@@ -25,11 +25,16 @@ package org.openscience.cdk.templates;
 
 import java.io.FileInputStream;
 
+import javax.vecmath.Point2d;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -832,6 +837,57 @@ public class MoleculeFactory {
 		return molecule;
 	}
 
+	/**
+	 * @cdk.inchi InChI=1/C5H5N5/c6-4-3-5(9-1-7-3)10-2-8-4/h1-2H,(H3,6,7,8,9,10)/f/h7H,6H2
+	 */
+	public static IMolecule makeAdenine() {
+    	IMolecule mol = new Molecule(); // Adenine
+    	IAtom a1 = mol.getBuilder().newAtom("C");
+    	a1.setPoint2d(new Point2d(21.0223, -17.2946));  mol.addAtom(a1);
+    	IAtom a2 = mol.getBuilder().newAtom("C");
+    	a2.setPoint2d(new Point2d(21.0223, -18.8093));  mol.addAtom(a2);
+    	IAtom a3 = mol.getBuilder().newAtom("C");
+    	a3.setPoint2d(new Point2d(22.1861, -16.6103));  mol.addAtom(a3);
+    	IAtom a4 = mol.getBuilder().newAtom("N");
+    	a4.setPoint2d(new Point2d(19.8294, -16.8677));  mol.addAtom(a4);
+    	IAtom a5 = mol.getBuilder().newAtom("N");
+    	a5.setPoint2d(new Point2d(22.2212, -19.5285));  mol.addAtom(a5);
+    	IAtom a6 = mol.getBuilder().newAtom("N");
+    	a6.setPoint2d(new Point2d(19.8177, -19.2187));  mol.addAtom(a6);
+    	IAtom a7 = mol.getBuilder().newAtom("N");
+    	a7.setPoint2d(new Point2d(23.4669, -17.3531));  mol.addAtom(a7);
+    	IAtom a8 = mol.getBuilder().newAtom("N");
+    	a8.setPoint2d(new Point2d(22.1861, -15.2769));  mol.addAtom(a8);
+    	IAtom a9 = mol.getBuilder().newAtom("C");
+    	a9.setPoint2d(new Point2d(18.9871, -18.0139));  mol.addAtom(a9);
+    	IAtom a10 = mol.getBuilder().newAtom("C");
+    	a10.setPoint2d(new Point2d(23.4609, -18.8267));  mol.addAtom(a10);
+    	IBond b1 = mol.getBuilder().newBond(a1, a2, 2.0);
+    	mol.addBond(b1);
+    	IBond b2 = mol.getBuilder().newBond(a1, a3, 1.0);
+    	mol.addBond(b2);
+    	IBond b3 = mol.getBuilder().newBond(a1, a4, 1.0);
+    	mol.addBond(b3);
+    	IBond b4 = mol.getBuilder().newBond(a2, a5, 1.0);
+    	mol.addBond(b4);
+    	IBond b5 = mol.getBuilder().newBond(a2, a6, 1.0);
+    	mol.addBond(b5);
+    	IBond b6 = mol.getBuilder().newBond(a3, a7, 2.0);
+    	mol.addBond(b6);
+    	IBond b7 = mol.getBuilder().newBond(a3, a8, 1.0);
+    	mol.addBond(b7);
+    	IBond b8 = mol.getBuilder().newBond(a4, a9, 2.0);
+    	mol.addBond(b8);
+    	IBond b9 = mol.getBuilder().newBond(a5, a10, 2.0);
+    	mol.addBond(b9);
+    	IBond b10 = mol.getBuilder().newBond(a6, a9, 1.0);
+    	mol.addBond(b10);
+    	IBond b11 = mol.getBuilder().newBond(a7, a10, 1.0);
+    	mol.addBond(b11);
+    	
+    	return mol;
+	}
+	
 	private static void configureAtoms(Molecule mol)
 	{
 		try
