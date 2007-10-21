@@ -135,6 +135,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit The special difficulty with Azulene is that only the
 	 *  outermost larger 10-ring is aromatic according to Hueckel rule.
+	 *  
+	 *  @see org.openscience.cdk.test.atomtype.CDKAtomTypeMatcherTest.testAzulene
 	 */
 	public void testAzulene() throws Exception
 	{
@@ -160,7 +162,9 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
 
 	/**
-	 *  A unit test for JUnit. The N has to be counted correctly
+	 *  A unit test for JUnit. The N has to be counted correctly.
+	 *  
+	 *  @see org.openscience.cdk.test.atomtype.CDKAtomTypeMatcherTest.testIndole
 	 */
 	public void testIndole() throws Exception
 	{
@@ -189,18 +193,20 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 	}
 
 	/**
-	 *  A unit test for JUnit. The N has to be counted correctly
+	 * A unit test for JUnit. The N has to be counted correctly.
+	 *  
+	 * @see org.openscience.cdk.test.atomtype.CDKAtomTypeMatcherTest.testPyrrole
 	 */
 	public void testPyrrole() throws Exception
 	{
 		Molecule molecule = MoleculeFactory.makePyrrole();
 		boolean testResults[] = {
-				true,
-				true,
-				true,
-				true,
-				true
-				};
+			true,
+			true,
+			true,
+			true,
+			true
+		};
 		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
 		CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 		for (int f = 0; f < molecule.getAtomCount(); f++) {
