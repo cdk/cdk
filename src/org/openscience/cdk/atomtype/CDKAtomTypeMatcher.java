@@ -27,6 +27,8 @@ import java.util.Map;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomException;
+import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -246,6 +248,22 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     						bonds.get(1).getFlag(CDKConstants.ISAROMATIC)) {
     						return factory.getAtomType("N.sp2");
     					} else {
+    						// a N.sp3 which is expected to take part in an aromatic system
+            				if (isRingAtom(atom, atomContainer)) {
+        						boolean bothNeighborsSP2 = true;
+            					Iterator<IAtom> atoms = atomContainer.getConnectedAtomsList(atom).iterator();
+            					while (atoms.hasNext() && bothNeighborsSP2) {
+            						IAtom nextAtom = atoms.next();
+            						if (!nextAtom.getSymbol().equals("H")) {
+            							if (nextAtom.getHybridization() != CDKConstants.UNSET && 
+            								nextAtom.getHybridization() != CDKConstants.HYBRIDIZATION_SP2 && 
+            								countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
+            								bothNeighborsSP2 = false;
+            							}
+            						}
+            					}
+            					if (bothNeighborsSP2) return factory.getAtomType("N.sp2");
+            				}
     						return factory.getAtomType("N.sp3");
     					}
     				} else if (connectedHeavyAtoms == 3) {
@@ -268,12 +286,21 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return null;
     }
 
-    private boolean isAmide(IAtom atom, IAtomContainer atomContainer) {
+    private boolean isRingAtom(IAtom atom, IAtomContainer atomContainer) {
+		SpanningTree st = new SpanningTree(atomContainer);
+		try {
+			return st.getCyclicFragmentsContainer().contains(atom);
+		} catch (NoSuchAtomException exception) {
+			return false;
+		}
+	}
+
+	private boolean isAmide(IAtom atom, IAtomContainer atomContainer) {
     	Iterator<IAtom> neighbors = atomContainer.getConnectedAtomsList(atom).iterator();
     	while (neighbors.hasNext()) {
     		IAtom neighbor = neighbors.next(); 
     		if (neighbor.getSymbol().equals("C")) {
-    			if (countAttachedDoubleBonds(atomContainer, atom, "O") == 1) return true;
+    			if (countAttachedDoubleBonds(atomContainer, neighbor, "O") == 1) return true;
     		}
     	}
 		return false;
@@ -307,6 +334,21 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				return factory.getAtomType("S.octahedral");
     			}
     		} else if (neighborcount == 2) {
+				if (isRingAtom(atom, atomContainer)) {
+					boolean bothNeighborsSP2 = true;
+					Iterator<IAtom> atoms = atomContainer.getConnectedAtomsList(atom).iterator();
+					while (atoms.hasNext() && bothNeighborsSP2) {
+						IAtom nextAtom = atoms.next();
+						if (!nextAtom.getSymbol().equals("H")) {
+							if (nextAtom.getHybridization() != CDKConstants.UNSET && 
+								nextAtom.getHybridization() != CDKConstants.HYBRIDIZATION_SP2 && 
+								countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
+								bothNeighborsSP2 = false;
+							}
+						}
+					}
+					if (bothNeighborsSP2) return factory.getAtomType("S.2");
+				}
     			return factory.getAtomType("S.3");
     		} else if (neighborcount == 1) {
     			if (atomContainer.getConnectedBondsList(atom).get(0).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
