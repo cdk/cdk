@@ -273,19 +273,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	while (neighbors.hasNext()) {
     		IAtom neighbor = neighbors.next(); 
     		if (neighbor.getSymbol().equals("C")) {
-    			Iterator<IBond> neighborBonds = atomContainer.getConnectedBondsList(neighbor).iterator();
-    			while (neighborBonds.hasNext()) {
-    				IBond neighborBond = neighborBonds.next();
-    				if (neighborBond.getAtomCount() == 2 &&
-    					neighborBond.getOrder() == CDKConstants.BONDORDER_DOUBLE) {
-    					if ((neighborBond.getAtom(0).equals(neighbor) &&
-    						 neighborBond.getAtom(1).getSymbol().equals("O")) ||
-    						(neighborBond.getAtom(1).equals(neighbor) &&
-    	    				 neighborBond.getAtom(0).getSymbol().equals("O"))) {
-    						return true;
-    					}
-    				}
-    			}
+    			if (countAttachedDoubleBonds(atomContainer, atom, "O") == 1) return true;
     		}
     	}
 		return false;
