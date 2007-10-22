@@ -47,6 +47,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Superclass of all JChemPaint GUI actions
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision: 9162 $
  * @author     steinbeck
  */
 public class JCPAction2D extends AbstractAction

@@ -64,6 +64,7 @@ import java.util.List;
  * @author      Federico
  * @cdk.created 2006-12-11
  * @cdk.module  qsar
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
  * @cdk.bug     1632419

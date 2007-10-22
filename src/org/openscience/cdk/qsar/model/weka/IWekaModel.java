@@ -32,6 +32,7 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  *
  * @author     Miguel Rojas
  * @cdk.module qsar
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public interface IWekaModel extends IModel {
 

@@ -94,6 +94,7 @@ import java.util.HashMap;
  * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
+ * @cdk.svnrev  $Revision$
  * 
  * @cdk.keyword partial least squares
  * @cdk.keyword PLS

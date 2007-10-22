@@ -69,6 +69,7 @@ import java.util.*;
  * @author Rajarshi Guha
  * @cdk.created 2007-04-08
  * @cdk.module smarts
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.keyword SMARTS
  * @cdk.keyword substructure search
  */

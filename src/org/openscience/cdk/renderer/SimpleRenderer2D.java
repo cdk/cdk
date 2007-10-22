@@ -67,6 +67,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
  *@author         steinbeck
  *@author         egonw
  *@cdk.module     render
+ * @cdk.svnrev  $Revision$
  *@cdk.created    2002-10-03
  *@cdk.keyword    viewer, 2D-viewer
  *

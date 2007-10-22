@@ -46,6 +46,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * {@cdk.cite FIG96}.
  *
  * @cdk.module extra
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search
  * @cdk.dictref blue-obelisk:findSmallestSetOfSmallestRings_Figueras

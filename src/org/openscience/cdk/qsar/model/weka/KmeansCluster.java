@@ -64,6 +64,7 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  * @cdk.require weka.jar
  * @cdk.license GPL
  * @cdk.module  qsar-weka
+ * @cdk.svnrev  $Revision: 9162 $
  * @see Weka
  * 
  * @cdk.keyword clusterers

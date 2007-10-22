@@ -67,6 +67,7 @@ import java.util.Iterator;
  * 
  * @cdk.created    2006-06-09
  * @cdk.module     reaction
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set        reaction-types
  * 
  **/

@@ -61,6 +61,7 @@ import java.util.Iterator;
  * @author      mfe4
  * @cdk.created 2004-11-03
  * @cdk.module  qsar
+ * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:aromaticBondsCount
  */

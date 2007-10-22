@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
  * @author      egonw
  * @cdk.created 2006-10-25
  * @cdk.module  render
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public interface IRenderer2D extends ISimpleRenderer2D {
 

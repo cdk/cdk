@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * @cdk.module render
+ * @cdk.svnrev  $Revision$
  */
 public class Arrow 
 {

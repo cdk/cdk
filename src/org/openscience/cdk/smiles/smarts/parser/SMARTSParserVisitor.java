@@ -4,6 +4,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 
 /**
  * @cdk.module smarts
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public interface SMARTSParserVisitor
 {

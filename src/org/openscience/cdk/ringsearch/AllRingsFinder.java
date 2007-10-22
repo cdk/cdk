@@ -52,6 +52,7 @@ import java.util.List;
  * @author        steinbeck
  * @cdk.created   2002-06-23
  * @cdk.module    standard
+ * @cdk.svnrev  $Revision$
  */
 public class AllRingsFinder
 {

@@ -75,6 +75,7 @@ import java.util.Vector;
  * @author Rajarshi Guha
  * @cdk.created 2004-11-23
  * @cdk.module qsar
+ * @cdk.svnrev  $Revision$
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:gravitationalIndex
  * @cdk.keyword gravitational index

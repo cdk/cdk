@@ -70,6 +70,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @author         Christoph Steinbeck
  * @author         Egon Willighagen
  * @cdk.module     smiles
+ * @cdk.svnrev  $Revision$
  * @cdk.created    2002-04-29
  * @cdk.keyword    SMILES, parser
  * @cdk.bug        1274464

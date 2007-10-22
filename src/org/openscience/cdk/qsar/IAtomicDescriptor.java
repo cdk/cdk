@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * Classes that implement this interface are QSAR descriptor calculators.
  *
  * @cdk.module qsar
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public interface IAtomicDescriptor extends IDescriptor {
 

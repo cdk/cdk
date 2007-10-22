@@ -29,6 +29,7 @@ import org.openscience.cdk.IImplementationSpecification;
  * Class that is used to distribute descriptor specifications.
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  */
 public class DescriptorSpecification implements IImplementationSpecification {
 

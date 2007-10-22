@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @author      egonw
  * @cdk.created 2006-10-25
  * @cdk.module  render
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public interface ISimpleRenderer2D {
 

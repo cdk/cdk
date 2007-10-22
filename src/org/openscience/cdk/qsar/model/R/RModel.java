@@ -57,6 +57,7 @@ import java.io.*;
  * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
+ * @cdk.svnrev  $Revision$
  * @deprecated 
  */
 public abstract class RModel implements IModel {

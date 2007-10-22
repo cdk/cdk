@@ -64,6 +64,7 @@ import java.util.List;
  * @author           Miguel Rojas
  * @cdk.created      2006-05-26
  * @cdk.module       qsar
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set          qsar-descriptors
  * @cdk.dictref      qsar-descriptors:ionizationPotential
  * 

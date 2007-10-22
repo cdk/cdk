@@ -91,6 +91,7 @@ import java.util.HashMap;
  * @author Rajarshi Guha
  * @cdk.require r-project
  * @cdk.module qsar
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.keyword neural network
  * @cdk.keyword R
  */

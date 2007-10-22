@@ -58,6 +58,7 @@ import java.io.IOException;
  * @author      Miguel Rojas
  * @cdk.created 2006-04-15
  * @cdk.module  qsar
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:partialPiCharge
  * @cdk.bug     1558660

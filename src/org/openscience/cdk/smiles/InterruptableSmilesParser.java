@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IMolecule;
  * 
  * @author     Nina Jeliazkova
  * @cdk.module smiles
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class InterruptableSmilesParser extends SmilesParser {
 

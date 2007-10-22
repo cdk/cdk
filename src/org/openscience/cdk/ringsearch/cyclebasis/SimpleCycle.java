@@ -36,6 +36,7 @@ import java.util.*;
  * @author Ulrich Bauer <baueru@cs.tum.edu>
  * 
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword smallest-set-of-rings
  * @cdk.keyword ring search

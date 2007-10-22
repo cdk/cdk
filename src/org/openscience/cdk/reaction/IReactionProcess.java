@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
  *
  * @author      Miguel Rojas
  * @cdk.module  reaction
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public interface IReactionProcess {
 	

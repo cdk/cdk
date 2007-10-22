@@ -70,6 +70,7 @@ import java.lang.reflect.Method;
  * 
  * @author     Todd Martin
  * @cdk.module nocompile
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set    qsar-descriptors
  */
 public class ALOGP implements IMolecularDescriptor {

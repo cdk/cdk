@@ -31,6 +31,7 @@ import org.openscience.cdk.IImplementationSpecification;
  *
  * @author      Miguel Rojas
  * @cdk.module  reaction
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class ReactionSpecification implements IImplementationSpecification {
 

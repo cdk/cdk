@@ -29,6 +29,7 @@ import org.openscience.cdk.exception.CDKException;
  * Classes that implement this interface are QSAR descriptor calculators.
  *
  * @cdk.module qsar
+ * @cdk.svnrev  $Revision$
  */
 public interface IDescriptor {
 

@@ -42,6 +42,7 @@ import java.awt.geom.Ellipse2D;
  * 
  * @author      steinbeck
  * @cdk.module  render
+ * @cdk.svnrev  $Revision$
  * @cdk.created 2006-03-28
  * @cdk.keyword viewer, 2D-viewer
  * @see         org.openscience.cdk.renderer.Renderer2DModel

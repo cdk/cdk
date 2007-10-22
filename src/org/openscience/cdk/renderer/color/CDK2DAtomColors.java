@@ -32,6 +32,7 @@ import java.awt.*;
  * Gives a short table of atom colors for 2D display.
  *
  * @cdk.module render
+ * @cdk.svnrev  $Revision$
  */
 public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
 

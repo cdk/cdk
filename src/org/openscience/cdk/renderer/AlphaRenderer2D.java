@@ -40,6 +40,7 @@ import java.awt.geom.Rectangle2D;
  * erased to background.
  *
  * @cdk.module render
+ * @cdk.svnrev  $Revision$
  *
  * @author     akrassavine
  *

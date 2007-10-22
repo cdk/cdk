@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IBond;
  * retrieved one by one.
  *
  * @cdk.module qsar
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public abstract class AbstractBondDescriptor implements IBondDescriptor {
     

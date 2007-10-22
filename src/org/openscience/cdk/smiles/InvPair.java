@@ -35,6 +35,7 @@ import org.openscience.cdk.math.Primes;
  * AtomContainers.
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  */
 public class InvPair implements java.io.Serializable{
 

@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * atoms are blue, and negatively charge atoms are red.
  *
  * @cdk.module  render
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword atom coloring, partial charges
  */
 public class PartialAtomicChargeColors implements IAtomColorer {

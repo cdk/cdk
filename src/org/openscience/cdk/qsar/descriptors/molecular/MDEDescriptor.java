@@ -76,6 +76,7 @@ import java.util.Vector;
  * @author Rajarshi Guha
  * @cdk.created 2006-09-18
  * @cdk.module qsar
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:mde
  */

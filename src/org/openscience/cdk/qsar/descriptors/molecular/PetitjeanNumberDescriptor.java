@@ -62,6 +62,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.created    December 7, 2004
  * @cdk.created    2004-11-03
  * @cdk.module     qsar
+ * @cdk.svnrev  $Revision$
  * @cdk.set        qsar-descriptors
  * @cdk.dictref    qsar-descriptors:petitjeanNumber
  * @cdk.keyword    Petit-Jean, number

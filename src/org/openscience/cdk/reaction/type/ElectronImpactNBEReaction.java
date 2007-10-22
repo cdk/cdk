@@ -67,6 +67,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @cdk.created    2006-04-01
  * @cdk.module     reaction
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set        reaction-types
  * @cdk.dictref    reaction-types:electronImpact
  * 

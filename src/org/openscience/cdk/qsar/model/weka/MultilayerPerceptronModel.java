@@ -78,6 +78,7 @@ import java.io.FileReader;
  * @cdk.require weka.jar
  * @cdk.license GPL
  * @cdk.module  qsar-weka
+ * @cdk.svnrev  $Revision: 9162 $
  * @see Weka
  * 
  * @cdk.keyword classifiers, funktions, MultilayerPerceptron

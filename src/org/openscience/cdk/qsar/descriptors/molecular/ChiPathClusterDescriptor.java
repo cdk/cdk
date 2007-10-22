@@ -75,6 +75,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @author Rajarshi Guha
  * @cdk.created 2006-11-13
  * @cdk.module qsar
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:chiPathCluster
  * @cdk.keyword chi path cluster index

@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 * Implementation of a Path as needed by {@cdk.cite HAN96}.
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword graph, path
  *

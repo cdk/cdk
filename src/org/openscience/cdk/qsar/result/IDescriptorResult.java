@@ -28,6 +28,7 @@ package org.openscience.cdk.qsar.result;
  * The concept was taken from JOELib.
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  */
 public interface IDescriptorResult {
 

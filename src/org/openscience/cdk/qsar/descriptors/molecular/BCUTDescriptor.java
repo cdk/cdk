@@ -106,6 +106,7 @@ import Jama.Matrix;
  * @cdk.builddepends Jama-1.0.1.jar
  * @cdk.depends Jama-1.0.1.jar
  * @cdk.module qsar
+ * @cdk.svnrev  $Revision$
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:BCUT
  * @cdk.keyword BCUT

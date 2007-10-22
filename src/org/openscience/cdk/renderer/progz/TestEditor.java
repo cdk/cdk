@@ -61,6 +61,7 @@ import org.openscience.cdk.Molecule;
  * @author nielsout
  * @author egonw
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class TestEditor extends JPanel {
 

@@ -80,6 +80,7 @@ import java.util.List;
  * @author Rajarshi Guha
  * @cdk.created 2006-11-12
  * @cdk.module qsar
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:chiChain
  * @cdk.keyword chi chain index

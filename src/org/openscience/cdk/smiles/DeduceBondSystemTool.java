@@ -54,6 +54,7 @@ import org.openscience.cdk.tools.SmilesValencyChecker;
  *
  * @author Todd Martin
  * @cdk.module smiles
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.keyword bond order
  */
 public class DeduceBondSystemTool {

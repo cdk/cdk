@@ -28,6 +28,7 @@ import java.lang.reflect.Constructor;
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
  * @cdk.module smarts
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.keyword SMARTS AST
  */
 public class SimpleNode implements Node, Cloneable {

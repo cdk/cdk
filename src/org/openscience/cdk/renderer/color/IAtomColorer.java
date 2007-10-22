@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * Interface to a class for coloring atoms.
  *
  * @cdk.module standard
+ * @cdk.svnrev  $Revision$
  */
 public interface IAtomColorer {
 

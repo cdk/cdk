@@ -39,6 +39,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @author      Federico
  * @cdk.created 2007-03-01
  * @cdk.module  qsar
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
  */
 

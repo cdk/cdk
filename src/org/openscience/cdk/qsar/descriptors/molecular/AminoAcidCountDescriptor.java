@@ -61,6 +61,7 @@ import java.util.List;
  * @author      egonw
  * @cdk.created 2006-01-15
  * @cdk.module  qsar-pdb
+ * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:aminoAcidsCount
  */

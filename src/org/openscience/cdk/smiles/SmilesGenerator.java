@@ -74,6 +74,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.created    2002-02-26
  * @cdk.keyword    SMILES, generator
  * @cdk.module     smiles
+ * @cdk.svnrev  $Revision$
  * @cdk.bug        1257438
  * @cdk.bug        1535055
  */

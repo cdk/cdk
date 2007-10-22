@@ -56,6 +56,7 @@ import java.util.Iterator;
  *@author         steinbeck
  *@author         egonw
  *@cdk.module     render
+ * @cdk.svnrev  $Revision$
  *@cdk.created    2002-10-03
  *@cdk.keyword    viewer, 2D-viewer
  *@see            org.openscience.cdk.renderer.Renderer2DModel

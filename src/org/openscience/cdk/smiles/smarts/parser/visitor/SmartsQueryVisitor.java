@@ -115,6 +115,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
  * @cdk.module smarts
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.keyword SMARTS AST
  */
 public class SmartsQueryVisitor implements SMARTSParserVisitor {

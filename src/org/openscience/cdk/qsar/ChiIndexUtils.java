@@ -21,6 +21,7 @@ import java.util.*;
  *
  * @author Rajarshi Guha
  * @cdk.module qsar
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class ChiIndexUtils {
 

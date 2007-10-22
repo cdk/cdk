@@ -74,6 +74,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @cdk.created    2006-07-04
  * @cdk.module     reaction
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set        reaction-types
  * 
  **/
