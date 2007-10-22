@@ -35,6 +35,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
  * Opens a new empty JChemPaintFrame.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  * @cdk.created    1997
  */

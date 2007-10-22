@@ -10,6 +10,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  * @cdk.module control
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class AddFuncGroupEdit  extends AbstractUndoableEdit{
 	

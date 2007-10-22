@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
  *
  * @author Rajarshi Guha
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.created 2006-09-26
  */
 public class InsertStructureAction extends JCPAction {

@@ -38,6 +38,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * Program that guesses the format of a file.
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  *
  *  @cdk.keyword command line util
  *  @cdk.keyword file format

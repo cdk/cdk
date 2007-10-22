@@ -45,6 +45,7 @@ import org.openscience.cdk.renderer.Renderer2DModel;
   * Simple Dialog that shows the loaded dictionaries..
   *
   * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
   */
 public class ModifyRenderOptionsDialog extends JFrame {
 

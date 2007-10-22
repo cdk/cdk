@@ -45,6 +45,7 @@ import org.openscience.cdk.dict.DictionaryDatabase;
   * Simple Dialog that shows the loaded dictionaries.
   *
   * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
   */
 public class DictionaryDialog extends JFrame {
 

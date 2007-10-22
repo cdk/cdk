@@ -63,6 +63,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * @author        steinbeck
  * @cdk.module    jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class OpenAction extends JCPAction {
 

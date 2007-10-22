@@ -37,6 +37,7 @@ import javax.swing.JFileChooser;
  * An export filter for JCP file formats
  *
  * @cdk.module jchempaint 
+ * @cdk.svnrev  $Revision$
  * @author  Egon Willighagen
  * @cdk.created 2003-04-01
  */

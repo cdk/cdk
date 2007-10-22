@@ -37,6 +37,7 @@ import java.awt.event.ActionEvent;
  * Opens a dictionary dialog
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class ShowDictionariesAction extends JCPAction

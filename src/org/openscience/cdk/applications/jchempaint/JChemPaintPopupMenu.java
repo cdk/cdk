@@ -41,6 +41,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *  A pop-up menu for JChemPaint
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class JChemPaintPopupMenu extends CDKPopupMenu

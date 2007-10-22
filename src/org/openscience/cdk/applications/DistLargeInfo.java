@@ -27,6 +27,7 @@ package org.openscience.cdk.applications;
  * Program that gives some information when running the large CDK jar.
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */

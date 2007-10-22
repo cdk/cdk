@@ -34,6 +34,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  * @cdk.module control
+ * @cdk.svnrev  $Revision$
  */
 public class BondChangeEdit extends AbstractUndoableEdit {
 

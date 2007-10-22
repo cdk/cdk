@@ -34,6 +34,7 @@ import javax.swing.JFileChooser;
  * data.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author  Egon Willighagen
  * @cdk.created 2002-10-05
  */

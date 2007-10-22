@@ -37,6 +37,7 @@ import java.util.ResourceBundle;
  *  A property manager for JChemPaint.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class JCPLocalizationHandler

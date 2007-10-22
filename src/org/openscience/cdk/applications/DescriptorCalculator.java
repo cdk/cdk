@@ -48,6 +48,7 @@ import java.util.List;
  * Command line utility that calculates QSAR descriptor values.
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  *
  * @author           Egon Willighagen
  * @cdk.require      java1.5+

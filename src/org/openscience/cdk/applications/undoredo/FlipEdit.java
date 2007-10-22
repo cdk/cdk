@@ -31,6 +31,7 @@ import java.util.HashMap;
  * 
  * @author tohel
  * @cdk.module control
+ * @cdk.svnrev  $Revision$
  */
 public class FlipEdit extends ChangeCoordsEdit {
 

@@ -39,6 +39,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * files.
  *
  * @cdk.module  experimental
+ * @cdk.svnrev  $Revision$
  *
  * @author      Egon Willighagen
  * @cdk.created 2003-08-14

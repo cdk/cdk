@@ -35,6 +35,7 @@ import java.awt.event.ActionEvent;
  * Performce a Redo - a repeat of the last undone action
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class RedoAction extends JCPAction

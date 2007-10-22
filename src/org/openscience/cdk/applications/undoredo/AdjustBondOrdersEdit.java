@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IBond;
  * 
  * @author tohel
  * @cdk.module control
+ * @cdk.svnrev  $Revision$
  */
 public class AdjustBondOrdersEdit extends AbstractUndoableEdit {
 

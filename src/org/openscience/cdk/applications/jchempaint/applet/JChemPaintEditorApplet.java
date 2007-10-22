@@ -36,6 +36,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
  * The
  *
  * @cdk.module jchempaint.applet
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class JChemPaintEditorApplet extends JChemPaintAbstractApplet

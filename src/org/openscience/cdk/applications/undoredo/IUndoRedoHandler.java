@@ -39,6 +39,7 @@ import javax.swing.undo.UndoableEdit;
  *@cdk.created    2. Mai 2005
  *@cdk.keyword    undo redo
  * @cdk.module control
+ * @cdk.svnrev  $Revision$
  */
 public interface IUndoRedoHandler {
 	

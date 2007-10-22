@@ -10,6 +10,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
  * @cdk.module control
+ * @cdk.svnrev  $Revision$
  */
 public class ClearAllEdit extends AbstractUndoableEdit {
 

@@ -67,6 +67,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  * @author        hel
  * @cdk.created       27. April 2005
  * @cdk.module    jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class EditAction extends JCPAction {
 

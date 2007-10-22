@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 
 /**
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  * @cdk.require swing
  */
 public class BondEditor extends ChemObjectEditor {

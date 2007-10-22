@@ -37,6 +37,7 @@ import org.openscience.cdk.applications.swing.FieldTablePanel;
  * JFrame that allows setting of a number of general application options.
  * 
  * @cdk.module jchempaint.application
+ * @cdk.svnrev  $Revision$
  */
 public class GeneralSettingsEditor extends FieldTablePanel implements ActionListener {
     

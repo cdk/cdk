@@ -42,6 +42,7 @@ import java.net.URL;
  *  Action to follow a weblink
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class WebLinkAction extends JCPAction

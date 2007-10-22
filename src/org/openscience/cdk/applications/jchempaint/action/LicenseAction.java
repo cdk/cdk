@@ -36,6 +36,7 @@ import java.awt.event.ActionEvent;
  * Shows the dialog displaying JCPs license
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class LicenseAction extends JCPAction

@@ -36,6 +36,7 @@ import javax.swing.Icon;
  * The file view class
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class JCPFileView extends javax.swing.filechooser.FileView

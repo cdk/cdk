@@ -53,6 +53,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * @cdk.module  applications
+ * @cdk.svnrev  $Revision$
  * @cdk.require swing
  */
 public class SmilesViewerforDeterministicGenerator extends JApplet implements ActionListener{

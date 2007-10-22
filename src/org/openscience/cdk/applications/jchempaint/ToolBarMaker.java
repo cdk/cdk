@@ -52,6 +52,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *@author        steinbeck
  *@cdk.created       16. Februar 2005
  *@cdk.module    jchempaint
+ * @cdk.svnrev  $Revision$
  *@see           JChemPaintViewerOnlyPanel
  */
 public class ToolBarMaker 

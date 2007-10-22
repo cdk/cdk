@@ -44,6 +44,7 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  * Action to copy/paste structures.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     Egon Willighagen <e.willighagen@science.ru.nl>
  */
 public class FlipAction extends JCPAction {

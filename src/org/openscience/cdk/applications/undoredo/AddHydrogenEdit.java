@@ -46,6 +46,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * 
  * @author tohel
  * @cdk.module control
+ * @cdk.svnrev  $Revision$
  */
 public class AddHydrogenEdit extends AbstractUndoableEdit {
 

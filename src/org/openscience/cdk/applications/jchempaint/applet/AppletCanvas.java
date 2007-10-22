@@ -47,6 +47,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * The canvas for a JChempaint applet
  *
  * @cdk.module jchempaint.applet
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class AppletCanvas extends Canvas

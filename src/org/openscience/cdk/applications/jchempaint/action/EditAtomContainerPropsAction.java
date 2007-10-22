@@ -43,6 +43,7 @@ import java.awt.event.ActionEvent;
  *
  * @author        E.L. Willighagen <elw38@cam.ac.uk>
  * @cdk.module    jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class EditAtomContainerPropsAction extends JCPAction {
 

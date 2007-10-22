@@ -39,6 +39,7 @@ import java.util.ArrayList;
  * Created after http://java.sun.com/docs/books/tutorial/uiswing/misc/example-1dot4/ArrayListTransferHandler.java
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class JCPTransferHandler extends TransferHandler {
     

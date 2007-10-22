@@ -69,6 +69,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * Action to copy/paste structures.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     Egon Willighagen <e.willighagen@science.ru.nl>
  * @cdk.bug    1288449
  */

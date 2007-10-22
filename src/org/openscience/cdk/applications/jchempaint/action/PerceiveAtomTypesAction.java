@@ -42,6 +42,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * An action that triggers atom type perception by the CDK.
  * 
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision: 9162 $
  * @author     E.L. Willighagen <ewilligh@uni-koeln.de>
  */
 public class PerceiveAtomTypesAction extends JCPAction

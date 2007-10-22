@@ -59,6 +59,7 @@ import com.sun.media.jai.codec.JPEGEncodeParam;
  * Exporting the current model various formats
  *
  * @cdk.module  jchempaint
+ * @cdk.svnrev  $Revision$
  * @author      Egon Willighagen
  * @cdk.require jai
  * @cdk.bug     1586156

@@ -53,6 +53,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * Creates a SMILES from the current model
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class CreateSmilesAction extends JCPAction

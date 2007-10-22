@@ -70,6 +70,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  *
  * @author Rajarshi Guha
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision: 9162 $
  * @cdk.require swing
  */
 public class InsertTextPanel extends JPanel implements ActionListener {

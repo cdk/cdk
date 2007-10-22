@@ -43,6 +43,7 @@ import java.util.List;
  * Triggers the adjustment of BondOrders
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class AdjustBondOrdersAction extends JCPAction

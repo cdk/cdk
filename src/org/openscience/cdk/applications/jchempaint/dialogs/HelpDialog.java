@@ -54,6 +54,7 @@ import javax.swing.text.Document;
  * A Dialog showing help information
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class HelpDialog extends JDialog implements HyperlinkListener

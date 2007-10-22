@@ -37,6 +37,7 @@ import org.openscience.cdk.event.ICDKChangeListener;
  * the user to copy&amp;paste the URL of JChemPaints main site.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class PTDialog extends JFrame {
 

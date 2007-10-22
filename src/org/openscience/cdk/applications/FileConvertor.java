@@ -93,6 +93,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *          Gaussian Input, CDK source code
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  *

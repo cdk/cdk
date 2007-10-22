@@ -43,6 +43,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class ConvertToPseudoAtomAction extends JCPAction {
 

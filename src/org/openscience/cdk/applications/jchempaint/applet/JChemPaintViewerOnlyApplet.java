@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  * The
  * 
  * @cdk.module jchempaint.applet
+ * @cdk.svnrev  $Revision$
  * @author dirk49
  * @cdk.created 04. Mai 2005
  */

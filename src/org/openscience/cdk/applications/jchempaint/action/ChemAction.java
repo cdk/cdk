@@ -46,6 +46,7 @@ import org.openscience.cdk.event.ICDKChangeListener;
 /**
  * Changes the editing mode for the Controller2D in CDK.
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class ChemAction extends JCPAction

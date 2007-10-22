@@ -37,6 +37,7 @@ import org.openscience.cdk.event.ICDKChangeListener;
 
 /**
  * @cdk.module  applications
+ * @cdk.svnrev  $Revision$
  * @cdk.require swing
  */
 public class AtomicTable extends JPanel implements ICDKChangeListener {

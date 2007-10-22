@@ -46,6 +46,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintPanel;
  * Internal frame to allow for changing the properties.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class GeneralFieldEditor extends JFrame {
     

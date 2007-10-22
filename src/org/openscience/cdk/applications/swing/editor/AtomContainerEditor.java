@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  * @cdk.require swing
  */
 public class AtomContainerEditor extends ChemObjectEditor {

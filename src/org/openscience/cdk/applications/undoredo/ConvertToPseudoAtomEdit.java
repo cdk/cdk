@@ -38,6 +38,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * 
  * @author tohel
  * @cdk.module control
+ * @cdk.svnrev  $Revision$
  */
 public class ConvertToPseudoAtomEdit extends AbstractUndoableEdit {
 

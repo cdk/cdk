@@ -32,6 +32,7 @@ import java.util.StringTokenizer;
  * used in CVS branches. (Patch welcome).
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  */
 public class APIVersionTester {
 

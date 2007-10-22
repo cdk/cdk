@@ -39,6 +39,7 @@ import javax.swing.JPanel;
 
 /**
  * @cdk.module jchempaint.application
+ * @cdk.svnrev  $Revision$
  */
 public class ModifyGeneralSettingsDialog extends JFrame {
 

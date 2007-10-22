@@ -36,6 +36,7 @@ import java.awt.event.ActionEvent;
  * Pops up the help.
  *
  * @cdk.module  jchempaint
+ * @cdk.svnrev  $Revision$
  * @author      steinbeck
  * @cdk.require javahelp
  */

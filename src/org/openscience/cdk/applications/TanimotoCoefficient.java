@@ -42,6 +42,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * Command line utility that will generate fingerprints for a set of files and calculate the tanimoto coefficient.
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision: 9162 $
  *
  * @author  Egon Willighagen
  * @author  Stefan Kuhn

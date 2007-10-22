@@ -37,6 +37,7 @@ import org.openscience.cdk.ChemObject;
 
 /**
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  * @cdk.require swing
  */
 public class ChemObjectPropertyEditorTableModel extends AbstractTableModel {

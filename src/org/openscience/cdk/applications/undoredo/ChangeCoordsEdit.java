@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * 
  * @author tohel
  * @cdk.module control
+ * @cdk.svnrev  $Revision$
  */
 public class ChangeCoordsEdit extends AbstractUndoableEdit {
 

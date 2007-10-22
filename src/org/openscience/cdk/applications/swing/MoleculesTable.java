@@ -38,6 +38,7 @@ import org.openscience.cdk.event.ICDKChangeListener;
 
 /**
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  * @cdk.require swing
  */
 public class MoleculesTable extends JPanel implements ICDKChangeListener {

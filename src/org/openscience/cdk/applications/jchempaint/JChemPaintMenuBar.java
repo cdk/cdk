@@ -49,6 +49,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author        steinbeck
  * @cdk.module    jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class JChemPaintMenuBar extends JMenuBar {
 

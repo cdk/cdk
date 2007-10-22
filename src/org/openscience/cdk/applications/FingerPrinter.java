@@ -38,6 +38,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Command line utility that will generate fingerprints for a set of files.
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  *
  * @author  Egon Willighagen
  * @cdk.created 2003-08-14

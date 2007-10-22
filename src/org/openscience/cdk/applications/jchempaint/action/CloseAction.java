@@ -39,6 +39,7 @@ import javax.swing.JFrame;
  * Triggers an exit of the current frame
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class CloseAction extends JCPAction

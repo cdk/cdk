@@ -42,6 +42,7 @@ import org.openscience.cdk.applications.jchempaint.dialogs.TextViewDialog;
  *  this JCPAction).
  *
  * @cdk.module  jchempaint
+ * @cdk.svnrev  $Revision$
  * @author      steinbeck
  * @cdk.require java1.5+
  */

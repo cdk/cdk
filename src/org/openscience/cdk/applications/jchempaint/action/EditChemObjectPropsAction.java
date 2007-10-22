@@ -47,6 +47,7 @@ import org.openscience.cdk.applications.swing.editor.ReactionEditor;
  *
  * @author        E.L. Willighagen <elw38@cam.ac.uk>
  * @cdk.module    jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class EditChemObjectPropsAction extends JCPAction {
 

@@ -42,6 +42,7 @@ import javax.swing.border.Border;
  * the user to copy&paste the URL of JChemPaints main site.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class LicenseDialog extends JFrame {
 

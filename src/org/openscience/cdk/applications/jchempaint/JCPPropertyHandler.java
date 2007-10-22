@@ -46,6 +46,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *  A property manager for JChemPaint.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class JCPPropertyHandler

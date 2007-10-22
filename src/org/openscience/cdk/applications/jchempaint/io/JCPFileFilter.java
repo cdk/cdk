@@ -38,6 +38,7 @@ import javax.swing.JFileChooser;
  * A file filter for JCP
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  *@author     steinbeck
  */
 public class JCPFileFilter extends javax.swing.filechooser.FileFilter implements IJCPFileFilter

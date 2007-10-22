@@ -73,6 +73,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * The
  * 
  * @cdk.module jchempaint.applet
+ * @cdk.svnrev  $Revision$
  * @author dirk49
  * @cdk.created 22. April 2005
  */

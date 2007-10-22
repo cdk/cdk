@@ -36,6 +36,7 @@ import java.awt.event.ActionEvent;
  * Opens a new empty JChemPaintFrame.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  * @cdk.created    1997
  */

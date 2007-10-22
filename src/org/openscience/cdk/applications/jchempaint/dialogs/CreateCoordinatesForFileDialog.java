@@ -66,6 +66,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * Dialog for coordinate creationg
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class CreateCoordinatesForFileDialog extends JInternalFrame

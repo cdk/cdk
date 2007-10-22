@@ -52,6 +52,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * @author        steinbeck
  * @cdk.created       2003-02-17
  * @cdk.module    jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class JChemPaintModel implements java.io.Serializable, ICDKChangeListener {
 

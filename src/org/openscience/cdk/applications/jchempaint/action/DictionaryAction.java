@@ -40,6 +40,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * Creates a dictionary entry for a selected entity
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author  Egon Willighagen
  * @cdk.created 2003-08-08
  */

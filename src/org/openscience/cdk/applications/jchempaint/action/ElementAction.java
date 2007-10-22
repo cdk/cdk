@@ -14,6 +14,7 @@ import org.openscience.cdk.controller.Controller2DModel;
  * Action to change element
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     shk3
  */
 public class ElementAction extends JCPAction {

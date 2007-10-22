@@ -44,6 +44,7 @@ import org.openscience.cdk.config.IsotopeFactory;
  * Changes the isotope for a selected atom
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     Egon Willighagen
  */
 public class ChangeIsotopeAction extends JCPAction

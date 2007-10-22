@@ -37,6 +37,7 @@ import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class ZoomAction extends JCPAction

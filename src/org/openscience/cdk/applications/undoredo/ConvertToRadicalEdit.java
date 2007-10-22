@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  * 
  * @author tohel
  * @cdk.module control
+ * @cdk.svnrev  $Revision$
  */
 public class ConvertToRadicalEdit extends AbstractUndoableEdit {
 

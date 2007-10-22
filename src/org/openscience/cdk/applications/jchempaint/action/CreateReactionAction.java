@@ -47,6 +47,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * Creates a reaction object
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  *@author     steinbeck
  */
 public class CreateReactionAction extends JCPAction

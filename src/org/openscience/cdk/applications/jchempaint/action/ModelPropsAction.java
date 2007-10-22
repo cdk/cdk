@@ -37,6 +37,7 @@ import java.awt.event.ActionEvent;
  * Shows an editor for editing the model properties
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  *@author     steinbeck
  */
 public class ModelPropsAction extends JCPAction

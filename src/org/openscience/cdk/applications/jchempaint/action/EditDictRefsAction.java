@@ -37,6 +37,7 @@ import java.awt.event.ActionEvent;
  * Allows for editing dictionary references
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author E.L. Willighagen <elw38@cam.ac.uk>
  */
 public class EditDictRefsAction extends JCPAction {

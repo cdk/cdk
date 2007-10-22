@@ -55,6 +55,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *  JChemPaint main class.
  *
  * @cdk.module jchempaint.application
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  * @author     egonw
  * @cdk.created    a long time ago

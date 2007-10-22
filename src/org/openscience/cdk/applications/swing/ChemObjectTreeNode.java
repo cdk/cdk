@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  * A node in the ChemObjectTree.
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  *
  * @author     egonw
  * @cdk.created    2004-08-22

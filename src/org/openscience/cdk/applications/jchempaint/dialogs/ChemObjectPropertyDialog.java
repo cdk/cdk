@@ -45,6 +45,7 @@ import org.openscience.cdk.applications.swing.editor.ChemObjectEditor;
   * Simple Dialog that shows the loaded dictionaries.
   * 
   * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
   */
 public class ChemObjectPropertyDialog extends JFrame {
 

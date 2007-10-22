@@ -32,6 +32,7 @@ package org.openscience.cdk.applications.jchempaint;
  * A status bar to support the development gui
  *
  *@cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  *@author     steinbeck
  */
 public class DevelStatusBar extends StatusBar

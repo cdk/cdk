@@ -41,6 +41,7 @@ import org.openscience.cdk.applications.jchempaint.io.JCPSaveFileFilter;
  * Opens a save dialog
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class SaveAction extends SaveAsAction

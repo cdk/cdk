@@ -35,6 +35,7 @@ import org.openscience.cdk.applications.jchempaint.dialogs.ModifyGeneralSettings
  * Action to pop-up an JFrame to edit general application settings.
  *
  * @cdk.module jchempaint.application
+ * @cdk.svnrev  $Revision$
  * @author     egonw
  * @cdk.created    2005-04-27
  */

@@ -45,6 +45,7 @@ import javax.swing.JTextArea;
  * A simple text viewing dialog for general use.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @cdk.created 2003-08-24
  */
 public class TextViewDialog extends JDialog {

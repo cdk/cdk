@@ -48,6 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * A Swing-based implementation of Renderer2D for viewing molecules.
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  * @cdk.require swing
  *
  * @author     steinbeck

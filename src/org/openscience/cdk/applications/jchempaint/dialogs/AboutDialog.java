@@ -51,6 +51,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author        hel
  * @cdk.created       27. April 2005
  * @cdk.module    jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class AboutDialog extends JFrame {
 

@@ -32,6 +32,7 @@ package org.openscience.cdk.applications.jchempaint.io;
  * The interface for JCP file filters
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public interface IJCPFileFilter

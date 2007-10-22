@@ -46,6 +46,7 @@ import java.awt.event.ActionEvent;
  * Allow to dump a IChemObject to a newly opened screen
  *
  * @cdk.module       jchempaint
+ * @cdk.svnrev  $Revision$
  * @author           steinbeck
  * @cdk.require      java1.5+
  * @cdk.builddepends xom-1.0.jar

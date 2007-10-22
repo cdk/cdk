@@ -64,6 +64,7 @@ import org.openscience.cdk.validate.ValidationTest;
  * ChemObjects.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class ValidateFrame extends JFrame  {
     

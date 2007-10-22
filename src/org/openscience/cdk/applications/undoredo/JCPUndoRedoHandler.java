@@ -38,6 +38,7 @@ import org.openscience.cdk.controller.Controller2DModel;
  * 
  * @author shk3
  * @cdk.module control
+ * @cdk.svnrev  $Revision$
  */
 public class JCPUndoRedoHandler implements IUndoRedoHandler {
 	Controller2DModel c2dm=null;

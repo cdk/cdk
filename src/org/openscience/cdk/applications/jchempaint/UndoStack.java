@@ -36,6 +36,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * A stack of undo operations
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  * @cdk.created    February 4, 2004
  */

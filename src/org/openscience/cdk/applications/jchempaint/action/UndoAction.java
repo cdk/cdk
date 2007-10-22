@@ -36,6 +36,7 @@ import java.awt.event.ActionEvent;
  * Beneficial in many situations in your life.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  * @cdk.bug    1524599
  */

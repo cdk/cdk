@@ -44,6 +44,7 @@ import org.openscience.cdk.applications.jchempaint.JChemPaintEditorPanel;
  * Simple Dialog that shows information about this JChemPaints executable.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class InfoDialog extends JFrame {
 

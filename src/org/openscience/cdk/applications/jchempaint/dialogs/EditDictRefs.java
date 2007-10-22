@@ -50,6 +50,7 @@ import org.openscience.cdk.applications.swing.DictRefEditorTableModel;
  * ChemObjects.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class EditDictRefs extends JFrame  {
     

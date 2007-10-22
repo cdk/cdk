@@ -41,6 +41,7 @@ import javax.swing.JScrollPane;
 
 /**
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  *
  * @author     steinbeck
  * @cdk.created    2002-10-29

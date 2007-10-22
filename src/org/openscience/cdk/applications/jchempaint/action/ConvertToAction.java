@@ -45,6 +45,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * or other objects
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class ConvertToAction extends JCPAction

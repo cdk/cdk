@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IReaction;
 
 /**
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  * @cdk.require swing
  */
 public class ReactionEditor extends ChemObjectEditor {

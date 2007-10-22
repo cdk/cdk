@@ -92,6 +92,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  *@author        steinbeck
  *@cdk.created       16. Februar 2005
  *@cdk.module    jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public abstract class JChemPaintPanel
 		 extends JPanel

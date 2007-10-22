@@ -38,6 +38,7 @@ import java.io.OptionalDataException;
  * 
  * @author tohel
  * @cdk.module control
+ * @cdk.svnrev  $Revision$
  */
 public class ChangeAtomSymbolEdit extends AbstractUndoableEdit {
 

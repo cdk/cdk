@@ -45,6 +45,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Demo that shows how to use the EvenCMLReader.
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  *

@@ -32,6 +32,7 @@ import java.awt.event.ActionEvent;
  * Action to pop-up an About JChemPaint dialog.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class AboutAction extends JCPAction

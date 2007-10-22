@@ -39,6 +39,7 @@ import java.awt.event.ActionEvent;
  * Shows a dialog for editing the Display settings
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class ModifyDisplaySettingsAction extends JCPAction

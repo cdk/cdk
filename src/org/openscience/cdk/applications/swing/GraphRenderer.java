@@ -46,6 +46,7 @@ import org.openscience.cdk.renderer.GraphRendererModel;
  * This class is a function plotter
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.created 2001-07-02

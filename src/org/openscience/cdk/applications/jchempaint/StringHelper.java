@@ -35,6 +35,7 @@ import java.util.Vector;
  *  Helper class for dealing with String objects.
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class StringHelper

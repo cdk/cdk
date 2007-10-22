@@ -39,6 +39,7 @@ import com.ozten.font.JFontChooser;
 
 /**
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  * @cdk.builddepends jfontchooser.jar
  * @cdk.require swing
  * @cdk.bug          1525961

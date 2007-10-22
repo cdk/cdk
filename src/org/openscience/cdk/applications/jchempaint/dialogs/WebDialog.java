@@ -57,6 +57,7 @@ import javax.swing.text.Document;
  *
  * <p>Taken from the Jmol Project.
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class WebDialog extends JDialog implements HyperlinkListener {
 

@@ -56,6 +56,7 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  * Triggers the invocation of the structure diagram generator
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class CleanupAction extends JCPAction

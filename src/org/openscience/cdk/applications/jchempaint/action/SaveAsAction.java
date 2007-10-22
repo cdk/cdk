@@ -63,6 +63,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * Opens a "Save as" dialog
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class SaveAsAction extends JCPAction

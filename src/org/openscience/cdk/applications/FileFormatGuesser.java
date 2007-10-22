@@ -34,6 +34,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Program that guesses the format of a file.
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  *
  *  @cdk.keyword command line util
  *  @cdk.keyword file format

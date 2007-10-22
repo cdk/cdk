@@ -47,6 +47,7 @@ import java.util.Iterator;
  * An action opening a validation frame
  * 
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     E.L. Willighagen <elw38@cam.ac.uk>
  */
 public class ValidateAction extends JCPAction

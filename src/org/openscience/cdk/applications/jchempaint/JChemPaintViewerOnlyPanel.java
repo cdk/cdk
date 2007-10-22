@@ -39,6 +39,7 @@ import java.util.MissingResourceException;
  *
  *@author        steinbeck
  *@cdk.module    jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class JChemPaintViewerOnlyPanel extends JChemPaintPanel {
 

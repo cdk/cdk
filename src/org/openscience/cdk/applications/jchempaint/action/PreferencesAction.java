@@ -37,6 +37,7 @@ import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
  * Shows the preferences dialog
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class PreferencesAction extends JCPAction

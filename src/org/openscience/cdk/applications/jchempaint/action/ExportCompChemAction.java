@@ -46,6 +46,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * Export current model to computational chemistry programs
  * 
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author Egon Willighagen
  */
 public class ExportCompChemAction extends SaveAction {

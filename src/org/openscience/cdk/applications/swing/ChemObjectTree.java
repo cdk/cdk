@@ -58,6 +58,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * it has that is either a IChemObject or a IChemObject[].
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  *
  * @author     egonw
  * @cdk.created    2002-12-29

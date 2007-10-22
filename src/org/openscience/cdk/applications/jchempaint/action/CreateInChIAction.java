@@ -50,6 +50,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * Creates an InChI from the current model
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision: 9162 $
  * @author     Sam Adams
  */
 public class CreateInChIAction extends JCPAction

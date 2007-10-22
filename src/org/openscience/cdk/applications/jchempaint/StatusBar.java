@@ -39,6 +39,7 @@ import javax.swing.JPanel;
  * JChemPaints status bar
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class StatusBar extends JPanel

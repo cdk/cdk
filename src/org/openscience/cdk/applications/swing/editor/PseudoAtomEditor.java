@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 
 /**
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  * @cdk.require swing
  */
 public class PseudoAtomEditor extends ChemObjectEditor {

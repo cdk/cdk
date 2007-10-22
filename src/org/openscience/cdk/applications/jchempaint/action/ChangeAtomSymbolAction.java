@@ -45,6 +45,7 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 /**
  * changes the atom symbol
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     Egon Willighagen
  */
 public class ChangeAtomSymbolAction extends JCPAction

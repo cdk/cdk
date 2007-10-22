@@ -40,6 +40,7 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  * drawn molecules
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author     steinbeck
  */
 public class SetColorSchemeAction extends JCPAction

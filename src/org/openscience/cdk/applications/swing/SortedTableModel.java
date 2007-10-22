@@ -44,6 +44,7 @@ import javax.swing.table.TableModel;
  *  interface.
  *
  * @cdk.module applications
+ * @cdk.svnrev  $Revision$
  * @cdk.require swing
  *
  * @author Bradley A. Smith <bradley@baysmith.com>

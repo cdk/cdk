@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  * @author        steinbeck
  * @cdk.module    jchempaint
+ * @cdk.svnrev  $Revision$
  */
 public class PrintAction extends JCPAction implements Printable {
 

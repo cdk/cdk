@@ -40,6 +40,7 @@ import org.openscience.cdk.applications.jchempaint.InsertTextPanel;
  * Inserts a SMILES
  *
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  *@author     steinbeck
  */
 public class InsertSmilesAction extends JCPAction

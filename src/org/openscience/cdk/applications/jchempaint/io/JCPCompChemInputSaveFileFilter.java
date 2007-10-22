@@ -38,6 +38,7 @@ import javax.swing.JFileChooser;
  * programs, e.g. Gaussian.
  * 
  * @cdk.module jchempaint
+ * @cdk.svnrev  $Revision$
  * @author  Egon Willighagen
  * @cdk.created 2003-07-18
  */
