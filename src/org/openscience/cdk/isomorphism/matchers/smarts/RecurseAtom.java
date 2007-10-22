@@ -34,6 +34,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 /**
  *
  * @author niper
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class RecurseAtom extends SMARTSAtom{
     

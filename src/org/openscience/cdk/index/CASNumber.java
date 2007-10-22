@@ -43,6 +43,7 @@ import java.util.regex.Pattern;
  * </p>
  * 
  * @author Egon Willighagen <egonw@sci.kun.nl>
+ * @cdk.svnrev  $Revision$
  * @author Nathana&euml;l "M.Le_maudit" Mazuir
  *
  * @see <a href="http://www.cas.org">CAS website</a>

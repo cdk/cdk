@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *  match for the most common halogens).
  *
  *@author        kha
+ * @cdk.svnrev  $Revision$
  *@cdk.created   2004-09-16
  *@see           InverseSymbolSetQueryAtom
  *@cdk.module    extra

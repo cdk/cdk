@@ -37,6 +37,7 @@ import org.openscience.cdk.math.Vector;
  * This class is used to calculate angular momentum states
  * 
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @cdk.svnrev  $Revision$
  * @cdk.created 2001-07-22
  */ 
 public class AngularMomentum {

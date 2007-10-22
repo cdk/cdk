@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * 
  * @author niper
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class TotalConnectionAtom extends SMARTSAtom {
 	private static final long serialVersionUID = 2714616726873309671L;

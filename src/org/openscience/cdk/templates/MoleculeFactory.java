@@ -42,6 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * This class contains methods for generating simple organic molecules.
  *
  * @cdk.keyword templates
+ * @cdk.svnrev  $Revision$
  */
 public class MoleculeFactory {
 

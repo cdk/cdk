@@ -55,6 +55,7 @@ import java.util.BitSet;
  *  <p>Note that the continuous Tanimoto coefficient does not lead to a metric space
  *
  *@author         steinbeck
+ * @cdk.svnrev  $Revision$
  *@cdk.created    2005-10-19
  *@cdk.keyword    jaccard
  *@cdk.keyword    similarity, tanimoto

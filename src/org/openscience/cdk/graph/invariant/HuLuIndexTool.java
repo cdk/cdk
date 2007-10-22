@@ -37,6 +37,8 @@ import java.util.Iterator;
 /**
  * Collection of methods for the calculation of topological indices of a 
  * molecular graph.
+ *
+ * @cdk.svnrev  $Revision$
  */
 public class HuLuIndexTool
 {

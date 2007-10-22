@@ -56,6 +56,7 @@ import org.openscience.cdk.renderer.Renderer2DModel;
  * Test class for testing the new Java2DRenderer.
  * 
  * @author nielsout
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class TestRenderer extends JPanel {
 

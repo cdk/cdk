@@ -34,6 +34,7 @@ import org.openscience.dadml.FIELD;
 
 /**
  * @cdk.builddepends dadml.jar
+ * @cdk.svnrev  $Revision$
  * @cdk.require      dadml
  */
 public class DADMLResult {

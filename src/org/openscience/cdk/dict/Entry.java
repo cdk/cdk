@@ -34,6 +34,7 @@ import java.util.Vector;
  * Entry in a Dictionary.
  * 
  * @author       Egon Willighagen <egonw@users.sf.net>
+ * @cdk.svnrev  $Revision$
  * @cdk.created  2003-08-23
  * @cdk.keyword  dictionary
  *

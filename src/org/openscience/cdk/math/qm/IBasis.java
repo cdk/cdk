@@ -35,6 +35,7 @@ import org.openscience.cdk.math.Vector;
  * A basis set must implement this class.
  * 
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @cdk.svnrev  $Revision$
  * @cdk.created 2001-07-02
  */ 
 public interface IBasis {

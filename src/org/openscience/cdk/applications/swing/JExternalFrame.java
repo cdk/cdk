@@ -34,6 +34,7 @@ import javax.swing.JPanel;
 
 /**
  * @author dirk49
+ * @cdk.svnrev  $Revision$
  *
  * This class allows to transfer an embedded or applet viewer or editor panel  
  * to an external frame. This frame can be resized.

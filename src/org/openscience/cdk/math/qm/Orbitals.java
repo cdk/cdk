@@ -35,6 +35,7 @@ import org.openscience.cdk.math.Vector;
  * This class represents a set of orbitals
  * 
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @cdk.svnrev  $Revision$
  * @cdk.created 2001-06-14
  */
 public class Orbitals

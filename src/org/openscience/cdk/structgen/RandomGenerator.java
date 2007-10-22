@@ -41,6 +41,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @see         org.openscience.cdk.structgen.VicinitySampler
  * 
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword structure generator
  */
 public class RandomGenerator {

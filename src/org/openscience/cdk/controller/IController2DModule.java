@@ -34,6 +34,7 @@ import javax.vecmath.Point2d;
  * Controller2DModel.
  * 
  * @author egonw
+ * @cdk.svnrev  $Revision: 9162 $
  * 
  * @see    Controller2DModel
  */

@@ -39,6 +39,7 @@ import java.util.Iterator;
  * Utility that helps determine which data features are present.
  * 
  * @author egonw
+ * @cdk.svnrev  $Revision: 9162 $
  * 
  * @see    DataFeatures
  */

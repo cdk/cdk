@@ -40,6 +40,7 @@ import org.openscience.cdk.graph.invariant.exception.MatrixNotInvertibleExceptio
  * to disturb Java language way of calling indexes; so the indexes used here take values between [0..n-1] instead.
  *
  * @author Jean-Sebastien Senecal
+ * @cdk.svnrev  $Revision$
  * @version 1.0
  * @cdk.created 1999-05-20
  */

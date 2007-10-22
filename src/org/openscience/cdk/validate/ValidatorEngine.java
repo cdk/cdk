@@ -41,6 +41,7 @@ import java.util.Iterator;
  * </pre>
  *
  * @author   Egon Willighagen <egonw@sci.kun.nl>
+ * @cdk.svnrev  $Revision$
  * @cdk.created  2003-08-22
  */ 
 public class ValidatorEngine implements IValidator {

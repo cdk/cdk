@@ -31,6 +31,7 @@ import java.util.Hashtable;
  * table for administration of physical or chemical properties
  *
  *@author        egonw
+ * @cdk.svnrev  $Revision$
  *@cdk.module    interfaces
  */
 public interface IChemObject extends Cloneable {

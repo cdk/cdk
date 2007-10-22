@@ -44,6 +44,7 @@ import org.openscience.cdk.math.Vector;
  * V = &lt;phi_i | 1/r | phi_j><br>
  * 
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @cdk.svnrev  $Revision$
  * @cdk.created 2001-06-14
  *
  * @cdk.keyword Gaussian basis set

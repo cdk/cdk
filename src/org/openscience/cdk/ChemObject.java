@@ -47,6 +47,7 @@ import java.util.List;
  *  table for administration of physical or chemical properties
  *
  *@author        steinbeck
+ * @cdk.svnrev  $Revision$
  *@cdk.module    data
  */
 public class ChemObject implements Serializable, IChemObject, Cloneable

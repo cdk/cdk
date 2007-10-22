@@ -58,6 +58,7 @@ import org.xmldb.api.modules.XPathQueryService;
  * as in a World Wide Molecular Matrix node
  * 
  * @author Yong Zhang <yz237@cam.ac.uk>
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword      database, Xindice
  * @cdk.builddepends xmldb.jar

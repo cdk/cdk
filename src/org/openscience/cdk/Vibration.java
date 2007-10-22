@@ -33,6 +33,7 @@ import java.util.Vector;
  * of the vector.
  *
  * @author Bradley A. Smith <yeldar@home.com>
+ * @cdk.svnrev  $Revision$
  */
 public class Vibration {
 

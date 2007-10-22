@@ -40,6 +40,7 @@ import org.openscience.cdk.*;
  * by :'number' to allow for more than one reference.
  *
  * @author     Egon Willighagen <egonw@sci.kun.nl>
+ * @cdk.svnrev  $Revision$
  * @cdk.created    2003-08-06
  * @cdk.keyword    dictionary, implicit CDK references
  */

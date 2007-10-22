@@ -68,6 +68,7 @@ import org.openscience.dadml.tools.DBDEFInfo;
  * via URLs.
  *
  * @author           Egon Willighagen <egonw@sci.kun.nl>
+ * @cdk.svnrev  $Revision$
  * @cdk.created      2001-12-18
  *
  * @cdk.keyword      internet

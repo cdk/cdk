@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IIsotope;
 * Generates all Combinatorial chemical isotopes given a structure..
 * 
 * @author         Miguel Rojas
+ * @cdk.svnrev  $Revision: 9162 $
 * @cdk.created    2007-03-01
 *
 * @cdk.keyword    isotope

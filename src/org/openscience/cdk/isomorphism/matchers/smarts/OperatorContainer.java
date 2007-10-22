@@ -36,6 +36,7 @@
 /**
  *
  * @author niper
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class OperatorContainer {
     /** Creates a new instance of OperatorContainer */

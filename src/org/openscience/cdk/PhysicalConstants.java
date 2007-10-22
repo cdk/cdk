@@ -27,6 +27,7 @@ package org.openscience.cdk;
  * An class providing predefined properties of physical constants.
  *
  * @cdk.keyword physical properties
+ * @cdk.svnrev  $Revision$
  */
 public class PhysicalConstants {
 

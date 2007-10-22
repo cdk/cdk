@@ -29,6 +29,7 @@ package org.openscience.cdk;
  * residues in a protein generator.
  *
  * @author     egonw
+ * @cdk.svnrev  $Revision$
  * @cdk.created    2002-08-14
  *
  * @cdk.keyword    fragment

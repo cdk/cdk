@@ -37,6 +37,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * with closed shells
  * 
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @cdk.svnrev  $Revision$
  * @cdk.created 2001-06-14
  */
 public class ClosedShellJob

@@ -46,6 +46,7 @@ import java.util.Iterator;
  * <a href="http://www.geocities.com/permute_it/pseudo2.html">http://www.geocities.com/permute_it/pseudo2.html</a>.
  * 
  *@author         steinbeck
+ * @cdk.svnrev  $Revision$
  *@cdk.created    2005-05-04
  *@cdk.keyword    permutation
  */

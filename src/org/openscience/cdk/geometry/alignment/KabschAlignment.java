@@ -88,6 +88,7 @@ import Jama.Matrix;
  * @cdk.builddepends Jama-1.0.1.jar
  * @cdk.depends      Jama-1.0.1.jar
  * @cdk.dictref      blue-obelisk:alignmentKabsch
+ * @cdk.svnrev  $Revision$
  */ 
 public class KabschAlignment {
 

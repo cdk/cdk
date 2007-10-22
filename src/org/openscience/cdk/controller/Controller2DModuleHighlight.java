@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IBond;
  * This should highlight the atom/bond when moving over with the mouse
  * 
  * @author Niels Out
+ * @cdk.svnrev  $Revision: 9162 $
  *
  */
 public class Controller2DModuleHighlight implements IController2DModule {

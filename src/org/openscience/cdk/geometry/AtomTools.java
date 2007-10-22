@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * A set of static utility classes for geometric calculations on Atoms.
  *
  * @author Peter Murray-Rust
+ * @cdk.svnrev  $Revision$
  * @cdk.created 2003-06-14
  */
 public class AtomTools {

@@ -40,6 +40,7 @@ import java.util.Hashtable;
  * and entities.
  *
  * @author     Egon Willighagen
+ * @cdk.svnrev  $Revision$
  * @cdk.created    2003-04-06
  * @cdk.keyword    dictionary
  * @cdk.depends    xom.jar

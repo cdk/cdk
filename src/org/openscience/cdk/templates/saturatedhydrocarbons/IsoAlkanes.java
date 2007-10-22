@@ -30,6 +30,7 @@ import org.openscience.cdk.Molecule;
  * This class contains methods for generating simple organic alkanes.
  *
  * @cdk.keyword templates
+ * @cdk.svnrev  $Revision$
  */
 public class IsoAlkanes {
 

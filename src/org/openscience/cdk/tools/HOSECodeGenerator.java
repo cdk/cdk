@@ -44,6 +44,7 @@ import java.util.List;
  * for this method to work properly
  *
  * @author     steinbeck
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword    HOSE code, spherical atom search
  * @cdk.created    2002-05-10
  */

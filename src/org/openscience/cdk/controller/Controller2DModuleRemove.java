@@ -45,6 +45,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * deletes closest atom on click
  * 
  * @author Niels Out
+ * @cdk.svnrev  $Revision: 9162 $
  *
  */
 public class Controller2DModuleRemove implements IController2DModule {

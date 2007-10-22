@@ -48,6 +48,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * -drags atoms around (click near atom and move mouse)
  * 
  * @author Niels Out
+ * @cdk.svnrev  $Revision: 9162 $
  *
  */
 public class Controller2DModuleMove implements IController2DModule {

@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  *@author        kaihartmann
+ * @cdk.svnrev  $Revision$
  *@cdk.created   2004-09-17
  *@cdk.module    extra
  *

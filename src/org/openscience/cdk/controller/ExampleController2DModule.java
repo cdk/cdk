@@ -47,6 +47,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * -show atom name on hove-over
  * 
  * @author Niels Out
+ * @cdk.svnrev  $Revision: 9162 $
  *
  */
 public class ExampleController2DModule implements IController2DModule {

@@ -33,6 +33,7 @@
 /**
  *
  * @author niper
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class ColumnAtom extends SMARTSAtom{
     

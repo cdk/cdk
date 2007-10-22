@@ -37,6 +37,7 @@ import java.io.IOException;
 * also implicit.
 * 
 * @author         Miguel Rojas
+ * @cdk.svnrev  $Revision: 9162 $
 * @cdk.created    2006-04-01
 *
 * @cdk.keyword    saturation

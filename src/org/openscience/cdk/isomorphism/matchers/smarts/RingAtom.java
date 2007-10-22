@@ -37,6 +37,7 @@ import java.util.ArrayList;
 
 /**
  * @author niper
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class RingAtom extends SMARTSAtom {
 

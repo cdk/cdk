@@ -34,6 +34,7 @@ import org.openscience.cdk.math.Vector;
  * This class will generate a simple base set for a atom container.
  * 
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+ * @cdk.svnrev  $Revision$
  * @cdk.created 2001-07-11
  */ 
 public class SimpleBasisSet extends GaussiansBasis

@@ -31,6 +31,7 @@ import java.util.Vector;
  * Holds data on a specific functional group or substituent.
  *
  * @author  Stephen Tomkinson
+ * @cdk.svnrev  $Revision$
  * @cdk.require ant1.6
  */
 public class AttachedGroup {

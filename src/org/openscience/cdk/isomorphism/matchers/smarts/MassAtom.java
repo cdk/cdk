@@ -34,6 +34,7 @@
 /**
  *
  * @author niper
+ * @cdk.svnrev  $Revision: 9162 $
  */
 public class MassAtom extends SMARTSAtom{
     private int mass;
