@@ -35,10 +35,8 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
@@ -50,7 +48,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -156,7 +153,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
 		CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 		for (int f = 0; f < molecule.getAtomCount(); f++) {
-			assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+			assertEquals("Atom " + f + " is not correctly marked",
+					     testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
 		}
 	}
 
@@ -248,6 +246,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
 		IMolecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
 		CDKHueckelAromaticityDetector.detectAromaticity(mol);
 		IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
 		RingSetManipulator.markAromaticRings(rs);
@@ -273,12 +272,14 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
     	IMolecule mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
+    	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
     	for (int f = 0; f < mol.getAtomCount(); f++) {
     		assertEquals(CDKConstants.HYBRIDIZATION_SP2, mol.getAtom(f).getHybridization().intValue());
     	}
     	assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
     	assertEquals(7, mol.getAtomCount());
     	for (int f = 0; f < mol.getAtomCount(); f++) {
+    		assertNotNull(mol.getAtom(f));
     		assertTrue(mol.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
     	}
 	}
@@ -293,6 +294,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
 		IMolecule mol = sp.parseSmiles("O=c1cccccc1"); // tropone
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
 		assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(mol));
 		assertEquals(testResults.length, mol.getAtomCount());
 		for (int f = 0; f < mol.getAtomCount(); f++) {
@@ -497,7 +499,17 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 		for (int f = 0; f < molecule.getAtomCount(); f++) {
 			assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
 		}
+	}
 
+	public void testCyclobutadiene() throws Exception {
+		// anti-aromatic
+		Molecule molecule = MoleculeFactory.makeCyclobutadiene();
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+		
+		assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(molecule));
+		for (int f = 0; f < molecule.getAtomCount(); f++) {
+			assertFalse(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
+		}
 	}
 
 	private IMolecule makeAromaticMolecule() {
