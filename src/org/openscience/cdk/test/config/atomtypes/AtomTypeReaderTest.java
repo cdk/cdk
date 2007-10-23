@@ -121,7 +121,49 @@ public class AtomTypeReaderTest extends CDKTestCase {
         assertNotNull(types);
         assertEquals(2, types.size());
     }
-    
+
+  public void testReadAtomTypes_CDK() {
+      String data = 
+          "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              \n" +
+          "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    \n" +
+          "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\"\n" +
+          "  id=\"mol2\" title=\"MOL2 AtomTypes\">                                                      \n" +
+          "                                                                                             \n" +
+          "  <metadataList>                                                                             \n" +
+          "    <metadata name=\"cvs:last-change-by\" content=\"$Author$\"/>                     \n" +
+          "    <metadata name=\"cvs:date\" content=\"$Date$\"/>                   \n" +
+          "    <metadata name=\"cvs:revision\" content=\"$Revision$\"/>                           \n" +
+          "  </metadataList>                                                                            \n" +
+          "\n" +
+          "  <atomType id=\"C.sp\">\n" +
+          "    <atom elementType=\"C\" formalCharge=\"0\">\n" +
+          "      <scalar dataType=\"xsd:integer\" dictRef=\"cdk:formalNeighbourCount\">2</scalar>\n" +
+          "      <scalar dataType=\"xsd:integer\" dictRef=\"cdk:lonePairCount\">0</scalar>\n" +
+          "      <scalar dataType=\"xsd:integer\" dictRef=\"cdk:piBondCount\">2</scalar>\n" +
+          "    </atom>\n" +
+          "    <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp1</scalar>\n" +
+          "  </atomType>                                                                                " +
+          "</atomTypeList>";
+      
+      AtomTypeReader reader = new AtomTypeReader(
+          new StringReader(data)
+      );
+      assertNotNull(reader);
+      List types = reader.readAtomTypes(new ChemObject().getBuilder());
+      assertNotNull(types);
+      assertEquals(1, types.size());
+      
+      Object object = types.get(0);
+      assertNotNull(object);
+      assertTrue(object instanceof IAtomType);
+      IAtomType atomType = (IAtomType)object;
+      
+      assertEquals(0, atomType.getFormalCharge().intValue());
+      assertEquals(CDKConstants.HYBRIDIZATION_SP1, atomType.getHybridization().intValue());
+      assertEquals(0, ((Integer)atomType.getProperty(CDKConstants.LONE_PAIR_COUNT)).intValue());
+      assertEquals(2, ((Integer)atomType.getProperty(CDKConstants.PI_BOND_COUNT)).intValue());
+  }
+
     public void testReadAtomTypes_FF() {
         String data = 
             "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              \n" +
