@@ -241,7 +241,7 @@ public class RingSetManipulator {
 	public static void markAromaticRings(IRingSet ringset) {
 		Iterator<IAtomContainer> rings = ringset.atomContainers();
 		while (rings.hasNext()) {
-			RingSetManipulator.markAromaticRings((IRingSet)rings.next());
+			RingManipulator.markAromaticRings((IRing)rings.next());
 		}
 	}
 }
