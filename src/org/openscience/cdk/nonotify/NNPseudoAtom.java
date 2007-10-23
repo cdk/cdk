@@ -43,7 +43,7 @@ public class NNPseudoAtom extends PseudoAtom {
 	private static final long serialVersionUID = -3952239302344875360L;
 
 	public NNPseudoAtom() {
-        this("");
+        super();
     }
     
     public NNPseudoAtom(String label) {
