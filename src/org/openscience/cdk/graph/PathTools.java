@@ -31,7 +31,12 @@ package org.openscience.cdk.graph;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISingleElectron;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -460,20 +465,20 @@ public class PathTools {
                 int tmp = ((Integer)Q.get(i)).intValue();
                 if (dist[tmp] < u) {
                     u = dist[tmp];
-                    index = i;
+                    index = tmp;
                 }
             }
-            Q.remove(index);
-            S.add(atomContainer.getAtom(u));
-            if (u == endNumber) break;
+            Q.remove(Q.indexOf(new Integer(index)));
+            S.add(atomContainer.getAtom(index));
+            if (index == endNumber) break;
 
             // relaxation
-            java.util.List connected = atomContainer.getConnectedAtomsList( atomContainer.getAtom(u) );
+            java.util.List connected = atomContainer.getConnectedAtomsList( atomContainer.getAtom(index) );
             for (int i = 0; i < connected.size(); i++) {
                 int anum = atomContainer.getAtomNumber((IAtom)connected.get(i));
-                if (dist[anum] > dist[u] + 1) { // all edges have equals weights
-                    dist[anum] = dist[u] + 1;
-                    previous[anum] = u;
+                if (dist[anum] > dist[index] + 1) { // all edges have equals weights
+                    dist[anum] = dist[index] + 1;
+                    previous[anum] = index;
                 }
             }
         }
