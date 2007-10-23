@@ -151,7 +151,8 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
             throw new CDKException("Error during clone");
         }
 
-        int atomPosition = varAtomContainer.getAtomNumber(atom);
+        int atomPosition = atomContainer.getAtomNumber(atom);
+        IAtom clonedAtom = varAtomContainer.getAtom(atomPosition);
 
 		final int g3r_desc_length = 13;
 
@@ -220,7 +221,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		IAtomContainer detected = varAtomContainerSet.getAtomContainer(0);
 
 		// neighboors[0] is the atom joined to the target proton:
-		List<IAtom> neighboors = mol.getConnectedAtomsList(atom);
+		List<IAtom> neighboors = mol.getConnectedAtomsList(clonedAtom);
 		IAtom neighbour0 = neighboors.get(0);
 
 		// 2', 3', 4', 5', 6', and 7' atoms up to the target are detected:

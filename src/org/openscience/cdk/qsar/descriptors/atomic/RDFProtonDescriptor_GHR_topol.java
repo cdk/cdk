@@ -144,7 +144,8 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
             throw new CDKException("Error during clone");
         }
 
-        int atomPosition = varAtomContainer.getAtomNumber(atom);
+        int atomPosition = atomContainer.getAtomNumber(atom);
+        IAtom clonedAtom = varAtomContainer.getAtom(atomPosition);
 
         final int ghr_topol_desc_length = 15;
 
@@ -204,7 +205,7 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
         IAtomContainer detected = varAtomContainerSet.getAtomContainer(0);
 
 // neighboors[0] is the atom joined to the target proton:
-        List<IAtom> neighboors = mol.getConnectedAtomsList(atom);
+        List<IAtom> neighboors = mol.getConnectedAtomsList(clonedAtom);
         IAtom neighbour0 = neighboors.get(0);
 
 // 2', 3', 4', 5', 6', and 7' atoms up to the target are detected:
@@ -354,7 +355,7 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
 	position = 0;
 	atom2 = null;
 	org._3pq.jgrapht.Graph mygraph = MoleculeGraphs.getMoleculeGraph(mol);
-	IAtom startVertex = atom;
+	IAtom startVertex = clonedAtom;
 	IAtom endVertex;
 	org._3pq.jgrapht.Edge edg;
 	List<Edge> mylist;
