@@ -197,6 +197,26 @@ public class MoleculeFactory {
 		return mol;
 	}
 
+	/**
+	 * Returns cyclobutadiene without explicit hydrogens.
+         *
+         * @cdk.inchi InChI=1/C4H4/c1-2-4-3-1/h1-4H
+	 */
+	public static Molecule makeCyclobutadiene()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+
+		mol.addBond(0, 1, 1.0); // 1
+		mol.addBond(1, 2, 2.0); // 2
+		mol.addBond(2, 3, 1.0); // 3
+		mol.addBond(3, 0, 2.0); // 4
+		return mol;
+	}
+
 	public static Molecule makePropylCycloPropane()
 	{
 		Molecule mol = new Molecule();
