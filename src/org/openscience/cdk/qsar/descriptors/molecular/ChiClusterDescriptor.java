@@ -122,14 +122,14 @@ public class ChiClusterDescriptor implements IMolecularDescriptor {
         // removeHydrogens does a deep copy, so no need to clone
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
     	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-    	Iterator<IAtom> atoms = container.atoms();
+    	Iterator<IAtom> atoms = localAtomContainer.atoms();
     	while (atoms.hasNext()) {
     		IAtom atom = atoms.next();
-    		IAtomType type = matcher.findMatchingAtomType(container, atom);
+    		IAtomType type = matcher.findMatchingAtomType(localAtomContainer, atom);
     		AtomTypeManipulator.configure(atom, type);
     	}
     	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
-    	hAdder.addImplicitHydrogens(container);
+    	hAdder.addImplicitHydrogens(localAtomContainer);
 
         List subgraph3 = order3(localAtomContainer);
         List subgraph4 = order4(localAtomContainer);
