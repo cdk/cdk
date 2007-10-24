@@ -45,9 +45,9 @@ import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * This class tests the matching of atom types defined in the
- * structgen atom type list.
+ * CDK atom type list.
  *
- * @cdk.module test-core
+ * @cdk.module test-standard
  */
 public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 
