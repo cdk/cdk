@@ -435,10 +435,7 @@ def parseJunitOutput(summaryFile, stable=True):
             while True:
                 moduleStats = f.readline()
                 if string.find(moduleStats, '[junit] Tests run:') != -1: break
-                if string.find(moduleStats, 'Exception') != -1:
-                    moduleStats = None
-                    break
-            if not moduleStats:
+            if moduleStats.find("[junit] Tests run:") == -1:
                 stats.append( (moduleName.split()[5], -1, -1, -1) )
                 continue
 
@@ -450,6 +447,7 @@ def parseJunitOutput(summaryFile, stable=True):
             stats.append( (moduleName.split()[5], nTest, nFail, nError) )
     f.close()
 
+    for i in stats: print i
     # get an HTML summary
     summary = writeJunitSummaryHTML(stats, stable)
     
