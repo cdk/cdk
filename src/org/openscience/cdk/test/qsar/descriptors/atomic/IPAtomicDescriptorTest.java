@@ -259,15 +259,20 @@ public class IPAtomicDescriptorTest extends CDKTestCase {
     public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
     	IMolecule mol = sp.parseSmiles("C-C-N");
-
+		assertEquals(3, mol.getAtomCount());
 		addExplicitHydrogens(mol);
+		assertEquals(10, mol.getAtomCount());
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.newSaturate(mol);
+		assertEquals("Unexpected number of lone pairs", 1, mol.getLonePairCount());
 		
+		assertEquals("N", mol.getAtom(2).getSymbol());
 		descriptor.calculate(mol.getAtom(2), mol);
 		IReactionSet reactionSet = descriptor.getReactionSet();
 		
+		assertNotNull("No reaction was found", reactionSet.getReaction(0));
+		assertNotNull("The ionization energy was not set for the reaction", reactionSet.getReaction(0).getProperty("IonizationEnergy"));
         double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
         double resultAccordingNIST = 8.9; 
 
