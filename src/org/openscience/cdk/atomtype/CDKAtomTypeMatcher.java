@@ -385,8 +385,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     		if (neighborcount == 3) {
     			return factory.getAtomType("P.ine");
-    		} else if (neighborcount == 2 && maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
-    			return factory.getAtomType("P.ine");
+    		} else if (neighborcount == 2) {
+    			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
+        			return factory.getAtomType("P.ine");
+    			} else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
+    				return factory.getAtomType("P.ine");
+    			}
     		} else if (neighborcount == 4) {
     			// count the number of double bonded oxygens
     			int doubleBonds = 0;

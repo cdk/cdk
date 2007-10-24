@@ -510,6 +510,21 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "P.ine", atm.findMatchingAtomType(mol, atom2));
     }
 
+    @Test public void testDiethylPhosphine() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("P");
+        IAtom atom3 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "P.ine", atm.findMatchingAtomType(mol, atom2));
+    }
+    
     @Test public void testPhosphorCompound() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("C");
