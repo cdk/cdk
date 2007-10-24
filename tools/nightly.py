@@ -447,7 +447,6 @@ def parseJunitOutput(summaryFile, stable=True):
             stats.append( (moduleName.split()[5], nTest, nFail, nError) )
     f.close()
 
-    for i in stats: print i
     # get an HTML summary
     summary = writeJunitSummaryHTML(stats, stable)
     
