@@ -153,9 +153,12 @@ public class CDKTestCase extends TestCase {
     protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
     	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
     	Iterator<IAtom> atoms = container.atoms();
+    	int atomCounter = 0;
     	while (atoms.hasNext()) {
     		IAtom atom = atoms.next();
+    		atomCounter++;
     		IAtomType type = matcher.findMatchingAtomType(container, atom);
+    		assertNotNull("Could not perceived type for atom " + atomCounter + ": " + atom, type);
     		AtomTypeManipulator.configure(atom, type);
     	}
     	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
