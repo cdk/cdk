@@ -285,7 +285,8 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
 //        		int piBondsFound = (int)mol.getBondOrderSum(atom) - connectionCount;
         		// there might be missing hydrogens, so: found <= expected
         		if (matched.getFormalNeighbourCount() != CDKConstants.UNSET &&
-        			connectionCount > matched.getFormalNeighbourCount()) {
+        			connectionCount > matched.getFormalNeighbourCount() &&
+        			!"X".equals(matched.getAtomTypeName())) {
             		results.failed++;
             		System.out.println("Number of neighbors is too high: " + results.tested + " in file " + filename);
             		System.out.println("Found: " + connectionCount + 
