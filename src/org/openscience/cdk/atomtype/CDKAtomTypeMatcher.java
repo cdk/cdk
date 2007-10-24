@@ -96,6 +96,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         			return factory.getAtomType("C.sp2");
     			} else if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP3) {
     				return factory.getAtomType("C.sp3");
+    			} else if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP1) {
+    				return factory.getAtomType("C.sp");
     			}
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() != 0) {
@@ -349,7 +351,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 							}
 						}
 					}
-					if (bothNeighborsSP2) return factory.getAtomType("S.2");
+					if (bothNeighborsSP2) return factory.getAtomType("S.planar3");
 				}
     			return factory.getAtomType("S.3");
     		} else if (neighborcount == 1) {

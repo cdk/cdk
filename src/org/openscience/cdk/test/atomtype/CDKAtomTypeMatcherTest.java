@@ -892,7 +892,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"N.sp2",
 			"C.sp2",
-			"S.2",
+			"S.planar3",
 			"C.sp2"
 		};
 		Molecule molecule = MoleculeFactory.makeThiazole();
