@@ -138,6 +138,8 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
         } catch (CloneNotSupportedException e) {
             throw new CDKException("Error during clone");
         }
+        IAtom clonedFirst = ac.getAtom(atomContainer.getAtomNumber(first));
+        IAtom clonedSecond = ac.getAtom(atomContainer.getAtomNumber(first));
 
         Molecule mol = new Molecule(ac);
         if (checkAromaticity) {
@@ -152,12 +154,12 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
         }
         java.util.Iterator<IAtomContainer> detected = acSet.atomContainers();
 
-        java.util.List<IAtom> neighboorsFirst = mol.getConnectedAtomsList(first);
-        java.util.List<IAtom> neighboorsSecond = mol.getConnectedAtomsList(second);
+        java.util.List<IAtom> neighboorsFirst = mol.getConnectedAtomsList(clonedFirst);
+        java.util.List<IAtom> neighboorsSecond = mol.getConnectedAtomsList(clonedSecond);
 
         while (detected.hasNext()) {
         	IAtomContainer detectedAC = detected.next();
-            if (detectedAC.contains(first) && detectedAC.contains(second)) {
+            if (detectedAC.contains(clonedFirst) && detectedAC.contains(clonedSecond)) {
                 counter += 1;
                 break;
             }

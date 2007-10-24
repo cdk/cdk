@@ -133,20 +133,21 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) throws CDKException {
-        IAtomContainer ac;
+        IAtomContainer clonedAtomContainer;
         try {
-            ac = (IAtomContainer) atomContainer.clone();
+            clonedAtomContainer = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             throw new CDKException("Error during clone");
         }
+        IAtom clonedAtom = clonedAtomContainer.getAtom(atomContainer.getAtomNumber(atom));
 
         int isProtonInAromaticSystem = 0;
-		IMolecule mol = new NNMolecule(ac);
+		IMolecule mol = new NNMolecule(clonedAtomContainer);
 		if (checkAromaticity) {
 			IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
 			HueckelAromaticityDetector.detectAromaticity(mol, rs, true);
 		}
-		java.util.List neighboor = mol.getConnectedAtomsList(atom);
+		java.util.List neighboor = mol.getConnectedAtomsList(clonedAtom);
         IAtom neighbour0 = (IAtom)neighboor.get(0);
 		if(atom.getSymbol().equals("H")) {
 			//logger.debug("aromatic proton");
@@ -154,7 +155,7 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 				isProtonInAromaticSystem = 1;
 			}
 			else {
-				java.util.List betaAtoms = ac.getConnectedAtomsList(neighbour0);
+				java.util.List betaAtoms = clonedAtomContainer.getConnectedAtomsList(neighbour0);
                 for (Object betaAtom : betaAtoms) {
                     if (((IAtom) betaAtom).getFlag(CDKConstants.ISAROMATIC)) {
                         isProtonInAromaticSystem = 2;

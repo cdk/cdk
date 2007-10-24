@@ -129,25 +129,26 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) throws CDKException {
-        IAtomContainer ac;
+        IAtomContainer clonedAtomContainer;
         try {
-            ac = (IAtomContainer) atomContainer.clone();
+            clonedAtomContainer = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             throw new CDKException("Error during clone");
         }
+        IAtom clonedAtom = clonedAtomContainer.getAtom(atomContainer.getAtomNumber(atom));
         
         boolean isProtonInPiSystem = false;
-        Molecule mol = new Molecule(ac);
+        Molecule mol = new Molecule(clonedAtomContainer);
         if (checkAromaticity) {
             HueckelAromaticityDetector.detectAromaticity(mol);
         }
         if(atom.getSymbol().equals("H")) {
-            if(acold!=ac){
-                acold=ac;
+            if(acold!=clonedAtomContainer){
+                acold=clonedAtomContainer;
                 acSet = ConjugatedPiSystemsDetector.detect(mol);
             }
             java.util.Iterator detected = acSet.atomContainers();
-            java.util.List neighboors = mol.getConnectedAtomsList(atom);
+            java.util.List neighboors = mol.getConnectedAtomsList(clonedAtom);
             for (Object neighboor : neighboors) {
                 while (detected.hasNext()) {
                     IAtomContainer detectedAC = (IAtomContainer) detected.next();
