@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.atomic;
 
-import java.io.IOException;
 import java.util.Iterator;
 
 import junit.framework.Test;
@@ -38,7 +37,6 @@ import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -64,7 +62,7 @@ public class AtomHybridizationDescriptorTest extends CDKTestCase {
         assertEquals(1, ((IntegerResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).intValue());
     }
 
-    public void testBug1701073() throws CDKException, IOException, ClassNotFoundException {
+    public void testBug1701073() throws Exception {
 
         String[] smiles = new String[]
                 {
@@ -84,20 +82,15 @@ public class AtomHybridizationDescriptorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol;
         Iterator atoms;
-        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
 
         for (int i = 0; i < smiles.length; i++) {
             mol = sp.parseSmiles(smiles[i]);
-            hAdder.addImplicitHydrogens(mol);
+            addImplicitHydrogens(mol);
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
             atoms = mol.atoms();
             while (atoms.hasNext()) {
                 IAtom atom = (IAtom) atoms.next();
-                try {
-                    int htype = ((IntegerResult) descriptor.calculate(atom, mol).getValue()).intValue();
-                } catch (Exception e) {
-                    fail(smiles[i] + " failed\n" + e.toString());
-                }
+                int htype = ((IntegerResult) descriptor.calculate(atom, mol).getValue()).intValue();
             }
         }
 
