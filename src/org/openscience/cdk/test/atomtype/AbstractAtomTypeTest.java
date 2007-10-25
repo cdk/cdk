@@ -32,7 +32,7 @@ import org.openscience.cdk.test.NewCDKTestCase;
  * It keeps track of the atom types which have been tested, to ensure
  * that all atom types are tested.
  *
- * @cdk.module test-core
+ * @cdk.module test
  */
 abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 
