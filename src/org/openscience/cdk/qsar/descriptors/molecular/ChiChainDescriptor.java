@@ -41,7 +41,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
@@ -79,9 +79,6 @@ import java.util.List;
  * versions of Molconn-Z use simplified fragment definitions (i.e., rings without
  * branches etc.) whereas these descriptors use the older more complex fragment
  * definitions.
- * <p/>
- * <b>Note</b>: The code utilizes a ring finding algorithm, with a timeout of 5s.
- * For very large or complicated ring systems, thismay not be sufficient.
  *
  * @author Rajarshi Guha
  * @cdk.created 2006-11-12
@@ -95,7 +92,7 @@ import java.util.List;
 public class ChiChainDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
     private SmilesParser sp;
-    private IRingSet rings;
+
 
     public ChiChainDescriptor() {
         logger = new LoggingTool(this);
@@ -145,9 +142,6 @@ public class ChiChainDescriptor implements IMolecularDescriptor {
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
         hAdder.addImplicitHydrogens(localAtomContainer);
 
-        AllRingsFinder arf = new AllRingsFinder();
-        arf.setTimeout(5000);
-        rings = arf.findAllRings(localAtomContainer);
 
         List subgraph3 = order3(localAtomContainer);
         List subgraph4 = order4(localAtomContainer);
@@ -204,6 +198,9 @@ public class ChiChainDescriptor implements IMolecularDescriptor {
 
     private List order3(IAtomContainer container) {
         List<List<Integer>> ret = new ArrayList<List<Integer>>();
+
+        SSSRFinder sssrf = new SSSRFinder(container);
+        IRingSet rings = sssrf.findSSSR();
 
         int nring = rings.getAtomContainerCount();
         for (int i = 0; i < nring; i++) {
