@@ -1,6 +1,7 @@
 package org.openscience.cdk.pharmacophore;
 
 import nu.xom.*;
+import org.openscience.cdk.annotations.TargetMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
@@ -19,7 +20,7 @@ import java.util.List;
  *
  * @author Rajarshi Guha
  * @cdk.module pcore
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev $Revision: 9162 $
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @cdk.builddepends xom-1.1.jar
@@ -63,6 +64,7 @@ public class PharmacophoreUtils {
      * @see PharmacophoreQueryBond
      * @see PharmacophoreMatcher
      */
+
     public static List<IQueryAtomContainer> readPharmacophoreDefinitions(String filename) throws CDKException, IOException {
         Builder parser = new Builder();
         Document doc;
@@ -109,6 +111,7 @@ public class PharmacophoreUtils {
      * @see PharmacophoreQueryBond
      * @see PharmacophoreMatcher
      */
+    @TargetMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreUtilityTest#testReadPcoreDef")
     public static List<IQueryAtomContainer> readPharmacophoreDefinitions(InputStream ins) throws IOException, CDKException {
         Builder parser = new Builder();
         Document doc;
