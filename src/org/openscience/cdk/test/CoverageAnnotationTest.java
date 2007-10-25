@@ -108,14 +108,11 @@ abstract public class CoverageAnnotationTest extends CDKTestCase {
         // lets get all the methods in the class we're checking
         // we're going to skip private and protected methods
         int missingTestCount = 0;
-        int totalSourceMethods = 0;
         HashMap<String, TestMethod> methodAnnotations = new HashMap<String, TestMethod>();
         Method[] sourceMethods = coreClass.getDeclaredMethods();
         for (Method method : sourceMethods) {
             int modifiers = method.getModifiers();
             if (Modifier.isPrivate(modifiers) || Modifier.isProtected(modifiers)) continue;
-
-            totalSourceMethods++;
 
             TestMethod testMethodAnnotation = method.getAnnotation(TestMethod.class);
 
