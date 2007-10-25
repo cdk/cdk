@@ -24,7 +24,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * TestSuite that uses tests wether all public methods in the standard
+ * TestSuite that uses tests whether all public methods in the standard
  * module are tested. Unlike Emma, it does not test that all code is
  * tested, just all methods.
  *
