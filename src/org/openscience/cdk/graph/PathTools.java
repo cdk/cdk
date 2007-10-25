@@ -450,24 +450,24 @@ public class PathTools {
         }
         dist[atomContainer.getAtomNumber(start)] = 0;
 
-        List<IAtom> S = new ArrayList<IAtom>();
-        List<Integer> Q = new ArrayList<Integer>();
-        for (int i = 0; i < natom; i++) Q.add(i);
+        List<IAtom> Slist = new ArrayList<IAtom>();
+        List<Integer> Qlist = new ArrayList<Integer>();
+        for (int i = 0; i < natom; i++) Qlist.add(i);
 
         while (true) {
-            if (Q.size() == 0) break;
+            if (Qlist.size() == 0) break;
 
             // extract min
             int u = 999999;
             int index = 0;
-            for (Integer tmp : Q) {
+            for (Integer tmp : Qlist) {
                 if (dist[tmp] < u) {
                     u = dist[tmp];
                     index = tmp;
                 }
             }
-            Q.remove(Q.indexOf(index));
-            S.add(atomContainer.getAtom(index));
+            Qlist.remove(Qlist.indexOf(index));
+            Slist.add(atomContainer.getAtom(index));
             if (index == endNumber) break;
 
             // relaxation
@@ -482,12 +482,12 @@ public class PathTools {
         }
 
         ArrayList<IAtom> tmp = new ArrayList<IAtom>();
-        int u = endNumber;
+        int tmpSerial = endNumber;
         while (true) {
-            tmp.add(0, atomContainer.getAtom(u));
-            u = previous[u];
-            if (u == startNumber) {
-                tmp.add(0, atomContainer.getAtom(u));
+            tmp.add(0, atomContainer.getAtom(tmpSerial));
+            tmpSerial = previous[tmpSerial];
+            if (tmpSerial == startNumber) {
+                tmp.add(0, atomContainer.getAtom(tmpSerial));
                 break;
             }
         }
