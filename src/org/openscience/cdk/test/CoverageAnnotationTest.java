@@ -21,6 +21,7 @@
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
 import java.io.BufferedReader;
@@ -125,23 +126,16 @@ abstract public class CoverageAnnotationTest extends CDKTestCase {
 
         if (methodAnnotations.size() == 0) return missingTestCount; // no source method has been tested
 
-        // at this point we have a map of methods and their associated TestMethod annotation
-        // lets get the classes specified in the annotations. Right now we'll assume that all
-        // the methods in a source class, will be tested in a single test class. So we only
-        // look at one of the annotations to get the test class name. Ideally we'd get the
-        // unique set of test classes referred to in all the annotations
-        TestMethod annot = null;
-        Set<String> validMethods = methodAnnotations.keySet();
-        for (String validMethod : validMethods) {
-            annot = methodAnnotations.get(validMethod);
-            break;
+        // get the test class for this class, as noted in the class annotation
+        // and get a list of methods in the test class. We assume that if a class
+        // does not have a TestClass annotation it is not tested, even though individual
+        // methods mighthave TestMethod annotations
+        TestClass testClassAnnotation = (TestClass) coreClass.getAnnotation(TestClass.class);
+        if (testClassAnnotation == null) {
+            System.out.println(className + " did not have a TestClass annotation");
+            return methodAnnotations.size() + missingTestCount;
         }
-
-        // we have the annotation, get it's value an extract the
-        // specified test class  and its methods
-        String[] components = annot.value().split("#");
-        String testClassName = components[0];
-        Class testClass = loadClass(testClassName);
+        Class testClass = testClassAnnotation.value();
         List<String> testMethodNames = new ArrayList<String>();
         Method[] testMethods = testClass.getMethods();
         for (Method method : testMethods) testMethodNames.add(method.getName());
@@ -155,7 +149,7 @@ abstract public class CoverageAnnotationTest extends CDKTestCase {
             String[] comps = annotation.value().split("#");
             String testMethodName = comps[1];
             if (!testMethodNames.contains(testMethodName)) {
-                System.out.println(className + "#" + key + " has a test method annotation which is not found in test class: " + testClassName);
+                System.out.println(className + "#" + key + " has a test method annotation which is not found in test class: " + testClass.getName());
                 missingTestCount++;
             }
         }
