@@ -8,6 +8,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.pharmacophore.PharmacophoreAtom;
 import org.openscience.cdk.pharmacophore.PharmacophoreMatcher;
@@ -25,7 +26,7 @@ public class PharmacophoreMatcherTest {
 
     public static ConformerContainer conformers = null;
 
-       @Before
+    @Before
     public void setUp() {
     }
 
@@ -172,5 +173,22 @@ public class PharmacophoreMatcherTest {
         List<List<PharmacophoreAtom>> upmatches = matcher.getUniqueMatchingPharmacophoreAtoms();
         Assert.assertEquals(1, upmatches.size());
 
+    }
+
+    @Test
+    public void testGetterSetter() {
+        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQueryAtom arom = new PharmacophoreQueryAtom("A", "c1ccccc1");
+        PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(arom, n1, 5.0, 7.0);
+        query.addAtom(arom);
+        query.addAtom(n1);
+        query.addBond(b1);
+
+        PharmacophoreMatcher matcher = new PharmacophoreMatcher();
+        matcher.setPharmacophoreQuery(query);
+        IQueryAtomContainer retQuery = matcher.getPharmacophoreQuery();
+        Assert.assertEquals(2, retQuery.getAtomCount());
+        Assert.assertEquals(1, retQuery.getBondCount());
     }
 }
