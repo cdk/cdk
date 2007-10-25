@@ -32,7 +32,6 @@ import java.util.Vector;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -205,69 +204,62 @@ public class GenerateFragments {
 											//logger.debug("First Ring Size:"+firstRingAtomContainer.getAtomCount()+" 2.Ring Size:"+secondRingAtomContainer.getAtomCount());
 											//logger.debug(f+".ringSub:"+molecule.getAtomNumber(firstRingSubstituents.getAtomAt(i))+" Sym:"+firstRingSubstituents.getAtomAt(i).getSymbol()+" "+g+".ringSub:"+molecule.getAtomNumber(secondRingSubstituents.getAtomAt(k)));
 											path=new AtomContainer();
-											try {
-												resetFlags(molecule);
-												PathTools.depthFirstTargetSearch(molecule,firstRingSubstituents.getAtom(i),secondRingSubstituents.getAtom(k),path);
-												/*logger.debug("\tPATHSIZE:"+path.getAtomCount());
-												logger.debug("\tFIRST PATHATOM:"+molecule.getAtomNumber(path.getAtomAt(0)));
-												try{
-													logger.debug("\tLAST PATHATOM:"+molecule.getAtomNumber(path.getAtomAt(path.getAtomCount()-1)));
-												}catch(Exception eS){
-													logger.debug("\tNO LAST PATHATOM");
-												}*/
+											resetFlags(molecule);
+											PathTools.depthFirstTargetSearch(molecule,firstRingSubstituents.getAtom(i),secondRingSubstituents.getAtom(k),path);
+											/*logger.debug("\tPATHSIZE:"+path.getAtomCount());
+											logger.debug("\tFIRST PATHATOM:"+molecule.getAtomNumber(path.getAtomAt(0)));
+											try{
+												logger.debug("\tLAST PATHATOM:"+molecule.getAtomNumber(path.getAtomAt(path.getAtomCount()-1)));
+											}catch(Exception eS){
+												logger.debug("\tNO LAST PATHATOM");
+											}*/
+											
+											if (firstRingSubstituents.getAtom(i)==secondRingSubstituents.getAtom(k)){
+												//logger.debug("\tSubstituents are equal");
+												path.addAtom(firstRingSubstituents.getAtom(i));
+											}
+											
+											//Check Path, direct connection between the substituents ->linker
+											if ((checkPath(firstRingAtom, secondRingAtom, path) && path.getAtomCount()>0)){
+												murckoFragment=new Molecule();
 												
-												if (firstRingSubstituents.getAtom(i)==secondRingSubstituents.getAtom(k)){
-													//logger.debug("\tSubstituents are equal");
+												//add both root atoms to path
+												if (!path.contains(firstRingSubstituents.getAtom(i))){
 													path.addAtom(firstRingSubstituents.getAtom(i));
 												}
-												
-												//Check Path, direct connection between the substituents ->linker
-												if ((checkPath(firstRingAtom, secondRingAtom, path) && path.getAtomCount()>0)){
-													murckoFragment=new Molecule();
-													
-													//add both root atoms to path
-													if (!path.contains(firstRingSubstituents.getAtom(i))){
-														path.addAtom(firstRingSubstituents.getAtom(i));
-													}
-													if (!path.contains(secondRingSubstituents.getAtom(i))){
-														path.addAtom(secondRingSubstituents.getAtom(i));
-													}
-//													//add both ring atoms to path
-													//if (!path.contains(firstRingAtom)){
-													//	path.addAtom(firstRingAtom);
-													//}
-													//if (!path.contains(secondRingAtom)){
-													//	path.addAtom(secondRingAtom);
-													//}
-													//1. add path
-													//2. add rings  
-													//3. connect ring atoms to path
-													murckoFragment=addPathFragments(path,murckoFragment,molecule);
-													linkerFragment=new Molecule(murckoFragment);
-													if (!linkerFragment.contains(firstRingAtom)){
-														linkerFragment.addAtom(firstRingAtom);
-													}
-													if (!linkerFragment.contains(secondRingAtom)){
-														linkerFragment.addAtom(secondRingAtom);
-													}													
-													linkerFragment=addFragmentBonds(linkerFragment, molecule);
-													murckoFragment=addFragments(firstRingAtomContainer,murckoFragment,molecule);
-													murckoFragment=addFragments(secondRingAtomContainer,murckoFragment,molecule);
-													
-													murckoFragment=addFragmentBonds(murckoFragment,molecule);
-																																																		
-													this.linkerFragments.add(linkerFragment);
-													this.murckoFragments.add(murckoFragment);
-													//logger.debug("\tADD MURCKOFRAGMENT");
-												}else{
-													//logger.debug("\tEND PATH");
+												if (!path.contains(secondRingSubstituents.getAtom(i))){
+													path.addAtom(secondRingSubstituents.getAtom(i));
 												}
+//													//add both ring atoms to path
+												//if (!path.contains(firstRingAtom)){
+												//	path.addAtom(firstRingAtom);
+												//}
+												//if (!path.contains(secondRingAtom)){
+												//	path.addAtom(secondRingAtom);
+												//}
+												//1. add path
+												//2. add rings  
+												//3. connect ring atoms to path
+												murckoFragment=addPathFragments(path,murckoFragment,molecule);
+												linkerFragment=new Molecule(murckoFragment);
+												if (!linkerFragment.contains(firstRingAtom)){
+													linkerFragment.addAtom(firstRingAtom);
+												}
+												if (!linkerFragment.contains(secondRingAtom)){
+													linkerFragment.addAtom(secondRingAtom);
+												}													
+												linkerFragment=addFragmentBonds(linkerFragment, molecule);
+												murckoFragment=addFragments(firstRingAtomContainer,murckoFragment,molecule);
+												murckoFragment=addFragments(secondRingAtomContainer,murckoFragment,molecule);
 												
-												
-											} catch (NoSuchAtomException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											}//catch
+												murckoFragment=addFragmentBonds(murckoFragment,molecule);
+																																																	
+												this.linkerFragments.add(linkerFragment);
+												this.murckoFragments.add(murckoFragment);
+												//logger.debug("\tADD MURCKOFRAGMENT");
+											}else{
+												//logger.debug("\tEND PATH");
+											}
 										}//For-k
 									}//if 2.ring sub
 								}//For-j
