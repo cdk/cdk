@@ -32,6 +32,7 @@ import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.qsar.ChiIndexUtils;
@@ -40,12 +41,14 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -76,11 +79,14 @@ import java.util.List;
  * versions of Molconn-Z use simplified fragment definitions (i.e., rings without
  * branches etc.) whereas these descriptors use the older more complex fragment
  * definitions.
+ * <p/>
+ * <b>Note</b>: The code utilizes a ring finding algorithm, with a timeout of 5s.
+ * For very large or complicated ring systems, thismay not be sufficient.
  *
  * @author Rajarshi Guha
  * @cdk.created 2006-11-12
  * @cdk.module qsar
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev $Revision: 9162 $
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:chiChain
  * @cdk.keyword chi chain index
@@ -89,10 +95,12 @@ import java.util.List;
 public class ChiChainDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
     private SmilesParser sp;
+    private IRingSet rings;
 
     public ChiChainDescriptor() {
         logger = new LoggingTool(this);
         sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+
     }
 
     public DescriptorSpecification getSpecification() {
@@ -130,12 +138,16 @@ public class ChiChainDescriptor implements IMolecularDescriptor {
             IAtom atom = atoms.next();
             IAtomType type = matcher.findMatchingAtomType(localAtomContainer, atom);
             if (type == null) {
-            	throw new CDKException("Cannot find atom type for: " + atom);
+                throw new CDKException("Cannot find atom type for: " + atom);
             }
             AtomTypeManipulator.configure(atom, type);
         }
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
         hAdder.addImplicitHydrogens(localAtomContainer);
+
+        AllRingsFinder arf = new AllRingsFinder();
+        arf.setTimeout(5000);
+        rings = arf.findAllRings(localAtomContainer);
 
         List subgraph3 = order3(localAtomContainer);
         List subgraph4 = order4(localAtomContainer);
@@ -190,14 +202,23 @@ public class ChiChainDescriptor implements IMolecularDescriptor {
         return new DoubleArrayResult();
     }
 
-    private List order3(IAtomContainer atomContainer) {
-        QueryAtomContainer[] queries = new QueryAtomContainer[1];
-        try {
-            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C1CC1"), false);
-        } catch (InvalidSmilesException e) {
-            e.printStackTrace();
+    private List order3(IAtomContainer container) {
+        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+
+        int nring = rings.getAtomContainerCount();
+        for (int i = 0; i < nring; i++) {
+            IAtomContainer ring = rings.getAtomContainer(i);
+            if (ring.getAtomCount() == 3) {
+                List<Integer> tmp = new ArrayList<Integer>();
+                Iterator<IAtom> iter = ring.atoms();
+                while (iter.hasNext()) {
+                    IAtom atom = iter.next();
+                    tmp.add(container.getAtomNumber(atom));
+                }
+                ret.add(tmp);
+            }
         }
-        return ChiIndexUtils.getFragments(atomContainer, queries);
+        return ret;
     }
 
     private List order4(IAtomContainer atomContainer) {
