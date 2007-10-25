@@ -79,7 +79,7 @@ public class XLogPDescriptorTest extends CDKTestCase {
     }
 
     public void testno1596() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        // the xlogp program value is 0.44 bevause of paralleled donor pair correction factor
+        // the xlogp program value is 0.44 because of paralleled donor pair correction factor
         IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
@@ -254,6 +254,7 @@ public class XLogPDescriptorTest extends CDKTestCase {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        // SMILES is in octet-rule version, PubChem has normalized one
         IMolecule mol = sp.parseSmiles("Brc1cc(Cl)c(O[P+]([S-])(OC)OC)cc1Cl"); // xlogp training set molecule 1844
         addExplicitHydrogens(mol);
         //logger.debug("no1844:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
@@ -271,6 +272,9 @@ public class XLogPDescriptorTest extends CDKTestCase {
         assertEquals(4.56, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
+    /**
+     * @cdk.inchi InChI=1/C23H20N2O3S/c26-22-21(16-17-29(28)20-14-8-3-9-15-20)23(27)25(19-12-6-2-7-13-19)24(22)18-10-4-1-5-11-18/h1-15,21H,16-17H2
+     */
     public void test1822() throws ClassNotFoundException, CDKException, java.lang.Exception {
         IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
