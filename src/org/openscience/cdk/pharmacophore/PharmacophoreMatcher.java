@@ -3,6 +3,7 @@ package org.openscience.cdk.pharmacophore;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -80,7 +81,7 @@ import java.util.*;
  *
  * @author Rajarshi Guha
  * @cdk.module pcore
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev $Revision: 9162 $
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom
@@ -157,6 +158,7 @@ public class PharmacophoreMatcher {
      * @see #matches(org.openscience.cdk.interfaces.IAtomContainer)
      * @see org.openscience.cdk.ConformerContainer
      */
+    @TestMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest#testMatcherQuery1")
     public boolean[] matches(ConformerContainer conformerContainer) throws CDKException {
         if (conformerContainer.size() == 0) throw new CDKException("Must supply at least 1 conformer");
         if (pharmacophoreQuery == null) throw new CDKException("Must set the query pharmacophore before matching");
@@ -221,6 +223,7 @@ public class PharmacophoreMatcher {
      * @return a List of a List of pharmacophore groups in the target molecule that match the query
      * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom
      */
+    @TestMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest#testMatchedAtoms")
     public List<List<PharmacophoreAtom>> getMatchingPharmacophoreAtoms() {
         return matchingPAtoms;
     }
@@ -238,6 +241,7 @@ public class PharmacophoreMatcher {
      * @return a List of a List of pharmacophore groups in the target molecule that match the query
      * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom
      */
+    @TestMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest#testMatchedAtoms")
     public List<List<PharmacophoreAtom>> getUniqueMatchingPharmacophoreAtoms() {
         List<List<PharmacophoreAtom>> ret = new ArrayList<List<PharmacophoreAtom>>();
 

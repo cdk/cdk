@@ -21,7 +21,7 @@
 package org.openscience.cdk.test;
 
 import junit.framework.Test;
-import org.openscience.cdk.annotations.TargetMethod;
+import org.openscience.cdk.annotations.TestMethod;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -109,7 +109,7 @@ abstract public class CoverageAnnotationTest extends CDKTestCase {
         // we're going to skip private and protected methods
         int missingTestCount = 0;
         int totalSourceMethods = 0;
-        HashMap<String, TargetMethod> methodAnnotations = new HashMap<String, TargetMethod>();
+        HashMap<String, TestMethod> methodAnnotations = new HashMap<String, TestMethod>();
         Method[] sourceMethods = coreClass.getDeclaredMethods();
         for (Method method : sourceMethods) {
             int modifiers = method.getModifiers();
@@ -117,23 +117,23 @@ abstract public class CoverageAnnotationTest extends CDKTestCase {
 
             totalSourceMethods++;
 
-            TargetMethod targetMethodAnnotation = method.getAnnotation(TargetMethod.class);
+            TestMethod testMethodAnnotation = method.getAnnotation(TestMethod.class);
 
             // if a method does not have the annotation, it's missing a test
-            if (targetMethodAnnotation == null) {
+            if (testMethodAnnotation == null) {
                 System.out.println(className + "#" + method.getName() + " does not have a test method");
                 missingTestCount++;
-            } else methodAnnotations.put(method.getName(), targetMethodAnnotation);
+            } else methodAnnotations.put(method.getName(), testMethodAnnotation);
         }
 
         if (methodAnnotations.size() == 0) return missingTestCount; // no source method has been tested
 
-        // at this point we have a map of methods and their associated TargetMethod annotation
+        // at this point we have a map of methods and their associated TestMethod annotation
         // lets get the classes specified in the annotations. Right now we'll assume that all
         // the methods in a source class, will be tested in a single test class. So we only
         // look at one of the annotations to get the test class name. Ideally we'd get the
         // unique set of test classes referred to in all the annotations
-        TargetMethod annot = null;
+        TestMethod annot = null;
         Set<String> validMethods = methodAnnotations.keySet();
         for (String validMethod : validMethods) {
             annot = methodAnnotations.get(validMethod);
@@ -154,7 +154,7 @@ abstract public class CoverageAnnotationTest extends CDKTestCase {
         // if not, we count it as a missing test
         Set<String> keys = methodAnnotations.keySet();
         for (String key : keys) {
-            TargetMethod annotation = methodAnnotations.get(key);
+            TestMethod annotation = methodAnnotations.get(key);
             String[] comps = annotation.value().split("#");
             String testMethodName = comps[1];
             if (!testMethodNames.contains(testMethodName)) {

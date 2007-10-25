@@ -1,7 +1,7 @@
 package org.openscience.cdk.pharmacophore;
 
 import nu.xom.*;
-import org.openscience.cdk.annotations.TargetMethod;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
@@ -111,7 +111,7 @@ public class PharmacophoreUtils {
      * @see PharmacophoreQueryBond
      * @see PharmacophoreMatcher
      */
-    @TargetMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreUtilityTest#testReadPcoreDef")
+    @TestMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreUtilityTest#testReadPcoreDef")
     public static List<IQueryAtomContainer> readPharmacophoreDefinitions(InputStream ins) throws IOException, CDKException {
         Builder parser = new Builder();
         Document doc;
