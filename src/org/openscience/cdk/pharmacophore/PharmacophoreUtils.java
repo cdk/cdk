@@ -1,6 +1,8 @@
 package org.openscience.cdk.pharmacophore;
 
 import nu.xom.*;
+
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -26,7 +28,7 @@ import java.util.List;
  * @cdk.builddepends xom-1.1.jar
  * @cdk.depends xom-1.1.jar
  */
-
+@TestClass(org.openscience.cdk.test.pharmacophore.PharmacophoreUtilityTest.class)
 public class PharmacophoreUtils {
 
     /**
