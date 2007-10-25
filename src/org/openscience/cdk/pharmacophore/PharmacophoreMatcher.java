@@ -123,6 +123,7 @@ public class PharmacophoreMatcher {
      *          does not have 3D coordinates
      * @see #matches(org.openscience.cdk.ConformerContainer)
      */
+    @TestMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest#testCNSPcore")
     public boolean matches(IAtomContainer atomContainer) throws CDKException {
         if (!GeometryTools.has3DCoordinates(atomContainer)) throw new CDKException("Molecule must have 3D coordinates");
         if (pharmacophoreQuery == null) throw new CDKException("Must set the query pharmacophore before matching");
@@ -279,6 +280,7 @@ public class PharmacophoreMatcher {
      *
      * @return The query
      */
+    @TestMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest#testGetterSetter")
     public IQueryAtomContainer getPharmacophoreQuery() {
         return pharmacophoreQuery;
     }
@@ -288,6 +290,7 @@ public class PharmacophoreMatcher {
      *
      * @param query The query
      */
+    @TestMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest#testGetterSetter")
     public void setPharmacophoreQuery(IQueryAtomContainer query) {
         pharmacophoreQuery = query;
     }
