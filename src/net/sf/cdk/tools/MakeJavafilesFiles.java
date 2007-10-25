@@ -147,6 +147,7 @@ public class MakeJavafilesFiles {
 				
 				if (!inComment && (line.indexOf("public class") != -1 ||
 						line.indexOf("public interface") != -1 ||
+						line.indexOf("public @interface") != -1 ||
 						line.indexOf("abstract class") != -1 ||
 						line.indexOf("final class") != -1)) {
 					// Nothing specified: return the default 'extra'
