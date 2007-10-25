@@ -39,5 +39,5 @@ import java.lang.annotation.RetentionPolicy;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TestClass {
-    Class value();
+    String value();
 }

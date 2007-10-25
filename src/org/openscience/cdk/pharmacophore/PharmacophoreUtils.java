@@ -28,7 +28,7 @@ import java.util.List;
  * @cdk.builddepends xom-1.1.jar
  * @cdk.depends xom-1.1.jar
  */
-@TestClass(org.openscience.cdk.test.pharmacophore.PharmacophoreUtilityTest.class)
+@TestClass("org.openscience.cdk.test.pharmacophore.PharmacophoreUtilityTest")
 public class PharmacophoreUtils {
 
     /**

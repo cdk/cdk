@@ -136,7 +136,13 @@ abstract public class CoverageAnnotationTest extends CDKTestCase {
             System.out.println(className + " did not have a TestClass annotation");
             return methodAnnotations.size() + missingTestCount;
         }
-        Class testClass = testClassAnnotation.value();
+        Class testClass;
+        try {
+	        testClass = this.getClass().getClassLoader().loadClass(testClassAnnotation.value());
+        } catch (ClassNotFoundException e) {
+        	System.out.println(className + " refers to a non-existin test class: " + testClassAnnotation.value());
+            return methodAnnotations.size() + missingTestCount;
+        }
         List<String> testMethodNames = new ArrayList<String>();
         Method[] testMethods = testClass.getMethods();
         for (Method method : testMethods) testMethodNames.add(method.getName());
