@@ -3,6 +3,7 @@ package org.openscience.cdk.pharmacophore;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -89,6 +90,7 @@ import java.util.*;
  * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryAtom
  * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryBond
  */
+@TestClass(org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest.class)
 public class PharmacophoreMatcher {
     private LoggingTool logger = new LoggingTool(PharmacophoreMatcher.class);
     private IQueryAtomContainer pharmacophoreQuery = null;
