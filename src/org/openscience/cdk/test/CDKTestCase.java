@@ -94,7 +94,7 @@ public class CDKTestCase extends TestCase {
      * on SourceForge, and both the test <i>and</i> the affected Class are marked
      * with a JavaDoc @cdk.bug taglet!</b>
      * 
-     * @return a boolean indicating wether known bugs should be tested
+     * @return a boolean indicating whether known bugs should be tested
      */
     public boolean runKnownBugs() {
     	if (System.getProperty("runKnownBugs", "true").equals("false")) 
@@ -158,7 +158,7 @@ public class CDKTestCase extends TestCase {
     		IAtom atom = atoms.next();
     		atomCounter++;
     		IAtomType type = matcher.findMatchingAtomType(container, atom);
-    		assertNotNull("Could not perceived type for atom " + atomCounter + ": " + atom, type);
+    		assertNotNull("Could not perceive type for atom " + atomCounter + ": " + atom, type);
     		AtomTypeManipulator.configure(atom, type);
     	}
     	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
