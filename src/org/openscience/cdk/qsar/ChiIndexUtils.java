@@ -21,7 +21,7 @@ import java.util.*;
  *
  * @author Rajarshi Guha
  * @cdk.module qsar
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev $Revision: 9162 $
  */
 public class ChiIndexUtils {
 
@@ -38,13 +38,13 @@ public class ChiIndexUtils {
      * @param queries       An array of query fragments
      * @return A list of lists, each list being the atoms that match the query fragments
      */
-    public static List getFragments(IAtomContainer atomContainer, QueryAtomContainer[] queries) {
-        List uniqueSubgraphs = new ArrayList();
-        for (int i = 0; i < queries.length; i++) {
+    public static List<List<Integer>> getFragments(IAtomContainer atomContainer, QueryAtomContainer[] queries) {
+        List<List<Integer>> uniqueSubgraphs = new ArrayList<List<Integer>>();
+        for (QueryAtomContainer query : queries) {
             List subgraphMaps = null;
             try {
                 // we get the list of bond mappings
-                subgraphMaps = UniversalIsomorphismTester.getSubgraphMaps(atomContainer, queries[i]);
+                subgraphMaps = UniversalIsomorphismTester.getSubgraphMaps(atomContainer, query);
             } catch (CDKException e) {
                 e.printStackTrace();
             }
@@ -62,11 +62,10 @@ public class ChiIndexUtils {
         // will have number of atoms equal to the number of bonds+1. So we need to check
         // fragment size against all unique query sizes - I get lazy and don't check
         // unique query sizes, but the size of each query
-        ArrayList retValue = new ArrayList();
-        for (Iterator iter = uniqueSubgraphs.iterator(); iter.hasNext();) {
-            ArrayList fragment = (ArrayList) iter.next();
-            for (int i = 0; i < queries.length; i++) {
-                if (fragment.size() == queries[i].getAtomCount()) {
+        List<List<Integer>> retValue = new ArrayList<List<Integer>>();
+        for (List<Integer> fragment : uniqueSubgraphs) {
+            for (QueryAtomContainer query : queries) {
+                if (fragment.size() == query.getAtomCount()) {
                     retValue.add(fragment);
                     break;
                 }
@@ -88,7 +87,7 @@ public class ChiIndexUtils {
             ArrayList frag = (ArrayList) fragList.get(i);
             double prod = 1.0;
             for (int j = 0; j < frag.size(); j++) {
-                int atomSerial = ((Integer) frag.get(j)).intValue();
+                int atomSerial = (Integer) frag.get(j);
                 IAtom atom = atomContainer.getAtom(atomSerial);
                 int nconnected = atomContainer.getConnectedAtomsCount(atom);
                 prod = prod * nconnected;
@@ -121,7 +120,7 @@ public class ChiIndexUtils {
             ArrayList frag = (ArrayList) fragList.get(i);
             double prod = 1.0;
             for (int j = 0; j < frag.size(); j++) {
-                int atomSerial = ((Integer) frag.get(j)).intValue();
+                int atomSerial = (Integer) frag.get(j);
                 IAtom atom = atomContainer.getAtom(atomSerial);
 
                 String sym = atom.getSymbol();
@@ -147,7 +146,7 @@ public class ChiIndexUtils {
                 int zv = getValenceElectronCount(atom);
 
                 int hsupp = atom.getHydrogenCount();
-                double deltav = (double) (zv - hsupp) / (double) (z - zv - 1);                               
+                double deltav = (double) (zv - hsupp) / (double) (z - zv - 1);
 
                 prod = prod * deltav;
             }
@@ -158,10 +157,10 @@ public class ChiIndexUtils {
 
     // TODO there should be a neater way to get the valence electron count
     private static int getValenceElectronCount(IAtom atom) {
-        Map valenceMap;
+        Map<String, Integer> valenceMap;
         AtomValenceDescriptor avd = new AtomValenceDescriptor();
         valenceMap = avd.valencesTable;
-        int valency = ((Integer) valenceMap.get(atom.getSymbol())).intValue();
+        int valency = valenceMap.get(atom.getSymbol());
         return valency - atom.getFormalCharge();
     }
 
@@ -182,9 +181,9 @@ public class ChiIndexUtils {
         if (!atom.getSymbol().equals("S")) return -1;
 
         // check whether it's a S in S-S
-        List connected = atomContainer.getConnectedAtomsList(atom);
+        List<IAtom> connected = atomContainer.getConnectedAtomsList(atom);
         for (int i = 0; i < connected.size(); i++) {
-            IAtom connectedAtom = (IAtom) connected.get(i);
+            IAtom connectedAtom = connected.get(i);
             if (connectedAtom.getSymbol().equals("S")
                     && atomContainer.getBond(atom, connectedAtom).getOrder() == 1.0)
                 return .89;
@@ -192,7 +191,7 @@ public class ChiIndexUtils {
 
         // check whether it's a S in -SO-
         for (int i = 0; i < connected.size(); i++) {
-            IAtom connectedAtom = (IAtom) connected.get(i);
+            IAtom connectedAtom = connected.get(i);
             if (connectedAtom.getSymbol().equals("O")
                     && atomContainer.getBond(atom, connectedAtom).getOrder() == 2.0)
                 return 1.33;
@@ -201,7 +200,7 @@ public class ChiIndexUtils {
         // check whether it's a S in -SO2-
         int count = 0;
         for (int i = 0; i < connected.size(); i++) {
-            IAtom connectedAtom = (IAtom) connected.get(i);
+            IAtom connectedAtom = connected.get(i);
             if (connectedAtom.getSymbol().equals("O")
                     && atomContainer.getBond(atom, connectedAtom).getOrder() == 2.0)
                 count++;
@@ -224,13 +223,13 @@ public class ChiIndexUtils {
     private static double deltavPhosphorous(IAtom atom, IAtomContainer atomContainer) {
         if (!atom.getSymbol().equals("P")) return -1;
 
-        List connected = atomContainer.getConnectedAtomsList(atom);
+        List<IAtom> connected = atomContainer.getConnectedAtomsList(atom);
         int conditions = 0;
 
         if (connected.size() == 4) conditions++;
 
         for (int i = 0; i < connected.size(); i++) {
-            IAtom connectedAtom = (IAtom) connected.get(i);
+            IAtom connectedAtom = connected.get(i);
             if (connectedAtom.getSymbol().equals("O")
                     && atomContainer.getBond(atom, connectedAtom).getOrder() == 2.0)
                 conditions++;
@@ -252,33 +251,33 @@ public class ChiIndexUtils {
      * @param ac        The molecule we are examining
      * @return A unique <code>List</code> of atom paths
      */
-    private static List getUniqueBondSubgraphs(List subgraphs, IAtomContainer ac) {
-        ArrayList bondList = new ArrayList();
-        for (int i = 0; i < subgraphs.size(); i++) {
-            List current = (List) subgraphs.get(i);
-            ArrayList ids = new ArrayList();
-            for (Iterator iter = current.iterator(); iter.hasNext();) {
-                RMap rmap = (RMap) iter.next();
-                ids.add(new Integer(rmap.getId1()));
+    private static List<List<Integer>> getUniqueBondSubgraphs(List subgraphs, IAtomContainer ac) {
+        List<List<Integer>> bondList = new ArrayList<List<Integer>>();
+        for (Object subgraph : subgraphs) {
+            List current = (List) subgraph;
+            List<Integer> ids = new ArrayList<Integer>();
+            for (Object aCurrent : current) {
+                RMap rmap = (RMap) aCurrent;
+                ids.add(rmap.getId1());
             }
             Collections.sort(ids);
             bondList.add(ids);
         }
 
         // get the unique set of bonds
-        HashSet hs = new HashSet(bondList);
-        bondList = new ArrayList(hs);
+        HashSet<List<Integer>> hs = new HashSet<List<Integer>>(bondList);
+        bondList = new ArrayList<List<Integer>>(hs);
 
-        List paths = new ArrayList();
-        for (Iterator iter = bondList.iterator(); iter.hasNext();) {
-            List aBondList = (List) iter.next();
-            List tmp = new ArrayList();
-            for (int i = 0; i < aBondList.size(); i++) {
-                int bondNumber = ((Integer) aBondList.get(i)).intValue();
-                Iterator atomIterator = ac.getBond(bondNumber).atoms();
+        List<List<Integer>> paths = new ArrayList<List<Integer>>();
+        for (Object aBondList1 : bondList) {
+            List aBondList = (List) aBondList1;
+            List<Integer> tmp = new ArrayList<Integer>();
+            for (Object anABondList : aBondList) {
+                int bondNumber = (Integer) anABondList;
+                Iterator<IAtom> atomIterator = ac.getBond(bondNumber).atoms();
                 while (atomIterator.hasNext()) {
-                    IAtom atom = (IAtom) atomIterator.next();
-                    Integer atomInt = new Integer(ac.getAtomNumber(atom));
+                    IAtom atom = atomIterator.next();
+                    Integer atomInt = ac.getAtomNumber(atom);
                     if (!tmp.contains(atomInt)) tmp.add(atomInt);
                 }
             }
