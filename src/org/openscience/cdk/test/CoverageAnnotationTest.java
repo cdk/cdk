@@ -43,7 +43,6 @@ import java.util.Set;
 abstract public class CoverageAnnotationTest extends CDKTestCase {
 
     private final String basePackageName = "org.openscience.cdk.";
-    private final String testPackageName = "test.";
 
     private String moduleName;
     private ClassLoader classLoader;
@@ -60,6 +59,8 @@ abstract public class CoverageAnnotationTest extends CDKTestCase {
 
     /**
      * This method must be overwritten by subclasses.
+     *
+     * @return null as this is not meant to be called directly
      */
     public static Test suite() {
         return null;
