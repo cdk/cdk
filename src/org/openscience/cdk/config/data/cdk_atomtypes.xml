@@ -378,7 +378,7 @@
     </atomType>
 
     <atomType id="I.plus">
-        <atom elementType="I" formalCharge="+1">
+        <atom elementType="I" formalCharge="1">
             <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
             <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">2</scalar>
             <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
