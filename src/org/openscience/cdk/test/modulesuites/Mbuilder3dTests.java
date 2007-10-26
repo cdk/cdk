@@ -1,4 +1,4 @@
-/* $RCSfile: $    
+/* $RCSfile$    
  * $Author: egonw $    
  * $Date: 2006-03-30 00:42:34 +0200 (Thu, 30 Mar 2006) $    
  * $Revision: 5865 $
@@ -21,28 +21,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test;
+
+package org.openscience.cdk.test.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.io.PDBReaderTest;
-import org.openscience.cdk.test.templates.AminoAcidsTest;
-import org.openscience.cdk.test.tools.ProteinBuilderToolTest;
+import org.openscience.cdk.test.modeling.builder3d.ModelBuilder3dTest;
+import org.openscience.cdk.test.modeling.builder3d.TemplateHandler3DTest;
 
 /**
- * TestSuite that runs all the sample tests for the CDK module pdb.
+ * TestSuite that runs all the sample tests.
  *
- * @cdk.module test-pdb
+ * @cdk.module test-builder3d
  */
-public class MpdbTests {
+public class Mbuilder3dTests {
 
     public static Test suite () {
-        TestSuite suite= new TestSuite("The pdb module Tests");
+        TestSuite suite = new TestSuite("The CDK builder3d module Tests");
         
-        suite.addTest(AminoAcidsTest.suite());
-        suite.addTest(PDBReaderTest.suite());
-        suite.addTest(ProteinBuilderToolTest.suite());
+        suite.addTest(ModelBuilder3dTest.suite());
+        suite.addTest(TemplateHandler3DTest.suite());
         
         return suite;
     }

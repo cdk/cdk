@@ -18,24 +18,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test;
+package org.openscience.cdk.test.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.libio.md.MDMoleculeTest;
+import org.openscience.cdk.test.inchi.InChIGeneratorTest;
 
 /**
- * TestSuite that runs all the sample tests for the CDK module libiomd.
+ * TestSuite that runs all the sample tests for the CDK module inchi.
  *
- * @cdk.module test-libiomd
+ * @cdk.module test-inchi
  */
-public class MlibiomdTests {
+public class MinchiTests {
 
     public static Test suite () {
-        TestSuite suite= new TestSuite("libiomd inchi module Tests");
+        TestSuite suite= new TestSuite("The inchi module Tests");
         
-        suite.addTest(MDMoleculeTest.suite());
+        suite.addTest(InChIGeneratorTest.suite());
         
         return suite;
     }

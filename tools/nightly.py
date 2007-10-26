@@ -66,6 +66,7 @@
 # Update 02/10/2007 - Updated to change the value of version in the property file
 #                     rather than hard code it as a date stamp in the build script
 # Update 02/19/2007 - Updated to process CDKCite errors
+# Update 10/26/2007 - Updated for new test.modulesuites package
 
 import string, sys, os, os.path, time, re, glob, shutil
 import tarfile, StringIO
@@ -791,7 +792,7 @@ def doCodeCoverage():
         return None
 
     # now lets get a list of the test class holders
-    f = glob.glob('src/org/openscience/cdk/test/M*Tests.java')
+    f = glob.glob('src/org/openscience/cdk/test/modulesuites/M*Tests.java')
     f.sort()
     f = [x.split('.')[0] for x in [os.path.basename(x) for x in f]]
 

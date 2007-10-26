@@ -904,7 +904,7 @@
                          <include name="cdk-test-${module}.jar" />
                      </fileset>
                  </classpath>
-              	 <test name="org.openscience.cdk.test.M${module}Tests"
+              	 <test name="org.openscience.cdk.test.modulesuites.M${module}Tests"
             	     haltonfailure="no"
             	     todir="${reports.tests}"
             	     outfile="result-${module}">

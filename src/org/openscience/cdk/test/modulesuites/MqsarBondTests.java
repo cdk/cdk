@@ -22,22 +22,26 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.openscience.cdk.test;
+package org.openscience.cdk.test.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.test.qsar.DescriptorEngineTest;
-import org.openscience.cdk.test.qsar.model.R2.RJavaEnvironmentTest;
-import org.openscience.cdk.test.qsar.model.weka.QSARWekaModelTests;
+
+import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialPiChargeDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialSigmaChargeDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialTChargeDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.bond.BondSigmaElectronegativityDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.bond.IPBondDescriptorTest;
+import org.openscience.cdk.test.qsar.descriptors.bond.ResonancePositiveChargeDescriptorTest;
 
 /**
  * TestSuite that runs all the sample tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsarBond
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MqsarTests {
+public class MqsarBondTests {
 
     public static Test suite() {
 
@@ -45,25 +49,14 @@ public class MqsarTests {
 
         // Individual Tests - Please add correlatively	
 
-        suite.addTest(DescriptorEngineTest.suite());
+        // from cdk.test.qsar.bond
+        suite.addTest(BondPartialPiChargeDescriptorTest.suite());
+        suite.addTest(BondPartialSigmaChargeDescriptorTest.suite());
+        suite.addTest(BondPartialTChargeDescriptorTest.suite());
+        suite.addTest(BondSigmaElectronegativityDescriptorTest.suite());
+        suite.addTest(IPBondDescriptorTest.suite());
+        suite.addTest(ResonancePositiveChargeDescriptorTest.suite());
         
-        String rhome = System.getenv("R_HOME");
-        String ldlibrarypath = System.getenv("LD_LIBRARY_PATH");
-
-        if (rhome != null && rhome.equals("") &&
-        	ldlibrarypath != null && ldlibrarypath.equals("")) {
-
-//      	from cdk.test.qsar.model.R2
-        	suite.addTest(org.openscience.cdk.test.qsar.model.R2.CNNRegressionModelTest.suite());
-        	suite.addTest(org.openscience.cdk.test.qsar.model.R2.LinearRegressionModelTest.suite());
-        	suite.addTest(org.openscience.cdk.test.qsar.model.R2.QSARRModelTests.suite());
-        	suite.addTest(RJavaEnvironmentTest.suite());
-        }
-
-//      from cdk.test.qsar.model.R2
- 
-        suite.addTest(QSARWekaModelTests.suite());
-
         return suite;
     }
 

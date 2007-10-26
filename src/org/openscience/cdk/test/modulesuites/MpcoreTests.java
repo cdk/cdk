@@ -1,4 +1,4 @@
-package org.openscience.cdk.test;
+package org.openscience.cdk.test.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
