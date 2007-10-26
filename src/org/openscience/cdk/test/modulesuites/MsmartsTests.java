@@ -22,7 +22,6 @@ package org.openscience.cdk.test.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.test.isomorphism.SMARTSTest;
 
 /**
@@ -37,9 +36,15 @@ public class MsmartsTests {
         suite.addTest(SMARTSTest.suite());
         
         try {
-            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.ParserTest");
+            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.parser.ParserTest");
             suite.addTest(new TestSuite(testClass));
-            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.SMARTSSearchTest");
+            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.parser.SMARTSSearchTest");
+            suite.addTest(new TestSuite(testClass));
+            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.parser.RecursiveTest");
+            suite.addTest(new TestSuite(testClass));
+            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.parser.visitor.SmartsDumpVisitorTest");
+            suite.addTest(new TestSuite(testClass));
+            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.parser.visitor.SmartsQueryVisitorTest");
             suite.addTest(new TestSuite(testClass));
             testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.SMARTSQueryToolTest");
             suite.addTest(new TestSuite(testClass));
