@@ -20,11 +20,8 @@
  */
 package org.openscience.cdk.test.smiles.smarts.parser;
 
-import java.io.StringReader;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -36,6 +33,8 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.test.CDKTestCase;
+
+import java.io.StringReader;
 
 /**
  * JUnit test routines for the SMARTS parser.
@@ -901,7 +900,7 @@ public class ParserTest extends CDKTestCase {
         parse("[nX3r5+]:c:n");
     }
     public void testPattern240() throws Exception { // 1-methyl-2-hydroxy benzene with either a Cl or H at the 5 position.
-    	parse("[c;$([*Cl]),$([*H1])]1ccc(O)c(C)c1,Cc1:c(O):c:c:[$(cCl),$([cH])]:c1");
+    	parse("Cc1:c(O):c:c:[$(cCl),$([cH])]:c1");
     }
     public void testPattern241() throws Exception { // Nonstandard atom groups.
         parse("[!#1;!#2;!#3;!#5;!#6;!#7;!#8;!#9;!#11;!#12;!#15;!#16;!#17;!#19;!#20;!#35;!#53]");
