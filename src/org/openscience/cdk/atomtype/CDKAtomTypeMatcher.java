@@ -466,9 +466,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			return factory.getAtomType("F");
     		}
     	} else if ("I".equals(atom.getSymbol())) {
-    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
-        		 atom.getFormalCharge() == -1)) {
-        		return factory.getAtomType("I.minus");
+    		if (atom.getFormalCharge() != CDKConstants.UNSET && 
+    		    atom.getFormalCharge() != 0) {
+    			if (atom.getFormalCharge() == -1) {
+    				return factory.getAtomType("I.minus");
+    			} else if (atom.getFormalCharge() == 1) {
+    				return factory.getAtomType("I.plus");
+    			}
         	} else if (atomContainer.getConnectedBondsCount(atom) == 1 ||
        				   atomContainer.getConnectedBondsCount(atom) == 0) {
         		return factory.getAtomType("I");

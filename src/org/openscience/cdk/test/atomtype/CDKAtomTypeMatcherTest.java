@@ -1,6 +1,7 @@
 /* $Revision: 5889 $ $Author: egonw $ $Date: 2006-04-06 15:24:58 +0200 (Thu, 06 Apr 2006) $
  * 
  * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+ *               2007  Rajarshi Guha
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -916,6 +917,25 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			assertAtomType(testedAtomTypes, expectedTypes[f], atm.findMatchingAtomType(molecule, molecule.getAtom(f)));
 		}
 	}
+
+    @Test public void testHaloniums() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+
+    	IAtom carbon1 = new Atom("C");
+    	IAtom carbon2 = new Atom("C");
+
+    	IAtom atom = new Atom("I");
+    	atom.setFormalCharge(+1);
+    	mol.addAtom(atom);
+    	mol.addAtom(carbon1);
+    	mol.addAtom(carbon2);
+    	mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+    	mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+
+    	assertAtomType(testedAtomTypes, "I.plus", atm.findMatchingAtomType(mol, atom));
+
+    }
     
     @Test public void testStructGenMatcher() throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
