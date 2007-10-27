@@ -57,31 +57,40 @@ public class MorganNumbersToolsTest extends CDKTestCase
 	public void testGetMorganNumbers_IAtomContainer()
 	{
 		// This is an array with the expected Morgan Numbers for a-pinene
-		String[] reference = {"1","1","1","1","1","1","1","1","1","1","1"};
+		long[] reference = {28776,
+				17899,
+				23549,
+				34598,
+				31846,
+				36393,
+				9847,
+				45904,
+				15669,
+				15669
+};
 
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
-		String[] morganNumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol((AtomContainer)mol);
-		//assertTrue(morganNumbers.length == reference.length);
+		long[] morganNumbers = MorganNumbersTools.getLongMorganNumbers((AtomContainer)mol);
+		assertEquals(reference.length, morganNumbers.length);
 		for (int f = 0; f < morganNumbers.length; f ++)
 		{
 			//logger.debug(morganNumbers[f]);
-			//assertTrue(reference[f] == morganNumbers[f]);
+			assertEquals(reference[f], morganNumbers[f]);
 		}
 	}
 
 	public void testPhenylamine()
 	{
 		// This is an array with the expected Morgan Numbers for a-pinene
-		String[] reference = {"1","1","1","1","1","1","1","1","1","1","1"};
+		String[] reference = {"C-457","C-428","C-325","C-354","C-325","C-428","N-251"};
 
 		Molecule mol = MoleculeFactory.makePhenylAmine();
 		String[] morganNumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol((AtomContainer)mol);
-		//assertTrue(morganNumbers.length == reference.length);
+		assertEquals(reference.length, morganNumbers.length);
 		for (int f = 0; f < morganNumbers.length; f ++)
 		{
 			//logger.debug(morganNumbers[f]);
-			System.out.println(morganNumbers[f]);
-			//assertTrue(reference[f] == morganNumbers[f]);
+			assertEquals(reference[f], morganNumbers[f]);
 		}
 	}
 	
