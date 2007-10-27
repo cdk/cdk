@@ -313,6 +313,29 @@ public class MoleculeFactory {
 		return mol;
 	}
 
+
+	public static Molecule makePhenylAmine()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("C")); // 1		
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("N")); // 6
+		
+		mol.addBond(0, 1, 2.0); // 1
+		mol.addBond(1, 2, 1.0); // 2
+		mol.addBond(2, 3, 2.0); // 3
+		mol.addBond(3, 4, 1.0); // 4
+		mol.addBond(4, 5, 2.0); // 5
+		mol.addBond(5, 0, 1.0); // 6
+	
+		mol.addBond(0, 6, 1.0); // 7
+		return mol;
+	}
+
 	
 	/* build a molecule from 4 condensed triangles */
 	public static Molecule make4x3CondensedRings()
