@@ -102,15 +102,22 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() != 0) {
     			if (atom.getFormalCharge() == 1) {
-    				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-        			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
-        				return factory.getAtomType("C.plus.sp2");
-        			}
+    				if (atomContainer.getConnectedBondsCount(atom) == 0) {
+    					return factory.getAtomType("C.plus.sp2");
+    				} else {
+    					double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    					if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
+    						return factory.getAtomType("C.plus.sp2");
+    					}
+    				}
     			} else if (atom.getFormalCharge() == -1) {
     				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
         			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE &&
         				atomContainer.getConnectedBondsCount(atom) <= 3) {
         				return factory.getAtomType("C.minus.sp2");
+        			} else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE &&
+            			atomContainer.getConnectedBondsCount(atom) <= 1) {
+        				return factory.getAtomType("C.minus.sp1");
         			}
     			}
     			return null;
@@ -224,11 +231,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			} else if (atom.getFormalCharge() == -1) {
     				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     				if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
-    					if (atomContainer.getConnectedBondsCount(atom) == 2) {
+    					if (atomContainer.getConnectedBondsCount(atom) <= 2) {
     						return factory.getAtomType("N.minus.sp3");
     					}
     				} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
-    					if (atomContainer.getConnectedBondsCount(atom) == 1) {
+    					if (atomContainer.getConnectedBondsCount(atom) <= 1) {
     						return factory.getAtomType("N.minus.sp2");
     					}
     				}
