@@ -1199,6 +1199,15 @@ public class SmilesParserTest extends NewCDKTestCase {
 		Assert.assertEquals(1.0, mol.getBond(4).getOrder());
 		Assert.assertEquals(2.0, mol.getBond(5).getOrder());
 	}	
-		
+
+	@org.junit.Test public void testChargedAtoms() throws Exception {
+		String smiles = "[C-]#[O+]";
+		IMolecule mol = sp.parseSmiles(smiles);
+		Assert.assertEquals(2, mol.getAtomCount());
+		Assert.assertEquals(3.0, mol.getBond(0).getOrder());
+		Assert.assertEquals(-1, mol.getAtom(0).getFormalCharge().intValue());
+		Assert.assertEquals(1, mol.getAtom(1).getFormalCharge().intValue());
+	}
+	
 }
 
