@@ -221,10 +221,12 @@ public class SmilesParser {
 				IAtomType type = matcher.findMatchingAtomType(m, atom);
 				AtomTypeManipulator.configure(atom, type);
 			} catch (Exception e) {
-				throw new InvalidSmilesException(
-					"Cannot percieve atom type for the " + i + "th atom: " + atom.getSymbol(),
-					e
-				);
+				System.out.println("Cannot percieve atom type for the " + i + "th atom: " + atom.getSymbol());
+				atom.setAtomTypeName("X");
+//				throw new InvalidSmilesException(
+//					"Cannot percieve atom type for the " + i + "th atom: " + atom.getSymbol(),
+//					e
+//				);
 			}
 		}
 		
