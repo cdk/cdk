@@ -1087,9 +1087,9 @@ if __name__ == '__main__':
         logEntryText = copyLogFile('build.log', nightly_dir, nightly_web)
         if logEntryText:
             resultTable.addCell(logEntryText)
-            resultTable.appendToCell("<a href=\"http://cia.navi.cx/stats/project/cdk/cdk\">SVN commits</a>")
+            resultTable.appendToCell("<a href=\"http://cia.vc/stats/project/cdk/cdk\">SVN commits</a>")
         else:
-            resultTable.addCell("<br><a href=\"http://cia.navi.cx/stats/project/cdk/cdk\">SVN commits</a>")
+            resultTable.addCell("<br><a href=\"http://cia.vc/stats/project/cdk/cdk\">SVN commits</a>")
 
 
     if successSrc:
@@ -1270,7 +1270,7 @@ if __name__ == '__main__':
         count = 1
         s = ''
         for dir in subdirs:
-            s = s+"<a href=\"javadoc/%s\">%s</a>\n" % (dir, dir)
+            s = s+"<a href=\"javadoc/%s/\">%s</a>\n" % (dir, dir)
             if count % per_line == 0: s += "<br>"
             count += 1
         resultTable.addCell(s)
