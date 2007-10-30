@@ -106,9 +106,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     					return factory.getAtomType("C.plus.sp2");
     				} else {
     					double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-    					if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
+    					if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
     						return factory.getAtomType("C.plus.sp2");
-    					}
+    					} else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
+    						return factory.getAtomType("C.plus.planar");
+    					} 
     				}
     			} else if (atom.getFormalCharge() == -1) {
     				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
