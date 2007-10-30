@@ -619,11 +619,12 @@ public class SmilesParserTest extends NewCDKTestCase {
 	/**
 	 * A bug found with JCP.
 	 * 
-	 * @cdk.bug 956929 
+	 * @cdk.bug   956929
+	 * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H 
 	 */
 	@org.junit.Test (timeout=1000)
 	public void testPyrole() throws Exception {
-		String smiles = "c1cccn1";
+		String smiles = "c1ccc[NH]1";
 		IMolecule mol = sp.parseSmiles(smiles);
 
 		StructureDiagramGenerator sdg=new StructureDiagramGenerator(mol);
