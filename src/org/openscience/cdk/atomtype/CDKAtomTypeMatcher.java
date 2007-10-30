@@ -83,6 +83,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if (type == null) type = perceivePhosphors(atomContainer, atom);
         if (type == null) type = perceiveCommonSalts(atomContainer, atom);
         if (type == null) type = perceiveSilicon(atomContainer, atom);
+        if (type == null) type = perceiveOrganometallicCenters(atomContainer, atom);
+        if (type == null) type = perceiveNobelGases(atomContainer, atom);
         return type;
     }
     
@@ -529,6 +531,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				atom.getFormalCharge() == +2)) {
     			return factory.getAtomType("Fe.2plus");
     		}
+    	} else if ("Ni".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() == +2)) {
+    			return factory.getAtomType("Ni.2plus");
+    		}
     	} else if ("K".equals(atom.getSymbol())) {
     		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() == +1)) {
@@ -538,6 +545,30 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return null;
     }
 
+    private IAtomType perceiveOrganometallicCenters(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+    	if ("Hg".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    			 atom.getFormalCharge() == -1)) {
+    			return factory.getAtomType("Hg.minus");
+    		}
+    	} else if ("Po".equals(atom.getSymbol())) {
+    		if (atomContainer.getConnectedBondsCount(atom) == 2) {
+    			return factory.getAtomType("Po");
+    		}
+    	}
+    	return null;
+    }
+    
+    private IAtomType perceiveNobelGases(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+    	if ("He".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() == CDKConstants.UNSET ||
+    				atom.getFormalCharge() == 0)) {
+    			return factory.getAtomType("He");
+    		}
+    	}
+    	return null;
+    }
+    
     private IAtomType perceiveSilicon(IAtomContainer atomContainer, IAtom atom) throws CDKException {
     	if ("Si".equals(atom.getSymbol())) {
     		if ((atom.getFormalCharge() != CDKConstants.UNSET &&

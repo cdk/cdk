@@ -461,30 +461,42 @@
   <atomType id="Na.plus">
     <atom elementType="Na" formalCharge="1">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
     </atom>
   </atomType>
 
   <atomType id="K.plus">
     <atom elementType="K" formalCharge="1">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
     </atom>
   </atomType>
 
   <atomType id="Ca.2plus">
     <atom elementType="Ca" formalCharge="2">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
     </atom>
   </atomType>
 
   <atomType id="Mg.2plus">
     <atom elementType="Mg" formalCharge="2">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Ni.2plus">
+    <atom elementType="Ni" formalCharge="2">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
     </atom>
   </atomType>
 
   <atomType id="Fe.2plus">
     <atom elementType="Fe" formalCharge="2">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
     </atom>
   </atomType>
 
@@ -497,6 +509,25 @@
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
   </atomType>
 
+  <atomType id="Hg.minus">
+    <atom elementType="Hg" formalCharge="-1">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+  </atomType>
 
+  <atomType id="Po">
+    <atom elementType="Po" formalCharge="0">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="He">
+    <atom elementType="He" formalCharge="0">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+  </atomType>
 
 </atomTypeList>
