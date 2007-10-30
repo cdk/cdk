@@ -375,16 +375,7 @@
           </delete>
           <javacc target="${src}/org/openscience/cdk/iupac/parser/NomParser.jj"
             outputdirectory="${src}/org/openscience/cdk/iupac/parser/"
-            javacchome="${lib}"/>
-          <delete>
-              <fileset id="javacc-generated"
-              dir="${src}/org/openscience/cdk/smiles/smarts/"
-	      excludes="*Query*.java"
-              includes="*.java" />
-          </delete>
-          <javacc target="${src}/org/openscience/cdk/smiles/smarts/SMARTSParser.jj"
-            outputdirectory="${src}/org/openscience/cdk/smiles/smarts/"
-            javacchome="${lib}"/>
+            javacchome="${lib}"/>         
           <delete>
               <fileset id="javacc-generated"
                 dir="${src}/org/openscience/cdk/smiles/smarts/parser/"
