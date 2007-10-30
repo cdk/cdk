@@ -801,7 +801,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "Fe.2plus", atm.findMatchingAtomType(
         	ferrocene, ferrocene.getAtom(10))
         );
-        assertAtomType(testedAtomTypes, "C.minus.sp2", atm.findMatchingAtomType(
+        assertAtomType(testedAtomTypes, "C.minus.planar", atm.findMatchingAtomType(
            	ferrocene, ferrocene.getAtom(4))
         );
     }
@@ -970,6 +970,45 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	mol.addBond(0, 1, CDKConstants.BONDORDER_TRIPLE);
 
     	assertAtomType(testedAtomTypes, "C.minus.sp1", atm.findMatchingAtomType(mol, atom1));
+    }
+    
+//    [O+]=C-[C-]
+    @Test public void testChargedSpecies2() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+
+    	IAtom atom1 = new Atom("O");
+    	atom1.setFormalCharge(1);
+    	IAtom atom2 = new Atom("C");
+    	IAtom atom3 = new Atom("C");
+    	atom3.setFormalCharge(-1);
+
+    	mol.addAtom(atom1);
+    	mol.addAtom(atom2);
+    	mol.addAtom(atom3);
+    	mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+    	mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+
+    	assertAtomType(testedAtomTypes, "C.minus.sp3", atm.findMatchingAtomType(mol, atom3));
+    }
+    
+//    [C-]=C-C
+    @Test public void testChargedSpecies3() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+
+    	IAtom atom1 = new Atom("C");
+    	atom1.setFormalCharge(-1);
+    	IAtom atom2 = new Atom("C");
+    	IAtom atom3 = new Atom("C");
+
+    	mol.addAtom(atom1);
+    	mol.addAtom(atom2);
+    	mol.addAtom(atom3);
+    	mol.addBond(0, 1, CDKConstants.BONDORDER_DOUBLE);
+    	mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+
+    	assertAtomType(testedAtomTypes, "C.minus.sp2", atm.findMatchingAtomType(mol, atom1));
     }
     
     @Test public void testStructGenMatcher() throws Exception {

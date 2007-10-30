@@ -116,7 +116,25 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
         			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE &&
         				atomContainer.getConnectedBondsCount(atom) <= 3) {
-        				return factory.getAtomType("C.minus.sp2");
+        				if (isRingAtom(atom, atomContainer)) {
+    						boolean bothNeighborsSP2 = true;
+        					Iterator<IAtom> atoms = atomContainer.getConnectedAtomsList(atom).iterator();
+        					while (atoms.hasNext() && bothNeighborsSP2) {
+        						IAtom nextAtom = atoms.next();
+        						if (!nextAtom.getSymbol().equals("H")) {
+        							if (nextAtom.getHybridization() != CDKConstants.UNSET && 
+        								nextAtom.getHybridization() != CDKConstants.HYBRIDIZATION_SP2 && 
+        								countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
+        								bothNeighborsSP2 = false;
+        							}
+        						}
+        					}
+        					if (bothNeighborsSP2) return factory.getAtomType("C.minus.planar");
+        				}
+        				return factory.getAtomType("C.minus.sp3");
+        			} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE &&
+                			atomContainer.getConnectedBondsCount(atom) <= 3) {
+            				return factory.getAtomType("C.minus.sp2");
         			} else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE &&
             			atomContainer.getConnectedBondsCount(atom) <= 1) {
         				return factory.getAtomType("C.minus.sp1");
