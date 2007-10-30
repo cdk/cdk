@@ -389,7 +389,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.getAtom(1).setNaturalAbundance(75.78);
         double totalAbudance = AtomContainerManipulator.getTotalNaturalAbundance((IAtomContainer)mol);
 
-        assertEquals(7496.9154,totalAbudance,0.001);
+        assertEquals(74.969154,totalAbudance,0.001);
     }
     
     /**

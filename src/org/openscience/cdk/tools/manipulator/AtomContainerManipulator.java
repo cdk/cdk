@@ -149,7 +149,7 @@ public class AtomContainerManipulator {
         while(iterAtoms.hasNext()) {
         	abundance = abundance* iterAtoms.next().getNaturalAbundance();
         }
-        return abundance;
+        return abundance/100;
     }
     
     /**
