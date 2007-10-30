@@ -109,6 +109,7 @@ public class CDKHydrogenAdder {
 	
 	/**
 	 * Sets the implicit hydrogen count for the indicated IAtom in the given IAtomContainer.
+	 * If the atom type is "X", then the atom is assigned zero implicit hydrogens.
 	 * 
 	 * @param  container
 	 * @param  atom         IAtom to set the implicit hydrogen count for
@@ -117,6 +118,11 @@ public class CDKHydrogenAdder {
 	public void addImplicitHydrogens(IAtomContainer container, IAtom atom) throws CDKException {
 		if (atom.getAtomTypeName() == null)
 			throw new CDKException("IAtom is not typed! " + atom.getSymbol());
+		
+		if ("X".equals(atom.getAtomTypeName())) {
+			atom.setHydrogenCount(0);
+			return; 
+		}
 		
 		IAtomType type =  atomTypeList.getAtomType(atom.getAtomTypeName());
 		if (type == null)
