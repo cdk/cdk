@@ -357,6 +357,42 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     }
     
     /**
+     * Test total Exact Mass.
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     */
+    public void testGetTotalExactMass_IAtomContainer() throws IOException, ClassNotFoundException, CDKException{
+    	
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = parser.parseSmiles("CCl");
+        mol.getAtom(0).setExactMass(12.00);
+        mol.getAtom(1).setExactMass(34.96885268);
+        double totalExactMass = AtomContainerManipulator.getTotalExactMass((IAtomContainer)mol);
+
+        assertEquals(46.96885268,totalExactMass,0.001);
+    }
+    
+    /**
+     * Test total natural abundance.
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     */
+    public void testGetTotalNaturalAbundance_IAtomContainer() throws IOException, ClassNotFoundException, CDKException{
+    	
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = parser.parseSmiles("CCl");
+        mol.getAtom(0).setNaturalAbundance(98.93);
+        mol.getAtom(1).setNaturalAbundance(75.78);
+        double totalAbudance = AtomContainerManipulator.getTotalNaturalAbundance((IAtomContainer)mol);
+
+        assertEquals(7496.9154,totalAbudance,0.001);
+    }
+    
+    /**
      * Test total positive formal charge.
      *
      * @throws IOException

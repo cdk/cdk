@@ -108,16 +108,50 @@ public class AtomContainerManipulator {
 
 
     /**
+     * Get the summed charge of all atoms in an AtomContainer
+     * 
+     * @param  atomContainer The IAtomContainer to manipulate
      * @return The summed charges of all atoms in this AtomContainer.
      */
     public static double getTotalCharge(IAtomContainer atomContainer) {
         double charge = 0.0;
-        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
-            charge += atomContainer.getAtom(i).getCharge();
+        Iterator<IAtom> iterAtoms = atomContainer.atoms();
+        while(iterAtoms.hasNext()) {
+            charge += iterAtoms.next().getCharge();
         }
         return charge;
     }
 
+    /**
+     * Get the summed exact mass of all atoms in an AtomContainer
+     * 
+     * @param  atomContainer The IAtomContainer to manipulate
+     * @return The summed exact mass of all atoms in this AtomContainer.
+     */
+    public static double getTotalExactMass(IAtomContainer atomContainer) {
+        double mass = 0.0;
+        Iterator<IAtom> iterAtoms = atomContainer.atoms();
+        while(iterAtoms.hasNext()) {
+        	mass += iterAtoms.next().getExactMass();
+        }
+        return mass;
+    }
+    
+    /** 
+     * Get the summed natural abundance of all atoms in an AtomContainer
+     * 
+     * @param  atomContainer The IAtomContainer to manipulate
+     * @return The summed natural abundance of all atoms in this AtomContainer.
+     */
+    public static double getTotalNaturalAbundance(IAtomContainer atomContainer) {
+        double abundance =  1.0;
+        Iterator<IAtom> iterAtoms = atomContainer.atoms();
+        while(iterAtoms.hasNext()) {
+        	abundance = abundance* iterAtoms.next().getNaturalAbundance();
+        }
+        return abundance;
+    }
+    
     /**
      * @return The summed formal charges of all atoms in this AtomContainer.
      */
