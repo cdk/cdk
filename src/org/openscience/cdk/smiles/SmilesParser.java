@@ -1,6 +1,7 @@
 /*  $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2002-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+ *                200?-2007  Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -30,10 +31,8 @@ import java.util.Stack;
 import java.util.StringTokenizer;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -46,7 +45,6 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.ValencyHybridChecker;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -70,7 +68,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @author         Christoph Steinbeck
  * @author         Egon Willighagen
  * @cdk.module     smiles
- * @cdk.svnrev  $Revision$
+ * @cdk.svnrev     $Revision$
  * @cdk.created    2002-04-29
  * @cdk.keyword    SMILES, parser
  * @cdk.bug        1274464
@@ -90,23 +88,10 @@ public class SmilesParser {
 
 	private LoggingTool logger;
 	private CDKHydrogenAdder hAdder;
-//	private SmilesValencyChecker valencyChecker;
-	private ValencyHybridChecker valencyChecker;
 		
 	private int status = 0;
 	protected IChemObjectBuilder builder;
 
-
-	/**
-	 * Constructor for the SmilesParser object.
-	 * 
-	 * @deprecated Use SmilesParser(IChemObjectBuilder instead)
-	 */
-	public SmilesParser()
-	{
-		this(DefaultChemObjectBuilder.getInstance());
-	}
-	
 	/**
 	 * Constructor for the SmilesParser object.
 	 * 
@@ -116,13 +101,10 @@ public class SmilesParser {
 	{
 		logger = new LoggingTool(this);
 		this.builder = builder;
-		try
-		{
-			valencyChecker = new ValencyHybridChecker();
+		try {
 			hAdder = CDKHydrogenAdder.getInstance(builder);
-		} catch (Exception exception)
-		{
-			logger.error("Could not instantiate valencyChecker or hydrogenAdder: ",
+		} catch (Exception exception) {
+			logger.error("Could not instantiate hydrogenAdder: ",
 					exception.getMessage());
 			logger.debug(exception);
 		}
@@ -195,81 +177,27 @@ public class SmilesParser {
 	 *      is invalid
 	 */
 	public IMolecule parseSmiles(String smiles) throws InvalidSmilesException {
-		setInterrupted(false);
+		IMolecule molecule = this.parseString(smiles);
 		
-		DeduceBondSystemTool dbst=new DeduceBondSystemTool();
-
-		IMolecule m2=this.parseString(smiles);
-
-		IMolecule m=null;
-
-		try {
-			m=(IMolecule)m2.clone();
-
-		} catch (java.lang.CloneNotSupportedException exception) {
-			logger.debug(exception);
-		}
-
 		// perceive atom types
-		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(m.getBuilder());
+		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
 		int i = 0;
-		Iterator<IAtom> atoms = m.atoms();
+		Iterator<IAtom> atoms = molecule.atoms();
 		while (atoms.hasNext()) {
 			IAtom atom = atoms.next();
 			i++;
 			try {
-				IAtomType type = matcher.findMatchingAtomType(m, atom);
+				IAtomType type = matcher.findMatchingAtomType(molecule, atom);
 				AtomTypeManipulator.configure(atom, type);
 			} catch (Exception e) {
 				System.out.println("Cannot percieve atom type for the " + i + "th atom: " + atom.getSymbol());
 				atom.setAtomTypeName("X");
-//				throw new InvalidSmilesException(
-//					"Cannot percieve atom type for the " + i + "th atom: " + atom.getSymbol(),
-//					e
-//				);
 			}
 		}
-		
-		// add implicit hydrogens
-		this.addImplicitHydrogens(m);
+		this.addImplicitHydrogens(molecule);
+		this.perceiveAromaticity(molecule);
 
-		// setup missing bond orders
-		this.setupMissingBondOrders(m);
-
-		// conceive aromatic perception
-		this.conceiveAromaticPerception(m);
-
-		boolean HaveSP2=false;
-
-        for (int j=0;j<=m.getAtomCount()-1;j++) {
-            Integer hybridization = m.getAtom(j).getHybridization();
-            if (hybridization != CDKConstants.UNSET && hybridization == CDKConstants.HYBRIDIZATION_SP2) {
-				HaveSP2=true;
-				break;
-			}
-		}
-
-		if (HaveSP2) {  // have lower case (aromatic) element symbols that may need to be fixed
-			try {
-				dbst.setInterrupted(isInterrupted());
-				if (!(dbst.isOK(m))) {
-
-					// need to fix it:
-					m = (IMolecule) dbst.fixAromaticBondOrders(m2);
-
-					if (!(m instanceof IMolecule)) {
-						throw new InvalidSmilesException("Could not deduce aromatic bond orders.");
-					}
-				} else {
-					// doesnt need to fix aromatic bond orders
-				}
-
-			} catch (CDKException ex) {
-				throw new InvalidSmilesException(ex.getMessage(), ex);
-			}
-		}
-
-		return (IMolecule)m;
+		return molecule;
 	}
 
 	/**
@@ -302,8 +230,8 @@ public class SmilesParser {
 		char mychar = 'X';
 		char[] chars = new char[1];
 		IAtom lastNode = null;
-		Stack atomStack = new Stack();
-		Stack bondStack = new Stack();
+		Stack<IAtom> atomStack = new Stack<IAtom>();
+		Stack<Double> bondStack = new Stack<Double>();
 		IAtom atom = null;
 		do
 		{
@@ -397,10 +325,10 @@ public class SmilesParser {
 				{
 					atomStack.push(lastNode);
 					logger.debug("Stack:");
-					Enumeration ses = atomStack.elements();
+					Enumeration<IAtom> ses = atomStack.elements();
 					while (ses.hasMoreElements())
 					{
-						IAtom a = (IAtom) ses.nextElement();
+						IAtom a = ses.nextElement();
 						logger.debug("", a.hashCode());
 					}
 					logger.debug("------");
@@ -410,10 +338,10 @@ public class SmilesParser {
 				{
 					lastNode = (IAtom) atomStack.pop();
 					logger.debug("Stack:");
-					Enumeration ses = atomStack.elements();
+					Enumeration<IAtom> ses = atomStack.elements();
 					while (ses.hasMoreElements())
 					{
-						IAtom a = (IAtom) ses.nextElement();
+						IAtom a = ses.nextElement();
 						logger.debug("", a.hashCode());
 					}
 					logger.debug("------");
@@ -867,25 +795,15 @@ public class SmilesParser {
 		}
 	}
 
-	private void setupMissingBondOrders(IMolecule m) {
-		try {
-			valencyChecker.saturate(m);
-			logger.debug("after adding missing bond orders: ", m);
-		} catch (Exception exception) {
-			logger.error("Error while calculation Hcount for SMILES atom: ", exception.getMessage());
-		}
-	}
-
-	private void conceiveAromaticPerception(IMolecule m) {
+	private void perceiveAromaticity(IMolecule m) {
 		IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(m);
 		logger.debug("#mols ", moleculeSet.getAtomContainerCount());
 		for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
 			IAtomContainer molecule = moleculeSet.getAtomContainer(i);
 			logger.debug("mol: ", molecule);
 			try {
-				valencyChecker.saturate(molecule);
 				logger.debug(" after saturation: ", molecule);
-				if (HueckelAromaticityDetector
+				if (CDKHueckelAromaticityDetector
 						.detectAromaticity(molecule)) {
 					logger.debug("Structure is aromatic...");
 				}
@@ -895,14 +813,6 @@ public class SmilesParser {
 				logger.debug(exception);
 			}
 		}
-	}
-	
-	public boolean isInterrupted() {
-		return valencyChecker.isInterrupted();
-	}
-
-	public void setInterrupted(boolean interrupted) {
-		valencyChecker.setInterrupted(interrupted);
 	}
 	
 }
