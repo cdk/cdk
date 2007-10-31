@@ -45,7 +45,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * CDK atom types to be perceived.
  *
  * @author         egonw
- * @cdk.module     experimental
+ * @cdk.module     standard
  * @cdk.svnrev     $Revision: 9162 $
  * @cdk.created    2007-10-05
  * 

@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
- * @cdk.module  test-experimental
+ * @cdk.module  test-standard
  *
  * @author      steinbeck
  * @author      egonw
