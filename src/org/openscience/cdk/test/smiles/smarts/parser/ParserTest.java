@@ -1207,23 +1207,23 @@ public class ParserTest extends CDKTestCase {
     }
     public void testBondAny1() throws Exception {
     	int m = match("C~C", "C=C", false);
-    	assertEquals(1, m);
+    	assertEquals(2, m);
     }
     public void testBondAny2() throws Exception {
     	int m = match("C~C", "C#C", false);
-    	assertEquals(1, m);
+    	assertEquals(2, m);
     }
     public void testBondAny3() throws Exception {
     	int m = match("C~C", "CCO", false);
-    	assertEquals(1, m);
+    	assertEquals(2, m);
     }
     public void testBondAny4() throws Exception {
     	int m = match("C~C", "C1C(C)=C(C=CC(C)=CC=CC(C)=CCO)C(C)(C)C1", false);
-    	assertEquals(19, m);
+    	assertEquals(38, m);
     }    
     public void testBondAny5() throws Exception {
     	int m = match("[C,c]~[C,c]", "CC1(C)SC2C(NC(=O)Cc3ccccc3)C(=O)N2C1C(=O)O", false);
-    	assertEquals(14, m);
+    	assertEquals(28, m);
     }
     public void testBondRing1() throws Exception {
     	int m = match("C@C", "C=C", false);
@@ -1239,15 +1239,15 @@ public class ParserTest extends CDKTestCase {
     }
     public void testBondRing4() throws Exception {
     	int m = match("[C,c]@[C,c]", "c1ccccc1Cc1ccccc1", false);
-    	assertEquals(12, m);
+    	assertEquals(24, m);
     }
     public void testBondRing5() throws Exception {
     	int m = match("[C,c]@[C,c]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1", false);
-    	assertEquals(15, m);
+    	assertEquals(30, m);
     }
     public void testBondRing6() throws Exception {
     	int m = match("[C,c]@[C,c]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76", false);
-    	assertEquals(22, m);
+    	assertEquals(44, m);
     }
     public void testBondStereo1() throws Exception { //TODO: Stereo bond not implemented in smiles parser?
     	int m = match("F/?C=C/Cl", "F/C=C/Cl", false);
