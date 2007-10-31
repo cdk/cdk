@@ -26,14 +26,12 @@ package org.openscience.cdk.test.atomtype;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.HybridizationStateATMatcher;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -87,8 +85,8 @@ public class HybridizationStateATMatcherTest extends CDKTestCase {
         HybridizationStateATMatcher atm = new HybridizationStateATMatcher();
         IAtomType matched = atm.findMatchingAtomType(mol, atom);
         
-        int hybridization = matched.getHybridization();
-        int thisHybridization = CDKConstants.HYBRIDIZATION_SP1;
+        IAtomType.Hybridization hybridization = matched.getHybridization();
+        IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP1;
         
         assertEquals(thisHybridization, hybridization);
     }

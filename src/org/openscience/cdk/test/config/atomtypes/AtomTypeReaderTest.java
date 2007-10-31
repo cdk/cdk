@@ -23,18 +23,16 @@
  */
 package org.openscience.cdk.test.config.atomtypes;
 
-import java.io.StringReader;
-import java.util.List;
-import java.util.Vector;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.test.CDKTestCase;
+
+import java.io.StringReader;
+import java.util.List;
 
 /**
  * Checks the funcitonality of the AtomTypeReader.
@@ -159,7 +157,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
       IAtomType atomType = (IAtomType)object;
       
       assertEquals(0, atomType.getFormalCharge().intValue());
-      assertEquals(CDKConstants.HYBRIDIZATION_SP1, atomType.getHybridization().intValue());
+      assertEquals(IAtomType.Hybridization.SP1, atomType.getHybridization());
       assertEquals(0, ((Integer)atomType.getProperty(CDKConstants.LONE_PAIR_COUNT)).intValue());
       assertEquals(2, ((Integer)atomType.getProperty(CDKConstants.PI_BOND_COUNT)).intValue());
   }
