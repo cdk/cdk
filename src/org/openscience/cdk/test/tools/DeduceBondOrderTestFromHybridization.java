@@ -28,6 +28,7 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNBond;
 import org.openscience.cdk.nonotify.NNMolecule;
@@ -69,9 +70,9 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		
 		// atom block
 		IAtom atom1 = new NNAtom(Elements.CARBON);
-		atom1.setHybridization(CDKConstants.HYBRIDIZATION_SP1);
+		atom1.setHybridization(Hybridization.SP1);
 		IAtom atom2 = new NNAtom(Elements.CARBON);
-		atom2.setHybridization(CDKConstants.HYBRIDIZATION_SP1);
+		atom2.setHybridization(Hybridization.SP1);
 		
 		// bond block
 		IBond bond1 = new NNBond(atom1, atom2);
@@ -95,11 +96,11 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		
 		// atom block
 		IAtom atom1 = new NNAtom(Elements.CARBON);
-		atom1.setHybridization(CDKConstants.HYBRIDIZATION_SP3);
+		atom1.setHybridization(Hybridization.SP3);
 		IAtom atom2 = new NNAtom(Elements.CARBON);
-		atom2.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom2.setHybridization(Hybridization.SP2);
 		IAtom atom3 = new NNAtom(Elements.OXYGEN);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		
 		// bond block
 		IBond bond1 = new NNBond(atom1, atom2);
@@ -127,11 +128,11 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		
 		// atom block
 		IAtom atom1 = new NNAtom(Elements.CARBON);
-		atom1.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom1.setHybridization(Hybridization.SP2);
 		IAtom atom2 = new NNAtom(Elements.CARBON);
-		atom2.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom2.setHybridization(Hybridization.SP2);
 		IAtom atom3 = new NNAtom(Elements.OXYGEN);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP3);
+		atom3.setHybridization(Hybridization.SP3);
 		
 		// bond block
 		IBond bond1 = new NNBond(atom1, atom2);
@@ -159,13 +160,13 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		
 		// atom block
 		IAtom atom1 = new NNAtom(Elements.CARBON);
-		atom1.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom1.setHybridization(Hybridization.SP2);
 		IAtom atom2 = new NNAtom(Elements.CARBON);
-		atom2.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom2.setHybridization(Hybridization.SP2);
 		IAtom atom3 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom4 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		
 		// bond block
 		IBond bond1 = new NNBond(atom1, atom2);
@@ -197,21 +198,21 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		
 		// atom block
 		IAtom atom1 = new NNAtom(Elements.CARBON);
-		atom1.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom1.setHybridization(Hybridization.SP2);
 		IAtom atom2 = new NNAtom(Elements.CARBON);
-		atom2.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom2.setHybridization(Hybridization.SP2);
 		IAtom atom3 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom4 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom5 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom6 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom7 = new NNAtom(Elements.OXYGEN);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom8 = new NNAtom(Elements.OXYGEN);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		
 		// bond block
 		IBond bond1 = new NNBond(atom1, atom2);
@@ -262,17 +263,17 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		
 		// atom block
 		IAtom atom1 = new NNAtom(Elements.CARBON);
-		atom1.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom1.setHybridization(Hybridization.SP2);
 		IAtom atom2 = new NNAtom(Elements.CARBON);
-		atom2.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom2.setHybridization(Hybridization.SP2);
 		IAtom atom3 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom4 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom5 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom6 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		
 		// bond block
 		IBond bond1 = new NNBond(atom1, atom2);
@@ -321,15 +322,15 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		
 		// atom block
 		IAtom atom1 = new NNAtom(Elements.CARBON);
-		atom1.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom1.setHybridization(Hybridization.SP2);
 		IAtom atom2 = new NNAtom(Elements.CARBON);
-		atom2.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom2.setHybridization(Hybridization.SP2);
 		IAtom atom3 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom4 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom5 = new NNAtom(Elements.NITROGEN);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		
 		// bond block
 		IBond bond1 = new NNBond(atom1, atom2);
@@ -365,17 +366,17 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		
 		// atom block
 		IAtom atom1 = new NNAtom(Elements.CARBON);
-		atom1.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom1.setHybridization(Hybridization.SP2);
 		IAtom atom2 = new NNAtom(Elements.CARBON);
-		atom2.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom2.setHybridization(Hybridization.SP2);
 		IAtom atom3 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom4 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom5 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom6 = new NNAtom(Elements.NITROGEN);
-		atom3.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		atom3.setHybridization(Hybridization.SP2);
 		
 		// bond block
 		IBond bond1 = new NNBond(atom1, atom2);

@@ -31,6 +31,7 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
@@ -258,7 +259,7 @@ public class SmilesParser {
 								{
 									currentSymbol = currentSymbol.toUpperCase();
 									atom = builder.newAtom(currentSymbol);
-									atom.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+									atom.setHybridization(Hybridization.SP2);
 								} else
 								{
 									atom = builder.newAtom(currentSymbol);
@@ -627,7 +628,7 @@ public class SmilesParser {
 							{
 								currentSymbol = currentSymbol.toUpperCase();
 								atom = builder.newAtom(currentSymbol);
-								atom.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+								atom.setHybridization(Hybridization.SP2);
 
                                 Integer hcount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
                                 if (hcount > 0)
