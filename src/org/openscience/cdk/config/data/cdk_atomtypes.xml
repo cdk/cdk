@@ -125,6 +125,15 @@
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
   </atomType>
 
+  <atomType id="O.planar3">
+    <atom elementType="O" formalCharge="0">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">planar</scalar>
+  </atomType>
+
   <atomType id="O.plus.sp2">
     <atom elementType="O" formalCharge="1">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
