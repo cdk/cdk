@@ -20,26 +20,17 @@
  */
 package org.openscience.cdk.test.tools;
 
-import java.util.Iterator;
-
 import junit.framework.TestSuite;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.*;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.CDKValencyChecker;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+
+import java.util.Iterator;
 
 /**
  * Tests CDK's valency checker capabilities in terms of example molecules.
@@ -216,9 +207,9 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 		CDKValencyChecker checker = CDKValencyChecker.getInstance(mol.getBuilder());
 		Atom c1 = new Atom("C");
 		c1.setHydrogenCount(2);
-        c1.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        c1.setHybridization(IAtomType.Hybridization.SP2);
 		Atom c2 = new Atom("C");
-        c2.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        c2.setHybridization(IAtomType.Hybridization.SP2);
 		c2.setHydrogenCount(2);
 		mol.addAtom(c1);
 		mol.addAtom(c2);

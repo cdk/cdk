@@ -25,13 +25,12 @@ package org.openscience.cdk.test.tools;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
@@ -75,8 +74,8 @@ public class ValencyHybridCheckerTest extends CDKTestCase
 		Molecule m = new Molecule();
 		Atom c1 = new Atom("C");
 		Atom c2 = new Atom("C");
-        c1.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
-        c2.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        c1.setHybridization(IAtomType.Hybridization.SP2);
+        c2.setHybridization(IAtomType.Hybridization.SP2);
 		m.addAtom(c1);
 		m.addAtom(c2);
 		m.addBond(new Bond(c1, c2));
@@ -89,8 +88,8 @@ public class ValencyHybridCheckerTest extends CDKTestCase
 		Molecule m = new Molecule();
 		Atom c1 = new Atom("C");
 		Atom c2 = new Atom("C");
-        c1.setHybridization(CDKConstants.HYBRIDIZATION_SP3);
-        c2.setHybridization(CDKConstants.HYBRIDIZATION_SP3);
+        c1.setHybridization(IAtomType.Hybridization.SP3);
+        c2.setHybridization(IAtomType.Hybridization.SP3);
 		m.addAtom(c1);
 		m.addAtom(c2);
 		m.addBond(new Bond(c1, c2));
