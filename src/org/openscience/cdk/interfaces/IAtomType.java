@@ -39,6 +39,19 @@ package org.openscience.cdk.interfaces;
  */
 public interface IAtomType extends IIsotope {
 
+	public enum Hybridization {
+	    UNSET,
+	    SP1,
+	    SP2,
+	    SP3,
+	    PLANAR3,
+	    SP3D1,
+	    HYBRIDIZATION_SP3D2,
+	    HYBRIDIZATION_SP3D3,
+	    HYBRIDIZATION_SP3D4,
+	    HYBRIDIZATION_SP3D5
+	}
+	
 	/**
 	 * Sets the if attribute of the AtomType object.
 	 *
@@ -125,7 +138,7 @@ public interface IAtomType extends IIsotope {
      * @param  hybridization  The hybridization
      * @see    #getHybridization
      */
-    public void setHybridization(Integer hybridization);
+    public void setHybridization(Hybridization hybridization);
     
     /**
      * Returns the hybridization of this atom.
@@ -133,7 +146,7 @@ public interface IAtomType extends IIsotope {
      * @return the hybridization of this atom
      * @see    #setHybridization
      */
-    public Integer getHybridization();
+    public Hybridization getHybridization();
     
     /**
      * Sets the Vanderwaals radius for this AtomType.

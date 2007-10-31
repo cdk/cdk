@@ -43,6 +43,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.test.CDKTestCase;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
@@ -164,7 +165,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 		assertEquals(4.0, atomType.getBondOrderSum(), 0.0001);
 		assertEquals(2.0, atomType.getMaxBondOrder(), 0.0001);
 		assertEquals(3, (int) atomType.getFormalNeighbourCount());
-		assertEquals(CDKConstants.HYBRIDIZATION_SP2, (int) atomType.getHybridization());
+		assertEquals(Hybridization.SP2, atomType.getHybridization());
 	}
 
     public void testGetAtomTypeFromPDB() throws Exception {
@@ -217,14 +218,14 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     	assertEquals("C", atomType.getSymbol());
     	assertEquals("C", atomType.getAtomTypeName());
     	assertEquals("[CSP]-[0-4][-]?+;[A-Za-z\\+\\-&&[^=%]]{0,6}[(].*+", (String)atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
-    	assertEquals(CDKConstants.HYBRIDIZATION_SP3, (int) atomType.getHybridization());
+    	assertEquals(Hybridization.SP3, atomType.getHybridization());
 
     	atomType = factory.getAtomType("Sthi");
     	assertNotNull(atomType);
     	assertEquals("S", atomType.getSymbol());
     	assertEquals("Sthi", atomType.getAtomTypeName());
     	assertEquals("S-[2];[H]{0,3}+=C.*+", (String)atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
-    	assertEquals(CDKConstants.HYBRIDIZATION_SP2, (int) atomType.getHybridization());
+    	assertEquals(Hybridization.SP2, atomType.getHybridization());
     	assertTrue(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
     	assertEquals(5, atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE));
     }

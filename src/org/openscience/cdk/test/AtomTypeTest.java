@@ -32,6 +32,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 
 /**
  * Checks the funcitonality of the AtomType class.
@@ -173,11 +174,11 @@ public class AtomTypeTest extends CDKTestCase {
     }
 
     public void testSetHybridization_Integer() {
-        int hybridization = CDKConstants.HYBRIDIZATION_SP3;
+        Hybridization hybridization = Hybridization.SP1;
 
         IAtomType atom = builder.newAtomType("C");
         atom.setHybridization(hybridization);
-        assertEquals(hybridization, (int) atom.getHybridization());
+        assertEquals(hybridization, atom.getHybridization());
     }
     public void testGetHybridization() {
         testSetHybridization_Integer();
@@ -338,15 +339,15 @@ public class AtomTypeTest extends CDKTestCase {
      */
     public void testClone_Hybridization() throws Exception {
         IAtomType at = builder.newAtomType("C");
-        at.setHybridization(1);
+        at.setHybridization(Hybridization.PLANAR3);
         IAtomType clone = (IAtomType)at.clone();
         
-        at.setHybridization(2);
-        assertEquals(1, (int) clone.getHybridization());
+        at.setHybridization(Hybridization.SP1);
+        assertEquals(Hybridization.PLANAR3, clone.getHybridization());
     }
     
     /**
-     * Method to test wether the class complies with RFC #9.
+     * Method to test whether the class complies with RFC #9.
      */
     public void testToString() {
         IAtomType at = builder.newAtomType("C");

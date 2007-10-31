@@ -86,7 +86,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * The hybridization state of this atom with CDKConstants.HYBRIDIZATION_UNSET
      * as default.
      */
-    protected Integer hybridization = (Integer) CDKConstants.UNSET;
+    protected IAtomType.Hybridization hybridization = IAtomType.Hybridization.UNSET;
 
     /**
      *  The electron Valency of this atom with CDKConstants.UNSET as default.
@@ -291,7 +291,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see    #getHybridization
      */
-    public void setHybridization(Integer hybridization) {
+    public void setHybridization(IAtomType.Hybridization hybridization) {
         this.hybridization = hybridization;
         notifyChanged();
     }
@@ -303,7 +303,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see    #setHybridization
      */
-    public Integer getHybridization() {
+    public IAtomType.Hybridization getHybridization() {
         return this.hybridization;
     }
     
