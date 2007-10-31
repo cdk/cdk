@@ -20,9 +20,14 @@
  */
 package org.openscience.cdk.test.smiles.smarts.parser;
 
+import java.io.StringReader;
+import java.util.Iterator;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
@@ -33,8 +38,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.test.CDKTestCase;
-
-import java.io.StringReader;
 
 /**
  * JUnit test routines for the SMARTS parser.
@@ -914,11 +917,20 @@ public class ParserTest extends CDKTestCase {
 
     /**
      * From http://www.daylight.com/dayhtml_tutorials/languages/smarts/index.html
+     * @param dumpAtomTypes TODO
      */
-    public int match(String smarts, String smiles) throws Exception {
+    public int match(String smarts, String smiles, boolean dumpAtomTypes) throws Exception {
     	SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, true);
     	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-    	IAtomContainer atomContainer = sp.parseSmiles(smiles);  
+    	IAtomContainer atomContainer = sp.parseSmiles(smiles);
+    	if (dumpAtomTypes) {
+    		Iterator<IAtom> atoms = atomContainer.atoms();
+    		while (atoms.hasNext()) {
+    			IAtom nextAtom = atoms.next();
+    			System.out.println("atom: " + nextAtom.getSymbol() + " -> " +
+    					nextAtom.getAtomTypeName());
+    		}
+    	}
     	boolean status = sqt.matches(atomContainer);
     	if (status) {
     		int nmatch = sqt.countMatches();
@@ -929,436 +941,436 @@ public class ParserTest extends CDKTestCase {
     }
     
     public void testPropertyCharge1() throws Exception {
-    	assertEquals(0, match("[+1]", "[OH-].[Mg+2]"));
+    	assertEquals(0, match("[+1]", "[OH-].[Mg+2]", false));
     }
     public void testPropertyCharge2() throws Exception {
-    	assertEquals(1, match("[+1]", "COCC(O)Cn1ccnc1[N+](=O)[O-]"));
+    	assertEquals(1, match("[+1]", "COCC(O)Cn1ccnc1[N+](=O)[O-]", false));
     }
     public void testPropertyCharge3() throws Exception {
-    	assertEquals(1, match("[+1]", "[NH4+]"));
+    	assertEquals(1, match("[+1]", "[NH4+]", false));
     }
     public void testPropertyCharge4() throws Exception {
-    	assertEquals(0, match("[+1]", "CN1C(=O)N(C)C(=O)C(N(C)C=N2)=C12"));
+    	assertEquals(0, match("[+1]", "CN1C(=O)N(C)C(=O)C(N(C)C=N2)=C12", false));
     }
     public void testPropertyCharge5() throws Exception {
-    	assertEquals(2, match("[+1]", "[Cl-].[Cl-].NC(=O)c2cc[n+](COC[n+]1ccccc1C=NO)cc2"));
+    	assertEquals(2, match("[+1]", "[Cl-].[Cl-].NC(=O)c2cc[n+](COC[n+]1ccccc1C=NO)cc2", true));
     }
     public void testPropertyAromatic1() throws Exception {
-    	int m = match("[a]", "c1cc(C)c(N)cc1");
+    	int m = match("[a]", "c1cc(C)c(N)cc1", false);
     	assertEquals(6, m);
     }
     public void testPropertyAromatic2() throws Exception {
-    	int m = match("[a]", "c1c(C)c(N)cnc1");
+    	int m = match("[a]", "c1c(C)c(N)cnc1", false);
     	assertEquals(6, m);
     }
     public void testPropertyAromatic3() throws Exception {
-    	int m = match("[a]", "c1(C)c(N)cco1");
+    	int m = match("[a]", "c1(C)c(N)cco1", false);
     	assertEquals(5, m);
     }
     public void testPropertyAromatic4() throws Exception {
-    	int m = match("[a]", "c1c(C)c(N)c[nH]1");
+    	int m = match("[a]", "c1c(C)c(N)c[nH]1", false);
     	assertEquals(5, m);
     }
     public void testPropertyAromatic5() throws Exception {
-    	int m = match("[a]", "O=n1ccccc1");
+    	int m = match("[a]", "O=n1ccccc1", false);
     	assertEquals(6, m);
     }  
     public void testPropertyAromatic6() throws Exception {
-    	int m = match("[a]", "[O-][n+]1ccccc1");
+    	int m = match("[a]", "[O-][n+]1ccccc1", false);
     	assertEquals(6, m);
     }  
     public void testPropertyAromatic7() throws Exception {
-    	int m = match("[a]", "c1ncccc1C1CCCN1C");
+    	int m = match("[a]", "c1ncccc1C1CCCN1C", false);
     	assertEquals(6, m);
     }  
     public void testPropertyAromatic8() throws Exception {
-    	int m = match("[a]", "c1ccccc1C(=O)OC2CC(N3C)CCC3C2C(=O)OC");
+    	int m = match("[a]", "c1ccccc1C(=O)OC2CC(N3C)CCC3C2C(=O)OC", false);
     	assertEquals(6, m);
     }
     public void testPropertyAliphatic1() throws Exception {
-    	int m = match("[A]", "c1cc(C)c(N)cc1");
+    	int m = match("[A]", "c1cc(C)c(N)cc1", false);
     	assertEquals(2, m);
     }
     public void testPropertyAliphatic2() throws Exception {
-    	int m = match("[A]", "CCO");
+    	int m = match("[A]", "CCO", false);
     	assertEquals(3, m);
     }
     public void testPropertyAliphatic3() throws Exception {
-    	int m = match("[A]", "C=CC=CC=C");
+    	int m = match("[A]", "C=CC=CC=C", false);
     	assertEquals(6, m);
     }
     public void testPropertyAliphatic4() throws Exception {
-    	int m = match("[A]", "CC(C)(C)C");
+    	int m = match("[A]", "CC(C)(C)C", false);
     	assertEquals(5, m);
     }
     public void testPropertyAliphatic5() throws Exception {
-    	int m = match("[A]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1");
+    	int m = match("[A]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1", false);
     	assertEquals(15, m);
     }
     public void testPropertyAliphatic6() throws Exception {
-    	int m = match("[A]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
+    	int m = match("[A]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76", false);
     	assertEquals(19, m);
     }
     //TODO: atomicnumber always 0 in smiles parsed atomcontainer
     public void testPropertyAtomicNumber1() throws Exception {
-    	int m = match("[#6]", "c1cc(C)c(N)cc1");
+    	int m = match("[#6]", "c1cc(C)c(N)cc1", false);
     	assertEquals(7, m);    	
     }
     public void testPropertyAtomicNumber2() throws Exception {
-    	int m = match("[#6]", "CCO");
+    	int m = match("[#6]", "CCO", false);
     	assertEquals(2, m);    	
     }
     public void testPropertyAtomicNumber3() throws Exception {
-    	int m = match("[#6]", "C=CC=CC=C-O");
+    	int m = match("[#6]", "C=CC=CC=C-O", false);
     	assertEquals(6, m);    	
     }
     public void testPropertyAtomicNumber4() throws Exception {
-    	int m = match("[#6]", "CC(C)(C)C");
+    	int m = match("[#6]", "CC(C)(C)C", false);
     	assertEquals(5, m);    	
     }
     public void testPropertyAtomicNumber5() throws Exception {
-    	int m = match("[#6]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
+    	int m = match("[#6]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34", false);
     	assertEquals(20, m);    	
     }
     public void testPropertyAtomicNumber6() throws Exception {
-    	int m = match("[#6]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
+    	int m = match("[#6]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5", false);
     	assertEquals(17, m);    	
     }
     public void testPropertyAtomicNumber7() throws Exception {
-    	int m = match("[#6]", "C123C5C(OC(=O)C)C=CC2C(N(C)CC1)Cc(ccc4OC(=O)C)c3c4O5");
+    	int m = match("[#6]", "C123C5C(OC(=O)C)C=CC2C(N(C)CC1)Cc(ccc4OC(=O)C)c3c4O5", false);
     	assertEquals(21, m);    	
     }
     public void testPropertyR1() throws Exception {
-    	int m = match("[R2]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
+    	int m = match("[R2]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76", false);
     	assertEquals(7, m);     	
     }
     public void testPropertyR2() throws Exception {
-    	int m = match("[R2]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
+    	int m = match("[R2]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34", false);
     	assertEquals(6, m);     	
     }
     public void testPropertyR3() throws Exception {
-    	int m = match("[R2]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
+    	int m = match("[R2]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5", false);
     	assertEquals(4, m);     	
     }
     public void testPropertyR4() throws Exception {
-    	int m = match("[R2]", "C123C5C(OC(=O)C)C=CC2C(N(C)CC1)Cc(ccc4OC(=O)C)c3c4O5");
+    	int m = match("[R2]", "C123C5C(OC(=O)C)C=CC2C(N(C)CC1)Cc(ccc4OC(=O)C)c3c4O5", false);
     	assertEquals(4, m);     	
     }
     public void testPropertyR5() throws Exception {
-    	int m = match("[R2]", "C1C(C)=C(C=CC(C)=CC=CC(C)=CCO)C(C)(C)C1");
+    	int m = match("[R2]", "C1C(C)=C(C=CC(C)=CC=CC(C)=CCO)C(C)(C)C1", false);
     	assertEquals(0, m);
     }
     public void testPropertyr1() throws Exception {
-    	int m = match("[r5]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
+    	int m = match("[r5]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76", false);
     	assertEquals(9, m);
     }
     public void testPropertyr2() throws Exception {
-    	int m = match("[r5]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
+    	int m = match("[r5]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34", false);
     	assertEquals(0, m);
     }
     public void testPropertyr3() throws Exception {
-    	int m = match("[r5]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
+    	int m = match("[r5]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5", false);
     	assertEquals(5, m);
     }
     public void testPropertyr4() throws Exception {
-    	int m = match("[r5]", "C123C5C(OC(=O)C)C=CC2C(N(C)CC1)Cc(ccc4OC(=O)C)c3c4O5");
+    	int m = match("[r5]", "C123C5C(OC(=O)C)C=CC2C(N(C)CC1)Cc(ccc4OC(=O)C)c3c4O5", false);
     	assertEquals(5, m);
     }
     public void testPropertyr5() throws Exception {
-    	int m = match("[r5]", "C1C(C)=C(C=CC(C)=CC=CC(C)=CCO)C(C)(C)C1");
+    	int m = match("[r5]", "C1C(C)=C(C=CC(C)=CC=CC(C)=CCO)C(C)(C)C1", false);
     	assertEquals(5, m);
     }
     public void testPropertyValence1() throws Exception {
-    	int m = match("[v4]", "C");
+    	int m = match("[v4]", "C", false);
     	assertEquals(1, m);
     }
     public void testPropertyValence2() throws Exception {
-    	int m = match("[v4]", "CCO");
+    	int m = match("[v4]", "CCO", false);
     	assertEquals(2, m);
     }
     public void testPropertyValence3() throws Exception {
-    	int m = match("[v4]", "[NH4+]");
+    	int m = match("[v4]", "[NH4+]", false);
     	assertEquals(1, m);
     }
     public void testPropertyValence4() throws Exception {
-    	int m = match("[v4]", "CC1(C)SC2C(NC(=O)Cc3ccccc3)C(=O)N2C1C(=O)O");
+    	int m = match("[v4]", "CC1(C)SC2C(NC(=O)Cc3ccccc3)C(=O)N2C1C(=O)O", false);
     	assertEquals(16, m);
     }
     public void testPropertyValence5() throws Exception {
-    	int m = match("[v4]", "[Cl-].[Cl-].NC(=O)c2cc[n+](COC[n+]1ccccc1C=NO)cc2");
+    	int m = match("[v4]", "[Cl-].[Cl-].NC(=O)c2cc[n+](COC[n+]1ccccc1C=NO)cc2", false);
     	assertEquals(16, m);
     }   
     public void testPropertyX1() throws Exception {
-    	int m = match("[X2]", "CCO");
+    	int m = match("[X2]", "CCO", false);
     	assertEquals(1, m);
     }
     public void testPropertyX2() throws Exception {
-    	int m = match("[X2]", "O");
+    	int m = match("[X2]", "O", false);
     	assertEquals(1, m);
     }
     public void testPropertyX3() throws Exception {
-    	int m = match("[X2]", "CCC(=O)CC");
+    	int m = match("[X2]", "CCC(=O)CC", false);
     	assertEquals(0, m);
     }
     public void testPropertyX4() throws Exception {
-    	int m = match("[X2]", "FC(Cl)=C=C(Cl)F");
+    	int m = match("[X2]", "FC(Cl)=C=C(Cl)F", false);
     	assertEquals(1, m);
     }
     public void testPropertyX5() throws Exception {
-    	int m = match("[X2]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
+    	int m = match("[X2]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34", false);
     	assertEquals(3, m);
     }
     public void testPropertyX6() throws Exception {
-    	int m = match("[X2]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
+    	int m = match("[X2]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5", false);
     	assertEquals(3, m);
     }
     public void testPropertyHAtom1() throws Exception {
-    	int m = match("[H]", "[H+].[Cl-]");
+    	int m = match("[H]", "[H+].[Cl-]", false);
     	assertEquals(1, m);    	
     }
     public void testPropertyHAtom2() throws Exception {
-    	int m = match("[H]", "[2H]");
+    	int m = match("[H]", "[2H]", false);
     	assertEquals(1, m);    	
     }
     public void testPropertyHAtom3() throws Exception {
-    	int m = match("[H]", "[H][H]");
+    	int m = match("[H]", "[H][H]", false);
     	assertEquals(2, m);    	
     }
     public void testPropertyHAtom4() throws Exception {
-    	int m = match("[H]", "[CH4]");
+    	int m = match("[H]", "[CH4]", false);
     	assertEquals(0, m);    	
     }
     public void testPropertyHAtom5() throws Exception {
-    	int m = match("[H]", "[H]C([H])([H])[H]");
+    	int m = match("[H]", "[H]C([H])([H])[H]", false);
     	assertEquals(0, m);    	
     }
     public void testPropertyHTotal1() throws Exception {
-    	int m = match("[H1]", "CCO");
+    	int m = match("[H1]", "CCO", false);
     	assertEquals(1, m);    	
     }
     public void testPropertyHTotal2() throws Exception {
-    	int m = match("[H1]", "[2H]C#C");
+    	int m = match("[H1]", "[2H]C#C", false);
     	assertEquals(2, m);    	
     }
     public void testPropertyHTotal3() throws Exception {
-    	int m = match("[H1]", "[H]C(C)(C)C");
+    	int m = match("[H1]", "[H]C(C)(C)C", false);
     	assertEquals(1, m);    	
     }
     public void testPropertyHTotal4() throws Exception {
-    	int m = match("[H1]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
+    	int m = match("[H1]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34", false);
     	assertEquals(11, m);    	
     }
     public void testPropertyHTotal5() throws Exception {
-    	int m = match("[H1]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
+    	int m = match("[H1]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5", false);
     	assertEquals(10, m);    	
     }
     public void testPropertyHTotal6() throws Exception {
-    	int m = match("[H1]", "[H][H]");
+    	int m = match("[H1]", "[H][H]", false);
     	assertEquals(2, m);    	
     }
     public void testPropertyAnyAtom1() throws Exception {
-    	int m = match("[*]", "C");
+    	int m = match("[*]", "C", false);
     	assertEquals(1, m);    	
     }
     public void testPropertyAnyAtom2() throws Exception {
-    	int m = match("[*]", "[2H]C");
+    	int m = match("[*]", "[2H]C", false);
     	assertEquals(2, m);    	
     }
     public void testPropertyAnyAtom3() throws Exception {
-    	int m = match("[*]", "[H][H]");
+    	int m = match("[*]", "[H][H]", false);
     	assertEquals(2, m);    	
     }
     public void testPropertyAnyAtom4() throws Exception {
-    	int m = match("[*]", "[1H]C([1H])([1H])[1H]");
+    	int m = match("[*]", "[1H]C([1H])([1H])[1H]", false);
     	assertEquals(5, m);    	
     }
     public void testBondSingle1() throws Exception {
-    	int m = match("CC", "C=C");
+    	int m = match("CC", "C=C", false);
     	assertEquals(0, m);    		
     }
     public void testBondSingle2() throws Exception {
-    	int m = match("CC", "C#C");
+    	int m = match("CC", "C#C", false);
     	assertEquals(0, m);    		
     }
     public void testBondSingle3() throws Exception {
-    	int m = match("CC", "CCO");
+    	int m = match("CC", "CCO", false);
     	assertEquals(1, m);    		
     }
     public void testBondSingle4() throws Exception {
-    	int m = match("CC", "C1C(C)=C(C=CC(C)=CC=CC(C)=CCO)C(C)(C)C1");
+    	int m = match("CC", "C1C(C)=C(C=CC(C)=CC=CC(C)=CCO)C(C)(C)C1", false);
     	assertEquals(14, m);    		
     }
     public void testBondSingle5() throws Exception {
-    	int m = match("CC", "CC1(C)SC2C(NC(=O)Cc3ccccc3)C(=O)N2C1C(=O)O");
+    	int m = match("CC", "CC1(C)SC2C(NC(=O)Cc3ccccc3)C(=O)N2C1C(=O)O", false);
     	assertEquals(7, m);    		
     }
     public void testBondAny1() throws Exception {
-    	int m = match("C~C", "C=C");
+    	int m = match("C~C", "C=C", false);
     	assertEquals(1, m);
     }
     public void testBondAny2() throws Exception {
-    	int m = match("C~C", "C#C");
+    	int m = match("C~C", "C#C", false);
     	assertEquals(1, m);
     }
     public void testBondAny3() throws Exception {
-    	int m = match("C~C", "CCO");
+    	int m = match("C~C", "CCO", false);
     	assertEquals(1, m);
     }
     public void testBondAny4() throws Exception {
-    	int m = match("C~C", "C1C(C)=C(C=CC(C)=CC=CC(C)=CCO)C(C)(C)C1");
+    	int m = match("C~C", "C1C(C)=C(C=CC(C)=CC=CC(C)=CCO)C(C)(C)C1", false);
     	assertEquals(19, m);
     }    
     public void testBondAny5() throws Exception {
-    	int m = match("[C,c]~[C,c]", "CC1(C)SC2C(NC(=O)Cc3ccccc3)C(=O)N2C1C(=O)O");
+    	int m = match("[C,c]~[C,c]", "CC1(C)SC2C(NC(=O)Cc3ccccc3)C(=O)N2C1C(=O)O", false);
     	assertEquals(14, m);
     }
     public void testBondRing1() throws Exception {
-    	int m = match("C@C", "C=C");
+    	int m = match("C@C", "C=C", false);
     	assertEquals(0, m);
     }
     public void testBondRing2() throws Exception {
-    	int m = match("C@C", "C#C");
+    	int m = match("C@C", "C#C", false);
     	assertEquals(0, m);
     }
     public void testBondRing3() throws Exception {
-    	int m = match("C@C", "C1CCCCC1");
+    	int m = match("C@C", "C1CCCCC1", false);
     	assertEquals(6, m);
     }
     public void testBondRing4() throws Exception {
-    	int m = match("[C,c]@[C,c]", "c1ccccc1Cc1ccccc1");
+    	int m = match("[C,c]@[C,c]", "c1ccccc1Cc1ccccc1", false);
     	assertEquals(12, m);
     }
     public void testBondRing5() throws Exception {
-    	int m = match("[C,c]@[C,c]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1");
+    	int m = match("[C,c]@[C,c]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1", false);
     	assertEquals(15, m);
     }
     public void testBondRing6() throws Exception {
-    	int m = match("[C,c]@[C,c]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
+    	int m = match("[C,c]@[C,c]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76", false);
     	assertEquals(22, m);
     }
     public void testBondStereo1() throws Exception { //TODO: Stereo bond not implemented in smiles parser?
-    	int m = match("F/?C=C/Cl", "F/C=C/Cl");
+    	int m = match("F/?C=C/Cl", "F/C=C/Cl", false);
     	assertEquals(1, m);
     }
     public void testBondStereo2() throws Exception {
-    	int m = match("F/?C=C/Cl", "FC=C/Cl");
+    	int m = match("F/?C=C/Cl", "FC=C/Cl", false);
     	assertEquals(1, m);
     }
     public void testBondStereo3() throws Exception {
-    	int m = match("F/?C=C/Cl", "FC=CCl");
+    	int m = match("F/?C=C/Cl", "FC=CCl", false);
     	assertEquals(1, m);
     }
     public void testBondStereo4() throws Exception {
-    	int m = match("F/?C=C/Cl", "F\\C=C/Cl");
+    	int m = match("F/?C=C/Cl", "F\\C=C/Cl", false);
     	assertEquals(0, m);
     }
     public void testLogicalNot1() throws Exception {
-    	int m = match("[!c]", "c1cc(C)c(N)cc1");
+    	int m = match("[!c]", "c1cc(C)c(N)cc1", false);
     	assertEquals(2, m);
     }
     public void testLogicalNot2() throws Exception {
-    	int m = match("[!c]", "c1c(C)c(N)cnc1");
+    	int m = match("[!c]", "c1c(C)c(N)cnc1", false);
     	assertEquals(3, m);
     }
     public void testLogicalNot3() throws Exception {
-    	int m = match("[!c]", "c1(C)c(N)cco1");
+    	int m = match("[!c]", "c1(C)c(N)cco1", false);
     	assertEquals(3, m);
     }
     public void testLogicalNot4() throws Exception {
-    	int m = match("[!c]", "c1c(C)c(N)c[nH]1");
+    	int m = match("[!c]", "c1c(C)c(N)c[nH]1", false);
     	assertEquals(3, m);
     }
     public void testLogicalNot5() throws Exception {
-    	int m = match("[!c]", "O=n1ccccc1");
+    	int m = match("[!c]", "O=n1ccccc1", false);
     	assertEquals(2, m);
     }
     public void testLogicalNot6() throws Exception {
-    	int m = match("[!c]", "[O-][n+]1ccccc1");
+    	int m = match("[!c]", "[O-][n+]1ccccc1", false);
     	assertEquals(2, m);
     }
     public void testLogicalNot7() throws Exception {
-    	int m = match("[!c]", "c1ncccc1C1CCCN1C");
+    	int m = match("[!c]", "c1ncccc1C1CCCN1C", false);
     	assertEquals(7, m);
     }
     public void testLogicalNot8() throws Exception {
-    	int m = match("[!c]", "c1ccccc1C(=O)OC2CC(N3C)CCC3C2C(=O)OC");
+    	int m = match("[!c]", "c1ccccc1C(=O)OC2CC(N3C)CCC3C2C(=O)OC", false);
     	assertEquals(16, m);
     }
     public void testLogicalOr1() throws Exception {
-    	int m = match("[N,O,o]", "c1cc(C)c(N)cc1");
+    	int m = match("[N,O,o]", "c1cc(C)c(N)cc1", false);
     	assertEquals(1, m);
     }
     public void testLogicalOr2() throws Exception {
-    	int m = match("[N,O,o]", "c1c(C)c(N)cnc1");
+    	int m = match("[N,O,o]", "c1c(C)c(N)cnc1", false);
     	assertEquals(1, m);
     }
     public void testLogicalOr3() throws Exception {
-    	int m = match("[N,O,o]", "c1(C)c(N)cco1");
+    	int m = match("[N,O,o]", "c1(C)c(N)cco1", false);
     	assertEquals(2, m);
     }
     public void testLogicalOr4() throws Exception {
-    	int m = match("[N,O,o]", "c1c(C)c(N)c[nH]1");
+    	int m = match("[N,O,o]", "c1c(C)c(N)c[nH]1", false);
     	assertEquals(1, m);
     }
     public void testLogicalOr5() throws Exception {
-    	int m = match("[N,O,o]", "O=n1ccccc1");
+    	int m = match("[N,O,o]", "O=n1ccccc1", false);
     	assertEquals(1, m);
     }
     public void testLogicalOr6() throws Exception {
-    	int m = match("[N,O,o]", "[O-][n+]1ccccc1");
+    	int m = match("[N,O,o]", "[O-][n+]1ccccc1", false);
     	assertEquals(1, m);
     }
     public void testLogicalOr7() throws Exception {
-    	int m = match("[N,O,o]", "c1ncccc1C1CCCN1C");
+    	int m = match("[N,O,o]", "c1ncccc1C1CCCN1C", false);
     	assertEquals(1, m);
     }
     public void testLogicalOr8() throws Exception {
-    	int m = match("[N,O,o]", "c1ccccc1C(=O)OC2CC(N3C)CCC3C2C(=O)OC");
+    	int m = match("[N,O,o]", "c1ccccc1C(=O)OC2CC(N3C)CCC3C2C(=O)OC", false);
     	assertEquals(5, m);
     }
     public void testLogicalOrHighAnd1() throws Exception {
-    	int m = match("[N,#6&+1,+0]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1");
+    	int m = match("[N,#6&+1,+0]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1", false);
     	assertEquals(24, m);
     }
     public void testLogicalOrHighAnd2() throws Exception {
-    	int m = match("[N,#6&+1,+0]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
+    	int m = match("[N,#6&+1,+0]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76", false);
     	assertEquals(25, m);
     }
     public void testLogicalOrHighAnd3() throws Exception {
-    	int m = match("[N,#6&+1,+0]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
+    	int m = match("[N,#6&+1,+0]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34", false);
     	assertEquals(24, m);
     }
     public void testLogicalOrHighAnd4() throws Exception {
-    	int m = match("[N,#6&+1,+0]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
+    	int m = match("[N,#6&+1,+0]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5", false);
     	assertEquals(21, m);
     }
     public void testLogicalOrHighAnd5() throws Exception {
-    	int m = match("[N,#6&+1,+0]", "N1N([Hg-][O+]=C1N=Nc2ccccc2)c3ccccc3");
+    	int m = match("[N,#6&+1,+0]", "N1N([Hg-][O+]=C1N=Nc2ccccc2)c3ccccc3", false);
     	assertEquals(17, m);
     }
     public void testLogicalOrHighAnd7() throws Exception {
-    	int m = match("[N,#6&+1,+0]", "[Cl-].Clc1ccc([I+]c2cccs2)cc1");
+    	int m = match("[N,#6&+1,+0]", "[Cl-].Clc1ccc([I+]c2cccs2)cc1", false);
     	assertEquals(12, m);
     }
     public void testLogicalOrLowAnd1() throws Exception {
-    	int m = match("[#7,C;+0,+1]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1");
+    	int m = match("[#7,C;+0,+1]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1", false);
     	assertEquals(15, m);    	
     }
     public void testLogicalOrLowAnd2() throws Exception {
-    	int m = match("[#7,C;+0,+1]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
+    	int m = match("[#7,C;+0,+1]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76", false);
     	assertEquals(17, m);    	
     }
     public void testLogicalOrLowAnd3() throws Exception {
-    	int m = match("[#7,C;+0,+1]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
+    	int m = match("[#7,C;+0,+1]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34", false);
     	assertEquals(13, m);    	
     }
     public void testLogicalOrLowAnd4() throws Exception {
-    	int m = match("[#7,C;+0,+1]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5");
+    	int m = match("[#7,C;+0,+1]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5", false);
     	assertEquals(12, m);    	
     }
     
     public void testLogicalOrLowAnd5() throws Exception {
-    	int m = match("[#7,C;+0,+1]", "N1N([Hg-][O+]=C1N=Nc2ccccc2)c3ccccc3");
+    	int m = match("[#7,C;+0,+1]", "N1N([Hg-][O+]=C1N=Nc2ccccc2)c3ccccc3", false);
     	assertEquals(5, m);    	
     }
     /*
@@ -1373,31 +1385,31 @@ public class ParserTest extends CDKTestCase {
     */
     
     public void testRing1() throws Exception {
-    	int m = match("C1CCCCC1", "C1CCCCC1CCCC");
+    	int m = match("C1CCCCC1", "C1CCCCC1CCCC", false);
     	assertEquals(12, m);     	
     }
     public void testRing2() throws Exception {
-    	int m = match("C1CCCCC1", "C1CCCCC1C1CCCCC1");
+    	int m = match("C1CCCCC1", "C1CCCCC1C1CCCCC1", false);
     	assertEquals(24, m);     	
     }
     public void testRing3() throws Exception {
-    	int m = match("C1CCCCC1", "C1CCCC12CCCCC2");
+    	int m = match("C1CCCCC1", "C1CCCC12CCCCC2", false);
     	assertEquals(12, m);     	
     }
     public void testRing4() throws Exception {
-    	int m = match("C1CCCCC1", "c1ccccc1O");
+    	int m = match("C1CCCCC1", "c1ccccc1O", false);
     	assertEquals(0, m);     	
     }
     public void testRing5() throws Exception {
-    	int m = match("C1CCCCC1", "c1ccccc1CCCCCC");
+    	int m = match("C1CCCCC1", "c1ccccc1CCCCCC", false);
     	assertEquals(0, m);     	
     }
     public void testRing6() throws Exception {
-    	int m = match("C1CCCCC1", "CCCCCC");
+    	int m = match("C1CCCCC1", "CCCCCC", false);
     	assertEquals(0, m);     	
     }
     public void testRing7() throws Exception {
-    	int m = match("c1ccccc1", "c1ccccc1");
+    	int m = match("c1ccccc1", "c1ccccc1", false);
     	assertEquals(12, m);
     }
 }
