@@ -24,21 +24,17 @@
  */
 package org.openscience.cdk.aromaticity;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.SpanningTree;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+
+import java.util.Iterator;
 
 /**
  * This aromaticity detector detects the aromaticity based on the H&uuml;ckel
@@ -123,7 +119,8 @@ public class CDKHueckelAromaticityDetector {
 		while (ringAtoms.hasNext()) {
 			IAtom ringAtom = ringAtoms.next();
 			if (ringAtom.getHybridization() != null &&
-				ringAtom.getHybridization() == Hybridization.SP2) {
+				(ringAtom.getHybridization() == Hybridization.SP2) ||
+                    ringAtom.getHybridization() == Hybridization.PLANAR3) {
 				// for example, a carbon
 				// note: the double bond is in the ring, that has been tested earlier
 				// FIXME: this does assume bond orders to be resolved too, when detecting
@@ -131,9 +128,11 @@ public class CDKHueckelAromaticityDetector {
 				if ("N.planar3".equals(ringAtom.getAtomTypeName())) {
 					electronCount += 2;
 				} else if ("S.2".equals(ringAtom.getAtomTypeName())) {
-					electronCount += 2;
-				} else {
-					if (factory == null) {
+                    electronCount += 2;
+                } else if ("O.planar3".equals(ringAtom.getAtomTypeName())) {
+                    electronCount += 2;
+                } else {
+                    if (factory == null) {
 						factory = AtomTypeFactory.getInstance(
 							"org/openscience/cdk/config/data/cdk_atomtypes.xml",
 							ringAtom.getBuilder()
