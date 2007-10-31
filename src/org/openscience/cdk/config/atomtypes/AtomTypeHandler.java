@@ -25,8 +25,8 @@ package org.openscience.cdk.config.atomtypes;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -130,7 +130,9 @@ public class AtomTypeHandler extends DefaultHandler {
                         atomType.setHybridization(Hybridization.SP2);
                     } else if ("sp3".equals(currentChars)) {
                         atomType.setHybridization(Hybridization.SP3);
-                    } else {
+                    } else if ("planar".equals(currentChars)) {
+                        atomType.setHybridization(Hybridization.PLANAR3);
+                    }else {
                     	logger.warn("Unrecognized hybridization in config file: ", currentChars);
                     }
                 } else if (scalarType == SCALAR_DA){
