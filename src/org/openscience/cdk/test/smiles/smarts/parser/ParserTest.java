@@ -957,7 +957,7 @@ public class ParserTest extends CDKTestCase {
     	assertEquals(2, match("[+1]", "[Cl-].[Cl-].NC(=O)c2cc[n+](COC[n+]1ccccc1C=NO)cc2", false));
     }
     public void testPropertyAromatic1() throws Exception {
-    	int m = match("[a]", "c1cc(C)c(N)cc1", true);
+    	int m = match("[a]", "c1cc(C)c(N)cc1", false);
     	assertEquals(6, m);
     }
     public void testPropertyAromatic2() throws Exception {
@@ -965,7 +965,7 @@ public class ParserTest extends CDKTestCase {
     	assertEquals(6, m);
     }
     public void testPropertyAromatic3() throws Exception {
-    	int m = match("[a]", "c1(C)c(N)cco1", false);
+    	int m = match("[a]", "c1(C)c(N)cco1", true);
     	assertEquals(5, m);
     }
     public void testPropertyAromatic4() throws Exception {
