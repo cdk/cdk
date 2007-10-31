@@ -146,10 +146,11 @@ public class AtomContainerManipulator {
     public static double getTotalNaturalAbundance(IAtomContainer atomContainer) {
         double abundance =  1.0;
         Iterator<IAtom> iterAtoms = atomContainer.atoms();
-        while(iterAtoms.hasNext()) {
+        while(iterAtoms.hasNext())
         	abundance = abundance* iterAtoms.next().getNaturalAbundance();
-        }
-        return abundance/(100^atomContainer.getAtomCount());
+        
+    	
+        return abundance/Math.pow(100,atomContainer.getAtomCount());
     }
     
     /**
