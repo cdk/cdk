@@ -118,7 +118,7 @@ public class CDKHueckelAromaticityDetector {
 		int electronCount = 0;
 		while (ringAtoms.hasNext()) {
 			IAtom ringAtom = ringAtoms.next();
-			if (ringAtom.getHybridization() != null &&
+			if (ringAtom.getHybridization() != CDKConstants.UNSET &&
 				(ringAtom.getHybridization() == Hybridization.SP2) ||
                     ringAtom.getHybridization() == Hybridization.PLANAR3) {
 				// for example, a carbon
@@ -139,7 +139,7 @@ public class CDKHueckelAromaticityDetector {
 						);
 					}
 					IAtomType type = factory.getAtomType(ringAtom.getAtomTypeName());
-					if (((Integer)type.getProperty(CDKConstants.PI_BOND_COUNT)).intValue() > 0) {
+					if ((Integer) type.getProperty(CDKConstants.PI_BOND_COUNT) > 0) {
 						electronCount += 1;
 					}
 				}
@@ -186,7 +186,7 @@ public class CDKHueckelAromaticityDetector {
 		if (count == null) {
 			return 0;
 		} else {
-			return count.intValue();
+			return count;
 		}
 	}
 	
