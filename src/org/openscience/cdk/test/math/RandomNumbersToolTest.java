@@ -163,27 +163,11 @@ public class RandomNumbersToolTest extends CDKTestCase {
                 sd >= (dev - epsilon) && sd <= (dev + epsilon));
     }
 
-    public void testExponentialFloat() {
-        float mean = 1.0f;
-        float epsilon = 0.01f;
-        int ntry = 10000000;
-        float[] values = new float[ntry];
-
-        for (int i = 0; i < ntry; i++) values[i] = RandomNumbersTool.exponentialFloat(mean);
-
-        // no get the mean of the values
-        float m = 0.0f;
-        for (int i = 0; i < ntry; i++) m += values[i];
-        m = m / ntry;
-
-        assertTrue("Estimated mean does not match to 2 decimal places",
-                m >= (mean - epsilon) && m <= (mean + epsilon));
-    }
 
     public void testExponentialDouble() {
         double mean = 1.0f;
-        double epsilon = 0.001f;
-        int ntry = 10000000;
+        double epsilon = 0.01f;
+        int ntry = 100000;
         double[] values = new double[ntry];
 
         for (int i = 0; i < ntry; i++) values[i] = RandomNumbersTool.exponentialDouble(mean);
@@ -193,7 +177,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
         for (int i = 0; i < ntry; i++) m += values[i];
         m = m / ntry;
 
-        assertTrue("Estimated mean does not match to 2 decimal places",
+        assertTrue("Estimated mean does not match to 2 decimal places " + m,
                 m >= (mean - epsilon) && m <= (mean + epsilon));
     }
 }
