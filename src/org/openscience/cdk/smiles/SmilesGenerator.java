@@ -50,6 +50,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
@@ -1584,7 +1585,8 @@ public class SmilesGenerator
 				buffer.append('[');
 			}
 			buffer.append(mass);
-			if ((useAromaticity && a.getFlag(CDKConstants.ISAROMATIC)) || (a.getHybridization() != CDKConstants.UNSET && a.getHybridization() == CDKConstants.HYBRIDIZATION_SP2))
+			if ((useAromaticity && a.getFlag(CDKConstants.ISAROMATIC)) || (a.getHybridization() != Hybridization.UNSET &&
+					a.getHybridization() == Hybridization.SP2))
 			{
 				buffer.append(a.getSymbol().toLowerCase());
 			} else

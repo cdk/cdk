@@ -28,10 +28,15 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -282,19 +287,16 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 logger.debug("This type matches: ", type);
                 int formalNeighbourCount = type.getFormalNeighbourCount();
-                if (type.getHybridization() == CDKConstants.HYBRIDIZATION_UNSET) {
+                if (type.getHybridization() == Hybridization.UNSET) {
                     missingHydrogens = (int) (type.getBondOrderSum() - bondOrderSum);
+                } else if (type.getHybridization() == Hybridization.SP3) {
+                	missingHydrogens = formalNeighbourCount - neighbourCount;
+                } else if (type.getHybridization() == Hybridization.SP2) {
+                	missingHydrogens = formalNeighbourCount - neighbourCount;
+                } else if (type.getHybridization() == Hybridization.SP1) {
+                	missingHydrogens = formalNeighbourCount - neighbourCount;
                 } else {
-                    switch (atom.getHybridization()) {
-                        case CDKConstants.HYBRIDIZATION_SP3:
-                            missingHydrogens = formalNeighbourCount - neighbourCount; break;
-                        case CDKConstants.HYBRIDIZATION_SP2:
-                            missingHydrogens = formalNeighbourCount - neighbourCount; break;
-                        case CDKConstants.HYBRIDIZATION_SP1:
-                            missingHydrogens = formalNeighbourCount - neighbourCount; break;
-                        default:
-                            missingHydrogens = (int) (type.getBondOrderSum() - bondOrderSum);
-                    }
+                	missingHydrogens = (int) (type.getBondOrderSum() - bondOrderSum);
                 }
                 break;
             }

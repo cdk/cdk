@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.IValencyChecker;
@@ -718,7 +719,8 @@ public class DeduceBondSystemTool {
 
                     //logger.debug(j+"\t"+r.getAtomAt(j).getSymbol()+"\t"+r.getAtomAt(j).getHybridization());
 
-                    if (r.getAtom(j).getHybridization() == CDKConstants.UNSET || r.getAtom(j).getHybridization() != CDKConstants.HYBRIDIZATION_SP2) {
+                    if (r.getAtom(j).getHybridization() == Hybridization.UNSET || 
+                    	r.getAtom(j).getHybridization() != Hybridization.SP2) {
                     	rs.removeAtomContainer(i);
                         i--; // go back
                         continue iloop;
@@ -772,7 +774,8 @@ public class DeduceBondSystemTool {
 
                 // logger.debug(j+"\t"+r.getAtomAt(j).getSymbol()+"\t"+r.getAtomAt(j).getHybridization());
 
-                if (r.getAtom(j).getHybridization() == CDKConstants.UNSET || r.getAtom(j).getHybridization() != 2) {
+                if (r.getAtom(j).getHybridization() == Hybridization.UNSET ||
+                	r.getAtom(j).getHybridization() != Hybridization.SP2) {
                     NonSP2Count++;
                     if (r.getAtom(j).getSymbol().equals("C")) {
                         Check[i] = false;

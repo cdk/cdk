@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 
@@ -122,7 +123,7 @@ public class CDKHueckelAromaticityDetector {
 		while (ringAtoms.hasNext()) {
 			IAtom ringAtom = ringAtoms.next();
 			if (ringAtom.getHybridization() != null &&
-				ringAtom.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
+				ringAtom.getHybridization() == Hybridization.SP2) {
 				// for example, a carbon
 				// note: the double bond is in the ring, that has been tested earlier
 				// FIXME: this does assume bond orders to be resolved too, when detecting
@@ -144,7 +145,7 @@ public class CDKHueckelAromaticityDetector {
 					}
 				}
 			} else if (ringAtom.getHybridization() != null &&
-					   ringAtom.getHybridization() == CDKConstants.HYBRIDIZATION_SP3 &&
+					   ringAtom.getHybridization() == Hybridization.SP3 &&
 					   getLonePairCount(ringAtom) > 0) {
 				// for example, a nitrogen or oxygen
 				electronCount += 2;

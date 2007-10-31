@@ -195,12 +195,12 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		return super.getFormalNeighbourCount();
 	}
 
-	public void setHybridization(int hybridization) {
+	public void setHybridization(IAtomType.Hybridization hybridization) {
 		logger.debug("Setting hybridization: ", hybridization);
 		super.setHybridization(hybridization);
 	}
 
-	public Integer getHybridization() {
+	public IAtomType.Hybridization getHybridization() {
 		logger.debug("Getting hybridization: ", super.getHybridization());
 		return super.getHybridization();
 	}

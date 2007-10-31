@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 
 /**
  * Atom Type matcher... TO BE WRITTEN.
@@ -94,11 +95,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		// if hybridization is given, use that
     		if (atom.getHybridization() != CDKConstants.UNSET &&
     			(atom.getFormalCharge() == CDKConstants.UNSET || atom.getFormalCharge() == 0)) {
-    			if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
+    			if (atom.getHybridization() == Hybridization.SP2) {
         			return factory.getAtomType("C.sp2");
-    			} else if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP3) {
+    			} else if (atom.getHybridization() == Hybridization.SP3) {
     				return factory.getAtomType("C.sp3");
-    			} else if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP1) {
+    			} else if (atom.getHybridization() == Hybridization.SP1) {
     				return factory.getAtomType("C.sp");
     			}
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
@@ -125,7 +126,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         						IAtom nextAtom = atoms.next();
         						if (!nextAtom.getSymbol().equals("H")) {
         							if (nextAtom.getHybridization() != CDKConstants.UNSET && 
-        								nextAtom.getHybridization() != CDKConstants.HYBRIDIZATION_SP2 && 
+        								nextAtom.getHybridization() != Hybridization.SP2 && 
         								countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
         								bothNeighborsSP2 = false;
         							}
@@ -181,7 +182,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		if (atom.getHybridization() != CDKConstants.UNSET &&
         		(atom.getFormalCharge() == CDKConstants.UNSET ||
         	     atom.getFormalCharge() == 0)) {
-    			if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
+    			if (atom.getHybridization() == Hybridization.SP2) {
     				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
         			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
         				return factory.getAtomType("O.sp2");
@@ -189,7 +190,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         				return factory.getAtomType("O.planar3");
         			}
     				
-    			} else if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP3) {
+    			} else if (atom.getHybridization() == Hybridization.SP3) {
     				return factory.getAtomType("O.sp3");
     			}
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
@@ -231,7 +232,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     							IAtom nextAtom = atoms.next();
     							if (!nextAtom.getSymbol().equals("H")) {
     								if (nextAtom.getHybridization() != CDKConstants.UNSET && 
-    										nextAtom.getHybridization() != CDKConstants.HYBRIDIZATION_SP2 && 
+    										nextAtom.getHybridization() != Hybridization.SP2 && 
     										countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
     									bothNeighborsSP2 = false;
     								}
@@ -256,11 +257,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		if (atom.getHybridization() != CDKConstants.UNSET &&
     			(atom.getFormalCharge() == CDKConstants.UNSET ||
     	    	 atom.getFormalCharge() == 0)) {
-    			if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP1) {
+    			if (atom.getHybridization() == Hybridization.SP1) {
     				return factory.getAtomType("N.sp1");
-    			} else if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
+    			} else if (atom.getHybridization() == Hybridization.SP2) {
     				return factory.getAtomType("N.sp2");
-    			} else if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP3) {
+    			} else if (atom.getHybridization() == Hybridization.SP3) {
     				return factory.getAtomType("N.sp3");
     			}
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
@@ -321,7 +322,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             						IAtom nextAtom = atoms.next();
             						if (!nextAtom.getSymbol().equals("H")) {
             							if (nextAtom.getHybridization() != CDKConstants.UNSET && 
-            								nextAtom.getHybridization() != CDKConstants.HYBRIDIZATION_SP2 && 
+            								nextAtom.getHybridization() != Hybridization.SP2 && 
             								countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
             								bothNeighborsSP2 = false;
             							}
@@ -406,7 +407,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 						IAtom nextAtom = atoms.next();
 						if (!nextAtom.getSymbol().equals("H")) {
 							if (nextAtom.getHybridization() != CDKConstants.UNSET && 
-								nextAtom.getHybridization() != CDKConstants.HYBRIDIZATION_SP2 && 
+								nextAtom.getHybridization() != Hybridization.SP2 && 
 								countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
 								bothNeighborsSP2 = false;
 							}

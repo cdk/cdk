@@ -20,15 +20,29 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.BFSShortestPath;
 import org.openscience.cdk.graph.MoleculeGraphs;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.*;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
+import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
+import org.openscience.cdk.isomorphism.matchers.SymbolQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
@@ -41,10 +55,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * <p>Prediction of logP based on the atom-type method called XLogP. <b>Requires
@@ -1469,19 +1479,19 @@ public class XLogPDescriptor implements IMolecularDescriptor {
         container.addAtom(atom3);
         IAtom atom4 = builder.newAtom("O");
         container.addAtom(atom4);
-        IAtom atom5 = builder.newAtom("C"); atom5.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        IAtom atom5 = builder.newAtom("C"); atom5.setHybridization(Hybridization.SP2);
         container.addAtom(atom5);
-        IAtom atom6 = builder.newAtom("C"); atom6.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        IAtom atom6 = builder.newAtom("C"); atom6.setHybridization(Hybridization.SP2);
         container.addAtom(atom6);
-        IAtom atom7 = builder.newAtom("C"); atom7.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        IAtom atom7 = builder.newAtom("C"); atom7.setHybridization(Hybridization.SP2);
         container.addAtom(atom7);
-        IAtom atom8 = builder.newAtom("C"); atom8.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        IAtom atom8 = builder.newAtom("C"); atom8.setHybridization(Hybridization.SP2);
         container.addAtom(atom8);
         IAtom atom9 = builder.newAtom("N");
         container.addAtom(atom9);
-        IAtom atom10 = builder.newAtom("C"); atom10.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        IAtom atom10 = builder.newAtom("C"); atom10.setHybridization(Hybridization.SP2);
         container.addAtom(atom10);
-        IAtom atom11 = builder.newAtom("C"); atom11.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        IAtom atom11 = builder.newAtom("C"); atom11.setHybridization(Hybridization.SP2);
         container.addAtom(atom11);
         IBond bond1 = builder.newBond(atom1, atom2, CDKConstants.BONDORDER_SINGLE);
         container.addBond(bond1);
@@ -1544,17 +1554,17 @@ public class XLogPDescriptor implements IMolecularDescriptor {
         container.addAtom(atom2);
         IAtom atom3 = builder.newAtom("O");
         container.addAtom(atom3);
-        IAtom atom4 = builder.newAtom("C"); atom4.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        IAtom atom4 = builder.newAtom("C"); atom4.setHybridization(Hybridization.SP2);
         container.addAtom(atom4);
-        IAtom atom5 = builder.newAtom("C"); atom5.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        IAtom atom5 = builder.newAtom("C"); atom5.setHybridization(Hybridization.SP2);
         container.addAtom(atom5);
-        IAtom atom6 = builder.newAtom("C"); atom6.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        IAtom atom6 = builder.newAtom("C"); atom6.setHybridization(Hybridization.SP2);
         container.addAtom(atom6);
-        IAtom atom7 = builder.newAtom("C"); atom7.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        IAtom atom7 = builder.newAtom("C"); atom7.setHybridization(Hybridization.SP2);
         container.addAtom(atom7);
-        IAtom atom8 = builder.newAtom("C"); atom8.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        IAtom atom8 = builder.newAtom("C"); atom8.setHybridization(Hybridization.SP2);
         container.addAtom(atom8);
-        IAtom atom9 = builder.newAtom("C"); atom9.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+        IAtom atom9 = builder.newAtom("C"); atom9.setHybridization(Hybridization.SP2);
         container.addAtom(atom9);
         IAtom atom10 = builder.newAtom("O");
         container.addAtom(atom10);
