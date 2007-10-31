@@ -1,12 +1,7 @@
 package org.openscience.cdk.test.applications.undoredo;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
@@ -14,19 +9,18 @@ import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.undoredo.AddHydrogenEdit;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Junit test for the ddHydrogenEditTest class
@@ -80,7 +74,7 @@ public class AddHydrogenEditTest extends CDKTestCase {
 	 */
 	public void testRedoImplicitHydrogenAdding() throws Exception {
 		Molecule molecule = new Molecule();
-		Map<IAtom,int[]> hydrogenAtomMap = addImplicitHydrogens(molecule);
+		Map<IAtom, Object[]> hydrogenAtomMap = addImplicitHydrogens(molecule);
 		ChemModel model = new ChemModel();
 		MoleculeSet som = new MoleculeSet();
 		som.addMolecule(molecule);
@@ -91,7 +85,7 @@ public class AddHydrogenEditTest extends CDKTestCase {
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			IAtom atom = molecule.getAtom(i);
 			assertNotNull(atom);
-			int[] hydrogens = (int[]) hydrogenAtomMap.get(atom);
+			Integer[] hydrogens = (Integer[]) hydrogenAtomMap.get(atom);
 			assertNotNull(hydrogens);
 			assertEquals(atom.getHydrogenCount(), new Integer(hydrogens[1]));
 		}
@@ -125,7 +119,7 @@ public class AddHydrogenEditTest extends CDKTestCase {
 	 */
 	public void testUndoImplicitHydrogenAdding() throws Exception {
 		Molecule molecule = new Molecule();
-		Map<IAtom,int[]> hydrogenAtomMap = addImplicitHydrogens(molecule);
+		Map<IAtom,Object[]> hydrogenAtomMap = addImplicitHydrogens(molecule);
 		ChemModel model = new ChemModel();
 		MoleculeSet som = new MoleculeSet();
 		som.addMolecule(molecule);
@@ -134,8 +128,8 @@ public class AddHydrogenEditTest extends CDKTestCase {
 		edit.undo();
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			org.openscience.cdk.interfaces.IAtom atom = molecule.getAtom(i);
-			int[] hydrogens = (int[]) hydrogenAtomMap.get(atom);
-			assertTrue(atom.getHydrogenCount() == hydrogens[0]);
+			Integer[] hydrogens = (Integer[]) hydrogenAtomMap.get(atom);
+			assertTrue(atom.getHydrogenCount().equals(hydrogens[0]));
 		}
 
 	}
@@ -159,7 +153,7 @@ public class AddHydrogenEditTest extends CDKTestCase {
 	 * @return
 	 * @throws CDKException
 	 */
-	private Map<IAtom,int[]> addImplicitHydrogens(IMolecule toAddTo) throws Exception {
+	private Map<IAtom,Object[]> addImplicitHydrogens(IMolecule toAddTo) throws Exception {
 		Molecule implicitMolecule = MoleculeFactory.makeAlphaPinene();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(implicitMolecule.getBuilder());
 		Iterator<IAtom> atoms = implicitMolecule.atoms();
@@ -175,7 +169,7 @@ public class AddHydrogenEditTest extends CDKTestCase {
 
     protected IAtomContainer addExplicitHydrogens_ReturnChanges(IAtomContainer container) throws Exception {
     	IAtomContainer changeContainer = container.getBuilder().newAtomContainer();
-    	Map<IAtom,int[]> changes = addImplicitHydrogens_ReturnChanges(container);
+    	Map<IAtom,Object[]> changes = addImplicitHydrogens_ReturnChanges(container);
     	Iterator<IAtom> atoms = changes.keySet().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
@@ -206,8 +200,8 @@ public class AddHydrogenEditTest extends CDKTestCase {
      * 
      * @param container to which implicit hydrogens are added.
      */
-    protected Map<IAtom,int[]> addImplicitHydrogens_ReturnChanges(IAtomContainer container) throws Exception {
-    	Map<IAtom,int[]> changes = new HashMap<IAtom,int[]>();
+    protected Map<IAtom,Object[]> addImplicitHydrogens_ReturnChanges(IAtomContainer container) throws Exception {
+    	Map<IAtom,Object[]> changes = new HashMap<IAtom,Object[]>();
     	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
     	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
     	Iterator<IAtom> atoms = container.atoms();
@@ -215,9 +209,9 @@ public class AddHydrogenEditTest extends CDKTestCase {
     		IAtom atom = atoms.next();
     		IAtomType type = matcher.findMatchingAtomType(container, atom);
     		AtomTypeManipulator.configure(atom, type);
-    		int oldHCount = atom.getHydrogenCount() == null ? 0 : atom.getHybridization().intValue();
+    		IAtomType.Hybridization oldHCount = atom.getHydrogenCount() == null ? IAtomType.Hybridization.UNSET : atom.getHybridization();
     		hAdder.addImplicitHydrogens(container, atom);
-    		changes.put(atom, new int[]{oldHCount, atom.getHydrogenCount().intValue()});
+    		changes.put(atom, new Object[]{oldHCount, atom.getHydrogenCount()});
     	}
     	return changes;
     }

@@ -23,30 +23,13 @@
  */
 package org.openscience.cdk.test.smiles;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
-
-import javax.vecmath.Point2d;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.Reaction;
+import org.openscience.cdk.*;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.MDLReader;
@@ -56,6 +39,11 @@ import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point2d;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.StringWriter;
 
 /**
  * @author         steinbeck
@@ -453,7 +441,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		Molecule molecule = new Molecule();
         SmilesGenerator sg = new SmilesGenerator();
 		Atom sp2CarbonWithOneHydrogen = new Atom("C");
-		sp2CarbonWithOneHydrogen.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		sp2CarbonWithOneHydrogen.setHybridization(IAtomType.Hybridization.SP2);
 		sp2CarbonWithOneHydrogen.setHydrogenCount(1);
 		molecule.addAtom(sp2CarbonWithOneHydrogen);
 		molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
