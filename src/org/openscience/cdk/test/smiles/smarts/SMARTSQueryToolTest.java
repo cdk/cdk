@@ -23,7 +23,7 @@ package org.openscience.cdk.test.smiles.smarts;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -125,7 +125,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     public void testUniqueQueries() throws CDKException, IOException, ClassNotFoundException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c1ccccc1CCCNCCCc1ccccc1");
-        HueckelAromaticityDetector.detectAromaticity(atomContainer);
+        CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
         SMARTSQueryTool querytool = new SMARTSQueryTool("c1ccccc1", true);
 
         boolean status = querytool.matches(atomContainer);
@@ -141,7 +141,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     public void testQuery() throws CDKException, IOException, ClassNotFoundException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c12cc(CCN)ccc1c(COC)ccc2");
-        HueckelAromaticityDetector.detectAromaticity(atomContainer);
+        CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
         SMARTSQueryTool querytool = new SMARTSQueryTool("c12ccccc1cccc2", true);
 
         boolean status = querytool.matches(atomContainer);
