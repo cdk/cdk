@@ -853,24 +853,6 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
            	ferrocene, ferrocene.getAtom(4))
         );
     }
-
-    @Test public void testFuran() throws Exception {
-    	IAtomContainer furan = new Molecule();
-    	furan.addAtom(new Atom("C"));
-    	furan.addAtom(new Atom("C"));
-    	furan.addAtom(new Atom("C"));
-    	furan.addAtom(new Atom("C"));
-    	furan.addAtom(new Atom("O"));
-    	furan.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
-    	furan.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
-    	furan.addBond(2,3,CDKConstants.BONDORDER_DOUBLE);
-    	furan.addBond(3,4,CDKConstants.BONDORDER_SINGLE);
-    	furan.addBond(4,0,CDKConstants.BONDORDER_SINGLE);
-    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(furan.getBuilder());
-    	assertAtomType(testedAtomTypes, "O.planar3", atm.findMatchingAtomType(
-    		furan, furan.getAtom(4))
-    	);
-    }
     
     @Test public void testPerchlorate() throws Exception {
     	IMolecule mol = new Molecule();

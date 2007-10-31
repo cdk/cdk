@@ -178,17 +178,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	throws CDKException {
     	if ("O".equals(atom.getSymbol())) {
     		// if hybridization is given, use that
-    		if (atom.getHybridization() != CDKConstants.UNSET &&
-        		(atom.getFormalCharge() == CDKConstants.UNSET ||
-        	     atom.getFormalCharge() == 0)) {
+    		if (atom.getHybridization() != CDKConstants.UNSET) {
     			if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
-    				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-        			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
-        				return factory.getAtomType("O.sp2");
-        			} else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
-        				return factory.getAtomType("O.planar3");
-        			}
-    				
+    				return factory.getAtomType("O.sp2");
     			} else if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP3) {
     				return factory.getAtomType("O.sp3");
     			}
@@ -219,30 +211,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
     				return factory.getAtomType("O.sp2");
-    			} else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
-    				int explicitHydrogens = countExplicitHydrogens(atom, atomContainer);
-    				int connectedHeavyAtoms = atomContainer.getConnectedBondsCount(atom) - explicitHydrogens; 
-    				if (connectedHeavyAtoms == 2) {
-    					// a O.sp3 which is expected to take part in an aromatic system
-    					if (isRingAtom(atom, atomContainer)) {
-    						boolean bothNeighborsSP2 = true;
-    						Iterator<IAtom> atoms = atomContainer.getConnectedAtomsList(atom).iterator();
-    						while (atoms.hasNext() && bothNeighborsSP2) {
-    							IAtom nextAtom = atoms.next();
-    							if (!nextAtom.getSymbol().equals("H")) {
-    								if (nextAtom.getHybridization() != CDKConstants.UNSET && 
-    										nextAtom.getHybridization() != CDKConstants.HYBRIDIZATION_SP2 && 
-    										countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
-    									bothNeighborsSP2 = false;
-    								}
-    							}
-    						}
-    						if (bothNeighborsSP2) return factory.getAtomType("O.planar3");
-    					}
-    					return factory.getAtomType("O.sp3");
-    				} else {
-    					return factory.getAtomType("O.sp3");
-    				}
+    			} else {
+    				return factory.getAtomType("O.sp3");
     			}
     		}
     	}

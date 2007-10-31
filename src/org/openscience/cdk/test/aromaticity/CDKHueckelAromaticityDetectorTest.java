@@ -128,29 +128,6 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 		assertEquals(1, numberOfAromaticRings);
 	}
 	
-	public void testFuran() throws Exception
-	{
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-
-		IMolecule mol = sp.parseSmiles("c1cocc1");
-		CDKHueckelAromaticityDetector.detectAromaticity(mol);
-		Iterator<IAtom> atoms = mol.atoms();
-		while (atoms.hasNext()) {
-			IAtom nextAtom = atoms.next();
-			System.out.println("atom: " + nextAtom.getSymbol() + " -> " +
-					nextAtom.getAtomTypeName() + " A:" +
-					nextAtom.getFlag(CDKConstants.ISAROMATIC));
-		}
-
-		IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
-		int numberOfAromaticRings = 0;
-		RingSetManipulator.markAromaticRings(ringset);
-		for (int i = 0; i < ringset.getAtomContainerCount(); i++) {
-			if (((Ring)ringset.getAtomContainer(i)).getFlag(CDKConstants.ISAROMATIC))
-				numberOfAromaticRings++;
-		}
-		assertEquals(1, numberOfAromaticRings);
-	}
 	
 	/**
 	 *  A unit test for JUnit The special difficulty with Azulene is that only the
