@@ -20,15 +20,8 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -45,6 +38,8 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.*;
 
 /**
  * This class provides a easy to use wrapper around SMARTS matching
@@ -369,7 +364,7 @@ public class SMARTSQueryTool {
 
         // check for atomaticity
         try {
-            HueckelAromaticityDetector.detectAromaticity(atomContainer, true, arf);
+            CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
         } catch (CDKException e) {
             logger.debug(e.toString());
             throw new CDKException(e.toString());
