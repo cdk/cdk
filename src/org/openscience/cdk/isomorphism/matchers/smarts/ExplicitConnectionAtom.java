@@ -26,9 +26,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * This smarts atom matches any atom with a certain number of explicit
  * connections
  *
- * @author Dazhi Jiao
- * @cdk.created 2007-05-10
- * @cdk.module smarts
+ * @cdk.module extra
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.keyword SMARTS 
  */

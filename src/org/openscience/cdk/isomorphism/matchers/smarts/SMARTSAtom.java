@@ -27,24 +27,19 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
 /**
- * This is just a simple proof of concept, and far from a functional SMARTSAtom.
+ * Abstract smarts atom
  * 
  * @cdk.module extra
  * @cdk.svnrev  $Revision$
+ * @cdk.keyword SMARTS 
  */
 public abstract class SMARTSAtom extends org.openscience.cdk.PseudoAtom implements
         IQueryAtom {
-    public String ID;
 
     public SMARTSAtom() {
     }
 
-    public void setOperator(String str) {
-        ID = str;
-    }
     public boolean matches(IAtom atom) {
         return false;
     }
-
-
 }

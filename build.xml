@@ -100,10 +100,6 @@
                           targetfile="${src}/org/openscience/cdk/iupac/parser/NomParser.java">
                   <srcfiles dir="${src}" includes="org/openscience/cdk/iupac/parser/NomParser.jj" />
                 </uptodate>
-                <uptodate property="SMARTSParserJavafiles.uptodate"
-                          targetfile="${src}/org/openscience/cdk/smiles/smarts/SMARTSParser.java">
-                  <srcfiles dir="${src}" includes="org/openscience/cdk/smiles/smarts/SMARTSParser.jj" />
-                </uptodate>
                 <uptodate property="SMARTSParserJJTJavafiles.uptodate"
                 		  targetfile="${src}/org/openscience/cdk/smiles/smarts/parser/SMARTSParser.java">
                   <srcfiles dir="${src}" includes="org/openscience/cdk/smiles/smarts/parser/SMARTSParser.jj" />

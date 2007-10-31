@@ -32,47 +32,29 @@ import org.openscience.cdk.CDKConstants;
  *
  * @cdk.module extra
  * @cdk.svnrev  $Revision$
+ * @cdk.keyword SMARTS
  */
 public class AromaticAtom extends SMARTSAtom {
     
     private static final long serialVersionUID = -3345204886992669829L;
-    private IAtom Element=null;
+    /**
+     * Creates a new instance
+     *
+     */
     public AromaticAtom() {
     	setFlag(CDKConstants.ISAROMATIC, true);
     }
-    public AromaticAtom(IAtom m_atom){
-        Element = m_atom;
-        setFlag(CDKConstants.ISAROMATIC, true);
-    }
-    public int getOperator(){
-        if(ID!=null && Element!=null)
-            return 1;
-        else if(ID!=null && Element==null)
-            return 2;
-        else if(ID==null && Element==null)
-            return 3;
-        else if(ID==null && Element!=null)
-            return 4;
-        return 5;
-    }
-    public boolean matches(IAtom atom) {
-    	switch(getOperator()){
-                case 1: { if((!atom.getFlag(CDKConstants.ISAROMATIC)) &
-                         (atom.getSymbol()!=Element.getSymbol())) return true; break;}
-                case 2: { if(!atom.getFlag(CDKConstants.ISAROMATIC)) return true; break;}
-                case 3:{if(atom.getFlag(CDKConstants.ISAROMATIC)) return true; break;}
-                case 4:{
-                         if(
-                            (atom.getFlag(CDKConstants.ISAROMATIC)) &
-                            (atom.getSymbol().equals(Element.getSymbol()))
-                           ) 
-                        return true; break;
-                       }
-                default:return false;
-            }   
-    	return false;
-    };
 
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+     */
+    public boolean matches(IAtom atom) {
+    	return atom.getFlag(CDKConstants.ISAROMATIC); 
+    }
+
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.PseudoAtom#toString()
+     */
     public String toString() {
 		return "AromaticAtom()";
     }

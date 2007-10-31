@@ -31,67 +31,48 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @cdk.module extra
  * @cdk.svnrev  $Revision$
+ * @cdk.keyword SMARTS
  */
 public class ConnectionCountAtom extends SMARTSAtom {
     
     private static final long serialVersionUID = 8787570498467055257L;
     
-    private int count;
+    final static String CC_PROP = "org.openscience.cdk.Atom.connectionCount";
     
+    /**
+     * Creates a new instance
+     *
+     * @param count
+     */
     public ConnectionCountAtom(int count) {
-        this.count = count;
-    }
-    public ConnectionCountAtom(){
-        this.count = Default;
-    }
-    public int getOperator(){
-        if(ID!=null && this.count==Default)
-            return 1;
-        else if(ID!=null && this.count!=Default)
-            return 2;
-        else if(this.count==Default)
-            return 3;
-        else if(this.count!=Default)
-            return 4;
-        return 5;
-    }
-    public int getCC(IAtom atom){
-        return ((Integer)atom.getProperty("org.openscience." +
-                "cdk.Atom.connectionCount")).intValue();
-    }
-    
-    public boolean matches(IAtom atom) {
-        switch(getOperator()){
-            case 1:return defaultOperatorCheck(atom);
-            case 2:return nonDefaultOperatorCheck(atom);
-            case 3:return defaultCheck(atom);
-            case 4:return nonDefaultCheck(atom);
-            default:return false;
-        }
-    };
-    
-    private boolean defaultCheck(IAtom atom){
-        if(getCC(atom)!=0)return true;
-        return false;
-    }
-    private boolean nonDefaultCheck(IAtom atom){
-        if(getCC(atom)!=0 && getCC(atom)==this.count) return true;
-        return false;
-    }
-    private boolean defaultOperatorCheck(IAtom atom){
-        if(getCC(atom)==0)return true;
-        return false;
-    }
-    private boolean nonDefaultOperatorCheck(IAtom atom){
-        if(getCC(atom)!=0 && getCC(atom)!=this.count) return false;
-        return false;
+        this.setProperty(CC_PROP, count);
     }
 
+    /**
+     * Returns the connection count of an atom
+     * 
+     * @param atom
+     * @return
+     */
+    public int getCC(IAtom atom){
+        return ((Integer)atom.getProperty(CC_PROP)).intValue();
+    }
+    
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+     */
+    public boolean matches(IAtom atom) {
+        return (getCC(atom)!=0 && getCC(atom)==getCC(this));
+    }
+
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.PseudoAtom#toString()
+     */
     public String toString() {
 		StringBuffer s = new StringBuffer();
 		s.append("ConnectionCountAtom(");
         s.append(this.hashCode() + ", ");
-		s.append("CC:" + count);
+		s.append("CC:" + getCC(this));
 		s.append(")");
 		return s.toString();
     }

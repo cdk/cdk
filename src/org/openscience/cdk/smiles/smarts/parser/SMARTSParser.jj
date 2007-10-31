@@ -68,6 +68,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author      Dazhi Jiao
  * @cdk.created 2007-04-23
+ * @cdk.svnrev $Revision: $
  *
  * @cdk.require ant1.6
  * @cdk.module  smarts
@@ -145,6 +146,9 @@ PARSER_END(SMARTSParser)
     |   <  n: "n" >
     |   <  o: "o" >
     |   <  s: "s" >
+    |   <  p: "p" >
+    |   < as: "as" >
+    |   < se: "se" >
     |   <  H: "H" >
     |   < HE: "He" >
     |   < LI: "Li" >
@@ -263,10 +267,11 @@ PARSER_END(SMARTSParser)
  *                     Start ::= <ReactionExpression>
  *        ReactionExpression ::= <GroupExpression> (">>" <GroupExpression>)? |
  *                               ">" <GroupExpression> ">" | ">>" <GroupExpression>
- *           GroupExpression ::= ["("] <SmartsExpresion> [")"] ( "." "(" <SmartsExpression> ")" )*
- *          SmartsExpression ::= <RingIdentifierExpression>
- *                               ( "<" (<Bond>)? <SmartsExpression> ">" )* ( (<Bond>)? <SmartsExpression> )?
- *                      Bond ::= <LowAndBond>
+ *           GroupExpression ::= ["("] <SmartsExpresion> [")"] ( "." ["("] <SmartsExpression> [")"] )*
+ *          SmartsExpression ::= <AtomExpression> ( 
+ 									( [ <LowAndBond> ] ( <Digit> | <AtomExpression> ) ) |
+ 									( "(" [ <LowAndBond> ] <SmartsExpression> ")" ) )*
+ 		      AtomExpression ::= ( "[" [ <AtomicMass> ] <LowAndExpression> "]" ) | <ExplicitAtomExpression>
  *                LowAndBond ::= <OrBond> [ ";" <AndBond> ]
  *                    OrBond ::= <ExplicitHighAndBond> [ "," <OrBond> ]
  *       ExplicitHighAndBond ::= <ImplicitHighAndBond> [ "&" <ExplicitHighAndBond> ]
@@ -274,28 +279,25 @@ PARSER_END(SMARTSParser)
  *                   NotBond ::= [ "!" ] <SimpleBond>
  *                SimpleBond ::= "/" | "\\" | "/?" | "\\?" | "=" | "#" | "~" | "@"
  *    ExplicitAtomExpression ::= [ "B" | "C" | "N" | "O" | "P" | "S" | "F" | "CL" | "BR" | "I" 
- *                               | "c" | "o" | "n" | "*" | "A" | "a" ] 
- *  RingIdentifierExpression ::= ( <LogicalExpression> | <ExplicitAtomExpression> ) ( ( <Bond> )? <Digit> ) *
- *         LogicalExpression ::= "[" <LowAndExpression> "]" 
+ *                               | "c" | "o" | "n" | "*" | "A" | "a" | "p" | "as" | "se" ] 
  *          LowAndExpression ::= <OrExpression> ( ";" <LowAndExpression> )?
  *              OrExpression ::= <ExplicitHighAndExpression> ( "," <OrExpression> ) ?
  * ExplicitHighAndExpression ::= <ImplicitHighAndExpression> ( "&" <ExplicitHighAndExpression> )?
  * ImplicitHighAndExpression ::= <NotExpression> ( <ImplicitHighAndExpression> ) ?
  *             NotExpression ::= "!" ( <PrimitiveAtomExpression> | <RecursiveSmartsExpression> )
  * RecursiveSmartsExpression ::= "$" "(" <SmartsExpression> ")"
- *   PrimitiveAtomExpression ::= <NonHydrogenElement> | "*" | "A" | "a" | "D" (<Number>)? | "H" (<Number>)? | "h" (<Number>)?
- *                               | "R" (<Number>)? | "r" (<Number>)? | "v" (<Number>)? | "X" (<Number>)? | "x" (<Number>)? 
- *                               | ("+" | "-") (<Number>)? | "#" (<Number>)? | "@" | "@@" | <Number>
+ *   PrimitiveAtomExpression ::= <NonHydrogenElement> | "*" | "A" | "a" | "D" (<Digits>)? | "H" (<Digits>)? | "h" (<Digits>)?
+ *                               | "R" (<Digit>+)? | "r" (<Digit>+)? | "v" (<Digit>+)? | "X" (<Digit>+)? | "x" (<Digit>+)? 
+ *                               | ("+" | "-") (<Digit>+)? | "#" (<Digit>+)? | "@" | "@@" | <Digit>+
  *                     Digit ::= ( "0" - "9")
- *                    Digits ::= ( "0"-"9" )+
- *         onHydrogenElement ::= [ "HE" | "LI" | "BE" | "NE" | "NA" | "MG" | "AL" | "SI" | "AR" | "CA" | "SC" |
+ *        NonHydrogenElement ::= [ "HE" | "LI" | "BE" | "NE" | "NA" | "MG" | "AL" | "SI" | "AR" | "CA" | "SC" |
  *                               "TI" | "CR" | "MN" | "FE" | "CO" | "NI" | "CU" | "ZN" | "GA" | "GE" | "AS" |
  *                               "SE" | "BR" | "KR" | "RB" | "SR" | "ZR" | "NB" | "MO" | "TC" | "RU" | "RH" |
  *                               "PD" | "AG" | "CD" | "IN" | "SN" | "SB" | "TE" | "XE" | "CS" | "BA" | "LA" |
  *                               "HF" | "TA" | "RE" | "OS" | "IR" | "PT" | "AU" | "HG" | "TL" | "PB" | "BI" |
  *                               "PO" | "AT" | "RN" | "FR" | "RA" | "AC" | "TH" | "PA" |
  *                               "B" | "C" | "N" | "O" | "F" | "P" | "S" | "K" | "V" | "Y" | "I" | "U" |
- *                               "c" | "o" | "n" ]
+ *                               "c" | "o" | "n" | "p" | "as" | "se" ]
  */
 
 ASTStart Start()        : {/*@bgen(jjtree) Start */
@@ -741,7 +743,7 @@ void ExplicitAtomExpression()               : {/*@bgen(jjtree) ExplicitAtom */
 {/*@bgen(jjtree) ExplicitAtom */
     try {
 /*@egen*/
-    ( <B> | <C> | <N> | <O> | <P> | <S> | <F> | <CL> | <BR> | <I> | <WILDCARD> | <A> | <a> | <c> | <n> | <o> | <s>)/*@bgen(jjtree)*/
+    ( <B> | <C> | <N> | <O> | <P> | <S> | <F> | <CL> | <BR> | <I> | <WILDCARD> | <A> | <a> | <c> | <n> | <o> | <s> | <p> | <se> | <as>)/*@bgen(jjtree)*/
     {
       jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;
@@ -1430,7 +1432,7 @@ void NoHydrogenElement()         : {/*@bgen(jjtree) Element */
     <HF> | <TA> | <RE> | <OS> | <IR> | <PT> | <AU> | <HG> | <TL> | <PB> | <BI> |
     <PO> | <AT> | <RN> | <FR> | <RA> | <AC> | <TH> | <PA> | <CL> |
 	<B> | <C> | <N> | <O> | <F> | <P> | <S> | <K> | <V> | <Y> | <I> | <U> | 
-    <c> | <o> | <n> | <s> 
+    <c> | <o> | <n> | <s> | <p> | <as> | <se>
     )/*@bgen(jjtree)*/
     {
       jjtree.closeNodeScope(jjtn000, true);

@@ -25,18 +25,17 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * This class mathces aromatic atom with element symbol specified
  *
- * @author Dazhi Jiao
- * @cdk.created 2007-05-10
- * @cdk.module smarts
+ * @cdk.module extra
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.keyword SMARTS
  */
 public class AromaticSymbolAtom extends SMARTSAtom {
 	private static final long serialVersionUID = -2887357588636946195L;
 
-	public AromaticSymbolAtom() {
+	public AromaticSymbolAtom(String symbol) {
 		super();
 		setFlag(CDKConstants.ISAROMATIC, true);
+		setSymbol(symbol);
 	}
 	
 	public boolean matches(IAtom atom) {
@@ -46,5 +45,9 @@ public class AromaticSymbolAtom extends SMARTSAtom {
 		} else {
 			return false;
 		}
+	}
+	
+	public String toString() {
+		return "AromaticSymbolAtom(" + getSymbol() + ")";
 	}
 }

@@ -1,4 +1,3 @@
-
 /*
  *  $RCSfile$
  *  $Author: Sushil Ronghe $
@@ -29,74 +28,55 @@
  *
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * This matcher checks the number of ring connections of the checked Atom
- * with other Atom's. This cannot be matched with a unpreprocessed Atom!
- *
+ * This matcher checks the number of ring connections of the checked Atom with
+ * other Atom's. This cannot be matched with a unpreprocessed Atom!
+ * 
  * @cdk.module extra
  * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.keyword SMARTS 
  */
 
 public class TotalRingConnectionAtom extends SMARTSAtom {
-    private int Connection_Size;
-    /** Creates a new instance of TotalRingConnectionAtom */
-    public TotalRingConnectionAtom(int m_Connection_Size){
-        Connection_Size = m_Connection_Size;
-    }
-    public TotalRingConnectionAtom(){
-        Connection_Size = Default;
-    }
-   
-    public int getOperator(){
-        if(ID!=null && this.Connection_Size==Default)
-            return 1;
-        else if(ID!=null && this.Connection_Size!=Default)
-            return 2;
-        else if(this.Connection_Size==Default)
-            return 3;
-        else if(this.Connection_Size!=Default)
-            return 4;
-        return 5;
-    }
-    private int getXX(IAtom atom){
-        if(atom.getFlag(CDKConstants.ISINRING))
-          return ((Integer)atom.getProperty(CDKConstants.RING_CONNECTIONS)).intValue();
-        else
-            return 0;
-    }
-    public boolean matches(IAtom atom) {
-      switch(getOperator()){
-            case 1:return defaultOperatorCheck(atom);
-            case 2:return nonDefaultOperatorCheck(atom);
-            case 3:return defaultCheck(atom);
-            case 4:return nonDefaultCheck(atom);
-            default:return false;
-        }
-    }
-    private boolean defaultCheck(IAtom atom){
-        if(getXX(atom)!=0)
-            return true;
-        return false;
-    }
-    private boolean nonDefaultCheck(IAtom atom){
-        if(getXX(atom)!=0 && getXX(atom)==this.Connection_Size) 
-            return true;
-        return false;
-    }
-    private boolean defaultOperatorCheck(IAtom atom){
-        if(getXX(atom)==0)return true;
-        return false;
-    }
-    private boolean nonDefaultOperatorCheck(IAtom atom){
-        if(getXX(atom)!=0 && getXX(atom)!=this.Connection_Size) return true;
-        return false;
-    }
-    public String toString() {
-        return ("TotalRingConnectionAtom("+ Connection_Size +")");
-    }
-    
-    
+	/**
+	 * Creates a new instance
+	 *
+	 * @param ringConn number of ring connections
+	 */
+	public TotalRingConnectionAtom(int ringConn) {
+		this.setProperty(CDKConstants.RING_CONNECTIONS, ringConn);
+	}
+
+	/**
+	 * Returns the ring connection of an atom
+	 * 
+	 * @param atom
+	 * @return
+	 */
+	private int getRC(IAtom atom) {
+		if (atom.getFlag(CDKConstants.ISINRING))
+			return ((Integer) atom.getProperty(CDKConstants.RING_CONNECTIONS))
+					.intValue();
+		else
+			return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+	 */
+	public boolean matches(IAtom atom) {
+		return getRC(atom) != 0 && getRC(atom) == getRC(this);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.PseudoAtom#toString()
+	 */
+	public String toString() {
+		return ("TotalRingConnectionAtom(" + getRC(this) + ")");
+	}
+
 }

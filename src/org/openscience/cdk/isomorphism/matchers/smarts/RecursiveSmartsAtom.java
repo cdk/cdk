@@ -39,10 +39,11 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * This recursive smarts. 
+ * This matches recursive smarts atoms 
  *
  * @cdk.module extra
  * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.keyword SMARTS
  */
 public class RecursiveSmartsAtom extends SMARTSAtom {
 	private static final long serialVersionUID = 1L;

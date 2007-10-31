@@ -44,7 +44,7 @@ import java.util.List;
 /**
  * JUnit test routines for the SMARTS substructure search.
  *
- * @author Egon Willighagen
+ * @author Dazhi Jiao
  * @cdk.module test-smarts
  * @cdk.require ant1.6
  */
@@ -1046,20 +1046,6 @@ public class SMARTSSearchTest extends CDKTestCase {
         assertEquals(2, results[0]);
         assertEquals(1, results[1]);
     }
-
-    /* TODO:
-    * Testing amino acids matching. AA smarts from Daylight smarts example page
-    * Most amino acids test failed. It seems the Nitrogen's convelance is not
-    * correctly calculated when building AtomContainer from smiles.
-    *
-    * If I change the smarts (the first one) to
-    * [NX5,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]
-    * It'll match correctly. However, in amino acides, N only connects to
-    * two H and one C. Not total of 5.
-    *
-    * All these tests are commented for now.
-    */
-
 
     public void testAminoAcid1() throws Exception {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(C)C(O)=O");

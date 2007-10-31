@@ -30,27 +30,28 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @cdk.module extra
  * @cdk.svnrev  $Revision$
+ * @cdk.keyword SMARTS
  */
 public class AnyAtom extends SMARTSAtom {
     
     private static final long serialVersionUID = -2061241755106011847L;
 
+    /**
+     * Creates a new instance
+     */
     public AnyAtom() {
     }
     
-    public int getOperator(){
-        if(ID!=null)
-            return 1;
-        return 2;
-    }
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+     */
     public boolean matches(IAtom atom) {
-       switch(getOperator()){
-                case 1:  return false;
-                case 2:  return true;
-                default: return false;
-            }
-    };
+    	return true;
+    }
 
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.PseudoAtom#toString()
+     */
     public String toString() {
 		return "AnyAtom()";
     }

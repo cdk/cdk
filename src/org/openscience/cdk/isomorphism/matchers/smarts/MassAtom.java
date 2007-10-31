@@ -32,21 +32,33 @@
   import org.openscience.cdk.interfaces.IAtom;
 
 /**
+ * This class matches an atom based on the atomic mass
  *
- * @author niper
+ * @cdk.module extra
  * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.keyword SMARTS
  */
 public class MassAtom extends SMARTSAtom{
-    private int mass;
-    /** Creates a new instance of MassAtom */
-    public MassAtom(int m_mass) {
-        mass = m_mass;
+    /**
+     * Creates a new instance
+     *
+     * @param mass
+     */
+    public MassAtom(int mass) {
+        this.setMassNumber(mass);
     }
+
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+     */
     public boolean matches(IAtom atom){
-        return atom.getMassNumber()==mass;
+        return atom.getMassNumber()==this.getMassNumber();
     }
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.PseudoAtom#toString()
+     */
     public String toString(){
-        return ("(MassAtom("+ mass+")");
+        return ("(MassAtom("+ this.getMassNumber() + ")");
     }
     
 }

@@ -2,6 +2,12 @@
 
 package org.openscience.cdk.smiles.smarts.parser;
 
+/**
+ * @author Dazhi Jiao
+ * @cdk.module smarts
+ * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.keyword SMARTS
+ */
 public interface SMARTSParserTreeConstants
 {
   public int JJTSTART = 0;

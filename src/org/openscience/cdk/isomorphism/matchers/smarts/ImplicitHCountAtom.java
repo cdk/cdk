@@ -31,65 +31,45 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @cdk.module extra
  * @cdk.svnrev  $Revision$
+ * @cdk.keyword SMARTS
  */
 public class ImplicitHCountAtom extends SMARTSAtom {
     
     private static final long serialVersionUID = 6752937431492584928L;
     
-    private int hCount;
-    
+    /**
+     * Creates a new instance
+     *
+     * @param hCount
+     */
     public ImplicitHCountAtom(int hCount) {
-        this.hCount = hCount;
-    }
-    public ImplicitHCountAtom(){
-        this.hCount = Default;
+        this.setHydrogenCount(hCount);
     }
    
-    public int getOperator(){
-        if(ID!=null && this.hCount==Default)
-            return 1;
-        else if(ID!=null && this.hCount!=Default)
-            return 2;
-        else if(this.hCount==Default)
-            return 3;
-        else if(this.hCount!=Default)
-            return 4;
-        return 5;
-    }
+    /**
+     * Returns the implicit hydrogen count of an atom
+     * 
+     * @param atom
+     * @return
+     */
     private int getIMPH(IAtom atom){
         if (atom.getHydrogenCount() == CDKConstants.UNSET) return 0;
         else return atom.getHydrogenCount();
     }
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+     */
     public boolean matches(IAtom atom) {
-        switch(getOperator()){
-            case 1:return defaultOperatorCheck(atom);
-            case 2:return nonDefaultOperatorCheck(atom);
-            case 3:return defaultCheck(atom);
-            case 4:return nonDefaultCheck(atom);
-            default:return false;
-        }
-    };
-    private boolean defaultCheck(IAtom atom){
-        if(getIMPH(atom)!=0)return true;
-        return false;
+        return (getIMPH(atom)!=0 && getIMPH(atom)==getIMPH(this));
     }
-    private boolean nonDefaultCheck(IAtom atom){
-        if(getIMPH(atom)!=0 && getIMPH(atom)==this.hCount) return true;
-        return false;
-    }
-    private boolean defaultOperatorCheck(IAtom atom){
-        if(getIMPH(atom)==0)return true;
-        return false;
-    }
-    private boolean nonDefaultOperatorCheck(IAtom atom){
-        if(getIMPH(atom)!=0 && getIMPH(atom)!=this.hCount) return false;
-        return false;
-    }
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.PseudoAtom#toString()
+     */
     public String toString() {
 		StringBuffer s = new StringBuffer();
 		s.append("ImplicitHCountAtom(");
         s.append(this.hashCode() + ", ");
-		s.append("IH:" + hCount);
+		s.append("IH:" + getIMPH(this));
 		s.append(")");
 		return s.toString();
     }

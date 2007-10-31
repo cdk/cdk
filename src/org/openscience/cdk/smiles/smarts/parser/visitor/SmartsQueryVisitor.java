@@ -39,8 +39,8 @@ import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticSymbolAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AtomicNumberAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.ChiralityAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.DegreeAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.ExplicitConnectionAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.FormalChargeAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.HydrogenAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.ImplicitHCountAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAtom;
@@ -162,19 +162,18 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 					if (ringIdAtom.getRingBond() == null) {
 						if (atom instanceof AromaticSymbolAtom && 
 								ringAtoms[ringId].getAtom() instanceof AromaticSymbolAtom) {
-							ringBond = new AromaticQueryBond(ringAtoms[ringId].getAtom(), atom, 1.5d);
+							ringBond = new AromaticQueryBond();
 						} else {
-							ringBond = new OrderQueryBond(ringAtoms[ringId].getAtom(), atom, 1.0d);
+							ringBond = new RingBond();
 						}
 					} else {
 						ringBond = ringIdAtom.getRingBond();
-						((IBond)ringBond).setAtoms(new IAtom[] { ringAtoms[ringId].getAtom(), atom });
 					}
 				} else {
 					// Here I assume the bond are always same. This should be checked by the parser already
 					ringBond = ringAtoms[ringId].getRingBond();
-					((IBond)ringBond).setAtoms(new IAtom[] { ringAtoms[ringId].getAtom(), atom });
 				}
+				((IBond)ringBond).setAtoms(new IAtom[] { ringAtoms[ringId].getAtom(), atom });
 				query.addBond((IBond)ringBond);
 			}
 			
@@ -232,10 +231,10 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 				if (((SMARTSAtom)((Object[])data)[0]).getFlag(CDKConstants.ISAROMATIC) &&
 						atom.getFlag(CDKConstants.ISAROMATIC)) {
 					bond = new AromaticQueryBond();
-					bond.setAtoms(new IAtom[] {atom, (SMARTSAtom)((Object[])data)[0]});
 				} else {
-					bond = new OrderQueryBond(atom, (SMARTSAtom)((Object[])data)[0], 1.0d);
+					bond = new OrderQueryBond(1.0d);
 				}
+				bond.setAtoms(new IAtom[] {atom, (SMARTSAtom)((Object[])data)[0]});
 			} else {
 				bond.setAtoms(new IAtom[] {(SMARTSAtom)((Object[])data)[0], atom});
 			}
@@ -255,13 +254,12 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 				if (bond == null) {
 					if (newAtom.getFlag(CDKConstants.ISAROMATIC) &&
 							atom.getFlag(CDKConstants.ISAROMATIC)) {
-						bond = new AromaticQueryBond(atom, newAtom, 1.5d);
+						bond = new AromaticQueryBond();
 					} else {
-						bond = new OrderQueryBond(atom, newAtom, 1.0d);
+						bond = new OrderQueryBond(1.0d);
 					}
-				} else {
-					bond.setAtoms(new IAtom[] {atom, newAtom});
 				}
+				bond.setAtoms(new IAtom[] {atom, newAtom});
 				if (isParsingRS) {
 					rsQuery.addBond(bond);
 					rsQuery.addAtom(newAtom);
@@ -352,16 +350,13 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		SMARTSBond bond = null;
 		switch (node.getBondType()) {
 		case SMARTSParserConstants.S_BOND:
-			bond = new OrderQueryBond();
-			bond.setOrder(1.0d);
+			bond = new OrderQueryBond(1.0d);
 			break;
 		case SMARTSParserConstants.D_BOND:
-			bond = new OrderQueryBond();
-			bond.setOrder(2.0d);
+			bond = new OrderQueryBond(2.0d);
 			break;
 		case SMARTSParserConstants.T_BOND:
-			bond = new OrderQueryBond();
-			bond.setOrder(3.0d);
+			bond = new OrderQueryBond(3.0d);
 			break;
 		case SMARTSParserConstants.ANY_BOND:
 			bond = new AnyOrderQueryBond();
@@ -437,12 +432,12 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		String symbol = node.getSymbol();
 		SMARTSAtom atom;
 		if ("o".equals(symbol) || "n".equals(symbol) || "c".equals(symbol)
-				|| "s".equals(symbol)) {
-			atom = new AromaticSymbolAtom();
-			atom.setSymbol(symbol.toUpperCase());
+				|| "s".equals(symbol) || "p".equals(symbol) || "as".equals(symbol)
+				|| "se".equals(symbol)) {
+			String atomSymbol = symbol.substring(0,1).toUpperCase() + symbol.substring(1);
+			atom = new AromaticSymbolAtom(atomSymbol);
 		} else {
-			atom = new AliphaticSymbolAtom();
-			atom.setSymbol(symbol);
+			atom = new AliphaticSymbolAtom(symbol);
 		}
 		return atom;
 	}
@@ -465,9 +460,9 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 
 	public Object visit(ASTCharge node, Object data) {
 		if (node.isPositive()) {
-			return new DegreeAtom(node.getCharge());
+			return new FormalChargeAtom(node.getCharge());
 		} else {
-			return new DegreeAtom(0 - node.getCharge());
+			return new FormalChargeAtom(0 - node.getCharge());
 		}
 	}
 
@@ -596,15 +591,16 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		} else if ("a".equals(symbol)) {
 			atom = new AromaticAtom();
 		} else if ("o".equals(symbol) || "n".equals(symbol)
-				|| "c".equals(symbol) || "s".equals(symbol)) {
-			atom = new AromaticSymbolAtom();
-			atom.setSymbol(symbol.toUpperCase());
+				|| "c".equals(symbol) || "s".equals(symbol)
+				|| "p".equals(symbol) || "as".equals(symbol)
+				|| "se".equals(symbol)) {
+			String atomSymbol = symbol.substring(0,1).toUpperCase() + symbol.substring(1);
+			atom = new AromaticSymbolAtom(atomSymbol);
 		} else if ("H".equals(symbol)) {
 			atom = new HydrogenAtom();
 			atom.setSymbol(symbol.toUpperCase());
 		} else {
-			atom = new AliphaticSymbolAtom();
-			atom.setSymbol(symbol);
+			atom = new AliphaticSymbolAtom(symbol);
 		}
 		return atom;
 	}

@@ -32,35 +32,31 @@ import org.openscience.cdk.CDKConstants;
  * 
  * @cdk.module extra
  * @cdk.svnrev  $Revision$
+ * @cdk.keyword SMARTS
  */
 public class AliphaticAtom extends SMARTSAtom {
 
 	private static final long serialVersionUID = 5145049891214205622L;
 
+	/**
+	 * Creates a new instance
+	 *
+	 */
 	public AliphaticAtom() {
 		setFlag(CDKConstants.ISALIPHATIC, true);
 	}
 
-	public int getOperator() {
-		if (ID != null)
-			return 1;
-		return 2;
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+	 */
+	public boolean matches(IAtom atom) {
+		return !atom.getFlag(CDKConstants.ISAROMATIC); 
+
 	}
 
-	public boolean matches(IAtom atom) {
-		switch (getOperator()) {
-		case 1: {
-			if (atom.getFlag(CDKConstants.ISAROMATIC))
-				return true;
-		}
-		case 2:
-			return (!atom.getFlag(CDKConstants.ISAROMATIC)); 
-		default:
-			return false;
-		}
-
-	};
-
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.PseudoAtom#toString()
+	 */
 	public String toString() {
 		return "AliphaticAtom()";
 	}

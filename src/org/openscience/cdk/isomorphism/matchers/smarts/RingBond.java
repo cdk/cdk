@@ -25,20 +25,25 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * This smarts bond matches any bond that is in a ring
  *
- * @author Dazhi Jiao
- * @cdk.created 2007-04-24
- * @cdk.module smarts
+ * @cdk.module extra
  * @cdk.svnrev  $Revision: 9162 $
- * @cdk.keyword SMARTS AST
+ * @cdk.keyword SMARTS 
  */
 public class RingBond extends SMARTSBond {
 	private static final long serialVersionUID = -8670609649648985629L;
+	
+	/**
+	 * Creates a new instance
+	 *
+	 */
+	public RingBond() {
+		this.setFlag(CDKConstants.ISINRING, true);
+	}
 
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org.openscience.cdk.interfaces.IBond)
+	 */
 	public boolean matches(IBond bond) {
-        if (bond.getFlag(CDKConstants.ISINRING)) {
-        	return true;
-        } else {
-        	return false;
-        }
+        return bond.getFlag(CDKConstants.ISINRING);
     }
 }

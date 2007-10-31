@@ -30,13 +30,25 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *
  * @cdk.module extra
  * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.keyword SMARTS 
  */
 public class HydrogenAtom extends SMARTSAtom {
+	/**
+	 * Local copy of IAtomContainer. 
+	 */
 	private IAtomContainer atomContainer;
 
+	/**
+	 * Creates a new instance
+	 *
+	 */
 	public HydrogenAtom() {
+		super();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+	 */
 	public boolean matches(IAtom atom) {
 		if (!atom.getSymbol().equals("H")) {
 			return false;
@@ -67,10 +79,20 @@ public class HydrogenAtom extends SMARTSAtom {
 		return false;
 	}
 
+	/**
+	 * Returns local copy of IAtomContainer
+	 * 
+	 * @return
+	 */
 	public IAtomContainer getAtomContainer() {
 		return atomContainer;
 	}
 
+	/**
+	 * Sets IAtomContainer
+	 * 
+	 * @param atomContainer
+	 */
 	public void setAtomContainer(IAtomContainer atomContainer) {
 		this.atomContainer = atomContainer;
 	}	

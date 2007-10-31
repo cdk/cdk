@@ -22,13 +22,12 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * This query bond matches bonds with specific stereo type
+ * This query bond matches bonds with specific stereo type. It is not 
+ * implemented.
  *
- * @author Dazhi Jiao
- * @cdk.created 2007-04-24
- * @cdk.module smarts
+ * @cdk.module extra
  * @cdk.svnrev  $Revision: 9162 $
- * @cdk.keyword SMARTS AST
+ * @cdk.keyword SMARTS
  */
 public class StereoBond extends SMARTSBond {
 

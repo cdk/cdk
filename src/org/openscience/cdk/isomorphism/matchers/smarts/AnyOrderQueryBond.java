@@ -27,38 +27,42 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
 /**
+ * This matches a bond of any order
+ * 
  * @cdk.module extra
  * @cdk.svnrev  $Revision$
+ * @cdk.keyword SMARTS
  */
 public class AnyOrderQueryBond extends SMARTSBond {
 
     private static final long serialVersionUID = -826100570208878645L;
-
+    
     public AnyOrderQueryBond() {
+    	super();
     }
 
+    /**
+     * Creates a new instance
+     *
+     * @param atom1
+     * @param atom2
+     */
     public AnyOrderQueryBond(IQueryAtom atom1, IQueryAtom atom2, double order) {
         super(atom1, atom2, order);
     }
     
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org.openscience.cdk.interfaces.IBond)
+	 */
 	public boolean matches(IBond bond) {
         return true; // any bond order is fine
-    };
+    }
 
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.Bond#toString()
+     */
     public String toString() {
-		StringBuffer s = new StringBuffer();
-		s.append("AnyOrderQueryBond(");
-        s.append(this.hashCode() + ", ");
-		s.append("#A:" + atoms.length);
-		for (int i = 0; i < atoms.length; i++) {
-			if (atoms[i] == null) {
-				s.append(", null");
-			} else {
-				s.append(", " + atoms[i].toString());
-			}
-		}
-		s.append(")");
-		return s.toString();
+		return "AnyOrderQueryBond()";
     }
 }
 

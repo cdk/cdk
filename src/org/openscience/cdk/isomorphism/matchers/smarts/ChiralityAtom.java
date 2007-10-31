@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @cdk.module extra
  * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.keyword SMARTS
  */
 public class ChiralityAtom extends SMARTSAtom {
 	/**

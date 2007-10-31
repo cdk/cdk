@@ -26,11 +26,9 @@ import org.openscience.cdk.interfaces.IRingSet;
 /**
  * This query atom matches any atom with a certain number of SSSR. 
  *
- * @author Dazhi Jiao
- * @cdk.created 2007-04-24
- * @cdk.module smarts
+ * @cdk.module extra
  * @cdk.svnrev  $Revision: 9162 $
- * @cdk.keyword SMARTS AST
+ * @cdk.keyword SMARTS 
  */
 public class RingMembershipAtom extends SMARTSAtom {
 	private static final long serialVersionUID = -7963168231557641862L;
@@ -43,6 +41,9 @@ public class RingMembershipAtom extends SMARTSAtom {
 		this.numSSSR = num;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+	 */
 	public boolean matches(IAtom atom) {
 		if (atom.getFlag(CDKConstants.ISINRING)) {
 			IRingSet ringSet = (IRingSet)atom.getProperty(CDKConstants.SMALLEST_RINGS);

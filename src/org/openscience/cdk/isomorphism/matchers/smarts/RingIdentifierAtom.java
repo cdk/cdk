@@ -27,28 +27,41 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * This encapsulates an atom with a ring identifier, with an optional ring
  * bond specified. For example, C=1CCCCC1
  *
- * @author Dazhi Jiao
- * @cdk.created 2007-04-24
- * @cdk.module smarts
+ * @cdk.module extra
  * @cdk.svnrev  $Revision: 9162 $
- * @cdk.keyword SMARTS AST
+ * @cdk.keyword SMARTS 
  */
 public class RingIdentifierAtom extends SMARTSAtom {
 	private static final long serialVersionUID = -6812146026923460637L;
 	private IQueryAtom atom;
 	private IQueryBond ringBond;
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+	 */
 	public boolean matches(IAtom atom) {
 		return this.atom.matches(atom);
 	}
+	/**
+	 * @return
+	 */
 	public IQueryAtom getAtom() {
 		return atom;
 	}
+	/**
+	 * @param atom
+	 */
 	public void setAtom(IQueryAtom atom) {
 		this.atom = atom;
 	}
+	/**
+	 * @return
+	 */
 	public IQueryBond getRingBond() {
 		return ringBond;
 	}
+	/**
+	 * @param bond
+	 */
 	public void setRingBond(IQueryBond bond) {
 		this.ringBond = bond;
 	}

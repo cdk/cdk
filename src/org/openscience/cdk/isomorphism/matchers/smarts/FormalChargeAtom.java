@@ -30,38 +30,36 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @cdk.module extra
  * @cdk.svnrev  $Revision$
+ * @cdk.keyword SMARTS 
  */
 public class FormalChargeAtom extends SMARTSAtom {
     
     private static final long serialVersionUID = 1203658471548492071L;
     
-    private int charge;
-    
+    /**
+     * Creates a new instance
+     *
+     * @param charge
+     */
     public FormalChargeAtom(int charge) {
-        this.charge = charge;
+        this.formalCharge = charge;
     }
     
-    public int getOperator(){
-        if(ID!=null )
-            return 1;
-        else if(this.charge!=Default)
-            return 2;
-        return 3;
-    }
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+     */
     public boolean matches(IAtom atom) {
-     switch(getOperator()){
-                case 1: { if(atom.getFormalCharge()!=this.charge) return true;}
-                case 2: { if(atom.getFormalCharge()==this.charge) return true;}
-                default: return false;
-            }   
-    };
+    	return atom.getFormalCharge() == this.formalCharge;
+    }
     
-
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.PseudoAtom#toString()
+     */
     public String toString() {
 		StringBuffer s = new StringBuffer();
 		s.append("FormalChargeAtom(");
         s.append(this.hashCode() + ", ");
-		s.append("FC:" + charge);
+		s.append("C:" + this.formalCharge);
 		s.append(")");
 		return s.toString();
     }

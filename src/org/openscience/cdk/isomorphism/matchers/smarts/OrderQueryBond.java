@@ -24,44 +24,43 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
 /**
+ * This matches a bond with a certain bond order
+ * 
  * @cdk.module extra
  * @cdk.svnrev  $Revision$
+ * @cdk.keyword SMARTS
  */
 public class OrderQueryBond extends SMARTSBond {
 
     private static final long serialVersionUID = -5139538872961160661L;
 
-    public OrderQueryBond() {
-    }
-
-    public OrderQueryBond(IQueryAtom atom1, IQueryAtom atom2, double order) {
-        super(atom1, atom2, order);
+    /**
+     * Creates a new instance
+     *
+     * @param order the order of bond
+     */
+    public OrderQueryBond(double order) {
+    	super();
+    	this.setOrder(order);
     }
     
+	/* (non-Javadoc)
+	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org.openscience.cdk.interfaces.IBond)
+	 */
 	public boolean matches(IBond bond) {
-        if (this.getOrder() == bond.getOrder()) {
-            // bond orders match
-            return true;
-        } // else
-        return false;
-    };
+        return this.getOrder() == bond.getOrder();
+    }
 
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.Bond#toString()
+     */
     public String toString() {
 		StringBuffer s = new StringBuffer();
 		s.append("OrderQueryBond(");
         s.append(this.hashCode() + ", ");
 		s.append("#O:" + getOrder());
-		s.append(", #A:" + atoms.length);
-		for (int i = 0; i < atoms.length; i++) {
-			if (atoms[i] == null) {
-				s.append(", null");
-			} else {
-				s.append(", " + atoms[i].toString());
-			}
-		}
 		s.append(")");
 		return s.toString();
     }

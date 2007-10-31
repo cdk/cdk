@@ -28,10 +28,11 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
 /**
- * This is just a simple proof of concept, and far from a functional SMARTSAtom.
+ * Abstarct smarts bond
  *
  * @cdk.module extra
  * @cdk.svnrev  $Revision$
+ * @cdk.keyword SMARTS
  */
 public class SMARTSBond extends org.openscience.cdk.Bond implements IQueryBond {
     
@@ -46,6 +47,6 @@ public class SMARTSBond extends org.openscience.cdk.Bond implements IQueryBond {
 	public boolean matches(IBond bond) {
         return false;
         
-    };
+    }
 }
 

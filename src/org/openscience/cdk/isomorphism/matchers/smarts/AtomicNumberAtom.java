@@ -32,33 +32,38 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * It matches an atom using the atomic number
+ * This matches an atom using the atomic number
  *
- * @author Dazhi Jiao
- * @cdk.created 2007-05-10
- * @cdk.module smarts
+ * @cdk.module extra
  * @cdk.svnrev  $Revision: 9162 $
- * @cdk.keyword SMARTS AST
+ * @cdk.keyword SMARTS
  */
 public class AtomicNumberAtom extends SMARTSAtom {
 	private static final long serialVersionUID = 4811205092161793129L;
-	private int atomicNumber;
 	
+	/**
+	 * Creates a new instance
+	 *
+	 * @param atomicNumber
+	 */
 	public AtomicNumberAtom(int atomicNumber) {
-		this.atomicNumber = atomicNumber;
+		this.setAtomicNumber(atomicNumber);
 	}
 	
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+     */
     public boolean matches(IAtom atom) {
     	// TODO: this is just a hack for a few
     	if (atom.getAtomicNumber() != 0) {
-            return (atom.getAtomicNumber() == atomicNumber);
+            return (atom.getAtomicNumber() == getAtomicNumber());
     	} 
     	if (atom.getSymbol().equals("C")) {
-    		return atomicNumber == 6;
+    		return getAtomicNumber() == 6;
     	} else if (atom.getSymbol().equals("O")) {
-    		return atomicNumber == 8;
+    		return getAtomicNumber() == 8;
     	} else if (atom.getSymbol().equals("N")) {
-    		return atomicNumber == 7;
+    		return getAtomicNumber() == 7;
     	}
     	return false;
     }
