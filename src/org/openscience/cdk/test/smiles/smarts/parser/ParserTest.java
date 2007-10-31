@@ -934,7 +934,7 @@ public class ParserTest extends CDKTestCase {
     	}
     	boolean status = sqt.matches(atomContainer);
     	if (status) {
-    		int nmatch = sqt.countMatches();
+            int nmatch = sqt.countMatches();
     		return nmatch;
     	} else {
     		return 0;
@@ -1235,7 +1235,7 @@ public class ParserTest extends CDKTestCase {
     }
     public void testBondRing3() throws Exception {
     	int m = match("C@C", "C1CCCCC1", false);
-    	assertEquals(6, m);
+    	assertEquals(12, m);
     }
     public void testBondRing4() throws Exception {
     	int m = match("[C,c]@[C,c]", "c1ccccc1Cc1ccccc1", false);
