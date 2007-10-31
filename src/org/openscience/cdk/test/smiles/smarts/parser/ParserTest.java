@@ -1278,7 +1278,7 @@ public class ParserTest extends CDKTestCase {
     	assertEquals(3, m);
     }
     public void testLogicalNot4() throws Exception {
-    	int m = match("[!c]", "c1c(C)c(N)c[nH]1", false);
+    	int m = match("[!c]", "c1c(C)c(N)c[nH]1", true);
     	assertEquals(3, m);
     }
     public void testLogicalNot5() throws Exception {
