@@ -35,9 +35,6 @@
 	<classpathentry kind="lib" path="jar/xml-apis.jar"/>
 	<classpathentry kind="lib" path="jar/xmldb.jar"/>
 	<classpathentry kind="lib" path="jar/xom-1.1.jar"/>
-	<classpathentry kind="lib" path="pluginjar/aminoacidtemplates.jar"/>
-	<classpathentry kind="lib" path="pluginjar/dadmlbrowser.jar"/>
-	<classpathentry kind="lib" path="pluginjar/dirbrowser.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="develjar/com-sun-javadoc.jar"/>
 	<classpathentry kind="lib" path="develjar/com-sun-tools-doclets-Taglet.jar"/>
