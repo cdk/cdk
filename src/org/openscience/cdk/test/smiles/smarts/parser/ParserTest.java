@@ -1195,15 +1195,15 @@ public class ParserTest extends CDKTestCase {
     }
     public void testBondSingle3() throws Exception {
     	int m = match("CC", "CCO", false);
-    	assertEquals(1, m);    		
+    	assertEquals(2, m);
     }
     public void testBondSingle4() throws Exception {
     	int m = match("CC", "C1C(C)=C(C=CC(C)=CC=CC(C)=CCO)C(C)(C)C1", false);
-    	assertEquals(14, m);    		
+    	assertEquals(28, m);
     }
     public void testBondSingle5() throws Exception {
     	int m = match("CC", "CC1(C)SC2C(NC(=O)Cc3ccccc3)C(=O)N2C1C(=O)O", false);
-    	assertEquals(7, m);    		
+    	assertEquals(14, m);
     }
     public void testBondAny1() throws Exception {
     	int m = match("C~C", "C=C", false);
