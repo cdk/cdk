@@ -26,6 +26,7 @@ import java.util.Iterator;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -928,7 +929,8 @@ public class ParserTest extends CDKTestCase {
     		while (atoms.hasNext()) {
     			IAtom nextAtom = atoms.next();
     			System.out.println("atom: " + nextAtom.getSymbol() + " -> " +
-    					nextAtom.getAtomTypeName());
+    					nextAtom.getAtomTypeName() + " A:" +
+    					nextAtom.getFlag(CDKConstants.ISAROMATIC));
     		}
     	}
     	boolean status = sqt.matches(atomContainer);
@@ -953,10 +955,10 @@ public class ParserTest extends CDKTestCase {
     	assertEquals(0, match("[+1]", "CN1C(=O)N(C)C(=O)C(N(C)C=N2)=C12", false));
     }
     public void testPropertyCharge5() throws Exception {
-    	assertEquals(2, match("[+1]", "[Cl-].[Cl-].NC(=O)c2cc[n+](COC[n+]1ccccc1C=NO)cc2", true));
+    	assertEquals(2, match("[+1]", "[Cl-].[Cl-].NC(=O)c2cc[n+](COC[n+]1ccccc1C=NO)cc2", false));
     }
     public void testPropertyAromatic1() throws Exception {
-    	int m = match("[a]", "c1cc(C)c(N)cc1", false);
+    	int m = match("[a]", "c1cc(C)c(N)cc1", true);
     	assertEquals(6, m);
     }
     public void testPropertyAromatic2() throws Exception {
