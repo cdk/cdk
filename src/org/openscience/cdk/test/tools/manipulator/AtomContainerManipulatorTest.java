@@ -371,7 +371,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.getAtom(1).setExactMass(34.96885268);
         double totalExactMass = AtomContainerManipulator.getTotalExactMass((IAtomContainer)mol);
 
-        assertEquals(46.96885268,totalExactMass,0.001);
+        assertEquals(46.96885268,totalExactMass,0.000001);
     }
     
     /**
@@ -389,7 +389,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.getAtom(1).setNaturalAbundance(75.78);
         double totalAbudance = AtomContainerManipulator.getTotalNaturalAbundance((IAtomContainer)mol);
 
-        assertEquals(74.969154,totalAbudance,0.001);
+        assertEquals(73.4991705,totalAbudance,0.000001);
     }
     
     /**
