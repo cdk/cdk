@@ -223,7 +223,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	throws CDKException {
     	if ("N".equals(atom.getSymbol())) {
     		// if hybridization is given, use that
-    		if (atom.getHybridization() != CDKConstants.UNSET) {
+    		if (atom.getHybridization() != CDKConstants.UNSET &&
+    			(atom.getFormalCharge() == CDKConstants.UNSET ||
+    	    	 atom.getFormalCharge() == 0)) {
     			if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP1) {
     				return factory.getAtomType("N.sp1");
     			} else if (atom.getHybridization() == CDKConstants.HYBRIDIZATION_SP2) {
