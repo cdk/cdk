@@ -19,23 +19,18 @@
  */
 package org.openscience.cdk.atomtype;
 
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.SpanningTree;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Atom Type matcher... TO BE WRITTEN.
@@ -250,6 +245,22 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return null;
     }
 
+    private boolean bothNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer) {
+        boolean bothNeighborsSP2 = true;
+        Iterator<IAtom> atoms = atomContainer.getConnectedAtomsList(atom).iterator();
+        while (atoms.hasNext() && bothNeighborsSP2) {
+            IAtom nextAtom = atoms.next();
+            if (!nextAtom.getSymbol().equals("H")) {
+                if (nextAtom.getHybridization() != CDKConstants.UNSET &&
+                        nextAtom.getHybridization() != Hybridization.SP2 &&
+                        countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
+                    bothNeighborsSP2 = false;
+                }
+            }
+        }
+        return bothNeighborsSP2;
+    }
+
     private IAtomType perceiveNitrogens(IAtomContainer atomContainer, IAtom atom)
     	throws CDKException {
     	if ("N".equals(atom.getSymbol())) {
@@ -260,10 +271,15 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			if (atom.getHybridization() == Hybridization.SP1) {
     				return factory.getAtomType("N.sp1");
     			} else if (atom.getHybridization() == Hybridization.SP2) {
-    				return factory.getAtomType("N.sp2");
-    			} else if (atom.getHybridization() == Hybridization.SP3) {
-    				return factory.getAtomType("N.sp3");
-    			}
+                    // but an sp2 hyb N might N.sp2 or N.planar3 (pyrrole), so check for the latter
+                    int hcount = atom.getHydrogenCount() == null ? 0 : atom.getHydrogenCount();
+                    if (isRingAtom(atom, atomContainer) &&
+                            atomContainer.getConnectedAtomsCount(atom) + hcount == 3 &&
+                            bothNeighborsAreSp2(atom, atomContainer)) return factory.getAtomType("N.planar3");
+                    return factory.getAtomType("N.sp2");
+                } else if (atom.getHybridization() == Hybridization.SP3) {
+                    return factory.getAtomType("N.sp3");
+                }
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() != 0) {
     			if (atom.getFormalCharge() == 1) {
@@ -313,25 +329,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     					if (bonds.get(0).getFlag(CDKConstants.ISAROMATIC) &&
     						bonds.get(1).getFlag(CDKConstants.ISAROMATIC)) {
     						return factory.getAtomType("N.sp2");
-    					} else {
-    						// a N.sp3 which is expected to take part in an aromatic system
-            				if (isRingAtom(atom, atomContainer)) {
-        						boolean bothNeighborsSP2 = true;
-            					Iterator<IAtom> atoms = atomContainer.getConnectedAtomsList(atom).iterator();
-            					while (atoms.hasNext() && bothNeighborsSP2) {
-            						IAtom nextAtom = atoms.next();
-            						if (!nextAtom.getSymbol().equals("H")) {
-            							if (nextAtom.getHybridization() != CDKConstants.UNSET && 
-            								nextAtom.getHybridization() != Hybridization.SP2 && 
-            								countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
-            								bothNeighborsSP2 = false;
-            							}
-            						}
-            					}
-            					if (bothNeighborsSP2) return factory.getAtomType("N.planar3");
-            				}
-    						return factory.getAtomType("N.sp3");
-    					}
+                        } else {
+                            // a N.sp3 which is expected to take part in an aromatic system
+                            if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom, atomContainer)) {
+                                return factory.getAtomType("N.planar3");
+                            }
+                            return factory.getAtomType("N.sp3");
+                        }
     				} else if (connectedHeavyAtoms == 3) {
     					return factory.getAtomType("N.sp3");
     				} else if (connectedHeavyAtoms == 1) {
