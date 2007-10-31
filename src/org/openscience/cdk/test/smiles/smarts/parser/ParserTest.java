@@ -20,12 +20,8 @@
  */
 package org.openscience.cdk.test.smiles.smarts.parser;
 
-import java.io.StringReader;
-import java.util.Iterator;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
@@ -39,6 +35,9 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.test.CDKTestCase;
+
+import java.io.StringReader;
+import java.util.Iterator;
 
 /**
  * JUnit test routines for the SMARTS parser.
@@ -1048,7 +1047,7 @@ public class ParserTest extends CDKTestCase {
     }
     public void testPropertyR2() throws Exception {
     	int m = match("[R2]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34", false);
-    	assertEquals(6, m);     	
+    	assertEquals(2, m);     	
     }
     public void testPropertyR3() throws Exception {
     	int m = match("[R2]", "C123C5C(O)C=CC2C(N(C)CC1)Cc(ccc4O)c3c4O5", false);
