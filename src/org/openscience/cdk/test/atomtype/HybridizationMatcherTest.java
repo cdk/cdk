@@ -20,16 +20,11 @@
  */
 package org.openscience.cdk.test.atomtype;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.HybridizationMatcher;
@@ -41,6 +36,9 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @cdk.module test-core
@@ -61,7 +59,7 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
     @Test public void testFindMatchingAtomType_IAtomContainer_IAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
-        final int thisHybridization = CDKConstants.HYBRIDIZATION_SP1;
+        final IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP1;
         atom.setHybridization(thisHybridization);
         mol.addAtom(atom);
 

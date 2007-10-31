@@ -21,28 +21,19 @@
  */
 package org.openscience.cdk.test.atomtype;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.*;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -66,7 +57,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     @Test public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
         IMolecule mol = new Molecule();
         IAtom atom = new Atom("C");
-        final int thisHybridization = CDKConstants.HYBRIDIZATION_SP3;
+        final IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP3;
         atom.setHybridization(thisHybridization);
         mol.addAtom(atom);
 
@@ -207,7 +198,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("C");
         IAtom atom2 = new Atom("C");
-        final int thisHybridization = CDKConstants.HYBRIDIZATION_SP2;
+        final IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP2;
         atom.setHybridization(thisHybridization);
         atom2.setHybridization(thisHybridization);
         mol.addAtom(atom);

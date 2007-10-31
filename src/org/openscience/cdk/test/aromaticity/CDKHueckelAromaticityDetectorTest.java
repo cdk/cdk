@@ -22,25 +22,14 @@
  */
 package org.openscience.cdk.test.aromaticity;
 
-import java.io.InputStream;
-import java.util.Iterator;
-
-import javax.vecmath.Point2d;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -49,6 +38,10 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import javax.vecmath.Point2d;
+import java.io.InputStream;
+import java.util.Iterator;
 
 /**
  * @cdk.module  test-standard
@@ -155,8 +148,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit The special difficulty with Azulene is that only the
 	 *  outermost larger 10-ring is aromatic according to Hueckel rule.
-	 *  
-	 *  @see org.openscience.cdk.test.atomtype.CDKAtomTypeMatcherTest.testAzulene
+	 *
 	 */
 	public void testAzulene() throws Exception
 	{
@@ -185,7 +177,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit. The N has to be counted correctly.
 	 *  
-	 *  @see org.openscience.cdk.test.atomtype.CDKAtomTypeMatcherTest.testIndole
+
 	 */
 	public void testIndole() throws Exception
 	{
@@ -216,7 +208,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 	/**
 	 * A unit test for JUnit. The N has to be counted correctly.
 	 *  
-	 * @see org.openscience.cdk.test.atomtype.CDKAtomTypeMatcherTest.testPyrrole
+
 	 */
 	public void testPyrrole() throws Exception
 	{
@@ -297,7 +289,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     	IMolecule mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
     	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
     	for (int f = 0; f < mol.getAtomCount(); f++) {
-    		assertEquals(CDKConstants.HYBRIDIZATION_SP2, mol.getAtom(f).getHybridization().intValue());
+    		assertEquals(IAtomType.Hybridization.SP2, mol.getAtom(f).getHybridization());
     	}
     	assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
     	assertEquals(7, mol.getAtomCount());
