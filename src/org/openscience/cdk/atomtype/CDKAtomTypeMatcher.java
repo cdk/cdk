@@ -183,10 +183,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         				return factory.getAtomType("O.sp2");
         			} else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
         				return factory.getAtomType("O.planar3");
-        			}
-    				
+        			}    				
     			} else if (atom.getHybridization() == Hybridization.SP3) {
     				return factory.getAtomType("O.sp3");
+    			} else if (atom.getHybridization() == Hybridization.PLANAR3) {
+    				return factory.getAtomType("O.planar3");
     			}
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() != 0) {
