@@ -15,7 +15,7 @@
         <property name="pathtojoelib" value="jar/libio" />
         <property name="pathtojmol" value="jar/libio" />
 
-        <!-- directories -->
+       <!-- directories -->
         <property name="build" value="build" />
         <property name="build.src" value="${build}/src" />
         <property name="sourcedist" value="sourcedist" />
@@ -38,6 +38,16 @@
         <property name="arg4" value="" />
 
          <property environment="env" />
+
+
+    <!-- Inlcude the ant-contrib goodies -->
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+        <classpath>
+            <pathelement location="${basedir}/develjar/ant-contrib-1.0b3.jar"/>
+        </classpath>
+    </taskdef>
+
+
 
     <target id="info" name="info" depends="check">
             <!-- Gives information about the building process. -->
