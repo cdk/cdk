@@ -1585,7 +1585,7 @@ public class SmilesGenerator
 				buffer.append('[');
 			}
 			buffer.append(mass);
-			if ((useAromaticity && a.getFlag(CDKConstants.ISAROMATIC)) || (a.getHybridization() != Hybridization.UNSET &&
+			if ((useAromaticity && a.getFlag(CDKConstants.ISAROMATIC)) || (a.getHybridization() != CDKConstants.UNSET &&
 					a.getHybridization() == Hybridization.SP2))
 			{
 				buffer.append(a.getSymbol().toLowerCase());

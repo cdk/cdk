@@ -40,7 +40,6 @@ package org.openscience.cdk.interfaces;
 public interface IAtomType extends IIsotope {
 
 	public enum Hybridization {
-	    UNSET,
 	    SP1,
 	    SP2,
 	    SP3,

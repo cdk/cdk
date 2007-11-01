@@ -56,7 +56,7 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
 
 	private IChemModel model;
 
-	private Map hydrogenAtomMap = null;
+	private Map<IAtom, int[]> hydrogenAtomMap = null;
 
 	/**
 	 * Constructor for explicit hydrogen addition
@@ -80,7 +80,7 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
 	 *            A HashMap containing the changed atoms as keys and an Array
 	 *            with the former and the new hydrogen count
 	 */
-	public AddHydrogenEdit(IChemModel model2, Map hydrogenAtomMap) {
+	public AddHydrogenEdit(IChemModel model2, Map<IAtom, int[]> hydrogenAtomMap) {
 		this.model = model2;
 		this.hydrogenAtomMap = hydrogenAtomMap;
 	}
@@ -115,8 +115,8 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
 	 * Method realising the redo of implicit hydrogen addition
 	 */
 	private void redoImplicitHydrogenAdding() {
-		Set keys = hydrogenAtomMap.keySet();
-		Iterator it = keys.iterator();
+		Set<IAtom> keys = hydrogenAtomMap.keySet();
+		Iterator<IAtom> it = keys.iterator();
 		while (it.hasNext()) {
 			IAtom atom = (IAtom) it.next();
 			int[] hydrogens = (int[]) hydrogenAtomMap.get(atom);
@@ -129,8 +129,8 @@ public class AddHydrogenEdit extends AbstractUndoableEdit {
 	 * Method realising the undo of implicit hydrogen addition
 	 */
 	private void undoImplicitHydrogenAdding() {
-		Set keys = hydrogenAtomMap.keySet();
-		Iterator it = keys.iterator();
+		Set<IAtom> keys = hydrogenAtomMap.keySet();
+		Iterator<IAtom> it = keys.iterator();
 		while (it.hasNext()) {
 			IAtom atom = (IAtom) it.next();
 			int[] hydrogens = (int[]) hydrogenAtomMap.get(atom);
