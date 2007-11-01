@@ -264,7 +264,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
                 // IMPLICIT hydrogens: count the number of hydrogen atoms and adjust other atom profile properties
                 Integer implicitHAtoms = atom.getHydrogenCount();
                 if (implicitHAtoms == CDKConstants.UNSET) {
-                    throw new CDKException("Atom " + atom.getSymbol() + " had implicit hydrogens UNSET. Probably an atom typing error");
+                    implicitHAtoms = 0;
                 }
 
                 for (int hydrogenIndex = 0; hydrogenIndex < atom.getHydrogenCount(); hydrogenIndex++) {
@@ -353,7 +353,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
-	public Object getParameterType(String name) {
-		return new Boolean(true);
+    public Object getParameterType(String name) {
+        return new Boolean(true);
 	}
 }
