@@ -91,10 +91,22 @@ public class TPSADescriptorTest extends CDKTestCase {
         assertEquals(12.892, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 
-    public void testTPSA6() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testTPSA6() throws java.lang.Exception {
         IMolecule mol = sp.parseSmiles("[H][N+]([H])(C)C");//at:  16
         addExplicitHydrogens(mol);
         assertEquals(16.61, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+    }
+
+    public void testTPSA7() throws java.lang.Exception {
+        IMolecule mol = sp.parseSmiles("C(I)I");//at:  16
+        addExplicitHydrogens(mol);
+        assertEquals(0.0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+    }
+
+    public void testTPSA8() throws java.lang.Exception {
+        IMolecule mol = sp.parseSmiles("C(O)O");//at:  16
+        addExplicitHydrogens(mol);
+        assertEquals(40.45, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
 
