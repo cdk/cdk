@@ -498,7 +498,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         
         for (int f = 0; f < 6; f++) {
             mol.getAtom(f).setFlag(CDKConstants.ISAROMATIC, true);
-            mol.getAtom(f).setHybridization(IAtomType.Hybridization.SP3);
+            mol.getAtom(f).setHybridization(IAtomType.Hybridization.SP2);
             mol.getBond(f).setFlag(CDKConstants.ISAROMATIC, true);
         }
         findAndConfigureAtomTypesForAllAtoms(mol);
