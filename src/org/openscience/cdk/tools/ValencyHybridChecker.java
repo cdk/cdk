@@ -298,7 +298,7 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 logger.debug("This type matches: ", type);
                 int formalNeighbourCount = type.getFormalNeighbourCount() == CDKConstants.UNSET ? 0 : type.getFormalNeighbourCount();
-                if (atom.getHybridization() == Hybridization.UNSET) {
+                if (atom.getHybridization() == CDKConstants.UNSET) {
                     double typeBoSum = type.getBondOrderSum() == CDKConstants.UNSET ? 0 : type.getBondOrderSum();
                     missingHydrogens = (int) (typeBoSum - bondOrderSum);
                 } else if (atom.getHybridization() == Hybridization.SP3) {

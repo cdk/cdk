@@ -28,6 +28,7 @@
  */
 package org.openscience.cdk.tools;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -287,7 +288,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 logger.debug("This type matches: ", type);
                 int formalNeighbourCount = type.getFormalNeighbourCount();
-                if (type.getHybridization() == Hybridization.UNSET) {
+                if (type.getHybridization() == CDKConstants.UNSET) {
                     missingHydrogens = (int) (type.getBondOrderSum() - bondOrderSum);
                 } else if (type.getHybridization() == Hybridization.SP3) {
                 	missingHydrogens = formalNeighbourCount - neighbourCount;
