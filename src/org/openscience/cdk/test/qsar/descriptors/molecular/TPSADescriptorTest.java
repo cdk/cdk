@@ -25,7 +25,6 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -43,6 +42,9 @@ import org.openscience.cdk.test.CDKTestCase;
 
 public class TPSADescriptorTest extends CDKTestCase {
 
+    private SmilesParser sp;
+    private IMolecularDescriptor descriptor;
+
     public TPSADescriptorTest() {
     }
 
@@ -50,28 +52,51 @@ public class TPSADescriptorTest extends CDKTestCase {
         return new TestSuite(TPSADescriptorTest.class);
     }
 
-    public void testTPSADescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-
-        // each test is for one or more atom types:
-
-        IMolecularDescriptor descriptor = new TPSADescriptor();
-        Object[] params = {new Boolean(true)};
+    protected void setUp() throws CDKException {
+        sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        descriptor = new TPSADescriptor();
+        Object[] params = {true};
         descriptor.setParameters(params);
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        //Molecule mol = sp.parseSmiles("O=C(O)CC"); at: 29, 31
-        //Molecule mol = sp.parseSmiles("C=NC(CC#N)N(C)C"); // at 1,2,3
-        //Molecule mol = sp.parseSmiles("CCCN(=O)=O"); // at 4
-        //Molecule mol = sp.parseSmiles("C#N=CC(CNC)N1CC1"); // at 5,6,7
-        //Molecule mol = sp.parseSmiles("c1ccncc1");//at:  19
+    }
+
+
+    public void testTPSA1() throws Exception {
+        IMolecule mol = sp.parseSmiles("O=C(O)CC");
+        addExplicitHydrogens(mol);
+        assertEquals(37.29, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
+    }
+
+    public void testTPSA2() throws Exception {
+        IMolecule mol = sp.parseSmiles("C=NC(CC#N)N(C)C");
+        addExplicitHydrogens(mol);
+        assertEquals(39.39, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
+    }
+
+    public void testTPSA3() throws Exception {
+        IMolecule mol = sp.parseSmiles("CCCN(=O)=O");
+        addExplicitHydrogens(mol);
+        assertEquals(45.82, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
+    }
+
+    public void testTPSA4() throws Exception {
+        IMolecule mol = sp.parseSmiles("C#N=CC(CNC)N1CC1");
+        addExplicitHydrogens(mol);
+        assertEquals(28.632, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
+    }
+
+
+    public void testTPSA5() throws Exception {
+        IMolecule mol = sp.parseSmiles("c1ccncc1");
+        addExplicitHydrogens(mol);
+        assertEquals(12.892, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
+    }
+
+    public void testTPSA6() throws ClassNotFoundException, CDKException, java.lang.Exception {
         IMolecule mol = sp.parseSmiles("[H][N+]([H])(C)C");//at:  16
         addExplicitHydrogens(mol);
-        // each test id done for one or more atom types:
-        // assertEquals(37.299999, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); at:  29, 31
-        // assertEquals(39.394, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  1,2,3
-        // assertEquals(45.824, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  4
-        //assertEquals(28.632, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  5,6,7
-        // assertEquals(12.892, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  19
         assertEquals(16.61, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
+
+
 }
 
