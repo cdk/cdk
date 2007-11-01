@@ -39,7 +39,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -56,6 +56,7 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @cdk.module test-standard
@@ -80,8 +81,10 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 	{
 		AtomContainer mol = MoleculeFactory.makeAlphaPinene();
 		AtomContainer frag1 = MoleculeFactory.makeCyclohexene(); //one double bond in ring
-		HueckelAromaticityDetector.detectAromaticity(mol);
-		HueckelAromaticityDetector.detectAromaticity(frag1);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(frag1);
+		CDKHueckelAromaticityDetector.detectAromaticity(mol);
+		CDKHueckelAromaticityDetector.detectAromaticity(frag1);
 		
 		if(standAlone) {
 			System.out.println("Cyclohexene is a subgraph of alpha-Pinen: " + UniversalIsomorphismTester.isSubgraph(mol, frag1));
@@ -131,8 +134,10 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 	{
 		AtomContainer mol = MoleculeFactory.makeAlphaPinene();
 		AtomContainer frag1 = MoleculeFactory.makeCyclohexane(); // no double bond in ring		
-		HueckelAromaticityDetector.detectAromaticity(mol);
-		HueckelAromaticityDetector.detectAromaticity(frag1);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(frag1);
+		CDKHueckelAromaticityDetector.detectAromaticity(mol);
+		CDKHueckelAromaticityDetector.detectAromaticity(frag1);
         
 		if(standAlone){
 			System.out.println("Cyclohexane is a subgraph of alpha-Pinen: " + UniversalIsomorphismTester.isSubgraph(mol, frag1));
@@ -145,8 +150,10 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 	{
 		AtomContainer mol = MoleculeFactory.makeIndole();
 		AtomContainer frag1 = MoleculeFactory.makePyrrole(); 
-		HueckelAromaticityDetector.detectAromaticity(mol);
-		HueckelAromaticityDetector.detectAromaticity(frag1);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(frag1);
+		CDKHueckelAromaticityDetector.detectAromaticity(mol);
+		CDKHueckelAromaticityDetector.detectAromaticity(frag1);
 
 		if(standAlone) {
 			System.out.println("Pyrrole is a subgraph of Indole: " + UniversalIsomorphismTester.isSubgraph(mol, frag1));
@@ -164,15 +171,18 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 	
-	public void testGetSubgraphAtomsMaps_IAtomContainer_IAtomContainer() throws java.lang.Exception
+	public void testGetSubgraphAtomsMaps_IAtomContainer() throws java.lang.Exception
 	{
 		int[] result1 = {6, 5, 7, 8, 0};
 		int[] result2 = {3, 4, 2, 1, 0};
 		
 		AtomContainer mol = MoleculeFactory.makeIndole();
 		AtomContainer frag1 = MoleculeFactory.makePyrrole(); 
-		HueckelAromaticityDetector.detectAromaticity(mol);
-		HueckelAromaticityDetector.detectAromaticity(frag1);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(frag1);
+		CDKHueckelAromaticityDetector.detectAromaticity(mol);
+		CDKHueckelAromaticityDetector.detectAromaticity(frag1);
+
 		List list = UniversalIsomorphismTester.getSubgraphAtomsMaps(mol, frag1);
 		List first = (List)list.get(0);
 		for (int i = 0; i < first.size(); i++) {
@@ -255,8 +265,10 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         
         // now apply aromaticity detection, then 8 overlaps should be found
         // see cdk-user@list.sf.net on 2005-06-16
-        HueckelAromaticityDetector.detectAromaticity(mol1, true);
-        HueckelAromaticityDetector.detectAromaticity(mol2, true);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol1);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol2);
+		CDKHueckelAromaticityDetector.detectAromaticity(mol1);
+		CDKHueckelAromaticityDetector.detectAromaticity(mol2);
         list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
         assertEquals(8, list.size());
         list = UniversalIsomorphismTester.getOverlaps(mol2, mol1);
