@@ -20,16 +20,19 @@
  */
 package org.openscience.cdk.test.layout;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.List;
 
-import javax.swing.JFrame;
 import javax.vecmath.Vector2d;
 
-import org.junit.*;
-import static org.junit.Assert.*;
-
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -103,7 +106,6 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		showIt(MoleculeFactory.makeDiamantane(), "Diamantane - Was A Problem! - Solved :-)");
 		showIt(MoleculeFactory.makeEthylCyclohexane(), "Ethylcyclohexane");
 		showIt(MoleculeFactory.makeBicycloRings(), "Bicyclo-[2.2.2]-octane");		
-		//showIt(makeBug736137(), "Bug 736137");
 		//showIt(makeBug891021(), "Bug 891021");
 		showIt(makeJhao1(), "Bug jhao1");
 		showIt(makeJhao2(), "Bug jhao2");
@@ -127,22 +129,6 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		sdg.setMolecule(m);
 		sdg.generateCoordinates(new Vector2d(0, 1));
 		return sdg.getMolecule();
-	}
-
-	/**
-	 * @cdk.bug 736137
-	 */
-	@Test (timeout=5000)
-	public void testBug736137() throws Exception
-	{
-		String filename = "data/mdl/bug736137.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLV2000Reader reader = new MDLV2000Reader(ins);
-		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-		IChemSequence chemSequence = chemFile.getChemSequence(0);
-		IChemModel chemModel = chemSequence.getChemModel(0);
-		List atomContainers = ChemModelManipulator.getAllAtomContainers(chemModel);
-		Assert.assertEquals(1, atomContainers.size());
 	}
 
 	public void visualBugPMR() throws Exception
