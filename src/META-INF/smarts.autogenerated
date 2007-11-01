@@ -1,0 +1,8 @@
+org/openscience/cdk/smiles/smarts/parser/ParseException.java
+org/openscience/cdk/smiles/smarts/parser/SMARTSParser.java
+org/openscience/cdk/smiles/smarts/parser/SMARTSParserConstants.java
+org/openscience/cdk/smiles/smarts/parser/SMARTSParserTokenManager.java
+org/openscience/cdk/smiles/smarts/parser/SimpleCharStream.java
+org/openscience/cdk/smiles/smarts/parser/Token.java
+org/openscience/cdk/smiles/smarts/parser/TokenMgrError.java
+
