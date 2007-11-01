@@ -267,7 +267,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
                     implicitHAtoms = 0;
                 }
 
-                for (int hydrogenIndex = 0; hydrogenIndex < atom.getHydrogenCount(); hydrogenIndex++) {
+                for (int hydrogenIndex = 0; hydrogenIndex < implicitHAtoms; hydrogenIndex++) {
                     hCount++;
                     numberOfNeighbours++;
                     singleBondCount++;
@@ -355,5 +355,5 @@ public class TPSADescriptor implements IMolecularDescriptor {
      */
     public Object getParameterType(String name) {
         return new Boolean(true);
-	}
+    }
 }
