@@ -46,10 +46,10 @@ public interface IAtomType extends IIsotope {
 	    SP3,
 	    PLANAR3,
 	    SP3D1,
-	    HYBRIDIZATION_SP3D2,
-	    HYBRIDIZATION_SP3D3,
-	    HYBRIDIZATION_SP3D4,
-	    HYBRIDIZATION_SP3D5
+	    SP3D2,
+	    SP3D3,
+	    SP3D4,
+	    SP3D5
 	}
 	
 	/**
