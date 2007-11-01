@@ -39,6 +39,7 @@ import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -652,7 +653,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 		Molecule molecule = new Molecule();
         SmilesGenerator sg = new SmilesGenerator();
 		Atom sp2CarbonWithOneHydrogen = new Atom("C");
-		sp2CarbonWithOneHydrogen.setHybridization(CDKConstants.HYBRIDIZATION_SP2);
+		sp2CarbonWithOneHydrogen.setHybridization(Hybridization.SP2);
 		sp2CarbonWithOneHydrogen.setHydrogenCount(1);
 		molecule.addAtom(sp2CarbonWithOneHydrogen);
 		molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
