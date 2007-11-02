@@ -31,7 +31,7 @@ import javax.vecmath.Point3d;
 /**
  * Implements the concept of a covalent bond between two or more atoms. A bond is
  * considered to be a number of electrons connecting two ore more atoms.
- *
+ *type filter text
  * @cdk.module interfaces
  * @cdk.svnrev  $Revision$
  *
@@ -44,7 +44,6 @@ import javax.vecmath.Point3d;
 public interface IBond extends IElectronContainer {
 
 	public enum Order {
-		EMPTY,
 		SINGLE,
 		DOUBLE,
 		TRIPLE,
