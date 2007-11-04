@@ -134,14 +134,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IMolecule mol = sp.parseSmiles("c1cocc1");
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
-        Iterator<IAtom> atoms = mol.atoms();
-        while (atoms.hasNext()) {
-            IAtom nextAtom = atoms.next();
-            System.out.println("atom: " + nextAtom.getSymbol() + " -> " +
-                    nextAtom.getAtomTypeName() + " A:" +
-                    nextAtom.getFlag(CDKConstants.ISAROMATIC));
-        }
+        assertTrue("Molecule is not detected aromatic", CDKHueckelAromaticityDetector.detectAromaticity(mol));
 
         IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
         int numberOfAromaticRings = 0;
@@ -237,14 +230,13 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     public void testThiazole() throws Exception {
         Molecule molecule = MoleculeFactory.makeThiazole();
-        boolean[] testResults = {true, true, true, true, true};
         AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
-        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        assertTrue("Molecule is not detected as aromatic", CDKHueckelAromaticityDetector.detectAromaticity(molecule));
+
         for (int f = 0; f < molecule.getAtomCount(); f++) {
-            assertEquals(
-                    "Atom " + f + " is not correctly marked",
-                    testResults[f],
-                    molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC)
+            assertTrue(
+                "Atom " + f + " is not correctly marked",
+                molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC)
             );
         }
     }
@@ -286,7 +278,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
         IMolecule mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
         AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
-        for (int f = 0; f < mol.getAtomCount(); f++) {
+        assertEquals(IAtomType.Hybridization.PLANAR3, mol.getAtom(0).getHybridization());
+        for (int f = 1; f < mol.getAtomCount(); f++) {
             assertEquals(IAtomType.Hybridization.SP2, mol.getAtom(f).getHybridization());
         }
         assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
