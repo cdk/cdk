@@ -347,25 +347,27 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		bool[2] = true;
 		String smiles1 = sg.createSMILES(mol1, true, bool);
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("F/C(=C/(F)S)S"));
+		assertEquals("F/C(=C/(F)S)S", smiles1);
 		mol1.getAtom(4).setPoint2d(new Point2d(0, 3));
 		mol1.getAtom(5).setPoint2d(new Point2d(2, 3));
 		
 		smiles1 = sg.createSMILES(mol1, true, bool);
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("F/C(=C\\(F)S)S"));
+		assertEquals("F/C(=C\\(F)S)S", smiles1);
 
 		addExplicitHydrogens(mol1);
 		hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
 		bool = new boolean[mol1.getBondCount()];
 		bool[2] = true;
 		smiles1 = sg.createSMILES(mol1, true, bool);
-		assertTrue(smiles1.equals("[H]S/C(F)=C/(F)S[H]"));
+		assertNotNull(smiles1);
+		assertEquals("[H]S/C(F)=C/(F)S[H]", smiles1);
 		
 		mol1.getAtom(5).setPoint2d(new Point2d(0, 3));
 		mol1.getAtom(4).setPoint2d(new Point2d(2, 3));
 		smiles1 = sg.createSMILES(mol1, true, bool);
-		assertTrue(smiles1.equals("[H]S/C(F)=C\\(F)S[H]"));
+		assertNotNull(smiles1);
+		assertEquals("[H]S/C(F)=C\\(F)S[H]", smiles1);
 	}
 
 
