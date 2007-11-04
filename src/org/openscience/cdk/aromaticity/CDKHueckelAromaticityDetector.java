@@ -129,6 +129,8 @@ public class CDKHueckelAromaticityDetector {
 					electronCount += 2;
 				} else if ("S.2".equals(ringAtom.getAtomTypeName())) {
                     electronCount += 2;
+				} else if ("S.planar3".equals(ringAtom.getAtomTypeName())) {
+                    electronCount += 2;
                 } else if ("O.planar3".equals(ringAtom.getAtomTypeName())) {
                     electronCount += 2;
                 } else {
