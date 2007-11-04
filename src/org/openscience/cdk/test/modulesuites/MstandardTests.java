@@ -100,6 +100,7 @@ import org.openscience.cdk.test.tools.manipulator.ChemSequenceManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.MoleculeSetManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.ReactionManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.ReactionSetManipulatorTest;
+import org.openscience.cdk.test.tools.manipulator.RingManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.RingSetManipulatorTest;
 import org.openscience.cdk.test.tools.manipulator.RingSizeComparatorTest;
 import org.openscience.cdk.test.validate.ProblemMarkerTest;
@@ -148,6 +149,7 @@ public class MstandardTests {
         suite.addTest(ReactionManipulatorTest.suite());
         suite.addTest(AtomContainerManipulatorTest.suite());
         suite.addTest(RingSetManipulatorTest.suite());
+        suite.addTest(RingManipulatorTest.suite());
         suite.addTest(AtomContainerSetManipulatorTest.suite());
         suite.addTest(MoleculeSetManipulatorTest.suite());
         suite.addTest(RebondToolTest.suite());
