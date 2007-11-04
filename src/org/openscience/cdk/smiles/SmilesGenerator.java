@@ -33,7 +33,7 @@ import java.util.TreeMap;
 import java.util.Vector;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
@@ -50,9 +50,9 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -356,7 +356,8 @@ public class SmilesGenerator
 			}
 			rings = ringFinder.findAllRings(molecule);
 		}
-		HueckelAromaticityDetector.detectAromaticity(molecule, rings, false);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+		CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 		if (chiral && rings.getAtomContainerCount() > 0)
 		{
 			List v = RingPartitioner.partitionRings(rings);
@@ -1585,8 +1586,7 @@ public class SmilesGenerator
 				buffer.append('[');
 			}
 			buffer.append(mass);
-			if ((useAromaticity && a.getFlag(CDKConstants.ISAROMATIC)) || (a.getHybridization() != CDKConstants.UNSET &&
-					a.getHybridization() == Hybridization.SP2))
+			if ((useAromaticity && a.getFlag(CDKConstants.ISAROMATIC)))
 			{
 				buffer.append(a.getSymbol().toLowerCase());
 			} else
