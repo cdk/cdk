@@ -20,20 +20,24 @@
  */
 package org.openscience.cdk.test.smiles;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.junit.Assert;
-import org.junit.Before;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.NewCDKTestCase;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Please see the test.gui package for visual feedback on tests.
@@ -594,14 +598,9 @@ public class SmilesParserTest extends NewCDKTestCase {
 		// C6H5+, phenyl cation
 		IMolecule mol = sp.parseSmiles(smiles);
 		Assert.assertEquals(6, mol.getAtomCount());
-		// it's a bit hard to detect three double bonds in the phenyl ring
-		// but I do can check the total order in the whole molecule
-		double totalBondOrder = 0.0;
-		Iterator bonds = mol.bonds();
-		while (bonds.hasNext())
-			totalBondOrder += ((IBond)bonds.next()).getOrder();
-		Assert.assertEquals(9.0, totalBondOrder, 0.001);
-		// I can also check wether all carbons have exact two neighbors
+		Assert.assertEquals(1, mol.getAtom(0).getFormalCharge().intValue());
+
+		// I can also check whether all carbons have exact two neighbors
 		for (int i = 0; i < mol.getAtomCount(); i++)
 		{
 			Assert.assertEquals(2, mol.getConnectedAtomsCount(mol.getAtom(i)));
@@ -656,19 +655,12 @@ public class SmilesParserTest extends NewCDKTestCase {
 		StructureDiagramGenerator sdg=new StructureDiagramGenerator(mol);
 		sdg.generateCoordinates();
 		Assert.assertEquals(6, mol.getAtomCount());
-		// it's a bit hard to detect two double bonds in the pyrrole ring
-		// but I do can check the total order in the whole molecule
-		double totalBondOrder = 0.0;
-		Iterator bonds = mol.bonds();
-		while (bonds.hasNext())
-			totalBondOrder += ((IBond)bonds.next()).getOrder();
-		Assert.assertEquals(8.0, totalBondOrder, 0.001);
 		// I can also check wether the total neighbor count around the
 		// nitrogen is 3, all single bonded
 		org.openscience.cdk.interfaces.IAtom nitrogen = mol.getAtom(1);
 		// the second atom
 		Assert.assertEquals("N", nitrogen.getSymbol());
-		totalBondOrder = 0.0;
+		double totalBondOrder = 0.0;
 		List bondsList = mol.getConnectedBondsList(nitrogen);
 		Assert.assertEquals(3, bondsList.size());
 		for (int i = 0; i < bondsList.size(); i++)
@@ -900,26 +892,11 @@ public class SmilesParserTest extends NewCDKTestCase {
 	public void testPyridine() throws Exception {
 		IMolecule mol = sp.parseSmiles("c1ccncc1");
 		Assert.assertEquals(6, mol.getAtomCount());
-		// it's a bit hard to detect two double bonds in the pyrrole ring
-		// but I do can check the total order in the whole molecule
-		double totalBondOrder = 0.0;
-		Iterator bonds = mol.bonds();
-		while (bonds.hasNext())
-			totalBondOrder += ((IBond)bonds.next()).getOrder();
-		Assert.assertEquals(9.0, totalBondOrder, 0.001);
-		// I can also check wether the total neighbor count around the
+		// I can also check whether the total neighbor count around the
 		// nitrogen is 3, all single bonded
 		org.openscience.cdk.interfaces.IAtom nitrogen = mol.getAtom(3);
 		// the second atom
 		Assert.assertEquals("N", nitrogen.getSymbol());
-		totalBondOrder = 0.0;
-		List bondsList = mol.getConnectedBondsList(nitrogen);
-		Assert.assertEquals(2, bondsList.size());
-		for (int i = 0; i < bondsList.size(); i++)
-		{
-			totalBondOrder += ((IBond)bondsList.get(i)).getOrder();
-		}
-		Assert.assertEquals(3.0, totalBondOrder, 0.001);
 	}
 
 	/**
@@ -987,17 +964,17 @@ public class SmilesParserTest extends NewCDKTestCase {
 	 */
 	@org.junit.Test (timeout=1000)
 	public void testBug1235852() throws Exception {
-		//                             0 1 234 56 7 890 12 3456 78
+		//                              0 1 234 56 7 890 12 3456 78
 		IMolecule mol = sp.parseSmiles("O=C(CCS)CC(C)CCC2Cc1ccsc1CC2");
 		Assert.assertNotNull(mol);
 		Assert.assertEquals(19, mol.getAtomCount());
 		Assert.assertEquals(20, mol.getBondCount());
 		// test only option for delocalized bond system
-		Assert.assertEquals(4.0, mol.getBondOrderSum(mol.getAtom(12)), 0.001);
-		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(13)), 0.001);
-		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(14)), 0.001);
+		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(12)), 0.001);
+		Assert.assertEquals(2.0, mol.getBondOrderSum(mol.getAtom(13)), 0.001);
+		Assert.assertEquals(2.0, mol.getBondOrderSum(mol.getAtom(14)), 0.001);
 		Assert.assertEquals(2.0, mol.getBondOrderSum(mol.getAtom(15)), 0.001);
-		Assert.assertEquals(4.0, mol.getBondOrderSum(mol.getAtom(16)), 0.001);
+		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(16)), 0.001);
 	}
 	
 	/**
@@ -1017,7 +994,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 	 */
 	@org.junit.Test (timeout=1000)
 	public void testBug1530926() throws Exception {
-		//                              0      12345   6
+		//                               0      12345   6
 		IMolecule mol = sp.parseSmiles("[n+]%101ccccc1.[O-]%10");
 		Assert.assertNotNull(mol);
 		Assert.assertEquals(7, mol.getAtomCount());
@@ -1150,18 +1127,6 @@ public class SmilesParserTest extends NewCDKTestCase {
 	
 
 	/**
-	 * Test case for bug #1783547 "Lost aromaticity in SmilesParser with Biphenyl".
-	 * The source of the bug is a NullPointerException thrown in DeduceBondSystemTool.java
-	 * at line:
-	 *
-	 *     if (r.getAtom(j).getHybridization() != 2) {
-	 *
-	 * And this is a consequence of the refactoring of primitive types to Objects
-	 * and having them a default value of null.
-	 * In this case the following line in AtomType.java causes the null value:
-	 *
-	 *     protected Integer hybridization = (Integer) CDKConstants.UNSET;
-	 *
 	 * @cdk.bug 1783547
 	 */
 	@org.junit.Test (timeout=1000)
@@ -1169,18 +1134,18 @@ public class SmilesParserTest extends NewCDKTestCase {
 		// easy case
 		String smiles = "c1ccccc1C1=CC=CC=C1";
 		IMolecule mol = sp.parseSmiles(smiles);
-		Assert.assertEquals(2.0, mol.getBond(0).getOrder());
-		Assert.assertEquals(1.0, mol.getBond(1).getOrder());
-		Assert.assertEquals(2.0, mol.getBond(2).getOrder());
-		Assert.assertEquals(1.0, mol.getBond(3).getOrder());
+		Assert.assertTrue(mol.getBond(0).getFlag(CDKConstants.ISAROMATIC));
+		Assert.assertTrue(mol.getBond(1).getFlag(CDKConstants.ISAROMATIC));
+		Assert.assertTrue(mol.getBond(2).getFlag(CDKConstants.ISAROMATIC));
+		Assert.assertTrue(mol.getBond(3).getFlag(CDKConstants.ISAROMATIC));
 		
 		// harder case
 		String smiles2 = "C%21=%01C=CC=C%02C=%01N(C)CCC%02.C%21c%02ccccc%02";
 		IMolecule mol2 = sp.parseSmiles(smiles2);
-		Assert.assertEquals(2.0, mol2.getBond(16).getOrder());
-		Assert.assertEquals(1.0, mol2.getBond(17).getOrder());
-		Assert.assertEquals(2.0, mol2.getBond(18).getOrder());
-		Assert.assertEquals(1.0, mol2.getBond(19).getOrder());
+		Assert.assertTrue(mol2.getBond(16).getFlag(CDKConstants.ISAROMATIC));
+		Assert.assertTrue(mol2.getBond(17).getFlag(CDKConstants.ISAROMATIC));
+		Assert.assertTrue(mol2.getBond(18).getFlag(CDKConstants.ISAROMATIC));
+		Assert.assertTrue(mol2.getBond(19).getFlag(CDKConstants.ISAROMATIC));
 	}	
 
 	/**
