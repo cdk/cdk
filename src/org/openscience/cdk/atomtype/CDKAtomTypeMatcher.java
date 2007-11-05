@@ -97,6 +97,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			} else if (atom.getHybridization() == Hybridization.SP1) {
     				return factory.getAtomType("C.sp");
     			}
+    		} else if (atom.getFlag(CDKConstants.ISAROMATIC)) {
+    			return factory.getAtomType("C.sp2");
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() != 0) {
     			if (atom.getFormalCharge() == 1) {
