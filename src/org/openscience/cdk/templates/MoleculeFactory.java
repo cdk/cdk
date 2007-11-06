@@ -847,28 +847,48 @@ public class MoleculeFactory {
 	}
 
     public static Molecule makePiperidine() {
-           Molecule mol = new Molecule();
-           mol.addAtom(new Atom("N"));
-           mol.addAtom(new Atom("C"));
-           mol.addAtom(new Atom("C"));
-           mol.addAtom(new Atom("C"));
-           mol.addAtom(new Atom("C"));
-           mol.addAtom(new Atom("C"));
-           mol.addAtom(new Atom("H"));
+        Molecule mol = new Molecule();
+        mol.addAtom(new Atom("N"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("H"));
 
-           mol.addBond(0, 1, 1.0);
-           mol.addBond(1, 2, 1.0);
-           mol.addBond(2, 3, 1.0);
-           mol.addBond(3, 4, 1.0);
-           mol.addBond(4, 5, 1.0);
-           mol.addBond(5, 0, 1.0);
+        mol.addBond(0, 1, 1.0);
+        mol.addBond(1, 2, 1.0);
+        mol.addBond(2, 3, 1.0);
+        mol.addBond(3, 4, 1.0);
+        mol.addBond(4, 5, 1.0);
+        mol.addBond(5, 0, 1.0);
 
-           mol.addBond(0, 6, 1.0);
+        mol.addBond(0, 6, 1.0);
 
-           return mol;
+        return mol;
 
-       }
-    
+    }
+
+    public static Molecule makeTetrahydropyran() {
+        Molecule mol = new Molecule();
+        mol.addAtom(new Atom("O"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+
+        mol.addBond(0, 1, 1.0);
+        mol.addBond(1, 2, 1.0);
+        mol.addBond(2, 3, 1.0);
+        mol.addBond(3, 4, 1.0);
+        mol.addBond(4, 5, 1.0);
+        mol.addBond(5, 0, 1.0);
+
+        return mol;
+
+    }
+
 
     public static org.openscience.cdk.interfaces.IMolecule loadMolecule(String inFile)
 	{
