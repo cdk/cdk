@@ -23,10 +23,6 @@
  */
 package org.openscience.cdk.templates;
 
-import java.io.FileInputStream;
-
-import javax.vecmath.Point2d;
-
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -37,6 +33,9 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.tools.LoggingTool;
+
+import javax.vecmath.Point2d;
+import java.io.FileInputStream;
 
 /**
  * This class contains methods for generating simple organic molecules.
@@ -846,9 +845,32 @@ public class MoleculeFactory {
 		mol.addBond(4, 7, 2.0); // 8
 		return mol;
 	}
-	
-	
-	public static org.openscience.cdk.interfaces.IMolecule loadMolecule(String inFile)
+
+    public static Molecule makePiperidine() {
+           Molecule mol = new Molecule();
+           mol.addAtom(new Atom("N"));
+           mol.addAtom(new Atom("C"));
+           mol.addAtom(new Atom("C"));
+           mol.addAtom(new Atom("C"));
+           mol.addAtom(new Atom("C"));
+           mol.addAtom(new Atom("C"));
+           mol.addAtom(new Atom("H"));
+
+           mol.addBond(0, 1, 1.0);
+           mol.addBond(1, 2, 1.0);
+           mol.addBond(2, 3, 1.0);
+           mol.addBond(3, 4, 1.0);
+           mol.addBond(4, 5, 1.0);
+           mol.addBond(5, 0, 1.0);
+
+           mol.addBond(0, 6, 1.0);
+
+           return mol;
+
+       }
+    
+
+    public static org.openscience.cdk.interfaces.IMolecule loadMolecule(String inFile)
 	{
 		MDLReader mr = null;
 		ChemFile chemFile = null;
