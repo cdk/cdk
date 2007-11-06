@@ -223,20 +223,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				int connectedHeavyAtoms = atomContainer.getConnectedBondsCount(atom) - explicitHydrogens; 
     				if (connectedHeavyAtoms == 2) {
     					// a O.sp3 which is expected to take part in an aromatic system
-    					if (isRingAtom(atom, atomContainer)) {
-    						boolean bothNeighborsSP2 = true;
-    						Iterator<IAtom> atoms = atomContainer.getConnectedAtomsList(atom).iterator();
-    						while (atoms.hasNext() && bothNeighborsSP2) {
-    							IAtom nextAtom = atoms.next();
-    							if (!nextAtom.getSymbol().equals("H")) {
-    								if (nextAtom.getHybridization() != CDKConstants.UNSET && 
-    										nextAtom.getHybridization() != Hybridization.SP2 && 
-    										countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
-    									bothNeighborsSP2 = false;
-    								}
-    							}
-    						}
-    						if (bothNeighborsSP2) return factory.getAtomType("O.planar3");
+    					if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom, atomContainer)) {
+    						return factory.getAtomType("O.planar3");
     					}
     					return factory.getAtomType("O.sp3");
     				} else {
@@ -254,10 +242,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         while (atoms.hasNext() && bothNeighborsSP2) {
             IAtom nextAtom = atoms.next();
             if (!nextAtom.getSymbol().equals("H")) {
-                if (nextAtom.getHybridization() != CDKConstants.UNSET &&
-                        nextAtom.getHybridization() != Hybridization.SP2 &&
-                        countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
-                    bothNeighborsSP2 = false;
+            	if (nextAtom.getHybridization() == CDKConstants.UNSET &&
+                    nextAtom.getHybridization() == Hybridization.SP2) {
+            		// OK, it's SP2
+            	} else if (countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
+                    // OK, it's SP2
+                } else {
+                	bothNeighborsSP2 = false;
                 }
             }
         }
