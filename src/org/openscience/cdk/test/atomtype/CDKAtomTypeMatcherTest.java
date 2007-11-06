@@ -209,7 +209,31 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom));
         assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom2));
     }
-    
+
+    @Test
+    public void testPiperidine() throws Exception {
+        Molecule molecule = MoleculeFactory.makePiperidine();
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+        String[] expectedTypes = {
+                "N.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"
+        };
+        for (int f = 0; f < molecule.getAtomCount() - 1; f++) {
+            assertAtomType(testedAtomTypes, expectedTypes[f], atm.findMatchingAtomType(molecule, molecule.getAtom(f)));
+        }
+    }
+
+    @Test
+    public void testTetrahydropyran() throws Exception {
+        Molecule molecule = MoleculeFactory.makeTetrahydropyran();
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+        String[] expectedTypes = {
+                "O.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"
+        };
+        for (int f = 0; f < molecule.getAtomCount(); f++) {
+            assertAtomType(testedAtomTypes, expectedTypes[f], atm.findMatchingAtomType(molecule, molecule.getAtom(f)));
+        }
+    }
+
     @Test public void testS3() throws CDKException {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
