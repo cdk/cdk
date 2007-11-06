@@ -23,12 +23,6 @@
  */
 package org.openscience.cdk.tools;
 
-import java.io.IOException;
-import java.io.OptionalDataException;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
-
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -38,15 +32,21 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.io.IOException;
+import java.io.OptionalDataException;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
+
 
 /**
-* Generates all Combinatorial chemical isotopes given a structure..
-* 
-* @author         Miguel Rojas
- * @cdk.svnrev  $Revision: 9162 $
-* @cdk.created    2007-03-01
-*
-* @cdk.keyword    isotope
+ * Generates all Combinatorial chemical isotopes given a structure..
+ *
+ * @author Miguel Rojas
+ * @cdk.svnrev $Revision: 9162 $
+ * @cdk.created 2007-03-01
+ * @cdk.module standard
+ * @cdk.keyword isotope
  */
 public class IsotopeGenerator implements java.io.Serializable{
 
@@ -65,7 +65,7 @@ public class IsotopeGenerator implements java.io.Serializable{
 	/**
 	 * Constructor for the IsotopeGenerator
 	 * 
-	 * @param minAbundance Minimun abundance of the isotopo to be added 
+	 * @param minAb Minimun abundance of the isotopo to be added
 	 * 						in the combinatorial search
 	 */
 	public IsotopeGenerator(double minAb){
@@ -132,7 +132,7 @@ public class IsotopeGenerator implements java.io.Serializable{
 	 * the IAtomContainer.
 	 * <p>double value = ((Double)atomContainer.getProperty("abundanceTotal")).doubleValue();
 	 * 
-	 * @param container The IAtomContainer
+	 * @param atomContainer The IAtomContainer
 	 * @return          The IAtomContainerSet with all isotopes combination
 	 * @see #getAllIsotopes(IAtomContainer)
 	 */
@@ -159,7 +159,7 @@ public class IsotopeGenerator implements java.io.Serializable{
 				IAtomContainer posteriorAC = atomContainerSpec.getAtomContainer(atomContainerSpec.getAtomContainerCount()-1);
 				Double result = (Double) posteriorAC.getProperty("abundanceTotal");
 				Hashtable<String, Double> abundanceTotal =  new Hashtable<String, Double>();
-				abundanceTotal.put("abundanceTotal",natAbund+result.doubleValue());
+				abundanceTotal.put("abundanceTotal",natAbund+ result);
 				posteriorAC.setProperties(abundanceTotal);
 			}
 		}
@@ -174,7 +174,7 @@ public class IsotopeGenerator implements java.io.Serializable{
 	 * <p>double value = ((Double)atomContainer.getProperty("abundanceTotal")).doubleValue();
 	 * <p>The abundance is normalized to the maxim abundance.
 	 * 
-	 * @param container The IAtomContainer
+	 * @param atomContainer The IAtomContainer
 	 * @return          The IAtomContainerSet with all isotopes combination
 	 * @see #getAllIsotopes(IAtomContainer)
 	 */
@@ -195,7 +195,7 @@ public class IsotopeGenerator implements java.io.Serializable{
 		Iterator<IAtomContainer> iteratorAC = containerSet.atomContainers();
 		while(iteratorAC.hasNext()){
 			IAtomContainer ac = iteratorAC.next();
-			double value = ((Double) ac.getProperty("abundanceTotal")).doubleValue();
+			double value = (Double) ac.getProperty("abundanceTotal");
 			if(max < value)
 				max = value;
 		}
@@ -203,7 +203,7 @@ public class IsotopeGenerator implements java.io.Serializable{
 		iteratorAC = containerSet.atomContainers();
 		while(iteratorAC.hasNext()){
 			IAtomContainer ac = iteratorAC.next();
-			double value = ((Double) ac.getProperty("abundanceTotal")).doubleValue();
+			double value = (Double) ac.getProperty("abundanceTotal");
 			Hashtable<String, Double> abundanceTotal =  new Hashtable<String, Double>();
 			abundanceTotal.put("abundanceTotal",value/max*100);
 			ac.setProperties(abundanceTotal);
@@ -215,7 +215,7 @@ public class IsotopeGenerator implements java.io.Serializable{
 	 * 
 	 * @param atomContainer    IAtomContainer to analyze
 	 * @param isotopesT        An arrayList containing all isotopes
-	 * @param nc               Number of combinations
+	 * @param nC               Number of combinations
 	 * 
 	 * @return The IAtomContainerSet
 	 */
@@ -244,13 +244,13 @@ public class IsotopeGenerator implements java.io.Serializable{
 			for (int j = isotopesT.size()-1; j >= 0; j--)
 				ordreComb[columncount][j] = column[j];
 			
-			int value = ((ArrayList<IIsotope>) isotopesT.get(posChanging)).size()-1;
+			int value = isotopesT.get(posChanging).size()-1;
 			if(column[posChanging] < value)
 				column[posChanging] = column[posChanging] + 1;
 			else{
 				boolean foundZ = false;
 				for(int z= posChanging; z >= 0 ; z--){
-					if (column[z] < ((ArrayList<IIsotope>) isotopesT.get(posChanging)).size()-1){
+					if (column[z] < isotopesT.get(posChanging).size()-1){
 						posChanging = z+1;
 						foundZ = true;
 						break;
@@ -285,7 +285,7 @@ public class IsotopeGenerator implements java.io.Serializable{
 					for (int j = 0; j < ordreComb[i].length; j++){
 						
 						int posAtom = j;
-						ArrayList<IIsotope> myIsotopes = (ArrayList<IIsotope>) isotopesT.get(posAtom);
+						ArrayList<IIsotope> myIsotopes = isotopesT.get(posAtom);
 						double mass = myIsotopes.get(ordreComb[i][j]).getExactMass();
 						double abundance = myIsotopes.get(ordreComb[i][j]).getNaturalAbundance();
 						containerClon.getAtom(posAtom).setExactMass(mass);
