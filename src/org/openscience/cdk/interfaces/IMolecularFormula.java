@@ -25,8 +25,6 @@ package org.openscience.cdk.interfaces;
 
 import java.util.Iterator;
 
-import org.openscience.cdk.MolecularFormula;
-
 /**
  * Represents a set of MolecularFormula.
  * 
@@ -39,15 +37,18 @@ public interface IMolecularFormula extends IChemObject {
 	/**
 	 *  Adds a molecular formula to this MolecularFormula.
 	 *
-	 *@param  atomContainer  The molecular formula to be added
+	 *@param  molecularFormula  The molecular formula to be added
 	 */
-	public void add(MolecularFormula molecularFormula);
+	public void add(IMolecularFormula molecularFormula);
 	
 	/**
 	 * add an Element
 	 *
 	 * @param  element  The element to be added to this MolecularFormula
-	 * @see             #getElements
+	 * @see             #getElement
+     * @see             #getFirstElement
+     * @see             #getLastElement
+     * @see             #elements
 	 */
 	public void addElement(IElement element);
 
@@ -119,7 +120,7 @@ public interface IMolecularFormula extends IChemObject {
 	 *  Checks a set of Nodes for the occurence of a particular
 	 *  element. It returns -1 if the element does not exist.
 	 *
-	 *@param     The IElement
+	 *@param     element The IElement
 	 *@return    The occurence of this element in this molecular formula
 	 */
 	public int getAtomCount(IElement element);
@@ -147,9 +148,9 @@ public interface IMolecularFormula extends IChemObject {
 	 *  Removes all elements of a given molecular formula from this
 	 *  molecular formula.
 	 *
-	 *@param  molecularformula  The molecular formula to be removed
+	 *@param  molecularFormula  The molecular formula to be removed
 	 */
-	public void remove(MolecularFormula molecularFormula);
+	public void remove(IMolecularFormula molecularFormula);
 	
 	/**
 	 *  Removes the element at the given position from the MolecularFormula. 

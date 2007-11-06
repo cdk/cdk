@@ -23,16 +23,11 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.*;
+
 import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Iterator;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
  *  Class defining Molecular Formula object. It consists on occurrence of 
@@ -118,13 +113,13 @@ public class MolecularFormula extends ChemObject
 
 		Iterator<IAtom> iterator = container.atoms();
 		while(iterator.hasNext()){
-			IAtom atom = (IAtom) iterator.next();
+			IAtom atom = iterator.next();
 			IElement newElement = atom.getBuilder().newElement(atom.getSymbol());
 			if (atom.getCharge() != null)
 				charge =+ atom.getCharge();
 			if (contains(newElement)){
 				int repetitions = elementRepetitions.get(newElement.getSymbol());
-				elementRepetitions.put(newElement.getSymbol(),new Integer(repetitions+1));
+				elementRepetitions.put(newElement.getSymbol(), repetitions + 1);
 			}else{
 				growElementArray(newElement);
 			}
@@ -135,9 +130,9 @@ public class MolecularFormula extends ChemObject
 	/**
 	 *  Adds a molecular formula to this MolecularFormula.
 	 *
-	 *@param  atomContainer  The molecular formula to be added
+	 *@param  molecularFormula  The molecular formula to be added
 	 */
-	public void add(MolecularFormula molecularFormula){
+	public void add(IMolecularFormula molecularFormula){
 		
 		for (int f = 0; f < molecularFormula.getElementCount(); f++){
 			
@@ -162,7 +157,7 @@ public class MolecularFormula extends ChemObject
 
 		if (contains(newElement)){
 			int repetitions = elementRepetitions.get(newElement.getSymbol());
-			elementRepetitions.put(newElement.getSymbol(),new Integer(repetitions+1));
+			elementRepetitions.put(newElement.getSymbol(), repetitions + 1);
 		}else{
 			growElementArray(newElement);
 		}
@@ -183,7 +178,7 @@ public class MolecularFormula extends ChemObject
 
 		if (contains(newElement)){
 			int repetitions = elementRepetitions.get(newElement.getSymbol());
-			elementRepetitions.put(newElement.getSymbol(),new Integer(repetitions+occur));
+			elementRepetitions.put(newElement.getSymbol(), repetitions + occur);
 		}else{
 			growElementArray(newElement,occur);
 		}
@@ -255,7 +250,7 @@ public class MolecularFormula extends ChemObject
 	 */
 	public IElement getLastElement(){
 		
-		return getElementCount() > 0 ? (IElement)elements[getElementCount() - 1] : null;
+		return getElementCount() > 0 ? elements[getElementCount() - 1] : null;
 	}
 
 
@@ -303,7 +298,7 @@ public class MolecularFormula extends ChemObject
 	 *  Checks a set of Nodes for the occurence of a particular
 	 *  element. It returns -1 if the element does not exist.
 	 *
-	 *@param     The IElement
+	 *@param     element The IElement
 	 *@return    The occurence of this element in this molecular formula
 	 */
 	public int getAtomCount(IElement element){
@@ -342,9 +337,9 @@ public class MolecularFormula extends ChemObject
 	 *  Removes all elements of a given molecular formula from this
 	 *  molecular formula.
 	 *
-	 *@param  molecularformula  The molecular formula to be removed
+	 *@param  molecularFormula  The molecular formula to be removed
 	 */
-	public void remove(MolecularFormula molecularFormula)
+	public void remove(IMolecularFormula molecularFormula)
 	{
 		for (int f = 0; f < molecularFormula.getElementCount(); f++){
 			
