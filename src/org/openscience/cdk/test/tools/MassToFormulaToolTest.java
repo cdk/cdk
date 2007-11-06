@@ -1,6 +1,6 @@
 /* $Revision: 8658 $ $Author: egonw $ $Date: 2007-08-03 15:20:28 +0200 (Fri, 03 Aug 2007) $
  * 
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2005-2007  Miguel Rojasch <miguelrojasch@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -21,10 +21,13 @@
 package org.openscience.cdk.test.tools;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.MassToFormulaTool;
 import org.openscience.cdk.tools.MassToFormulaTool.IElement_Nr;
@@ -61,9 +64,14 @@ public class MassToFormulaToolTest extends CDKTestCase {
         return suite;
 	}
     
-    public void testMassToFormulaTool()	{
+    /**
+	 * A unit test suite for JUnit
+	 *
+	 * @return    The test suite
+	 */
+    public void testMassToFormulaTool_Notnull(){
     	
-		assertNotNull(new MassToFormulaTool(0.0));
+		assertNotNull(new MassToFormulaTool());
 	}
     /**
 	 * A unit test suite for JUnit
@@ -72,92 +80,35 @@ public class MassToFormulaToolTest extends CDKTestCase {
 	 */
     public void testMassToFormulaTool_null(){
     	
-		assertNull(new MassToFormulaTool(0.0).getMolecularFormula());
-	}
-    /**
-	 * A unit test suite for JUnit
-	 *
-	 * @return    The test suite
-	 */
-	public void testMassToFormulaTool1(){
-    	
-		assertNotNull(new MassToFormulaTool(44.0032).getMolecularFormula());
+		assertNull(new MassToFormulaTool().generate(0.0));
 	}
 	/**
-	 * A unit test suite for JUnit. Results contrasted with the page:
-	 * http://www.ch.ic.ac.uk/java/applets/f2m2f/
+	 * A unit test suite for JUnit. Orthinine
 	 *
 	 * @return    The test suite
 	 */
-	public void testMassToFormulaTool2(){
-		String[] resultsFromPage = {"O2C1","O1N2","O1N1C1H2","O1C2H4","N3H2","N2C1H4","N1C2H6"};
-		/*obtained only those possible molecular formula according graphical maps*/
-		String[] resultsFromMy = {"O2C1","O1N2","O1C2H4","N2C1H4"};
-		ArrayList<String> resultsMF = new MassToFormulaTool(44.0032).getMolecularFormula();
-		for(int i = 0 ; i < resultsMF.size(); i++){
-			assertEquals(resultsFromMy[i],(String)resultsMF.get(i));
-		}
-	}
-	
-	/**
-	 * A unit test suite for JUnit. Restriction with the occurrences
-	 *
-	 * @return    The test suite
-	 */
-	public void testMassToFormulaTool4(){
-		String[] results = {"O2C1","O1N2","O1C2H4","N2C1H4"};
-		IElement_Nr[] elem = new IElement_Nr[4];
-		MassToFormulaTool mToF = (new MassToFormulaTool());
-		elem[0] = mToF.new IElement_Nr("C",0,9);
-		elem[1] = mToF.new IElement_Nr("H",0,9);
-		elem[2] = mToF.new IElement_Nr("O",0,9);
-		elem[3] = mToF.new IElement_Nr("N",0,9);
+	public void testMassToFormulaToolOrthinine(){
+		IElement_Nr[] elem = new IElement_Nr[6];
+		MassToFormulaRestrictions restrictions = new MassToFormulaRestrictions();
+		restrictions.restrict(Elements.CARBON, 0, 15);
+		restrictions.restrict(Elements.HYDROGEN, 0, 15);
+		restrictions.restrict(Elements.OXYGEN, 0, 15);
+		restrictions.restrict(Elements.NITROGEN, 0, 15);
+		restrictions.restrict(Elements.PHOSPHORUS, 0, 15);
+		restrictions.restrict(Elements.SULFUR, 0, 15);
+		restrictions.setTole
+		double myMass = 133.0968;
+		MassToFormulaTool mf = new MassToFormulaTool(restrictions);
+		mf.setElements(elem);
+		mf.setTolerance(0.01);
 		
-		ArrayList<String> resultsMF = new MassToFormulaTool(44.0032, 50, 0, 0.05, elem).getMolecularFormula();
+		List<IMolecularFormula> resultsMF = mf.generate(myMass);
+
 		
 		for(int i = 0 ; i < resultsMF.size(); i++){
-			assertEquals(results[i],(String)resultsMF.get(i));
-		}
-	}
-	/**
-	 * A unit test suite for JUnit. Restriction with the occurrences
-	 *
-	 * @return    The test suite
-	 */
-	public void testMassToFormulaTool5(){
-		String[] results = {"O1C2H4","N2C1H4"};
-		IElement_Nr[] elem = new IElement_Nr[4];
-		MassToFormulaTool mToF = (new MassToFormulaTool());
-		elem[0] = mToF.new IElement_Nr("C",1,4);
-		elem[1] = mToF.new IElement_Nr("H",0,6);
-		elem[2] = mToF.new IElement_Nr("O",0,0);
-		elem[3] = mToF.new IElement_Nr("N",0,1);
-		
-		ArrayList<String> resultsMF = new MassToFormulaTool(44.0032, 50, 0, 0.05, elem).getMolecularFormula();
-		
-		for(int i = 0 ; i < resultsMF.size(); i++){
-			assertEquals(results[i],(String)resultsMF.get(i));
-		}
-	}
-	/**
-	 * A unit test suite for JUnit. Molecular formula with charge
-	 *
-	 * @return    The test suite
-	 */
-	public void testMassToFormulaTool6(){
-		String[] resultsFromPage = {"C2HO","CHN2","C2H3N","C3H5","H9O2","H11NO"};
-		String[] resultsFromMy = {"[O1C2H1]+1","[N2C1H1]+1","[C3H5]+1"};
-		IElement_Nr[] elem = new IElement_Nr[4];
-		MassToFormulaTool mToF = (new MassToFormulaTool());
-		elem[0] = mToF.new IElement_Nr("C",0,9);
-		elem[1] = mToF.new IElement_Nr("H",0,9);
-		elem[2] = mToF.new IElement_Nr("O",0,9);
-		elem[3] = mToF.new IElement_Nr("N",0,9);
-		
-		ArrayList<String> resultsMF = new MassToFormulaTool(41.0032, 50, 1, 0.05, elem).getMolecularFormula();
-		
-		for(int i = 0 ; i < resultsMF.size(); i++){
-			assertEquals(resultsFromMy[i],(String)resultsMF.get(i));
+			
+			String stringMF = resultsMF.get(i).toString();
+			System.out.println(stringMF);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 /* $Revision: 8397 $ $Author: rajarshi $ $Date: 2007-06-24 05:24:27 +0200 (Sun, 24 Jun 2007) $
  *
- * Copyright (C) 1997 Guillaume Cottenceau <gcottenc@ens.insa-rennes.fr> 
+ *  Copyright (C) 2005-2007  Miguel Rojasch <miguelrojasch@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -26,21 +26,37 @@ package org.openscience.cdk.tools;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.Iterator;
+import java.util.List;
 
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Element;
+import org.openscience.cdk.MolecularFormula;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.exception.NoSuchAtomTypeException;
-import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * Tool to determine molecular formula consistent with a given accurate mass.
+ * <p>Tool to determine molecular formula consistent with a given accurate mass. The 
+ * molecular formulas are not validate. It only consist in generate combination according
+ * object (see MolecularFormulaChecker).
+ * 
+ * <pre>
+ *   MassToFormulaTool mf = new MassToFormulaTool();
+ *   double myMass = 133.004242;
+ *   ArrayList<IMolecularFormula> resultsMF = mf.generate(myMass);
+ * </pre>
+ * 
+ * <p>The elements are listed in order of probable occurrence, beginning the C, H, O then N and
+ * so on.
+ * <p>The elements are not listed according on difference with the proposed mass(see MFAnalyser).
  * 
  * @author     Miguel Rojas
  * 
@@ -53,144 +69,254 @@ public class MassToFormulaTool {
 	
 	/** The mass which is calculate the molecular formula. */
 	private double mass;
-	
-	/** The max number of solutions to be found. Default number fixed to 50*/
-	private static int max_Solutions = 50;
-	
-	/** The molecular formulas obtained from the accurate mass.*/
-	private ArrayList<String> molecularFormula;
 
 	protected IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
-	/** Elements that must be presents in the molecular formula.*/
-	private IElement_Nr[] elemToCond;
+	/** Elements that must be presents in the molecular formula. As default they
+	 *  are O,N,C and H*/
+	private IElement_Nr[] elemToCond = generateElemDefault();
 
-	/** Mass Ratio to look for. As default 0.05*/
-	private static double ratio = 0.05;
+	/** Mass tolerance to look for. As default 0.05 amu*/
+	private double tolerance = 0.05;
 	
+	/** */
 	AtomTypeFactory factory;
 
-	/** charge of the compound. As default is 0 meaning neutral compound.**/
-	private static int charge = 0;
+	/** charge of the compound. As default is 0, meaning neutral compound.**/
+	private double charge = 0;
+	
+	/** matrix to follow for the permutations*/
+	private int[][] matrix_Base;
+
+	/** Array listing the order of the elements to be shown according probability occurrence*/
+	private String[] orderElements;
+
+	
 	/**
 	 * Construct an instance of MassToFormulaTool.
 	 */
 	public MassToFormulaTool() {
+
+		factory = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
+		this.matrix_Base = callMatrix(elemToCond.length);
+		this.orderElements = generateOrderE();
+		
 	}
 	/**
-	 * Construct an instance of MassToFormulaTool, initialized with a mass.
+	 * Set the elements that must be presents in the molecular formula.
+	 * They will be set as default number of occurrence for each element
+	 * as minimum = 0 and maximum = 9. 
 	 * 
-	 * @param  mass  Mass with which is determined the molecular formula
+	 * @param elemToCon  IElements that must be presents
+	 * @see #setElements(org.openscience.cdk.tools.MassToFormulaTool.IElement_Nr[])
 	 */
-	public MassToFormulaTool(double mass) {
-		this(mass, max_Solutions, null);
-	}
-	
-	/**
-	 * Construct an instance of MassToFormulaTool, initialized with a mass.
-	 * This constructor restricts the number maxim of elemental elements to be
-	 * found.
-	 * 
-	 * @param  mass  Mass with which is determined the molecular formula
-	 * @param  max_Solut    Number max of solutions
-	 */
-	public MassToFormulaTool(double mass, int max_solut) {
-		this(mass, max_solut, null);
-	}
-	
-	/**
-	 * Construct an instance of MassToFormulaTool, initialized with a mass.
-	 * This constructor restricts the elements to be found.
-	 * 
-	 * @param  mass            Mass with which is determined the molecular formula
-	 * @param  elemToCondione  Elements that must be presents
-	 */
-	public MassToFormulaTool(double mass,  IElement[] elemToCondione) {
-		this(mass, max_Solutions, elemToCondione);
-	}
-	/**
-	 * Construct an instance of MassToFormulaTool, initialized with a mass.
-	 * This constructor restricts the elements to be found and the charge.
-	 * 
-	 * @param  mass            Mass with which is determined the molecular formula
-//	 * @param  charge          Charge of the molecule
-	 * @param  elemToCondione  Elements that must be presents
-	 */
-//	public MassToFormulaTool(double mass,  int charge, IElement[] elemToCondione) {
-//		this(mass, max_Solutions, charge, elemToCondione);
-//	}
-	/**
-	 * Construct an instance of MassToFormulaTool, initialized with a mass.
-	 * This constructor restricts the elements to be found and the charge.
-	 * This constructor restricts the number maxim of elemental elements to be
-	 * found.
-	 * 
-	 * @param  mass            Mass with which is determined the molecular formula
-	 * @param  max_Solut       Number max of solutions to be found
-//	 * @param  charge          Charge of the molecule
-	 * @param  elemToCondione  Elements that must be presents
-	 */
-	public MassToFormulaTool(double mass, int max_Solut, IElement[] elemToCondione) {
+	public void setElements(IElement[] elem){
 		IElement_Nr[] elemToCondione_re = null;
 		/*convert the IElement array to IElement_Nr which contains as default(0,9) the number of maximum
 		 * and minimum the repetitions for each IElement.*/
-		if(elemToCondione != null){
-			elemToCondione_re = new IElement_Nr[elemToCondione.length];
+		if((elem != null)&(elem.length > 0)){
+			elemToCond = new IElement_Nr[elem.length];
 			for(int i = 1; i < elemToCondione_re.length; i++)
-				elemToCondione_re[i] = new IElement_Nr(elemToCondione[i].getSymbol(),0,9);
-				
+				elemToCond[i] = new IElement_Nr(elem[i].getSymbol(),0,9);
+			
+
+			/*put in order descendant the Elements according their mass*/
+			this.elemToCond = ordningElements(elemToCond);
+			
+			if(matrix_Base[1].length != elemToCond.length)
+				this.matrix_Base = callMatrix(elemToCond.length);
+		}else{
+			logger.error("The list IElement object is null or not contain elements");
+//			return null;
 		}
-		
-		this.molecularFormula = analyseMF(mass, max_Solut, 0, ratio, elemToCondione_re);
+			
 	}
 	/**
-	 * Construct an instance of MassToFormulaTool, initialized with a mass.
-	 * This constructor restricts the elements to be found and the charge.
-	 * This constructor restricts the number maxim of elemental elements to be
-	 * found.
+	 * Set the elements that must be presents in the molecular formula.
+	 * The IElement_Nr object is subclass of IElement containing the occurrence max and min.
 	 * 
-	 * @param  mass            Mass with which is determined the molecular formula
-	 * @param  max_Solut       Number max of solutions to be found
-	 * @param  charge          Charge of the molecule
-	 * @param  ratio           Ratio between the mass of the molecular formula and the mass to apply
-	 * @param  elemToCondione  Elements that must be presents
+	 * @param elemToCon  IElements_Nr
+	 * @see #setElements(IElement[])
 	 */
-	public MassToFormulaTool(double mass, int max_Solut, int charge, double ratio, IElement_Nr[] elemToCondione) {
-		this.molecularFormula = analyseMF(mass, max_Solut, charge, ratio, elemToCondione);
+	public void setElements(IElement_Nr[] elemToCond){
+		if((elemToCond != null)&(elemToCond.length > 0)){
+			this.elemToCond = elemToCond;
+			this.matrix_Base = callMatrix(elemToCond.length);
+		}else
+			logger.error("The list IElement_Nr object is null or not contain elements");
+		
+
+		/*put in order descendant the Elements according their mass*/
+		this.elemToCond = ordningElements(elemToCond);
 	}
-	
+	/**
+	 * Set the charge of the molecule. As default is 0, meaning neutral compound.
+	 * 
+	 * @param charge The charge value
+	 */
+	public void setCharge(double charge){
+		this.charge = charge;
+	}
+	/**
+	 * Set the mass tolerance. As Default 0.05 uma.
+	 * 
+	 * @param tolerance The mass tolerance value
+	 */
+	public void setTolerance(double tolerance){
+		this.tolerance = tolerance;
+	}
 	/**
 	 * Method that actually does the work of extracting the molecular formula.
 	 *
-	 * @param  mass            molecular formula to create an AtomContainer from
-	 * @param  max_Solut       Number max of solutions
-	 * @param  charge          Charge of the molecule
-	 * @param  elemToCondione  Elements that must be presents
-	 * @param  ratio           Ratio between the mass of the molecular formula and the mass to apply
+	 * @param  mass            molecular formula to create from the mass
 	 * @return                 the filled molecular formula as ArrayList
 	 */
-	private ArrayList<String> analyseMF(double m, int max_Solut, int charg, double rat, IElement_Nr[] elemToCondione) {
+	public List<IMolecularFormula> generate(double mass) {
 
-		ArrayList<String> solutions_found = new ArrayList<String>();
+		ArrayList<IMolecularFormula> solutions_found = new ArrayList<IMolecularFormula>();
 		
-		if(m == 0.0){
-			logger.error("Proposed mass is not a valid: ",mass);
+		if(mass == 0.0){
+			logger.error("Proposed mass is not valid: ",mass);
 			return null;
 		}else
-			mass = m;
+			this.mass = mass;
 		
-		factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/valency_atomtypes.xml", new ChemObject().getBuilder());
 		
-		max_Solutions = max_Solut;
-		ratio = rat;
-		charge = charg;
 		
-		if(elemToCondione == null)
-			elemToCond = generateElemDefault();
-		else
-			elemToCond = elemToCondione;
+		int[][] matrix = this.matrix_Base;
 		
-		/*put in order descendent the Elements according their mass*/
+		for(int i = 0; i < matrix.length ; i++){
+		
+	
+			/*constructing initial combinations*/
+			int[] value_In = new int[elemToCond.length];
+			for(int j= 0; j < elemToCond.length ; j++){
+				if(matrix[i][j] == 0)
+					value_In[j] = 0;
+				else
+					value_In[j] = 1;
+			}
+			
+			/*find number of element to combine*/
+			int count_E = 0;
+			ArrayList<Integer> elem_Pos = new ArrayList<Integer>();
+			for(int j= 0 ; j< matrix[1].length; j++)
+				if(value_In[j] != 0){
+					count_E++;
+					elem_Pos.add(j);
+				}
+			
+			
+			boolean flag = true;
+			/*first position those first starting at the left*/
+			int possChan = 0; 
+			while(flag){
+				
+				/*Find max occurence given a mass for a element with minimal elements*/
+				int occurence = getMaxOccurence(mass, elem_Pos.get(possChan).intValue(),value_In,elemToCond);
+				
+				/*at least one*/
+				if (occurence == 0)
+					break;
+				
+				int maxx = elemToCond[elem_Pos.get(possChan).intValue()].getOccurrenceMax();
+				int minn = elemToCond[elem_Pos.get(possChan).intValue()].getOccurrenceMin();
+				/*restriction of the number of max and min number for a element*/
+				if(occurence < minn | maxx < occurence){
+					/* when is not in the occurrence that means that we have to
+					 * restart one value to the predecessor.*/
+					
+					/*case: 0111 which there is not more possibilities to combine*/
+					boolean flagONE = true;
+					for (int one = 0 ; one < elem_Pos.size(); one++)
+						if ((value_In[elem_Pos.get(one).intValue()] != 1)){
+							flagONE = false;
+						}
+					if(flagONE)
+						break;
+					
+					if (possChan < elem_Pos.size()-1){
+						/*Means that is possible to fit the next*/
+						possChan++;
+						
+					}else{
+						boolean foundZ = false;
+						for(int z= possChan-1; z >= 0 ; z--){
+							if (value_In[elem_Pos.get(z).intValue()] != 1){
+								possChan = z;
+								foundZ = true;
+								int newValue = value_In[elem_Pos.get(possChan).intValue()]-1;
+								
+								value_In[elem_Pos.get(possChan).intValue()] = newValue;
+								for(int j= possChan+1; j < elem_Pos.size() ; j++){
+									int p = elem_Pos.get(j).intValue();
+									value_In[p] = 1;
+								}
+								possChan++;
+								break;
+							}
+						}
+						if(!foundZ)
+							break;
+						
+					}
+					
+					continue;
+				} /*final not occurrence*/
+				
+				/*set the occurrence into the matrix*/
+				value_In[elem_Pos.get(possChan).intValue()] = occurence;
+					
+				double massT = calculateMassT(elemToCond,value_In);
+				double diff_new = Math.abs(mass - (massT));
+				
+				if(diff_new < tolerance){
+					IMolecularFormula myMF = getFormula(elemToCond,value_In);
+					solutions_found.add(myMF);
+				}
+				
+				if(count_E == 1)/*only valid for the first random 1000*/
+					break;
+				
+				if (possChan < elem_Pos.size()-1){
+					/*Means that is possible to fit the next*/
+					possChan++;
+					
+				}else{
+					boolean foundZ = false;
+					for(int z= possChan-1; z >= 0 ; z--){
+						if (value_In[elem_Pos.get(z).intValue()] != 1){
+							possChan = z;
+							foundZ = true;
+							int newValue = value_In[elem_Pos.get(possChan).intValue()]-1;
+							
+							value_In[elem_Pos.get(possChan).intValue()] = newValue;
+							for(int j= possChan+1; j < elem_Pos.size() ; j++){
+								int p = elem_Pos.get(j).intValue();
+								value_In[p] = 1;
+							}
+							possChan++;
+							break;
+						}
+					}
+					if(!foundZ)
+						break;
+					
+				}
+			}
+			
+		}
+		
+		
+		return returnOrdered(solutions_found);
+	}
+	/**
+	 * Put in order the element according their mass
+	 * 
+	 * @param elemToCond2 The elements
+	 * @return            List with the elements put in order
+	 */
+	private IElement_Nr[] ordningElements(IElement_Nr[] elemToCond2) {
 		IElement_Nr[] elemToCond_pro = elemToCond;
 		IElement_Nr[] elemToCond_new = new IElement_Nr[elemToCond.length];
 		int pos = 0;
@@ -213,180 +339,91 @@ public class MassToFormulaTool {
 			pos++;
 			
 		}
-		
-		for(int i = 0; i < elemToCond_new.length ; i++){
-			
-			/*if H is the last break*/
-			if(elemToCond_new[i].getMyElement().getSymbol().equals("H"))
-				break;
-			
-			int occurence1 = getMaxOccurence(mass, elemToCond_new[i].getMajorIsotope().getExactMass());
-
-			int[] value_In = new int[elemToCond_new.length];
-			for(int j= 1; j < elemToCond_new.length ; j++)
-				value_In[j] = 0;
-			
-			value_In[i] = occurence1;
-			for(int j = occurence1; j > 0; j--){
-				
-				int maxx = elemToCond_new[i].getOccurrenceMax();
-				int minn = elemToCond_new[i].getOccurrenceMin();
-				if(j < minn | maxx < j){
-					value_In[i]--;
-					continue;
-				}
-				
-				for(int k = i+1; k < elemToCond_new.length ; k++)
-					value_In[k] = 0;
-				
-				for(int k = i+1; k < elemToCond_new.length ; k++){
-					value_In[k] = 0;
-					double massT = calculateMassT(elemToCond_new,value_In);
-					double diff = (mass - massT);
-					int occurence2 = getMaxOccurence(diff,elemToCond_new[k].getMajorIsotope().getExactMass());
-					if(occurence2 == 0){
-						continue;
-					}
-					
-					for(int s = occurence2; s > 0; s--){
-						
-						maxx = elemToCond_new[k].getOccurrenceMax();
-						minn = elemToCond_new[k].getOccurrenceMin();
-						if(s < minn | maxx < s){
-							value_In[k]--;
-							continue;
-						}
-						
-						value_In[k] = s;
-						double massTT = calculateMassT(elemToCond_new,value_In);
-						diff = Math.abs(mass - Math.abs(massTT));
-						if(diff < ratio){
-							 if(isValiedMF(elemToCond_new,value_In)){ 
-								 String myString = getFormulaString(elemToCond_new,value_In);
-								 if(charge > 0)
-									 myString = "["+myString+"]+"+charge;
-								 else if(charge < 0)
-									 myString =  "["+myString+"]"+charge;
-								 
-								 solutions_found.add(myString);
-							 }
-						
-						}else{
-							if(k == elemToCond_new.length-1)
-								break;
-							
-							for(int l = k+1; l < elemToCond_new.length ; l++)
-								value_In[l] = 0;
-							
-							for(int l = k+1; l < elemToCond_new.length ; l++){
-								value_In[l] = 0;
-								double massT3 = calculateMassT(elemToCond_new,value_In);
-								double diff3 = (mass - massT3);
-								int occurence3 = getMaxOccurence(diff3,elemToCond_new[l].getMajorIsotope().getExactMass());
-								if(occurence3 == 0){
-									continue;
-								}
-								
-								for(int t = occurence3; t > 0; t--){
-									maxx = elemToCond_new[l].getOccurrenceMax();
-									minn = elemToCond_new[l].getOccurrenceMin();
-									if(t < minn | maxx < t){
-										value_In[l]--;
-										continue;
-									}
-									
-									value_In[l] = t;
-									double massTT3 = calculateMassT(elemToCond_new,value_In);
-									double diff4 = Math.abs(mass - Math.abs(massTT3));
-									if(diff4 < ratio){
-										 if(isValiedMF(elemToCond_new,value_In)){ 
-											 String myString = getFormulaString(elemToCond_new,value_In);
-											 if(charge > 0)
-												 myString = "["+myString+"]+"+charge;
-											 else if(charge < 0)
-												 myString =  "["+myString+"]"+charge;
-											 
-											 solutions_found.add(myString);
-										 }
-									
-										value_In[l]--;	
-									}else{
-										if(l == elemToCond_new.length-1)
-											break;
-									}
-								}
-							}
-						}
-					}
-					value_In[k]--;
-				}
-		
-				value_In[i]--;
-				
-				
-			}
-		}
-		
-		return solutions_found;
+		return elemToCond_new;
 	}
 	/**
-	 * Validation of the molecular formula. According to notion 
-	 * of connected multigraph. Corollary from 
-	 * http://www.sccj.net/publications/JCCJ/v3n3/a01/text.html 
+	 * generate the order of the Elements according probability occurrence.,
+	 * beginning the C, H, O, N, Si, P, S, F, Cl, Br, I, Sn, B, Pb, Tl, Ba, In, Pd,
+	 * Pt, Os, Ag, Zr, Se, Zn, Cu, Ni, Co, Fe, Cr, Ti, Ca, K, Al, Mg, Na, Ce,
+	 * Hg, Au, Ir, Re, W, Ta, Hf, Lu, Yb, Tm, Er, Ho, Dy, Tb, Gd, Eu, Sm, Pm,
+	 * Nd, Pr, La, Cs, Xe, Te, Sb, Cd, Rh, Ru, Tc, Mo, Nb, Y, Sr, Rb, Kr, As, 
+	 * Ge, Ga, Mn, V, Sc, Ar, Ne, Be, Li, Tl, Pb, Bi, Po, At, Rn, Fr, Ra, Ac, 
+	 * Th, Pa, U, Np, Pu. 
 	 * 
+	 * @return  Array with the elements ordered.
+	 * 
+	 */
+	private String[] generateOrderE(){
+		String[] listElements = new String[]{
+				    "C", "H", "O", "N", "Si", "P", "S", "F", "Cl",
+				    "Br", "I", "Sn", "B", "Pb", "Tl", "Ba", "In", "Pd",
+				    "Pt", "Os", "Ag", "Zr", "Se", "Zn", "Cu", "Ni", "Co", 
+				    "Fe", "Cr", "Ti", "Ca", "K", "Al", "Mg", "Na", "Ce",
+				    "Hg", "Au", "Ir", "Re", "W", "Ta", "Hf", "Lu", "Yb", 
+				    "Tm", "Er", "Ho", "Dy", "Tb", "Gd", "Eu", "Sm", "Pm",
+				    "Nd", "Pr", "La", "Cs", "Xe", "Te", "Sb", "Cd", "Rh", 
+				    "Ru", "Tc", "Mo", "Nb", "Y", "Sr", "Rb", "Kr", "As", 
+				    "Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "Be", "Li", 
+				    "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", 
+				    "Th", "Pa", "U", "Np", "Pu"};
+		return listElements;
+	}
+	/**
+	 * 
+	 * @param massTo
+	 * @param element_pos
+	 * @param matrix
 	 * @param elemToCond_new
-	 * @param value_In
 	 * @return
 	 */
-	private boolean isValiedMF(IElement_Nr[] elemToCond_new, int[] value_In) {
+	private int getMaxOccurence(double massTo, int element_pos, int[] matrix,IElement_Nr[] elemToCond_new) {
+		double massIn = elemToCond_new[element_pos].getMajorIsotope().getExactMass();
+		double massToM = massTo;
+		for(int i = 0; i < matrix.length ; i++)
+			if (i != element_pos)
+				if(matrix[i] != 0)
+					massToM -= elemToCond_new[i].getMajorIsotope().getExactMass()*matrix[i];
+				
 		
-		
-		/* first validation - an odd number */
-		double landaI = charge;
-		try {
-			for(int i = 0 ; i < elemToCond_new.length ; i++)
-				if(value_In[i] != 0){
-					IAtomType atomType = factory.getAtomType(elemToCond_new[i].getMyElement().getSymbol());		
-					landaI += atomType.getBondOrderSum()*value_In[i];
-				}
-		} catch (NoSuchAtomTypeException e) {
-			e.printStackTrace();
-			return false;
-		}
-		if (landaI % 2 != 0) 
-			return false;
-		
-		/* second validation - calculation: epsilon >= n-1 */
-		double epsilon = landaI/2;
-		
-		int countE = charge;
-		for(int i = 0 ; i < elemToCond_new.length ; i++)
-			if(value_In[i] != 0)
-				countE += value_In[i];
-		
-		if(epsilon >= countE-1)
-			return true;
-		
-		return false;
+		int value = (int)((massToM+1)/massIn);
+		return value;
 	}
 
 	/**
-	 * Get the formula molecular as String from the the sum of the Elements
+	 * set the formula molecular as IMolecularFormula object
 	 *   
 	 * @param elemToCond_new
 	 * @param value_In
-	 * @return
+	 * @return  The IMolecularFormula
 	 */
-	private String getFormulaString(IElement_Nr[] elemToCond_new, int[] value_In) {
-		String result = "";
+	private IMolecularFormula getFormula(IElement_Nr[] elemToCond_new, int[] value_In) {
+		IMolecularFormula mf = new MolecularFormula();;
 		for(int i = 0; i < elemToCond_new.length ; i++){
 			if(value_In[i] != 0){
-				result += elemToCond_new[i].getMyElement().getSymbol()+value_In[i];
+				mf.addElement(elemToCond_new[i].getMyElement(),value_In[i]);
 			}
 		}
-		return result;
+		mf = putInOrder(mf);
+		return mf;
 	}
 
+	/**
+	 * Put in order the elements of the molecular formula. 
+	 * 
+	 * @param mf The IMolecularFormula to put in order
+	 * @return   IMolecularFormula object
+	 */
+	private IMolecularFormula putInOrder(IMolecularFormula mf) {
+		IMolecularFormula new_mf = new MolecularFormula();
+		for(int i = 0 ; i < orderElements.length; i++){
+			IElement element = new Element(orderElements[i]);
+			if(mf.contains(element)){
+				new_mf.addElement(element, mf.getAtomCount(element));
+			}
+		}
+		new_mf.setCharge(charge);
+		return new_mf;
+	}
 	/**
 	 * Calculate the mass total given the elements and their respective occurrences
 	 * 
@@ -402,16 +439,6 @@ public class MassToFormulaTool {
 			}
 		}
 		return result;
-	}
-
-	/**
-	 * calculate the occurrence of this Element
-	 * @param element    The element to analyze
-	 * @return           The occurrence
-	 */
-	private int getMaxOccurence(double massTo, double massIn) {
-		int value = (int)((massTo+1)/massIn);
-		return value;
 	}
 	/**
 	 * generate all elements that will be present as default. They 
@@ -466,6 +493,7 @@ public class MassToFormulaTool {
 				IsotopeFactory ifac = IsotopeFactory.getInstance(builder);
 				myElement = ifac.getElement(symbol);
 				maxIsotop = ifac.getMajorIsotope(symbol);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -509,60 +537,178 @@ public class MassToFormulaTool {
 			return maxIsotop;
 		}
 	}
-
-
-
-	/**
-	 * Returns the all molecular formulas which can have existence 
-	 * looking the notion of connected multigraph. Corla from 
-	 * http://www.sccj.net/publications/JCCJ/v3n3/a01/text.html 
-	 *
-	 * @return    The molecularFormula in an ArrayList
-	 */
-	public ArrayList<String> getMolecularFormula() {
-		return molecularFormula;
-	}
-
+	
 	/**
 	 * return all molecular formula but ordered from difference of the ratio between masses.
 	 * 
 	 * @return  The molecularFormula in an ArrayList
 	 */
-	public ArrayList<String> getMoleculesFormulaOrned(){
-		ArrayList<String> solutions_new = null;
-		if(molecularFormula.size() != 0){
-			
-			ArrayList<String> solutions_pro = molecularFormula;
-			solutions_new = new ArrayList<String>();
-			for (int i = 0; i < molecularFormula.size() ; i++){
+	private ArrayList<IMolecularFormula> returnOrdered(ArrayList<IMolecularFormula> molecularFormula){
+		ArrayList<IMolecularFormula> solutions_new = null;
+		IsotopeFactory ifac;
+		try {
+			ifac = IsotopeFactory.getInstance(builder);
+			if(molecularFormula.size() != 0){
 				
-				double valueMax = 10;
-				int j_final = 0;
-				for (int j = 0 ; j < solutions_pro.size() ; j++){
+				ArrayList<IMolecularFormula> solutions_pro = molecularFormula;
+				solutions_new = new ArrayList<IMolecularFormula>();
+				for (int i = 0; i < molecularFormula.size() ; i++){
 					
-					MFAnalyser mfa = new MFAnalyser((String)solutions_pro.get(j), new Molecule());
-			    	try {
-						double value = mfa.getNaturalMass();
-
-						double diff = Math.abs(mass - Math.abs(value));
-						if (valueMax > diff){
-							valueMax = diff;
-							j_final = j;
+					double valueMin = 100;
+					int j_final = 0;
+					for (int j = 0 ; j < solutions_pro.size() ; j++){
+						IAtomContainer newAC = solutions_pro.get(j).getBuilder().newAtomContainer();
+						Iterator<IElement> iterator = solutions_pro.get(j).elements();
+						while(iterator.hasNext()){
+							IElement element = iterator.next();
+							double maxIsotop = ifac.getMajorIsotope(element.getSymbol()).getExactMass();
+							int rep = solutions_pro.get(j).getAtomCount(element);
+							for(int z = 0; z < rep; z++){
+								IAtom atom = solutions_pro.get(j).getBuilder().newAtom(element);
+								atom.setExactMass(maxIsotop);
+								newAC.addAtom(atom);
+							}
 						}
 						
-					} catch (IOException e) {
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
-						e.printStackTrace();
+						double value = AtomContainerManipulator.getTotalExactMass(newAC);
+
+							double diff = Math.abs(mass - Math.abs(value));
+							if (valueMin > diff){
+								valueMin = diff;
+								j_final = j;
+							}
+							
+				    	
 					}
-			    	
+					solutions_new.add(solutions_pro.get(j_final));
+					solutions_pro.remove(j_final);
+					
 				}
-				solutions_new.add(solutions_pro.get(j_final));
-				solutions_pro.remove(j_final);
-				
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 		return solutions_new;
 	}
+	/**
+	 * call the corresponding matrix and create it
+	 */
+	private int[][] callMatrix(int size){
+		 switch (size) {
+	         case 1:
+	             return getMatrix_1();
+	         case 2:
+	        	 return getMatrix_2();
+	         case 3:
+	        	 return getMatrix_3();
+	         case 4:
+	        	 return getMatrix_4();
+	         case 5:
+	        	 return getMatrix_5();
+	         case 6:
+	        	 return getMatrix_6();
+	         default:
+	        	 logger.error("The size of the matrix is not implemented yet.");
+	             return null;
+		 }
+	}
+	/**
+	 * get the matrix the permutation for dimension 1
+	 *  
+	 * @return the matrix with the permutations
+	 */
+	private int[][] getMatrix_1(){
+		int[][] matrix = new int[][]{{1},{1}};
+		return matrix;
+	}
+	
 
+	/**
+	 * get the matrix the permutation for dimension 2
+	 *  
+	 * @return the matrix with the permutations
+	 */
+	private int[][] getMatrix_2(){
+		int[][] matrix = new int[][]{
+				{1,0},{0,1},{1,1}};
+		return matrix;
+	}
+	
+	/**
+	 * get the matrix the permutation for dimension 3
+	 *  
+	 * @return the matrix with the permutations
+	 */
+	private int[][] getMatrix_3(){
+		int[][] matrix = new int[][]{
+				{1,0,0},{0,1,0},{0,0,1},
+				{1,1,0},{1,0,1},{0,1,1},
+				{1,1,1}};
+		return matrix;
+	}
+	/**
+	 * get the matrix the permutation for dimension 4
+	 *  
+	 * @return the matrix with the permutations
+	 */
+	private int[][] getMatrix_4(){
+		int[][] matrix = new int[][]{
+				{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}, // 1
+				{1,1,0,0},{1,0,1,0},{1,0,0,1},{0,1,1,0}, // 2
+				{0,1,0,1},{0,0,1,1},
+				{0,1,1,1},{1,0,1,1},{1,1,0,1},{1,1,1,0}, // 3
+				{1,1,1,1}}; // 4
+		return matrix;
+	}
+
+	/**
+	 * get the matrix the permutation for dimension 5
+	 *  
+	 * @return the matrix with the permutations
+	 */
+	private int[][] getMatrix_5(){
+		int[][] matrix = new int[][]{
+				{1,0,0,0,0},{0,1,0,0,0},{0,0,1,0,0},{0,0,0,1,0},// 1
+				{0,0,0,0,1},
+				{1,1,0,0,0},{1,0,1,0,0},{1,0,0,1,0},{1,0,0,0,0},// 2
+				{0,1,1,0,0},{0,1,0,1,0},{0,1,0,0,1},{0,0,1,1,0},
+				{0,0,1,0,1},{0,0,0,1,1},
+				{0,0,1,1,1},{0,1,0,1,1},{0,1,1,0,1},{0,1,1,1,1},// 3
+				{1,0,0,1,1},{1,0,1,0,1},{1,0,1,1,0},{1,1,0,0,1},
+				{1,1,0,1,0},{1,1,1,0,0},
+				{0,1,1,1,1},{1,0,1,1,1},{1,1,0,1,1},{1,1,1,0,1},// 4
+				{1,1,1,1,0},
+				{1,1,1,1,1}}; // 5
+		return matrix;
+	}
+	/**
+	 * get the matrix the permutation for dimension 6
+	 *  
+	 * @return the matrix with the permutations
+	 */
+	private int[][] getMatrix_6(){
+		int[][] matrix = new int[][]{
+				{1,0,0,0,0,0},{0,1,0,0,0,0},{0,0,1,0,0,0},{0,0,0,1,0,0},// 1
+				{0,0,0,0,1,0},{0,0,0,0,0,1},
+				{1,1,0,0,0,0},{1,0,1,0,0,0},{1,0,0,1,0,0},{1,0,0,0,1,0},// 2
+				{1,0,0,0,0,1},{0,1,1,0,0,0},{0,1,0,1,0,0},{0,1,0,0,1,0},
+				{0,1,0,0,0,1},{0,0,1,1,0,0},{0,0,1,0,1,0},{0,0,1,0,0,1},
+				{0,0,0,1,1,0},{0,0,0,1,0,1},{0,0,0,0,1,1},
+				{1,1,1,0,0,0},{1,1,0,1,0,0},{1,1,0,0,1,0},{1,1,0,0,0,1},// 3
+				{0,1,1,1,0,0},{0,1,1,0,1,0},{0,1,1,0,0,1},{0,0,1,1,1,0},
+				{0,0,1,1,0,1},{0,0,0,1,1,1},
+				{1,0,1,1,0,0},{1,0,1,0,1,0},{1,0,1,0,0,1},{1,0,0,1,1,0},
+				{1,0,0,1,0,1},{1,0,0,0,1,1},{0,1,0,1,1,0},{0,1,0,1,0,1},
+				{0,1,0,0,1,1},{0,0,1,0,1,1},
+				{0,1,1,1,1,1},{1,0,1,1,1,1},{1,1,0,1,1,1},{1,1,1,0,1,1},// 4
+				{1,1,1,1,0,1},{1,1,1,1,1,0},
+				{0,0,1,1,1,1},{0,1,0,1,1,1},{0,1,1,0,1,1},{0,1,1,1,0,1},// 5
+				{0,1,1,1,1,0},{1,0,0,1,1,1},{1,0,1,0,1,1},{1,0,1,1,0,1},
+				{1,0,1,1,1,0},{1,1,0,0,1,1},{1,1,0,1,0,1},{1,1,0,1,1,0},
+				{1,1,1,0,0,1},{1,1,1,0,1,0},{1,1,1,1,0,0},
+				{1,1,1,1,1,1}}; // 6
+		return matrix;
+	}
 }

@@ -24,15 +24,30 @@
  */
 package org.openscience.cdk.tools;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.io.IOException;
-import java.util.*;
 
 /**
  * Analyses a molecular formula given in String format and builds
@@ -58,26 +73,36 @@ public class MFAnalyser {
 
 	private final static String H_ELEMENT_SYMBOL = "H";
 
-	private String MF;
+	private String stringMF;
 	private IAtomContainer atomContainer;
 	private int HCount = 0;
 	private boolean useboth=false;
 	
 	private LoggingTool logger = new LoggingTool(MFAnalyser.class);
+
 	
 	/**
 	 * Construct an instance of MFAnalyser, initialized with a molecular
 	 * formula string. The string is immediatly analysed and a set of Nodes
 	 * is built based on this analysis
 	 *
-	 * @param  MF  Description of the Parameter
+	 * @param  stringMF  Description of the Parameter
 	 * @param target TODO
 	 */
-	public MFAnalyser(String MF, IAtomContainer target) {
-		this.MF = MF;
-		this.atomContainer = analyseMF(MF, target);
+	public MFAnalyser(String stringMF, IAtomContainer target) {
+		this.stringMF = stringMF;
+		this.atomContainer = analyseMF(stringMF, target);
 	}
-
+//	/**
+//	 * Construct an instance of MFAnalyser, initialized with the MolecularFormula
+//	 * object. 
+//	 *
+//	 * @param  mf  The MolecularFormula object
+//	 */
+//	public MFAnalyser(IMolecularFormula mf) {
+//		
+//		this(newAC,false);
+//	}
 
 	/**
 	 * Construct an instance of MFAnalyser, initialized with a set of Nodes
@@ -101,7 +126,7 @@ public class MFAnalyser {
 	public MFAnalyser(IAtomContainer ac, boolean useboth) {
 		this.useboth=useboth;
 		this.atomContainer = ac;
-		this.MF = analyseAtomContainer(ac);
+		this.stringMF = analyseAtomContainer(ac);
 	}
 	
 
@@ -115,7 +140,17 @@ public class MFAnalyser {
 		return atomContainer;
 	}
 
-
+	/**
+	 * Returns the complete set of Nodes, as implied by the molecular
+	 * formula, including all the hydrogens.
+	 *
+	 * @return    The molecularFormula value
+	 * @see       #getStringMolecularFormula()
+	 * @deprecated
+	 */
+	public String getMolecularFormula() {
+		return stringMF;
+	}
 	/**
 	 * Returns the complete set of Nodes, as implied by the molecular
 	 * formula, including all the hydrogens.
@@ -123,8 +158,8 @@ public class MFAnalyser {
 	 * @return    The molecularFormula value
 	 * @see       #getHTMLMolecularFormula()
 	 */
-	public String getMolecularFormula() {
-		return MF;
+	public String getStringMolecularFormula() {
+		return stringMF;
 	}
 
 
@@ -138,7 +173,7 @@ public class MFAnalyser {
 	public String getHTMLMolecularFormula() {
 		boolean lastCharacterWasDigit = false;
 		boolean currentCharacterIsDigit;
-		StringBuffer htmlString = new StringBuffer(MF);
+		StringBuffer htmlString = new StringBuffer(stringMF);
 
 		for (int characterCounter = 0; characterCounter <= htmlString.length(); characterCounter++) {
 			try {
@@ -364,7 +399,7 @@ public class MFAnalyser {
 			final IBond bond = ac.getBond(i);
 			IAtom atom0 = bond.getAtom(0);
 			IAtom atom1 = bond.getAtom(1);
-			java.util.Iterator atoms = bond.atoms();
+			Iterator<IAtom> atoms = bond.atoms();
 			boolean remove_bond = false;
 			while (atoms.hasNext()){
 				if (remove.contains((IAtom)atoms.next())) {
@@ -393,7 +428,7 @@ public class MFAnalyser {
 		for (Iterator<IAtom> i = remove.iterator();
 				i.hasNext(); ) {
 			// Process neighbours.
-			for (Iterator n = ac.getConnectedAtomsList(i.next()).iterator();
+			for (Iterator<IAtom> n = ac.getConnectedAtomsList(i.next()).iterator();
 					n.hasNext(); ) {
 				final IAtom neighb = map.get(n.next());
 				neighb.setHydrogenCount(neighb.getHydrogenCount() + 1);
@@ -428,6 +463,7 @@ public class MFAnalyser {
 	 * @param  MF  molecular formula to create an AtomContainer from
 	 * @param  ac  AtomContainer in which the Atom's and Bond's will be stored 
 	 * @return     the filled AtomContainer
+	 * @see        #analyseMF(IMolecularFormula mf, IAtomContainer ac)
 	 */
 	private IAtomContainer analyseMF(String MF, IAtomContainer ac) {
 		char ThisChar;
@@ -482,6 +518,31 @@ public class MFAnalyser {
 				}
 			}
 		}
+		return ac;
+	}
+	
+	/**
+	 * Method that actually does the work of analysing the molecular formula
+	 *
+	 * @param  mf  The IMolecularformula to create an AtomContainer from
+	 * @param  ac  AtomContainer in which the Atom's and Bond's will be stored 
+	 * @return     the filled AtomContainer
+	 * @see        #analyseMF(String MF, IAtomContainer ac) 
+	 */
+	private IAtomContainer analyseMF(IMolecularFormula mf, IAtomContainer ac) {
+	
+		if (mf == null)
+			return null;
+		
+
+		Iterator<IElement> elementIter = mf.elements();
+		while(elementIter.hasNext()){
+			IElement element = elementIter.next();
+			for(int occ = 0; occ < mf.getAtomCount(element); occ++)
+				ac.addAtom(ac.getBuilder().newAtom(element.getSymbol()));
+			
+		}
+			
 		return ac;
 	}
 
