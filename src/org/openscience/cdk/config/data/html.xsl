@@ -45,9 +45,9 @@
             <td><xsl:value-of select="cml:atom/@elementType"/></td>
             <td><xsl:value-of select="cml:atom/@formalCharge"/></td>
             <td><xsl:value-of select="cml:scalar[@dictRef='cdk:hybridization']"/></td>
-            <td><xsl:value-of select="cml:scalar[@dictRef='cdk:formalNeighbourCount']"/></td>
-            <td><xsl:value-of select="cml:scalar[@dictRef='cdk:piBondCount']"/></td>
-            <td><xsl:value-of select="cml:scalar[@dictRef='cdk:lonePairCount']"/></td>
+            <td><xsl:value-of select="cml:atom/cml:scalar[@dictRef='cdk:formalNeighbourCount']"/></td>
+            <td><xsl:value-of select="cml:atom/cml:scalar[@dictRef='cdk:piBondCount']"/></td>
+            <td><xsl:value-of select="cml:atom/cml:scalar[@dictRef='cdk:lonePairCount']"/></td>
         </tr>
     </xsl:template>
 
