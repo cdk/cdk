@@ -29,6 +29,9 @@
                     <td><b>element</b></td>
                     <td><b>formal charge</b></td>
                     <td><b>hybridization</b></td>
+                    <td><b>neighbours</b></td>
+                    <td><b>pi bonds</b></td>
+                    <td><b>lone pairs</b></td>
                     <xsl:apply-templates select="//cml:atomType"/>
                   </table>
                </xsl:element>
@@ -42,6 +45,9 @@
             <td><xsl:value-of select="cml:atom/@elementType"/></td>
             <td><xsl:value-of select="cml:atom/@formalCharge"/></td>
             <td><xsl:value-of select="cml:scalar[@dictRef='cdk:hybridization']"/></td>
+            <td><xsl:value-of select="cml:scalar[@dictRef='cdk:formalNeighbourCount']"/></td>
+            <td><xsl:value-of select="cml:scalar[@dictRef='cdk:piBondCount']"/></td>
+            <td><xsl:value-of select="cml:scalar[@dictRef='cdk:lonePairCount']"/></td>
         </tr>
     </xsl:template>
 
