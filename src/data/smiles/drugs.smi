@@ -136,7 +136,6 @@ c1ccc2c(c1)C(N=[N+]2C)C(=O)NC1CC2CCCC(C1)N2C	3510
 c1ccc2c(c1)[nH]c(=O)n2C1=CCN(CC1)CCCC(=O)c1ccc(cc1)F	3168
 c1ccc2c(c1)[nH]c(=O)n2C1CCN(CC1)CCCC(c1ccc(cc1)F)c1ccc(cc1)F	16362
 c1ccc2c(c1)[nH]c(=O)n2CCCN1CCC(CC1)n1c2ccc(cc2[nH]c1=O)Cl	3151
-c1ccc2c(c1)[nH]c(n2)c1c[s]c[nH]1	5430
 c1ccc2c(c1)c(=O)[nH]c1cccnc1n2C(=O)CN1CCN(CC1)C	4848
 c1cnc(cn1)C(=O)N	1046
 c1nc2c([nH]1)c(=O)n(c(=O)n2C)C	2153
