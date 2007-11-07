@@ -986,7 +986,18 @@ if __name__ == '__main__':
         if not status:
             print "Error parsing build.props. Could not a valid version line. Exiting"
             sys.exit(-1)
-        
+
+        # get a summary of the test results from the previous run
+        reports = glob.glob(os.path.join(nightly_repo, 'reports', '*.txt'))
+        reports.sort()
+        oldReports = []
+        for report in reports:
+            for line in open(report, 'r'):
+                if line.startswith('Testcase:'):
+                    oldReports.append(''.join(line.split(':')[:2]))
+                
+
+       
         # compile the distro
         successDist = runAntJob('nice -n 19 ant -lib %s clean dist-large' % (ant_libs), 'build.log', 'distro')
         if successDist: # if we compiled, do the rest of the stuff
@@ -1191,6 +1202,29 @@ if __name__ == '__main__':
 
     if successTest:
         print '  Generating JUnit section'
+
+        # we'll want to do a diff against the previous runs results,
+        # but only if it is not a dry run
+        nTestFixed = 'NA'
+        nTestFails = 'NA'
+        if not dryRun:
+            reports = glob.glob(os.path.join(nightly_repo, 'reports', '*.txt'))
+            reports.sort()
+            newReports = []
+            for report in reports:
+                for line in open(report, 'r'):
+                    if line.startswith('Testcase:'):
+                        newReports.append(''.join(line.split(':')[:2]))
+
+            import difflib
+            diff = difflib.unified_diff(oldReports, newReports)
+            nTestFixed = 0
+            nTestFails = 0
+            for i in diff:
+                if i.startswith('-'): nTestFixed += 1
+            if i.startswith('+'): nTestFails += 1        
+        
+        
         # make the directory for reports
         testDir = os.path.join(nightly_web, 'test')
         os.mkdir(testDir)
@@ -1228,7 +1262,9 @@ if __name__ == '__main__':
                             os.path.join(nightly_web, 'test.log'))
             resultTable.addCell("<a href=\"test.log\">test.log</a>")
             resultTable.appendToCell("<a href=\"junitsummary.html\">Stable</a>")
-            resultTable.appendToCell("<a href=\"junitsummary-unstable.html\">Unstable</a>") 
+            resultTable.appendToCell("<a href=\"junitsummary-unstable.html\">Unstable</a>")
+            resultTable.appendToCell("No. old fails fixed in current SVN = %s" % (str(nTestFixed)))
+            resultTable.appendToCell("No. new fails in current SVN = %s" % (str(nTestFails)))            
     else:
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         if os.path.exists( os.path.join(nightly_dir, 'test.log') ):
