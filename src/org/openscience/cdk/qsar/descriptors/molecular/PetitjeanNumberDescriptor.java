@@ -119,12 +119,12 @@ public class PetitjeanNumberDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
-        double petitjeanNumber = 0; //weinerPath
+        double petitjeanNumber; //weinerPath
         int diameter = PathTools.getMolecularGraphDiameter(atomContainer);
         int radius = PathTools.getMolecularGraphRadius(atomContainer);
 
         if (diameter == 0) petitjeanNumber = 0;
-        else petitjeanNumber = (diameter - radius)/diameter;
+        else petitjeanNumber = (diameter - radius)/(double)diameter;
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(petitjeanNumber),
                 new String[] {"PetitjeanNumber"});
     }
