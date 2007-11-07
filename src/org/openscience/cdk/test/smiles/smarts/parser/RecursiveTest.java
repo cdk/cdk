@@ -23,7 +23,7 @@ package org.openscience.cdk.test.smiles.smarts.parser;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.iterator.IteratingSMILESReader;
@@ -60,7 +60,7 @@ public class RecursiveTest extends CDKTestCase {
         SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, true);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(smiles);
-        HueckelAromaticityDetector.detectAromaticity(atomContainer);
+        CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
         boolean status = sqt.matches(atomContainer);
         if (status) {
             nmatch = sqt.countMatches();
@@ -262,29 +262,63 @@ public class RecursiveTest extends CDKTestCase {
         match("[NX3;H2,H1;!$(NC=O)]", "Cc1nc2=NC3=C(C(n2[nH]1)c1cc(cc(c1)F)F)C(=O)CC(C3)c1ccco1");
         assertEquals(1, nmatch);
         assertEquals(1, nqmatch);
+    }
 
-        match("[NX3;H2,H1;!$(NC=O)]", "CC1CCCC(C1)N1CCN(CC1)C1CCN(CC1)Cc1ccccc1");
-        assertEquals(0, nmatch);
-        assertEquals(0, nqmatch);
-
-        match("[NX3;H2,H1;!$(NC=O)]", "CCOc1cc2c(cc1/C=C/C(=O)c1ccc(cc1)S(=O)(=O)N1CCCC1)OC(C2)C");
-        assertEquals(0, nmatch);
-        assertEquals(0, nqmatch);
-
-        match("[NX3;H2,H1;!$(NC=O)]", "CN1CCc2cc3c(c(c2C1CC(=O)/C=C/c1ccco1)OC)OCO3");
-        assertEquals(0, nmatch);
-        assertEquals(0, nqmatch);
-
-
-        match("[NX3;H2,H1;!$(NC=O)]", "Cc1nc2=NC3=C(C(n2[nH]1)c1cc(cc(c1)F)F)C(=O)CC(C3)c1ccco1");
-        assertEquals(1, nmatch);
-        assertEquals(1, nqmatch);
-
+    public void testRecursiveSmarts34() throws Exception {
         match("[NX3;h2,h1,H1,H2;!$(NC=O)]", "NC1CCCC1C(CCNC)Cc1ccccc1N");
         assertEquals(3, nmatch);
         assertEquals(3, nqmatch);
-
     }
+
+    public void testRecursiveSmarts30() throws Exception {
+        match("[NX3;H2,H1;!$(NC=O)]", "CC1CCCC(C1)N1CCN(CC1)C1CCN(CC1)Cc1ccccc1");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+    }
+
+    public void testRecursiveSmarts31() throws Exception {
+        match("[NX3;H2,H1;!$(NC=O)]", "CCOc1cc2c(cc1/C=C/C(=O)c1ccc(cc1)S(=O)(=O)N1CCCC1)OC(C2)C");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+    }
+
+    public void testRecursiveSmarts32() throws Exception {
+        match("[NX3;H2,H1;!$(NC=O)]", "CN1CCc2cc3c(c(c2C1CC(=O)/C=C/c1ccco1)OC)OCO3");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+    }
+
+    public void testRecursiveSmarts33() throws Exception {
+        match("[NX3;H2,H1;!$(NC=O)]", "Cc1nc2=NC3=C(C(n2[nH]1)c1cc(cc(c1)F)F)C(=O)CC(C3)c1ccco1");
+        assertEquals(1, nmatch);
+        assertEquals(1, nqmatch);
+    }
+
+
+    public void testRecursiveSmarts26() throws Exception {
+        match("[NX3;H2,H1;!$(NC=O)]", "CCCc1cc(=O)nc([nH]1)S");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+    }
+
+    public void testRecursiveSmarts27() throws Exception {
+        match("[NX3;H2,H1;!$(NC=O)]", "CCCc1nc(c2n1[nH]c(nc2=O)c1cc(ccc1OCC)S(=O)(=O)N1CCN(CC1)CC)C");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+    }
+
+    public void testRecursive28() throws Exception {
+        match("[NX3;H2,H1;!$(NC=O)]", "Cc1ccc[n+]2c1[nH]cc(c2=O)c1n[nH]nn1");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+    }
+
+    public void testRecursive29() throws Exception {
+        match("[NX3;H2,H1;!$(NC=O)]", "Cc1cc(=O)c(c[nH]1)C(=O)NC(c1ccc(cc1)O)C(=O)NC1C(=O)N2C1SCC(=C2C(=O)O)CSc1nnnn1C");
+        assertEquals(0, nmatch);
+        assertEquals(0, nqmatch);
+    }
+
 
     public void testBasicAmineOnDrugs() throws CDKException, IOException {
         String filename = "data/smiles/drugs.smi";
@@ -296,7 +330,7 @@ public class RecursiveTest extends CDKTestCase {
         int nmol = 0;
         while (reader.hasNext()) {
             IAtomContainer container = (IAtomContainer) reader.next();
-            HueckelAromaticityDetector.detectAromaticity(container);
+            CDKHueckelAromaticityDetector.detectAromaticity(container);
             if (sqt.matches(container)) {
                 nmatch++;
             }
