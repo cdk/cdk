@@ -242,7 +242,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         while (atoms.hasNext() && bothNeighborsSP2) {
             IAtom nextAtom = atoms.next();
             if (!nextAtom.getSymbol().equals("H")) {
-            	if (nextAtom.getHybridization() == CDKConstants.UNSET &&
+            	if (nextAtom.getHybridization() != CDKConstants.UNSET &&
                     nextAtom.getHybridization() == Hybridization.SP2) {
             		// OK, it's SP2
             	} else if (countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
