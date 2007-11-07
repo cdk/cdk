@@ -50,7 +50,7 @@ public class PetitjeanNumberDescriptorTest extends CDKTestCase {
         return new TestSuite(PetitjeanNumberDescriptorTest.class);
     }
 
-    public void testPetitjeanNumberDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testPetitjeanNumberDescriptor() throws java.lang.Exception {
         IMolecularDescriptor descriptor = new PetitjeanNumberDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
