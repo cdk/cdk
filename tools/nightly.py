@@ -1232,7 +1232,7 @@ if __name__ == '__main__':
             nTestFails = 0
             for i in diff:
                 if i.startswith('-'): nTestFixed += 1
-            if i.startswith('+'): nTestFails += 1        
+                if i.startswith('+'): nTestFails += 1        
         
         
         # make the directory for reports
