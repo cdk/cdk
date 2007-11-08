@@ -988,6 +988,7 @@ if __name__ == '__main__':
             sys.exit(-1)
 
         # get a summary of the test results from the previous run
+        # we also get the old rev number for display purposes
         reports = glob.glob(os.path.join(nightly_repo, 'reports', '*.txt'))
         reports.sort()
         oldReports = []
@@ -995,6 +996,15 @@ if __name__ == '__main__':
             for line in open(report, 'r'):
                 if line.startswith('Testcase:'):
                     oldReports.append(''.join(line.split(':')[:2]))
+        tmp = [x.strip() for x in open('svn.log', 'r').readlines()]
+        oldRevision = 'NA'
+        for line in tmp:
+            if line.startswith('At revision'):
+                oldRevision = line.split()[2][:-1]
+                break
+            elif line.startswith('Updated to revision'):
+                oldRevision = line.split()[3][:-1]
+                break
                 
 
        
@@ -1263,8 +1273,8 @@ if __name__ == '__main__':
             resultTable.addCell("<a href=\"test.log\">test.log</a>")
             resultTable.appendToCell("<a href=\"junitsummary.html\">Stable</a>")
             resultTable.appendToCell("<a href=\"junitsummary-unstable.html\">Unstable</a>")
-            resultTable.appendToCell("No. old fails fixed in current SVN = %s" % (str(nTestFixed)))
-            resultTable.appendToCell("No. new fails in current SVN = %s" % (str(nTestFails)))            
+            resultTable.appendToCell("<br>No. old fails fixed since r%s = %s" % (oldRevision,str(nTestFixed)))
+            resultTable.appendToCell("No. new fails since r%s = %s" % (oldRevision,str(nTestFails)))            
     else:
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         if os.path.exists( os.path.join(nightly_dir, 'test.log') ):
