@@ -25,7 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -156,7 +156,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
         int aromaticAtomsCount = 0;
         if (checkAromaticity) {
             IRingSet rs = (new AllRingsFinder()).findAllRings(ac);
-            HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
+            CDKHueckelAromaticityDetector.detectAromaticity(ac);
         }
         for (int i = 0; i < ac.getAtomCount(); i++) {
             if (ac.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) {
