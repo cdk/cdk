@@ -23,11 +23,8 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
-import java.util.Iterator;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -40,6 +37,8 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
+
+import java.util.Iterator;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -58,7 +57,7 @@ public class AromaticBondsCountDescriptorTest extends CDKTestCase {
 
     public void testAromaticBondsCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         IMolecularDescriptor descriptor = new AromaticBondsCountDescriptor();
-        Object[] params = {new Boolean(true)};
+        Object[] params = {true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCOc1ccccc1"); // ethanol

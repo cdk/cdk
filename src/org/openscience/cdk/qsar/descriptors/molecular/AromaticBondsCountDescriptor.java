@@ -25,17 +25,15 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
 
 import java.util.Iterator;
 
@@ -117,7 +115,7 @@ public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
             throw new CDKException("The first parameter must be of type Boolean");
         }
         // ok, all should be fine
-        checkAromaticity = ((Boolean) params[0]).booleanValue();
+        checkAromaticity = (Boolean) params[0];
     }
 
 
@@ -130,7 +128,7 @@ public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = new Boolean(checkAromaticity);
+        params[0] = checkAromaticity;
         return params;
     }
 
@@ -157,8 +155,7 @@ public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
 
         int aromaticBondsCount = 0;
         if (checkAromaticity) {
-            IRingSet rs = (new AllRingsFinder()).findAllRings(ac);
-            HueckelAromaticityDetector.detectAromaticity(ac, rs, true);
+            CDKHueckelAromaticityDetector.detectAromaticity(ac);
         }
         Iterator bonds = ac.bonds();
         while (bonds.hasNext()) {
@@ -207,7 +204,7 @@ public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
      *@return       An Object of class equal to that of the parameter being requested
      */
     public Object getParameterType(String name) {
-        return new Boolean(true);
+        return true;
     }
 }
 
