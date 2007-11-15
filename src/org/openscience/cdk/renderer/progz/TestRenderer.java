@@ -24,9 +24,23 @@
  */
 package org.openscience.cdk.renderer.progz;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.layout.StructureDiagramGenerator;
+import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.smiles.SmilesParser;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.vecmath.Point2d;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
@@ -34,23 +48,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.vecmath.Point2d;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
  * Test class for testing the new Java2DRenderer.
@@ -121,7 +118,7 @@ public class TestRenderer extends JPanel {
 		public void mouseReleased(MouseEvent e) { 	}
 	}
 	
-	private TestRenderer() {
+	private TestRenderer() throws InvalidSmilesException {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -132,7 +129,9 @@ public class TestRenderer extends JPanel {
 		setUp();
 		
 		IMolecule mol;
-		//mol = MoleculeFactory.makeAlphaPinene();
+        SmilesParser sp = new SmilesParser(builder);
+        mol = sp.parseSmiles("CN1C(=O)CN=C(C2=C1C=CC(=C2)Cl)C3=CC=CC=C3");
+        //mol = MoleculeFactory.makeAlphaPinene();
 		//mol = MoleculeFactory.makeThiazole();
 		//mol = MoleculeFactory.makeAlkane(5);
 		//mol = makeAlkanetest(5);
@@ -141,8 +140,8 @@ public class TestRenderer extends JPanel {
 		//mol = MoleculeFactory.makeBenzene();
 		//mol = makeBenzene();
 		
-		mol = makeSWedgeTest();
-System.out.println("molecule: " + mol);
+		//mol = makeSWedgeTest();
+//System.out.println("molecule: " + mol);
 		
 		
 		sdg.setMolecule(mol);
@@ -171,7 +170,7 @@ System.out.println("molecule: " + mol);
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InvalidSmilesException {
 		TestRenderer prog = new TestRenderer();
 		prog.run();
 	}
