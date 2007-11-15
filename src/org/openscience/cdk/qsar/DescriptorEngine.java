@@ -78,9 +78,9 @@ public class DescriptorEngine {
     public static final int MOLECULAR = 3;
 
     private Dictionary dict = null;
-    private List classNames = null;
-    private List descriptors = null;
-    private List speclist = null;
+    private List<String> classNames = null;
+    private List<IDescriptor> descriptors = null;
+    private List<DescriptorSpecification> speclist = null;
     private static LoggingTool logger = new LoggingTool(DescriptorEngine.class);
 
     /**
@@ -106,7 +106,7 @@ public class DescriptorEngine {
      * This approach allows one to use find classes using the interface based approach ({@link #getDescriptorClassNameByInterface(String, String[])}.
      * If you use this method it is preferable to specify the jar files to examine
      */
-    public DescriptorEngine(List classNames) {
+    public DescriptorEngine(List<String> classNames) {
         this.classNames = classNames;
         descriptors = instantiateDescriptors(classNames);
         speclist = initializeSpecifications(descriptors);
@@ -614,7 +614,7 @@ public class DescriptorEngine {
      *                     container.
      * @return A list containing the classes in the specified package
      */
-    public static List getDescriptorClassNameByPackage(String packageName, String[] jarFileNames) {
+    public static List<String> getDescriptorClassNameByPackage(String packageName, String[] jarFileNames) {
 
         if (packageName == null || packageName.equals("")) {
             packageName = "org.openscience.cdk.qsar.descriptors";
@@ -628,7 +628,7 @@ public class DescriptorEngine {
             jars = jarFileNames;
         }
 
-        ArrayList classlist = new ArrayList();
+        ArrayList<String> classlist = new ArrayList<String>();
 
         for (int i = 0; i < jars.length; i++) {
             logger.debug("Looking in " + jars[i]);
@@ -653,11 +653,10 @@ public class DescriptorEngine {
         return classlist;
     }
 
-    public List instantiateDescriptors(List descriptorClassNames) {
-        List descriptors;
-        descriptors = new ArrayList();
-        for (Iterator iter = descriptorClassNames.iterator(); iter.hasNext();) {
-            String descriptorName = (String) iter.next();
+    public List<IDescriptor> instantiateDescriptors(List<String> descriptorClassNames) {
+        List<IDescriptor> descriptors;
+        descriptors = new ArrayList<IDescriptor>();
+        for (String descriptorName : descriptorClassNames) {
             try {
                 IDescriptor descriptor = (IDescriptor) this.getClass().getClassLoader().loadClass(descriptorName).newInstance();
                 descriptors.add(descriptor);
@@ -673,10 +672,9 @@ public class DescriptorEngine {
         return descriptors;
     }
 
-    public List initializeSpecifications(List descriptors) {
-        List speclist = new ArrayList();
-        for (int i = 0; i < descriptors.size(); i++) {
-            IDescriptor descriptor = (IDescriptor) descriptors.get(i);
+    public List<DescriptorSpecification> initializeSpecifications(List<IDescriptor> descriptors) {
+        List<DescriptorSpecification> speclist = new ArrayList<DescriptorSpecification>();
+        for (IDescriptor descriptor : descriptors) {
             speclist.add(descriptor.getSpecification());
         }
         return speclist;
