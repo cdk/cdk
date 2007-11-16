@@ -35,7 +35,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.smiles.SmilesParser;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -129,8 +128,7 @@ public class TestRenderer extends JPanel {
 		setUp();
 		
 		IMolecule mol;
-        SmilesParser sp = new SmilesParser(builder);
-        mol = sp.parseSmiles("CN1C(=O)CN=C(C2=C1C=CC(=C2)Cl)C3=CC=CC=C3");
+
         //mol = MoleculeFactory.makeAlphaPinene();
 		//mol = MoleculeFactory.makeThiazole();
 		//mol = MoleculeFactory.makeAlkane(5);
@@ -138,7 +136,7 @@ public class TestRenderer extends JPanel {
 		//mol = makeMasstest();
 		
 		//mol = MoleculeFactory.makeBenzene();
-		//mol = makeBenzene();
+		mol = makeBenzene();
 		
 		//mol = makeSWedgeTest();
 //System.out.println("molecule: " + mol);
