@@ -214,6 +214,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else if (atomContainer.getConnectedBondsCount(atom) > 2) {
     			// FIXME: I don't perceive carbons with more than 4 connections yet
     			return null;
+    		} else if (atomContainer.getConnectedBondsCount(atom) == 0) {
+    			return getAtomType("O.sp3");
     		} else { // OK, use bond order info
     			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
