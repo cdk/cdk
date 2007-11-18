@@ -29,7 +29,6 @@ import org.openscience.cdk.test.atomtype.MM2AtomTypeMatcherTest;
 import org.openscience.cdk.test.atomtype.MMFF94AtomTypeMatcherTest;
 import org.openscience.cdk.test.io.VASPReaderTest;
 import org.openscience.cdk.test.tools.GenerateFragmentsTest;
-import org.openscience.cdk.test.tools.MassToFormulaToolTest;
 
 /**
  * TestSuite that runs all the sample tests for experimental classes.
@@ -44,7 +43,6 @@ public class MexperimentalTests {
         suite.addTest(AssociationTest.suite());
         suite.addTest(VASPReaderTest.suite());
         suite.addTest(GenerateFragmentsTest.suite());
-        suite.addTest(MassToFormulaToolTest.suite());
 
         // from cdk.test.atomtype
         suite.addTest(MMFF94AtomTypeMatcherTest.suite());
