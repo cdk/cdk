@@ -1,5 +1,6 @@
 org/openscience/cdk/qsar/model/data/*.R
 org/openscience/cdk/qsar/descriptors/data/*.txt
 data/arff/*.arff
+org/openscience/cdk/config/data/whim*
 qsar-descriptors.set
 
