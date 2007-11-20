@@ -28,181 +28,91 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Hashtable;
-import java.util.LinkedList;
 
+/**
+ * Provides atomic property values for descriptor calculations.
+ *
+ * This class currently provides values for mass, Vanm der Waals volume, electronegativity and
+ * polarizability
+ *
+ * @cdk.author Todd Martin
+ * @cdk.module qsar
+ * @cdk.svnrev  $Revision: 9416 $
+ */
 public class AtomicProperties {
 
 	private LoggingTool logger;
-	
+
 	private static AtomicProperties ap=null;
-	
-	private Hashtable htMass=new Hashtable();
-	private Hashtable htVdWVolume=new Hashtable();
-	private Hashtable htElectronegativity=new Hashtable();
-	private Hashtable htPolarizability=new Hashtable();
-	
-	
+
+	private Hashtable<String, Double> htMass=new Hashtable<String,Double>();
+	private Hashtable<String, Double> htVdWVolume=new Hashtable<String, Double>();
+	private Hashtable<String, Double> htElectronegativity=new Hashtable<String, Double>();
+	private Hashtable<String, Double> htPolarizability=new Hashtable<String, Double>();
+
+
 	private AtomicProperties() throws IOException {
-		
+
 		logger = new LoggingTool(this);
-		
-	    String configFile = "src/org/openscience/cdk/config/data/whim_weights.txt";
+
+	    String configFile = "org/openscience/cdk/config/data/whim_weights.txt";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-		
-		String Header= br.readLine(); // header
-		
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(ins));
+        bufferedReader.readLine(); // header
+
 		String Line="";
 		while (true) {
-			Line=br.readLine();
-			if (!(Line instanceof String)) {
+			Line=bufferedReader.readLine();
+			if (Line == null) {
 				break;
 			}
-			
-			LinkedList l = parseStringIntoList(Line,"\t");
-			
-			String symbol=(String)l.get(0);
-			htMass.put(symbol,l.get(1));
-			htVdWVolume.put(symbol,l.get(2));
-			htElectronegativity.put(symbol,l.get(3));
-			htPolarizability.put(symbol,l.get(4));
-			
+			String[] components = Line.split("\t");
+
+			String symbol=components[0];
+			htMass.put(symbol,Double.parseDouble(components[1]));
+			htVdWVolume.put(symbol, Double.parseDouble(components[2]));
+			htElectronegativity.put(symbol, Double.parseDouble(components[3]));
+			htPolarizability.put(symbol, Double.parseDouble(components[4]));
 		}
-						
-		br.close();
+
+		bufferedReader.close();
 	}
 
-	public static LinkedList parseStringIntoList(String Line, String Delimiter) {
-		// parses a delimited string into a list
-		
-		LinkedList myList = new LinkedList();
-		
-		int tabpos = 1;
-		
-		while (tabpos > -1) {
-			tabpos = Line.indexOf(Delimiter);
-			
-			if (tabpos > 0) {
-				myList.add(Line.substring(0, tabpos));
-				Line = Line.substring(tabpos + 1, Line.length());
-			} else if (tabpos == 0) {
-				myList.add("");
-				Line = Line.substring(tabpos + 1, Line.length());
-			} else {
-				myList.add(Line.trim());
-			}
-		}
-		
-		return myList;
-		
-	}
+
 
 	public double getVdWVolume(String symbol) {
-		double VdWVolume=-99;
-		
-		String strVdWVolume=(String)htVdWVolume.get(symbol);
-		
-		try {
-			VdWVolume=Double.parseDouble(strVdWVolume);
-		} catch (Exception e) {
-			logger.error("Error while parsing the Vanderwaals volume: " + e.getMessage());
-			logger.debug(e);
-		}
-		
-		
-		return VdWVolume;
-		
+		return htVdWVolume.get(symbol);
 	}
-	
+
 	public double getNormalizedVdWVolume(String symbol) {
-		double VdWVolume=-99;
-		
-		VdWVolume=this.getVdWVolume(symbol)/this.getVdWVolume("C");
-				
-		return VdWVolume;
-		
+		return this.getVdWVolume(symbol)/this.getVdWVolume("C");
 	}
-	
+
 	public double getElectronegativity(String symbol) {
-		double Electronegativity=-99;
-		
-		String strElectronegativity=(String)htElectronegativity.get(symbol);
-		
-		try {
-		Electronegativity=Double.parseDouble(strElectronegativity);
-		} catch (Exception e) {
-			logger.error("Error while parsing the electronegativity: " + e.getMessage());
-			logger.debug(e);
-		}
-		
-		
-		return Electronegativity;
-		
+		return htElectronegativity.get(symbol);
 	}
-	
+
 	public double getNormalizedElectronegativity(String symbol) {
-		double Electronegativity=-99;
-		
-		Electronegativity=this.getElectronegativity(symbol)/this.getElectronegativity("C");
-				
-		return Electronegativity;
-		
+		return this.getElectronegativity(symbol)/this.getElectronegativity("C");
 	}
 	public double getPolarizability(String symbol) {
-		double Polarizability=-99;
-		
-		String strPolarizability=(String)htPolarizability.get(symbol);
-		
-		try {
-		Polarizability=Double.parseDouble(strPolarizability);
-		} catch (Exception e) {
-			logger.error("Error while parsing the polarizability: " + e.getMessage());
-			logger.debug(e);
-		}
-		
-		
-		return Polarizability;
-		
+		return htPolarizability.get(symbol);
 	}
-	
+
 	public double getNormalizedPolarizability(String symbol) {
-		double Polarizability=-99;
-		
-		Polarizability=this.getPolarizability(symbol)/this.getPolarizability("C");
-				
-		return Polarizability;
-		
+		return this.getPolarizability(symbol)/this.getPolarizability("C");
 	}
-	public double getMass(String symbol) {
-		double mass=-99;
-		
-		String strMass=(String)htMass.get(symbol);
-		
-		try {
-		mass=Double.parseDouble(strMass);
-		
-		} catch (Exception e) {
-			logger.error("Error while parsing the mass: " + e.getMessage());
-			logger.debug(e);
-		}
-		
-		
-		return mass;
-		
+
+    public double getMass(String symbol) {
+		return htMass.get(symbol);
 	}
-	
+
 	public double getNormalizedMass(String symbol) {
-		double mass=-99;
-		
-		mass=this.getMass(symbol)/this.getMass("C");
-				
-		return mass;
-		
+		return this.getMass(symbol)/this.getMass("C");
 	}
-	
-	
-	
+
+
+
 	public static AtomicProperties getInstance() throws IOException
 	{
 		if (ap == null) {
@@ -210,4 +120,6 @@ public class AtomicProperties {
 		}
 		return ap;
 	}
+
+
 }
