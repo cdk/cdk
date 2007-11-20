@@ -45,6 +45,7 @@ public class MqsarMolecularTests {
         // Individual Tests - Please add correlatively	
 
 //      from cdk.test.qsar.molecular
+        suite.addTest(ALOGPDescriptorTest.suite());
         suite.addTest(AminoAcidCountDescriptorTest.suite());
         suite.addTest(APolDescriptorTest.suite());
         suite.addTest(AromaticAtomsCountDescriptorTest.suite());
