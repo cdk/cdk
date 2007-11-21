@@ -2,14 +2,18 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.ALOGP;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.HydrogenAdder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Test suite for the alogp descriptor
@@ -18,31 +22,43 @@ import org.openscience.cdk.tools.HydrogenAdder;
  */
 public class ALOGPDescriptorTest extends CDKTestCase {
 
+    private IMolecularDescriptor alogp;
+    private CDKHydrogenAdder hydrogenAdder;
+
     public static Test suite() {
         return new TestSuite(ALOGPDescriptorTest.class);
     }
 
-    public void test1() {
-        try {
-            DescriptorValue v = getALOGP("CCCCl");
-            assertEquals(0.5192, ((DoubleArrayResult) v.getValue()).get(0), 1E-10);
-            assertEquals(19.1381, ((DoubleArrayResult) v.getValue()).get(2), 1E-10);
-        } catch (Exception x) {
-            fail(x.getMessage());
-        }
+    protected void setUp() throws CDKException {
+        alogp = new ALOGP();
+        hydrogenAdder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
     }
 
-    private DescriptorValue getALOGP(String smiles) throws Exception {
-        IMolecule mol = null;
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        mol = sp.parseSmiles(smiles);
-        HydrogenAdder ha = new HydrogenAdder();
-        ha.addExplicitHydrogensToSatisfyValency(mol);
+    public void testChloroButane() throws Exception {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IAtom c2 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IAtom c3 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IAtom c4 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IAtom cl = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
+        mol.addAtom(c1);
+        mol.addAtom(c2);
+        mol.addAtom(c3);
+        mol.addAtom(c4);
+        mol.addAtom(cl);
 
-        ALOGP descr = new ALOGP();
-        return descr.calculate(mol);
+        mol.addBond(new Bond(c1, c2));
+        mol.addBond(new Bond(c2, c3));
+        mol.addBond(new Bond(c3, c4));
+        mol.addBond(new Bond(c4, cl));
 
+        // add explicit hydrogens here
+        hydrogenAdder.addImplicitHydrogens(mol);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+
+        DescriptorValue v = alogp.calculate(mol);
+        assertEquals(0.5192, ((DoubleArrayResult) v.getValue()).get(0), 0.0001);
+        assertEquals(19.1381, ((DoubleArrayResult) v.getValue()).get(2), 0.0001);
     }
-
 
 }
