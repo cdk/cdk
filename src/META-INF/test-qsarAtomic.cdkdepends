@@ -2,6 +2,7 @@ cdk-interfaces.jar
 cdk-core.jar
 cdk-standard.jar
 cdk-data.jar
+cdk-atomtype.jar
 cdk-nonotify.jar
 cdk-io.jar
 cdk-pdb.jar

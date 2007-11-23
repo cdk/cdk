@@ -37,7 +37,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Checks the functionality of the AtomType-HybridizationStateATMatcher.
  *
- * @cdk.module test-core
+ * @cdk.module test-atomtype
  *
  * @see org.openscience.cdk.atomtype.HybridizationStateATMatcher
  */

@@ -41,7 +41,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @cdk.module test-core
+ * @cdk.module test-atomtype
  */
 public class HybridizationMatcherTest extends AbstractAtomTypeTest {
 

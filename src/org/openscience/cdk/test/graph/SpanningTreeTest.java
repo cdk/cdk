@@ -37,7 +37,7 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-standard
+ * @cdk.module test-atomtype
  */
 public class SpanningTreeTest extends CDKTestCase {
     

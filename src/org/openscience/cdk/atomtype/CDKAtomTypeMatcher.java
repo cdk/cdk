@@ -41,7 +41,7 @@ import java.util.Map;
  *
  * @author         egonw
  * @cdk.created    2007-07-20
- * @cdk.module     standard
+ * @cdk.module     atomtype
  * @cdk.svnrev  $Revision: 9162 $
  */
 public class CDKAtomTypeMatcher implements IAtomTypeMatcher {

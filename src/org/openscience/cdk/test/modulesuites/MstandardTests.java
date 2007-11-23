@@ -29,7 +29,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.StandardCoverageTest;
 import org.openscience.cdk.test.aromaticity.AromaticityCalculatorTest;
-import org.openscience.cdk.test.atomtype.CDKAtomTypeMatcherTest;
 import org.openscience.cdk.test.atomtype.EStateAtomTypeMatcherTest;
 import org.openscience.cdk.test.config.SymbolsTest;
 import org.openscience.cdk.test.dict.DictRefTest;
@@ -49,7 +48,6 @@ import org.openscience.cdk.test.graph.ConnectivityCheckerTest;
 import org.openscience.cdk.test.graph.MinimalPathIteratorTest;
 import org.openscience.cdk.test.graph.MoleculeGraphsTest;
 import org.openscience.cdk.test.graph.PathToolsTest;
-import org.openscience.cdk.test.graph.SpanningTreeTest;
 import org.openscience.cdk.test.graph.invariant.CanonicalLabelerTest;
 import org.openscience.cdk.test.graph.invariant.MorganNumbersToolsTest;
 import org.openscience.cdk.test.graph.matrix.AdjacencyMatrixTest;
@@ -124,7 +122,6 @@ public class MstandardTests {
         suite.addTest(DictRefTest.suite());
         suite.addTest(CrystalGeometryToolsTest.suite());
         suite.addTest(GeometryToolsTest.suite());
-        suite.addTest(PathToolsTest.suite());
         suite.addTest(MinimalPathIteratorTest.suite());
         suite.addTest(ConnectivityCheckerTest.suite());
         suite.addTest(BiconnectivityInspectorTest.suite());
@@ -174,8 +171,6 @@ public class MstandardTests {
         suite.addTest(ElementComparatorTest.suite());
         suite.addTest(BFSShortestPathTest.suite());
         suite.addTest(MoleculeGraphsTest.suite());
-        suite.addTest(SpanningTreeTest.suite());
-        suite.addTest(AdjacencyMatrixTest.suite());
         suite.addTest(ConnectionMatrixTest.suite());
         suite.addTest(BsptTest.suite());
         suite.addTest(PointTest.suite());
@@ -198,8 +193,6 @@ public class MstandardTests {
         suite.addTest(EStateAtomTypeMatcherTest.suite());
         suite.addTest(AtomContainerComparatorTest.suite());
         
-        suite.addTest(CDKAtomTypeMatcherTest.suite());
-
         return suite;
     }
     

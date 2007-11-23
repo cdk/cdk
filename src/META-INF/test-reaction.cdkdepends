@@ -2,6 +2,7 @@ cdk-interfaces.jar
 cdk-data.jar
 cdk-core.jar
 cdk-standard.jar
+cdk-atomtype.jar
 cdk-extra.jar
 cdk-reaction.jar
 cdk-io.jar

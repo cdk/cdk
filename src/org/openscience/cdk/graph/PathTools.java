@@ -40,7 +40,7 @@ import java.util.Vector;
  * Tools class with methods for handling molecular graphs.
  *
  * @author steinbeck
- * @cdk.module standard
+ * @cdk.module atomtype
  * @cdk.svnrev $Revision$
  * @cdk.created 2001-06-17
  */

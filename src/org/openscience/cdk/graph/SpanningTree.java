@@ -36,7 +36,7 @@ import java.util.Iterator;
  * inefficient AllRingsFinder to run for too long.
  *
  * @author      Nina Jeliazkova
- * @cdk.module  standard
+ * @cdk.module  atomtype
  * @cdk.svnrev  $Revision$
  * @cdk.dictref blue-obelisk:graphSpanningTree
  * @cdk.keyword spanning tree

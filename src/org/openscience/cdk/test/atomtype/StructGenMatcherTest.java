@@ -43,7 +43,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  * This class tests the matching of atom types defined in the
  * structgen atom type list.
  *
- * @cdk.module test-core
+ * @cdk.module test-atomtype
  */
 public class StructGenMatcherTest extends AbstractAtomTypeTest {
 

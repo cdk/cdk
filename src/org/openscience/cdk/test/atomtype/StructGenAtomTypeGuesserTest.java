@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-core
+ * @cdk.module test-atomtype
  */
 public class StructGenAtomTypeGuesserTest extends CDKTestCase {
 

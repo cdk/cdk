@@ -30,7 +30,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-standard
+ * @cdk.module test-atomtype
  */
 public class AdjacencyMatrixTest extends CDKTestCase {
     

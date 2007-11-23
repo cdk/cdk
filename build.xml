@@ -439,6 +439,7 @@
             <antcall target="compile-init"/>
             <antcall target="compile-module"><param name="module" value="interfaces"/></antcall>
             <antcall target="compile-module"><param name="module" value="core"/></antcall>
+            <antcall target="compile-module"><param name="module" value="atomtype"/></antcall>
             <antcall target="compile-module"><param name="module" value="standard"/></antcall>
             <antcall target="compile-module"><param name="module" value="data"/></antcall>
             <antcall target="compile-module"><param name="module" value="render"/></antcall>
@@ -477,6 +478,7 @@
         <antcall target="compile-init"/>
         <antcall target="compile-module"><param name="module" value="test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-core"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-atomtype"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-standard"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-data"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-datadebug"/></antcall>
@@ -510,6 +512,7 @@
             <unjar dest="${appjars.dir}">
                 <fileset dir="${lib}">
                     <includesfile name="${metainf}/applications.libdepends"/>
+                    <includesfile name="${metainf}/atomtype.libdepends"/>
                     <includesfile name="${metainf}/builder3d.libdepends"/>
                     <includesfile name="${metainf}/builder3dtools.libdepends"/>
                     <includesfile name="${metainf}/charges.libdepends"/>
@@ -543,6 +546,7 @@
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-applications.jar"/>
+                    <include name="cdk-atomtype.jar"/>
                     <include name="cdk-builder3d.jar"/>
                     <include name="cdk-builder3dtools.jar"/>
                     <include name="cdk-charges.jar"/>
@@ -936,6 +940,7 @@
         <target id="test-all" name="test-all" depends="noJunit, dist-all, test-dist-all"
                 description="Performs a full JUnit test for the CDK." 
                 if="junit.present">
+        	<antcall target="test-module"><param name="module" value="atomtype"/></antcall>
         	<antcall target="test-module"><param name="module" value="core"/></antcall>
         	<antcall target="test-module"><param name="module" value="data"/></antcall>
         	<antcall target="test-module"><param name="module" value="datadebug"/></antcall>

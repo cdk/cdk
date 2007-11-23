@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author         mfe4
  * @cdk.created    2004-12-02
- * @cdk.module     core
+ * @cdk.module     atomtype
  * @cdk.svnrev  $Revision$
  */
 public class HybridizationStateATMatcher implements IAtomTypeMatcher {

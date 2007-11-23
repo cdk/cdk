@@ -25,6 +25,12 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.CDKConstantsTest;
 import org.openscience.cdk.test.CoreCoverageTest;
+import org.openscience.cdk.test.atomtype.CDKAtomTypeMatcherTest;
+import org.openscience.cdk.test.atomtype.HybridizationMatcherTest;
+import org.openscience.cdk.test.atomtype.HybridizationStateATMatcherTest;
+import org.openscience.cdk.test.atomtype.StructGenAtomTypeGuesserTest;
+import org.openscience.cdk.test.atomtype.StructGenMatcherTest;
+import org.openscience.cdk.test.atomtype.ValencyMatcherTest;
 import org.openscience.cdk.test.config.AtomTypeFactoryTest;
 import org.openscience.cdk.test.config.CDKBasedAtomTypeConfiguratorTest;
 import org.openscience.cdk.test.config.IsotopeFactoryTest;
@@ -36,43 +42,38 @@ import org.openscience.cdk.test.config.isotopes.IsotopeReaderTest;
 import org.openscience.cdk.test.exception.CDKExceptionTest;
 import org.openscience.cdk.test.exception.NoSuchAtomExceptionTest;
 import org.openscience.cdk.test.exception.NoSuchAtomTypeExceptionTest;
+import org.openscience.cdk.test.graph.PathToolsTest;
+import org.openscience.cdk.test.graph.SpanningTreeTest;
+import org.openscience.cdk.test.graph.matrix.AdjacencyMatrixTest;
 import org.openscience.cdk.test.tools.DataFeaturesTest;
 import org.openscience.cdk.test.tools.LoggingToolTest;
 
 /**
  * TestSuite that runs all the tests for the CDK core module.
  *
- * @cdk.module  test-core
+ * @cdk.module  test-atomtype
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class McoreTests {
+public class MatomtypeTests {
     
     public static Test suite() {
         TestSuite suite= new TestSuite("CDK core Tests");
 
-        suite.addTest(CoreCoverageTest.suite());
+//        suite.addTest(AtomtypeCoverageTest.suite());
 
-        // make sure to check it against src/test-core.javafiles
-        // before each release!
-        suite.addTest(CDKConstantsTest.suite());
-        suite.addTest(DataFeaturesTest.suite());
-
-        // cdk.config
-        suite.addTest(IsotopeFactoryTest.suite());
-        suite.addTest(AtomTypeFactoryTest.suite());
-        suite.addTest(CDKBasedAtomTypeConfiguratorTest.suite());
-        suite.addTest(TXTBasedAtomTypeConfiguratorTest.suite());
-        suite.addTest(AtomTypeReaderTest.suite());
-        suite.addTest(AtomTypeHandlerTest.suite());
-        suite.addTest(IsotopeReaderTest.suite());
-        suite.addTest(IsotopeHandlerTest.suite());
+        // basic helper algorithms
+        suite.addTest(AdjacencyMatrixTest.suite());
+        suite.addTest(PathToolsTest.suite());
+        suite.addTest(SpanningTreeTest.suite());
         
-        // other
-        suite.addTest(CDKExceptionTest.suite());
-        suite.addTest(NoSuchAtomExceptionTest.suite());
-        suite.addTest(NoSuchAtomTypeExceptionTest.suite());
-        suite.addTest(LoggingToolTest.suite());
+        // cdk.atomtype
+        suite.addTest(CDKAtomTypeMatcherTest.suite());
+        suite.addTest(HybridizationStateATMatcherTest.suite());
+        suite.addTest(HybridizationMatcherTest.suite());
+        suite.addTest(StructGenMatcherTest.suite());
+        suite.addTest(ValencyMatcherTest.suite());
+        suite.addTest(StructGenAtomTypeGuesserTest.suite());
 
         return suite;
     }

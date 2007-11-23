@@ -25,7 +25,6 @@ package org.openscience.cdk.graph.matrix;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElectronContainer;
 
 /**
  * Calculator for a adjacency matrix representation of this AtomContainer. An
@@ -34,7 +33,7 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  * and the j-th atom in the atomcontainer share a bond. Otherwise it is zero.
  * See {@cdk.cite TRI92}.
  *
- * @cdk.module  standard
+ * @cdk.module  atomtype
  * @cdk.svnrev  $Revision$
  * @cdk.keyword adjacency matrix
  *
