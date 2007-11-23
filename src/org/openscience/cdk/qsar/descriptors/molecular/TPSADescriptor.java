@@ -41,6 +41,22 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import java.util.HashMap;
 import java.util.Vector;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Ring;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.qsar.DescriptorSpecification;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
 /**
  * Calculation of topological polar surface area based on fragment
  * contributions (TPSA) {@cdk.cite ERTL2000}.
@@ -222,8 +238,10 @@ public class TPSADescriptor implements IMolecularDescriptor {
         // calculate the set of all rings
         IRingSet rs = (new AllRingsFinder()).findAllRings(ac);
         // check aromaticity if the descriptor parameter is set to true
-        if (checkAromaticity)
+        if (checkAromaticity) {
+        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(ac);
             CDKHueckelAromaticityDetector.detectAromaticity(ac);
+        }
 
         // iterate over all atoms of ac
         java.util.Iterator atoms = ac.atoms();

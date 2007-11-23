@@ -25,12 +25,10 @@ import static org.junit.Assert.fail;
 
 import java.io.InputStream;
 import java.io.StringReader;
-import java.util.List;
 
 import javax.vecmath.Vector2d;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -40,7 +38,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -49,14 +47,12 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.NewCDKTestCase;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  *  A set of test cases for the StructureDiagramGenerator
@@ -360,7 +356,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		String smiles = "c1(:c(:c2-C(-c3:c(-C(=O)-c:2:c(:c:1-[H])-[H]):c(:c(:c(:c:3-[H])-[H])-N(-[H])-[H])-[H])=O)-[H])-[H]";
 		SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 		IMolecule cdkMol = parser.parseSmiles(smiles);
-		HueckelAromaticityDetector.detectAromaticity(cdkMol, false);
+		CDKHueckelAromaticityDetector.detectAromaticity(cdkMol);
 		new StructureDiagramGenerator(cdkMol).generateCoordinates();
 	}
 	
@@ -437,7 +433,6 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 				String problematicMol2AsSmiles = "N1c2c(c3c(c4c(c(c3O)C)OC(OC=CC(C(C(C(C(C(C(C(C=CC=C(C1=O)C)C)O)C)O)C)OC(=O)C)C)OC)(C4=O)C)c(c2C=NN(C12CC3CC(C1)CC(C2)C3)C)O)O";
 				SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 				IMolecule cdkMol = parser.parseSmiles(problematicMol2AsSmiles);
-				HueckelAromaticityDetector.detectAromaticity(cdkMol, false);
 				new StructureDiagramGenerator(cdkMol).generateCoordinates();
 				assertTrue(GeometryTools.has2DCoordinates(cdkMol));
 				

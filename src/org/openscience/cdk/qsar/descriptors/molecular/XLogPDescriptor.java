@@ -41,6 +41,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 import java.util.ArrayList;
@@ -195,9 +196,10 @@ public class XLogPDescriptor implements IMolecularDescriptor {
             throw new CDKException("Error during clone");
         }
 
-        IRingSet rs = (IRingSet) (new AllRingsFinder()).findAllRings(ac);
+        IRingSet rs = (IRingSet) new SSSRFinder(ac).findSSSR();
         IRingSet atomRingSet=null;
         if (checkAromaticity) {
+        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(ac);
             CDKHueckelAromaticityDetector.detectAromaticity(ac);
         }
         double xlogP = 0;

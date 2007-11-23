@@ -1002,7 +1002,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 		for (int i=0; i<7; i++) {
 			IBond bond = mol.getBond(i);
 			if (bond.getAtom(0).getSymbol().equals("O") ||
-					bond.getAtom(1).getSymbol().equals("O")) {
+				bond.getAtom(1).getSymbol().equals("O")) {
 				Assert.assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
 			} else {
 				Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));

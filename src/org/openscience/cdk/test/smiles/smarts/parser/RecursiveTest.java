@@ -20,8 +20,12 @@
  */
 package org.openscience.cdk.test.smiles.smarts.parser;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -30,9 +34,7 @@ import org.openscience.cdk.io.iterator.IteratingSMILESReader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.test.CDKTestCase;
-
-import java.io.IOException;
-import java.io.InputStream;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Test recursive smarts
@@ -330,6 +332,7 @@ public class RecursiveTest extends CDKTestCase {
         int nmol = 0;
         while (reader.hasNext()) {
             IAtomContainer container = (IAtomContainer) reader.next();
+            AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(container);
             CDKHueckelAromaticityDetector.detectAromaticity(container);
             if (sqt.matches(container)) {
                 nmatch++;

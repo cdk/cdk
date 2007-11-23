@@ -31,13 +31,14 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -294,7 +295,8 @@ public class MoleculeBuilder
             //Detect Aromacity in the benzene ring.
             try
             {
-                HueckelAromaticityDetector.detectAromaticity(benzene);
+            	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(benzene);
+                CDKHueckelAromaticityDetector.detectAromaticity(benzene);
             }
             catch (Exception exc)
             {

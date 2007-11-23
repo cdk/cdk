@@ -28,13 +28,12 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *  Class that returns the number of aromatic atoms in an atom container.
@@ -155,7 +154,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
 
         int aromaticAtomsCount = 0;
         if (checkAromaticity) {
-            IRingSet rs = (new AllRingsFinder()).findAllRings(ac);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(ac);
             CDKHueckelAromaticityDetector.detectAromaticity(ac);
         }
         for (int i = 0; i < ac.getAtomCount(); i++) {

@@ -24,11 +24,21 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
+import java.util.ArrayList;
+
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
@@ -43,8 +53,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
-
-import java.util.ArrayList;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *  <p>The calculation of Resonance stabilization of a positive charge of an heavy 
@@ -135,6 +144,7 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
             throw new CDKException("Error during clone");
         }
         IBond clonedBond = localClone.getBond(atomContainer.getBondNumber(bond));
+        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(localClone);
 
         cleanFlagReactiveCenter((IMolecule) localClone);
 
@@ -208,7 +218,7 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
 	        	
 	        	int maxNumbStruc = 50;
 	        	boolean isAromatic = false;
-	        	if(HueckelAromaticityDetector.detectAromaticity(localClone)){
+	        	if(CDKHueckelAromaticityDetector.detectAromaticity(localClone)){
 	        		 isAromatic = true;
 	        		 IRingSet ringSet = new SSSRFinder(product).findSSSR();
 	        		 if( ringSet.getAtomContainerCount() > 4)

@@ -36,6 +36,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 
 import java.util.Iterator;
 import java.util.List;
@@ -139,14 +140,10 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 		Iterator bonds = ac.bonds();
 		int degree0 = 0;
 		int degree1 = 0;
-		IRingSet ringSet = null;
-		AllRingsFinder arf = new AllRingsFinder();
-		ringSet = arf.findAllRings(ac);
-		List ringsWithThisBond = null;
+		IRingSet ringSet = (IRingSet) new SSSRFinder(ac).findSSSR();
 		while (bonds.hasNext()) {
 			IBond bond = (IBond)bonds.next();
-			ringsWithThisBond = ringSet.getRings(bond);
-			if (ringsWithThisBond.size() > 0) {
+			if (ringSet.getRings(bond).size() > 0) {
 				bond.setFlag(CDKConstants.ISINRING, true);
 			}
 		}

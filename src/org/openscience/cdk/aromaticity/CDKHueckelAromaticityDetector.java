@@ -51,7 +51,6 @@ import java.util.Iterator;
 public class CDKHueckelAromaticityDetector {
 
 	private static AtomTypeFactory factory = null;
-	private static AllRingsFinder ringFinder = new AllRingsFinder();
 
 	public static boolean detectAromaticity(IAtomContainer atomContainer) throws CDKException {
 		SpanningTree spanningTree = new SpanningTree(atomContainer);
@@ -90,7 +89,7 @@ public class CDKHueckelAromaticityDetector {
 			if (!foundSomeAromaticity && !atLeastOneRingIsSprouted &&
 				singleRings.getAtomContainerCount() == 2) {
 				// every ring system consisting of more than two rings is too difficult
-				Iterator<IAtomContainer> allRingsIterator = ringFinder.findAllRingsInIsolatedRingSystem(isolatedSystem).atomContainers();
+				Iterator<IAtomContainer> allRingsIterator = new AllRingsFinder().findAllRingsInIsolatedRingSystem(isolatedSystem).atomContainers();
 				while (allRingsIterator.hasNext()) {
 					// there should be exactly three rings, of which only one has a size larger
 					// than the two previous ones

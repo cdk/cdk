@@ -24,21 +24,27 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.NoSuchAtomTypeException;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.tools.HOSECodeGenerator;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
 import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.HOSECodeGenerator;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  *  Reads in a force field configuration file, set the atom types into a vector, and the data into a hashtable
@@ -243,7 +249,7 @@ public class ForceFieldConfigurator {
 		IRingSet ringSetMolecule = new SSSRFinder(molecule).findSSSR();
 		boolean isInHeteroRing = false;
 		try {
-			HueckelAromaticityDetector.detectAromaticity(molecule);
+			CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 		} catch (Exception cdk1) {
 			System.out.println("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
 		}

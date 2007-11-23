@@ -23,19 +23,26 @@
  */
 package org.openscience.cdk.charges;
 
+import java.io.IOException;
+
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.io.IOException;
 
 /**
  * <p>The calculation of the Gasteiger (PEPE) partial charges is based on 
@@ -437,8 +444,8 @@ public class GasteigerPEPEPartialCharges {
         /*aromatic*/
         double fA = 1.0;
         try {
-			if(HueckelAromaticityDetector.detectAromaticity(ac))
-				if(!HueckelAromaticityDetector.detectAromaticity(atomContainer))
+			if(CDKHueckelAromaticityDetector.detectAromaticity(ac))
+				if(!CDKHueckelAromaticityDetector.detectAromaticity(atomContainer))
 						fA = 0.3;
 		} catch (CDKException e) {
 			e.printStackTrace();

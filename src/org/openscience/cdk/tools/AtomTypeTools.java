@@ -25,11 +25,11 @@
 package org.openscience.cdk.tools;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
@@ -90,7 +90,7 @@ public class AtomTypeTools {
 		
 		if (aromaticity){
 			try {
-				HueckelAromaticityDetector.detectAromaticity(molecule);
+				CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 			} catch (Exception cdk1) {
 				//logger.debug("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
 				logger.error("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());

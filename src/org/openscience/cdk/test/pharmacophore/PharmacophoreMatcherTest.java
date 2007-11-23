@@ -1,9 +1,17 @@
 package org.openscience.cdk.test.pharmacophore;
 
-import org.junit.*;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
@@ -14,10 +22,6 @@ import org.openscience.cdk.pharmacophore.PharmacophoreAtom;
 import org.openscience.cdk.pharmacophore.PharmacophoreMatcher;
 import org.openscience.cdk.pharmacophore.PharmacophoreQueryAtom;
 import org.openscience.cdk.pharmacophore.PharmacophoreQueryBond;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.List;
 
 /**
  * @cdk.module test-pcore
@@ -161,7 +165,7 @@ public class PharmacophoreMatcherTest {
 
         reader.hasNext();
         IAtomContainer mol = (IAtomContainer) reader.next();
-        HueckelAromaticityDetector.detectAromaticity(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
         boolean status = matcher.matches(mol);

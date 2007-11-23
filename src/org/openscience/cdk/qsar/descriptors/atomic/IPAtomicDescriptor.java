@@ -20,12 +20,21 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -35,9 +44,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.ElectronImpactNBEReaction;
-
-import java.util.Iterator;
-import java.util.List;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *  This class returns the ionization potential of an atom containg lone 
@@ -131,7 +138,8 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		double[] resultsH;
 
 		/*control if it is into an aromatic or conjugated system*/
-		HueckelAromaticityDetector.detectAromaticity(localClone,true);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(localClone);
+		CDKHueckelAromaticityDetector.detectAromaticity(localClone);
 		AtomContainerSet conjugatedPi = ConjugatedPiSystemsDetector.detect(localClone);
 		Iterator acI = conjugatedPi.atomContainers();
  		while(acI.hasNext()){

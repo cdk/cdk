@@ -29,7 +29,7 @@ import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
@@ -294,7 +294,8 @@ public class BCUTDescriptor implements IMolecularDescriptor {
 
         // do aromaticity detecttion for calculating polarizability later on
         if (this.checkAromaticity) {
-            HueckelAromaticityDetector.detectAromaticity(molecule);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+            CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         }
 
         // find number of heavy atoms

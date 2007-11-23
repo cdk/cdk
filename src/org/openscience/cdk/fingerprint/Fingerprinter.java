@@ -32,12 +32,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *  Generates a Fingerprint for a given AtomContainer. Fingerprints are
@@ -127,7 +128,8 @@ public class Fingerprinter implements IFingerprinter {
 		logger.debug("Entering Fingerprinter");
 		logger.debug("Starting Aromaticity Detection");
 		long before = System.currentTimeMillis();
-		HueckelAromaticityDetector.detectAromaticity(ac, false, ringFinder);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(ac);
+		CDKHueckelAromaticityDetector.detectAromaticity(ac);
 		long after = System.currentTimeMillis();
 		logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
 		logger.debug("Finished Aromaticity Detection");

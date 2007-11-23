@@ -29,7 +29,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.StandardCoverageTest;
 import org.openscience.cdk.test.aromaticity.AromaticityCalculatorTest;
-import org.openscience.cdk.test.aromaticity.HueckelAromaticityDetectorTest;
 import org.openscience.cdk.test.atomtype.CDKAtomTypeMatcherTest;
 import org.openscience.cdk.test.atomtype.EStateAtomTypeMatcherTest;
 import org.openscience.cdk.test.config.SymbolsTest;
@@ -122,7 +121,6 @@ public class MstandardTests {
         // make sure to check it agains src/test-standard.files
         // before each release!
         suite.addTest(AromaticityCalculatorTest.suite());
-        suite.addTest(HueckelAromaticityDetectorTest.suite());
         suite.addTest(DictRefTest.suite());
         suite.addTest(CrystalGeometryToolsTest.suite());
         suite.addTest(GeometryToolsTest.suite());

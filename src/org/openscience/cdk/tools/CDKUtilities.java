@@ -26,13 +26,15 @@ package org.openscience.cdk.tools;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Utility class written by Todd Martin, for help in his QSAR descriptors and SMILES
@@ -213,9 +215,10 @@ public class CDKUtilities {
 		
 		try {
 			// figure out which atoms are in aromatic rings:
-			HueckelAromaticityDetector.detectAromaticity(m);
+			AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+			CDKHueckelAromaticityDetector.detectAromaticity(m);
 			// figure out which rings are aromatic:
-			HueckelAromaticityDetector.detectAromaticity(m, rs);
+			RingSetManipulator.markAromaticRings(rs);
 			// figure out which simple (non cycles) rings are aromatic:
 			// HueckelAromaticityDetector.detectAromaticity(m, srs);
 		} catch (Exception e) {

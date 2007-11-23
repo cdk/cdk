@@ -496,7 +496,6 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     public void testBenzene() throws Exception {
         Molecule molecule = MoleculeFactory.makeBenzene();
         AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
-
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));

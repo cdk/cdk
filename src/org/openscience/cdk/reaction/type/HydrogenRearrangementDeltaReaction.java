@@ -33,7 +33,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.SingleElectron;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -49,6 +49,7 @@ import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.HOSECodeGenerator;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * <p>
@@ -242,7 +243,8 @@ public class HydrogenRearrangementDeltaReaction implements IReactionProcess{
 		for(int i = 0; i < reactant.getAtomCount(); i++) {
 			IAtom  atomi = reactant.getAtom(i);
 			if(reactant.getConnectedSingleElectronsCount(atomi) == 1) {
-				HueckelAromaticityDetector.detectAromaticity(reactant);
+				AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(reactant);
+				CDKHueckelAromaticityDetector.detectAromaticity(reactant);
 				hcg.getSpheres((Molecule) reactant, atomi, 5, true);
 				
 				/* no rearrangement if H belongs to ring*/

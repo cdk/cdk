@@ -22,7 +22,7 @@ package org.openscience.cdk.qsar.descriptors.atompair;
 
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.interfaces.IAtom;
@@ -31,6 +31,7 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomPairDescriptor;
 import org.openscience.cdk.qsar.result.BooleanResult;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * This class checks if two atoms have pi-contact (this is true when there is
@@ -143,7 +144,8 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
 
         Molecule mol = new Molecule(ac);
         if (checkAromaticity) {
-            HueckelAromaticityDetector.detectAromaticity(mol);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+            CDKHueckelAromaticityDetector.detectAromaticity(mol);
         }
         boolean piContact = false;
         int counter = 0;

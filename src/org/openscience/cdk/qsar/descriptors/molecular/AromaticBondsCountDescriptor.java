@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -34,8 +36,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
-
-import java.util.Iterator;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * This Class contains a method that returns the number of aromatic atoms in an AtomContainer.
@@ -155,6 +156,7 @@ public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
 
         int aromaticBondsCount = 0;
         if (checkAromaticity) {
+        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(ac);
             CDKHueckelAromaticityDetector.detectAromaticity(ac);
         }
         Iterator bonds = ac.bonds();

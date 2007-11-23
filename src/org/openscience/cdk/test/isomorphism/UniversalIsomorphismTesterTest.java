@@ -29,6 +29,7 @@
 package org.openscience.cdk.test.isomorphism;
 
 import java.io.InputStream;
+import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.Test;
@@ -37,11 +38,13 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -266,9 +269,18 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         // now apply aromaticity detection, then 8 overlaps should be found
         // see cdk-user@list.sf.net on 2005-06-16
 		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol1);
+//		CDKHueckelAromaticityDetector.detectAromaticity(mol1);
+		Iterator<IAtom> atoms = mol1.atoms();
+		int i= 1;
+		while (atoms.hasNext()) {
+			IAtom nextAtom = atoms.next();
+			System.out.println(i + ": " + nextAtom.getSymbol() +
+				" T:" + nextAtom.getAtomTypeName() + 
+				" A:" + nextAtom.getFlag(CDKConstants.ISAROMATIC));
+			i++;
+		}
 		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol2);
-		CDKHueckelAromaticityDetector.detectAromaticity(mol1);
-		CDKHueckelAromaticityDetector.detectAromaticity(mol2);
+		assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol2));
         list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
         assertEquals(8, list.size());
         list = UniversalIsomorphismTester.getOverlaps(mol2, mol1);

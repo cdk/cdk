@@ -24,22 +24,21 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.Vector;
+
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
-
-import java.util.Vector;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Class that returns the number of atoms in the largest pi system.
@@ -157,8 +156,8 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         //logger.debug("LargestPiSystemDescriptor");
         if (checkAromaticity) {
-            IRingSet rs = (new AllRingsFinder()).findAllRings(container);
-            HueckelAromaticityDetector.detectAromaticity(container, rs, true);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(container);
+            CDKHueckelAromaticityDetector.detectAromaticity(container);
         }
         int largestPiSystemAtomsCount = 0;
         Vector startSphere = null;

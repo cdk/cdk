@@ -25,7 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -34,6 +34,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * This descriptor calculates the number of hydrogen bond acceptors using a slightly simplified version of the
@@ -146,8 +147,10 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
         }
 
         // aromaticity is detected prior to descriptor calculation if the respective parameter is set to true
-        if (checkAromaticity)
-            HueckelAromaticityDetector.detectAromaticity(ac);
+        if (checkAromaticity) {
+        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(ac);
+            CDKHueckelAromaticityDetector.detectAromaticity(ac);
+        }
 
         //org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
     // labelled for loop to allow for labelled continue statements within the loop

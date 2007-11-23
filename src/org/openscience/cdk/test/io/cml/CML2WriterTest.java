@@ -40,7 +40,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.aromaticity.HueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
@@ -79,7 +79,7 @@ public class CML2WriterTest extends CDKTestCase {
 	public void testCMLWriterBenzene() throws Exception {
 		StringWriter writer = new StringWriter();
         Molecule molecule = MoleculeFactory.makeBenzene();
-        HueckelAromaticityDetector.detectAromaticity(molecule);
+        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         CMLWriter cmlWriter = new CMLWriter(writer);
         
         cmlWriter.write(molecule);
