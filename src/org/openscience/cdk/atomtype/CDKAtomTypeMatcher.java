@@ -238,23 +238,27 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return null;
     }
 
-    private boolean bothNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer) {
-        boolean bothNeighborsSP2 = true;
-        Iterator<IAtom> atoms = atomContainer.getConnectedAtomsList(atom).iterator();
-        while (atoms.hasNext() && bothNeighborsSP2) {
+    private boolean atLeastTwoNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer) {
+    	int count = 0;
+    	Iterator<IAtom> atoms = atomContainer.getConnectedAtomsList(atom).iterator();
+        while (atoms.hasNext() && (count < 2)) {
             IAtom nextAtom = atoms.next();
             if (!nextAtom.getSymbol().equals("H")) {
             	if (nextAtom.getHybridization() != CDKConstants.UNSET &&
                     nextAtom.getHybridization() == Hybridization.SP2) {
             		// OK, it's SP2
+            		count++;
             	} else if (countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
                     // OK, it's SP2
-                } else {
-                	bothNeighborsSP2 = false;
-                }
+            		count++;
+                } // OK, not SP2
             }
         }
-        return bothNeighborsSP2;
+        return count >= 2;
+    }
+    
+    private boolean bothNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer) {       
+    	return atLeastTwoNeighborsAreSp2(atom, atomContainer);
     }
 
     private IAtomType perceiveNitrogens(IAtomContainer atomContainer, IAtom atom)
@@ -315,10 +319,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else { // OK, use bond order info
     			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
+    				boolean isRingAtom = isRingAtom(atom, atomContainer);
     				int explicitHydrogens = countExplicitHydrogens(atom, atomContainer);
     				int connectedHeavyAtoms = atomContainer.getConnectedBondsCount(atom) - explicitHydrogens; 
     				if (connectedHeavyAtoms == 2) {
-        				if (isAmide(atom, atomContainer)) {
+        				if (!isRingAtom && isAmide(atom, atomContainer)) {
         					return getAtomType("N.amide");
         				}
     					List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
@@ -327,12 +332,15 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     						return getAtomType("N.sp2");
                         } else {
                             // a N.sp3 which is expected to take part in an aromatic system
-                            if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom, atomContainer)) {
+                            if (isRingAtom && bothNeighborsAreSp2(atom, atomContainer)) {
                                 return getAtomType("N.planar3");
                             }
                             return getAtomType("N.sp3");
                         }
     				} else if (connectedHeavyAtoms == 3) {
+    					if (isRingAtom && bothNeighborsAreSp2(atom, atomContainer)) {
+                            return getAtomType("N.planar3");
+                        }
     					return getAtomType("N.sp3");
     				} else if (connectedHeavyAtoms == 1) {
         				if (isAmide(atom, atomContainer)) {
