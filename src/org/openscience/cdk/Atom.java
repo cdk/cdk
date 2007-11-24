@@ -374,7 +374,6 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
                 stringContent.append("], 3D:[").append(getPoint3d());
                 stringContent.append("], Fract3D:[").append(getFractionalPoint3d());
                 stringContent.append("], C:").append(getCharge());
-                stringContent.append(", FC:").append(getFormalCharge());
                 stringContent.append(", ").append(super.toString());
                 stringContent.append(')');
                 return stringContent.toString();
