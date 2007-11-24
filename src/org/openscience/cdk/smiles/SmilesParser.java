@@ -407,12 +407,13 @@ public class SmilesParser {
 				}
 			} catch (InvalidSmilesException exc)
 			{
-				logger.error("InvalidSmilesException while parsing char (in parseSmiles()): " + mychar);
+				logger.error("InvalidSmilesException while parsing char (in parseSmiles()) '" + 
+					mychar + "': " + exc.getMessage());
 				logger.debug(exc);
 				throw exc;
 			} catch (Exception exception)
 			{
-				logger.error("Error while parsing char: " + mychar);
+				logger.error("Error while parsing char '" + mychar + "': " + exception.getMessage());
 				logger.debug(exception);
 				throw new InvalidSmilesException("Error while parsing char: " + mychar, exception);
 			}
@@ -507,7 +508,7 @@ public class SmilesParser {
 					count = count + Integer.parseInt(multiplier.toString());
 				} catch (Exception exception)
 				{
-					logger.error("Could not parse number of implicit hydrogens!");
+					logger.error("Could not parse number of implicit hydrogens from the multiplier: " + multiplier);
 					logger.debug(exception);
 				}
 			}
@@ -663,14 +664,14 @@ public class SmilesParser {
 				}
 			} catch (InvalidSmilesException exc)
 			{
-				logger.error("InvalidSmilesException while parsing atom string: " + s);
+				logger.error("InvalidSmilesException while parsing atom string '" + s + "': " + exc.getMessage());
 				logger.debug(exc);
 				throw exc;
 			} catch (Exception exception)
 			{
 				logger.error("Could not parse atom string: ", s);
 				logger.debug(exception);
-				throw new InvalidSmilesException("Could not parse atom string: " + s, exception);
+				throw new InvalidSmilesException("Could not parse atom string '" + s + "': " + exception.getMessage(), exception);
 			}
 		} while (position < s.length());
 		if (isotopicNumber.toString().length() > 0)
@@ -680,7 +681,7 @@ public class SmilesParser {
 				atom.setMassNumber(Integer.parseInt(isotopicNumber.toString()));
 			} catch (Exception exception)
 			{
-				logger.error("Could not set atom's atom number.");
+				logger.error("Could not set atom's isotope number '" + isotopicNumber + "'");
 				logger.debug(exception);
 			}
 		}
