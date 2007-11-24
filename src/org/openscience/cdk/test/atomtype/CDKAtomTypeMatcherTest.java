@@ -21,19 +21,29 @@
  */
 package org.openscience.cdk.test.atomtype;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import junit.framework.JUnit4TestAdapter;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -1037,6 +1047,61 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 		}
 	}
     
+    @Test public void testPyridine() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makePyridine();
+		CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+		for (int f = 0; f < molecule.getAtomCount(); f++) {
+			assertAtomType(testedAtomTypes, expectedTypes[f], atm.findMatchingAtomType(molecule, molecule.getAtom(f)));
+		}
+	}
+    
+    @Test public void testPyridineOxide() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.plus.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2",
+			"O.minus"
+		};
+		Molecule molecule = MoleculeFactory.makePyridineOxide();
+		CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+		for (int f = 0; f < molecule.getAtomCount(); f++) {
+			assertAtomType(testedAtomTypes, expectedTypes[f], atm.findMatchingAtomType(molecule, molecule.getAtom(f)));
+		}
+	}
+    
+    @Test public void testPyridineOxide_SP2() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.plus.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2",
+			"O.minus"
+		};
+		Molecule molecule = MoleculeFactory.makePyridineOxide();
+		Iterator<IBond> bonds = molecule.bonds();
+		while (bonds.hasNext()) bonds.next().setOrder(CDKConstants.BONDORDER_SINGLE);
+		for (int i=0; i<6; i++) {
+			molecule.getAtom(i).setHybridization(IAtomType.Hybridization.SP2);
+		}
+		CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+		for (int f = 0; f < molecule.getAtomCount(); f++) {
+			assertAtomType(testedAtomTypes, expectedTypes[f], atm.findMatchingAtomType(molecule, molecule.getAtom(f)));
+		}
+	}
+
     @Test public void testThiazole() throws Exception {
 		String[] expectedTypes = {
 			"C.sp2",

@@ -22,13 +22,25 @@
  */
 package org.openscience.cdk.test.aromaticity;
 
+import java.io.InputStream;
+import java.util.Iterator;
+
+import javax.vecmath.Point2d;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -37,10 +49,6 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import javax.vecmath.Point2d;
-import java.io.InputStream;
-import java.util.Iterator;
 
 /**
  * @author steinbeck
@@ -129,6 +137,23 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         }
         assertEquals(1, numberOfAromaticRings);
     }
+    
+    public void testPyridineOxide() throws Exception {
+		Molecule molecule = MoleculeFactory.makePyridineOxide();
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+		assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(molecule));
+	}
+    
+    public void testPyridineOxide_SP2() throws Exception {
+		Molecule molecule = MoleculeFactory.makePyridineOxide();
+		Iterator<IBond> bonds = molecule.bonds();
+		while (bonds.hasNext()) bonds.next().setOrder(CDKConstants.BONDORDER_SINGLE);
+		for (int i=0; i<6; i++) {
+			molecule.getAtom(i).setHybridization(IAtomType.Hybridization.SP2);
+		}
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+		assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(molecule));
+	}
 
     public void testFuran() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

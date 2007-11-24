@@ -662,6 +662,61 @@ public class MoleculeFactory {
 	}
 
 	/**
+	 * Returns pyridine without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H
+	 */
+	public static Molecule makePyridine()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("N")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		
+		mol.addBond(0, 1, 2.0); // 1
+		mol.addBond(1, 2, 1.0); // 2
+		mol.addBond(2, 3, 2.0); // 3
+		mol.addBond(3, 4, 1.0); // 4
+		mol.addBond(4, 5, 2.0); // 5
+		mol.addBond(5, 0, 1.0); // 6
+		
+		return mol;
+	}
+	
+	/**
+	 * Returns pyridine oxide without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C5H5NO/c7-6-4-2-1-3-5-6/h1-5H
+	 */
+	public static Molecule makePyridineOxide()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("N")); // 1
+		mol.getAtom(1).setFormalCharge(1);
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		mol.addAtom(new Atom("O")); // 6
+		mol.getAtom(6).setFormalCharge(-1);
+		
+		mol.addBond(0, 1, 2.0); // 1
+		mol.addBond(1, 2, 1.0); // 2
+		mol.addBond(2, 3, 2.0); // 3
+		mol.addBond(3, 4, 1.0); // 4
+		mol.addBond(4, 5, 2.0); // 5
+		mol.addBond(5, 0, 1.0); // 6
+		mol.addBond(1, 6, 1.0); // 7
+		
+		return mol;
+	}
+	
+
+	/**
 	 * Returns thiazole without explicit hydrogens.
 	 * 
 	 * @cdk.inchi InChI=1/C3H3NS/c1-2-5-3-4-1/h1-3H
