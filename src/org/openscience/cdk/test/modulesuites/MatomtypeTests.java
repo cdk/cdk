@@ -23,30 +23,16 @@ package org.openscience.cdk.test.modulesuites;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.CDKConstantsTest;
-import org.openscience.cdk.test.CoreCoverageTest;
+import org.openscience.cdk.test.AtomtypeCoverageTest;
 import org.openscience.cdk.test.atomtype.CDKAtomTypeMatcherTest;
 import org.openscience.cdk.test.atomtype.HybridizationMatcherTest;
 import org.openscience.cdk.test.atomtype.HybridizationStateATMatcherTest;
 import org.openscience.cdk.test.atomtype.StructGenAtomTypeGuesserTest;
 import org.openscience.cdk.test.atomtype.StructGenMatcherTest;
 import org.openscience.cdk.test.atomtype.ValencyMatcherTest;
-import org.openscience.cdk.test.config.AtomTypeFactoryTest;
-import org.openscience.cdk.test.config.CDKBasedAtomTypeConfiguratorTest;
-import org.openscience.cdk.test.config.IsotopeFactoryTest;
-import org.openscience.cdk.test.config.TXTBasedAtomTypeConfiguratorTest;
-import org.openscience.cdk.test.config.atomtypes.AtomTypeHandlerTest;
-import org.openscience.cdk.test.config.atomtypes.AtomTypeReaderTest;
-import org.openscience.cdk.test.config.isotopes.IsotopeHandlerTest;
-import org.openscience.cdk.test.config.isotopes.IsotopeReaderTest;
-import org.openscience.cdk.test.exception.CDKExceptionTest;
-import org.openscience.cdk.test.exception.NoSuchAtomExceptionTest;
-import org.openscience.cdk.test.exception.NoSuchAtomTypeExceptionTest;
 import org.openscience.cdk.test.graph.PathToolsTest;
 import org.openscience.cdk.test.graph.SpanningTreeTest;
 import org.openscience.cdk.test.graph.matrix.AdjacencyMatrixTest;
-import org.openscience.cdk.test.tools.DataFeaturesTest;
-import org.openscience.cdk.test.tools.LoggingToolTest;
 
 /**
  * TestSuite that runs all the tests for the CDK core module.
@@ -58,9 +44,9 @@ import org.openscience.cdk.test.tools.LoggingToolTest;
 public class MatomtypeTests {
     
     public static Test suite() {
-        TestSuite suite= new TestSuite("CDK core Tests");
+        TestSuite suite= new TestSuite("CDK atomtype Tests");
 
-//        suite.addTest(AtomtypeCoverageTest.suite());
+        suite.addTest(AtomtypeCoverageTest.suite());
 
         // basic helper algorithms
         suite.addTest(AdjacencyMatrixTest.suite());
