@@ -302,7 +302,6 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IMolecule mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
         assertEquals(IAtomType.Hybridization.PLANAR3, mol.getAtom(0).getHybridization());
         for (int f = 1; f < mol.getAtomCount(); f++) {
             assertEquals(IAtomType.Hybridization.SP2, mol.getAtom(f).getHybridization());
