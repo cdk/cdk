@@ -940,11 +940,11 @@
         <target id="test-all" name="test-all" depends="noJunit, dist-all, test-dist-all"
                 description="Performs a full JUnit test for the CDK." 
                 if="junit.present">
-        	<antcall target="test-module"><param name="module" value="atomtype"/></antcall>
         	<antcall target="test-module"><param name="module" value="core"/></antcall>
         	<antcall target="test-module"><param name="module" value="data"/></antcall>
         	<antcall target="test-module"><param name="module" value="datadebug"/></antcall>
         	<antcall target="test-module"><param name="module" value="nonotify"/></antcall>
+        	<antcall target="test-module"><param name="module" value="atomtype"/></antcall>
         	<antcall target="test-module"><param name="module" value="standard"/></antcall>
         	<antcall target="test-module"><param name="module" value="io"/></antcall>
 	        <antcall target="test-module"><param name="module" value="extra"/></antcall>
