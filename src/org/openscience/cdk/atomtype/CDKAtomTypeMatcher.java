@@ -286,6 +286,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     				if (maxBondOrder == CDKConstants.BONDORDER_SINGLE ||
     					atomContainer.getConnectedBondsCount(atom) == 0) {
+    					if (atom.getHybridization() != CDKConstants.UNSET &&
+    						atom.getHybridization() == IAtomType.Hybridization.SP2) {
+    						return getAtomType("N.plus.sp2");
+    					}
     					return getAtomType("N.plus");
     				} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
     					int doubleBonds= countAttachedDoubleBonds(atomContainer, atom);
