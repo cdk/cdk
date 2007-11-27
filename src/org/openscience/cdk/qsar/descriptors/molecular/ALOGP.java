@@ -3,7 +3,7 @@
  * $Date: 2006-05-04 19:29:58 +0000 (Thu, 04 May 2006) $
  * $Revision: 6171 $
  *
- * Copyright (C) 2006-2007  Todd Martin (Environmental Protection Agency)
+ * Copyright (C) 2007  Nikolay Kochev <nick@argon.acad.bg>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -89,7 +89,6 @@ import java.lang.reflect.Method;
 public class ALOGP implements IMolecularDescriptor {
     private LoggingTool logger;
 
-   private boolean printDebugInfo = false;
     IAtomContainer atomContainer;
     IRingSet rs;
     String[] fragment; // estate fragments for each atom
@@ -98,19 +97,16 @@ public class ALOGP implements IMolecularDescriptor {
 
     int[] frags = new int[121]; // counts of each type of fragment in the molecule
     public int[] alogpfrag; // alogp fragments for each atom (used to see which atoms have missing fragments)
-    double[] fragval = new double[121];// coefficients for alogp model
-    double[] refracval = new double[121]; // coefficients for refractivity model
+    final double[] fragval = new double[121];// coefficients for alogp model
+    final double[] refracval = new double[121]; // coefficients for refractivity model
     String UnassignedAtoms="";
 
     double ALOGP = 0.0;
     double AMR = 0.0;
     double ALOGP2 = 0.0;
 
-    public void setDebugOn() {
-        printDebugInfo = true;
-    }
 
-    public ALOGP() {
+    public ALOGP() throws CDKException {
         logger = new LoggingTool(this);
 
         // fragments for ALOGP from Ghose et al., 1998
@@ -360,7 +356,8 @@ public class ALOGP implements IMolecularDescriptor {
         try {
             ap = AtomicProperties.getInstance();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.debug("Problem in accessing atomic properties. Can't calculate");
+            throw new CDKException("Problem in accessing atomic properties. Can't calculate");
         }
     }
 
@@ -373,7 +370,10 @@ public class ALOGP implements IMolecularDescriptor {
         }
     }
 
-    private void calculate(IAtomContainer atomContainer, String[] fragment, IRingSet rs) {
+
+
+
+    private double[] calculate(IAtomContainer atomContainer, String[] fragment, IRingSet rs) throws CDKException {
         this.atomContainer = atomContainer;
         this.fragment = fragment;
         this.rs = rs;
@@ -401,7 +401,7 @@ public class ALOGP implements IMolecularDescriptor {
                         Method method = methods[j];
                         if (!method.getName().equals("calculate") && method.getName().startsWith("calc")) {
 
-                            Object[] objs = { new Integer(i) };
+                            Object[] objs = {i};
                             //Object[] objs = { (int)(i) };
                             method.invoke(this, objs);
                         }
@@ -409,7 +409,7 @@ public class ALOGP implements IMolecularDescriptor {
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new CDKException(e.toString());
             }
         } // end i atom loop
 
@@ -425,6 +425,8 @@ public class ALOGP implements IMolecularDescriptor {
         ALOGP2 = ALOGP * ALOGP;
 
         this.findUnassignedAtoms();
+
+        return new double[]{ALOGP, ALOGP2, AMR};
 
     }
 
@@ -1971,14 +1973,15 @@ public class ALOGP implements IMolecularDescriptor {
 
 
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
-        rs = null;
+        IRingSet rs;
         try {
             AllRingsFinder arf = new AllRingsFinder();
             rs = arf.findAllRings(container);
         } catch (Exception e) {
             throw new CDKException("Could not find all rings: " + e.getMessage(), e);
         }
-        fragment = new String[container.getAtomCount()];
+
+        String[] fragment = new String[container.getAtomCount()];
         EStateAtomTypeMatcher eStateMatcher = new EStateAtomTypeMatcher();
         eStateMatcher.setRingSet(rs);
 
@@ -1990,18 +1993,13 @@ public class ALOGP implements IMolecularDescriptor {
                 fragment[i] = atomType.getAtomTypeName();
             }
         }
-        calculate(container, fragment, rs);
-        if (printDebugInfo)
-        {
-            for (int i=0; i<container.getAtomCount(); i++)
-                logger.debug("atom[" + i + "] = "+ fragment[i] + "   "+alogpfrag[i] +
-                        "     Ar="	+ atomContainer.getAtom(i).getFlag(CDKConstants.ISAROMATIC));
-        }
+
+        double[] ret = calculate(container, fragment, rs);
 
         DoubleArrayResult results = new DoubleArrayResult();
-        results.add(ALOGP);
-        results.add(ALOGP2);
-        results.add(AMR);
+        results.add(ret[0]);
+        results.add(ret[1]);
+        results.add(ret[2]);
 
         return new DescriptorValue(getSpecification(), getParameterNames(),
             getParameters(), results, new String[] {"ALogP", "ALogP2", "AMR"} );
