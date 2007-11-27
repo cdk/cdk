@@ -895,6 +895,23 @@ public class SMARTSSearchTest extends CDKTestCase {
         assertEquals(5, results[1]);
     }
 
+    public void testLogicalOr9() throws Exception {
+        int[] results = match("[N]=[N]-,=[N]", "CCCC(=O)C=C");
+        assertEquals(0, results[0]);
+    }
+
+    public void testLogicalOr10() throws Exception {
+        int[] results = match("[N;$([N!X4])]!@;-[N;$([N!X4])]", "CCCC(=O)C=C");
+        assertEquals(0, results[0]);
+        assertEquals(0, results[1]);
+    }
+
+     public void testLogicalOr11() throws Exception {
+        int[] results = match("[#6]!:;=[#6][#6](=O)[!O]", "CCCC(=O)C=C");
+        assertEquals(0, results[0]);
+        assertEquals(0, results[1]);
+    }
+
     public void testLogicalOrHighAnd1() throws Exception {
         int[] results = match("[N,#6&+1,+0]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1");
         assertEquals(24, results[0]);
@@ -986,6 +1003,8 @@ public class SMARTSSearchTest extends CDKTestCase {
         assertEquals(0, results[0]);
         assertEquals(0, results[1]);
     }
+
+
 
     public void testRing1() throws Exception {
         int[] results = match("C1CCCCC1", "C1CCCCC1CCCC");
