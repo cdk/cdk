@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -78,7 +79,7 @@ public class MDLReaderTest extends CDKTestCase {
                 "cyclopropane.mol\n" +
                 "\n" +
                 "\n" +
-                "  9  9  0  0  0                 1 V2000\n" +
+                "  9  9  0  0\n" +
                 "   -0.0073   -0.5272    0.9655 C   0  0  0  0  0\n" +
                 "   -0.6776   -0.7930   -0.3498 C   0  0  0  0  0\n" +
                 "    0.2103    0.4053   -0.1891 C   0  0  0  0  0\n" +
