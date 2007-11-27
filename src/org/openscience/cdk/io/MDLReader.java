@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Reads a molecule from the original MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
  * is read into a ChemSequence of ChemModel's. Each ChemModel will contain one
  * Molecule. If the MDL molfile contains a property block, the MDLV2000Reader should be
- * use.
+ * used.
  *
  * <p>If all z coordinates are 0.0, then the xy coordinates are taken as
  * 2D, otherwise the coordinates are read as 3D.
@@ -98,6 +98,22 @@ public class MDLReader extends DefaultChemObjectReader {
 		this(new InputStreamReader(in));
 	}
 
+	/**
+	 * Contructs a new MDLReader that can read Molecule from a given Reader.
+	 *
+	 * @param  in  The Reader to read from
+	 */
+	public MDLReader(Reader in) {
+		this(in, Mode.RELAXED);
+	}
+
+	public MDLReader(Reader in, Mode mode) {
+		super.mode = mode; 
+        logger = new LoggingTool(this);
+        input = new BufferedReader(in);
+        initIOSettings();
+	}
+
     public IResourceFormat getFormat() {
         return MDLFormat.getInstance();
     }
@@ -113,18 +129,6 @@ public class MDLReader extends DefaultChemObjectReader {
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
-
-	/**
-	 *  Contructs a new MDLReader that can read Molecule from a given Reader.
-	 *
-	 *@param  in  The Reader to read from
-	 */
-	public MDLReader(Reader in) {
-        logger = new LoggingTool(this);
-        input = new BufferedReader(in);
-        initIOSettings();
-	}
-
 
 	public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
@@ -332,6 +336,14 @@ public class MDLReader extends DefaultChemObjectReader {
             logger.info("Reading rest of file");
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
+            if (mode == Mode.STRICT) {
+            	if (line.contains("V2000") || line.contains("v2000")) {
+            		throw new CDKException("This file must be read with the MDLV2000Reader.");
+            	}
+            	if (line.contains("V3000") || line.contains("v3000")) {
+            		throw new CDKException("This file must be read with the MDLV3000Reader.");
+            	}
+            }
             atoms = Integer.valueOf(line.substring(0,3).trim()).intValue();
             logger.debug("Atomcount: " + atoms);
             bonds = Integer.valueOf(line.substring(3,6).trim()).intValue();
