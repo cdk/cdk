@@ -913,6 +913,12 @@ public class SMARTSSearchTest extends CDKTestCase {
         assertEquals(1, results[1]);
     }
 
+    public void testLogicalOr12() throws Exception {
+        int[] results = match("C=,#C","C=CCC#C");
+        assertEquals(4, results[0]);
+        assertEquals(2, results[1]);
+    }
+
     public void testLogicalOrHighAnd1() throws Exception {
         int[] results = match("[N,#6&+1,+0]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1");
         assertEquals(24, results[0]);
