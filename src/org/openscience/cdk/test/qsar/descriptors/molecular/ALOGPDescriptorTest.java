@@ -52,6 +52,8 @@ public class ALOGPDescriptorTest extends CDKTestCase {
         mol.addBond(new Bond(c3, c4));
         mol.addBond(new Bond(c4, cl));
 
+        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+
         // add explicit hydrogens here
         hydrogenAdder.addImplicitHydrogens(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
