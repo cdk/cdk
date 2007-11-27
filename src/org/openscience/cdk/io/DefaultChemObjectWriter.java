@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$$Date$
  *
  * Copyright (C) 2002-2007  The Jmol Development Team
  *
@@ -23,7 +20,8 @@
  */
 package org.openscience.cdk.io;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -33,26 +31,26 @@ import org.openscience.cdk.io.setting.IOSetting;
  * take care of basic stuff, like managing the ReaderListeners.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.svnrev $Revision$
  */
 public abstract class DefaultChemObjectWriter implements IChemObjectWriter {
 
     /**
      * Holder of reader event listeners.
      */
-    private Vector listenerList = new Vector();
+    private List<IChemObjectIOListener> listenerList = new ArrayList<IChemObjectIOListener>();
 
     public void addChemObjectIOListener(IChemObjectIOListener listener) {
-        listenerList.addElement(listener);
+        listenerList.add(listener);
     }
 
     public void removeChemObjectIOListener(IChemObjectIOListener listener) {
-        listenerList.removeElement(listener);
+        listenerList.remove(listener);
     }
     
     protected void fireIOSettingQuestion(IOSetting setting) {
         for (int i = 0; i < listenerList.size(); ++i) {
-            IChemObjectIOListener listener = (IChemObjectIOListener) listenerList.elementAt(i);
+            IChemObjectIOListener listener = listenerList.get(i);
             listener.processIOSettingQuestion(setting);
         }
     }
