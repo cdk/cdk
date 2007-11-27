@@ -227,6 +227,17 @@ public class ChemObjectTest extends NewCDKTestCase {
         Assert.assertEquals(0, chemObject2.getListenerCount());
     }
     
+    /** @cdk.bug 1838820 */
+    @Test(timeout=100)
+    public void testDontCloneIChemObjectProperties() throws Exception {
+    	IChemObject chemObject1 = builder.newChemObject();
+    	chemObject1.setProperty("RecursiveBastard", chemObject1);
+    	
+    	Object clone = chemObject1.clone();
+    	Assert.assertNotNull(clone);
+    	Assert.assertTrue(clone instanceof IChemObject);
+    }
+    
     @Test public void testAddListener_IChemObjectListener() {
         IChemObject chemObject1 = builder.newChemObject();
         Assert.assertEquals(0, chemObject1.getListenerCount());
