@@ -40,6 +40,8 @@ public abstract class DefaultChemObjectReader implements IChemObjectReader {
      * An event to be sent to listeners when a frame is read.
      */
     private ReaderEvent frameReadEvent = null;
+    
+    protected IChemObjectReader.Mode mode = IChemObjectReader.Mode.RELAXED;
 
     /**
      * Holder of reader event listeners.
@@ -81,6 +83,10 @@ public abstract class DefaultChemObjectReader implements IChemObjectReader {
 
     public IOSetting[] getIOSettings() {
         return new IOSetting[0];
+    }
+    
+    public void setReaderMode(IChemObjectReader.Mode mode) {
+    	
     }
     
 }

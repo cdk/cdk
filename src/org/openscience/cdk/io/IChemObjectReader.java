@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$  
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2000-2007  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,7 +21,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.io;
 
@@ -47,14 +43,21 @@ import org.openscience.cdk.exception.CDKException;
  * can be used to instantiate a ChemObjectReader.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision$
+ * @cdk.svnrev $Revision$
  *
  * @see DefaultChemObjectReader
  *
- * @author Egon Willighagen <egonw@sci.kun.nl>
+ * @author Egon Willighagen <egonw@users.sf.net>
  **/
 public interface IChemObjectReader extends IChemObjectIO {
 
+	public enum Mode {
+		/** Only fail on serious format problems */
+		RELAXED,
+		/** Fail on any format problem */
+		STRICT
+	}
+	
     /**
      * Reads an IChemObject of type "object" from input. The constructor
      * of the actual implementation may take a Reader as input to get
@@ -81,5 +84,14 @@ public interface IChemObjectReader extends IChemObjectIO {
      * the contents.
      */
     public void setReader(InputStream reader) throws CDKException;
+    
+    /**
+     * Sets the reader mode. If Mode.STRICT, then the reader will fail on
+     * any problem in the format of the read file, instead of trying to
+     * recover from that.
+     * 
+     * @param mode
+     */
+    public void setReaderMode(Mode mode);
 }
 
