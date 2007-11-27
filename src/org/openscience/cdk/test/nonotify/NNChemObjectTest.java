@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author: egonw $    
- * $Date: 2006-04-12 11:16:35 +0200 (Wed, 12 Apr 2006) $    
- * $Revision: 5921 $
+/* $Revision: 5921 $ $Author: egonw $ $Date: 2006-04-12 11:16:35 +0200 (Wed, 12 Apr 2006) $    
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -24,9 +21,11 @@
  */
 package org.openscience.cdk.test.nonotify;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import junit.framework.JUnit4TestAdapter;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -40,100 +39,96 @@ import org.openscience.cdk.test.ChemObjectTest;
  */
 public class NNChemObjectTest extends ChemObjectTest {
 
-    public NNChemObjectTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @Before public void setUp() {
     	super.builder = NoNotificationChemObjectBuilder.getInstance();
     }
 
-    public static Test suite() {
-        return new TestSuite(NNChemObjectTest.class);
+	public static junit.framework.Test suite() {
+        return new JUnit4TestAdapter(NNChemObjectTest.class);
     }
 
     // Overwrite default methods: no notifications are expected!
     
-    public void testNotifyChanged() {
+    @Test public void testNotifyChanged() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = builder.newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");
-        assertFalse(listener.changed);
+        Assert.assertFalse(listener.changed);
     }
 
-    public void testNotifyChanged_IChemObjectChangeEvent() {
+    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = builder.newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");
-        assertNull(listener.event);
+        Assert.assertNull(listener.event);
     }
 
-    public void testStateChanged_IChemObjectChangeEvent() {
+    @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = builder.newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");
-        assertFalse(listener.changed);
+        Assert.assertFalse(listener.changed);
         
         listener.reset();
-        assertFalse(listener.changed);
+        Assert.assertFalse(listener.changed);
         chemObject.setProperty("Changed", "Again");
-        assertFalse(listener.changed);
+        Assert.assertFalse(listener.changed);
 
         listener.reset();
-        assertFalse(listener.changed);
+        Assert.assertFalse(listener.changed);
         chemObject.setFlag(3, true);
-        assertFalse(listener.changed);
+        Assert.assertFalse(listener.changed);
     }
 
-    public void testClone_ChemObjectListeners() throws Exception {
+    @Test public void testClone_ChemObjectListeners() throws Exception {
         IChemObject chemObject1 = builder.newChemObject();
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         chemObject1.addListener(listener);
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();
 
         // test lack of cloning of listeners
-        assertEquals(0, chemObject1.getListenerCount());
-        assertEquals(0, chemObject2.getListenerCount());
+        Assert.assertEquals(0, chemObject1.getListenerCount());
+        Assert.assertEquals(0, chemObject2.getListenerCount());
     }
     
-    public void testAddListener_IChemObjectListener() {
+    @Test public void testAddListener_IChemObjectListener() {
         IChemObject chemObject1 = builder.newChemObject();
-        assertEquals(0, chemObject1.getListenerCount());
+        Assert.assertEquals(0, chemObject1.getListenerCount());
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         chemObject1.addListener(listener);
-        assertEquals(0, chemObject1.getListenerCount());
+        Assert.assertEquals(0, chemObject1.getListenerCount());
     }
     
-    public void testGetListenerCount() {
+    @Test public void testGetListenerCount() {
         IChemObject chemObject1 = builder.newChemObject();
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         chemObject1.addListener(listener);
-        assertEquals(0, chemObject1.getListenerCount());
+        Assert.assertEquals(0, chemObject1.getListenerCount());
     }
 
-    public void testRemoveListener_IChemObjectListener() {
+    @Test public void testRemoveListener_IChemObjectListener() {
         IChemObject chemObject1 = builder.newChemObject();
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         chemObject1.addListener(listener);
-        assertEquals(0, chemObject1.getListenerCount());
+        Assert.assertEquals(0, chemObject1.getListenerCount());
         chemObject1.removeListener(listener);
-        assertEquals(0, chemObject1.getListenerCount());
+        Assert.assertEquals(0, chemObject1.getListenerCount());
     }
     
-    public void testSetNotification_true() {
+    @Test public void testSetNotification_true() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = builder.newChemObject();
         chemObject.addListener(listener);
         chemObject.setNotification(true);
         
         chemObject.setID("Changed");
-        assertFalse(listener.changed);
+        Assert.assertFalse(listener.changed);
     }
     
     private class ChemObjectListenerImpl implements IChemObjectListener {

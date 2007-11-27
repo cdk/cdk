@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2001-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -24,14 +21,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
 package org.openscience.cdk.test;
 
 import java.util.Hashtable;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import junit.framework.JUnit4TestAdapter;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -42,155 +41,149 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 /**
  * TestCase for the IChemObject class.
  *
- * @cdk.module test-data
- *
- * @author Edgar Luttmann <edgar@uni-paderborn.de>
+ * @author      Edgar Luttmann <edgar@uni-paderborn.de>
+ * @cdk.module  test-data
  * @cdk.created 2001-08-09
  */
-public class ChemObjectTest extends CDKTestCase {
+public class ChemObjectTest extends NewCDKTestCase {
 
 	protected IChemObjectBuilder builder;
 	
-	public ChemObjectTest(String name) {
-		super(name);
-	}
-
-	public static Test suite() {
-        TestSuite suite = new TestSuite(ChemObjectTest.class);
-        return suite;
-	}
-
-    public void setUp() {
+	public static junit.framework.Test suite() {
+        return new JUnit4TestAdapter(ChemObjectTest.class);
+    }
+	
+	@Before public void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
 
-    public void testChemObject() {
+    @Test public void testChemObject() {
         IChemObject chemObject = builder.newChemObject();
-        assertNotNull(chemObject);
+        Assert.assertNotNull(chemObject);
     }
 
-    public void testChemObject_IChemObject() {
+    @Test public void testChemObject_IChemObject() {
     	IChemObject chemObject1 = builder.newChemObject();
         IChemObject chemObject = builder.newChemObject(chemObject1);
-        assertNotNull(chemObject);
+        Assert.assertNotNull(chemObject);
     }
 
-    public void testGetBuilder() {
+    @Test public void testGetBuilder() {
     	IChemObject chemObject = builder.newChemObject();
     	Object object = chemObject.getBuilder();
-    	assertNotNull(object);
-    	assertTrue(object instanceof IChemObjectBuilder);
+    	Assert.assertNotNull(object);
+    	Assert.assertTrue(object instanceof IChemObjectBuilder);
     }
     	
-    public void testSetProperty_Object_Object() {
+    @Test public void testSetProperty_Object_Object() {
         IChemObject chemObject = builder.newChemObject();
         String cDescription = new String("description");
         String cProperty = new String("property");
         chemObject.setProperty(cDescription, cProperty);
-        assertEquals(cProperty, chemObject.getProperty(cDescription));
+        Assert.assertEquals(cProperty, chemObject.getProperty(cDescription));
     }
 
-    public void testSetProperties_Hashtable() {
+    @Test public void testSetProperties_Hashtable() {
         IChemObject chemObject = builder.newChemObject();
         Hashtable props = new Hashtable();
         String cDescription = new String("description");
         String cProperty = new String("property");
         props.put(cDescription, cProperty);
         chemObject.setProperties(props);
-        assertEquals(cProperty, chemObject.getProperty(cDescription));
+        Assert.assertEquals(cProperty, chemObject.getProperty(cDescription));
     }
 
-    public void testGetProperties() {
+    @Test public void testGetProperties() {
         IChemObject chemObject = builder.newChemObject();
-        assertNotNull(chemObject.getProperties());
-        assertEquals(0, chemObject.getProperties().size());
+        Assert.assertNotNull(chemObject.getProperties());
+        Assert.assertEquals(0, chemObject.getProperties().size());
     }
-    public void testLazyProperies() {
+    @Test public void testLazyProperies() {
         testGetProperties();
     }
 
-    public void testGetProperty_Object() {
+    @Test public void testGetProperty_Object() {
         IChemObject chemObject = builder.newChemObject();
-        assertNull(chemObject.getProperty("dummy"));
+        Assert.assertNull(chemObject.getProperty("dummy"));
     }
 
-    public void testRemoveProperty_Object() {
+    @Test public void testRemoveProperty_Object() {
         IChemObject chemObject = builder.newChemObject();
         String cDescription = new String("description");
         String cProperty = new String("property");
         chemObject.setProperty(cDescription, cProperty);
-        assertNotNull(chemObject.getProperty(cDescription));
+        Assert.assertNotNull(chemObject.getProperty(cDescription));
         chemObject.removeProperty(cDescription);
-        assertNull(chemObject.getProperty(cDescription));
+        Assert.assertNull(chemObject.getProperty(cDescription));
     }
 
-    public void testSetID_String() {
+    @Test public void testSetID_String() {
         IChemObject chemObject = builder.newChemObject();
         String id = "objectX";
         chemObject.setID(id);
-        assertEquals(id, chemObject.getID());
+        Assert.assertEquals(id, chemObject.getID());
     }
     
-    public void testGetID() {
+    @Test public void testGetID() {
         IChemObject chemObject = builder.newChemObject();
-        assertNull(chemObject.getID());
+        Assert.assertNull(chemObject.getID());
     }
     
-    public void testSetFlags_arrayboolean(){
+    @Test public void testSetFlags_arrayboolean(){
       IChemObject chemObject=builder.newChemObject();
       chemObject.setFlag(1,true);
       IChemObject chemObject2=builder.newChemObject();
       chemObject2.setFlags(chemObject.getFlags());
-      assertTrue(chemObject2.getFlag(1));
+      Assert.assertTrue(chemObject2.getFlag(1));
     }
     
-    public void testGetFlags(){
+    @Test public void testGetFlags(){
       IChemObject chemObject=builder.newChemObject();
       chemObject.setFlag(1,true);
       IChemObject chemObject2=builder.newChemObject();
       chemObject2.setFlags(chemObject.getFlags());
-      assertTrue(chemObject2.getFlag(1));
+      Assert.assertTrue(chemObject2.getFlag(1));
     }
 
-    public void testSetFlag_int_boolean() {
+    @Test public void testSetFlag_int_boolean() {
         IChemObject chemObject = builder.newChemObject();
         chemObject.setFlag(0, true);
-        assertTrue(chemObject.getFlag(0));
+        Assert.assertTrue(chemObject.getFlag(0));
     }
-    public void testGetFlag_int() {
+    @Test public void testGetFlag_int() {
         testSetFlag_int_boolean();
     }
     
-    public void testClone() throws Exception {
+    @Test public void testClone() throws Exception {
         IChemObject chemObject = builder.newChemObject();
         chemObject.setFlag(3, true);
         
         // test cloning of itself
         Object clone = chemObject.clone();
-        assertTrue(clone instanceof IChemObject);
+        Assert.assertTrue(clone instanceof IChemObject);
     }
     
-    public void testClone_Flags() throws Exception {
+    @Test public void testClone_Flags() throws Exception {
         IChemObject chemObject1 = builder.newChemObject();
         chemObject1.setFlag(3, true);
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();
 
         // test cloning of flags field
         chemObject2.setFlag(3, false);
-        assertTrue(chemObject1.getFlag(3));
+        Assert.assertTrue(chemObject1.getFlag(3));
     }
 
-    public void testClone_Identifier() throws Exception {
+    @Test public void testClone_Identifier() throws Exception {
         IChemObject chemObject1 = builder.newChemObject();
         chemObject1.setID("co1");
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();
 
         // test cloning of identifier field
         chemObject2.setID("co2");
-        assertEquals("co1", chemObject1.getID());
+        Assert.assertEquals("co1", chemObject1.getID());
     }
     
-    public void testClone_Properties() throws Exception {
+    @Test public void testClone_Properties() throws Exception {
         IChemObject chemObject1 = builder.newChemObject();
         Hashtable props1 = new Hashtable();
         chemObject1.setProperties(props1);
@@ -200,12 +193,12 @@ public class ChemObjectTest extends CDKTestCase {
         Hashtable props2 = new Hashtable();
         props2.put("key", "value");
         chemObject2.setProperties(props2);
-        assertEquals(props1, chemObject1.getProperties());
-        assertEquals(1, chemObject2.getProperties().size());
-        assertEquals(0, chemObject1.getProperties().size());
+        Assert.assertEquals(props1, chemObject1.getProperties());
+        Assert.assertEquals(1, chemObject2.getProperties().size());
+        Assert.assertEquals(0, chemObject1.getProperties().size());
     }
     
-    public void testClone_Properties2() throws Exception {
+    @Test public void testClone_Properties2() throws Exception {
         IChemObject chemObject1 = builder.newChemObject();
         Hashtable props1 = new Hashtable();
         IAtom atom = builder.newAtom("C");
@@ -216,129 +209,129 @@ public class ChemObjectTest extends CDKTestCase {
         // test cloning of properties field
         Hashtable props2 = new Hashtable();
         chemObject2.setProperties(props2);
-        assertEquals(props1, chemObject1.getProperties());
-        assertEquals(1, chemObject2.getProperties().size());
-        assertEquals(1, chemObject1.getProperties().size());
+        Assert.assertEquals(props1, chemObject1.getProperties());
+        Assert.assertEquals(1, chemObject2.getProperties().size());
+        Assert.assertEquals(1, chemObject1.getProperties().size());
         // ok, copied hashtable item, but this item should be cloned
-        assertNotSame(atom, chemObject2.getProperties().get("atom"));
+        Assert.assertNotSame(atom, chemObject2.getProperties().get("atom"));
     }
     
-    public void testClone_ChemObjectListeners() throws Exception {
+    @Test public void testClone_ChemObjectListeners() throws Exception {
         IChemObject chemObject1 = builder.newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();
 
         // test lack of cloning of listeners
-        assertEquals(1, chemObject1.getListenerCount());
-        assertEquals(0, chemObject2.getListenerCount());
+        Assert.assertEquals(1, chemObject1.getListenerCount());
+        Assert.assertEquals(0, chemObject2.getListenerCount());
     }
     
-    public void testAddListener_IChemObjectListener() {
+    @Test public void testAddListener_IChemObjectListener() {
         IChemObject chemObject1 = builder.newChemObject();
-        assertEquals(0, chemObject1.getListenerCount());
+        Assert.assertEquals(0, chemObject1.getListenerCount());
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
-        assertEquals(1, chemObject1.getListenerCount());
+        Assert.assertEquals(1, chemObject1.getListenerCount());
     }
     
-    public void testRemoveListener_IChemObjectListener() {
+    @Test public void testRemoveListener_IChemObjectListener() {
         IChemObject chemObject1 = builder.newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
-        assertEquals(1, chemObject1.getListenerCount());
+        Assert.assertEquals(1, chemObject1.getListenerCount());
         chemObject1.removeListener(listener);
-        assertEquals(0, chemObject1.getListenerCount());
+        Assert.assertEquals(0, chemObject1.getListenerCount());
     }
     
-    public void testGetListenerCount() {
+    @Test public void testGetListenerCount() {
         IChemObject chemObject1 = builder.newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
-        assertEquals(1, chemObject1.getListenerCount());
+        Assert.assertEquals(1, chemObject1.getListenerCount());
     }
 
     class DummyChemObjectListener implements IChemObjectListener {
-        public void stateChanged(IChemObjectChangeEvent event) {};
+        @Test public void stateChanged(IChemObjectChangeEvent event) {};
     }
     
-   public void testShallowCopy() throws Exception {
+   @Test public void testShallowCopy() throws Exception {
         IChemObject chemObject = builder.newChemObject();
         Object clone = chemObject.clone();
-        assertNotNull(clone);
-        assertTrue(clone instanceof IChemObject);
+        Assert.assertNotNull(clone);
+        Assert.assertTrue(clone instanceof IChemObject);
     }
 
-    public void testStateChanged_IChemObjectChangeEvent() {
+    @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = builder.newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");
-        assertTrue(listener.changed);
+        Assert.assertTrue(listener.changed);
         
         listener.reset();
-        assertFalse(listener.changed);
+        Assert.assertFalse(listener.changed);
         chemObject.setProperty("Changed", "Again");
-        assertTrue(listener.changed);
+        Assert.assertTrue(listener.changed);
 
         listener.reset();
-        assertFalse(listener.changed);
+        Assert.assertFalse(listener.changed);
         chemObject.setFlag(3, true);
-        assertTrue(listener.changed);
+        Assert.assertTrue(listener.changed);
     }
     
-    public void testNotifyChanged() {
+    @Test public void testNotifyChanged() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = builder.newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");
-        assertTrue(listener.changed);
+        Assert.assertTrue(listener.changed);
     }
 
-    public void testSetNotification_boolean() {
+    @Test public void testSetNotification_boolean() {
         IChemObject chemObject = builder.newChemObject();
         chemObject.setNotification(false);
-        assertFalse(chemObject.getNotification());
+        Assert.assertFalse(chemObject.getNotification());
     }
-    public void testGetNotification() {
+    @Test public void testGetNotification() {
     	testSetNotification_boolean();
     }
     
-    public void testSetNotification_false() {
+    @Test public void testSetNotification_false() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = builder.newChemObject();
         chemObject.addListener(listener);
         chemObject.setNotification(false);
         
         chemObject.setID("Changed");
-        assertFalse(listener.changed);
+        Assert.assertFalse(listener.changed);
     }
     
-    public void testSetNotification_true() {
+    @Test public void testSetNotification_true() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = builder.newChemObject();
         chemObject.addListener(listener);
         chemObject.setNotification(true);
         
         chemObject.setID("Changed");
-        assertTrue(listener.changed);
+        Assert.assertTrue(listener.changed);
     }
     
-    public void testNotifyChanged_IChemObjectChangeEvent() {
+    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = builder.newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");
-        assertNotNull(listener.event);
+        Assert.assertNotNull(listener.event);
     }
 
-    public void testCompare_Object() {
+    @Test public void testCompare_Object() {
         // Added to keep the Coverage checker happy, but since the
         // compare(Object) method is not part of the interface, nothing is tested
-        assertTrue(true);
+        Assert.assertTrue(true);
     }
 
     private class ChemObjectListenerImpl implements IChemObjectListener {
@@ -350,12 +343,12 @@ public class ChemObjectTest extends CDKTestCase {
             event = null;
         }
         
-        public void stateChanged(IChemObjectChangeEvent e) {
+        @Test public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
             event = e;
         }
         
-        public void reset() {
+        @Test public void reset() {
             changed = false;
             event = null;
         }
