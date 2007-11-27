@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -51,7 +52,7 @@ public class SpanningTreeTest extends CDKTestCase {
     	// load azulene
 		String filename = "data/mdl/azulene.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
+		MDLReader reader = new MDLReader(ins, Mode.STRICT);
 		IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
 		IChemSequence seq = chemFile.getChemSequence(0);
 		IChemModel model = seq.getChemModel(0);

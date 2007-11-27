@@ -37,6 +37,7 @@ import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.controller.PopupController2D;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
@@ -249,7 +250,7 @@ public class ControllerTest
 	IMolecule loadMolecule(String inFile) throws Exception
 	{
 		FileInputStream fis = new FileInputStream(inFile);
-		mr = new MDLReader(fis);
+		mr = new MDLReader(fis, Mode.STRICT);
 		chemFile = (ChemFile)mr.read((ChemObject)new ChemFile());
 		fis.close();
 		chemSequence = chemFile.getChemSequence(0);

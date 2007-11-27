@@ -29,6 +29,7 @@
 package org.openscience.cdk.test.tools;
 
 import java.io.InputStream;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -36,6 +37,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.BremserOneSphereHOSECodePredictor;
 import org.openscience.cdk.tools.HOSECodeGenerator;
@@ -209,7 +211,7 @@ double[] result = {
 		Molecule molecule = null;
 		String filename = "data/mdl/BremserPredictionTest.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
+		MDLReader reader = new MDLReader(ins, Mode.STRICT);
 		molecule = (Molecule)reader.read((ChemObject)new Molecule());
 		double prediction;
 		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();

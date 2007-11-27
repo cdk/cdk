@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.test.renderer;
 
-import java.io.File;
 import java.io.FileInputStream;
 
 import org.openscience.cdk.ChemFile;
@@ -34,6 +33,7 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.XYZReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 
 /**
  * @cdk.module test-extra
@@ -51,7 +51,7 @@ public class TableTest {
   	      reader = new CMLReader(new FileInputStream(inFile));
           System.out.println("Expecting CML format...");
         } else {
-          reader = new MDLReader(new FileInputStream(inFile));
+          reader = new MDLReader(new FileInputStream(inFile), Mode.STRICT);
           System.out.println("Expecting MDL MolFile format...");
         }
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());

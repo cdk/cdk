@@ -48,6 +48,7 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.Mol2Reader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -371,7 +372,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 
 //		set up molecule reader
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		IChemObjectReader molReader = new MDLReader(ins);
+		IChemObjectReader molReader = new MDLReader(ins, Mode.STRICT);
 
 //		read molecule
 		IMolecule molecule = (IMolecule) molReader.read(new
@@ -806,7 +807,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 
 //		set up molecule reader
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		IChemObjectReader molReader = new MDLReader(ins);
+		IChemObjectReader molReader = new MDLReader(ins, Mode.STRICT);
 
 //		read molecule
 		return ((IMolecule) molReader.read(new	Molecule()));
@@ -836,7 +837,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		// set up molecule reader
 		String filename = "data/mdl/bug1772609.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		IChemObjectReader molReader = new MDLReader(ins);
+		IChemObjectReader molReader = new MDLReader(ins, Mode.STRICT);
 		
 		// read molecule
 		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
@@ -868,7 +869,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		// set up molecule reader
 		String filename = "data/mdl/bug1784850.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		IChemObjectReader molReader = new MDLReader(ins);
+		IChemObjectReader molReader = new MDLReader(ins, Mode.STRICT);
 		
 		// read molecule
 		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newMolecule());

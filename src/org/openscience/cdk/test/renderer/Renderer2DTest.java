@@ -40,6 +40,7 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.renderer.Renderer2D;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
@@ -79,7 +80,7 @@ public class Renderer2DTest extends JPanel
 			    cr = new CMLReader(ins);
 			    chemFile = (ChemFile)cr.read((ChemObject)new ChemFile());
 			} else {
-			    mr = new MDLReader(ins);
+			    mr = new MDLReader(ins, Mode.STRICT);
 			    chemFile = (ChemFile)mr.read((ChemObject)new ChemFile());
 			}
 			ins.close();

@@ -69,6 +69,7 @@ public class MDLReaderTest extends CDKTestCase {
 
     public void testAccepts() {
     	MDLReader reader = new MDLReader();
+    	reader.setReaderMode(Mode.STRICT);
     	assertTrue(reader.accepts(ChemFile.class));
     	assertTrue(reader.accepts(ChemModel.class));
     	assertTrue(reader.accepts(Molecule.class));
@@ -98,7 +99,7 @@ public class MDLReaderTest extends CDKTestCase {
                 "  2  7  1  6  0  0\n" +
                 "  3  8  1  6  0  0\n" +
                 "  3  9  1  0  0  0\n";
-        MDLReader reader = new MDLReader(new StringReader(mdl));
+        MDLReader reader = new MDLReader(new StringReader(mdl), Mode.STRICT);
         ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
         assertNotNull(chemFile);
         assertEquals(1, chemFile.getChemSequenceCount());
@@ -124,7 +125,7 @@ public class MDLReaderTest extends CDKTestCase {
         String filename = "data/mdl/Strychnine_nichtOK.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins);
+        MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
         assertNotNull(chemFile);
         List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
@@ -140,7 +141,7 @@ public class MDLReaderTest extends CDKTestCase {
             "\n" +
             "  1  0  0  0  0                 1 V2000\n" +
             "   -0.0073   -0.5272    0.9655 H   0  3  0  0  0\n";
-    	MDLReader reader = new MDLReader(new StringReader(mdl));
+    	MDLReader reader = new MDLReader(new StringReader(mdl), Mode.STRICT);
     	Molecule mol = (Molecule)reader.read(new Molecule());
     	assertNotNull(mol);
     	assertEquals(1, mol.getAtomCount());
@@ -156,7 +157,7 @@ public class MDLReaderTest extends CDKTestCase {
         String filename = "data/mdl/prev2000.sd";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins);
+        MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
         assertNotNull(chemFile);
         List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
@@ -169,7 +170,7 @@ public class MDLReaderTest extends CDKTestCase {
     
     public void testEmptyString() throws Exception {
     	String emptyString = "";
-    	MDLReader reader = new MDLReader(new StringReader(emptyString));
+    	MDLReader reader = new MDLReader(new StringReader(emptyString), Mode.STRICT);
     	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
     	assertNull(mol);
     }
@@ -181,7 +182,7 @@ public class MDLReaderTest extends CDKTestCase {
         String filename = "data/mdl/hisotopes.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins);
+        MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
         assertNotNull(chemFile);
         List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);

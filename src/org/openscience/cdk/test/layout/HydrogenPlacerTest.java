@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.test.layout;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import javax.vecmath.Point2d;
@@ -37,9 +36,9 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
@@ -128,7 +127,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
 		HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
                 String filename = "data/mdl/reserpine.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins);
+		MDLReader reader = new MDLReader(ins, Mode.STRICT);
 		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
 		org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);

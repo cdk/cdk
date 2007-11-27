@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.HOSECodeGenerator;
@@ -83,7 +84,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase
 	public void test968852() throws Exception {
         String filename = "data/mdl/2,5-dimethyl-furan.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins);
+        MDLReader reader = new MDLReader(ins, Mode.STRICT);
         Molecule mol1 = (Molecule) reader.read(new Molecule());
 		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol1);
         CDKHueckelAromaticityDetector.detectAromaticity(mol1);
@@ -99,12 +100,12 @@ public class HOSECodeGeneratorTest extends CDKTestCase
 	public void testSecondSphere() throws Exception {
         String filename = "data/mdl/isopropylacetate.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins);
+        MDLReader reader = new MDLReader(ins, Mode.STRICT);
 				Molecule mol1 = (Molecule) reader.read(new Molecule());
         String code1=new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(0), 6);
         filename="data/mdl/testisopropylacetate.mol";
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader2 = new MDLReader(ins2);
+        MDLReader reader2 = new MDLReader(ins2, Mode.STRICT);
 				Molecule mol2 = (Molecule) reader2.read(new Molecule());
         String code2=new HOSECodeGenerator().getHOSECode(mol2, mol2.getAtom(2), 6);
         assertFalse(code1.equals(code2));

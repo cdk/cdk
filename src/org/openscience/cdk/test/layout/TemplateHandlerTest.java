@@ -30,12 +30,12 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.layout.TemplateHandler;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -180,7 +180,7 @@ public class TemplateHandlerTest extends CDKTestCase
 		// Set up molecule reader
 		String filename = "data/mdl/diadamantane-cubane.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		IChemObjectReader molReader = new MDLReader(ins);
+		IChemObjectReader molReader = new MDLReader(ins, Mode.STRICT);
 		
 		// Read molecule
 		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newMolecule());

@@ -49,6 +49,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
@@ -117,7 +118,7 @@ public class ChemFileManipulatorTest extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-        MDLReader reader = new MDLReader(ins);
+        MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
         assertNotNull(chemFile);
         List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);

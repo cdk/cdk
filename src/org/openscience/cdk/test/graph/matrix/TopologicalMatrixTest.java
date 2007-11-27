@@ -10,6 +10,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.matrix.TopologicalMatrix;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -30,7 +31,7 @@ public class TopologicalMatrixTest extends CDKTestCase {
 		String filename = "data/mdl/clorobenzene.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
 				filename);
-		MDLReader reader = new MDLReader(ins);
+		MDLReader reader = new MDLReader(ins, Mode.STRICT);
 		IMolecule container = (Molecule) reader
 				.read((ChemObject) new Molecule());
 		int[][] matrix = TopologicalMatrix.getMatrix(container);

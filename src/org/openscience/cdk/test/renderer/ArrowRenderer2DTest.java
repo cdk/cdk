@@ -32,12 +32,14 @@ import java.util.Hashtable;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.renderer.Arrow;
 import org.openscience.cdk.renderer.ArrowRenderer2D;
 import org.openscience.cdk.renderer.Renderer2D;
@@ -93,7 +95,7 @@ public class ArrowRenderer2DTest extends JPanel {
 				cr = new CMLReader(ins);
 				chemFile = (ChemFile) cr.read((ChemObject) new ChemFile());
 			} else {
-				mr = new MDLReader(ins);
+				mr = new MDLReader(ins, Mode.STRICT);
 				chemFile = (ChemFile) mr.read((ChemObject) new ChemFile());
 			}
 			ins.close();

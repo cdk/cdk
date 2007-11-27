@@ -42,6 +42,7 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.XYZReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.math.qm.ClosedShellJob;
 import org.openscience.cdk.math.qm.GaussiansBasis;
 import org.openscience.cdk.math.qm.Orbitals;
@@ -78,7 +79,7 @@ public class GaussiansCalculationTest
         System.out.println("Expecting CML format...");
       } else
       { 
-        reader = new MDLReader(new FileInputStream(inFile));
+        reader = new MDLReader(new FileInputStream(inFile), Mode.STRICT);
         System.out.println("Expecting MDL MolFile format...");
       }
       ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
