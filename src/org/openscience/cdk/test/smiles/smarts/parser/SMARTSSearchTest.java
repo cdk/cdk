@@ -898,6 +898,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     public void testLogicalOr9() throws Exception {
         int[] results = match("[N]=[N]-,=[N]", "CCCC(=O)C=C");
         assertEquals(0, results[0]);
+        assertEquals(0, results[1]);
     }
 
     public void testLogicalOr10() throws Exception {
@@ -908,8 +909,8 @@ public class SMARTSSearchTest extends CDKTestCase {
 
      public void testLogicalOr11() throws Exception {
         int[] results = match("[#6]!:;=[#6][#6](=O)[!O]", "CCCC(=O)C=C");
-        assertEquals(0, results[0]);
-        assertEquals(0, results[1]);
+        assertEquals(1, results[0]);
+        assertEquals(1, results[1]);
     }
 
     public void testLogicalOrHighAnd1() throws Exception {
