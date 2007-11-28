@@ -231,7 +231,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 	public IMolecule newMolecule(IAtomContainer container) {
 		return new Molecule(container);
 	}
-
+	
 	public IMonomer newMonomer () {
 		return new Monomer();
 	}
