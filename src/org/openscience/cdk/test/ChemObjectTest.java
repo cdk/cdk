@@ -213,7 +213,7 @@ public class ChemObjectTest extends NewCDKTestCase {
         Assert.assertEquals(1, chemObject2.getProperties().size());
         Assert.assertEquals(1, chemObject1.getProperties().size());
         // ok, copied hashtable item, but this item should be cloned
-        Assert.assertNotSame(atom, chemObject2.getProperties().get("atom"));
+        Assert.assertEquals(atom, chemObject2.getProperties().get("atom"));
     }
     
     @Test public void testClone_ChemObjectListeners() throws Exception {

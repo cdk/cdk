@@ -1,8 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
@@ -311,13 +307,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 			Enumeration keys = properties.keys();
 			while (keys.hasMoreElements()) {
 				Object key = keys.nextElement();
-				if (key instanceof IChemObject) {
-					key = ((IChemObject) key).clone();
-				}
 				Object value = properties.get(key);
-				if (value instanceof IChemObject) {
-					value = ((IChemObject) value).clone();
-				}
 				clonedHashtable.put(key, value);
 			}
 			clone.properties = clonedHashtable;
