@@ -93,6 +93,7 @@ public class LogicalOperatorBond extends SMARTSBond {
     }
     
     public void setAtoms(IAtom[] atoms) {
+    	super.setAtoms(atoms);
     	((IBond)left).setAtoms(atoms);
     	if (right != null) ((IBond)right).setAtoms(atoms);
     }
