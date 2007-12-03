@@ -137,8 +137,6 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 				if (NumHAtoms > 1)
 					fragment += ("H" + NumHAtoms);
 
-			//atom.setHydrogenCount(0);
-
 			atomType = atom.getBuilder().newAtomType(fragment, atom.getSymbol());
 			atomType.setFormalCharge(atom.getFormalCharge());
 			if (atom.getFlag(CDKConstants.ISAROMATIC))
@@ -154,6 +152,8 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 	public static boolean inSameAromaticRing(IAtomContainer m, IAtom atom1,
 			IAtom atom2, IRingSet rs)
 	{
+		if (rs == null) 
+			return false;
 		for (int i = 0; i <= rs.getAtomContainerCount() - 1; i++)
 		{
 			IRing r = (IRing) rs.getAtomContainer(i);
