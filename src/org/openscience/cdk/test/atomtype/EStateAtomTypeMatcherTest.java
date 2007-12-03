@@ -64,9 +64,9 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 		return(rs);     
 	}
 	
-	void testAtom(String expectedAtType, IAtom atom)
+	private boolean testAtom(String expectedAtType, IAtom atom)
 	{	
-		assertEquals(expectedAtType, matcher.findMatchingAtomType(mol,atom).getAtomTypeName());
+		return expectedAtType.equals(matcher.findMatchingAtomType(mol,atom).getAtomTypeName());
 	}
 	
 	public void testSP3Atoms(){
@@ -152,14 +152,14 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 		mol.addBond(b19);	
 		
 		matcher.setRingSet(getRings());
-		testAtom("SsCH3",a1);
-		testAtom("SssssC",a2);
-		testAtom("SsCH3",a3);
-		testAtom("SsCH3",a4);
-		testAtom("SssCH2",a5);
-		testAtom("SsCH3",a6);
-		testAtom("SsH",a7);
-		testAtom("SsH",a8);
+		assertTrue(testAtom("SsCH3",a1));
+		assertTrue(testAtom("SssssC",a2));
+		assertTrue(testAtom("SsCH3",a3));
+		assertTrue(testAtom("SsCH3",a4));
+		assertTrue(testAtom("SssCH2",a5));
+		assertTrue(testAtom("SsCH3",a6));
+		assertTrue(testAtom("SsH",a7));
+		assertTrue(testAtom("SsH",a8));
 	}
 	
 	public void testSP2Atoms(){
@@ -201,11 +201,11 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 		mol.addBond(b8);
 		
 		matcher.setRingSet(getRings());
-		testAtom("SdCH2",a1);
-		testAtom("SdsCH",a2);
-		testAtom("SdsCH",a3);
-		testAtom("SdNH",a4);	
-		testAtom("SsH",a9);
+		assertTrue(testAtom("SdCH2",a1));
+		assertTrue(testAtom("SdsCH",a2));
+		assertTrue(testAtom("SdsCH",a3));
+		assertTrue(testAtom("SdNH",a4));
+		assertTrue(testAtom("SsH",a9));
 	}
 	
 	public void testSPAtoms(){
@@ -243,11 +243,11 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 		mol.addBond(b7);
 		
 		matcher.setRingSet(getRings());
-		testAtom("StCH",a1);
-		testAtom("StsC",a2);
-		testAtom("SssCH2",a3);
-		testAtom("StsC",a4);
-		testAtom("StN",a5);		
+		assertTrue(testAtom("StCH",a1));
+		assertTrue(testAtom("StsC",a2));
+		assertTrue(testAtom("SssCH2",a3));
+		assertTrue(testAtom("StsC",a4));
+		assertTrue(testAtom("StN",a5));
 	}
 	
 	public void testAromaticAtoms(){
@@ -317,13 +317,13 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 		mol.addBond(b14);		
 		
 		matcher.setRingSet(getRings());		
-		testAtom("SaaCH",a1);
-		testAtom("SaaCH",a2);
-		testAtom("SaaN",a3);
-		testAtom("SaaCH",a4);
-		testAtom("SaaCH",a5);
-		testAtom("SsaaC",a6);
-		testAtom("SsCH3",a7);
+		assertTrue(testAtom("SaaCH",a1));
+		assertTrue(testAtom("SaaCH",a2));
+		assertTrue(testAtom("SaaN",a3));
+		assertTrue(testAtom("SaaCH",a4));
+		assertTrue(testAtom("SaaCH",a5));
+		assertTrue(testAtom("SsaaC",a6));
+		assertTrue(testAtom("SsCH3",a7));
 	}
 	
 	public void testNaphthalene(){
@@ -415,16 +415,16 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 		mol.addBond(b19);
 		
 		matcher.setRingSet(getRings());
-		testAtom("SaaCH",a1);
-		testAtom("SaaCH",a2);
-		testAtom("SaaaC",a3);
-		testAtom("SaaCH",a4);
-		testAtom("SaaCH",a5);
-		testAtom("SaaCH",a6);
-		testAtom("SaaCH",a7);
-		testAtom("SaaaC",a8);
-		testAtom("SaaCH",a9);
-		testAtom("SaaCH",a10);
+		assertTrue(testAtom("SaaCH",a1));
+		assertTrue(testAtom("SaaCH",a2));
+		assertTrue(testAtom("SaaaC",a3));
+		assertTrue(testAtom("SaaCH",a4));
+		assertTrue(testAtom("SaaCH",a5));
+		assertTrue(testAtom("SaaCH",a6));
+		assertTrue(testAtom("SaaCH",a7));
+		assertTrue(testAtom("SaaaC",a8));
+		assertTrue(testAtom("SaaCH",a9));
+		assertTrue(testAtom("SaaCH",a10));
 	}	
 	
 	public void testChargedAtoms(){
@@ -463,8 +463,8 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 		mol.addBond(b7);
 		
 		matcher.setRingSet(getRings());
-		testAtom("SsCH3",a1);
-		testAtom("SsNpH3",a2);
+		assertTrue(testAtom("SsCH3",a1));
+		assertTrue(testAtom("SsNpH3",a2));
 	}
 	
 	public void testNaCl(){
@@ -478,8 +478,8 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 		mol.addAtom(a2);
 		
 		matcher.setRingSet(getRings());
-		testAtom("SNap",a1);
-		testAtom("SClm",a2);
+		assertTrue(testAtom("SNap",a1));
+		assertTrue(testAtom("SClm",a2));
 		
 		//Testing with different presentation - [Na]Cl 		
 		mol = new Molecule();		
@@ -491,8 +491,8 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
 		mol.addBond(b1);
 		
 		matcher.setRingSet(getRings());
-		testAtom("SsNa",a1);
-		testAtom("SsCl",a2);
+		assertTrue(testAtom("SsNa",a1));
+		assertTrue(testAtom("SsCl",a2));
 	}	
 }
 
