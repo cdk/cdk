@@ -62,7 +62,7 @@ public class ReaderFactory {
     private int headerLength;
     private LoggingTool logger;
 
-    private static List formats = null;
+    private static List<IChemFormatMatcher> formats = null;
 
     /**
      * Constructs a ReaderFactory which tries to detect the format in the
@@ -91,13 +91,13 @@ public class ReaderFactory {
         formats.add(format);
     }
     
-    public List getFormats(){
+    public List<IChemFormatMatcher> getFormats(){
     	return formats;
     }
 
     private void loadReaders() {
         if (formats == null) {
-            formats = new ArrayList();
+            formats = new ArrayList<IChemFormatMatcher>();
             try {
                 logger.debug("Starting loading Readers...");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(
