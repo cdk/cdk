@@ -34,10 +34,6 @@ import org.openscience.cdk.test.ChemObjectTest;
  */
 public class DebugChemObjectTest extends ChemObjectTest {
 
-    public DebugChemObjectTest(String name) {
-		super(name);
-		// TODO Auto-generated constructor stub
-	}
 
 	@Before public void setUp() {
     	super.builder = DebugChemObjectBuilder.getInstance();
