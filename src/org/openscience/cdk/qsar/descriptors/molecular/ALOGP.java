@@ -4,6 +4,7 @@
  * $Revision: 6171 $
  *
  * Copyright (C) 2007  Todd Martin (Environmental Protection Agency)
+ * Copyright (C) 2007  Nikolay Kochev <nick@argon.acad.bg>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
