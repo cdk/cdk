@@ -54,7 +54,6 @@ public class JCPSaveFileFilter extends JCPFileFilter {
      */
     public static void addChoosableFileFilters(JFileChooser chooser) {
         chooser.addChoosableFileFilter(new JCPFileFilter(JCPFileFilter.mol));
-        chooser.addChoosableFileFilter(new JCPSaveFileFilter(JCPSaveFileFilter.svg));
         chooser.addChoosableFileFilter(new JCPSaveFileFilter(JCPSaveFileFilter.smiles));
         chooser.addChoosableFileFilter(new JCPSaveFileFilter(JCPSaveFileFilter.cdk));
         chooser.addChoosableFileFilter(new JCPFileFilter(JCPFileFilter.cml));
@@ -67,9 +66,7 @@ public class JCPSaveFileFilter extends JCPFileFilter {
         String type = (String)types.get(0);
         String result = super.getDescription();
         if (result == null) {
-            if (type.equals(svg)) {
-                result = "Scalable Vector Graphics";
-            } else if (type.equals(smiles)) {
+        	if (type.equals(smiles)) {
                 result = "SMILES";
             } else if (type.equals(cdk)) {
                 result = "CDK source code fragment";
