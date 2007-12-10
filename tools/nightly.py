@@ -934,6 +934,7 @@ if __name__ == '__main__':
     successPMD = True
     successPMDUnused = True
     successSVN = True
+    successJCP = True
 
     revision = None
     
@@ -1011,6 +1012,7 @@ if __name__ == '__main__':
         # compile the distro
         successDist = runAntJob('nice -n 19 ant -lib %s clean dist-large' % (ant_libs), 'build.log', 'distro')
         if successDist: # if we compiled, do the rest of the stuff
+            successJCP = runAntJob('nice -n 19 ant -lib %s -f build-jchempaint.xml' % (ant_libs), 'jcp.log', 'jcp')
             successTestDist = runAntJob('nice -19 ant -lib %s dist-test-large' % (ant_libs), 'testdist.log', 'testdist')
             successSrc = runAntJob('nice -19 ant -lib %s  sourcedist' % (ant_libs), 'srcdist.log', 'srcdist')
             successTest = runAntJob('nice -n 19 ant -lib %s -DrunSlowTests=false test-all' % (ant_libs), 'test.log', 'test') 
@@ -1112,6 +1114,17 @@ if __name__ == '__main__':
         else:
             resultTable.addCell("<br><a href=\"http://cia.vc/stats/project/cdk/cdk\">SVN commits</a>")
 
+    if successJCP:
+        jcpSrc = glob.glob(os.path.join(nightly_repo, 'dist', 'jar', 'jchempaint*.jar'))[0]
+        jcpDest = os.path.join(nightly_web, 'jchempaint-svn-%s.jar' % (todayStr))
+        shutil.copyfile(jcpSrc, jcpDest)
+
+        resultTable.addRow()
+        resultTable.addCell('JChemPaint')
+        resultTable.addCell("<a href='jchempaint-svn-%s.jar'>jchempaint-svn-%s.jar</a>" % (todayStr, todayStr))
+        logEntryText = copyLogFile('jcp.log', nightly_dir, nightly_web)
+        if logEntryText:
+            resultTable.addCell(logEntryText)        
 
     if successSrc:
         print '  Generating source distro section'
@@ -1273,8 +1286,10 @@ if __name__ == '__main__':
             resultTable.addCell("<a href=\"test.log\">test.log</a>")
             resultTable.appendToCell("<a href=\"junitsummary.html\">Stable</a>")
             resultTable.appendToCell("<a href=\"junitsummary-unstable.html\">Unstable</a>")
-            resultTable.appendToCell("<br>No. old fails fixed since r%s = %s" % (oldRevision,str(nTestFixed)))
-            resultTable.appendToCell("No. new fails since r%s = %s" % (oldRevision,str(nTestFails)))            
+
+            if not dryRun:
+                resultTable.appendToCell("<br>No. old fails fixed since r%s = %s" % (oldRevision,str(nTestFixed)))
+                resultTable.appendToCell("No. new fails since r%s = %s" % (oldRevision,str(nTestFails)))            
     else:
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         if os.path.exists( os.path.join(nightly_dir, 'test.log') ):
