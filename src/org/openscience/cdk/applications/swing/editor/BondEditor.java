@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * @cdk.module applications
@@ -64,8 +65,14 @@ public class BondEditor extends ChemObjectEditor {
     public void applyChanges() {
         IBond bond = (IBond)source;
         try {
-            double newOrder = Double.parseDouble(orderField.getText());
-            bond.setOrder(newOrder);
+            IBond.Order newOrder = BondManipulator.createBondOrder(
+            	Double.parseDouble(orderField.getText())
+            );
+            if (newOrder == null) {
+            	JOptionPane.showMessageDialog(null, "The entered bond order is not a valid bond order: " + orderField.getText());
+            } else {
+            	bond.setOrder(newOrder);
+            }
         } catch (NumberFormatException exception) {
             JOptionPane.showMessageDialog(null, "The entered bond order is not a double: " + orderField.getText());
         }

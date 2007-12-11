@@ -72,14 +72,14 @@ public class AdjustBondOrdersAction extends JCPAction
                     Iterator bonds = ac.bonds();
                     while (bonds.hasNext()) {
                         IBond bond = (IBond) bonds.next();
-                        bond.setOrder(1.0);
+                        bond.setOrder(IBond.Order.SINGLE);
                     }
 
                      for (int j=0; j<containerCopy.getBondCount(); j++) {
                     	 org.openscience.cdk.interfaces.IBond bondCopy = containerCopy.getBond(j);
                     	 org.openscience.cdk.interfaces.IBond bond = ac.getBond(j);
                             if (bond.getOrder() != bondCopy.getOrder()) {
-                                double[] bondOrders = new double[2];
+                                IBond.Order[] bondOrders = new IBond.Order[2];
                                 bondOrders[0] = bond.getOrder();
                                 bondOrders[1] = bondCopy.getOrder();
                                 changedBonds.put(bond, bondOrders);
@@ -111,7 +111,7 @@ public class AdjustBondOrdersAction extends JCPAction
                     	org.openscience.cdk.interfaces.IBond bondCopy = containerCopy.getBond(j);
                     	org.openscience.cdk.interfaces.IBond bond = ac.getBond(j);
                         if (bond.getOrder() != bondCopy.getOrder()) {
-                            double[] bondOrders = new double[2];
+                            IBond.Order[] bondOrders = new IBond.Order[2];
                             bondOrders[0] = bond.getOrder();
                             bondOrders[1] = bondCopy.getOrder();
                             changedBonds.put(bond, bondOrders);
