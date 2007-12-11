@@ -57,6 +57,7 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
  * A helper class to instantiate a IChemObject for the debug implementation.
@@ -168,11 +169,11 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 		return new DebugBond(atom1, atom2);
 	}
 	
-	public IBond newBond(IAtom atom1, IAtom atom2, double order) {
+	public IBond newBond(IAtom atom1, IAtom atom2, Order order) {
 		return new DebugBond(atom1, atom2, order);
 	}
 	
-	public IBond newBond(IAtom atom1, IAtom atom2, double order, int stereo) {
+	public IBond newBond(IAtom atom1, IAtom atom2, Order order, int stereo) {
 		return new DebugBond(atom1, atom2, order, stereo);
 	}
 	

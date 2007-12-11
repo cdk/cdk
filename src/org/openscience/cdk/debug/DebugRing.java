@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -62,9 +63,9 @@ public class DebugRing extends org.openscience.cdk.Ring
 		atoms[0] = new DebugAtom(elementSymbol);
 		for (int i = 1; i < ringSize; i++) {
 			atoms[i] = new DebugAtom(elementSymbol);
-			super.bonds[i-1] = new Bond(atoms[i - 1], atoms[i], 1);
+			super.bonds[i-1] = new Bond(atoms[i - 1], atoms[i], IBond.Order.SINGLE);
 		}
-		super.bonds[ringSize-1] = new Bond(atoms[ringSize - 1], atoms[0], 1);
+		super.bonds[ringSize-1] = new Bond(atoms[ringSize - 1], atoms[0], IBond.Order.SINGLE);
 	}
 	
 	public DebugRing(int ringSize) {
@@ -291,12 +292,12 @@ public class DebugRing extends org.openscience.cdk.Ring
 		return super.getBondOrderSum(atom);
 	}
 
-	public double getMaximumBondOrder(IAtom atom) {
+	public Order getMaximumBondOrder(IAtom atom) {
 		logger.debug("Getting maximum bond order for atom: ", atom);
 		return super.getMaximumBondOrder(atom);
 	}
 
-	public double getMinimumBondOrder(IAtom atom) {
+	public Order getMinimumBondOrder(IAtom atom) {
 		logger.debug("Getting minimum bond order for atom: ", atom);
 		return super.getMinimumBondOrder(atom);
 	}
@@ -416,12 +417,12 @@ public class DebugRing extends org.openscience.cdk.Ring
 		super.removeAllBonds();
 	}
 
-	public void addBond(int atom1, int atom2, double order, int stereo) {
+	public void addBond(int atom1, int atom2, IBond.Order order, int stereo) {
 		logger.debug("Adding bond: atom1=" + atom1 + " atom2=" + atom2, " order=" + order + " stereo=" + stereo);
 		super.addBond(atom1, atom2, order, stereo);
 	}
 
-	public void addBond(int atom1, int atom2, double order) {
+	public void addBond(int atom1, int atom2, IBond.Order order) {
 		logger.debug("Adding bond: atom1=" + atom1 + " atom2=" + atom2, " order=" + order);
 		super.addBond(atom1, atom2, order);
 	}

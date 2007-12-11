@@ -78,27 +78,27 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 					if (SameRing) {
 						NumAromaticBonds2++;
 						if (element.equals("N")) {
-							if (b.getOrder() == 1)
+							if (b.getOrder() == IBond.Order.SINGLE)
 								NumAromaticBondsTotal2++;
-							if (b.getOrder() == 2)
+							if (b.getOrder() == IBond.Order.DOUBLE)
 								NumAromaticBondsTotal2 = NumAromaticBondsTotal2 + 2;
 						}
 					} else {
-						if (b.getOrder() == 1)
+						if (b.getOrder() == IBond.Order.SINGLE)
 							NumSingleBonds2++;
-						if (b.getOrder() == 2)
+						if (b.getOrder() == IBond.Order.DOUBLE)
 							NumDoubleBonds2++;
-						if (b.getOrder() == 3)
+						if (b.getOrder() == IBond.Order.TRIPLE)
 							NumTripleBonds2++;
 					}
 
 				} else {
 
-					if (b.getOrder() == 1)
+					if (b.getOrder() == IBond.Order.SINGLE)
 						NumSingleBonds2++;
-					if (b.getOrder() == 2)
+					if (b.getOrder() == IBond.Order.DOUBLE)
 						NumDoubleBonds2++;
-					if (b.getOrder() == 3)
+					if (b.getOrder() == IBond.Order.TRIPLE)
 						NumTripleBonds2++;
 				}
 			}

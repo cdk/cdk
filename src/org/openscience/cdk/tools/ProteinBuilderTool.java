@@ -71,7 +71,7 @@ public class ProteinBuilderTool {
             // make the connection between that aminoAcid's C-terminus and the 
             // protein's N-terminus
             protein.addBond(
-                new Bond(aaToAddTo.getNTerminus(), aaToAdd.getCTerminus(), 1.0)
+                new Bond(aaToAddTo.getNTerminus(), aaToAdd.getCTerminus(), IBond.Order.SINGLE)
             );
         } // else : no current N-terminus, so nothing special to do
         return protein;
@@ -97,7 +97,7 @@ public class ProteinBuilderTool {
             // make the connection between that aminoAcid's N-terminus and the 
             // protein's C-terminus
             protein.addBond(
-                new Bond(aaToAddTo.getCTerminus(), aaToAdd.getNTerminus(), 1.0)
+                new Bond(aaToAddTo.getCTerminus(), aaToAdd.getNTerminus(), IBond.Order.SINGLE)
             );
         } // else : no current C-terminus, so nothing special to do
         return protein;
@@ -143,7 +143,7 @@ public class ProteinBuilderTool {
         Atom oxygen = new Atom("O");
         // ... to amino acid
         previousAA.addAtom(oxygen);
-        Bond bond = new Bond(oxygen, previousAA.getCTerminus(), 1.0);
+        Bond bond = new Bond(oxygen, previousAA.getCTerminus(), IBond.Order.SINGLE);
         previousAA.addBond(bond);
         // ... and to protein
         protein.addAtom(oxygen, previousAA, strand);

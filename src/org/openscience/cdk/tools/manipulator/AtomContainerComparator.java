@@ -130,8 +130,8 @@ public class AtomContainerComparator implements Comparator {
           return -1;
         else {
           // 4. Bond count equal, compare sum of bond orders (heavy atoms only)
-          double bondOrderSum1 = getBondOrderSum(atomContainer1);
-          double bondOrderSum2 = getBondOrderSum(atomContainer2);
+          double bondOrderSum1 = AtomContainerManipulator.getSingleBondEquivalentSum(atomContainer1);
+          double bondOrderSum2 = AtomContainerManipulator.getSingleBondEquivalentSum(atomContainer2);
           if (bondOrderSum1 > bondOrderSum2)
             return 1;
           else if (bondOrderSum1 < bondOrderSum2)
@@ -165,24 +165,6 @@ public class AtomContainerComparator implements Comparator {
       throw new CDKException(e.getMessage(), e);
     }
     return mw;
-  }
-  
-  /**
-   * Returns the sum of all bond orders of all bonds connecting
-   * heavy atoms only for the given IAtomContainer.
-   * @param atomContainer an IAtomContainer to return the bond order sum from
-   * @return the sum of all bond orders of all bonds connecting
-   *         heavy atoms only for the given IAtomContainer.
-   */
-  private double getBondOrderSum(IAtomContainer atomContainer) {
-    double bondOrderSum = 0.0;
-    Iterator iterator = atomContainer.bonds();
-    while (iterator.hasNext()) {
-      IBond bond = ((IBond) iterator.next());
-      if (!bond.getAtom(0).getSymbol().equals("H") && !bond.getAtom(1).getSymbol().equals("H"))
-        bondOrderSum += bond.getOrder();
-    }
-    return bondOrderSum;
   }
   
 }

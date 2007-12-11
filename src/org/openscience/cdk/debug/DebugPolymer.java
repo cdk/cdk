@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPolymer;
 import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -268,12 +269,12 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 		return super.getBondOrderSum(atom);
 	}
 
-	public double getMaximumBondOrder(IAtom atom) {
+	public Order getMaximumBondOrder(IAtom atom) {
 		logger.debug("Getting maximum bond order for atom: ", atom);
 		return super.getMaximumBondOrder(atom);
 	}
 
-	public double getMinimumBondOrder(IAtom atom) {
+	public Order getMinimumBondOrder(IAtom atom) {
 		logger.debug("Getting minimum bond order for atom: ", atom);
 		return super.getMinimumBondOrder(atom);
 	}
@@ -393,12 +394,12 @@ public class DebugPolymer extends org.openscience.cdk.Polymer
 		super.removeAllBonds();
 	}
 
-	public void addBond(int atom1, int atom2, double order, int stereo) {
+	public void addBond(int atom1, int atom2, IBond.Order order, int stereo) {
 		logger.debug("Adding bond: atom1=" + atom1 + " atom2=" + atom2, " order=" + order + " stereo=" + stereo);
 		super.addBond(atom1, atom2, order, stereo);
 	}
 
-	public void addBond(int atom1, int atom2, double order) {
+	public void addBond(int atom1, int atom2, IBond.Order order) {
 		logger.debug("Adding bond: atom1=" + atom1 + " atom2=" + atom2, " order=" + order);
 		super.addBond(atom1, atom2, order);
 	}

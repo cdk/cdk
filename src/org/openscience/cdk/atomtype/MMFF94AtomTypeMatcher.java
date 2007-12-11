@@ -24,6 +24,9 @@
  */
 package org.openscience.cdk.atomtype;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -31,11 +34,9 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.AtomTypeTools;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Class implements methods to assign mmff94 atom types for a specific atom in
@@ -51,7 +52,7 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 
 	private LoggingTool logger;
 
-	double maxBondOrder = 0;
+	IBond.Order maxBondOrder = IBond.Order.SINGLE;
 	private AtomTypeFactory factory = null;
 	AtomTypeTools atomTypeTools=null;
 	
@@ -120,11 +121,10 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 		boolean atomTypeFlag = false;
 		Matcher mat1=null;
 		Matcher mat2=null;
-		Double tmpMaxBondOrder;
+		IBond.Order tmpMaxBondOrder;
 		maxBondOrder = atomContainer.getMaximumBondOrder(atom);
 		for (int j = 0; j < atomTypeIds.length; j++){
         	tmpMaxBondOrder = factory.getAtomType(atomTypeIds[j]).getMaxBondOrder();
-            if (tmpMaxBondOrder == CDKConstants.UNSET) tmpMaxBondOrder = 0.0;
             String atomSphericalMatcher = (String)factory.getAtomType(atomTypeIds[j]).getProperty(CDKConstants.SPHERICAL_MATCHER);
 			logger.debug(j + " ATOM TYPE "+ tmpMaxBondOrder + " " +atomSphericalMatcher);
 			p1 =Pattern.compile(atomSphericalMatcher);
@@ -140,7 +140,7 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 				}
 				if (atomTypeIds[j].equals("C")) {
 					if (atomChemGroupConstant != -1) {//in Ring
-						if (ringSize != null && maxBondOrder == 1){
+						if (ringSize != null && maxBondOrder == IBond.Order.SINGLE){
 							if (atomRingSize == 3) {
 								ID = atomTypeIds[9];//sp3 3mem rings
 							}else if (atomRingSize == 4) {

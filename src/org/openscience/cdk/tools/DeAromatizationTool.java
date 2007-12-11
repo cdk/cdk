@@ -67,8 +67,8 @@ public class DeAromatizationTool {
 		if(!allaromatic)
 			return false;
 		for(int i=0;i<ring.getBondCount();i++){
-			if(ring.getBond(i).getOrder()==1.5)
-				ring.getBond(i).setOrder(1);
+			if(ring.getBond(i).getFlag(CDKConstants.ISAROMATIC))
+				ring.getBond(i).setOrder(IBond.Order.SINGLE);
 		}
 		boolean result = false;
 		Map elementCounts = new MFAnalyser(ring).getFormulaHashtable();
@@ -109,7 +109,7 @@ public class DeAromatizationTool {
 						atom=bond.getAtom(0);
 					count++;
 					if(count%2==0){
-						bond.setOrder(2);
+						bond.setOrder(IBond.Order.DOUBLE);
 						done++;
 					}
 				}

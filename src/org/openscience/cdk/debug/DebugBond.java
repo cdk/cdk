@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -54,11 +55,11 @@ public class DebugBond extends org.openscience.cdk.Bond
 		super(atom1, atom2);
 	}
 	
-	public DebugBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, double order) {
+	public DebugBond(IAtom atom1, IAtom atom2, IBond.Order order) {
 		super(atom1, atom2, order);
 	}
 	
-	public DebugBond(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2, double order, int stereo) {
+	public DebugBond(IAtom atom1, IAtom atom2, IBond.Order order, int stereo) {
 		super(atom1, atom2, order, stereo);
 	}
 
@@ -202,12 +203,12 @@ public class DebugBond extends org.openscience.cdk.Bond
 		super.setAtom(atom, position);
 	}
 
-	public double getOrder() {
+	public Order getOrder() {
 		logger.debug("Getting order: ", super.getOrder());
 		return super.getOrder();
 	}
 
-	public void setOrder(double order) {
+	public void setOrder(Order order) {
 		logger.debug("Setting order: ", order);
 		super.setOrder(order);
 	}

@@ -28,14 +28,19 @@
  */
 package org.openscience.cdk.tools;
 
+import java.io.IOException;
+import java.util.Iterator;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
-
-import java.io.IOException;
-import java.util.Iterator;
 
 /**
  * This class is an experimental alternative to the SaturationChecker.
@@ -101,7 +106,7 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
             return true;
         }
         double bondOrderSum = container.getBondOrderSum(atom);
-        double maxBondOrder = container.getMaximumBondOrder(atom);
+        IBond.Order maxBondOrder = container.getMaximumBondOrder(atom);
         Integer hcount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
         Integer charge = atom.getFormalCharge() == CDKConstants.UNSET ? 0 : atom.getFormalCharge();
 
@@ -117,7 +122,7 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
             IAtomType type = atomTypes[f];
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 if (bondOrderSum + hcount == type.getBondOrderSum() && 
-                    maxBondOrder <= type.getMaxBondOrder()) {
+                	!BondManipulator.isHigherOrder(maxBondOrder, type.getMaxBondOrder())) {
                     logger.debug("We have a match: ", type);
                     logger.debug("Atom is saturated: ", atom.getSymbol());
                     return true;
@@ -143,14 +148,14 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
      */
     public boolean couldMatchAtomType(IAtomContainer container, IAtom atom, IAtomType type) {
         double bondOrderSum = container.getBondOrderSum(atom);
-        double maxBondOrder = container.getMaximumBondOrder(atom);
+        IBond.Order maxBondOrder = container.getMaximumBondOrder(atom);
         return couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type);
     }
 
     /**
      * Determines if the atom can be of type AtomType.
      */
-    public boolean couldMatchAtomType(IAtom atom, double bondOrderSum, double maxBondOrder, IAtomType type) {
+    public boolean couldMatchAtomType(IAtom atom, double bondOrderSum, IBond.Order maxBondOrder, IAtomType type) {
         logger.debug("   ... matching atom ", atom.getSymbol(), " vs ", type);
         Integer hcount = atom.getHydrogenCount();
         if (hcount == CDKConstants.UNSET) hcount = 0;
@@ -159,8 +164,8 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
         if (charge == CDKConstants.UNSET) charge = 0;
 
         if (charge == type.getFormalCharge()) {
-            if (bondOrderSum + hcount <= type.getBondOrderSum() && 
-                maxBondOrder <= type.getMaxBondOrder()) {
+            if (bondOrderSum + hcount <= type.getBondOrderSum() &&
+            	!BondManipulator.isHigherOrder(maxBondOrder, type.getMaxBondOrder())) {
                 logger.debug("    We have a match!");
                 return true;
             }
@@ -189,7 +194,7 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
     }
     
 	public int calculateNumberOfImplicitHydrogens(IAtom atom) throws CDKException {
-        return this.calculateNumberOfImplicitHydrogens(atom, 0.0, 0.0, 0.0, 0);
+        return this.calculateNumberOfImplicitHydrogens(atom, 0.0, 0.0, null, 0);
     }
 
     /** 
@@ -197,7 +202,7 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
      * the atom's valency. It will return 0 for PseudoAtoms, and for atoms for which it
      * does not have an entry in the configuration file.
      */
-	public int calculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, double singleElectronSum, double maxBondOrder, int neighbourCount) 
+	public int calculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, double singleElectronSum, IBond.Order maxBondOrder, int neighbourCount) 
         throws CDKException {
 
         int missingHydrogen = 0;
@@ -275,8 +280,7 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
                 // 2. saturate this one by saturating the rest
                 logger.debug("Option 1: Saturating this bond directly, then trying to saturate rest");
                 // considering organic bonds, the max order is 3, so increase twice
-                double increment = 1.0;
-                boolean bondOrderIncreased = saturateByIncreasingBondOrder(bond, atomContainer, increment);
+                boolean bondOrderIncreased = saturateByIncreasingBondOrder(bond, atomContainer);
                 bondsAreFullySaturated = bondOrderIncreased && saturate(bonds, atomContainer);
                 if (bondsAreFullySaturated) {
                     logger.debug("Option 1: worked");
@@ -284,7 +288,7 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
                     logger.debug("Option 1: failed. Trying option 2.");
                     logger.debug("Option 2: Saturing this bond by saturating the rest");
                     // revert the increase (if succeeded), then saturate the rest
-                    if (bondOrderIncreased) unsaturateByDecreasingBondOrder(bond, increment);
+                    if (bondOrderIncreased) BondManipulator.decreaseBondOrder(bond);
                     bondsAreFullySaturated = saturate(leftBonds, atomContainer) &&
                                              isSaturated(bond, atomContainer);
                     if (!bondsAreFullySaturated) logger.debug("Option 2: failed");
@@ -306,7 +310,7 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
      *
      * @return true if the bond could be increased
      */
-    public boolean saturateByIncreasingBondOrder(IBond bond, IAtomContainer atomContainer, double increment) throws CDKException {
+    public boolean saturateByIncreasingBondOrder(IBond bond, IAtomContainer atomContainer) throws CDKException {
     	IAtom atom = bond.getAtom(0);
     	IAtom partner = bond.getAtom(1);
         logger.debug("  saturating bond: ", atom.getSymbol(), "-", partner.getSymbol());
@@ -322,9 +326,9 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
                     logger.debug("  condidering partner type: ", aType1);
                     if (couldMatchAtomType(atomContainer, partner, atomTypes2[atCounter2])) {
                         logger.debug("    with atom type: ", aType2);
-                        if (bond.getOrder() < aType2.getMaxBondOrder() && 
-                        bond.getOrder() < aType1.getMaxBondOrder()) {
-                            bond.setOrder(bond.getOrder() + increment);
+                        if (BondManipulator.isLowerOrder(bond.getOrder(), aType2.getMaxBondOrder()) &&
+                        	BondManipulator.isLowerOrder(bond.getOrder(), aType1.getMaxBondOrder())) {
+                        	BondManipulator.increaseBondOrder(bond);
                             logger.debug("Bond order now ", bond.getOrder());
                             return true;
                         }
@@ -345,7 +349,7 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
         boolean bondOrderIncreased = true;
         while (bondOrderIncreased && isUnsaturated(bond, atomContainer)) {
             logger.debug("Can increase bond order");
-            bondOrderIncreased = saturateByIncreasingBondOrder(bond, atomContainer, 1.0);
+            bondOrderIncreased = saturateByIncreasingBondOrder(bond, atomContainer);
         }
         return isSaturated(bond, atomContainer);
     }
@@ -403,15 +407,6 @@ public class ValencyChecker implements IValencyChecker, IDeduceBondOrderTool {
     public void unsaturate(IAtomContainer atomContainer) {
     	Iterator bonds = atomContainer.bonds();
         while (bonds.hasNext()) ((IBond)bonds.next()).setOrder(CDKConstants.BONDORDER_SINGLE);
-    }
-    
-    public boolean unsaturateByDecreasingBondOrder(IBond bond, double decrement) {
-        if (bond.getOrder() > decrement) {
-            bond.setOrder(bond.getOrder() - decrement);
-            return true;
-        } else {
-            return false;
-        }
     }
     
 }

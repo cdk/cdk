@@ -207,7 +207,7 @@ public class DebugAtomType extends org.openscience.cdk.AtomType
 		super.setAtomTypeName(identifier);
 	}
 
-	public void setMaxBondOrder(Double maxBondOrder) {
+	public void setMaxBondOrder(IBond.Order maxBondOrder) {
 		logger.debug("Setting max bond order: ", maxBondOrder);
 		super.setMaxBondOrder(maxBondOrder);
 	}
@@ -222,7 +222,7 @@ public class DebugAtomType extends org.openscience.cdk.AtomType
 		return super.getAtomTypeName();
 	}
 
-	public Double getMaxBondOrder() {
+	public IBond.Order getMaxBondOrder() {
 		logger.debug("Getting max bond order: ", super.getMaxBondOrder());
 		return super.getMaxBondOrder();
 	}

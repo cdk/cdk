@@ -24,11 +24,12 @@
  */
 package org.openscience.cdk.atomtype;
 
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -50,7 +51,7 @@ public class HybridizationStateATMatcher implements IAtomTypeMatcher {
     double charge = 0;
     int neighboorsCount = 0;
 
-    double maxbondOrder = 0;
+    IBond.Order maxbondOrder = IBond.Order.SINGLE;
     double bondOrderSum = 0;
 
     int hybr = 0;
@@ -96,7 +97,7 @@ public class HybridizationStateATMatcher implements IAtomTypeMatcher {
             // ...and then search the exact atom type with these parameters
             logger.debug("My ATOM TYPE "+symbol+" "+bondOrderSum+" "+maxbondOrder+" "+neighboorsCount);
             int tmpNeighboorsCount = 0;
-            double tmpMaxbondOrder = 0;
+            IBond.Order tmpMaxbondOrder = IBond.Order.SINGLE;
             double tmpBondOrderSum = 0;
             for (int i = 0; i < type.length; i++) {
                 tmpMaxbondOrder = type[i].getMaxBondOrder();

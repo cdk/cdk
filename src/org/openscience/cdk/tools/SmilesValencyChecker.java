@@ -113,8 +113,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
                 // 2. saturate this one by saturating the rest
                 logger.debug("Option 1: Saturating this bond directly, then trying to saturate rest");
                 // considering organic bonds, the max order is 3, so increase twice
-                double increment = 1.0;
-                boolean bondOrderIncreased = saturateByIncreasingBondOrder(bond, atomContainer, increment);
+                boolean bondOrderIncreased = saturateByIncreasingBondOrder(bond, atomContainer);
                 bondsAreFullySaturated = bondOrderIncreased && saturate(bonds, atomContainer);
                 if (bondsAreFullySaturated) {
                     logger.debug("Option 1: worked");
@@ -122,7 +121,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
                     logger.debug("Option 1: failed. Trying option 2.");
                     logger.debug("Option 2: Saturing this bond by saturating the rest");
                     // revert the increase (if succeeded), then saturate the rest
-                    if (bondOrderIncreased) unsaturateByDecreasingBondOrder(bond, increment);
+                    if (bondOrderIncreased) unsaturateByDecreasingBondOrder(bond);
                     bondsAreFullySaturated = saturate(leftBonds, atomContainer) &&
                                              isSaturated(bond, atomContainer);
                     if (!bondsAreFullySaturated) logger.debug("Option 2: failed");
@@ -139,9 +138,9 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
         return bondsAreFullySaturated;
     }
 
-    public boolean unsaturateByDecreasingBondOrder(IBond bond, double decrement) {
-        if (bond.getOrder() > decrement) {
-            bond.setOrder(bond.getOrder() - decrement);
+    public boolean unsaturateByDecreasingBondOrder(IBond bond) {
+        if (bond.getOrder() != IBond.Order.SINGLE) {
+        	bond.setOrder(BondManipulator.decreaseBondOrder(bond.getOrder()));
             return true;
         } else {
             return false;
@@ -168,7 +167,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
      *
      * @return true if the bond could be increased
      */
-    public boolean saturateByIncreasingBondOrder(IBond bond, IAtomContainer atomContainer, double increment) throws CDKException {
+    public boolean saturateByIncreasingBondOrder(IBond bond, IAtomContainer atomContainer) throws CDKException {
     	IAtom[] atoms = BondManipulator.getAtomArray(bond);
     	IAtom atom = atoms[0];
     	IAtom partner = atoms[1];
@@ -185,9 +184,9 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
                     logger.debug("  condidering partner type: ", aType1);
                     if (couldMatchAtomType(atomContainer, partner, atomTypes2[atCounter2])) {
                         logger.debug("    with atom type: ", aType2);
-                        if (bond.getOrder() < aType2.getMaxBondOrder() && 
-                        bond.getOrder() < aType1.getMaxBondOrder()) {
-                            bond.setOrder(bond.getOrder() + increment);
+                        if (BondManipulator.isLowerOrder(bond.getOrder(), aType2.getMaxBondOrder()) &&
+                        	BondManipulator.isLowerOrder(bond.getOrder(), aType1.getMaxBondOrder())) {
+                        	bond.setOrder(BondManipulator.increaseBondOrder(bond.getOrder()));
                             logger.debug("Bond order now ", bond.getOrder());
                             return true;
                         }
@@ -234,7 +233,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
      * Determines if the atom can be of type AtomType. That is, it sees if this
      * AtomType only differs in bond orders, or implicit hydrogen count.
      */
-    public boolean couldMatchAtomType(IAtom atom, double bondOrderSum, double maxBondOrder, IAtomType type) {
+    public boolean couldMatchAtomType(IAtom atom, double bondOrderSum, IBond.Order maxBondOrder, IAtomType type) {
         logger.debug("couldMatchAtomType:   ... matching atom ", atom, " vs ", type);
         int hcount = atom.getHydrogenCount();
         int charge = atom.getFormalCharge();
@@ -244,7 +243,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
 //                logger.debug("couldMatchAtomType:     hybridization is OK...");
                 if (bondOrderSum + hcount <= type.getBondOrderSum()) {
                     logger.debug("couldMatchAtomType:     bond order sum is OK...");
-                    if (maxBondOrder <= type.getMaxBondOrder()) {
+                    if (!BondManipulator.isHigherOrder(maxBondOrder, type.getMaxBondOrder())) {
                         logger.debug("couldMatchAtomType:     max bond order is OK... We have a match!");
                         return true;
                     }
@@ -265,7 +264,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
      * the atom's valency. It will return 0 for PseudoAtoms, and for atoms for which it
      * does not have an entry in the configuration file.
      */
-	public int calculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, double maxBondOrder, int neighbourCount) 
+	public int calculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, IBond.Order maxBondOrder, int neighbourCount) 
         throws CDKException {
 
         int missingHydrogens = 0;
@@ -323,7 +322,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
             return true;
         }
         double bondOrderSum = container.getBondOrderSum(atom);
-        double maxBondOrder = container.getMaximumBondOrder(atom);
+        IBond.Order maxBondOrder = container.getMaximumBondOrder(atom);
         int hcount = atom.getHydrogenCount();
         int charge = atom.getFormalCharge();
 
@@ -338,7 +337,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
             IAtomType type = atomTypes[f];
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
                 if (bondOrderSum + hcount == type.getBondOrderSum() && 
-                    maxBondOrder <= type.getMaxBondOrder()) {
+                    !BondManipulator.isHigherOrder(maxBondOrder, type.getMaxBondOrder())) {
                     logger.debug("We have a match: ", type);
                     logger.debug("Atom is saturated: ", atom.getSymbol());
                     return true;
@@ -385,7 +384,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
      */
     public boolean couldMatchAtomType(IAtomContainer container, IAtom atom, IAtomType type) {
         double bondOrderSum = container.getBondOrderSum(atom);
-        double maxBondOrder = container.getMaximumBondOrder(atom);
+        IBond.Order maxBondOrder = container.getMaximumBondOrder(atom);
         return couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type);
     }
 

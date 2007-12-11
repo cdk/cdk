@@ -27,6 +27,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 import java.util.List;
 
@@ -109,17 +110,13 @@ public class HybridizationMatcher implements IAtomTypeMatcher {
             // lets first get the max bond order
             logger.debug("      Evaluating hybridization state");
             List<IBond> connectedBonds = atomContainer.getConnectedBondsList(atom);
-            double maxBondOrder = -1;
-            double bondOrderSum = 0;
-            for (IBond bond : connectedBonds) {
-                if (bond.getOrder() > maxBondOrder) maxBondOrder = bond.getOrder();
-                bondOrderSum += bond.getOrder();
-            }
+            IBond.Order maxBondOrder = BondManipulator.getMaximumBondOrder(connectedBonds);
+            double bondOrderSum = BondManipulator.getSingleBondEquivalentSum(connectedBonds);
 
             // in case the atom has all implicit hydrogens and no explicit bonds,
             // then we can return a max bond order of 1
-            if (maxBondOrder == -1 && atom.getHydrogenCount() != CDKConstants.UNSET) {
-                maxBondOrder = 1.0;
+            if (maxBondOrder == null && atom.getHydrogenCount() != CDKConstants.UNSET) {
+                maxBondOrder = IBond.Order.SINGLE;
             }
             // also count the implicit hydrogens with the bond order sum
             if (atom.getHydrogenCount() != CDKConstants.UNSET) {

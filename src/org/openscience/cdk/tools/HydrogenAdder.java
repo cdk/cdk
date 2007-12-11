@@ -298,7 +298,7 @@ public class HydrogenAdder {
             IAtom hydrogen = container.getBuilder().newAtom("H");
             IsotopeFactory.getInstance(container.getBuilder()).configure(hydrogen, isotope);
             totalContainer.addAtom(hydrogen);
-            IBond newBond = container.getBuilder().newBond((IAtom)atom, hydrogen, 1.0);
+            IBond newBond = container.getBuilder().newBond((IAtom)atom, hydrogen, IBond.Order.SINGLE);
             totalContainer.addBond(newBond);
             changedAtomsAndBonds.addAtom(hydrogen);
             changedAtomsAndBonds.addBond(newBond);

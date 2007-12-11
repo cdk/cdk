@@ -99,15 +99,16 @@ public class CDKUtilities {
 						}
 						
 						
-						double order1=m.getBond(a,cao[0]).getOrder();
-						double order2=m.getBond(a,cao[1]).getOrder();
+						IBond.Order order1 = m.getBond(a,cao[0]).getOrder();
+						IBond.Order order2 = m.getBond(a,cao[1]).getOrder();
 						
 						
 						//if (totalobonds==4) { // need to fix (FIXME)
-						if (order1==2 && order2==2) {
+						if (order1 == IBond.Order.SINGLE &&
+							order2 == IBond.Order.DOUBLE) {
 							a.setFormalCharge(1);
 							cao[0].setFormalCharge(-1); // pick first O arbitrarily
-							m.getBond(a,cao[0]).setOrder(1);
+							m.getBond(a,cao[0]).setOrder(IBond.Order.SINGLE);
 							changed=true;
 						}
 					} //else if (count==1) {// end if count>1
@@ -166,20 +167,21 @@ public class CDKUtilities {
 						}
 						
 						
-						double order1=m.getBond(a,cao[0]).getOrder();
-						double order2=m.getBond(a,cao[1]).getOrder();
+						IBond.Order order1 = m.getBond(a,cao[0]).getOrder();
+						IBond.Order order2 = m.getBond(a,cao[1]).getOrder();
 						
 						//int totalobonds=0;						
 						//totalobonds+=m.getBond(a,cao[0]).getOrder();
 //						totalobonds+=m.getBond(a,cao[1]).getOrder();
 						
 						//if (totalobonds==4) { // need to fix
-						if ((order1==1 && order2==2) || (order1==2 && order2==1) ) {
+						if ((order1 == IBond.Order.SINGLE && order2 == IBond.Order.DOUBLE) ||
+							(order1 == IBond.Order.DOUBLE && order2 == IBond.Order.SINGLE) ) {
 							a.setFormalCharge(0);
 							cao[0].setFormalCharge(0); // pick first O arbitrarily
 							cao[1].setFormalCharge(0); // pick first O arbitrarily
-							m.getBond(a,cao[0]).setOrder(2);
-							m.getBond(a,cao[1]).setOrder(2);
+							m.getBond(a,cao[0]).setOrder(IBond.Order.DOUBLE);
+							m.getBond(a,cao[1]).setOrder(IBond.Order.DOUBLE);
 							changed=true;
 						}
 					} // end if count>1
@@ -276,8 +278,16 @@ public class CDKUtilities {
 				for (int j=0;j<connectedAtoms.size();j++) {
 					IAtom conAtom = (IAtom)connectedAtoms.get(j);
 					if (!conAtom.getSymbol().equals("H")) {
-						IBond b=m.getBond(a,conAtom);
-						bondOrderSum+=b.getOrder();						
+						IBond bond = m.getBond(a,conAtom);
+						if (bond.getOrder() == IBond.Order.SINGLE) {
+							bondOrderSum += 1;
+						} else if (bond.getOrder() == IBond.Order.DOUBLE) {
+							bondOrderSum += 2;
+						} else if (bond.getOrder() == IBond.Order.TRIPLE) {
+							bondOrderSum += 3;
+						} else if (bond.getOrder() == IBond.Order.QUADRUPLE) {
+							bondOrderSum += 4;
+						}
 					}
 				}
 								

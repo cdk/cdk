@@ -46,6 +46,7 @@ import org.openscience.cdk.reaction.type.RearrangementCation3Reaction;
 import org.openscience.cdk.reaction.type.RearrangementRadical1Reaction;
 import org.openscience.cdk.reaction.type.RearrangementRadical2Reaction;
 import org.openscience.cdk.reaction.type.RearrangementRadical3Reaction;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * <p>This class try to generate resonance structure for a determinate molecule.</p>
@@ -147,13 +148,9 @@ public class StructureResonanceGenerator {
 		
 		IAtomContainerSet set = getAllStructures(atomContainer); 
 		/*analize sum of bonds */
-		double bondSum = 0;
-		for(int i = 0; i < atomContainer.getBondCount(); i++)
-			bondSum = bondSum + atomContainer.getBond(i).getOrder();
+		int bondSum = AtomContainerManipulator.getSingleBondEquivalentSum(atomContainer);
 		for(int i = 0; i < set.getAtomContainerCount(); i++){
-			double bondSumI = 0;
-			for(int j = 0; j < set.getAtomContainer(i).getBondCount(); j++)
-				bondSumI += set.getAtomContainer(i).getBond(j).getOrder();
+			int bondSumI = AtomContainerManipulator.getSingleBondEquivalentSum(set.getAtomContainer(i));
 			if(bondSumI >= bondSum)
 				setOfAC.addAtomContainer(set.getAtomContainer(i));
 		}

@@ -24,6 +24,9 @@
  */
 package org.openscience.cdk.atomtype;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -31,11 +34,9 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.AtomTypeTools;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Class implements methods to assign mmff94 atom types for a specific atom in an molecule. 
@@ -49,7 +50,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 
 	private LoggingTool logger;
 
-	double maxBondOrder = 0;
+	IBond.Order maxBondOrder = IBond.Order.SINGLE;
 	private AtomTypeFactory factory = null;
 	AtomTypeTools atomTypeTools=null;
 	
@@ -123,7 +124,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 		String ID = "";
 		boolean atomTypeFlag = false;
 		Matcher mat1=null;
-		double tmpMaxBondOrder = 0;
+		IBond.Order tmpMaxBondOrder = IBond.Order.SINGLE;
 		maxBondOrder = atomContainer.getMaximumBondOrder(atom);
 		logger.debug("Atom maxBond"+maxBondOrder+" ChemicalGroupConstant "+atomChemicalGroupConstant);
 		for (int j = 0; j < atomTypeIds.length; j++){
@@ -139,7 +140,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 							ID="CR3R";
 						}else if (atomChemicalGroupConstant==5){
 							ID="Car";	
-						}else if (maxBondOrder>1) {
+						}else if (maxBondOrder != IBond.Order.SINGLE) {
 							ID="Csp2";
 						}
 					}
@@ -185,7 +186,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 					}
 					
 				} else if (atomTypeIds[j].equals("N")) {//n sp3
-					if (atomContainer.getMaximumBondOrder(atom)>1 & atomContainer.getMaximumBondOrder(atom)<3){
+					if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE){
 						ID="Nsp2";
 					}
 					
@@ -251,7 +252,8 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 					}
 					
 				} else if (atomTypeIds[j].equals("HS")) {
-					if (atom.getMaxBondOrder() != null && atom.getMaxBondOrder() > 1) {
+					if (atom.getMaxBondOrder() != null &&
+						atom.getMaxBondOrder() != IBond.Order.SINGLE) {
 						ID="HC";
 					}
 				} else if (atomTypeIds[j].equals("HO")) {

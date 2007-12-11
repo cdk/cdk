@@ -36,6 +36,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
@@ -319,7 +320,9 @@ public class GenerateFragments {
 						//logger.debug("HETATOM TRUE");
 						targetMolecule.addAtom(atom);
 					}
-					if (this.exocyclicDoubleBonds && mainMolecule.getBond(atom,addAtomContainer.getAtom(i)).getOrder()>1 && !targetMolecule.contains(atom)){
+					if (this.exocyclicDoubleBonds &&
+						mainMolecule.getBond(atom,addAtomContainer.getAtom(i)).getOrder() != IBond.Order.SINGLE && 
+						!targetMolecule.contains(atom)){
 						//logger.debug("EXOCYCLIC DB TRUE");
 						targetMolecule.addAtom(atom);
 					}	
@@ -381,7 +384,9 @@ public class GenerateFragments {
 			atoms=mainMolecule.getConnectedAtomsList(addAtomContainer.getAtom(i));
 			for (int j = 0; j < atoms.size(); j++) {
 				IAtom atom = (IAtom)atoms.get(j);
-				if (this.exocyclicDoubleBonds && mainMolecule.getBond(atom,addAtomContainer.getAtom(i)).getOrder()>1 && !targetMolecule.contains(atom)){
+				if (this.exocyclicDoubleBonds && 
+					mainMolecule.getBond(atom,addAtomContainer.getAtom(i)).getOrder() != IBond.Order.SINGLE && 
+					!targetMolecule.contains(atom)){
 					targetMolecule.addAtom(atom);
 				}
 			}

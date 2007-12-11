@@ -105,7 +105,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				if (atomContainer.getConnectedBondsCount(atom) == 0) {
     					return getAtomType("C.plus.sp2");
     				} else {
-    					double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    					IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     					if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
     						return getAtomType("C.plus.sp2");
     					} else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
@@ -113,7 +113,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     					} 
     				}
     			} else if (atom.getFormalCharge() == -1) {
-    				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    				IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
         			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE &&
         				atomContainer.getConnectedBondsCount(atom) <= 3) {
         				if (isRingAtom(atom, atomContainer)) {
@@ -145,8 +145,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			// FIXME: I don't perceive carbons with more than 4 connections yet
     			return null;
     		} else { // OK, use bond order info
-    			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-    			if (maxBondOrder > CDKConstants.BONDORDER_TRIPLE) {
+    			IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    			if (maxBondOrder == IBond.Order.QUADRUPLE) {
     				// WTF??
     				return null;
     			} else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
@@ -180,7 +180,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         		(atom.getFormalCharge() == CDKConstants.UNSET ||
         	     atom.getFormalCharge() == 0)) {
     			if (atom.getHybridization() == Hybridization.SP2) {
-    				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    				IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
         			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
         				return getAtomType("O.sp2");
         			} else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
@@ -203,7 +203,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				if (atomContainer.getConnectedBondsCount(atom) == 0) {
     					return getAtomType("O.plus");
     				}
-    				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    				IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
         			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
         				return getAtomType("O.plus.sp2");
         			} else {
@@ -217,7 +217,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else if (atomContainer.getConnectedBondsCount(atom) == 0) {
     			return getAtomType("O.sp3");
     		} else { // OK, use bond order info
-    			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    			IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
     				return getAtomType("O.sp2");
     			} else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
@@ -283,7 +283,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() != 0) {
     			if (atom.getFormalCharge() == 1) {
-    				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    				IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     				if (maxBondOrder == CDKConstants.BONDORDER_SINGLE ||
     					atomContainer.getConnectedBondsCount(atom) == 0) {
     					if (atom.getHybridization() != CDKConstants.UNSET &&
@@ -304,7 +304,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     					}
     				}
     			} else if (atom.getFormalCharge() == -1) {
-    				double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    				IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     				if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
     					if (atomContainer.getConnectedBondsCount(atom) <= 2) {
     						return getAtomType("N.minus.sp3");
@@ -321,7 +321,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else if (atomContainer.getConnectedBondsCount(atom) == 0) {
     			return getAtomType("N.sp3");
     		} else { // OK, use bond order info
-    			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    			IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
     				boolean isRingAtom = isRingAtom(atom, atomContainer);
     				int explicitHydrogens = countExplicitHydrogens(atom, atomContainer);
@@ -407,7 +407,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				return getAtomType("S.minus");
     			}
     		} else if (neighborcount == 6) {
-    			double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    			IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
     				return getAtomType("S.octahedral");
     			}
@@ -456,7 +456,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	if ("P".equals(atom.getSymbol())) {
     		List<IBond> neighbors = atomContainer.getConnectedBondsList(atom);
     		int neighborcount = neighbors.size();
-    		double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    		IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     		if (neighborcount == 3) {
     			return getAtomType("P.ine");
     		} else if (neighborcount == 2) {

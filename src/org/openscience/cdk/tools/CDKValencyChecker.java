@@ -34,6 +34,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -83,7 +84,7 @@ public class CDKValencyChecker implements IValencyChecker {
 			throw new CDKException("Atom type is too general; cannot determine the number of pi bonds for: " + atom.getAtomTypeName());
 
         double bondOrderSum = container.getBondOrderSum(atom);
-        double maxBondOrder = container.getMaximumBondOrder(atom);
+        IBond.Order maxBondOrder = container.getMaximumBondOrder(atom);
         Integer hcount = atom.getHydrogenCount() == CDKConstants.UNSET ?  0 : atom.getHydrogenCount();
         
         int piBondCount = ((Integer)type.getProperty(CDKConstants.PI_BOND_COUNT)).intValue();
@@ -93,7 +94,7 @@ public class CDKValencyChecker implements IValencyChecker {
         int typeBondOrderSum = formalNeighborCount + piBondCount;
         
         if (bondOrderSum + hcount == typeBondOrderSum && 
-        		maxBondOrder <= typeMaxBondOrder) {
+        	maxBondOrder.ordinal() <= typeMaxBondOrder) {
         	return true;
         }
 		return false;

@@ -354,7 +354,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 					tempNode = new TreeNode(atom.getSymbol(), new TreeNode(root.getSymbol(), null, root, (double) 0, 0, (long) 0), atom, 4, atomContainer.getConnectedBondsCount(atom), 0);
 				} else
 				{
-					tempNode = new TreeNode(atom.getSymbol(), new TreeNode(root.getSymbol(), null, root, (double) 0, 0, (long) 0), atom, bond.getOrder(), atomContainer.getConnectedBondsCount(atom), 0);
+					tempNode = new TreeNode(atom.getSymbol(), new TreeNode(root.getSymbol(), null, root, (double) 0, 0, (long) 0), atom, bond.getOrder().ordinal()+1, atomContainer.getConnectedBondsCount(atom), 0);
 				}
 				
 		        sphereNodes.add(tempNode);
@@ -419,7 +419,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 								nextSphereNodes.add(new TreeNode(toNode.getSymbol(), treeNode, toNode, 4, atomContainer.getConnectedBondsCount(toNode), treeNode.score));
 							} else
 							{
-								nextSphereNodes.add(new TreeNode(toNode.getSymbol(), treeNode, toNode, bond.getOrder(), atomContainer.getConnectedBondsCount(toNode), treeNode.score));
+								nextSphereNodes.add(new TreeNode(toNode.getSymbol(), treeNode, toNode, bond.getOrder().ordinal()+1, atomContainer.getConnectedBondsCount(toNode), treeNode.score));
 							}
 						}
 					}

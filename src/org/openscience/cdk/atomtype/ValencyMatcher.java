@@ -24,7 +24,9 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * AtomTypeMatcher that finds an AtomType by matching the Atom's element symbol.
@@ -75,7 +77,7 @@ public class ValencyMatcher implements IAtomTypeMatcher {
         }
 
 		double bondOrderSum = atomContainer.getBondOrderSum(atom);
-		double maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+		IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
 		int charge = atom.getFormalCharge();
 		int hcount = atom.getHydrogenCount() == null ? 0 : atom.getHydrogenCount();
 
@@ -83,7 +85,7 @@ public class ValencyMatcher implements IAtomTypeMatcher {
         for (IAtomType type : types) {
             logger.debug("   ... matching atom ", atom, " vs ", type);
             if (bondOrderSum - charge + hcount == type.getBondOrderSum() &&
-                    maxBondOrder <= type.getMaxBondOrder()) {
+                !BondManipulator.isHigherOrder(maxBondOrder, type.getMaxBondOrder())) {
                 return type;
             }
         }

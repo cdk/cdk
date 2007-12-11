@@ -519,5 +519,34 @@ public class AtomContainerManipulator {
         }
 	}
 	
+	/**
+	 * Returns the sum of bond orders, where a single bond counts as one
+	 * <i>single bond equivalent</i>, a double as two, etc.
+	 * 
+	 * @param container
+	 * @return
+	 */
+	public static int getSingleBondEquivalentSum(IAtomContainer container) {
+		int sum = 0;
+		Iterator<IBond> bonds = container.bonds();
+		while (bonds.hasNext()) {
+			IBond nextBond = bonds.next();
+			if (nextBond.getOrder() == IBond.Order.SINGLE) {
+				sum += 1;
+			} else if (nextBond.getOrder() == IBond.Order.DOUBLE) {
+				sum += 2;
+			} else if (nextBond.getOrder() == IBond.Order.TRIPLE) {
+				sum += 3;
+			} else if (nextBond.getOrder() == IBond.Order.QUADRUPLE) {
+				sum += 4;
+			}
+		}
+		return sum;
+	}
+	
+	public static IBond.Order getMaximumBondOrder(IAtomContainer container) {
+		return BondManipulator.getMaximumBondOrder(container.bonds());
+	}
+	
 }
 
