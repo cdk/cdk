@@ -221,7 +221,7 @@ NO_CHARGES
                 writer.write(counter + " " +
                              mol.getAtomNumber(bond.getAtom(0)) + " " +
                              mol.getAtomNumber(bond.getAtom(1)) + " " +
-                             ((int)bond.getOrder()) +
+                             ((int)bond.getOrder().ordinal()) +
                              "\n");
                 counter++;
             } 

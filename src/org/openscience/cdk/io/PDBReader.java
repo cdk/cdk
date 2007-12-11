@@ -43,6 +43,7 @@ import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -494,7 +495,7 @@ public class PDBReader extends DefaultChemObjectReader {
 		if (secondAtom == null) {
 			logger.error("Could not find bond target atom in map with serial id: ", bondAtomNo);
 		}
-		obp.addBond(firstAtom.getBuilder().newBond(firstAtom, secondAtom, 1));
+		obp.addBond(firstAtom.getBuilder().newBond(firstAtom, secondAtom, IBond.Order.SINGLE));
 	}
 
 	private boolean createBondsWithRebondTool(IBioPolymer pol){

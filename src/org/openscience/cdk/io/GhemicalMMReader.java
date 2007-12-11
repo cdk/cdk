@@ -37,6 +37,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -124,7 +125,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
         
         int[] bondatomid1 = new int[1];
         int[] bondatomid2 = new int[1];
-        int[] bondorder = new int[1];
+        IBond.Order[] bondorder = new IBond.Order[1];
         
         int numberOfAtoms = 0;
         int numberOfBonds = 0;
@@ -168,7 +169,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                         numberOfBonds = Integer.parseInt(st.nextToken());
                         bondatomid1 = new int[numberOfAtoms];
                         bondatomid2 = new int[numberOfAtoms];
-                        bondorder = new int[numberOfAtoms];
+                        bondorder = new IBond.Order[numberOfAtoms];
                         
                         for (int i = 0; i < numberOfBonds; i++) {
                             line = input.readLine();
@@ -177,15 +178,15 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                             bondatomid2[i] = Integer.parseInt(bondInfoFields.nextToken());
                             String order = bondInfoFields.nextToken();
                             if ("D".equals(order)) {
-                                bondorder[i] = 2;
+                                bondorder[i] = IBond.Order.DOUBLE;
                             } else if ("S".equals(order)) {
-                                bondorder[i] = 1;
+                                bondorder[i] = IBond.Order.SINGLE;
                             } else if ("T".equals(order)) {
-                                bondorder[i] = 3;
+                                bondorder[i] = IBond.Order.TRIPLE;
                             } else {
                                 // ignore order, i.e. set to single
                                 logger.warn("Unrecognized bond order, using single bond instead. Found: " + order);
-                                bondorder[i] = 1;
+                                bondorder[i] = IBond.Order.SINGLE;
                             }
                         }
                     } catch (Exception exception) {

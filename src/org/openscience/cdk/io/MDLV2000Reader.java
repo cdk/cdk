@@ -311,7 +311,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         double totalZ = 0.0;
         //int[][] conMat = new int[0][0];
         //String help;
-        IBond bond;
         IAtom atom;
         String line = "";
         
@@ -493,18 +492,22 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 // interpret CTfile's special bond orders
                 IAtom a1 = molecule.getAtom(atom1 - 1);
                 IAtom a2 = molecule.getAtom(atom2 - 1);
-                if (order == 4) {
+                IBond newBond = null;
+                if (order == 1) {
+                	newBond = molecule.getBuilder().newBond(a1, a2, IBond.Order.SINGLE, stereo);
+                } else if (order == 2) {
+                	newBond = molecule.getBuilder().newBond(a1, a2, IBond.Order.DOUBLE, stereo);
+                } else if (order == 3) {
+                	newBond = molecule.getBuilder().newBond(a1, a2, IBond.Order.TRIPLE, stereo);
+                } else if (order == 4) {                
                     // aromatic bond
-                    bond = molecule.getBuilder().newBond(a1, a2, CDKConstants.BONDORDER_SINGLE, stereo);
+                	newBond = molecule.getBuilder().newBond(a1, a2, IBond.Order.SINGLE, stereo);
                     // mark both atoms and the bond as aromatic
-                    bond.setFlag(CDKConstants.ISAROMATIC, true);
+                	newBond.setFlag(CDKConstants.ISAROMATIC, true);
                     a1.setFlag(CDKConstants.ISAROMATIC, true);
                     a2.setFlag(CDKConstants.ISAROMATIC, true);
-                    molecule.addBond(bond);
-                } else {
-                    bond = molecule.getBuilder().newBond(a1, a2, (double) order, stereo);
-                    molecule.addBond(bond);
                 }
+                molecule.addBond(newBond);
             }
             
             // read PROPERTY block

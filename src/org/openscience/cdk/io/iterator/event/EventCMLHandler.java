@@ -57,7 +57,7 @@ public class EventCMLHandler extends CMLHandler {
     
     private int bond_a1;
     private int bond_a2;
-    private double bond_order;
+    private IBond.Order bond_order;
     private int bond_stereo;
     private String bond_id;
     
@@ -156,9 +156,6 @@ public class EventCMLHandler extends CMLHandler {
                 if (bond_id != null) b.setID(bond_id);
                 if (bond_stereo != -99) {
                     b.setStereo(bond_stereo);
-                }
-                if (bond_order == 1.5) {
-                    b.setFlag(CDKConstants.ISAROMATIC, true);
                 }
                 currentMolecule.addBond(b);
             }
@@ -275,10 +272,21 @@ public class EventCMLHandler extends CMLHandler {
                 bond_id = propertyValue;
             } else if (propertyType.equals("order")) {
                 try {
-                    bond_order = Double.parseDouble(propertyValue);
+                    Double order = Double.parseDouble(propertyValue);
+                    if (order == 1.0) {
+                    	bond_order = IBond.Order.SINGLE;
+                    } else if (order == 2.0) {
+                    	bond_order = IBond.Order.DOUBLE;
+                    } else if (order == 3.0) {
+                    	bond_order = IBond.Order.TRIPLE;
+                    } else if (order == 4.0) {
+                    	bond_order = IBond.Order.QUADRUPLE;
+                    } else {
+                        bond_order = IBond.Order.SINGLE;
+                    }
                 } catch (Exception e) {
                     logger.error("Cannot convert to double: " + propertyValue);
-                    bond_order = 1.0;
+                    bond_order = IBond.Order.SINGLE;
                 }
             } else if (propertyType.equals("stereo")) {
                 if (propertyValue.equals("H")) {

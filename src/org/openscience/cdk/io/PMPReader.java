@@ -275,7 +275,16 @@ public class PMPReader extends DefaultChemObjectReader {
                         			(Integer)bondAtomTwos.get(index)
                         		)).intValue()
                         	);
-                    		IBond bond = modelStructure.getBuilder().newBond(atom1, atom2, order);
+                    		IBond bond = modelStructure.getBuilder().newBond(atom1, atom2);
+                    		if (order == 1.0) {
+                    			bond.setOrder(IBond.Order.SINGLE);
+                    		} else if (order == 2.0) {
+                    			bond.setOrder(IBond.Order.DOUBLE);
+                    		} else if (order == 3.0) {
+                    			bond.setOrder(IBond.Order.TRIPLE);
+                    		} else if (order == 4.0) {
+                    			bond.setOrder(IBond.Order.QUADRUPLE);
+                    		}
                     		modelStructure.addBond(bond);
                     	}
                     }

@@ -28,6 +28,7 @@ package org.openscience.cdk.io.cml;
 import java.util.StringTokenizer;
 
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.xml.sax.Attributes;
 
 /**
@@ -79,7 +80,9 @@ public class CDKConvention extends CMLCoreModule {
                 logger.debug("new bond order: " + border);
                 // assume cdk bond object has already started
 //                cdo.setObjectProperty("Bond", "order", border);
-                currentBond.setOrder(Double.parseDouble(border));
+                currentBond.setOrder(
+                	BondManipulator.createBondOrder(Double.parseDouble(border))
+                );
             }
         } else {
             super.characterData(xpath, ch, start, length);

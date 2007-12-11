@@ -55,6 +55,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.xml.sax.Attributes;
 
 /**
@@ -1380,7 +1381,9 @@ public class CMLCoreModule implements ICMLModule {
                     	currentBond.setFlag(CDKConstants.ISAROMATIC, true);
                     } else {
 //                        cdo.setObjectProperty("Bond", "order", bondOrder);
-                    	currentBond.setOrder(Double.parseDouble(bondOrder));
+                    	currentBond.setOrder(
+                    		BondManipulator.createBondOrder(Double.parseDouble(bondOrder))
+                    	);
                     }
                 }
 

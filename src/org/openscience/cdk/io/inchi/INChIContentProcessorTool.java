@@ -123,7 +123,7 @@ public class INChIContentProcessorTool {
                     IAtom targetAtom = container.getAtom(target-1);
                     if (source != -1) {
                     	IAtom sourceAtom = container.getAtom(source-1);
-                        bondToAdd = container.getBuilder().newBond(sourceAtom, targetAtom, 1.0);
+                        bondToAdd = container.getBuilder().newBond(sourceAtom, targetAtom, IBond.Order.SINGLE);
                         container.addBond(bondToAdd);
                     }
                     remainder = matcher.group(2);

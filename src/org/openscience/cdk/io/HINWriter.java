@@ -185,17 +185,17 @@ public class HINWriter extends DefaultChemObjectWriter {
                         if (bond.contains(atom)) {
                             // current atom is in the bond so lets get the connected atom
                             IAtom connectedAtom = bond.getConnectedAtom(atom);
-                            double bondOrder = bond.getOrder();
+                            IBond.Order bondOrder = bond.getOrder();
                             int serial;
                             String bondType = "";
 
                             // get the serial no for this atom
                             serial = mol.getAtomNumber(connectedAtom);
 
-                            if (bondOrder == 1) bondType = "s";
-                            else if (bondOrder == 2) bondType = "d";
-                            else if (bondOrder == 3) bondType = "t";
-                            else if (bondOrder == 1.5) bondType = "a";
+                            if (bondOrder == IBond.Order.SINGLE) bondType = "s";
+                            else if (bondOrder == IBond.Order.DOUBLE) bondType = "d";
+                            else if (bondOrder == IBond.Order.TRIPLE) bondType = "t";
+                            else if (bond.getFlag(CDKConstants.ISAROMATIC)) bondType = "a";
                             buf = buf + Integer.toString(serial + 1) + " " + bondType + " ";
                             ncon++;
                         }

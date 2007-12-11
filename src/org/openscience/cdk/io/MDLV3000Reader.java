@@ -49,6 +49,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * Class that implements the MDL mol V3000 format. This reader reads the 
@@ -291,7 +292,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     if (order >= 4) {
                         logger.warn("Query order types are not supported (yet). File a bug if you need it");
                     } else {
-                        bond.setOrder((double)order);
+                        bond.setOrder(BondManipulator.createBondOrder((double)order));
                     }
                 } catch (Exception exception) {
                     String error = "Error while parsing bond index";

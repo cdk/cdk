@@ -335,7 +335,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         			line = formatMDLInt(container.getAtomNumber(bond.getAtom(0)) + 1,3);
         			line += formatMDLInt(container.getAtomNumber(bond.getAtom(1)) + 1,3);
         		}
-        		line += formatMDLInt((int)bond.getOrder(),3);
+        		line += formatMDLInt((int)bond.getOrder().ordinal()+1,3);
         		line += "  ";
         		switch(bond.getStereo()){
         		case CDKConstants.STEREO_BOND_UP:

@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.CTXFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * Reader that extracts information from the IDENT, NAME, ATOMS and BONDS
@@ -194,7 +195,7 @@ public class CTXReader extends DefaultChemObjectReader {
 					container.getAtom(atom2)
 				);
 				int order = Integer.parseInt(line.substring(23).trim());
-				bond.setOrder((double)order);
+				bond.setOrder(BondManipulator.createBondOrder((double)order));
 				container.addBond(bond);
 			} // else: bond already present; CTX store the bonds twice
 		}

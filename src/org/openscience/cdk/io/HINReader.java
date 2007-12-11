@@ -35,15 +35,16 @@ import java.util.Vector;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.HINFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 
@@ -262,7 +263,15 @@ public class HINReader extends DefaultChemObjectReader {
                     int s = ((Integer)ar.get(0)).intValue();
                     int e = ((Integer)ar.get(1)).intValue();
                     double bo = ((Double)ar.get(2)).doubleValue();
-                    m.addBond( s,e,bo );
+                    if (bo == 1.0) {
+                    	m.addBond(s, e, IBond.Order.SINGLE);
+                    } else if (bo == 2.0) {
+                    	m.addBond(s, e, IBond.Order.DOUBLE);
+                    } else if (bo == 3.0) {
+                    	m.addBond(s, e, IBond.Order.TRIPLE);
+                    } else if (bo == 4.0) {
+                    	m.addBond(s, e, IBond.Order.QUADRUPLE);
+                    }	
                 }
 
                 setOfMolecules.addMolecule(m);
