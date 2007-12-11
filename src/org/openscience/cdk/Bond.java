@@ -24,13 +24,14 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
+import java.io.Serializable;
+import java.util.Iterator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-import java.io.Serializable;
-import java.util.Iterator;
+
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  *  Implements the concept of a covalent bond between two atoms. A bond is
@@ -60,7 +61,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	/**
 	 *  The bond order of this bond.
 	 */
-	protected double order;
+	protected IBond.Order order;
 
 	/**
 	 *  Number of atoms contained by this object.
@@ -85,7 +86,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 *  Constructs an empty bond.
 	 */
 	public Bond() {
-		this(null, null, 0.0, CDKConstants.STEREO_BOND_NONE);
+		this(null, null, null, CDKConstants.STEREO_BOND_NONE);
 	}
 
 
@@ -97,7 +98,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 */
 	public Bond(IAtom atom1, IAtom atom2)
 	{
-		this(atom1, atom2, 1.0, CDKConstants.STEREO_BOND_NONE);
+		this(atom1, atom2, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_NONE);
 	}
 
 
@@ -108,7 +109,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 *@param  atom2  the second Atom in the bond
 	 *@param  order  the bond order
 	 */
-	public Bond(IAtom atom1, IAtom atom2, double order)
+	public Bond(IAtom atom1, IAtom atom2, Order order)
 	{
 		this(atom1, atom2, order, CDKConstants.STEREO_BOND_NONE);
 	}
@@ -123,7 +124,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 *@param  order   the bond order
 	 *@param  stereo  a descriptor the stereochemical orientation of this bond
 	 */
-	public Bond(IAtom atom1, IAtom atom2, double order, int stereo)
+	public Bond(IAtom atom1, IAtom atom2, Order order, int stereo)
 	{
 		atoms = new Atom[2];
 		atoms[0] = atom1;
@@ -264,7 +265,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 *      for predefined values.
 	 *@see       #setOrder
 	 */
-	public double getOrder()
+	public Order getOrder()
 	{
 		return this.order;
 	}
@@ -278,7 +279,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 *      org.openscience.cdk.CDKConstants for predefined values.
 	 *@see           #getOrder
 	 */
-	public void setOrder(double order)
+	public void setOrder(Order order)
 	{
 		this.order = order;
 		notifyChanged();

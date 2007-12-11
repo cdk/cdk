@@ -25,6 +25,7 @@
 package org.openscience.cdk.graph.invariant;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
@@ -118,30 +119,30 @@ public class EquivalentClassPartitioner
 				 IBond bond0 = (IBond)bonds.get(0);
 				 if(atom.getSymbol().equals("C"))
 				 {
-					if(bond0.getOrder()==1.0)nodeSequence[i]=1;//CH3-
-					else if(bond0.getOrder()==2.0)nodeSequence[i]=3;//CH2=
-					else if(bond0.getOrder()==3.0)nodeSequence[i]=6;//CH#
+					if(bond0.getOrder()==IBond.Order.SINGLE)nodeSequence[i]=1;//CH3-
+					else if(bond0.getOrder()==IBond.Order.DOUBLE)nodeSequence[i]=3;//CH2=
+					else if(bond0.getOrder()==IBond.Order.TRIPLE)nodeSequence[i]=6;//CH#
 				 }
 				 else if(atom.getSymbol().equals("O"))
 				 {
-					if(bond0.getOrder()==1.0)nodeSequence[i]=14;//HO-
-					else if(bond0.getOrder()==2.0)nodeSequence[i]=16;//O=
+					if(bond0.getOrder()==IBond.Order.SINGLE)nodeSequence[i]=14;//HO-
+					else if(bond0.getOrder()==IBond.Order.DOUBLE)nodeSequence[i]=16;//O=
 				 }
 				 else if(atom.getSymbol().equals("N"))
 				 {
-					if(bond0.getOrder()==1.0)nodeSequence[i]=18;//NH2-
-					else if(bond0.getOrder()==2.0)
+					if(bond0.getOrder()==IBond.Order.SINGLE)nodeSequence[i]=18;//NH2-
+					else if(bond0.getOrder()==IBond.Order.DOUBLE)
 					{
 						if(atom.getCharge()==-1.0)nodeSequence[i]=27;//N= contains -1 charge
 						else nodeSequence[i]=20;//NH=
 					}
-					else if(bond0.getOrder()==3.0)nodeSequence[i]=23;//N#
+					else if(bond0.getOrder()==IBond.Order.TRIPLE)nodeSequence[i]=23;//N#
 					
 				 }
 				 else if(atom.getSymbol().equals("S"))
 				 {
-					if(bond0.getOrder()==1.0)nodeSequence[i]=31;//HS-
-					else if(bond0.getOrder()==2.0)nodeSequence[i]=33;//S=
+					if(bond0.getOrder()==IBond.Order.SINGLE)nodeSequence[i]=31;//HS-
+					else if(bond0.getOrder()==IBond.Order.DOUBLE)nodeSequence[i]=33;//S=
 				 }
 				 else if(atom.getSymbol().equals("P"))nodeSequence[i]=38;//PH2-
 				 else if(atom.getSymbol().equals("F"))nodeSequence[i]=42;//F-
@@ -159,56 +160,56 @@ public class EquivalentClassPartitioner
 				 IBond bond1 = (IBond)bonds.get(1);
 				 if(atom.getSymbol().equals("C"))
 				 {
-					 if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0)
+					 if(bond0.getOrder()==IBond.Order.SINGLE && bond1.getOrder()==IBond.Order.SINGLE)
 						 nodeSequence[i]=2;//-CH2-
-					 else if(bond0.getOrder()==2.0 && bond1.getOrder()==2.0)
+					 else if(bond0.getOrder()==IBond.Order.DOUBLE && bond1.getOrder()==IBond.Order.DOUBLE)
 						 nodeSequence[i]=10;//=C=
-					 else if((bond0.getOrder()==1.0 || bond1.getOrder()==1.0) &&
-						 (bond0.getOrder()==2.0 || bond1.getOrder()==2.0))
+					 else if((bond0.getOrder()==IBond.Order.SINGLE || bond1.getOrder()==IBond.Order.SINGLE) &&
+						 (bond0.getOrder()==IBond.Order.DOUBLE || bond1.getOrder()==IBond.Order.DOUBLE))
 						nodeSequence[i]=5;//-CH=
-					 else if((bond0.getOrder()==1.0 || bond1.getOrder()==3.0) &&
-						 (bond0.getOrder()==3.0 || bond1.getOrder()==3.0))
+					 else if((bond0.getOrder()==IBond.Order.SINGLE || bond1.getOrder()==IBond.Order.TRIPLE) &&
+						 (bond0.getOrder()==IBond.Order.TRIPLE || bond1.getOrder()==IBond.Order.TRIPLE))
 						nodeSequence[i]=9;//-C#
-					else if(bond0.getOrder()==1.5 && bond1.getOrder()==1.5)
+					else if(bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
 						nodeSequence[i]=11;//ArCH
 				}
 				else if(atom.getSymbol().equals("N"))
 				{
-					if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0)
+					if(bond0.getOrder()==IBond.Order.SINGLE && bond1.getOrder()==IBond.Order.SINGLE)
 						 nodeSequence[i]=19;//-NH-
-					else if(bond0.getOrder()==2.0 && bond1.getOrder()==2.0)
+					else if(bond0.getOrder()==IBond.Order.DOUBLE && bond1.getOrder()==IBond.Order.DOUBLE)
 						nodeSequence[i]=28;//=N= with charge=-1
-					else if((bond0.getOrder()==1.0 || bond1.getOrder()==1.0) &&
-						 (bond0.getOrder()==2.0 || bond1.getOrder()==2.0))
+					else if((bond0.getOrder()==IBond.Order.SINGLE || bond1.getOrder()==IBond.Order.SINGLE) &&
+						 (bond0.getOrder()==IBond.Order.DOUBLE || bond1.getOrder()==IBond.Order.DOUBLE))
 						nodeSequence[i]=22;//-N=
-					else if((bond0.getOrder()==2.0 || bond1.getOrder()==2.0) &&
-						 (bond0.getOrder()==3.0 || bond1.getOrder()==3.0))
+					else if((bond0.getOrder()==IBond.Order.DOUBLE || bond1.getOrder()==IBond.Order.DOUBLE) &&
+						 (bond0.getOrder()==IBond.Order.TRIPLE || bond1.getOrder()==IBond.Order.TRIPLE))
 						nodeSequence[i]=26;//=N#
-					else if((bond0.getOrder()==1.0 || bond1.getOrder()==1.0) &&
-						 (bond0.getOrder()==3.0 || bond1.getOrder()==3.0))
+					else if((bond0.getOrder()==IBond.Order.SINGLE || bond1.getOrder()==IBond.Order.SINGLE) &&
+						 (bond0.getOrder()==IBond.Order.TRIPLE || bond1.getOrder()==IBond.Order.TRIPLE))
 						nodeSequence[i]=29;//-N# with charge=+1
-					else if(bond0.getOrder()==1.5 && bond1.getOrder()==1.5)
+					else if(bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
 						nodeSequence[i]=30;//ArN
 				}
 				else if(atom.getSymbol().equals("O"))
 				{
-					if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0)
+					if(bond0.getOrder()==IBond.Order.SINGLE && bond1.getOrder()==IBond.Order.SINGLE)
 						 nodeSequence[i]=15;//-O-
-					else if(bond0.getOrder()==1.5 && bond1.getOrder()==1.5)
+					else if(bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
 						nodeSequence[i]=17;//ArO
 				}
 				else if(atom.getSymbol().equals("S"))
 				{
-					if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0)
+					if(bond0.getOrder()==IBond.Order.SINGLE && bond1.getOrder()==IBond.Order.SINGLE)
 						 nodeSequence[i]=32;//-S-
-					else if(bond0.getOrder()==2.0 && bond1.getOrder()==2.0)
+					else if(bond0.getOrder()==IBond.Order.DOUBLE && bond1.getOrder()==IBond.Order.DOUBLE)
 						 nodeSequence[i]=35;//=S=
-					else if(bond0.getOrder()==1.5 && bond1.getOrder()==1.5)
+					else if(bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
 						nodeSequence[i]=37;//ArS
 				}
 				else if(atom.getSymbol().equals("P"))
 				{
-					if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0)
+					if(bond0.getOrder()==IBond.Order.SINGLE && bond1.getOrder()==IBond.Order.SINGLE)
 						 nodeSequence[i]=39;//-PH-
 				}
 				else
@@ -223,31 +224,31 @@ public class EquivalentClassPartitioner
 				 IBond bond2 = (IBond)bonds.get(2);
 				 if(atom.getSymbol().equals("C"))
 				 {
-					 if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0 && bond2.getOrder()==1.0)
+					 if(bond0.getOrder()==IBond.Order.SINGLE && bond1.getOrder()==IBond.Order.SINGLE && bond2.getOrder()==IBond.Order.SINGLE)
 						 nodeSequence[i]=4;//>C-
-					 else if(bond0.getOrder()==2.0 || bond1.getOrder()==2.0 ||bond2.getOrder()==2.0)
+					 else if(bond0.getOrder()==IBond.Order.DOUBLE || bond1.getOrder()==IBond.Order.DOUBLE ||bond2.getOrder()==IBond.Order.DOUBLE)
 						 nodeSequence[i]=8;//>C=
-					 else if(bond0.getOrder()==1.5 && bond1.getOrder()==1.5 && bond2.getOrder()==1.5)
+					 else if(bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC) && bond2.getFlag(CDKConstants.ISAROMATIC))
 						nodeSequence[i]=13;//ArC
-					 else if((bond0.getOrder()==1.5 || bond1.getOrder()==1.5 || bond2.getOrder()==1.5) &&
-						 (bond0.getOrder()==1.0 || bond1.getOrder()==1.0 || bond2.getOrder()==1.0))
+					 else if((bond0.getFlag(CDKConstants.ISAROMATIC) || bond1.getFlag(CDKConstants.ISAROMATIC) || bond2.getFlag(CDKConstants.ISAROMATIC)) &&
+						 (bond0.getOrder()==IBond.Order.SINGLE || bond1.getOrder()==IBond.Order.SINGLE || bond2.getOrder()==IBond.Order.SINGLE))
 						nodeSequence[i]=12;//ArC-
 				 }
 				 else if(atom.getSymbol().equals("N"))
 				 {
-					 if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0 && bond2.getOrder()==1.0)
+					 if(bond0.getOrder()==IBond.Order.SINGLE && bond1.getOrder()==IBond.Order.SINGLE && bond2.getOrder()==IBond.Order.SINGLE)
 						 nodeSequence[i]=21;//>N-
-					 else if(bond0.getOrder()==1.0 || bond1.getOrder()==1.0 || bond2.getOrder()==1.0)
+					 else if(bond0.getOrder()==IBond.Order.SINGLE || bond1.getOrder()==IBond.Order.SINGLE || bond2.getOrder()==IBond.Order.SINGLE)
 						 nodeSequence[i]=25;//-N(=)=
 				 }
 				 else if(atom.getSymbol().equals("S"))
 				 {
-					 if(bond0.getOrder()==2.0 || bond1.getOrder()==2.0 || bond2.getOrder()==2.0)
+					 if(bond0.getOrder()==IBond.Order.DOUBLE || bond1.getOrder()==IBond.Order.DOUBLE || bond2.getOrder()==IBond.Order.DOUBLE)
 						 nodeSequence[i]=34;//>S=
 				 }
 				 else if(atom.getSymbol().equals("P"))
 				 {
-					 if(bond0.getOrder()==1.0 && bond1.getOrder()==1.0 && bond2.getOrder()==1.0)
+					 if(bond0.getOrder()==IBond.Order.SINGLE && bond1.getOrder()==IBond.Order.SINGLE && bond2.getOrder()==IBond.Order.SINGLE)
 						 nodeSequence[i]=40;//>P-
 				 }
 				 else

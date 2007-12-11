@@ -28,10 +28,11 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IElement;
-
 import java.io.Serializable;
+
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * The base class for atom types. Atom types are typically used to describe the
@@ -61,7 +62,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	/**
 	 *  The maximum bond order allowed for this atom type.
 	 */
-	Double maxBondOrder = (Double) CDKConstants.UNSET;
+	IBond.Order maxBondOrder = null;
 	/**
 	 *  The maximum sum of all bondorders allowed for this atom type.
 	 */
@@ -179,7 +180,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see       #getMaxBondOrder
 	 */
-	public void setMaxBondOrder(Double maxBondOrder)
+	public void setMaxBondOrder(IBond.Order maxBondOrder)
 	{
 		this.maxBondOrder = maxBondOrder;
 		notifyChanged();
@@ -220,7 +221,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @see       #setMaxBondOrder
 	 */
-	public Double getMaxBondOrder()
+	public IBond.Order getMaxBondOrder()
 	{
 		return maxBondOrder;
 	}

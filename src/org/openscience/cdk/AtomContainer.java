@@ -23,10 +23,23 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.interfaces.*;
-
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomParity;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.IBond.Order;
 
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and
@@ -882,13 +895,25 @@ public class AtomContainer extends ChemObject
 	 *
 	 * @param  atom  The atom
 	 * @return       The number of bondorders for this atom
+	 * 
+	 * @deprecated
 	 */
 	public double getBondOrderSum(IAtom atom)
 	{
 		double count = 0;
 		for (int i = 0; i < bondCount; i++)
 		{
-			if (bonds[i].contains(atom)) count += bonds[i].getOrder();
+			if (bonds[i].contains(atom)) {
+				if (bonds[i].getOrder() == IBond.Order.SINGLE) {
+					count += 1;
+				} else if (bonds[i].getOrder() == IBond.Order.DOUBLE) {
+					count += 2;
+				} else if (bonds[i].getOrder() == IBond.Order.TRIPLE) {
+					count += 3;
+				} else if (bonds[i].getOrder() == IBond.Order.QUADRUPLE) {
+					count += 4;
+				}
+			}
 		}
 		return count;
 	}
@@ -900,12 +925,11 @@ public class AtomContainer extends ChemObject
 	 * @param  atom  The atom
 	 * @return       The maximum bond order that this atom currently has
 	 */
-	public double getMaximumBondOrder(IAtom atom) {
-		double max = 0.0;
-		for (int i = 0; i < bondCount; i++)
-		{
-			if (bonds[i].contains(atom) && bonds[i].getOrder() > max)
-			{
+	public Order getMaximumBondOrder(IAtom atom) {
+		IBond.Order max = IBond.Order.SINGLE;
+		for (int i = 0; i < bondCount; i++) {
+			if (bonds[i].contains(atom) && 
+				bonds[i].getOrder().ordinal() > max.ordinal()) {
 				max = bonds[i].getOrder();
 			}
 		}
@@ -920,13 +944,12 @@ public class AtomContainer extends ChemObject
 	 *@param  atom  The atom
 	 *@return       The minimim bond order that this atom currently has
 	 */
-	public double getMinimumBondOrder(IAtom atom)
+	public Order getMinimumBondOrder(IAtom atom)
 	{
-		double min = 6;
-		for (int i = 0; i < bondCount; i++)
-		{
-			if (bonds[i].contains(atom) && bonds[i].getOrder() < min)
-			{
+		IBond.Order min = IBond.Order.QUADRUPLE;
+		for (int i = 0; i < bondCount; i++) {
+			if (bonds[i].contains(atom) &&
+				bonds[i].getOrder().ordinal() < min.ordinal()) {
 				min = bonds[i].getOrder();
 			}
 		}
@@ -1348,7 +1371,7 @@ public class AtomContainer extends ChemObject
 	 *@param  order   Bondorder
 	 *@param  stereo  Stereochemical orientation
 	 */
-	public void addBond(int atom1, int atom2, double order, int stereo)
+	public void addBond(int atom1, int atom2, IBond.Order order, int stereo)
 	{
 		IBond bond = getBuilder().newBond(getAtom(atom1), getAtom(atom2), order, stereo);
 
@@ -1374,7 +1397,7 @@ public class AtomContainer extends ChemObject
 	 *@param  atom2  Id of the second atom of the Bond in [0,..]
 	 *@param  order  Bondorder
 	 */
-	public void addBond(int atom1, int atom2, double order)
+	public void addBond(int atom1, int atom2, IBond.Order order)
 	{
 		IBond bond = getBuilder().newBond(getAtom(atom1), getAtom(atom2), order);
 

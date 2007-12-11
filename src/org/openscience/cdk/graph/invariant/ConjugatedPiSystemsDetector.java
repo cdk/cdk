@@ -29,11 +29,12 @@ import java.util.Stack;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  *@author        kaihartmann
@@ -60,13 +61,13 @@ public class ConjugatedPiSystemsDetector {
      *	Atom h3 = new Atom("H"); mol.addAtom(h3);
      *	Atom h4 = new Atom("H"); mol.addAtom(h4);
      *	Atom h5 = new Atom("H"); mol.addAtom(h5);
-     *	mol.addBond(0, 1, 2);
-     *	mol.addBond(1, 2, 1);
-     *	mol.addBond(0, 3, 1);
-     *	mol.addBond(0, 4, 1);
-     *	mol.addBond(1, 5, 1);
-     *	mol.addBond(2, 6, 1);
-     *	mol.addBond(2, 7, 1);
+     *	mol.addBond(0, 1, IBond.Order.DOUBLE);
+     *	mol.addBond(1, 2, IBond.Order.SINGLE);
+     *	mol.addBond(0, 3, IBond.Order.SINGLE);
+     *	mol.addBond(0, 4, IBond.Order.SINGLE);
+     *	mol.addBond(1, 5, IBond.Order.SINGLE);
+     *	mol.addBond(2, 6, IBond.Order.SINGLE);
+     *	mol.addBond(2, 7, IBond.Order.SINGLE);
      *	SingleElectron se = new SingleElectron(a2);
      *	mol.addElectronContainer(se);
      *  </pre>
@@ -154,7 +155,9 @@ public class ConjugatedPiSystemsDetector {
 		    int counterOfPi = 0;
 	            for(int n = 0; n < atoms.size(); n++) {
 					Atom atom = (Atom) atoms.get(n);
-					if(ac.getMaximumBondOrder(atom) > 1.0) { counterOfPi ++; }
+					if(ac.getMaximumBondOrder(atom) != IBond.Order.SINGLE) {
+						counterOfPi ++;
+					}
 	            }
 		    if(counterOfPi > 0) check = 0;
         }else { 
@@ -169,7 +172,7 @@ public class ConjugatedPiSystemsDetector {
 			    int highOrderBondCount = 0;
 			    for (int j = 0; j < atoms.size(); j++) {
 					Bond bond = (Bond) bonds.get(j);
-					if (bond == null || bond.getOrder() > 1) {
+					if (bond == null || bond.getOrder() != IBond.Order.SINGLE) {
 					    highOrderBondCount++;
 					} else {
 					    singleBondCount++;

@@ -30,6 +30,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -151,19 +152,19 @@ public class InductivePartialCharges {
 					} else if (symbol.equals("H")) {
 						paulingElectronegativities[i] = 2.10;
 					} else if (symbol.equals("C")) {
-						if (ac.getMaximumBondOrder(atom) == 1) {
+						if (ac.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
 							// Csp3
 							paulingElectronegativities[i] = 2.20;
-						} else if (ac.getMaximumBondOrder(atom) > 1 && ac.getMaximumBondOrder(atom) < 3) {
+						} else if (ac.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
 							paulingElectronegativities[i] = 2.31;
 						} else {
 							paulingElectronegativities[i] = 3.15;
 						}
 					} else if (symbol.equals("O")) {
-						if (ac.getMaximumBondOrder(atom) == 1) {
+						if (ac.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
 							// Osp3
 							paulingElectronegativities[i] = 3.20;
-						} else if (ac.getMaximumBondOrder(atom) > 1) {
+						} else if (ac.getMaximumBondOrder(atom) != IBond.Order.SINGLE) {
 							paulingElectronegativities[i] = 4.34;
 						}
 					} else if (symbol.equals("Si")) {
@@ -324,7 +325,7 @@ public class InductivePartialCharges {
 	 *@param  maxBondOrder  its max bond order
 	 *@return               The covalentRadius value given by the reference
 	 */
-	private double getCovalentRadius(String symbol, double maxBondOrder) {
+	private double getCovalentRadius(String symbol, IBond.Order maxBondOrder) {
 		double radiusTarget = 0;
 		if (symbol.equals("F")) {
 			radiusTarget = 0.64;
@@ -337,19 +338,19 @@ public class InductivePartialCharges {
 		} else if (symbol.equals("H")) {
 			radiusTarget = 0.30;
 		} else if (symbol.equals("C")) {
-			if (maxBondOrder == 1) {
+			if (maxBondOrder == IBond.Order.SINGLE) {
 				// Csp3
 				radiusTarget = 0.77;
-			} else if (maxBondOrder > 1 && maxBondOrder < 3) {
+			} else if (maxBondOrder == IBond.Order.DOUBLE) {
 				radiusTarget = 0.67;
 			} else {
 				radiusTarget = 0.60;
 			}
 		} else if (symbol.equals("O")) {
-			if (maxBondOrder == 1) {
+			if (maxBondOrder == IBond.Order.SINGLE) {
 				// Csp3
 				radiusTarget = 0.66;
-			} else if (maxBondOrder > 1) {
+			} else if (maxBondOrder != IBond.Order.SINGLE) {
 				radiusTarget = 0.60;
 			}
 		} else if (symbol.equals("Si")) {

@@ -22,6 +22,8 @@ package org.openscience.cdk.interfaces;
 
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.interfaces.IBond.Order;
+
 /**
  * A helper class to instantiate a IChemObject for a specific implementation.
  *
@@ -228,7 +230,7 @@ public interface IChemObjectBuilder {
 	 * @param  order  the bond order
      * @return IBond  implementation defined for this IChemObjectBuilder
 	 */
-	public IBond newBond(IAtom atom1, IAtom atom2, double order);
+	public IBond newBond(IAtom atom1, IAtom atom2, Order order);
 	
 	/**
 	 * Constructs a IBond with a given order and stereo orientation from an array
@@ -240,7 +242,7 @@ public interface IChemObjectBuilder {
 	 * @param  stereo  a descriptor the stereochemical orientation of this bond
      * @return IBond   implementation defined for this IChemObjectBuilder
 	 */
-	public IBond newBond(IAtom atom1, IAtom atom2, double order, int stereo);
+	public IBond newBond(IAtom atom1, IAtom atom2, Order order, int stereo);
 
 	/**
 	 * Constructs an empty IChemFile.

@@ -749,7 +749,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		System.out.println(" painting paintRingBond now at " + center + " getOrder: " + bond.getOrder() + " bond: " + bond);
 
 
-		if (bond.getOrder() == 1.0)
+		if (bond.getOrder() == IBond.Order.SINGLE)
 		{
 			// Added by rstefani (in fact, code copied from paintBond)
 			if (bond.getStereo() != CDKConstants.STEREO_BOND_NONE && bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED)
@@ -768,12 +768,12 @@ public class Java2DRenderer implements IJava2DRenderer {
 				System.out.println("  singlebond in ring");
 				paintSingleBond(bond, bondColor, graphics);
 			}
-		} else if (bond.getOrder() == 2.0)
+		} else if (bond.getOrder() == IBond.Order.DOUBLE)
 		{
 			
 			paintSingleBond(bond, bondColor, graphics);
 			paintInnerBond(bond, ring, bondColor, graphics);
-		} else if (bond.getOrder() == 3.0)
+		} else if (bond.getOrder() == IBond.Order.TRIPLE)
 		{
 			paintTripleBond(bond, bondColor, graphics);
 		} else
@@ -972,9 +972,9 @@ public class Java2DRenderer implements IJava2DRenderer {
 			} else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE)
 			{
 				paintTripleBond(bond, bondColor, graphics);
-			} else if (bond.getOrder() == 8.)
-			{
-				paintAnyBond(bond, bondColor, graphics);
+//			} else if (bond.getOrder() == 8.)
+//			{
+//				paintAnyBond(bond, bondColor, graphics);
 			} else
 			{
 				

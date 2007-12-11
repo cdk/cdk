@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.math.MathTools;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * The VicinitySampler is a generator of Constitutional Isomers. It needs to be 
@@ -95,7 +96,7 @@ public class VicinitySampler {
 						b1 = ac.getBond(ax1, ay1);
 						if (b1 != null)
 						{
-							a11 = b1.getOrder();
+							a11 = BondManipulator.destroyBondOrder(b1.getOrder());
 							nonZeroBondsCounter ++;				
 						}
 						else
@@ -106,7 +107,7 @@ public class VicinitySampler {
 						b2 = ac.getBond(ax1, ay2);
 						if (b2 != null)
 						{
-							a12 = b2.getOrder();
+							a12 = BondManipulator.destroyBondOrder(b2.getOrder());
 							nonZeroBondsCounter ++;				
 						}
 						else
@@ -117,7 +118,7 @@ public class VicinitySampler {
 						b3 = ac.getBond(ax2, ay1);
 						if (b3 != null)
 						{
-							a21 = b3.getOrder();
+							a21 = BondManipulator.destroyBondOrder(b3.getOrder());
 							nonZeroBondsCounter ++;				
 						}
 						else
@@ -128,7 +129,7 @@ public class VicinitySampler {
 						b4 = ac.getBond(ax2, ay2);									
 						if (b4 != null)
 						{
-							a22 = b4.getOrder();
+							a22 = BondManipulator.destroyBondOrder(b4.getOrder());
 							nonZeroBondsCounter ++;
 						}
 						else
@@ -204,12 +205,12 @@ public class VicinitySampler {
 			if (b1 == null)
 			{
 				logger.debug("no bond " + x1 + "-" + y1 + ". Adding it with order " + b11);
-				b1 = ac.getBuilder().newBond(ax1, ay1, b11);
+				b1 = ac.getBuilder().newBond(ax1, ay1, BondManipulator.createBondOrder(b11));
 				ac.addBond(b1);
 			}
 			else
 			{
-				b1.setOrder(b11);
+				b1.setOrder(BondManipulator.createBondOrder(b11));
 				logger.debug("Setting bondorder for " + x1 + "-" + y1 + " to " + b11);
 			}
 		}
@@ -224,12 +225,14 @@ public class VicinitySampler {
 			if (b2 == null)
 			{
 				logger.debug("no bond " + x1 + "-" + y2 + ". Adding it with order " + b12);				
-				b2 = ac.getBuilder().newBond(ax1, ay2, b12);
+				b2 = ac.getBuilder().newBond(
+					ax1, ay2, BondManipulator.createBondOrder(b12)
+				);
 				ac.addBond(b2);
 			}
 			else
 			{
-				b2.setOrder(b12);
+				b2.setOrder(BondManipulator.createBondOrder(b12));
 				logger.debug("Setting bondorder for " + x1 + "-" + y2 + " to " + b12);
 			}
 		}
@@ -244,12 +247,12 @@ public class VicinitySampler {
 			if (b3 == null)
 			{
 				logger.debug("no bond " + x2 + "-" + y1 + ". Adding it with order " + b21);
-				b3 = ac.getBuilder().newBond(ax2, ay1, b21);
+				b3 = ac.getBuilder().newBond(ax2, ay1, BondManipulator.createBondOrder(b21));
 				ac.addBond(b3);
 			}
 			else
 			{
-				b3.setOrder(b21);
+				b3.setOrder(BondManipulator.createBondOrder(b21));
 				logger.debug("Setting bondorder for " + x2 + "-" + y1 + " to " + b21);
 			}
 		}
@@ -264,12 +267,12 @@ public class VicinitySampler {
 			if (b4 == null)
 			{
 				logger.debug("no bond " + x2 + "-" + y2 + ". Adding it  with order " + b22);
-				b4 = ac.getBuilder().newBond(ax2, ay2, b22);
+				b4 = ac.getBuilder().newBond(ax2, ay2, BondManipulator.createBondOrder(b22));
 				ac.addBond(b4);
 			}
 			else
 			{
-				b4.setOrder(b22);
+				b4.setOrder(BondManipulator.createBondOrder(b22));
 				logger.debug("Setting bondorder for " + x2 + "-" + y2 + " to " + b22);
 			}
 		}

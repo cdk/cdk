@@ -192,7 +192,15 @@ public class HuLuIndexTool
                 if (Math.abs(apspMatrix[i][headAtomPosition] - apspMatrix[i][endAtomPosition]) == 1)
                 {
                     int min = Math.min(apspMatrix[i][headAtomPosition],apspMatrix[i][endAtomPosition]);
-                    interLayerBondSum[min] += bond.getOrder();
+                    if (bond.getOrder() == IBond.Order.SINGLE) {
+                    	interLayerBondSum[min] += 1;
+                    } else if (bond.getOrder() == IBond.Order.DOUBLE) {
+                    	interLayerBondSum[min] += 2;
+                    } else if (bond.getOrder() == IBond.Order.TRIPLE) {
+                    	interLayerBondSum[min] += 3;
+                    } else if (bond.getOrder() == IBond.Order.QUADRUPLE) {
+                    	interLayerBondSum[min] += 4;
+                    }
                 }
             }
 

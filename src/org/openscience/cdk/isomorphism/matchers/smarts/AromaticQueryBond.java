@@ -51,7 +51,7 @@ public class AromaticQueryBond extends SMARTSBond {
      * Creates a new instance
      *
      */
-    public AromaticQueryBond(IQueryAtom atom1, IQueryAtom atom2, double order) {
+    public AromaticQueryBond(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order) {
     	super(atom1, atom2, order);
     	setFlag(CDKConstants.ISAROMATIC, true);
     }    

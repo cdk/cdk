@@ -38,6 +38,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * Validator which tests a number of basic chemical semantics.
@@ -241,7 +242,7 @@ public class BasicValidator extends AbstractValidator {
                 org.openscience.cdk.interfaces.IAtomType failedOn = null;
                 boolean foundMatchingAtomType = false;
                 for (int j=0; j<atomTypes.length; j++) {
-                    if (bond.getOrder() <= atomTypes[j].getMaxBondOrder()) {
+                    if (!BondManipulator.isHigherOrder(bond.getOrder(), atomTypes[j].getMaxBondOrder())) {
                         foundMatchingAtomType = true;
                     } else {
                         failedOn = atomTypes[j];

@@ -177,27 +177,28 @@ public class Polarizability {
         if (AtomSymbol.equals("H")) {
             polarizabilitiyFactor = 0.387;
         } else if (AtomSymbol.equals("C")) {
-            if (atomContainer.getMaximumBondOrder(atom) == 1) {
+            if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
                 polarizabilitiyFactor = 1.064;/*1.064*/
-            } else if (atomContainer.getMaximumBondOrder(atom) == 1.5 || atom.getFlag(CDKConstants.ISAROMATIC)) {
+            } else if (atom.getFlag(CDKConstants.ISAROMATIC)) {
                 polarizabilitiyFactor = 1.230;
-            } else if (atomContainer.getMaximumBondOrder(atom) == 2) {
+            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
                 if (getNumberOfHydrogen(atomContainer, atom) == 0) {
                     polarizabilitiyFactor = 1.382;
                 } else {
                     polarizabilitiyFactor = 1.37;
                 }
-            } else if (atomContainer.getMaximumBondOrder(atom) >= 3) {
+            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.TRIPLE ||
+            		atomContainer.getMaximumBondOrder(atom) == IBond.Order.QUADRUPLE) {
                 polarizabilitiyFactor = 1.279;
             }
         } else if (AtomSymbol.equals("N")) {
             if (atom.getCharge() != CDKConstants.UNSET && atom.getCharge() < 0) {
                 polarizabilitiyFactor = 1.090;
-            } else if (atomContainer.getMaximumBondOrder(atom) == 1) {
+            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
                 polarizabilitiyFactor = 1.094;
-            } else if (atomContainer.getMaximumBondOrder(atom) > 1 && atomContainer.getMaximumBondOrder(atom) < 3) {
+            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
                 polarizabilitiyFactor = 1.030;
-            } else if (atomContainer.getMaximumBondOrder(atom) >= 3) {
+            } else {
                 polarizabilitiyFactor = 0.852;
             }
         } else if (AtomSymbol.equals("O")) {
@@ -205,27 +206,28 @@ public class Polarizability {
                 polarizabilitiyFactor = 1.791;
             } else if (atom.getCharge() != CDKConstants.UNSET && atom.getCharge() == 1) {
                 polarizabilitiyFactor = 0.422;
-            } else if (atomContainer.getMaximumBondOrder(atom) == 1) {
+            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
                 polarizabilitiyFactor = 0.664;
-            } else if (atomContainer.getMaximumBondOrder(atom) == 2) {
+            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
                 polarizabilitiyFactor = 0.460;
             }
         } else if (AtomSymbol.equals("P")) {
-            if (atomContainer.getConnectedBondsCount(atom) == 4 && atomContainer.getMaximumBondOrder(atom) == 2) {
+            if (atomContainer.getConnectedBondsCount(atom) == 4 && 
+            	atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
                 polarizabilitiyFactor = 0;
             }
         } else if (AtomSymbol.equals("S")) {
-            if (atomContainer.getMaximumBondOrder(atom) == 1) {
+            if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
                 polarizabilitiyFactor = 3.20;/*3.19*/
-            } else if (atomContainer.getMaximumBondOrder(atom) == 1.5 || atom.getFlag(CDKConstants.ISAROMATIC)) {
+            } else if (atom.getFlag(CDKConstants.ISAROMATIC)) {
                 polarizabilitiyFactor = 3.38;
-            } else if (atomContainer.getMaximumBondOrder(atom) == 2) {
+            } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
                 if (getNumberOfHydrogen(atomContainer, atom) == 0) {
                     polarizabilitiyFactor = 3.51;
                 } else {
                     polarizabilitiyFactor = 3.50;
                 }
-            } else if (atomContainer.getMaximumBondOrder(atom) >= 3) {
+            } else {
                 polarizabilitiyFactor = 3.42;
             }
         }else if (AtomSymbol.equals("F")) {

@@ -775,9 +775,9 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.BENZENERING)
 			{
 				// make newRing a benzene ring
-				newRing.getBond(0).setOrder(2.0);
-				newRing.getBond(2).setOrder(2.0);
-				newRing.getBond(4).setOrder(2.0);
+				newRing.getBond(0).setOrder(IBond.Order.DOUBLE);
+				newRing.getBond(2).setOrder(IBond.Order.DOUBLE);
+				newRing.getBond(4).setOrder(IBond.Order.DOUBLE);
 				makeRingAromatic(newRing);
 			}
 			bondLength = r2dm.getBondLength();
@@ -799,9 +799,9 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.BENZENERING)
 			{
 				// make newRing a benzene ring
-				newRing.getBond(0).setOrder(2.0);
-				newRing.getBond(2).setOrder(2.0);
-				newRing.getBond(4).setOrder(2.0);
+				newRing.getBond(0).setOrder(IBond.Order.DOUBLE);
+				newRing.getBond(2).setOrder(IBond.Order.DOUBLE);
+				newRing.getBond(4).setOrder(IBond.Order.DOUBLE);
 				makeRingAromatic(newRing);
 			}
 			bondLength = r2dm.getBondLength();
@@ -886,22 +886,22 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				{
 					// make newRing a benzene ring
 					IBond existingBond = atomCon.getBond(firstAtom, secondAtom);
-					if (existingBond.getOrder() == 1.0)
+					if (existingBond.getOrder() == IBond.Order.SINGLE)
 					{
 						if (existingBond.getFlag(CDKConstants.ISAROMATIC))
 						{
-							newRing.getBond(2).setOrder(2.0);
-							newRing.getBond(4).setOrder(2.0);
+							newRing.getBond(2).setOrder(IBond.Order.DOUBLE);
+							newRing.getBond(4).setOrder(IBond.Order.DOUBLE);
 						} else
 						{
-							newRing.getBond(1).setOrder(2.0);
-							newRing.getBond(3).setOrder(2.0);
-							newRing.getBond(5).setOrder(2.0);
+							newRing.getBond(1).setOrder(IBond.Order.DOUBLE);
+							newRing.getBond(3).setOrder(IBond.Order.DOUBLE);
+							newRing.getBond(5).setOrder(IBond.Order.DOUBLE);
 						}
 					} else
 					{
-						newRing.getBond(2).setOrder(2.0);
-						newRing.getBond(4).setOrder(2.0);
+						newRing.getBond(2).setOrder(IBond.Order.DOUBLE);
+						newRing.getBond(4).setOrder(IBond.Order.DOUBLE);
 					}
 					makeRingAromatic(newRing);
 				}
@@ -1052,20 +1052,21 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			IAtomContainer container = ChemModelManipulator.getRelevantAtomContainer(chemModel, bondInRange.getAtom(0));
 			updateAtoms(container, bondInRange.atoms());
 			HashMap changedBonds = new HashMap();
-			double formerBondOrder = bondInRange.getOrder();
+			IBond.Order formerBondOrder = bondInRange.getOrder();
 			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.DRAWBOND){
 				if(bondInRange.getStereo()!=CDKConstants.STEREO_BOND_NONE){
 					bondInRange.setStereo(CDKConstants.STEREO_BOND_NONE);
 				}else{
 					// increase Bond order
-					double order = bondInRange.getOrder();
-					if (order >= CDKConstants.BONDORDER_TRIPLE)
+					IBond.Order order = bondInRange.getOrder();
+					if (order == IBond.Order.TRIPLE ||
+						order == IBond.Order.QUADRUPLE)
 					{
 						bondInRange.setOrder(CDKConstants.BONDORDER_SINGLE);
-					} else {
-						bondInRange.setOrder(order + 1.0);
-						// this is tricky as it depends on the fact that the
-						// constants are unidistant, i.e. {1.0, 2.0, 3.0}.
+					} else if (order == IBond.Order.DOUBLE) {
+						bondInRange.setOrder(IBond.Order.TRIPLE);
+					} else  if (order == IBond.Order.SINGLE) {
+						bondInRange.setOrder(IBond.Order.DOUBLE);
 					}
 				}
 			}else if(c2dm.getDrawMode() == Controller2DModel.DrawMode.DOWN_BOND){
@@ -1081,7 +1082,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 	            {
 	              bondInRange.setStereo(CDKConstants.STEREO_BOND_DOWN);
 	            }
-	            bondInRange.setOrder(1);
+	            bondInRange.setOrder(IBond.Order.SINGLE);
 			}else{
 	            // toggle bond stereo
 	            double stereo = bondInRange.getStereo();
@@ -1095,7 +1096,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 	            {
 	              bondInRange.setStereo(CDKConstants.STEREO_BOND_UP);
 	            }
-	            bondInRange.setOrder(1);
+	            bondInRange.setOrder(IBond.Order.SINGLE);
 			}           
 			/*
 			 *  PRESERVE THIS. This notifies the
@@ -1104,7 +1105,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			 *  should store this change of an atom symbol
 			 */
 			if (bondInRange.getOrder() != formerBondOrder) {
-                double[] bondOrders = new double[2];
+                IBond.Order[] bondOrders = new IBond.Order[2];
                 bondOrders[0] = bondInRange.getOrder();
                 bondOrders[1] = formerBondOrder;
                 changedBonds.put(bondInRange, bondOrders);
@@ -1176,7 +1177,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 					}
 					if (newAtom1 != newAtom2)
 					{
-						newBond = atomCon.getBuilder().newBond(newAtom1, newAtom2, 1);
+						newBond = atomCon.getBuilder().newBond(newAtom1, newAtom2, IBond.Order.SINGLE);
 						if(c2dm.getDrawMode() == Controller2DModel.DrawMode.UP_BOND)
 							newBond.setStereo(CDKConstants.STEREO_BOND_UP);
 						if(c2dm.getDrawMode() == Controller2DModel.DrawMode.DOWN_BOND)
@@ -1260,7 +1261,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				atomCon.addAtom(newAtom2);
 				undoRedoContainer.addAtom(newAtom2);
 				r2dm.setRenderingCoordinate(newAtom2,new Point2d(newAtom2.getPoint2d()));
-				newBond= undoRedoContainer.getBuilder().newBond(atomInRange, newAtom2, 1.0);
+				newBond= undoRedoContainer.getBuilder().newBond(atomInRange, newAtom2, IBond.Order.SINGLE);
 				atomCon.addBond(newBond);
 				undoRedoContainer.addBond(newBond);
 				if(c2dm.getDrawMode() == Controller2DModel.DrawMode.UP_BOND)
@@ -1886,9 +1887,9 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 		}
 		for (int i = sharedAtoms.getBondCount(); i < ringSize - 1; i++)
 		{
-			newRing.addBond(sharedAtoms.getBuilder().newBond(ringAtoms[i], ringAtoms[i + 1], 1));
+			newRing.addBond(sharedAtoms.getBuilder().newBond(ringAtoms[i], ringAtoms[i + 1], IBond.Order.SINGLE));
 		}
-		newRing.addBond(sharedAtoms.getBuilder().newBond(ringAtoms[ringSize - 1], ringAtoms[0], 1));
+		newRing.addBond(sharedAtoms.getBuilder().newBond(ringAtoms[ringSize - 1], ringAtoms[0], IBond.Order.SINGLE));
 		newRing.setAtoms(ringAtoms);
 		return newRing;
 	}

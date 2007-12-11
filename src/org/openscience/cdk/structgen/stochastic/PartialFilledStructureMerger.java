@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.SaturationChecker;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * Randomly generates a single, connected, correctly bonded structure for 
@@ -125,7 +126,9 @@ public class PartialFilledStructureMerger {
 							logger.debug("cmax1, cmax2, max, order: " + cmax1 + ", " + cmax2 + ", "  + max + ", " + order);	
 
 							atomContainer.addBond(
-								atomContainer.getBuilder().newBond(atom, partner, order)
+								atomContainer.getBuilder().newBond(
+									atom, partner, BondManipulator.createBondOrder(order)
+								)
 							);
 							bondFormed = true;
 						}

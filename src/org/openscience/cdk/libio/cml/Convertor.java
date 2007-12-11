@@ -558,7 +558,7 @@ public class Convertor {
             cmlBond.setAtomRefs(atomRefArray);
         }
 
-        double border = cdkBond.getOrder();
+        IBond.Order border = cdkBond.getOrder();
         if (border == CDKConstants.BONDORDER_SINGLE) {
             cmlBond.setOrder("S");
         } else if (border == CDKConstants.BONDORDER_DOUBLE) {
@@ -571,7 +571,7 @@ public class Convertor {
 //            scalar.setDataType("xsd:float");
             scalar.setDictRef("cdk:bondOrder");
             scalar.setTitle("order");
-            scalar.setValue(cdkBond.getOrder());
+            scalar.setValue(cdkBond.getOrder().ordinal()+1);
             cmlBond.appendChild(scalar);
         }
         if (cdkBond.getFlag(CDKConstants.ISAROMATIC)) {

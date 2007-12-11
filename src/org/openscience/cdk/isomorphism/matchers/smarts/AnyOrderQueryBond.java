@@ -47,7 +47,7 @@ public class AnyOrderQueryBond extends SMARTSBond {
      * @param atom1
      * @param atom2
      */
-    public AnyOrderQueryBond(IQueryAtom atom1, IQueryAtom atom2, double order) {
+    public AnyOrderQueryBond(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order) {
         super(atom1, atom2, order);
     }
     

@@ -25,7 +25,7 @@ package org.openscience.cdk.graph.matrix;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * Calculator for a connection matrix representation of this AtomContainer. An
@@ -60,8 +60,8 @@ public class ConnectionMatrix implements IGraphMatrix {
 			bond = container.getBond(f);
 			indexAtom1 = container.getAtomNumber(bond.getAtom(0));
 			indexAtom2 = container.getAtomNumber(bond.getAtom(1));
-			conMat[indexAtom1][indexAtom2] = bond.getOrder();
-			conMat[indexAtom2][indexAtom1] = bond.getOrder();
+			conMat[indexAtom1][indexAtom2] = BondManipulator.destroyBondOrder(bond.getOrder());
+			conMat[indexAtom2][indexAtom1] = BondManipulator.destroyBondOrder(bond.getOrder());
 		}
 		return conMat;
 	}

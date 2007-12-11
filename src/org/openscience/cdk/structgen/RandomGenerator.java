@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.math.MathTools;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * RandomGenerator is a generator of Constitutional Isomers. It needs to be 
@@ -157,7 +158,7 @@ public class RandomGenerator {
 				b1 = ac.getBond(ax1, ay1);
 				if (b1 != null)
 				{
-					a11 = b1.getOrder();
+					a11 = BondManipulator.destroyBondOrder(b1.getOrder());
 					nonZeroBondsCounter ++;				
 				}
 				else
@@ -168,7 +169,7 @@ public class RandomGenerator {
 				b2 = ac.getBond(ax1, ay2);
 				if (b2 != null)
 				{
-					a12 = b2.getOrder();
+					a12 = BondManipulator.destroyBondOrder(b2.getOrder());
 					nonZeroBondsCounter ++;				
 				}
 				else
@@ -179,7 +180,7 @@ public class RandomGenerator {
 				b3 = ac.getBond(ax2, ay1);
 				if (b3 != null)
 				{
-					a21 = b3.getOrder();
+					a21 = BondManipulator.destroyBondOrder(b3.getOrder());
 					nonZeroBondsCounter ++;				
 				}
 				else
@@ -190,7 +191,7 @@ public class RandomGenerator {
 				b4 = ac.getBond(ax2, ay2);									
 				if (b4 != null)
 				{
-					a22 = b4.getOrder();
+					a22 = BondManipulator.destroyBondOrder(b4.getOrder());
 					nonZeroBondsCounter ++;
 				}
 				else
@@ -238,12 +239,14 @@ public class RandomGenerator {
 		{
 			if (b1 == null)
 			{
-				b1 = ac.getBuilder().newBond(ax1, ay1, b11);
+				b1 = ac.getBuilder().newBond(
+					ax1, ay1, BondManipulator.createBondOrder(b11)
+				);
 				ac.addBond(b1);
 			}
 			else
 			{
-				b1.setOrder(b11);
+				b1.setOrder(BondManipulator.createBondOrder(b11));
 			}
 		}
 		else if (b1 != null)
@@ -255,12 +258,14 @@ public class RandomGenerator {
 		{
 			if (b2 == null)
 			{
-				b2 = ac.getBuilder().newBond(ax1, ay2, b12);
+				b2 = ac.getBuilder().newBond(
+					ax1, ay2, BondManipulator.createBondOrder(b12)
+				);
 				ac.addBond(b2);
 			}
 			else
 			{
-				b2.setOrder(b12);
+				b2.setOrder(BondManipulator.createBondOrder(b12));
 			}
 		}
 		else if (b2 != null)
@@ -272,12 +277,14 @@ public class RandomGenerator {
 		{
 			if (b3 == null)
 			{
-				b3 = ac.getBuilder().newBond(ax2, ay1, b21);
+				b3 = ac.getBuilder().newBond(
+					ax2, ay1, BondManipulator.createBondOrder(b21)
+				);
 				ac.addBond(b3);
 			}
 			else
 			{
-				b3.setOrder(b21);
+				b3.setOrder(BondManipulator.createBondOrder(b21));
 			}
 		}
 		else if (b3 != null)
@@ -289,12 +296,14 @@ public class RandomGenerator {
 		{
 			if (b4 == null)
 			{
-				b4 = ac.getBuilder().newBond(ax2, ay2, b22);
+				b4 = ac.getBuilder().newBond(
+					ax2, ay2, BondManipulator.createBondOrder(b22)
+				);
 				ac.addBond(b4);
 			}
 			else
 			{
-				b4.setOrder(b22);
+				b4.setOrder(BondManipulator.createBondOrder(b22));
 			}
 		}
 		else if (b4 != null)

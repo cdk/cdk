@@ -24,11 +24,11 @@
 package org.openscience.cdk.charges;
 
 
+import java.util.Iterator;
+
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-
-import java.util.Iterator;
 
 /**
  * <p>The calculation of the Gasteiger Marsili (PEOE) partial charges is based on 
@@ -207,45 +207,50 @@ public class GasteigerMarsiliPartialCharges {
                 factors[1] = 6.24;
                 factors[2] = -0.56;
             } else if (AtomSymbol.equals("C")) {
-                if ((ac.getMaximumBondOrder(ac.getAtom(i)) == 1)&&
+                if ((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE)&&
                 (ac.getAtom(i).getFormalCharge() != -1)){
                     factors[0] = 7.98;
                     factors[1] = 9.18;
                     factors[2] = 1.88;
-                } else if ((ac.getMaximumBondOrder(ac.getAtom(i)) > 1 && ac.getMaximumBondOrder(ac.getAtom(i)) < 3)
-                        ||((ac.getMaximumBondOrder(ac.getAtom(i)) == 1)&& ac.getAtom(i).getFormalCharge() == -1)) {
+                } else if (ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.DOUBLE
+                        ||((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE)
+                           && ac.getAtom(i).getFormalCharge() == -1)) {
                     factors[0] = 8.79;/*8.79*//*8.81*/
                     factors[1] = 9.32;/*9.32*//*9.34*/
                     factors[2] = 1.51;/*1.51*//*1.52*/
-                } else if (ac.getMaximumBondOrder(ac.getAtom(i)) >= 3) {
+                } else if (ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.TRIPLE ||
+                		ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.QUADRUPLE) {
                     factors[0] = 10.39;/*10.39*/
                     factors[1] = 9.45;/*9.45*/
                     factors[2] = 0.73;
                 }
             } else if(AtomSymbol.equals("N")){
-                if((ac.getMaximumBondOrder(ac.getAtom(i)) == 1) &&
+                if((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE) &&
                 (ac.getAtom(i).getFormalCharge() != -1)) {
                     factors[0] = 11.54;
                     factors[1] = 10.82;
                     factors[2] = 1.36;
-                } else if ((ac.getMaximumBondOrder(ac.getAtom(i)) > 1 && ac.getMaximumBondOrder(ac.getAtom(i)) < 3)
-                        ||((ac.getMaximumBondOrder(ac.getAtom(i)) == 1)&& ac.getAtom(i).getFormalCharge() == -1)) {
+                } else if ((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.DOUBLE)
+                        ||((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE)&& 
+                        	ac.getAtom(i).getFormalCharge() == -1)) {
                     factors[0] = 12.87;
                     factors[1] = 11.15;
                     factors[2] = 0.85;
-                } else if (ac.getMaximumBondOrder(ac.getAtom(i)) >= 3) {
+                } else if (ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.TRIPLE
+                    || ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.QUADRUPLE) {
                     factors[0] = 17.68;/*15.68*/
                     factors[1] = 12.70;/*11.70*/
                     factors[2] = -0.27;/*-0.27*/
                 }
             } else if (AtomSymbol.equals("O")) {
-                if ((ac.getMaximumBondOrder(ac.getAtom(i)) == 1) &&
+                if ((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE) &&
                 (ac.getAtom(i).getFormalCharge() != -1)){
                     factors[0] = 14.18;
                     factors[1] = 12.92;
                     factors[2] = 1.39;
-                } else if((ac.getMaximumBondOrder(ac.getAtom(i)) > 1 && ac.getMaximumBondOrder(ac.getAtom(i)) < 3)
-                    ||((ac.getMaximumBondOrder(ac.getAtom(i)) == 1)&& ac.getAtom(i).getFormalCharge() == -1)){
+                } else if((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.DOUBLE)
+                    ||((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE)
+                    	&& ac.getAtom(i).getFormalCharge() == -1)){
                     factors[0] = 17.07;/* paramaters aren'T correct parametrized. */
                     factors[1] = 13.79;
                     factors[2] = 0.47;/*0.47*/

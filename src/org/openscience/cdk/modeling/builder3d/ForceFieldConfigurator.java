@@ -274,7 +274,7 @@ public class ForceFieldConfigurator {
 				atom.setFlag(CDKConstants.ISINRING, false);
 				isInHeteroRing = false;
 			}
-			atom.setProperty("MAX_BOND_ORDER", new Double(molecule.getMaximumBondOrder(atom)));
+			atom.setProperty("MAX_BOND_ORDER", new Double(molecule.getMaximumBondOrder(atom).ordinal()+1));
 
 			try {
 				hoseCode = hcg.getHOSECode(molecule, atom, 3);
@@ -299,7 +299,7 @@ public class ForceFieldConfigurator {
 
 			//logger.debug("bond[" + i + "] properties : " + molecule.getBond(i).getProperties());
 			bondType = "0";
-			if (bond.getOrder() == 1) {
+			if (bond.getOrder() == IBond.Order.SINGLE) {
 				if ((bond.getAtom(0).getAtomTypeName().equals("Csp2")) &
 					((bond.getAtom(1).getAtomTypeName().equals("Csp2")) | (bond.getAtom(1).getAtomTypeName().equals("C=")))) {
 					bondType = "1";

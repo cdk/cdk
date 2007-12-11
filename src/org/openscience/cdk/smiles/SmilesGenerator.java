@@ -1521,19 +1521,13 @@ public class SmilesGenerator
 		{
 			return;
 		}
-		int type = 0;
-		type = (int) atomContainer.getBond(a1, a2).getOrder();
-		if (type == 1)
-		{
-		} else if (type == 2)
-		{
+		IBond.Order type = atomContainer.getBond(a1, a2).getOrder();
+		if (type == IBond.Order.SINGLE) {
+		} else if (type == IBond.Order.DOUBLE) {
 			line.append("=");
-
-		} else if (type == 3)
-		{
+		} else if (type == IBond.Order.TRIPLE) {
 			line.append("#");
-		} else
-		{
+		} else {
 			// //logger.debug("Unknown bond type");
 		}
 	}
@@ -1687,10 +1681,10 @@ public class SmilesGenerator
 		{
 			Integer integer = (Integer) it.next();
 			IBond b = container.getBond((IAtom) it2.next(), a);
-			int type = (int) b.getOrder();
-			if (type == 2) {
+			IBond.Order type = b.getOrder();
+			if (type == IBond.Order.DOUBLE) {
 				buffer.append("=");
-			} else if (type == 3) {
+			} else if (type == IBond.Order.TRIPLE) {
 				buffer.append("#");
 			}
 			buffer.append(integer);

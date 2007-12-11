@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.SaturationChecker;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * Randomly generates a single, connected, correctly bonded structure for 
@@ -137,7 +138,9 @@ public class SingleStructureRandomGenerator {
 							order = Math.min(Math.max(1.0, random.nextInt((int)Math.round(max))), 3.0);
 							logger.debug("Forming bond of order ", order);
 							atomContainer.addBond(
-								atomContainer.getBuilder().newBond(atom, partner, order)
+								atomContainer.getBuilder().newBond(
+									atom, partner, BondManipulator.createBondOrder(order)
+								)
 							);
 							bondFormed = true;
 						}

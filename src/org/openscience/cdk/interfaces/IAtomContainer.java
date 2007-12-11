@@ -23,6 +23,8 @@ package org.openscience.cdk.interfaces;
 import java.util.Iterator;
 import java.util.List;
 
+import org.openscience.cdk.interfaces.IBond.Order;
+
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and
  *  ElectronContainers. <p>
@@ -376,7 +378,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 * @param  atom  The atom
 	 * @return       The maximum bond order that this atom currently has
 	 */
-	public double getMaximumBondOrder(IAtom atom);
+	public Order getMaximumBondOrder(IAtom atom);
 
 
 	/**
@@ -386,7 +388,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  atom  The atom
 	 *@return       The minimim bond order that this atom currently has
 	 */
-	public double getMinimumBondOrder(IAtom atom);
+	public Order getMinimumBondOrder(IAtom atom);
 
 	/**
 	 *  Adds all atoms and electronContainers of a given atomcontainer to this
@@ -562,7 +564,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  order   Bondorder
 	 *@param  stereo  Stereochemical orientation
 	 */
-	public void addBond(int atom1, int atom2, double order, int stereo);
+	public void addBond(int atom1, int atom2, IBond.Order order, int stereo);
 
 
 	/**
@@ -572,7 +574,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  atom2  Id of the second atom of the Bond in [0,..]
 	 *@param  order  Bondorder
 	 */
-	public void addBond(int atom1, int atom2, double order);
+	public void addBond(int atom1, int atom2, IBond.Order order);
 
 
 	/**

@@ -955,18 +955,18 @@ public class UniversalIsomorphismTester {
 	  {
 		  bond = ac1.getBond(i);
 		  if (bond.getFlag(CDKConstants.ISAROMATIC)) ac1AromaticBondCount ++;
-		  else if (bond.getOrder() == 1) ac1SingleBondCount ++;
-		  else if (bond.getOrder() == 2) ac1DoubleBondCount ++;
-		  else if (bond.getOrder() == 3) ac1TripleBondCount ++;
+		  else if (bond.getOrder() == IBond.Order.SINGLE) ac1SingleBondCount ++;
+		  else if (bond.getOrder() == IBond.Order.DOUBLE) ac1DoubleBondCount ++;
+		  else if (bond.getOrder() == IBond.Order.TRIPLE) ac1TripleBondCount ++;
 	  }
 	  for (int i = 0; i < ac2.getBondCount(); i++)
 	  {
 		  bond = ac2.getBond(i);
           if (bond instanceof IQueryBond) continue;
 		  if (bond.getFlag(CDKConstants.ISAROMATIC)) ac2AromaticBondCount ++;
-		  else if (bond.getOrder() == 1) ac2SingleBondCount ++;
-		  else if (bond.getOrder() == 2) ac2DoubleBondCount ++;
-		  else if (bond.getOrder() == 3) ac2TripleBondCount ++;
+		  else if (bond.getOrder() == IBond.Order.SINGLE) ac2SingleBondCount ++;
+		  else if (bond.getOrder() == IBond.Order.DOUBLE) ac2DoubleBondCount ++;
+		  else if (bond.getOrder() == IBond.Order.TRIPLE) ac2TripleBondCount ++;
 	  }
 
 	  if (ac2SingleBondCount > ac1SingleBondCount) return false;

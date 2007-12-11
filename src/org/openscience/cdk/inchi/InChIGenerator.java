@@ -268,7 +268,7 @@ public class InChIGenerator {
             
             // Get bond order
             INCHI_BOND_TYPE order;
-            double bo = bond.getOrder();
+            IBond.Order bo = bond.getOrder();
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
             	order = INCHI_BOND_TYPE.ALTERN;
             } else if (bo == CDKConstants.BONDORDER_SINGLE) {

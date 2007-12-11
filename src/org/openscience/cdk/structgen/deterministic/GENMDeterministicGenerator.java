@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -2720,8 +2721,15 @@ public class GENMDeterministicGenerator {
 			 for(i=0;i<size;i++)
 				 mol.addAtom(builder.newAtom(((BasicFragment)(set.get(i))).getHeavyAtomSymbol()));
 			 for(i=0;i<size-1;i++)
-				 for(j=i+1;j<size;j++)
-					 if(matrix[i][j]!=0)mol.addBond(i,j,matrix[i][j]);
+				 for(j=i+1;j<size;j++) {
+					 if (matrix[i][j] == 1) {
+						 mol.addBond(i,j, IBond.Order.SINGLE);
+					 } else if (matrix[i][j] == 2) {
+						 mol.addBond(i,j, IBond.Order.DOUBLE);
+					 } else if (matrix[i][j] == 3) {
+						 mol.addBond(i,j, IBond.Order.TRIPLE);
+					 }
+				 }
 
 			 structures.add(mol);
 		 }

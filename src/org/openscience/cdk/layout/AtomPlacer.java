@@ -1061,9 +1061,9 @@ public class AtomPlacer
         for (int g = 0; g < bonds.size(); g++)
         {
             IBond bond = (IBond)bonds.get(g);
-            if (bond.getOrder() == 3) sum += 10;
-            else if (bond.getOrder() == 1) sum += 1;
-//            else if (bond.getOrder() == 2) sum += 5;
+            if (bond.getOrder() == IBond.Order.TRIPLE) sum += 10;
+            else if (bond.getOrder() == IBond.Order.SINGLE) sum += 1;
+//            else if (bond.getOrder() == IBond.Order.DOUBLE) sum += 5;
         }
         if (sum >= 10) return true;
         return false;

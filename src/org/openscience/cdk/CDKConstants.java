@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.IBond;
+
 /**
  * An interface providing predefined values for a number of
  * constants used throughout the CDK. Classes using these constants should
@@ -45,13 +47,13 @@ public class CDKConstants {
 	public final static Object UNSET = null;	
 
 	/** A bond of degree 1.0. */
-	public final static double BONDORDER_SINGLE = 1.0;
+	public final static IBond.Order BONDORDER_SINGLE = IBond.Order.SINGLE;
 
     /** A bond of degree 2.0. */
-    public final static double BONDORDER_DOUBLE = 2.0;
+    public final static IBond.Order BONDORDER_DOUBLE = IBond.Order.DOUBLE;
 
     /** A bond of degree 3.0. */
-    public final static double BONDORDER_TRIPLE = 3.0;
+    public final static IBond.Order BONDORDER_TRIPLE = IBond.Order.TRIPLE;
 
     /** A bonds which end is above the drawing plane. */
     public final static int STEREO_BOND_UP = 1;

@@ -23,18 +23,19 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Vector;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Vector;
 
 
 /**
@@ -259,13 +260,17 @@ public class AtomPlacer3D {
 	 */
 	private int getHybridisationState(IAtom atom1) {
 
-        Double maxBondOrder = atom1.getMaxBondOrder() == CDKConstants.UNSET ? 0 : atom1.getMaxBondOrder();
+        IBond.Order maxBondOrder = atom1.getMaxBondOrder();
 
-        if (atom1.getFormalNeighbourCount() == 1 || maxBondOrder > 4) {
-		} else if (atom1.getFormalNeighbourCount() == 2 || maxBondOrder == 3) {
+//        if (atom1.getFormalNeighbourCount() == 1 || maxBondOrder > 4) {
+        if (atom1.getFormalNeighbourCount() == 1) {
+        	// WTF??
+		} else if (atom1.getFormalNeighbourCount() == 2 ||
+				   maxBondOrder == IBond.Order.TRIPLE) {
 			//sp
 			return 1;
-		} else if (atom1.getFormalNeighbourCount() == 3 || (maxBondOrder > 1 && maxBondOrder < 3)) {
+		} else if (atom1.getFormalNeighbourCount() == 3 ||
+				   (maxBondOrder == IBond.Order.DOUBLE)) {
 			//sp2
 			return 2;
 		} else {
@@ -283,12 +288,12 @@ public class AtomPlacer3D {
 	 *@param  a              coordinates (Point2d) of atom1 connected to bond
 	 *@param  b              coordinates (Point2d) of atom2 connected to bond
 	 *@param  c              coordinates (Point2d) of atom3 connected to bond
-	 *@param  d              Dcoordinates (Point2d) of ato4 connected to bond
+	 *@param  d              coordinates (Point2d) of atom4 connected to bond
 	 *@return                The doubleBondConfiguration2D value
 	 *@exception  Exception  Description of the Exception
 	 */
 	private int getDoubleBondConfiguration2D(org.openscience.cdk.interfaces.IBond bond,Point2d a, Point2d b,Point2d c,Point2d d) throws Exception{
-		if (bond.getOrder()<1.5 || bond.getOrder()>2){
+		if (bond.getOrder() != IBond.Order.DOUBLE){
 			return 0;
 		}
 		Point2d cb=new Point2d(c.x-b.x,c.y-b.y);

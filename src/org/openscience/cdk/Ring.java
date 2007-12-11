@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.IBond;
+
 /** 
  * Class representing a ring structure in a molecule.
  * A ring is a linear sequence of
@@ -78,9 +80,9 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 		atoms[0] = new Atom(elementSymbol);
 		for (int i = 1; i < ringSize; i++) {
 			atoms[i] = new Atom(elementSymbol);
-			super.bonds[i-1] = new Bond(atoms[i - 1], atoms[i], 1);
+			super.bonds[i-1] = new Bond(atoms[i - 1], atoms[i], IBond.Order.SINGLE);
 		}
-		super.bonds[ringSize-1] = new Bond(atoms[ringSize - 1], atoms[0], 1);
+		super.bonds[ringSize-1] = new Bond(atoms[ringSize - 1], atoms[0], IBond.Order.SINGLE);
 	}
 	
 		
@@ -134,7 +136,15 @@ public class Ring extends AtomContainer implements java.io.Serializable, org.ope
 	{
 		int orderSum = 0;
 		for (int i = 0; i < getBondCount(); i++) {
-            orderSum += getBond(i).getOrder();
+			if (getBond(i).getOrder() == IBond.Order.SINGLE) {
+				orderSum += 1;
+			} else if (getBond(i).getOrder() == IBond.Order.DOUBLE) {
+				orderSum += 2;
+			} else if (getBond(i).getOrder() == IBond.Order.TRIPLE) {
+				orderSum += 3;
+			} else if (getBond(i).getOrder() == IBond.Order.QUADRUPLE) {
+				orderSum += 4;
+			}
         }
 		return orderSum;
 	}

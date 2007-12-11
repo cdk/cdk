@@ -41,7 +41,7 @@ public class OrderQueryBond extends SMARTSBond {
      *
      * @param order the order of bond
      */
-    public OrderQueryBond(double order) {
+    public OrderQueryBond(IBond.Order order) {
     	super();
     	this.setOrder(order);
     }

@@ -322,13 +322,13 @@ public class Fingerprinter implements IFingerprinter {
 		if (bond.getFlag(CDKConstants.ISAROMATIC))
 		{
 			bondSymbol = ":";
-		} else if (bond.getOrder() == 1)
+		} else if (bond.getOrder() == IBond.Order.SINGLE)
 		{
 			bondSymbol = "-";
-		} else if (bond.getOrder() == 2)
+		} else if (bond.getOrder() == IBond.Order.DOUBLE)
 		{
 			bondSymbol = "=";
-		} else if (bond.getOrder() == 3)
+		} else if (bond.getOrder() == IBond.Order.TRIPLE)
 		{
 			bondSymbol = "#";
 		}

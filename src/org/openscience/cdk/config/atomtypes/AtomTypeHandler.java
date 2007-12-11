@@ -23,16 +23,17 @@
  */
 package org.openscience.cdk.config.atomtypes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * SAX Handler for the AtomTypeReader.
@@ -116,7 +117,16 @@ public class AtomTypeHandler extends DefaultHandler {
                 if (scalarType == SCALAR_BONDORDERSUM) {
                     atomType.setBondOrderSum(Double.parseDouble(currentChars));
                 } else if (scalarType == SCALAR_MAXBONDORDER) {
-                    atomType.setMaxBondOrder(Double.parseDouble(currentChars));
+                	double scalarValue = Double.parseDouble(currentChars);
+                	if (scalarValue == 1.0) {
+                        atomType.setMaxBondOrder(IBond.Order.SINGLE);
+                	} else if (scalarValue == 2.0) {
+                		atomType.setMaxBondOrder(IBond.Order.DOUBLE);
+                	} else if (scalarValue == 3.0) {
+                		atomType.setMaxBondOrder(IBond.Order.TRIPLE);
+                	} else if (scalarValue == 4.0) {
+                		atomType.setMaxBondOrder(IBond.Order.QUADRUPLE);
+                	} 
                 } else if (scalarType == SCALAR_FORMALNEIGHBOURCOUNT) {
                     atomType.setFormalNeighbourCount(Integer.parseInt(currentChars));
                 }else if (scalarType == SCALAR_VALENCY) {

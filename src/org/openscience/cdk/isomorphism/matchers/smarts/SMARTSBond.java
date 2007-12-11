@@ -40,7 +40,7 @@ public class SMARTSBond extends org.openscience.cdk.Bond implements IQueryBond {
 
     public SMARTSBond() {}
     
-    public SMARTSBond(IQueryAtom atom1, IQueryAtom atom2, double order) {
+    public SMARTSBond(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order) {
         super(atom1, atom2, order);
     }
 

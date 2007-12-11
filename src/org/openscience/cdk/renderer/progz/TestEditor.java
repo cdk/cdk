@@ -235,12 +235,12 @@ public class TestEditor extends JPanel {
 			atom = new Atom("C");
 			atom.setHydrogenCount(2);
 			currentChain.addAtom(atom);
-			currentChain.addBond(atomCount, atomCount - 1, 1);
+			currentChain.addBond(atomCount, atomCount - 1, IBond.Order.SINGLE);
 		}  
 		atom = new Atom("C");
 		atom.setHydrogenCount(3);
 		currentChain.addAtom(atom);
-		currentChain.addBond(atomCount, atomCount - 1, 1);
+		currentChain.addBond(atomCount, atomCount - 1, IBond.Order.SINGLE);
 
 		return currentChain;
 	}
@@ -292,7 +292,7 @@ public class TestEditor extends JPanel {
 
 	    IBond bondB1 = builder.newBond(atomC0, atomO1);
 	    bondB1.setElectronCount(2);
-	    bondB1.setOrder(2);
+	    bondB1.setOrder(IBond.Order.DOUBLE);
 	    IBond bondB2 = builder.newBond(atomC0, atomH0);
 	    bondB2.setElectronCount(1);
     bondB2.setStereo(CDKConstants.STEREO_BOND_DOWN);

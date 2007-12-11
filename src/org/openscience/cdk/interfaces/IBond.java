@@ -116,7 +116,7 @@ public interface IBond extends IElectronContainer {
 	 *         for predefined values.
 	 * @see    #setOrder
 	 */
-	public double getOrder();
+	public Order getOrder();
 
 	/**
 	 * Sets the bond order of this bond.
@@ -125,7 +125,7 @@ public interface IBond extends IElectronContainer {
 	 * @see          org.openscience.cdk.CDKConstants for predefined values.
 	 * @see          #getOrder
 	 */
-	public void setOrder(double order);
+	public void setOrder(Order order);
 
 	/**
 	 * Returns the stereo descriptor for this bond.

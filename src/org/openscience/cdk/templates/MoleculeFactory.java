@@ -64,17 +64,17 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 9
 		mol.addAtom(new Atom("C")); // 10
 
-		mol.addBond(0, 1, 2.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 0, 1.0); // 6
-		mol.addBond(0, 6, 1.0); // 7
-		mol.addBond(3, 7, 1.0); // 8
-		mol.addBond(5, 7, 1.0); // 9
-		mol.addBond(7, 8, 1.0); // 10
-		mol.addBond(7, 9, 1.0); // 11
+		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+		mol.addBond(0, 6, IBond.Order.SINGLE); // 7
+		mol.addBond(3, 7, IBond.Order.SINGLE); // 8
+		mol.addBond(5, 7, IBond.Order.SINGLE); // 9
+		mol.addBond(7, 8, IBond.Order.SINGLE); // 10
+		mol.addBond(7, 9, IBond.Order.SINGLE); // 11
 		configureAtoms(mol);
 		return mol;
 	}
@@ -99,7 +99,7 @@ public class MoleculeFactory {
     //Add further atoms and bonds as needed, a pair at a time.
     for (int atomCount = 1; atomCount < chainLength; atomCount ++) {
         currentChain.addAtom(new Atom("C"));
-        currentChain.addBond(atomCount, atomCount - 1, 1);
+        currentChain.addBond(atomCount, atomCount - 1, IBond.Order.SINGLE);
     }  
 
     return currentChain;
@@ -117,14 +117,14 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 7
 		mol.addAtom(new Atom("C")); // 8
 
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 0, 1.0); // 6
-		mol.addBond(0, 6, 1.0); // 7
-		mol.addBond(6, 7, 1.0); // 8
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+		mol.addBond(0, 6, IBond.Order.SINGLE); // 7
+		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
 		return mol;
 	}
 
@@ -143,12 +143,12 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("C")); // 6
 
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 0, 2.0); // 6
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 0, IBond.Order.DOUBLE); // 6
 		return mol;
 	}
 
@@ -167,12 +167,12 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("C")); // 6
 
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 0, 1.0); // 6
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
 		return mol;
 	}
 
@@ -189,10 +189,10 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
 
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 0, 1.0); // 4
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 0, IBond.Order.SINGLE); // 4
 		return mol;
 	}
 
@@ -209,10 +209,10 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
 
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 2.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 0, 2.0); // 4
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 0, IBond.Order.DOUBLE); // 4
 		return mol;
 	}
 
@@ -225,12 +225,12 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
 		mol.addAtom(new Atom("C")); // 4
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 0, 1.0); // 3
-		mol.addBond(2, 3, 1.0); // 4
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 1.0); // 4
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 0, IBond.Order.SINGLE); // 3
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 4
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 4
 		
 		return mol;
 	}
@@ -257,20 +257,20 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 11
 	
 		
-		mol.addBond(0, 1, 2.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 2.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 2.0); // 5
-		mol.addBond(5, 0, 1.0); // 6
+		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
 	
-		mol.addBond(0, 6, 1.0); // 7
-		mol.addBond(6, 7, 1.0); // 8
-		mol.addBond(7, 8, 2.0); // 5
-		mol.addBond(8, 9, 1.0); // 6
-		mol.addBond(9, 10, 2.0); // 7
-		mol.addBond(10, 11, 1.0); // 8
-		mol.addBond(11, 6, 2.0); // 5
+		mol.addBond(0, 6, IBond.Order.SINGLE); // 7
+		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
+		mol.addBond(7, 8, IBond.Order.DOUBLE); // 5
+		mol.addBond(8, 9, IBond.Order.SINGLE); // 6
+		mol.addBond(9, 10, IBond.Order.DOUBLE); // 7
+		mol.addBond(10, 11, IBond.Order.SINGLE); // 8
+		mol.addBond(11, 6, IBond.Order.DOUBLE); // 5
 		return mol;
 	}
 	
@@ -293,22 +293,22 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 12
 		mol.addAtom(new Atom("C")); // 13
 		
-		mol.addBond(0, 1, 2.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 2.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 2.0); // 5
-		mol.addBond(5, 0, 1.0); // 6
+		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
 	
-		mol.addBond(0, 6, 1.0); // 7
-		mol.addBond(6, 7, 1.0); // 8
-		mol.addBond(7, 8, 1.0); // 5
-		mol.addBond(8, 9, 1.0); // 6
-		mol.addBond(9, 10, 2.0); // 7
-		mol.addBond(10, 11, 1.0); // 8
-		mol.addBond(11, 12, 2.0); // 5
-		mol.addBond(12, 13, 1.0);
-		mol.addBond(13, 8, 2.0); // 5
+		mol.addBond(0, 6, IBond.Order.SINGLE); // 7
+		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
+		mol.addBond(7, 8, IBond.Order.SINGLE); // 5
+		mol.addBond(8, 9, IBond.Order.SINGLE); // 6
+		mol.addBond(9, 10, IBond.Order.DOUBLE); // 7
+		mol.addBond(10, 11, IBond.Order.SINGLE); // 8
+		mol.addBond(11, 12, IBond.Order.DOUBLE); // 5
+		mol.addBond(12, 13, IBond.Order.SINGLE);
+		mol.addBond(13, 8, IBond.Order.DOUBLE); // 5
 		return mol;
 	}
 
@@ -324,14 +324,14 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("N")); // 6
 		
-		mol.addBond(0, 1, 2.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 2.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 2.0); // 5
-		mol.addBond(5, 0, 1.0); // 6
+		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
 	
-		mol.addBond(0, 6, 1.0); // 7
+		mol.addBond(0, 6, IBond.Order.SINGLE); // 7
 		return mol;
 	}
 
@@ -347,15 +347,15 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("C")); // 6
 		
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 0, 1.0); // 3
-		mol.addBond(2, 3, 1.0); // 4
-		mol.addBond(1, 3, 1.0); // 5
-		mol.addBond(3, 4, 1.0); // 6
-		mol.addBond(4, 2, 1.0); // 7
-		mol.addBond(4, 5, 1.0); // 8
-		mol.addBond(5, 3, 1.0); // 9
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 0, IBond.Order.SINGLE); // 3
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 4
+		mol.addBond(1, 3, IBond.Order.SINGLE); // 5
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 6
+		mol.addBond(4, 2, IBond.Order.SINGLE); // 7
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 8
+		mol.addBond(5, 3, IBond.Order.SINGLE); // 9
 		
 		return mol;
 	}
@@ -376,17 +376,17 @@ public class MoleculeFactory {
 
 		
 		
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 6, 1.0); // 6
-		mol.addBond(6, 0, 1.0); // 7
-		mol.addBond(6, 7, 1.0); // 8
-		mol.addBond(7, 8, 1.0); // 9
-		mol.addBond(8, 9, 1.0); // 10
-		mol.addBond(9, 6, 1.0); // 11
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 6, IBond.Order.SINGLE); // 6
+		mol.addBond(6, 0, IBond.Order.SINGLE); // 7
+		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
+		mol.addBond(7, 8, IBond.Order.SINGLE); // 9
+		mol.addBond(8, 9, IBond.Order.SINGLE); // 10
+		mol.addBond(9, 6, IBond.Order.SINGLE); // 11
 		return mol;
 	}
 	
@@ -403,15 +403,15 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 6
 		mol.addAtom(new Atom("C")); // 7
 
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 0, 1.0); // 6
-		mol.addBond(6, 0, 1.0); // 7
-		mol.addBond(6, 7, 1.0); // 8
-		mol.addBond(7, 3, 1.0); // 9
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+		mol.addBond(6, 0, IBond.Order.SINGLE); // 7
+		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
+		mol.addBond(7, 3, IBond.Order.SINGLE); // 9
 		return mol;
 	}
 
@@ -429,18 +429,18 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 8
 		mol.addAtom(new Atom("C")); // 9
 
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 0, 1.0); // 6
-		mol.addBond(5, 6, 1.0); // 7
-		mol.addBond(6, 7, 1.0); // 8
-		mol.addBond(7, 4, 1.0); // 9
-		mol.addBond(8, 0, 1.0); // 10
-		mol.addBond(9, 1, 1.0); // 11
-		mol.addBond(9, 8, 1.0); // 11
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+		mol.addBond(5, 6, IBond.Order.SINGLE); // 7
+		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
+		mol.addBond(7, 4, IBond.Order.SINGLE); // 9
+		mol.addBond(8, 0, IBond.Order.SINGLE); // 10
+		mol.addBond(9, 1, IBond.Order.SINGLE); // 11
+		mol.addBond(9, 8, IBond.Order.SINGLE); // 11
 		return mol;
 	}
 
@@ -460,18 +460,18 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 10
 
 		
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 0, 1.0); // 6
-		mol.addBond(5, 6, 1.0); // 7
-		mol.addBond(6, 7, 1.0); // 8RingSet
-		mol.addBond(7, 8, 1.0); // 9
-		mol.addBond(8, 9, 1.0); // 10
-		mol.addBond(9, 0, 1.0); // 11
-		mol.addBond(5, 10, 1.0); // 12
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+		mol.addBond(5, 6, IBond.Order.SINGLE); // 7
+		mol.addBond(6, 7, IBond.Order.SINGLE); // 8RingSet
+		mol.addBond(7, 8, IBond.Order.SINGLE); // 9
+		mol.addBond(8, 9, IBond.Order.SINGLE); // 10
+		mol.addBond(9, 0, IBond.Order.SINGLE); // 11
+		mol.addBond(5, 10, IBond.Order.SINGLE); // 12
 		return mol;
 
 	}
@@ -499,27 +499,27 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 17
 		mol.addAtom(new Atom("C")); // 18
 		
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 2.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4, 2.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 6, 2.0); // 6
-		mol.addBond(6, 7, 1.0); // 8
-		mol.addBond(7, 8, 2.0); // 9
-		mol.addBond(8, 9, 1.0); // 10
-		mol.addBond(9, 0, 2.0); // 11		
-		mol.addBond(9, 4, 1.0); // 12
-		mol.addBond(8, 10, 1.0); // 12
-		mol.addBond(10, 11, 2.0); // 12
-		mol.addBond(11, 12, 1.0); // 12
-		mol.addBond(12, 13, 2.0); // 12
-		mol.addBond(13, 7, 1.0); // 12
-		mol.addBond(3, 14, 1.0); // 12
-		mol.addBond(14, 15, 1.0); // 12
-		mol.addBond(12, 16, 1.0); // 12		
-		mol.addBond(16, 17, 1.0); // 12
-		mol.addBond(17, 18, 1.0); // 12	
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.DOUBLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 6, IBond.Order.DOUBLE); // 6
+		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
+		mol.addBond(7, 8, IBond.Order.DOUBLE); // 9
+		mol.addBond(8, 9, IBond.Order.SINGLE); // 10
+		mol.addBond(9, 0, IBond.Order.DOUBLE); // 11		
+		mol.addBond(9, 4, IBond.Order.SINGLE); // 12
+		mol.addBond(8, 10, IBond.Order.SINGLE); // 12
+		mol.addBond(10, 11, IBond.Order.DOUBLE); // 12
+		mol.addBond(11, 12, IBond.Order.SINGLE); // 12
+		mol.addBond(12, 13, IBond.Order.DOUBLE); // 12
+		mol.addBond(13, 7, IBond.Order.SINGLE); // 12
+		mol.addBond(3, 14, IBond.Order.SINGLE); // 12
+		mol.addBond(14, 15, IBond.Order.SINGLE); // 12
+		mol.addBond(12, 16, IBond.Order.SINGLE); // 12		
+		mol.addBond(16, 17, IBond.Order.SINGLE); // 12
+		mol.addBond(17, 18, IBond.Order.SINGLE); // 12	
 		configureAtoms(mol);
 		return mol;
 	}
@@ -546,26 +546,26 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 16
 		
 		
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2,1.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4,1.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 6,1.0); // 6
-		mol.addBond(6, 7, 1.0); // 8
-		mol.addBond(7, 8,1.0); // 9
-		mol.addBond(8, 9, 1.0); // 10
-		mol.addBond(9, 0,1.0); // 11		
-		mol.addBond(9, 4, 1.0); // 12
-		mol.addBond(8, 10, 1.0); // 13
-		mol.addBond(10, 11,1.0); // 14
-		mol.addBond(11, 12, 1.0); // 15
-		mol.addBond(12, 13,1.0); // 16
-		mol.addBond(13, 7, 1.0); // 17
-		mol.addBond(13, 14, 1.0); // 18
-		mol.addBond(14, 15, 1.0); // 19
-		mol.addBond(15, 16, 1.0); // 20
-		mol.addBond(16, 12, 1.0); // 21
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 6, IBond.Order.SINGLE); // 6
+		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
+		mol.addBond(7, 8, IBond.Order.SINGLE); // 9
+		mol.addBond(8, 9, IBond.Order.SINGLE); // 10
+		mol.addBond(9, 0, IBond.Order.SINGLE); // 11		
+		mol.addBond(9, 4, IBond.Order.SINGLE); // 12
+		mol.addBond(8, 10, IBond.Order.SINGLE); // 13
+		mol.addBond(10, 11, IBond.Order.SINGLE); // 14
+		mol.addBond(11, 12, IBond.Order.SINGLE); // 15
+		mol.addBond(12, 13, IBond.Order.SINGLE); // 16
+		mol.addBond(13, 7, IBond.Order.SINGLE); // 17
+		mol.addBond(13, 14, IBond.Order.SINGLE); // 18
+		mol.addBond(14, 15, IBond.Order.SINGLE); // 19
+		mol.addBond(15, 16, IBond.Order.SINGLE); // 20
+		mol.addBond(16, 12, IBond.Order.SINGLE); // 21
 		
 		configureAtoms(mol);
 		return mol;
@@ -590,17 +590,17 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 8
 		mol.addAtom(new Atom("C")); // 9
 		
-		mol.addBond(0, 1, 2.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 2.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 2.0); // 5
-		mol.addBond(5, 6, 1.0); // 6
-		mol.addBond(6, 7, 2.0); // 8
-		mol.addBond(7, 8, 1.0); // 9
-		mol.addBond(8, 9, 2.0); // 10
-		mol.addBond(9, 5, 1.0); // 11
-		mol.addBond(9, 0, 1.0); // 12
+		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
+		mol.addBond(5, 6, IBond.Order.SINGLE); // 6
+		mol.addBond(6, 7, IBond.Order.DOUBLE); // 8
+		mol.addBond(7, 8, IBond.Order.SINGLE); // 9
+		mol.addBond(8, 9, IBond.Order.DOUBLE); // 10
+		mol.addBond(9, 5, IBond.Order.SINGLE); // 11
+		mol.addBond(9, 0, IBond.Order.SINGLE); // 12
 		
 		return mol;
 	}
@@ -624,16 +624,16 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("N")); // 8
 
 		
-		mol.addBond(0, 1, 2.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 2.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 2.0); // 5
-		mol.addBond(5, 6, 1.0); // 6
-		mol.addBond(6, 7, 2.0); // 8
-		mol.addBond(7, 8, 1.0); // 9
-		mol.addBond(0, 5, 1.0); // 11
-		mol.addBond(8, 0, 1.0); // 12
+		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
+		mol.addBond(5, 6, IBond.Order.SINGLE); // 6
+		mol.addBond(6, 7, IBond.Order.DOUBLE); // 8
+		mol.addBond(7, 8, IBond.Order.SINGLE); // 9
+		mol.addBond(0, 5, IBond.Order.SINGLE); // 11
+		mol.addBond(8, 0, IBond.Order.SINGLE); // 12
 		
 		return mol;
 	}
@@ -652,11 +652,11 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
 		
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 2.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 0, 2.0); // 5
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
 		
 		return mol;
 	}
@@ -676,12 +676,12 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 4
 		mol.addAtom(new Atom("C")); // 5
 		
-		mol.addBond(0, 1, 2.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 2.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 2.0); // 5
-		mol.addBond(5, 0, 1.0); // 6
+		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
 		
 		return mol;
 	}
@@ -704,13 +704,13 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("O")); // 6
 		mol.getAtom(6).setFormalCharge(-1);
 		
-		mol.addBond(0, 1, 2.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 2.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 2.0); // 5
-		mol.addBond(5, 0, 1.0); // 6
-		mol.addBond(1, 6, 1.0); // 7
+		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+		mol.addBond(1, 6, IBond.Order.SINGLE); // 7
 		
 		return mol;
 	}
@@ -730,11 +730,11 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("S")); // 3
 		mol.addAtom(new Atom("C")); // 4
 		
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 2.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 0, 2.0); // 5
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
 		
 		return mol;
 	}	
@@ -754,17 +754,17 @@ public class MoleculeFactory {
 //		mol.addAtom(new Atom("C")); // 8
 //		mol.addAtom(new Atom("C")); // 9
 		
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 0, 1.0); // 6
-//		mol.addBond(5, 6, 1.0); // 7
-//		mol.addBond(6, 7, 1.0); // 8
-//		mol.addBond(7, 4, 1.0); // 9
-//		mol.addBond(8, 0, 1.0); // 10
-//		mol.addBond(9, 1, 1.0); // 11		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+//		mol.addBond(5, 6, IBond.Order.SINGLE); // 7
+//		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
+//		mol.addBond(7, 4, IBond.Order.SINGLE); // 9
+//		mol.addBond(8, 0, IBond.Order.SINGLE); // 10
+//		mol.addBond(9, 1, IBond.Order.SINGLE); // 11		
 		
 			
 		return mol;
@@ -790,24 +790,24 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 13
 		
 		
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 0, 1.0); // 6
-		mol.addBond(5, 6, 1.0); // 7
-		mol.addBond(6, 9, 1.0); // 8
-		mol.addBond(1, 7, 1.0); // 9
-		mol.addBond(7, 9, 1.0); // 10
-		mol.addBond(3, 8, 1.0); // 11		
-		mol.addBond(8, 9, 1.0); // 12
-		mol.addBond(0, 10, 1.0); // 13
-		mol.addBond(10, 13, 1.0); // 14
-		mol.addBond(2, 11, 1.0); // 15
-		mol.addBond(11, 13, 1.0); // 16
-		mol.addBond(4, 12, 1.0); // 17		
-		mol.addBond(12, 13, 1.0); // 18		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+		mol.addBond(5, 6, IBond.Order.SINGLE); // 7
+		mol.addBond(6, 9, IBond.Order.SINGLE); // 8
+		mol.addBond(1, 7, IBond.Order.SINGLE); // 9
+		mol.addBond(7, 9, IBond.Order.SINGLE); // 10
+		mol.addBond(3, 8, IBond.Order.SINGLE); // 11		
+		mol.addBond(8, 9, IBond.Order.SINGLE); // 12
+		mol.addBond(0, 10, IBond.Order.SINGLE); // 13
+		mol.addBond(10, 13, IBond.Order.SINGLE); // 14
+		mol.addBond(2, 11, IBond.Order.SINGLE); // 15
+		mol.addBond(11, 13, IBond.Order.SINGLE); // 16
+		mol.addBond(4, 12, IBond.Order.SINGLE); // 17		
+		mol.addBond(12, 13, IBond.Order.SINGLE); // 18		
 				
 		return mol;
 	}
@@ -836,24 +836,24 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 17
 		mol.addAtom(new Atom("C")); // 18
 		
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 2.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(2, 6, 1.0); // 6
-		mol.addBond(6, 7, 1.0); // 7
-		mol.addBond(7, 8, 1.0); // 8
-		mol.addBond(6, 9, 1.0); // 9
-		mol.addBond(6, 10, 1.0); // 10
-		mol.addBond(10, 11, 1.0); // 11
-		mol.addBond(8, 12, 3.0); // 12
-		mol.addBond(12, 13, 1.0); // 13
-		mol.addBond(11, 14, 1.0); // 14
-		mol.addBond(9, 15, 1.0);
-		mol.addBond(15, 16, 2.0);
-		mol.addBond(16, 17, 2.0);
-		mol.addBond(17, 18, 1.0);
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(2, 6, IBond.Order.SINGLE); // 6
+		mol.addBond(6, 7, IBond.Order.SINGLE); // 7
+		mol.addBond(7, 8, IBond.Order.SINGLE); // 8
+		mol.addBond(6, 9, IBond.Order.SINGLE); // 9
+		mol.addBond(6, 10, IBond.Order.SINGLE); // 10
+		mol.addBond(10, 11, IBond.Order.SINGLE); // 11
+		mol.addBond(8, 12, IBond.Order.TRIPLE); // 12
+		mol.addBond(12, 13, IBond.Order.SINGLE); // 13
+		mol.addBond(11, 14, IBond.Order.SINGLE); // 14
+		mol.addBond(9, 15, IBond.Order.SINGLE);
+		mol.addBond(15, 16, IBond.Order.DOUBLE);
+		mol.addBond(16, 17, IBond.Order.DOUBLE);
+		mol.addBond(17, 18, IBond.Order.SINGLE);
 		
 		
 		return mol;
@@ -869,12 +869,12 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 4
 		mol.addAtom(new Atom("C")); // 5
 		
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 2.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 4, 2.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 0, 2.0); // 6
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.DOUBLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 0, IBond.Order.DOUBLE); // 6
 		return mol;
 	}
 	
@@ -890,14 +890,14 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 6
 		mol.addAtom(new Atom("O")); // 7
 		
-		mol.addBond(0, 1, 2.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 2.0); // 3
-		mol.addBond(3, 4, 1.0); // 4
-		mol.addBond(4, 5, 1.0); // 5
-		mol.addBond(5, 6, 2.0); // 6
-		mol.addBond(6, 1, 1.0); // 7
-		mol.addBond(4, 7, 2.0); // 8
+		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 6, IBond.Order.DOUBLE); // 6
+		mol.addBond(6, 1, IBond.Order.SINGLE); // 7
+		mol.addBond(4, 7, IBond.Order.DOUBLE); // 8
 		return mol;
 	}
 
@@ -911,14 +911,14 @@ public class MoleculeFactory {
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("H"));
 
-        mol.addBond(0, 1, 1.0);
-        mol.addBond(1, 2, 1.0);
-        mol.addBond(2, 3, 1.0);
-        mol.addBond(3, 4, 1.0);
-        mol.addBond(4, 5, 1.0);
-        mol.addBond(5, 0, 1.0);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
+        mol.addBond(2, 3, IBond.Order.SINGLE);
+        mol.addBond(3, 4, IBond.Order.SINGLE);
+        mol.addBond(4, 5, IBond.Order.SINGLE);
+        mol.addBond(5, 0, IBond.Order.SINGLE);
 
-        mol.addBond(0, 6, 1.0);
+        mol.addBond(0, 6, IBond.Order.SINGLE);
 
         return mol;
 
@@ -933,12 +933,12 @@ public class MoleculeFactory {
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
 
-        mol.addBond(0, 1, 1.0);
-        mol.addBond(1, 2, 1.0);
-        mol.addBond(2, 3, 1.0);
-        mol.addBond(3, 4, 1.0);
-        mol.addBond(4, 5, 1.0);
-        mol.addBond(5, 0, 1.0);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
+        mol.addBond(2, 3, IBond.Order.SINGLE);
+        mol.addBond(3, 4, IBond.Order.SINGLE);
+        mol.addBond(4, 5, IBond.Order.SINGLE);
+        mol.addBond(5, 0, IBond.Order.SINGLE);
 
         return mol;
 
@@ -1003,27 +1003,27 @@ public class MoleculeFactory {
     	a9.setPoint2d(new Point2d(18.9871, -18.0139));  mol.addAtom(a9);
     	IAtom a10 = mol.getBuilder().newAtom("C");
     	a10.setPoint2d(new Point2d(23.4609, -18.8267));  mol.addAtom(a10);
-    	IBond b1 = mol.getBuilder().newBond(a1, a2, 2.0);
+    	IBond b1 = mol.getBuilder().newBond(a1, a2, IBond.Order.DOUBLE);
     	mol.addBond(b1);
-    	IBond b2 = mol.getBuilder().newBond(a1, a3, 1.0);
+    	IBond b2 = mol.getBuilder().newBond(a1, a3, IBond.Order.SINGLE);
     	mol.addBond(b2);
-    	IBond b3 = mol.getBuilder().newBond(a1, a4, 1.0);
+    	IBond b3 = mol.getBuilder().newBond(a1, a4, IBond.Order.SINGLE);
     	mol.addBond(b3);
-    	IBond b4 = mol.getBuilder().newBond(a2, a5, 1.0);
+    	IBond b4 = mol.getBuilder().newBond(a2, a5, IBond.Order.SINGLE);
     	mol.addBond(b4);
-    	IBond b5 = mol.getBuilder().newBond(a2, a6, 1.0);
+    	IBond b5 = mol.getBuilder().newBond(a2, a6, IBond.Order.SINGLE);
     	mol.addBond(b5);
-    	IBond b6 = mol.getBuilder().newBond(a3, a7, 2.0);
+    	IBond b6 = mol.getBuilder().newBond(a3, a7, IBond.Order.DOUBLE);
     	mol.addBond(b6);
-    	IBond b7 = mol.getBuilder().newBond(a3, a8, 1.0);
+    	IBond b7 = mol.getBuilder().newBond(a3, a8, IBond.Order.SINGLE);
     	mol.addBond(b7);
-    	IBond b8 = mol.getBuilder().newBond(a4, a9, 2.0);
+    	IBond b8 = mol.getBuilder().newBond(a4, a9, IBond.Order.DOUBLE);
     	mol.addBond(b8);
-    	IBond b9 = mol.getBuilder().newBond(a5, a10, 2.0);
+    	IBond b9 = mol.getBuilder().newBond(a5, a10, IBond.Order.DOUBLE);
     	mol.addBond(b9);
-    	IBond b10 = mol.getBuilder().newBond(a6, a9, 1.0);
+    	IBond b10 = mol.getBuilder().newBond(a6, a9, IBond.Order.SINGLE);
     	mol.addBond(b10);
-    	IBond b11 = mol.getBuilder().newBond(a7, a10, 1.0);
+    	IBond b11 = mol.getBuilder().newBond(a7, a10, IBond.Order.SINGLE);
     	mol.addBond(b11);
     	
     	return mol;

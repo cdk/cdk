@@ -25,6 +25,7 @@ package org.openscience.cdk.templates.saturatedhydrocarbons;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * This class contains methods for generating simple organic alkanes.
@@ -41,9 +42,9 @@ public class IsoAlkanes {
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
 
-        mol.addBond(0, 1, 1);
-        mol.addBond(0, 2, 1);
-        mol.addBond(0, 3, 1);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(0, 2, IBond.Order.SINGLE);
+        mol.addBond(0, 3, IBond.Order.SINGLE);
         return mol;
     }
 
@@ -55,10 +56,10 @@ public class IsoAlkanes {
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
 
-        mol.addBond(0, 1, 1);
-        mol.addBond(0, 2, 1);
-        mol.addBond(0, 3, 1);
-        mol.addBond(3, 4, 1);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(0, 2, IBond.Order.SINGLE);
+        mol.addBond(0, 3, IBond.Order.SINGLE);
+        mol.addBond(3, 4, IBond.Order.SINGLE);
         return mol;
     }
 
@@ -71,11 +72,11 @@ public class IsoAlkanes {
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
 
-        mol.addBond(0, 1, 1);
-        mol.addBond(0, 2, 1);
-        mol.addBond(0, 3, 1);
-        mol.addBond(3, 4, 1);
-        mol.addBond(4, 5, 1);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(0, 2, IBond.Order.SINGLE);
+        mol.addBond(0, 3, IBond.Order.SINGLE);
+        mol.addBond(3, 4, IBond.Order.SINGLE);
+        mol.addBond(4, 5, IBond.Order.SINGLE);
         return mol;
     }
 

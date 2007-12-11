@@ -1045,9 +1045,9 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 			} else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE)
 			{
 				paintTripleBond(bond, bondColor, graphics);
-			} else if (bond.getOrder() == 8.)
-			{
-				paintAnyBond(bond, bondColor, graphics);
+//			} else if (bond.getOrder() == 8.)
+//			{
+//				paintAnyBond(bond, bondColor, graphics);
 			} else
 			{
 				// paint all other bonds as single bonds
@@ -1065,7 +1065,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintRingBond(org.openscience.cdk.interfaces.IBond bond, IRing ring, Color bondColor, Graphics2D graphics)
 	{
-		if (bond.getOrder() == 1.0)
+		if (bond.getOrder() == IBond.Order.SINGLE)
 		{
 			// Added by rstefani (in fact, code copied from paintBond)
 			if (bond.getStereo() != CDKConstants.STEREO_BOND_NONE && bond.getStereo() != CDKConstants.STEREO_BOND_UNDEFINED)
@@ -1083,12 +1083,12 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 				// end code by rstefani
 				paintSingleBond(bond, bondColor, graphics);
 			}
-		} else if (bond.getOrder() == 2.0)
+		} else if (bond.getOrder() == IBond.Order.DOUBLE)
 		{
 			
 			paintSingleBond(bond, bondColor, graphics);
 			paintInnerBond(bond, ring, bondColor, graphics);
-		} else if (bond.getOrder() == 3.0)
+		} else if (bond.getOrder() == IBond.Order.TRIPLE)
 		{
 			paintTripleBond(bond, bondColor, graphics);
 		} else

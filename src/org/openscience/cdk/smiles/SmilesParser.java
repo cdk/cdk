@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -106,11 +107,11 @@ public class SmilesParser {
 	int position = -1;
 	int nodeCounter = -1;
 	String smiles = null;
-	double bondStatus = -1;
-	double bondStatusForRingClosure = 1;
+	IBond.Order bondStatus = null;
+	IBond.Order bondStatusForRingClosure = IBond.Order.SINGLE;
     boolean bondIsAromatic = false;
 	IAtom[] rings = null;
-	double[] ringbonds = null;
+	IBond.Order[] ringbonds = null;
 	int thisRing = -1;
 	IMolecule molecule = null;
 	String currentSymbol = null;
@@ -204,7 +205,7 @@ public class SmilesParser {
 		logger.debug("parseSmiles()...");
 		IBond bond = null;
 		nodeCounter = 0;
-		bondStatus = 0;
+		bondStatus = null;
         bondIsAromatic = false;
 		boolean bondExists = true;
 		thisRing = -1;
@@ -213,18 +214,18 @@ public class SmilesParser {
 		position = 0;
 		// we don't want more than 1024 rings
 		rings = new IAtom[1024];
-		ringbonds = new double[1024];
+		ringbonds = new IBond.Order[1024];
 		for (int f = 0; f < 1024; f++)
 		{
 			rings[f] = null;
-			ringbonds[f] = -1;
+			ringbonds[f] = null;
 		}
 
 		char mychar = 'X';
 		char[] chars = new char[1];
 		IAtom lastNode = null;
 		Stack<IAtom> atomStack = new Stack<IAtom>();
-		Stack<Double> bondStack = new Stack<Double>();
+		Stack<IBond.Order> bondStack = new Stack<IBond.Order>();
 		IAtom atom = null;
 		do
 		{
@@ -325,7 +326,7 @@ public class SmilesParser {
 						logger.debug("", a.hashCode());
 					}
 					logger.debug("------");
-					bondStack.push(new Double(bondStatus));
+					bondStack.push(bondStatus);
 					position++;
 				} else if (mychar == ')')
 				{
@@ -338,7 +339,7 @@ public class SmilesParser {
 						logger.debug("", a.hashCode());
 					}
 					logger.debug("------");
-					bondStatus = ((Double) bondStack.pop()).doubleValue();
+					bondStatus = bondStack.pop();
 					position++;
 				} else if (mychar >= '0' && mychar <= '9')
 				{
@@ -747,8 +748,8 @@ public class SmilesParser {
 	private void handleRing(IAtom atom)
 	{
 		logger.debug("handleRing():");
-		double bondStat = bondStatusForRingClosure;
-		if (ringbonds[thisRing] > bondStat)
+		IBond.Order bondStat = bondStatusForRingClosure;
+		if (BondManipulator.isHigherOrder(ringbonds[thisRing], bondStat))
 			bondStat = ringbonds[thisRing];
 		IBond bond = null;
 		IAtom partner = null;
@@ -765,7 +766,7 @@ public class SmilesParser {
 			molecule.addBond(bond);
             bondIsAromatic = false;
 			rings[thisRing] = null;
-			ringbonds[thisRing] = -1;
+			ringbonds[thisRing] = null;
 
 		} else
 		{
@@ -776,7 +777,7 @@ public class SmilesParser {
 			rings[thisRing] = atom;
 			ringbonds[thisRing] = bondStatusForRingClosure;
 		}
-		bondStatusForRingClosure = 1;
+		bondStatusForRingClosure = IBond.Order.SINGLE;
 	}
 
 	private void addImplicitHydrogens(IMolecule m) {

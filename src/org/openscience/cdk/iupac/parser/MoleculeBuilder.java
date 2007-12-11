@@ -36,6 +36,8 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -136,12 +138,12 @@ public class MoleculeBuilder
             if (addPos < 0)
             {
                 //Set the first bond to an order of 2 (i.e. a double bond)
-                currentMolecule.getBond(0).setOrder(2.0);
+                currentMolecule.getBond(0).setOrder(IBond.Order.DOUBLE);
             }
             else
             {
                 //Set the addPos'th bond to an order of 2 (i.e. a double bond)
-                currentMolecule.getBond(addPos).setOrder(2.0);
+                currentMolecule.getBond(addPos).setOrder(IBond.Order.DOUBLE);
             }
         }
         //Alkynes - Tripple bond
@@ -151,12 +153,12 @@ public class MoleculeBuilder
             if (addPos < 0)
             {
                 //Set the first bond to an order of 3 (i.e. a tripple bond)
-                currentMolecule.getBond(0).setOrder(3.0);
+                currentMolecule.getBond(0).setOrder(IBond.Order.TRIPLE);
             }
             else
             {
                 //Set the addPos'th bond to an order of 3 (i.e. a tripple bond)
-                currentMolecule.getBond(addPos).setOrder(3.0);
+                currentMolecule.getBond(addPos).setOrder(IBond.Order.TRIPLE);
             }
         }
         //FUNCTIONAL GROUP SUFFIXES
@@ -172,29 +174,29 @@ public class MoleculeBuilder
             //If functional group hasn't had a location specified:
             if (addPos < 0)
             {
-                addAtom("O", endOfChain, 1.0, 1);
+                addAtom("O", endOfChain, IBond.Order.SINGLE, 1);
             }
             else
             {
-                addAtom("O", currentMolecule.getAtom(addPos), 1.0, 1);
+                addAtom("O", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 1);
             }
         }
         //Aldehydes
         else if (funGroupToken == "al")
         {
-            addAtom("O", endOfChain, 2.0, 0);
+            addAtom("O", endOfChain, IBond.Order.DOUBLE, 0);
         }
         //Carboxylic acid
         else if (funGroupToken == "oic acid")
         {
-            addAtom("O", endOfChain, 2.0, 0);
-            addAtom("O", endOfChain, 1.0, 1);
+            addAtom("O", endOfChain, IBond.Order.DOUBLE, 0);
+            addAtom("O", endOfChain, IBond.Order.SINGLE, 1);
         }
         //Carboxylic Acid Chloride
         else if (funGroupToken == "oyl chloride")
         {
-            addAtom("O", endOfChain, 2.0, 0);
-            addAtom("Cl", endOfChain, 1.0, 0);
+            addAtom("O", endOfChain, IBond.Order.DOUBLE, 0);
+            addAtom("Cl", endOfChain, IBond.Order.SINGLE, 0);
         }
         //PREFIXES
         //Halogens
@@ -204,11 +206,11 @@ public class MoleculeBuilder
             //If functional group hasn't had a location specified:
             if (addPos < 0)
             {
-                addAtom("Cl", currentMolecule.getFirstAtom(), 1.0, 0);
+                addAtom("Cl", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 0);
             }
             else
             {
-                addAtom("Cl", currentMolecule.getAtom(addPos), 1.0, 0);
+                addAtom("Cl", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
         }
         //Fluorine
@@ -217,11 +219,11 @@ public class MoleculeBuilder
             //If functional group hasn't had a location specified:
             if (addPos < 0)
             {
-                addAtom("F", currentMolecule.getFirstAtom(), 1.0, 0);
+                addAtom("F", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 0);
             }
             else
             {
-                addAtom("F", currentMolecule.getAtom(addPos), 1.0, 0);
+                addAtom("F", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
         }
         //Bromine
@@ -230,11 +232,11 @@ public class MoleculeBuilder
             //If functional group hasn't had a location specified:
             if (addPos < 0)
             {
-                addAtom("Br", currentMolecule.getFirstAtom(), 1.0, 0);
+                addAtom("Br", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 0);
             }
             else
             {
-                addAtom("Br", currentMolecule.getAtom(addPos), 1.0, 0);
+                addAtom("Br", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
         }
         //Iodine
@@ -243,11 +245,11 @@ public class MoleculeBuilder
             //If functional group hasn't had a location specified:
             if (addPos < 0)
             {
-                addAtom("I", currentMolecule.getFirstAtom(), 1.0, 0);
+                addAtom("I", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 0);
             }
             else
             {
-                addAtom("I", currentMolecule.getAtom(addPos), 1.0, 0);
+                addAtom("I", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
         }
         //Nitro
@@ -256,19 +258,19 @@ public class MoleculeBuilder
             //If functional group hasn't had a location specified:
             if (addPos < 0)
             {
-                addAtom("N", currentMolecule.getFirstAtom(), 1.0, 0);
+                addAtom("N", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 0);
             }
             else
             {
-                addAtom("N", currentMolecule.getAtom(addPos), 1.0, 0);
+                addAtom("N", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
             
             //Stuff which applied no matter where the N atom is:
             org.openscience.cdk.interfaces.IAtom nitrogenAtom = currentMolecule.getLastAtom();
             nitrogenAtom.setFormalCharge(+1);
-            addAtom("O", nitrogenAtom, 1.0, 0);
+            addAtom("O", nitrogenAtom, IBond.Order.SINGLE, 0);
             currentMolecule.getLastAtom().setFormalCharge(-1);
-            addAtom("O", nitrogenAtom, 2.0, 0);
+            addAtom("O", nitrogenAtom, IBond.Order.DOUBLE, 0);
         }
         //Oxo
         else if (funGroupToken == "oxo")
@@ -276,17 +278,17 @@ public class MoleculeBuilder
             //If functional group hasn't had a location specified:
             if (addPos < 0)
             {
-                addAtom("O", currentMolecule.getFirstAtom(), 2.0, 0);
+                addAtom("O", currentMolecule.getFirstAtom(), IBond.Order.DOUBLE, 0);
             }
             else
             {
-                addAtom("O", currentMolecule.getAtom(addPos), 2.0, 0);
+                addAtom("O", currentMolecule.getAtom(addPos), IBond.Order.DOUBLE, 0);
             }
         }
         //Nitrile
         else if (funGroupToken == "nitrile" )
         {
-            addAtom("N", currentMolecule.getFirstAtom(), 3.0, 0);
+            addAtom("N", currentMolecule.getFirstAtom(), IBond.Order.TRIPLE, 0);
         }
         //Benzene
         else if (funGroupToken == "phenyl" )
@@ -321,11 +323,11 @@ public class MoleculeBuilder
             //If functional group hasn't had a location specified:
             if (addPos < 0)
             {
-                addAtom("N", currentMolecule.getFirstAtom(), 1.0, 2);
+                addAtom("N", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 2);
             }
             else
             {
-                addAtom("N", currentMolecule.getAtom(addPos), 1.0, 2);
+                addAtom("N", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 2);
             }
         }
         //ORGANO METALLICS ADDED AS PREFIXES
@@ -334,11 +336,11 @@ public class MoleculeBuilder
             //If functional group hasn't had a location specified:
             if (addPos < 0)
             {
-                addAtom("Al", currentMolecule.getFirstAtom(), 1.0, 2);
+                addAtom("Al", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 2);
             }
             else
             {
-                addAtom("Al", currentMolecule.getAtom(addPos), 1.0, 2);
+                addAtom("Al", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 2);
             }
         }
         else if (funGroupToken == "litho" )
@@ -346,11 +348,11 @@ public class MoleculeBuilder
             //If functional group hasn't had a location specified:
             if (addPos < 0)
             {
-                addAtom("Li", currentMolecule.getFirstAtom(), 1.0, 2);
+                addAtom("Li", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 2);
             }
             else
             {
-                addAtom("Li", currentMolecule.getAtom(addPos), 1.0, 2);
+                addAtom("Li", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 2);
             }
         }
         //PRIORITY SUBSTITUENTS
@@ -359,30 +361,30 @@ public class MoleculeBuilder
         //Esters ("...oate")
         else if (funGroupToken == "oate")
         {
-            addAtom("O", endOfChain, 2.0, 0);
-            addAtom("O", endOfChain, 1.0, 0);
+            addAtom("O", endOfChain, IBond.Order.DOUBLE, 0);
+            addAtom("O", endOfChain, IBond.Order.SINGLE, 0);
             //Set the end of the chain to be built on for unspecified substituents.
             endOfChain = currentMolecule.getLastAtom();
         }
         //Amines
         else if (funGroupToken == "amine")
         {
-            addAtom("N", endOfChain, 1.0, 1);            
+            addAtom("N", endOfChain, IBond.Order.SINGLE, 1);            
             //Set the end of the chain to be built on for unspecified substituents.
             endOfChain = currentMolecule.getLastAtom();
         }
         //Amides
         else if (funGroupToken =="amide")
         {
-            addAtom("O", endOfChain, 2.0, 0);
-            addAtom("N", endOfChain, 1.0, 1);
+            addAtom("O", endOfChain, IBond.Order.DOUBLE, 0);
+            addAtom("N", endOfChain, IBond.Order.SINGLE, 1);
             //Set the end of the chain to be built on for unspecified substituents.
             endOfChain = currentMolecule.getLastAtom();
         }
         //Ketones
         else if (funGroupToken == "one")
         {
-            addAtom("O", endOfChain, 2.0, 2);
+            addAtom("O", endOfChain, IBond.Order.DOUBLE, 2);
             //End of chain doesn't change in this case
         }
         //Organometals
@@ -463,7 +465,7 @@ public class MoleculeBuilder
      * @param bondOrder The order of the bond to use to join the two atoms.
      * @param hydrogenCount The number of hydrogen atoms connected to this atom.
      */
-    private void addAtom(String newAtomType, org.openscience.cdk.interfaces.IAtom otherConnectingAtom, double bondOrder, int hydrogenCount)
+    private void addAtom(String newAtomType, IAtom otherConnectingAtom, Order bondOrder, int hydrogenCount)
     {
         //Create the new atom and bond.
         Atom newAtom = new Atom(newAtomType);

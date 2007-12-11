@@ -75,16 +75,16 @@ public class AromaticityCalculator
 			allConnectedBondsSingle = true;
 			conectedBonds = atomContainer.getConnectedBondsList(atom);
             for (IBond conectedBond : conectedBonds) {
-                if (conectedBond.getOrder() == 2 && ring.contains(conectedBond)) {
+                if (conectedBond.getOrder() == IBond.Order.DOUBLE && ring.contains(conectedBond)) {
                     numDoubleBond++;
                 }
 
                 // Count the Electron if bond order = 1.5
-                else if (conectedBond.getOrder() == 1.5 && ring.contains(conectedBond)) {
+                else if (conectedBond.getFlag(CDKConstants.ISAROMATIC) && ring.contains(conectedBond)) {
                     numDoubleBond = 1;
                 }
 
-                if (conectedBond.getOrder() != 1) {
+                if (conectedBond.getOrder() != IBond.Order.SINGLE) {
                     allConnectedBondsSingle = false;
                 }
             }

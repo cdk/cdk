@@ -304,7 +304,7 @@ public class GasteigerPEPEPartialCharges {
 		/* search of reactive center.*/
 		out:
 		for(int i = 0 ; i < ac.getBondCount() ; i++){
-			if(ac.getBond(i).getOrder() > 1 ){
+			if(ac.getBond(i).getOrder() != IBond.Order.SINGLE ){
 				for(int j = 0 ; j < iSet.getAtomContainerCount(); j++){
     				IAtomContainer ati = iSet.getAtomContainer(j);
     				if(!ati.equals(ac))
@@ -427,9 +427,9 @@ public class GasteigerPEPEPartialCharges {
 		int numBond1 = 0;
 		int numBond2 = 0;
         for (int i = 0; i < atomContainer.getBondCount(); i++) {
-            if (atomContainer.getBond(i).getOrder() == 2.0)
+            if (atomContainer.getBond(i).getOrder() == IBond.Order.DOUBLE)
                 numBond1 += 1;
-            if (ac.getBond(i).getOrder() == 2.0)
+            if (ac.getBond(i).getOrder() == IBond.Order.DOUBLE)
                 numBond2 += 1;
         }
         
@@ -495,7 +495,7 @@ public class GasteigerPEPEPartialCharges {
 						factors[2] = 2.94;
 					}
 				} else if (AtomSymbol.equals("O")) {
-						if(ac.getMaximumBondOrder(ac.getAtom(i)) == 1){
+						if(ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE){
 							factors[0] = 10.0;
 							factors[1] = 13.86;
 							factors[2] = 9.68;
@@ -505,7 +505,7 @@ public class GasteigerPEPEPartialCharges {
 							factors[2] = 6.85;
 						}
 				} else if (AtomSymbol.equals("N")) {
-					if(ac.getMaximumBondOrder(ac.getAtom(i)) != 1){
+					if(ac.getMaximumBondOrder(ac.getAtom(i)) != IBond.Order.SINGLE){
 						factors[0] = 7.95;/*7.95*/
 						factors[1] = 9.73;/*9.73*/
 						factors[2] = 2.67;/*2.67*/
@@ -515,7 +515,7 @@ public class GasteigerPEPEPartialCharges {
 						factors[2] = 7.32;/*7.32*//*7.99*/
 					}
 				} else if (AtomSymbol.equals("S")) {
-					if(ac.getMaximumBondOrder(ac.getAtom(i)) == 1){
+					if(ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE){
 						factors[0] = 7.73;
 						factors[1] = 8.16;
 						factors[2] = 1.81;
@@ -585,7 +585,7 @@ public class GasteigerPEPEPartialCharges {
 						factors[1] = 7.93;/*7.93-8.93*/
 						factors[2] = 1.94;
 				} else if (AtomSymbol.equals("O")) {
-						if(ac.getMaximumBondOrder(ac.getAtom(i)) > 1){
+						if(ac.getMaximumBondOrder(ac.getAtom(i)) != IBond.Order.SINGLE){
 							factors[0] = 11.2;/*11.2-10.0*/
 							factors[1] = 13.24;/*13.24-13.86*/
 							factors[2] = 9.68;
@@ -595,7 +595,7 @@ public class GasteigerPEPEPartialCharges {
 							factors[2] = 6.85;
 						}
 				} else if (AtomSymbol.equals("N")) {
-					if(ac.getMaximumBondOrder(ac.getAtom(i))  > 1){
+					if(ac.getMaximumBondOrder(ac.getAtom(i)) != IBond.Order.SINGLE){
 						
 						factors[0] = 8.95;/*7.95*/
 						factors[1] = 9.73;/*9.73*/
@@ -606,7 +606,7 @@ public class GasteigerPEPEPartialCharges {
 						factors[2] = 7.32;
 					}
 				} else if (AtomSymbol.equals("P")) {// <--No correct
-					if(ac.getMaximumBondOrder(ac.getAtom(i))  > 1){
+					if(ac.getMaximumBondOrder(ac.getAtom(i)) != IBond.Order.SINGLE){
 						factors[0] = 10.73;// <--No correct
 						factors[1] = 11.16;// <--No correct
 						factors[2] = 6.81;// <--No correct
@@ -616,7 +616,7 @@ public class GasteigerPEPEPartialCharges {
 						factors[2] = 2.72;// <--No correct
 					}
 				} else if (AtomSymbol.equals("S")) {
-					if(ac.getMaximumBondOrder(ac.getAtom(i))  > 1){
+					if(ac.getMaximumBondOrder(ac.getAtom(i)) != IBond.Order.SINGLE){
 						
 						factors[0] = 7.73;
 						factors[1] = 8.16;

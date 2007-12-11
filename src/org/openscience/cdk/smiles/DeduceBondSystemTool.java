@@ -198,10 +198,10 @@ public class DeduceBondSystemTool {
     				for (int j=0;j<ca.size();j++){
     					IAtom caj=(IAtom)ca.get(j);
     					
-    					if (caj.getSymbol().equals("O") && molecule.getBond(ai,caj).getOrder()==2) {
+    					if (caj.getSymbol().equals("O") && molecule.getBond(ai,caj).getOrder() == IBond.Order.DOUBLE) {
     						ai.setFormalCharge(1);
     						caj.setFormalCharge(-1);
-    						molecule.getBond(ai,caj).setOrder(1);
+    						molecule.getBond(ai,caj).setOrder(IBond.Order.SINGLE);
     					}
     				}// end for (int j=0;j<ca.size();j++)
     				
@@ -229,7 +229,7 @@ public class DeduceBondSystemTool {
             //logger.debug(s1+"\t"+s2);
 
             IBond b = m.getBond(m.getAtom(i1), m.getAtom(i2));
-            b.setOrder(2);
+            b.setOrder(IBond.Order.DOUBLE);
 
 
         }
@@ -490,7 +490,7 @@ public class DeduceBondSystemTool {
                             java.util.List ca = molecule.getConnectedAtomsList(atom);
 
                             for (int k = 0; k <= ca.size() - 1; k++) {
-                                if (molecule.getBond(atom, (IAtom)ca.get(k)).getOrder() == 2) {
+                                if (molecule.getBond(atom, (IAtom)ca.get(k)).getOrder() == IBond.Order.DOUBLE) {
                                     if (inRingSet((IAtom)ca.get(k), ringSet)) {
                                         doublebondcount++;
                                     }

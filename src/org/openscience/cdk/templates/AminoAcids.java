@@ -78,7 +78,7 @@ public class AminoAcids {
         		info[counter][0] = counter;
         		info[counter][1] = acid.getAtomNumber(bond.getAtom(0));
         		info[counter][2] = acid.getAtomNumber(bond.getAtom(1));
-        		info[counter][3] = (int)bond.getOrder();
+        		info[counter][3] = (int)bond.getOrder().ordinal();
         		counter++;
         	}
         }

@@ -28,23 +28,29 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-import java.io.IOException;
-import java.util.*;
 
 /**
  *  The main class to generate the 3D coordinates of a molecule ModelBuilder3D.
@@ -454,7 +460,7 @@ public class ModelBuilder3D {
 		if (atomA.getStereoParity() != CDKConstants.UNSET && atomA.getStereoParity() != 0 ||
 				(Math.abs((molecule.getBond(atomA, unplacedAtom)).getStereo()) < 2
 				 && Math.abs((molecule.getBond(atomA, unplacedAtom)).getStereo()) != 0)
-				 && molecule.getMaximumBondOrder(atomA) < 1.5) {
+				 && molecule.getMaximumBondOrder(atomA) == IBond.Order.SINGLE) {
 			if (atomNeighbours.getAtomCount() > 1) {
 				stereo = atlp3d.makeStereocenter(atomA.getPoint3d(), molecule.getBond(atomA, unplacedAtom), (atomNeighbours.getAtom(0)).getPoint3d(), (atomNeighbours.getAtom(1)).getPoint3d(), branchPoints);
 			}

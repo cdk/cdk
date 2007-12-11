@@ -237,12 +237,12 @@ public class TestRenderer extends JPanel {
 	    	atom = new Atom("C");
 	    	atom.setHydrogenCount(2);
 	        currentChain.addAtom(atom);
-	        currentChain.addBond(atomCount, atomCount - 1, 1);
+	        currentChain.addBond(atomCount, atomCount - 1, IBond.Order.SINGLE);
 	    }  
 	    atom = new Atom("C");
     	atom.setHydrogenCount(3);
         currentChain.addAtom(atom);
-        currentChain.addBond(atomCount, atomCount - 1, 1);
+        currentChain.addBond(atomCount, atomCount - 1, IBond.Order.SINGLE);
         
 	    return currentChain;
 	}

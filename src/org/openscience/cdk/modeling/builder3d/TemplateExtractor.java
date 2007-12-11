@@ -531,7 +531,7 @@ public class TemplateExtractor {
 			IAtomContainer atomContainer) throws Exception {
 		IAtomContainer query = (IAtomContainer) atomContainer.clone();
 		for (int i = 0; i < query.getBondCount(); i++) {
-			query.getBond(i).setOrder(1);
+			query.getBond(i).setOrder(IBond.Order.SINGLE);
 			query.getBond(i).getAtom(0).setSymbol("C");
 			query.getBond(i).getAtom(1).setSymbol("C");
 		}
