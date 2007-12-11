@@ -45,6 +45,7 @@ import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * <p>IReactionProcess which participate in movement resonance. 
@@ -172,7 +173,7 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 				
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);
-					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER) && bondj.getOrder() == 1.0){
+					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER) && bondj.getOrder() == IBond.Order.SINGLE){
 						IAtom atom1 = bondj.getConnectedAtom(atomi);
 						List lp = reactant.getConnectedLonePairsList(atom1);
 						if(atom1.getFlag(CDKConstants.REACTIVE_CENTER) && lp.size() > 0 ){
@@ -205,8 +206,7 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 							for(int l = 0 ; l<acCloned.getBondCount();l++){
 								IBond bb = acCloned.getBond(l);
 								if(bb.getFlag(BONDTOFLAG1)){
-									double order = bb.getOrder();
-									bb.setOrder(order+1);
+									BondManipulator.increaseBondOrder(bb);
 									bondjClon = bb;
 									break;
 								}
@@ -255,7 +255,7 @@ public class RearrangementRadical1Reaction implements IReactionProcess{
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);
-					if(bondj.getOrder() == 1.0){
+					if(bondj.getOrder() == IBond.Order.SINGLE){
 						IAtom atom = bondj.getConnectedAtom(atomi);
 						int lpCount = reactant.getConnectedLonePairsCount(atom);
 						if(lpCount > 0 ){

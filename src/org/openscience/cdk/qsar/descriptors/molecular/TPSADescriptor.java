@@ -291,9 +291,9 @@ public class TPSADescriptor implements IMolecularDescriptor {
                     singleBondCount++;
                 }
                 // Calculate bond order sum using the counters of single/double/triple/aromatic bonds
-                bondOrderSum += singleBondCount * CDKConstants.BONDORDER_SINGLE;
-                bondOrderSum += doubleBondCount * CDKConstants.BONDORDER_DOUBLE;
-                bondOrderSum += tripleBondCount * CDKConstants.BONDORDER_TRIPLE;
+                bondOrderSum += singleBondCount * 1.0;
+                bondOrderSum += doubleBondCount * 2.0;
+                bondOrderSum += tripleBondCount * 3.0;
                 bondOrderSum += aromaticBondCount * 1.5;
                 // setting maxBondOrder
                 if (singleBondCount > 0)

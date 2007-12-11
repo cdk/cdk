@@ -166,7 +166,7 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
         while(itB.hasNext()){
             IBond bond = (IBond) itB.next();
 
-        	if(bond.getOrder() < 2)
+        	if(bond.getOrder() == IBond.Order.SINGLE)
         		continue;
         	
         	double result = ((DoubleResult)descriptorB.calculate(bond,atomContainer).getValue()).doubleValue();

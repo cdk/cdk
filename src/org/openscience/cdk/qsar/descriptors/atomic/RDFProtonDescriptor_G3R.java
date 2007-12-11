@@ -263,7 +263,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 											// which are in cycloexane-like
 											// rings (rings with more than 4
 											// at.)
-		double bondOrder;
+		IBond.Order bondOrder;
 		int bondNumber;
 		int sphere;
 
@@ -587,7 +587,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
         for (IAtom neighbour : neighToCarbon) {
             if (neighbour.getSymbol().equals("O")) {
                 tmpBond = mol.getBond(neighbour, carbonAtom);
-                if (tmpBond.getOrder() == 2.0)
+                if (tmpBond.getOrder() == IBond.Order.DOUBLE)
                     counter += 1;
             }
         }
@@ -611,7 +611,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 	}
 
 	// this method store atoms and bonds in proper lists:
-	private void checkAndStore(int bondToStore, double bondOrder,
+	private void checkAndStore(int bondToStore, IBond.Order bondOrder,
 			ArrayList<Integer> singleVec,
             ArrayList<Integer> doubleVec,
             ArrayList<Integer> cycloexVec,
@@ -627,11 +627,11 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 				cycloexVec.add(bondToStore);
 			}
 		}
-		if (bondOrder == 2.0) {
+		if (bondOrder == IBond.Order.DOUBLE) {
 			if (!doubleVec.contains(new Integer(bondToStore)))
 				doubleVec.add(bondToStore);
 		}
-		if (bondOrder == 1.0) {
+		if (bondOrder == IBond.Order.SINGLE) {
 			if (!singleVec.contains(new Integer(bondToStore)))
 				singleVec.add(bondToStore);
 		}

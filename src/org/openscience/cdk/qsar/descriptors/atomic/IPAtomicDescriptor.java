@@ -146,7 +146,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 			IAtomContainer ac = (IAtomContainer) acI.next();
 			if(ac.contains(clonedAtom)){
 				isConjugated = true;
-				if(localClone.getMaximumBondOrder(clonedAtom) == 1 && localClone.getConnectedLonePairsCount(clonedAtom) > 0){
+				if(localClone.getMaximumBondOrder(clonedAtom) == IBond.Order.SINGLE && localClone.getConnectedLonePairsCount(clonedAtom) > 0){
 					resultsH = calculateHeteroAtomConjugatedDescriptor(clonedAtom, localClone,ac);
 					resultD = getTreeHeteroConjAtom(resultsH);
 					resultD += 0.05;
@@ -160,7 +160,8 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		
 		int count = localClone.getConnectedLonePairsCount(clonedAtom);
 		
-		if(localClone.getMaximumBondOrder(clonedAtom) > 1 && localClone.getConnectedLonePairsCount(clonedAtom) > 0){
+		if(localClone.getMaximumBondOrder(clonedAtom) != IBond.Order.SINGLE &&
+			localClone.getConnectedLonePairsCount(clonedAtom) > 0){
 			resultsH = calculateCarbonylDescriptor(clonedAtom, localClone);
 			resultD = getTreeDoubleHetero(resultsH);
 			resultD += 0.05;
@@ -1082,7 +1083,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
         IAtom positionC = null;
 		List<IAtom> listAtoms = atomContainer.getConnectedAtomsList(atom);
         for (IAtom listAtom : listAtoms) {
-            if (atomContainer.getBond(atom, listAtom).getOrder() <= 1) {
+            if (atomContainer.getBond(atom, listAtom).getOrder() == IBond.Order.SINGLE) {
                 continue;
             }
             positionC = listAtom;

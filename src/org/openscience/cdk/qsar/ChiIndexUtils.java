@@ -1,17 +1,23 @@
 package org.openscience.cdk.qsar;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptor;
-
-import java.io.IOException;
-import java.util.*;
 
 /**
  * Utility methods for chi index calculations.
@@ -185,7 +191,7 @@ public class ChiIndexUtils {
         for (int i = 0; i < connected.size(); i++) {
             IAtom connectedAtom = connected.get(i);
             if (connectedAtom.getSymbol().equals("S")
-                    && atomContainer.getBond(atom, connectedAtom).getOrder() == 1.0)
+                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.SINGLE)
                 return .89;
         }
 
@@ -193,7 +199,7 @@ public class ChiIndexUtils {
         for (int i = 0; i < connected.size(); i++) {
             IAtom connectedAtom = connected.get(i);
             if (connectedAtom.getSymbol().equals("O")
-                    && atomContainer.getBond(atom, connectedAtom).getOrder() == 2.0)
+                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE)
                 return 1.33;
         }
 
@@ -202,7 +208,7 @@ public class ChiIndexUtils {
         for (int i = 0; i < connected.size(); i++) {
             IAtom connectedAtom = connected.get(i);
             if (connectedAtom.getSymbol().equals("O")
-                    && atomContainer.getBond(atom, connectedAtom).getOrder() == 2.0)
+                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE)
                 count++;
         }
         if (count == 2) return 2.67;
@@ -231,9 +237,9 @@ public class ChiIndexUtils {
         for (int i = 0; i < connected.size(); i++) {
             IAtom connectedAtom = connected.get(i);
             if (connectedAtom.getSymbol().equals("O")
-                    && atomContainer.getBond(atom, connectedAtom).getOrder() == 2.0)
+                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE)
                 conditions++;
-            if (atomContainer.getBond(atom, connectedAtom).getOrder() == 1.0)
+            if (atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.SINGLE)
                 conditions++;
         }
         if (conditions == 5) return 2.22;

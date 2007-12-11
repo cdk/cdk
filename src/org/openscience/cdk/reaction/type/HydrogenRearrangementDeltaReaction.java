@@ -37,6 +37,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -178,7 +179,8 @@ public class HydrogenRearrangementDeltaReaction implements IReactionProcess{
 					IAtom atom4 = (IAtom)atoms.get(j);
 					if(atom4 != null)
 					if(atom4.getFormalCharge() == 0 && !atom4.equals("H")  && 
-							reactant.getMaximumBondOrder(atom4) == 1 && atom4.getFlag(CDKConstants.REACTIVE_CENTER)){
+							reactant.getMaximumBondOrder(atom4) == IBond.Order.SINGLE && 
+							atom4.getFlag(CDKConstants.REACTIVE_CENTER)){
 						Iterator iterat = reactant.getConnectedAtomsList(atom4).iterator();
 						while(iterat.hasNext()){
 							IAtom hydrogen = (IAtom) iterat.next();
@@ -199,7 +201,7 @@ public class HydrogenRearrangementDeltaReaction implements IReactionProcess{
 								
 								List selectron = acCloned.getConnectedSingleElectronsList(acCloned.getAtom(atom0P));
 								acCloned.removeSingleElectron((ISingleElectron)selectron.get(selectron.size() -1));
-								acCloned.addBond(atom0P,atomHP, 1);
+								acCloned.addBond(atom0P,atomHP, IBond.Order.SINGLE);
 								acCloned.removeBond(acCloned.getAtom(atom4P), acCloned.getAtom(atomHP));
 	
 								acCloned.addSingleElectron(new SingleElectron(acCloned.getAtom(atom4P)));	
@@ -263,7 +265,7 @@ public class HydrogenRearrangementDeltaReaction implements IReactionProcess{
 					if(atom4 != null)
 					if(!atom4.getFlag(CDKConstants.ISINRING))
 					if(atom4.getFormalCharge() == 0 && !atom4.equals("H") && 
-							reactant.getMaximumBondOrder(atom4) == 1){
+							reactant.getMaximumBondOrder(atom4) == IBond.Order.SINGLE){
 						Iterator iterat = reactant.getConnectedAtomsList(atom4).iterator();
 						while(iterat.hasNext()){
 							IAtom hydrogen = (IAtom) iterat.next();

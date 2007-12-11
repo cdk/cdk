@@ -34,6 +34,7 @@ import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 import java.util.Iterator;
 
@@ -154,7 +155,7 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
 
-            if(bond.getFlag(CDKConstants.REACTIVE_CENTER) && bond.getOrder() == 2.0){
+            if(bond.getFlag(CDKConstants.REACTIVE_CENTER) && bond.getOrder() == IBond.Order.DOUBLE){
                 IAtom atom1 = bond.getAtom(0);
                 IAtom atom2 = bond.getAtom(1);
                 if((((atom1.getFormalCharge() == 0 && reactant.getConnectedSingleElectronsCount(atom1) == 0 && reactant.getConnectedLonePairsCount(atom1) > 0 && !atom1.getSymbol().equals("C")))
@@ -179,8 +180,8 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
                         IBond bondClon = null;
                         for(int l = 0 ; l<acCloned.getBondCount();l++){
                             if(acCloned.getBond(l).getFlag(BONDTOFLAG1)){
-                                double order = acCloned.getBond(l).getOrder();
-                                acCloned.getBond(l).setOrder(order - 1);
+                                IBond.Order order = acCloned.getBond(l).getOrder();
+                                BondManipulator.decreaseBondOrder(acCloned.getBond(l));
                                 bondClon = acCloned.getBond(l);
                                 break;
                             }
@@ -246,7 +247,7 @@ public class DisplacementChargeFromAcceptorReaction implements IReactionProcess{
 
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
-            if (bond.getOrder() == 2.0) {
+            if (bond.getOrder() == IBond.Order.DOUBLE) {
                 IAtom atom1 = bond.getAtom(0);
                 IAtom atom2 = bond.getAtom(1);/* TODO - not controll from lone pair electrons*/
                 if ((((atom1.getFormalCharge() == 0 && reactant.getConnectedSingleElectronsCount(atom1) == 0 && reactant.getConnectedLonePairsCount(atom1) > 0 && !atom1.getSymbol().equals("C")))

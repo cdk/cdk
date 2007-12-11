@@ -1,5 +1,8 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -11,9 +14,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.util.Iterator;
-import java.util.List;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * Topological descriptor characterizing the carbon connectivity.
@@ -144,17 +145,17 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
                 if (connectedAtom.getSymbol().equals("C") || connectedAtom.getSymbol().equals("c")) cc++;
             }
 
-            double maxBondOrder = getHighestBondOrder(container, atom);
+            IBond.Order maxBondOrder = getHighestBondOrder(container, atom);
 
-            if (maxBondOrder == 3 && cc == 1) c1sp1++;
-            else if (maxBondOrder == 3 && cc == 2) c2sp1++;
-            else if (maxBondOrder == 2 && cc == 1) c1sp2++;
-            else if (maxBondOrder == 2 && cc == 2) c2sp2++;
-            else if (maxBondOrder == 2 && cc == 3) c3sp2++;
-            else if (maxBondOrder == 1 && cc == 1) c1sp3++;
-            else if (maxBondOrder == 1 && cc == 2) c2sp3++;
-            else if (maxBondOrder == 1 && cc == 3) c3sp3++;
-            else if (maxBondOrder == 1 && cc == 4) c4sp3++;
+            if (maxBondOrder == IBond.Order.TRIPLE && cc == 1) c1sp1++;
+            else if (maxBondOrder == IBond.Order.TRIPLE && cc == 2) c2sp1++;
+            else if (maxBondOrder == IBond.Order.DOUBLE && cc == 1) c1sp2++;
+            else if (maxBondOrder == IBond.Order.DOUBLE && cc == 2) c2sp2++;
+            else if (maxBondOrder == IBond.Order.DOUBLE && cc == 3) c3sp2++;
+            else if (maxBondOrder == IBond.Order.SINGLE && cc == 1) c1sp3++;
+            else if (maxBondOrder == IBond.Order.SINGLE && cc == 2) c2sp3++;
+            else if (maxBondOrder == IBond.Order.SINGLE && cc == 3) c3sp3++;
+            else if (maxBondOrder == IBond.Order.SINGLE && cc == 4) c4sp3++;
         }
 
         IntegerArrayResult retval = new IntegerArrayResult(9);
@@ -176,12 +177,12 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
     }
 
-
-    private double getHighestBondOrder(IAtomContainer container, IAtom atom) {
+    private IBond.Order getHighestBondOrder(IAtomContainer container, IAtom atom) {
         List<IBond> bonds = container.getConnectedBondsList(atom);
-        double maxOrder = -1;
+        IBond.Order maxOrder = IBond.Order.SINGLE;
         for (IBond bond : bonds) {
-            if (bond.getOrder() > maxOrder) maxOrder = bond.getOrder();
+            if (BondManipulator.isHigherOrder(bond.getOrder(), maxOrder))
+            	maxOrder = bond.getOrder();
         }
         return maxOrder;
     }

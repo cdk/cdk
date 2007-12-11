@@ -176,7 +176,7 @@ public class RearrangementAnion3Reaction implements IReactionProcess{
 				
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);
-					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER) && bondj.getOrder() == 2.0){
+					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER) && bondj.getOrder() == IBond.Order.DOUBLE){
 						IAtom atom = bondj.getConnectedAtom(atomi);
 						if(atom.getFlag(CDKConstants.REACTIVE_CENTER) && atom.getFormalCharge() == 0){
 							IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
@@ -255,7 +255,7 @@ public class RearrangementAnion3Reaction implements IReactionProcess{
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);
-					if(bondj.getOrder() == 2.0){
+					if(bondj.getOrder() == IBond.Order.DOUBLE){
 						IAtom atom = bondj.getConnectedAtom(reactant.getAtom(i));
 						if(atom.getFormalCharge() == 0){
 							atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);

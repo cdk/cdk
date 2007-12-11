@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 import java.util.Iterator;
 
@@ -151,7 +152,8 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
 
-            if(bond.getFlag(CDKConstants.REACTIVE_CENTER) && bond.getOrder() > 1){
+            if(bond.getFlag(CDKConstants.REACTIVE_CENTER) && 
+               bond.getOrder() != IBond.Order.SINGLE){
                 /**/
                 for (int j = 0; j < 2; j++){
                     IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
@@ -172,8 +174,7 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 
                     for(int l = 0 ; l<reactantCloned.getBondCount();l++){
                         if(reactantCloned.getBond(l).getFlag(BONDTOFLAG1)){
-                            double order = reactantCloned.getBond(l).getOrder();
-                            reactantCloned.getBond(l).setOrder(order - 1);
+                            BondManipulator.decreaseBondOrder(reactantCloned.getBond(l));
                             posB1 = reactantCloned.getBondNumber(reactantCloned.getBond(l));
                             break;
                         }
@@ -223,7 +224,7 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
             IBond bond = (IBond) bonds.next();
             atom0 = bond.getAtom(0);
             atom1 = bond.getAtom(1);
-            if (bond.getOrder() > 1 &&
+            if (bond.getOrder() != IBond.Order.SINGLE &&
                     atom0.getSymbol().equals("C") &&
                     atom1.getSymbol().equals("C")) {
                 bond.setFlag(CDKConstants.REACTIVE_CENTER, true);

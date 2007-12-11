@@ -35,6 +35,7 @@ import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.ValencyChecker;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -186,11 +187,13 @@ public class BreakingBondReaction implements IReactionProcess{
 					}
 					
 					IBond aBond = null;
-					double order = 0;
+					IBond.Order order = null;
 					for(int l = 0 ; l<reactantCloned.getBondCount();l++){
 						if(reactantCloned.getBond(l).getFlag(BONDTOFLAG)){
 							order = reactantCloned.getBond(l).getOrder();
-							reactantCloned.getBond(l).setOrder(order-1);
+							BondManipulator.decreaseBondOrder(
+								reactantCloned.getBond(l)
+							);
 							aBond = reactantCloned.getBond(l);
 							break;
 						}
@@ -211,7 +214,7 @@ public class BreakingBondReaction implements IReactionProcess{
 						if(!reactantCloned.getAtom(atom2).getSymbol().equals("H"))
 							if(!valChecker.isSaturated(reactantCloned.getAtom(atom1),reactantCloned))
 								continue;
-						if(order == 1)/*break molecule*/
+						if(order == IBond.Order.SINGLE)/*break molecule*/
 							reactantCloned.removeBond(reactantCloned.getAtom(atom1), reactantCloned.getAtom(atom2));
 						
 					} else{
@@ -229,7 +232,7 @@ public class BreakingBondReaction implements IReactionProcess{
 						if(!reactantCloned.getAtom(atom2).getSymbol().equals("H"))
 							if(!valChecker.isSaturated(reactantCloned.getAtom(atom2),reactantCloned))
 								continue;
-						if(order == 1)/*break molecule*/
+						if(order == IBond.Order.SINGLE)/*break molecule*/
 							reactantCloned.removeBond(reactantCloned.getAtom(atom1), reactantCloned.getAtom(atom2));
 					}
 					
@@ -238,11 +241,11 @@ public class BreakingBondReaction implements IReactionProcess{
 			        reaction.addMapping(mapping);
 			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactants.getMolecule(0).getAtom(atom2), reactantCloned.getAtom(atom2));
 			        reaction.addMapping(mapping);
-			        if(order != 1){
+			        if(order != IBond.Order.SINGLE){
 						mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond, aBond);
 						reaction.addMapping(mapping);
 					}
-			        if(order > 1)
+			        if(order != null && order != IBond.Order.SINGLE)
 						reaction.addProduct(reactantCloned);
 			        else{
 				        IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(reactantCloned);

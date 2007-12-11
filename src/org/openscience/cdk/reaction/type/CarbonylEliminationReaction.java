@@ -158,7 +158,7 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 		
 		for(int i = 0 ; i < reactant.getBondCount() ; i++) {
 			IBond bond = reactant.getBond(i);
-			if(bond.getOrder() == 3 ){
+			if(bond.getOrder() == IBond.Order.TRIPLE ){
 				IAtom atom1 = null;
 				IAtom atom2 = null;
 				if(bond.getAtom(0).getSymbol().equals("C") && bond.getAtom(1).getSymbol().equals("O") && 
@@ -262,7 +262,7 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		for(int i = 0 ; i < reactant.getBondCount() ; i++) {
 			IBond bond = reactant.getBond(i);
-			if(bond.getOrder() == 3 ){
+			if(bond.getOrder() == IBond.Order.TRIPLE ){
 				IAtom atom1 = null;
 				IAtom atom2 = null;
 				if(bond.getAtom(0).getSymbol().equals("C") && bond.getAtom(1).getSymbol().equals("O") && 

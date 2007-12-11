@@ -43,6 +43,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * <p>HyperconjugationReaction is the stabilising interaction that results 
@@ -173,7 +174,7 @@ public class HyperconjugationReaction implements IReactionProcess{
 					atomj = (IAtom)atoms1.get(j);
 					if(atomj.getFlag(CDKConstants.REACTIVE_CENTER)&& !(atomj.getSymbol().equals("H"))){
 						IBond bond = reactant.getBond(atomi, atomj);
-						if(bond.getOrder() == 1) {
+						if(bond.getOrder() == IBond.Order.SINGLE) {
 							if(bond.getFlag(CDKConstants.REACTIVE_CENTER)){
 								java.util.List atoms2 = reactant.getConnectedAtomsList(atomj);
 								for(int k = 0; k < atoms2.size() ; k++) {
@@ -195,8 +196,7 @@ public class HyperconjugationReaction implements IReactionProcess{
 											throw new CDKException("Could not clone IMolecule!", e);
 										}
 
-										double order = reactantCloned.getBond(bond1).getOrder();
-										reactantCloned.getBond(bond1).setOrder(order + 1);
+										BondManipulator.increaseBondOrder(reactantCloned.getBond(bond1));
 
 										int charge = reactantCloned.getAtom(atom1).getFormalCharge();
 										reactantCloned.getAtom(atom1).setFormalCharge(charge-1);
@@ -264,7 +264,7 @@ public class HyperconjugationReaction implements IReactionProcess{
 					atomj = (IAtom)atoms1.get(j);
 					if(!atomj.getSymbol().equals("H") && atomj.getFormalCharge() == 0){
 						IBond bond = reactant.getBond(atomi, atomj);
-						if(bond.getOrder() == 1){
+						if(bond.getOrder() == IBond.Order.SINGLE){
 							java.util.List atoms2 = reactant.getConnectedAtomsList(atomj);
 							for(int k = 0; k < atoms2.size() ; k++){
 								atomk = (IAtom)atoms2.get(k);

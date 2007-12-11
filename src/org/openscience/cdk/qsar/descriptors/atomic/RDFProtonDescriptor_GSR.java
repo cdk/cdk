@@ -238,7 +238,7 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
 
 // definition of some variables used in the main FOR loop for detection of interesting atoms and bonds:
         boolean theBondIsInA6MemberedRing; // this is like a flag for bonds which are in cycloexane-like rings (rings with more than 4 at.)
-        double bondOrder;
+        IBond.Order bondOrder;
         int bondNumber;
         int sphere;
 
@@ -448,7 +448,7 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
             IAtom neighbour = neighToCarbon.get(nei);
             if (neighbour.getSymbol().equals("O")) {
                 tmpBond = mol.getBond(neighbour, carbonAtom);
-                if (tmpBond.getOrder() == 2.0) counter += 1;
+                if (tmpBond.getOrder() == IBond.Order.DOUBLE) counter += 1;
             }
         }
         if (counter > 0) isDoubleBondedToOxygen = true;
@@ -468,7 +468,7 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
     }
 
     // this method store atoms and bonds in proper lists:
-    private void checkAndStore(int bondToStore, double bondOrder,
+    private void checkAndStore(int bondToStore, IBond.Order bondOrder,
                                ArrayList<Integer> singleVec, ArrayList<Integer> doubleVec,
                                ArrayList<Integer> cycloexVec, int a1,
                                ArrayList<Integer> atomVec, int sphere, boolean isBondInCycloex) {
@@ -480,10 +480,10 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
                 cycloexVec.add(bondToStore);
             }
         }
-        if (bondOrder == 2.0) {
+        if (bondOrder == IBond.Order.DOUBLE) {
             if (!doubleVec.contains(new Integer(bondToStore))) doubleVec.add(bondToStore);
         }
-        if (bondOrder == 1.0) {
+        if (bondOrder == IBond.Order.SINGLE) {
             if (!singleVec.contains(new Integer(bondToStore))) singleVec.add(bondToStore);
         }
     }

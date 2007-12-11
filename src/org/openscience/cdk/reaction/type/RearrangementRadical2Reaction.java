@@ -44,6 +44,7 @@ import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * <p>IReactionProcess which participate in movement resonance. 
@@ -173,12 +174,12 @@ public class RearrangementRadical2Reaction implements IReactionProcess{
 				
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);
-					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER)&& bondj.getOrder() == 1.0){
+					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER)&& bondj.getOrder() == IBond.Order.SINGLE){
 						IAtom atom = bondj.getConnectedAtom(reactant.getAtom(i));
 						java.util.List bondsI = reactant.getConnectedBondsList(atom);
 						for(int k = 0 ; k < bondsI.size() ; k++){
 							bondk = (IBond)bondsI.get(k);
-							if(bondk.getFlag(CDKConstants.REACTIVE_CENTER) && bondk.getOrder() == 2.0){
+							if(bondk.getFlag(CDKConstants.REACTIVE_CENTER) && bondk.getOrder() == IBond.Order.DOUBLE){
 								IAtom atom1 = bondk.getConnectedAtom(atom);
 								if(atom1.getFlag(CDKConstants.REACTIVE_CENTER)&& atom1.getFormalCharge() == 0 ){
 									IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
@@ -209,14 +210,10 @@ public class RearrangementRadical2Reaction implements IReactionProcess{
 									for(int l = 0 ; l<acCloned.getBondCount();l++){
 										IBond bb = acCloned.getBond(l);
 										if(bb.getFlag(BONDTOFLAG1)){
-											
-											double order = bb.getOrder();
-											bb.setOrder(order+1);
-											bondjClon = bb;
-											
+											BondManipulator.increaseBondOrder(bb);
+											bondjClon = bb;											
 										}else if(acCloned.getBond(l).getFlag(BONDTOFLAG2)){
-											double order = bb.getOrder();
-											bb.setOrder(order-1);
+											BondManipulator.increaseBondOrder(bb);
 											bondkClon = bb;
 										}
 									}
@@ -277,12 +274,12 @@ public class RearrangementRadical2Reaction implements IReactionProcess{
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);
-					if(bondj.getOrder() == 1.0){
+					if(bondj.getOrder() == IBond.Order.SINGLE){
 						IAtom atom = bondj.getConnectedAtom(reactant.getAtom(i));
 						java.util.List bondsI = reactant.getConnectedBondsList(atom);
 						for(int k = 0 ; k < bondsI.size() ; k++){
 							bondk = (IBond)bondsI.get(k);
-							if(bondk.getOrder() == 2.0){
+							if(bondk.getOrder() == IBond.Order.DOUBLE){
 								IAtom atom1 = bondk.getConnectedAtom(atom);
 								if(atom1.getFormalCharge() == 0 ){
 									atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);

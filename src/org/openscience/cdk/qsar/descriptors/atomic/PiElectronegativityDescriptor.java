@@ -29,6 +29,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -165,7 +166,7 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
 	      int atomPosition = ac.getAtomNumber(atom);
 	      int start = (stepSize * (atomPosition) + atomPosition);
 	      if(ac.getConnectedLonePairsCount(ac.getAtom(atomPosition)) > 0 ||
-					ac.getMaximumBondOrder(ac.getAtom(atomPosition)) >1 ||
+					ac.getMaximumBondOrder(ac.getAtom(atomPosition)) != IBond.Order.SINGLE ||
 					ac.getAtom(atomPosition).getFormalCharge() != 0)
 	    	  piElectronegativity = ((gasteigerFactors[1][start]) + (q * gasteigerFactors[1][start + 1]) + (gasteigerFactors[1][start + 2] * (q * q)));
 //	      logger.debug(ac.getAtomAt(atomPosition).getSymbol()+" - "+piElectronegativity+"="+q+" a("+gasteigerFactors[1][start]+")+b("+gasteigerFactors[1][start+1]+")+c"+gasteigerFactors[1][start+2]+")");

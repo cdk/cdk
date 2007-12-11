@@ -170,7 +170,12 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
         for (int i = 0; i < container.getAtomCount(); i++) {
             //Possible pi System double bond or triple bond, charge, N or O (free electron pair)
             //logger.debug("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
-            if ((container.getMaximumBondOrder(container.getAtom(i)) > 1 || Math.abs(container.getAtom(i).getFormalCharge()) >= 1 || container.getAtom(i).getFlag(CDKConstants.ISAROMATIC) || container.getAtom(i).getSymbol().equals("N") || container.getAtom(i).getSymbol().equals("O")) & !container.getAtom(i).getFlag(CDKConstants.VISITED))
+            if ((container.getMaximumBondOrder(container.getAtom(i)) != IBond.Order.SINGLE ||
+            	Math.abs(container.getAtom(i).getFormalCharge()) >= 1 ||
+            	container.getAtom(i).getFlag(CDKConstants.ISAROMATIC) || 
+            	container.getAtom(i).getSymbol().equals("N") || 
+            	container.getAtom(i).getSymbol().equals("O")) & 
+            	!container.getAtom(i).getFlag(CDKConstants.VISITED))
             {
                 //logger.debug("...... -> Accepted");
                 startSphere = new Vector();
@@ -229,7 +234,12 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
             java.util.List bonds = container.getConnectedBondsList(atom);
             for (int j = 0; j < bonds.size(); j++) {
                 nextAtom = ((IBond) bonds.get(j)).getConnectedAtom(atom);
-                if ((container.getMaximumBondOrder(nextAtom) > 1 || Math.abs(nextAtom.getFormalCharge()) >= 1 || nextAtom.getFlag(CDKConstants.ISAROMATIC) || nextAtom.getSymbol().equals("N") || nextAtom.getSymbol().equals("O")) & !nextAtom.getFlag(CDKConstants.VISITED))
+                if ((container.getMaximumBondOrder(nextAtom) != IBond.Order.SINGLE ||
+                	Math.abs(nextAtom.getFormalCharge()) >= 1 ||
+                	nextAtom.getFlag(CDKConstants.ISAROMATIC) || 
+                	nextAtom.getSymbol().equals("N") || 
+                	nextAtom.getSymbol().equals("O")) & 
+                	!nextAtom.getFlag(CDKConstants.VISITED))
                 {
                     //logger.debug("BDS> AtomNr:"+container.getAtomNumber(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));
                     path.addElement(nextAtom);

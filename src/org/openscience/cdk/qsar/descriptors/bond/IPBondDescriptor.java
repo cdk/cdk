@@ -143,7 +143,7 @@ public class IPBondDescriptor implements IBondDescriptor {
             exc.printStackTrace();
         }
         
-        if(clonedBond.getOrder() > 1 && 
+        if(clonedBond.getOrder() != IBond.Order.SINGLE && 
         		(localClone.getConnectedLonePairsCount(clonedBond.getAtom(0)) == 0) && /*not containing heteroatoms*/ 
         		(localClone.getConnectedLonePairsCount(clonedBond.getAtom(1)) == 0) && 
         		!clonedBond.getAtom(0).getFlag(CDKConstants.ISAROMATIC) && !clonedBond.getAtom(1).getFlag(CDKConstants.ISAROMATIC)){ /*not belonging to aromatics*/

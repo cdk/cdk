@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * <p>IReactionProcess which participate mass spectrum process. Homolitic dissocitation. 
@@ -167,14 +168,15 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 				
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);
-					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER)&& bondj.getOrder() < 3.0 ){
+					if(bondj.getFlag(CDKConstants.REACTIVE_CENTER)&&
+						BondManipulator.isLowerOrder(bondj.getOrder(), IBond.Order.TRIPLE)){
 						IAtom atom = bondj.getConnectedAtom(reactant.getAtom(i));
 						if(atom.getFormalCharge() != 0)
 							continue;
 						java.util.List bondsI = reactant.getConnectedBondsList(atom);
 						for(int k = 0 ; k < bondsI.size() ; k++){
 							bondk = (IBond)bondsI.get(k);
-							if(bondk.getFlag(CDKConstants.REACTIVE_CENTER) && bondk.getOrder() ==  1.0 && !bondk.equals(bondj)){
+							if(bondk.getFlag(CDKConstants.REACTIVE_CENTER) && bondk.getOrder() == IBond.Order.SINGLE && !bondk.equals(bondj)){
 								IAtom atomConn = bondk.getConnectedAtom(atom);
 								if(atomConn.getFlag(CDKConstants.REACTIVE_CENTER) && atomConn.getFormalCharge() == 0
 										&& !atomConn.equals(atomi) && !atomConn.getSymbol().equals("H")){
@@ -205,13 +207,10 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 									
 									acCloned.addSingleElectron(new SingleElectron(acCloned.getAtom(atom2P)));	
 
-									
-									double order = 0;
 									IBond bondjClon = null;
 									for(int l = 0 ; l < acCloned.getBondCount();l++){
 										if(acCloned.getBond(l).getFlag(BONDTOFLAG)){
-											order = acCloned.getBond(l).getOrder();
-											acCloned.getBond(l).setOrder(order+1);
+											BondManipulator.increaseBondOrder(acCloned.getBond(l));
 											bondjClon = acCloned.getBond(l);
 											break;
 										}
@@ -273,14 +272,14 @@ public class RadicalSiteInitiationReaction implements IReactionProcess{
 				java.util.List bonds = reactant.getConnectedBondsList(atomi);
 				for(int j = 0 ; j < bonds.size() ; j++){
 					bondj = (IBond)bonds.get(j);
-					if(bondj.getOrder() < 3.0){
+					if(BondManipulator.isLowerOrder(bondj.getOrder(), IBond.Order.TRIPLE)){
 						IAtom atom = bondj.getConnectedAtom(atomi);
 						if(atom.getFormalCharge() != 0)
 							continue;
 						java.util.List bondsI = reactant.getConnectedBondsList(atom);
 						for(int k = 0 ; k < bondsI.size() ; k++){
 							bondk = (IBond)bondsI.get(k);
-							if(bondk.getOrder() == 1 && !bondk.equals(bondj)){
+							if(bondk.getOrder() == IBond.Order.SINGLE && !bondk.equals(bondj)){
 							IAtom atomConn = bondk.getConnectedAtom(atom);
 							if(atomConn.getFormalCharge() == 0 && !atomConn.getSymbol().equals("H")){
 								atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);

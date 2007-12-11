@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -35,11 +37,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
-
-import java.util.Iterator;
-import java.util.List;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  *  The number of rotatable bonds is given by the SMARTS specified by Daylight on
@@ -153,7 +152,8 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 			IAtom atom0 = bond.getAtom(0);
 			IAtom atom1 = bond.getAtom(1);
 			if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
-				if ((ac.getMaximumBondOrder(atom0) < 3.0) && (ac.getMaximumBondOrder(atom1) < 3.0)) {
+				if ((BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom0), IBond.Order.TRIPLE)) && 
+					(BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom1), IBond.Order.TRIPLE))) {
 					if (bond.getFlag(CDKConstants.ISINRING) == false) {
 						degree0 = ac.getConnectedBondsCount(atom0);
 						degree1 = ac.getConnectedBondsCount(atom1);

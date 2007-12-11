@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -28,8 +30,6 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
-
-import java.util.Iterator;
 
 /**
  *  IDescriptor based on the number of bonds of a certain bond order.
@@ -66,8 +66,8 @@ import java.util.Iterator;
  */
 public class BondCountDescriptor implements IMolecularDescriptor {
 
-	/** defaults to -1.0, which means: count all bonds **/
-    private double order = -1.0;
+	/** defaults to UNSET, which means: count all bonds **/
+    private IBond.Order order = null;
 
     /**
      *  Constructor for the BondCountDescriptor object
@@ -99,11 +99,11 @@ public class BondCountDescriptor implements IMolecularDescriptor {
         if (params.length > 1) {
             throw new CDKException("BondCount only expects one parameter");
         }
-        if (!(params[0] instanceof Double)) {
-            throw new CDKException("The parameter must be of type Double");
+        if (!(params[0] instanceof IBond.Order)) {
+            throw new CDKException("The parameter must be of type IBond.Order");
         }
         // ok, all should be fine
-        order = ((Double) params[0]).doubleValue();
+        order = (IBond.Order)params[0];
     }
 
 
@@ -115,7 +115,7 @@ public class BondCountDescriptor implements IMolecularDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = new Double(order);
+        params[0] = order;
         return params;
     }
 
@@ -127,7 +127,7 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      *@return            The number of bonds of a certain type.
      */
     public DescriptorValue calculate(IAtomContainer container) {
-    	if (order < 0) {
+    	if (order == null) {
     		// the special case: just count them all
     		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new IntegerResult(container.getBondCount()), new String[]{"nB"});
@@ -143,10 +143,10 @@ public class BondCountDescriptor implements IMolecularDescriptor {
         }
 
         String name = "nB";
-        if (order == 1) name += "s";
-        else if (order == 2) name += "d";
-        else if (order == 3) name += "t";
-        else if (order == 1.5) name += "a";
+        if (order == IBond.Order.SINGLE) name += "s";
+        else if (order == IBond.Order.DOUBLE) name += "d";
+        else if (order == IBond.Order.TRIPLE) name += "t";
+        else if (order == IBond.Order.QUADRUPLE) name += "q";
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new IntegerResult(bondCount), new String[]{name});
