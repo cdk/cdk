@@ -28,6 +28,7 @@ import javax.vecmath.Vector2d;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;
 
@@ -99,15 +100,15 @@ public class DrawPolygonTest
 //		mol.addAtom(new Atom("C")); // 6
 //		mol.addAtom(new Atom("C")); // 7
 		
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(1, 2, 1); // 2
-		mol.addBond(2, 3, 1); // 3
-		mol.addBond(3, 4, 1); // 4
-		mol.addBond(4, 5, 1); // 5
-		mol.addBond(5, 0, 1); // 6
-//		mol.addBond(5, 6, 1); // 7
-//		mol.addBond(6, 7, 1); // 8
-//		mol.addBond(7, 4, 1); // 9
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+//		mol.addBond(5, 6, IBond.Order.SINGLE); // 7
+//		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
+//		mol.addBond(7, 4, IBond.Order.SINGLE); // 9
 		
 			
 		return mol;

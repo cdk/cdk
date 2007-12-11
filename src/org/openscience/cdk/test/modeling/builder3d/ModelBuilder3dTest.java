@@ -38,6 +38,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -281,15 +282,15 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	for (int i=0; i<3; i++) {
     		IAtom hydrogen = builder.newAtom("H");
     		methanol.addAtom(hydrogen);
-    		methanol.addBond(builder.newBond(carbon1, hydrogen, 1.0));
+    		methanol.addBond(builder.newBond(carbon1, hydrogen, IBond.Order.SINGLE));
     	}
     	IAtom oxygen1 = builder.newAtom("O");
     	oxygen1.setID("oxygen1");
     	methanol.addAtom(oxygen1);
-    	methanol.addBond(builder.newBond(carbon1, oxygen1, 1.0));
+    	methanol.addBond(builder.newBond(carbon1, oxygen1, IBond.Order.SINGLE));
     	IAtom hydrogen = builder.newAtom("H");
     	methanol.addAtom(hydrogen);
-    	methanol.addBond(builder.newBond(hydrogen, oxygen1, 1.0));
+    	methanol.addBond(builder.newBond(hydrogen, oxygen1, IBond.Order.SINGLE));
 
     	assertEquals(6, methanol.getAtomCount());
     	assertEquals(5, methanol.getBondCount());

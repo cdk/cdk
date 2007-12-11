@@ -31,6 +31,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.StructGenAtomTypeGuesser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -61,7 +62,7 @@ public class StructGenAtomTypeGuesserTest extends CDKTestCase {
         atom2.setHydrogenCount(2);
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        mol.addBond(new Bond(atom, atom2, 1));
+        mol.addBond(new Bond(atom, atom2, IBond.Order.SINGLE));
 
         StructGenAtomTypeGuesser atm = new StructGenAtomTypeGuesser();
         List matched = atm.possbibleAtomTypes(mol, atom);

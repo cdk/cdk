@@ -38,6 +38,8 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * Please see the test.gui package for visual feedback on tests.
@@ -340,27 +342,27 @@ public class SmilesParserTest extends NewCDKTestCase {
 		apinene.addAtom(mol.getBuilder().newAtom("C"));
 		// 10
 		
-		apinene.addBond(0, 1, 2.0);
+		apinene.addBond(0, 1, IBond.Order.DOUBLE);
 		// 1
-		apinene.addBond(1, 2, 1.0);
+		apinene.addBond(1, 2, IBond.Order.SINGLE);
 		// 2
-		apinene.addBond(2, 3, 1.0);
+		apinene.addBond(2, 3, IBond.Order.SINGLE);
 		// 3
-		apinene.addBond(3, 4, 1.0);
+		apinene.addBond(3, 4, IBond.Order.SINGLE);
 		// 4
-		apinene.addBond(4, 5, 1.0);
+		apinene.addBond(4, 5, IBond.Order.SINGLE);
 		// 5
-		apinene.addBond(5, 0, 1.0);
+		apinene.addBond(5, 0, IBond.Order.SINGLE);
 		// 6
-		apinene.addBond(0, 6, 1.0);
+		apinene.addBond(0, 6, IBond.Order.SINGLE);
 		// 7
-		apinene.addBond(3, 7, 1.0);
+		apinene.addBond(3, 7, IBond.Order.SINGLE);
 		// 8
-		apinene.addBond(5, 7, 1.0);
+		apinene.addBond(5, 7, IBond.Order.SINGLE);
 		// 9
-		apinene.addBond(7, 8, 1.0);
+		apinene.addBond(7, 8, IBond.Order.SINGLE);
 		// 10
-		apinene.addBond(7, 9, 1.0);
+		apinene.addBond(7, 9, IBond.Order.SINGLE);
 		// 11
 		
 		IsomorphismTester it = new IsomorphismTester(apinene);
@@ -450,7 +452,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 		IMolecule mol = sp.parseSmiles(smiles);
 		Assert.assertEquals(2, mol.getAtomCount());
 		Assert.assertEquals(1, mol.getBondCount());
-		Assert.assertEquals(1.0, mol.getBond(0).getOrder(), 0.0001);
+		Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(0).getOrder());
 	}
 
 
@@ -636,8 +638,8 @@ public class SmilesParserTest extends NewCDKTestCase {
 
 		for(int i=0;i<mol.getAtomCount();i++){
 			if(mol.getAtom(i).getSymbol().equals("N")){
-				Assert.assertEquals(1,((IBond)mol.getConnectedBondsList(mol.getAtom(i)).get(0)).getOrder(),.1);
-				Assert.assertEquals(1,((IBond)mol.getConnectedBondsList(mol.getAtom(i)).get(1)).getOrder(),.1);
+				Assert.assertEquals(IBond.Order.SINGLE,((IBond)mol.getConnectedBondsList(mol.getAtom(i)).get(0)).getOrder());
+				Assert.assertEquals(IBond.Order.SINGLE,((IBond)mol.getConnectedBondsList(mol.getAtom(i)).get(1)).getOrder());
 			}
 		}
 	}
@@ -655,18 +657,14 @@ public class SmilesParserTest extends NewCDKTestCase {
 		StructureDiagramGenerator sdg=new StructureDiagramGenerator(mol);
 		sdg.generateCoordinates();
 		Assert.assertEquals(6, mol.getAtomCount());
-		// I can also check wether the total neighbor count around the
+		// I can also check whether the total neighbor count around the
 		// nitrogen is 3, all single bonded
 		org.openscience.cdk.interfaces.IAtom nitrogen = mol.getAtom(1);
 		// the second atom
 		Assert.assertEquals("N", nitrogen.getSymbol());
-		double totalBondOrder = 0.0;
-		List bondsList = mol.getConnectedBondsList(nitrogen);
+		List<IBond> bondsList = mol.getConnectedBondsList(nitrogen);
 		Assert.assertEquals(3, bondsList.size());
-		for (int i = 0; i < bondsList.size(); i++)
-		{
-			totalBondOrder += ((IBond)bondsList.get(i)).getOrder();
-		}
+		int totalBondOrder = BondManipulator.getSingleBondEquivalentSum(bondsList);
 		Assert.assertEquals(3.0, totalBondOrder, 0.001);
 	}
 
@@ -1025,8 +1023,8 @@ public class SmilesParserTest extends NewCDKTestCase {
 		Assert.assertEquals(23, mol2.getAtomCount());
 		Assert.assertEquals(25, mol2.getBondCount());
 		// do some checking
-		Assert.assertEquals(2.0, mol1.getBond(1).getOrder(), 0.0001);
-		Assert.assertEquals(2.0, mol2.getBond(1).getOrder(), 0.0001);
+		Assert.assertEquals(IBond.Order.DOUBLE, mol1.getBond(1).getOrder());
+		Assert.assertEquals(IBond.Order.DOUBLE, mol2.getBond(1).getOrder());
 		Assert.assertTrue(mol1.getBond(7).getFlag(CDKConstants.ISAROMATIC));
 		Assert.assertTrue(mol2.getBond(7).getFlag(CDKConstants.ISAROMATIC));
 	}
@@ -1122,7 +1120,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 	public void testBug1783367() throws Exception {
 		String smiles = "C=%10C=CC=C%02C=%10N(C)CCC%02";
 		IMolecule mol = sp.parseSmiles(smiles);
-		Assert.assertEquals(1.0, mol.getBond(0).getOrder());
+		Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(0).getOrder());
 	}
 	
 
@@ -1158,19 +1156,19 @@ public class SmilesParserTest extends NewCDKTestCase {
 	public void testBug1783546() throws Exception {
 		String smiles = "C=1C=CC=CC=1";
 		IMolecule mol = sp.parseSmiles(smiles);
-		Assert.assertEquals(1.0, mol.getBond(0).getOrder());
-		Assert.assertEquals(2.0, mol.getBond(1).getOrder());
-		Assert.assertEquals(1.0, mol.getBond(2).getOrder());
-		Assert.assertEquals(2.0, mol.getBond(3).getOrder());
-		Assert.assertEquals(1.0, mol.getBond(4).getOrder());
-		Assert.assertEquals(2.0, mol.getBond(5).getOrder());
+		Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(0).getOrder());
+		Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(1).getOrder());
+		Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(2).getOrder());
+		Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(3).getOrder());
+		Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(4).getOrder());
+		Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(5).getOrder());
 	}	
 
 	@org.junit.Test public void testChargedAtoms() throws Exception {
 		String smiles = "[C-]#[O+]";
 		IMolecule mol = sp.parseSmiles(smiles);
 		Assert.assertEquals(2, mol.getAtomCount());
-		Assert.assertEquals(3.0, mol.getBond(0).getOrder());
+		Assert.assertEquals(IBond.Order.TRIPLE, mol.getBond(0).getOrder());
 		Assert.assertEquals(-1, mol.getAtom(0).getFormalCharge().intValue());
 		Assert.assertEquals(1, mol.getAtom(1).getFormalCharge().intValue());
 	}

@@ -36,6 +36,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
@@ -230,10 +231,10 @@ public class CMLFragmentsTest extends CDKTestCase {
         assertEquals(2, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         assertEquals(2, bond.getAtomCount());
-        assertEquals(1.0, bond.getOrder(), 0.0001);
+        assertEquals(IBond.Order.SINGLE, bond.getOrder());
         bond = mol.getBond(1);
         assertEquals(2, bond.getAtomCount());
-        assertEquals(1.0, bond.getOrder(), 0.0001);
+        assertEquals(IBond.Order.SINGLE, bond.getOrder());
     }
 
     public void testBondAromatic() throws Exception {
@@ -244,7 +245,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         assertEquals(2, mol.getAtomCount());
         assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
-        assertEquals(CDKConstants.BONDORDER_SINGLE, bond.getOrder(), 0.0001);
+        assertEquals(CDKConstants.BONDORDER_SINGLE, bond.getOrder());
         assertEquals(true, bond.getFlag(CDKConstants.ISAROMATIC));
     }
     

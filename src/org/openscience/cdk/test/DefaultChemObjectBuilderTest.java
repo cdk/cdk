@@ -233,7 +233,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		Object object = rootObject.getBuilder().newBond(
 			rootObject.getBuilder().newAtom(),
 			rootObject.getBuilder().newAtom(),
-			1.0
+			IBond.Order.SINGLE
 		);
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);
@@ -245,7 +245,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		Object object = rootObject.getBuilder().newBond(
 			rootObject.getBuilder().newAtom(),
 			rootObject.getBuilder().newAtom(),
-			1.0, 1
+			IBond.Order.SINGLE, 1
 		);
 		assertNotNull(object);
 		assertTrue(object instanceof org.openscience.cdk.ChemObject);

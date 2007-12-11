@@ -165,12 +165,12 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 		mol.addAtom(o4);
 		mol.addAtom(h1);
 		mol.addAtom(h2);
-		mol.addBond(new Bond(sulphur, o1, 2));
-		mol.addBond(new Bond(sulphur, o2, 2));
-		mol.addBond(new Bond(sulphur, o3, 1));
-		mol.addBond(new Bond(sulphur, o4, 1));
-		mol.addBond(new Bond(h1, o3, 1));
-		mol.addBond(new Bond(h2, o4, 1));
+		mol.addBond(new Bond(sulphur, o1, IBond.Order.DOUBLE));
+		mol.addBond(new Bond(sulphur, o2, IBond.Order.DOUBLE));
+		mol.addBond(new Bond(sulphur, o3, IBond.Order.SINGLE));
+		mol.addBond(new Bond(sulphur, o4, IBond.Order.SINGLE));
+		mol.addBond(new Bond(h1, o3, IBond.Order.SINGLE));
+		mol.addBond(new Bond(h2, o4, IBond.Order.SINGLE));
 		findAndConfigureAtomTypesForAllAtoms(mol);
 		assertTrue(checker.isSaturated(mol));
     }

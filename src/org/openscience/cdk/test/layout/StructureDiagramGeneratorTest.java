@@ -41,6 +41,7 @@ import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -731,14 +732,14 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		mol.addAtom(new Atom("C")); // 7
 		mol.addAtom(new Atom("C")); // 8
 		
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(1, 2, 1.0); // 2
-		mol.addBond(2, 3, 1.0); // 3
-		mol.addBond(3, 0, 1.0); // 4
-		mol.addBond(0, 4, 1.0); // 5
-		mol.addBond(1, 5, 1.0); // 6
-		mol.addBond(2, 6, 1.0); // 7
-		mol.addBond(3, 7, 1.0); // 8
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 0, IBond.Order.SINGLE); // 4
+		mol.addBond(0, 4, IBond.Order.SINGLE); // 5
+		mol.addBond(1, 5, IBond.Order.SINGLE); // 6
+		mol.addBond(2, 6, IBond.Order.SINGLE); // 7
+		mol.addBond(3, 7, IBond.Order.SINGLE); // 8
 		return mol;
 	}
 
@@ -756,18 +757,18 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		mol.addAtom(new Atom("O")); // 8
 		mol.addAtom(new Atom("C")); // 9
 		
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(0, 3, 1.0); // 2
-		mol.addBond(0, 4, 1.0); // 3
-		mol.addBond(0, 7, 1.0); // 4
-		mol.addBond(1, 4, 1.0); // 5
-		mol.addBond(1, 5, 1.0); // 6
-		mol.addBond(1, 6, 1.0); // 7
-		mol.addBond(2, 3, 1.0); // 8
-		mol.addBond(2, 5, 1.0); // 9
-		mol.addBond(2, 6, 1.0); // 10
-		mol.addBond(2, 7, 1.0); // 11
-		mol.addBond(3, 8, 1.0); // 12
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(0, 3, IBond.Order.SINGLE); // 2
+		mol.addBond(0, 4, IBond.Order.SINGLE); // 3
+		mol.addBond(0, 7, IBond.Order.SINGLE); // 4
+		mol.addBond(1, 4, IBond.Order.SINGLE); // 5
+		mol.addBond(1, 5, IBond.Order.SINGLE); // 6
+		mol.addBond(1, 6, IBond.Order.SINGLE); // 7
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 8
+		mol.addBond(2, 5, IBond.Order.SINGLE); // 9
+		mol.addBond(2, 6, IBond.Order.SINGLE); // 10
+		mol.addBond(2, 7, IBond.Order.SINGLE); // 11
+		mol.addBond(3, 8, IBond.Order.SINGLE); // 12
 		return mol;
 	}
 
@@ -784,18 +785,18 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		mol.addAtom(new Atom("O")); // 8
 		mol.addAtom(new Atom("C")); // 9
 		
-		mol.addBond(0, 1, 1.0); // 1
-		mol.addBond(0, 3, 1.0); // 2
-		mol.addBond(0, 4, 1.0); // 3
-		mol.addBond(0, 7, 1.0); // 4
-		mol.addBond(1, 5, 1.0); // 5
-		mol.addBond(1, 6, 1.0); // 6
-		mol.addBond(1, 7, 1.0); // 7
-		mol.addBond(2, 3, 1.0); // 8
-		mol.addBond(2, 4, 1.0); // 9
-		mol.addBond(2, 5, 1.0); // 10
-		mol.addBond(2, 6, 1.0); // 11
-		mol.addBond(3, 8, 1.0); // 12
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(0, 3, IBond.Order.SINGLE); // 2
+		mol.addBond(0, 4, IBond.Order.SINGLE); // 3
+		mol.addBond(0, 7, IBond.Order.SINGLE); // 4
+		mol.addBond(1, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(1, 6, IBond.Order.SINGLE); // 6
+		mol.addBond(1, 7, IBond.Order.SINGLE); // 7
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 8
+		mol.addBond(2, 4, IBond.Order.SINGLE); // 9
+		mol.addBond(2, 5, IBond.Order.SINGLE); // 10
+		mol.addBond(2, 6, IBond.Order.SINGLE); // 11
+		mol.addBond(3, 8, IBond.Order.SINGLE); // 12
 		return mol;
 	}
 	

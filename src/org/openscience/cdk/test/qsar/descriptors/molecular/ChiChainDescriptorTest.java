@@ -42,13 +42,13 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         IAtom a4 = mol.getBuilder().newAtom("O");
         a4.setPoint2d(new Point2d(-1.2990381056766582, 0.7500000000000001));
         mol.addAtom(a4);
-        IBond b1 = mol.getBuilder().newBond(a2, a1, 1.0);
+        IBond b1 = mol.getBuilder().newBond(a2, a1, IBond.Order.SINGLE);
         mol.addBond(b1);
-        IBond b2 = mol.getBuilder().newBond(a3, a2, 1.0);
+        IBond b2 = mol.getBuilder().newBond(a3, a2, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = mol.getBuilder().newBond(a4, a3, 1.0);
+        IBond b3 = mol.getBuilder().newBond(a4, a3, IBond.Order.SINGLE);
         mol.addBond(b3);
-        IBond b4 = mol.getBuilder().newBond(a4, a2, 1.0);
+        IBond b4 = mol.getBuilder().newBond(a4, a2, IBond.Order.SINGLE);
         mol.addBond(b4);
 
 
@@ -82,15 +82,15 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         IAtom a5 = mol.getBuilder().newAtom("O");
         a5.setPoint2d(new Point2d(-1.42658477444273, 1.9635254915624212));
         mol.addAtom(a5);
-        IBond b1 = mol.getBuilder().newBond(a2, a1, 2.0);
+        IBond b1 = mol.getBuilder().newBond(a2, a1, IBond.Order.DOUBLE);
         mol.addBond(b1);
-        IBond b2 = mol.getBuilder().newBond(a3, a2, 1.0);
+        IBond b2 = mol.getBuilder().newBond(a3, a2, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = mol.getBuilder().newBond(a4, a3, 2.0);
+        IBond b3 = mol.getBuilder().newBond(a4, a3, IBond.Order.DOUBLE);
         mol.addBond(b3);
-        IBond b4 = mol.getBuilder().newBond(a5, a4, 1.0);
+        IBond b4 = mol.getBuilder().newBond(a5, a4, IBond.Order.SINGLE);
         mol.addBond(b4);
-        IBond b5 = mol.getBuilder().newBond(a5, a1, 1.0);
+        IBond b5 = mol.getBuilder().newBond(a5, a1, IBond.Order.SINGLE);
         mol.addBond(b5);
 
         ChiChainDescriptor desc = new ChiChainDescriptor();
@@ -125,15 +125,15 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         IAtom a5 = mol.getBuilder().newAtom("S");
         a5.setPoint2d(new Point2d(-1.42658477444273, 1.9635254915624212));
         mol.addAtom(a5);
-        IBond b1 = mol.getBuilder().newBond(a2, a1, 2.0);
+        IBond b1 = mol.getBuilder().newBond(a2, a1, IBond.Order.DOUBLE);
         mol.addBond(b1);
-        IBond b2 = mol.getBuilder().newBond(a3, a2, 1.0);
+        IBond b2 = mol.getBuilder().newBond(a3, a2, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = mol.getBuilder().newBond(a4, a3, 2.0);
+        IBond b3 = mol.getBuilder().newBond(a4, a3, IBond.Order.DOUBLE);
         mol.addBond(b3);
-        IBond b4 = mol.getBuilder().newBond(a5, a4, 1.0);
+        IBond b4 = mol.getBuilder().newBond(a5, a4, IBond.Order.SINGLE);
         mol.addBond(b4);
-        IBond b5 = mol.getBuilder().newBond(a5, a1, 1.0);
+        IBond b5 = mol.getBuilder().newBond(a5, a1, IBond.Order.SINGLE);
         mol.addBond(b5);
 
         ChiChainDescriptor desc = new ChiChainDescriptor();
@@ -167,15 +167,15 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         IAtom a5 = mol.getBuilder().newAtom("O");
         a5.setPoint2d(new Point2d(-1.42658477444273, 1.9635254915624212));
         mol.addAtom(a5);
-        IBond b1 = mol.getBuilder().newBond(a2, a1, 1.0);
+        IBond b1 = mol.getBuilder().newBond(a2, a1, IBond.Order.SINGLE);
         mol.addBond(b1);
-        IBond b2 = mol.getBuilder().newBond(a3, a2, 2.0);
+        IBond b2 = mol.getBuilder().newBond(a3, a2, IBond.Order.DOUBLE);
         mol.addBond(b2);
-        IBond b3 = mol.getBuilder().newBond(a4, a3, 1.0);
+        IBond b3 = mol.getBuilder().newBond(a4, a3, IBond.Order.SINGLE);
         mol.addBond(b3);
-        IBond b4 = mol.getBuilder().newBond(a5, a4, 1.0);
+        IBond b4 = mol.getBuilder().newBond(a5, a4, IBond.Order.SINGLE);
         mol.addBond(b4);
-        IBond b5 = mol.getBuilder().newBond(a5, a1, 1.0);
+        IBond b5 = mol.getBuilder().newBond(a5, a1, IBond.Order.SINGLE);
         mol.addBond(b5);
 
 
@@ -219,21 +219,21 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         IAtom a8 = mol.getBuilder().newAtom("Cl");
         a8.setPoint2d(new Point2d(1.2990381056766576, -0.7500000000000007));
         mol.addAtom(a8);
-        IBond b1 = mol.getBuilder().newBond(a2, a1, 2.0);
+        IBond b1 = mol.getBuilder().newBond(a2, a1, IBond.Order.DOUBLE);
         mol.addBond(b1);
-        IBond b2 = mol.getBuilder().newBond(a3, a2, 1.0);
+        IBond b2 = mol.getBuilder().newBond(a3, a2, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = mol.getBuilder().newBond(a4, a3, 2.0);
+        IBond b3 = mol.getBuilder().newBond(a4, a3, IBond.Order.DOUBLE);
         mol.addBond(b3);
-        IBond b4 = mol.getBuilder().newBond(a5, a4, 1.0);
+        IBond b4 = mol.getBuilder().newBond(a5, a4, IBond.Order.SINGLE);
         mol.addBond(b4);
-        IBond b5 = mol.getBuilder().newBond(a6, a5, 2.0);
+        IBond b5 = mol.getBuilder().newBond(a6, a5, IBond.Order.DOUBLE);
         mol.addBond(b5);
-        IBond b6 = mol.getBuilder().newBond(a6, a1, 1.0);
+        IBond b6 = mol.getBuilder().newBond(a6, a1, IBond.Order.SINGLE);
         mol.addBond(b6);
-        IBond b7 = mol.getBuilder().newBond(a7, a6, 1.0);
+        IBond b7 = mol.getBuilder().newBond(a7, a6, IBond.Order.SINGLE);
         mol.addBond(b7);
-        IBond b8 = mol.getBuilder().newBond(a8, a2, 1.0);
+        IBond b8 = mol.getBuilder().newBond(a8, a2, IBond.Order.SINGLE);
         mol.addBond(b8);
 
 

@@ -73,11 +73,11 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
-        mol.addBond(0,1,2);
-        mol.addBond(0,2,1);
-        mol.addBond(0,3,1);
-        mol.addBond(1,4,1);
-        mol.addBond(1,5,1);
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
+        mol.addBond(0, 2, IBond.Order.SINGLE);
+        mol.addBond(0, 3, IBond.Order.SINGLE);
+        mol.addBond(1, 4, IBond.Order.SINGLE);
+        mol.addBond(1, 5, IBond.Order.SINGLE);
         assertEquals(6, mol.getAtomCount());
         assertEquals(5, mol.getBondCount());
         assertEquals(0, AtomContainerManipulator.getTotalHydrogenCount(mol));
@@ -108,11 +108,11 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
-        mol.addBond(0,1,2);
-        mol.addBond(0,2,1);
-        mol.addBond(0,3,1);
-        mol.addBond(1,4,1);
-        mol.addBond(1,5,1);
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
+        mol.addBond(0, 2, IBond.Order.SINGLE);
+        mol.addBond(0, 3, IBond.Order.SINGLE);
+        mol.addBond(1, 4, IBond.Order.SINGLE);
+        mol.addBond(1, 5, IBond.Order.SINGLE);
         assertEquals(6, mol.getAtomCount());
         assertEquals(5, mol.getBondCount());
 
@@ -131,11 +131,11 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
-        mol.addBond(0,1,2);
-        mol.addBond(0,2,1);
-        mol.addBond(0,3,1);
-        mol.addBond(1,4,1);
-        mol.addBond(1,5,1);
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
+        mol.addBond(0, 2, IBond.Order.SINGLE);
+        mol.addBond(0, 3, IBond.Order.SINGLE);
+        mol.addBond(1, 4, IBond.Order.SINGLE);
+        mol.addBond(1, 5, IBond.Order.SINGLE);
         assertEquals(6, mol.getAtomCount());
         assertEquals(5, mol.getBondCount());
 
@@ -160,11 +160,11 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
-        mol.addBond(0,1,2);
-        mol.addBond(0,2,1);
-        mol.addBond(0,3,1);
-        mol.addBond(1,4,2);
-        mol.addBond(1,5,2);
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
+        mol.addBond(0, 2, IBond.Order.SINGLE);
+        mol.addBond(0, 3, IBond.Order.SINGLE);
+        mol.addBond(1, 4, IBond.Order.DOUBLE);
+        mol.addBond(1, 5, IBond.Order.DOUBLE);
         mol.setFlag(5,true);
         
         assertEquals(6, mol.getAtomCount());
@@ -219,11 +219,11 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
-        mol.addBond(0,1,2);
-        mol.addBond(0,2,1);
-        mol.addBond(0,3,1);
-        mol.addBond(1,4,2);
-        mol.addBond(1,5,2);
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
+        mol.addBond(0, 2, IBond.Order.SINGLE);
+        mol.addBond(0, 3, IBond.Order.SINGLE);
+        mol.addBond(1, 4, IBond.Order.DOUBLE);
+        mol.addBond(1, 5, IBond.Order.DOUBLE);
         mol.setFlag(5,true);
         
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(
@@ -243,11 +243,11 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
-        mol.addBond(0,1,2);
-        mol.addBond(0,2,1);
-        mol.addBond(0,3,1);
-        mol.addBond(1,4,2);
-        mol.addBond(1,5,2);
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
+        mol.addBond(0, 2, IBond.Order.SINGLE);
+        mol.addBond(0, 3, IBond.Order.SINGLE);
+        mol.addBond(1, 4, IBond.Order.DOUBLE);
+        mol.addBond(1, 5, IBond.Order.DOUBLE);
         mol.setFlag(5,true);
         
         IBond[] bonds = AtomContainerManipulator.getBondArray(
@@ -267,11 +267,11 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
-        mol.addBond(0,1,2);
-        mol.addBond(0,2,1);
-        mol.addBond(0,3,1);
-        mol.addBond(1,4,2);
-        mol.addBond(1,5,2);
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
+        mol.addBond(0, 2, IBond.Order.SINGLE);
+        mol.addBond(0, 3, IBond.Order.SINGLE);
+        mol.addBond(1, 4, IBond.Order.DOUBLE);
+        mol.addBond(1, 5, IBond.Order.DOUBLE);
         mol.setFlag(5,true);
         
         IBond[] bonds = AtomContainerManipulator.getBondArray(mol);
@@ -291,11 +291,11 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("H")); mol.getAtom(3).setID("a4");
         mol.addAtom(new Atom("H")); mol.getAtom(4).setID("a5");
         mol.addAtom(new Atom("H")); mol.getAtom(5).setID("a6");
-        mol.addBond(0,1,2);
-        mol.addBond(0,2,1);
-        mol.addBond(0,3,1);
-        mol.addBond(1,4,2);
-        mol.addBond(1,5,2);
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
+        mol.addBond(0, 2, IBond.Order.SINGLE);
+        mol.addBond(0, 3, IBond.Order.SINGLE);
+        mol.addBond(1, 4, IBond.Order.DOUBLE);
+        mol.addBond(1, 5, IBond.Order.DOUBLE);
         mol.setFlag(5,true);
         
         assertEquals(mol.getAtom(0), AtomContainerManipulator.getAtomById(mol, "a1"));

@@ -206,14 +206,14 @@ public class SaturationCheckerTest extends CDKTestCase
 		c1.setHydrogenCount(2);
 		Atom c2 = new Atom("C");
 		c2.setHydrogenCount(2);
-		Bond b = new Bond(c1, c2, 1);
+		Bond b = new Bond(c1, c2, IBond.Order.SINGLE);
 		// force single bond, saturate() must fix that
 		Molecule m = new Molecule();
 		m.addAtom(c1);
 		m.addAtom(c2);
 		m.addBond(b);
 		satcheck.saturate(m);
-		assertEquals(2.0, b.getOrder(), 0.0001);
+		assertEquals(IBond.Order.DOUBLE, b.getOrder());
 	}
 
 	/**
@@ -229,9 +229,9 @@ public class SaturationCheckerTest extends CDKTestCase
 		c3.setHydrogenCount(1);
 		Atom c4 = new Atom("C");
 		c4.setHydrogenCount(2);
-		Bond b1 = new Bond(c1, c2, 1);
-		Bond b2 = new Bond(c3, c2, 1);
-		Bond b3 = new Bond(c3, c4, 1);
+		Bond b1 = new Bond(c1, c2, IBond.Order.SINGLE);
+		Bond b2 = new Bond(c3, c2, IBond.Order.SINGLE);
+		Bond b3 = new Bond(c3, c4, IBond.Order.SINGLE);
 		// force single bond, saturate() must fix that
 		Molecule m = new Molecule();
 		m.addAtom(c1);
@@ -242,9 +242,9 @@ public class SaturationCheckerTest extends CDKTestCase
 		m.addBond(b2);
 		m.addBond(b3);
 		satcheck.saturate(m);
-		assertEquals(2.0, b1.getOrder(), 0.0001);
-		assertEquals(1.0, b2.getOrder(), 0.0001);
-		assertEquals(2.0, b3.getOrder(), 0.0001);
+		assertEquals(IBond.Order.DOUBLE, b1.getOrder());
+		assertEquals(IBond.Order.SINGLE, b2.getOrder());
+		assertEquals(IBond.Order.DOUBLE, b3.getOrder());
 	}
 
     public void testSaturate_ParaDiOxygenBenzene() throws CDKException {
@@ -273,39 +273,39 @@ public class SaturationCheckerTest extends CDKTestCase
         mol.addAtom(a11);
         Atom a12 = new Atom("O");
         mol.addAtom(a12);
-        Bond b1 = new Bond(a2, a1, 1.0);
+        Bond b1 = new Bond(a2, a1, IBond.Order.SINGLE);
         mol.addBond(b1);
-        Bond b2 = new Bond(a1, a3, 1.0);
+        Bond b2 = new Bond(a1, a3, IBond.Order.SINGLE);
         mol.addBond(b2);
-        Bond b3 = new Bond(a1, a4, 1.0);
+        Bond b3 = new Bond(a1, a4, IBond.Order.SINGLE);
         mol.addBond(b3);
-        Bond b4 = new Bond(a5, a3, 1.0);
+        Bond b4 = new Bond(a5, a3, IBond.Order.SINGLE);
         mol.addBond(b4);
-        Bond b5 = new Bond(a3, a6, 1.0);
+        Bond b5 = new Bond(a3, a6, IBond.Order.SINGLE);
         mol.addBond(b5);
-        Bond b6 = new Bond(a7, a4, 1.0);
+        Bond b6 = new Bond(a7, a4, IBond.Order.SINGLE);
         mol.addBond(b6);
-        Bond b7 = new Bond(a4, a8, 1.0);
+        Bond b7 = new Bond(a4, a8, IBond.Order.SINGLE);
         mol.addBond(b7);
-        Bond b8 = new Bond(a6, a9, 1.0);
+        Bond b8 = new Bond(a6, a9, IBond.Order.SINGLE);
         mol.addBond(b8);
-        Bond b9 = new Bond(a6, a10, 1.0);
+        Bond b9 = new Bond(a6, a10, IBond.Order.SINGLE);
         mol.addBond(b9);
-        Bond b10 = new Bond(a8, a10, 1.0);
+        Bond b10 = new Bond(a8, a10, IBond.Order.SINGLE);
         mol.addBond(b10);
-        Bond b11 = new Bond(a8, a11, 1.0);
+        Bond b11 = new Bond(a8, a11, IBond.Order.SINGLE);
         mol.addBond(b11);
-        Bond b12 = new Bond(a10, a12, 1.0);
+        Bond b12 = new Bond(a10, a12, IBond.Order.SINGLE);
         mol.addBond(b12);
         satcheck.saturate(mol);
-        assertEquals(2.0, b1.getOrder(), 0.0001);
-        assertEquals(1.0, b2.getOrder(), 0.0001);
-        assertEquals(1.0, b3.getOrder(), 0.0001);
-        assertEquals(2.0, b5.getOrder(), 0.0001);
-        assertEquals(2.0, b7.getOrder(), 0.0001);
-        assertEquals(1.0, b9.getOrder(), 0.0001);
-        assertEquals(1.0, b10.getOrder(), 0.0001);
-        assertEquals(2.0, b12.getOrder(), 0.0001);
+        assertEquals(IBond.Order.DOUBLE, b1.getOrder());
+        assertEquals(IBond.Order.SINGLE, b2.getOrder());
+        assertEquals(IBond.Order.SINGLE, b3.getOrder());
+        assertEquals(IBond.Order.DOUBLE, b5.getOrder());
+        assertEquals(IBond.Order.DOUBLE, b7.getOrder());
+        assertEquals(IBond.Order.SINGLE, b9.getOrder());
+        assertEquals(IBond.Order.SINGLE, b10.getOrder());
+        assertEquals(IBond.Order.DOUBLE, b12.getOrder());
     }
     /**
      * Test sulfuric acid.
@@ -327,12 +327,12 @@ public class SaturationCheckerTest extends CDKTestCase
 		m.addAtom(o4);
 		m.addAtom(h1);
 		m.addAtom(h2);
-		m.addBond(new Bond(sulphur, o1, 2));
-		m.addBond(new Bond(sulphur, o2, 2));
-		m.addBond(new Bond(sulphur, o3, 1));
-		m.addBond(new Bond(sulphur, o4, 1));
-		m.addBond(new Bond(h1, o3, 1));
-		m.addBond(new Bond(h2, o4, 1));
+		m.addBond(new Bond(sulphur, o1, IBond.Order.DOUBLE));
+		m.addBond(new Bond(sulphur, o2, IBond.Order.DOUBLE));
+		m.addBond(new Bond(sulphur, o3, IBond.Order.SINGLE));
+		m.addBond(new Bond(sulphur, o4, IBond.Order.SINGLE));
+		m.addBond(new Bond(h1, o3, IBond.Order.SINGLE));
+		m.addBond(new Bond(h2, o4, IBond.Order.SINGLE));
 		assertTrue(satcheck.isSaturated(sulphur, m));
 		assertTrue(satcheck.isSaturated(o1, m));
 		assertTrue(satcheck.isSaturated(o2, m));
@@ -381,32 +381,32 @@ public class SaturationCheckerTest extends CDKTestCase
       m.getAtom(17).setHydrogenCount(1);
       m.getAtom(18).setHydrogenCount(1);
       m.getAtom(19).setHydrogenCount(3);
-      m.addBond(0, 1, 1);
-      m.addBond(1, 2, 1);
-      m.addBond(2, 3, 1);
-      m.addBond(3, 4, 1);
-      m.addBond(4, 5, 1);
-      m.addBond(5, 6, 1);
-      m.addBond(6, 7, 1);
-      m.addBond(7, 8, 1);
-      m.addBond(8, 9, 1);
-      m.addBond(5, 10, 1);
-      m.addBond(9, 10, 1);
-      m.addBond(10, 11, 1);
-      m.addBond(0, 12, 1);
-      m.addBond(4, 12, 1);
-      m.addBond(11, 12, 1);
-      m.addBond(11, 13, 1);
-      m.addBond(13, 14, 1);
-      m.addBond(14, 15, 1);
-      m.addBond(15, 16, 1);
-      m.addBond(16, 17, 1);
-      m.addBond(13, 18, 1);
-      m.addBond(17, 18, 1);
-      m.addBond(20, 16, 1);
-      m.addBond(11, 21, 1);
-      m.addBond(22, 1, 1);
-      m.addBond(20, 19, 1);
+      m.addBond(0, 1, IBond.Order.SINGLE);
+      m.addBond(1, 2, IBond.Order.SINGLE);
+      m.addBond(2, 3, IBond.Order.SINGLE);
+      m.addBond(3, 4, IBond.Order.SINGLE);
+      m.addBond(4, 5, IBond.Order.SINGLE);
+      m.addBond(5, 6, IBond.Order.SINGLE);
+      m.addBond(6, 7, IBond.Order.SINGLE);
+      m.addBond(7, 8, IBond.Order.SINGLE);
+      m.addBond(8, 9, IBond.Order.SINGLE);
+      m.addBond(5, 10, IBond.Order.SINGLE);
+      m.addBond(9, 10, IBond.Order.SINGLE);
+      m.addBond(10, 11, IBond.Order.SINGLE);
+      m.addBond(0, 12, IBond.Order.SINGLE);
+      m.addBond(4, 12, IBond.Order.SINGLE);
+      m.addBond(11, 12, IBond.Order.SINGLE);
+      m.addBond(11, 13, IBond.Order.SINGLE);
+      m.addBond(13, 14, IBond.Order.SINGLE);
+      m.addBond(14, 15, IBond.Order.SINGLE);
+      m.addBond(15, 16, IBond.Order.SINGLE);
+      m.addBond(16, 17, IBond.Order.SINGLE);
+      m.addBond(13, 18, IBond.Order.SINGLE);
+      m.addBond(17, 18, IBond.Order.SINGLE);
+      m.addBond(20, 16, IBond.Order.SINGLE);
+      m.addBond(11, 21, IBond.Order.SINGLE);
+      m.addBond(22, 1, IBond.Order.SINGLE);
+      m.addBond(20, 19, IBond.Order.SINGLE);
       m.getAtom(0).setFlag(CDKConstants.ISAROMATIC,true);
       m.getAtom(1).setFlag(CDKConstants.ISAROMATIC,true);
       m.getAtom(2).setFlag(CDKConstants.ISAROMATIC,true);
@@ -432,9 +432,9 @@ public class SaturationCheckerTest extends CDKTestCase
       m.getBond(12).setFlag(CDKConstants.ISAROMATIC,true);
       m.getBond(13).setFlag(CDKConstants.ISAROMATIC,true);
       satcheck.saturate(m);
-      assertTrue(m.getBond(4).getOrder()==1);
-      assertTrue(m.getBond(9).getOrder()==2 ^ m.getBond(5).getOrder()==2);
-      assertTrue(m.getBond(13).getOrder()==2 ^ m.getBond(3).getOrder()==2);
+      assertTrue(m.getBond(4).getOrder() == IBond.Order.SINGLE);
+      assertTrue(m.getBond(9).getOrder() == IBond.Order.DOUBLE ^ m.getBond(5).getOrder() == IBond.Order.DOUBLE);
+      assertTrue(m.getBond(13).getOrder() == IBond.Order.DOUBLE ^ m.getBond(3).getOrder() == IBond.Order.DOUBLE);
     }
     
     public void testCalculateNumberOfImplicitHydrogens() throws CDKException {
@@ -460,7 +460,7 @@ public class SaturationCheckerTest extends CDKTestCase
     	IMolecule coRad = builder.newMolecule();
     	IAtom c = builder.newAtom("C");
     	IAtom o = builder.newAtom("O");
-    	IBond bond = builder.newBond(c, o, 2);
+    	IBond bond = builder.newBond(c, o, IBond.Order.DOUBLE);
     	coRad.addAtom(c);
     	coRad.addAtom(o);
     	coRad.addBond(bond);

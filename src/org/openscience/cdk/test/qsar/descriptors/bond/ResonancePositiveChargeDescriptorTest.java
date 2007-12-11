@@ -29,6 +29,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.ResonancePositiveChargeDescriptor;
@@ -303,7 +304,7 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 
 		for(int i = 0; i < mol.getBondCount(); i++){
 			DoubleArrayResult dar;
-			if(mol.getBond(i).getOrder() > 1)
+			if(mol.getBond(i).getOrder() != IBond.Order.SINGLE)
 				dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(i),mol).getValue());
 		}
 	}

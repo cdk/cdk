@@ -84,9 +84,9 @@ public class MoleculeTest extends CDKTestCase {
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        IBond b1 = builder.newBond(c1, c2,1);
-        IBond b2 = builder.newBond(c1, o, 2);
-        IBond b3 = builder.newBond(c1, c3,1);
+        IBond b1 = builder.newBond(c1, c2, IBond.Order.SINGLE);
+        IBond b2 = builder.newBond(c1, o, IBond.Order.DOUBLE);
+        IBond b3 = builder.newBond(c1, c3, IBond.Order.SINGLE);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);

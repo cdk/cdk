@@ -28,6 +28,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.BondCountDescriptor;
@@ -53,7 +54,7 @@ public class BondCountDescriptorTest extends CDKTestCase {
     }
 
     public void testSingleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Double(1.0)};
+        Object[] params = {IBond.Order.SINGLE};
         descriptor.setParameters(params);
         
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
@@ -63,7 +64,7 @@ public class BondCountDescriptorTest extends CDKTestCase {
     }
 
     public void testDoubleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Double(2.0)};
+        Object[] params = {IBond.Order.DOUBLE};
         descriptor.setParameters(params);
 
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol

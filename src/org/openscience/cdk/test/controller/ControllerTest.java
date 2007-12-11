@@ -35,6 +35,7 @@ import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.controller.PopupController2D;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -101,16 +102,16 @@ public class ControllerTest
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("C")); // 6		
 		
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(1, 2, 1); // 2
-		mol.addBond(2, 3, 1); // 3
-		mol.addBond(3, 4, 1); // 4
-		mol.addBond(4, 5, 1); // 5
-		mol.addBond(5, 6, 1); // 6
-		mol.addBond(2, 0, 1); // 7
-		mol.addBond(1, 3, 1); // 8
-		mol.addBond(4, 2, 1); // 9
-		mol.addBond(6, 4, 1); // 9		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 6, IBond.Order.SINGLE); // 6
+		mol.addBond(2, 0, IBond.Order.SINGLE); // 7
+		mol.addBond(1, 3, IBond.Order.SINGLE); // 8
+		mol.addBond(4, 2, IBond.Order.SINGLE); // 9
+		mol.addBond(6, 4, IBond.Order.SINGLE); // 9		
 		
 		return mol;
 	}
@@ -123,11 +124,11 @@ public class ControllerTest
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("C")); // 3
 		
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(1, 2, 1); // 2
-		mol.addBond(2, 0, 1); // 3
-		mol.addBond(2, 3, 1); // 7
-		mol.addBond(1, 3, 1); // 8
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 0, IBond.Order.SINGLE); // 3
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 7
+		mol.addBond(1, 3, IBond.Order.SINGLE); // 8
 		return mol;
 	}
 	
@@ -142,13 +143,13 @@ public class ControllerTest
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("C")); // 3
 		
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(1, 2, 1); // 2
-		mol.addBond(2, 3, 1); // 3
-		mol.addBond(3, 0, 1); // 7
-		mol.addBond(1, 4, 1); // 8
-		mol.addBond(4, 5, 1); // 7
-		mol.addBond(5, 2, 1); // 8
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 0, IBond.Order.SINGLE); // 7
+		mol.addBond(1, 4, IBond.Order.SINGLE); // 8
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 7
+		mol.addBond(5, 2, IBond.Order.SINGLE); // 8
 		return mol;
 	}
 
@@ -167,18 +168,18 @@ public class ControllerTest
 		mol.addAtom(new Atom("C")); // 8
 		mol.addAtom(new Atom("C")); // 9
 		
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(1, 2, 1); // 2
-		mol.addBond(2, 3, 1); // 3
-		mol.addBond(3, 4, 1); // 4
-		mol.addBond(4, 5, 1); // 5
-		mol.addBond(5, 0, 1); // 6
-		mol.addBond(5, 6, 1); // 7
-		mol.addBond(6, 7, 1); // 8
-		mol.addBond(7, 4, 1); // 9
-		mol.addBond(8, 0, 1); // 10
-		mol.addBond(9, 1, 1); // 11		
-		mol.addBond(9, 8, 1); // 11		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+		mol.addBond(5, 6, IBond.Order.SINGLE); // 7
+		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
+		mol.addBond(7, 4, IBond.Order.SINGLE); // 9
+		mol.addBond(8, 0, IBond.Order.SINGLE); // 10
+		mol.addBond(9, 1, IBond.Order.SINGLE); // 11		
+		mol.addBond(9, 8, IBond.Order.SINGLE); // 11		
 		
 			
 		return mol;
@@ -200,17 +201,17 @@ public class ControllerTest
 
 		
 		
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(1, 2, 1); // 2
-		mol.addBond(2, 3, 1); // 3
-		mol.addBond(3, 4, 1); // 4
-		mol.addBond(4, 5, 1); // 5
-		mol.addBond(5, 6, 1); // 6
-		mol.addBond(6, 0, 1); // 7
-		mol.addBond(6, 7, 1); // 8
-		mol.addBond(7, 8, 1); // 9
-		mol.addBond(8, 9, 1); // 10
-		mol.addBond(9, 6, 1); // 11				
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 6, IBond.Order.SINGLE); // 6
+		mol.addBond(6, 0, IBond.Order.SINGLE); // 7
+		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
+		mol.addBond(7, 8, IBond.Order.SINGLE); // 9
+		mol.addBond(8, 9, IBond.Order.SINGLE); // 10
+		mol.addBond(9, 6, IBond.Order.SINGLE); // 11				
 		return mol;
 	}
 	
@@ -229,17 +230,17 @@ public class ControllerTest
 //		mol.addAtom(new Atom("C")); // 8
 //		mol.addAtom(new Atom("C")); // 9
 		
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(1, 2, 1); // 2
-		mol.addBond(2, 3, 1); // 3
-		mol.addBond(3, 4, 1); // 4
-		mol.addBond(4, 5, 1); // 5
-		mol.addBond(5, 0, 1); // 6
-//		mol.addBond(5, 6, 1); // 7
-//		mol.addBond(6, 7, 1); // 8
-//		mol.addBond(7, 4, 1); // 9
-//		mol.addBond(8, 0, 1); // 10
-//		mol.addBond(9, 1, 1); // 11		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+//		mol.addBond(5, 6, IBond.Order.SINGLE); // 7
+//		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
+//		mol.addBond(7, 4, IBond.Order.SINGLE); // 9
+//		mol.addBond(8, 0, IBond.Order.SINGLE); // 10
+//		mol.addBond(9, 1, IBond.Order.SINGLE); // 11		
 		
 			
 		return mol;

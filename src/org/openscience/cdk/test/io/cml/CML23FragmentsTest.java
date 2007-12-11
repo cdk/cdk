@@ -144,10 +144,10 @@ public class CML23FragmentsTest extends CDKTestCase {
         assertEquals(2, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         assertEquals(2, bond.getAtomCount());
-        assertEquals(1.0, bond.getOrder(), 0.0001);
+        assertEquals(IBond.Order.SINGLE, bond.getOrder());
         bond = mol.getBond(1);
         assertEquals(2, bond.getAtomCount());
-        assertEquals(1.0, bond.getOrder(), 0.0001);
+        assertEquals(IBond.Order.SINGLE, bond.getOrder());
     }
 
     public void testBondId() throws Exception {
@@ -181,7 +181,7 @@ public class CML23FragmentsTest extends CDKTestCase {
         assertEquals(2, mol.getAtomCount());
         assertEquals(1, mol.getBondCount());
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
-        assertEquals(CDKConstants.BONDORDER_SINGLE, bond.getOrder(), 0.0001);
+        assertEquals(CDKConstants.BONDORDER_SINGLE, bond.getOrder());
         assertEquals(true, bond.getFlag(CDKConstants.ISAROMATIC));
     }
     
@@ -194,7 +194,7 @@ public class CML23FragmentsTest extends CDKTestCase {
       assertEquals(2, mol.getAtomCount());
       assertEquals(1, mol.getBondCount());
       org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
-      assertEquals(CDKConstants.BONDORDER_DOUBLE, bond.getOrder(), 0.0001);
+      assertEquals(CDKConstants.BONDORDER_DOUBLE, bond.getOrder());
       assertEquals(true, bond.getFlag(CDKConstants.ISAROMATIC));
   }
 

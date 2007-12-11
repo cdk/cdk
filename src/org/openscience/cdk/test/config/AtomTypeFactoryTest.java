@@ -20,20 +20,21 @@
  */
 package org.openscience.cdk.test.config;
 
-import javax.xml.validation.*;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.*;
-import javax.xml.transform.stream.*;
-import javax.xml.XMLConstants;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Source;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -43,6 +44,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.test.CDKTestCase;
 import org.w3c.dom.Document;
@@ -131,7 +133,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         assertEquals("C", atomType.getSymbol());
         assertEquals("C4", atomType.getAtomTypeName());
 		assertEquals(4.0, atomType.getBondOrderSum(), 0.001);
-		assertEquals(3.0, atomType.getMaxBondOrder(), 0.0001);
+		assertEquals(IBond.Order.TRIPLE, atomType.getMaxBondOrder());
 	}
 
     public void testGetAtomTypes_String() throws Exception {
@@ -151,7 +153,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         assertEquals("Oplus", atomType.getAtomTypeName());
 		assertEquals(1, atomType.getFormalCharge().intValue());
 		assertEquals(3.0, atomType.getBondOrderSum(), 0.0001);
-		assertEquals(3.0, atomType.getMaxBondOrder(), 0.0001);
+		assertEquals(IBond.Order.TRIPLE, atomType.getMaxBondOrder());
 	}
 
     public void testGetAtomTypeFromHybrid() throws Exception {
@@ -163,7 +165,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         assertEquals("C.sp2", atomType.getAtomTypeName());
 		assertEquals(0, atomType.getFormalCharge().intValue());
 		assertEquals(4.0, atomType.getBondOrderSum(), 0.0001);
-		assertEquals(2.0, atomType.getMaxBondOrder(), 0.0001);
+		assertEquals(IBond.Order.DOUBLE, atomType.getMaxBondOrder());
 		assertEquals(3, (int) atomType.getFormalNeighbourCount());
 		assertEquals(Hybridization.SP2, atomType.getHybridization());
 	}

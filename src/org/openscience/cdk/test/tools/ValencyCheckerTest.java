@@ -218,12 +218,12 @@ public class ValencyCheckerTest extends CDKTestCase
 		m.addAtom(o4);
 		m.addAtom(h1);
 		m.addAtom(h2);
-		m.addBond(new Bond(sulphur, o1, 2));
-		m.addBond(new Bond(sulphur, o2, 2));
-		m.addBond(new Bond(sulphur, o3, 1));
-		m.addBond(new Bond(sulphur, o4, 1));
-		m.addBond(new Bond(h1, o3, 1));
-		m.addBond(new Bond(h2, o4, 1));
+		m.addBond(new Bond(sulphur, o1, IBond.Order.DOUBLE));
+		m.addBond(new Bond(sulphur, o2, IBond.Order.DOUBLE));
+		m.addBond(new Bond(sulphur, o3, IBond.Order.SINGLE));
+		m.addBond(new Bond(sulphur, o4, IBond.Order.SINGLE));
+		m.addBond(new Bond(h1, o3, IBond.Order.SINGLE));
+		m.addBond(new Bond(h2, o4, IBond.Order.SINGLE));
 		assertTrue(satcheck.isSaturated(sulphur, m));
 		assertTrue(satcheck.isSaturated(o1, m));
 		assertTrue(satcheck.isSaturated(o2, m));
@@ -256,7 +256,7 @@ public class ValencyCheckerTest extends CDKTestCase
     	IMolecule coRad = builder.newMolecule();
     	IAtom c = builder.newAtom("C");
     	IAtom o = builder.newAtom("O");
-    	IBond bond = builder.newBond(c, o, 2);
+    	IBond bond = builder.newBond(c, o, IBond.Order.DOUBLE);
     	coRad.addAtom(c);
     	coRad.addAtom(o);
     	coRad.addBond(bond);
@@ -272,10 +272,10 @@ public class ValencyCheckerTest extends CDKTestCase
 //        carbon2.setHydrogenCount(2);
 //        ethene.addAtom(carbon1);
 //        ethene.addAtom(carbon2);
-//        ethene.addBond(new Bond(carbon1, carbon2, 1.0));
+//        ethene.addBond(new Bond(carbon1, carbon2, IBond.Order.SINGLE));
 //        
 //        satcheck.saturate(ethene); // fix bond orders
-//        assertEquals(2.0, (ethene.getBonds())[0].getOrder(), 0.0001);
+//        assertEquals(IBond.Order.DOUBLE, (ethene.getBonds())[0].getOrder());
 //    }
 //    
 //    public void testSaturate_13Butadiene() throws CDKException {
@@ -292,15 +292,15 @@ public class ValencyCheckerTest extends CDKTestCase
 //        butadiene.addAtom(carbon2);
 //        butadiene.addAtom(carbon3);
 //        butadiene.addAtom(carbon4);
-//        butadiene.addBond(new Bond(carbon2, carbon3, 1.0));
-//        butadiene.addBond(new Bond(carbon2, carbon1, 1.0));
-//        butadiene.addBond(new Bond(carbon3, carbon4, 1.0));
+//        butadiene.addBond(new Bond(carbon2, carbon3, IBond.Order.SINGLE));
+//        butadiene.addBond(new Bond(carbon2, carbon1, IBond.Order.SINGLE));
+//        butadiene.addBond(new Bond(carbon3, carbon4, IBond.Order.SINGLE));
 //        
 //        satcheck.saturate(butadiene); // fix bond orders
 //        org.openscience.cdk.interfaces.IBond[] bonds = butadiene.getBonds();
-//        assertEquals(1.0, bonds[0].getOrder(), 0.0001);
-//        assertEquals(2.0, bonds[1].getOrder(), 0.0001);
-//        assertEquals(2.0, bonds[2].getOrder(), 0.0001);
+//        assertEquals(IBond.Order.SINGLE, bonds[0].getOrder());
+//        assertEquals(IBond.Order.DOUBLE, bonds[1].getOrder());
+//        assertEquals(IBond.Order.DOUBLE, bonds[2].getOrder());
 //    }
 //    
 //    public void testSaturate_Benzene() throws CDKException {
@@ -311,9 +311,9 @@ public class ValencyCheckerTest extends CDKTestCase
 //            benzene.addAtom(carbon);
 //        }
 //        for (int i=0; i<5; i++) {
-//            benzene.addBond(i, i+1, 1.0);
+//            benzene.addBond(i, i+1, IBond.Order.SINGLE);
 //        }
-//        benzene.addBond(5, 0, 1.0);
+//        benzene.addBond(5, 0, IBond.Order.SINGLE);
 //        
 //        satcheck.saturate(benzene); // fix bond orders
 //        

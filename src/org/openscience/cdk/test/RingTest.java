@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * Checks the funcitonality of the Ring class.
@@ -91,6 +92,15 @@ public class RingTest extends CDKTestCase {
     public void testGetBondOrderSum() {
         IRing r = builder.newRing(5, "C");
         assertEquals(5, r.getBondOrderSum());
+
+        BondManipulator.increaseBondOrder(r.getBond(0));
+        assertEquals(6, r.getBondOrderSum());
+
+        BondManipulator.increaseBondOrder(r.getBond(0));
+        assertEquals(7, r.getBondOrderSum());
+
+        BondManipulator.increaseBondOrder(r.getBond(4));
+        assertEquals(8, r.getBondOrderSum());
     }
     
     public void testGetRingSize() {
@@ -103,9 +113,9 @@ public class RingTest extends CDKTestCase {
         IAtom c1 = builder.newAtom("C");
         IAtom c2 = builder.newAtom("C");
         IAtom c3 = builder.newAtom("C");
-        IBond b1 = builder.newBond(c1, c2, 1.0);
-        IBond b2 = builder.newBond(c3, c2, 1.0);
-        IBond b3 = builder.newBond(c1, c3, 1.0);
+        IBond b1 = builder.newBond(c1, c2, IBond.Order.SINGLE);
+        IBond b2 = builder.newBond(c3, c2, IBond.Order.SINGLE);
+        IBond b3 = builder.newBond(c1, c3, IBond.Order.SINGLE);
         ring.addAtom(c1);
         ring.addAtom(c2);
         ring.addAtom(c3);

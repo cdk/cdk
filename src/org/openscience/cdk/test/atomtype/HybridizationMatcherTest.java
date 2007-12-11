@@ -78,7 +78,7 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         for (int i = 0; i < 3; i++) {
             Atom h = new Atom("H");
             mol.addAtom(h);
-            mol.addBond(new Bond(atom, h, 1.0)) ;
+            mol.addBond(new Bond(atom, h, IBond.Order.SINGLE)) ;
         }
                        
 
@@ -194,11 +194,11 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
         IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
 
-        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(carbon, o1, 1.0);
-        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(carbon, o2, 2.0);
+        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(carbon, o1, IBond.Order.SINGLE);
+        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(carbon, o2, IBond.Order.DOUBLE);
 
-        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(carbon, h1, 1.0);
-        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(o1, h2, 1.0);
+        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(carbon, h1, IBond.Order.SINGLE);
+        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(o1, h2, IBond.Order.SINGLE);
 
         mol.addAtom(carbon);
         mol.addAtom(o1);
@@ -233,9 +233,9 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
         IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
 
-        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(h1, o1, 1.0);
-        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(o1, o2, 1.0);
-        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(o2, h2, 1.0);
+        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(h1, o1, IBond.Order.SINGLE);
+        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(o1, o2, IBond.Order.SINGLE);
+        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(o2, h2, IBond.Order.SINGLE);
 
         mol.addAtom(o1);
         mol.addAtom(o2);
@@ -273,10 +273,10 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         IAtom cl3 = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
         IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
 
-        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(p, cl1, 1.0);
-        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(p, cl2, 1.0);
-        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(p, cl3, 1.0);
-        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(p, s, 2.0);
+        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(p, cl1, IBond.Order.SINGLE);
+        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(p, cl2, IBond.Order.SINGLE);
+        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(p, cl3, IBond.Order.SINGLE);
+        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(p, s, IBond.Order.DOUBLE);
 
         mol.addAtom(p);
         mol.addAtom(cl1);
@@ -322,12 +322,12 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         c2.setHydrogenCount(3);
         c3.setHydrogenCount(3);
 
-        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(p, o1, 1.0);
-        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(p, o2, 1.0);
-        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(p, o3, 1.0);
-        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(c1, o1, 1.0);
-        IBond bond5 = DefaultChemObjectBuilder.getInstance().newBond(c2, o2, 1.0);
-        IBond bond6 = DefaultChemObjectBuilder.getInstance().newBond(c3, o3, 1.0);
+        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(p, o1, IBond.Order.SINGLE);
+        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(p, o2, IBond.Order.SINGLE);
+        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(p, o3, IBond.Order.SINGLE);
+        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(c1, o1, IBond.Order.SINGLE);
+        IBond bond5 = DefaultChemObjectBuilder.getInstance().newBond(c2, o2, IBond.Order.SINGLE);
+        IBond bond6 = DefaultChemObjectBuilder.getInstance().newBond(c3, o3, IBond.Order.SINGLE);
 
         mol.addAtom(p);
         mol.addAtom(o1);
@@ -367,10 +367,10 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
 
         c1.setHydrogenCount(3);
 
-        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(si, c1, 1.0);
-        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(si, cl1, 1.0);
-        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(si, cl2, 1.0);
-        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(si, cl3, 1.0);
+        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(si, c1, IBond.Order.SINGLE);
+        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(si, cl1, IBond.Order.SINGLE);
+        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(si, cl2, IBond.Order.SINGLE);
+        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(si, cl3, IBond.Order.SINGLE);
 
         mol.addAtom(si);
         mol.addAtom(c1);
@@ -416,8 +416,8 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         s = DefaultChemObjectBuilder.getInstance().newAtom("S");
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
         IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, h1, 1.0);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, h2, 1.0);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, h1, IBond.Order.SINGLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, h2, IBond.Order.SINGLE);
 
         mol.addAtom(s);
         mol.addAtom(h1);
@@ -443,8 +443,8 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
         IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, o1, 2.0);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, o2, 2.0);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, o1, IBond.Order.DOUBLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, o2, IBond.Order.DOUBLE);
 
         mol.addAtom(s);
         mol.addAtom(o1);
@@ -478,7 +478,7 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         for (int i = 0; i < 6; i++) {
             IAtom f = DefaultChemObjectBuilder.getInstance().newAtom("F");
             mol.addAtom(f);
-            IBond bond = DefaultChemObjectBuilder.getInstance().newBond(s, f, 1.0);
+            IBond bond = DefaultChemObjectBuilder.getInstance().newBond(s, f, IBond.Order.SINGLE);
             mol.addBond(bond);
         }
 
@@ -503,9 +503,9 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
         IAtom o3 = DefaultChemObjectBuilder.getInstance().newAtom("O");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, o1, 2.0);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, o2, 2.0);
-        IBond b3 = DefaultChemObjectBuilder.getInstance().newBond(s, o3, 2.0);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, o1, IBond.Order.DOUBLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, o2, IBond.Order.DOUBLE);
+        IBond b3 = DefaultChemObjectBuilder.getInstance().newBond(s, o3, IBond.Order.DOUBLE);
 
         mol.addAtom(s);
         mol.addAtom(o1);
@@ -543,8 +543,8 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         IAtom h = DefaultChemObjectBuilder.getInstance().newAtom("H");
 
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(n, o, 2.0);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(n, h, 1.0);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(n, o, IBond.Order.DOUBLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(n, h, IBond.Order.SINGLE);
 
 
         mol.addAtom(n);
@@ -579,8 +579,8 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
         c1.setHydrogenCount(0);
         c2.setHydrogenCount(3);
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(n, c1, 3.0);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(c1, c2, 1.0);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(n, c1, IBond.Order.TRIPLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(c1, c2, IBond.Order.SINGLE);
 
 
         mol.addAtom(n);
@@ -616,9 +616,9 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
 
         c.setHydrogenCount(3);
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(n, o1, 2.0);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(n, o2, 2.0);
-        IBond b3 = DefaultChemObjectBuilder.getInstance().newBond(n, c, 1.0);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(n, o1, IBond.Order.DOUBLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(n, o2, IBond.Order.DOUBLE);
+        IBond b3 = DefaultChemObjectBuilder.getInstance().newBond(n, c, IBond.Order.SINGLE);
 
         mol.addAtom(n);
         mol.addAtom(o1);
@@ -687,17 +687,17 @@ public class HybridizationMatcherTest extends AbstractAtomTypeTest {
     	a9.setHydrogenCount(1);
     	IAtom a10 = mol.getBuilder().newAtom("C"); mol.addAtom(a10);
     	a10.setHydrogenCount(1);
-    	IBond b1 = mol.getBuilder().newBond(a1, a2, 2.0); mol.addBond(b1);
-    	IBond b2 = mol.getBuilder().newBond(a1, a3, 1.0); mol.addBond(b2);
-    	IBond b3 = mol.getBuilder().newBond(a1, a4, 1.0); mol.addBond(b3);
-    	IBond b4 = mol.getBuilder().newBond(a2, a5, 1.0); mol.addBond(b4);
-    	IBond b5 = mol.getBuilder().newBond(a2, a6, 1.0); mol.addBond(b5);
-    	IBond b6 = mol.getBuilder().newBond(a3, a7, 2.0); mol.addBond(b6);
-    	IBond b7 = mol.getBuilder().newBond(a3, a8, 1.0); mol.addBond(b7);
-    	IBond b8 = mol.getBuilder().newBond(a4, a9, 2.0); mol.addBond(b8);
-    	IBond b9 = mol.getBuilder().newBond(a5, a10, 2.0); mol.addBond(b9);
-    	IBond b10 = mol.getBuilder().newBond(a6, a9, 1.0); mol.addBond(b10);
-    	IBond b11 = mol.getBuilder().newBond(a7, a10, 1.0); mol.addBond(b11);
+    	IBond b1 = mol.getBuilder().newBond(a1, a2, IBond.Order.DOUBLE); mol.addBond(b1);
+    	IBond b2 = mol.getBuilder().newBond(a1, a3, IBond.Order.SINGLE); mol.addBond(b2);
+    	IBond b3 = mol.getBuilder().newBond(a1, a4, IBond.Order.SINGLE); mol.addBond(b3);
+    	IBond b4 = mol.getBuilder().newBond(a2, a5, IBond.Order.SINGLE); mol.addBond(b4);
+    	IBond b5 = mol.getBuilder().newBond(a2, a6, IBond.Order.SINGLE); mol.addBond(b5);
+    	IBond b6 = mol.getBuilder().newBond(a3, a7, IBond.Order.DOUBLE); mol.addBond(b6);
+    	IBond b7 = mol.getBuilder().newBond(a3, a8, IBond.Order.SINGLE); mol.addBond(b7);
+    	IBond b8 = mol.getBuilder().newBond(a4, a9, IBond.Order.DOUBLE); mol.addBond(b8);
+    	IBond b9 = mol.getBuilder().newBond(a5, a10, IBond.Order.DOUBLE); mol.addBond(b9);
+    	IBond b10 = mol.getBuilder().newBond(a6, a9, IBond.Order.SINGLE); mol.addBond(b10);
+    	IBond b11 = mol.getBuilder().newBond(a7, a10, IBond.Order.SINGLE); mol.addBond(b11);
     	HybridizationMatcher matcher = new HybridizationMatcher();
     	assertAtomType(testedAtomTypes, "C.sp2", matcher.findMatchingAtomType(mol, a1));
     	assertAtomType(testedAtomTypes, "C.sp2", matcher.findMatchingAtomType(mol, a2));

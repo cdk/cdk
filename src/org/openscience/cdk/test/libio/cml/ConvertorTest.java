@@ -29,6 +29,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.libio.md.MDMolecule;
 import org.openscience.cdk.test.CDKTestCase;
@@ -64,11 +65,11 @@ public class ConvertorTest extends CDKTestCase {
         mol.addAtom(new Atom("H")); // 4
         mol.addAtom(new Atom("H")); // 5
 
-        mol.addBond(0, 1, 2); // 1
-        mol.addBond(2, 0, 1); // 3
-        mol.addBond(3, 0, 1); // 4
-        mol.addBond(4, 1, 1); // 5
-        mol.addBond(5, 1, 1); // 6
+        mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+        mol.addBond(2, 0, IBond.Order.SINGLE); // 3
+        mol.addBond(3, 0, IBond.Order.SINGLE); // 4
+        mol.addBond(4, 1, IBond.Order.SINGLE); // 5
+        mol.addBond(5, 1, IBond.Order.SINGLE); // 6
         
         Convertor convertor=new Convertor(false,"");
         CMLAtom cmlatom=convertor.cdkAtomToCMLAtom(mol,mol.getAtom(2));

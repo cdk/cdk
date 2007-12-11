@@ -101,10 +101,10 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[O+]=C-[C-]");
 		for(int i = 0; i < 4; i++)
 			molecule2.addAtom(new Atom("H"));
-		molecule2.addBond(0, 3, 1);
-	    molecule2.addBond(1, 4, 1);
-	    molecule2.addBond(2, 5, 1);
-	    molecule2.addBond(2, 6, 1);
+		molecule2.addBond(0, 3, IBond.Order.SINGLE);
+	    molecule2.addBond(1, 4, IBond.Order.SINGLE);
+	    molecule2.addBond(2, 5, IBond.Order.SINGLE);
+	    molecule2.addBond(2, 6, IBond.Order.SINGLE);
 	    
 	    lpcheck.newSaturate(molecule2);
 		setOfReactants.addMolecule(molecule2);

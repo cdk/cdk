@@ -62,6 +62,7 @@ import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  * TestCase for the reading CML 2 files using a few test files
@@ -272,7 +273,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         Atom atom2 = new Atom("O");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        Bond bond = new Bond(atom, atom2, 1.0);
+        Bond bond = new Bond(atom, atom2, IBond.Order.SINGLE);
         mol.addBond(bond);
         
         IMolecule roundTrippedMol = roundTripMolecule(mol);
@@ -283,7 +284,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(2, roundTrippedBond.getAtomCount());
         assertEquals("C", roundTrippedBond.getAtom(0).getSymbol()); // preserved direction?
         assertEquals("O", roundTrippedBond.getAtom(1).getSymbol());
-        assertEquals(bond.getOrder(), roundTrippedBond.getOrder(), 0.0001);
+        assertEquals(bond.getOrder(), roundTrippedBond.getOrder());
     }
     
     public void testBondID() throws Exception {
@@ -292,7 +293,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         Atom atom2 = new Atom("O");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        Bond bond = new Bond(atom, atom2, 1.0);
+        Bond bond = new Bond(atom, atom2, IBond.Order.SINGLE);
         bond.setID("b1");
         mol.addBond(bond);
         
@@ -307,7 +308,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         Atom atom2 = new Atom("O");
         mol.addAtom(atom);
         mol.addAtom(atom2);
-        Bond bond = new Bond(atom, atom2, 1.0);
+        Bond bond = new Bond(atom, atom2, IBond.Order.SINGLE);
         int stereo = CDKConstants.STEREO_BOND_DOWN;
         bond.setStereo(stereo);
         mol.addBond(bond);
@@ -544,11 +545,10 @@ public class CMLRoundTripTest extends CDKTestCase {
     	}
     	
         IMolecule roundTrippedMol = roundTripMolecule(molecule);
-        double orderSum = 0.0;
-        for (Iterator bonds=roundTrippedMol.bonds(); bonds.hasNext();) {
-        	IBond bond = (IBond)bonds.next();
-    		orderSum += bond.getOrder();
-    		assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
+        Iterator<IBond> bonds = roundTrippedMol.bonds();
+        double orderSum = BondManipulator.getSingleBondEquivalentSum(bonds);
+        while (bonds.hasNext()) {
+    		assertTrue(bonds.next().getFlag(CDKConstants.ISAROMATIC));
     	}
         assertEquals(9.0, orderSum, 0.001);
     }

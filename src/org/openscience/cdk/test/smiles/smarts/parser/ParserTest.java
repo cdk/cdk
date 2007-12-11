@@ -26,6 +26,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
@@ -113,7 +114,7 @@ public class ParserTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IBond bond = container.getBond(0);
         assertTrue(bond instanceof OrderQueryBond);
         OrderQueryBond qBond = (OrderQueryBond) bond;
-        assertEquals(1.0, qBond.getOrder(), 0.001);
+        assertEquals(IBond.Order.SINGLE, qBond.getOrder());
     }
 
     public void testDoubleBond() throws Exception {
@@ -123,7 +124,7 @@ public class ParserTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IBond bond = container.getBond(0);
         assertTrue(bond instanceof OrderQueryBond);
         OrderQueryBond qBond = (OrderQueryBond) bond;
-        assertEquals(2.0, qBond.getOrder(), 0.001);
+        assertEquals(IBond.Order.DOUBLE, qBond.getOrder());
     }
 
     public void testTripleBond() throws Exception {
@@ -133,7 +134,7 @@ public class ParserTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IBond bond = container.getBond(0);
         assertTrue(bond instanceof OrderQueryBond);
         OrderQueryBond qBond = (OrderQueryBond) bond;
-        assertEquals(3.0, qBond.getOrder(), 0.001);
+        assertEquals(IBond.Order.TRIPLE, qBond.getOrder());
     }
 
     public void testAromaticBond() throws Exception {

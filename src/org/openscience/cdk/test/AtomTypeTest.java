@@ -30,6 +30,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
@@ -87,8 +88,8 @@ public class AtomTypeTest extends CDKTestCase {
     
     public void testSetMaxBondOrder_Double() {
         IAtomType at = builder.newAtomType("C");
-        at.setMaxBondOrder(3.0);
-        assertEquals(3.0, at.getMaxBondOrder(), 0.001);
+        at.setMaxBondOrder(IBond.Order.TRIPLE);
+        assertEquals(IBond.Order.TRIPLE, at.getMaxBondOrder());
     }
 
     public void testGetMaxBondOrder() {
@@ -267,11 +268,11 @@ public class AtomTypeTest extends CDKTestCase {
      */
     public void testClone_MaxBondOrder() throws Exception {
         IAtomType at = builder.newAtomType("C");
-        at.setMaxBondOrder(1.0);
+        at.setMaxBondOrder(IBond.Order.SINGLE);
         IAtomType clone = (IAtomType)at.clone();
         
-        at.setMaxBondOrder(2.0);
-        assertEquals(1.0, clone.getMaxBondOrder(), 0.001);
+        at.setMaxBondOrder(IBond.Order.DOUBLE);
+        assertEquals(IBond.Order.SINGLE, clone.getMaxBondOrder());
     }
     
     /**

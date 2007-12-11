@@ -38,6 +38,7 @@ import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.DeAromatizationTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Tests the DeAromatizationTool.
@@ -60,9 +61,7 @@ public class DeAromatizationToolTest extends CDKTestCase {
 		while (bonds.hasNext()) ((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
 		boolean success = DeAromatizationTool.deAromatize(benzene);
 		assertTrue(success);
-		double bondOrderSum = 0.0;
-		bonds = benzene.bonds();
-		while (bonds.hasNext()) bondOrderSum += ((IBond)bonds.next()).getOrder();
+		double bondOrderSum = AtomContainerManipulator.getSingleBondEquivalentSum(benzene);
 		assertEquals(9.0, bondOrderSum, 0.00001);
 	}
 	
@@ -73,9 +72,7 @@ public class DeAromatizationToolTest extends CDKTestCase {
 		while (bonds.hasNext()) ((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
 		boolean success = DeAromatizationTool.deAromatize(pyridine);
 		assertTrue(success);
-		double bondOrderSum = 0.0;
-		bonds = pyridine.bonds();
-		while (bonds.hasNext()) bondOrderSum += ((IBond)bonds.next()).getOrder();
+		double bondOrderSum = AtomContainerManipulator.getSingleBondEquivalentSum(pyridine);
 		assertEquals(9.0, bondOrderSum, 0.00001);
 	}
 	

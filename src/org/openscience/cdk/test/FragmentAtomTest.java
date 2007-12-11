@@ -28,6 +28,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.FragmentAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -88,7 +89,7 @@ public class FragmentAtomTest extends CDKTestCase {
     	IAtomContainer container = new AtomContainer();
     	container.addAtom(new Atom("N"));
     	container.addAtom(new Atom("C"));
-    	container.addBond(0, 1, 3);
+    	container.addBond(0, 1, IBond.Order.TRIPLE);
     	a.setFragment(container);
     	assertEquals(container, a.getFragment());
     }

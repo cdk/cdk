@@ -101,8 +101,8 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 		IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]-[O-]");
 		molecule2.addAtom(new Atom("H"));
 	    molecule2.addAtom(new Atom("H"));
-	    molecule2.addBond(0, 2, 1);
-	    molecule2.addBond(0, 3, 1);
+	    molecule2.addBond(0, 2, IBond.Order.SINGLE);
+	    molecule2.addBond(0, 3, IBond.Order.SINGLE);
         
 		lpcheck.newSaturate(molecule2);
 		setOfReactants.addMolecule(molecule2);
@@ -201,11 +201,11 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 		IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[N-]-[C+]C");
 		for(int i = 0; i < 5; i++)
 			molecule2.addAtom(new Atom("H"));
-	    molecule2.addBond(0, 3, 1);
-	    molecule2.addBond(1, 4, 1);
-	    molecule2.addBond(2, 5, 1);
-	    molecule2.addBond(2, 6, 1);
-	    molecule2.addBond(2, 7, 1);
+	    molecule2.addBond(0, 3, IBond.Order.SINGLE);
+	    molecule2.addBond(1, 4, IBond.Order.SINGLE);
+	    molecule2.addBond(2, 5, IBond.Order.SINGLE);
+	    molecule2.addBond(2, 6, IBond.Order.SINGLE);
+	    molecule2.addBond(2, 7, IBond.Order.SINGLE);
         
 		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));

@@ -64,7 +64,7 @@ public class BondTest extends CDKTestCase {
         assertEquals(2, bond.getAtomCount());
         assertTrue(bond.getAtom(0) == null);
         assertTrue(bond.getAtom(1) == null);
-        assertTrue(bond.getOrder() == 0.0);
+        assertNull(bond.getOrder());
         assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
     }
     
@@ -76,31 +76,31 @@ public class BondTest extends CDKTestCase {
         assertEquals(2, bond.getAtomCount());
         assertEquals(c, bond.getAtom(0));
         assertEquals(o, bond.getAtom(1));
-        assertEquals(1.0, bond.getOrder(), 0.0001);
+        assertEquals(IBond.Order.SINGLE, bond.getOrder());
         assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
     }
     
     public void testBond_IAtom_IAtom_double() {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
-        IBond bond = builder.newBond(c, o, 2.0);
+        IBond bond = builder.newBond(c, o, IBond.Order.DOUBLE);
         
         assertEquals(2, bond.getAtomCount());
         assertEquals(c, bond.getAtom(0));
         assertEquals(o, bond.getAtom(1));
-        assertTrue(bond.getOrder() == 2.0);
+        assertTrue(bond.getOrder() == IBond.Order.DOUBLE);
         assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
     }
     
     public void testBond_IAtom_IAtom_double_int() {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
-        IBond bond = builder.newBond(c, o, 1.0, CDKConstants.STEREO_BOND_UP);
+        IBond bond = builder.newBond(c, o, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_UP);
         
         assertEquals(2, bond.getAtomCount());
         assertEquals(c, bond.getAtom(0));
         assertEquals(o, bond.getAtom(1));
-        assertTrue(bond.getOrder() == 1.0);
+        assertTrue(bond.getOrder() == IBond.Order.SINGLE);
         assertEquals(CDKConstants.STEREO_BOND_UP, bond.getStereo());
     }
     
@@ -108,8 +108,8 @@ public class BondTest extends CDKTestCase {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
         
-        IBond b = builder.newBond(c, o, 2.0); // C=O bond
-        IBond b2 = builder.newBond(c, o, 2.0); // same C=O bond
+        IBond b = builder.newBond(c, o, IBond.Order.DOUBLE); // C=O bond
+        IBond b2 = builder.newBond(c, o, IBond.Order.DOUBLE); // same C=O bond
         
         assertTrue(b.compare(b2));
     }
@@ -118,7 +118,7 @@ public class BondTest extends CDKTestCase {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
         
-        IBond b = builder.newBond(c, o, 2.0); // C=O bond
+        IBond b = builder.newBond(c, o, IBond.Order.DOUBLE); // C=O bond
         
         assertTrue(b.contains(c));
         assertTrue(b.contains(o));
@@ -128,7 +128,7 @@ public class BondTest extends CDKTestCase {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
         
-        IBond b = builder.newBond(c, o, 2.0); // C=O bond
+        IBond b = builder.newBond(c, o, IBond.Order.DOUBLE); // C=O bond
         
         assertEquals(2.0, b.getAtomCount(), 0.001);
     }
@@ -150,7 +150,7 @@ public class BondTest extends CDKTestCase {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
         
-        IBond b = builder.newBond(c, o, 2.0); // C=O bond
+        IBond b = builder.newBond(c, o, IBond.Order.DOUBLE); // C=O bond
         
         java.util.Iterator atoms = b.atoms();
         assertEquals(2, b.getAtomCount());
@@ -165,7 +165,7 @@ public class BondTest extends CDKTestCase {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
         
-        IBond b = builder.newBond(c, o, 2.0); // C=O bond
+        IBond b = builder.newBond(c, o, IBond.Order.DOUBLE); // C=O bond
         
         assertEquals(c, b.getAtom(0));
         assertEquals(o, b.getAtom(1));
@@ -187,7 +187,7 @@ public class BondTest extends CDKTestCase {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
         
-        IBond b = builder.newBond(c, o, 2.0); // C=O bond
+        IBond b = builder.newBond(c, o, IBond.Order.DOUBLE); // C=O bond
         
         assertEquals(c, b.getConnectedAtom(o));
         assertEquals(o, b.getConnectedAtom(c));
@@ -215,24 +215,24 @@ public class BondTest extends CDKTestCase {
     }
     
     public void testGetOrder() {
-        IBond b = builder.newBond(builder.newAtom("C"), builder.newAtom("O"), 2.0); // C=O bond
+        IBond b = builder.newBond(builder.newAtom("C"), builder.newAtom("O"), IBond.Order.DOUBLE); // C=O bond
         
-        assertEquals(2.0, b.getOrder(), 0.001);
+        assertEquals(IBond.Order.DOUBLE, b.getOrder());
     }
     public void testSetOrder_double() {
-        IBond b = builder.newBond(builder.newAtom("C"), builder.newAtom("O"), 2.0); // C=O bond
+        IBond b = builder.newBond(builder.newAtom("C"), builder.newAtom("O"), IBond.Order.DOUBLE); // C=O bond
         
-        assertEquals(2.0, b.getOrder(), 0.001);
+        assertEquals(IBond.Order.DOUBLE, b.getOrder());
         
-        b.setOrder(1.0);
-        assertEquals(1.0, b.getOrder(), 0.001);
+        b.setOrder(IBond.Order.SINGLE);
+        assertEquals(IBond.Order.SINGLE, b.getOrder());
     }
     
     public void testSetStereo_int() {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
         
-        IBond b = builder.newBond(c, o, 2.0, CDKConstants.STEREO_BOND_DOWN);
+        IBond b = builder.newBond(c, o, IBond.Order.DOUBLE, CDKConstants.STEREO_BOND_DOWN);
         
         b.setStereo(CDKConstants.STEREO_BOND_UP);
         assertEquals(CDKConstants.STEREO_BOND_UP, b.getStereo());
@@ -241,7 +241,7 @@ public class BondTest extends CDKTestCase {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
         
-        IBond b = builder.newBond(c, o, 2.0, CDKConstants.STEREO_BOND_UP);
+        IBond b = builder.newBond(c, o, IBond.Order.DOUBLE, CDKConstants.STEREO_BOND_UP);
         assertEquals(CDKConstants.STEREO_BOND_UP, b.getStereo());
     }
     
@@ -285,18 +285,18 @@ public class BondTest extends CDKTestCase {
     public void testClone_Order() throws Exception {
         IAtom atom1 = builder.newAtom("C");
         IAtom atom2 = builder.newAtom("O");
-        IBond bond = builder.newBond(atom1, atom2, 1.0);
+        IBond bond = builder.newBond(atom1, atom2, IBond.Order.SINGLE);
         IBond clone = (IBond)bond.clone();
         
         // test cloning of bond order
-        bond.setOrder(2.0);
-        assertEquals(1.0, clone.getOrder(), 0.01);
+        bond.setOrder(IBond.Order.DOUBLE);
+        assertEquals(IBond.Order.SINGLE, clone.getOrder());
     }
 
     public void testClone_Stereo() throws Exception {
         IAtom atom1 = builder.newAtom("C");
         IAtom atom2 = builder.newAtom("O");
-        IBond bond = builder.newBond(atom1, atom2, 1.0, 1);
+        IBond bond = builder.newBond(atom1, atom2, IBond.Order.SINGLE, 1);
         IBond clone = (IBond)bond.clone();
         
         // test cloning of bond order

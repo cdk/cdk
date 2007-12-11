@@ -38,6 +38,7 @@ import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
 import org.openscience.cdk.fingerprint.IFingerprinter;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -361,12 +362,12 @@ public class FingerprinterTest extends CDKTestCase
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("C")); // 6
 				
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(0, 2, 1); // 2
-		mol.addBond(0, 3, 1); // 3
-		mol.addBond(0, 4, 1); // 4
-		mol.addBond(3, 5, 1); // 5
-		mol.addBond(5, 6, 2); // 6
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(0, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(0, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(0, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(3, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 6, IBond.Order.DOUBLE); // 6
 		return mol;
 	}
 
@@ -377,7 +378,7 @@ public class FingerprinterTest extends CDKTestCase
 		mol.addAtom(new Atom("C")); // 0
 		mol.addAtom(new Atom("C")); // 1
 				
-		mol.addBond(0, 1, 1); // 1
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		return mol;
 	}
 
@@ -392,13 +393,13 @@ public class FingerprinterTest extends CDKTestCase
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("C")); // 6
 				
-		mol.addBond(0, 1, 2); // 1
-		mol.addBond(0, 2, 1); // 2
-		mol.addBond(0, 3, 1); // 3
-		mol.addBond(0, 4, 1); // 4
-		mol.addBond(3, 5, 1); // 5
-		mol.addBond(5, 6, 2); // 6
-		mol.addBond(5, 6, 2); // 7
+		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+		mol.addBond(0, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(0, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(0, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(3, 5, IBond.Order.SINGLE); // 5
+		mol.addBond(5, 6, IBond.Order.DOUBLE); // 6
+		mol.addBond(5, 6, IBond.Order.DOUBLE); // 7
 		return mol;
 	}
 	
@@ -413,12 +414,12 @@ public class FingerprinterTest extends CDKTestCase
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("C")); // 6
 				
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(0, 2, 1); // 2
-		mol.addBond(0, 3, 1); // 3
-		mol.addBond(0, 4, 1); // 4
-		mol.addBond(3, 5, 2); // 5
-		mol.addBond(5, 6, 1); // 6
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(0, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(0, 3, IBond.Order.SINGLE); // 3
+		mol.addBond(0, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(3, 5, IBond.Order.DOUBLE); // 5
+		mol.addBond(5, 6, IBond.Order.SINGLE); // 6
 		return mol;
 	}
 

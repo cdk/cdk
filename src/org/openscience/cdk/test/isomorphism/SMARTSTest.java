@@ -32,6 +32,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -69,7 +70,7 @@ public class SMARTSTest extends CDKTestCase {
         atom2.setSymbol("C");
         query.addAtom(atom1);
         query.addAtom(atom2);
-        query.addBond(new OrderQueryBond(atom1, atom2, 2));
+        query.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.DOUBLE));
         
         assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
@@ -83,7 +84,7 @@ public class SMARTSTest extends CDKTestCase {
         atom2.setSymbol("C");
         query.addAtom(atom1);
         query.addAtom(atom2);
-        query.addBond(new OrderQueryBond(atom1, atom2, 2));
+        query.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.DOUBLE));
         
         assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
@@ -96,7 +97,7 @@ public class SMARTSTest extends CDKTestCase {
         carbon2.setHydrogenCount(3);
         container.addAtom(carbon);
         container.addAtom(carbon2);
-        container.addBond(carbon.getBuilder().newBond(carbon, carbon2, 1));
+        container.addBond(carbon.getBuilder().newBond(carbon, carbon2, IBond.Order.SINGLE));
         return container;
     }
     
@@ -108,7 +109,7 @@ public class SMARTSTest extends CDKTestCase {
         SMARTSAtom atom2 = new ImplicitHCountAtom(3);
         query1.addAtom(atom1);
         query1.addAtom(atom2);
-        query1.addBond(new OrderQueryBond(atom1, atom2, 1));
+        query1.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.SINGLE));
         assertTrue(UniversalIsomorphismTester.isSubgraph(container, query1));
     }
 
@@ -120,7 +121,7 @@ public class SMARTSTest extends CDKTestCase {
         SMARTSAtom atom2 = new ImplicitHCountAtom(2);
         query1.addAtom(atom1);
         query1.addAtom(atom2);
-        query1.addBond(new OrderQueryBond(atom1, atom2, 1));
+        query1.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.SINGLE));
         assertFalse(UniversalIsomorphismTester.isSubgraph(container, query1));
     }
 

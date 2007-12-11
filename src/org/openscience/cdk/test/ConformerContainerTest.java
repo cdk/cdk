@@ -43,7 +43,7 @@ public class ConformerContainerTest {
         for (int i = 0; i < natom - 1; i++) {
             IAtom atom1 = container.getAtom(i);
             IAtom atom2 = container.getAtom(i + 1);
-            IBond bond = DefaultChemObjectBuilder.getInstance().newBond(atom1, atom2, 1.0);
+            IBond bond = DefaultChemObjectBuilder.getInstance().newBond(atom1, atom2, IBond.Order.SINGLE);
             container.addBond(bond);
         }
         return container;

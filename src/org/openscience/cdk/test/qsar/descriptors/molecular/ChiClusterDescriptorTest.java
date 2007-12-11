@@ -42,13 +42,13 @@ public class ChiClusterDescriptorTest extends CDKTestCase {
         IAtom a4 = mol.getBuilder().newAtom("O");
         a4.setPoint2d(new Point2d(-1.2990381056766582, 0.7500000000000001));
         mol.addAtom(a4);
-        IBond b1 = mol.getBuilder().newBond(a2, a1, 1.0);
+        IBond b1 = mol.getBuilder().newBond(a2, a1, IBond.Order.SINGLE);
         mol.addBond(b1);
-        IBond b2 = mol.getBuilder().newBond(a3, a2, 1.0);
+        IBond b2 = mol.getBuilder().newBond(a3, a2, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = mol.getBuilder().newBond(a4, a3, 1.0);
+        IBond b3 = mol.getBuilder().newBond(a4, a3, IBond.Order.SINGLE);
         mol.addBond(b3);
-        IBond b4 = mol.getBuilder().newBond(a4, a2, 1.0);
+        IBond b4 = mol.getBuilder().newBond(a4, a2, IBond.Order.SINGLE);
         mol.addBond(b4);
 
 
@@ -92,21 +92,21 @@ public class ChiClusterDescriptorTest extends CDKTestCase {
         IAtom a8 = mol.getBuilder().newAtom("Cl");
         a8.setPoint2d(new Point2d(1.2990381056766576, -0.7500000000000007));
         mol.addAtom(a8);
-        IBond b1 = mol.getBuilder().newBond(a2, a1, 2.0);
+        IBond b1 = mol.getBuilder().newBond(a2, a1, IBond.Order.DOUBLE);
         mol.addBond(b1);
-        IBond b2 = mol.getBuilder().newBond(a3, a2, 1.0);
+        IBond b2 = mol.getBuilder().newBond(a3, a2, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = mol.getBuilder().newBond(a4, a3, 2.0);
+        IBond b3 = mol.getBuilder().newBond(a4, a3, IBond.Order.DOUBLE);
         mol.addBond(b3);
-        IBond b4 = mol.getBuilder().newBond(a5, a4, 1.0);
+        IBond b4 = mol.getBuilder().newBond(a5, a4, IBond.Order.SINGLE);
         mol.addBond(b4);
-        IBond b5 = mol.getBuilder().newBond(a6, a5, 2.0);
+        IBond b5 = mol.getBuilder().newBond(a6, a5, IBond.Order.DOUBLE);
         mol.addBond(b5);
-        IBond b6 = mol.getBuilder().newBond(a6, a1, 1.0);
+        IBond b6 = mol.getBuilder().newBond(a6, a1, IBond.Order.SINGLE);
         mol.addBond(b6);
-        IBond b7 = mol.getBuilder().newBond(a7, a6, 1.0);
+        IBond b7 = mol.getBuilder().newBond(a7, a6, IBond.Order.SINGLE);
         mol.addBond(b7);
-        IBond b8 = mol.getBuilder().newBond(a8, a2, 1.0);
+        IBond b8 = mol.getBuilder().newBond(a8, a2, IBond.Order.SINGLE);
         mol.addBond(b8);
 
 
@@ -156,25 +156,25 @@ public class ChiClusterDescriptorTest extends CDKTestCase {
         IAtom a10 = mol.getBuilder().newAtom("C");
         a10.setPoint2d(new Point2d(0.5130302149885025, 2.909538931178863));
         mol.addAtom(a10);
-        IBond b1 = mol.getBuilder().newBond(a2, a1, 1.0);
+        IBond b1 = mol.getBuilder().newBond(a2, a1, IBond.Order.SINGLE);
         mol.addBond(b1);
-        IBond b2 = mol.getBuilder().newBond(a3, a2, 1.0);
+        IBond b2 = mol.getBuilder().newBond(a3, a2, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = mol.getBuilder().newBond(a4, a3, 1.0);
+        IBond b3 = mol.getBuilder().newBond(a4, a3, IBond.Order.SINGLE);
         mol.addBond(b3);
-        IBond b4 = mol.getBuilder().newBond(a5, a4, 2.0);
+        IBond b4 = mol.getBuilder().newBond(a5, a4, IBond.Order.DOUBLE);
         mol.addBond(b4);
-        IBond b5 = mol.getBuilder().newBond(a6, a5, 1.0);
+        IBond b5 = mol.getBuilder().newBond(a6, a5, IBond.Order.SINGLE);
         mol.addBond(b5);
-        IBond b6 = mol.getBuilder().newBond(a6, a1, 1.0);
+        IBond b6 = mol.getBuilder().newBond(a6, a1, IBond.Order.SINGLE);
         mol.addBond(b6);
-        IBond b7 = mol.getBuilder().newBond(a7, a5, 1.0);
+        IBond b7 = mol.getBuilder().newBond(a7, a5, IBond.Order.SINGLE);
         mol.addBond(b7);
-        IBond b8 = mol.getBuilder().newBond(a8, a3, 2.0);
+        IBond b8 = mol.getBuilder().newBond(a8, a3, IBond.Order.DOUBLE);
         mol.addBond(b8);
-        IBond b9 = mol.getBuilder().newBond(a9, a1, 1.0);
+        IBond b9 = mol.getBuilder().newBond(a9, a1, IBond.Order.SINGLE);
         mol.addBond(b9);
-        IBond b10 = mol.getBuilder().newBond(a10, a1, 1.0);
+        IBond b10 = mol.getBuilder().newBond(a10, a1, IBond.Order.SINGLE);
         mol.addBond(b10);
 
         ChiClusterDescriptor desc = new ChiClusterDescriptor();

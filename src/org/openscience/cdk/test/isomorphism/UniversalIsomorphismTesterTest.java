@@ -46,6 +46,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -108,20 +109,20 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         atomContainer.addAtom(builder.newAtom("C"));
         atomContainer.addAtom(builder.newAtom("C"));
         atomContainer.addAtom(builder.newAtom("N"));
-        atomContainer.addBond(0,1,1.0);
-        atomContainer.addBond(1,2,1.0);
+        atomContainer.addBond(0, 1, IBond.Order.SINGLE);
+        atomContainer.addBond(1, 2, IBond.Order.SINGLE);
         IQueryAtomContainer query = new QueryAtomContainer();
         IQueryAtom a1 = new SymbolQueryAtom();
         a1.setSymbol("C");
         
         AnyAtom a2 = new AnyAtom();
         
-        Bond b1 = new OrderQueryBond(a1, a2, 1.0);
+        Bond b1 = new OrderQueryBond(a1, a2, IBond.Order.SINGLE);
         
         IQueryAtom a3 = new SymbolQueryAtom();
         a3.setSymbol("C");
         
-        Bond b2 = new OrderQueryBond(a2, a3, 1.0);
+        Bond b2 = new OrderQueryBond(a2, a3, IBond.Order.SINGLE);
         query.addAtom(a1);
         query.addAtom(a2);
         query.addAtom(a3);
@@ -249,6 +250,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     }
     
     /**
+<<<<<<< .working
+=======
      * @cdk.bug 1208740
      */
     public void testSFBug1208740() throws CDKException {
@@ -289,6 +292,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     }
     
     /**
+>>>>>>> .merge-right.r9583
      * @cdk.bug 999330
      */
     public void testSFBug999330() throws CDKException {

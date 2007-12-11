@@ -78,7 +78,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
         IBond ring1Bond3 = builder.newBond(ring1Atom3, ring1Atom1);
         bondRing2Ring3 = builder.newBond(ring2Atom1, ring2Atom2);
         IBond ring2Bond2 = builder.newBond(ring2Atom2, ring2Atom3);
-        IBond ring2Bond3 = builder.newBond(ring2Atom3, ring2Atom1, 2.0);
+        IBond ring2Bond3 = builder.newBond(ring2Atom3, ring2Atom1, IBond.Order.DOUBLE);
         IBond ring3Bond2 = builder.newBond(ring2Atom2, ring3Atom3);
         IBond bondRing3Ring4 = builder.newBond(ring3Atom3, ring3Atom4);
         IBond ring3Bond4 = builder.newBond(ring3Atom4, ring2Atom1);
@@ -172,7 +172,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
     	IAtomContainer ac2 = builder.newRing();
     	ac2.addAtom(builder.newAtom("C"));
     	ac2.addAtom(builder.newAtom("C"));
-    	ac2.addBond(0, 1, 2);
+    	ac2.addBond(0, 1, IBond.Order.DOUBLE);
     	rs.addAtomContainer(ac2);
     	assertEquals(3, RingSetManipulator.getAtomCount(rs));
     	assertEquals(1, RingSetManipulator.getBondCount(rs));

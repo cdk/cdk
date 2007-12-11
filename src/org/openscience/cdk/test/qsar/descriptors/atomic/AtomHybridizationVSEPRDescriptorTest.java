@@ -33,6 +33,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
@@ -72,8 +73,8 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addAtom(O1);
         molecule.addAtom(c2);
         molecule.addAtom(c3);
-        Bond b1 = new Bond(c2, O1, 2);
-        Bond b2 = new Bond(c2, c3, 1);
+        Bond b1 = new Bond(c2, O1, IBond.Order.DOUBLE);
+        Bond b2 = new Bond(c2, c3, IBond.Order.SINGLE);
         molecule.addBond(b1);
         molecule.addBond(b2);
 
@@ -101,8 +102,8 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addAtom(O1);
         molecule.addAtom(c2);
         molecule.addAtom(c3);
-        Bond b1 = new Bond(c2, O1, 3);
-        Bond b2 = new Bond(c2, c3, 1);
+        Bond b1 = new Bond(c2, O1, IBond.Order.TRIPLE);
+        Bond b2 = new Bond(c2, c3, IBond.Order.SINGLE);
         molecule.addBond(b1);
         molecule.addBond(b2);
 
@@ -132,8 +133,8 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addAtom(c1);
         molecule.addAtom(c2);
         molecule.addAtom(c3);
-        Bond b1 = new Bond(c1, c2, 1);
-        Bond b2 = new Bond(c2, c3, 1);
+        Bond b1 = new Bond(c1, c2, IBond.Order.SINGLE);
+        Bond b2 = new Bond(c2, c3, IBond.Order.SINGLE);
         molecule.addBond(b1);
         molecule.addBond(b2);
 
@@ -161,9 +162,9 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addAtom(O2);
         molecule.addAtom(O3);
         molecule.addAtom(O4);
-        Bond b1 = new Bond(S1, O2, 2);
-        Bond b2 = new Bond(S1, O3, 2);
-        Bond b3 = new Bond(S1, O4, 2);
+        Bond b1 = new Bond(S1, O2, IBond.Order.DOUBLE);
+        Bond b2 = new Bond(S1, O3, IBond.Order.DOUBLE);
+        Bond b3 = new Bond(S1, O4, IBond.Order.DOUBLE);
         molecule.addBond(b1);
         molecule.addBond(b2);
         molecule.addBond(b3);
@@ -191,10 +192,10 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addAtom(F3);
         molecule.addAtom(F4);
         molecule.addAtom(F5);
-        Bond b1 = new Bond(Xe1, F2, 1);
-        Bond b2 = new Bond(Xe1, F3, 1);
-        Bond b3 = new Bond(Xe1, F4, 1);
-        Bond b4 = new Bond(Xe1, F5, 1);
+        Bond b1 = new Bond(Xe1, F2, IBond.Order.SINGLE);
+        Bond b2 = new Bond(Xe1, F3, IBond.Order.SINGLE);
+        Bond b3 = new Bond(Xe1, F4, IBond.Order.SINGLE);
+        Bond b4 = new Bond(Xe1, F5, IBond.Order.SINGLE);
         molecule.addBond(b1);
         molecule.addBond(b2);
         molecule.addBond(b3);
@@ -220,8 +221,8 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
         molecule.addAtom(I1);
         molecule.addAtom(F2);
         molecule.addAtom(F3);
-        Bond b1 = new Bond(I1, F2, 1);
-        Bond b2 = new Bond(I1, F3, 1);
+        Bond b1 = new Bond(I1, F2, IBond.Order.SINGLE);
+        Bond b2 = new Bond(I1, F3, IBond.Order.SINGLE);
         molecule.addBond(b1);
         molecule.addBond(b2);
 

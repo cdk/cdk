@@ -303,8 +303,8 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         IAtom o1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
         IAtom o2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, o1, 2.0);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, o2, 2.0);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, o1, IBond.Order.DOUBLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, o2, IBond.Order.DOUBLE);
 
         mol.addAtom(s);
         mol.addAtom(o1);
@@ -324,8 +324,8 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
         IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, h1, 1.0);
-        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, h2, 1.0);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, h1, IBond.Order.SINGLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, h2, IBond.Order.SINGLE);
 
         mol.addAtom(s);
         mol.addAtom(h1);
@@ -345,7 +345,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         s.setFormalCharge(-1);
         IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
 
-        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, h1, 1.0);
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, h1, IBond.Order.SINGLE);
 
         mol.addAtom(s);
         mol.addAtom(h1);

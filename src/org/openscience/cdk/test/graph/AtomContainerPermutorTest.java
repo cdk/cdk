@@ -30,6 +30,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -60,11 +61,11 @@ public class AtomContainerPermutorTest extends CDKTestCase
 		ac.addAtom(new Atom("O"));
 		ac.addAtom(new Atom("S"));
 		ac.addAtom(new Atom("Br"));
-		ac.addBond(0, 1, 1.0);
-		ac.addBond(1, 2, 1.0);
-		ac.addBond(2, 3, 1.0);
-		ac.addBond(3, 4, 1.0);
-		ac.addBond(4, 5, 1.0);
+		ac.addBond(0, 1, IBond.Order.SINGLE);
+		ac.addBond(1, 2, IBond.Order.SINGLE);
+		ac.addBond(2, 3, IBond.Order.SINGLE);
+		ac.addBond(3, 4, IBond.Order.SINGLE);
+		ac.addBond(4, 5, IBond.Order.SINGLE);
 		AtomContainerAtomPermutor acap = new
 		AtomContainerAtomPermutor(ac);
 		int counter = 0;
@@ -92,11 +93,11 @@ public class AtomContainerPermutorTest extends CDKTestCase
 		ac.addAtom(new Atom("O"));
 		ac.addAtom(new Atom("S"));
 		ac.addAtom(new Atom("Br"));
-		ac.addBond(0, 1, 1.0);
-		ac.addBond(1, 2, 2.0);
-		ac.addBond(2, 3, 3.0);
-		ac.addBond(3, 4, 4.0);
-		ac.addBond(4, 5, 5.0);
+		ac.addBond(0, 1, IBond.Order.SINGLE);
+		ac.addBond(1, 2, IBond.Order.DOUBLE);
+		ac.addBond(2, 3, IBond.Order.TRIPLE);
+		ac.addBond(3, 4, IBond.Order.QUADRUPLE);
+		ac.addBond(4, 5, IBond.Order.SINGLE); // was 5.0 !
 		AtomContainerBondPermutor acap = new
 		AtomContainerBondPermutor(ac);
 		int counter = 0;

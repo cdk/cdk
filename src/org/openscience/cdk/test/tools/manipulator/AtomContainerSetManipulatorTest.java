@@ -102,7 +102,7 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
     	IAtomContainer mol = new AtomContainer();
     	mol.addAtom(new Atom("O"));
     	mol.addAtom(new Atom("O"));
-    	mol.addBond(0, 1, 2.0);
+    	mol.addBond(0, 1, IBond.Order.DOUBLE);
     	IBond bond = mol.getBond(0);
     	ms.addAtomContainer(mol);
     	IBond otherBond = new Bond(new Atom(), new Atom());
@@ -118,7 +118,7 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
     	IAtomContainer mol = new AtomContainer();
     	mol.addAtom(new Atom("O"));
     	mol.addAtom(new Atom("O"));
-    	mol.addBond(0, 1, 2.0);
+    	mol.addBond(0, 1, IBond.Order.DOUBLE);
     	IAtom atom = mol.getAtom(0);
     	ms.addAtomContainer(mol);
     	IAtom otherAtom = new Atom("O");

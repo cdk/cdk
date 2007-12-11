@@ -37,6 +37,7 @@ import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -111,10 +112,10 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
         IMolecule molecule1 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C[C+](O)C=O");
         for(int i = 0; i < 4; i++)
 			molecule1.addAtom(new Atom("H"));
-		molecule1.addBond(0, 5, 1);
-	    molecule1.addBond(0, 6, 1);
-	    molecule1.addBond(0, 7, 1);
-	    molecule1.addBond(3, 8, 1);
+		molecule1.addBond(0, 5, IBond.Order.SINGLE);
+	    molecule1.addBond(0, 6, IBond.Order.SINGLE);
+	    molecule1.addBond(0, 7, IBond.Order.SINGLE);
+	    molecule1.addBond(3, 8, IBond.Order.SINGLE);
         lpcheck.newSaturate(molecule1);
         IAtom atom1 =  molecule1.getAtom(2);
         molecule1.addSingleElectron(new SingleElectron(atom1));
@@ -125,10 +126,10 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 //		Molecule molecule2 = (new SmilesParser()).parseSmiles("CC(O)=CO");
 //		for(int i = 0; i < 4; i++)
 //			molecule2.addAtom(new Atom("H"));
-//		molecule2.addBond(0, 5, 1);
-//	    molecule2.addBond(0, 6, 1);
-//	    molecule2.addBond(0, 7, 1);
-//	    molecule2.addBond(3, 8, 1);
+//		molecule2.addBond(0, 5, IBond.Order.SINGLE);
+//	    molecule2.addBond(0, 6, IBond.Order.SINGLE);
+//	    molecule2.addBond(0, 7, IBond.Order.SINGLE);
+//	    molecule2.addBond(3, 8, IBond.Order.SINGLE);
 //        lpcheck.newSaturate(molecule2);
 //		IAtom atom2a =  molecule2.getAtom(2);
 //		molecule2.addElectronContainer(new SingleElectron(atom2a));

@@ -102,8 +102,8 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		IMolecule molecule2 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]-[O-]");
 	    molecule2.addAtom(new Atom("H"));
 	    molecule2.addAtom(new Atom("H"));
-	    molecule2.addBond(0, 2, 1);
-	    molecule2.addBond(0, 3, 1);
+	    molecule2.addBond(0, 2, IBond.Order.SINGLE);
+	    molecule2.addBond(0, 3, IBond.Order.SINGLE);
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 		
@@ -112,7 +112,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		molecule2 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
 		molecule2.getAtom(0).setFormalCharge(+1);
 		molecule2.addAtom(new Atom("H"));
-	    molecule2.addBond(0, 2, 1);
+	    molecule2.addBond(0, 2, IBond.Order.SINGLE);
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 		
@@ -121,7 +121,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		molecule2 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
 		molecule2.getAtom(0).setFormalCharge(-1);
 		molecule2.addAtom(new Atom("H"));
-	    molecule2.addBond(0, 2, 1);
+	    molecule2.addBond(0, 2, IBond.Order.SINGLE);
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 		
@@ -162,8 +162,8 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		IMolecule molecule2 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]-[O-]");
 	    molecule2.addAtom(new Atom("H"));
 	    molecule2.addAtom(new Atom("H"));
-	    molecule2.addBond(0, 2, 1);
-	    molecule2.addBond(0, 3, 1);
+	    molecule2.addBond(0, 2, IBond.Order.SINGLE);
+	    molecule2.addBond(0, 3, IBond.Order.SINGLE);
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
 		
@@ -236,14 +236,14 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		IMolecule molecule2 = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]C");
 		molecule2.addAtom(new Atom("H"));
 	    molecule2.addAtom(new Atom("H"));
-	    molecule2.addBond(0, 2, 1);
-	    molecule2.addBond(0, 3, 1);
+	    molecule2.addBond(0, 2, IBond.Order.SINGLE);
+	    molecule2.addBond(0, 3, IBond.Order.SINGLE);
 	    molecule2.addAtom(new Atom("H"));
 	    molecule2.addAtom(new Atom("H"));
 	    molecule2.addAtom(new Atom("H"));
-	    molecule2.addBond(1, 4, 1);
-	    molecule2.addBond(1, 5, 1);
-	    molecule2.addBond(1, 6, 1);
+	    molecule2.addBond(1, 4, IBond.Order.SINGLE);
+	    molecule2.addBond(1, 5, IBond.Order.SINGLE);
+	    molecule2.addBond(1, 6, IBond.Order.SINGLE);
 		
 		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));

@@ -32,6 +32,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
@@ -102,7 +103,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		}
 		m.addBond(new Bond(c, h1));
 		m.addBond(new Bond(c, h2));
-		m.addBond(new Bond(c, O,2));
+		m.addBond(new Bond(c, O, IBond.Order.DOUBLE));
 		
 		assertTrue(lpcheck.allSaturated(m));
 	}
@@ -117,7 +118,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		Atom s = new Atom("S");
 		s.setHydrogenCount(1);
 		
-		Bond b1 = new Bond(c, s, 1);
+		Bond b1 = new Bond(c, s, IBond.Order.SINGLE);
 		
 		Molecule m = new Molecule();
 		m.addAtom(c);
@@ -138,7 +139,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		Atom c1 = new Atom("C");
 		c1.setHydrogenCount(3);
 		Atom cl = new Atom("Cl");
-		Bond b1 = new Bond(c1, cl, 1);
+		Bond b1 = new Bond(c1, cl, IBond.Order.SINGLE);
 		
 		Molecule m = new Molecule();
 		m.addAtom(c1);
@@ -158,7 +159,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		c1.setHydrogenCount(3);
 		Atom o = new Atom("O");
 		o.setHydrogenCount(1);
-		Bond b1 = new Bond(c1, o, 1);
+		Bond b1 = new Bond(c1, o, IBond.Order.SINGLE);
 		
 		Molecule m = new Molecule();
 		m.addAtom(c1);
@@ -180,11 +181,11 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		for(int i = 0 ; i < 4 ; i++)
 			m.addAtom(new Atom("H"));
 		
-		m.addBond(0,1,1);
-		m.addBond(0,2,1);
-		m.addBond(0,3,1);
-		m.addBond(0,4,1);
-		m.addBond(1,5,1);
+		m.addBond(0, 1, IBond.Order.SINGLE);
+		m.addBond(0, 2, IBond.Order.SINGLE);
+		m.addBond(0, 3, IBond.Order.SINGLE);
+		m.addBond(0, 4, IBond.Order.SINGLE);
+		m.addBond(1, 5, IBond.Order.SINGLE);
 		lpcheck.newSaturate(m);
 		
 		assertEquals(2, m.getConnectedLonePairsCount(m.getAtom(1)));
@@ -200,7 +201,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		Atom o = new Atom("O");
         o.setFormalCharge(+1);
 		o.setHydrogenCount(2);
-		Bond b1 = new Bond(c1, o, 1);
+		Bond b1 = new Bond(c1, o, IBond.Order.SINGLE);
 		
 		Molecule m = new Molecule();
 		m.addAtom(c1);
@@ -220,7 +221,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		c1.setHydrogenCount(3);
 		Atom o = new Atom("O");
         o.setFormalCharge(-1);
-		Bond b1 = new Bond(c1, o, 1);
+		Bond b1 = new Bond(c1, o, IBond.Order.SINGLE);
 		
 		Molecule m = new Molecule();
 		m.addAtom(c1);
@@ -256,7 +257,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		Atom n = new Atom("N");
 		n.setHydrogenCount(3);
         n.setFormalCharge(+1);
-		Bond b1 = new Bond(c, n, 1);
+		Bond b1 = new Bond(c, n, IBond.Order.SINGLE);
 		
 		Molecule m = new Molecule();
 		m.addAtom(c);

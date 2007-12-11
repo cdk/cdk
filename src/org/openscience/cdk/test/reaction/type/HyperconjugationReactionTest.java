@@ -31,6 +31,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -77,13 +78,13 @@ public class HyperconjugationReactionTest extends CDKTestCase {
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]CC");
 		for(int i = 0; i < 7 ; i++)
 			molecule.addAtom(new Atom("H"));
-	    molecule.addBond(0, 3, 1);
-	    molecule.addBond(0, 4, 1);
-	    molecule.addBond(1, 5, 1);
-	    molecule.addBond(1, 6, 1);
-	    molecule.addBond(2, 7, 1);
-	    molecule.addBond(2, 8, 1);
-	    molecule.addBond(2, 9, 1);
+	    molecule.addBond(0, 3, IBond.Order.SINGLE);
+	    molecule.addBond(0, 4, IBond.Order.SINGLE);
+	    molecule.addBond(1, 5, IBond.Order.SINGLE);
+	    molecule.addBond(1, 6, IBond.Order.SINGLE);
+	    molecule.addBond(2, 7, IBond.Order.SINGLE);
+	    molecule.addBond(2, 8, IBond.Order.SINGLE);
+	    molecule.addBond(2, 9, IBond.Order.SINGLE);
 		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the centre active*/

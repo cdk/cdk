@@ -39,6 +39,7 @@ import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -201,17 +202,17 @@ public class SmilesGeneratorTest extends CDKTestCase
 		// 6
 		mol1.addAtom(new Atom("O", new Point2d(1, 6)));
 		// 7
-		mol1.addBond(0, 1, 1);
+		mol1.addBond(0, 1, IBond.Order.SINGLE);
 		// 1
-		mol1.addBond(1, 2, 1, CDKConstants.STEREO_BOND_UP);
+		mol1.addBond(1, 2, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_UP);
 		// 2
-		mol1.addBond(1, 3, 1, CDKConstants.STEREO_BOND_DOWN);
+		mol1.addBond(1, 3, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_DOWN);
 		// 3
-		mol1.addBond(1, 4, 1);
+		mol1.addBond(1, 4, IBond.Order.SINGLE);
 		// 4
-		mol1.addBond(4, 5, 1);
+		mol1.addBond(4, 5, IBond.Order.SINGLE);
 		// 5
-		mol1.addBond(4, 6, 2);
+		mol1.addBond(4, 6, IBond.Order.DOUBLE);
 		// 6
 		addExplicitHydrogens(mol1);
 		hydrogenPlacer.placeHydrogens2D(mol1, 1.0);
@@ -270,25 +271,25 @@ public class SmilesGeneratorTest extends CDKTestCase
 		// 2
 		mol1.addAtom(new Atom("H", new Point2d(2, 3)));
 		// 3
-		mol1.addBond(0, 2, 1, CDKConstants.STEREO_BOND_DOWN);
+		mol1.addBond(0, 2, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_DOWN);
 		// 1
-		mol1.addBond(1, 2, 1, CDKConstants.STEREO_BOND_UP);
+		mol1.addBond(1, 2, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_UP);
 		// 2
-		mol1.addBond(2, 3, 1);
+		mol1.addBond(2, 3, IBond.Order.SINGLE);
 		// 3
-		mol1.addBond(3, 4, 1);
+		mol1.addBond(3, 4, IBond.Order.SINGLE);
 		// 4
-		mol1.addBond(4, 5, 1);
+		mol1.addBond(4, 5, IBond.Order.SINGLE);
 		// 5
-		mol1.addBond(5, 6, 1);
+		mol1.addBond(5, 6, IBond.Order.SINGLE);
 		// 6
-		mol1.addBond(6, 7, 1);
+		mol1.addBond(6, 7, IBond.Order.SINGLE);
 		// 3
-		mol1.addBond(7, 8, 1, CDKConstants.STEREO_BOND_UP);
+		mol1.addBond(7, 8, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_UP);
 		// 4
-		mol1.addBond(7, 9, 1, CDKConstants.STEREO_BOND_DOWN);
+		mol1.addBond(7, 9, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_DOWN);
 		// 5
-		mol1.addBond(7, 2, 1);
+		mol1.addBond(7, 2, IBond.Order.SINGLE);
 		// 6
 		try
 		{
@@ -376,31 +377,31 @@ public class SmilesGeneratorTest extends CDKTestCase
 		// 2
 		mol1.addAtom(new Atom("C", new Point2d(1, 2)));
 		// 3
-		mol1.addBond(0, 1, 1, CDKConstants.STEREO_BOND_DOWN);
+		mol1.addBond(0, 1, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_DOWN);
 		// 1
-		mol1.addBond(1, 2, 1);
+		mol1.addBond(1, 2, IBond.Order.SINGLE);
 		// 2
-		mol1.addBond(2, 3, 1);
+		mol1.addBond(2, 3, IBond.Order.SINGLE);
 		// 3
-		mol1.addBond(3, 4, 1);
+		mol1.addBond(3, 4, IBond.Order.SINGLE);
 		// 4
-		mol1.addBond(4, 5, 1);
+		mol1.addBond(4, 5, IBond.Order.SINGLE);
 		// 5
-		mol1.addBond(5, 6, 1);
+		mol1.addBond(5, 6, IBond.Order.SINGLE);
 		// 6
-		mol1.addBond(6, 7, 1, CDKConstants.STEREO_BOND_DOWN);
+		mol1.addBond(6, 7, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_DOWN);
 		// 3
-		mol1.addBond(6, 8, 1);
+		mol1.addBond(6, 8, IBond.Order.SINGLE);
 		// 4
-		mol1.addBond(8, 9, 1);
+		mol1.addBond(8, 9, IBond.Order.SINGLE);
 		// 5
-		mol1.addBond(9, 10, 1);
+		mol1.addBond(9, 10, IBond.Order.SINGLE);
 		// 6
-		mol1.addBond(10, 11, 1);
+		mol1.addBond(10, 11, IBond.Order.SINGLE);
 		// 6
-		mol1.addBond(11, 1, 1);
+		mol1.addBond(11, 1, IBond.Order.SINGLE);
 		// 6
-		mol1.addBond(1, 6, 1);
+		mol1.addBond(1, 6, IBond.Order.SINGLE);
 		// 6
 		try
 		{
@@ -473,15 +474,15 @@ public class SmilesGeneratorTest extends CDKTestCase
 		mol1.addAtom(new Atom("S", new Point2d(0, 3)));
 		// 1
 
-		mol1.addBond(0, 1, 1);
+		mol1.addBond(0, 1, IBond.Order.SINGLE);
 		// 1
-		mol1.addBond(1, 2, 1);
+		mol1.addBond(1, 2, IBond.Order.SINGLE);
 		// 2
-		mol1.addBond(1, 3, 2);
+		mol1.addBond(1, 3, IBond.Order.DOUBLE);
 		// 3
-		mol1.addBond(3, 4, 1);
+		mol1.addBond(3, 4, IBond.Order.SINGLE);
 		// 4
-		mol1.addBond(3, 5, 1);
+		mol1.addBond(3, 5, IBond.Order.SINGLE);
 		// 4
 		try
 		{
@@ -620,11 +621,11 @@ public class SmilesGeneratorTest extends CDKTestCase
 		molecule.addAtom(new Atom("C"));
 		molecule.addAtom(new Atom("C"));
 		molecule.addAtom(new Atom("N"));
-		molecule.addBond(0, 1, 1.0);
-		molecule.addBond(1, 2, 1.0);
-		molecule.addBond(2, 4, 1.0);
-		molecule.addBond(4, 0, 1.0);
-		molecule.addBond(4, 3, 1.0);
+		molecule.addBond(0, 1, IBond.Order.SINGLE);
+		molecule.addBond(1, 2, IBond.Order.SINGLE);
+		molecule.addBond(2, 4, IBond.Order.SINGLE);
+		molecule.addBond(4, 0, IBond.Order.SINGLE);
+		molecule.addBond(4, 3, IBond.Order.SINGLE);
 		fixCarbonHCount(molecule);
 		try
 		{
@@ -662,12 +663,12 @@ public class SmilesGeneratorTest extends CDKTestCase
 		molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
 		molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
 		molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
-		molecule.addBond(0, 1, 1.0);
-		molecule.addBond(1, 2, 1.0);
-		molecule.addBond(2, 3, 1.0);
-		molecule.addBond(3, 4, 1.0);
-		molecule.addBond(4, 5, 1.0);
-		molecule.addBond(5, 0, 1.0);
+		molecule.addBond(0, 1, IBond.Order.SINGLE);
+		molecule.addBond(1, 2, IBond.Order.SINGLE);
+		molecule.addBond(2, 3, IBond.Order.SINGLE);
+		molecule.addBond(3, 4, IBond.Order.SINGLE);
+		molecule.addBond(4, 5, IBond.Order.SINGLE);
+		molecule.addBond(5, 0, IBond.Order.SINGLE);
 		try
 		{
 			smiles = sg.createSMILES(molecule);
@@ -690,10 +691,10 @@ public class SmilesGeneratorTest extends CDKTestCase
 		mol.addAtom(new Atom("O"));
 		mol.addAtom(new Atom("O"));
 		mol.addAtom(new Atom("O"));
-		mol.addBond(0, 1, 2.0);
-		mol.addBond(0, 2, 2.0);
-		mol.addBond(0, 3, 1.0);
-		mol.addBond(0, 4, 1.0);
+		mol.addBond(0, 1, IBond.Order.DOUBLE);
+		mol.addBond(0, 2, IBond.Order.DOUBLE);
+		mol.addBond(0, 3, IBond.Order.SINGLE);
+		mol.addBond(0, 4, IBond.Order.SINGLE);
 		mol.getAtom(3).setHydrogenCount(1);
 		mol.getAtom(4).setHydrogenCount(1);
 		AtomContainerAtomPermutor acap = new
@@ -722,10 +723,10 @@ public class SmilesGeneratorTest extends CDKTestCase
 		mol.addAtom(new Atom("O"));
 		mol.addAtom(new Atom("O"));
 		mol.addAtom(new Atom("O"));
-		mol.addBond(0, 1, 2.0);
-		mol.addBond(0, 2, 2.0);
-		mol.addBond(0, 3, 1.0);
-		mol.addBond(0, 4, 1.0);
+		mol.addBond(0, 1, IBond.Order.DOUBLE);
+		mol.addBond(0, 2, IBond.Order.DOUBLE);
+		mol.addBond(0, 3, IBond.Order.SINGLE);
+		mol.addBond(0, 4, IBond.Order.SINGLE);
 		mol.getAtom(3).setHydrogenCount(1);
 		mol.getAtom(4).setHydrogenCount(1);
 		AtomContainerBondPermutor acbp = new

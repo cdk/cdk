@@ -26,12 +26,14 @@ package org.openscience.cdk.test.atomtype;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.HybridizationStateATMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -64,21 +66,21 @@ public class HybridizationStateATMatcherTest extends CDKTestCase {
         // smiles source: C#CCC=O
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
-        mol.addBond(0,1,3);
+        mol.addBond(0, 1, IBond.Order.TRIPLE);
         mol.addAtom(new Atom("C"));
-        mol.addBond(1,2,1);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
         mol.addAtom(new Atom("C"));
-        mol.addBond(2,3,1);
+        mol.addBond(2, 3, IBond.Order.SINGLE);
         mol.addAtom(new Atom("O"));
-        mol.addBond(3,4,2);
+        mol.addBond(3, 4, IBond.Order.DOUBLE);
         mol.addAtom(new Atom("H"));
-        mol.addBond(5,0,1);
+        mol.addBond(5, 0, IBond.Order.SINGLE);
         mol.addAtom(new Atom("H"));
-        mol.addBond(6,2,1);
+        mol.addBond(6, 2, IBond.Order.SINGLE);
         mol.addAtom(new Atom("H"));
-        mol.addBond(7,2,1);
+        mol.addBond(7, 2, IBond.Order.SINGLE);
         mol.addAtom(new Atom("H"));
-        mol.addBond(8,3,1);
+        mol.addBond(8, 3, IBond.Order.SINGLE);
         
         IAtom atom = mol.getAtom(0);
         

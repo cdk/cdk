@@ -363,9 +363,9 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         mol.addAtom(o1);
         mol.addAtom(o2);
         mol.addAtom(o3);
-        Bond b1 = new Bond(s, o1, 1.0);
-        Bond b2 = new Bond(s, o2, 1.0);
-        Bond b3 = new Bond(s, o3, 2.0);
+        Bond b1 = new Bond(s, o1, IBond.Order.SINGLE);
+        Bond b2 = new Bond(s, o2, IBond.Order.SINGLE);
+        Bond b3 = new Bond(s, o3, IBond.Order.DOUBLE);
         mol.addBond(b1);
         mol.addBond(b2);
         mol.addBond(b3);
@@ -407,9 +407,9 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         mol.addAtom(hydroxylOxygen);
         mol.addAtom(methylCarbon);
         mol.addAtom(carbonylCarbon);
-        Bond b1 = new Bond(methylCarbon, carbonylCarbon, 1.0);
-        Bond b2 = new Bond(carbonylOxygen, carbonylCarbon, 2.0);
-        Bond b3 = new Bond(hydroxylOxygen, carbonylCarbon, 1.0);
+        Bond b1 = new Bond(methylCarbon, carbonylCarbon, IBond.Order.SINGLE);
+        Bond b2 = new Bond(carbonylOxygen, carbonylCarbon, IBond.Order.DOUBLE);
+        Bond b3 = new Bond(hydroxylOxygen, carbonylCarbon, IBond.Order.SINGLE);
         mol.addBond(b1);
         mol.addBond(b2);
         mol.addBond(b3);
@@ -428,7 +428,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         Molecule mol = new Molecule();
         Atom carbon1 = new Atom("C");
         Atom carbon2 = new Atom("C");
-        Bond b = new Bond(carbon1, carbon2, 1.0);
+        Bond b = new Bond(carbon1, carbon2, IBond.Order.SINGLE);
         mol.addAtom(carbon1);
         mol.addAtom(carbon2);
         mol.addBond(b);
@@ -445,7 +445,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         Molecule mol = new Molecule();
         Atom carbon1 = new Atom("C");
         Atom carbon2 = new Atom("C");
-        Bond b = new Bond(carbon1, carbon2, 2.0);
+        Bond b = new Bond(carbon1, carbon2, IBond.Order.DOUBLE);
         mol.addAtom(carbon1);
         mol.addAtom(carbon2);
         mol.addBond(b);
@@ -462,7 +462,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         Molecule mol = new Molecule();
         Atom carbon1 = new Atom("C");
         Atom carbon2 = new Atom("C");
-        Bond b = new Bond(carbon1, carbon2, 3.0);
+        Bond b = new Bond(carbon1, carbon2, IBond.Order.TRIPLE);
         mol.addAtom(carbon1);
         mol.addAtom(carbon2);
         mol.addBond(b);
@@ -487,14 +487,14 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         mol.addAtom(new Atom("C")); // 7
         
         
-        mol.addBond(0, 1, 1.0); // 1
-        mol.addBond(1, 2, 1.0); // 2
-        mol.addBond(2, 3, 1.0); // 3
-        mol.addBond(3, 4, 1.0); // 4
-        mol.addBond(4, 5, 1.0); // 5
-        mol.addBond(5, 0, 1.0); // 6
-        mol.addBond(0, 6, 1.0); // 7
-        mol.addBond(6, 7, 3.0); // 8
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+        mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+        mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+        mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+        mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+        mol.addBond(0, 6, IBond.Order.SINGLE); // 7
+        mol.addBond(6, 7, IBond.Order.TRIPLE); // 8
         
         for (int f = 0; f < 6; f++) {
             mol.getAtom(f).setFlag(CDKConstants.ISAROMATIC, true);
@@ -513,8 +513,8 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         mol.addAtom(oxygen);
         mol.addAtom(new Atom("C"));
         
-        mol.addBond(0, 1, 1.0);
-        mol.addBond(1, 2, 1.0);
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
         
         oxygen.setHydrogenCount(2); /* e.g. caused by the fact that the element symbol
                                        was changed from C to O (=actual bug) */
@@ -552,27 +552,27 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	a9.setPoint2d(new Point2d(18.9871, -18.0139));  mol.addAtom(a9);
     	IAtom a10 = mol.getBuilder().newAtom("C");
     	a10.setPoint2d(new Point2d(23.4609, -18.8267));  mol.addAtom(a10);
-    	IBond b1 = mol.getBuilder().newBond(a1, a2, 2.0);
+    	IBond b1 = mol.getBuilder().newBond(a1, a2, IBond.Order.DOUBLE);
     	mol.addBond(b1);
-    	IBond b2 = mol.getBuilder().newBond(a1, a3, 1.0);
+    	IBond b2 = mol.getBuilder().newBond(a1, a3, IBond.Order.SINGLE);
     	mol.addBond(b2);
-    	IBond b3 = mol.getBuilder().newBond(a1, a4, 1.0);
+    	IBond b3 = mol.getBuilder().newBond(a1, a4, IBond.Order.SINGLE);
     	mol.addBond(b3);
-    	IBond b4 = mol.getBuilder().newBond(a2, a5, 1.0);
+    	IBond b4 = mol.getBuilder().newBond(a2, a5, IBond.Order.SINGLE);
     	mol.addBond(b4);
-    	IBond b5 = mol.getBuilder().newBond(a2, a6, 1.0);
+    	IBond b5 = mol.getBuilder().newBond(a2, a6, IBond.Order.SINGLE);
     	mol.addBond(b5);
-    	IBond b6 = mol.getBuilder().newBond(a3, a7, 2.0);
+    	IBond b6 = mol.getBuilder().newBond(a3, a7, IBond.Order.DOUBLE);
     	mol.addBond(b6);
-    	IBond b7 = mol.getBuilder().newBond(a3, a8, 1.0);
+    	IBond b7 = mol.getBuilder().newBond(a3, a8, IBond.Order.SINGLE);
     	mol.addBond(b7);
-    	IBond b8 = mol.getBuilder().newBond(a4, a9, 2.0);
+    	IBond b8 = mol.getBuilder().newBond(a4, a9, IBond.Order.DOUBLE);
     	mol.addBond(b8);
-    	IBond b9 = mol.getBuilder().newBond(a5, a10, 2.0);
+    	IBond b9 = mol.getBuilder().newBond(a5, a10, IBond.Order.DOUBLE);
     	mol.addBond(b9);
-    	IBond b10 = mol.getBuilder().newBond(a6, a9, 1.0);
+    	IBond b10 = mol.getBuilder().newBond(a6, a9, IBond.Order.SINGLE);
     	mol.addBond(b10);
-    	IBond b11 = mol.getBuilder().newBond(a7, a10, 1.0);
+    	IBond b11 = mol.getBuilder().newBond(a7, a10, IBond.Order.SINGLE);
     	mol.addBond(b11);
 
     	findAndConfigureAtomTypesForAllAtoms(mol);

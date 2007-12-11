@@ -33,6 +33,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.Normalizer;
 import org.w3c.dom.Document;
@@ -62,8 +63,8 @@ public class NormalizerTest extends CDKTestCase {
     ac.addAtom(new Atom("O"));
     ac.addAtom(new Atom("O"));
     ac.addBond(new Bond(ac.getAtom(0),ac.getAtom(1)));
-    ac.addBond(new Bond(ac.getAtom(1),ac.getAtom(2),2));
-    ac.addBond(new Bond(ac.getAtom(1),ac.getAtom(3),2));
+    ac.addBond(new Bond(ac.getAtom(1),ac.getAtom(2),IBond.Order.DOUBLE));
+    ac.addBond(new Bond(ac.getAtom(1),ac.getAtom(3),IBond.Order.DOUBLE));
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     DocumentBuilder db = dbf.newDocumentBuilder();
     Document doc = db.newDocument();
@@ -76,7 +77,7 @@ public class NormalizerTest extends CDKTestCase {
     set.appendChild(replacement);
     replacement.appendChild(doc.createTextNode("[O-][N+]=O"));
     Normalizer.normalize(ac,doc);
-    assertTrue(ac.getBond(1).getOrder()==1 ^ ac.getBond(2).getOrder()==1);
+    assertTrue(ac.getBond(1).getOrder() == IBond.Order.SINGLE ^ ac.getBond(2).getOrder() == IBond.Order.SINGLE);
 	}
 }
 

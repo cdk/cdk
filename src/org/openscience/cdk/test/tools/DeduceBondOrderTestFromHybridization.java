@@ -85,7 +85,7 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		dboTool.saturate(keto);
 		
 		// now check wether it did the right thing
-		assertEquals(CDKConstants.BONDORDER_TRIPLE, bond1.getOrder(), 0.00001);
+		assertEquals(IBond.Order.TRIPLE, bond1.getOrder());
 	}
 
 	/**
@@ -116,8 +116,8 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		dboTool.saturate(keto);
 		
 		// now check wether it did the right thing
-		assertEquals(CDKConstants.BONDORDER_SINGLE, bond1.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond2.getOrder(), 0.00001);
+		assertEquals(CDKConstants.BONDORDER_SINGLE, bond1.getOrder());
+		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond2.getOrder());
 	}
 	
 	/**
@@ -148,8 +148,8 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		dboTool.saturate(enol);
 		
 		// now check wether it did the right thing
-		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder(), 0.00001);
+		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder());
+		assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder());
 	}
 	
 	/**
@@ -185,9 +185,9 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		dboTool.saturate(enol);
 		
 		// now check wether it did the right thing
-		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_SINGLE, bond3.getOrder(), 0.00001);
+		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder());
+		assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder());
+		assertEquals(CDKConstants.BONDORDER_SINGLE, bond3.getOrder());
 	}
 
 	/**
@@ -245,14 +245,14 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		dboTool.saturate(enol);
 		
 		// now check wether it did the right thing
-		assertEquals(CDKConstants.BONDORDER_SINGLE, bond1.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond2.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_SINGLE, bond3.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_SINGLE, bond4.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond5.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_SINGLE, bond6.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond7.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond8.getOrder(), 0.00001);
+		assertEquals(CDKConstants.BONDORDER_SINGLE, bond1.getOrder());
+		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond2.getOrder());
+		assertEquals(CDKConstants.BONDORDER_SINGLE, bond3.getOrder());
+		assertEquals(CDKConstants.BONDORDER_SINGLE, bond4.getOrder());
+		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond5.getOrder());
+		assertEquals(CDKConstants.BONDORDER_SINGLE, bond6.getOrder());
+		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond7.getOrder());
+		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond8.getOrder());
 	}
 	
 	/**
@@ -300,18 +300,18 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		dboTool.saturate(enol);
 		
 		// now check wether it did the right thing
-		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
-				bond1.getOrder() + bond6.getOrder(), 0.00001); // around atom1
-		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
-				bond1.getOrder() + bond2.getOrder(), 0.00001); // around atom2
-		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
-				bond2.getOrder() + bond3.getOrder(), 0.00001); // around atom3
-		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
-				bond3.getOrder() + bond4.getOrder(), 0.00001); // around atom4
-		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
-				bond4.getOrder() + bond5.getOrder(), 0.00001); // around atom5
-		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
-				bond5.getOrder() + bond6.getOrder(), 0.00001); // around atom6
+		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
+				bond1.getOrder().ordinal() + bond6.getOrder().ordinal()); // around atom1
+		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
+				bond1.getOrder().ordinal() + bond2.getOrder().ordinal()); // around atom2
+		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
+				bond2.getOrder().ordinal() + bond3.getOrder().ordinal()); // around atom3
+		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
+				bond3.getOrder().ordinal() + bond4.getOrder().ordinal()); // around atom4
+		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
+				bond4.getOrder().ordinal() + bond5.getOrder().ordinal()); // around atom5
+		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
+				bond5.getOrder().ordinal() + bond6.getOrder().ordinal()); // around atom6
 	}
 	
 	/**
@@ -354,11 +354,11 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		dboTool.saturate(enol);
 		
 		// now check wether it did the right thing
-		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond3.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_SINGLE, bond4.getOrder(), 0.00001);
-		assertEquals(CDKConstants.BONDORDER_SINGLE, bond5.getOrder(), 0.00001);
+		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder());;
+		assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder());;
+		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond3.getOrder());;
+		assertEquals(CDKConstants.BONDORDER_SINGLE, bond4.getOrder());;
+		assertEquals(CDKConstants.BONDORDER_SINGLE, bond5.getOrder());;
 	}
 	
 	public void xtestPyridine() throws Exception {
@@ -403,18 +403,18 @@ public class DeduceBondOrderTestFromHybridization extends CDKTestCase {
 		dboTool.saturate(enol);
 		
 		// now check wether it did the right thing
-		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
-				bond1.getOrder() + bond6.getOrder(), 0.00001); // around atom1
-		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
-				bond1.getOrder() + bond2.getOrder(), 0.00001); // around atom2
-		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
-				bond2.getOrder() + bond3.getOrder(), 0.00001); // around atom3
-		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
-				bond3.getOrder() + bond4.getOrder(), 0.00001); // around atom4
-		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
-				bond4.getOrder() + bond5.getOrder(), 0.00001); // around atom5
-		assertEquals(CDKConstants.BONDORDER_SINGLE + CDKConstants.BONDORDER_DOUBLE, 
-				bond5.getOrder() + bond6.getOrder(), 0.00001); // around atom6
+		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
+				bond1.getOrder().ordinal() + bond6.getOrder().ordinal()); // around atom1
+		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
+				bond1.getOrder().ordinal() + bond2.getOrder().ordinal()); // around atom2
+		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
+				bond2.getOrder().ordinal() + bond3.getOrder().ordinal()); // around atom3
+		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
+				bond3.getOrder().ordinal() + bond4.getOrder().ordinal()); // around atom4
+		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
+				bond4.getOrder().ordinal() + bond5.getOrder().ordinal()); // around atom5
+		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
+				bond5.getOrder().ordinal() + bond6.getOrder().ordinal()); // around atom6
 	}
 }
 

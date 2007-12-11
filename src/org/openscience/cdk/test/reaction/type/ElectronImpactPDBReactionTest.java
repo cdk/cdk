@@ -70,7 +70,7 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
 			IBond bond = (IBond)bonds.next();
 			IAtom atom0 = bond.getAtom(0);
 			IAtom atom1 = bond.getAtom(1);
-			if(bond.getOrder() == 2 &&
+			if(bond.getOrder() == IBond.Order.DOUBLE &&
 					atom0.getSymbol().equals("C")&&
 					atom1.getSymbol().equals("C")){
 				bond.setFlag(CDKConstants.REACTIVE_CENTER,true);

@@ -35,6 +35,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
@@ -78,12 +79,12 @@ public class MDMoleculeTest extends CDKTestCase {
         mol.addAtom(new Atom("C")); // 4
         mol.addAtom(new Atom("C")); // 5
 
-        mol.addBond(0, 1, 1); // 1
-        mol.addBond(1, 2, 2); // 2
-        mol.addBond(2, 3, 1); // 3
-        mol.addBond(3, 4, 2); // 4
-        mol.addBond(4, 5, 1); // 5
-        mol.addBond(5, 0, 2); // 6
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
+        mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+        mol.addBond(3, 4, IBond.Order.DOUBLE); // 4
+        mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+        mol.addBond(5, 0, IBond.Order.DOUBLE); // 6
 
         //Create 2 residues
         AtomContainer ac= new AtomContainer();
@@ -255,12 +256,12 @@ public class MDMoleculeTest extends CDKTestCase {
         mol.addAtom(new Atom("C")); // 4
         mol.addAtom(new Atom("C")); // 5
 
-        mol.addBond(0, 1, 1); // 1
-        mol.addBond(1, 2, 2); // 2
-        mol.addBond(2, 3, 1); // 3
-        mol.addBond(3, 4, 2); // 4
-        mol.addBond(4, 5, 1); // 5
-        mol.addBond(5, 0, 2); // 6
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
+        mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+        mol.addBond(3, 4, IBond.Order.DOUBLE); // 4
+        mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+        mol.addBond(5, 0, IBond.Order.DOUBLE); // 6
 
         //Create 2 residues
         AtomContainer ac= new AtomContainer();

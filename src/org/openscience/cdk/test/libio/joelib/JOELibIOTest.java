@@ -68,12 +68,12 @@ public class JOELibIOTest extends CDKTestCase {
     public void testBond() {
         Atom a = new Atom("C");
         Atom b = new Atom("O");
-        Bond bond = new Bond(a,b,2);
+        Bond bond = new Bond(a, b, IBond.Order.DOUBLE);
 
         JOEBond converted = Convertor.convert(bond);
         Bond reverted = Convertor.convert(converted);
 
-        assertEquals(bond.getOrder(), reverted.getOrder(), 0.001);
+        assertEquals(bond.getOrder(), reverted.getOrder());;
     }
 
     public void testBenzene() throws Exception {
@@ -85,12 +85,12 @@ public class JOELibIOTest extends CDKTestCase {
         mol.addAtom(new Atom("C")); // 4
         mol.addAtom(new Atom("C")); // 5
 
-        mol.addBond(0, 1, 1); // 1
-        mol.addBond(1, 2, 2); // 2
-        mol.addBond(2, 3, 1); // 3
-        mol.addBond(3, 4, 2); // 4
-        mol.addBond(4, 5, 1); // 5
-        mol.addBond(5, 0, 2); // 6
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
+        mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+        mol.addBond(3, 4, IBond.Order.DOUBLE); // 4
+        mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+        mol.addBond(5, 0, IBond.Order.DOUBLE); // 6
 
         JOEMol converted = Convertor.convert(mol);
         Molecule reverted = Convertor.convert(converted);

@@ -33,6 +33,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.charges.InductivePartialCharges;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -99,10 +100,10 @@ public class InductivePartialChargesTest extends CDKTestCase {
 		mol.addAtom(h3); 
 		h3.setPoint3d(h3_coord);
 		
-		mol.addBond(0, 1, 1); // 1
-		mol.addBond(0, 2, 1); // 1
-		mol.addBond(0, 3, 1); // 1
-		mol.addBond(0, 4, 1); // 1
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(0, 2, IBond.Order.SINGLE); // 1
+		mol.addBond(0, 3, IBond.Order.SINGLE); // 1
+		mol.addBond(0, 4, IBond.Order.SINGLE); // 1
 		InductivePartialCharges ipc = new InductivePartialCharges();
 		ipc.assignInductivePartialCharges(mol);
 		for (int i = 0; i < mol.getAtomCount(); i++) {
