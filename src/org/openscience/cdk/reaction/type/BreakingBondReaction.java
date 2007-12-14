@@ -30,10 +30,12 @@ import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -43,7 +45,6 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
-import org.openscience.cdk.tools.CDKValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
@@ -82,15 +83,16 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 public class BreakingBondReaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
-	private CDKValencyChecker valChecker;
+	private CDKAtomTypeMatcher atMatcher;
 	private static final int BONDTOFLAG = 8;
+	
 	/**
 	 * Constructor of the BreakingBondReaction object
 	 *
 	 */
 	public BreakingBondReaction(){
 		logger = new LoggingTool(this);
-		valChecker = CDKValencyChecker.getInstance(NoNotificationChemObjectBuilder.getInstance());
+		atMatcher = CDKAtomTypeMatcher.getInstance(NoNotificationChemObjectBuilder.getInstance());
 	}
 
 	/**
@@ -174,13 +176,11 @@ public class BreakingBondReaction implements IReactionProcess{
 				
 				int atom1 = reactants.getMolecule(0).getAtomNumber(bond.getAtom(0));
 				int atom2 = reactants.getMolecule(0).getAtomNumber(bond.getAtom(1));
+				
 				cleanFlagBOND(reactants.getMolecule(0));
 				bond.setFlag(BONDTOFLAG, true);
 				/**/
 				for (int j = 0; j < 2; j++){
-					IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-					reaction.addReactant(reactants.getMolecule(0));
-					
 					IMolecule reactantCloned;
 					try {
 						reactantCloned = (IMolecule) reactant.clone();
@@ -193,9 +193,13 @@ public class BreakingBondReaction implements IReactionProcess{
 					for(int l = 0 ; l<reactantCloned.getBondCount();l++){
 						if(reactantCloned.getBond(l).getFlag(BONDTOFLAG)){
 							order = reactantCloned.getBond(l).getOrder();
-							BondManipulator.decreaseBondOrder(
-								reactantCloned.getBond(l)
-							);
+							if (order == IBond.Order.SINGLE) {
+								reactantCloned.removeBond(reactantCloned.getAtom(atom1), reactantCloned.getAtom(atom2));
+							} else {
+								BondManipulator.decreaseBondOrder(
+										reactantCloned.getBond(l)
+								);
+							}
 							aBond = reactantCloned.getBond(l);
 							break;
 						}
@@ -205,51 +209,43 @@ public class BreakingBondReaction implements IReactionProcess{
 					if (j == 0){
 						charge = reactantCloned.getAtom(atom1).getFormalCharge();
 						reactantCloned.getAtom(atom1).setFormalCharge(charge+1);
-						if(!reactantCloned.getAtom(atom2).getSymbol().equals("H"))
-							if(!valChecker.isSaturated(reactantCloned.getAtom(atom1), reactantCloned))
-								continue;
+						// check if resulting atom type is reasonable
+						IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, reactantCloned.getAtom(atom1));
+						if (type == null) continue;
 						
 						charge = reactantCloned.getAtom(atom2).getFormalCharge();
 						reactantCloned.getAtom(atom2).setFormalCharge(charge-1);
 						reactantCloned.addLonePair(new LonePair(reactantCloned.getAtom(atom2)));
 						/* an acceptor atom cannot be charged positive*/
-						if(!reactantCloned.getAtom(atom2).getSymbol().equals("H"))
-							if(!valChecker.isSaturated(reactantCloned.getAtom(atom1),reactantCloned))
-								continue;
-						if(order == IBond.Order.SINGLE)/*break molecule*/
-							reactantCloned.removeBond(reactantCloned.getAtom(atom1), reactantCloned.getAtom(atom2));
-						
+						type = atMatcher.findMatchingAtomType(reactantCloned, reactantCloned.getAtom(atom2));
+						if (type == null) continue;
 					} else{
 						charge = reactantCloned.getAtom(atom2).getFormalCharge();
 						reactantCloned.getAtom(atom2).setFormalCharge(charge+1);
-						
-						if(!reactantCloned.getAtom(atom2).getSymbol().equals("H"))
-							if(!valChecker.isSaturated(reactantCloned.getAtom(atom2), reactantCloned))
-								continue;
+						IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, reactantCloned.getAtom(atom2));
+						if (type == null) continue;
 						
 						charge = reactantCloned.getAtom(atom1).getFormalCharge();
 						reactantCloned.getAtom(atom1).setFormalCharge(-1);
 						reactantCloned.addLonePair(new LonePair(reactantCloned.getAtom(atom1)));
 						/* an acceptor atom cannot be charged positive*/
-						if(!reactantCloned.getAtom(atom2).getSymbol().equals("H"))
-							if(!valChecker.isSaturated(reactantCloned.getAtom(atom2),reactantCloned))
-								continue;
-						if(order == IBond.Order.SINGLE)/*break molecule*/
-							reactantCloned.removeBond(reactantCloned.getAtom(atom1), reactantCloned.getAtom(atom2));
+						type = atMatcher.findMatchingAtomType(reactantCloned, reactantCloned.getAtom(atom1));
+						if (type == null) continue;
 					}
-					
+
+					IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+					reaction.addReactant(reactants.getMolecule(0));
+
 					/* mapping */
 					IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactants.getMolecule(0).getAtom(atom1), reactantCloned.getAtom(atom1));
 			        reaction.addMapping(mapping);
 			        mapping = DefaultChemObjectBuilder.getInstance().newMapping(reactants.getMolecule(0).getAtom(atom2), reactantCloned.getAtom(atom2));
 			        reaction.addMapping(mapping);
-			        if(order != IBond.Order.SINGLE){
-						mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond, aBond);
-						reaction.addMapping(mapping);
-					}
-			        if(order != null && order != IBond.Order.SINGLE)
-						reaction.addProduct(reactantCloned);
-			        else{
+			        if(order != IBond.Order.SINGLE) {
+			        	mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond, aBond);
+			        	reaction.addMapping(mapping);
+			        	reaction.addProduct(reactantCloned);
+			        } else{
 				        IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(reactantCloned);
 						for(int z = 0; z < moleculeSet.getAtomContainerCount() ; z++){
 							reaction.addProduct(moleculeSet.getMolecule(z));
