@@ -96,11 +96,11 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		Assert.assertEquals(molecule.getAtom(1), molecule.getLonePair(1).getAtom());
 		setOfReactants.addMolecule(molecule);
 		
-		/*automatic search of the centre active*/
+		/*automatic search of the reactive atoms and bonds */
         Object[] params = {Boolean.FALSE};
         type.setParameters(params);
         
-        /* iniciate */
+        /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         // DEBUG: dump the created reactions
