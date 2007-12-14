@@ -409,18 +409,7 @@
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
         <isClassifiedAs rdf:resource="#hybridDescriptor"/>
     </Descriptor>
-
-    <Descriptor rdf:ID="ALOGP">
-        <rdfs:label>AlogP</rdfs:label>
-        <dc:contributor rdf:resourrce="#rg"/>
-        <dc:date>2007-12-01</dc:date>
-        <definition>
-            Calculates atom additive logP and molar refractivity values as described by Ghose and Crippen
-            <bibtex:cite ref="GHOSE1986" /> and <bibtex:cite ref="GHOSE1987"/>
-        </definition>
-        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
-        <isClassifiedAs rdf:resource="#hybridDescriptor"/>
-    </Descriptor>
+    
 
     <Descriptor rdf:ID="bondCount">
         <rdfs:label>Bond Count</rdfs:label>
@@ -2060,7 +2049,8 @@
         <dc:contributor rdf:resource="#tm"/>
         <dc:date>2005-01-27</dc:date>
         <definition>
-            Prediction of logP based on Ghose-Crippen method.
+            Calculates atom additive logP and molar refractivity values as described by Ghose and Crippen
+            <bibtex:cite ref="GHOSE1986" /> and <bibtex:cite ref="GHOSE1987"/>
         </definition>
         <description>
 
