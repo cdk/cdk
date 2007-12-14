@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
  * module are tested. Unlike Emma, it does not test that all code is
  * tested, just all methods.
  *
- * @cdk.module test-core
+ * @cdk.module test-reaction
  */
 public class ReactionCoverageTest extends CoverageTest {
 
