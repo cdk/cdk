@@ -24,6 +24,8 @@
 package org.openscience.cdk.test.reaction.type;
 
 
+import java.util.Iterator;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -36,12 +38,14 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.BreakingBondReaction;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
@@ -83,9 +87,13 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		/*C=O*/
 		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
         addExplicitHydrogens(molecule);
+        Assert.assertEquals(4, molecule.getAtomCount());
         AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(molecule);
+		Assert.assertEquals(2, molecule.getLonePairCount());
+		Assert.assertEquals(molecule.getAtom(1), molecule.getLonePair(0).getAtom());
+		Assert.assertEquals(molecule.getAtom(1), molecule.getLonePair(1).getAtom());
 		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the centre active*/
@@ -94,6 +102,13 @@ public class BreakingBondReactionTest extends CDKTestCase {
         
         /* iniciate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+        
+        // DEBUG: dump the created reactions
+        Iterator<IReaction> reactions = setOfReactions.reactions();
+        SmilesGenerator smigen = new SmilesGenerator();
+        while (reactions.hasNext()) {        	
+        	System.out.println("REACTION: " + smigen.createSMILES(reactions.next()));
+        }
         
         Assert.assertEquals(5, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());

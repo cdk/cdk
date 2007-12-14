@@ -61,7 +61,7 @@ public class RearrangementRadical1ReactionTest extends CDKTestCase {
 	private IReactionProcess type;
 
 	/**
-	 * Constructror of the RearrangementRadical1ReactionTest object
+	 * Constructor of the RearrangementRadical1ReactionTest object
 	 *
 	 */
 	public  RearrangementRadical1ReactionTest() {
@@ -82,6 +82,7 @@ public class RearrangementRadical1ReactionTest extends CDKTestCase {
         
         /*[C*]-O|*/
         IMolecule molecule = getMolecule1();
+		Assert.assertEquals(1, molecule.getSingleElectronCount());
         
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(molecule);
@@ -92,17 +93,17 @@ public class RearrangementRadical1ReactionTest extends CDKTestCase {
         
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
-
-        
-        
         
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         IMolecule molecule2 = getMolecule2();
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
-        
-        		
+		// is there a radical?
+		Assert.assertEquals(1, molecule2.getSingleElectronCount());
+		// is the radical on the oxygen?
+		Assert.assertEquals(molecule2.getAtom(1), molecule2.getSingleElectron(0).getAtom());
 	}
+	
 	/**
 	 * A unit test suite for JUnit. Reaction: [C*]-O| => C=[O*]
 	 * Manually put of the centre active.
