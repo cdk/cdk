@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author: miguelrojasch $
- * $Date: 2006-05-11 14:25:07 +0200 (Do, 11 Mai 2006) $
- * $Revision: 6221 $
+/* $Revision: 6221 $ $Author: miguelrojasch $ $Date: 2006-05-11 14:25:07 +0200 (Do, 11 Mai 2006) $
  *
- *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ * Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -22,7 +19,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
 package org.openscience.cdk.tools;
-
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
@@ -50,11 +46,11 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * <p>This class try to generate resonance structure for a determinate molecule.</p>
- * <p>Make sure that the molecule has the corresponend lone pair electrons
+ * <p>Make sure that the molecule has the corresponding lone pair electrons
  * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
  * <p>It is needed to call the addExplicitHydrogensToSatisfyValency
  *  from the class tools.HydrogenAdder.</p>
- * <p>It is based on rearrengements of electrons and charge</p>
+ * <p>It is based on rearrangements of electrons and charge</p>
  * <p>The method is based on call by reactions which occur in a resonance.</p>
  * 
  * <pre>
@@ -67,27 +63,15 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
  * <p>Moreover you must put the parameter as true</p>
  * <p>If the reactive center is not localized then the reaction process will
- * try to find automatically the posible reactive center.</p>
+ * try to find automatically the possible reactive center.</p>
  *  
  * @author       Miguel Rojas
  * @cdk.created  2006-5-05
  * @cdk.module   reaction
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev   $Revision: 9162 $
  * 
- * @see DisplacementChargeFromAcceptorReaction
- * @see DisplacementChargeFromDonorReaction
- * @see RearrangementAnion1Reaction
- * @see RearrangementAnion2Reaction
- * @see RearrangementAnion3Reaction
- * @see RearrangementCation1Reaction
- * @see RearrangementCation2Reaction
- * @see RearrangementCation3Reaction
- * @see RearrangementRadical1Reaction
- * @see RearrangementRadical2Reaction
- * @see RearrangementRadical3Reaction
- * @see HyperconjugationReaction
- * 
- **/
+ * @see org.openscience.cdk.reaction.IReactionProcess
+ */
 public class StructureResonanceGenerator {
 	
 	private boolean cationR = true;
@@ -138,9 +122,9 @@ public class StructureResonanceGenerator {
 	}
 	/**
 	 * <p>Get the resonance structures from an atomContainer. </p>
-	 * <p>This generator of resonances is limited only strutcures whose have the same order sum of bonds or higher.
+	 * <p>This generator of resonances is limited only structures whose have the same order sum of bonds or higher.
 	 * 
-	 * @param atomContainer The atomContainer to analize
+	 * @param atomContainer The atomContainer to analyze
 	 * @return The different resonance structures
 	 */
 	public IAtomContainerSet getStructures(IAtomContainer atomContainer) {
@@ -159,7 +143,7 @@ public class StructureResonanceGenerator {
 	/**
 	 * <p>Get all resonance structures from an atomContainer. </p>
 	 * 
-	 * @param atomContainer The atomContainer to analize
+	 * @param atomContainer The atomContainer to analyze
 	 * @return The different resonance structures
 	 */
 	public IAtomContainerSet getAllStructures(IAtomContainer atomContainer){

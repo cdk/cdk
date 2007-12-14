@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author: miguelrojasch $
- * $Date: 2006-05-11 14:25:07 +0200 (Do, 11 Mai 2006) $
- * $Revision: 6221 $
+/* $Revision: 6221 $ $Author: miguelrojasch $ $Date: 2006-05-11 14:25:07 +0200 (Do, 11 Mai 2006) $
  *
- *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ * Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -22,7 +19,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
 package org.openscience.cdk.test.tools;
-
 
 import java.util.List;
 
