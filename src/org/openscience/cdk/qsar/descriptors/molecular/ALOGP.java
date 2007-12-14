@@ -42,7 +42,7 @@ import java.lang.reflect.Method;
 
 /**
  * This class calculates ALOGP (Ghose-Crippen LogKow) and the 
- * Ghose-Crippen molar refractivity.
+ * Ghose-Crippen molar refractivity @cdk.cite{GHOSE1986} @cdk.cite{GHOSE1987}.
  *
  * <b>Note</b> The code assumes that aromaticity has been detected before
  * evaluating this descriptor. The code also expects that the molecule
@@ -2025,7 +2025,7 @@ public class ALOGP implements IMolecularDescriptor {
 
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP",
                 this.getClass().getName(),
                 "$Id: ALOGP-MR descriptor  $",
                 "The Chemistry Development Kit");
