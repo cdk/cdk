@@ -45,6 +45,7 @@ import org.openscience.cdk.reaction.type.BreakingBondReaction;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
@@ -82,8 +83,9 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		/*C=O*/
 		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
         addExplicitHydrogens(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(molecule);
+		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the centre active*/
@@ -139,8 +141,9 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		/*C=O*/
 		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
 	    addExplicitHydrogens(molecule);
-        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+	    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);
 		
 		/*manually put the centre active*/
@@ -180,8 +183,9 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		/*C=O*/
 		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
 	    addExplicitHydrogens(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(molecule);
+		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the centre active*/
@@ -213,8 +217,9 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		/*FCC*/
 		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("FCC");
         addExplicitHydrogens(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(molecule);
+		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);
 		
 		/*manually put the centre active*/

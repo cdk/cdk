@@ -82,7 +82,7 @@ public class MreactionTests {
         suite.addTest(HyperconjugationReactionTest.suite());
         suite.addTest(RadicalSiteInitiationHReactionTest.suite());
         suite.addTest(RadicalSiteInitiationReactionTest.suite());
-//      suite.addTest(ReactionBalancerTest.suite());
+//      suite.addTest(ReactionBasvn colancerTest.suite());
         suite.addTest(RearrangementAnion1ReactionTest.suite());
         suite.addTest(RearrangementAnion2ReactionTest.suite());
         suite.addTest(RearrangementAnion3ReactionTest.suite());

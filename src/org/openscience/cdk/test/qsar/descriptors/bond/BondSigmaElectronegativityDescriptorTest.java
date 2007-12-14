@@ -63,7 +63,7 @@ public class BondSigmaElectronegativityDescriptorTest extends CDKTestCase {
         IMolecule mol = sp.parseSmiles("CF"); 
         addExplicitHydrogens(mol);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
         for (int i = 0 ; i < 2 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();

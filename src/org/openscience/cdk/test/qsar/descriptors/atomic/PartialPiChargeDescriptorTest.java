@@ -66,7 +66,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("FC");
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		addExplicitHydrogens(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
@@ -94,7 +94,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -122,7 +122,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -149,7 +149,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			params[0] = new Integer(6);
@@ -180,7 +180,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < 4/*mol.getAtomCount() */; i++){
 			params[0] = new Integer(6);
@@ -209,7 +209,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -244,7 +244,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles("F[C+]([H])[C-]([H])[H]");
 
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < 6; i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -276,7 +276,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -301,7 +301,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -332,7 +332,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -353,7 +353,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		Object[] object = {new Integer(6),new Boolean(true)};
 		descriptor.setParameters(object);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 //			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
@@ -379,7 +379,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		Object[] object = {new Integer(6),new Boolean(true)};
 		descriptor.setParameters(object);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 //			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
@@ -404,7 +404,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		Object[] object = {new Integer(6),new Boolean(true)};
 		descriptor.setParameters(object);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 //			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
@@ -432,7 +432,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		Object[] object = {new Integer(6),new Boolean(true)};
 		descriptor.setParameters(object);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 //			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
@@ -460,7 +460,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		Object[] object = {new Integer(6),new Boolean(true)};
 		descriptor.setParameters(object);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 //			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
@@ -519,7 +519,7 @@ public class PartialPiChargeDescriptorTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles("c1ccc(cc1)n3c4ccccc4(c2ccccc23)");
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		Object[] object = {new Integer(6),new Boolean(false)};
 		descriptor.setParameters(object);

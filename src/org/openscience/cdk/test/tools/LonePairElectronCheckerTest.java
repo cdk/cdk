@@ -4,6 +4,7 @@
  * $Revision: 6221 $
  *
  *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ *                     2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -37,6 +38,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Tests CDK's Lone Pair Electron checking capabilities in terms of
@@ -104,6 +106,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addBond(new Bond(c, h1));
 		m.addBond(new Bond(c, h2));
 		m.addBond(new Bond(c, O, IBond.Order.DOUBLE));
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
 		
 		assertTrue(lpcheck.allSaturated(m));
 	}
@@ -128,6 +131,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 			LonePair lp = new LonePair(s);
 			m.addLonePair(lp);
 		}
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
 		
 		assertFalse(lpcheck.allSaturated(m));
 	}
@@ -146,7 +150,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addAtom(cl);
 		m.addBond(b1);
 		
-		lpcheck.newSaturate(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		lpcheck.saturate(m);
 		assertEquals(3, m.getConnectedLonePairsCount(cl));
 		assertEquals(0, m.getConnectedLonePairsCount(c1));
 	}
@@ -166,7 +171,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addAtom(o);
 		m.addBond(b1);
 		
-		lpcheck.newSaturate(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		lpcheck.saturate(m);
 		assertEquals(2, m.getConnectedLonePairsCount(o));
 		assertEquals(0, m.getConnectedLonePairsCount(c1));
 	}
@@ -186,7 +192,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addBond(0, 3, IBond.Order.SINGLE);
 		m.addBond(0, 4, IBond.Order.SINGLE);
 		m.addBond(1, 5, IBond.Order.SINGLE);
-		lpcheck.newSaturate(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		lpcheck.saturate(m);
 		
 		assertEquals(2, m.getConnectedLonePairsCount(m.getAtom(1)));
 		assertEquals(0, m.getConnectedLonePairsCount(m.getAtom(0)));
@@ -208,7 +215,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addAtom(o);
 		m.addBond(b1);
 		
-		lpcheck.newSaturate(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		lpcheck.saturate(m);
 		
 		assertEquals(1, m.getConnectedLonePairsCount(o));
 	}
@@ -228,7 +236,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addAtom(o);
 		m.addBond(b1);
 		
-		lpcheck.newSaturate(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		lpcheck.saturate(m);
 		
 		assertEquals(3, m.getConnectedLonePairsCount(o));
 	}
@@ -243,7 +252,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		Molecule m = new Molecule();
 		m.addAtom(n);
 		
-		lpcheck.newSaturate(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		lpcheck.saturate(m);
 		
 		assertEquals(1, m.getConnectedLonePairsCount(n));
 	}
@@ -264,7 +274,8 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addAtom(n);
 		m.addBond(b1);
 		
-		lpcheck.newSaturate(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		lpcheck.saturate(m);
 		
 		assertEquals(0, m.getConnectedLonePairsCount(n));
 	}
@@ -275,7 +286,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		// O=C([H])[C+]([H])[C-]([H])[H]
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		assertEquals(2, mol.getConnectedLonePairsCount(mol.getAtom(0)));
 		assertEquals(0, mol.getConnectedLonePairsCount(mol.getAtom(3)));

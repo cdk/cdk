@@ -141,6 +141,7 @@ public class CDKTestCase extends TestCase {
     protected void addExplicitHydrogens(IAtomContainer container) throws Exception {
     	addImplicitHydrogens(container);
     	AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+    	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(container);
     }
 
     /**

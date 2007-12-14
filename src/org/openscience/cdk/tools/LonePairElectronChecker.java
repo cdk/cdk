@@ -1,9 +1,7 @@
-/* $RCSfile$
- * $Author: miguelrojasch $
- * $Date: 2006-05-11 14:25:07 +0200 (Do, 11 Mai 2006) $
- * $Revision: 6221 $
- *
- *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
+/* $Revision: 6221 $ $Author: miguelrojasch $ $Date: 2006-05-11 14:25:07 +0200 (Do, 11 Mai 2006) $
+ * 
+ * Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ *                    2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -26,180 +24,99 @@ package org.openscience.cdk.tools;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
-
-import java.io.IOException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 /**
-* Provides methods for checking whether an atoms lone pair electrons are saturated 
-* with respect to a particular atom type. You should ensure that you has checked first
-* the atomcontainer ( with ValencyChecker or SaturationChecker). The hydrogen muss be
-* also implicit.
-* 
-* @author         Miguel Rojas
- * @cdk.svnrev  $Revision: 9162 $
-* @cdk.created    2006-04-01
-*
-* @cdk.keyword    saturation
-* @cdk.keyword    atom, valency
-*/
+ * Provides methods for checking whether an atoms lone pair electrons are saturated 
+ * with respect to a particular atom type.
+ * 
+ * @author         Miguel Rojas
+ * @cdk.svnrev     $Revision: 9162 $
+ * @cdk.created    2006-04-01
+ *
+ * @cdk.keyword    saturation
+ * @cdk.keyword    atom, valency
+ */
 public class LonePairElectronChecker {
 	
 	private LoggingTool logger;
-	private String atomTypeList;
-	private AtomTypeFactory structgenATF;
+	private static AtomTypeFactory factory = AtomTypeFactory.getInstance(
+		"org/openscience/cdk/config/data/cdk_atomtypes.xml",
+		NoNotificationChemObjectBuilder.getInstance()
+	);
 
 	/**
-	 * Constructor of the SaturationChecker object
-	 * 
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * Constructor of the LonePairElectronChecker object.
 	 */
-	public LonePairElectronChecker() throws IOException, ClassNotFoundException
-	{
-		 this("org/openscience/cdk/config/data/valency2_atomtypes.xml");
+	public LonePairElectronChecker() {
+		logger = new LoggingTool(LonePairElectronChecker.class);
 	}
-	/**
-	 * Constructor of the SaturationChecker object
-	 * 
-	 * @param atomTypeList Path of the atomtype to use
-	 *  
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-	public LonePairElectronChecker(String atomTypeList) throws IOException, ClassNotFoundException {
-		this.atomTypeList = atomTypeList;
-		logger = new LoggingTool(this);
-        logger.info("Using configuration file: ", atomTypeList);
-	}
-	/**
-	 * Get the atom Type Factory
-	 * 
-     * @param builder the ChemObjectBuilder implementation used to construct the AtomType's.
-     */
-    protected AtomTypeFactory getAtomTypeFactory(IChemObjectBuilder builder) throws CDKException {
-        if (structgenATF == null) {
-            try {
-                structgenATF = AtomTypeFactory.getInstance(atomTypeList, builder);
-            } catch (Exception exception) {
-                logger.debug(exception);
-                throw new CDKException("Could not instantiate AtomTypeFactory!", exception);
-            }
-        }
-        return structgenATF;
-    }
+	
     /**
-     * Determines of all atoms on the AtomContainer have specified the right number the lone pair electrons.
+     * Determines of all atoms on the AtomContainer have the
+     * right number the lone pair electrons.
      */
 	public boolean isSaturated(IAtomContainer container) throws CDKException {
         return allSaturated(container);
     }
 
 	/**
-     * Determines of all atoms on the AtomContainer have specified the right number the lone pair electrons.
+     * Determines of all atoms on the AtomContainer have
+     * the right number the lone pair electrons.
 	 */
 	public boolean allSaturated(IAtomContainer ac) throws CDKException
 	{
         logger.debug("Are all atoms saturated?");
         for (int f = 0; f < ac.getAtomCount(); f++) {
-//        	if (!ac.getAtomAt(f).getSymbol().equals("C"))
-//        		if(!ac.getAtomAt(f).getSymbol().equals("H"))
-        			if (!isSaturated(ac.getAtom(f), ac)) 
-        				return false;
+        	if (!isSaturated(ac.getAtom(f), ac)) 
+        		return false;
         }
         return true;
     }
+	
 	/**
-	 * Checks wether an Atom is saturated their lone pair electrons by comparing it with known AtomTypes.
-     
-	 * @return       True, if it's right satured
+	 * Checks if an Atom is saturated their lone pair electrons
+	 * by comparing it with known AtomTypes.
+	 * 
+	 * @return       True, if it's right saturated
 	 */
-	public boolean isSaturated(IAtom atom, IAtomContainer ac) throws CDKException {
-		
-		IAtomType atomType = getAtomTypeFactory(atom.getBuilder()).getAtomType(atom.getSymbol());
-        Double bondOrderSum = ac.getBondOrderSum(atom);
-        if (bondOrderSum == CDKConstants.UNSET) bondOrderSum = 0.0;
-
-        Integer charge = atom.getFormalCharge();
-        if (charge == CDKConstants.UNSET) charge = 0;
-
-        Integer hcount = atom.getHydrogenCount();
-        if (hcount == CDKConstants.UNSET) hcount = 0;
-        
-        if(hcount == 0){
-			java.util.List atomsC = ac.getConnectedAtomsList(atom);
-			for(int i = 0 ; i < atomsC.size() ; i++)
-				if(((IAtom)atomsC.get(i)).getSymbol().equals("H"))
-					hcount++;
-			bondOrderSum -= hcount;
-		}
-		int valency = atomType.getValency();
-		
-		double nLonePair = (valency - (hcount + bondOrderSum) - charge) / 2;
-        try {
-        	logger.info("*** Checking saturation of atom "+ atom.getSymbol()+ "" + ac.getAtomNumber(atom) + " ***");
-            logger.info("bondOrderSum: " + bondOrderSum);
-            logger.info("valency: " + valency);
-            logger.info("hcount: " + hcount);
-            logger.info("cahrge: " + charge);
-        } catch (Exception exc) {
-            logger.debug(exc);
-        }
-        if((double)ac.getConnectedLonePairsCount(atom) != nLonePair){
-        	logger.info("*** Bad ! ***");
-        	return false;
-        }else{
-        	logger.info("*** Good ! ***");
-            return true;
-        }
+	public boolean isSaturated(IAtom atom, IAtomContainer ac) throws CDKException {	
+		IAtomType atomType = factory.getAtomType(atom.getAtomTypeName());
+		int lpCount = (Integer)atomType.getProperty(CDKConstants.LONE_PAIR_COUNT);
+		int foundLPCount = ac.getConnectedLonePairsCount(atom);
+        return foundLPCount >= lpCount;
     }
+	
 	/**
 	 * Saturates a molecule by setting appropriate number lone pair electrons.
 	 */
-	public void newSaturate(IAtomContainer atomContainer) throws CDKException {
+	public void saturate(IAtomContainer atomContainer) throws CDKException {
         logger.info("Saturating atomContainer by adjusting lone pair electrons...");
         boolean allSaturated = allSaturated(atomContainer);
         if (!allSaturated) {
             for(int i=0 ; i < atomContainer.getAtomCount() ; i++ ){
-            	newSaturate(atomContainer.getAtom(i), atomContainer);
+            	saturate(atomContainer.getAtom(i), atomContainer);
             }
         }
     }
+	
 	/**
-	 * Saturates a atom by setting appropriate number lone pair electrons.
+	 * Saturates an IAtom by adding the appropriate number lone pairs.
 	 */
-	public void newSaturate(IAtom atom, IAtomContainer ac) throws CDKException {
+	public void saturate(IAtom atom, IAtomContainer ac) throws CDKException {
         logger.info("Saturating atom by adjusting lone pair electrons...");
-        boolean isSaturated = isSaturated(atom, ac);
-        if (!isSaturated) {
-        	int nLonePairI = ac.getConnectedLonePairsCount(atom);
-    		IAtomType atomType = getAtomTypeFactory(atom.getBuilder()).getAtomType(atom.getSymbol());
-            
-            Double bondOrderSum = ac.getBondOrderSum(atom);
-            if (bondOrderSum == CDKConstants.UNSET) bondOrderSum = 0.0;
-
-            Integer charge = atom.getFormalCharge();
-            if (charge == CDKConstants.UNSET) charge = 0;
-
-            Integer hcount = atom.getHydrogenCount();
-            if (hcount == CDKConstants.UNSET) hcount = 0;
-
-            if(hcount == 0){
-    			java.util.List atomsC = ac.getConnectedAtomsList(atom);
-    			for(int i = 0 ; i < atomsC.size() ; i++)
-    				if(((IAtom)atomsC.get(i)).getSymbol().equals("H"))
-    					hcount++;
-    			bondOrderSum -= hcount;
-    		}
-    		int valency = atomType.getValency();
-    		
-    		double nLonePair = (valency - (hcount + bondOrderSum) - charge) / 2;
-    		ILonePair lp = atom.getBuilder().newLonePair(atom);
-			for (int j = 0; j < nLonePair - nLonePairI; j++)
-			{
-				ac.addLonePair(lp);
-			}
-            
-        }
+		IAtomType atomType = factory.getAtomType(atom.getAtomTypeName());
+		int lpCount = (Integer)atomType.getProperty(CDKConstants.LONE_PAIR_COUNT);
+		int missingLPs = lpCount - ac.getConnectedLonePairsCount(atom);
+		
+		for (int j = 0; j < missingLPs; j++) {
+			ILonePair lp = atom.getBuilder().newLonePair(atom);
+			ac.addLonePair(lp);
+		}
     }
+	
 }

@@ -284,7 +284,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	mol = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)O");
     	addImplicitHydrogens(mol);
     	LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    	lpcheck.newSaturate(mol);
+    	lpcheck.saturate(mol);
     	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
@@ -323,7 +323,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 //  	mol.getAtomAt(6).setFormalCharge(1);
     	addImplicitHydrogens(mol);
     	LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    	lpcheck.newSaturate(mol);
+    	lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
         AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -346,7 +346,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	mol = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("FC=CC=C");
     	addImplicitHydrogens(mol);
     	LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    	lpcheck.newSaturate(mol);
+    	lpcheck.saturate(mol);
     	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
@@ -369,7 +369,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	mol = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("FC#CF");
     	addImplicitHydrogens(mol);
     	LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    	lpcheck.newSaturate(mol);
+    	lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
         AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -394,7 +394,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	mol.getAtom(3).setFormalCharge(+1);
     	addImplicitHydrogens(mol);
     	LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    	lpcheck.newSaturate(mol);
+    	lpcheck.saturate(mol);
     	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
@@ -448,7 +448,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	mol = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=C=CC#N");
     	addImplicitHydrogens(mol);
     	LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    	lpcheck.newSaturate(mol);
+    	lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
         AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);

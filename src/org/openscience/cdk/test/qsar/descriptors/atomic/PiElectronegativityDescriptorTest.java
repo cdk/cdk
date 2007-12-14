@@ -69,7 +69,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles("FC");
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(10);
@@ -96,7 +96,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles("ClC");
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(10);
@@ -123,7 +123,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles("IC");
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(10);
@@ -150,7 +150,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles("BrC");
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(10);
@@ -177,7 +177,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles("OC");
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < 4; i++){
 			params[0] = new Integer(10);
@@ -204,7 +204,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles("C=O");
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(10);
@@ -233,7 +233,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		for (int i = 0 ; i < 3 ; i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 
@@ -260,7 +260,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < 3 ; i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -286,7 +286,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
@@ -313,7 +313,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 //			params[0] = new Integer(10);
@@ -342,7 +342,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(6);
@@ -371,7 +371,7 @@ public class PiElectronegativityDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(6);

@@ -74,7 +74,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		double result = ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.26; 
@@ -91,7 +91,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculatePlus(mol).getValue());
         
@@ -110,7 +110,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculatePlus(mol).getValue());
 
@@ -134,7 +134,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		descriptor.calculate(mol);
 		
@@ -158,7 +158,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		descriptor.calculate(mol);
 		
@@ -179,7 +179,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		descriptor.calculate(mol);
 		
@@ -200,7 +200,7 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		descriptor.calculate(mol);
 		

@@ -72,7 +72,7 @@ public class BondPartialTChargeDescriptorTest extends CDKTestCase {
         addExplicitHydrogens(mol);
         
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
         for (int i = 0 ; i < 2 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
@@ -90,7 +90,7 @@ public class BondPartialTChargeDescriptorTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles("C=CCBr");
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < 8 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();

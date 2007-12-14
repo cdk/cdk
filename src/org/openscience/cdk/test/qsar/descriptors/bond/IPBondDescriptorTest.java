@@ -67,7 +67,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getBond(3),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.80; 
@@ -84,7 +84,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getBond(4),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.95; 
@@ -101,7 +101,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.44; 
@@ -122,7 +122,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		descriptor.calculate(mol.getBond(0), mol);
 		IReactionSet reactionSet = descriptor.getReactionSet();
@@ -148,7 +148,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		descriptor.calculate(mol.getBond(0), mol);
 		IReactionSet reactionSet = descriptor.getReactionSet();
@@ -170,7 +170,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.44; 
@@ -191,7 +191,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.98; 
@@ -212,7 +212,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.47; 
@@ -238,7 +238,7 @@ public class IPBondDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.072; 

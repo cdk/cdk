@@ -63,7 +63,7 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
 		/* ionize(>C=O): C=CCC(=O)CC -> C=CCC(=O*)CC , set the reactive center*/
 		IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=CCC(=O)CC");
 		LonePairElectronChecker lpeCheck = new LonePairElectronChecker();
-		lpeCheck.newSaturate(reactant);
+		lpeCheck.saturate(reactant);
 		
 		java.util.Iterator atoms = reactant.atoms();
 		while (atoms.hasNext()) {
@@ -101,7 +101,7 @@ public class ElectronImpactNBEReactionTest extends CDKTestCase {
 		/* ionize(>C=O): C=CCC(=O)CC -> C=CCC(=O*)CC, without setting the reactive center*/
 		IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=CCC(=O)CC");
 		LonePairElectronChecker lpeCheck = new LonePairElectronChecker();
-		lpeCheck.newSaturate(reactant);
+		lpeCheck.saturate(reactant);
 		
 		
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();

@@ -91,7 +91,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
         addExplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.newSaturate(molecule);
+        lpcheck.saturate(molecule);
 		
         IAtom atom =  molecule.getAtom(2);
         molecule.addSingleElectron(new SingleElectron(atom));
@@ -112,7 +112,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 	    molecule1.addBond(0, 6, IBond.Order.SINGLE);
 	    molecule1.addBond(0, 7, IBond.Order.SINGLE);
 	    molecule1.addBond(3, 8, IBond.Order.SINGLE);
-        lpcheck.newSaturate(molecule1);
+        lpcheck.saturate(molecule1);
         IAtom atom1 =  molecule1.getAtom(2);
         molecule1.addSingleElectron(new SingleElectron(atom1));
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
@@ -146,7 +146,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
         addExplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.newSaturate(molecule);
+        lpcheck.saturate(molecule);
 		
         IAtom atom =  molecule.getAtom(2);
         molecule.addSingleElectron(new SingleElectron(atom));
@@ -161,7 +161,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		
 		IMolecule molecule1 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)C=O");
 		addExplicitHydrogens(molecule1);
-		lpcheck.newSaturate(molecule1);
+		lpcheck.saturate(molecule1);
 		IAtom atom1 =  molecule1.getAtom(4);
 		molecule1.addSingleElectron(new SingleElectron(atom1));	
 		selectron = molecule1.getConnectedLonePairsList(atom1);
@@ -182,7 +182,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CCC(=O)C(C)=O");
         addExplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.newSaturate(molecule);
+        lpcheck.saturate(molecule);
         
         IAtom atom =  molecule.getAtom(3);
         molecule.addSingleElectron(new SingleElectron(atom));
@@ -197,7 +197,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		
 		IMolecule molecule1 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CCC(=O)C(C)=O");
 		addExplicitHydrogens(molecule1);
-		lpcheck.newSaturate(molecule1);
+		lpcheck.saturate(molecule1);
 
         IAtom atom1 =  molecule1.getAtom(6);
         molecule1.addSingleElectron(new SingleElectron(atom1));
@@ -261,7 +261,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C(=O)O");
         addImplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.newSaturate(molecule);
+        lpcheck.saturate(molecule);
         
         IAtomContainerSet setOfMolecules = gR.getAllStructures(molecule);
         
@@ -275,13 +275,13 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 
 		IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+](-[O-])O");
         addImplicitHydrogens(molecule2);
-        lpcheck.newSaturate(molecule2);
+        lpcheck.saturate(molecule2);
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
         
         IMolecule molecule3 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C([O-])=[O+]");
         addImplicitHydrogens(molecule3);
-        lpcheck.newSaturate(molecule3);
+        lpcheck.saturate(molecule3);
         
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule3);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(2),qAC));
@@ -296,7 +296,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("F-C=C");
         addImplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.newSaturate(molecule);
+        lpcheck.saturate(molecule);
         
         IAtomContainerSet setOfMolecules = gR.getAllStructures(molecule);
         
@@ -304,7 +304,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 
         IMolecule molecule1 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[F+]=C-[C-]");
         addImplicitHydrogens(molecule1);
-        lpcheck.newSaturate(molecule1);
+        lpcheck.saturate(molecule1);
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
 	}
@@ -317,7 +317,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("Fc1ccccc1");
         addImplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.newSaturate(molecule);
+        lpcheck.saturate(molecule);
         
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
 		IAtomContainerSet setOfMolecules = gRI.getAllStructures(molecule);
@@ -326,13 +326,13 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 
         IMolecule molecule1 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[F+]=C1C=CC=C[C-]1");
         addImplicitHydrogens(molecule1);
-        lpcheck.newSaturate(molecule1);
+        lpcheck.saturate(molecule1);
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(1),qAC));
         
         IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[F+]=C1-C=C-[C-]-C=C1");
         addImplicitHydrogens(molecule2);
-        lpcheck.newSaturate(molecule2);
+        lpcheck.saturate(molecule2);
         qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getAtomContainer(2),qAC));
 	}
@@ -345,7 +345,7 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("n1ccccc1");
         addImplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.newSaturate(molecule);
+        lpcheck.saturate(molecule);
         
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
 		 IAtomContainerSet setOfMolecules = gRI.getAllStructures(molecule);

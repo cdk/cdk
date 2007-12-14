@@ -79,7 +79,7 @@ public class CleavageBondMultiReactionTest extends CDKTestCase {
 		
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CCc1ccc(C=O)cc1");
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(molecule);
+		lpcheck.saturate(molecule);
 		
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
@@ -110,7 +110,7 @@ public class CleavageBondMultiReactionTest extends CDKTestCase {
 		
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O=Cc1ccccc1");
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(molecule);
+		lpcheck.saturate(molecule);
 		
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		setOfReactants.addMolecule(molecule);
@@ -150,7 +150,7 @@ public class CleavageBondMultiReactionTest extends CDKTestCase {
 		
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CCc1cccc(CC)c1N(COC)C(=O)CCl");
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(molecule);
+		lpcheck.saturate(molecule);
 		
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);

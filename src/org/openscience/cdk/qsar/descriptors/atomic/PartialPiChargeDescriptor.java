@@ -34,8 +34,6 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
-import java.io.IOException;
-
 /**
  *  <p>The calculation of pi partial charges in pi-bonded systems of an heavy 
  *  atom was made by Saller-Gasteiger. It is based on the qualitative concept of resonance and
@@ -153,15 +151,8 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      */
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
     	if(lpeChecker){
-    		LonePairElectronChecker lpcheck;
-			try {
-				lpcheck = new LonePairElectronChecker();
-	    		lpcheck.newSaturate(ac);
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+    		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    		lpcheck.saturate(ac);
     	}
     	if (!isCachedAtomContainer(ac)) {
     		if(maxIterations != -1)

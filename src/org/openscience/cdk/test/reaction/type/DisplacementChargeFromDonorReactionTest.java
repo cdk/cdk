@@ -45,6 +45,7 @@ import org.openscience.cdk.reaction.type.DisplacementChargeFromDonorReaction;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 
@@ -81,8 +82,9 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		/*O-C=C*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O-C=C");
         addExplicitHydrogens(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(molecule);
+		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the centre active*/
@@ -106,7 +108,8 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 	    molecule2.addBond(2, 5, IBond.Order.SINGLE);
 	    molecule2.addBond(2, 6, IBond.Order.SINGLE);
 	    
-	    lpcheck.newSaturate(molecule2);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule2);
+	    lpcheck.saturate(molecule2);
 		setOfReactants.addMolecule(molecule2);
 		
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
@@ -123,8 +126,9 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		/*O-C=C*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O-C=C");
         addExplicitHydrogens(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(molecule);
+		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);
 		
 		/*manually put the centre active*/
@@ -155,8 +159,9 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		/*O-C=C*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("O-C=C");
         addExplicitHydrogens(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(molecule);
+		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the centre active*/
@@ -188,8 +193,9 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		/*C=N-C=C*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=N-C=C");
         addExplicitHydrogens(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(molecule);
+		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the centre active*/
@@ -216,8 +222,9 @@ public class DisplacementChargeFromDonorReactionTest extends CDKTestCase {
 		/*CC(=O)N*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC(=O)N");
         addExplicitHydrogens(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(molecule);
+		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the centre active*/

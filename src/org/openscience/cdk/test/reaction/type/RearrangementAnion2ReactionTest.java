@@ -218,7 +218,7 @@ public class RearrangementAnion2ReactionTest extends CDKTestCase {
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[F+]=C1C=CC=C[C-]1");
         addImplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.newSaturate(molecule);
+        lpcheck.saturate(molecule);
 		
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(molecule);
@@ -235,7 +235,7 @@ public class RearrangementAnion2ReactionTest extends CDKTestCase {
         /*[F+]=C1-[C=]-C-[C-]-C=C1*/
         IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[F+]=C1-C=C-[C-]-C=C1");
         addImplicitHydrogens(molecule2);
-        lpcheck.newSaturate(molecule2);
+        lpcheck.saturate(molecule2);
         
         QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
 		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));

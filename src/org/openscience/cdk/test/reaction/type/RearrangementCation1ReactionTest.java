@@ -177,7 +177,7 @@ public class RearrangementCation1ReactionTest extends CDKTestCase {
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]-O");
         addImplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.newSaturate(molecule);
+        lpcheck.saturate(molecule);
         return molecule;
 	}
 	/**
@@ -189,7 +189,7 @@ public class RearrangementCation1ReactionTest extends CDKTestCase {
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=[O+]");
         addImplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.newSaturate(molecule);
+        lpcheck.saturate(molecule);
         
         return molecule;
 	}

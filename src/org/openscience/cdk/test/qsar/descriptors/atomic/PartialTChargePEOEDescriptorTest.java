@@ -66,7 +66,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("FC");
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		addExplicitHydrogens(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
@@ -91,7 +91,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			params[0] = new Integer(i);
@@ -115,7 +115,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			params[0] = new Integer(i);
@@ -139,7 +139,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < 5 ; i++){
 			params[0] = new Integer(i);
@@ -163,7 +163,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(i);
@@ -187,7 +187,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 			params[0] = new Integer(i);

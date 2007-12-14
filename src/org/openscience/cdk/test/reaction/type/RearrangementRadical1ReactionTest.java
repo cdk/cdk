@@ -177,7 +177,7 @@ public class RearrangementRadical1ReactionTest extends CDKTestCase {
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C-O");
         addImplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.newSaturate(molecule);
+        lpcheck.saturate(molecule);
         IAtom atom =  molecule.getAtom(0);
         molecule.addSingleElectron(new SingleElectron(atom));
         atom.setHydrogenCount(2);
@@ -192,7 +192,7 @@ public class RearrangementRadical1ReactionTest extends CDKTestCase {
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
         addImplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        lpcheck.newSaturate(molecule);
+        lpcheck.saturate(molecule);
         IAtom atom1 =  molecule.getAtom(1);
         molecule.addElectronContainer(new SingleElectron(atom1));
         atom1.setHydrogenCount(1);

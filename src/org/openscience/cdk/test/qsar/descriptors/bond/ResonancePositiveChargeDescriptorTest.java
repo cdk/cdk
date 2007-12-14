@@ -73,11 +73,12 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
     	
         DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate( mol.getBond(0),mol).getValue());
         
 		assertEquals(testResult[0],dar.get(0), 0.01);
+		assertFalse(0.0 == dar.get(1));
 		assertEquals(testResult[1],dar.get(1), 1.6);
 
 		descriptor = new ResonancePositiveChargeDescriptor();
@@ -113,7 +114,7 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(0),mol).getValue());
 	        
@@ -155,7 +156,7 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(0),mol).getValue());
 			
@@ -192,7 +193,7 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(0),mol).getValue());
 			assertEquals(testResult[0],dar.get(0), 0.001);
@@ -225,7 +226,7 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(0),mol).getValue());
 	        assertEquals(testResult[0],dar.get(0), 0.001);
@@ -264,7 +265,7 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 		IMolecule mol = sp.parseSmiles("C=CCC(=[O+])CC");
 
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for(int i = 0; i < mol.getBondCount(); i++){	
 	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(i),mol).getValue());
@@ -281,7 +282,7 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 		mol.addSingleElectron(new SingleElectron(mol.getAtom(1)));
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for(int i = 6; i < 8; i++){	
 	        DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculate(mol.getBond(i),mol).getValue());
@@ -299,7 +300,7 @@ public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 
 		for(int i = 0; i < mol.getBondCount(); i++){
 			DoubleArrayResult dar;

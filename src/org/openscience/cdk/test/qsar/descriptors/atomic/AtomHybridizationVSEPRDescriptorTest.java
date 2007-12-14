@@ -244,7 +244,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for(int i = 0 ; i < 3; i++){
 	        assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).intValue());
@@ -265,7 +265,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
 		addImplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(mol);
+		lpcheck.saturate(mol);
 		
 		for(int i = 0 ; i < 3; i++){
 	        assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).intValue());

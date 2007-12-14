@@ -80,7 +80,7 @@ public class CleavageBondReactionTest extends CDKTestCase {
 		/*C=O*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CCc1ccc(C=O)cc1");
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-		lpcheck.newSaturate(molecule);
+		lpcheck.saturate(molecule);
 		
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
