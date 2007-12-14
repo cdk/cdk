@@ -27,6 +27,7 @@ package org.openscience.cdk.test.modulesuites;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.ReactionCoverageTest;
 import org.openscience.cdk.test.reaction.type.BreakingBondReactionTest;
 import org.openscience.cdk.test.reaction.type.CarbonylEliminationReactionTest;
 import org.openscience.cdk.test.reaction.type.CleavageBondMultiReactionTest;
@@ -62,6 +63,8 @@ public class MreactionTests {
     public static Test suite() {
         TestSuite suite= new TestSuite("CDK standard Tests");
 
+        suite.addTest(ReactionCoverageTest.suite());
+        
         // Individual Tests
         
         // from cdk.test.reaction
