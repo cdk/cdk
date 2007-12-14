@@ -864,9 +864,33 @@ Method </bibtex:title>
           <bibtex:title>Ultrafast shape recognition to search compound databases for similar molecular shapes</bibtex:title>
           <bibtex:journal>Journal of Computational Chemistry</bibtex:journal>
           <bibtex:year>2007</bibtex:year>
-          <bibtex:volume></bibtex:volume>
-          <bibtex:pages></bibtex:pages>
+          <bibtex:volume>28</bibtex:volume>
+          <bibtex:pages>1711-1723</bibtex:pages>
       </bibtex:article>
   </bibtex:entry>
+
+    <bibtex:entry id="GHOSE1986">
+        <bibtex:article>
+            <bibtex:author>Ghose, A.K. and Crippen, G.M.
+            </bibtex:author>
+            <bibtex:title>Atomic physicochemical parameters for three-dimensional structure-directed quantitative structure-activity relationships. I. Partition coefficients as a measure of hydrophobicity</bibtex:title>
+            <bibtex:journal>Journal of Computational Chemistry</bibtex:journal>
+            <bibtex:year>1986</bibtex:year>
+            <bibtex:volume>7</bibtex:volume>
+            <bibtex:pages>565-577</bibtex:pages>
+        </bibtex:article>
+    </bibtex:entry>
+
+    <bibtex:entry id="GHOSE1987">
+        <bibtex:article>
+            <bibtex:author>Ghose, A.K. and Crippen, G.M.
+            </bibtex:author>
+            <bibtex:title>Atomic physicochemical parameters for three-dimensional-structure-directed quantitative structure-activity relationships. 2. Modeling dispersive and hydrophobic interactions</bibtex:title>
+            <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
+            <bibtex:year>1987</bibtex:year>
+            <bibtex:volume>27</bibtex:volume>
+            <bibtex:pages>21-35</bibtex:pages>
+        </bibtex:article>
+    </bibtex:entry>
 
 </bibtex:file>
