@@ -25,20 +25,27 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.Iterator;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
+import org.openscience.cdk.tools.CDKValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.ValencyChecker;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
-
-import java.io.IOException;
-import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which a bond that is being broken to generate charges. 
@@ -75,7 +82,7 @@ import java.util.Iterator;
 public class BreakingBondReaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
-	private ValencyChecker valChecker;
+	private CDKValencyChecker valChecker;
 	private static final int BONDTOFLAG = 8;
 	/**
 	 * Constructor of the BreakingBondReaction object
@@ -83,14 +90,9 @@ public class BreakingBondReaction implements IReactionProcess{
 	 */
 	public BreakingBondReaction(){
 		logger = new LoggingTool(this);
-		try{
-			valChecker = new ValencyChecker();
-		}catch(IOException e){
-			e.printStackTrace();
-		}catch(ClassNotFoundException e){
-			e.printStackTrace();
-		}
+		valChecker = CDKValencyChecker.getInstance(NoNotificationChemObjectBuilder.getInstance());
 	}
+
 	/**
 	 *  Gets the specification attribute of the BreakingBondReaction object
 	 *
