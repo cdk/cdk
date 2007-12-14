@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.StructureResonanceGenerator;
 /**
 * TestSuite that runs all QSAR tests.
 *
-* @cdk.module test-extra
+* @cdk.module test-reaction
 */
 public class StructureResonanceGeneratorTest  extends CDKTestCase
 {

@@ -50,6 +50,7 @@ import org.openscience.cdk.test.reaction.type.RearrangementCation3ReactionTest;
 import org.openscience.cdk.test.reaction.type.RearrangementRadical1ReactionTest;
 import org.openscience.cdk.test.reaction.type.RearrangementRadical2ReactionTest;
 import org.openscience.cdk.test.reaction.type.RearrangementRadical3ReactionTest;
+import org.openscience.cdk.test.tools.StructureResonanceGeneratorTest;
 
 /**
  * TestSuite that runs all the tests for the CDK reaction module.
@@ -91,6 +92,7 @@ public class MreactionTests {
         suite.addTest(RearrangementRadical1ReactionTest.suite());
         suite.addTest(RearrangementRadical2ReactionTest.suite());
         suite.addTest(RearrangementRadical3ReactionTest.suite());
+        suite.addTest(StructureResonanceGeneratorTest.suite());
         
         return suite;
     }
