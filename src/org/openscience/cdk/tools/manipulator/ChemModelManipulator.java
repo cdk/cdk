@@ -167,6 +167,12 @@ public class ChemModelManipulator {
         IMolecule molecule = chemModel.getBuilder().newMolecule();
         if (chemModel.getMoleculeSet() != null) {
             IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+            for(int i=0;i<moleculeSet.getAtomContainerCount();i++){
+            	if(moleculeSet.getAtomContainer(i).getAtomCount()==0){
+            		moleculeSet.removeAtomContainer(i);
+            		i--;
+            	}
+            }
             moleculeSet.addMolecule(molecule);
         } else {
             IMoleculeSet moleculeSet = chemModel.getBuilder().newMoleculeSet();
