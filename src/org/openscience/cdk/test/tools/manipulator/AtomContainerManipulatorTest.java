@@ -30,6 +30,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
@@ -454,6 +455,18 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         assertTrue(intersection.contains(b2));
         assertTrue(intersection.contains(o));
         assertTrue(intersection.contains(c2));
+    }
+ 
+    public void testPerceiveAtomTypesAndConfigureAtoms() {
+    	IAtomContainer container = new AtomContainer();
+        container.addAtom(new Atom("R"));
+        
+        // the next should not throw an exception
+        try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+		} catch (CDKException e) {
+			fail("The percieveAtomTypesAndConfigureAtoms must not throw exceptions when no atom type is perceived.");
+		}
     }
     
 }
