@@ -156,7 +156,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         //logger.debug("LargestPiSystemDescriptor");
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(container);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
             CDKHueckelAromaticityDetector.detectAromaticity(container);
         }
         int largestPiSystemAtomsCount = 0;

@@ -370,7 +370,7 @@ public class SMARTSQueryTool {
 
         // check for atomaticity
         try {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(atomContainer);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
             CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
         } catch (CDKException e) {
             logger.debug(e.toString());

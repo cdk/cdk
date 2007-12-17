@@ -356,7 +356,7 @@ public class SmilesGenerator
 			}
 			rings = ringFinder.findAllRings(molecule);
 		}
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 		if (chiral && rings.getAtomContainerCount() > 0)
 		{

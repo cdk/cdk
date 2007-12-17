@@ -154,7 +154,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
 
         int aromaticAtomsCount = 0;
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(ac);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
             CDKHueckelAromaticityDetector.detectAromaticity(ac);
         }
         for (int i = 0; i < ac.getAtomCount(); i++) {

@@ -285,7 +285,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	addImplicitHydrogens(mol);
     	LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     	lpcheck.saturate(mol);
-    	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
         AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -347,7 +347,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	addImplicitHydrogens(mol);
     	LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     	lpcheck.saturate(mol);
-    	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
         AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -395,7 +395,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	addImplicitHydrogens(mol);
     	LonePairElectronChecker lpcheck = new LonePairElectronChecker();
     	lpcheck.saturate(mol);
-    	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
         AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);

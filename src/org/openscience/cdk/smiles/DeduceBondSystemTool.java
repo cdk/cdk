@@ -645,7 +645,7 @@ public class DeduceBondSystemTool {
             // for example pyrene 129-00-0
 
             for (int i = 0; i <= ringSet.getAtomContainerCount() - 1; i++) {
-            	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+            	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
                 CDKHueckelAromaticityDetector.detectAromaticity(molecule);
             }
 

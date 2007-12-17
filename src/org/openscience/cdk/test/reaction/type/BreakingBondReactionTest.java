@@ -88,7 +88,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
         addExplicitHydrogens(molecule);
         Assert.assertEquals(4, molecule.getAtomCount());
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(molecule);
 		Assert.assertEquals(2, molecule.getLonePairCount());
@@ -156,7 +156,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		/*C=O*/
 		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
 	    addExplicitHydrogens(molecule);
-	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 	    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -198,7 +198,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		/*C=O*/
 		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
 	    addExplicitHydrogens(molecule);
-	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -232,7 +232,7 @@ public class BreakingBondReactionTest extends CDKTestCase {
 		/*FCC*/
 		IMolecule molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("FCC");
         addExplicitHydrogens(molecule);
-	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);

@@ -297,7 +297,7 @@ public class MoleculeBuilder
             //Detect Aromacity in the benzene ring.
             try
             {
-            	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(benzene);
+            	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
                 CDKHueckelAromaticityDetector.detectAromaticity(benzene);
             }
             catch (Exception exc)

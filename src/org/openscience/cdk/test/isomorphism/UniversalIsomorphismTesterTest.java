@@ -86,8 +86,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 	{
 		AtomContainer mol = MoleculeFactory.makeAlphaPinene();
 		AtomContainer frag1 = MoleculeFactory.makeCyclohexene(); //one double bond in ring
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(frag1);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
 		CDKHueckelAromaticityDetector.detectAromaticity(mol);
 		CDKHueckelAromaticityDetector.detectAromaticity(frag1);
 		
@@ -139,8 +139,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 	{
 		AtomContainer mol = MoleculeFactory.makeAlphaPinene();
 		AtomContainer frag1 = MoleculeFactory.makeCyclohexane(); // no double bond in ring		
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(frag1);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
 		CDKHueckelAromaticityDetector.detectAromaticity(mol);
 		CDKHueckelAromaticityDetector.detectAromaticity(frag1);
         
@@ -155,8 +155,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 	{
 		AtomContainer mol = MoleculeFactory.makeIndole();
 		AtomContainer frag1 = MoleculeFactory.makePyrrole(); 
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(frag1);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
 		CDKHueckelAromaticityDetector.detectAromaticity(mol);
 		CDKHueckelAromaticityDetector.detectAromaticity(frag1);
 
@@ -183,8 +183,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 		
 		AtomContainer mol = MoleculeFactory.makeIndole();
 		AtomContainer frag1 = MoleculeFactory.makePyrrole(); 
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(frag1);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
 		CDKHueckelAromaticityDetector.detectAromaticity(mol);
 		CDKHueckelAromaticityDetector.detectAromaticity(frag1);
 
@@ -272,7 +272,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         
         // now apply aromaticity detection, then 8 overlaps should be found
         // see cdk-user@list.sf.net on 2005-06-16
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol1);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
 //		CDKHueckelAromaticityDetector.detectAromaticity(mol1);
 		Iterator<IAtom> atoms = mol1.atoms();
 		int i= 1;
@@ -283,7 +283,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 				" A:" + nextAtom.getFlag(CDKConstants.ISAROMATIC));
 			i++;
 		}
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol2);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
 		assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol2));
         list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
         assertEquals(8, list.size());

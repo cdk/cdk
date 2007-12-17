@@ -245,7 +245,7 @@ public class HydrogenRearrangementDeltaReaction implements IReactionProcess{
 		for(int i = 0; i < reactant.getAtomCount(); i++) {
 			IAtom  atomi = reactant.getAtom(i);
 			if(reactant.getConnectedSingleElectronsCount(atomi) == 1) {
-				AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(reactant);
+				AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
 				CDKHueckelAromaticityDetector.detectAromaticity(reactant);
 				hcg.getSpheres((Molecule) reactant, atomi, 5, true);
 				

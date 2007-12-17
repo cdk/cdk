@@ -509,7 +509,7 @@ public class AtomContainerManipulator {
 		return ret;
 	}
 
-	public static void percieveAtomTypesAndConfigerAtoms(IAtomContainer container) throws CDKException {
+	public static void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws CDKException {
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
         Iterator<IAtom> atoms = container.atoms();
         while (atoms.hasNext()) {

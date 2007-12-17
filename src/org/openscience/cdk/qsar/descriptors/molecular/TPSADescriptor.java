@@ -239,7 +239,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
         IRingSet rs = (new AllRingsFinder()).findAllRings(ac);
         // check aromaticity if the descriptor parameter is set to true
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(ac);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
             CDKHueckelAromaticityDetector.detectAromaticity(ac);
         }
 

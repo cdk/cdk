@@ -217,7 +217,7 @@ public class CDKUtilities {
 		
 		try {
 			// figure out which atoms are in aromatic rings:
-			AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 			CDKHueckelAromaticityDetector.detectAromaticity(m);
 			// figure out which rings are aromatic:
 			RingSetManipulator.markAromaticRings(rs);

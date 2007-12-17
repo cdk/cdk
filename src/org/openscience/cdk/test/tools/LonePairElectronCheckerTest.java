@@ -106,7 +106,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addBond(new Bond(c, h1));
 		m.addBond(new Bond(c, h2));
 		m.addBond(new Bond(c, O, IBond.Order.DOUBLE));
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		
 		assertTrue(lpcheck.allSaturated(m));
 	}
@@ -131,7 +131,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 			LonePair lp = new LonePair(s);
 			m.addLonePair(lp);
 		}
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		
 		assertFalse(lpcheck.allSaturated(m));
 	}
@@ -150,7 +150,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addAtom(cl);
 		m.addBond(b1);
 		
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		lpcheck.saturate(m);
 		assertEquals(3, m.getConnectedLonePairsCount(cl));
 		assertEquals(0, m.getConnectedLonePairsCount(c1));
@@ -171,7 +171,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addAtom(o);
 		m.addBond(b1);
 		
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		lpcheck.saturate(m);
 		assertEquals(2, m.getConnectedLonePairsCount(o));
 		assertEquals(0, m.getConnectedLonePairsCount(c1));
@@ -192,7 +192,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addBond(0, 3, IBond.Order.SINGLE);
 		m.addBond(0, 4, IBond.Order.SINGLE);
 		m.addBond(1, 5, IBond.Order.SINGLE);
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		lpcheck.saturate(m);
 		
 		assertEquals(2, m.getConnectedLonePairsCount(m.getAtom(1)));
@@ -215,7 +215,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addAtom(o);
 		m.addBond(b1);
 		
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		lpcheck.saturate(m);
 		
 		assertEquals(1, m.getConnectedLonePairsCount(o));
@@ -236,7 +236,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addAtom(o);
 		m.addBond(b1);
 		
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		lpcheck.saturate(m);
 		
 		assertEquals(3, m.getConnectedLonePairsCount(o));
@@ -252,7 +252,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		Molecule m = new Molecule();
 		m.addAtom(n);
 		
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		lpcheck.saturate(m);
 		
 		assertEquals(1, m.getConnectedLonePairsCount(n));
@@ -274,7 +274,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addAtom(n);
 		m.addBond(b1);
 		
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(m);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		lpcheck.saturate(m);
 		
 		assertEquals(0, m.getConnectedLonePairsCount(n));

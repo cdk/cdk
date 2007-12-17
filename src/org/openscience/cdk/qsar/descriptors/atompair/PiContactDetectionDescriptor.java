@@ -144,7 +144,7 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
 
         Molecule mol = new Molecule(ac);
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
             CDKHueckelAromaticityDetector.detectAromaticity(mol);
         }
         boolean piContact = false;

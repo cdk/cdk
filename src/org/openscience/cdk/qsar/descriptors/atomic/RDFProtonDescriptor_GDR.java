@@ -182,7 +182,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
             }
         }
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(varAtomContainer);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(varAtomContainer);
             CDKHueckelAromaticityDetector.detectAromaticity(varAtomContainer);
         }
         List rsAtom;

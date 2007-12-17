@@ -199,7 +199,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
         IRingSet rs = (IRingSet) new SSSRFinder(ac).findSSSR();
         IRingSet atomRingSet=null;
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(ac);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
             CDKHueckelAromaticityDetector.detectAromaticity(ac);
         }
         double xlogP = 0;

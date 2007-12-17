@@ -137,7 +137,7 @@ public class IPBondDescriptor implements IBondDescriptor {
 		double[] resultsH = null;
 		
 		try{
-			AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(localClone);
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(localClone);
 			CDKHueckelAromaticityDetector.detectAromaticity(localClone);
 		} catch (Exception exc){
             exc.printStackTrace();

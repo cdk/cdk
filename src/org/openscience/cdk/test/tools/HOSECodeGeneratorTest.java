@@ -86,7 +86,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
         Molecule mol1 = (Molecule) reader.read(new Molecule());
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol1);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         CDKHueckelAromaticityDetector.detectAromaticity(mol1);
         assertEquals(new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(2), 6),new HOSECodeGenerator().getHOSECode(mol1, mol1.getAtom(3), 6));
 	}
@@ -251,7 +251,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase
 		  addImplicitHydrogens(mol);
 
 		//MoleculeViewer2D.display(molecule, true);
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		CDKHueckelAromaticityDetector.detectAromaticity(mol);
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
 		String s = null;

@@ -128,7 +128,7 @@ public class Fingerprinter implements IFingerprinter {
 		logger.debug("Entering Fingerprinter");
 		logger.debug("Starting Aromaticity Detection");
 		long before = System.currentTimeMillis();
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(ac);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
 		CDKHueckelAromaticityDetector.detectAromaticity(ac);
 		long after = System.currentTimeMillis();
 		logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");

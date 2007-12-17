@@ -141,7 +141,7 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
         boolean isProtonInPiSystem = false;
         Molecule mol = new Molecule(clonedAtomContainer);
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
             CDKHueckelAromaticityDetector.detectAromaticity(mol);
         }
         if(atom.getSymbol().equals("H")) {

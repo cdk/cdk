@@ -82,7 +82,7 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 		/*C=O*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
         addExplicitHydrogens(molecule);
-	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -106,7 +106,7 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 	    molecule2.addBond(0, 2, IBond.Order.SINGLE);
 	    molecule2.addBond(0, 3, IBond.Order.SINGLE);
         
-	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule2);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
 		lpcheck.saturate(molecule2);
 		setOfReactants.addMolecule(molecule2);
 		
@@ -125,7 +125,7 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
         addExplicitHydrogens(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);
 		
@@ -154,7 +154,7 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 		/*C=O*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=O");
         addExplicitHydrogens(molecule);
-	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);
@@ -186,7 +186,7 @@ public class DisplacementChargeFromAcceptorReactionTest extends CDKTestCase {
 		/*C=O*/
 		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("N=CC");
         addExplicitHydrogens(molecule);
-	    AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(molecule);
 		setOfReactants.addMolecule(molecule);

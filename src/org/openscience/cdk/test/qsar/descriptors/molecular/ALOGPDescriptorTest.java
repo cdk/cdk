@@ -52,13 +52,13 @@ public class ALOGPDescriptorTest extends CDKTestCase {
         mol.addBond(new Bond(c3, c4));
         mol.addBond(new Bond(c4, cl));
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
         // add explicit hydrogens here
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         hydrogenAdder.addImplicitHydrogens(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
         DescriptorValue v = alogp.calculate(mol);
         assertEquals(0.5192, ((DoubleArrayResult) v.getValue()).get(0), 0.0001);

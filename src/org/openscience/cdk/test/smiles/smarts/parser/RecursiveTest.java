@@ -332,7 +332,7 @@ public class RecursiveTest extends CDKTestCase {
         int nmol = 0;
         while (reader.hasNext()) {
             IAtomContainer container = (IAtomContainer) reader.next();
-            AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(container);
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
             CDKHueckelAromaticityDetector.detectAromaticity(container);
             if (sqt.matches(container)) {
                 nmatch++;

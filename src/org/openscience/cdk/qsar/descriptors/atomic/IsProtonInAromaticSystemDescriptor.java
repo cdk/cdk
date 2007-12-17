@@ -143,7 +143,7 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
         int isProtonInAromaticSystem = 0;
 		IMolecule mol = new NNMolecule(clonedAtomContainer);
 		if (checkAromaticity) {
-			AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 			CDKHueckelAromaticityDetector.detectAromaticity(mol);
 		}
 		java.util.List neighboor = mol.getConnectedAtomsList(clonedAtom);

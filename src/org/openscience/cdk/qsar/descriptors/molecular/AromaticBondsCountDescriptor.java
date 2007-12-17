@@ -156,7 +156,7 @@ public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
 
         int aromaticBondsCount = 0;
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(ac);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
             CDKHueckelAromaticityDetector.detectAromaticity(ac);
         }
         Iterator bonds = ac.bonds();

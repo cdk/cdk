@@ -148,7 +148,7 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
 
         // aromaticity is detected prior to descriptor calculation if the respective parameter is set to true
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(ac);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
             CDKHueckelAromaticityDetector.detectAromaticity(ac);
         }
 

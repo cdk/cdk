@@ -138,7 +138,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		double[] resultsH;
 
 		/*control if it is into an aromatic or conjugated system*/
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(localClone);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(localClone);
 		CDKHueckelAromaticityDetector.detectAromaticity(localClone);
 		AtomContainerSet conjugatedPi = ConjugatedPiSystemsDetector.detect(localClone);
 		Iterator acI = conjugatedPi.atomContainers();

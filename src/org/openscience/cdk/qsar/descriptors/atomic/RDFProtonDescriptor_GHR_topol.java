@@ -183,7 +183,7 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
             }
         }
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(varAtomContainer);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(varAtomContainer);
             CDKHueckelAromaticityDetector.detectAromaticity(varAtomContainer);
         }
         List<IRing> rsAtom;

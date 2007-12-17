@@ -176,7 +176,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
     	}
         
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(container);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
             CDKHueckelAromaticityDetector.detectAromaticity(container);
         }
 

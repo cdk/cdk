@@ -80,7 +80,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     public void testDetectAromaticity_IAtomContainer() throws Exception {
         IMolecule mol = makeAromaticMolecule();
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(mol);
         assertTrue("Molecule is expected to be marked aromatic!", isAromatic);
 
@@ -140,7 +140,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     
     public void testPyridineOxide() throws Exception {
 		Molecule molecule = MoleculeFactory.makePyridineOxide();
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(molecule));
 	}
     
@@ -151,7 +151,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 		for (int i=0; i<6; i++) {
 			molecule.getAtom(i).setHybridization(IAtomType.Hybridization.SP2);
 		}
-		AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(molecule));
 	}
 
@@ -189,7 +189,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
                         true
                 };
         Molecule molecule = MoleculeFactory.makeAzulene();
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             assertEquals("Atom " + f + " is not correctly marked",
@@ -215,7 +215,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
                 true
         };
         //boolean isAromatic = false;
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             assertEquals(
@@ -238,7 +238,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
                 true,
                 true
         };
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             assertEquals(
@@ -255,7 +255,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     public void testThiazole() throws Exception {
         Molecule molecule = MoleculeFactory.makeThiazole();
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         assertTrue("Molecule is not detected as aromatic", CDKHueckelAromaticityDetector.detectAromaticity(molecule));
 
         for (int f = 0; f < molecule.getAtomCount(); f++) {
@@ -276,7 +276,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IMolecule mol = sp.parseSmiles("C1CCCc2c1cccc2");
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
         IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
         RingSetManipulator.markAromaticRings(rs);
@@ -324,7 +324,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IMolecule mol = sp.parseSmiles("O=c1cccccc1"); // tropone
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(mol));
         assertEquals(testResults.length, mol.getAtomCount());
         for (int f = 0; f < mol.getAtomCount(); f++) {
@@ -387,7 +387,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
@@ -427,7 +427,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
@@ -470,7 +470,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             assertEquals(testResults[f], molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
@@ -502,7 +502,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IMolecule molecule = (IMolecule) reader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
 
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 
         assertEquals(15, molecule.getBondCount());
@@ -519,7 +519,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      */
     public void testBenzene() throws Exception {
         Molecule molecule = MoleculeFactory.makeBenzene();
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         for (int f = 0; f < molecule.getAtomCount(); f++) {
             assertTrue(molecule.getAtom(f).getFlag(CDKConstants.ISAROMATIC));
@@ -529,7 +529,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     public void testCyclobutadiene() throws Exception {
         // anti-aromatic
         Molecule molecule = MoleculeFactory.makeCyclobutadiene();
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
         assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(molecule));
         for (int f = 0; f < molecule.getAtomCount(); f++) {

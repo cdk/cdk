@@ -144,7 +144,7 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
             throw new CDKException("Error during clone");
         }
         IBond clonedBond = localClone.getBond(atomContainer.getBondNumber(bond));
-        AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(localClone);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(localClone);
 
         cleanFlagReactiveCenter((IMolecule) localClone);
 

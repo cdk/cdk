@@ -294,7 +294,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
 
         // do aromaticity detecttion for calculating polarizability later on
         if (this.checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(molecule);
+        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
             CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         }
 

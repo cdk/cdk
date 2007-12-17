@@ -250,7 +250,7 @@ public class AllRingsFinderTest extends CDKTestCase
 			IAtomContainer ac = ringSet.getAtomContainer(i);
 			Molecule newMol = new Molecule(ac);
 			String title = "ring no. " + (i + 1);
-			AtomContainerManipulator.percieveAtomTypesAndConfigerAtoms(newMol);
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(newMol);
 			if (CDKHueckelAromaticityDetector.detectAromaticity(newMol)) title += " is aromatic";
 			listview.addStructure(newMol, title , false, false);
 		}
