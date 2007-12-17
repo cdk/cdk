@@ -46,11 +46,17 @@ public class AtomTypeManipulator {
 	
 	/**
 	 * Method that assign properties to an atom given a particular atomType.
+	 * An <code>IllegalArgumentException</code> is thrown if the given <code>IAtomType</code>
+	 * is null.
 	 *
-	 * @param  atom  Atom to configure
-	 * @param  atomType    AtomType
+	 * @param  atom     Atom to configure
+	 * @param  atomType AtomType. Must not be null.
 	 */
 	public static void configure(IAtom atom, IAtomType atomType) {
+		if (atomType == null) {
+			throw new IllegalArgumentException("The IAtomType was null.");
+		}
+		
 		atom.setSymbol(atomType.getSymbol());
 		atom.setAtomTypeName(atomType.getAtomTypeName());
         atom.setMaxBondOrder(atomType.getMaxBondOrder());
