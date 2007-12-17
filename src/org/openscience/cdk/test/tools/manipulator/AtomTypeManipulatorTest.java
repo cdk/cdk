@@ -56,6 +56,17 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
 		);
 	}
 	
+	public void testConfigure_IAtom_Null() {
+		IAtom atom = new NNAtom(Elements.CARBON);
+		IAtomType atomType = null;
+		try {
+			AtomTypeManipulator.configure(atom, atomType);
+			fail("Expected an IllegalArgumentException");
+		} catch (IllegalArgumentException exception) {
+			// OK, expected behavior
+		}
+	}
+	
 }
 
 
