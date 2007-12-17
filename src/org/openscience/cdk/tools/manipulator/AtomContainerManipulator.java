@@ -509,13 +509,23 @@ public class AtomContainerManipulator {
 		return ret;
 	}
 
+	/**
+	 * Convenience method to perceive atom types for all <code>IAtom</code>s in the
+	 * <code>IAtomContainer</code>, using the <code>CDKAtomTypeMatcher</code>. If the
+	 * matcher finds a matching atom type, the <code>IAtom</code> will be configured
+	 * to have the same properties as the <code>IAtomType</code>. If no matching atom
+	 * type is found, no configuration is performed.
+	 * 
+	 * @param container
+	 * @throws CDKException
+	 */
 	public static void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws CDKException {
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
         Iterator<IAtom> atoms = container.atoms();
         while (atoms.hasNext()) {
         	IAtom atom = atoms.next();
         	IAtomType matched = matcher.findMatchingAtomType(container, atom);
-        	AtomTypeManipulator.configure(atom, matched);
+        	if (matched != null) AtomTypeManipulator.configure(atom, matched);
         }
 	}
 	
