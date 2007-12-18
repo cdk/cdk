@@ -92,7 +92,10 @@ public class BreakingBondReaction implements IReactionProcess{
 	 */
 	public BreakingBondReaction(){
 		logger = new LoggingTool(this);
-		atMatcher = CDKAtomTypeMatcher.getInstance(NoNotificationChemObjectBuilder.getInstance());
+		atMatcher = CDKAtomTypeMatcher.getInstance(
+			NoNotificationChemObjectBuilder.getInstance(),
+			CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS
+		);
 	}
 
 	/**
