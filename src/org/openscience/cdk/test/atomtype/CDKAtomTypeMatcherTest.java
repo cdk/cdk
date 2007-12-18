@@ -30,6 +30,7 @@ import junit.framework.JUnit4TestAdapter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
@@ -61,6 +62,14 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 
     @Test public void testGetInstance_IChemObjectBuilder() throws CDKException {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
+        Assert.assertNotNull(matcher);
+    }
+
+    @Test public void testGetInstance_IChemObjectBuilder_int() throws CDKException {
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(
+        	DefaultChemObjectBuilder.getInstance(),
+        	CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS
+        );
         Assert.assertNotNull(matcher);
     }
 
@@ -1216,6 +1225,26 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 
     	mol.addAtom(new Atom("He"));
     	assertAtomType(testedAtomTypes, "He", atm.findMatchingAtomType(mol, mol.getAtom(0)));
+    }
+    
+    @Test public void testAssumeExplicitHydrogens() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(
+    		mol.getBuilder(),
+    		CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS
+    	);
+
+    	mol.addAtom(new Atom("O"));
+    	mol.getAtom(0).setFormalCharge(+1);
+    	Assert.assertNull(atm.findMatchingAtomType(mol, mol.getAtom(0)));
+    	
+    	for (int i=0; i<3; i++) {
+    		mol.addAtom(new Atom("H"));
+    		mol.addBond(new Bond(mol.getAtom(i+1), mol.getAtom(0), IBond.Order.SINGLE));
+    	}
+    	assertAtomType(testedAtomTypes, "O.plus", 
+    		atm.findMatchingAtomType(mol, mol.getAtom(0))
+    	);    	
     }
     
     @Test public void testStructGenMatcher() throws Exception {
