@@ -26,22 +26,25 @@ package org.openscience.cdk.test.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.openscience.cdk.test.QsarmolecularCoverageTest;
 import org.openscience.cdk.test.qsar.descriptors.molecular.*;
 
 
 /**
  * TestSuite that runs all the sample tests.
  *
- * @cdk.module test-qsarMolecular
+ * @cdk.module test-qsarmolecular
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MqsarMolecularTests {
+public class MqsarmolecularTests {
 
     public static Test suite() {
 
         TestSuite suite = new TestSuite("All QSAR Tests");
 
+        suite.addTest(QsarmolecularCoverageTest.suite());
         // Individual Tests - Please add correlatively	
 
 //      from cdk.test.qsar.molecular

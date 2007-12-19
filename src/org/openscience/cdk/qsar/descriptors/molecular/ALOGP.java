@@ -82,7 +82,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * </ol>
  * 
  * @author     Todd Martin
- * @cdk.module qsar
+ * @cdk.module qsarmolecular
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set    qsar-descriptors
  * @cdk.keyword logP

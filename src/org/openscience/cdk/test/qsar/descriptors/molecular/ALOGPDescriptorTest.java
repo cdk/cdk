@@ -17,7 +17,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Test suite for the alogp descriptor
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 public class ALOGPDescriptorTest extends MolecularDescriptorTest {
 
