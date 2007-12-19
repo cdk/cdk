@@ -24,10 +24,17 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.lang.reflect.Method;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.EStateAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -38,8 +45,6 @@ import org.openscience.cdk.tools.AtomicProperties;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
-import java.lang.reflect.Method;
-
 /**
  * This class calculates ALOGP (Ghose-Crippen LogKow) and the 
  * Ghose-Crippen molar refractivity @cdk.cite{GHOSE1986} @cdk.cite{GHOSE1987}.
@@ -49,8 +54,6 @@ import java.lang.reflect.Method;
  * will have hydrogens explicitly set. For SD files, this is usually not
  * a problem since hydrogens are explicit. But for the case of molecules
  * obtained from SMILES, hydrogens must be made explicit.
- *
-
  * 
  * <p>TODO: what should sub return if have missing fragment?
  * Just report sum for other fragments? Or report as -9999 and 
