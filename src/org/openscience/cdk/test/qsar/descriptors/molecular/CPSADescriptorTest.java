@@ -31,10 +31,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.CPSADescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 
@@ -44,13 +42,17 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-qsar
  */
 
-public class CPSADescriptorTest extends CDKTestCase {
+public class CPSADescriptorTest extends MolecularDescriptorTest {
 
     public CPSADescriptorTest() {
     }
 
     public static Test suite() {
         return new TestSuite(CPSADescriptorTest.class);
+    }
+
+    public void setUp() {
+    	descriptor = new CPSADescriptor();
     }
 
     public void testCPSA() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -61,7 +63,6 @@ public class CPSADescriptorTest extends CDKTestCase {
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
 
-        IMolecularDescriptor descriptor = new CPSADescriptor();
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
         /*
         System.out.println("Num ret = "+retval.size());

@@ -34,7 +34,6 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.BondCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -42,15 +41,18 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test-qsar
  */
 
-public class BondCountDescriptorTest extends CDKTestCase {
+public class BondCountDescriptorTest extends MolecularDescriptorTest {
 
 	private static final SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
-	private static final IMolecularDescriptor descriptor  = new BondCountDescriptor();
 	
     public  BondCountDescriptorTest() {}
 
     public static Test suite() {
         return new TestSuite(BondCountDescriptorTest.class);
+    }
+
+    public void setUp() {
+    	descriptor = new BondCountDescriptor();
     }
 
     public void testSingleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {

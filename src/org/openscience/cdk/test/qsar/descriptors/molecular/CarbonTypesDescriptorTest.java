@@ -2,13 +2,13 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.descriptors.molecular.CarbonTypesDescriptor;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -16,7 +16,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test-qsar
  */
 
-public class CarbonTypesDescriptorTest extends CDKTestCase {
+public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
 
     public CarbonTypesDescriptorTest() {
     }
@@ -24,13 +24,16 @@ public class CarbonTypesDescriptorTest extends CDKTestCase {
     public static Test suite() {
         return new TestSuite(CarbonTypesDescriptorTest.class);
     }
+    
+    public void setUp() {
+    	descriptor = new CarbonTypesDescriptor();
+    }
 
     public void testButane() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("CCCC");
 
-        CarbonTypesDescriptor ctypes = new CarbonTypesDescriptor();
-        IntegerArrayResult ret = (IntegerArrayResult) ctypes.calculate(mol).getValue();
+        IntegerArrayResult ret = (IntegerArrayResult) descriptor.calculate(mol).getValue();
 
         assertEquals(0, ret.get(0));
         assertEquals(0, ret.get(1));
@@ -48,8 +51,7 @@ public class CarbonTypesDescriptorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("C(C)(C)C=C(C)C");
 
-        CarbonTypesDescriptor ctypes = new CarbonTypesDescriptor();
-        IntegerArrayResult ret = (IntegerArrayResult) ctypes.calculate(mol).getValue();
+        IntegerArrayResult ret = (IntegerArrayResult) descriptor.calculate(mol).getValue();
 
         assertEquals(0, ret.get(0));
         assertEquals(0, ret.get(1));
@@ -66,8 +68,7 @@ public class CarbonTypesDescriptorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("C#CC(C)=C");
 
-        CarbonTypesDescriptor ctypes = new CarbonTypesDescriptor();
-        IntegerArrayResult ret = (IntegerArrayResult) ctypes.calculate(mol).getValue();
+        IntegerArrayResult ret = (IntegerArrayResult) descriptor.calculate(mol).getValue();
 
         assertEquals(1, ret.get(0));
         assertEquals(1, ret.get(1));

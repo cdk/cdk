@@ -1,17 +1,17 @@
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
+import javax.vecmath.Point2d;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.descriptors.molecular.ChiPathDescriptor;
+import org.openscience.cdk.qsar.descriptors.molecular.ChiPathClusterDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.test.CDKTestCase;
-
-import javax.vecmath.Point2d;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -19,13 +19,17 @@ import javax.vecmath.Point2d;
  * @cdk.module test-qsar
  */
 
-public class ChiPathDescriptorTest extends CDKTestCase {
+public class ChiPathDescriptorTest extends MolecularDescriptorTest {
 
     public ChiPathDescriptorTest() {
     }
 
     public static Test suite() {
         return new TestSuite(ChiPathDescriptorTest.class);
+    }
+
+    public void setUp() {
+    	descriptor = new ChiPathClusterDescriptor();
     }
 
     public void testDan64() throws CDKException {
@@ -51,9 +55,7 @@ public class ChiPathDescriptorTest extends CDKTestCase {
         IBond b4 = mol.getBuilder().newBond(a4, a2, IBond.Order.SINGLE);
         mol.addBond(b4);
 
-
-        ChiPathDescriptor desc = new ChiPathDescriptor();
-        DoubleArrayResult ret = (DoubleArrayResult) desc.calculate(mol).getValue();
+        DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
         assertEquals(2.9916, ret.get(0), 0.0001);
         assertEquals(1.8938, ret.get(1), 0.0001);
@@ -96,8 +98,7 @@ public class ChiPathDescriptorTest extends CDKTestCase {
         IBond b5 = mol.getBuilder().newBond(a5, a1, IBond.Order.SINGLE);
         mol.addBond(b5);
 
-        ChiPathDescriptor desc = new ChiPathDescriptor();
-        DoubleArrayResult ret = (DoubleArrayResult) desc.calculate(mol).getValue();
+        DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
         assertEquals(3.5355, ret.get(0), 0.0001);
         assertEquals(2.5000, ret.get(1), 0.0001);
@@ -140,8 +141,7 @@ public class ChiPathDescriptorTest extends CDKTestCase {
         IBond b5 = mol.getBuilder().newBond(a5, a1, IBond.Order.SINGLE);
         mol.addBond(b5);
 
-        ChiPathDescriptor desc = new ChiPathDescriptor();
-        DoubleArrayResult ret = (DoubleArrayResult) desc.calculate(mol).getValue();
+        DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
         assertEquals(3.5355, ret.get(0), 0.0001);
         assertEquals(2.5000, ret.get(1), 0.0001);
@@ -183,9 +183,7 @@ public class ChiPathDescriptorTest extends CDKTestCase {
         IBond b5 = mol.getBuilder().newBond(a5, a1, IBond.Order.SINGLE);
         mol.addBond(b5);
 
-
-        ChiPathDescriptor desc = new ChiPathDescriptor();
-        DoubleArrayResult ret = (DoubleArrayResult) desc.calculate(mol).getValue();
+        DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
         assertEquals(3.5355, ret.get(0), 0.0001);
         assertEquals(2.5000, ret.get(1), 0.0001);
@@ -242,9 +240,7 @@ public class ChiPathDescriptorTest extends CDKTestCase {
         IBond b8 = mol.getBuilder().newBond(a8, a2, IBond.Order.SINGLE);
         mol.addBond(b8);
 
-
-        ChiPathDescriptor desc = new ChiPathDescriptor();
-        DoubleArrayResult ret = (DoubleArrayResult) desc.calculate(mol).getValue();
+        DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
         assertEquals(5.9831, ret.get(0), 0.0001);
         assertEquals(3.7877, ret.get(1), 0.0001);

@@ -14,7 +14,6 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.FragmentComplexityDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.GenerateFragments;
 
 /**
@@ -22,7 +21,7 @@ import org.openscience.cdk.tools.GenerateFragments;
  * @author      chhoppe from EUROSCREEN
  * @cdk.module test-qsar
  */
-public class FragmentComplexityDescriptorTest extends CDKTestCase{
+public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
 	
 	public  FragmentComplexityDescriptorTest() {}
 	

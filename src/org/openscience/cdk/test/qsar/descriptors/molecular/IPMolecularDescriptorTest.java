@@ -31,7 +31,6 @@ import org.openscience.cdk.qsar.descriptors.molecular.IPMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
 /**
@@ -39,7 +38,8 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  *
  * @cdk.module test-qsar
  */
-public class IPMolecularDescriptorTest extends CDKTestCase {
+public class IPMolecularDescriptorTest extends MolecularDescriptorTest {
+	
 	IPMolecularDescriptor descriptor;
 	private SmilesParser sp;
 	/**
@@ -47,10 +47,9 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
 	 *
 	 */
     public  IPMolecularDescriptorTest() {
-    	descriptor = new IPMolecularDescriptor();
-    	sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-    	
+    	sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());    	
     }
+    
     /**
 	 *  A unit test suite for JUnit
 	 *
@@ -60,6 +59,10 @@ public class IPMolecularDescriptorTest extends CDKTestCase {
         return new TestSuite(IPMolecularDescriptorTest.class);
     }
 
+    public void setUp() {
+    	super.descriptor = new IPMolecularDescriptor();
+    }
+	
     /**
 	 *  A unit test for JUnit with C-Cl
      * 

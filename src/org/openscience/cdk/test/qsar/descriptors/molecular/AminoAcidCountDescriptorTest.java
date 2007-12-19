@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -28,11 +25,9 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.AminoAcidCountDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.ProteinBuilderTool;
 
 /**
@@ -41,17 +36,19 @@ import org.openscience.cdk.tools.ProteinBuilderTool;
  * @cdk.module test-qsar
  */
  
-public class AminoAcidCountDescriptorTest extends CDKTestCase {
+public class AminoAcidCountDescriptorTest extends MolecularDescriptorTest {
 	
 	public  AminoAcidCountDescriptorTest() {}
     
 	public static Test suite() {
 		return new TestSuite(AminoAcidCountDescriptorTest.class);
 	}
-    
+
+    protected void setUp() throws CDKException {
+        descriptor = new AminoAcidCountDescriptor();
+    }
+
 	public void testAACount() throws CDKException {
-        IMolecularDescriptor descriptor = new AminoAcidCountDescriptor();
-        
         BioPolymer protein = ProteinBuilderTool.createProtein("ARNDCFQEGHIPLKMSTYVW");
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         assertTrue(result instanceof IntegerArrayResult);
@@ -63,8 +60,6 @@ public class AminoAcidCountDescriptorTest extends CDKTestCase {
 	}
 
 	public void testFCount() throws CDKException {
-        IMolecularDescriptor descriptor = new AminoAcidCountDescriptor();
-        
         BioPolymer protein = ProteinBuilderTool.createProtein("FF");
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         assertTrue(result instanceof IntegerArrayResult);
@@ -74,8 +69,6 @@ public class AminoAcidCountDescriptorTest extends CDKTestCase {
 	}
 
 	public void testTCount() throws CDKException {
-        IMolecularDescriptor descriptor = new AminoAcidCountDescriptor();
-        
         BioPolymer protein = ProteinBuilderTool.createProtein("TT");
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         assertTrue(result instanceof IntegerArrayResult);

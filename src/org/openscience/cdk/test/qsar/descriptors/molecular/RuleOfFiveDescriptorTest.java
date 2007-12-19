@@ -29,11 +29,9 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.RuleOfFiveDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -41,7 +39,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test-qsar
  */
 
-public class RuleOfFiveDescriptorTest extends CDKTestCase {
+public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
 
     public RuleOfFiveDescriptorTest() {
     }
@@ -50,8 +48,11 @@ public class RuleOfFiveDescriptorTest extends CDKTestCase {
         return new TestSuite(RuleOfFiveDescriptorTest.class);
     }
 
+    public void setUp() {
+    	descriptor = new RuleOfFiveDescriptor();
+    }
+
     public void testRuleOfFiveDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new RuleOfFiveDescriptor();
         Object[] params = { Boolean.TRUE };
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

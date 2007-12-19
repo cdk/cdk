@@ -2,16 +2,15 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.ALOGP;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -20,9 +19,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsar
  */
-public class ALOGPDescriptorTest extends CDKTestCase {
+public class ALOGPDescriptorTest extends MolecularDescriptorTest {
 
-    private IMolecularDescriptor alogp;
     private CDKHydrogenAdder hydrogenAdder;
 
     public static Test suite() {
@@ -30,7 +28,7 @@ public class ALOGPDescriptorTest extends CDKTestCase {
     }
 
     protected void setUp() throws CDKException {
-        alogp = new ALOGP();
+        descriptor = new ALOGP();
         hydrogenAdder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
     }
 
@@ -60,7 +58,7 @@ public class ALOGPDescriptorTest extends CDKTestCase {
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
-        DescriptorValue v = alogp.calculate(mol);
+        DescriptorValue v = descriptor.calculate(mol);
         assertEquals(0.5192, ((DoubleArrayResult) v.getValue()).get(0), 0.0001);
         assertEquals(19.1381, ((DoubleArrayResult) v.getValue()).get(2), 0.0001);
     }

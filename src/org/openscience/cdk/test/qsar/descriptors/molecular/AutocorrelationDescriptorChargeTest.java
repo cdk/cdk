@@ -11,13 +11,11 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorCharge;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-qsar
  */
-
-public class AutocorrelationDescriptorChargeTest extends CDKTestCase {
+public class AutocorrelationDescriptorChargeTest extends MolecularDescriptorTest {
 
 	public AutocorrelationDescriptorChargeTest(String name) {
 		super(name);
@@ -26,6 +24,10 @@ public class AutocorrelationDescriptorChargeTest extends CDKTestCase {
 	public static Test suite() {
 		return new TestSuite(AutocorrelationDescriptorChargeTest.class);
 	}
+
+	public void setUp() {
+		descriptor = new AutocorrelationDescriptorCharge();
+	}
 	
 	public void testcalculate_IAtomContainer() throws Exception {
 		String filename = "data/mdl/clorobenzene.mol";
@@ -33,7 +35,7 @@ public class AutocorrelationDescriptorChargeTest extends CDKTestCase {
 				filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins);
 		IMolecule container = (Molecule) reader.read((ChemObject) new Molecule());
-		DescriptorValue count = new AutocorrelationDescriptorCharge().calculate(container);
+		DescriptorValue count = descriptor.calculate(container);
 		System.out.println(count.getValue());
 		fail("Not validated yet");
 	}

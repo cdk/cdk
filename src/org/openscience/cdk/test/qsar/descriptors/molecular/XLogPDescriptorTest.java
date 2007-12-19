@@ -29,11 +29,9 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -41,13 +39,17 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test-qsar
  */
 
-public class XLogPDescriptorTest extends CDKTestCase {
+public class XLogPDescriptorTest extends MolecularDescriptorTest {
 
     public XLogPDescriptorTest() {
     }
 
     public static Test suite() {
         return new TestSuite(XLogPDescriptorTest.class);
+    }
+    
+    public void setUp() {
+    	descriptor = new XLogPDescriptor();
     }
 
 //	public void testXLogPDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -68,7 +70,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
 //}
 
     public void testno688() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -80,7 +81,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
 
     public void testno1596() throws ClassNotFoundException, CDKException, java.lang.Exception {
         // the xlogp program value is 0.44 because of paralleled donor pair correction factor
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -91,7 +91,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
     }
 
     public void testno367() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -102,7 +101,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
     }
 
     public void testno1837() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -113,7 +111,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
     }
 
     public void testno87() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -124,7 +121,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
     }
 
     public void testno1782() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -135,7 +131,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
     }
 
     public void testno30() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -146,7 +141,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
     }
 
     public void testno937() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -157,7 +151,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
     }
 
     public void testno990() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -168,7 +161,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
     }
 
     public void testno1000() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -179,7 +171,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
     }
 
     public void testApirinBug1296383() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -190,7 +181,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
     }
 
     public void testno1429() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -201,7 +191,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
     }
 
     public void testno1274() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -215,7 +204,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
         //xlogp program gives a result of -0.89, because one N is classified as in ring and not as amid
         //if one takes a 5 or 7 ring than the program assignes amid ... strange
         //sometimes amid is O=C-N-C=O sometimes not...
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -227,7 +215,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
 
     public void testno498() throws ClassNotFoundException, CDKException, java.lang.Exception {
         //even here the amid assignment is very strange
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -239,7 +226,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
 
     public void testAprindine() throws ClassNotFoundException, CDKException, java.lang.Exception {
         //even here the amid assignment is very strange
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -250,7 +236,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
     }
 
     public void test1844() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -262,7 +247,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
     }
 
     public void test1810() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -276,7 +260,6 @@ public class XLogPDescriptorTest extends CDKTestCase {
      * @cdk.inchi InChI=1/C23H20N2O3S/c26-22-21(16-17-29(28)20-14-8-3-9-15-20)23(27)25(19-12-6-2-7-13-19)24(22)18-10-4-1-5-11-18/h1-15,21H,16-17H2
      */
     public void test1822() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new XLogPDescriptor();
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

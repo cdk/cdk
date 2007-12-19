@@ -29,17 +29,15 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WienerNumbersDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @cdk.module test-qsar
  */
-public class WienerNumbersDescriptorTest extends CDKTestCase {
+public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
 
     public WienerNumbersDescriptorTest() {
     }
@@ -47,10 +45,13 @@ public class WienerNumbersDescriptorTest extends CDKTestCase {
     public static Test suite() {
         return new TestSuite(WienerNumbersDescriptorTest.class);
     }
+    
+    public void setUp() {
+    	descriptor = new WienerNumbersDescriptor();
+    }
 
     public void testWienerNumbersDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         double [] testResult = {18, 2};
-        IMolecularDescriptor descriptor = new WienerNumbersDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
         AtomContainerManipulator.removeHydrogens(mol);

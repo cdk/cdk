@@ -25,14 +25,13 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanNumberDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -40,8 +39,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsar
  */
-
-public class PetitjeanNumberDescriptorTest extends CDKTestCase {
+public class PetitjeanNumberDescriptorTest extends MolecularDescriptorTest {
 
     public PetitjeanNumberDescriptorTest() {
     }
@@ -50,8 +48,11 @@ public class PetitjeanNumberDescriptorTest extends CDKTestCase {
         return new TestSuite(PetitjeanNumberDescriptorTest.class);
     }
 
+    public void setUp() {
+    	descriptor = new PetitjeanNumberDescriptor();
+    }
+
     public void testPetitjeanNumberDescriptor() throws java.lang.Exception {
-        IMolecularDescriptor descriptor = new PetitjeanNumberDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
         AtomContainerManipulator.removeHydrogens(mol);
@@ -59,7 +60,6 @@ public class PetitjeanNumberDescriptorTest extends CDKTestCase {
     }
 
     public void testSingleAtomCase() throws CDKException {
-        IMolecularDescriptor descriptor = new PetitjeanNumberDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O");
         assertEquals(0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);

@@ -36,10 +36,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanShapeIndexDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -48,7 +46,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-qsar
  */
 
-public class PetitjeanShapeIndexDescriptorTest extends CDKTestCase {
+public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
 
     public PetitjeanShapeIndexDescriptorTest() {
     }
@@ -57,9 +55,11 @@ public class PetitjeanShapeIndexDescriptorTest extends CDKTestCase {
         return new TestSuite(PetitjeanShapeIndexDescriptorTest.class);
     }
 
-    public void testPetitjeanShapeIndexDescriptor() throws ClassNotFoundException, CDKException, Exception {
-        IMolecularDescriptor descriptor = new PetitjeanShapeIndexDescriptor();
+    public void setUp() {
+    	descriptor = new PetitjeanShapeIndexDescriptor();
+    }
 
+    public void testPetitjeanShapeIndexDescriptor() throws ClassNotFoundException, CDKException, Exception {
         // first molecule is nbutane, second is naphthalene
         String filename = "data/mdl/petitejean.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

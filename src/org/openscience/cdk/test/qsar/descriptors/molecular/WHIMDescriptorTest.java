@@ -31,10 +31,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WHIMDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 
@@ -44,13 +42,17 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-qsar
  */
 
-public class WHIMDescriptorTest extends CDKTestCase {
+public class WHIMDescriptorTest extends MolecularDescriptorTest {
 
     public WHIMDescriptorTest() {
     }
 
     public static Test suite() {
         return new TestSuite(WHIMDescriptorTest.class);
+    }
+    
+    public void setUp() {
+    	descriptor = new WHIMDescriptor();
     }
 
     public void testWHIM() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -61,7 +63,6 @@ public class WHIMDescriptorTest extends CDKTestCase {
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
 
-        IMolecularDescriptor descriptor = new WHIMDescriptor();
         Object[] params = new Object[1];
         params[0] = new String("unity");
         descriptor.setParameters(params);
@@ -71,6 +72,7 @@ public class WHIMDescriptorTest extends CDKTestCase {
             //logger.debug( retval.get(i) );
         }
 
+        fail("This descriptor is not tested.");
         /*
         assertEquals(1756.5060703860984, ((Double)retval.get(0)).doubleValue(), 0.00000001);
         assertEquals(41.91069159994975,  ((Double)retval.get(1)).doubleValue(), 0.00000001);

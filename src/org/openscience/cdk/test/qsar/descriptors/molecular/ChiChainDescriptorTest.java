@@ -1,7 +1,10 @@
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
+import javax.vecmath.Point2d;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -9,9 +12,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.descriptors.molecular.ChiChainDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.test.CDKTestCase;
-
-import javax.vecmath.Point2d;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -19,13 +19,17 @@ import javax.vecmath.Point2d;
  * @cdk.module test-qsar
  */
 
-public class ChiChainDescriptorTest extends CDKTestCase {
+public class ChiChainDescriptorTest extends MolecularDescriptorTest {
 
     public ChiChainDescriptorTest() {
     }
 
     public static Test suite() {
         return new TestSuite(ChiChainDescriptorTest.class);
+    }
+
+    public void setUp() {
+    	descriptor = new ChiChainDescriptor();
     }
 
     public void testDan64() throws CDKException {
@@ -51,9 +55,7 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         IBond b4 = mol.getBuilder().newBond(a4, a2, IBond.Order.SINGLE);
         mol.addBond(b4);
 
-
-        ChiChainDescriptor desc = new ChiChainDescriptor();
-        DoubleArrayResult ret = (DoubleArrayResult) desc.calculate(mol).getValue();
+        DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
         assertEquals(0.2887, ret.get(0), 0.0001);
         assertEquals(0.2887, ret.get(1), 0.0001);
@@ -93,8 +95,7 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         IBond b5 = mol.getBuilder().newBond(a5, a1, IBond.Order.SINGLE);
         mol.addBond(b5);
 
-        ChiChainDescriptor desc = new ChiChainDescriptor();
-        DoubleArrayResult ret = (DoubleArrayResult) desc.calculate(mol).getValue();
+        DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
         assertEquals(0.0000, ret.get(0), 0.0001);
         assertEquals(0.0000, ret.get(1), 0.0001);
@@ -136,8 +137,7 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         IBond b5 = mol.getBuilder().newBond(a5, a1, IBond.Order.SINGLE);
         mol.addBond(b5);
 
-        ChiChainDescriptor desc = new ChiChainDescriptor();
-        DoubleArrayResult ret = (DoubleArrayResult) desc.calculate(mol).getValue();
+        DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
         assertEquals(0.0000, ret.get(0), 0.0001);
         assertEquals(0.0000, ret.get(1), 0.0001);
@@ -178,9 +178,7 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         IBond b5 = mol.getBuilder().newBond(a5, a1, IBond.Order.SINGLE);
         mol.addBond(b5);
 
-
-        ChiChainDescriptor desc = new ChiChainDescriptor();
-        DoubleArrayResult ret = (DoubleArrayResult) desc.calculate(mol).getValue();
+        DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
         assertEquals(0.0000, ret.get(0), 0.0001);
         assertEquals(0.0000, ret.get(1), 0.0001);
@@ -236,9 +234,7 @@ public class ChiChainDescriptorTest extends CDKTestCase {
         IBond b8 = mol.getBuilder().newBond(a8, a2, IBond.Order.SINGLE);
         mol.addBond(b8);
 
-
-        ChiChainDescriptor desc = new ChiChainDescriptor();
-        DoubleArrayResult ret = (DoubleArrayResult) desc.calculate(mol).getValue();
+        DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
         assertEquals(0.0000, ret.get(0), 0.0001);
         assertEquals(0.0000, ret.get(1), 0.0001);

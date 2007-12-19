@@ -25,14 +25,13 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -40,10 +39,9 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test-qsar
  */
 
-public class TPSADescriptorTest extends CDKTestCase {
+public class TPSADescriptorTest extends MolecularDescriptorTest {
 
     private SmilesParser sp;
-    private IMolecularDescriptor descriptor;
 
     public TPSADescriptorTest() {
     }
@@ -51,7 +49,7 @@ public class TPSADescriptorTest extends CDKTestCase {
     public static Test suite() {
         return new TestSuite(TPSADescriptorTest.class);
     }
-
+    
     protected void setUp() throws CDKException {
         sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         descriptor = new TPSADescriptor();

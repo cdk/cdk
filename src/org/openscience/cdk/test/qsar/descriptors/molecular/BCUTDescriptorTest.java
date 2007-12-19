@@ -19,22 +19,21 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
+import java.io.InputStream;
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.io.InputStream;
-import java.util.List;
 
 
 /**
@@ -43,13 +42,17 @@ import java.util.List;
  * @cdk.module test-qsar
  */
 
-public class BCUTDescriptorTest extends CDKTestCase {
+public class BCUTDescriptorTest extends MolecularDescriptorTest {
 
     public BCUTDescriptorTest() {
     }
 
     public static Test suite() {
         return new TestSuite(BCUTDescriptorTest.class);
+    }
+
+    public void setUp() {
+    	descriptor = new BCUTDescriptor();
     }
 
     public void testBCUT() throws Exception {
@@ -60,7 +63,6 @@ public class BCUTDescriptorTest extends CDKTestCase {
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
 
-        IMolecularDescriptor descriptor = new BCUTDescriptor();
         Object[] params = new Object[3];
         params[0] = new Integer(2);
         params[1] = new Integer(2);

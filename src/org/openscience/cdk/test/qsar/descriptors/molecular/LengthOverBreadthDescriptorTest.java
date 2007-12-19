@@ -12,10 +12,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.LengthOverBreadthDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -24,13 +22,17 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-qsar
  */
 
-public class LengthOverBreadthDescriptorTest extends CDKTestCase {
+public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
 
     public LengthOverBreadthDescriptorTest() {
     }
 
     public static Test suite() {
         return new TestSuite(LengthOverBreadthDescriptorTest.class);
+    }
+
+    public void setUp() {
+    	descriptor = new LengthOverBreadthDescriptor();
     }
 
     public void testLOBDescriptorCholesterol() throws ClassNotFoundException, CDKException, Exception {
@@ -41,7 +43,6 @@ public class LengthOverBreadthDescriptorTest extends CDKTestCase {
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
 
-        IMolecularDescriptor descriptor = new LengthOverBreadthDescriptor();
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
         Assert.assertEquals(3.560092, result.get(0), 0.001);
@@ -56,7 +57,6 @@ public class LengthOverBreadthDescriptorTest extends CDKTestCase {
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(1);
 
-        IMolecularDescriptor descriptor = new LengthOverBreadthDescriptor();
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
         Assert.assertEquals(1.1476784, result.get(0), 0.000001);
@@ -71,7 +71,6 @@ public class LengthOverBreadthDescriptorTest extends CDKTestCase {
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(2);
 
-        IMolecularDescriptor descriptor = new LengthOverBreadthDescriptor();
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
         Assert.assertEquals(1.3083278, result.get(0), 0.000001);
@@ -86,7 +85,6 @@ public class LengthOverBreadthDescriptorTest extends CDKTestCase {
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(3);
 
-        IMolecularDescriptor descriptor = new LengthOverBreadthDescriptor();
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
         Assert.assertEquals(2.1251065, result.get(0), 0.000001);

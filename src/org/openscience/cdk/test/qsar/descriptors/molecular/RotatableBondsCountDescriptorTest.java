@@ -29,11 +29,9 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.RotatableBondsCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -41,7 +39,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test-qsar
  */
 
-public class RotatableBondsCountDescriptorTest extends CDKTestCase {
+public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
 
     public RotatableBondsCountDescriptorTest() {
     }
@@ -50,8 +48,11 @@ public class RotatableBondsCountDescriptorTest extends CDKTestCase {
         return new TestSuite(RotatableBondsCountDescriptorTest.class);
     }
 
+    public void setUp() {
+    	descriptor = new RotatableBondsCountDescriptor();
+    }
+
     public void testRotatableBondsCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         Object[] params = {new Boolean(true)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

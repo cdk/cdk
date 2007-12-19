@@ -11,16 +11,19 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorPolarizability;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-qsar
  */
 
-public class AutocorrelationDescriptorPolarizabilityTest extends CDKTestCase {
+public class AutocorrelationDescriptorPolarizabilityTest extends MolecularDescriptorTest {
 
 	public AutocorrelationDescriptorPolarizabilityTest(String name) {
 		super(name);
+	}
+	
+	public void setUp() {
+		descriptor = new AutocorrelationDescriptorPolarizability();
 	}
 
 	public static Test suite() {
@@ -33,7 +36,7 @@ public class AutocorrelationDescriptorPolarizabilityTest extends CDKTestCase {
 				filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins);
 		IMolecule container = (Molecule) reader.read((ChemObject) new Molecule());
-		DescriptorValue count = new AutocorrelationDescriptorPolarizability().calculate(container);
+		DescriptorValue count = descriptor.calculate(container);
 		System.out.println(count.getValue());
 
 		fail("Not validated yet");

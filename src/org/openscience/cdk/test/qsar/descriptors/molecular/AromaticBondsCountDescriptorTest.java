@@ -23,30 +23,28 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
+import java.util.Iterator;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.AromaticBondsCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
-
-import java.util.Iterator;
 
 /**
  * TestSuite that runs all QSAR tests.
  *
  * @cdk.module test-qsar
  */
-
-public class AromaticBondsCountDescriptorTest extends CDKTestCase {
+public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
 
     public AromaticBondsCountDescriptorTest() {
     }
@@ -55,8 +53,11 @@ public class AromaticBondsCountDescriptorTest extends CDKTestCase {
         return new TestSuite(AromaticBondsCountDescriptorTest.class);
     }
 
+    public void setUp() {
+    	descriptor = new AromaticBondsCountDescriptor();
+    }
+    
     public void testAromaticBondsCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new AromaticBondsCountDescriptor();
         Object[] params = {true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -69,7 +70,6 @@ public class AromaticBondsCountDescriptorTest extends CDKTestCase {
     	for (Iterator bonds=molecule.bonds(); bonds.hasNext();) {
     		((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
     	}
-    	IMolecularDescriptor descriptor = new AromaticBondsCountDescriptor();
     	assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
     }
 

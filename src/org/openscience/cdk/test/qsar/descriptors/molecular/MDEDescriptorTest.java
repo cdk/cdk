@@ -13,7 +13,6 @@ import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.descriptors.molecular.MDEDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -22,7 +21,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-qsar
  */
 
-public class MDEDescriptorTest extends CDKTestCase {
+public class MDEDescriptorTest extends MolecularDescriptorTest {
 
     public MDEDescriptorTest() {
     }
@@ -31,6 +30,9 @@ public class MDEDescriptorTest extends CDKTestCase {
         return new TestSuite(MDEDescriptorTest.class);
     }
 
+    public void setUp() {
+    	descriptor = new MDEDescriptor();
+    }
 
     public void testMDE1() throws ClassNotFoundException, CDKException, Exception {
         String filename = "data/mdl/mdeotest.sdf";
@@ -40,8 +42,7 @@ public class MDEDescriptorTest extends CDKTestCase {
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
 
-        MDEDescriptor desc = new MDEDescriptor();
-        DoubleArrayResult result = (DoubleArrayResult) desc.calculate(ac).getValue();
+        DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
         for (int i = 0; i < 19; i++) System.out.println(result.get(i));
         

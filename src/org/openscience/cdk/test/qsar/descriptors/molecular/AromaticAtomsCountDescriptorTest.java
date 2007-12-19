@@ -34,12 +34,10 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.AromaticAtomsCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -47,7 +45,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test-qsar
  */
 
-public class AromaticAtomsCountDescriptorTest extends CDKTestCase {
+public class AromaticAtomsCountDescriptorTest extends MolecularDescriptorTest {
 
     public AromaticAtomsCountDescriptorTest() {
     }
@@ -55,9 +53,12 @@ public class AromaticAtomsCountDescriptorTest extends CDKTestCase {
     public static Test suite() {
         return new TestSuite(AromaticAtomsCountDescriptorTest.class);
     }
+    
+    public void setUp() {
+    	descriptor = new AromaticAtomsCountDescriptor();
+    }
 
     public void testAromaticAtomsCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new AromaticAtomsCountDescriptor();
         Object[] params = {new Boolean(true)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -70,7 +71,6 @@ public class AromaticAtomsCountDescriptorTest extends CDKTestCase {
     	for (Iterator atoms=molecule.atoms(); atoms.hasNext();) {
     		((IAtom)atoms.next()).setFlag(CDKConstants.ISAROMATIC, true);
     	}
-    	IMolecularDescriptor descriptor = new AromaticAtomsCountDescriptor();
     	assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
     }
 }

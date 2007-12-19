@@ -37,11 +37,9 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightedPathDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -51,7 +49,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-qsar
  */
 
-public class WeightedPathDescriptorTest extends CDKTestCase {
+public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
 
     public WeightedPathDescriptorTest() {
     }
@@ -59,10 +57,12 @@ public class WeightedPathDescriptorTest extends CDKTestCase {
     public static Test suite() {
         return new TestSuite(WeightedPathDescriptorTest.class);
     }
+    
+    public void setUp() {
+    	descriptor = new WeightedPathDescriptor();
+    }
 
     public void testWeightedPathDescriptor() throws ClassNotFoundException, CDKException, Exception {
-        IMolecularDescriptor descriptor = new WeightedPathDescriptor();
-
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = null;
         DescriptorValue value = null;

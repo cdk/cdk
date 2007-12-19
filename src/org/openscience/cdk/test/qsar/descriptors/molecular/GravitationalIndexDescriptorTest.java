@@ -31,10 +31,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.GravitationalIndexDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -43,13 +41,17 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-qsar
  */
 
-public class GravitationalIndexDescriptorTest extends CDKTestCase {
+public class GravitationalIndexDescriptorTest extends MolecularDescriptorTest {
 
     public GravitationalIndexDescriptorTest() {
     }
 
     public static Test suite() {
         return new TestSuite(GravitationalIndexDescriptorTest.class);
+    }
+
+    public void setUp() {
+    	descriptor = new GravitationalIndexDescriptor();
     }
 
     public void testGravitationalIndex() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -60,7 +62,6 @@ public class GravitationalIndexDescriptorTest extends CDKTestCase {
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
 
-        IMolecularDescriptor descriptor = new GravitationalIndexDescriptor();
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
         assertEquals(1756.5060703860984, retval.get(0), 0.00000001);

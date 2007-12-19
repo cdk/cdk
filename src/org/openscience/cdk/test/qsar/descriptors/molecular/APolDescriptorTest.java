@@ -29,11 +29,9 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.APolDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -41,7 +39,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test-qsar
  */
 
-public class APolDescriptorTest extends CDKTestCase {
+public class APolDescriptorTest extends MolecularDescriptorTest {
 
     public APolDescriptorTest() {
     }
@@ -50,8 +48,11 @@ public class APolDescriptorTest extends CDKTestCase {
         return new TestSuite(APolDescriptorTest.class);
     }
 
+    protected void setUp() throws CDKException {
+        descriptor = new APolDescriptor();
+    }
+
     public void testAPolDescriptorTest() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IMolecularDescriptor descriptor = new APolDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("O=C(O)CC");
         addExplicitHydrogens(mol);

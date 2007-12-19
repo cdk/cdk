@@ -34,7 +34,6 @@ import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.MomentOfInertiaDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -43,13 +42,17 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-qsar
  */
 
-public class MomentOfInertiaDescriptorTest extends CDKTestCase {
+public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
 
     public MomentOfInertiaDescriptorTest() {
     }
 
     public static Test suite() {
         return new TestSuite(MomentOfInertiaDescriptorTest.class);
+    }
+
+    public void setUp() {
+    	descriptor = new MomentOfInertiaDescriptor();
     }
 
     public void testMomentOfInertia1() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -60,7 +63,6 @@ public class MomentOfInertiaDescriptorTest extends CDKTestCase {
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
 
-        IMolecularDescriptor descriptor = new MomentOfInertiaDescriptor();
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
         assertEquals(1820.692519, retval.get(0), 0.00001);
