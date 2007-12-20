@@ -92,7 +92,7 @@ abstract public class CoverageTest extends CDKTestCase {
             if (errors > 0) uncoveredClassesCount++;
         }
         if (missingTestsCount > 0) {
-            fail("The core module is not fully tested! Missing number of method tests: " + 
+            fail("The module is not fully tested! Missing number of method tests: " + 
                  missingTestsCount + " in number of classes: " + uncoveredClassesCount);
         }
         return true;
