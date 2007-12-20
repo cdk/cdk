@@ -62,7 +62,7 @@ import java.util.Vector;
  * Returns a single value named <i>nAtomLAC</i>
  * @author      chhoppe from EUROSCREEN
  * @cdk.created 2006-1-03
- * @cdk.module  qsar
+ * @cdk.module  qsarmolecular
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:largestAliphaticChain

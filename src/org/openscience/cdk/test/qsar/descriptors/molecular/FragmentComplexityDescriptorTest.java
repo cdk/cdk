@@ -19,7 +19,7 @@ import org.openscience.cdk.tools.GenerateFragments;
 /**
  * TestSuite that runs all QSAR tests.
  * @author      chhoppe from EUROSCREEN
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
 	

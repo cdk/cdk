@@ -74,7 +74,7 @@ import javax.vecmath.Point3d;
  * @cdk.created      2005-02-07
  * @cdk.builddepends Jama-1.0.1.jar
  * @cdk.depends      Jama-1.0.1.jar
- * @cdk.module       qsar
+ * @cdk.module       qsarmolecular
  * @cdk.svnrev  $Revision$
  * @cdk.set          qsar-descriptors
  * @cdk.dictref      qsar-descriptors:momentOfInertia

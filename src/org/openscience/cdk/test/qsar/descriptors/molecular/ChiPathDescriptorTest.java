@@ -16,7 +16,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 
 public class ChiPathDescriptorTest extends MolecularDescriptorTest {

@@ -14,7 +14,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  * TestSuite for the LargestChainDescriptor.
  * 
  * @author      chhoppe from EUROSCREEN
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 
 public class LargestChainDescriptorTest extends MolecularDescriptorTest {

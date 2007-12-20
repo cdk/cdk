@@ -18,7 +18,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  * TestSuite that runs a test for the MDEDescriptor.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 
 public class MDEDescriptorTest extends MolecularDescriptorTest {

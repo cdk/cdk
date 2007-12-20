@@ -61,7 +61,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @author chhoppe from EUROSCREEN
  * @cdk.created 2006-1-03
- * @cdk.module qsar
+ * @cdk.module qsarmolecular
  * @cdk.svnrev  $Revision$
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:largestPiSystem

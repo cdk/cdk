@@ -106,7 +106,7 @@ import java.util.List;
  *
  *@author         mfe4, chhoppe
  *@cdk.created    2004-11-03
- *@cdk.module     qsar
+ *@cdk.module     qsarmolecular
  * @cdk.svnrev  $Revision$
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:xlogP

@@ -34,7 +34,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 public class HBondDonorCountDescriptorTest extends MolecularDescriptorTest {
 

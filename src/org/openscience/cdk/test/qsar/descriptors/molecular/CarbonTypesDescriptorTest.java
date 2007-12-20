@@ -13,7 +13,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 
 public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {

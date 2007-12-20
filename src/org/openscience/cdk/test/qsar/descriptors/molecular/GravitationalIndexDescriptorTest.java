@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 
 public class GravitationalIndexDescriptorTest extends MolecularDescriptorTest {

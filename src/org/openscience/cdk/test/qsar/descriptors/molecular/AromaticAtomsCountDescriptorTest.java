@@ -42,7 +42,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 
 public class AromaticAtomsCountDescriptorTest extends MolecularDescriptorTest {

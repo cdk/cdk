@@ -13,7 +13,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * TestSuite that runs all QSAR tests.
  * @author      chhoppe from EUROSCREEN
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 
 public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest {

@@ -33,7 +33,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorMass;
 
 /**
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 public class AutocorrelationDescriptorMassTest extends MolecularDescriptorTest {
 

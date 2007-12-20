@@ -35,7 +35,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
 

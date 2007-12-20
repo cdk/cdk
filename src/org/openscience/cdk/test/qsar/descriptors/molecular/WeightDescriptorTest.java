@@ -36,7 +36,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * TestSuite that runs a test for the AtomCountDescriptor.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
  
 public class WeightDescriptorTest extends MolecularDescriptorTest {

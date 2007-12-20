@@ -74,7 +74,7 @@ import java.util.List;
  * 
  * @author Rajarshi Guha
  * @cdk.created 2006-01-15
- * @cdk.module qsar
+ * @cdk.module qsarmolecular
  * @cdk.svnrev  $Revision$
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:weightedPath

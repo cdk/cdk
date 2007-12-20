@@ -128,7 +128,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author Rajarshi Guha
  * @cdk.created 2005-05-16
- * @cdk.module qsar
+ * @cdk.module qsarmolecular
  * @cdk.svnrev  $Revision$
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:CPSA

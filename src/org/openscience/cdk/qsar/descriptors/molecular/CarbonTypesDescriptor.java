@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *
  * @author Rajarshi Guha
  * @cdk.created 2007-09-28
- * @cdk.module qsar
+ * @cdk.module qsarmolecular
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:carbonTypes

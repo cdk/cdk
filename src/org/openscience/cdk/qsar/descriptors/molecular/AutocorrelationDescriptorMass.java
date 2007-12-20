@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  * 
  * @author      Federico
  * @cdk.created 2007-02-08
- * @cdk.module  qsar
+ * @cdk.module  qsarmolecular
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
  */

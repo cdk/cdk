@@ -13,7 +13,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorCharge;
 
 /**
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 public class AutocorrelationDescriptorChargeTest extends MolecularDescriptorTest {
 

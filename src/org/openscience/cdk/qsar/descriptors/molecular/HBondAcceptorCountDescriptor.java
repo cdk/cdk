@@ -73,7 +73,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * 
  * @author      ulif
  * @cdk.created 2005-22-07
- * @cdk.module  qsar
+ * @cdk.module  qsarmolecular
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:hBondacceptors

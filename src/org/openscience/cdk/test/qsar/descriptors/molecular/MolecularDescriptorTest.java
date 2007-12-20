@@ -33,7 +33,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * Tests for molecular descriptors.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 public abstract class MolecularDescriptorTest extends CDKTestCase {
 	
