@@ -20,8 +20,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Iterator;
-
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -30,6 +29,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
+
+import java.util.Iterator;
 
 /**
  *  IDescriptor based on the number of bonds of a certain bond order.
@@ -67,7 +68,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 public class BondCountDescriptor implements IMolecularDescriptor {
 
 	/** defaults to UNSET, which means: count all bonds **/
-    private IBond.Order order = null;
+    private IBond.Order order = (IBond.Order) CDKConstants.UNSET;
 
     /**
      *  Constructor for the BondCountDescriptor object
@@ -187,7 +188,7 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-        return new Double(0.0);
+        return IBond.Order.DOUBLE;
     }
 }
 

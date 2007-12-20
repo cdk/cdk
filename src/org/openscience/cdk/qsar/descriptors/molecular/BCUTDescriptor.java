@@ -23,10 +23,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import static java.lang.Boolean.valueOf;
-
-import java.util.Iterator;
-
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -48,8 +46,7 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
+import java.util.Iterator;
 
 /**
  * Eigenvalue based descriptor noted for its utility in chemical diversity.
@@ -89,6 +86,11 @@ import Jama.Matrix;
  * <td>1</td>
  * <td>The number of lowest eigenvalue</td>
  * </tr>
+ * <tr>
+ * <td>checkAromaticity</td>
+ * <td>true</td>
+ * <td>Whether aromaticity should be checked</td>
+ * </tr>
  * </table>
  * <p/>
  * Returns an array of values in the following order
@@ -119,7 +121,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
     // to return for each class of BCUT descriptor
     private int nhigh;
     private int nlow;
-    private boolean checkAromaticity = true;
+    private boolean checkAromaticity;
 
     public BCUTDescriptor() {
         logger = new LoggingTool(this);
@@ -127,6 +129,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         // set the default number of BCUT's
         this.nhigh = 1;
         this.nlow = 1;
+        this.checkAromaticity = true;
     }
 
     public DescriptorSpecification getSpecification() {
@@ -180,7 +183,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         Object params[] = new Object[3];
         params[0] = this.nhigh;
         params[1] = this.nlow;
-        params[2] = valueOf(this.checkAromaticity);
+        params[2] = this.checkAromaticity;
         return (params);
     }
 
@@ -210,7 +213,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         if (name.equals("nlow")) {
             object = 1;
         }
-        if (name.equals("checkAromaticity")) object = 1;
+        if (name.equals("checkAromaticity")) object = true;
         return (object);
     }
 
