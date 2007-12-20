@@ -46,13 +46,28 @@ public abstract class MolecularDescriptorTest extends CDKTestCase {
 	}
 	
 	/**
+	 * Makes sure that the extending class has set the super.descriptor.
+	 * Each extending class should have this bit of code (JUnit3 formalism):
+	 * <pre>
+	 * public void setUp() {
+	 *   super.descriptor = new SomeDescriptor();
+	 * }
+	 * 
+	 * <p>The unit tests in the extending class may use this instance, but
+	 * are not required.
+	 * 
+	 * </pre>
+	 */
+	public void testHasSetSuperDotDescriptor() {
+    	assertNotNull("The extending class must set the super.descriptor in its seUp() method.", descriptor);    	
+	}
+	
+	/**
 	 * Checks if the output is consistent.
 	 * 
 	 * @throws Exception Passed on from calculate.
 	 */
     public void testDescriptorSanity() throws Exception {
-    	assertNotNull("The extending class must set the super.descriptor in its seUp() method.", descriptor);
-    	
         IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
         c1.setPoint3d(new Point3d(0.0, 0.0, 0.0));
