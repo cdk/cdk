@@ -460,6 +460,7 @@
             <antcall target="compile-module"><param name="module" value="reaction"/></antcall>
     	    <antcall target="compile-module"><param name="module" value="charges"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qsarmolecular"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar-cml"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar-pdb"/></antcall>
      	    <antcall target="compile-module"><param name="module" value="qsar-weka"/></antcall>
@@ -496,7 +497,7 @@
         <antcall target="compile-module"><param name="module" value="test-qsar"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarAtomic"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarBond"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsarMolecular"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-pdb"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-inchi"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-libiomd"/></antcall>
@@ -530,6 +531,7 @@
                     <includesfile name="${metainf}/pdb-cml.libdepends"/>
                     <includesfile name="${metainf}/pdb.libdepends"/>
                     <includesfile name="${metainf}/qsar.libdepends"/>
+                    <includesfile name="${metainf}/qsarmolecular.libdepends"/>
                     <includesfile name="${metainf}/qsar-cml.libdepends"/>
                     <includesfile name="${metainf}/qsar-pdb.libdepends"/>
                     <includesfile name="${metainf}/qsar-weka.libdepends"/>
@@ -566,6 +568,7 @@
                     <include name="cdk-pdb-cml.jar"/>
                     <include name="cdk-pdb.jar"/>
                     <include name="cdk-qsar.jar"/>
+                    <include name="cdk-qsarmolecular.jar"/>
                     <include name="cdk-qsar-cml.jar"/>
                     <include name="cdk-qsar-pdb.jar"/>
                     <include name="cdk-qsar-weka.jar"/>
@@ -630,6 +633,7 @@
                     <include name="cdk-pdb-cml.jar"/>
                     <include name="cdk-pdb.jar"/>
                     <include name="cdk-qsar.jar"/>
+                    <include name="cdk-qsarmolecular.jar"/>
                     <include name="cdk-qsar-cml.jar"/>
                     <include name="cdk-qsar-pdb.jar"/>
                     <include name="cdk-qsar-weka.jar"/>
@@ -688,7 +692,7 @@
                     <includesfile name="${metainf}/test-qsarAtomic.libdepends"/>
                     <includesfile name="${metainf}/test-qsarBond.libdepends"/>
                     <includesfile name="${metainf}/test-qsar.libdepends"/>
-                    <includesfile name="${metainf}/test-qsarMolecular.libdepends"/>
+                    <includesfile name="${metainf}/test-qsarmolecular.libdepends"/>
                     <includesfile name="${metainf}/test-reaction.libdepends"/>
                     <includesfile name="${metainf}/test-smarts.libdepends"/>
                     <includesfile name="${metainf}/test-smiles.libdepends"/>
@@ -714,7 +718,7 @@
                     <include name="cdk-test-qsarAtomic.jar"/>
                     <include name="cdk-test-qsarBond.jar"/>
                     <include name="cdk-test-qsar.jar"/>
-                    <include name="cdk-test-qsarMolecular.jar"/>
+                    <include name="cdk-test-qsarmolecular.jar"/>
                     <include name="cdk-test-reaction.jar"/>
                     <include name="cdk-test-smarts.jar"/>
                     <include name="cdk-test-smiles.jar"/>
@@ -958,7 +962,7 @@
         	<antcall target="test-module"><param name="module" value="qsar"/></antcall> 
         	<antcall target="test-module"><param name="module" value="qsarAtomic"/></antcall>
                 <antcall target="test-module"><param name="module" value="qsarBond"/></antcall>
-                <antcall target="test-module"><param name="module" value="qsarMolecular"/></antcall>
+                <antcall target="test-module"><param name="module" value="qsarmolecular"/></antcall>
                 <antcall target="test-module"><param name="module" value="weka"/></antcall>
         	<antcall target="test-module"><param name="module" value="pdb"/></antcall> 
         	<antcall target="test-module"><param name="module" value="pcore"/></antcall> 
