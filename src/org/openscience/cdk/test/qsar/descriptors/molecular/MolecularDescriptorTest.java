@@ -27,8 +27,10 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
@@ -144,7 +146,7 @@ public abstract class MolecularDescriptorTest extends CDKTestCase {
         }
     }
     
-    public void testGetParameterType() {
+    public void testGetParameterType_String() {
         String[] paramNames = descriptor.getParameterNames();
 //      FIXME: see testGetParameterNames() comment on the same line 
         if (paramNames == null) paramNames = new String[0];
@@ -177,6 +179,70 @@ public abstract class MolecularDescriptorTest extends CDKTestCase {
         );
     }
 
+    public void testGetDescriptorResultType() throws Exception {
+    	IDescriptorResult result = descriptor.getDescriptorResultType();
+    	assertNotNull(
+    		"The getDescriptorResultType() must not be null.",
+    		result
+    	);
+    	
+    	IAtomContainer mol = someoneBringMeSomeWater();
+        DescriptorValue v = descriptor.calculate(mol);
+        
+    	assertEquals(
+    		"The getDescriptorResultType() is inconsistent with the calculated descriptor results",
+    		v.getValue().getClass().getName(), result.getClass().getName()
+    	);
+    	assertEquals(
+    		"The specified getDescriptorResultType() length does not match the actually calculated result vector length",
+    		v.getValue().length(), result.length()
+    	);
+    }
+    
+    public void testGetSpecification() {
+    	DescriptorSpecification spec = descriptor.getSpecification();
+    	assertNotNull(
+    		"The descriptor specification returned must not be null.",
+    		spec
+    	);
+
+    	assertNotNull(
+    		"The specification identifier must not be null.",
+    		spec.getImplementationIdentifier()
+    	);
+    	assertNotSame(
+       		"The specification identifier must not be empty.",
+       		0, spec.getImplementationIdentifier().length()
+       	);
+
+    	assertNotNull(
+       		"The specification title must not be null.",
+       		spec.getImplementationTitle()
+    	);
+    	assertNotSame(
+    		"The specification title must not be empty.",
+    		0, spec.getImplementationTitle().length()
+    	);
+
+    	assertNotNull(
+       		"The specification vendor must not be null.",
+       		spec.getImplementationVendor()
+    	);
+    	assertNotSame(
+    		"The specification vendor must not be empty.",
+    		0, spec.getImplementationVendor().length()
+    	);
+
+    	assertNotNull(
+       		"The specification reference must not be null.",
+       		spec.getSpecificationReference()
+    	);
+    	assertNotSame(
+    		"The specification reference must not be empty.",
+    		0, spec.getSpecificationReference().length()
+    	);
+    }
+    
     private IMolecule someoneBringMeSomeWater() {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
