@@ -49,7 +49,6 @@ public class MqsarmolecularTests {
 
 //      from cdk.test.qsar.molecular
         suite.addTest(ALOGPDescriptorTest.suite());
-        suite.addTest(AminoAcidCountDescriptorTest.suite());
         suite.addTest(APolDescriptorTest.suite());
         suite.addTest(AromaticAtomsCountDescriptorTest.suite());
         suite.addTest(AromaticBondsCountDescriptorTest.suite());
@@ -78,7 +77,6 @@ public class MqsarmolecularTests {
         suite.addTest(PetitjeanShapeIndexDescriptorTest.suite());
         suite.addTest(RotatableBondsCountDescriptorTest.suite());
         suite.addTest(RuleOfFiveDescriptorTest.suite());
-        suite.addTest(TaeAminoAcidDescriptorTest.suite());
         suite.addTest(TPSADescriptorTest.suite());
         suite.addTest(WeightDescriptorTest.suite());
         suite.addTest(WeightedPathDescriptorTest.suite());
