@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -150,17 +151,19 @@ public class AtomCountDescriptor implements IMolecularDescriptor {
 
         if (elementName.equals("*")) {
             for (int i = 0; i < container.getAtomCount(); i++) {
-                atomCount += container.getAtom(i).getHydrogenCount();
+                // we assume that UNSET is equivalent to 0 implicit H's
+                Integer hcount = container.getAtom(i).getHydrogenCount();
+                if (hcount != CDKConstants.UNSET) atomCount += hcount;
             }
             atomCount += container.getAtomCount();
-        }
-        else if (elementName.equals("H")) {
+        } else if (elementName.equals("H")) {
             for (int i = 0; i < container.getAtomCount(); i++) {
                 if (container.getAtom(i).getSymbol().equals(elementName)) {
                     atomCount += 1;
-                }
-                else {
-                    atomCount += container.getAtom(i).getHydrogenCount();
+                } else {
+                    // we assume that UNSET is equivalent to 0 implicit H's
+                    Integer hcount = container.getAtom(i).getHydrogenCount();
+                    if (hcount != CDKConstants.UNSET) atomCount += hcount;
                 }
             }
         }
