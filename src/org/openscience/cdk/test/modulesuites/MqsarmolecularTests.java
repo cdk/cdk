@@ -78,6 +78,7 @@ public class MqsarmolecularTests {
         suite.addTest(RotatableBondsCountDescriptorTest.suite());
         suite.addTest(RuleOfFiveDescriptorTest.suite());
         suite.addTest(TPSADescriptorTest.suite());
+        suite.addTest(VAdjMaDescriptorTest.suite());
         suite.addTest(WeightDescriptorTest.suite());
         suite.addTest(WeightedPathDescriptorTest.suite());
         suite.addTest(WHIMDescriptorTest.suite());
