@@ -68,7 +68,7 @@
 # Update 02/19/2007 - Updated to process CDKCite errors
 # Update 10/26/2007 - Updated for new test.modulesuites package
 
-import string, sys, os, os.path, time, re, glob, shutil
+import string, sys, os, os.path, time, re, glob, shutil, pickle
 import tarfile, StringIO
 from email.MIMEText import MIMEText
 import email.Utils
@@ -141,6 +141,8 @@ links = [ ('1.0.x Nightly Build', 'http://cheminfo.informatics.indiana.edu/~rguh
 # NO NEED TO CHANGE ANYTHING BELOW HERE
 #
 #################################################################
+
+pickle_file = os.path.join(nightly_dir, 'nightly.pickle')
 
 today = time.localtime()
 todayStr = '%04d%02d%02d' % (today[0], today[1], today[2])
@@ -871,7 +873,18 @@ def updateVersion():
     
     return True
         
-    
+def getSVNRevision():
+    tmp = [x.strip() for x in open(os.path.join(nightly_dir,'svn.log'), 'r').readlines()]
+    revision = None
+    for line in tmp:
+        if line.startswith('At revision'):
+            revision = line.split()[2][:-1]
+            break
+        elif line.startswith('Updated to revision'):
+            revision = line.split()[3][:-1]
+            break
+    return revision
+                
 if __name__ == '__main__':
     if 'help' in sys.argv:
         print """
@@ -936,12 +949,36 @@ if __name__ == '__main__':
     successSVN = True
     successJCP = True
 
-    revision = None
+    currentRevision = None
+    oldRevision = None
     
     start_dir = os.getcwd()
     os.chdir(nightly_dir)
 
     if not dryRun:
+        
+        # before cleaning anything, lets get some old data
+        # try and load the pickle of the previous test summaries
+        # else get a summary of the test results from the previous run
+        oldReports = None
+        if os.path.exists(pickle_file):
+            print 'Loading data from persistent storage'
+            data = pickle.load(open(pickle_file, 'r'))
+            oldReports = data[0]
+            oldRevision = data[1]
+        else:
+            print 'Processing old data'
+            reports = glob.glob(os.path.join(nightly_repo, 'reports', '*.txt'))
+            reports.sort()
+            oldReports = []
+            for report in reports:
+                for line in open(report, 'r'):
+                    if line.startswith('Testcase:'):
+                        oldReports.append(''.join(line.split(':')[:2]))
+            oldRevision = getSVNRevision()
+            if not oldRevision:
+                print 'Error getting the SVN revision. Exiting'
+                sys.exit(-1)
 
         # clean out any files from a previous SEGV in the repo dir
         hsfiles = glob.glob(os.path.join(nightly_repo, 'hs_*'))
@@ -983,30 +1020,20 @@ if __name__ == '__main__':
             os.chdir(start_dir)
             sys.exit(0)
 
+        # get the latest revision number
+        currentRevision = getSVNRevision()
+        if not currentRevision:
+            print 'Error getting the SVN revision. Exiting'
+            sys.exit(-1)
+
+        print 'Old revision = %s Current Revision = %s' % (oldRevision, currentRevision)
+
         status = updateVersion()
         if not status:
             print "Error parsing build.props. Could not a valid version line. Exiting"
             sys.exit(-1)
 
-        # get a summary of the test results from the previous run
-        # we also get the old rev number for display purposes
-        reports = glob.glob(os.path.join(nightly_repo, 'reports', '*.txt'))
-        reports.sort()
-        oldReports = []
-        for report in reports:
-            for line in open(report, 'r'):
-                if line.startswith('Testcase:'):
-                    oldReports.append(''.join(line.split(':')[:2]))
-        tmp = [x.strip() for x in open('svn.log', 'r').readlines()]
-        oldRevision = 'NA'
-        for line in tmp:
-            if line.startswith('At revision'):
-                oldRevision = line.split()[2][:-1]
-                break
-            elif line.startswith('Updated to revision'):
-                oldRevision = line.split()[3][:-1]
-                break
-                
+
 
        
         # compile the distro
@@ -1062,13 +1089,6 @@ if __name__ == '__main__':
     os.system('rm -rf %s/*' % (nightly_web))
     writeTemporaryPage()
 
-    # get some revision info
-    rev = open(os.path.join(nightly_dir, 'svn.log'),'r').readlines()
-    rev = rev[len(rev)-1].split()
-    if rev[0] == 'At': rev = rev[2]
-    else: rev = rev[3]
-    rev = rev[:len(rev)-1]
-    
     currTime = time.localtime()
     currTime = "%02d:%02d" % (currTime[3], currTime[4])	
     page = """
@@ -1086,10 +1106,10 @@ if __name__ == '__main__':
     <head>
     <body>
     <center>
-    <h2>CDK Nightly Build - %s (%s)
+    <h2>CDK Nightly Build - %s (%s EST)
     <i>[<a href=\"https://sourceforge.net/svn/?group_id=20024\">SVN</a>
     Revision %s]</i></h2>
-    """ % (todayNice, currTime, rev, todayNice, currTime, rev)
+    """ % (todayNice, currTime, currentRevision, todayNice, currTime, currentRevision)
 
     resultTable = HTMLTable()
     resultTable.addHeaderCell("")
@@ -1241,11 +1261,53 @@ if __name__ == '__main__':
 
             import difflib
             diff = difflib.unified_diff(oldReports, newReports)
-            nTestFixed = 0
-            nTestFails = 0
+            nTestFixed = -1
+            nTestFails = -1
             for i in diff:
                 if i.startswith('-'): nTestFixed += 1
-                if i.startswith('+'): nTestFails += 1        
+                if i.startswith('+'): nTestFails += 1
+                
+            # dump the new report to the pickle file
+            # so that it's the old report for the
+            # next run
+            data = [newReports, currentRevision]
+            pickle.dump(data, open(pickle_file, 'w'))                
+
+            # dump out a nice HTML diff page
+            oldReports = [x.replace('Testcase', '') for x in oldReports]
+            newReports = [x.replace('Testcase', '') for x in newReports]
+
+            oldReports = [x.replace('org.openscience.cdk.test', 'o.o.c.t') for x in oldReports]
+            newReports = [x.replace('org.openscience.cdk.test', 'o.o.c.t') for x in newReports]
+
+            htmlDiff = difflib.HtmlDiff()
+            difffile = htmlDiff.make_file(oldReports, newReports, numlines=0, context=True)
+            difffile = difffile.replace('<title></title>',
+                                        """
+                                        <title>Fixed and New JUnit Failures</title>""")
+            difffile = difffile.replace("<body>",
+                                        """
+                                        <body>
+                                        <center><h2>Fixed and New JUnit Failures
+                                        </center></h2>
+                                        """)
+            difffile= difffile.replace("<tbody>",
+                                       """
+                                       <tbody>
+                                       <tr>
+                                       <td></td>
+                                       <td></td>                                                                  
+                                       <td align='center'><b>Tests fixed since Rev %s</b></td>
+                                       <td></td>
+                                       <td></td>                                                                                                         
+                                       <td align='center'><b>New failures in Rev %s</b></td>
+                                       </tr>
+                                       """ % (oldRevision, currentRevision), 1)
+            f = open('junitdiff.html', 'w')
+            f.write(difffile)
+            f.close()
+
+
         
         
         # make the directory for reports
@@ -1289,7 +1351,8 @@ if __name__ == '__main__':
 
             if not dryRun:
                 resultTable.appendToCell("<br>No. old fails fixed since r%s = %s" % (oldRevision,str(nTestFixed)))
-                resultTable.appendToCell("No. new fails since r%s = %s" % (oldRevision,str(nTestFails)))            
+                resultTable.appendToCell("No. new fails since r%s = %s" % (oldRevision,str(nTestFails)))
+                resultTable.appendToCell("<a href='%s'>Comparison</a>" % (os.path.join(nightly_web, 'junitdiff.html')))
     else:
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         if os.path.exists( os.path.join(nightly_dir, 'test.log') ):
