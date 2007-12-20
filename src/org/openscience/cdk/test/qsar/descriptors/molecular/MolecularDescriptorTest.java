@@ -65,7 +65,18 @@ public abstract class MolecularDescriptorTest extends CDKTestCase {
     	assertNotNull("The extending class must set the super.descriptor in its seUp() method.", descriptor);    	
 	}
 	
-	/**
+    public void testCalculate_IAtomContainer() throws Exception {
+        IAtomContainer mol = someoneBringMeSomeWater();
+        
+        DescriptorValue v = descriptor.calculate(mol);
+        assertNotNull(v);
+        assertNotSame(
+        	"The descriptor did not calculate any value.",
+        	0, v.getValue().length()
+        );
+    }
+
+    /**
 	 * Checks if the given labels are consistent.
 	 * 
 	 * @throws Exception Passed on from calculate.
@@ -241,6 +252,11 @@ public abstract class MolecularDescriptorTest extends CDKTestCase {
     		"The specification reference must not be empty.",
     		0, spec.getSpecificationReference().length()
     	);
+    }
+    
+    public void testSetParameters_arrayObject() throws Exception {
+    	Object[] defaultParams = descriptor.getParameters();
+    	descriptor.setParameters(defaultParams);
     }
     
     private IMolecule someoneBringMeSomeWater() {
