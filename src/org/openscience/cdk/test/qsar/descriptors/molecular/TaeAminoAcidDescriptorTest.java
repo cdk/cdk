@@ -6,8 +6,10 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.TaeAminoAcidDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.ProteinBuilderTool;
 
 /**
@@ -16,8 +18,10 @@ import org.openscience.cdk.tools.ProteinBuilderTool;
  * @cdk.module test-qsar
  */
 
-public class TaeAminoAcidDescriptorTest extends MolecularDescriptorTest {
+public class TaeAminoAcidDescriptorTest extends CDKTestCase {
 
+	private IMolecularDescriptor descriptor;
+	
     public TaeAminoAcidDescriptorTest() {
     }
 
