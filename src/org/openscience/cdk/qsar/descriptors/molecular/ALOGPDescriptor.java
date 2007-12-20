@@ -91,7 +91,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @see org.openscience.cdk.tools.HydrogenAdder
  * @see org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector
  */
-public class ALOGP implements IMolecularDescriptor {
+public class ALOGPDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
 
     IAtomContainer atomContainer;
@@ -111,7 +111,7 @@ public class ALOGP implements IMolecularDescriptor {
     double ALOGP2 = 0.0;
 
 
-    public ALOGP() throws CDKException {
+    public ALOGPDescriptor() throws CDKException {
         logger = new LoggingTool(this);
 
         // fragments for ALOGP from Ghose et al., 1998

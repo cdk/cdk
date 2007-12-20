@@ -103,7 +103,7 @@ public class DescriptorValue {
      * other arbitrary names, which should be documented in the Javadocs for the decsriptor
      * (e.g., the CPSA descriptor).
      * <p/>
-     * Note that by default if a descriptor returns a single value (such as {@link org.openscience.cdk.qsar.descriptors.molecular.ALOGP}
+     * Note that by default if a descriptor returns a single value (such as {@link org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptor}
      * the return array will have a single element
      * <p/>
      * In case a descriptor creates a <code>DescriptorValue</code> object with no names, this
