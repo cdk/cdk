@@ -1025,17 +1025,18 @@ if __name__ == '__main__':
         if not currentRevision:
             print 'Error getting the SVN revision. Exiting'
             sys.exit(-1)
-
+	# if there is no change in rev number since our
+	# last run, we can skip the run
         print 'Old revision = %s Current Revision = %s' % (oldRevision, currentRevision)
+	if oldRevision == currentRevision:
+	    print '  No commits since last run. Exiting'
+            sys.exit(0)
 
         status = updateVersion()
         if not status:
             print "Error parsing build.props. Could not a valid version line. Exiting"
             sys.exit(-1)
 
-
-
-       
         # compile the distro
         successDist = runAntJob('nice -n 19 ant -lib %s clean dist-large' % (ant_libs), 'build.log', 'distro')
         if successDist: # if we compiled, do the rest of the stuff
@@ -1269,9 +1270,11 @@ if __name__ == '__main__':
                 
             # dump the new report to the pickle file
             # so that it's the old report for the
-            # next run
-            data = [newReports, currentRevision]
-            pickle.dump(data, open(pickle_file, 'w'))                
+            # next run. Byt only do so, if the current version
+	    # is newer than the older version
+	    if currentRevision != oldRevision:		
+	        data = [newReports, currentRevision]
+        	pickle.dump(data, open(pickle_file, 'w'))                
 
             # dump out a nice HTML diff page
             oldReports = [x.replace('Testcase', '') for x in oldReports]
@@ -1303,7 +1306,7 @@ if __name__ == '__main__':
                                        <td align='center'><b>New failures in Rev %s</b></td>
                                        </tr>
                                        """ % (oldRevision, currentRevision), 1)
-            f = open('junitdiff.html', 'w')
+            f = open(os.path.join(nightly_web,'junitdiff.html'), 'w')
             f.write(difffile)
             f.close()
 
@@ -1352,7 +1355,7 @@ if __name__ == '__main__':
             if not dryRun:
                 resultTable.appendToCell("<br>No. old fails fixed since r%s = %s" % (oldRevision,str(nTestFixed)))
                 resultTable.appendToCell("No. new fails since r%s = %s" % (oldRevision,str(nTestFails)))
-                resultTable.appendToCell("<a href='%s'>Comparison</a>" % (os.path.join(nightly_web, 'junitdiff.html')))
+                resultTable.appendToCell("<a href='%s'>Comparison</a>" % ('junitdiff.html'))
     else:
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         if os.path.exists( os.path.join(nightly_dir, 'test.log') ):
