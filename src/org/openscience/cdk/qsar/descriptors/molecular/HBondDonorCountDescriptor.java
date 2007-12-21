@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -142,7 +143,9 @@ public class HBondDonorCountDescriptor implements IMolecularDescriptor {
       if((atom.getSymbol().equals("O") || atom.getSymbol().equals("N")) && atom.getFormalCharge() >= 0)
       {
         // implicit hydrogens
-        if(atom.getHydrogenCount() > 0)
+        Integer implicitH = atom.getHydrogenCount();
+        if (implicitH == CDKConstants.UNSET) implicitH = 0;
+        if(implicitH > 0)
         {
           hBondDonors++;
           continue atomloop; // we skip the explicit hydrogens part cause we found implicit hydrogens
