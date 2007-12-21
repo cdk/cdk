@@ -116,11 +116,11 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
      *  It calculates the first ionization energy of a molecule. 
      *
      *@param  atomContainer     AtomContainer
-     *@return                   The 1 ionization energy
+     *@return                   The first ionization energy
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
-    	String[] descriptorNames = {"DoubleResult"};
+    	String[] descriptorNames = {"MolIP"};
     	
     	DoubleResult value = new DoubleResult(((DoubleArrayResult)calculatePlus(atomContainer).getValue()).get(0));
     	return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), value, descriptorNames );
@@ -134,7 +134,7 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculatePlus(IAtomContainer atomContainer) throws CDKException {
-    	String[] descriptorNames = {"DoubleArrayResult"};
+    	String[] descriptorNames = {"MolIP"};
     	
     	reactionSet = atomContainer.getBuilder().newReactionSet();
         ArrayList<Double> dar = new ArrayList<Double>();
