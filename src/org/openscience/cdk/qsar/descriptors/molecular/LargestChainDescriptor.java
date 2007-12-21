@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Vector;
-
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -41,6 +39,8 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.Vector;
 
 /**
  * Class that returns the number of atoms in the largest chain.
@@ -166,7 +166,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         //logger.debug("LargestChainDescriptor");
     	if (checkRingSystem) {
-    		IRingSet rs = (IRingSet) new SSSRFinder(container).findSSSR();
+    		IRingSet rs = new SSSRFinder(container).findSSSR();
     		for (int i = 0; i < container.getAtomCount(); i++) {
     			if (rs.contains(container.getAtom(i))) {
     				container.getAtom(i).setFlag(CDKConstants.ISINRING, true);
@@ -183,7 +183,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
         int largestChainAtomsCount = 0;
         //IAtom[] atoms = container.getAtoms();
         Vector<IAtom> startSphere;
-        Vector path = null;
+        Vector path;
         //Set all VisitedFlags to False
         for (int i = 0; i < container.getAtomCount(); i++) {
             container.getAtom(i).setFlag(CDKConstants.VISITED, false);
@@ -293,9 +293,6 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      * @return An Object of class equal to that of the parameter being requested
      */
     public Object getParameterType(String name) {
-        Object[] paramTypes = new Object[2];
-        paramTypes[0] = Boolean.TRUE;
-        paramTypes[1] = Boolean.TRUE;
-        return paramTypes;
+        return true;
     }
 }
