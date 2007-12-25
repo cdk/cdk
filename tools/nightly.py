@@ -1025,6 +1025,7 @@ if __name__ == '__main__':
         if not currentRevision:
             print 'Error getting the SVN revision. Exiting'
             sys.exit(-1)
+
 	# if there is no change in rev number since our
 	# last run, we can skip the run
         print 'Old revision = %s Current Revision = %s' % (oldRevision, currentRevision)
@@ -1054,9 +1055,12 @@ if __name__ == '__main__':
             srcFile = os.path.join(nightly_dir, 'build.log')
             destFile = os.path.join(nightly_web, 'build.log.fail')
             shutil.copyfile(srcFile, destFile)
-            f = open(os.path.join(nightly_web, 'index.html'), 'r')
-            lines = string.join(f.readlines())
-            f.close()
+	    lines = None
+	    if os.path.exists(os.path.join(nightly_web, 'index.html')):
+            	f = open(os.path.join(nightly_web, 'index.html'), 'r')
+            	lines = string.join(f.readlines())
+            	f.close()
+	    else: lines = '<html><body><h2>CDK Nightly Build</h2></body></html>'
             if lines.find("Could not compile the sources") == -1:
                 newlines = re.sub("<h2>CDK Nightly Build",
                                   """<center><b><h3>Could not compile the sources -
