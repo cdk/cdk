@@ -29,12 +29,13 @@ package org.openscience.cdk.test.libio.openbabel;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.InputStream;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.libio.openbabel.OpenBabelConvert;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
@@ -56,53 +57,45 @@ public class OpenBabelConvertTest extends CDKTestCase {
     }
 
     public static Test suite() {
-    	TestSuite suite = new TestSuite("The OpenBabel Tests");
-    	if (OpenBabelConvert.hasOpenBabel(getPATH())) {
-    		System.out.println("Found OpenBabel: running tests.");
-    		suite.addTest(new TestSuite(OpenBabelConvertTest.class));
-    	} else {
-    		System.out.println("No OpenBabel found: not running tests.");
-    	}
-    	return suite;
+    	return new TestSuite(OpenBabelConvertTest.class);
     }
 
     public void test5_Hexen_3_one() throws Exception {
-        String filenameInput = "src/data/mdl/540545.mol";
-        logger.info("Testing: " + filenameInput);
-        /* the path only necessary for windows systems*/
-        File PATH = getPATH();
-
-        OpenBabelConvert convertOB = new OpenBabelConvert(PATH);
-        convertOB.setInputFileToConvert(new File(filenameInput),"mol",null);
+        String filenameInput = "data/mdl/540545.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameInput);
+        File fileOutput = File.createTempFile("540545.", ".mol");
+        FileOutputStream outs = new FileOutputStream(fileOutput);
+        try {
+            byte[] buf = new byte[1024];
+            int i = 0;
+            while ((i = ins.read(buf)) != -1) {
+            	outs.write(buf, 0, i);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (ins != null) ins.close();
+            if (outs != null) outs.close();
+        }
+        
+        logger.info("Testing: " + fileOutput.getAbsolutePath());
+        System.out.println("testing: " + fileOutput.getAbsolutePath());
+        
+        OpenBabelConvert convertOB = new OpenBabelConvert();
+        
         File tmpFile = File.createTempFile("540545.", ".cml");
-        convertOB.convertTo(tmpFile,"cml","-h");
-        IChemFile chemFile = convertOB.getChemFile();
-        convertOB.reset();
-
-//      test the resulting ChemFile content
-        assertNotNull(chemFile);
-
+        System.out.println("testing: " + tmpFile.getAbsolutePath());
+        convertOB.convert(fileOutput, "mol", tmpFile, "cml", "-h");
+        
         BufferedReader reader = new BufferedReader(new FileReader(tmpFile));
         String line = reader.readLine();
         int lineCount = 0;
         while (line != null) {
+        	System.out.println("Line: " + line);
         	lineCount++; 
         	line = reader.readLine();
         }
         assertTrue(lineCount > 0);
     }
 
-    private static File getPATH(){
-    	String[] possibilities = {
-    		"C:/Programme/openbabel-2.0.0awins/babel.exe", // likely??
-    		"/usr/bin/babel", // most POSIX systems
-    		"/usr/local/bin/babel" // private installation
-    	};
-    	File PATH = null;
-    	for (int i=0; i<possibilities.length; i++) {
-    		PATH = new File(possibilities[i]);
-    	    if (PATH.exists()) break;
-        }
-    	return PATH;
-    }
 }
