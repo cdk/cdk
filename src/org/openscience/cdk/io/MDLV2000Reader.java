@@ -106,8 +106,26 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 	public MDLV2000Reader(InputStream in) {
 		this(new InputStreamReader(in));
 	}
+	public MDLV2000Reader(InputStream in, Mode mode) {
+		this(new InputStreamReader(in), mode);
+	}
 
-    public IResourceFormat getFormat() {
+	/**
+	 *  Contructs a new MDLReader that can read Molecule from a given Reader.
+	 *
+	 *@param  in  The Reader to read from
+	 */
+	public MDLV2000Reader(Reader in) {
+        this(in, Mode.RELAXED);
+	}
+	public MDLV2000Reader(Reader in, Mode mode) {
+        logger = new LoggingTool(this);
+        input = new BufferedReader(in);
+        initIOSettings();
+        super.mode = mode;
+	}
+
+	public IResourceFormat getFormat() {
         return MDLV2000Format.getInstance();
     }
 
@@ -122,18 +140,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
-
-	/**
-	 *  Contructs a new MDLReader that can read Molecule from a given Reader.
-	 *
-	 *@param  in  The Reader to read from
-	 */
-	public MDLV2000Reader(Reader in) {
-        logger = new LoggingTool(this);
-        input = new BufferedReader(in);
-        initIOSettings();
-	}
-
 
 	public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
@@ -342,6 +348,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             logger.info("Reading rest of file");
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
+            if (mode == Mode.STRICT) {
+            	if (line.contains("V3000") || line.contains("v3000")) {
+            		throw new CDKException("This file must be read with the MDLV3000Reader.");
+            	} else if (!line.contains("V2000") && !line.contains("v2000")) {
+            		throw new CDKException("This file must be read with the MDLReader.");
+            	}
+            }
             atoms = Integer.valueOf(line.substring(0,3).trim()).intValue();
             logger.debug("Atomcount: " + atoms);
             bonds = Integer.valueOf(line.substring(3,6).trim()).intValue();
