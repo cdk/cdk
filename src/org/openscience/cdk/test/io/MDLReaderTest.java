@@ -35,7 +35,6 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -175,18 +174,4 @@ public class MDLReaderTest extends CDKTestCase {
     	assertNull(mol);
     }
     
-    /**
-     * @cdk.bug 1826577
-     */
-    public void testHisotopes() throws Exception {
-        String filename = "data/mdl/hisotopes.mol";
-        logger.info("Testing: " + filename);
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins, Mode.STRICT);
-        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-        assertNotNull(chemFile);
-        List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        assertFalse(((IAtomContainer)containersList.get(0)).getAtom(1) instanceof PseudoAtom);
-        assertFalse(((IAtomContainer)containersList.get(0)).getAtom(1) instanceof PseudoAtom);
-    }        
 }

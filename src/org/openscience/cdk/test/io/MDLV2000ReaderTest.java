@@ -24,22 +24,40 @@
  *  */
 package org.openscience.cdk.test.io;
 
+import java.io.InputStream;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.*;
+
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.io.InputStream;
-import java.io.StringReader;
-import java.util.*;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -441,5 +459,36 @@ public class MDLV2000ReaderTest extends CDKTestCase {
         boolean has3d = GeometryTools.has3DCoordinates(mol);
         assertTrue(has3d);
     }
+
+    /**
+     * @cdk.bug 1826577
+     */
+    public void testHisotopes_Strict() throws Exception {
+    	String filename = "data/mdl/hisotopes.mol";
+    	logger.info("Testing: " + filename);
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    	try {
+    		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+    		reader.read((ChemObject)new ChemFile());
+    		fail("Expected a CDKException");
+    	} catch (Exception exception) {
+    		// OK, that's what's is supposed to happen
+    	}
+    }        
+
+    /**
+     * @cdk.bug 1826577
+     */
+    public void testHisotopes_Relaxed() throws Exception {
+    	String filename = "data/mdl/hisotopes.mol";
+    	logger.info("Testing: " + filename);
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    	MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.RELAXED);
+    	IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
+    	assertNotNull(chemFile);
+    	List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+    	assertFalse(((IAtomContainer)containersList.get(0)).getAtom(1) instanceof PseudoAtom);
+    	assertFalse(((IAtomContainer)containersList.get(0)).getAtom(1) instanceof PseudoAtom);
+    }        
 
 }
