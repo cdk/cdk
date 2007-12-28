@@ -139,7 +139,7 @@ public class MDLReaderTest extends CDKTestCase {
             "proton.mol\n" +
             "\n" +
             "\n" +
-            "  1  0  0  0  0                 1 V2000\n" +
+            "  1  0  0  0  0                 1\n" +
             "   -0.0073   -0.5272    0.9655 H   0  3  0  0  0\n";
     	MDLReader reader = new MDLReader(new StringReader(mdl), Mode.STRICT);
     	Molecule mol = (Molecule)reader.read(new Molecule());
