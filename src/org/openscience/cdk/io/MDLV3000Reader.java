@@ -132,11 +132,13 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     }
     
     public IAtomContainer readConnectionTable(IChemObjectBuilder builder) throws CDKException {
+    	logger.info("Reading CTAB block");
         IAtomContainer readData = builder.newAtomContainer();
         boolean foundEND = false;
-        readHeader(readData);
+        String lastLine = readHeader(readData);
         while (isReady() && !foundEND) {
-            String command = readCommand();
+            String command = readCommand(lastLine);
+            logger.debug("command found: " + command);
             if ("END CTAB".equals(command)) {
                 foundEND = true;
             } else if ("BEGIN CTAB".equals(command)) {
@@ -152,24 +154,32 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             } else {
                 logger.warn("Unrecognized command: " + command);
             }
+            lastLine = readLine();
         }
         return readData;
     }
     
     /**
      * @throws CDKException when no file content is detected
+     * @return Last line read
      */
-    public void readHeader(IAtomContainer readData) throws CDKException {
+    public String readHeader(IAtomContainer readData) throws CDKException {
 		// read four lines
     	String line1 = readLine();
     	if (line1 == null) {
     		throw new CDKException("Expected a header line, but found nothing.");
     	}
-    	if (line1.length() > 0) readData.setProperty(CDKConstants.TITLE, line1);
+    	if (line1.length() > 0) {
+    		if (line1.startsWith("M  V30")) {
+    			// no header
+    			return line1;
+    		}
+    		readData.setProperty(CDKConstants.TITLE, line1);
+    	}
     	readLine();
     	String line3 = readLine();
     	if (line3.length() > 0) readData.setProperty(CDKConstants.COMMENT, line3);
-    	readLine();
+    	return readLine();
 	}
 
 	/**
@@ -178,6 +188,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      * <p>IMPORTANT: it does not support the atom list and its negation!
      */
     public void readAtomBlock(IAtomContainer readData) throws CDKException {
+    	logger.info("Reading ATOM block");
     	IsotopeFactory isotopeFactory;
         try {
 	        isotopeFactory = IsotopeFactory.getInstance(readData.getBuilder());
@@ -191,7 +202,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 
         boolean foundEND = false;
         while (isReady() && !foundEND) {
-            String command = readCommand();
+            String command = readCommand(readLine());
             if ("END ATOM".equals(command)) {
                 // FIXME: should check wether 3D is really 2D
                 foundEND = true;
@@ -303,9 +314,10 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      * Reads the bond atoms, order and stereo configuration.
      */
     public void readBondBlock(IAtomContainer readData) throws CDKException {
+    	logger.info("Reading BOND block");
         boolean foundEND = false;
         while (isReady() && !foundEND) {
-            String command = readCommand();
+            String command = readCommand(readLine());
             if ("END BOND".equals(command)) {
                 foundEND = true;
             } else {
@@ -406,7 +418,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     public void readSGroup(IAtomContainer readData) throws CDKException {
         boolean foundEND = false;
         while (isReady() && !foundEND) {
-            String command = readCommand();
+            String command = readCommand(readLine());
             if ("END SGROUP".equals(command)) {
                 foundEND = true;
             } else {
@@ -475,13 +487,12 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      *
      * @return Returns the command on this line.
      */
-    private String readCommand() throws CDKException {
-        String line = readLine();
+    private String readCommand(String line) throws CDKException {
         if (line.startsWith("M  V30 ")) {
             String command =  line.substring(7);
             if (command.endsWith("-")) {
                 command = command.substring(0, command.length()-1);
-                command += readCommand();
+                command += readCommand(readLine());
             }
             return command;
         } else {
