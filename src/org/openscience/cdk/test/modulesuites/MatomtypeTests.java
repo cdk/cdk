@@ -33,6 +33,7 @@ import org.openscience.cdk.test.atomtype.ValencyMatcherTest;
 import org.openscience.cdk.test.graph.PathToolsTest;
 import org.openscience.cdk.test.graph.SpanningTreeTest;
 import org.openscience.cdk.test.graph.matrix.AdjacencyMatrixTest;
+import org.openscience.cdk.test.tools.manipulator.BondManipulatorTest;
 
 /**
  * TestSuite that runs all the tests for the CDK core module.
@@ -49,6 +50,7 @@ public class MatomtypeTests {
         suite.addTest(AtomtypeCoverageTest.suite());
 
         // basic helper algorithms
+        suite.addTest(BondManipulatorTest.suite());
         suite.addTest(AdjacencyMatrixTest.suite());
         suite.addTest(PathToolsTest.suite());
         suite.addTest(SpanningTreeTest.suite());

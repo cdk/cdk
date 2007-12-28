@@ -33,7 +33,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * @cdk.module test-standard
+ * @cdk.module test-atomtype
  */
 public class BondManipulatorTest extends CDKTestCase {
     
