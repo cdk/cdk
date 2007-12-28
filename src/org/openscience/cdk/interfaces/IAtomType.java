@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -22,9 +19,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.interfaces;
-
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.config.AtomTypeFactory;
 
 /**
  * The base class for atom types. Atom types are typically used to describe the
