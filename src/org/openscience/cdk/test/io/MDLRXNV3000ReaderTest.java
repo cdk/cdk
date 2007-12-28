@@ -35,7 +35,10 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.MDLRXNV3000Reader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -72,12 +75,23 @@ public class MDLRXNV3000ReaderTest extends CDKTestCase {
         String filename1 = "data/mdl/reaction_v3.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
-        MDLRXNV3000Reader reader1 = new MDLRXNV3000Reader(ins1);
-        Reaction reaction1 = new Reaction();
-        reaction1 = (Reaction)reader1.read(reaction1);
+        MDLRXNV3000Reader reader1 = new MDLRXNV3000Reader(ins1, Mode.STRICT);
+        IReaction reaction1 = new Reaction();
+        reaction1 = (IReaction)reader1.read(reaction1);
         reader1.close();
 
         assertNotNull(reaction1);
+        assertEquals(1, reaction1.getReactantCount());
+        assertEquals(1, reaction1.getProductCount());
+        IAtomContainer reactant = reaction1.getReactants().getAtomContainer(0);
+        assertNotNull(reactant);
+        assertEquals(32, reactant.getAtomCount());
+        assertEquals(29, reactant.getBondCount());
+        IAtomContainer product = reaction1.getProducts().getAtomContainer(0);
+        assertNotNull(product);
+        assertEquals(32, product.getAtomCount());
+        assertEquals(29, product.getBondCount());
+        
     }
 
 }
