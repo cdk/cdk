@@ -25,11 +25,9 @@ package org.openscience.cdk.libio.openbabel;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * File writer thats convert input files with OpenBabel.
@@ -98,15 +96,10 @@ import org.openscience.cdk.io.CMLReader;
  */
 public class OpenBabelConvert {
 
-    /*Operating system name*/
-    public static int SYSTEM_WINDOWS = 0;
-    public static int SYSTEM_LINUX = 1;
-    private static int SYSTEM;
-
-    /*PATH of babel*/
-    private String PATH = null;
-
-    private IChemFile chemFile;
+    /* PATH to babel */
+    private String pathToBabel = null;
+    
+    private final static LoggingTool logger = new LoggingTool(OpenBabelConvert.class);
 
     /**
      * Constructor of the ConvertOpenBabel
@@ -114,87 +107,35 @@ public class OpenBabelConvert {
      * @param path String which set the path of the progam OpenBabel. It will necessary
      *             for windows systems.
      */
-    public OpenBabelConvert(File path) {
-        SYSTEM = getOperatingSystem();
-        setPATH(path);
-
+    public OpenBabelConvert() throws Exception {
+        this(null);
     }
 
     /**
-     * set the path
+     * Constructor of the ConvertOpenBabel
      *
-     * @param path String the path value
+     * @param path String which set the path of the progam OpenBabel. It will necessary
+     *             for windows systems.
      */
-    private void setPATH(File path) {
-        if (!path.exists()) {
-            System.out.println("The File-PATH to load not exist: " + path.toString());
-            System.exit(-1);
-        }
-        PATH = convertorFileToString(path);
-        /*check if babel is installed correct, and it works*/
-//		callBABEL(0,null,null,null);
+    public OpenBabelConvert(String path) throws Exception {
+        pathToBabel = getPath(path);
     }
 
     /**
-     * call the babel program
-     *
-     * @param TYPE_CALL  Option to make
-     * @param file       File of the molecule
-     * @param type       String type of molecule
-     * @param addOptions Others options to
+     * Call the babel program.
      */
-    private void callBABEL(int TYPE_CALL,
-                           String file, String type, String addOptions) {
-        String[] args = null;
-        switch (TYPE_CALL) {
-            case 0: { /*test*/
-                args = new String[1];
-                args[0] = PATH;
-                break;
-            }
-            case 1: { /*convert from "X" to cml without options*/
-                args = new String[5];
-                args[0] = PATH;
-                args[1] = "-i" + type;
-                args[2] = file;
-                args[3] = "-ocml";
-                args[4] = "data\u002Fmdl\u002Fmolecule_IN_MEMORY.cml";
-                break;
-            }
-            case 2: { /*convert from "X" to cml with options*/
-                args = new String[6];
-                args[0] = PATH;
-                args[1] = "-i" + type;
-                args[2] = file;
-                args[3] = "-ocml";
-                args[4] = "data\u002Fmdl\u002Fmolecule_IN_MEMORY.cml";
-                args[5] = addOptions;
-                break;
-            }
-            case 3: { /*convert from cml to "X" without options*/
-                args = new String[5];
-                args[0] = PATH;
-                args[1] = "-icml";
-                args[2] = "data\u002Fmdl\u002Fmolecule_IN_MEMORY.cml";
-                args[3] = "-o" + type;
-                args[4] = file;
-                break;
-            }
-            case 4: { /*convert from cml to "X" with options*/
-                args = new String[6];
-                args[0] = PATH;
-                args[1] = "-icml";
-                args[2] = "data\u002Fmdl\u002Fmolecule_IN_MEMORY.cml";
-                args[3] = "-o" + type;
-                args[4] = file;
-                args[5] = addOptions;
-                break;
-            }
-            default:
-                ;
-                break;
-        }
+    public void convert(File inputFile, String inputType,
+    					   File outputFile, String outputType,
+    					   String addOptions) {
         try {
+            String[] args = new String[6];
+            args[0] = pathToBabel;
+            args[1] = "-i" + inputType;
+            args[2] = inputFile.getCanonicalPath();
+            args[3] = "-o" + outputType;
+            args[4] = outputFile.getCanonicalPath();
+            args[5] = addOptions == null ? "" : addOptions;
+
             Process p = Runtime.getRuntime().exec(args);
             BufferedReader r = new BufferedReader(
                     new InputStreamReader(p.getInputStream()));
@@ -207,133 +148,39 @@ public class OpenBabelConvert {
         } catch (Exception e) {
             System.err.println(e);
             System.err.println("There is some problem with babel. Check: ");
-            System.err.println("PATH: " + PATH);
+            System.err.println("PATH: " + pathToBabel);
         }
     }
 
     /**
-     * set the Operating System of the machine
-     * Now is only possible for:
-     * -Windows
-     * -Linux
+     * Searches the babel executable from a set up reasonable picks.
+     * 
+     * @param suggestedPath
+     * @return
      */
-    public static int getOperatingSystem() {
-
-        String systemString = System.getProperty("os.name").substring(0, 5);
-        if (systemString.equals("Linux")) {
-            return SYSTEM_LINUX;
-        } else if (systemString.equals("Windo")) {
-            return SYSTEM_WINDOWS;
-        } else
-            System.err.print("not system found");
-        return SYSTEM_LINUX;
-    }
-
-    /**
-     * Set the molecule to load for converting
-     *
-     * @param file File of the molecule
-     * @param type String type of the molecule.
-     *             It muss be the same convention as babel.
-     */
-    public void setInputFileToConvert(File file, String type, String addOptions) {
-        if (!file.exists()) {
-            System.out.println("The File-molecule to load not exist: " + file.toString());
-            System.exit(0);
-        } else {
-            convertorFileToString(file);
-            if (addOptions == null)
-                callBABEL(1, convertorFileToString(file), type, addOptions);
-            else
-                callBABEL(2, convertorFileToString(file), type, addOptions);
-            readCML();
+    private static String getPath(String suggestedPath) throws Exception {
+    	if (suggestedPath != null) {
+    		File suggestion = new File(suggestedPath);
+    		if (suggestion.exists()) {
+    			return suggestedPath;
+    		}
+    	}
+    	String[] possibilities = {
+    		"C:/Programme/openbabel-2.0.0awins/babel.exe", // likely??
+    		"/usr/bin/babel", // most POSIX systems
+    		"/usr/local/bin/babel" // private installation
+    	};
+    	File path = null;
+    	for (int i=0; i<possibilities.length; i++) {
+    		path = new File(possibilities[i]);
+    	    if (path.exists()) {
+    	    	logger.info("Babel executable found at: " + possibilities[i]);
+    	    	return possibilities[i];
+    	    }
         }
-
-
+    	
+    	throw new Exception("Cannot find the babel executable.");
     }
-
-    /**
-     * Convert the molecule.
-     *
-     * @param file       File of the molecule
-     * @param type       String type of the output
-     * @param addOptions Additional options for the conversion
-     */
-    public void convertTo(File file, String type, String addOptions) {
-        convertorFileToString(file);
-        if (addOptions == null)
-            callBABEL(3, convertorFileToString(file), type, addOptions);
-        else
-            callBABEL(4, convertorFileToString(file), type, addOptions);
-
-    }
-
-    /**
-     * Read the created CML and read to chemFile.
-     */
-    private void readCML() {
-        String filename = "data/mdl/molecule_IN_MEMORY.cml";
-        File file = new File(filename);
-        try {
-        	FileInputStream readerFile = new FileInputStream(file);
-            CMLReader reader = new CMLReader(readerFile);
-            chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * convert the string to string which recognizes babel
-     *
-     * @param file File value
-     * @return String value
-     */
-    private String convertorFileToString(File file) {
-
-        String fileString = "";
-        int strlen = file.getAbsolutePath().length();
-        String str = file.getAbsolutePath();
-
-        for (int i = 0; i < strlen; i++) {
-            if (Character.toString(str.charAt(i)).equals("/"))
-                fileString = fileString + "\u002F";
-
-            else
-                fileString = fileString + str.charAt(i);
-        }
-
-        return fileString;
-    }
-
-    /**
-     * get the ChemFile
-     *
-     * @return The ChemFile value
-     */
-    public IChemFile getChemFile() {
-        return chemFile;
-    }
-
-    /**
-     * resest the molecule_IN_MEMORY.cml to
-     */
-    public void reset() {
-        File file = new File("data/mdl/molecule_IN_MEMORY.cml");
-        if (file.exists())
-            file.delete();
-    }
-
-    /**
-     *
-     * @param file File wich contains the path who babel is
-     * @return Boolean, True if it exists
-     */
-    public static boolean hasOpenBabel(File file) {
-        return file.exists();
-	}
-    
 }
 
 
