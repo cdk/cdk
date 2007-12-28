@@ -30,6 +30,7 @@ import org.openscience.cdk.FragmentAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IFragmentAtom;
 
 /**
  * Checks the functionality of the FragmentAtom.
@@ -56,12 +57,12 @@ public class FragmentAtomTest extends CDKTestCase {
      * Method to test the Atom(String symbol) method.
      */
     public void testFragmentAtom() {
-        FragmentAtom a = new FragmentAtom();
+        IFragmentAtom a = new FragmentAtom();
         assertNotNull(a);
     }
     
     public void testGetFragment() {
-    	FragmentAtom a = new FragmentAtom();
+    	IFragmentAtom a = new FragmentAtom();
     	// make sure that we start with a not-null, but empty container
         assertNotNull(a.getFragment());
         assertEquals(0, a.getFragment().getAtomCount());
@@ -69,13 +70,13 @@ public class FragmentAtomTest extends CDKTestCase {
     }
     
     public void testIsExpanded() {
-    	FragmentAtom a = new FragmentAtom();
+    	IFragmentAtom a = new FragmentAtom();
         assertNotNull(a);
         assertFalse(a.isExpanded()); // test the default state
     }
     
     public void testSetExpanded_boolean() {
-    	FragmentAtom a = new FragmentAtom();
+    	IFragmentAtom a = new FragmentAtom();
         assertNotNull(a);
         a.setExpanded(true);
         assertTrue(a.isExpanded());
@@ -84,7 +85,7 @@ public class FragmentAtomTest extends CDKTestCase {
     }
     
     public void testSetFragment_IAtomContainer() {
-    	FragmentAtom a = new FragmentAtom();
+    	IFragmentAtom a = new FragmentAtom();
         assertNotNull(a);
     	IAtomContainer container = new AtomContainer();
     	container.addAtom(new Atom("N"));
