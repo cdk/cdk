@@ -73,16 +73,23 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     private Pattern keyValueTuple2;
     
     public MDLV3000Reader(Reader in) {
-        logger = new LoggingTool(this);
+    	this(in, Mode.RELAXED);
+    }
+    public MDLV3000Reader(Reader in, Mode mode) {
+    	logger = new LoggingTool(this);
         input = new BufferedReader(in);
         initIOSettings();
+        super.mode = mode;
         /* compile patterns */
         keyValueTuple = Pattern.compile("\\s*(\\w+)=([^\\s]*)(.*)"); // e.g. CHG=-1
         keyValueTuple2 = Pattern.compile("\\s*(\\w+)=\\(([^\\)]*)\\)(.*)"); // e.g. ATOMS=(1 31)
     }
 
     public MDLV3000Reader(InputStream input) {
-        this(new InputStreamReader(input));
+    	this(input, Mode.RELAXED);
+    }
+    public MDLV3000Reader(InputStream input, Mode mode) {
+        this(new InputStreamReader(input), mode);
     }
     
     public MDLV3000Reader() {
