@@ -64,13 +64,24 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     private LoggingTool logger = null;
 
     public MDLRXNV3000Reader(Reader in) {
+    	this(in, Mode.RELAXED);
+    }
+    public MDLRXNV3000Reader(Reader in, Mode mode) {
         logger = new LoggingTool(this);
-        input = new BufferedReader(in);
+        if (in instanceof BufferedReader) {
+        	input = (BufferedReader)in;
+        } else {
+        	input = new BufferedReader(in);
+        }
         initIOSettings();
+        super.mode = mode;
     }
 
     public MDLRXNV3000Reader(InputStream input) {
-        this(new InputStreamReader(input));
+    	this(input, Mode.RELAXED);
+    }
+    public MDLRXNV3000Reader(InputStream input, Mode mode) {
+        this(new InputStreamReader(input), mode);
     }
     
     public MDLRXNV3000Reader() {
