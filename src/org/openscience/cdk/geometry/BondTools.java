@@ -444,8 +444,8 @@ public class BondTools {
 		}
 		if (differentAtoms != atoms.size())
 		{
-			int[] morgannumbers = MorganNumbersTools.getMorganNumbers(container);
-			Vector differentSymbols = new Vector();
+			long[] morgannumbers = MorganNumbersTools.getMorganNumbers(container);
+			Vector<String> differentSymbols = new Vector<String>();
 			for (int i = 0; i < atoms.size(); i++)
 			{
 				IAtom atom = (IAtom)atoms.get(i);
@@ -470,22 +470,22 @@ public class BondTools {
 				}
 			}
 			boolean[] symbolsWithDifferentMorganNumbers = new boolean[differentSymbols.size()];
-			Vector[] symbolsMorganNumbers = new Vector[differentSymbols.size()];
+			Vector<Long>[] symbolsMorganNumbers = null;
 			for (int i = 0; i < symbolsWithDifferentMorganNumbers.length; i++)
 			{
 				symbolsWithDifferentMorganNumbers[i] = true;
-				symbolsMorganNumbers[i] = new Vector();
+				symbolsMorganNumbers[i] = new Vector<Long>();
 			}
 			for (int k = 0; k < atoms.size(); k++)
 			{
 				IAtom atom = (IAtom)atoms.get(k);
 				int elementNumber = differentSymbols.indexOf(atom.getSymbol());
-				if (symbolsMorganNumbers[elementNumber].contains(new Integer(morgannumbers[container.getAtomNumber(atom)])))
+				if (symbolsMorganNumbers[elementNumber].contains(morgannumbers[container.getAtomNumber(atom)]))
 				{
 					symbolsWithDifferentMorganNumbers[elementNumber] = false;
 				} else
 				{
-					symbolsMorganNumbers[elementNumber].add(new Integer(morgannumbers[container.getAtomNumber(atom)]));
+					symbolsMorganNumbers[elementNumber].add(morgannumbers[container.getAtomNumber(atom)]);
 				}
 			}
 			int numberOfSymbolsWithDifferentMorganNumbers = 0;
@@ -565,7 +565,7 @@ public class BondTools {
 	public static boolean stereosAreOpposite(IAtomContainer container, IAtom a)
 	{
 		List atoms = container.getConnectedAtomsList(a);
-		TreeMap hm = new TreeMap();
+		TreeMap<Double, Integer> hm = new TreeMap<Double, Integer>();
 		for (int i = 1; i < atoms.size(); i++)
 		{
 			hm.put(new Double(giveAngle(a, (IAtom) atoms.get(0), ((IAtom) atoms.get(i)))), new Integer(i));

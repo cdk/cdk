@@ -53,10 +53,10 @@ public class IsomorphismTester implements java.io.Serializable
 {
 
 	private static final long serialVersionUID = 2499779110996693974L;
-	int[] baseTable;
-	int[] sortedBaseTable;
-	int[] compareTable;
-	int[] sortedCompareTable;
+	long[] baseTable;
+	long[] sortedBaseTable;
+	long[] compareTable;
+	long[] sortedCompareTable;
 	IMolecule base = null;
 	IMolecule compare = null;
 
@@ -144,7 +144,7 @@ public class IsomorphismTester implements java.io.Serializable
 	private void setBaseTable(IMolecule mol) {
 		this.base = mol;
 		this.baseTable = MorganNumbersTools.getMorganNumbers(base);
-		sortedBaseTable = new int[baseTable.length];
+		sortedBaseTable = new long[baseTable.length];
 		System.arraycopy(baseTable, 0, sortedBaseTable, 0, baseTable.length);
 		Arrays.sort(sortedBaseTable);
 	}
@@ -158,7 +158,7 @@ public class IsomorphismTester implements java.io.Serializable
 	private void setCompareTable(IMolecule mol) {
 		this.compare = mol;
 		this.compareTable = MorganNumbersTools.getMorganNumbers(compare);
-		sortedCompareTable = new int[compareTable.length];
+		sortedCompareTable = new long[compareTable.length];
 		System.arraycopy(compareTable, 0, sortedCompareTable, 0, compareTable.length);
 		Arrays.sort(sortedCompareTable);
 
