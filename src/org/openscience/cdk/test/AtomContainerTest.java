@@ -1272,7 +1272,7 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(b3, acetone.getBond(1));
     }
 
-    public void testAddBond_int_int_double() {
+    public void testAddBond_int_int_IBond_Order() {
         // acetone molecule
         IMolecule acetone = builder.newMolecule();
         IAtom c1 = builder.newAtom("C");
@@ -1302,7 +1302,7 @@ public class AtomContainerTest extends CDKTestCase {
         assertEquals(IBond.Order.SINGLE, acetone.getBond(2).getOrder());
     }
 
-    public void testAddBond_int_int_double_int() {
+    public void testAddBond_int_int_IBond_Order_int() {
         // acetone molecule
         IMolecule acetone = builder.newMolecule();
         IAtom c1 = builder.newAtom("C");

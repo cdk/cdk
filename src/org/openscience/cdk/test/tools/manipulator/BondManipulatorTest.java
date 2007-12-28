@@ -55,6 +55,43 @@ public class BondManipulatorTest extends CDKTestCase {
 		assertEquals(atom2, atoms[1]);
 	}
 	
+	public void testIsHigherOrder_IBond_Order_IBond_Order() {
+		fail("Missing JUnit test");
+	}
+	public void testIsLowerOrder_IBond_Order_IBond_Order() {
+		fail("Missing JUnit test");
+	}
+	public void testIncreaseBondOrder_IBond_Order() {
+		fail("Missing JUnit test");
+	}
+	public void testIncreaseBondOrder_IBond() {
+		fail("Missing JUnit test");
+	}
+	public void testDecreaseBondOrder_IBond_Order() {
+		fail("Missing JUnit test");
+	}
+	public void testDecreaseBondOrder_IBond() {
+		fail("Missing JUnit test");
+	}
+	public void testDestroyBondOrder_IBond_Order() {
+		fail("Missing JUnit test");
+	}
+	public void testGetMaximumBondOrder_List() {
+		fail("Missing JUnit test");
+	}
+	public void testGetMaximumBondOrder_Iterator() {
+		fail("Missing JUnit test");
+	}
+	public void testGetSingleBondEquivalentSum_List() {
+		fail("Missing JUnit test");
+	}
+	public void testGetSingleBondEquivalentSum_Iterator() {
+		fail("Missing JUnit test");
+	}
+	public void testCreateBondOrder_double() {
+		fail("Missing JUnit test");
+	}
+
 }
 
 

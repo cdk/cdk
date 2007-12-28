@@ -85,6 +85,29 @@ public class SpanningTreeTest extends CDKTestCase {
 		assertEquals(0, this.azulene.getBondsAcyclicCount());
 	}
 
+	public void testClear() {
+		fail("Missing JUnit test");
+	}
+	public void testGetPath_IAtomContainer_IAtom_IAtom() {
+		fail("Missing JUnit test");
+	}
+	public void testResetFlags_IAtomContainer() {
+		fail("Missing JUnit test");
+	}
+	public void testIsDisconnected() {
+		fail("Missing JUnit test");
+	}
+	public void testGetSpanningTree() {
+		fail("Missing JUnit test");
+	}
+	public void testGetBasicRings() {
+		fail("Missing JUnit test");
+	}
+	public void testGetAllRings() {
+		fail("Missing JUnit test");
+	}
+	public void testGetSpanningTreeSize() {
+		fail("Missing JUnit test");
+	}
+	
 }
-
-

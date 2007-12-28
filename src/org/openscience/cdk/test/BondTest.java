@@ -80,7 +80,7 @@ public class BondTest extends CDKTestCase {
         assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
     }
     
-    public void testBond_IAtom_IAtom_double() {
+    public void testBond_IAtom_IAtom_IBond_Order() {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
         IBond bond = builder.newBond(c, o, IBond.Order.DOUBLE);
@@ -92,7 +92,7 @@ public class BondTest extends CDKTestCase {
         assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
     }
     
-    public void testBond_IAtom_IAtom_double_int() {
+    public void testBond_IAtom_IAtom_IBond_Order_int() {
         IAtom c = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
         IBond bond = builder.newBond(c, o, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_UP);
@@ -219,7 +219,7 @@ public class BondTest extends CDKTestCase {
         
         assertEquals(IBond.Order.DOUBLE, b.getOrder());
     }
-    public void testSetOrder_double() {
+    public void testSetOrder_IBond_Order() {
         IBond b = builder.newBond(builder.newAtom("C"), builder.newAtom("O"), IBond.Order.DOUBLE); // C=O bond
         
         assertEquals(IBond.Order.DOUBLE, b.getOrder());

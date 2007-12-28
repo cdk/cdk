@@ -229,7 +229,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof IBond);
 	}
 	
-	public void testNewBond_IAtom_IAtom_double() {
+	public void testNewBond_IAtom_IAtom_IBond_Order() {
 		Object object = rootObject.getBuilder().newBond(
 			rootObject.getBuilder().newAtom(),
 			rootObject.getBuilder().newAtom(),
@@ -241,7 +241,7 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 		assertTrue(object instanceof IBond);
 	}
 	
-	public void testNewBond_IAtom_IAtom_double_int() {
+	public void testNewBond_IAtom_IAtom_IBond_Order_int() {
 		Object object = rootObject.getBuilder().newBond(
 			rootObject.getBuilder().newAtom(),
 			rootObject.getBuilder().newAtom(),

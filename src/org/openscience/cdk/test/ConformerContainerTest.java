@@ -72,7 +72,7 @@ public class ConformerContainerTest {
     }
 
     @Test
-    public void testSimpleConstructor() {
+    public void testConformerContainer() {
         ConformerContainer container = new ConformerContainer();
         Assert.assertNotNull(container);
         container.add(base);
@@ -83,7 +83,7 @@ public class ConformerContainerTest {
     }
 
     @Test
-    public void testArrayConstructor() {
+    public void testConformerContainer_arrayIAtomContainer() {
         ConformerContainer container = new ConformerContainer(confs);
         Assert.assertNotNull(container);
         Assert.assertEquals(nconfs, container.size());
@@ -139,7 +139,7 @@ public class ConformerContainerTest {
     }
 
     @Test
-    public void testRemove() {
+    public void testRemove_int() {
         ConformerContainer container = new ConformerContainer(confs);
         container.clear();
         Assert.assertEquals(0, container.size());
@@ -152,7 +152,7 @@ public class ConformerContainerTest {
     }
 
     @Test
-    public void testIndexOf() {
+    public void testIndexOf_IAtomContainer() {
         ConformerContainer container = new ConformerContainer(confs);
         IAtomContainer ac = container.get(2);
         int index = container.indexOf(ac);
@@ -160,14 +160,14 @@ public class ConformerContainerTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testAdd() {
+    public void testAdd_IAtomContainer() {
         ConformerContainer container = new ConformerContainer(confs);
         base.setProperty(CDKConstants.TITLE, "junk");
         container.add(base);
     }
 
     @Test(expected  = IndexOutOfBoundsException.class)
-    public void testGet1() {
+    public void testGet_int() {
         ConformerContainer container = new ConformerContainer(confs);
         container.get(100);        
     }
@@ -178,4 +178,80 @@ public class ConformerContainerTest {
         for (int i = 0; i < container.size()+1; i++) container.get(i);        
     }
 
+    @Test public void testAdd_int_IAtomContainer() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testAdd_int_Object() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testAdd_Object() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testIndexOf_Object() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testClear() {
+    	ConformerContainer container = new ConformerContainer(confs);
+    	Assert.assertEquals(nconfs, container.size());
+    	container.clear();
+    	Assert.assertEquals(0, container.size());
+    };
+    @Test public void testSize() {
+    	ConformerContainer container = new ConformerContainer(confs);
+    	Assert.assertEquals(nconfs, container.size());
+    };
+    @Test public void testLastIndexOf_Object() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testContains_Object() {
+    	ConformerContainer container = new ConformerContainer(confs);
+    	Assert.assertEquals(nconfs, container.size());
+    	Assert.assertTrue(container.contains(container.get(3)));
+    };
+    @Test public void testAddAll_Collection() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testAddAll_int_Collection() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testToArray_arrayObject() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testRemove_Object() {
+    	ConformerContainer cContainer = new ConformerContainer(confs);
+    	Assert.assertEquals(nconfs, cContainer.size());
+    	IAtomContainer container = cContainer.get(3);
+    	Assert.assertTrue(cContainer.contains(container));
+    	cContainer.remove(container);
+    	Assert.assertEquals(nconfs-1, cContainer.size());
+    	Assert.assertFalse(cContainer.contains(container));
+    };
+    @Test public void testSet_int_IAtomContainer() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testSet_int_Object() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testContainsAll_Collection() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testRemoveAll_Collection() {
+    	Assert.fail("Missing JUnit test");
+    };       
+    @Test public void testRetainAll_Collection() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testSubList_int_int() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testListIterator() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testListIterator_int() {
+    	Assert.fail("Missing JUnit test");
+    };
+    @Test public void testConformerContainer_IAtomContainer() {
+    	Assert.fail("Missing JUnit test");
+    };
+    
 }

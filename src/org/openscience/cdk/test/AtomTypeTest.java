@@ -86,14 +86,14 @@ public class AtomTypeTest extends CDKTestCase {
         assertEquals("C4", at.getAtomTypeName());
     }
     
-    public void testSetMaxBondOrder_Double() {
+    public void testSetMaxBondOrder_IBond_Order() {
         IAtomType at = builder.newAtomType("C");
         at.setMaxBondOrder(IBond.Order.TRIPLE);
         assertEquals(IBond.Order.TRIPLE, at.getMaxBondOrder());
     }
 
     public void testGetMaxBondOrder() {
-        testSetMaxBondOrder_Double();
+    	testSetMaxBondOrder_IBond_Order();
     }
 
     public void testSetBondOrderSum_Double() {
@@ -174,7 +174,7 @@ public class AtomTypeTest extends CDKTestCase {
         testSetFormalNeighbourCount_Integer();
     }
 
-    public void testSetHybridization_Integer() {
+    public void testSetHybridization_IAtomType_Hybridization() {
         Hybridization hybridization = Hybridization.SP1;
 
         IAtomType atom = builder.newAtomType("C");
@@ -182,7 +182,7 @@ public class AtomTypeTest extends CDKTestCase {
         assertEquals(hybridization, atom.getHybridization());
     }
     public void testGetHybridization() {
-        testSetHybridization_Integer();
+    	testSetHybridization_IAtomType_Hybridization();
     }
 
     public void testSetAcceptor_boolean(){

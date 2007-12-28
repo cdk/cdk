@@ -198,6 +198,27 @@ public class PathToolsTest extends CDKTestCase {
         atomContainer = sp.parseSmiles("c12ccccc1cccc2");
         assertEquals(5, PathTools.getMolecularGraphDiameter(atomContainer));
     }
-    
+
+    public void testComputeFloydAPSP_arrayintint() {
+    	fail("Missing JUnit test");
+    }
+    public void testComputeFloydAPSP_arraydoubledouble() {
+    	fail("Missing JUnit test");
+    }
+    public void testDepthFirstTargetSearch_IAtomContainer_IAtom_IAtom_IAtomContainer() {
+    	fail("Missing JUnit test");
+    }
+    public void testBreadthFirstSearch_IAtomContainer_Vector_IMolecule() {
+    	fail("Missing JUnit test");
+    }
+    public void testBreadthFirstSearch_IAtomContainer_Vector_IMolecule_int() {
+    	fail("Missing JUnit test");
+    }
+    public void testFindClosestByBond_IAtomContainer_IAtom_int() {
+    	fail("Missing JUnit test");
+    }
+    public void testResetFlags_IAtomContainer() {
+    	fail("Missing JUnit test");
+    }
 }
 
