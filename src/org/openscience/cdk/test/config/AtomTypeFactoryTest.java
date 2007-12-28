@@ -180,6 +180,17 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         assertEquals("ALA.CA", atomType.getAtomTypeName());
 	}
 
+    public void testGetAtomTypeFromJmol() throws Exception {
+        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", 
+                new ChemObject().getBuilder());
+		IAtomType atomType = factory.getAtomType("H");
+		
+        assertNotNull(atomType);
+        assertEquals("H", atomType.getSymbol());
+        assertEquals("H", atomType.getAtomTypeName());
+        assertEquals(1.20, atomType.getVanderwaalsRadius(), 0.01);
+	}
+
     public void testConfigure_IAtom() throws Exception {
 		IAtomType atomType;
         IAtom atom = new org.openscience.cdk.Atom("X");

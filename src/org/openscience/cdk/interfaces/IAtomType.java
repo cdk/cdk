@@ -23,13 +23,16 @@
  */
 package org.openscience.cdk.interfaces;
 
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.config.AtomTypeFactory;
+
 /**
  * The base class for atom types. Atom types are typically used to describe the
  * behaviour of an atom of a particular element in different environment like 
  * sp<sup>3</sup> hybridized carbon C3, etc., in some molecular modelling 
  * applications.
  *
- * @cdk.module interfaces
+ * @cdk.module  interfaces
  * @cdk.svnrev  $Revision$
  *
  * @author      egonw
@@ -157,9 +160,18 @@ public interface IAtomType extends IIsotope {
     
     /**
      * Returns the Vanderwaals radius for this AtomType.
+     * 
+     * <p>Vanderwaals radii can be set by using the Jmol atom type list:
+     * <pre>
+     * AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt",
+     * new ChemObject().getBuilder());
+     * IAtomType atomType = factory.getAtomType("H");
+     * double radius = atomType.getVanderwaalsRadius();
+     * </pre>        
      *
-     * @return The Vanderwaals radius for this AtomType
-     * @see    #setVanderwaalsRadius
+     * @return      The Vanderwaals radius for this AtomType
+     * @see         #setVanderwaalsRadius
+     * @cdk.keyword radius, vanderwaals
      */
     public Double getVanderwaalsRadius();
     
