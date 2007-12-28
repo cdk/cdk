@@ -94,5 +94,17 @@ public class FragmentAtomTest extends CDKTestCase {
     	assertEquals(container, a.getFragment());
     }
     
+    public void testGetExactMass() {
+    	FragmentAtom a = new FragmentAtom();
+        assertNotNull(a);
+    	IAtomContainer container = new AtomContainer();
+    	container.addAtom(new Atom("N"));
+    	container.getAtom(0).setExactMass(5.5);
+    	container.addAtom(new Atom("C"));
+    	container.getAtom(1).setExactMass(3.5);
+    	container.addBond(0, 1, IBond.Order.TRIPLE);
+    	a.setFragment(container);
+    	assertEquals(9.0, a.getExactMass(), 0.0001);
+    }
 
 }

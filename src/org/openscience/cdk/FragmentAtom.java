@@ -24,11 +24,17 @@
  */
 package org.openscience.cdk;
 
+import java.util.Iterator;
+
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
+ * Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much
+ * like the MDL molfile <code>Group</code> concept.
+ * 
  * @cdk.module data
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev $Revision: 9162 $
  * 
  * @author egonw
  */
@@ -58,6 +64,19 @@ public class FragmentAtom extends PseudoAtom {
 
 	public void setFragment(IAtomContainer fragment) {
 		this.fragment = fragment;
+	}
+	
+	/**
+	 * The exact mass of an FragmentAtom is defined as the sum of exact masses
+	 * of the IAtom's in the fragment.
+	 */
+	public double getExactMass() {
+		double totalMass = 0.0;
+		Iterator<IAtom> atoms = fragment.atoms();
+		while (atoms.hasNext()) {
+			totalMass += atoms.next().getExactMass();
+		}
+		return totalMass;
 	}
 	
 }
