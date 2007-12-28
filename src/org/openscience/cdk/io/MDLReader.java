@@ -100,6 +100,7 @@ public class MDLReader extends DefaultChemObjectReader {
 		
 	public MDLReader(InputStream in, Mode mode) {
 		this(new InputStreamReader(in));
+		super.mode = mode;
 	}
 
 	/**
