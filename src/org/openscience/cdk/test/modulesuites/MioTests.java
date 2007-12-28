@@ -56,6 +56,7 @@ public class MioTests {
         suite.addTest(SDFReaderTest.suite());
         suite.addTest(MDLWriterTest.suite());
         suite.addTest(MDLRXNReaderTest.suite());
+        suite.addTest(MDLRXNV3000ReaderTest.suite());
         suite.addTest(MDLRXNWriterTest.suite());
         suite.addTest(Mol2ReaderTest.suite());
         suite.addTest(PDBWriterTest.suite());
