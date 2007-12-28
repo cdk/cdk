@@ -75,12 +75,23 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
      * @param  in  The Reader to read from
      */
     public MDLRXNV2000Reader(Reader in) {
+    	this(in, Mode.RELAXED);
+    }
+    public MDLRXNV2000Reader(Reader in, Mode mode) {
         logger = new LoggingTool(this);
-        input = new BufferedReader(in);
+        if (in instanceof BufferedReader) {
+        	input = (BufferedReader)in;
+        } else {
+        	input = new BufferedReader(in);
+        }
+        super.mode = mode;
     }
 
     public MDLRXNV2000Reader(InputStream input) {
-        this(new InputStreamReader(input));
+    	this(input, Mode.RELAXED);
+    }
+    public MDLRXNV2000Reader(InputStream input, Mode mode) {
+        this(new InputStreamReader(input), mode);
     }
     
     public MDLRXNV2000Reader() {
@@ -211,7 +222,9 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
                 // read MDL molfile content
                 // Changed this to mdlv2000 reader
                 MDLV2000Reader reader = new MDLV2000Reader(
-                  new StringReader(molFile.toString()));
+                    new StringReader(molFile.toString()),
+                    super.mode
+                );
                 IMolecule reactant = (IMolecule)reader.read(
                   builder.newMolecule()
                 );

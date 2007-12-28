@@ -72,12 +72,23 @@ public class MDLRXNReader extends DefaultChemObjectReader {
      * @param  in  The Reader to read from
      */
     public MDLRXNReader(Reader in) {
+    	this(in, Mode.RELAXED);
+    }
+    public MDLRXNReader(Reader in, Mode mode) {
         logger = new LoggingTool(this);
-        input = new BufferedReader(in);
+        if (in instanceof BufferedReader) {
+        	input = (BufferedReader)in;
+        } else {
+        	input = new BufferedReader(in);
+        }
+        super.mode = mode;
     }
 
     public MDLRXNReader(InputStream input) {
-        this(new InputStreamReader(input));
+    	this(input, Mode.RELAXED);
+    }
+    public MDLRXNReader(InputStream input, Mode mode) {
+        this(new InputStreamReader(input), mode);
     }
     
     public MDLRXNReader() {
@@ -237,7 +248,9 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 
                 // read MDL molfile content
                 MDLReader reader = new MDLReader(
-                  new StringReader(molFile.toString()));
+                    new StringReader(molFile.toString()),
+                    super.mode
+                );
                 IMolecule product = (IMolecule)reader.read(
                   builder.newMolecule());
                   

@@ -212,7 +212,9 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
             try {
                 // read MDL molfile content
                 MDLV3000Reader reader = new MDLV3000Reader(
-                  new StringReader(molFile.toString()));
+                    new StringReader(molFile.toString()),
+                    super.mode
+                );
                 IMolecule reactant = (IMolecule)reader.read(
                   builder.newMolecule());
                   
