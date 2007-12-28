@@ -314,6 +314,8 @@ public class MDLReader extends DefaultChemObjectReader {
         String line = "";
         
         try {
+        	IsotopeFactory isotopeFactory = IsotopeFactory.getInstance(molecule.getBuilder());
+        	
             logger.info("Reading header");
             line = input.readLine(); linecount++;
             if (line == null) {
@@ -339,6 +341,7 @@ public class MDLReader extends DefaultChemObjectReader {
             logger.info("Reading rest of file");
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
+            System.out.println("Line " + linecount + ": " + line);
             if (mode == Mode.STRICT) {
             	if (line.contains("V2000") || line.contains("v2000")) {
             		throw new CDKException("This file must be read with the MDLV2000Reader.");
@@ -364,10 +367,20 @@ public class MDLReader extends DefaultChemObjectReader {
                 String element = line.substring(31,34).trim();
 
                 logger.debug("Atom type: ", element);
-                if (IsotopeFactory.getInstance(molecule.getBuilder()).isElement(element)) {
-                    atom = IsotopeFactory.getInstance(molecule.getBuilder()).configure(molecule.getBuilder().newAtom(element));
-                } else {
-                    logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
+                if (isotopeFactory.isElement(element)) {
+                    atom = isotopeFactory.configure(molecule.getBuilder().newAtom(element));
+                } else if ("A".equals(element)) {
+                	atom = molecule.getBuilder().newPseudoAtom(element);
+                } else if ("Q".equals(element)) {
+                	atom = molecule.getBuilder().newPseudoAtom(element);
+                } else if ("*".equals(element)) {
+                	atom = molecule.getBuilder().newPseudoAtom(element);
+                } else if ("LP".equals(element)) {
+                	atom = molecule.getBuilder().newPseudoAtom(element);
+                } else if ("L".equals(element)) {
+                	atom = molecule.getBuilder().newPseudoAtom(element);
+                } else if (element.length() > 0 && element.charAt(0) == 'R'){
+                	logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
                     //check if the element is R
                     rGroup=element.split("^R");
                     if (rGroup.length >1){
@@ -381,6 +394,11 @@ public class MDLReader extends DefaultChemObjectReader {
                     	element="R"+Rnumber;
                     }
                     atom = molecule.getBuilder().newPseudoAtom(element);
+                } else {
+                	if (mode == IChemObjectReader.Mode.STRICT) {
+                		throw new CDKException("Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");
+                	}
+                	atom = molecule.getBuilder().newPseudoAtom(element);
                 }
 
                 // store as 3D for now, convert to 2D (if totalZ == 0.0) later

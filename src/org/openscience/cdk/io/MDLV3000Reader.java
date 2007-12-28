@@ -171,6 +171,17 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
      * <p>IMPORTANT: it does not support the atom list and its negation!
      */
     public void readAtomBlock(IAtomContainer readData) throws CDKException {
+    	IsotopeFactory isotopeFactory;
+        try {
+	        isotopeFactory = IsotopeFactory.getInstance(readData.getBuilder());
+        } catch (IOException exception) {
+	        throw new CDKException("Could not initiate the IsotopeFactory.", exception);
+        }
+        
+        int RGroupCounter = 1;
+        int Rnumber = 0;
+        String[] rGroup = null;
+
         boolean foundEND = false;
         while (isReady() && !foundEND) {
             String command = readCommand();
@@ -192,21 +203,40 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 }
                 // parse the element
                 String element = tokenizer.nextToken();
-                boolean isElement = false;
-                try {
-                    isElement = IsotopeFactory.getInstance(atom.getBuilder()).isElement(element);
-                } catch (Exception exception) {
-                    throw new CDKException("Could not determine if element exists!", exception);
-                }
-                if (isPseudoAtom(element)) {
-                    atom = readData.getBuilder().newPseudoAtom(atom);
-                } else if (isElement) {
-                    atom.setSymbol(element);
+                if (isotopeFactory.isElement(element)) {
+                    atom = isotopeFactory.configure(readData.getBuilder().newAtom(element));
+                } else if ("A".equals(element)) {
+                	atom = readData.getBuilder().newPseudoAtom(element);
+                } else if ("Q".equals(element)) {
+                	atom = readData.getBuilder().newPseudoAtom(element);
+                } else if ("*".equals(element)) {
+                	atom = readData.getBuilder().newPseudoAtom(element);
+                } else if ("LP".equals(element)) {
+                	atom = readData.getBuilder().newPseudoAtom(element);
+                } else if ("L".equals(element)) {
+                	atom = readData.getBuilder().newPseudoAtom(element);
+                } else if (element.length() > 0 && element.charAt(0) == 'R'){
+                	logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
+                    //check if the element is R
+                	rGroup = element.split("^R");
+                    if (rGroup.length > 1){
+                    	try{
+                    		Rnumber = new Integer(rGroup[(rGroup.length-1)]).intValue();
+                    		RGroupCounter=Rnumber;
+                    	}catch(Exception ex){
+                    		Rnumber=RGroupCounter;
+                    		RGroupCounter++;
+                    	}
+                    	element="R"+Rnumber;
+                    }
+                    atom = readData.getBuilder().newPseudoAtom(element);
                 } else {
-                    String error = "Cannot parse element of type: " + element;
-                    logger.error(error);
-                    throw new CDKException("(Possible CDK bug) " + error);
+                	if (mode == IChemObjectReader.Mode.STRICT) {
+                		throw new CDKException("Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");
+                	}
+                	atom = readData.getBuilder().newPseudoAtom(element);
                 }
+
                 // parse atom coordinates (in Angstrom)
                 try {
                     String xString = tokenizer.nextToken();
@@ -517,16 +547,6 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
     }
 
-    private boolean isPseudoAtom(String element) {
-        if (element.equals("R#") || // a Rgroup
-            element.equals("Q") ||  // any atom but C and H
-            element.equals("A") ||  // any atom
-            element.equals("*")) {  // 'star' atom
-            return true;
-        }
-        return false;
-    }
-    
     public boolean accepts(IChemObject object) {
         if (object instanceof IMolecule) {
             return true;
