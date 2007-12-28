@@ -44,7 +44,7 @@ abstract public class CoverageTest extends CDKTestCase {
     private final String testPackageName = "test.";
     
     private ClassLoader classLoader;
-    private List classesToTest;
+    private List<String> classesToTest;
     
     public CoverageTest(String name) {
         super(name);
@@ -63,7 +63,7 @@ abstract public class CoverageTest extends CDKTestCase {
     }
 
     protected void loadClassList(String classList) throws Exception {
-        classesToTest = new ArrayList();
+        classesToTest = new ArrayList<String>();
         
         // get the src/core.javafiles file
         InputStream stream = this.getClass().getClassLoader().getResourceAsStream(classList);
@@ -110,7 +110,7 @@ abstract public class CoverageTest extends CDKTestCase {
             int missingTestsCount = 0;
 
             // make map of methods in the test class
-            ArrayList testMethodNames = new ArrayList();
+            List<String> testMethodNames = new ArrayList<String>();
             Method[] testMethods = testClass.getMethods();
             for (int i=0; i<testMethods.length; i++) {
                 testMethodNames.add(testMethods[i].getName());
@@ -139,6 +139,23 @@ abstract public class CoverageTest extends CDKTestCase {
                         } else {
                             testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
                         }
+                    }
+                    // replace '$' with '_'
+                    if (testMethod.indexOf('$') != -1) {
+                    	StringBuffer output = new StringBuffer();
+                    	for (int j=0; j<testMethod.length(); j++) {
+                    		char ch = testMethod.charAt(j);
+                    		if (ch == '$') {
+                    			if (j+1 == testMethod.length() || testMethod.charAt(j+1) == '_') {
+                    				// drop if it's the last char, or if the next is an underscore too
+                    			} else {
+                    				output.append('_');
+                    			}
+                    		} else {
+                    			output.append(ch);
+                    		}
+                    	}
+                    	testMethod = output.toString();
                     }
                     if (!testMethod.equals("testClass$_String")) {
                     	if (!testMethodNames.contains(testMethod)) {
