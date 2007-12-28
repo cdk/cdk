@@ -141,22 +141,7 @@ abstract public class CoverageTest extends CDKTestCase {
                         }
                     }
                     // replace '$' with '_'
-                    if (testMethod.indexOf('$') != -1) {
-                    	StringBuffer output = new StringBuffer();
-                    	for (int j=0; j<testMethod.length(); j++) {
-                    		char ch = testMethod.charAt(j);
-                    		if (ch == '$') {
-                    			if (j+1 == testMethod.length() || testMethod.charAt(j+1) == '_') {
-                    				// drop if it's the last char, or if the next is an underscore too
-                    			} else {
-                    				output.append('_');
-                    			}
-                    		} else {
-                    			output.append(ch);
-                    		}
-                    	}
-                    	testMethod = output.toString();
-                    }
+                    testMethod = replaceFunnyCharacters(testMethod);
                     if (!testMethod.equals("testClass$_String")) {
                     	if (!testMethodNames.contains(testMethod)) {
                     		System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
@@ -190,6 +175,7 @@ abstract public class CoverageTest extends CDKTestCase {
             					testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
             				}
             			}
+            			testMethod = replaceFunnyCharacters(testMethod);
                         if (!testMethod.equals("testClass$_String")) {
                         	if (!testMethodNames.contains(testMethod)) {
                         		System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
@@ -205,6 +191,26 @@ abstract public class CoverageTest extends CDKTestCase {
             // interfaces should not be tested
             return 0;
         }
+    }
+
+	private String replaceFunnyCharacters(String testMethod) {
+	    if (testMethod.indexOf('$') != -1) {
+	    	StringBuffer output = new StringBuffer();
+	    	for (int j=0; j<testMethod.length(); j++) {
+	    		char ch = testMethod.charAt(j);
+	    		if (ch == '$') {
+	    			if (j+1 == testMethod.length() || testMethod.charAt(j+1) == '_') {
+	    				// drop if it's the last char, or if the next is an underscore too
+	    			} else {
+	    				output.append('_');
+	    			}
+	    		} else {
+	    			output.append(ch);
+	    		}
+	    	}
+	    	testMethod = output.toString();
+	    }
+	    return testMethod;
     }
     
     private String stripBrackets(String string) {
