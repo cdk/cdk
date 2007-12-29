@@ -102,18 +102,8 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
 
     int[] frags = new int[121]; // counts of each type of fragment in the molecule
     public int[] alogpfrag; // alogp fragments for each atom (used to see which atoms have missing fragments)
-    final double[] fragval = new double[121];// coefficients for alogp model
-    final double[] refracval = new double[121]; // coefficients for refractivity model
-    String UnassignedAtoms="";
-
-    double ALOGP = 0.0;
-    double AMR = 0.0;
-    double ALOGP2 = 0.0;
-
-
-    public ALOGPDescriptor() throws CDKException {
-        logger = new LoggingTool(this);
-
+    final static double[] fragval = new double[121];// coefficients for alogp model
+    static {
         // fragments for ALOGP from Ghose et al., 1998
         fragval[1] = -1.5603;
         fragval[2] = -1.012;
@@ -235,7 +225,10 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
         fragval[118] = -0.7966;
         fragval[119] = 0.6705;
         fragval[120] = -0.4801;
+    }
 
+    final static double[] refracval = new double[121]; // coefficients for refractivity model
+    static {
         // fragments for AMR from Viswanadhan et al., 1989
         refracval[1]=2.968;
         refracval[2]=2.9116;
@@ -357,6 +350,17 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
         refracval[118]=6.836;
         refracval[119]=10.0101;
         refracval[120]=5.2806;
+    }
+    
+    String UnassignedAtoms="";
+
+    double ALOGP = 0.0;
+    double AMR = 0.0;
+    double ALOGP2 = 0.0;
+
+
+    public ALOGPDescriptor() throws CDKException {
+        logger = new LoggingTool(this);
 
         try {
             ap = AtomicProperties.getInstance();
