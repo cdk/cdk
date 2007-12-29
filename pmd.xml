@@ -46,6 +46,10 @@
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="pcore"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="forcefield"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="qsar"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="qsaratomic"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="qsarbond"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="qsarmolecular"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="qsarprotein"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="experimental"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="svg"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="structgen"/></antcall>
@@ -64,6 +68,11 @@
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-standard"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-pcore"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-valencycheck"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-qsar"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-qsaratomic"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-qsarbond"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-qsarmolecular"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-qsarprotein"/></antcall>
     </target>
 
     <target id="test-module" name="test-module"

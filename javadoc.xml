@@ -132,6 +132,10 @@
       <antcall target="doccheck-module"><param name="module" value="smarts"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="forcefield"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="qsar"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="qsaratomic"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="qsarbond"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="qsarmolecular"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="qsarprotein"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="experimental"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="svg"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="pcore"/></antcall>
