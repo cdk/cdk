@@ -65,7 +65,7 @@ public class PharmacophoreUtils {
      * @see PharmacophoreQueryBond
      * @see PharmacophoreMatcher
      */
-    @TestMethod("testReadPcoreDef")
+    @TestMethod("testReadPcoreDef, testInvalidPcoreXML")
     public static List<IQueryAtomContainer> readPharmacophoreDefinitions(String filename) throws CDKException, IOException {
         Builder parser = new Builder();
         Document doc;
@@ -112,7 +112,7 @@ public class PharmacophoreUtils {
      * @see PharmacophoreQueryBond
      * @see PharmacophoreMatcher
      */
-    @TestMethod("testReadPcoreDef")
+    @TestMethod("testReadPcoreDef, testInvalidPcoreXML")
     public static List<IQueryAtomContainer> readPharmacophoreDefinitions(InputStream ins) throws IOException, CDKException {
         Builder parser = new Builder();
         Document doc;
