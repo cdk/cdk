@@ -34,12 +34,16 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Reaction;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
 import org.openscience.cdk.fingerprint.IFingerprinter;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -349,6 +353,27 @@ public class FingerprinterTest extends CDKTestCase
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		assertTrue(FingerprinterTool.isSubset(bs, bs1));
+	}
+	
+	/**
+	 * @cdk.bug 1851202
+	 */
+	public void testBug1851202() throws Exception {
+        String filename1 = "data/mdl/0002.stg01.rxn";
+        logger.info("Testing: " + filename1);
+        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
+        MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins1, Mode.STRICT);
+        IReaction reaction = (IReaction)reader.read(new Reaction());
+        assertNotNull(reaction);
+
+        IAtomContainer reactant = reaction.getReactants().getAtomContainer(0);
+        IAtomContainer product = reaction.getProducts().getAtomContainer(0);
+        
+        Fingerprinter fingerprinter = new Fingerprinter(64*26,8);
+        BitSet bs1 = fingerprinter.getFingerprint(reactant);
+        assertNotNull(bs1);
+        BitSet bs2 = fingerprinter.getFingerprint(product);
+        assertNotNull(bs2);
 	}
 	
 	public static Molecule makeFragment1()
