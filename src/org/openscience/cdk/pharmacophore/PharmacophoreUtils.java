@@ -220,7 +220,7 @@ public class PharmacophoreUtils {
                     if (queryAtom.getSymbol().equals(id1)) a1 = queryAtom;
                     if (queryAtom.getSymbol().equals(id2)) a2 = queryAtom;
                 }
-                ret.addBond(new PharmacophoreQueryBond(a1, a2, lower, upper));
+                ret.addBond(new PharmacophoreQueryBond((PharmacophoreQueryAtom)a1, (PharmacophoreQueryAtom)a2, lower, upper));
 
             } else if (child.getQualifiedName().equals("angleConstraint")) {
                 // CDK doesn't handle angle constraints at this point
