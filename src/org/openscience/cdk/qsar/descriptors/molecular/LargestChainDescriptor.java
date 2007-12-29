@@ -24,10 +24,13 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.Vector;
+
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -37,10 +40,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.Vector;
 
 /**
  * Class that returns the number of atoms in the largest chain.
@@ -166,7 +166,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
         //logger.debug("LargestChainDescriptor");
     	if (checkRingSystem) {
-    		IRingSet rs = new SSSRFinder(container).findSSSR();
+    		IRingSet rs = new SpanningTree(container).getBasicRings();
     		for (int i = 0; i < container.getAtomCount(); i++) {
     			if (rs.contains(container.getAtom(i))) {
     				container.getAtom(i).setFlag(CDKConstants.ISINRING, true);

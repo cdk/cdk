@@ -28,6 +28,7 @@ import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -37,7 +38,6 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -139,7 +139,7 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 		Iterator bonds = ac.bonds();
 		int degree0 = 0;
 		int degree1 = 0;
-		IRingSet ringSet = (IRingSet) new SSSRFinder(ac).findSSSR();
+		IRingSet ringSet = new SpanningTree(ac).getBasicRings();
 		while (bonds.hasNext()) {
 			IBond bond = (IBond)bonds.next();
 			if (ringSet.getRings(bond).size() > 0) {
