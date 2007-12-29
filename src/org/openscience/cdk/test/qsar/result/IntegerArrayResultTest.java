@@ -42,7 +42,7 @@ public class IntegerArrayResultTest extends CDKTestCase {
 	public void testIntegerArrayResult_int() {
 		IntegerArrayResult result = new IntegerArrayResult(5);
 		assertNotNull(result);
-		assertEquals(0, result.length());
+		assertEquals(5, result.length());
 	}
 	
 	public void testIntegerArrayResult() {

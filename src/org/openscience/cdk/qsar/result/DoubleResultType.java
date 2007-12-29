@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision: 9170 $ $Author: rajarshi $ $Date: 2007-10-22 02:11:09 +0200 (Mon, 22 Oct 2007) $
  * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.ne>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,25 +21,19 @@
 package org.openscience.cdk.qsar.result;
 
 /**
- * Object that provides access to the calculated descriptor value.
+ * IDescriptorResult type for booleans. 
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision$
+ * @cdk.svnrev $Revision: 9170 $
  */
-public class BooleanResult extends BooleanResultType {
+public class DoubleResultType implements IDescriptorResult {
     
-    private boolean value;
-    
-    public BooleanResult(boolean value) {
-        this.value = value;
-    }
-    
-    public boolean booleanValue() {
-        return this.value;
-    }
-
     public String toString() {
-        return Boolean.toString(value);
+        return "DoubleResultType";
+    }
+    
+    public int length() {
+    	return 1;
     }
 }
 

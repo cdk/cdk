@@ -24,22 +24,23 @@
 package org.openscience.cdk.qsar.result;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-public class DoubleArrayResult implements IDescriptorResult {
+public class DoubleArrayResult extends DoubleArrayResultType {
 
     private List<Double> array;
 
     public DoubleArrayResult() {
+    	super(0);
         this.array = new ArrayList<Double>();
     }
 
     public DoubleArrayResult(int size) {
+    	super(size);
         this.array = new ArrayList<Double>(size);
     }
 
@@ -51,19 +52,21 @@ public class DoubleArrayResult implements IDescriptorResult {
      * The first double is at index = 0;
      */
     public double get(int index) {
-        return ((Double) this.array.get(index)).doubleValue();
+    	if (index >= this.array.size()) {
+    		return 0.0;
+    	}
+        return this.array.get(index);
     }
 
     public int length() {
-        return this.array.size();
+        return Math.max(super.length(), this.array.size());
     }
 
     public String toString() {
         StringBuffer buf = new StringBuffer();
-        for (Iterator<Double> iterator = array.iterator(); iterator.hasNext();) {
-            Double value = iterator.next();
-            buf.append(value.doubleValue());
-            if (iterator.hasNext()) buf.append(",");
+        for (int i=0; i<length(); i++) {
+            buf.append(get(i));
+            if (i+1<length()) buf.append(",");
         }
         return buf.toString();
     }

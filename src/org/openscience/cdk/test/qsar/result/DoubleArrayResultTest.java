@@ -42,7 +42,7 @@ public class DoubleArrayResultTest extends CDKTestCase {
 	public void testDoubleArrayResult_int() {
 		DoubleArrayResult result = new DoubleArrayResult(5);
 		assertNotNull(result);
-		assertEquals(0, result.length());
+		assertEquals(5, result.length());
 	}
 	
 	public void testDoubleArrayResult() {

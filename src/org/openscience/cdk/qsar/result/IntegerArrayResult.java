@@ -24,22 +24,23 @@
 package org.openscience.cdk.qsar.result;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-public class IntegerArrayResult implements IDescriptorResult {
+public class IntegerArrayResult extends IntegerArrayResultType {
 
     private List<Integer> array;
 
     public IntegerArrayResult() {
+    	super(0);
         this.array = new ArrayList<Integer>();
     }
 
     public IntegerArrayResult(int size) {
+    	super(size);
         this.array = new ArrayList<Integer>(size);
     }
 
@@ -51,19 +52,21 @@ public class IntegerArrayResult implements IDescriptorResult {
      * The first int is at index = 0;
      */
     public int get(int index) {
-        return ((Integer)this.array.get(index)).intValue();
+    	if (index >= this.array.size()) {
+    		return 0;
+    	}
+        return this.array.get(index);
     }
 
     public int length() {
-        return this.array.size();
+    	return Math.max(super.length(), this.array.size());
     }
 
     public String toString() {
-        StringBuffer buf = new StringBuffer();
-        for (Iterator<Integer> iterator = array.iterator(); iterator.hasNext();) {
-            Integer integer = iterator.next();
-            buf.append(integer.intValue());
-            if (iterator.hasNext()) buf.append(",");
+    	StringBuffer buf = new StringBuffer();
+        for (int i=0; i<length(); i++) {
+            buf.append(get(i));
+            if (i+1<length()) buf.append(",");
         }
         return buf.toString();
     }
