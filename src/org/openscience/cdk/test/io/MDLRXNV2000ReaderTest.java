@@ -35,7 +35,6 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
-import org.openscience.cdk.io.MDLRXNV3000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
@@ -74,7 +73,7 @@ public class MDLRXNV2000ReaderTest extends CDKTestCase {
         String filename1 = "data/mdl/0024.stg02.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
-        MDLRXNV3000Reader reader1 = new MDLRXNV3000Reader(ins1, Mode.STRICT);
+        MDLRXNV2000Reader reader1 = new MDLRXNV2000Reader(ins1, Mode.STRICT);
         IReaction reaction1 = new Reaction();
         reaction1 = (IReaction)reader1.read(reaction1);
         reader1.close();
@@ -90,6 +89,32 @@ public class MDLRXNV2000ReaderTest extends CDKTestCase {
         assertNotNull(product);
         assertEquals(46, product.getAtomCount());
         assertEquals(43, product.getBondCount());
+        
+    }
+
+    /**
+     * @cdk.bug 1851202
+     */
+    public void testBug1851202() throws Exception {
+        String filename1 = "data/mdl/0002.stg01.rxn";
+        logger.info("Testing: " + filename1);
+        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
+        MDLRXNV2000Reader reader1 = new MDLRXNV2000Reader(ins1, Mode.STRICT);
+        IReaction reaction1 = new Reaction();
+        reaction1 = (IReaction)reader1.read(reaction1);
+        reader1.close();
+
+        assertNotNull(reaction1);
+        assertEquals(1, reaction1.getReactantCount());
+        assertEquals(1, reaction1.getProductCount());
+        IAtomContainer reactant = reaction1.getReactants().getAtomContainer(0);
+        assertNotNull(reactant);
+        assertEquals(30, reactant.getAtomCount());
+        assertEquals(25, reactant.getBondCount());
+        IAtomContainer product = reaction1.getProducts().getAtomContainer(0);
+        assertNotNull(product);
+        assertEquals(30, product.getAtomCount());
+        assertEquals(26, product.getBondCount());
         
     }
 
