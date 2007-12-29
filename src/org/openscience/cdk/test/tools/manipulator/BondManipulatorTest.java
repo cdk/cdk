@@ -20,9 +20,13 @@
  */
 package org.openscience.cdk.test.tools.manipulator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
@@ -56,40 +60,138 @@ public class BondManipulatorTest extends CDKTestCase {
 	}
 	
 	public void testIsHigherOrder_IBond_Order_IBond_Order() {
-		fail("Missing JUnit test");
+		assertFalse(BondManipulator.isHigherOrder(IBond.Order.SINGLE, IBond.Order.SINGLE));
+		assertFalse(BondManipulator.isHigherOrder(IBond.Order.SINGLE, IBond.Order.DOUBLE));
+		assertFalse(BondManipulator.isHigherOrder(IBond.Order.SINGLE, IBond.Order.TRIPLE));
+		assertFalse(BondManipulator.isHigherOrder(IBond.Order.SINGLE, IBond.Order.QUADRUPLE));
+		assertTrue(BondManipulator.isHigherOrder(IBond.Order.DOUBLE, IBond.Order.SINGLE));
+		assertFalse(BondManipulator.isHigherOrder(IBond.Order.DOUBLE, IBond.Order.DOUBLE));
+		assertFalse(BondManipulator.isHigherOrder(IBond.Order.DOUBLE, IBond.Order.TRIPLE));
+		assertFalse(BondManipulator.isHigherOrder(IBond.Order.DOUBLE, IBond.Order.QUADRUPLE));
+		assertTrue(BondManipulator.isHigherOrder(IBond.Order.TRIPLE, IBond.Order.SINGLE));
+		assertTrue(BondManipulator.isHigherOrder(IBond.Order.TRIPLE, IBond.Order.DOUBLE));
+		assertFalse(BondManipulator.isHigherOrder(IBond.Order.TRIPLE, IBond.Order.TRIPLE));
+		assertFalse(BondManipulator.isHigherOrder(IBond.Order.TRIPLE, IBond.Order.QUADRUPLE));
+		assertTrue(BondManipulator.isHigherOrder(IBond.Order.QUADRUPLE, IBond.Order.SINGLE));
+		assertTrue(BondManipulator.isHigherOrder(IBond.Order.QUADRUPLE, IBond.Order.DOUBLE));
+		assertTrue(BondManipulator.isHigherOrder(IBond.Order.QUADRUPLE, IBond.Order.TRIPLE));
+		assertFalse(BondManipulator.isHigherOrder(IBond.Order.QUADRUPLE, IBond.Order.QUADRUPLE));
 	}
+	
 	public void testIsLowerOrder_IBond_Order_IBond_Order() {
-		fail("Missing JUnit test");
+		assertFalse(BondManipulator.isLowerOrder(IBond.Order.SINGLE, IBond.Order.SINGLE));
+		assertTrue(BondManipulator.isLowerOrder(IBond.Order.SINGLE, IBond.Order.DOUBLE));
+		assertTrue(BondManipulator.isLowerOrder(IBond.Order.SINGLE, IBond.Order.TRIPLE));
+		assertTrue(BondManipulator.isLowerOrder(IBond.Order.SINGLE, IBond.Order.QUADRUPLE));
+		assertFalse(BondManipulator.isLowerOrder(IBond.Order.DOUBLE, IBond.Order.SINGLE));
+		assertFalse(BondManipulator.isLowerOrder(IBond.Order.DOUBLE, IBond.Order.DOUBLE));
+		assertTrue(BondManipulator.isLowerOrder(IBond.Order.DOUBLE, IBond.Order.TRIPLE));
+		assertTrue(BondManipulator.isLowerOrder(IBond.Order.DOUBLE, IBond.Order.QUADRUPLE));
+		assertFalse(BondManipulator.isLowerOrder(IBond.Order.TRIPLE, IBond.Order.SINGLE));
+		assertFalse(BondManipulator.isLowerOrder(IBond.Order.TRIPLE, IBond.Order.DOUBLE));
+		assertFalse(BondManipulator.isLowerOrder(IBond.Order.TRIPLE, IBond.Order.TRIPLE));
+		assertTrue(BondManipulator.isLowerOrder(IBond.Order.TRIPLE, IBond.Order.QUADRUPLE));
+		assertFalse(BondManipulator.isLowerOrder(IBond.Order.QUADRUPLE, IBond.Order.SINGLE));
+		assertFalse(BondManipulator.isLowerOrder(IBond.Order.QUADRUPLE, IBond.Order.DOUBLE));
+		assertFalse(BondManipulator.isLowerOrder(IBond.Order.QUADRUPLE, IBond.Order.TRIPLE));
+		assertFalse(BondManipulator.isLowerOrder(IBond.Order.QUADRUPLE, IBond.Order.QUADRUPLE));
 	}
 	public void testIncreaseBondOrder_IBond_Order() {
-		fail("Missing JUnit test");
+		assertEquals(IBond.Order.DOUBLE, BondManipulator.increaseBondOrder(IBond.Order.SINGLE));
+		assertEquals(IBond.Order.TRIPLE, BondManipulator.increaseBondOrder(IBond.Order.DOUBLE));
+		assertEquals(IBond.Order.QUADRUPLE, BondManipulator.increaseBondOrder(IBond.Order.TRIPLE));
+		assertEquals(IBond.Order.QUADRUPLE, BondManipulator.increaseBondOrder(IBond.Order.QUADRUPLE));
 	}
+	
 	public void testIncreaseBondOrder_IBond() {
-		fail("Missing JUnit test");
+		IBond bond = new Bond(); bond.setOrder(IBond.Order.SINGLE);
+		BondManipulator.increaseBondOrder(bond);
+		assertEquals(IBond.Order.DOUBLE, bond.getOrder());
+		BondManipulator.increaseBondOrder(bond);
+		assertEquals(IBond.Order.TRIPLE, bond.getOrder());
+		BondManipulator.increaseBondOrder(bond);
+		assertEquals(IBond.Order.QUADRUPLE, bond.getOrder());
+		BondManipulator.increaseBondOrder(bond);
+		assertEquals(IBond.Order.QUADRUPLE, bond.getOrder());
 	}
+	
 	public void testDecreaseBondOrder_IBond_Order() {
-		fail("Missing JUnit test");
+		assertEquals(IBond.Order.SINGLE, BondManipulator.decreaseBondOrder(IBond.Order.SINGLE));
+		assertEquals(IBond.Order.SINGLE, BondManipulator.decreaseBondOrder(IBond.Order.DOUBLE));
+		assertEquals(IBond.Order.DOUBLE, BondManipulator.decreaseBondOrder(IBond.Order.TRIPLE));
+		assertEquals(IBond.Order.TRIPLE, BondManipulator.decreaseBondOrder(IBond.Order.QUADRUPLE));
 	}
+	
 	public void testDecreaseBondOrder_IBond() {
-		fail("Missing JUnit test");
+		IBond bond = new Bond(); bond.setOrder(IBond.Order.QUADRUPLE);
+		BondManipulator.decreaseBondOrder(bond);
+		assertEquals(IBond.Order.TRIPLE, bond.getOrder());
+		BondManipulator.decreaseBondOrder(bond);
+		assertEquals(IBond.Order.DOUBLE, bond.getOrder());
+		BondManipulator.decreaseBondOrder(bond);
+		assertEquals(IBond.Order.SINGLE, bond.getOrder());
+		BondManipulator.decreaseBondOrder(bond);
+		assertEquals(IBond.Order.SINGLE, bond.getOrder());
 	}
+	
 	public void testDestroyBondOrder_IBond_Order() {
-		fail("Missing JUnit test");
+		assertEquals(1.0, BondManipulator.destroyBondOrder(IBond.Order.SINGLE), 0.00001);
+		assertEquals(2.0, BondManipulator.destroyBondOrder(IBond.Order.DOUBLE), 0.00001);
+		assertEquals(3.0, BondManipulator.destroyBondOrder(IBond.Order.TRIPLE), 0.00001);
+		assertEquals(4.0, BondManipulator.destroyBondOrder(IBond.Order.QUADRUPLE), 0.00001);
 	}
+	
 	public void testGetMaximumBondOrder_List() {
-		fail("Missing JUnit test");
+		List<IBond> bonds = new ArrayList<IBond>();
+		IBond bond = new Bond(); bond.setOrder(IBond.Order.SINGLE);
+		bonds.add(bond);
+		bond = new Bond(); bond.setOrder(IBond.Order.QUADRUPLE);
+		bonds.add(bond);
+		bond = new Bond(); bond.setOrder(IBond.Order.QUADRUPLE);
+		bonds.add(bond);
+		assertEquals(IBond.Order.QUADRUPLE, BondManipulator.getMaximumBondOrder(bonds));
 	}
+	
 	public void testGetMaximumBondOrder_Iterator() {
-		fail("Missing JUnit test");
+		List<IBond> bonds = new ArrayList<IBond>();
+		IBond bond = new Bond(); bond.setOrder(IBond.Order.SINGLE);
+		bonds.add(bond);
+		bond = new Bond(); bond.setOrder(IBond.Order.QUADRUPLE);
+		bonds.add(bond);
+		bond = new Bond(); bond.setOrder(IBond.Order.QUADRUPLE);
+		bonds.add(bond);
+		assertEquals(IBond.Order.QUADRUPLE, BondManipulator.getMaximumBondOrder(bonds.iterator()));
 	}
+	
 	public void testGetSingleBondEquivalentSum_List() {
-		fail("Missing JUnit test");
+		List<IBond> bonds = new ArrayList<IBond>();
+		IBond bond = new Bond(); bond.setOrder(IBond.Order.SINGLE);
+		bonds.add(bond);
+		bond = new Bond(); bond.setOrder(IBond.Order.DOUBLE);
+		bonds.add(bond);
+		assertEquals(3, BondManipulator.getSingleBondEquivalentSum(bonds));
+		bond = new Bond(); bond.setOrder(IBond.Order.QUADRUPLE);
+		bonds.add(bond);
+		assertEquals(7, BondManipulator.getSingleBondEquivalentSum(bonds));
 	}
+	
 	public void testGetSingleBondEquivalentSum_Iterator() {
-		fail("Missing JUnit test");
+		List<IBond> bonds = new ArrayList<IBond>();
+		IBond bond = new Bond(); bond.setOrder(IBond.Order.SINGLE);
+		bonds.add(bond);
+		bond = new Bond(); bond.setOrder(IBond.Order.DOUBLE);
+		bonds.add(bond);
+		assertEquals(3, BondManipulator.getSingleBondEquivalentSum(bonds.iterator()));
+		bond = new Bond(); bond.setOrder(IBond.Order.QUADRUPLE);
+		bonds.add(bond);
+		assertEquals(7, BondManipulator.getSingleBondEquivalentSum(bonds.iterator()));
 	}
+	
 	public void testCreateBondOrder_double() {
-		fail("Missing JUnit test");
+		assertEquals(IBond.Order.SINGLE, BondManipulator.createBondOrder(1.0));
+		assertEquals(IBond.Order.DOUBLE, BondManipulator.createBondOrder(2.0));
+		assertEquals(IBond.Order.TRIPLE, BondManipulator.createBondOrder(3.0));
+		assertEquals(IBond.Order.QUADRUPLE, BondManipulator.createBondOrder(4.0));
 	}
 
 }
