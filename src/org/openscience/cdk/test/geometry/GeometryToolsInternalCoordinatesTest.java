@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomContainer;
@@ -87,11 +87,11 @@ public class GeometryToolsInternalCoordinatesTest extends CDKTestCase {
 	    Molecule molOne=null;
 	    Molecule molTwo=null;
 	    Map mappedAtoms=new HashMap();
-	    MDLReader reader = new MDLReader(ins, Mode.STRICT);
+	    MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 	    molOne = (Molecule)reader.read(new Molecule());
 		
 	    ins = this.getClass().getClassLoader().getResourceAsStream(filenameMolTwo);
-	    reader = new MDLReader(ins, Mode.STRICT);
+	    reader = new MDLV2000Reader(ins, Mode.STRICT);
 	    molTwo = (Molecule)reader.read(new Molecule());
 	   
 	    mappedAtoms=GeometryToolsInternalCoordinates.mapAtomsOfAlignedStructures(molOne, molTwo, mappedAtoms);

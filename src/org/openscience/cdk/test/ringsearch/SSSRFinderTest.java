@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -139,7 +139,7 @@ public class SSSRFinderTest extends CDKTestCase {
         IRing ring = null;
         String filename = "data/mdl/figueras-test-sep3D.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins, Mode.STRICT);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
         logger.debug("Testing " + filename);
 
@@ -157,7 +157,7 @@ public class SSSRFinderTest extends CDKTestCase {
     {
         String filename = "data/mdl/ring_03419.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins, Mode.STRICT);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IMolecule molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
         logger.debug("Testing " + filename);
 
@@ -178,7 +178,7 @@ public class SSSRFinderTest extends CDKTestCase {
         IRing ring = null;
         String filename = "data/mdl/figueras-test-buried.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins, Mode.STRICT);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
         logger.debug("Testing " + filename);
 
@@ -197,7 +197,7 @@ public class SSSRFinderTest extends CDKTestCase {
         IRing ring = null;
         String filename = "data/mdl/figueras-test-inring.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins, Mode.STRICT);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
         logger.debug("Testing " + filename);
 
@@ -218,7 +218,7 @@ public class SSSRFinderTest extends CDKTestCase {
         IMolecule molecule = null;
         String filename = "data/mdl/too.many.rings.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins, Mode.STRICT);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = (IMolecule) reader.read((IChemObject) new org.openscience.cdk.Molecule());
         logger.debug("Testing " + filename);
 
