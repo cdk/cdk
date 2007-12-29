@@ -47,7 +47,6 @@ public class MexperimentalTests {
         // from cdk.test.atomtype
         suite.addTest(MMFF94AtomTypeMatcherTest.suite());
         suite.addTest(MM2AtomTypeMatcherTest.suite());
-        suite.addTest(CDKHueckelAromaticityDetectorTest.suite());
         
         return suite;
     }
