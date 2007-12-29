@@ -153,10 +153,14 @@ abstract public class CoverageAnnotationTest extends CDKTestCase {
         Set<String> keys = methodAnnotations.keySet();
         for (String key : keys) {
             TestMethod annotation = methodAnnotations.get(key);
-            String testMethodName = annotation.value();
-            if (!testMethodNames.contains(testMethodName)) {
-                System.out.println(className + "#" + key + " has a test method annotation which is not found in test class: " + testClass.getName());
-                missingTestCount++;
+
+            // this may be a comma separated list of test method names
+            String[] tokens = annotation.value().split(",");
+            for (String token : tokens) {
+                if (!testMethodNames.contains(token.trim())) {
+                    System.out.println(className + "#" + key + " has a test method annotation which is not found in test class: " + testClass.getName());
+                    missingTestCount++;
+                }
             }
         }
 
