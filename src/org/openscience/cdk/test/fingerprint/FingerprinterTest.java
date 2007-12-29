@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.CDKTestCase;
@@ -92,11 +92,11 @@ public class FingerprinterTest extends CDKTestCase
 		 */
 		String filename = "data/mdl/bug706786-1.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins, Mode.STRICT);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		superstructure = (Molecule) reader.read((ChemObject) new Molecule());
 		filename = "data/mdl/bug706786-2.mol";
 		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		reader = new MDLReader(ins, Mode.STRICT);
+		reader = new MDLV2000Reader(ins, Mode.STRICT);
 		substructure = (Molecule) reader.read((ChemObject) new Molecule());
 		/* now we've read the two chromanes and we are going to check now
 		 * whether the latter is likely to be a substructure of the first by
@@ -131,12 +131,12 @@ public class FingerprinterTest extends CDKTestCase
 		 */
 		String filename = "data/mdl/bug853254-2.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins, Mode.STRICT);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		superstructure = (Molecule) reader.read((ChemObject) new Molecule());
 		//MoleculeViewer2D.display(superstructure, false, true);		
 		filename = "data/mdl/bug853254-1.mol";
 		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		reader = new MDLReader(ins, Mode.STRICT);
+		reader = new MDLV2000Reader(ins, Mode.STRICT);
 		substructure = (Molecule) reader.read((ChemObject) new Molecule());
 		//MoleculeViewer2D.display(substructure, false, true);		
 		/* now we've read the two and we are going to check now
@@ -177,11 +177,11 @@ public class FingerprinterTest extends CDKTestCase
 		 */
 		String filename = "data/mdl/bug771485-1.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins, Mode.STRICT);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		structure1 = (Molecule) reader.read((ChemObject) new Molecule());
 		filename = "data/mdl/bug771485-2.mol";
 		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		reader = new MDLReader(ins, Mode.STRICT);
+		reader = new MDLV2000Reader(ins, Mode.STRICT);
 		structure2 = (Molecule) reader.read((ChemObject) new Molecule());
 		/* now we've read the two chromanes and we are going to check now
 		 * whether the latter is likely to be a substructure of the first by
@@ -220,11 +220,11 @@ public class FingerprinterTest extends CDKTestCase
 		 */
 		String filename = "data/mdl/bug934819-1.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins, Mode.STRICT);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		substructure = (Molecule) reader.read((ChemObject) new Molecule());
 		filename = "data/mdl/bug934819-2.mol";
 		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		reader = new MDLReader(ins, Mode.STRICT);
+		reader = new MDLV2000Reader(ins, Mode.STRICT);
 		superstructure = (Molecule) reader.read((ChemObject) new Molecule());
 		/* now we've read the two molecules and we are going to check now
 		 * whether the latter is likely to be a substructure of the first by
@@ -265,11 +265,11 @@ public class FingerprinterTest extends CDKTestCase
 		 */
 		String filename = "data/mdl/bug931608-1.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins, Mode.STRICT);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		structure1 = (Molecule) reader.read((ChemObject) new Molecule());
 		filename = "data/mdl/bug931608-2.mol";
 		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		reader = new MDLReader(ins, Mode.STRICT);
+		reader = new MDLV2000Reader(ins, Mode.STRICT);
 		structure2 = (Molecule) reader.read((ChemObject) new Molecule());
 		/* now we've read the two molecules and we are going to check now
 		 * whether the two give the same bitstring.
