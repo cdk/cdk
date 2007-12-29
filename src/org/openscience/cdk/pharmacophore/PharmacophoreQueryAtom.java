@@ -1,6 +1,8 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
@@ -20,6 +22,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * @see org.openscience.cdk.isomorphism.matchers.QueryAtomContainer
  * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
  */
+@TestClass("org.openscience.cdk.test.pharmacophore.PharmacophoreQueryAtomTest")
 public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
     private String smarts;
 
@@ -39,6 +42,7 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
      *
      * @return The SMARTS pattern
      */
+    @TestMethod("testGetSmarts")
     public String getSmarts() {
         return smarts;
     }
@@ -46,7 +50,7 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
     /**
      * Checks whether this query atom matches a target atom.
      * <p/>
-     * Currently a query atom will match a target pharmacophore group if the
+     * Currently a query pharmacophore atom will match a target pharmacophore group if the
      * symbols of the two groups match. This is based on the assumption that
      * pharmacophore groups with the same symbol will have the same SMARTS
      * pattern.
@@ -54,11 +58,13 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
      * @param atom A target pharmacophore group
      * @return true if the current query group has the same symbol as the target group
      */
+    @TestMethod("testMatches")
     public boolean matches(IAtom atom) {
         PharmacophoreAtom patom = (PharmacophoreAtom) atom;
         return patom.getSymbol().equals(getSymbol());
     }
 
+    @TestMethod("testSetOperator")
     public void setOperator(String ID) {
         //To change body of implemented methods use File | Settings | File Templates.
     }

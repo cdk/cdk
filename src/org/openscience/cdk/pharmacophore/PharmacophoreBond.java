@@ -1,6 +1,8 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Represents a distance relationship between two pharmacophore groups.
@@ -12,7 +14,7 @@ import org.openscience.cdk.Bond;
  * @cdk.keyword 3D isomorphism
  * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom
  */
-
+@TestClass("org.openscience.cdk.test.pharmacophore.PharmacophoreBondTest")
 public class PharmacophoreBond extends Bond {
 
     /**
@@ -30,6 +32,7 @@ public class PharmacophoreBond extends Bond {
      *
      * @return The distance between the two groups
      */
+    @TestMethod("testGetBondLength")
     public double getBondLength() {
         PharmacophoreAtom atom1 = (PharmacophoreAtom) getAtom(0);
         PharmacophoreAtom atom2 = (PharmacophoreAtom) getAtom(1);

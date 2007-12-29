@@ -1,7 +1,8 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
@@ -17,6 +18,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
  * @see org.openscience.cdk.isomorphism.matchers.QueryAtomContainer
  */
+@TestClass("org.openscience.cdk.test.pharmacophore.PharmacophoreQueryBondTest")
 public class PharmacophoreQueryBond extends Bond implements IQueryBond {
     private PharmacophoreQueryAtom[] atoms;
     private double upper;
@@ -28,18 +30,20 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
     /**
      * Create a query distance constraint between two query groups.
      *
+     * Note that the distance is only considered upto 2 decimal places.
+     *
      * @param atom1 The first pharmacophore group
      * @param atom2 The second pharmacophore group
      * @param lower The lower bound of the distance between the two groups
      * @param upper The upper bound of the distance between the two groups
      * @see #PharmacophoreQueryBond(PharmacophoreQueryAtom,PharmacophoreQueryAtom,double)
      */
-    public PharmacophoreQueryBond(IAtom atom1,
-                                  IAtom atom2,
+    public PharmacophoreQueryBond(PharmacophoreQueryAtom atom1,
+                                  PharmacophoreQueryAtom atom2,
                                   double lower, double upper) {
         super(atom1, atom2);
-        this.upper = upper;
-        this.lower = lower;
+        this.upper = round(upper,2);
+        this.lower = round(lower, 2);
     }
 
     /**
@@ -47,19 +51,21 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
      * <p/>
      * This constructor allows you to define a query distance constraint
      * such that the distance between the two query groups is exact
-     * (i.e., not a range)
+     * (i.e., not a range).
+     *
+     * Note that the distance is only considered upto 2 decimal places.
      *
      * @param atom1    The first pharmacophore group
      * @param atom2    The second pharmacophore group
      * @param distance The exact distance between the two groups
-     * @see #PharmacophoreQueryBond(org.openscience.cdk.interfaces.IAtom,org.openscience.cdk.interfaces.IAtom,double,double)
+     * @see #PharmacophoreQueryBond(PharmacophoreQueryAtom, PharmacophoreQueryAtom, double, double)
      */
     public PharmacophoreQueryBond(PharmacophoreQueryAtom atom1,
                                   PharmacophoreQueryAtom atom2,
                                   double distance) {
         super(atom1, atom2);
-        this.upper = distance;
-        this.lower = distance;
+        this.upper = round(distance,2);
+        this.lower = round(distance, 2);
     }
 
     /**
@@ -72,6 +78,7 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
      * @param bond The distance relationship in a target molecule
      * @return true if the target distance lies within the range of the query constraint
      */
+    @TestMethod("testMatches")
     public boolean matches(IBond bond) {        
         PharmacophoreBond pbond = (PharmacophoreBond) bond;
         double bondLength = round(pbond.getBondLength(), 2);

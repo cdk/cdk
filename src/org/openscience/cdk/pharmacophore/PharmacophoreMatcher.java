@@ -125,7 +125,7 @@ public class PharmacophoreMatcher {
      *          does not have 3D coordinates
      * @see #matches(org.openscience.cdk.ConformerContainer)
      */
-    @TestMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest#testCNSPcore")
+    @TestMethod("testCNSPcore")
     public boolean matches(IAtomContainer atomContainer) throws CDKException {
         if (!GeometryTools.has3DCoordinates(atomContainer)) throw new CDKException("Molecule must have 3D coordinates");
         if (pharmacophoreQuery == null) throw new CDKException("Must set the query pharmacophore before matching");
@@ -161,7 +161,7 @@ public class PharmacophoreMatcher {
      * @see #matches(org.openscience.cdk.interfaces.IAtomContainer)
      * @see org.openscience.cdk.ConformerContainer
      */
-    @TestMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest#testMatcherQuery1")
+    @TestMethod("testMatcherQuery1")
     public boolean[] matches(ConformerContainer conformerContainer) throws CDKException {
         if (conformerContainer.size() == 0) throw new CDKException("Must supply at least 1 conformer");
         if (pharmacophoreQuery == null) throw new CDKException("Must set the query pharmacophore before matching");
@@ -226,7 +226,7 @@ public class PharmacophoreMatcher {
      * @return a List of a List of pharmacophore groups in the target molecule that match the query
      * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom
      */
-    @TestMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest#testMatchedAtoms")
+    @TestMethod("testMatchedAtoms")
     public List<List<PharmacophoreAtom>> getMatchingPharmacophoreAtoms() {
         return matchingPAtoms;
     }
@@ -244,7 +244,7 @@ public class PharmacophoreMatcher {
      * @return a List of a List of pharmacophore groups in the target molecule that match the query
      * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom
      */
-    @TestMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest#testMatchedAtoms")
+    @TestMethod("testMatchedAtoms")
     public List<List<PharmacophoreAtom>> getUniqueMatchingPharmacophoreAtoms() {
         List<List<PharmacophoreAtom>> ret = new ArrayList<List<PharmacophoreAtom>>();
 
@@ -282,7 +282,7 @@ public class PharmacophoreMatcher {
      *
      * @return The query
      */
-    @TestMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest#testGetterSetter")
+    @TestMethod("testGetterSetter")
     public IQueryAtomContainer getPharmacophoreQuery() {
         return pharmacophoreQuery;
     }
@@ -292,7 +292,7 @@ public class PharmacophoreMatcher {
      *
      * @param query The query
      */
-    @TestMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest#testGetterSetter")
+    @TestMethod("testGetterSetter")
     public void setPharmacophoreQuery(IQueryAtomContainer query) {
         pharmacophoreQuery = query;
     }

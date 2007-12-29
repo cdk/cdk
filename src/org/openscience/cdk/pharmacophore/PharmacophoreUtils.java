@@ -1,7 +1,6 @@
 package org.openscience.cdk.pharmacophore;
 
 import nu.xom.*;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -66,7 +65,7 @@ public class PharmacophoreUtils {
      * @see PharmacophoreQueryBond
      * @see PharmacophoreMatcher
      */
-
+    @TestMethod("testReadPcoreDef")
     public static List<IQueryAtomContainer> readPharmacophoreDefinitions(String filename) throws CDKException, IOException {
         Builder parser = new Builder();
         Document doc;
@@ -113,7 +112,7 @@ public class PharmacophoreUtils {
      * @see PharmacophoreQueryBond
      * @see PharmacophoreMatcher
      */
-    @TestMethod("org.openscience.cdk.test.pharmacophore.PharmacophoreUtilityTest#testReadPcoreDef")
+    @TestMethod("testReadPcoreDef")
     public static List<IQueryAtomContainer> readPharmacophoreDefinitions(InputStream ins) throws IOException, CDKException {
         Builder parser = new Builder();
         Document doc;
