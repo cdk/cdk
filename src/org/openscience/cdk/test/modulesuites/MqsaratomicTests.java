@@ -24,9 +24,11 @@
 
 package org.openscience.cdk.test.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.QsaratomicCoverageTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.AtomDegreeDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.AtomHybridizationDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptorTest;
@@ -35,7 +37,6 @@ import org.openscience.cdk.test.qsar.descriptors.atomic.BondsToAtomDescriptorTes
 import org.openscience.cdk.test.qsar.descriptors.atomic.CovalentRadiusDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.DistanceToAtomDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.atomic.IPAtomicDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.InductiveAtomicHardnessDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.InductiveAtomicSoftnessDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptorTest;
@@ -43,7 +44,6 @@ import org.openscience.cdk.test.qsar.descriptors.atomic.IsProtonInConjugatedPiSy
 import org.openscience.cdk.test.qsar.descriptors.atomic.PartialPiChargeDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PartialSigmaChargeDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.atomic.PartialTChargePEOEDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PiElectronegativityDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptorTest;
@@ -52,7 +52,6 @@ import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptor_GDRT
 import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptor_GHRTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptor_GHR_topolTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptor_GSRTest;
-import org.openscience.cdk.test.qsar.descriptors.atomic.SigmaElectronegativityDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.VdWRadiusDescriptorTest;
 
 /**
@@ -68,7 +67,7 @@ public class MqsaratomicTests {
 
         TestSuite suite = new TestSuite("All QSAR Tests");
 
-        // Individual Tests - Please add correlatively	
+        suite.addTest(new JUnit4TestAdapter(QsaratomicCoverageTest.class));	
 
 //      from cdk.test.qsar.atomic
         suite.addTest(AtomDegreeDescriptorTest.suite());
@@ -81,13 +80,11 @@ public class MqsaratomicTests {
         suite.addTest(EffectiveAtomPolarizabilityDescriptorTest.suite());
         suite.addTest(InductiveAtomicHardnessDescriptorTest.suite());
         suite.addTest(InductiveAtomicSoftnessDescriptorTest.suite());
-        suite.addTest(IPAtomicDescriptorTest.suite());
         suite.addTest(IsProtonInAromaticSystemDescriptorTest.suite());
         suite.addTest(IsProtonInConjugatedPiSystemDescriptorTest.suite());
         suite.addTest(PartialPiChargeDescriptorTest.suite());
         suite.addTest(PartialSigmaChargeDescriptorTest.suite());
         suite.addTest(PartialTChargeMMFF94DescriptorTest.suite());
-        suite.addTest(PartialTChargePEOEDescriptorTest.suite());
         suite.addTest(PeriodicTablePositionDescriptorTest.suite());
         suite.addTest(PiElectronegativityDescriptorTest.suite());
         suite.addTest(ProtonTotalPartialChargeDescriptorTest.suite());
@@ -96,7 +93,6 @@ public class MqsaratomicTests {
         suite.addTest(RDFProtonDescriptor_GHRTest.suite());
         suite.addTest(RDFProtonDescriptor_GHR_topolTest.suite());
         suite.addTest(RDFProtonDescriptor_GSRTest.suite());
-        suite.addTest(SigmaElectronegativityDescriptorTest.suite());
         suite.addTest(VdWRadiusDescriptorTest.suite());
         
         return suite;

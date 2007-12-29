@@ -42,9 +42,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsaratomic
  */
-
 public class AtomHybridizationDescriptorTest extends CDKTestCase {
 
     public AtomHybridizationDescriptorTest() {

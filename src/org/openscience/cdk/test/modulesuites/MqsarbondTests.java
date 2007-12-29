@@ -24,15 +24,11 @@
 
 package org.openscience.cdk.test.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialPiChargeDescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialSigmaChargeDescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.bond.BondPartialTChargeDescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.bond.BondSigmaElectronegativityDescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.bond.IPBondDescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.bond.ResonancePositiveChargeDescriptorTest;
+import org.openscience.cdk.test.QsarbondCoverageTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -47,13 +43,9 @@ public class MqsarbondTests {
 
         TestSuite suite = new TestSuite("All QSAR Tests");
 
+        suite.addTest(new JUnit4TestAdapter(QsarbondCoverageTest.class));
+        
         // from cdk.test.qsar.bond
-        suite.addTest(BondPartialPiChargeDescriptorTest.suite());
-        suite.addTest(BondPartialSigmaChargeDescriptorTest.suite());
-        suite.addTest(BondPartialTChargeDescriptorTest.suite());
-        suite.addTest(BondSigmaElectronegativityDescriptorTest.suite());
-        suite.addTest(IPBondDescriptorTest.suite());
-        suite.addTest(ResonancePositiveChargeDescriptorTest.suite());
         
         return suite;
     }

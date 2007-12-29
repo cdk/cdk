@@ -24,6 +24,7 @@ package org.openscience.cdk.test.modulesuites;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.qsar.descriptors.molecular.AminoAcidCountDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.protein.TaeAminoAcidDescriptorTest;
 
 /**
@@ -41,7 +42,8 @@ public class MqsarproteinTests {
 
         // from cdk.test.qsar.protein
         suite.addTest(TaeAminoAcidDescriptorTest.suite());
-        
+        suite.addTest(AminoAcidCountDescriptorTest.suite());
+
         return suite;
     }
 

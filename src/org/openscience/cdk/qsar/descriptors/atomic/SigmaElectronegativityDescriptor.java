@@ -53,7 +53,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *
  * @author      mfe4
  * @cdk.created 2004-11-03
- * @cdk.module  qsaratomic
+ * @cdk.module  qsarmolecular
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:sigmaElectronegativity

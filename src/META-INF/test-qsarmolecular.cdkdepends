@@ -11,5 +11,6 @@ cdk-reaction.jar
 cdk-charges.jar
 cdk-qsar.jar
 cdk-qsarmolecular.jar
+cdk-qsaratomic.jar
 cdk-smiles.jar
 cdk-test.jar

@@ -39,9 +39,8 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsaratomic
  */
- 
 public class PiElectronegativityDescriptorTest extends CDKTestCase {
 	/**
 	 *  Constructor for the PiElectronegativityDescriptorTest object

@@ -38,9 +38,8 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsaratomic
  */
- 
 public class EffectiveAtomPolarizabilityDescriptorTest extends CDKTestCase {
 	
 	public  EffectiveAtomPolarizabilityDescriptorTest() {}

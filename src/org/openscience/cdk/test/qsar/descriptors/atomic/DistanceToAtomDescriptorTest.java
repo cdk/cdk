@@ -40,9 +40,8 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsaratomic
  */
- 
 public class DistanceToAtomDescriptorTest extends CDKTestCase {
 	
 	public  DistanceToAtomDescriptorTest() {}

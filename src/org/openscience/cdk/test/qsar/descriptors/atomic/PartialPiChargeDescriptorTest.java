@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsaratomic
  */
 public class PartialPiChargeDescriptorTest extends CDKTestCase {
 	/**

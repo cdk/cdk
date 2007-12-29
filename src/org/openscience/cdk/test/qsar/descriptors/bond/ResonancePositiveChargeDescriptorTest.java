@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
 	private IBondDescriptor descriptor;

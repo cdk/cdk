@@ -36,7 +36,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-qsar
+ * @cdk.module test-qsaratomic
  */
 public class CovalentRadiusDescriptorTest extends CDKTestCase {
 	/**

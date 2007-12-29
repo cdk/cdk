@@ -38,7 +38,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-qsar
+ * @cdk.module test-qsaratomic
  */
 public class InductiveAtomicSoftnessDescriptorTest extends CDKTestCase {
 	

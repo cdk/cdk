@@ -42,7 +42,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsaratomic
  * @cdk.bug    1627763
  */
 public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
