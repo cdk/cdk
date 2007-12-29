@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
  * module are tested. Unlike Emma, it does not test that all code is
  * tested, just all methods.
  *
- * @cdk.module test-standard
+ * @cdk.module test-pcore
  */
 public class PcoreCoverageTest extends CoverageAnnotationTest {
 
