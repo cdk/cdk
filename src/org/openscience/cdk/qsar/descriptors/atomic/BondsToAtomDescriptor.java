@@ -54,8 +54,8 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *
  * @author         mfe4
  * @cdk.created    2004-11-13
- * @cdk.module     qsar
- * @cdk.svnrev  $Revision$
+ * @cdk.module     qsaratomic
+ * @cdk.svnrev     $Revision$
  * @cdk.set        qsar-descriptors
  * @cdk.dictref    qsar-descriptors:bondsToAtom
  */

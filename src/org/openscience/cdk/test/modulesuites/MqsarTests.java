@@ -26,9 +26,9 @@ package org.openscience.cdk.test.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.test.qsar.DescriptorEngineTest;
 import org.openscience.cdk.test.qsar.descriptors.molecular.AminoAcidCountDescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.molecular.TaeAminoAcidDescriptorTest;
 import org.openscience.cdk.test.qsar.model.R2.RJavaEnvironmentTest;
 import org.openscience.cdk.test.qsar.model.weka.QSARWekaModelTests;
 
@@ -47,7 +47,6 @@ public class MqsarTests {
 
         // Individual Tests - Please add correlatively	
         suite.addTest(AminoAcidCountDescriptorTest.suite());
-        suite.addTest(TaeAminoAcidDescriptorTest.suite());
 
         suite.addTest(DescriptorEngineTest.suite());
         

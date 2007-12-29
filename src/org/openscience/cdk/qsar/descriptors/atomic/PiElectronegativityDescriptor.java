@@ -55,7 +55,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *
  * @author      Miguel Rojas
  * @cdk.created 2006-05-17
- * @cdk.module  qsar
+ * @cdk.module  qsaratomic
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:piElectronegativity

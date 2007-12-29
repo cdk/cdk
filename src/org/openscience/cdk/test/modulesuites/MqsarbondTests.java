@@ -37,17 +37,15 @@ import org.openscience.cdk.test.qsar.descriptors.bond.ResonancePositiveChargeDes
 /**
  * TestSuite that runs all the sample tests.
  *
- * @cdk.module test-qsarBond
+ * @cdk.module  test-qsarbond
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MqsarBondTests {
+public class MqsarbondTests {
 
     public static Test suite() {
 
         TestSuite suite = new TestSuite("All QSAR Tests");
-
-        // Individual Tests - Please add correlatively	
 
         // from cdk.test.qsar.bond
         suite.addTest(BondPartialPiChargeDescriptorTest.suite());

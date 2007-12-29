@@ -53,7 +53,7 @@ import javax.vecmath.Point3d;
  *
  *@author         mfe4
  *@cdk.created    2004-11-13
- *@cdk.module     qsar
+ *@cdk.module     qsaratomic
  * @cdk.svnrev  $Revision$
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:distanceToAtom

@@ -25,8 +25,8 @@ import org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptor;
  * These methods are common to all the types of chi index calculations and can
  * be used to evaluate path, path-cluster, cluster and chain chi indices.
  *
- * @author Rajarshi Guha
- * @cdk.module qsar
+ * @author     Rajarshi Guha
+ * @cdk.module qsarmolecular
  * @cdk.svnrev $Revision: 9162 $
  */
 public class ChiIndexUtils {

@@ -460,9 +460,11 @@
             <antcall target="compile-module"><param name="module" value="reaction"/></antcall>
     	    <antcall target="compile-module"><param name="module" value="charges"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qsaratomic"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qsarbond"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsarmolecular"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qsarprotein"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar-cml"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsar-pdb"/></antcall>
      	    <antcall target="compile-module"><param name="module" value="qsar-weka"/></antcall>
             <antcall target="compile-module"><param name="module" value="forcefield"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
@@ -495,9 +497,10 @@
         <antcall target="compile-module"><param name="module" value="test-valencycheck"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-experimental"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsar"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsarAtomic"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsarBond"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-qsaratomic"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-qsarbond"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-qsarprotein"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-pdb"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-inchi"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-libiomd"/></antcall>
@@ -531,9 +534,11 @@
                     <includesfile name="${metainf}/pdb-cml.libdepends"/>
                     <includesfile name="${metainf}/pdb.libdepends"/>
                     <includesfile name="${metainf}/qsar.libdepends"/>
+                    <includesfile name="${metainf}/qsaratomic.libdepends"/>
+                    <includesfile name="${metainf}/qsarbond.libdepends"/>
                     <includesfile name="${metainf}/qsarmolecular.libdepends"/>
+                    <includesfile name="${metainf}/qsarprotein.libdepends"/>
                     <includesfile name="${metainf}/qsar-cml.libdepends"/>
-                    <includesfile name="${metainf}/qsar-pdb.libdepends"/>
                     <includesfile name="${metainf}/qsar-weka.libdepends"/>
                     <includesfile name="${metainf}/reaction.libdepends"/>
                     <includesfile name="${metainf}/render.libdepends"/>
@@ -568,9 +573,11 @@
                     <include name="cdk-pdb-cml.jar"/>
                     <include name="cdk-pdb.jar"/>
                     <include name="cdk-qsar.jar"/>
+                    <include name="cdk-qsaratomic.jar"/>
+                    <include name="cdk-qsarbond.jar"/>
                     <include name="cdk-qsarmolecular.jar"/>
+                    <include name="cdk-qsarprotein.jar"/>
                     <include name="cdk-qsar-cml.jar"/>
-                    <include name="cdk-qsar-pdb.jar"/>
                     <include name="cdk-qsar-weka.jar"/>
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
@@ -633,9 +640,11 @@
                     <include name="cdk-pdb-cml.jar"/>
                     <include name="cdk-pdb.jar"/>
                     <include name="cdk-qsar.jar"/>
+                    <include name="cdk-qsaratomic.jar"/>
+                    <include name="cdk-qsarbond.jar"/>
                     <include name="cdk-qsarmolecular.jar"/>
+                    <include name="cdk-qsarprotein.jar"/>
                     <include name="cdk-qsar-cml.jar"/>
-                    <include name="cdk-qsar-pdb.jar"/>
                     <include name="cdk-qsar-weka.jar"/>
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
@@ -689,10 +698,11 @@
                     <includesfile name="${metainf}/test-io.libdepends"/>
                     <includesfile name="${metainf}/test-nonotify.libdepends"/>
                     <includesfile name="${metainf}/test-pdb.libdepends"/>
-                    <includesfile name="${metainf}/test-qsarAtomic.libdepends"/>
-                    <includesfile name="${metainf}/test-qsarBond.libdepends"/>
-                    <includesfile name="${metainf}/test-qsar.libdepends"/>
+                    <includesfile name="${metainf}/test-qsaratomic.libdepends"/>
+                    <includesfile name="${metainf}/test-qsarbond.libdepends"/>
                     <includesfile name="${metainf}/test-qsarmolecular.libdepends"/>
+                    <includesfile name="${metainf}/test-qsarprotein.libdepends"/>
+                    <includesfile name="${metainf}/test-qsar.libdepends"/>
                     <includesfile name="${metainf}/test-reaction.libdepends"/>
                     <includesfile name="${metainf}/test-smarts.libdepends"/>
                     <includesfile name="${metainf}/test-smiles.libdepends"/>
@@ -715,10 +725,11 @@
                     <include name="cdk-test-io.jar"/>
                     <include name="cdk-test-nonotify.jar"/>
                     <include name="cdk-test-pdb.jar"/>
-                    <include name="cdk-test-qsarAtomic.jar"/>
-                    <include name="cdk-test-qsarBond.jar"/>
-                    <include name="cdk-test-qsar.jar"/>
+                    <include name="cdk-test-qsaratomic.jar"/>
+                    <include name="cdk-test-qsarbond.jar"/>
                     <include name="cdk-test-qsarmolecular.jar"/>
+                    <include name="cdk-test-qsarprotein.jar"/>
+                    <include name="cdk-test-qsar.jar"/>
                     <include name="cdk-test-reaction.jar"/>
                     <include name="cdk-test-smarts.jar"/>
                     <include name="cdk-test-smiles.jar"/>
@@ -960,9 +971,10 @@
                 <antcall target="test-module"><param name="module" value="smiles"/></antcall>
         	<antcall target="test-module"><param name="module" value="experimental"/></antcall> 
         	<antcall target="test-module"><param name="module" value="qsar"/></antcall> 
-        	<antcall target="test-module"><param name="module" value="qsarAtomic"/></antcall>
-                <antcall target="test-module"><param name="module" value="qsarBond"/></antcall>
+        	<antcall target="test-module"><param name="module" value="qsaratomic"/></antcall>
+                <antcall target="test-module"><param name="module" value="qsarbond"/></antcall>
                 <antcall target="test-module"><param name="module" value="qsarmolecular"/></antcall>
+                <antcall target="test-module"><param name="module" value="qsarprotein"/></antcall>
                 <antcall target="test-module"><param name="module" value="weka"/></antcall>
         	<antcall target="test-module"><param name="module" value="pdb"/></antcall> 
         	<antcall target="test-module"><param name="module" value="pcore"/></antcall> 

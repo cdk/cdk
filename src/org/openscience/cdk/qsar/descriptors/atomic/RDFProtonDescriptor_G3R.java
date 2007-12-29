@@ -69,7 +69,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * 
  * @author      Federico
  * @cdk.created 2006-12-11
- * @cdk.module  qsar
+ * @cdk.module  qsaratomic
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues

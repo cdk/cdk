@@ -83,7 +83,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  *@author         Miguel Rojas
  *@cdk.created    2005-03-24
- *@cdk.module     qsar
+ *@cdk.module     qsaratomic
  * @cdk.svnrev  $Revision$
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomHybridizationVSEPR

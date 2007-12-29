@@ -1,0 +1,10 @@
+cdk-interfaces.jar
+cdk-data.jar
+cdk-nonotify.jar
+cdk-core.jar
+cdk-standard.jar
+cdk-valencycheck.jar
+cdk-extra.jar
+cdk-reaction.jar
+cdk-charges.jar
+cdk-qsar.jar

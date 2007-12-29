@@ -55,7 +55,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  *
  * @author      Miguel Rojas
  * @cdk.created 2006-04-15
- * @cdk.module  qsar
+ * @cdk.module  qsaratomic
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:partialPiCharge

@@ -22,7 +22,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.openscience.cdk.qsar.descriptors.molecular;
+package org.openscience.cdk.qsar.descriptors.protein;
 
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
@@ -104,13 +104,13 @@ import java.util.*;
  * </tr>
  * </table>
  *
- * @author Rajarshi Guha
+ * @author      Rajarshi Guha
  * @cdk.created 2006-08-23
- * @cdk.module qsar-pdb
+ * @cdk.module  qsarprotein
  * @cdk.svnrev  $Revision: 9162 $
- * @cdk.set qsar-descriptors
+ * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:taeAminoAcid
- * @see IBioPolymer
+ * @see         IBioPolymer
  */
 public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
