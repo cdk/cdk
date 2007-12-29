@@ -525,10 +525,6 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         assertEquals(0, oxygen.getHydrogenCount().intValue());
     }
 
-    /**
-     * @cdk.bug 1575269
-     *
-     */
     public void testAdenine() throws Exception 
     {
     	IMolecule mol = new Molecule(); // Adenine
@@ -598,6 +594,22 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         assertEquals(2,molecule.getAtom(3).getHydrogenCount().intValue());
     }
 
+    /**
+     * @cdk.bug 1575269
+     */
+    public void testBug1575269() throws Exception {
+        String filename = "data/mdl/furan.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IMolecule molecule = (IMolecule)reader.read((ChemObject)new Molecule());
+    	findAndConfigureAtomTypesForAllAtoms(molecule);
+        adder.addImplicitHydrogens(molecule);
+        assertEquals(1,molecule.getAtom(0).getHydrogenCount().intValue());
+        assertEquals(1,molecule.getAtom(1).getHydrogenCount().intValue());
+        assertEquals(1,molecule.getAtom(2).getHydrogenCount().intValue());
+        assertEquals(1,molecule.getAtom(3).getHydrogenCount().intValue());
+    }
+
     public void testNaCl() throws Exception {
         Molecule mol = new Molecule();
         Atom cl = new Atom("Cl");
@@ -643,6 +655,33 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         assertNotNull(sulfur.getHydrogenCount());
         assertEquals(0, sulfur.getHydrogenCount().intValue());
         assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
+    }
+    
+    /**
+     * @cdk.bug 1627763
+     */
+    public void testBug1627763() throws Exception {
+    	IMolecule mol = new Molecule();
+    	mol.addAtom(mol.getBuilder().newAtom("C"));
+    	mol.addAtom(mol.getBuilder().newAtom("O"));
+    	mol.addBond(mol.getBuilder().newBond(
+    		mol.getAtom(0), 
+    		mol.getAtom(1),
+    		CDKConstants.BONDORDER_SINGLE)
+    	);
+        addExplicitHydrogens(mol);
+        int hCount = 0;
+        Iterator<IAtom> neighbors = mol.getConnectedAtomsList(mol.getAtom(0)).iterator(); 
+        while (neighbors.hasNext()) {
+        	if (neighbors.next().getSymbol().equals("H")) hCount++;
+        }
+        assertEquals(3, hCount);
+        hCount = 0;
+        neighbors = mol.getConnectedAtomsList(mol.getAtom(1)).iterator(); 
+        while (neighbors.hasNext()) {
+        	if (neighbors.next().getSymbol().equals("H")) hCount++;
+        }
+        assertEquals(1, hCount);
     }
 
     private void findAndConfigureAtomTypesForAllAtoms(IAtomContainer container) throws CDKException {
