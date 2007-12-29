@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-
 package org.openscience.cdk.test.io.cml;
 
 import junit.framework.Test;
@@ -46,9 +45,11 @@ public class CMLIOTests {
         suite.addTest(CML23FragmentsTest.suite()); // schema23 20060209
         suite.addTest(Jumbo46CMLFragmentsTest.suite());
         
-        // the following classes require Java 1.5
-        if (System.getProperty("java.version").startsWith("1.5")) {
-            System.out.println("Found required Java 1.5, so running the CML2 tests.");
+        // the following classes require Java 1.5 (or better)
+        if (System.getProperty("java.version").startsWith("1.5") ||
+        	System.getProperty("java.version").startsWith("1.6") ||
+        	System.getProperty("java.version").startsWith("1.7")) {
+            System.out.println("Found required Java 1.5 (or better), so running the CML2 tests.");
             try {
                 Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.io.cml.CML2Test");
                 suite.addTest(new TestSuite(testClass));
@@ -74,7 +75,7 @@ public class CMLIOTests {
                 exception.printStackTrace();
             }
         } else {
-        	System.out.println("Did not find the required Java 1.5, so not running the CML2 tests.");
+        	System.out.println("Did not find the required Java 1.5 (or better), so not running the CML2 tests.");
         }
         return suite;
     }
