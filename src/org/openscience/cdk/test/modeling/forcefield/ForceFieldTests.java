@@ -35,6 +35,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
@@ -78,28 +79,28 @@ public class ForceFieldTests extends CDKTestCase {
 	
 	String input;
 
-	private LoggingTool logger;
+	private LoggingTool logger = new LoggingTool(ForceFieldTests.class);
 	private boolean standAlone = false;
 
 	/**
 	 *  Constructor for ForceFieldTests object
 	 */
-	public ForceFieldTests() {
-		logger = new LoggingTool(this);
-	}
+	public ForceFieldTests() {}
 	
 	public void setUp() throws Exception {
-		input = "Ethane-TestFF";
-		InputStream is = this.getClass().getClassLoader().getResourceAsStream("data/mdl/" + input + ".mol");
-		MDLReader mdlReader = new MDLReader(is, Mode.STRICT);
-		molecule = (IMolecule)mdlReader.read(new org.openscience.cdk.Molecule());
-		mdlReader.close();
-		//logger.debug("molecule: " +  molecule);
+		if (molecule == null) {
+			input = "Ethane-TestFF";
+			InputStream is = this.getClass().getClassLoader().getResourceAsStream("data/mdl/" + input + ".mol");
+			MDLV2000Reader mdlReader = new MDLV2000Reader(is, Mode.STRICT);
+			molecule = (IMolecule)mdlReader.read(new org.openscience.cdk.Molecule());
+			mdlReader.close();
+			//logger.debug("molecule: " +  molecule);
 
-		gm.setMMFF94Tables(molecule);
-		mmff94Tables = gm.getPotentialParameterSet();
+			gm.setMMFF94Tables(molecule);
+			mmff94Tables = gm.getPotentialParameterSet();
 
-		moleculeCoordinates = ForceFieldTools.getCoordinates3xNVector(molecule);
+			moleculeCoordinates = ForceFieldTools.getCoordinates3xNVector(molecule);
+		}
 	}
 
 
@@ -128,7 +129,7 @@ public class ForceFieldTests extends CDKTestCase {
 		
 		InputStream is = this.getClass().getClassLoader().getResourceAsStream("data/mdl/" + localInput + ".mol");
 		//FileReader fileReader = new FileReader("data/mdl/" + localInput + ".mol");
-		MDLReader mdlReader = new MDLReader(is, Mode.STRICT);
+		MDLV2000Reader mdlReader = new MDLV2000Reader(is, Mode.STRICT);
 		molecule = (IMolecule)mdlReader.read(new org.openscience.cdk.Molecule());
 		mdlReader.close();
 		//logger.debug("molecule: " +  molecule);
@@ -1113,7 +1114,7 @@ public class ForceFieldTests extends CDKTestCase {
 		//input = "src/data/mdl/Heptane-TestFF";
 
 		InputStream is = this.getClass().getClassLoader().getResourceAsStream("data/mdl/" + input + ".mol");
-		MDLReader mdlReader = new MDLReader(is, Mode.STRICT);
+		MDLV2000Reader mdlReader = new MDLV2000Reader(is, Mode.STRICT);
 		molecule = (IMolecule)mdlReader.read(new org.openscience.cdk.Molecule());
 		mdlReader.close();
  
@@ -1245,7 +1246,7 @@ public class ForceFieldTests extends CDKTestCase {
 		//input = "src/data/mdl/methylbenzol";
 
 		InputStream is = this.getClass().getClassLoader().getResourceAsStream("data/mdl/" + input + ".mol");
-		MDLReader mdlReader = new MDLReader(is, Mode.STRICT);
+		MDLV2000Reader mdlReader = new MDLV2000Reader(is, Mode.STRICT);
 		molecule = (IMolecule)mdlReader.read(new org.openscience.cdk.Molecule());
 		mdlReader.close();
  

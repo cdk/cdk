@@ -52,6 +52,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -606,13 +607,13 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	public void testAlaSMILES() throws Exception {
 		String filename = "data/mdl/l-ala.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins, Mode.STRICT);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		Molecule mol1 = (Molecule) reader.read(new Molecule());
 		addExplicitHydrogens(mol1);
 		new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
 		filename = "data/mdl/d-ala.mol";
 		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		reader = new MDLReader(ins, Mode.STRICT);
+		reader = new MDLV2000Reader(ins, Mode.STRICT);
 		Molecule mol2 = (Molecule) reader.read(new Molecule());
 		addExplicitHydrogens(mol2);
 		new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
@@ -629,12 +630,12 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	public void testSugarSMILES() throws Exception {
 		String filename = "data/mdl/D-mannose.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins, Mode.STRICT);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		Molecule mol1 = (Molecule) reader.read(new Molecule());
 		new HydrogenPlacer().placeHydrogens2D(mol1, 1.0);
 		filename = "data/mdl/D+-glucose.mol";
 		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		reader = new MDLReader(ins, Mode.STRICT);
+		reader = new MDLV2000Reader(ins, Mode.STRICT);
 		Molecule mol2 = (Molecule) reader.read(new Molecule());
 		new HydrogenPlacer().placeHydrogens2D(mol2, 1.0);
 		SmilesGenerator sg = new SmilesGenerator();
@@ -649,7 +650,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	public void testCycloOctan() throws Exception {
 		String filename = "data/mdl/cyclooctan.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins, Mode.STRICT);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		Molecule mol1 = (Molecule) reader.read(new Molecule());
 		SmilesGenerator sg = new SmilesGenerator();
 		String moleculeSmile = sg.createSMILES(mol1);
@@ -663,7 +664,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	public void testCycloOcten() throws Exception {
 		String filename = "data/mdl/cycloocten.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins, Mode.STRICT);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		Molecule mol1 = (Molecule) reader.read(new Molecule());
 		SmilesGenerator sg = new SmilesGenerator();
 		String moleculeSmile = sg.createSMILES(mol1);
@@ -677,7 +678,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	public void testCycloOctadien() throws Exception {
 		String filename = "data/mdl/cyclooctadien.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins, Mode.STRICT);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		Molecule mol1 = (Molecule) reader.read(new Molecule());
 		SmilesGenerator sg = new SmilesGenerator();
 		String moleculeSmile = sg.createSMILES(mol1);
@@ -691,7 +692,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	public void testSFBug1089770_1() throws Exception {
 		String filename = "data/mdl/bug1089770-1.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins, Mode.STRICT);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		Molecule mol1 = (Molecule) reader.read(new Molecule());
 		SmilesGenerator sg = new SmilesGenerator();
 		String moleculeSmile = sg.createSMILES(mol1);
@@ -705,7 +706,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	public void testSFBug1089770_2() throws Exception {
 		String filename = "data/mdl/bug1089770-2.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins, Mode.STRICT);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		Molecule mol1 = (Molecule) reader.read(new Molecule());
 		SmilesGenerator sg = new SmilesGenerator();
 		String moleculeSmile = sg.createSMILES(mol1);
@@ -742,13 +743,13 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		String filename_mol = "data/mdl/9553.mol";
 		InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_cml);
 		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename_mol);
-		MDLReader reader1 = new MDLReader(ins1, Mode.STRICT);
+		MDLV2000Reader reader1 = new MDLV2000Reader(ins1, Mode.STRICT);
         Molecule mol1 = (Molecule) reader1.read(new Molecule());
         addExplicitHydrogens(mol1);
         StructureDiagramGenerator sdg=new StructureDiagramGenerator(mol1);
         sdg.generateCoordinates();
 		
-		MDLReader reader2 = new MDLReader(ins2, Mode.STRICT);		
+        MDLV2000Reader reader2 = new MDLV2000Reader(ins2, Mode.STRICT);		
 		Molecule mol2 = (Molecule) reader2.read(new Molecule());
 		addExplicitHydrogens(mol2);
         sdg=new StructureDiagramGenerator(mol2);

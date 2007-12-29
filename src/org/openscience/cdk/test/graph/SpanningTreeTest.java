@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.test.CDKTestCase;
 
@@ -42,24 +42,26 @@ import org.openscience.cdk.test.CDKTestCase;
  */
 public class SpanningTreeTest extends CDKTestCase {
     
-	private SpanningTree azulene;
+	private static SpanningTree azulene = null;
 	
     public SpanningTreeTest(String name) {
         super(name);
     }
     
     public void setUp() throws Exception {
-    	// load azulene
-		String filename = "data/mdl/azulene.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins, Mode.STRICT);
-		IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
-		IChemSequence seq = chemFile.getChemSequence(0);
-		IChemModel model = seq.getChemModel(0);
-		IMolecule azulene = model.getMoleculeSet().getMolecule(0);
-		assertEquals(10, azulene.getAtomCount());
-		assertEquals(11, azulene.getBondCount());
-		this.azulene = new SpanningTree(azulene);
+    	if (this.azulene == null) {
+    		// load azulene
+    		String filename = "data/mdl/azulene.mol";
+    		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+    		IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
+    		IChemSequence seq = chemFile.getChemSequence(0);
+    		IChemModel model = seq.getChemModel(0);
+    		IMolecule azulene = model.getMoleculeSet().getMolecule(0);
+    		assertEquals(10, azulene.getAtomCount());
+    		assertEquals(11, azulene.getBondCount());
+    		this.azulene = new SpanningTree(azulene);
+    	}
     }
     
 	public static Test suite() {

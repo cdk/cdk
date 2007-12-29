@@ -47,7 +47,7 @@ import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
@@ -207,10 +207,10 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         QueryAtomContainer query2 = null;
         
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(molfile);
-        MDLReader reader = new MDLReader(ins, Mode.STRICT);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         reader.read(mol);
         ins = this.getClass().getClassLoader().getResourceAsStream(queryfile);
-        reader = new MDLReader(ins, Mode.STRICT);
+        reader = new MDLV2000Reader(ins, Mode.STRICT);
         reader.read(temp);
         query1 = QueryAtomContainerCreator.createBasicQueryContainer(temp);
 
@@ -236,9 +236,9 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         Molecule mol2 = new Molecule();
         
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
-        new MDLReader(ins1, Mode.STRICT).read(mol1);
+        new MDLV2000Reader(ins1, Mode.STRICT).read(mol1);
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
-        new MDLReader(ins2, Mode.STRICT).read(mol2);
+        new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
         
         List list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
         assertEquals(1, list.size());
@@ -250,8 +250,6 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     }
     
     /**
-<<<<<<< .working
-=======
      * @cdk.bug 1208740
      */
     public void testSFBug1208740() throws CDKException {
@@ -261,9 +259,9 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         Molecule mol2 = new Molecule();
         
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
-        new MDLReader(ins1, Mode.STRICT).read(mol1);
+        new MDLV2000Reader(ins1, Mode.STRICT).read(mol1);
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
-        new MDLReader(ins2, Mode.STRICT).read(mol2);
+        new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
         
         List list = UniversalIsomorphismTester.getOverlaps(mol1, mol2);
         assertEquals(5, list.size());
@@ -292,7 +290,6 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     }
     
     /**
->>>>>>> .merge-right.r9583
      * @cdk.bug 999330
      */
     public void testSFBug999330() throws CDKException {
@@ -302,9 +299,9 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         Molecule mol2 = new Molecule();
         
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
-        new MDLReader(ins1, Mode.STRICT).read(mol1);
+        new MDLV2000Reader(ins1, Mode.STRICT).read(mol1);
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
-        new MDLReader(ins2, Mode.STRICT).read(mol2);
+        new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
         mol2 = new Molecule((AtomContainer)permutor.next());
         

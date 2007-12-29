@@ -11,7 +11,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.similarity.DistanceMoment;
 import org.openscience.cdk.test.CDKTestCase;
@@ -35,7 +35,7 @@ public class DistanceMomentTest extends CDKTestCase {
 
     private IAtomContainer loadMolecule(String path) throws CDKException {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(path);
-        MDLReader reader = new MDLReader(ins, Mode.STRICT);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         return (IAtomContainer) containersList.get(0);
