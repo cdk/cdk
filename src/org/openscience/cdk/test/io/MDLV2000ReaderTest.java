@@ -367,8 +367,8 @@ public class MDLV2000ReaderTest extends CDKTestCase {
         assertNotNull(chemFile);
         List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         assertEquals(1, containersList.size());
-        assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
-        assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
+        assertEquals(15, ((IAtomContainer)containersList.get(0)).getAtomCount());
+        assertEquals(16, ((IAtomContainer)containersList.get(0)).getBondCount());
     }
     
     public void testReadProton() throws Exception {
