@@ -23,12 +23,20 @@ package org.openscience.cdk.test.modulesuites;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.test.VariousTests;
-import org.openscience.cdk.test.applications.undoredo.*;
-import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
-import org.openscience.cdk.test.charges.InductivePartialChargesTest;
-import org.openscience.cdk.test.charges.MMFF94PartialChargesTest;
+import org.openscience.cdk.test.applications.undoredo.AddAtomsAndBondsEditTest;
+import org.openscience.cdk.test.applications.undoredo.AddHydrogenEditTest;
+import org.openscience.cdk.test.applications.undoredo.AdjustBondOrdersEditTest;
+import org.openscience.cdk.test.applications.undoredo.ChangeAtomSymbolEditTest;
+import org.openscience.cdk.test.applications.undoredo.ChangeChargeEditTest;
+import org.openscience.cdk.test.applications.undoredo.ChangeIsotopeEditTest;
+import org.openscience.cdk.test.applications.undoredo.CleanUpEditTest;
+import org.openscience.cdk.test.applications.undoredo.ConvertToPseudoAtomEditTest;
+import org.openscience.cdk.test.applications.undoredo.ConvertToRadicalEditTest;
+import org.openscience.cdk.test.applications.undoredo.FlipEditTest;
+import org.openscience.cdk.test.applications.undoredo.RemoveAtomsAndBondsEditTest;
 import org.openscience.cdk.test.dict.DictDBTest;
 import org.openscience.cdk.test.geometry.RDFCalculatorTest;
 import org.openscience.cdk.test.geometry.alignment.KabschAlignmentTest;
@@ -63,10 +71,6 @@ public class MextraTests {
         // from cdk.test.aromaticity
         // from cdk.test.dict
         suite.addTest(DictDBTest.suite());
-        // from cdk.test.charges
-        suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
-        suite.addTest(MMFF94PartialChargesTest.suite());
-        suite.addTest(InductivePartialChargesTest.suite());
         // from cdk.test.geometry
         suite.addTest(RDFCalculatorTest.suite());
         // from cdk.test.geometry.align

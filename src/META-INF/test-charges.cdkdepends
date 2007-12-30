@@ -1,0 +1,16 @@
+cdk-interfaces.jar
+cdk-core.jar
+cdk-standard.jar
+cdk-data.jar
+cdk-atomtype.jar
+cdk-nonotify.jar
+cdk-io.jar
+cdk-valencycheck.jar
+cdk-extra.jar
+cdk-reaction.jar
+cdk-charges.jar
+cdk-qsar.jar
+cdk-qsarmolecular.jar
+cdk-qsaratomic.jar
+cdk-smiles.jar
+cdk-test.jar
