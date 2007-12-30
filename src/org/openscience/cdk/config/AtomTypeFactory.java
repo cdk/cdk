@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.config;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -73,6 +75,7 @@ import java.util.List;
  * @cdk.keyword    atom, type
  * @see        IAtomTypeConfigurator
  */
+@TestClass("org.openscience.cdk.test.config.AtomTypeFactoryTest")
 public class AtomTypeFactory {
 
     /**
@@ -131,6 +134,7 @@ public class AtomTypeFactory {
      * @param  builder                IChemObjectBuilder used to make IChemObject instances
      * @return                        The AtomTypeFactory for the given data file
      */
+    @TestMethod("testGetInstance_InputStream_String_IChemObjectBuilder")
     public static AtomTypeFactory getInstance(InputStream ins, String format, IChemObjectBuilder builder) {
         return new AtomTypeFactory(ins, format, builder);
     }
@@ -142,6 +146,7 @@ public class AtomTypeFactory {
      * @param  builder                IChemObjectBuilder used to make IChemObject instances
      * @return                        The AtomTypeFactory for the given data file
      */
+    @TestMethod("testGetInstance_IChemObjectBuilder")
     public static AtomTypeFactory getInstance(IChemObjectBuilder builder) {
         return getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml", builder);
     }
@@ -161,6 +166,7 @@ public class AtomTypeFactory {
      * @param  builder                IChemObjectBuilder used to make IChemObject instances
      * @return                        The AtomTypeFactory for the given data file
      */
+    @TestMethod("testGetInstance_String_IChemObjectBuilder")
     public static AtomTypeFactory getInstance(String configFile, IChemObjectBuilder builder) {
         if (tables == null) {
             tables = new Hashtable<String, AtomTypeFactory>();
@@ -255,7 +261,8 @@ public class AtomTypeFactory {
 	 *
 	 * @return    The number of atom types
 	 */
-	public int getSize()
+    @TestMethod("testGetSize")
+    public int getSize()
 	{
 		return atomTypes.size();
 	}
@@ -268,7 +275,8 @@ public class AtomTypeFactory {
 	 * @return                              The AtomType for this id
 	 * @exception  NoSuchAtomTypeException  Thrown if the atom type does not exist.
 	 */
-	public IAtomType getAtomType(String identifier) throws NoSuchAtomTypeException
+    @TestMethod("testGetAtomType_String,testGetAtomTypeFromHybrid,testGetAtomTypeFromJmol,testGetAtomTypeFromMM2,testGetAtomTypeFromPDB,testGetAtomTypeFromValency")
+    public IAtomType getAtomType(String identifier) throws NoSuchAtomTypeException
 	{
         for (IAtomType atomType : atomTypes) {
             if (atomType.getAtomTypeName().equals(identifier)) {
@@ -287,7 +295,8 @@ public class AtomTypeFactory {
 	 * @return         An array of atomtypes that matches the given element symbol
 	 *                 and atomtype class
 	 */
-	public IAtomType[] getAtomTypes(String symbol)
+    @TestMethod("testGetAtomTypes_String")
+    public IAtomType[] getAtomTypes(String symbol)
 	{
         logger.debug("Request for atomtype for symbol ", symbol);
         List<IAtomType> atomList = new ArrayList<IAtomType>();
@@ -319,7 +328,8 @@ public class AtomTypeFactory {
 	 *
 	 * @return    The allAtomTypes value
 	 */
-	public IAtomType[] getAllAtomTypes()
+    @TestMethod("testGetAllAtomTypes")
+    public IAtomType[] getAllAtomTypes()
 	{
 		logger.debug("Returning list of size: ", getSize());
 		List<IAtomType> atomtypeList = new ArrayList<IAtomType>();
@@ -347,6 +357,7 @@ public class AtomTypeFactory {
 	 * @throws       CDKException when it could not recognize and configure the 
 	 *               IAtom
 	 */
+    @TestMethod("testConfigure_IAtom")
     public IAtom configure(IAtom atom) throws CDKException {
         if (atom instanceof IPseudoAtom) {
             // do not try to configure PseudoAtom's
