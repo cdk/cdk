@@ -33,12 +33,11 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-qsaratomic
  */
-public class ProtonTotalPartialChargeDescriptorTest extends CDKTestCase {
+public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest {
 	
 	public  ProtonTotalPartialChargeDescriptorTest() {}
     

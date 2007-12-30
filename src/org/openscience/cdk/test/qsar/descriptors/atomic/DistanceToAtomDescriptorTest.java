@@ -35,14 +35,13 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.DistanceToAtomDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
  *
  * @cdk.module test-qsaratomic
  */
-public class DistanceToAtomDescriptorTest extends CDKTestCase {
+public class DistanceToAtomDescriptorTest extends AtomicDescriptorTest {
 	
 	public  DistanceToAtomDescriptorTest() {}
     

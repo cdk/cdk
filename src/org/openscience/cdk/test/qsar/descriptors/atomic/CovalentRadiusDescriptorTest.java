@@ -33,12 +33,11 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.CovalentRadiusDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-qsaratomic
  */
-public class CovalentRadiusDescriptorTest extends CDKTestCase {
+public class CovalentRadiusDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  Constructor for the CovalentRadiusDescriptorTest object
 	 *

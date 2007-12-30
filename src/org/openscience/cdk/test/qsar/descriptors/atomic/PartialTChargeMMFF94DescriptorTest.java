@@ -37,7 +37,6 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94Descriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -45,7 +44,7 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test-qsaratomic
  * @cdk.bug    1627763
  */
-public class PartialTChargeMMFF94DescriptorTest extends CDKTestCase {
+public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 	
 	private final double METHOD_ERROR = 0.1;
 	

@@ -34,7 +34,6 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
 /**
@@ -42,7 +41,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  *
  * @cdk.module test-qsaratomic
  */
-public class PartialPiChargeDescriptorTest extends CDKTestCase {
+public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  Constructor for the PartialPiChargeDescriptorTest object
 	 *

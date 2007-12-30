@@ -33,14 +33,13 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
  *
  * @cdk.module test-qsaratomic
  */
-public class EffectiveAtomPolarizabilityDescriptorTest extends CDKTestCase {
+public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorTest {
 	
 	public  EffectiveAtomPolarizabilityDescriptorTest() {}
     

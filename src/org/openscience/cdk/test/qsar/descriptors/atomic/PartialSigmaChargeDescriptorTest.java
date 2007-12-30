@@ -33,14 +33,13 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
  *
  * @cdk.module test-qsaratomic
  */
-public class PartialSigmaChargeDescriptorTest extends CDKTestCase {
+public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	
 	private IAtomicDescriptor descriptor = null;
 	

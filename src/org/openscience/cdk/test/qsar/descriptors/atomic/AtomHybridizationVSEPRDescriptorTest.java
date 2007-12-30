@@ -38,7 +38,6 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
 
@@ -47,7 +46,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  *
  * @cdk.module test-qsaratomic
  */
-public class AtomHybridizationVSEPRDescriptorTest extends CDKTestCase {
+public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
 
     public  AtomHybridizationVSEPRDescriptorTest() {}
 

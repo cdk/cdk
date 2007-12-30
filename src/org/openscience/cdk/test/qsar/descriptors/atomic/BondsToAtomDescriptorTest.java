@@ -32,14 +32,13 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
  *
  * @cdk.module test-qsaratomic
  */
-public class BondsToAtomDescriptorTest extends CDKTestCase {
+public class BondsToAtomDescriptorTest extends AtomicDescriptorTest {
 
     public  BondsToAtomDescriptorTest() {}
 

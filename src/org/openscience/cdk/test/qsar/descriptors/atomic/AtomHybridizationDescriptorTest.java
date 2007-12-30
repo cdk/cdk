@@ -36,7 +36,6 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -44,7 +43,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-qsaratomic
  */
-public class AtomHybridizationDescriptorTest extends CDKTestCase {
+public class AtomHybridizationDescriptorTest extends AtomicDescriptorTest {
 
     public AtomHybridizationDescriptorTest() {
     }

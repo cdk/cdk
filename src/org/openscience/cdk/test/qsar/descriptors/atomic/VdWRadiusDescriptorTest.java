@@ -33,12 +33,11 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-qsaratomic
  */
-public class VdWRadiusDescriptorTest extends CDKTestCase {
+public class VdWRadiusDescriptorTest extends AtomicDescriptorTest {
 	
 	public  VdWRadiusDescriptorTest() {}
     

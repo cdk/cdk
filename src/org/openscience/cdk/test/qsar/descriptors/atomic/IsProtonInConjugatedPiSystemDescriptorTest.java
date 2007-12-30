@@ -33,7 +33,6 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemDescriptor;
 import org.openscience.cdk.qsar.result.BooleanResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 
 /**
@@ -41,7 +40,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @cdk.module test-qsaratomic
  */
-public class IsProtonInConjugatedPiSystemDescriptorTest extends CDKTestCase {
+public class IsProtonInConjugatedPiSystemDescriptorTest extends AtomicDescriptorTest {
 	
 	public  IsProtonInConjugatedPiSystemDescriptorTest() {}
     

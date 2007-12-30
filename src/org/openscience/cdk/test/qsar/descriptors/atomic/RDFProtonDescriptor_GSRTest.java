@@ -16,12 +16,11 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GSR;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-qsaratomic
  */
-public class RDFProtonDescriptor_GSRTest extends CDKTestCase {
+public class RDFProtonDescriptor_GSRTest extends AtomicDescriptorTest {
 
 	public RDFProtonDescriptor_GSRTest() {
     }

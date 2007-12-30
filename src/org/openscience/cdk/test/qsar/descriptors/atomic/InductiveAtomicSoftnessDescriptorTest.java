@@ -35,12 +35,11 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.InductiveAtomicSoftnessDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-qsaratomic
  */
-public class InductiveAtomicSoftnessDescriptorTest extends CDKTestCase {
+public class InductiveAtomicSoftnessDescriptorTest extends AtomicDescriptorTest {
 	
 	public  InductiveAtomicSoftnessDescriptorTest() {}
     

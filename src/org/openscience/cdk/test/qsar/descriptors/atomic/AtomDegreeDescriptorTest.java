@@ -33,14 +33,13 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomDegreeDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
  *
  * @cdk.module test-qsaratomic
  */
-public class AtomDegreeDescriptorTest extends CDKTestCase {
+public class AtomDegreeDescriptorTest extends AtomicDescriptorTest {
 	
 	public  AtomDegreeDescriptorTest() {}
     
