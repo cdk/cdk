@@ -24,7 +24,6 @@
 package org.openscience.cdk.test.charges;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.charges.Polarizability;
@@ -42,7 +41,7 @@ import org.openscience.cdk.test.NewCDKTestCase;
  */
 public class PolarizabilityTest extends NewCDKTestCase {
 	
-	private static boolean standAlone = false;
+	private boolean standAlone = false;
 	
 
 	
@@ -51,7 +50,6 @@ public class PolarizabilityTest extends NewCDKTestCase {
 	 *
 	 *@param  arg  The new standAlone value
 	 */
-    @BeforeClass
     public void setStandAlone(boolean arg)
 	{
 		standAlone = arg;
