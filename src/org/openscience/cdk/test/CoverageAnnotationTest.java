@@ -125,8 +125,6 @@ abstract public class CoverageAnnotationTest extends CDKTestCase {
             } else methodAnnotations.put(method.getName(), testMethodAnnotation);
         }
 
-        if (methodAnnotations.size() == 0) return missingTestCount; // no source method has been tested
-
         // get the test class for this class, as noted in the class annotation
         // and get a list of methods in the test class. We assume that if a class
         // does not have a TestClass annotation it is not tested, even though individual
