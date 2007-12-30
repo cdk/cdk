@@ -20,9 +20,9 @@
  */
 package org.openscience.cdk.test.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.test.CDKConstantsTest;
 import org.openscience.cdk.test.CoreCoverageTest;
 import org.openscience.cdk.test.config.AtomTypeFactoryTest;
@@ -51,28 +51,28 @@ public class McoreTests {
     public static Test suite() {
         TestSuite suite= new TestSuite("CDK core Tests");
 
-        suite.addTest(CoreCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(CoreCoverageTest.class));
 
         // make sure to check it against src/test-core.javafiles
         // before each release!
-        suite.addTest(CDKConstantsTest.suite());
-        suite.addTest(DataFeaturesTest.suite());
+        suite.addTest(new JUnit4TestAdapter(CDKConstantsTest.class));
+        suite.addTest(new JUnit4TestAdapter(DataFeaturesTest.class));
 
         // cdk.config
-        suite.addTest(IsotopeFactoryTest.suite());
-        suite.addTest(AtomTypeFactoryTest.suite());
-        suite.addTest(CDKBasedAtomTypeConfiguratorTest.suite());
-        suite.addTest(TXTBasedAtomTypeConfiguratorTest.suite());
-        suite.addTest(AtomTypeReaderTest.suite());
-        suite.addTest(AtomTypeHandlerTest.suite());
-        suite.addTest(IsotopeReaderTest.suite());
-        suite.addTest(IsotopeHandlerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(IsotopeFactoryTest.class));
+        suite.addTest(new JUnit4TestAdapter(AtomTypeFactoryTest.class));
+        suite.addTest(new JUnit4TestAdapter(CDKBasedAtomTypeConfiguratorTest.class));
+        suite.addTest(new JUnit4TestAdapter(TXTBasedAtomTypeConfiguratorTest.class));
+        suite.addTest(new JUnit4TestAdapter(AtomTypeReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(AtomTypeHandlerTest.class));
+        suite.addTest(new JUnit4TestAdapter(IsotopeReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(IsotopeHandlerTest.class));
         
         // other
-        suite.addTest(CDKExceptionTest.suite());
-        suite.addTest(NoSuchAtomExceptionTest.suite());
-        suite.addTest(NoSuchAtomTypeExceptionTest.suite());
-        suite.addTest(LoggingToolTest.suite());
+        suite.addTest(new JUnit4TestAdapter(CDKExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(NoSuchAtomExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(NoSuchAtomTypeExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(LoggingToolTest.class));
 
         return suite;
     }

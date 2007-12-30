@@ -24,48 +24,38 @@
  */
 package org.openscience.cdk.test.config;
 
-import java.io.InputStream;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.CDKBasedAtomTypeConfigurator;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
+
+import java.io.InputStream;
 
 /**
  * Checks the functionality of the TXTBasedAtomTypeConfigurator.
  *
  * @cdk.module test-core
  */
-public class CDKBasedAtomTypeConfiguratorTest extends CDKTestCase
+public class CDKBasedAtomTypeConfiguratorTest extends NewCDKTestCase
 {
-
-    public CDKBasedAtomTypeConfiguratorTest(String name) {
-        super(name);
-    }
-    
-    public void setUp() {}
-    
-    public static Test suite() {
-        return new TestSuite(CDKBasedAtomTypeConfiguratorTest.class);
-    }
-
+    @Test
     public void testCDKBasedAtomTypeConfigurator() {
         CDKBasedAtomTypeConfigurator configurator = new CDKBasedAtomTypeConfigurator();
-        assertNotNull(configurator);
+        Assert.assertNotNull(configurator);
     }
-    
+
+    @Test
     public void testReadAtomTypes_IChemObjectBuilder() throws Exception {
         CDKBasedAtomTypeConfigurator configurator = new CDKBasedAtomTypeConfigurator();
         String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         configurator.setInputStream(ins);
-        assertNotSame(new Integer(0), new Integer(
-            configurator.readAtomTypes(new ChemObject().getBuilder()).size())
+        Assert.assertNotSame(0, configurator.readAtomTypes(new ChemObject().getBuilder()).size()
         );
     }
-    
+
+    @Test
     public void testSetInputStream_InputStream() throws Exception {
     	testReadAtomTypes_IChemObjectBuilder();
     }

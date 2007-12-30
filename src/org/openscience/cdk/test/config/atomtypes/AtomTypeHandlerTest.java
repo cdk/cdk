@@ -24,65 +24,62 @@
  */
 package org.openscience.cdk.test.config.atomtypes;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.atomtypes.AtomTypeHandler;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * Checks the funcitonality of the IsotopeFactory
  *
  * @cdk.module test-core
  */
-public class AtomTypeHandlerTest extends CDKTestCase {
+public class AtomTypeHandlerTest extends NewCDKTestCase {
      
-	public AtomTypeHandlerTest(String name) {
-		super(name);
-	}
-	
-	public void setUp() {}
-	
-	public static Test suite() {
-		return new TestSuite(AtomTypeHandlerTest.class);
-	}
+
 
     // serious testing is done in AtomTypeFactoryTest; the factory
     // requires this class to work properly. But nevertheless:
 
+    @Test
     public void testAtomTypeHandler_IChemObjectBuilder() {
         AtomTypeHandler handler = new AtomTypeHandler(new ChemObject().getBuilder());
-        assertNotNull(handler);
+        Assert.assertNotNull(handler);
     }
-    
+
+    @Test
     public void testGetAtomTypes() {
         AtomTypeHandler handler = new AtomTypeHandler(new ChemObject().getBuilder());
         // nothing is read
-        assertNotNull(handler);
-        assertNull(handler.getAtomTypes());
+        Assert.assertNotNull(handler);
+        Assert.assertNull(handler.getAtomTypes());
     }
-    
+
+    @Test
     public void testStartDocument() {
         AtomTypeHandler handler = new AtomTypeHandler(new ChemObject().getBuilder());
         // nothing is read, but Vector is initialized
-        assertNotNull(handler);
-        assertNull(handler.getAtomTypes());
+        Assert.assertNotNull(handler);
+        Assert.assertNull(handler.getAtomTypes());
     }
-    
+
+    @Test
     public void testCharacters_arraychar_int_int() {
         // nothing I can test here that AtomTypeFactoryTest doesn't do
-    	assertTrue(true);
+    	Assert.assertTrue(true);
     }
-    
+
+    @Test
     public void testStartElement_String_String_String_Attributes() {
         // nothing I can test here that AtomTypeFactoryTest doesn't do
-    	assertTrue(true);
+    	Assert.assertTrue(true);
     }
-    
+
+    @Test
     public void testEndElement_String_String_String() {
         // nothing I can test here that AtomTypeFactoryTest doesn't do
-    	assertTrue(true);
+    	Assert.assertTrue(true);
     }
     
 }

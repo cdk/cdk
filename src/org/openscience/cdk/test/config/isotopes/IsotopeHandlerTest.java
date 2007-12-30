@@ -24,60 +24,56 @@
  */
 package org.openscience.cdk.test.config.isotopes;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.isotopes.IsotopeHandler;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * Checks the funcitonality of the IsotopeFactory
  *
  * @cdk.module test-core
  */
-public class IsotopeHandlerTest extends CDKTestCase {
-     
-	public IsotopeHandlerTest(String name) {
-		super(name);
-	}
-	
-	public void setUp() {}
-	
-	public static Test suite() {
-		return new TestSuite(IsotopeHandlerTest.class);
-	}
+public class IsotopeHandlerTest extends NewCDKTestCase {
+
 
     // serious testing is done in IsotopeFactoryTest; the factory
     // requires this class to work properly. But nevertheless:
 
+    @Test
     public void testIsotopeHandler_IChemObjectBuilder() {
         IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
-        assertNotNull(handler);
+        Assert.assertNotNull(handler);
     }
-    
+
+    @Test
     public void testGetIsotopes() {
         IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
         // nothing is read
-        assertNotNull(handler);
-        assertNull(handler.getIsotopes());
+        Assert.assertNotNull(handler);
+        Assert.assertNull(handler.getIsotopes());
     }
-    
+
+    @Test
     public void testStartDocument() {
         IsotopeHandler handler = new IsotopeHandler(new ChemObject().getBuilder());
         // nothing is read, but Vector is initialized
-        assertNotNull(handler);
-        assertNull(handler.getIsotopes());
-    }
-    
-    public void testCharacters_arraychar_int_int() {
-        // nothing I can test here that IsotopeFactoryTest doesn't do
-    	assertTrue(true);
+        Assert.assertNotNull(handler);
+        Assert.assertNull(handler.getIsotopes());
     }
 
-    
+    @Test
+    public void testCharacters_arraychar_int_int() {
+        // nothing I can test here that IsotopeFactoryTest doesn't do
+    	Assert.assertTrue(true);
+    }
+
+
+    @Test
     public void testEndElement_String_String_String() {
         // nothing I can test here that IsotopeFactoryTest doesn't do
-    	assertTrue(true);
+    	Assert.assertTrue(true);
     }
     
 }

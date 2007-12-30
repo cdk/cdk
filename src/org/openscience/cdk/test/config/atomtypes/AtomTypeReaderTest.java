@@ -23,13 +23,13 @@
  */
 package org.openscience.cdk.test.config.atomtypes;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 import java.io.StringReader;
 import java.util.List;
@@ -39,25 +39,18 @@ import java.util.List;
  *
  * @cdk.module test-core
  */
-public class AtomTypeReaderTest extends CDKTestCase {
+public class AtomTypeReaderTest extends NewCDKTestCase {
      
-	public AtomTypeReaderTest(String name) {
-		super(name);
-	}
-	
-	public void setUp() {}
-	
-	public static Test suite() {
-		return new TestSuite(AtomTypeReaderTest.class);
-	}
 
+    @Test
     public void testAtomTypeReader_Reader() {
         AtomTypeReader reader = new AtomTypeReader(
             new StringReader("")
         );
-        assertNotNull(reader);
+        Assert.assertNotNull(reader);
     }
-    
+
+    @Test
     public void testReadAtomTypes_IChemObjectBuilder() {
         AtomTypeReader reader = new AtomTypeReader(
             new StringReader(
@@ -82,12 +75,13 @@ public class AtomTypeReaderTest extends CDKTestCase {
             "  </atomType>                                                                                " +
             "</atomTypeList>")
         );
-        assertNotNull(reader);
+        Assert.assertNotNull(reader);
         List types = reader.readAtomTypes(new ChemObject().getBuilder());
-        assertNotNull(types);
-        assertEquals(2, types.size());
+        Assert.assertNotNull(types);
+        Assert.assertEquals(2, types.size());
     }
-    
+
+    @Test
     public void testReadAtomTypes2() {
         String data = 
             "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              " +
@@ -114,12 +108,13 @@ public class AtomTypeReaderTest extends CDKTestCase {
         AtomTypeReader reader = new AtomTypeReader(
             new StringReader(data)
         );
-        assertNotNull(reader);
+        Assert.assertNotNull(reader);
         List types = reader.readAtomTypes(new ChemObject().getBuilder());
-        assertNotNull(types);
-        assertEquals(2, types.size());
+        Assert.assertNotNull(types);
+        Assert.assertEquals(2, types.size());
     }
 
+    @Test
   public void testReadAtomTypes_CDK() {
       String data = 
           "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              \n" +
@@ -146,22 +141,23 @@ public class AtomTypeReaderTest extends CDKTestCase {
       AtomTypeReader reader = new AtomTypeReader(
           new StringReader(data)
       );
-      assertNotNull(reader);
+      Assert.assertNotNull(reader);
       List types = reader.readAtomTypes(new ChemObject().getBuilder());
-      assertNotNull(types);
-      assertEquals(1, types.size());
+      Assert.assertNotNull(types);
+      Assert.assertEquals(1, types.size());
       
       Object object = types.get(0);
-      assertNotNull(object);
-      assertTrue(object instanceof IAtomType);
+      Assert.assertNotNull(object);
+      Assert.assertTrue(object instanceof IAtomType);
       IAtomType atomType = (IAtomType)object;
       
-      assertEquals(0, atomType.getFormalCharge().intValue());
-      assertEquals(IAtomType.Hybridization.SP1, atomType.getHybridization());
-      assertEquals(0, ((Integer)atomType.getProperty(CDKConstants.LONE_PAIR_COUNT)).intValue());
-      assertEquals(2, ((Integer)atomType.getProperty(CDKConstants.PI_BOND_COUNT)).intValue());
+      Assert.assertEquals(0, atomType.getFormalCharge());
+      Assert.assertEquals(IAtomType.Hybridization.SP1, atomType.getHybridization());
+      Assert.assertEquals(0, atomType.getProperty(CDKConstants.LONE_PAIR_COUNT));
+      Assert.assertEquals(2, atomType.getProperty(CDKConstants.PI_BOND_COUNT));
   }
 
+    @Test
     public void testReadAtomTypes_FF() {
         String data = 
             "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              \n" +
@@ -194,21 +190,21 @@ public class AtomTypeReaderTest extends CDKTestCase {
         AtomTypeReader reader = new AtomTypeReader(
             new StringReader(data)
         );
-        assertNotNull(reader);
+        Assert.assertNotNull(reader);
         List types = reader.readAtomTypes(new ChemObject().getBuilder());
-        assertNotNull(types);
-        assertEquals(1, types.size());
+        Assert.assertNotNull(types);
+        Assert.assertEquals(1, types.size());
         
         Object object = types.get(0);
-        assertNotNull(object);
-        assertTrue(object instanceof IAtomType);
+        Assert.assertNotNull(object);
+        Assert.assertTrue(object instanceof IAtomType);
         IAtomType atomType = (IAtomType)object;
         
-        assertEquals("[CSP]-[0-4][-]?+;", atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
-        assertFalse(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
-        assertFalse(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));
+        Assert.assertEquals("[CSP]-[0-4][-]?+;", atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
+        Assert.assertFalse(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
+        Assert.assertFalse(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));
 
-        assertEquals(3, ((Integer)atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue());
-        assertEquals(3, ((Integer)atomType.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue());
+        Assert.assertEquals(3, atomType.getProperty(CDKConstants.PART_OF_RING_OF_SIZE));
+        Assert.assertEquals(3, atomType.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT));
     }
 }

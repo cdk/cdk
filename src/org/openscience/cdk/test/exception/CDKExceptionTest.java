@@ -24,49 +24,41 @@
  */
 package org.openscience.cdk.test.exception;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * Checks the funcitonality of the CDKException class.
  *
  * @cdk.module test-core
  *
- * @see org.openscience.cdk.CDKException
+ * @see org.openscience.cdk.exception.CDKException
  */
-public class CDKExceptionTest extends CDKTestCase {
+public class CDKExceptionTest extends NewCDKTestCase {
 
-    public CDKExceptionTest(String name) {
-        super(name);
-    }
 
-    public void setUp() {}
-
-    public static Test suite() {
-        return new TestSuite(CDKExceptionTest.class);
-    }
-    
+    @Test
     public void testCDKException_String() {
         final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
         CDKException exception = new CDKException(EXPLANATION);
-        assertNotNull(exception);
-        assertEquals(EXPLANATION, exception.getMessage());
+        Assert.assertNotNull(exception);
+        Assert.assertEquals(EXPLANATION, exception.getMessage());
     }
 
+    @Test
     public void testCDKException_String_Throwable() {
         final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
         try {
         	int[] array = new int[0];
         	int dummy = array[50];
         	dummy = dummy + 1;
-        	fail("Should not have reached this place. The test *requires* the error to occur!");
+        	Assert.fail("Should not have reached this place. The test *requires* the error to occur!");
         } catch (Exception exception) {
             CDKException cdkException = new CDKException(EXPLANATION, exception);
-            assertNotNull(cdkException);
-            assertEquals(EXPLANATION, cdkException.getMessage());
+            Assert.assertNotNull(cdkException);
+            Assert.assertEquals(EXPLANATION, cdkException.getMessage());
         }
     }
 }

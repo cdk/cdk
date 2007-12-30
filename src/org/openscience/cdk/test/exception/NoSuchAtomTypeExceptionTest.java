@@ -24,35 +24,25 @@
  */
 package org.openscience.cdk.test.exception;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * Checks the funcitonality of the NoSuchAtomTypeException class.
  *
  * @cdk.module test-core
  *
- * @see org.openscience.cdk.NoSuchAtomTypeException
+ * @see org.openscience.cdk.exception.NoSuchAtomTypeException
  */
-public class NoSuchAtomTypeExceptionTest extends CDKTestCase {
+public class NoSuchAtomTypeExceptionTest extends NewCDKTestCase {
 
-    public NoSuchAtomTypeExceptionTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {}
-
-    public static Test suite() {
-        return new TestSuite(NoSuchAtomTypeExceptionTest.class);
-    }
-    
+    @Test
     public void testNoSuchAtomTypeException_String() {
         final String EXPLANATION = "Buckybull is not an atom type!";
         NoSuchAtomTypeException exception = new NoSuchAtomTypeException(EXPLANATION);
-        assertNotNull(exception);
-        assertEquals(EXPLANATION, exception.getMessage());
+        Assert.assertNotNull(exception);
+        Assert.assertEquals(EXPLANATION, exception.getMessage());
     }
 }

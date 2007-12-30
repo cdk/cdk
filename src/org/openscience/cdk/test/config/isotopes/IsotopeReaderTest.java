@@ -24,52 +24,43 @@
  */
 package org.openscience.cdk.test.config.isotopes;
 
-import java.io.ByteArrayInputStream;
-import java.util.List;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.isotopes.IsotopeReader;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
+
+import java.io.ByteArrayInputStream;
+import java.util.List;
 
 /**
  * Checks the funcitonality of the IsotopeFactory
  *
  * @cdk.module test-core
  */
-public class IsotopeReaderTest extends CDKTestCase {
-     
-	public IsotopeReaderTest(String name) {
-		super(name);
-	}
-	
-	public void setUp() {}
-	
-	public static Test suite() {
-		return new TestSuite(IsotopeReaderTest.class);
-	}
-
+public class IsotopeReaderTest extends NewCDKTestCase {
+    @Test
     public void testIsotopeReader_InputStream_IChemObjectBuilder() {
         IsotopeReader reader = new IsotopeReader(
             new ByteArrayInputStream(new byte[0]), 
             new ChemObject().getBuilder()
         );
-        assertNotNull(reader);
+        Assert.assertNotNull(reader);
     }
-    
+
+    @Test
     public void testReadIsotopes() {
         IsotopeReader reader = new IsotopeReader(
         	new ByteArrayInputStream(new byte[0]), 
         	new ChemObject().getBuilder()
         );
-        assertNotNull(reader);
+        Assert.assertNotNull(reader);
         List isotopes = reader.readIsotopes();
-        assertNotNull(isotopes);
-        assertEquals(0, isotopes.size());
+        Assert.assertNotNull(isotopes);
+        Assert.assertEquals(0, isotopes.size());
     }
-    
+
+    @Test
     public void testReadIsotopes2() {
         String isotopeData = 
             "<?xml version=\"1.0\"?>" +
@@ -100,10 +91,10 @@ public class IsotopeReaderTest extends CDKTestCase {
         	new ByteArrayInputStream(isotopeData.getBytes()), 
             new ChemObject().getBuilder()
         );
-        assertNotNull(reader);
+        Assert.assertNotNull(reader);
         List isotopes = reader.readIsotopes();
-        assertNotNull(isotopes);
-        assertEquals(3, isotopes.size());
+        Assert.assertNotNull(isotopes);
+        Assert.assertEquals(3, isotopes.size());
     }
     
 }

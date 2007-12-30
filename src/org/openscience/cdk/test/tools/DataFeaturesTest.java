@@ -24,11 +24,9 @@
  */
 package org.openscience.cdk.test.tools;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.test.CDKTestCase;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -39,20 +37,11 @@ import org.openscience.cdk.tools.DataFeatures;
  *
  * @see org.openscience.cdk.CDKConstants
  */
-public class DataFeaturesTest extends CDKTestCase {
+public class DataFeaturesTest extends NewCDKTestCase {       
 
-    public DataFeaturesTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {}
-
-    public static Test suite() {
-        return new TestSuite(DataFeaturesTest.class);
-    }
-    
+    @Test
     public void testDataFeatures() {
-        assertFalse(DataFeatures.HAS_2D_COORDINATES == -1);
+        Assert.assertFalse(DataFeatures.HAS_2D_COORDINATES == -1);
     }
     
     // FIXME: should add a test here that used introspection and test wether there

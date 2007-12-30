@@ -24,9 +24,9 @@
  */
 package org.openscience.cdk.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 
 /**
@@ -37,20 +37,11 @@ import org.openscience.cdk.CDKConstants;
  *
  * @see org.openscience.cdk.CDKConstants
  */
-public class CDKConstantsTest extends CDKTestCase {
+public class CDKConstantsTest extends NewCDKTestCase {
 
-    public CDKConstantsTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {}
-
-    public static Test suite() {
-        return new TestSuite(CDKConstantsTest.class);
-    }
-    
+    @Test
     public void testCDKConstants() {
-        assertFalse(CDKConstants.ISAROMATIC == -1);
+        Assert.assertFalse(CDKConstants.ISAROMATIC == -1);
     }
     
     // FIXME: should add a test here that used introspection and test wether there
