@@ -26,7 +26,6 @@ package org.openscience.cdk.test.config.isotopes;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.isotopes.IsotopeHandler;
 import org.openscience.cdk.test.CDKTestCase;
@@ -74,11 +73,7 @@ public class IsotopeHandlerTest extends CDKTestCase {
         // nothing I can test here that IsotopeFactoryTest doesn't do
     	assertTrue(true);
     }
-    
-    public void testStartElement_String_String_String_Attributes() {
-        // nothing I can test here that IsotopeFactoryTest doesn't do
-    	assertTrue(true);
-    }
+
     
     public void testEndElement_String_String_String() {
         // nothing I can test here that IsotopeFactoryTest doesn't do

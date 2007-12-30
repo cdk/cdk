@@ -27,6 +27,8 @@
  */
 package org.openscience.cdk.config.isotopes;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.LoggingTool;
@@ -51,6 +53,7 @@ import java.util.List;
  *
  * @author     Egon Willighagen
  */
+@TestClass("org.openscience.cdk.test.config.isotopes.IsotopeReaderTest")
 public class IsotopeReader {
 
     private XMLReader parser;
@@ -126,6 +129,7 @@ public class IsotopeReader {
      * @return a List of Isotope's. Returns an empty list is some reading error
      *         occured.
      */
+    @TestMethod("testReadIsotopes,testReadIsotopes2")
     public List<IIsotope> readIsotopes() {
         List<IIsotope> isotopes = new ArrayList<IIsotope>();
         try {

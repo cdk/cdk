@@ -23,11 +23,13 @@
  */
 package org.openscience.cdk.tools;
 
+import org.apache.log4j.Logger;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
-
-import org.apache.log4j.Logger;
 
 /**
  * Useful for logging messages. Often used as a class static variable instantiated like:
@@ -90,6 +92,7 @@ import org.apache.log4j.Logger;
  * @cdk.svnrev  $Revision$
  * @cdk.builddepends log4j.jar
  */
+@TestClass("org.openscience.cdk.test.tools.LoggingToolTest")
 public class LoggingTool {
 
     private boolean doDebug = false;
@@ -174,6 +177,7 @@ public class LoggingTool {
      * Normally this should be done by the application that uses the CDK library,
      * but is available for convenience.
      */
+    @TestMethod("testConfigureLog4j")
     public static void configureLog4j() {
         LoggingTool localLogger = new LoggingTool(LoggingTool.class);
         try { // NOPMD
@@ -193,6 +197,7 @@ public class LoggingTool {
      * version. More specifically: os.name, os.version, os.arch, java.version
      * and java.vendor.
      */
+    @TestMethod("testDumpSystemProperties")
     public void dumpSystemProperties() {
         debug("os.name        : " + System.getProperty("os.name"));
         debug("os.version     : " + System.getProperty("os.version"));
@@ -210,6 +215,7 @@ public class LoggingTool {
      *
      * @see #DEFAULT_STACK_LENGTH
      */
+    @TestMethod("testSetStackLength_int")
     public void setStackLength(int length) {
         this.stackLength = length;
     }
@@ -217,6 +223,7 @@ public class LoggingTool {
     /**
      * Outputs the system property for java.class.path.
      */
+    @TestMethod("testDumpClasspath")
     public void dumpClasspath() {
         debug("java.class.path: " + System.getProperty("java.class.path"));
     }
@@ -228,6 +235,7 @@ public class LoggingTool {
      *
      * @param object Object to apply toString() too and output
      */
+    @TestMethod("testDebug_Object")
     public void debug(Object object) {
         if (doDebug) {
             if (object instanceof Throwable) {
@@ -253,6 +261,7 @@ public class LoggingTool {
      * @param object  Object to apply toString() too and output
      * @param object2 Object to apply toString() too and output
      */
+    @TestMethod("testDebug_Object_Object")
     public void debug(Object object, Object object2) {
         if (doDebug) {
             debugString("" + object + object2);
@@ -266,6 +275,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      * @param number int to concatenate to object
      */
+    @TestMethod("testDebug_Object_int")
     public void debug(Object object, int number) {
         if (doDebug) {
             debugString("" + object + number);
@@ -279,6 +289,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      * @param number int to concatenate to object
      */
+    @TestMethod("testDebug_Object_double")
     public void debug(Object object, double number) {
         if (doDebug) {
             debugString("" + object + number);
@@ -292,6 +303,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      * @param bool   boolean to concatenate to object
      */
+    @TestMethod("testDebug_Object_boolean")
     public void debug(Object object, boolean bool) {
         if (doDebug) {
             debugString("" + object + bool);
@@ -306,6 +318,7 @@ public class LoggingTool {
      * @param obj2 Object to apply toString() too and output
      * @param obj3 Object to apply toString() too and output
      */
+    @TestMethod("testDebug_Object_Object_Object")
     public void debug(Object obj, Object obj2, Object obj3) {
         if (doDebug) {
             debugString("" + obj + obj2 + obj3);
@@ -321,6 +334,7 @@ public class LoggingTool {
      * @param obj3 Object to apply toString() too and output
      * @param obj4 Object to apply toString() too and output
      */
+    @TestMethod("testDebug_Object_Object_Object_Object")
     public void debug(Object obj, Object obj2, Object obj3, Object obj4) {
         if (doDebug) {
             debugString("" + obj + obj2 + obj3 + obj4);
@@ -337,6 +351,7 @@ public class LoggingTool {
      * @param obj4 Object to apply toString() too and output
      * @param obj5 Object to apply toString() too and output
      */
+    @TestMethod("testDebug_Object_Object_Object_Object_Object")
     public void debug(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
         if (doDebug) {
             debugString("" + obj + obj2 + obj3 + obj4 + obj5);
@@ -383,6 +398,7 @@ public class LoggingTool {
      *
      * @param object Object to apply toString() too and output
      */
+    @TestMethod("testError_Object")
     public void error(Object object) {
         if (doDebug) {
             errorString("" + object);
@@ -396,6 +412,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      * @param number int to concatenate to object
      */
+    @TestMethod("testError_Object_int")
     public void error(Object object, int number) {
         if (doDebug) {
             errorString("" + object + number);
@@ -409,6 +426,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      * @param number double to concatenate to object
      */
+    @TestMethod("testError_Object_double")
     public void error(Object object, double number) {
         if (doDebug) {
             errorString("" + object + number);
@@ -422,6 +440,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      * @param bool   boolean to concatenate to object
      */
+    @TestMethod("testError_Object_boolean")
     public void error(Object object, boolean bool) {
         if (doDebug) {
             errorString("" + object + bool);
@@ -443,6 +462,7 @@ public class LoggingTool {
      * @param object  Object to apply toString() too and output
      * @param object2 Object to apply toString() too and output
      */
+    @TestMethod("testError_Object_Object")
     public void error(Object object, Object object2) {
         if (doDebug) {
             errorString("" + object + object2);
@@ -457,6 +477,7 @@ public class LoggingTool {
      * @param obj2 Object to apply toString() too and output
      * @param obj3 Object to apply toString() too and output
      */
+    @TestMethod("testError_Object_Object_Object")
     public void error(Object obj, Object obj2, Object obj3) {
         if (doDebug) {
             errorString("" + obj + obj2 + obj3);
@@ -472,6 +493,7 @@ public class LoggingTool {
      * @param obj3 Object to apply toString() too and output
      * @param obj4 Object to apply toString() too and output
      */
+    @TestMethod("testError_Object_Object_Object_Object")
     public void error(Object obj, Object obj2, Object obj3, Object obj4) {
         if (doDebug) {
             errorString("" + obj + obj2 + obj3 + obj4);
@@ -488,6 +510,7 @@ public class LoggingTool {
      * @param obj4 Object to apply toString() too and output
      * @param obj5 Object to apply toString() too and output
      */
+    @TestMethod("testError_Object_Object_Object_Object_Object")
     public void error(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
         if (doDebug) {
             errorString("" + obj + obj2 + obj3 + obj4 + obj5);
@@ -499,6 +522,7 @@ public class LoggingTool {
      *
      * @param object Object to apply toString() too and output
      */
+    @TestMethod("testFatal_Object")
     public void fatal(Object object) {
         if (doDebug) {
             if (toSTDOUT) {
@@ -514,6 +538,7 @@ public class LoggingTool {
      *
      * @param object Object to apply toString() too and output
      */
+    @TestMethod("testInfo_Object")
     public void info(Object object) {
         if (doDebug) {
             infoString("" + object);
@@ -527,6 +552,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      * @param number int to concatenate to object
      */
+    @TestMethod("testInfo_Object_int")
     public void info(Object object, int number) {
         if (doDebug) {
             infoString("" + object + number);
@@ -540,6 +566,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      * @param number double to concatenate to object
      */
+    @TestMethod("testInfo_Object_double")
     public void info(Object object, double number) {
         if (doDebug) {
             infoString("" + object + number);
@@ -553,6 +580,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      * @param bool   boolean to concatenate to object
      */
+    @TestMethod("testInfo_Object_boolean")
     public void info(Object object, boolean bool) {
         if (doDebug) {
             infoString("" + object + bool);
@@ -574,6 +602,7 @@ public class LoggingTool {
      * @param object  Object to apply toString() too and output
      * @param object2 Object to apply toString() too and output
      */
+    @TestMethod("testInfo_Object_Object")
     public void info(Object object, Object object2) {
         if (doDebug) {
             infoString("" + object + object2);
@@ -588,6 +617,7 @@ public class LoggingTool {
      * @param obj2 Object to apply toString() too and output
      * @param obj3 Object to apply toString() too and output
      */
+    @TestMethod("testInfo_Object_Object_Object")
     public void info(Object obj, Object obj2, Object obj3) {
         if (doDebug) {
             infoString("" + obj + obj2 + obj3);
@@ -603,6 +633,7 @@ public class LoggingTool {
      * @param obj3 Object to apply toString() too and output
      * @param obj4 Object to apply toString() too and output
      */
+     @TestMethod("testInfo_Object_Object_Object_Object")
     public void info(Object obj, Object obj2, Object obj3, Object obj4) {
         if (doDebug) {
             infoString("" + obj + obj2 + obj3 + obj4);
@@ -619,6 +650,7 @@ public class LoggingTool {
      * @param obj4 Object to apply toString() too and output
      * @param obj5 Object to apply toString() too and output
      */
+    @TestMethod("testInfo_Object_Object_Object_Object_Object")
     public void info(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
         if (doDebug) {
             infoString("" + obj + obj2 + obj3 + obj4 + obj5);
@@ -630,6 +662,7 @@ public class LoggingTool {
      *
      * @param object Object to apply toString() too and output
      */
+    @TestMethod("testWarn_Object")
     public void warn(Object object) {
         if (doDebug) {
             warnString("" + object);
@@ -651,6 +684,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      * @param number int to concatenate to object
      */
+    @TestMethod("testWarn_Object_int")
     public void warn(Object object, int number) {
         if (doDebug) {
             warnString("" + object + number);
@@ -664,6 +698,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      * @param bool   boolean to concatenate to object
      */
+    @TestMethod("testWarn_Object_boolean")
     public void warn(Object object, boolean bool) {
         if (doDebug) {
             warnString("" + object + bool);
@@ -677,6 +712,7 @@ public class LoggingTool {
      * @param object Object to apply toString() too and output
      * @param number double to concatenate to object
      */
+    @TestMethod("testWarn_Object_number")
     public void warn(Object object, double number) {
         if (doDebug) {
             warnString("" + object + number);
@@ -690,6 +726,7 @@ public class LoggingTool {
      * @param object  Object to apply toString() too and output
      * @param object2 Object to apply toString() too and output
      */
+    @TestMethod("testWarn_Object_Object")
     public void warn(Object object, Object object2) {
         if (doDebug) {
             warnString("" + object + object2);
@@ -704,6 +741,7 @@ public class LoggingTool {
      * @param obj2 Object to apply toString() too and output
      * @param obj3 Object to apply toString() too and output
      */
+    @TestMethod("testWarn_Object_Object_Object")
     public void warn(Object obj, Object obj2, Object obj3) {
         if (doDebug) {
             warnString("" + obj + obj2 + obj3);
@@ -719,6 +757,7 @@ public class LoggingTool {
      * @param obj3 Object to apply toString() too and output
      * @param obj4 Object to apply toString() too and output
      */
+    @TestMethod("testWarn_Object_Object_Object_Object")
     public void warn(Object obj, Object obj2, Object obj3, Object obj4) {
         if (doDebug) {
             warnString("" + obj + obj2 + obj3 + obj4);
@@ -735,6 +774,7 @@ public class LoggingTool {
      * @param obj4 Object to apply toString() too and output
      * @param obj5 Object to apply toString() too and output
      */
+    @TestMethod("testWarn_Object_Object_Object_Object_Object")
     public void warn(Object obj, Object obj2, Object obj3, Object obj4, Object obj5) {
         if (doDebug) {
             warnString("" + obj + obj2 + obj3 + obj4 + obj5);
@@ -753,6 +793,7 @@ public class LoggingTool {
      *
      * @return true, if debug is enabled
      */
+    @TestMethod("testIsDebugEnabled")
     public boolean isDebugEnabled() {
         return doDebug;
     }

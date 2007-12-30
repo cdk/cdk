@@ -27,6 +27,8 @@
  */
 package org.openscience.cdk.config.atomtypes;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
@@ -47,6 +49,7 @@ import java.util.List;
  * @cdk.module core
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.config.atomtypes.AtomTypeReaderTest")
 public class AtomTypeReader {
 
     private XMLReader parser;
@@ -117,6 +120,7 @@ public class AtomTypeReader {
      * @param  builder The IChemObjectBuilder used to create new IAtomType's.
      * @return         a List with atom types. Is empty if some reading error occured.
      */
+    @TestMethod("testReadAtomTypes2,testReadAtomTypes_CDK,testReadAtomTypes_FF,testReadAtomTypes_IChemObjectBuilder")
     public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) {
     	List<IAtomType> isotopes = new ArrayList<IAtomType>();
         try {

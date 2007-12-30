@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test-core
  */
-public class CoreCoverageTest extends CoverageTest {
+public class CoreCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "core.javafiles";
     

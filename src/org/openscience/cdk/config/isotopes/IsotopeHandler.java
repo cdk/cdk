@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.config.isotopes;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.LoggingTool;
@@ -52,6 +54,7 @@ import java.util.List;
  * @cdk.module core
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.config.isotopes.IsotopeHandlerTest")
 public class IsotopeHandler extends DefaultHandler {
 
     private LoggingTool logger;
@@ -79,16 +82,19 @@ public class IsotopeHandler extends DefaultHandler {
      *
      * @return A List object with all isotopes
      */
+    @TestMethod("testGetIsotopes")
     public List<IIsotope> getIsotopes() {
         return isotopes;
     }
 
     // SAX Parser methods
 
+    @TestMethod("testStartDocument")
     public void startDocument() {
         isotopes = new ArrayList<IIsotope>();
     }
 
+    @TestMethod("testEndElement_String_String_String")
     public void endElement(String uri, String local, String raw) {
         logger.debug("end element: ", raw);
         if ("isotope".equals(local)) {
@@ -113,6 +119,7 @@ public class IsotopeHandler extends DefaultHandler {
         }
     }
 
+    @TestMethod("testEndElement_String_String_String")
     public void startElement(String uri, String local,
                              String raw, Attributes atts) {
         currentChars = "";
@@ -134,6 +141,7 @@ public class IsotopeHandler extends DefaultHandler {
         }
     }
 
+    @TestMethod("testCharacters_arraychar_int_int")
     public void characters(char chars[], int start, int length) {
         currentChars += new String(chars, start, length);
     }

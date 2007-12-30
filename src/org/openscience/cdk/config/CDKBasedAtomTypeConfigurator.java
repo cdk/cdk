@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.config;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -41,6 +43,7 @@ import java.util.List;
  * @cdk.module core
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.config.CDKBasedAtomTypeConfiguratorTest")
 public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
     private String configFile = "org.openscience.cdk.config.data.structgen_atomtypes.xml";
@@ -51,7 +54,8 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
     public CDKBasedAtomTypeConfigurator() {
         logger = new LoggingTool(this);
     }
-    
+
+    @TestMethod("testSetInputStream_InputStream")
     public void setInputStream(InputStream ins) {
         this.ins = ins;
     }
@@ -63,6 +67,7 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
      * @throws        IOException when a problem occured with reading from the InputStream
      * @return        A List with read IAtomType's.
      */
+    @TestMethod("testReadAtomTypes_IChemObjectBuilder")
     public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) throws IOException {
         List<IAtomType> atomTypes;
         if (ins == null) {
