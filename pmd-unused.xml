@@ -54,6 +54,7 @@
       <antcall target="test-module"><param name="module" value="svg"/></antcall>
       <antcall target="test-module"><param name="module" value="structgen"/></antcall>
       <antcall target="test-module"><param name="module" value="valencycheck"/></antcall>
+      <antcall target="test-module"><param name="module" value="charges"/></antcall>
       <!-- the test modules -->
       <antcall target="test-module"><param name="module" value="test-core"/></antcall>
       <antcall target="test-module"><param name="module" value="test-data"/></antcall>
@@ -67,6 +68,7 @@
       <antcall target="test-module"><param name="module" value="test-smiles"/></antcall>
       <antcall target="test-module"><param name="module" value="test-standard"/></antcall>
       <antcall target="test-module"><param name="module" value="test-valencycheck"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-charges"/></antcall>
       <antcall target="test-module"><param name="module" value="test-pcore"/></antcall>
       <antcall target="test-module"><param name="module" value="test-qsar"/></antcall>
       <antcall target="test-module"><param name="module" value="test-qsaratomic"/></antcall>

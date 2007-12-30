@@ -141,6 +141,7 @@
       <antcall target="doccheck-module"><param name="module" value="pcore"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="structgen"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="valencycheck"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="charges"/></antcall>
     </target>
 
     <target name="check-doccheck">

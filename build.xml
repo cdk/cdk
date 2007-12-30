@@ -495,6 +495,7 @@
         <antcall target="compile-module"><param name="module" value="test-builder3d"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-forcefield"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-valencycheck"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-charges"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-experimental"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsar"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsaratomic"/></antcall>
@@ -709,6 +710,7 @@
                     <includesfile name="${metainf}/test-standard.libdepends"/>
                     <includesfile name="${metainf}/test-structgen.libdepends"/>
                     <includesfile name="${metainf}/test-valencycheck.libdepends"/>
+                    <includesfile name="${metainf}/test-charges.libdepends"/>
                     <includesfile name="${metainf}/test-weka.libdepends"/>
                     <includesfile name="${metainf}/test-libiomd.libdepends"/>
                     <includesfile name="${metainf}/test-pcore.libdepends"/>
@@ -736,6 +738,7 @@
                     <include name="cdk-test-standard.jar"/>
                     <include name="cdk-test-structgen.jar"/>
                     <include name="cdk-test-valencycheck.jar"/>
+                    <include name="cdk-test-charges.jar"/>
                     <include name="cdk-test-weka.jar"/>
                     <include name="cdk-test-libiomd.jar"/>
                     <include name="cdk-test-pcore.jar"/>
@@ -966,6 +969,7 @@
             <antcall target="test-module"><param name="module" value="builder3d"/></antcall> 
             <antcall target="test-module"><param name="module" value="forcefield"/></antcall> 
         	<antcall target="test-module"><param name="module" value="valencycheck"/></antcall> 
+                <antcall target="test-module"><param name="module" value="charges"/></antcall>
         	<antcall target="test-module"><param name="module" value="reaction"/></antcall>
         	<antcall target="test-module"><param name="module" value="smarts"/></antcall> 
                 <antcall target="test-module"><param name="module" value="smiles"/></antcall>
