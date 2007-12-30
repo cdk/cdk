@@ -24,9 +24,8 @@
  */
 package org.openscience.cdk.test.atomtype;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.HybridizationStateATMatcher;
@@ -34,7 +33,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * Checks the functionality of the AtomType-HybridizationStateATMatcher.
@@ -43,24 +42,16 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.atomtype.HybridizationStateATMatcher
  */
-public class HybridizationStateATMatcherTest extends CDKTestCase {
+public class HybridizationStateATMatcherTest extends NewCDKTestCase {
 
-    public HybridizationStateATMatcherTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {}
-
-    public static Test suite() {
-        return new TestSuite(HybridizationStateATMatcherTest.class);
-    }
-    
+    @Test
     public void testHybridizationStateATMatcher() throws ClassNotFoundException, CDKException, java.lang.Exception {
 	    HybridizationStateATMatcher matcher = new HybridizationStateATMatcher();
-	    assertNotNull(matcher);
+	    Assert.assertNotNull(matcher);
 	    
     }
-    
+
+    @Test
     public void testFindMatchingAtomType_IAtomContainer_IAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Molecule mol = new Molecule();
         // smiles source: C#CCC=O
@@ -90,6 +81,6 @@ public class HybridizationStateATMatcherTest extends CDKTestCase {
         IAtomType.Hybridization hybridization = matched.getHybridization();
         IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP1;
         
-        assertEquals(thisHybridization, hybridization);
+        Assert.assertEquals(thisHybridization, hybridization);
     }
 }

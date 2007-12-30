@@ -20,36 +20,30 @@
  */
 package org.openscience.cdk.test.graph;
 
-import java.io.InputStream;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.graph.SpanningTree;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.test.NewCDKTestCase;
+
+import java.io.InputStream;
 
 /**
  * @cdk.module test-atomtype
  */
-public class SpanningTreeTest extends CDKTestCase {
+public class SpanningTreeTest extends NewCDKTestCase {
     
 	private static SpanningTree azulene = null;
 	
-    public SpanningTreeTest(String name) {
-        super(name);
-    }
-    
+
+    @Before
     public void setUp() throws Exception {
-    	if (this.azulene == null) {
+    	if (azulene == null) {
     		// load azulene
     		String filename = "data/mdl/azulene.mol";
     		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -57,59 +51,68 @@ public class SpanningTreeTest extends CDKTestCase {
     		IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
     		IChemSequence seq = chemFile.getChemSequence(0);
     		IChemModel model = seq.getChemModel(0);
-    		IMolecule azulene = model.getMoleculeSet().getMolecule(0);
-    		assertEquals(10, azulene.getAtomCount());
-    		assertEquals(11, azulene.getBondCount());
-    		this.azulene = new SpanningTree(azulene);
+    		IMolecule azuleneMolecule = model.getMoleculeSet().getMolecule(0);
+    		Assert.assertEquals(10, azuleneMolecule.getAtomCount());
+    		Assert.assertEquals(11, azuleneMolecule.getBondCount());
+    		azulene = new SpanningTree(azuleneMolecule);
     	}
     }
     
-	public static Test suite() {
-		return new TestSuite(SpanningTreeTest.class);
-	}
-	
+
+    @Test
 	public void testSpanningTree_IAtomContainer() {
 		SpanningTree sTree = new SpanningTree(new AtomContainer());
-		assertNotNull(sTree);
-	}
-	
-	public void testGetCyclicFragmentsContainer() throws Exception {
-		IAtomContainer ringSystems = this.azulene.getCyclicFragmentsContainer();
-		assertEquals(10, ringSystems.getAtomCount());
-		assertEquals(11, ringSystems.getBondCount());
+		Assert.assertNotNull(sTree);
 	}
 
-	public void testGetBondsCyclicCount() throws Exception {
-		assertEquals(11, this.azulene.getBondsCyclicCount());
+    @Test
+    public void testGetCyclicFragmentsContainer() throws Exception {
+		IAtomContainer ringSystems = azulene.getCyclicFragmentsContainer();
+		Assert.assertEquals(10, ringSystems.getAtomCount());
+		Assert.assertEquals(11, ringSystems.getBondCount());
 	}
 
-	public void testGetBondsAcyclicCount() throws Exception {
-		assertEquals(0, this.azulene.getBondsAcyclicCount());
+    @Test
+    public void testGetBondsCyclicCount() throws Exception {
+		Assert.assertEquals(11, azulene.getBondsCyclicCount());
 	}
 
-	public void testClear() {
-		fail("Missing JUnit test");
+    @Test
+    public void testGetBondsAcyclicCount() throws Exception {
+		Assert.assertEquals(0, azulene.getBondsAcyclicCount());
 	}
-	public void testGetPath_IAtomContainer_IAtom_IAtom() {
-		fail("Missing JUnit test");
+
+    @Test
+    public void testClear() {
+		Assert.fail("Missing JUnit test");
 	}
-	public void testResetFlags_IAtomContainer() {
-		fail("Missing JUnit test");
+    @Test
+    public void testGetPath_IAtomContainer_IAtom_IAtom() {
+		Assert.fail("Missing JUnit test");
 	}
-	public void testIsDisconnected() {
-		fail("Missing JUnit test");
+    @Test
+    public void testResetFlags_IAtomContainer() {
+		Assert.fail("Missing JUnit test");
 	}
-	public void testGetSpanningTree() {
-		fail("Missing JUnit test");
+    @Test
+    public void testIsDisconnected() {
+		Assert.fail("Missing JUnit test");
 	}
-	public void testGetBasicRings() {
-		fail("Missing JUnit test");
+    @Test
+    public void testGetSpanningTree() {
+		Assert.fail("Missing JUnit test");
 	}
-	public void testGetAllRings() {
-		fail("Missing JUnit test");
+    @Test
+    public void testGetBasicRings() {
+		Assert.fail("Missing JUnit test");
 	}
-	public void testGetSpanningTreeSize() {
-		fail("Missing JUnit test");
+    @Test
+    public void testGetAllRings() {
+		Assert.fail("Missing JUnit test");
+	}
+    @Test
+    public void testGetSpanningTreeSize() {
+		Assert.fail("Missing JUnit test");
 	}
 	
 }

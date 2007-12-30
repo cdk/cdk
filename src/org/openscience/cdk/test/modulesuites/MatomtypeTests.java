@@ -20,16 +20,11 @@
  */
 package org.openscience.cdk.test.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.test.AtomtypeCoverageTest;
-import org.openscience.cdk.test.atomtype.CDKAtomTypeMatcherTest;
-import org.openscience.cdk.test.atomtype.HybridizationMatcherTest;
-import org.openscience.cdk.test.atomtype.HybridizationStateATMatcherTest;
-import org.openscience.cdk.test.atomtype.StructGenAtomTypeGuesserTest;
-import org.openscience.cdk.test.atomtype.StructGenMatcherTest;
-import org.openscience.cdk.test.atomtype.ValencyMatcherTest;
+import org.openscience.cdk.test.atomtype.*;
 import org.openscience.cdk.test.graph.PathToolsTest;
 import org.openscience.cdk.test.graph.SpanningTreeTest;
 import org.openscience.cdk.test.graph.matrix.AdjacencyMatrixTest;
@@ -47,21 +42,21 @@ public class MatomtypeTests {
     public static Test suite() {
         TestSuite suite= new TestSuite("CDK atomtype Tests");
 
-        suite.addTest(AtomtypeCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(AtomtypeCoverageTest.class));
 
         // basic helper algorithms
-        suite.addTest(BondManipulatorTest.suite());
-        suite.addTest(AdjacencyMatrixTest.suite());
-        suite.addTest(PathToolsTest.suite());
-        suite.addTest(SpanningTreeTest.suite());
+        suite.addTest(new JUnit4TestAdapter(BondManipulatorTest.class));
+        suite.addTest(new JUnit4TestAdapter(AdjacencyMatrixTest.class));
+        suite.addTest(new JUnit4TestAdapter(PathToolsTest.class));
+        suite.addTest(new JUnit4TestAdapter(SpanningTreeTest.class));
         
         // cdk.atomtype
-        suite.addTest(CDKAtomTypeMatcherTest.suite());
-        suite.addTest(HybridizationStateATMatcherTest.suite());
-        suite.addTest(HybridizationMatcherTest.suite());
-        suite.addTest(StructGenMatcherTest.suite());
-        suite.addTest(ValencyMatcherTest.suite());
-        suite.addTest(StructGenAtomTypeGuesserTest.suite());
+        suite.addTest(new JUnit4TestAdapter(CDKAtomTypeMatcherTest.class));
+        suite.addTest(new JUnit4TestAdapter(HybridizationStateATMatcherTest.class));
+        suite.addTest(new JUnit4TestAdapter(HybridizationMatcherTest.class));
+        suite.addTest(new JUnit4TestAdapter(StructGenMatcherTest.class));
+        suite.addTest(new JUnit4TestAdapter(ValencyMatcherTest.class));
+        suite.addTest(new JUnit4TestAdapter(StructGenAtomTypeGuesserTest.class));
 
         return suite;
     }
