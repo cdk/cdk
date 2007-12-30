@@ -23,30 +23,26 @@
  */
 package org.openscience.cdk.test.tools;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.BioPolymer;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.ProteinBuilderTool;
 
 /**
  * @cdk.module test-pdb
  */
-public class ProteinBuilderToolTest extends CDKTestCase {
+public class ProteinBuilderToolTest extends NewCDKTestCase {
 
-    public static Test suite() {
-        return new TestSuite(ProteinBuilderToolTest.class);
-    }
-
+    @Test
     public void testCreateProtein() throws Exception {
         BioPolymer protein = ProteinBuilderTool.createProtein("GAGA");
-        assertNotNull(protein);
-        assertEquals(4, protein.getMonomerCount());
-        assertEquals(1, protein.getStrandCount());
-        assertEquals(18+1, protein.getAtomCount()); 
+        Assert.assertNotNull(protein);
+        Assert.assertEquals(4, protein.getMonomerCount());
+        Assert.assertEquals(1, protein.getStrandCount());
+        Assert.assertEquals(18+1, protein.getAtomCount());
         // 1=terminal oxygen
-        assertEquals(14+3+1, protein.getBondCount()); 
+        Assert.assertEquals(14+3+1, protein.getBondCount()); 
         // 3 = extra back bone bonds, 1=bond to terminal oxygen
     }
 
