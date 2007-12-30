@@ -19,23 +19,18 @@
  */
 package org.openscience.cdk.test.inchi;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import net.sf.jniinchi.INCHI_RET;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.SingleElectron;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.*;
 import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 
 /**
  * TestCase for the InChIGenerator.
@@ -44,7 +39,7 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.inchi.InChIGenerator
  */
-public class InChIGeneratorTest extends CDKTestCase {
+public class InChIGeneratorTest extends NewCDKTestCase {
     
     protected InChIGeneratorFactory factory;
     
@@ -54,28 +49,19 @@ public class InChIGeneratorTest extends CDKTestCase {
         }
         return(factory);
     }
-    
-    
-    public static Test suite() {
-        return new TestSuite(InChIGeneratorTest.class);
-    }
-    
-    public InChIGeneratorTest(String name) {
-        super(name);
-    }
-    
+
     
     /**
      * Tests element name is correctly passed to InChI.
      * 
      * @throws Exception
      */
-    public void testGetInchiFromChlorineAtom() throws Exception {
+    @Test public void testGetInchiFromChlorineAtom() throws Exception {
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("Cl"));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        assertEquals(gen.getInchi(), "InChI=1/Cl");
+        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assert.assertEquals(gen.getInchi(), "InChI=1/Cl");
     }
     
     /**
@@ -83,14 +69,14 @@ public class InChIGeneratorTest extends CDKTestCase {
      * 
      * @throws Exception
      */
-    public void testGetInchiFromLithiumIon() throws Exception {
+    @Test public void testGetInchiFromLithiumIon() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("Li");
         a.setFormalCharge(+1);
         ac.addAtom(a);
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        assertEquals(gen.getInchi(), "InChI=1/Li/q+1");
+        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assert.assertEquals(gen.getInchi(), "InChI=1/Li/q+1");
     }
     
     /**
@@ -98,14 +84,14 @@ public class InChIGeneratorTest extends CDKTestCase {
     * 
     * @throws Exception
     */
-    public void testGetInchiFromChlorine37Atom() throws Exception {
+    @Test public void testGetInchiFromChlorine37Atom() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("Cl");
         a.setMassNumber(37);
         ac.addAtom(a);
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        assertEquals(gen.getInchi(), "InChI=1/Cl/i1+2");
+        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assert.assertEquals(gen.getInchi(), "InChI=1/Cl/i1+2");
     }
     
     /**
@@ -113,14 +99,14 @@ public class InChIGeneratorTest extends CDKTestCase {
      * 
      * @throws Exception
      */
-    public void testGetInchiFromHydrogenChlorideImplicitH() throws Exception {
+    @Test public void testGetInchiFromHydrogenChlorideImplicitH() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("Cl");
         a.setHydrogenCount(1);
         ac.addAtom(a);
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        assertEquals(gen.getInchi(), "InChI=1/ClH/h1H");
+        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assert.assertEquals(gen.getInchi(), "InChI=1/ClH/h1H");
     }
     
     /**
@@ -128,15 +114,15 @@ public class InChIGeneratorTest extends CDKTestCase {
      * 
      * @throws Exception
      */
-    public void testGetInchiFromMethylRadical() throws Exception {
+    @Test public void testGetInchiFromMethylRadical() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("C");
         a.setHydrogenCount(3);
         ac.addAtom(a);
         ac.addSingleElectron(new SingleElectron(a));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        assertEquals(gen.getInchi(), "InChI=1/CH3/h1H3");
+        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assert.assertEquals(gen.getInchi(), "InChI=1/CH3/h1H3");
     }
     
     /**
@@ -144,7 +130,7 @@ public class InChIGeneratorTest extends CDKTestCase {
      * 
      * @throws Exception
      */
-    public void testGetInchiFromEthane() throws Exception {
+    @Test public void testGetInchiFromEthane() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
@@ -154,8 +140,8 @@ public class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_SINGLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        assertEquals(gen.getInchi(), "InChI=1/C2H6/c1-2/h1-2H3");
+        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assert.assertEquals(gen.getInchi(), "InChI=1/C2H6/c1-2/h1-2H3");
     }
     
     /**
@@ -163,7 +149,7 @@ public class InChIGeneratorTest extends CDKTestCase {
      * 
      * @throws Exception
      */
-    public void testGetInchiFromEthene() throws Exception {
+    @Test public void testGetInchiFromEthene() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
@@ -173,8 +159,8 @@ public class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_DOUBLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        assertEquals(gen.getInchi(), "InChI=1/C2H4/c1-2/h1-2H2");
+        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assert.assertEquals(gen.getInchi(), "InChI=1/C2H4/c1-2/h1-2H2");
     }
     
     /**
@@ -182,7 +168,7 @@ public class InChIGeneratorTest extends CDKTestCase {
      * 
      * @throws Exception
      */
-    public void testGetInchiFromEthyne() throws Exception {
+    @Test public void testGetInchiFromEthyne() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
@@ -192,8 +178,8 @@ public class InChIGeneratorTest extends CDKTestCase {
         ac.addAtom(a2);
         ac.addBond(new Bond(a1, a2, CDKConstants.BONDORDER_TRIPLE));
         InChIGenerator gen = getFactory().getInChIGenerator(ac);
-        assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
-        assertEquals(gen.getInchi(), "InChI=1/C2H2/c1-2/h1-2H");
+        Assert.assertEquals(gen.getReturnStatus(), INCHI_RET.OKAY);
+        Assert.assertEquals(gen.getInchi(), "InChI=1/C2H2/c1-2/h1-2H");
     }
     
     /**
@@ -201,7 +187,7 @@ public class InChIGeneratorTest extends CDKTestCase {
      * 
      * @throws Exception
      */
-    public void testGetInchiEandZ12Dichloroethene2D() throws Exception {
+    @Test public void testGetInchiEandZ12Dichloroethene2D() throws Exception {
 
         // (E)-1,2-dichloroethene
         IAtomContainer acE = new AtomContainer();
@@ -222,8 +208,8 @@ public class InChIGeneratorTest extends CDKTestCase {
         acE.addBond(new Bond(a2E, a4E, CDKConstants.BONDORDER_SINGLE));
         
         InChIGenerator genE = getFactory().getInChIGenerator(acE);
-        assertEquals(genE.getReturnStatus(), INCHI_RET.OKAY);
-        assertEquals(genE.getInchi(), "InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+");
+        Assert.assertEquals(genE.getReturnStatus(), INCHI_RET.OKAY);
+        Assert.assertEquals(genE.getInchi(), "InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+");
         
         
         // (Z)-1,2-dichloroethene
@@ -245,8 +231,8 @@ public class InChIGeneratorTest extends CDKTestCase {
         acZ.addBond(new Bond(a2Z, a4Z, CDKConstants.BONDORDER_SINGLE));
         
         InChIGenerator genZ = getFactory().getInChIGenerator(acZ);
-        assertEquals(genZ.getReturnStatus(), INCHI_RET.OKAY);
-        assertEquals(genZ.getInchi(), "InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-");
+        Assert.assertEquals(genZ.getReturnStatus(), INCHI_RET.OKAY);
+        Assert.assertEquals(genZ.getInchi(), "InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-");
     }
     
     
@@ -255,6 +241,7 @@ public class InChIGeneratorTest extends CDKTestCase {
      * 
      * @throws Exception
      */
+    @Test
     public void testGetInchiFromLandDAlanine3D() throws Exception {
         
         // L-Alanine
@@ -283,8 +270,8 @@ public class InChIGeneratorTest extends CDKTestCase {
         acL.addBond(new Bond(a2L, a6L, CDKConstants.BONDORDER_DOUBLE));
         
         InChIGenerator genL = getFactory().getInChIGenerator(acL);
-        assertEquals(genL.getReturnStatus(), INCHI_RET.OKAY);
-        assertEquals(genL.getInchi(), "InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1");
+        Assert.assertEquals(genL.getReturnStatus(), INCHI_RET.OKAY);
+        Assert.assertEquals(genL.getInchi(), "InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1");
         
         
         // D-Alanine
@@ -313,8 +300,8 @@ public class InChIGeneratorTest extends CDKTestCase {
         acD.addBond(new Bond(a2D, a6D, CDKConstants.BONDORDER_DOUBLE));
         
         InChIGenerator genD = getFactory().getInChIGenerator(acD);
-        assertEquals(genD.getReturnStatus(), INCHI_RET.OKAY);
-        assertEquals(genD.getInchi(), "InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1");
+        Assert.assertEquals(genD.getReturnStatus(), INCHI_RET.OKAY);
+        Assert.assertEquals(genD.getInchi(), "InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1");
     };
     
 }
