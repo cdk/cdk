@@ -23,7 +23,6 @@ package org.openscience.cdk.test.modulesuites;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.test.ChargesCoverageTest;
 import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
 import org.openscience.cdk.test.charges.InductivePartialChargesTest;
@@ -46,7 +45,7 @@ public class MchargesTests {
 
 //      from cdk.test.qsar.charges
         suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
-        suite.addTest(InductivePartialChargesTest.suite());
+        suite.addTest(new JUnit4TestAdapter(InductivePartialChargesTest.class));
         suite.addTest(PolarizabilityTest.suite());
         
         return suite;
