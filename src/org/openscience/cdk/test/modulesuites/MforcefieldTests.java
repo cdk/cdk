@@ -27,6 +27,7 @@ package org.openscience.cdk.test.modulesuites;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.test.charges.MMFF94PartialChargesTest;
 import org.openscience.cdk.test.modeling.forcefield.ForceFieldTests;
 
 /**
@@ -41,6 +42,8 @@ public class MforcefieldTests {
         
         suite.addTest(ForceFieldTests.suite());
         
+        suite.addTest(MMFF94PartialChargesTest.suite());
+
         return suite;
     }
 
