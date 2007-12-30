@@ -44,9 +44,9 @@ public class MchargesTests {
         suite.addTest(new JUnit4TestAdapter(ChargesCoverageTest.class));	
 
 //      from cdk.test.qsar.charges
-        suite.addTest(GasteigerMarsiliPartialChargesTest.suite());
+        suite.addTest(new JUnit4TestAdapter(GasteigerMarsiliPartialChargesTest.class));
         suite.addTest(new JUnit4TestAdapter(InductivePartialChargesTest.class));
-        suite.addTest(PolarizabilityTest.suite());
+        suite.addTest(new JUnit4TestAdapter(PolarizabilityTest.class));
         
         return suite;
     }
