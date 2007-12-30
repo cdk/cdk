@@ -27,18 +27,17 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.qsar.descriptors.DescriptorTest;
 
 /**
  * Tests for molecular descriptors.
  *
  * @cdk.module test-qsarmolecular
  */
-public abstract class MolecularDescriptorTest extends CDKTestCase {
+public abstract class MolecularDescriptorTest extends DescriptorTest {
 	
 	protected IMolecularDescriptor descriptor;
 
@@ -114,82 +113,6 @@ public abstract class MolecularDescriptorTest extends CDKTestCase {
         );
     }
 
-	/**
-	 * Checks if the parameterization is consistent.
-	 * 
-	 * @throws Exception 
-	 */
-    public void testGetParameterNames() throws Exception {
-        String[] paramNames = descriptor.getParameterNames();
-//        FIXME: the next would be nice, but not currently agreed-upon policy
-//        assertNotNull(
-//        	"The method getParameterNames() must return a non-null value, possible a zero length String[] array",
-//        	paramNames
-//        );
-//        FIXME: so instead:
-        if (paramNames == null) paramNames = new String[0];
-        for (int i=0; i<paramNames.length; i++) {
-        	assertNotNull(
-        		"A parameter name must not be null.",
-        		paramNames[i]
-        	);
-        	assertNotSame(
-            	"A parameter name String must not be empty.",
-            	0, paramNames[i].length()
-            );
-        }
-    }
-    
-    public void testGetParameters() {
-        Object[] params = descriptor.getParameters();
-//      FIXME: the next would be nice, but not currently agreed-upon policy
-//      assertNotNull(
-//      	"The method getParameters() must return a non-null value, possible a zero length Object[] array",
-//      	paramNames
-//      );
-//      FIXME: so instead:
-        if (params == null) params = new Object[0];
-        for (int i=0; i<params.length; i++) {
-        	assertNotNull(
-        		"A parameter default must not be null.",
-        		params[i]
-        	);
-        }
-    }
-    
-    public void testGetParameterType_String() {
-        String[] paramNames = descriptor.getParameterNames();
-//      FIXME: see testGetParameterNames() comment on the same line 
-        if (paramNames == null) paramNames = new String[0];
-        Object[] params = descriptor.getParameters();
-//      FIXME: see testGetParameters() comment on the same line
-        if (params == null) params = new Object[0];
-
-        for (int i=0; i<paramNames.length; i++) {
-        	Object type = descriptor.getParameterType(paramNames[i]);
-        	assertEquals(
-        		"The getParameterType(String) return type is not consistent " +
-        		"with the getParameters() types for parameter " + i,
-        		type.getClass().getName(),
-        		params[i].getClass().getName()
-        	);
-        }
-    }
-    
-    public void testParameterConsistency() {
-        String[] paramNames = descriptor.getParameterNames();
-//      FIXME: see testGetParameterNames() comment on the same line 
-        if (paramNames == null) paramNames = new String[0];
-        Object[] params = descriptor.getParameters();
-//      FIXME: see testGetParameters() comment on the same line
-        if (params == null) params = new Object[0];
-        
-        assertEquals(
-        	"The number of returned parameter names must equate the number of returned parameters",
-        	paramNames.length, params.length
-        );
-    }
-
     public void testGetDescriptorResultType() throws Exception {
     	IDescriptorResult result = descriptor.getDescriptorResultType();
     	assertNotNull(
@@ -208,55 +131,6 @@ public abstract class MolecularDescriptorTest extends CDKTestCase {
     		"The specified getDescriptorResultType() length does not match the actually calculated result vector length",
     		v.getValue().length(), result.length()
     	);
-    }
-    
-    public void testGetSpecification() {
-    	DescriptorSpecification spec = descriptor.getSpecification();
-    	assertNotNull(
-    		"The descriptor specification returned must not be null.",
-    		spec
-    	);
-
-    	assertNotNull(
-    		"The specification identifier must not be null.",
-    		spec.getImplementationIdentifier()
-    	);
-    	assertNotSame(
-       		"The specification identifier must not be empty.",
-       		0, spec.getImplementationIdentifier().length()
-       	);
-
-    	assertNotNull(
-       		"The specification title must not be null.",
-       		spec.getImplementationTitle()
-    	);
-    	assertNotSame(
-    		"The specification title must not be empty.",
-    		0, spec.getImplementationTitle().length()
-    	);
-
-    	assertNotNull(
-       		"The specification vendor must not be null.",
-       		spec.getImplementationVendor()
-    	);
-    	assertNotSame(
-    		"The specification vendor must not be empty.",
-    		0, spec.getImplementationVendor().length()
-    	);
-
-    	assertNotNull(
-       		"The specification reference must not be null.",
-       		spec.getSpecificationReference()
-    	);
-    	assertNotSame(
-    		"The specification reference must not be empty.",
-    		0, spec.getSpecificationReference().length()
-    	);
-    }
-    
-    public void testSetParameters_arrayObject() throws Exception {
-    	Object[] defaultParams = descriptor.getParameters();
-    	descriptor.setParameters(defaultParams);
     }
     
     private IMolecule someoneBringMeSomeWater() {

@@ -14,3 +14,4 @@ cdk-qsarmolecular.jar
 cdk-qsaratomic.jar
 cdk-smiles.jar
 cdk-test.jar
+cdk-test-qsar.jar
