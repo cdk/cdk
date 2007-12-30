@@ -24,11 +24,13 @@
 package org.openscience.cdk.charges;
 
 
-import java.util.Iterator;
-
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+
+import java.util.Iterator;
 
 /**
  * <p>The calculation of the Gasteiger Marsili (PEOE) partial charges is based on 
@@ -47,6 +49,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.keyword electronegativities, partial equalization of orbital
  * @cdk.keyword PEOE
  */
+@TestClass("org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest")
 public class GasteigerMarsiliPartialCharges {
 
     private double DEOC_HYDROGEN = 20.02;
@@ -99,10 +102,11 @@ public class GasteigerMarsiliPartialCharges {
      *  Main method which assigns Gasteiger Marisili partial sigma charges
      *
      *@param  ac             AtomContainer
-     *@param  addCharge      unused
+     * @param setCharge XXX
      *@return                AtomContainer with partial charges
      *@exception  Exception  Possible Exceptions
      */
+    @TestMethod("testAssignGasteigerMarsiliPartialCharges")
     public IAtomContainer assignGasteigerMarsiliSigmaPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
 
 //		if (setCharge) {

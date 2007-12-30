@@ -24,17 +24,22 @@
  */
 package org.openscience.cdk.test.charges;
 
-import javax.vecmath.Point3d;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.charges.InductivePartialCharges;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
+
+import javax.vecmath.Point3d;
+import java.io.IOException;
 
 /**
  *  TestSuite that runs a test for the MMFF94PartialCharges.
@@ -45,32 +50,45 @@ import org.openscience.cdk.test.CDKTestCase;
  *@cdk.created       2004-11-04
  */
 
-public class InductivePartialChargesTest extends CDKTestCase {
+public class InductivePartialChargesTest extends NewCDKTestCase {
 
-	/**
-	 *  Constructor for the InductivePartialChargesTest object
-	 */
-	public InductivePartialChargesTest() { }
+    private static IAtomContainer mol;
 
+    @BeforeClass
+    public static void makeMoleucle() {
+        mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
+        IAtom atom3 = DefaultChemObjectBuilder.getInstance().newAtom("Br");
+        IAtom atom4 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IAtom atom5 = DefaultChemObjectBuilder.getInstance().newAtom("O");
 
-	/**
-	 *  A unit test suite for JUnit
-	 *
-	 *@return    The test suite
-	 */
-	public static Test suite() {
-		return new TestSuite(InductivePartialChargesTest.class);
-	}
+        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(atom1, atom2, IBond.Order.SINGLE);
+        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(atom1, atom3, IBond.Order.SINGLE);
+        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(atom1, atom4, IBond.Order.SINGLE);
+        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(atom1, atom5, IBond.Order.SINGLE);
 
+        mol.addAtom(atom1);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addAtom(atom5);
 
-	/**
+        mol.addBond(bond1);
+        mol.addBond(bond2);
+        mol.addBond(bond3);
+        mol.addBond(bond4);
+    }
+
+    /**
 	 *  A unit test for JUnit with beta-amino-acetic-acid
 	 *
 	 *@exception  ClassNotFoundException  Description of the Exception
 	 *@exception  CDKException            Description of the Exception
 	 *@exception  java.lang.Exception     Description of the Exception
 	 */
-	public void testInductivePartialCharges() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testInductivePartialCharges() throws java.lang.Exception {
 		double [] testResult={0.197,-0.492,0.051,0.099,0.099};
 		Point3d c_coord=new Point3d(1.392, 0.0, 0.0);
 		Point3d f_coord=new Point3d(0.0, 0.0, 0.0);
@@ -107,9 +125,29 @@ public class InductivePartialChargesTest extends CDKTestCase {
 		InductivePartialCharges ipc = new InductivePartialCharges();
 		ipc.assignInductivePartialCharges(mol);
 		for (int i = 0; i < mol.getAtomCount(); i++) {
-			assertEquals(testResult[i], ((Double)mol.getAtom(i).getProperty("InductivePartialCharge")).doubleValue(), 0.1);
+			Assert.assertEquals(testResult[i], ((Double)mol.getAtom(i).getProperty("InductivePartialCharge")).doubleValue(), 0.1);
 			//logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " + ac.getAtomAt(i).getProperty("MMFF94charge"));
 		}
 	}
+
+    @Test
+    public void testGetPaulingElectronegativities() throws Exception, ClassNotFoundException {
+        InductivePartialCharges ipc = new InductivePartialCharges();
+        double[] eneg = ipc.getPaulingElectronegativities(mol, true);
+        long[] expected = {};
+        Assert.assertEquals("Error in C electronegativity", 2.20, eneg[0], 0.01);
+        Assert.assertEquals("Error in Cl electronegativity", 3.28, eneg[1], 0.01);
+        Assert.assertEquals("Error in Br electronegativity", 3.13, eneg[2], 0.01);
+        Assert.assertEquals("Error in H electronegativity", 2.10, eneg[3], 0.01);
+        Assert.assertEquals("Error in O electronegativity", 3.20, eneg[4], 0.01);
+    }
+
+    @Test
+    public void testGetAtomicSoftness() throws IOException, ClassNotFoundException, CDKException {
+        InductivePartialCharges ipc = new InductivePartialCharges();
+        double softness = ipc.getAtomicSoftnessCore(mol, 0);
+        Assert.fail("Not validated - need known values");
+    }
+
 }
 

@@ -23,46 +23,34 @@
  */
 package org.openscience.cdk.test.charges;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  *  Description of the Class
  *
- * @cdk.module test-charges
+ * @cdk.module test-extra
  *
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
+public class GasteigerMarsiliPartialChargesTest extends NewCDKTestCase {
 	
-	/**
-	 *  Constructor for the GasteigerMarsiliPartialChargesTest
-	 *@param  name  Description of the Parameter
-	 */
-	public  GasteigerMarsiliPartialChargesTest(){}
 
 
-	/**
-	 *  A unit test suite for JUnit
-	 *
-	 *@return    The test suite
-	 */
-	public static Test suite()
-	{
-		return new TestSuite(GasteigerMarsiliPartialChargesTest.class);
-	}
+
 	
 	/**
 	 *  A unit test for JUnit with methylenfluoride
 	 */
-	public void testAssignGasteigerMarsiliPartialCharges() throws Exception {
+    @Test
+    public void testAssignGasteigerMarsiliPartialCharges() throws Exception {
 		double [] testResult={0.07915,-0.25264,0.05783,0.05783,0.05783};
 		GasteigerMarsiliPartialCharges peoe=new GasteigerMarsiliPartialCharges();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -71,7 +59,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 		peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
 		for (int i=0;i<mol.getAtomCount();i++){
 			//logger.debug("Charge for atom:"+i+" S:"+mol.getAtomAt(i).getSymbol()+" Charge:"+mol.getAtomAt(i).getCharge());
-			assertEquals(testResult[i],mol.getAtom(i).getCharge(),0.01);
+			Assert.assertEquals(testResult[i],mol.getAtom(i).getCharge(),0.01);
 		}
 	}
 }

@@ -24,14 +24,12 @@
  */
 package org.openscience.cdk.charges;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -50,6 +48,7 @@ import java.io.IOException;
  * @cdk.keyword charge distribution
  * @cdk.keyword electronegativity
  */
+@TestClass("org.openscience.cdk.test.charges.InductivePartialChargesTest")
 public class InductivePartialCharges {
 
 	private static double[] pauling;
@@ -85,7 +84,8 @@ public class InductivePartialCharges {
 	 *@return                AtomContainer
 	 *@exception  Exception  Description of the Exception
 	 */
-	public IAtomContainer assignInductivePartialCharges(IAtomContainer ac) throws Exception {
+    @TestMethod("testInductivePartialCharges")
+    public IAtomContainer assignInductivePartialCharges(IAtomContainer ac) throws Exception {
         if (factory == null) {
             factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", 
                 ac.getBuilder());
@@ -130,7 +130,8 @@ public class InductivePartialCharges {
 	 *@return                The pauling electronegativities
 	 *@exception  Exception  Description of the Exception
 	 */
-	public double[] getPaulingElectronegativities(IAtomContainer ac, boolean modified) throws Exception {
+    @TestMethod("testGetPaulingElectronegativities")
+    public double[] getPaulingElectronegativities(IAtomContainer ac, boolean modified) throws CDKException {
 		double[] paulingElectronegativities = new double[ac.getAtomCount()];
 		IElement element = null;
 		String symbol = null;
@@ -200,7 +201,8 @@ public class InductivePartialCharges {
 	 // this method returns the result of the core of the equation of atomic softness
 	 // that can be used for qsar descriptors and during the iterative calculation
 	 // of effective electronegativity
-	public double getAtomicSoftnessCore(IAtomContainer ac, int atomPosition) throws CDKException {
+    @TestMethod("testGetAtomicSoftness")
+    public double getAtomicSoftnessCore(IAtomContainer ac, int atomPosition) throws CDKException {
 		org.openscience.cdk.interfaces.IAtom target = null;
 		double core = 0;
 		double radiusTarget = 0;
