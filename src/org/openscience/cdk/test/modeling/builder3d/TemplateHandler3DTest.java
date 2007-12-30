@@ -23,12 +23,13 @@
  */
 package org.openscience.cdk.test.modeling.builder3d;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.modeling.builder3d.TemplateHandler3D;
 import org.openscience.cdk.nonotify.NNAtomContainer;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
+
 /**
  * @cdk.module test-builder3d
  *
@@ -36,17 +37,14 @@ import org.openscience.cdk.test.CDKTestCase;
  *@author      Christoph Steinbeck
  *@cdk.created 2004-11-04
  */
-public class TemplateHandler3DTest extends CDKTestCase {
-	
-	public static Test suite() {
-		return new TestSuite(TemplateHandler3DTest.class);
-	}
-	
+public class TemplateHandler3DTest extends NewCDKTestCase {
+		
+	@Test
 	public void testGetInstance() throws Exception {
 		TemplateHandler3D th3d = TemplateHandler3D.getInstance();
 		// need to trigger a load of the templates
 		th3d.mapTemplates(new NNAtomContainer(), 0);
-		assertEquals(10751, th3d.getTemplateCount());
+		Assert.assertEquals(10751, th3d.getTemplateCount());
 	
 	}
 }
