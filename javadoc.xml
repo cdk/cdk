@@ -119,6 +119,7 @@
       <antcall target="doccheck-module"><param name="module" value="datadebug"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="nonotify"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="standard"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="atomtype"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="io"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="inchi"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="extra"/></antcall>

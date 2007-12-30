@@ -34,6 +34,7 @@
       <antcall target="test-module"><param name="module" value="interfaces"/></antcall>
       <antcall target="test-module"><param name="module" value="core"/></antcall>
       <antcall target="test-module"><param name="module" value="standard"/></antcall>
+      <antcall target="test-module"><param name="module" value="atomtype"/></antcall>
       <antcall target="test-module"><param name="module" value="io"/></antcall>
       <antcall target="test-module"><param name="module" value="extra"/></antcall>
       <antcall target="test-module"><param name="module" value="render"/></antcall>
@@ -60,6 +61,7 @@
       <antcall target="test-module"><param name="module" value="test-data"/></antcall>
       <antcall target="test-module"><param name="module" value="test-datadebug"/></antcall>
       <antcall target="test-module"><param name="module" value="test-nonotify"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-atomtype"/></antcall>
       <antcall target="test-module"><param name="module" value="test-extra"/></antcall>
       <antcall target="test-module"><param name="module" value="test-experimental"/></antcall>
       <antcall target="test-module"><param name="module" value="test-forcefield"/></antcall>
