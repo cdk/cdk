@@ -99,7 +99,7 @@ public class MstandardTests {
         suite.addTest(RMapTest.suite());
         suite.addTest(RGraphTest.suite());
         suite.addTest(RNodeTest.suite());
-        suite.addTest(MathToolsTest.suite());
+        suite.addTest(new JUnit4TestAdapter(MathToolsTest.class));
         suite.addTest(AllRingsFinderTest.suite());
         suite.addTest(RingPartitionerTest.suite());
         suite.addTest(SimpleCycleTest.suite());
@@ -159,9 +159,9 @@ public class MstandardTests {
         suite.addTest(BooleanResultTypeTest.suite());
         suite.addTest(DescriptorValueTest.suite());
         suite.addTest(DescriptorSpecificationTest.suite());
-        suite.addTest(FortranFormatTest.suite());
-        suite.addTest(PrimesTest.suite());
-        suite.addTest(RandomNumbersToolTest.suite());
+        suite.addTest(new JUnit4TestAdapter(FortranFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(PrimesTest.class));
+        suite.addTest(new JUnit4TestAdapter(RandomNumbersToolTest.class));
         suite.addTest(InvPairTest.suite());
         suite.addTest(EStateAtomTypeMatcherTest.suite());
         suite.addTest(AtomContainerComparatorTest.suite());

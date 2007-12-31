@@ -20,44 +20,36 @@
  */
 package org.openscience.cdk.test.math;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.math.Primes;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class PrimesTest extends CDKTestCase {
+public class PrimesTest extends NewCDKTestCase {
     
-    public PrimesTest(String name) {
-        super(name);
+    public PrimesTest() {
+        super();
     }
     
-	public static Test suite() {
-		return new TestSuite(PrimesTest.class);
-	}
-
+	@Test
 	public void testGetPrimeAt_int() {
-		assertEquals(2, Primes.getPrimeAt(0));
+		Assert.assertEquals(2, Primes.getPrimeAt(0));
 		
 		try {
 			Primes.getPrimeAt(2229);
-			fail("Should fail her, because it contains only X primes.");
+			Assert.fail("Should fail her, because it contains only X primes.");
 		} catch (ArrayIndexOutOfBoundsException exception) {
 			// OK, that should happen
 		}
 	}
-	
-	public void testArrayIndexOutOfBounds() {
-		try {
-			Primes.getPrimeAt(-1);
-			fail("Should fail her, because only positive integers are accepted");
-		} catch (ArrayIndexOutOfBoundsException exception) {
-			// OK, that should happen
-		}
-}
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void testArrayIndexOutOfBounds() {
+        Primes.getPrimeAt(-1);
+    }
 	
 }
 

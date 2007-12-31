@@ -24,56 +24,51 @@
  */
 package org.openscience.cdk.test.math;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.math.MathTools;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class MathToolsTest extends CDKTestCase {
+public class MathToolsTest extends NewCDKTestCase {
 
-    public MathToolsTest(String name) {
-        super(name);
+    public MathToolsTest() {
+        super();
     }
 
-    public void setUp() {}
-
-    public static Test suite() {
-        return new TestSuite(MathToolsTest.class);
-    }
     
     public void testMax_arraydouble() {
         double[] doubles = { 2.0, 1.0, 3.0, 5.0, 4.0};
-        assertEquals(5.0, MathTools.max(doubles), 0.001);
+        Assert.assertEquals(5.0, MathTools.max(doubles), 0.001);
     }
     
-    public void testMin_arraydouble() {
+    @Test public void testMin_arraydouble() {
     	double[] doubles = { 2.0, 1.0, 3.0, 5.0, 4.0};
-        assertEquals(1.0, MathTools.min(doubles), 0.001);
+        Assert.assertEquals(1.0, MathTools.min(doubles), 0.001);
     }
     
+    @Test
     public void testMax_arrayint() {
         int[] ints = { 1, 2, 3, 4, 5};
-        assertEquals(5, MathTools.max(ints));
+        Assert.assertEquals(5, MathTools.max(ints));
     }
     
-    public void testMin_arrayint() {
+    @Test public void testMin_arrayint() {
         int[] ints = { 1, 2, 3, 4, 5};
-        assertEquals(1, MathTools.min(ints));
+        Assert.assertEquals(1, MathTools.min(ints));
     }
     
-    public void testIsEven_int() {
-        assertTrue(MathTools.isEven(2));
-        assertTrue(MathTools.isEven(208));
+    @Test public void testIsEven_int() {
+        Assert.assertTrue(MathTools.isEven(2));
+        Assert.assertTrue(MathTools.isEven(208));
     }
     
-    public void testIsOdd_int() {
-        assertTrue(MathTools.isOdd(1));
-        assertTrue(MathTools.isOdd(3));
-        assertTrue(MathTools.isOdd(209));
+    @Test public void testIsOdd_int() {
+        Assert.assertTrue(MathTools.isOdd(1));
+        Assert.assertTrue(MathTools.isOdd(3));
+        Assert.assertTrue(MathTools.isOdd(209));
     }
     
 }

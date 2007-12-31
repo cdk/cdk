@@ -24,6 +24,9 @@
  */
 package org.openscience.cdk.math;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 
 /**
  * Converts a String representation of a Fortran double to a double.
@@ -39,12 +42,14 @@ package org.openscience.cdk.math;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.math.FortranFormatTest")
 public class FortranFormat {
     /**
      * Converts a string of digits to an double
      *
      * @param s a string denoting a double
      */
+    @TestMethod("testAtof_String")
     public static double atof(String s) {  
         int i = 0;
         int sign = 1;

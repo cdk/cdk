@@ -20,27 +20,25 @@
  */
 package org.openscience.cdk.test.math;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.math.FortranFormat;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class FortranFormatTest extends CDKTestCase {
+public class FortranFormatTest extends NewCDKTestCase {
     
-    public FortranFormatTest(String name) {
-        super(name);
+    public FortranFormatTest() {
+        super();
     }
     
-	public static Test suite() {
-		return new TestSuite(FortranFormatTest.class);
-	}
-	
-	public void testAtof_String() {
-		assertEquals(1.5, FortranFormat.atof("1.5"), 0.0001);
+
+
+    @Test
+    public void testAtof_String() {
+		Assert.assertEquals(1.5, FortranFormat.atof("1.5"), 0.0001);
 		
 		// FIXME: need to add something here with a 'd'
 	}

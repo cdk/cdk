@@ -27,6 +27,9 @@
  *  */
 package org.openscience.cdk.math;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
@@ -36,7 +39,9 @@ package org.openscience.cdk.math;
  *
  * @cdk.keyword prime numbers
  */
+@TestClass("org.openscience.cdk.test.math.PrimesTest")
 public class Primes {
+
 
   private static final int[] PRIMES = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73,
 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163,
@@ -227,6 +232,7 @@ public class Primes {
    * all prime numbers below 19700. The first in the sequence
    * (n=0) is the prime number 2.
    */
+  @TestMethod("testGetPrimeAt_int,testArrayIndexOutOfBounds")
   public static int getPrimeAt(int index) {
     if(index < 0 || index > PRIMES.length -1)
       throw new ArrayIndexOutOfBoundsException("out of range " + index);

@@ -23,12 +23,16 @@
  */
 package org.openscience.cdk.math;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * Class providing convenience methods for simple mathematical operations.
  *
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.math.MathToolsTest")
 public class MathTools {
 	
 	/**
@@ -37,12 +41,13 @@ public class MathTools {
 	 * @param   values  the values to be searched for the largest value among them
 	 * @return   the largest value among a set of given values  
 	 */
-	public static double max(double[] values)
+    @TestMethod("testMax_arraydouble")
+    public static double max(double[] values)
 	{
 		double max = values[0];
-		for (int f = 0; f < values.length; f++)
-			if (values[f] > max)
-				max = values[f];
+        for (double value : values)
+            if (value > max)
+                max = value;
 			return max;
 	}
 
@@ -52,56 +57,54 @@ public class MathTools {
 	 * @param   values  the values to be searched for the smallest value among them
 	 * @return   the smallest value among a set of given values  
 	 */
-	public static double min(double[] values)
+    @TestMethod("testMin_arraydouble")
+    public static double min(double[] values)
 	{
 		double min = values[0];
-		for (int f = 0; f < values.length; f++)
-			if (values[f] < min)
-				min = values[f];
+        for (double value : values)
+            if (value < min)
+                min = value;
 			return min;
 	}
 	
 	/**
 	 * Analog of Math.max that returns the largest int value in an array of ints
 	 **/
-	public static int max(int[] values)
+    @TestMethod("testMax_arrayint")
+    public static int max(int[] values)
 	{
 		int max = values[0];
-		for (int f = 0; f < values.length; f++)
-		{
-			if (values[f] > max)
-			{
-				max = values[f];
-			}
-		}
+        for (int value : values) {
+            if (value > max) {
+                max = value;
+            }
+        }
 		return max;
 	}
 
 	/**
 	 * Analog of Math.max that returns the largest int value in an array of ints
 	 **/
-	public static int min(int[] values)
+    @TestMethod("testMin_arrayint")
+    public static int min(int[] values)
 	{
 		int min = values[0];
-		for (int f = 0; f < values.length; f++)
-		{
-			if (values[f] < min)
-			{
-				min = values[f];
-			}
-		}
+        for (int value : values) {
+            if (value < min) {
+                min = value;
+            }
+        }
 		return min;
 	}
-    
+
+    @TestMethod("testIsOdd_int")
     public static boolean isOdd(int intValue) {
         return !MathTools.isEven(intValue);
     }
-    
+
+    @TestMethod("testIsEven_int")
     public static boolean isEven(int intValue) {
-        if (Math.floor((double)intValue/2.0)*2.0 == (double)intValue) {
-            return true;
-        }
-        return false;
+        return Math.floor((double) intValue / 2.0) * 2.0 == (double) intValue;
     }
     
 }
