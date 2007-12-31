@@ -51,8 +51,8 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(CPSADescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new CPSADescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(CPSADescriptor.class);
     }
 
     public void testCPSA() throws ClassNotFoundException, CDKException, java.lang.Exception {

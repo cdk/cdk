@@ -45,8 +45,8 @@ public class AutocorrelationDescriptorMassTest extends MolecularDescriptorTest {
 		return new TestSuite(AutocorrelationDescriptorMassTest.class);
 	}
 		
-	public void setUp() {
-		descriptor = new AutocorrelationDescriptorMass();
+	public void setUp() throws Exception {
+		setDescriptor(AutocorrelationDescriptorMass.class);
 	}
 	
 	public void testcalculate_IAtomContainer() throws Exception {

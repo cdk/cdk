@@ -25,8 +25,8 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 		return new TestSuite(LargestChainDescriptorTest.class);
 	}
     
-    public void setUp() {
-    	descriptor = new LargestChainDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(LargestChainDescriptor.class);
     }
 	
 	public void test1LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {

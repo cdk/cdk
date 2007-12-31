@@ -25,8 +25,8 @@ public class CarbonTypesDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(CarbonTypesDescriptorTest.class);
     }
     
-    public void setUp() {
-    	descriptor = new CarbonTypesDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(CarbonTypesDescriptor.class);
     }
 
     public void testButane() throws CDKException {

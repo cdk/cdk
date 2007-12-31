@@ -5,7 +5,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -27,8 +26,8 @@ public class ALOGPDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(ALOGPDescriptorTest.class);
     }
 
-    protected void setUp() throws CDKException {
-        descriptor = new ALOGPDescriptor();
+    protected void setUp() throws Exception {
+        setDescriptor(ALOGPDescriptor.class);
         hydrogenAdder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
     }
 

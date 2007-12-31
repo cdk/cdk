@@ -48,8 +48,8 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(HBondAcceptorCountDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new HBondAcceptorCountDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(HBondAcceptorCountDescriptor.class);
     }
 
     public void testHBondAcceptorCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {

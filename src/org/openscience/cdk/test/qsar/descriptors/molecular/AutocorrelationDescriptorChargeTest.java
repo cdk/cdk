@@ -25,8 +25,8 @@ public class AutocorrelationDescriptorChargeTest extends MolecularDescriptorTest
 		return new TestSuite(AutocorrelationDescriptorChargeTest.class);
 	}
 
-	public void setUp() {
-		descriptor = new AutocorrelationDescriptorCharge();
+	public void setUp() throws Exception {
+		setDescriptor(AutocorrelationDescriptorCharge.class);
 	}
 	
 	public void testcalculate_IAtomContainer() throws Exception {

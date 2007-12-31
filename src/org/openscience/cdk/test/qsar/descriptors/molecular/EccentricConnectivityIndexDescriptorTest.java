@@ -50,8 +50,8 @@ public class EccentricConnectivityIndexDescriptorTest extends MolecularDescripto
         return new TestSuite(EccentricConnectivityIndexDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new EccentricConnectivityIndexDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(EccentricConnectivityIndexDescriptor.class);
     }
 
     public void testEccentricConnectivityIndex() throws ClassNotFoundException, CDKException, java.lang.Exception {

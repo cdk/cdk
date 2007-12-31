@@ -47,8 +47,8 @@ public class AtomCountDescriptorTest extends MolecularDescriptorTest {
 		return new TestSuite(AtomCountDescriptorTest.class);
 	}
 	
-	public void setUp() {
-		descriptor = new AtomCountDescriptor();
+	public void setUp() throws Exception {
+		setDescriptor(AtomCountDescriptor.class);
 	}
     
 	public void testCarbonCount() throws ClassNotFoundException, CDKException, java.lang.Exception {

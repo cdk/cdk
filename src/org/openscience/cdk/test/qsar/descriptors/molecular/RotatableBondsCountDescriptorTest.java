@@ -48,8 +48,8 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(RotatableBondsCountDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new RotatableBondsCountDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(RotatableBondsCountDescriptor.class);
     }
 
     public void testRotatableBondsCount() throws ClassNotFoundException, CDKException, java.lang.Exception {

@@ -55,8 +55,8 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(PetitjeanShapeIndexDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new PetitjeanShapeIndexDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(PetitjeanShapeIndexDescriptor.class);
     }
 
     public void testPetitjeanShapeIndexDescriptor() throws ClassNotFoundException, CDKException, Exception {

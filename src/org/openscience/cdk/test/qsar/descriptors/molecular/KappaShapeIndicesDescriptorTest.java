@@ -49,8 +49,8 @@ public class KappaShapeIndicesDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(KappaShapeIndicesDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new KappaShapeIndicesDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(KappaShapeIndicesDescriptor.class);
     }
 	
     public void testKappaShapeIndicesDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {

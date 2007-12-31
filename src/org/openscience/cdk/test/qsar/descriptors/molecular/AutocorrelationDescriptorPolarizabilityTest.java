@@ -22,8 +22,8 @@ public class AutocorrelationDescriptorPolarizabilityTest extends MolecularDescri
 		super(name);
 	}
 	
-	public void setUp() {
-		descriptor = new AutocorrelationDescriptorPolarizability();
+	public void setUp() throws Exception {
+		setDescriptor(AutocorrelationDescriptorPolarizability.class);
 	}
 
 	public static Test suite() {

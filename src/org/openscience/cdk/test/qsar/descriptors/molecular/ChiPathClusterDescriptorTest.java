@@ -28,8 +28,8 @@ public class ChiPathClusterDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(ChiPathClusterDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new ChiPathClusterDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(ChiPathClusterDescriptor.class);
     }
 
    public void testDan64() throws CDKException {

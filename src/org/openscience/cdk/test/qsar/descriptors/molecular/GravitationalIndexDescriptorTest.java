@@ -50,8 +50,8 @@ public class GravitationalIndexDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(GravitationalIndexDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new GravitationalIndexDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(GravitationalIndexDescriptor.class);
     }
 
     public void testGravitationalIndex() throws ClassNotFoundException, CDKException, java.lang.Exception {

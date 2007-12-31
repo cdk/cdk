@@ -28,8 +28,8 @@ public class ChiClusterDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(ChiClusterDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new ChiClusterDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(ChiClusterDescriptor.class);
     }
 
     public void testDan64() throws CDKException {

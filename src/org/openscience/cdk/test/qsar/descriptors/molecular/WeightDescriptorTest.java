@@ -47,8 +47,8 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
 		return new TestSuite(WeightDescriptorTest.class);
 	}
     
-	public void setUp() {
-		descriptor = new WeightDescriptor();
+	public void setUp() throws Exception {
+		setDescriptor(WeightDescriptor.class);
 	}
 	
 	public void testWeightDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {

@@ -24,8 +24,8 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
 		return new TestSuite(LongestAliphaticChainDescriptorTest.class);
 	}
 
-    public void setUp() {
-    	descriptor = new LongestAliphaticChainDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(LongestAliphaticChainDescriptor.class);
     }
     
 	public void test1LongestAliphaticChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {

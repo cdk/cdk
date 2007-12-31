@@ -28,8 +28,8 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(ChiChainDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new ChiChainDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(ChiChainDescriptor.class);
     }
 
     public void testDan64() throws CDKException {

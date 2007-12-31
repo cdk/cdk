@@ -54,8 +54,8 @@ public class AromaticAtomsCountDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(AromaticAtomsCountDescriptorTest.class);
     }
     
-    public void setUp() {
-    	descriptor = new AromaticAtomsCountDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(AromaticAtomsCountDescriptor.class);
     }
 
     public void testAromaticAtomsCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {

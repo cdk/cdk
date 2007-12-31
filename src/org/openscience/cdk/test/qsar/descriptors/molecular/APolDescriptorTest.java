@@ -48,8 +48,8 @@ public class APolDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(APolDescriptorTest.class);
     }
 
-    protected void setUp() throws CDKException {
-        descriptor = new APolDescriptor();
+    protected void setUp() throws Exception {
+        setDescriptor(APolDescriptor.class);
     }
 
     public void testAPolDescriptorTest() throws ClassNotFoundException, CDKException, java.lang.Exception {

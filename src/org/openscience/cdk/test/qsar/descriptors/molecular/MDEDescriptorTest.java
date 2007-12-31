@@ -30,8 +30,8 @@ public class MDEDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(MDEDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new MDEDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(MDEDescriptor.class);
     }
 
     public void testMDE1() throws ClassNotFoundException, CDKException, Exception {

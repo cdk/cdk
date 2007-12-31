@@ -51,8 +51,8 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(BondCountDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new BondCountDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(BondCountDescriptor.class);
     }
 
     public void testSingleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {

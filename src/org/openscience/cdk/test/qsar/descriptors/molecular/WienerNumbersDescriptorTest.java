@@ -46,8 +46,8 @@ public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(WienerNumbersDescriptorTest.class);
     }
     
-    public void setUp() {
-    	descriptor = new WienerNumbersDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(WienerNumbersDescriptor.class);
     }
 
     public void testWienerNumbersDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {

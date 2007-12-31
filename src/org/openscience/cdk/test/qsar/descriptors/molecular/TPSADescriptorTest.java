@@ -27,7 +27,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
@@ -50,9 +49,9 @@ public class TPSADescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(TPSADescriptorTest.class);
     }
     
-    protected void setUp() throws CDKException {
+    protected void setUp() throws Exception {
         sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        descriptor = new TPSADescriptor();
+        setDescriptor(TPSADescriptor.class);
         Object[] params = {true};
         descriptor.setParameters(params);
     }

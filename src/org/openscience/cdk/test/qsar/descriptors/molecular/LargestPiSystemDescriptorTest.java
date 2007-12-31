@@ -23,8 +23,8 @@ public class LargestPiSystemDescriptorTest extends MolecularDescriptorTest {
 		return new TestSuite(LargestPiSystemDescriptorTest.class);
 	}
     
-    public void setUp() {
-    	descriptor = new LargestPiSystemDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(LargestPiSystemDescriptor.class);
     }
 	
 	public void test1LargestPiSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {

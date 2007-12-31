@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.test.qsar.descriptors;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.test.CDKTestCase;
@@ -39,12 +40,23 @@ public abstract class DescriptorTest extends CDKTestCase {
 		super(name);
 	}
 	
+	public void setDescriptor(Class descriptorClass) throws Exception {
+		if (descriptor == null) {
+			Object descriptor = (Object)descriptorClass.newInstance();
+			if (!(descriptor instanceof IDescriptor)) {
+				throw new CDKException("The passed descriptor class must be a IDescriptor");
+			}
+			this.descriptor = (IDescriptor)descriptor;
+		}
+	}
+	
 	/**
 	 * Makes sure that the extending class has set the super.descriptor.
 	 * Each extending class should have this bit of code (JUnit3 formalism):
 	 * <pre>
 	 * public void setUp() {
-	 *   super.descriptor = new SomeDescriptor();
+	 *   // Pass a Class, not an Object!
+	 *   setDescriptor(SomeDescriptor.class);
 	 * }
 	 * 
 	 * <p>The unit tests in the extending class may use this instance, but

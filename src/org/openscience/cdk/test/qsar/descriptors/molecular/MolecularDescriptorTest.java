@@ -23,6 +23,7 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -47,6 +48,17 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
 		super(name);
 	}
 	
+	public void setDescriptor(Class descriptorClass) throws Exception {
+		if (descriptor == null) {
+			Object descriptor = (Object)descriptorClass.newInstance();
+			if (!(descriptor instanceof IMolecularDescriptor)) {
+				throw new CDKException("The passed descriptor class must be a IMolecularDescriptor");
+			}
+			this.descriptor = (IMolecularDescriptor)descriptor;
+		}
+		super.setDescriptor(descriptorClass);
+	}
+
     public void testCalculate_IAtomContainer() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         

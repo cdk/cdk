@@ -58,8 +58,8 @@ public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(WeightedPathDescriptorTest.class);
     }
     
-    public void setUp() {
-    	descriptor = new WeightedPathDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(WeightedPathDescriptor.class);
     }
 
     public void testWeightedPathDescriptor() throws ClassNotFoundException, CDKException, Exception {

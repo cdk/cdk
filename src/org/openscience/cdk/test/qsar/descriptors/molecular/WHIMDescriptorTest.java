@@ -51,8 +51,8 @@ public class WHIMDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(WHIMDescriptorTest.class);
     }
     
-    public void setUp() {
-    	descriptor = new WHIMDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(WHIMDescriptor.class);
     }
 
     public void testWHIM() throws ClassNotFoundException, CDKException, java.lang.Exception {

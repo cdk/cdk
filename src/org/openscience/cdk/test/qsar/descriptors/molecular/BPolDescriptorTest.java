@@ -48,8 +48,8 @@ public class BPolDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(BPolDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new BPolDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(BPolDescriptor.class);
     }
 
     public void testBPolDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {

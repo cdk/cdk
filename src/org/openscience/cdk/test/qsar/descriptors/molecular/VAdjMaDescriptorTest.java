@@ -23,7 +23,6 @@ package org.openscience.cdk.test.qsar.descriptors.molecular;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptor;
 
 /**
@@ -37,8 +36,8 @@ public class VAdjMaDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(VAdjMaDescriptorTest.class);
     }
     
-    protected void setUp() throws CDKException {
-        descriptor = new TPSADescriptor();
+    protected void setUp() throws Exception {
+        setDescriptor(TPSADescriptor.class);
     }
 
     public void testCalculate_IAtomContainer() {

@@ -51,8 +51,8 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(BCUTDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new BCUTDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(BCUTDescriptor.class);
     }
 
     public void testBCUT() throws Exception {

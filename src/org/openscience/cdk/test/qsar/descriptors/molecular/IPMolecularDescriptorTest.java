@@ -59,8 +59,8 @@ public class IPMolecularDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(IPMolecularDescriptorTest.class);
     }
 
-    public void setUp() {
-    	super.descriptor = new IPMolecularDescriptor();
+    public void setUp() throws Exception {
+    	super.setDescriptor(IPMolecularDescriptor.class);
     }
 	
     /**

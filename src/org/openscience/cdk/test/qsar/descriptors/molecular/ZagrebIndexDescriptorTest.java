@@ -48,8 +48,8 @@ public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(ZagrebIndexDescriptorTest.class);
     }
     
-    public void setUp() {
-    	descriptor = new ZagrebIndexDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(ZagrebIndexDescriptor.class);
     }
 
     public void testZagrebIndexDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {

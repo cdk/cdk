@@ -48,8 +48,8 @@ public class PetitjeanNumberDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(PetitjeanNumberDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new PetitjeanNumberDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(PetitjeanNumberDescriptor.class);
     }
 
     public void testPetitjeanNumberDescriptor() throws java.lang.Exception {

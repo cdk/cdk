@@ -48,15 +48,15 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(XLogPDescriptorTest.class);
     }
     
-    public void setUp() {
-    	descriptor = new XLogPDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(XLogPDescriptor.class);
     }
 
 //	public void testXLogPDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 //	
 //	// each test is for one or more atom types:
 //	// 1. Test for cumarine
-//	IMolecularDescriptor descriptor = new XLogPDescriptor();
+//	IMolecularDescriptor setDescriptor(XLogPDescriptor.class);
 //	Object[] params = {new Boolean(true)};
 //	descriptor.setParameters(params);
 //	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

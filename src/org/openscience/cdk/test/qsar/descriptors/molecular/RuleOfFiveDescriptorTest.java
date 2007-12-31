@@ -48,8 +48,8 @@ public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(RuleOfFiveDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new RuleOfFiveDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(RuleOfFiveDescriptor.class);
     }
 
     public void testRuleOfFiveDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {

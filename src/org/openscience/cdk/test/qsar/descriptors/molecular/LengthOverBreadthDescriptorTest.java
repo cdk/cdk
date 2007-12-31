@@ -31,8 +31,8 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         return new TestSuite(LengthOverBreadthDescriptorTest.class);
     }
 
-    public void setUp() {
-    	descriptor = new LengthOverBreadthDescriptor();
+    public void setUp() throws Exception {
+    	setDescriptor(LengthOverBreadthDescriptor.class);
     }
 
     public void testLOBDescriptorCholesterol() throws ClassNotFoundException, CDKException, Exception {
