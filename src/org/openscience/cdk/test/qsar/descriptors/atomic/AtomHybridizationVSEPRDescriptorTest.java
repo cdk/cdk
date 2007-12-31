@@ -54,6 +54,10 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         return new TestSuite(AtomHybridizationVSEPRDescriptorTest.class);
     }
 
+    public void setUp() throws Exception {
+    	setDescriptor(AtomHybridizationVSEPRDescriptor.class);
+    }
+    
     /**
 	 *  A unit test for JUnit with O-C
 	 */

@@ -41,6 +41,10 @@ public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest
 	
 	public  ProtonTotalPartialChargeDescriptorTest() {}
     
+    public void setUp() throws Exception {
+    	setDescriptor(ProtonTotalPartialChargeDescriptor.class);
+    }
+    
 	public static Test suite() {
 		return new TestSuite(ProtonTotalPartialChargeDescriptorTest.class);
 	}

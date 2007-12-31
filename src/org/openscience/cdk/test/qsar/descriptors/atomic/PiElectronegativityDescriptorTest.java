@@ -55,6 +55,10 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		return new TestSuite(PiElectronegativityDescriptorTest.class);
 	}
     
+    public void setUp() throws Exception {
+    	setDescriptor(PiElectronegativityDescriptor.class);
+    }
+    
 	/**
 	 *  A unit test for JUnit with Methyl Fluoride
 	 */

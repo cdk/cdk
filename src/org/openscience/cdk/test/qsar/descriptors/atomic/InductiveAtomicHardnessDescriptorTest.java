@@ -43,6 +43,10 @@ public class InductiveAtomicHardnessDescriptorTest extends AtomicDescriptorTest 
 	
 	public  InductiveAtomicHardnessDescriptorTest() {}
     
+    public void setUp() throws Exception {
+    	setDescriptor(InductiveAtomicHardnessDescriptor.class);
+    }
+    
 	public static Test suite() {
 		return new TestSuite(InductiveAtomicHardnessDescriptorTest.class);
 	}

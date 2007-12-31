@@ -44,6 +44,10 @@ public class IsProtonInConjugatedPiSystemDescriptorTest extends AtomicDescriptor
 	
 	public  IsProtonInConjugatedPiSystemDescriptorTest() {}
     
+    public void setUp() throws Exception {
+    	setDescriptor(IsProtonInConjugatedPiSystemDescriptor.class);
+    }
+    
 	public static Test suite() {
 		return new TestSuite(IsProtonInConjugatedPiSystemDescriptorTest.class);
 	}

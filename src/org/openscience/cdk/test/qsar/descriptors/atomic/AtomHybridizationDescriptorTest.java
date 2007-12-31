@@ -48,6 +48,10 @@ public class AtomHybridizationDescriptorTest extends AtomicDescriptorTest {
     public AtomHybridizationDescriptorTest() {
     }
 
+    public void setUp() throws Exception {
+    	setDescriptor(AtomHybridizationDescriptor.class);
+    }
+    
     public static Test suite() {
         return new TestSuite(AtomHybridizationDescriptorTest.class);
     }

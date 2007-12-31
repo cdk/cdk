@@ -47,6 +47,7 @@ public class PartialTChargePEOEDescriptorTest extends CDKTestCase {
 	 *
 	 */
 	public  PartialTChargePEOEDescriptorTest() {}
+
 	/**
 	 *  A unit test suite for JUnit
 	 *

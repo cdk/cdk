@@ -25,6 +25,10 @@ public class RDFProtonDescriptor_GSRTest extends AtomicDescriptorTest {
 	public RDFProtonDescriptor_GSRTest() {
     }
 
+    public void setUp() throws Exception {
+    	setDescriptor(RDFProtonDescriptor_GSR.class);
+    }
+    
 	public static Test suite() {
 		return new TestSuite(RDFProtonDescriptor_GSRTest.class);
 	}

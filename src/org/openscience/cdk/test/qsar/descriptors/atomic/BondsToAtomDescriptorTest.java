@@ -42,6 +42,10 @@ public class BondsToAtomDescriptorTest extends AtomicDescriptorTest {
 
     public  BondsToAtomDescriptorTest() {}
 
+    public void setUp() throws Exception {
+    	setDescriptor(BondsToAtomDescriptor.class);
+    }
+    
     public static Test suite() {
         return new TestSuite(BondsToAtomDescriptorTest.class);
     }

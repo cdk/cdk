@@ -43,6 +43,10 @@ public class IsProtonInAromaticSystemDescriptorTest extends AtomicDescriptorTest
 	
 	public  IsProtonInAromaticSystemDescriptorTest() {}
     
+    public void setUp() throws Exception {
+    	setDescriptor(IsProtonInAromaticSystemDescriptor.class);
+    }
+    
 	public static Test suite() {
 		return new TestSuite(IsProtonInAromaticSystemDescriptorTest.class);
 	}

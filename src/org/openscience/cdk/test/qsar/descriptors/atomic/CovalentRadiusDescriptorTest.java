@@ -43,6 +43,11 @@ public class CovalentRadiusDescriptorTest extends AtomicDescriptorTest {
 	 *
 	 */
 	public  CovalentRadiusDescriptorTest() {}
+
+    public void setUp() throws Exception {
+    	setDescriptor(CovalentRadiusDescriptor.class);
+    }
+    
 	/**
 	 *  A unit test suite for JUnit
 	 *

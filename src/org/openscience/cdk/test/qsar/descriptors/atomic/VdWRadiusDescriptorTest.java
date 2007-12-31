@@ -41,6 +41,10 @@ public class VdWRadiusDescriptorTest extends AtomicDescriptorTest {
 	
 	public  VdWRadiusDescriptorTest() {}
     
+    public void setUp() throws Exception {
+    	setDescriptor(VdWRadiusDescriptor.class);
+    }
+    
 	public static Test suite() {
 		return new TestSuite(VdWRadiusDescriptorTest.class);
 	}

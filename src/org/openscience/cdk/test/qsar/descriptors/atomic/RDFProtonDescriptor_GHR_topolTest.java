@@ -25,6 +25,10 @@ public class RDFProtonDescriptor_GHR_topolTest extends AtomicDescriptorTest {
 	public RDFProtonDescriptor_GHR_topolTest() {
     }
 
+    public void setUp() throws Exception {
+    	setDescriptor(RDFProtonDescriptor_GHR_topol.class);
+    }
+    
 	public static Test suite() {
 		return new TestSuite(RDFProtonDescriptor_GHR_topolTest.class);
 	}

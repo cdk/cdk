@@ -43,6 +43,10 @@ public class InductiveAtomicSoftnessDescriptorTest extends AtomicDescriptorTest 
 	
 	public  InductiveAtomicSoftnessDescriptorTest() {}
     
+    public void setUp() throws Exception {
+    	setDescriptor(InductiveAtomicSoftnessDescriptor.class);
+    }
+    
 	public static Test suite() {
 		return new TestSuite(InductiveAtomicSoftnessDescriptorTest.class);
 	}

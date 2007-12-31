@@ -56,6 +56,10 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 	 */
 	public  PartialTChargeMMFF94DescriptorTest() {}
 	
+    public void setUp() throws Exception {
+    	setDescriptor(PartialTChargeMMFF94Descriptor.class);
+    }
+    
 	/**
 	 *  A unit test suite for JUnit
 	 *

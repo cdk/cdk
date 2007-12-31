@@ -44,6 +44,10 @@ public class AtomValenceDescriptorTest extends AtomicDescriptorTest {
 
     public  AtomValenceDescriptorTest() {}
 
+    public void setUp() throws Exception {
+    	setDescriptor(AtomValenceDescriptor.class);
+    }
+    
     public static Test suite() {
         return new TestSuite(AtomValenceDescriptorTest.class);
     }

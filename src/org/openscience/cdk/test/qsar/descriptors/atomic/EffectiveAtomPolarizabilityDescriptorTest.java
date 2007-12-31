@@ -43,7 +43,11 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 	
 	public  EffectiveAtomPolarizabilityDescriptorTest() {}
     
-	public static Test suite() {
+    public void setUp() throws Exception {
+    	setDescriptor(EffectiveAtomPolarizabilityDescriptor.class);
+    }
+    
+    public static Test suite() {
 		return new TestSuite(EffectiveAtomPolarizabilityDescriptorTest.class);
 	}
 	/**

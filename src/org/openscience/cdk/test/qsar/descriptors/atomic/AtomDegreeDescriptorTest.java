@@ -47,6 +47,10 @@ public class AtomDegreeDescriptorTest extends AtomicDescriptorTest {
 		return new TestSuite(AtomDegreeDescriptorTest.class);
 	}
     
+    public void setUp() throws Exception {
+    	setDescriptor(AtomDegreeDescriptor.class);
+    }
+    
 	public void testAtomDegreeDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IAtomicDescriptor descriptor  = new AtomDegreeDescriptor();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

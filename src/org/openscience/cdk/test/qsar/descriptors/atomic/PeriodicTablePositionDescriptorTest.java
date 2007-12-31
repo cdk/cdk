@@ -47,6 +47,10 @@ public class PeriodicTablePositionDescriptorTest extends AtomicDescriptorTest {
 		return new TestSuite(PeriodicTablePositionDescriptorTest.class);
 	}
     
+    public void setUp() throws Exception {
+    	setDescriptor(PeriodicTablePositionDescriptor.class);
+    }
+    
 	public void testPeriodicTablePositionDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IAtomicDescriptor descriptor  = new PeriodicTablePositionDescriptor();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

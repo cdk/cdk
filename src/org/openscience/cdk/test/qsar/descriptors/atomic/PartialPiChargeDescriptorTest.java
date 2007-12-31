@@ -47,7 +47,12 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 	 *
 	 */
 	public  PartialPiChargeDescriptorTest() {}
-	/**
+
+    public void setUp() throws Exception {
+    	setDescriptor(PartialPiChargeDescriptor.class);
+    }
+    
+    /**
 	 *  A unit test suite for JUnit
 	 *
 	 *@return    The test suite

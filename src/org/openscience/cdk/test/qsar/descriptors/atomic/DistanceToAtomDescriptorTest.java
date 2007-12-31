@@ -45,6 +45,10 @@ public class DistanceToAtomDescriptorTest extends AtomicDescriptorTest {
 	
 	public  DistanceToAtomDescriptorTest() {}
     
+    public void setUp() throws Exception {
+    	setDescriptor(DistanceToAtomDescriptor.class);
+    }
+    
 	public static Test suite() {
 		return new TestSuite(DistanceToAtomDescriptorTest.class);
 	}

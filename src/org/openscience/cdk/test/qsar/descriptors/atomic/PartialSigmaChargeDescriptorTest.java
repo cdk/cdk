@@ -29,7 +29,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -40,8 +39,6 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @cdk.module test-qsaratomic
  */
 public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
-	
-	private IAtomicDescriptor descriptor = null;
 	
 	/**
 	 *  Constructor for the PartialSigmaChargeDescriptorTest object
@@ -58,8 +55,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		return new TestSuite(PartialSigmaChargeDescriptorTest.class);
 	}
 	
-	public void setUp() throws CDKException {
-		descriptor = new PartialSigmaChargeDescriptor();
+	public void setUp() throws Exception {
+		setDescriptor(PartialSigmaChargeDescriptor.class);
 		Integer[] params = new Integer[1];
 		params[0] = new Integer(6);
         descriptor.setParameters(params);
