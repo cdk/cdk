@@ -27,22 +27,12 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.*;
+
+import java.util.*;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -249,7 +239,7 @@ public class AtomContainerManipulator {
         return hCount;
 	}
 
-    public static List getAllIDs(IAtomContainer mol) {
+    public static List<String> getAllIDs(IAtomContainer mol) {
     	List<String> idList = new ArrayList<String>();
         if (mol != null) {
             if (mol.getID() != null) idList.add(mol.getID());
@@ -344,6 +334,7 @@ public class AtomContainerManipulator {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+                assert clone != null;
                 clone.setAtoms(new IAtom[]{(IAtom) map.get(bond.getAtom(0)), (IAtom) map.get(bond.getAtom(1))});
                 mol.addBond(clone);
             }
