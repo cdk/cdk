@@ -27,15 +27,10 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.interfaces.*;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 
 /**
  * @cdk.module standard
@@ -89,8 +84,8 @@ public class MoleculeSetManipulator {
 		return AtomContainerSetManipulator.getTotalHydrogenCount(set);
 	}
 	
-    public static List getAllIDs(IMoleculeSet set) {
-    	List list = new ArrayList();
+    public static List<String> getAllIDs(IMoleculeSet set) {
+    	List<String> list = new ArrayList<String>();
     	// the ID is set in AtomContainerSetManipulator.getAllIDs()
     	list.addAll(AtomContainerSetManipulator.getAllIDs(set));
 		return list;

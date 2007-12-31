@@ -27,18 +27,13 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 
 /**
  * @cdk.module standard
@@ -151,8 +146,8 @@ public class AtomContainerSetManipulator {
 		return hCount;
 	}
 	
-    public static List getAllIDs(IAtomContainerSet set) {
-        List idList = new ArrayList();
+    public static List<String> getAllIDs(IAtomContainerSet set) {
+        List<String> idList = new ArrayList<String>();
         if (set != null) {
             if (set.getID() != null) idList.add(set.getID());
             for (int i = 0; i < set.getAtomContainerCount(); i++) {
