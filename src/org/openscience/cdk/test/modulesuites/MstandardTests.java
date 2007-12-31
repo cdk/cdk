@@ -88,7 +88,7 @@ public class MstandardTests {
         // make sure to check it agains src/test-standard.files
         // before each release!
         suite.addTest(new JUnit4TestAdapter(AromaticityCalculatorTest.class));
-        suite.addTest(DictRefTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DictRefTest.class));
         suite.addTest(CrystalGeometryToolsTest.suite());
         suite.addTest(GeometryToolsTest.suite());
         suite.addTest(MinimalPathIteratorTest.suite());
@@ -127,8 +127,8 @@ public class MstandardTests {
         suite.addTest(SymbolsTest.suite());
         suite.addTest(GeometryToolsInternalCoordinatesTest.suite());
         suite.addTest(BondToolsTest.suite());
-        suite.addTest(UnsupportedChemObjectExceptionTest.suite());
-        suite.addTest(InvalidSmilesExceptionTest.suite());
+        suite.addTest(new JUnit4TestAdapter(UnsupportedChemObjectExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(InvalidSmilesExceptionTest.class));
         suite.addTest(AminoAcidManipulatorTest.suite());
         suite.addTest(AtomTypeManipulatorTest.suite());
         suite.addTest(ChemFileManipulatorTest.suite());

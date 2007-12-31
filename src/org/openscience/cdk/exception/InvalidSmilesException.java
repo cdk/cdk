@@ -28,10 +28,13 @@
  */
 package org.openscience.cdk.exception;
 
+import org.openscience.cdk.annotations.TestClass;
+
 /**
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.exception.InvalidSmilesExceptionTest")
 public class InvalidSmilesException extends CDKException {
 
     private static final long serialVersionUID = 1932255464874201495L;

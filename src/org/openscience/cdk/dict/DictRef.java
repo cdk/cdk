@@ -28,6 +28,9 @@
  */
 package org.openscience.cdk.dict;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * Object that can be used as key in IChemObject.setProperty(key, value) to
  * denote that this property is a dictionary reference for this IChemObject.
@@ -37,22 +40,25 @@ package org.openscience.cdk.dict;
  * @cdk.module  standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.dict.DictRefTest")
 public class DictRef implements java.io.Serializable, Cloneable  {
 
     private static final long serialVersionUID = -3691244168587563625L;
     
     String type;
     String dictRef;
-    
+        
     public DictRef(String type, String dictRef) {
         this.type = type;
         this.dictRef = dictRef;
     }
-    
+
+    @TestMethod("testGetDictRef")
     public String getDictRef() {
         return dictRef;
     }
 
+    @TestMethod("testGetType")
     public String getType() {
         return type;
     }

@@ -25,11 +25,10 @@
 
 package org.openscience.cdk.test.dict;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.dict.DictRef;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * Checks the functionality of the DictRef class.
@@ -38,42 +37,40 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.dict.DictRef
  */
-public class DictRefTest extends CDKTestCase {
+public class DictRefTest extends NewCDKTestCase {
 
-    public DictRefTest(String name) {
-        super(name);
+    public DictRefTest() {
+        super();
     }
 
-    public void setUp() {}
-
-    public static Test suite() {
-        return new TestSuite(DictRefTest.class);
-    }
-    
     // test constructors
-    
+
+    @Test
     public void testDictRef_String_String() {
     	DictRef dictRef = new DictRef("bar:foo", "bla");
-    	assertNotNull(dictRef);
+    	Assert.assertNotNull(dictRef);
     }
-    
+
+    @Test
     public void testGetType() {
     	DictRef dictRef = new DictRef("bar:foo", "bla");
-    	assertEquals("bar:foo", dictRef.getType());
+    	Assert.assertEquals("bar:foo", dictRef.getType());
     }
-    
+
+    @Test
     public void testGetDictRef() {
     	DictRef dictRef = new DictRef("bar:foo", "bla");
-    	assertEquals("bla", dictRef.getDictRef());
+    	Assert.assertEquals("bla", dictRef.getDictRef());
     }
     
     /** Test for RFC #9 */
+    @Test
     public void testToString() {
     	DictRef dictRef = new DictRef("bar:foo", "bla");
         String description = dictRef.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue(description.charAt(i) != '\n');
-            assertTrue(description.charAt(i) != '\r');
+            Assert.assertTrue(description.charAt(i) != '\n');
+            Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
 }
