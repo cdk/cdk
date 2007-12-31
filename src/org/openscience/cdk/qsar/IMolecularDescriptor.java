@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) $
- * $Revision: 5855 $
+/* $Revision: 5855 $ $Author: egonw $ $Date: 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) $
  * 
- * Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -28,7 +25,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
- * Classes that implement this interface are QSAR descriptor calculators.
+ * Classes that implement this interface are QSAR descriptor calculators
+ * for <code>IMolecule</code> objects.
  *
  * @cdk.module qsar
  * @cdk.svnrev  $Revision: 9162 $
@@ -49,11 +47,15 @@ public interface IMolecularDescriptor extends IDescriptor {
 
     /**
      * Returns the specific type of the DescriptorResult object.
-     * <p/>
      * The return value from this method really indicates what type of result will
      * be obtained from the {@link DescriptorValue} object. Note that the same result
      * can be achieved by interrogating the {@link DescriptorValue} object; this method
      * allows you to do the same thing, without actually calculating the descriptor.
+     * 
+     * <p>Additionally, the length indicated by the result type must match the actual
+     * length of a descriptor calculated with the current parameters. Typically, the
+     * length of array result types vary with the values of the parameters. See
+     * {@link IDescriptor} for more details.  
      *
      * @return an object that implements the {@link IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link DescriptorValue} object
