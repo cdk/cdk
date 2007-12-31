@@ -109,7 +109,7 @@ public class GraphOnlyFingerprinterTest extends NewCDKTestCase {
     	Molecule structure = null;
     	if (molecule != null) {
     		IChemObjectReader reader = new MDLV2000Reader(new StringReader(molecule));
-    		assertNotNull("Could not create reader", reader);
+    		Assert.assertNotNull("Could not create reader", reader);
     		if (reader.accepts(Molecule.class)) {
     			structure = (Molecule) reader.read(new Molecule());
     		}

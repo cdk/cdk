@@ -451,7 +451,7 @@ public class FingerprinterTest extends NewCDKTestCase
 		System.err.println(bi.toString());
 		bi=bi.add(BigInteger.valueOf((long) Math.pow(2, 0)));
 		System.err.println(bi.toString());
-		FingerprinterTest fpt = new FingerprinterTest("FingerprinterTest");
+		FingerprinterTest fpt = new FingerprinterTest();
 		fpt.standAlone = true;
 		//fpt.testFingerprinter();
 		//fpt.testFingerprinterArguments();
