@@ -24,6 +24,8 @@
 package org.openscience.cdk.atomtype;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.*;
 
 /**
@@ -36,7 +38,7 @@ import org.openscience.cdk.interfaces.*;
  */
 
 	
-
+@TestClass("org.openscience.cdk.test.atomtype.EStateAtomTypeMatcherTest")
 public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 
 	IRingSet ringSet = null;
@@ -46,7 +48,8 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 		ringSet = rs;
 	}
 
-	public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
+    @TestMethod("testSP3Atoms,testNaCl,testNaphthalene,testSP2Atoms,testSPAtoms")
+    public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
 	{
 
 		IAtomType atomType = null;
@@ -149,7 +152,8 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 		return atomType;
 	}
 
-	public static boolean inSameAromaticRing(IAtomContainer m, IAtom atom1,
+    @TestMethod("testAromaticAtoms")
+    public static boolean inSameAromaticRing(IAtomContainer m, IAtom atom1,
 			IAtom atom2, IRingSet rs)
 	{
 		if (rs == null) 
@@ -166,7 +170,7 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 		return false;
 	}
 
-
+    @TestMethod("testAromaticAtoms")
 	static boolean  isAromaticRing(IRing ring)
 	{
 		for (int i = 0; i < ring.getAtomCount(); i++)

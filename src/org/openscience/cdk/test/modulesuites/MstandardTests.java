@@ -163,7 +163,7 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(PrimesTest.class));
         suite.addTest(new JUnit4TestAdapter(RandomNumbersToolTest.class));
         suite.addTest(InvPairTest.suite());
-        suite.addTest(EStateAtomTypeMatcherTest.suite());
+        suite.addTest(new JUnit4TestAdapter(EStateAtomTypeMatcherTest.class));
         suite.addTest(AtomContainerComparatorTest.suite());
         suite.addTest(new JUnit4TestAdapter(CDKHueckelAromaticityDetectorTest.class));
 
