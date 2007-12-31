@@ -154,6 +154,8 @@ public class ReactionManipulator {
     /**
      * Returns a new Reaction object which is the reverse of the given
      * Reaction.
+     * @param reaction the reaction being considered
+     * @return the reverse reaction
      */
     @TestMethod("testReverse_IReaction")
     public static IReaction reverse(IReaction reaction) {
@@ -180,6 +182,8 @@ public class ReactionManipulator {
     
     /**
      * Returns all the AtomContainer's of a Reaction.
+     * @param reaction The reaction being considered
+     * @return a list of the IAtomContainer objects comprising the reaction
      */
     @TestMethod("testGetAllAtomContainers_IReaction")
     public static List getAllAtomContainers(IReaction reaction) {
@@ -190,16 +194,16 @@ public class ReactionManipulator {
 
     @TestMethod("testGetAllIDs_IReaction")
     public static Vector getAllIDs(IReaction reaction) {
-        Vector idList = new Vector();
+        Vector<String> idList = new Vector<String>();
         if (reaction.getID() != null) idList.addElement(reaction.getID());
         IMoleculeSet reactants = reaction.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
-            IMolecule mol = reactants.getMolecule(i);;
+            IMolecule mol = reactants.getMolecule(i);
             idList.addAll(AtomContainerManipulator.getAllIDs(mol));
         }
         IMoleculeSet products = reaction.getProducts();
         for (int i=0; i<products.getAtomContainerCount(); i++) {
-            IMolecule mol = products.getMolecule(i);;
+            IMolecule mol = products.getMolecule(i);
             idList.addAll(AtomContainerManipulator.getAllIDs(mol));
         }
         return idList;
@@ -241,7 +245,7 @@ public class ReactionManipulator {
 
     @TestMethod("testGetAllChemObjects_IReactionSet")
     public static List getAllChemObjects(IReaction reaction) {
-        ArrayList list = new ArrayList();
+        ArrayList<IChemObject> list = new ArrayList<IChemObject>();
         list.add(reaction);
         IMoleculeSet reactants = reaction.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
