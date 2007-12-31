@@ -24,13 +24,8 @@
  */
 package org.openscience.cdk.test.fingerprint;
 
-import java.io.InputStream;
-import java.math.BigInteger;
-import java.util.BitSet;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
@@ -43,46 +38,46 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.InputStream;
+import java.math.BigInteger;
+import java.util.BitSet;
 
 /**
  * @cdk.module test-standard
  */
-public class FingerprinterTest extends CDKTestCase
+public class FingerprinterTest extends NewCDKTestCase
 {
 	
 	boolean standAlone = false;
 	private static LoggingTool logger = new LoggingTool(FingerprinterTest.class);
 	
-	public FingerprinterTest(String name)
+	public FingerprinterTest()
 	{
-		super(name);
+		super();
 	}
 
-	
-	public static Test suite() {
-		return new TestSuite(FingerprinterTest.class);
-	}
 
-	public void testRegression() throws Exception {
+	@Test public void testRegression() throws Exception {
 		IMolecule mol1 = MoleculeFactory.makeIndole();
 		IMolecule mol2 = MoleculeFactory.makePyrrole();
 		Fingerprinter fingerprinter = new Fingerprinter();
 		BitSet bs1 = fingerprinter.getFingerprint(mol1);
-		assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 32, bs1.cardinality());
+		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 32, bs1.cardinality());
 		BitSet bs2 = fingerprinter.getFingerprint(mol2);
-		assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 13, bs2.cardinality());
+		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 13, bs2.cardinality());
 	}
 	
 	/**
 	 * @cdk.bug 706786
 	 */
-	public void testBug706786() throws java.lang.Exception
+	@Test public void testBug706786() throws java.lang.Exception
 	{
 		Molecule superstructure = null;
 		Molecule substructure = null;
@@ -115,13 +110,13 @@ public class FingerprinterTest extends CDKTestCase
 			System.out.println("BitString substructure: " + subBS);
 			System.out.println("isSubset? " + isSubset);
 		}
-		assertTrue(isSubset);
+		Assert.assertTrue(isSubset);
 	}
 	
 	/**
 	 * @cdk.bug 853254
 	 */
-	public void testBug853254() throws java.lang.Exception
+	@Test public void testBug853254() throws java.lang.Exception
 	{
 		Molecule superstructure = null;
 		Molecule substructure = null;
@@ -157,7 +152,7 @@ public class FingerprinterTest extends CDKTestCase
 			System.out.println("isSubset? " + isSubset);
 		}
 		//Fingerprinter.listDifferences(superBS, subBS);
-		assertTrue(isSubset);
+		Assert.assertTrue(isSubset);
 	}
 	
 	
@@ -167,7 +162,7 @@ public class FingerprinterTest extends CDKTestCase
 	 * 
 	 * @cdk.bug 771485
 	 */
-	public void testBug771485() throws java.lang.Exception
+	@Test public void testBug771485() throws java.lang.Exception
 	{
 		Molecule structure1 = null;
 		Molecule structure2 = null;
@@ -202,7 +197,7 @@ public class FingerprinterTest extends CDKTestCase
 			System.out.println("BitString 2: " + subBS);
 			System.out.println("isSubset? " + isSubset);
 		}
-		assertTrue(isSubset);
+		Assert.assertTrue(isSubset);
 	}
 
 	/**
@@ -210,7 +205,7 @@ public class FingerprinterTest extends CDKTestCase
 	 * 
 	 * @cdk.bug 934819
 	 */
-	public void testBug934819() throws java.lang.Exception
+	@Test public void testBug934819() throws java.lang.Exception
 	{
 		Molecule superstructure = null;
 		Molecule substructure = null;
@@ -245,7 +240,7 @@ public class FingerprinterTest extends CDKTestCase
 			logger.debug("BitString 2: " + subBS);
 			logger.debug("isSubset? " + isSubset);
 		}
-		assertTrue(isSubset);
+		Assert.assertTrue(isSubset);
 	}
 
 
@@ -255,7 +250,7 @@ public class FingerprinterTest extends CDKTestCase
 	 * @cdk.bug 931608
 	 * @cdk.bug 934819
 	 */
-	public void testBug931608() throws java.lang.Exception
+	@Test public void testBug931608() throws java.lang.Exception
 	{
 		Molecule structure1 = null;
 		Molecule structure2 = null;
@@ -294,86 +289,87 @@ public class FingerprinterTest extends CDKTestCase
 			logger.debug("differing bits: " + bs1);
 			logger.debug("number of differing bits: " + cardinality);
 		}
-		assertEquals(0, cardinality);
+		Assert.assertEquals(0, cardinality);
 	}
 
-	public void testGetSize() throws java.lang.Exception {
+	@Test public void testGetSize() throws java.lang.Exception {
 		IFingerprinter fingerprinter = new Fingerprinter(512);
-		assertNotNull(fingerprinter);
-		assertEquals(512, fingerprinter.getSize());
+		Assert.assertNotNull(fingerprinter);
+		Assert.assertEquals(512, fingerprinter.getSize());
 	}
 
-	public void testGetSearchDepth() throws java.lang.Exception {
+	@Test public void testGetSearchDepth() throws java.lang.Exception {
 		Fingerprinter fingerprinter = new Fingerprinter(512,3);
-		assertNotNull(fingerprinter);
-		assertEquals(3, fingerprinter.getSearchDepth());
+		Assert.assertNotNull(fingerprinter);
+		Assert.assertEquals(3, fingerprinter.getSearchDepth());
 	}
 
-	public void testGetFingerprint_IAtomContainer() throws java.lang.Exception
+	@Test public void testGetFingerprint_IAtomContainer() throws java.lang.Exception
 	{
 		Fingerprinter fingerprinter = new Fingerprinter();
 		
 		Molecule mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
-		assertNotNull(bs);
-		assertEquals(fingerprinter.getSize(), bs.size());
+		Assert.assertNotNull(bs);
+		Assert.assertEquals(fingerprinter.getSize(), bs.size());
 	}
 	
-	public void testFingerprinter() throws java.lang.Exception
+	@Test public void testFingerprinter() throws java.lang.Exception
 	{
 		Fingerprinter fingerprinter = new Fingerprinter();
-		assertNotNull(fingerprinter);
+		Assert.assertNotNull(fingerprinter);
 		
 		Molecule mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
-		assertTrue(FingerprinterTool.isSubset(bs, bs1));
+		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 	
-	public void testFingerprinter_int() throws java.lang.Exception
+	@Test public void testFingerprinter_int() throws java.lang.Exception
 	{
 		Fingerprinter fingerprinter = new Fingerprinter(512);
-		assertNotNull(fingerprinter);
+		Assert.assertNotNull(fingerprinter);
 		
 		Molecule mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
-		assertTrue(FingerprinterTool.isSubset(bs, bs1));
+		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 	
-	public void testFingerprinter_int_int() throws java.lang.Exception
+	@Test public void testFingerprinter_int_int() throws java.lang.Exception
 	{
 		Fingerprinter fingerprinter = new Fingerprinter(1024,7);
-		assertNotNull(fingerprinter);
+		Assert.assertNotNull(fingerprinter);
 		
 		Molecule mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
-		assertTrue(FingerprinterTool.isSubset(bs, bs1));
+		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 	
 	/**
 	 * @cdk.bug 1851202
 	 */
-	public void testBug1851202() throws Exception {
+	@Test
+    public void testBug1851202() throws Exception {
         String filename1 = "data/mdl/0002.stg01.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
         MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins1, Mode.STRICT);
         IReaction reaction = (IReaction)reader.read(new Reaction());
-        assertNotNull(reaction);
+        Assert.assertNotNull(reaction);
 
         IAtomContainer reactant = reaction.getReactants().getAtomContainer(0);
         IAtomContainer product = reaction.getProducts().getAtomContainer(0);
         
         Fingerprinter fingerprinter = new Fingerprinter(64*26,8);
         BitSet bs1 = fingerprinter.getFingerprint(reactant);
-        assertNotNull(bs1);
+        Assert.assertNotNull(bs1);
         BitSet bs2 = fingerprinter.getFingerprint(product);
-        assertNotNull(bs2);
+        Assert.assertNotNull(bs2);
 	}
 	
 	public static Molecule makeFragment1()

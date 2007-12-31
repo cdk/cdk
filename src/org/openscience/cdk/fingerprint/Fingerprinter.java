@@ -24,14 +24,9 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -39,6 +34,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.*;
 
 /**
  *  Generates a Fingerprint for a given AtomContainer. Fingerprints are
@@ -78,6 +75,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module     standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.fingerprint.FingerprinterTest")
 public class Fingerprinter implements IFingerprinter {
 	
 	public final static int defaultSize = 1024;
@@ -122,7 +120,9 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param     ac         The AtomContainer for which a Fingerprint is generated
 	 *@exception Exception  Description of the Exception
 	 */
-	public BitSet getFingerprint(IAtomContainer ac, AllRingsFinder ringFinder) throws Exception {
+
+    @TestMethod("testGetFingerprint_IAtomContainer")
+    public BitSet getFingerprint(IAtomContainer ac, AllRingsFinder ringFinder) throws Exception {
 		String path = null;
 		int position = -1;
 		logger.debug("Entering Fingerprinter");
@@ -152,7 +152,8 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param     ac         The AtomContainer for which a Fingerprint is generated
 	 *@exception Exception  Description of the Exception
 	 */
-	public BitSet getFingerprint(IAtomContainer ac) throws Exception {
+    @TestMethod("testGetFingerprint_IAtomContainer")
+    public BitSet getFingerprint(IAtomContainer ac) throws Exception {
 		return getFingerprint(ac, null);
 	}
 	
@@ -335,10 +336,12 @@ public class Fingerprinter implements IFingerprinter {
 		return bondSymbol;
 	}
 
-	public int getSearchDepth() {
+    @TestMethod("testGetSearchDepth")
+    public int getSearchDepth() {
 		return searchDepth;
 	}
 
+    @TestMethod("testGetSize")
 	public int getSize() {
 		return size;
 	}

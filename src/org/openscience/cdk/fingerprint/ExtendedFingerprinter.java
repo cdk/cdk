@@ -24,13 +24,15 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.util.BitSet;
-
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.MFAnalyser;
+
+import java.util.BitSet;
 
 /**
  * Generates an extended fingerprint for a given AtomContainer, that
@@ -46,6 +48,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  * 
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */
+@TestClass("org.openscience.cdk.test.fingerprint.ExtendedFingerprinterTest")
 public class ExtendedFingerprinter implements IFingerprinter {
 
 	private final int RESERVED_BITS = 25;
@@ -85,7 +88,8 @@ public class ExtendedFingerprinter implements IFingerprinter {
 	 *@param     ac         The AtomContainer for which a Fingerprint is generated
 	 *@exception Exception  Description of the Exception
 	 */
-	public BitSet getFingerprint(IAtomContainer ac) throws Exception {
+    @TestMethod("testGetFingerprint_IAtomContainer")
+    public BitSet getFingerprint(IAtomContainer ac) throws Exception {
 		return this.getFingerprint(ac,null);
 	}
 		
@@ -99,7 +103,8 @@ public class ExtendedFingerprinter implements IFingerprinter {
 	 *@param     rs         A RingSet of ac (if not available, use  getExtendedFingerprint(AtomContainer ac), which does the calculation)
 	 *@exception Exception  Description of the Exception
 	 */
-	public BitSet getFingerprint(IAtomContainer ac, IRingSet rs) throws Exception {
+    @TestMethod("testGetFingerprint_IAtomContainer_IRingSet")
+    public BitSet getFingerprint(IAtomContainer ac, IRingSet rs) throws Exception {
 		BitSet bs = fingerprinter.getFingerprint(ac);
 		int size = this.getSize();
 		MFAnalyser mfa=new MFAnalyser(ac);
@@ -126,7 +131,8 @@ public class ExtendedFingerprinter implements IFingerprinter {
 		return bs;
 	}
 
-	public int getSize() {
+    @TestMethod("testGetSize")
+    public int getSize() {
 		return fingerprinter.getSize()+RESERVED_BITS;
 	}
 

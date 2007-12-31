@@ -24,37 +24,33 @@
  */
 package org.openscience.cdk.test.fingerprint;
 
-import java.util.BitSet;
-import java.util.List;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.BitSet;
+import java.util.List;
 
 /**
  * @cdk.module test-standard
  */
-public class FingerprinterToolTest extends CDKTestCase
+public class FingerprinterToolTest extends NewCDKTestCase
 {
 	
 	private static LoggingTool logger = new LoggingTool(FingerprinterToolTest.class);
 	
-	public FingerprinterToolTest(String name)
+	public FingerprinterToolTest()
 	{
-		super(name);
+		super();
 	}
 
 	
-	public static Test suite() {
-		return new TestSuite(FingerprinterToolTest.class);
-	}
-
+	@Test
 	public void testIsSubset_BitSet_BitSet() throws java.lang.Exception
 	{
 		Fingerprinter fingerprinter = new Fingerprinter();
@@ -63,10 +59,11 @@ public class FingerprinterToolTest extends CDKTestCase
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
-		assertTrue(FingerprinterTool.isSubset(bs, bs1));
+		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
-	
-	public void testListDifferences_BitSet_BitSet() throws Exception{
+
+    @Test
+    public void testListDifferences_BitSet_BitSet() throws Exception{
 		Fingerprinter fingerprinter = new Fingerprinter();
 		
 		Molecule mol = MoleculeFactory.makeIndole();
@@ -74,7 +71,7 @@ public class FingerprinterToolTest extends CDKTestCase
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		List l=FingerprinterTool.listDifferences(bs1, bs);
-		this.assertEquals(l.size(),19);
+		Assert.assertEquals(l.size(),19);
 	}
 }
 

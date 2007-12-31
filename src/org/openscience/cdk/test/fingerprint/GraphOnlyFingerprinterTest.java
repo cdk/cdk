@@ -24,13 +24,8 @@
  */
 package org.openscience.cdk.test.fingerprint;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.BitSet;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
@@ -42,25 +37,26 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.BitSet;
 
 /**
  * @cdk.module test-standard
  */
-public class GraphOnlyFingerprinterTest extends CDKTestCase {
+public class GraphOnlyFingerprinterTest extends NewCDKTestCase {
 
 	private static LoggingTool logger = new LoggingTool(FingerprinterTest.class);
 
-	public GraphOnlyFingerprinterTest(String name) {
-		super(name);
+	public GraphOnlyFingerprinterTest() {
+		super();
 	}
 
-	public static Test suite() {
-		return new TestSuite(GraphOnlyFingerprinterTest.class);
-	}
-
-	public void testFingerprint() throws Exception {
+    @Test
+    public void testFingerprint() throws Exception {
 		SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 		IFingerprinter printer = new GraphOnlyFingerprinter();
 		
@@ -68,7 +64,7 @@ public class GraphOnlyFingerprinterTest extends CDKTestCase {
 		System.out.println("----");
 		BitSet bs2 = printer.getFingerprint(parser.parseSmiles("CCCN"));
 		
-		assertEquals(bs1, bs2);
+		Assert.assertEquals(bs1, bs2);
 	}
 	
     /* ethanolamine */
@@ -92,17 +88,18 @@ public class GraphOnlyFingerprinterTest extends CDKTestCase {
 	 * 
 	 * @see testExtendedFingerPrint()
 	 */
-    public static void testFingerPrint() throws CloneNotSupportedException, Exception {
+    @Test
+    public static void testFingerPrint() throws Exception {
     	IFingerprinter printer = new GraphOnlyFingerprinter();
 
     	Molecule mol1 = createMolecule(molecule_test_2);
     	Molecule mol2 = createMolecule(ethanolamine);
-    	assertTrue("SubGraph does NOT match", UniversalIsomorphismTester.isSubgraph(mol1, mol2));
+    	Assert.assertTrue("SubGraph does NOT match", UniversalIsomorphismTester.isSubgraph(mol1, mol2));
 
     	BitSet bs1 = printer.getFingerprint((IAtomContainer) mol1.clone());
     	BitSet bs2 = printer.getFingerprint((IAtomContainer) mol2.clone());
 
-    	assertTrue("Subset (with fingerprint) does NOT match", FingerprinterTool.isSubset(bs1, bs2));
+    	Assert.assertTrue("Subset (with fingerprint) does NOT match", FingerprinterTool.isSubset(bs1, bs2));
 
     	// Match OK
     	logger.debug("Subset (with fingerprint) does match");

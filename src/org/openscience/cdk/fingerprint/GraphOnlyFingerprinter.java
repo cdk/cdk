@@ -24,12 +24,13 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.interfaces.IAtomContainer;
+
 import java.util.BitSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
-
-import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * Specialized version of the Fingerprinter which does not take bond orders
@@ -44,6 +45,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * 
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */
+@TestClass("org.openscience.cdk.test.fingerprint.GraphOnlyFingerprinterTest")
 public class GraphOnlyFingerprinter extends Fingerprinter {
 	
 	/**

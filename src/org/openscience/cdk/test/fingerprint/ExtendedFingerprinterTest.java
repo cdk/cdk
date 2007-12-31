@@ -24,11 +24,8 @@
  */
 package org.openscience.cdk.test.fingerprint;
 
-import java.util.BitSet;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
@@ -38,82 +35,82 @@ import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
+
+import java.util.BitSet;
 
 /**
  * @cdk.module test-standard
  */
-public class ExtendedFingerprinterTest extends CDKTestCase {
+public class ExtendedFingerprinterTest extends NewCDKTestCase {
 	
-	public ExtendedFingerprinterTest(String name) {
-		super(name);
+	public ExtendedFingerprinterTest() {
+		super();
 	}
 
-	public static Test suite() {
-		return new TestSuite(ExtendedFingerprinterTest.class);
-	}
 
-	public void testExtendedFingerprinter() throws java.lang.Exception {
+	@Test public void testExtendedFingerprinter() throws java.lang.Exception {
 		IFingerprinter fingerprinter = new ExtendedFingerprinter();
-		assertNotNull(fingerprinter);
+		Assert.assertNotNull(fingerprinter);
 	}
 	
-	public void testGetFingerprint_IAtomContainer() throws java.lang.Exception {
+	@Test public void testGetFingerprint_IAtomContainer() throws java.lang.Exception {
 		IFingerprinter fingerprinter = new ExtendedFingerprinter();
-		assertNotNull(fingerprinter);
+		Assert.assertNotNull(fingerprinter);
 		
 		Molecule mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
-		assertTrue(FingerprinterTool.isSubset(bs, bs1));
+		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 	
-	public void testGetFingerprint_IAtomContainer_IRingSet() throws java.lang.Exception {
+	@Test
+    public void testGetFingerprint_IAtomContainer_IRingSet() throws java.lang.Exception {
 		ExtendedFingerprinter fingerprinter = new ExtendedFingerprinter();
-		assertNotNull(fingerprinter);
+		Assert.assertNotNull(fingerprinter);
 		
 		Molecule mol = MoleculeFactory.makeIndole();
 		IRingSet ringset=new AllRingsFinder().findAllRings(mol);
 		BitSet bs = fingerprinter.getFingerprint(mol,ringset);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
-		assertTrue(FingerprinterTool.isSubset(bs, bs1));
+		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 	
 	
-	public void testGetSize() throws java.lang.Exception {
+	@Test public void testGetSize() throws java.lang.Exception {
 		IFingerprinter fingerprinter = new ExtendedFingerprinter(512);
-		assertNotNull(fingerprinter);
-		assertEquals(512, fingerprinter.getSize());
+		Assert.assertNotNull(fingerprinter);
+		Assert.assertEquals(512, fingerprinter.getSize());
 	}
 
-	public void testExtendedFingerprinter_int() throws java.lang.Exception {
+	@Test public void testExtendedFingerprinter_int() throws java.lang.Exception {
 		IFingerprinter fingerprinter = new ExtendedFingerprinter(512);
-		assertNotNull(fingerprinter);
+		Assert.assertNotNull(fingerprinter);
 		
 		Molecule mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
-		assertTrue(FingerprinterTool.isSubset(bs, bs1));
+		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 	
-	public void testExtendedFingerprinter_int_int() throws java.lang.Exception {
+	@Test public void testExtendedFingerprinter_int_int() throws java.lang.Exception {
 		IFingerprinter fingerprinter = new ExtendedFingerprinter(512,7);
-		assertNotNull(fingerprinter);
+		Assert.assertNotNull(fingerprinter);
 		
 		Molecule mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
-		assertTrue(FingerprinterTool.isSubset(bs, bs1));
+		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 	
 	/*
 	 * this test only works with allringsfinder in fingerprinter
 	 */
-	public void testDifferentRingFinders()throws Exception{
+	@Test public void testDifferentRingFinders()throws Exception{
 		IFingerprinter fingerprinter = new ExtendedFingerprinter();
 		Molecule ac1=new Molecule();
 		Atom atom1=new Atom("C");
@@ -157,7 +154,7 @@ public class ExtendedFingerprinterTest extends CDKTestCase {
 		ac2.addBond(bond7);
 		BitSet bs = fingerprinter.getFingerprint(ac1);
 		BitSet bs1 = fingerprinter.getFingerprint(ac2);
-		assertTrue(FingerprinterTool.isSubset(bs1, bs));	
+		Assert.assertTrue(FingerprinterTool.isSubset(bs1, bs));
 		
 	}
 	

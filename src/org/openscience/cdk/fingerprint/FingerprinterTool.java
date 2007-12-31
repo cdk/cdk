@@ -24,11 +24,13 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.tools.LoggingTool;
+
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
-
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Tool with helper methods for IFingerprint.
@@ -39,6 +41,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module     standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.fingerprint.FingerprinterToolTest")
 public class FingerprinterTool {
 	
 	private final static LoggingTool logger = new LoggingTool(FingerprinterTool.class);
@@ -63,7 +66,8 @@ public class FingerprinterTool {
 	 *@return         True, if bs2 is a subset of bs2
 	 *@cdk.keyword    substructure search
 	 */
-	public static boolean isSubset(BitSet bs1, BitSet bs2)
+    @TestMethod("testIsSubset_BitSet_BitSet")
+    public static boolean isSubset(BitSet bs1, BitSet bs2)
 	{
 		BitSet clone = (BitSet) bs1.clone();
 		clone.and(bs2);
@@ -81,7 +85,8 @@ public class FingerprinterTool {
 	 * @param bs2 Second bitset
 	 * @return An arrayList of Integers
 	 */
-	public static List listDifferences(BitSet bs1, BitSet bs2)
+    @TestMethod("testListDifferences_BitSet_BitSet")
+    public static List listDifferences(BitSet bs1, BitSet bs2)
 	{
 		List l=new ArrayList();
 		logger.debug("Listing bit positions set in bs2 but not in bs1");

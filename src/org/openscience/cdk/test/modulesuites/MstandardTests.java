@@ -119,10 +119,10 @@ public class MstandardTests {
         suite.addTest(RebondToolTest.suite());
         suite.addTest(CanonicalLabelerTest.suite());
         // from cdk.test.fingerprint
-        suite.addTest(FingerprinterTest.suite());
-        suite.addTest(GraphOnlyFingerprinterTest.suite());
-        suite.addTest(ExtendedFingerprinterTest.suite());
-        suite.addTest(FingerprinterToolTest.suite());
+        suite.addTest(new JUnit4TestAdapter(FingerprinterTest.class));
+        suite.addTest(new JUnit4TestAdapter(GraphOnlyFingerprinterTest.class));
+        suite.addTest(new JUnit4TestAdapter(ExtendedFingerprinterTest.class));
+        suite.addTest(new JUnit4TestAdapter(FingerprinterToolTest.class));
         suite.addTest(ProblemMarkerTest.suite());
         suite.addTest(SymbolsTest.suite());
         suite.addTest(GeometryToolsInternalCoordinatesTest.suite());
