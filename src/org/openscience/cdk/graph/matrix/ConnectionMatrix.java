@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.graph.matrix;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
@@ -42,6 +44,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @author      steinbeck
  * @cdk.created 2004-07-04
  */
+@TestClass("org.openscience.cdk.test.graph.matrix.ConnectionMatrixTest")
 public class ConnectionMatrix implements IGraphMatrix {
 
 	/**
@@ -50,7 +53,8 @@ public class ConnectionMatrix implements IGraphMatrix {
      * @param  container The AtomContainer for which the matrix is calculated
 	 * @return           A connection matrix representating this AtomContainer
 	 */
-	public static double[][] getMatrix(IAtomContainer container) {
+    @TestMethod("testGetMatrix_IAtomContainer")
+    public static double[][] getMatrix(IAtomContainer container) {
 		IBond bond = null;
 		int indexAtom1;
 		int indexAtom2;
