@@ -25,6 +25,8 @@
 package org.openscience.cdk.tools;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -54,6 +56,7 @@ import java.util.*;
  * @cdk.keyword    molecule, molecular formula
  * @cdk.keyword    molecule, double bond equivalents
  */
+@TestClass("org.openscience.cdk.test.tools.MFAnalyserTest")
 public class MFAnalyser {
 
 	private final static String H_ELEMENT_SYMBOL = "H";
@@ -111,7 +114,8 @@ public class MFAnalyser {
 	 *
 	 * @return    The atomContainer value
 	 */
-	public IAtomContainer getAtomContainer() {
+    @TestMethod("testGetAtomContainer")
+    public IAtomContainer getAtomContainer() {
 		return atomContainer;
 	}
 
@@ -123,7 +127,8 @@ public class MFAnalyser {
 	 * @return    The molecularFormula value
 	 * @see       #getHTMLMolecularFormula()
 	 */
-	public String getMolecularFormula() {
+    @TestMethod("testGetMolecularFormula")
+    public String getMolecularFormula() {
 		return MF;
 	}
 
@@ -135,7 +140,8 @@ public class MFAnalyser {
 	 *
 	 * @return    A HTML representation of the molecular formula.
 	 */
-	public String getHTMLMolecularFormula() {
+    @TestMethod("testGetHTMLMolecularFormula")
+    public String getHTMLMolecularFormula() {
 		boolean lastCharacterWasDigit = false;
 		boolean currentCharacterIsDigit;
 		StringBuffer htmlString = new StringBuffer(MF);
@@ -171,7 +177,8 @@ public class MFAnalyser {
 	 * @cdk.keyword DBE
 	 * @cdk.keyword double bond equivalent
 	 */
-	public float getDBE() throws IOException, ClassNotFoundException, CDKException{
+    @TestMethod("testGetDBE")
+    public float getDBE() throws IOException, ClassNotFoundException, CDKException{
 		int valencies[]=new int[5];
 		AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml", getAtomContainer().getBuilder());
 		IAtomContainer ac = getAtomContainer();
@@ -190,7 +197,8 @@ public class MFAnalyser {
 	 *
 	 * @return    The mass value
 	 */
-	public float getMass() {
+    @TestMethod("testGetMass")
+    public float getMass() {
 		float mass = 0;
 		IIsotope i;
 		IsotopeFactory si = null;
@@ -224,7 +232,8 @@ public class MFAnalyser {
 	 * @exception  java.io.IOException     Description of the Exception
 	 * @exception  ClassNotFoundException  Description of the Exception
 	 */
-	public static double getNaturalMass(IElement element) throws java.io.IOException, ClassNotFoundException {
+    @TestMethod("testGetNaturalMass_IElement")
+    public static double getNaturalMass(IElement element) throws java.io.IOException, ClassNotFoundException {
 		IIsotope[] isotopes = IsotopeFactory.getInstance(element.getBuilder()).getIsotopes(element.getSymbol());
 		double summedAbundances = 0;
 		double summedWeightedAbundances = 0;
@@ -244,7 +253,8 @@ public class MFAnalyser {
 	 * @exception  java.io.IOException     Description of the Exception
 	 * @exception  ClassNotFoundException  Description of the Exception
 	 */
-	public float getNaturalMass() throws java.io.IOException, ClassNotFoundException {
+    @TestMethod("testGetNaturalMass")
+    public float getNaturalMass() throws java.io.IOException, ClassNotFoundException {
 		float mass = 0;
 		IsotopeFactory si = null;
 		try {
@@ -284,7 +294,8 @@ public class MFAnalyser {
 	 * @return         The mol without Hs.
 	 * @cdk.keyword    hydrogen, removal
 	 */
-	public IAtomContainer removeHydrogensPreserveMultiplyBonded() {
+    @TestMethod("testRemoveHydrogensPreserveMultiplyBonded")
+    public IAtomContainer removeHydrogensPreserveMultiplyBonded() {
 		IAtomContainer ac = getAtomContainer();
 
 		List<IAtom> h = new ArrayList<IAtom>();
@@ -410,7 +421,8 @@ public class MFAnalyser {
 	 * @return         The heavyAtoms value
 	 * @cdk.keyword    hydrogen, removal
 	 */
-	public List<IAtom> getHeavyAtoms() {
+    @TestMethod("testGetHeavyAtoms")
+    public List<IAtom> getHeavyAtoms() {
 		List<IAtom> newAc = new ArrayList<IAtom>();
 		IAtomContainer ac = getAtomContainer();
 		for (int f = 0; f < ac.getAtomCount(); f++) {
@@ -524,7 +536,8 @@ public class MFAnalyser {
 	 * @param  ac  Description of the Parameter
 	 * @return     a string containing the molecular formula.
 	 */
-	public String analyseAtomContainer(IAtomContainer ac) {
+    @TestMethod("testAnalyseAtomContainer_IAtomContainer")
+    public String analyseAtomContainer(IAtomContainer ac) {
 		String mf = "";
 		Map<String, Integer> symbols = this.getSymolMap(ac);
 		mf = addSymbolToFormula(symbols, "C", mf);
@@ -587,7 +600,8 @@ public class MFAnalyser {
 	 * @param  thisElement  Description of the Parameter
 	 * @return              The number of atoms for the particular element in the formula
 	 */
-	public int getAtomCount(String thisElement) {
+    @TestMethod("testGetAtomCount_String,testGetAtomCount_String2")
+    public int getAtomCount(String thisElement) {
 		int atomCount = 0;
 		if (thisElement.equals(H_ELEMENT_SYMBOL) && HCount > 0) {
 			return HCount;
@@ -608,7 +622,8 @@ public class MFAnalyser {
 	 * @return    The elements value
 	 * @see       ElementComparator
 	 */
-	public List<String> getElements() {
+    @TestMethod("testGetElements")
+    public List<String> getElements() {
 		TreeSet<String> elements = new TreeSet<String>((Comparator<? super String>)new ElementComparator());
 		for (int f = 0; f < atomContainer.getAtomCount(); f++) {
 			String symbol = atomContainer.getAtom(f).getSymbol();
@@ -630,7 +645,8 @@ public class MFAnalyser {
 	 *
 	 * @return    The elementCount value
 	 */
-	public int getElementCount() {
+    @TestMethod("testGetElementCount")
+    public int getElementCount() {
 		return getElements().size();
 	}
 
@@ -644,7 +660,8 @@ public class MFAnalyser {
 	 * @param  elements  Description of the Parameter
 	 * @return           The element formula as a string
 	 */
-	public static String generateElementFormula(IMolecule mol, String[] elements) {
+    @TestMethod("testGenerateElementFormula_IMolecule_arrayString")
+    public static String generateElementFormula(IMolecule mol, String[] elements) {
 		int num = elements.length;
 		StringBuffer formula = new StringBuffer();
 		int[] elementCount = new int[num];
@@ -668,7 +685,8 @@ public class MFAnalyser {
 	 *
 	 * @return    a Hashtable, keys are the elemental symbols and values are their no.
 	 */
-	public Map<String, Integer> getFormulaHashtable() {
+    @TestMethod("testGetFormulaHashtable")
+    public Map<String, Integer> getFormulaHashtable() {
 		Map<String, Integer> formula = new HashMap<String, Integer>();
 		List<String> elements = this.getElements();
 		for (int i = 0; i < elements.size(); i++) {
@@ -688,7 +706,8 @@ public class MFAnalyser {
 	 * @return    The html-string representation of the sum formula with charge 
 	 * @see #getHTMLMolecularFormula()
 	 */
-	public String getHTMLMolecularFormulaWithCharge() {
+    @TestMethod("testGetHTMLMolecularFormulaWithCharge")
+    public String getHTMLMolecularFormulaWithCharge() {
 		String formula = new MFAnalyser(atomContainer,useboth).getHTMLMolecularFormula();
 		int charge = AtomContainerManipulator.getTotalFormalCharge(atomContainer);
 		if (charge == 0)

@@ -20,12 +20,9 @@
  */
 package org.openscience.cdk.test.tools;
 
-import java.io.IOException;
-import java.util.Map;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Element;
@@ -37,137 +34,132 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NNAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.MFAnalyser;
+
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * @cdk.module test-standard
  */
-public class MFAnalyserTest extends CDKTestCase {
-	Molecule molecule;
+public class MFAnalyserTest extends NewCDKTestCase {
+	static Molecule molecule;
 	
-	public MFAnalyserTest(String name)
-	{
-		super(name);
-	}
-
-	public void setUp()
+	@BeforeClass
+	public static void setUp()
 	{
 		molecule = MoleculeFactory.makeAlphaPinene();
 	}
 
-	public static Test suite() 
-	{
-		return new TestSuite(MFAnalyserTest.class);
+
+	@Test public void testMFAnalyser_String_IAtomContainer()	{
+		Assert.assertNotNull(new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer()));
 	}
 
-	public void testMFAnalyser_String_IAtomContainer()	{
-		assertNotNull(new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer()));
-	}
-
-	public void testMFAnalyser_IAtomContainer()	{
-		assertNotNull(new MFAnalyser(new org.openscience.cdk.AtomContainer()));
+	@Test public void testMFAnalyser_IAtomContainer()	{
+		Assert.assertNotNull(new MFAnalyser(new org.openscience.cdk.AtomContainer()));
 	}
 	
-	public void testMFAnalyser_IAtomContainer_boolean()	{
-		assertNotNull(new MFAnalyser(new org.openscience.cdk.AtomContainer(), true));
-		assertNotNull(new MFAnalyser(new org.openscience.cdk.AtomContainer(), false));
+	@Test public void testMFAnalyser_IAtomContainer_boolean()	{
+		Assert.assertNotNull(new MFAnalyser(new org.openscience.cdk.AtomContainer(), true));
+		Assert.assertNotNull(new MFAnalyser(new org.openscience.cdk.AtomContainer(), false));
 	}
 	
-	public void testGetMolecularFormula()	{
+	@Test public void testGetMolecularFormula()	{
 		MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
 		IAtomContainer ac = mfa.getAtomContainer();
 		MFAnalyser mfa2 = new MFAnalyser(ac);
 		String mf = mfa2.getMolecularFormula();
-		assertEquals("C10H16", mf);
+		Assert.assertEquals("C10H16", mf);
 	}
 	
-	public void testGetElements()	{
+	@Test public void testGetElements()	{
 		MFAnalyser mfa = new MFAnalyser("C10H16", new NNAtomContainer());
-		assertEquals(2, mfa.getElements().size());
+		Assert.assertEquals(2, mfa.getElements().size());
 		mfa = new MFAnalyser("C10H19N", new NNAtomContainer());
-		assertEquals(3, mfa.getElements().size());
+		Assert.assertEquals(3, mfa.getElements().size());
 	}
 	
-	public void testGetDBE() throws Exception{
+	@Test public void testGetDBE() throws Exception{
         MFAnalyser mfa = new MFAnalyser("C10H22", DefaultChemObjectBuilder.getInstance().newAtomContainer());
-		assertEquals(0, (int)mfa.getDBE());
+		Assert.assertEquals(0, (int)mfa.getDBE());
 
         mfa = new MFAnalyser("C10H16", DefaultChemObjectBuilder.getInstance().newAtomContainer());
-		assertEquals(3, (int)mfa.getDBE());
+		Assert.assertEquals(3, (int)mfa.getDBE());
 
         mfa = new MFAnalyser("C10H16O", DefaultChemObjectBuilder.getInstance().newAtomContainer());
-		assertEquals(3, (int)mfa.getDBE());
+		Assert.assertEquals(3, (int)mfa.getDBE());
 
         mfa = new MFAnalyser("C10H19N", DefaultChemObjectBuilder.getInstance().newAtomContainer());
-		assertEquals(2, (int)mfa.getDBE());
+		Assert.assertEquals(2, (int)mfa.getDBE());
 	}
 	
-	public void testGenerateElementFormula_IMolecule_arrayString() {
+	@Test public void testGenerateElementFormula_IMolecule_arrayString() {
 		MFAnalyser mfa = new MFAnalyser("C10H19N", DefaultChemObjectBuilder.getInstance().newAtomContainer());
-		assertEquals("C10N1H19", MFAnalyser.generateElementFormula(
+		Assert.assertEquals("C10N1H19", MFAnalyser.generateElementFormula(
 			new Molecule(mfa.getAtomContainer()), new String[] { "C", "N", "H" })
 		);
-		assertEquals("C10H19N1", MFAnalyser.generateElementFormula(
+		Assert.assertEquals("C10H19N1", MFAnalyser.generateElementFormula(
 			new Molecule(mfa.getAtomContainer()), new String[] { "C", "H", "N" })
 		);
-		assertEquals("N1H19C10", MFAnalyser.generateElementFormula(
+		Assert.assertEquals("N1H19C10", MFAnalyser.generateElementFormula(
 			new Molecule(mfa.getAtomContainer()), new String[] { "N", "H", "C" })
 		);
 	}
 	
-	public void testAnalyseAtomContainer_IAtomContainer() {
+	@Test public void testAnalyseAtomContainer_IAtomContainer() {
 		MFAnalyser mfa = new MFAnalyser("C10H19N", DefaultChemObjectBuilder.getInstance().newAtomContainer());
-		assertEquals("C10H19N", mfa.analyseAtomContainer(
+		Assert.assertEquals("C10H19N", mfa.analyseAtomContainer(
 			new Molecule(mfa.getAtomContainer()))
 		);
 	}
 	
-	public void testElements() throws Exception{
+	@Test public void testElements() throws Exception{
         MFAnalyser mfa = new MFAnalyser("C10H22", DefaultChemObjectBuilder.getInstance().newAtomContainer());
-		assertEquals(2, (int)mfa.getElements().size());
+		Assert.assertEquals(2, (int)mfa.getElements().size());
 
         mfa = new MFAnalyser("C10H16O", DefaultChemObjectBuilder.getInstance().newAtomContainer());
-		assertEquals(3, (int)mfa.getElements().size());
+		Assert.assertEquals(3, (int)mfa.getElements().size());
 	}
 	
-    public void testGetAtomContainer() {
+    @Test public void testGetAtomContainer() {
         MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
         IAtomContainer ac = mfa.getAtomContainer();
-        assertEquals(26, ac.getAtomCount());        
+        Assert.assertEquals(26, ac.getAtomCount());
     }
     
-    public void testGetElementCount() {
+    @Test public void testGetElementCount() {
         MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
-        assertEquals(2, mfa.getElementCount());        
+        Assert.assertEquals(2, mfa.getElementCount());
     }
         	
-    public void testGetElementCount2() {
+    @Test public void testGetElementCount2() {
         MFAnalyser mfa = new MFAnalyser("CH3OH", new org.openscience.cdk.AtomContainer());
-        assertEquals(3, mfa.getElementCount());        
+        Assert.assertEquals(3, mfa.getElementCount());
     }
     
-    public void testGetAtomCount_String() {
+    @Test public void testGetAtomCount_String() {
         MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
-        assertEquals(10, mfa.getAtomCount("C"));        
-        assertEquals(16, mfa.getAtomCount("H"));        
+        Assert.assertEquals(10, mfa.getAtomCount("C"));
+        Assert.assertEquals(16, mfa.getAtomCount("H"));
     }
     
-    public void testGetAtomCount_String2() {
+    @Test public void testGetAtomCount_String2() {
         MFAnalyser mfa = new MFAnalyser("CH3OH", new org.openscience.cdk.AtomContainer());
-        assertEquals(1, mfa.getAtomCount("C"));        
-        assertEquals(1, mfa.getAtomCount("O"));        
-        assertEquals(4, mfa.getAtomCount("H")); 
+        Assert.assertEquals(1, mfa.getAtomCount("C"));
+        Assert.assertEquals(1, mfa.getAtomCount("O"));
+        Assert.assertEquals(4, mfa.getAtomCount("H"));
     }
     
-    public void testGetHeavyAtoms() {
+    @Test public void testGetHeavyAtoms() {
         MFAnalyser mfa = new MFAnalyser("C10H16", new org.openscience.cdk.AtomContainer());
-        assertEquals(10, mfa.getHeavyAtoms().size());        
+        Assert.assertEquals(10, mfa.getHeavyAtoms().size());
     }
     
-    public void testGetHeavyAtoms2() {
+    @Test public void testGetHeavyAtoms2() {
         MFAnalyser mfa = new MFAnalyser("CH3OH", new org.openscience.cdk.AtomContainer());
-        assertEquals(2, mfa.getHeavyAtoms().size());        
+        Assert.assertEquals(2, mfa.getHeavyAtoms().size());
     }
     
     /**
@@ -177,7 +169,7 @@ public class MFAnalyserTest extends CDKTestCase {
      * @throws ClassNotFoundException
      * @throws CDKException
      */
-    public void testRemoveHydrogensPreserveMultiplyBonded() throws IOException, ClassNotFoundException, CDKException
+    @Test public void testRemoveHydrogensPreserveMultiplyBonded() throws IOException, ClassNotFoundException, CDKException
     {
     	IAtomContainer borane = new Molecule();
     	borane.addAtom(borane.getBuilder().newAtom("H"));
@@ -199,8 +191,8 @@ public class MFAnalyserTest extends CDKTestCase {
         IAtomContainer ac = new MFAnalyser(borane).removeHydrogensPreserveMultiplyBonded();
 
         // Should be two connected Bs with H-count == 2 and two explicit Hs.
-        assertEquals("incorrect atom count", 4, ac.getAtomCount());
-        assertEquals("incorrect bond count", 4, ac.getBondCount());
+        Assert.assertEquals("incorrect atom count", 4, ac.getAtomCount());
+        Assert.assertEquals("incorrect bond count", 4, ac.getBondCount());
 
         int b = 0;
         int h = 0;
@@ -214,69 +206,71 @@ public class MFAnalyserTest extends CDKTestCase {
             {
                 // Each B has two explicit and two implicit H.
                 b++;
-                assertEquals("incorrect hydrogen count", 2, atom.getHydrogenCount().intValue());
+                Assert.assertEquals("incorrect hydrogen count", 2, atom.getHydrogenCount());
                 java.util.List nbs = ac.getConnectedAtomsList(atom);
-                assertEquals("incorrect connected count", 2, nbs.size());
-                assertEquals("incorrect bond", "H", ((IAtom)nbs.get(0)).getSymbol());
-                assertEquals("incorrect bond", "H", ((IAtom)nbs.get(1)).getSymbol());
+                Assert.assertEquals("incorrect connected count", 2, nbs.size());
+                Assert.assertEquals("incorrect bond", "H", ((IAtom)nbs.get(0)).getSymbol());
+                Assert.assertEquals("incorrect bond", "H", ((IAtom)nbs.get(1)).getSymbol());
             }
             else if (sym.equals("H"))
             {
                 h++;
             }
         }
-        assertEquals("incorrect no. Bs", 2, b);
-        assertEquals("incorrect no. Hs", 2, h);
+        Assert.assertEquals("incorrect no. Bs", 2, b);
+        Assert.assertEquals("incorrect no. Hs", 2, h);
     }
 
 
+    @Test
     public void testGetFormulaHashtable() {
 	MFAnalyser mfa=new MFAnalyser(molecule);
 	Map formula = mfa.getFormulaHashtable();
-	assertEquals(10, ((Integer)formula.get("C")).intValue());
+	Assert.assertEquals(10, formula.get("C"));
     }
     
-    public void testGetMass() throws Exception{
+    @Test public void testGetMass() throws Exception{
         MFAnalyser mfa = new MFAnalyser(molecule);
-        assertEquals((float)120, mfa.getMass(), .1);
-        assertEquals((float)120.11038, mfa.getNaturalMass(), .1);
+        Assert.assertEquals((float)120, mfa.getMass(), .1);
+        Assert.assertEquals((float)120.11038, mfa.getNaturalMass(), .1);
     }
     
-    public void testGetNaturalMass_IElement() throws Exception {
-        assertEquals(1.0079760, MFAnalyser.getNaturalMass(new Element("H")), 0.1);
+    @Test public void testGetNaturalMass_IElement() throws Exception {
+        Assert.assertEquals(1.0079760, MFAnalyser.getNaturalMass(new Element("H")), 0.1);
     }
     
-    public void testGetNaturalMass() throws Exception {
+    @Test public void testGetNaturalMass() throws Exception {
     	MFAnalyser mfa = new MFAnalyser("C8H10O2Cl2", new Molecule());
-    	assertEquals((float)209.0692 , mfa.getNaturalMass() ,.001);
+    	Assert.assertEquals((float)209.0692 , mfa.getNaturalMass() ,.001);
     }
     
-    public void testGetHTMLMolecularFormulaWithCharge() {
+    @Test public void testGetHTMLMolecularFormulaWithCharge() {
     	org.openscience.cdk.interfaces.IAtom atom = molecule.getAtom(0);
         MFAnalyser mfa = new MFAnalyser(molecule);
-        assertEquals("C<sub>10</sub>", mfa.getHTMLMolecularFormulaWithCharge());
+        Assert.assertEquals("C<sub>10</sub>", mfa.getHTMLMolecularFormulaWithCharge());
         atom.setFormalCharge(atom.getFormalCharge() + 1);
-        assertEquals("C<sub>10</sub><sup>1+</sup>", mfa.getHTMLMolecularFormulaWithCharge());
+        Assert.assertEquals("C<sub>10</sub><sup>1+</sup>", mfa.getHTMLMolecularFormulaWithCharge());
         atom.setFormalCharge(atom.getFormalCharge() - 2);
-        assertEquals("C<sub>10</sub><sup>1-</sup>", mfa.getHTMLMolecularFormulaWithCharge());
+        Assert.assertEquals("C<sub>10</sub><sup>1-</sup>", mfa.getHTMLMolecularFormulaWithCharge());
     }
     
-    public void testGetHTMLMolecularFormula() {
+    @Test public void testGetHTMLMolecularFormula() {
     	MFAnalyser mfa = new MFAnalyser("C8H10O2Cl2", new Molecule());
-        assertEquals("C<sub>8</sub>H<sub>10</sub>O<sub>2</sub>Cl<sub>2</sub>", mfa.getHTMLMolecularFormula());
+        Assert.assertEquals("C<sub>8</sub>H<sub>10</sub>O<sub>2</sub>Cl<sub>2</sub>", mfa.getHTMLMolecularFormula());
     }
     
     /**
      * @cdk.bug 1595430
+     * @throws Exception if an invalid SMILES is used
      */
-    public void test1595430_2() throws Exception {
+    @Test public void test1595430_2() throws Exception {
 		String smile="CN(CC2=CC=CO2)C1=CC=CC=C1";
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles(smile);
 		addExplicitHydrogens(mol);
 		MFAnalyser mfa=new MFAnalyser(mol);
-		assertEquals((float)187.2382 , mfa.getNaturalMass() ,.001);
-		assertEquals("C12H13NO",mfa.getMolecularFormula());
+		Assert.assertEquals((float)187.2382 , mfa.getNaturalMass() ,.001);
+		Assert.assertEquals("C12H13NO",mfa.getMolecularFormula());
     }
 }
 

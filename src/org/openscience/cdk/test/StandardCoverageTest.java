@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test-standard
  */
-public class StandardCoverageTest extends CoverageTest {
+public class StandardCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "standard.javafiles";
     
