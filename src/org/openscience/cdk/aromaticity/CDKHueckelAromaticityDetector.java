@@ -25,6 +25,8 @@
 package org.openscience.cdk.aromaticity;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -48,11 +50,13 @@ import java.util.Iterator;
  * 
  * @see org.openscience.cdk.CDKConstants
  */
+@TestClass("org.openscience.cdk.test.aromaticity.CDKHueckelAromaticityDetectorTest")
 public class CDKHueckelAromaticityDetector {
 
 	private static AtomTypeFactory factory = null;
 
-	public static boolean detectAromaticity(IAtomContainer atomContainer) throws CDKException {
+    @TestMethod("testDetectAromaticity_IAtomContainer")
+    public static boolean detectAromaticity(IAtomContainer atomContainer) throws CDKException {
 		SpanningTree spanningTree = new SpanningTree(atomContainer);
 		IAtomContainer ringSystems = spanningTree.getCyclicFragmentsContainer();
 		if (ringSystems.getAtomCount() == 0) {

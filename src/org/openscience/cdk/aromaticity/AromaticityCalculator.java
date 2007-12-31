@@ -29,6 +29,8 @@
 package org.openscience.cdk.aromaticity;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -43,6 +45,7 @@ import org.openscience.cdk.interfaces.IRing;
  *
  * @cdk.keyword aromaticity detector
  */
+@TestClass("org.openscience.cdk.test.aromaticity.AromaticityCalculatorTest")
 public class AromaticityCalculator
 {
 
@@ -59,7 +62,8 @@ public class AromaticityCalculator
 	 * @param  atomContainer  the AtomContainer the ring is in
 	 * @return           true if the ring is aromatic false otherwise.
 	 */
-	public static boolean isAromatic(IRing ring, IAtomContainer atomContainer)
+    @TestMethod("testIsAromatic_IRing_IAtomContainer")
+    public static boolean isAromatic(IRing ring, IAtomContainer atomContainer)
 	{
 		
 		java.util.Iterator<IAtom> ringAtoms = ring.atoms();
