@@ -47,23 +47,6 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
 		super(name);
 	}
 	
-	/**
-	 * Makes sure that the extending class has set the super.descriptor.
-	 * Each extending class should have this bit of code (JUnit3 formalism):
-	 * <pre>
-	 * public void setUp() {
-	 *   super.descriptor = new SomeDescriptor();
-	 * }
-	 * 
-	 * <p>The unit tests in the extending class may use this instance, but
-	 * are not required.
-	 * 
-	 * </pre>
-	 */
-	public void testHasSetSuperDotDescriptor() {
-    	assertNotNull("The extending class must set the super.descriptor in its seUp() method.", descriptor);    	
-	}
-	
     public void testCalculate_IAtomContainer() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         
