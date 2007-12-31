@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.test.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -121,7 +122,7 @@ public class MstandardTests {
         
         // make sure to check it agains src/test-standard.files
         // before each release!
-        suite.addTest(AromaticityCalculatorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(AromaticityCalculatorTest.class));
         suite.addTest(DictRefTest.suite());
         suite.addTest(CrystalGeometryToolsTest.suite());
         suite.addTest(GeometryToolsTest.suite());
@@ -142,7 +143,7 @@ public class MstandardTests {
         suite.addTest(DeAromatizationToolTest.suite());
         suite.addTest(FormatStringBufferTest.suite());
         suite.addTest(IDCreatorTest.suite());
-        suite.addTest(MFAnalyserTest.suite());
+        suite.addTest(new JUnit4TestAdapter(MFAnalyserTest.class));
         suite.addTest(MoleculeSetManipulatorTest.suite());
         suite.addTest(ReactionManipulatorTest.suite());
         suite.addTest(AtomContainerManipulatorTest.suite());
@@ -172,8 +173,8 @@ public class MstandardTests {
         suite.addTest(RingSizeComparatorTest.suite());
         suite.addTest(ElementComparatorTest.suite());
         suite.addTest(BFSShortestPathTest.suite());
-        suite.addTest(MoleculeGraphsTest.suite());
-        suite.addTest(ConnectionMatrixTest.suite());
+        suite.addTest(new JUnit4TestAdapter(MoleculeGraphsTest.class));
+        suite.addTest(new JUnit4TestAdapter(ConnectionMatrixTest.class));
         suite.addTest(BsptTest.suite());
         suite.addTest(PointTest.suite());
         suite.addTest(BiconnectivityInspectorTest.suite());
@@ -199,7 +200,7 @@ public class MstandardTests {
         suite.addTest(InvPairTest.suite());
         suite.addTest(EStateAtomTypeMatcherTest.suite());
         suite.addTest(AtomContainerComparatorTest.suite());
-        suite.addTest(CDKHueckelAromaticityDetectorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(CDKHueckelAromaticityDetectorTest.class));
 
         return suite;
     }
