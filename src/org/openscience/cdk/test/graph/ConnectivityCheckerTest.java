@@ -24,18 +24,14 @@
  */
 package org.openscience.cdk.test.graph;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.LonePair;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.SingleElectron;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.*;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  *  Checks the functionality of the ConnectivityChecker
@@ -45,41 +41,33 @@ import org.openscience.cdk.test.CDKTestCase;
  * @author     steinbeck
  * @cdk.created    2001-07-24
  */
-public class ConnectivityCheckerTest extends CDKTestCase {
+public class ConnectivityCheckerTest extends NewCDKTestCase {
 
-	/**
-	 *  Constructor for the ConnectivityCheckerTest object
-	 *
-	 * @param  name  A Name of the test
-	 */
-	public ConnectivityCheckerTest(String name) {
-		super(name);
+
+	public ConnectivityCheckerTest() {
+		super();
 	}
 
-	/**
-	 *  The JUnit setup method
-	 */
-	public void setUp() {
-	}
 
 	/**
 	 * This test tests the function of the partitionIntoMolecule() method.
 	 */
-	public void testPartitionIntoMolecules_IAtomContainer() {
+	@Test
+    public void testPartitionIntoMolecules_IAtomContainer() {
 		//logger.debug(atomCon);
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
 		atomCon.add(MoleculeFactory.makeAlphaPinene());
 		atomCon.add(MoleculeFactory.makeSpiroRings());
         IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
-        assertNotNull(moleculeSet);
-		assertEquals(3, moleculeSet.getMoleculeCount());
+        Assert.assertNotNull(moleculeSet);
+		Assert.assertEquals(3, moleculeSet.getMoleculeCount());
 	}
 
     /**
      * Test for SF bug #903551
      */
-	public void testPartitionIntoMoleculesKeepsAtomIDs() {
+	@Test public void testPartitionIntoMoleculesKeepsAtomIDs() {
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
         Atom atom1 = new Atom("C");
         atom1.setID("atom1");
@@ -88,39 +76,39 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         atomCon.addAtom(atom1);
         atomCon.addAtom(atom2);
         IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
-        assertNotNull(moleculeSet);
-		assertEquals(2, moleculeSet.getMoleculeCount());
+        Assert.assertNotNull(moleculeSet);
+		Assert.assertEquals(2, moleculeSet.getMoleculeCount());
 		org.openscience.cdk.interfaces.IAtom copy1 = moleculeSet.getMolecule(0).getAtom(0);
 		org.openscience.cdk.interfaces.IAtom copy2 = moleculeSet.getMolecule(1).getAtom(0);
         
-        assertEquals(atom1.getID(), copy1.getID());
-        assertEquals(atom2.getID(), copy2.getID());
+        Assert.assertEquals(atom1.getID(), copy1.getID());
+        Assert.assertEquals(atom2.getID(), copy2.getID());
     }
 
     /**
 	 * This test tests the consitency between isConnected() and
      * partitionIntoMolecules().
 	 */
-	public void testPartitionIntoMolecules_IsConnected_Consistency() {
+	@Test public void testPartitionIntoMolecules_IsConnected_Consistency() {
 		//logger.debug(atomCon);
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
 		atomCon.add(MoleculeFactory.make4x3CondensedRings());
 		atomCon.add(MoleculeFactory.makeAlphaPinene());
 		atomCon.add(MoleculeFactory.makeSpiroRings());
         IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
-        assertNotNull(moleculeSet);
-		assertEquals(3, moleculeSet.getMoleculeCount());
+        Assert.assertNotNull(moleculeSet);
+		Assert.assertEquals(3, moleculeSet.getMoleculeCount());
         
-        assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(0)));
-        assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(1)));
-        assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(2)));
+        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(0)));
+        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(1)));
+        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(2)));
 	}
 
     /**
 	 * This test makes sure that it is checked that the partitionIntoMolecules()
      * method keeps LonePairs and SingleElectrons with its associated atoms.
 	 */
-	public void testDontDeleteSingleElectrons() {
+	@Test public void testDontDeleteSingleElectrons() {
         AtomContainer atomCon = new org.openscience.cdk.AtomContainer();
         // make two molecules; one with an LonePair, the other with a SingleElectron
         Molecule mol1 = new Molecule();
@@ -140,39 +128,31 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         
         // now partition
         IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
-        assertNotNull(moleculeSet);
-		assertEquals(2, moleculeSet.getMoleculeCount());
+        Assert.assertNotNull(moleculeSet);
+		Assert.assertEquals(2, moleculeSet.getMoleculeCount());
         
-        assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(0)));
-        assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(1)));
+        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(0)));
+        Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getMolecule(1)));
         
         // make sure
-        assertEquals(1, moleculeSet.getMolecule(0).getAtomCount());
-        assertEquals(1, moleculeSet.getMolecule(0).getElectronContainerCount());
-        assertEquals(1, moleculeSet.getMolecule(1).getAtomCount());
-        assertEquals(1, moleculeSet.getMolecule(1).getElectronContainerCount());
+        Assert.assertEquals(1, moleculeSet.getMolecule(0).getAtomCount());
+        Assert.assertEquals(1, moleculeSet.getMolecule(0).getElectronContainerCount());
+        Assert.assertEquals(1, moleculeSet.getMolecule(1).getAtomCount());
+        Assert.assertEquals(1, moleculeSet.getMolecule(1).getElectronContainerCount());
         // we don't know which partition contains the LP and which the electron
-        assertTrue(moleculeSet.getMolecule(0).getConnectedSingleElectronsCount(moleculeSet.getMolecule(0).getAtom(0)) == 0 ||
+        Assert.assertTrue(moleculeSet.getMolecule(0).getConnectedSingleElectronsCount(moleculeSet.getMolecule(0).getAtom(0)) == 0 ||
         		moleculeSet.getMolecule(1).getConnectedSingleElectronsCount(moleculeSet.getMolecule(1).getAtom(0)) == 0);
-        assertTrue(moleculeSet.getMolecule(0).getConnectedLonePairsCount(moleculeSet.getMolecule(0).getAtom(0)) == 0 ||
+        Assert.assertTrue(moleculeSet.getMolecule(0).getConnectedLonePairsCount(moleculeSet.getMolecule(0).getAtom(0)) == 0 ||
         		moleculeSet.getMolecule(1).getConnectedLonePairsCount(moleculeSet.getMolecule(1).getAtom(0)) == 0);
 	}
     
 	/**
 	 * This test tests the algorithm behind isConnected().
 	 */
-	public void testIsConnected_IAtomContainer() {
+	@Test public void testIsConnected_IAtomContainer() {
         Molecule spiro = MoleculeFactory.makeSpiroRings();
-        assertTrue(ConnectivityChecker.isConnected(spiro));
+        Assert.assertTrue(ConnectivityChecker.isConnected(spiro));
 	}
 
-	/**
-	 *  A unit test suite for JUnit
-	 *
-	 * @return    The test suite
-	 */
-	public static Test suite() {
-		return new TestSuite(ConnectivityCheckerTest.class);
-	}
 }
 

@@ -31,6 +31,8 @@ package org.openscience.cdk.graph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.traverse.BreadthFirstIterator;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,10 +48,12 @@ import java.util.List;
  * @cdk.svnrev  $Revision$
  * @cdk.created 2004-10-19
  */
+@TestClass("org.openscience.cdk.test.graph.BFSShortestPathTest")
 public final class BFSShortestPath {
     
     private BFSShortestPath(  ) {} // ensure non-instantiability.
 
+    @TestMethod("testFindPathBetween_Graph_Object_Object")
     public static List<Edge> findPathBetween( Graph graph, Object startVertex,
             Object endVertex ) {
             MyBreadthFirstIterator iter =

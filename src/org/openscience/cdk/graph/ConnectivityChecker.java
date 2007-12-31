@@ -25,6 +25,8 @@
 package org.openscience.cdk.graph;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.*;
 
 import java.util.Iterator;
@@ -50,7 +52,8 @@ import java.util.Vector;
  * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword connectivity
- */ 
+ */
+@TestClass("org.openscience.cdk.test.graph.ConnectivityCheckerTest")
 public class ConnectivityChecker 
 {
 	/**
@@ -59,7 +62,8 @@ public class ConnectivityChecker
 	 * @param   atomContainer  The AtomContainer to be check for connectedness
 	 * @return                 true if the AtomContainer is connected   
 	 */
-	public static boolean isConnected(IAtomContainer atomContainer)
+    @TestMethod("testIsConnected_IAtomContainer,testPartitionIntoMolecules_IsConnected_Consistency")
+    public static boolean isConnected(IAtomContainer atomContainer)
 	{
 		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
 		IAtom atom = null;
@@ -82,12 +86,8 @@ public class ConnectivityChecker
 		sphere.addElement(atom);
 		atom.setFlag(CDKConstants.VISITED, true);
 		PathTools.breadthFirstSearch(ac, sphere, molecule);
-		if (molecule.getAtomCount() == atomContainer.getAtomCount())
-		{
-			return true;
-		}
-		return false;
-	}
+        return molecule.getAtomCount() == atomContainer.getAtomCount();
+    }
 	
 
 
@@ -99,7 +99,8 @@ public class ConnectivityChecker
      *
      * @cdk.dictref   blue-obelisk:graphPartitioning
 	 */
-	public static IMoleculeSet partitionIntoMolecules(IAtomContainer atomContainer) {
+    @TestMethod("testPartitionIntoMolecules_IAtomContainer,testPartitionIntoMoleculesKeepsAtomIDs,testPartitionIntoMolecules_IsConnected_Consistency")
+    public static IMoleculeSet partitionIntoMolecules(IAtomContainer atomContainer) {
 		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
 		IAtom atom = null;
 		IElectronContainer eContainer = null;
