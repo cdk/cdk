@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,12 +21,66 @@
 package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
  * Classes that implement this interface are QSAR descriptor calculators.
+ * The architecture provides a few subinterfaces such as the
+ * <code>IMolecularDescriptor</code>, <code>IAtomicDescriptor</code> and
+ * <code>IBondDescriptor</code>. 
+ * 
+ * <p><b>Calculated results</b><br />
+ * The results calculated by the descriptor can have various types, which
+ * extend the IDescriptorResult, and is embedded in a
+ * <code>DescriptorValue</code>. Currently, there are five result types:
+ * <ul>
+ *   <li>BooleanResultType</li>
+ *   <li>DoubleResultType</li>
+ *   <li>IntegerResultType</li>
+ *   <li>DoubleArrayResultType</li>
+ *   <li>IntegerArrayResultType</li>
+ * </ul>
+ * But the DescriptorValue will hold an actual value using one of the
+ * following five classes:
+ * <ul>
+ *   <li>BooleanResult</li>
+ *   <li>DoubleResult</li>
+ *   <li>IntegerResult</li>
+ *   <li>DoubleArrayResult</li>
+ *   <li>IntegerArrayResult</li>
+ * </ul>
+ * 
+ * <p>The length of the first of these three result types is fixed at
+ * 1. However, the length of the array result types varies, depending
+ * on the used descriptor parameters. 
+ * 
+ * <p><b>Parameters</b><br />
+ * A descriptor may have parameters that specify how the descriptor
+ * is calculated, or to what level of detail. For example, the atom
+ * count descriptor may calculate counts for all elements, or just
+ * the specified element. As an effect, the DescriptorValue results
+ * may vary in length too.
+ * 
+ * <p>Each descriptor <b>must</b> provide default parameters, which
+ * allow descriptors to be calculated without having to set parameter
+ * values.
+ * 
+ * <p>To interactively query which parameters are available, one can
+ * use the methods <code>getParameterNames()</code> to see how many
+ * and which parameters are available. To determine what object is
+ * used to set the parameter, the method <code>getParameterType(String)</code>
+ * is used, where the parameter name is used as identifier.
+ * 
+ * <p>The default values are retrieved using the <code>getParameters()</code>
+ * method of a freshly instantiated <code>IDescriptor</code>. After use
+ * of <code>setParameters()</code>, the current parameter values are
+ * returned.
  *
  * @cdk.module qsar
- * @cdk.svnrev  $Revision$
+ * @cdk.svnrev $Revision$
+ * 
+ * @see        DescriptorValue
+ * @see        IDescriptorResult
  */
 public interface IDescriptor {
 
@@ -51,10 +102,11 @@ public interface IDescriptor {
     public DescriptorSpecification getSpecification();
     
     /** 
-     * Returns the names of the parameters for this descriptor. 
+     * Returns the names of the parameters for this descriptor. The method
+     * returns null if the descriptor does not have any parameters.
      *
      * @return An array of String containing the names of the paraneters 
-     * that this descriptor can accept
+     * that this descriptor can accept.
      */
     public String[] getParameterNames();
     /** 
@@ -78,9 +130,11 @@ public interface IDescriptor {
     public void setParameters(Object[] params) throws CDKException;
     
     /** 
-     * Returns the current parameter values.
+     * Returns the current parameter values. If not parameters have been set,
+     * it must return the default parameters. The method returns null
+     * if the descriptor does not have any parameters.
      *
-     * @return An array of Object containing the parameter values
+     * @return An array of Object containing the parameter default values
      * @see #setParameters
      * */
     public Object[] getParameters();
