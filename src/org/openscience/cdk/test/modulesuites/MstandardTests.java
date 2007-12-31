@@ -144,8 +144,8 @@ public class MstandardTests {
         suite.addTest(PointTest.suite());
         suite.addTest(BiconnectivityInspectorTest.suite());
         suite.addTest(MorganNumbersToolsTest.suite());
-        suite.addTest(PathTest.suite());
-        suite.addTest(QueueTest.suite());
+        suite.addTest(new JUnit4TestAdapter(PathTest.class));
+        suite.addTest(new JUnit4TestAdapter(QueueTest.class));
         suite.addTest(SSSRFinderTest.suite());
         suite.addTest(DoubleArrayResultTest.suite());
         suite.addTest(IntegerArrayResultTest.suite());

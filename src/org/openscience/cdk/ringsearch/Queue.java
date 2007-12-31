@@ -28,6 +28,9 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 import java.util.Vector;
 
 /**
@@ -36,6 +39,7 @@ import java.util.Vector;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.ringsearch.QueueTest")
 public class Queue extends Vector
 {
 
@@ -53,8 +57,9 @@ public class Queue extends Vector
 	 *  Places an Object into the queue
 	 *
 	 * @param   o  The object to be pushed into the queue
-	 */
-	public void push(Object o){
+	 */    
+    @TestMethod("testOperations")
+    public void push(Object o){
 		addElement(o);
 	}
 	
@@ -63,7 +68,8 @@ public class Queue extends Vector
 	 *
 	 * @return The object that had been pushed first into the queue     
 	 */
-	public Object pop(){
+    @TestMethod("testOperations")
+    public Object pop(){
 		Object o = elementAt(0);
 		removeElementAt(0);	
 		return o;

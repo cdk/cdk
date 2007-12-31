@@ -28,10 +28,12 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import java.util.Vector;
-
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+
+import java.util.Vector;
 
 /**
 * Implementation of a Path as needed by {@cdk.cite HAN96}.
@@ -44,6 +46,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @author     steinbeck
  * @cdk.created    2002-02-28
  */
+@TestClass("org.openscience.cdk.test.ringsearch.PathTest")
 public class Path extends Vector
 {
 
@@ -81,7 +84,8 @@ public class Path extends Vector
 	 * @param  atom   The atom which is the joint point
 	 * @return        The newly formed longer path
 	 */
-	public static Path join(Path path1, Path path2, IAtom atom)
+    @TestMethod("testJoin")
+    public static Path join(Path path1, Path path2, IAtom atom)
 	{
 		Path newPath = new Path();
 		Path tempPath = new Path();
@@ -99,8 +103,9 @@ public class Path extends Vector
 		newPath.addAll(tempPath);
 		return newPath;
 	}
-	
-	public int getIntersectionSize(Path other)
+
+    @TestMethod("testGetIntersectionSize")
+    public int getIntersectionSize(Path other)
 	{
 		IAtom a1, a2;
 		int iSize = 0;
@@ -116,7 +121,7 @@ public class Path extends Vector
 		return iSize;
 	}
 	
-	public void revert()
+	private void revert()
 	{
 		Object o = null;
 		int size = size();

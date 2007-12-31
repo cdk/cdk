@@ -20,29 +20,35 @@
  */
 package org.openscience.cdk.test.ringsearch;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.ringsearch.Queue;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class QueueTest extends CDKTestCase {
+public class QueueTest extends NewCDKTestCase {
     
-    public QueueTest(String name) {
-        super(name);
+    public QueueTest() {
+        super();
     }
     
-	public static Test suite() {
-		return new TestSuite(QueueTest.class);
-	}
-
+	@Test
 	public void testQueue() {
 		Queue queue = new Queue();
-		assertNotNull(queue);
+		Assert.assertNotNull(queue);
 	}
+
+    @Test
+    public void testOperations() {
+        Queue queue = new Queue();
+        queue.push(1);
+        queue.push("Hello");
+        Assert.assertEquals(1, queue.pop());
+    }
+
 
 }
 
