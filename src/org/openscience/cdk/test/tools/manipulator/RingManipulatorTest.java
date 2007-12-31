@@ -24,49 +24,45 @@
  */
 package org.openscience.cdk.test.tools.manipulator;
 
-import java.util.Iterator;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.RingManipulator;
+
+import java.util.Iterator;
 
 /**
  * @cdk.module test-standard
  */
-public class RingManipulatorTest extends CDKTestCase {
+public class RingManipulatorTest extends NewCDKTestCase {
 
-	public RingManipulatorTest(String name) {
-        super(name);
+	public RingManipulatorTest() {
+        super();
     }
 	
-	public void setUp() {}
-	
-	public static Test suite() {
-		return new TestSuite(RingManipulatorTest.class);
-	}
-	
+
+    @Test
 	public void testMarkAromaticRings() {
 		IRing ring = new Ring(3, "C");
-		assertNotNull(ring);
+		Assert.assertNotNull(ring);
 		RingManipulator.markAromaticRings(ring);
-		assertFalse(ring.getFlag(CDKConstants.ISAROMATIC));
+		Assert.assertFalse(ring.getFlag(CDKConstants.ISAROMATIC));
 		
 		Iterator<IAtom> atoms = ring.atoms();
 		while (atoms.hasNext()) atoms.next().setFlag(CDKConstants.ISAROMATIC, true);
 		RingManipulator.markAromaticRings(ring);
-		assertFalse(ring.getFlag(CDKConstants.ISAROMATIC));
+		Assert.assertFalse(ring.getFlag(CDKConstants.ISAROMATIC));
 		
 		Iterator<IBond> bonds = ring.bonds();
 		while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISAROMATIC, true);
 		RingManipulator.markAromaticRings(ring);
-		assertTrue(ring.getFlag(CDKConstants.ISAROMATIC));
+		Assert.assertTrue(ring.getFlag(CDKConstants.ISAROMATIC));
 	}
 	
 }

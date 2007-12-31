@@ -24,25 +24,29 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
+
+import java.util.Iterator;
 
 /**
  * @cdk.module standard
  * @cdk.svnrev  $Revision: 9162 $
  */
+@TestClass("org.openscience.cdk.test.tools.manipulator.RingManipulatorTest")
 public class RingManipulator {
 
     /**
      * Marks the ring aromatic if all atoms and all bonds are aromatic.
      * 
-     * @param ringset
+     * @param next
      */
-	public static void markAromaticRings(IRing next) {
+    @TestMethod("testMarkAromaticRings")
+    public static void markAromaticRings(IRing next) {
 		// return as soon as the conditions are not met:
 		// 1. all atoms are labeled aromatic
 		Iterator<IAtom> atoms = next.atoms();

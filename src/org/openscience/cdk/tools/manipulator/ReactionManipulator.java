@@ -27,19 +27,13 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
 
 /**
  * @cdk.module standard
@@ -47,8 +41,10 @@ import org.openscience.cdk.interfaces.IReaction;
  *
  * @see ChemModelManipulator
  */
+@TestClass("org.openscience.cdk.test.tools.manipulator.ReactionManipulatorTest")
 public class ReactionManipulator {
-    
+
+    @TestMethod("testGetAtomCount_IReaction")
     public static int getAtomCount(IReaction reaction) {
     	int count = 0;
         IMoleculeSet reactants = reaction.getReactants();
@@ -61,7 +57,8 @@ public class ReactionManipulator {
         }
         return count;
     }
-    
+
+    @TestMethod("testGetBondCount_IReaction")
     public static int getBondCount(IReaction reaction) {
     	int count = 0;
     	IMoleculeSet reactants = reaction.getReactants();
@@ -74,7 +71,8 @@ public class ReactionManipulator {
         }
         return count;
     }
-    
+
+
     public static void removeAtomAndConnectedElectronContainers(IReaction reaction, IAtom atom) {
     	IMoleculeSet reactants = reaction.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
@@ -91,7 +89,7 @@ public class ReactionManipulator {
             }
         }
     }
-    
+
     public static void removeElectronContainer(IReaction reaction, IElectronContainer electrons) {
     	IMoleculeSet reactants = reaction.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
@@ -157,6 +155,7 @@ public class ReactionManipulator {
      * Returns a new Reaction object which is the reverse of the given
      * Reaction.
      */
+    @TestMethod("testReverse_IReaction")
     public static IReaction reverse(IReaction reaction) {
         IReaction reversedReaction = reaction.getBuilder().newReaction();
         if (reaction.getDirection() == IReaction.BIDIRECTIONAL) {
@@ -182,12 +181,14 @@ public class ReactionManipulator {
     /**
      * Returns all the AtomContainer's of a Reaction.
      */
+    @TestMethod("testGetAllAtomContainers_IReaction")
     public static List getAllAtomContainers(IReaction reaction) {
 		return MoleculeSetManipulator.getAllAtomContainers(
             getAllMolecules(reaction)
         );
     }
-    
+
+    @TestMethod("testGetAllIDs_IReaction")
     public static Vector getAllIDs(IReaction reaction) {
         Vector idList = new Vector();
         if (reaction.getID() != null) idList.addElement(reaction.getID());
@@ -204,6 +205,7 @@ public class ReactionManipulator {
         return idList;
     }
 
+    @TestMethod("testGetRelevantAtomContainer_IReaction_IAtom")
     public static IAtomContainer getRelevantAtomContainer(IReaction reaction, IAtom atom) {
         IAtomContainer result = MoleculeSetManipulator.getRelevantAtomContainer(reaction.getReactants(), atom);
         if (result != null) {
@@ -212,6 +214,7 @@ public class ReactionManipulator {
         return MoleculeSetManipulator.getRelevantAtomContainer(reaction.getProducts(), atom);
     }
 
+    @TestMethod("testGetRelevantAtomContainer_IReaction_IBond")
     public static IAtomContainer getRelevantAtomContainer(IReaction reaction, IBond bond) {
         IAtomContainer result = MoleculeSetManipulator.getRelevantAtomContainer(reaction.getReactants(), bond);
         if (result != null) {
@@ -219,7 +222,8 @@ public class ReactionManipulator {
         }
         return MoleculeSetManipulator.getRelevantAtomContainer(reaction.getProducts(), bond);
     }
-    
+
+    @TestMethod("testSetAtomProperties_IReactionSet_Object_Object")
     public static void setAtomProperties(IReaction reaction, Object propKey, Object propVal) {
     	IMoleculeSet reactants = reaction.getReactants();
         for (int j=0; j<reactants.getAtomContainerCount(); j++) {
@@ -234,7 +238,8 @@ public class ReactionManipulator {
             );
         }
     }
-    
+
+    @TestMethod("testGetAllChemObjects_IReactionSet")
     public static List getAllChemObjects(IReaction reaction) {
         ArrayList list = new ArrayList();
         list.add(reaction);
@@ -255,6 +260,7 @@ public class ReactionManipulator {
      * @param chemObject The IChemObject which will be searched its mapped IChemObject
      * @return           The mapped IChemObject
      */
+    @TestMethod("testGetMappedChemObject_IReaction_IAtom,testGetMappedChemObject_IReaction_IBond")
     public static IChemObject getMappedChemObject(IReaction reaction, IChemObject chemObject){
     	java.util.Iterator mappings = reaction.mappings();
     	while (mappings.hasNext()){
