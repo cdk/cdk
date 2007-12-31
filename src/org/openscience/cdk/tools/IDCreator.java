@@ -25,28 +25,13 @@
  */
 package org.openscience.cdk.tools;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.tools.manipulator.*;
+
 import java.util.Iterator;
 import java.util.List;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
-import org.openscience.cdk.tools.manipulator.ChemSequenceManipulator;
-import org.openscience.cdk.tools.manipulator.ReactionManipulator;
-import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
 
 /**
  * Class that provides methods to give unique IDs to ChemObjects.
@@ -62,6 +47,7 @@ import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
  *
  * @cdk.keyword  id, creation
  */
+@TestClass("org.openscience.cdk.test.tools.IDCreatorTest")
 public abstract class IDCreator {
 
 	private final static String REACTION_PREFIX = "r";
@@ -82,7 +68,8 @@ public abstract class IDCreator {
      * 
 	 * @param  chemObject IChemObject to create IDs for.
 	 */
-	public static void createIDs(IChemObject chemObject) {
+    @TestMethod("testCreateIDs_IChemObject,testKeepingIDs,testNoDuplicateCreation,testCallingTwice")
+    public static void createIDs(IChemObject chemObject) {
 		if (chemObject == null) return;
 		
 		if (chemObject instanceof IAtomContainer) {
@@ -108,7 +95,7 @@ public abstract class IDCreator {
 	 * @param object   IChemObject to set the ID for
 	 * @param tabuList Tabu list to add the ID to
 	 */
-    private static void setID(String identifier, IChemObject object, List tabuList) {
+    private static void setID(String identifier, IChemObject object, List<String> tabuList) {
 		object.setID(identifier);
 		tabuList.add(identifier);
 	}
@@ -117,9 +104,9 @@ public abstract class IDCreator {
      * Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
      * scheme often used in CML.
      *
-     * @see #createIDs(IAtomContainerSet)
+     * @see #createIDs(org.openscience.cdk.interfaces.IChemObject)
      */
-    private static void createIDsForAtomContainer(IAtomContainer container, List tabuList) {
+    private static void createIDsForAtomContainer(IAtomContainer container, List<String> tabuList) {
     	if (tabuList == null) tabuList = AtomContainerManipulator.getAllIDs(container);
     	
     	int moleculeCount = 1;
@@ -156,7 +143,7 @@ public abstract class IDCreator {
      * them m1, m2, etc.
      * It will not the AtomContainerSet itself.
      */
-    private static void createIDsForAtomContainerSet(IAtomContainerSet containerSet, List tabuList) {
+    private static void createIDsForAtomContainerSet(IAtomContainerSet containerSet, List<String> tabuList) {
         if (tabuList == null) tabuList = AtomContainerSetManipulator.getAllIDs(containerSet);
 
         int moleculeCount = 1;
@@ -179,7 +166,7 @@ public abstract class IDCreator {
      * Labels the reactants and products in the Reaction m1, m2, etc, and the atoms
      * accordingly, when no ID is given.
      */
-    private static void createIDsForReaction(IReaction reaction, List tabuList) {
+    private static void createIDsForReaction(IReaction reaction, List<String> tabuList) {
         if (tabuList == null) tabuList = ReactionManipulator.getAllIDs(reaction);
         
         int reactionCount = 1;
@@ -199,7 +186,7 @@ public abstract class IDCreator {
         }
     }
     
-    private static void createIDsForReactionSet(IReactionSet reactionSet, List tabuList) {
+    private static void createIDsForReactionSet(IReactionSet reactionSet, List<String> tabuList) {
     	if (tabuList == null) tabuList = ReactionSetManipulator.getAllIDs(reactionSet);
         
     	int rsetCount = 1;
@@ -212,7 +199,7 @@ public abstract class IDCreator {
         }
     }
     
-    private static void createIDsForChemFile(IChemFile file, List tabuList) {
+    private static void createIDsForChemFile(IChemFile file, List<String> tabuList) {
     	if (tabuList == null) tabuList = ChemFileManipulator.getAllIDs(file);
         
     	int fileCount = 1;
@@ -227,7 +214,7 @@ public abstract class IDCreator {
     	}
     }
     
-    private static void createIDsForChemSequence(IChemSequence sequence, List tabuList) {
+    private static void createIDsForChemSequence(IChemSequence sequence, List<String> tabuList) {
     	if (tabuList == null) tabuList = ChemSequenceManipulator.getAllIDs(sequence);
         
     	int sequenceCount = 1;
@@ -242,7 +229,7 @@ public abstract class IDCreator {
     	}
     }
     
-    private static void createIDsForChemModel(IChemModel model, List tabuList) {
+    private static void createIDsForChemModel(IChemModel model, List<String> tabuList) {
     	if (tabuList == null) tabuList = ChemModelManipulator.getAllIDs(model);
         
     	int modelCount = 1;
