@@ -46,26 +46,26 @@ public class    DescriptorEngineTest extends CDKTestCase {
 
     public void testConstructor() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
-        assertTrue(engine != null);
-        assertTrue(engine.getDescriptorInstances().size() > 0);
-        assertTrue(engine.getDescriptorClassNames().size() > 0);
-        assertTrue(engine.getDescriptorSpecifications().size() > 0);
+        assertNotNull(engine);
+        assertNotSame(0, engine.getDescriptorInstances().size());
+        assertNotSame(0, engine.getDescriptorClassNames().size());
+        assertNotSame(0, engine.getDescriptorSpecifications().size());
     }
 
     public void testConstructor_Atomic() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.ATOMIC);
-        assertTrue(engine != null);
-        assertTrue(engine.getDescriptorInstances().size() > 0);
-        assertTrue(engine.getDescriptorClassNames().size() > 0);
-        assertTrue(engine.getDescriptorSpecifications().size() > 0);
+        assertNotNull(engine);
+        assertNotSame(0, engine.getDescriptorInstances().size());
+        assertNotSame(0, engine.getDescriptorClassNames().size());
+        assertNotSame(0, engine.getDescriptorSpecifications().size());
     }
 
     public void testConstructor_Bond() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.BOND);
-        assertTrue(engine != null);
-        assertTrue(engine.getDescriptorInstances().size() > 0);
-        assertTrue(engine.getDescriptorClassNames().size() > 0);
-        assertTrue(engine.getDescriptorSpecifications().size() > 0);
+        assertNotNull(engine);
+        assertNotSame(0, engine.getDescriptorInstances().size());
+        assertNotSame(0, engine.getDescriptorClassNames().size());
+        assertNotSame(0, engine.getDescriptorSpecifications().size());
     }
 
     public void testDictionaryType() {
@@ -95,13 +95,13 @@ public class    DescriptorEngineTest extends CDKTestCase {
         String[] dictClass = engine.getDictionaryClass(className);
         Assert.assertEquals(2, dictClass.length);
         System.out.println(dictClass[0]+" "+dictClass[1]);
-        Assert.assertTrue("topologicalDescriptor".equals(dictClass[0]));
-        Assert.assertTrue("electronicDescriptor".equals(dictClass[1]));
+        Assert.assertEquals("topologicalDescriptor", dictClass[0]);
+        Assert.assertEquals("electronicDescriptor", dictClass[1]);
 
         dictClass = engine.getDictionaryClass(specRef);
         Assert.assertEquals(2, dictClass.length);
-        Assert.assertTrue("topologicalDescriptor".equals(dictClass[0]));
-        Assert.assertTrue("electronicDescriptor".equals(dictClass[1]));
+        Assert.assertEquals("topologicalDescriptor", dictClass[0]);
+        Assert.assertEquals("electronicDescriptor", dictClass[1]);
     }
 
     public void testAvailableClass() {
