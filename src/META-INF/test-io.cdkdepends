@@ -10,6 +10,7 @@ cdk-valencycheck.jar
 cdk-libio-cml.jar
 cdk-pdb.jar
 cdk-qsar.jar
+cdk-qsarmolecular.jar
 cdk-qsar-cml.jar
 cdk-qsar-pdb.jar
 cdk-pdb-cml.jar
