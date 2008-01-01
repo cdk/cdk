@@ -324,7 +324,7 @@ public class DescriptorEngine {
             logger.error("Cannot determine specification for id: ", identifier);
             return new String[0];
         }
-        List dictClasses = new ArrayList();
+        List<String> dictClasses = new ArrayList<String>();
 
         for (int j = 0; j < dictEntries.length; j++) {
             if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
@@ -464,7 +464,7 @@ public class DescriptorEngine {
      * @param specs A list of specification objects
      * @see #getDescriptorSpecifications
      */
-    public void setDescriptorSpecifications(List specs) {
+    public void setDescriptorSpecifications(List<DescriptorSpecification> specs) {
         speclist = specs;
     }
 
@@ -492,7 +492,7 @@ public class DescriptorEngine {
      * @param descriptors A List of descriptor objects
      * @see #getDescriptorInstances()
      */
-    public void setDescriptorInstances(List descriptors) {
+    public void setDescriptorInstances(List<IDescriptor> descriptors) {
         this.descriptors = descriptors;
     }
 
@@ -502,13 +502,13 @@ public class DescriptorEngine {
      * @return An array containing the unique dictionary classes.
      */
     public String[] getAvailableDictionaryClasses() {
-        List classList = new ArrayList();
+        List<String> classList = new ArrayList<String>();
         for (Iterator iter = speclist.iterator(); iter.hasNext();) {
             DescriptorSpecification spec = (DescriptorSpecification) iter.next();
             String[] tmp = getDictionaryClass(spec);
             if (tmp != null) classList.addAll(Arrays.asList(tmp));
         }
-        Set uniqueClasses = new HashSet(classList);
+        Set<String> uniqueClasses = new HashSet<String>(classList);
         return (String[]) uniqueClasses.toArray(new String[]{});
     }
 
@@ -551,7 +551,7 @@ public class DescriptorEngine {
             jars = jarFileNames;
         }
 
-        ArrayList classlist = new ArrayList();
+        List<String> classlist = new ArrayList<String>();
         for (int i = 0; i < jars.length; i++) {
             logger.debug("Looking in " + jars[i]);
             JarFile jarFile;
