@@ -18,6 +18,7 @@
   <rule ref="rulesets/strings.xml"/>
   <rule ref="rulesets/codesize.xml"/>
   <rule ref="rulesets/strictexception.xml"/>
+  <rule ref="pmd/migrating.xml"/>
 
   <!-- Rules specific for CDK -->
 
