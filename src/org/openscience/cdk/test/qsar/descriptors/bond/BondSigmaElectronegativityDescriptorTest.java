@@ -1,9 +1,7 @@
-/* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-05-04 21:29:58 +0200 (Do, 04 Mai 2006) $
- * $Revision: 6171 $
+/* $Revision: 5865 $ $Author: egonw $ $Date: 2006-03-30 00:42:34 +0200 (Thu, 30 Mar 2006) $
  * 
- *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ * Copyright (C) 2004-2008  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ *                          Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -29,11 +27,10 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.BondSigmaElectronegativityDescriptor;
+import org.openscience.cdk.qsar.descriptors.bond.MassNumberDifferenceDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
 /**
@@ -41,9 +38,11 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  *
  * @cdk.module test-qsarmolecular
  */
-public class BondSigmaElectronegativityDescriptorTest extends CDKTestCase {
+public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest {
 	
-	private IBondDescriptor descriptor;
+	public void setUp() throws Exception {
+		super.setDescriptor(MassNumberDifferenceDescriptor.class);
+	}
 	
 	public  BondSigmaElectronegativityDescriptorTest() {
 		descriptor  = new BondSigmaElectronegativityDescriptor() ;

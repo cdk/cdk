@@ -1,9 +1,7 @@
-/* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-03-30 00:42:34 +0200 (Thu, 30 Mar 2006) $
- * $Revision: 5865 $
+/* $Revision: 5865 $ $Author: egonw $ $Date: 2006-03-30 00:42:34 +0200 (Thu, 30 Mar 2006) $
  * 
- *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ * Copyright (C) 2004-2008  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ *                          Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -31,11 +29,10 @@ import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.IBondDescriptor;
+import org.openscience.cdk.qsar.descriptors.bond.MassNumberDifferenceDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.ResonancePositiveChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
 /**
@@ -43,8 +40,12 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  *
  * @cdk.module test-qsarmolecular
  */
-public class ResonancePositiveChargeDescriptorTest extends CDKTestCase {
-	private IBondDescriptor descriptor;
+public class ResonancePositiveChargeDescriptorTest extends BondDescriptorTest {
+	
+	public void setUp() throws Exception {
+		super.setDescriptor(MassNumberDifferenceDescriptor.class);
+	}
+	
 	/**
 	 *  Constructor for the ResonancePositiveChargeDescriptorTest object
 	 *
