@@ -1,6 +1,6 @@
 /* $Revision: 5855 $ $Author: egonw $ $Date: 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) $
  * 
- * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2007-2008  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,6 +22,8 @@ package org.openscience.cdk.qsar.descriptors.bond;
 
 import java.io.IOException;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -44,12 +46,12 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondMassNumberInbalance
  */
+@TestClass("org.openscience.cdk.test.qsar.descriptors.bond.MassNumberDifferenceDescriptorTest")
 public class MassNumberDifferenceDescriptor implements IBondDescriptor {
 
 	private static IsotopeFactory factory = null;
 	
 	private final static String DESCRIPTOR_VALUE_NAME = "MNDiff";
-	
 	
     public MassNumberDifferenceDescriptor() {
     	if (factory == null) {
@@ -62,6 +64,7 @@ public class MassNumberDifferenceDescriptor implements IBondDescriptor {
     	}
     }
 
+	@TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondMassNumberInbalance",
@@ -70,9 +73,11 @@ public class MassNumberDifferenceDescriptor implements IBondDescriptor {
             "The Chemistry Development Kit");
     }
 
+	@TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
     }
 
+	@TestMethod("testGetParameters")
     public Object[] getParameters() {
         return null;
     }
