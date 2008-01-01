@@ -470,7 +470,7 @@ public class BondTools {
 				}
 			}
 			boolean[] symbolsWithDifferentMorganNumbers = new boolean[differentSymbols.size()];
-			Vector<Long>[] symbolsMorganNumbers = null;
+			Vector<Long>[] symbolsMorganNumbers = new Vector[symbolsWithDifferentMorganNumbers.length];
 			for (int i = 0; i < symbolsWithDifferentMorganNumbers.length; i++)
 			{
 				symbolsWithDifferentMorganNumbers[i] = true;
