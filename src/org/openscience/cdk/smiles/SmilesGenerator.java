@@ -1571,7 +1571,7 @@ public class SmilesGenerator
 			String charge = generateChargeString(a);
 			brackets = brackets | !charge.equals("");
 
-			if (chiral && stereo)
+			if (chiral && stereo && (BondTools.isTrigonalBipyramidalOrOctahedral(container, a)!=0 || BondTools.isSquarePlanar(container, a) || BondTools.isTetrahedral(container, a,false) != 0 || BondTools.isSquarePlanar(container, a)))
 			{
 				brackets = true;
 			}
@@ -1680,12 +1680,15 @@ public class SmilesGenerator
 		while (it.hasNext())
 		{
 			Integer integer = (Integer) it.next();
-			IBond b = container.getBond((IAtom) it2.next(), a);
+			IAtom a2=(IAtom) it2.next();
+			IBond b = container.getBond(a2, a);
 			IBond.Order type = b.getOrder();
-			if (type == IBond.Order.DOUBLE) {
-				buffer.append("=");
-			} else if (type == IBond.Order.TRIPLE) {
-				buffer.append("#");
+			if (!(useAromaticity && a.getFlag(CDKConstants.ISAROMATIC) && a2.getFlag(CDKConstants.ISAROMATIC))){
+				if (type == IBond.Order.DOUBLE) {
+					buffer.append("=");
+				} else if (type == IBond.Order.TRIPLE) {
+					buffer.append("#");
+				}
 			}
 			buffer.append(integer);
 		}
