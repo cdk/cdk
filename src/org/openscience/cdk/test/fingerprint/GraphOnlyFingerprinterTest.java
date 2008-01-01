@@ -89,7 +89,7 @@ public class GraphOnlyFingerprinterTest extends NewCDKTestCase {
 	 * @see testExtendedFingerPrint()
 	 */
     @Test
-    public static void testFingerPrint() throws Exception {
+    public void testFingerPrint() throws Exception {
     	IFingerprinter printer = new GraphOnlyFingerprinter();
 
     	Molecule mol1 = createMolecule(molecule_test_2);
