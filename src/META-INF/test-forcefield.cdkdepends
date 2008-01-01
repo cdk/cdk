@@ -8,6 +8,7 @@ cdk-extra.jar
 cdk-pdb.jar
 cdk-qsar.jar
 cdk-qsar-pdb.jar
+cdk-qsaratomic.jar
 cdk-valencycheck.jar
 cdk-forcefield.jar
 cdk-smiles.jar
