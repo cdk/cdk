@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.SpanningTree;
@@ -54,6 +56,7 @@ import java.util.List;
  * @cdk.module    standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.ringsearch.AllRingsFinderTest")
 public class AllRingsFinder
 {
 	private final LoggingTool logger = new LoggingTool(AllRingsFinder.class);
@@ -67,9 +70,9 @@ public class AllRingsFinder
 	 *  reference purposes (printing)
 	 */
 	IAtomContainer originalAc = null;
-	List newPaths = new ArrayList();
-	List potentialRings = new ArrayList();
-	List removePaths = new ArrayList();
+	List<Path> newPaths = new ArrayList<Path>();
+	List<Path> potentialRings = new ArrayList<Path>();
+	List<Path> removePaths = new ArrayList<Path>();
 
 
 	/**
@@ -79,7 +82,8 @@ public class AllRingsFinder
 	 *@return                   A RingSet with all rings in the AtomContainer
 	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
 	 */
-	public IRingSet findAllRings(IAtomContainer atomContainer) throws CDKException
+    @TestMethod("testFindAllRings_IAtomContainer,testBondsWithinRing")
+    public IRingSet findAllRings(IAtomContainer atomContainer) throws CDKException
 	{
 		startTime = System.currentTimeMillis();
 		SpanningTree spanningTree = new SpanningTree(atomContainer);
@@ -100,12 +104,13 @@ public class AllRingsFinder
 	 *@return                   a RingSet containing the rings in molecule
 	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
 	 */
-	public IRingSet findAllRingsInIsolatedRingSystem(IAtomContainer atomContainer) throws CDKException
+
+    public IRingSet findAllRingsInIsolatedRingSystem(IAtomContainer atomContainer) throws CDKException
 	{
 		if (startTime == 0) {
 			startTime = System.currentTimeMillis();
 		}
-		List paths = new ArrayList();
+		List<Path> paths = new ArrayList<Path>();
 		IRingSet ringSet = atomContainer.getBuilder().newRingSet();
 		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
 		originalAc = atomContainer;
@@ -121,7 +126,7 @@ public class AllRingsFinder
 	 *@param  ringSet           A ringset to be extended while we search
 	 *@exception  CDKException  An exception thrown if something goes wrong or if the timeout limit is reached
 	 */
-	private void doSearch(IAtomContainer ac, List paths, IRingSet ringSet) throws CDKException
+	private void doSearch(IAtomContainer ac, List<Path> paths, IRingSet ringSet) throws CDKException
 	{
 		IAtom atom;
 		/*
@@ -182,7 +187,7 @@ public class AllRingsFinder
 	 *@param  rings             The ringset to be extended
 	 *@exception  CDKException  Thrown if something goes wrong or if the timeout is exceeded
 	 */
-	private void remove(IAtom atom, IAtomContainer ac, List paths, IRingSet rings) throws CDKException
+	private void remove(IAtom atom, IAtomContainer ac, List<Path> paths, IRingSet rings) throws CDKException
 	{
 		Path path1;
 		Path path2;
@@ -195,13 +200,13 @@ public class AllRingsFinder
 
 		for (int i = 0; i < paths.size(); i++)
 		{
-			path1 = (Path) paths.get(i);
+			path1 = paths.get(i);
 			if (path1.firstElement() == atom || path1.lastElement() == atom)
 			{
 				for (int j = i + 1; j < paths.size(); j++)
 				{
 					//logger.debug(".");
-					path2 = (Path) paths.get(j);
+					path2 = paths.get(j);
 					if (path2.firstElement() == atom || path2.lastElement() == atom)
 					{
 						intersectionSize = path1.getIntersectionSize(path2);
@@ -230,14 +235,12 @@ public class AllRingsFinder
 				}
 			}
 		}
-		for (int f = 0; f < removePaths.size(); f++)
-		{
-			paths.remove(removePaths.get(f));
-		}
-		for (int f = 0; f < newPaths.size(); f++)
-		{
-			paths.add(newPaths.get(f));
-		}
+        for (Path removePath : removePaths) {
+            paths.remove(removePath);
+        }
+        for (Path newPath : newPaths) {
+            paths.add(newPath);
+        }
 		detectRings(potentialRings, rings, originalAc);
 		ac.removeAtomAndConnectedElectronContainers(atom);
 		logger.debug("\n" + paths.size() + " paths and " + ac.getAtomCount() + " atoms left.");
@@ -251,53 +254,48 @@ public class AllRingsFinder
 	 *@param  ringSet  The ringset to add the detected rings to
 	 *@param  ac       The AtomContainer with the original structure
 	 */
-	private void detectRings(List paths, IRingSet ringSet, IAtomContainer ac)
+	private void detectRings(List<Path> paths, IRingSet ringSet, IAtomContainer ac)
 	{
-		Path path;
 		IRing ring;
 		int bondNum;
 		IAtom a1, a2 = null;
-		for (int f = 0; f < paths.size(); f++)
-		{
-			path = (Path) paths.get(f);
-			if (path.size() > 3 && path.lastElement() == path.firstElement())
-			{
-				logger.debug("Removing path " + path.toString(originalAc) + " which is a ring.");
-				path.removeElementAt(0);
-				ring = ac.getBuilder().newRing();
-				for (int g = 0; g < path.size() - 1; g++)
-				{
-					a1 = (IAtom) path.elementAt(g);
-					a2 = (IAtom) path.elementAt(g + 1);
-					ring.addAtom(a1);
-					bondNum = ac.getBondNumber(a1, a2);
-					//logger.debug("bondNum " + bondNum);
-					ring.addBond(ac.getBond(bondNum));
-				}
-				ring.addAtom(a2);
-				a1 = (IAtom) path.elementAt(0);
-				a2 = (IAtom) path.elementAt(path.size()-1);
-				ring.addAtom(a1);
-				bondNum = ac.getBondNumber(a1, a2);
-				//logger.debug("bondNum " + bondNum);
-				ring.addBond(ac.getBond(bondNum));
+        for (Path path : paths) {
+            if (path.size() > 3 && path.lastElement() == path.firstElement()) {
+                logger.debug("Removing path " + path.toString(originalAc) + " which is a ring.");
+                path.removeElementAt(0);
+                ring = ac.getBuilder().newRing();
+                for (int g = 0; g < path.size() - 1; g++) {
+                    a1 = (IAtom) path.elementAt(g);
+                    a2 = (IAtom) path.elementAt(g + 1);
+                    ring.addAtom(a1);
+                    bondNum = ac.getBondNumber(a1, a2);
+                    //logger.debug("bondNum " + bondNum);
+                    ring.addBond(ac.getBond(bondNum));
+                }
+                ring.addAtom(a2);
+                a1 = (IAtom) path.elementAt(0);
+                a2 = (IAtom) path.elementAt(path.size() - 1);
+                ring.addAtom(a1);
+                bondNum = ac.getBondNumber(a1, a2);
+                //logger.debug("bondNum " + bondNum);
+                ring.addBond(ac.getBond(bondNum));
 
-				/*
-				 * The following code had a problem when two atom in the ring 
-				 * found are connected the in orignal graph but do not belong
-				 * to this particular ring.
-				 IBond[] bonds = ac.getBonds();
-				for (int g = 0; g < bonds.length; g++)
-				{
-					bond = bonds[g];
-					if (ring.contains(bond.getAtom(0)) && ring.contains(bond.getAtom(1)))
-					{
-						ring.addBond(bond);
-					}
-				}*/
-				ringSet.addAtomContainer(ring);
-			}
-		}
+                /*
+                     * The following code had a problem when two atom in the ring
+                     * found are connected the in orignal graph but do not belong
+                     * to this particular ring.
+                     IBond[] bonds = ac.getBonds();
+                    for (int g = 0; g < bonds.length; g++)
+                    {
+                        bond = bonds[g];
+                        if (ring.contains(bond.getAtom(0)) && ring.contains(bond.getAtom(1)))
+                        {
+                            ring.addBond(bond);
+                        }
+                    }*/
+                ringSet.addAtomContainer(ring);
+            }
+        }
 	}
 
 
@@ -308,7 +306,7 @@ public class AllRingsFinder
 	 *@param  ac      The AtomContainer with the original structure
 	 *@param  paths  The paths to initialize
 	 */
-	private void initPathGraph(IAtomContainer ac, List paths)
+	private void initPathGraph(IAtomContainer ac, List<Path> paths)
 	{
 		Path path;
 
@@ -360,7 +358,8 @@ public class AllRingsFinder
 	 *
 	 *@exception  CDKException  The exception thrown in case of hitting the timeout
 	 */
-	public void checkTimeout() throws CDKException
+    @TestMethod("testCheckTimeout")
+    public void checkTimeout() throws CDKException
 	{
 		if (startTime == 0) return;
 		long time = System.currentTimeMillis();
@@ -380,7 +379,8 @@ public class AllRingsFinder
 	 *@param  timeout  The new timeout value
    * @return a reference to the instance this method was called for
 	 */
-	public AllRingsFinder setTimeout(long timeout)
+    @TestMethod("testSetTimeout_long")
+    public AllRingsFinder setTimeout(long timeout)
 	{
 		this.timeout = timeout;
     return this;
@@ -392,7 +392,8 @@ public class AllRingsFinder
 	 *
 	 *@return    The timeout value
 	 */
-	public long getTimeout()
+    @TestMethod("testGetTimeout")
+    public long getTimeout()
 	{
 		return timeout;
 	}
