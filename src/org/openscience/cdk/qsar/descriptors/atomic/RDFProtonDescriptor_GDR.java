@@ -579,7 +579,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
      */
     @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
-        if (name.equals("checkAromaticity")) return null;
-        return Boolean.TRUE;
+        if (name.equals("checkAromaticity")) return Boolean.TRUE;
+        return null;
     }
 }
