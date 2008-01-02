@@ -74,7 +74,10 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         assertNotNull(retval);
         /* System.out.println("Num ret = "+retval.size()); */
         for (int i = 0; i < retval.length(); i++) {
-            assertTrue(Math.abs(0.0 - retval.get(i)) > 0.0000001);
+            assertTrue(
+            	"The returned value must be non-zero",
+            	Math.abs(0.0 - retval.get(i)) > 0.0000001
+            );
         }
 
         String[] names = descriptorValue.getNames();
