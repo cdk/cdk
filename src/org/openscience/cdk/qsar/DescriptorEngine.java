@@ -63,7 +63,7 @@ import java.util.jar.JarFile;
  * obtain its classification as described in the CDK descriptor-algorithms OWL dictionary.
  *
  * @cdk.created 2004-12-02
- * @cdk.module qsar
+ * @cdk.module qsarmolecular
  * @cdk.svnrev  $Revision$
  * @cdk.depends xom-1.0.jar
  * @see DescriptorSpecification

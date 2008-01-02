@@ -33,7 +33,7 @@ import org.openscience.cdk.test.CDKTestCase;
 /**
  * TestSuite that runs all tests for the DescriptorEngine.
  *
- * @cdk.module test-qsar
+ * @cdk.module test-qsarmolecular
  */
 public class    DescriptorEngineTest extends CDKTestCase {
 
@@ -47,25 +47,33 @@ public class    DescriptorEngineTest extends CDKTestCase {
     public void testConstructor() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
         assertNotNull(engine);
-        assertNotSame(0, engine.getDescriptorInstances().size());
-        assertNotSame(0, engine.getDescriptorClassNames().size());
-        assertNotSame(0, engine.getDescriptorSpecifications().size());
+    }
+        
+    public void testLoadingOfMolecularDescriptors() {
+    	DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+        assertNotNull(engine);
+        int loadedDescriptors = engine.getDescriptorInstances().size(); 
+        assertNotSame(0, loadedDescriptors);
+        assertEquals(loadedDescriptors, engine.getDescriptorClassNames().size());
+        assertEquals(loadedDescriptors, engine.getDescriptorSpecifications().size());
     }
 
-    public void testConstructor_Atomic() {
+    public void testLoadingOfAtomicDescriptors() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.ATOMIC);
         assertNotNull(engine);
-        assertNotSame(0, engine.getDescriptorInstances().size());
-        assertNotSame(0, engine.getDescriptorClassNames().size());
-        assertNotSame(0, engine.getDescriptorSpecifications().size());
+        int loadedDescriptors = engine.getDescriptorInstances().size(); 
+        assertNotSame(0, loadedDescriptors);
+        assertEquals(loadedDescriptors, engine.getDescriptorClassNames().size());
+        assertEquals(loadedDescriptors, engine.getDescriptorSpecifications().size());
     }
 
-    public void testConstructor_Bond() {
+    public void testLoadingOfBondDescriptors() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.BOND);
         assertNotNull(engine);
-        assertNotSame(0, engine.getDescriptorInstances().size());
-        assertNotSame(0, engine.getDescriptorClassNames().size());
-        assertNotSame(0, engine.getDescriptorSpecifications().size());
+        int loadedDescriptors = engine.getDescriptorInstances().size(); 
+        assertNotSame(0, loadedDescriptors);
+        assertEquals(loadedDescriptors, engine.getDescriptorClassNames().size());
+        assertEquals(loadedDescriptors, engine.getDescriptorSpecifications().size());
     }
 
     public void testDictionaryType() {
@@ -106,7 +114,10 @@ public class    DescriptorEngineTest extends CDKTestCase {
 
     public void testAvailableClass() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
-        String[] availClasses = engine.getAvailableDictionaryClasses();        
+        String[] availClasses = engine.getAvailableDictionaryClasses();    
+        for (int i=0; i<availClasses.length; i++) {
+        	System.out.println("avail class: " + availClasses[i]);
+        }
         Assert.assertEquals(6, availClasses.length);
     }
 }

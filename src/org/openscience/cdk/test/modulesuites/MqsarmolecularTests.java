@@ -29,6 +29,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.QsarmolecularCoverageTest;
 import org.openscience.cdk.test.qsar.ChiIndexUtilsTest;
+import org.openscience.cdk.test.qsar.DescriptorEngineTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.IPAtomicDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.PartialTChargePEOEDescriptorTest;
 import org.openscience.cdk.test.qsar.descriptors.atomic.SigmaElectronegativityDescriptorTest;
@@ -84,15 +85,14 @@ import org.openscience.cdk.test.qsar.descriptors.molecular.ZagrebIndexDescriptor
 /**
  * TestSuite that runs all the sample tests.
  *
- * @cdk.module test-qsarmolecular
+ * @cdk.module  test-qsarmolecular
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
+ * 
+ * @cdk.bug     1860497
  */
 public class MqsarmolecularTests {
 
-	/**
-	 * @cdk.bug 1860497
-	 */
     public static Test suite() {
 
         TestSuite suite = new TestSuite("All QSAR Tests");
@@ -101,6 +101,7 @@ public class MqsarmolecularTests {
         
         // Individual Tests - Please add correlatively	
         suite.addTest(ChiIndexUtilsTest.suite());
+        suite.addTest(DescriptorEngineTest.suite());
 
 //      from cdk.test.qsar.atomic
 //      FIXME: see bug #1860497
