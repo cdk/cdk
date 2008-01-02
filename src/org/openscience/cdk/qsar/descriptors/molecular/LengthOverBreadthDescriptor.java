@@ -7,6 +7,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -14,6 +15,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 import Jama.Matrix;
 
@@ -32,12 +34,13 @@ import Jama.Matrix;
  * </ul>
  * <B>Note:</B> The descriptor assumes that the atoms have been configured.
  *
- * @author Rajarshi Guha
+ * @author      Rajarshi Guha
  * @cdk.created 2006-09-26
- * @cdk.module qsarmolecular
+ * @cdk.module  qsarmolecular
  * @cdk.svnrev  $Revision: 9162 $
- * @cdk.set qsar-descriptors
+ * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:lengthOverBreadth
+ * @cdk.bug     1862142
  */
 public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
@@ -215,7 +218,10 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
             System.arraycopy(coords[i], 0, coord, 0, coords[0].length);
             if (withRadii) {
                 IAtom atom = atomContainer.getAtom(i);
-                atomTypeFactory.configure(atom);
+                // FIXME (see bug #1862142): should really do proper atom type perception here
+                IAtomType[] types = atomTypeFactory.getAtomTypes(atom.getSymbol());
+                if (types.length == 0) throw new CDKException("Could not determine covalent radius for: " + atom);
+                AtomTypeManipulator.configure(atom,types[0]);
 
                 // TODO: is this the same as the VDW radius?
                 double radius = atom.getCovalentRadius();
