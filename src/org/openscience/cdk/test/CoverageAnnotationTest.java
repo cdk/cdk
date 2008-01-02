@@ -116,7 +116,6 @@ abstract public class CoverageAnnotationTest extends CDKTestCase {
         for (Method method : sourceMethods) {
             int modifiers = method.getModifiers();
             if (Modifier.isPrivate(modifiers) || Modifier.isProtected(modifiers)) continue;
-            if (method.getName().equals("toString")) continue;
 
             TestMethod testMethodAnnotation = method.getAnnotation(TestMethod.class);
 
