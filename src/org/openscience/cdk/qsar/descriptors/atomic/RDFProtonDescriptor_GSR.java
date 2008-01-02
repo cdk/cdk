@@ -363,6 +363,7 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
 	Point3d middlePoint = new Point3d();
 	double angle = 0;		
 	
+	descriptorNames = new String[gsr_desc_length];
 	if(singles.size() > 0) {
 		double dist0;
 		double dist1;
@@ -375,6 +376,7 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
 		limitSup = Math.PI / 2;
 		step = (limitSup - limitInf)/7;
 		smooth = -1.15;
+		int counter = 0;
 		for(double ghs = 0; ghs < limitSup; ghs = ghs + step) {
 			sum = 0;
 			for( int sing = 0; sing < singles.size(); sing++ ) {
@@ -406,10 +408,15 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
 			//gSr_function.add(new Double(sum));
 			rdfProtonCalculatedValues.add(sum);
 			logger.debug("RDF gSr prob.: " + sum +  " at distance " + ghs);
+			descriptorNames[counter-1] = "gSr_" + counter;
+			counter++;
 		}
 	}
 	else {
-		for (int i=0; i<gsr_desc_length; i++) rdfProtonCalculatedValues.add(Double.NaN);
+		for (int i=0; i<gsr_desc_length; i++) {
+			rdfProtonCalculatedValues.add(Double.NaN);
+			descriptorNames[i] = "gSr_" + (i+1);
+		}
 	}
 	return new DescriptorValue(
 		getSpecification(), getParameterNames(), 
