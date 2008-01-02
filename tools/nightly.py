@@ -375,8 +375,8 @@ def writeJunitSummaryHTML(stats, stable=True):
     totalError = 0
     
     for entry in stats:
-        if stable and (entry[0] == 'experimental'): continue
-        if not stable and entry[0] != 'experimental': continue
+        if stable and (entry[0] in ['experimental','builder3d','structgen']): continue
+        if not stable and entry[0] not in [ 'experimental', 'builder3d', 'structgen']: continue
         
         if int(entry[1]) != -1:
             totalTest = totalTest + int(entry[1])
@@ -946,6 +946,7 @@ if __name__ == '__main__':
     successDoccheck = True
     successPMD = True
     successPMDUnused = True
+    successPMDMigrate = True
     successSVN = True
     successJCP = True
 
@@ -1050,6 +1051,7 @@ if __name__ == '__main__':
             successDoccheck = runAntJob('nice -n 19 ant -lib %s  -f javadoc.xml doccheck' % (ant_libs), 'doccheck.log', 'doccheck')
             successPMD = runAntJob('nice -n 19 ant -lib %s -f pmd.xml pmd' % (ant_libs), 'pmd.log', 'pmd')
             successPMDUnused = runAntJob('nice -n 19 ant -lib %s  -f pmd-unused.xml' % (ant_libs), 'pmdu.log', 'pmdu')            
+            successPMDMigrate = runAntJob('nice -n 19 ant -lib %s  -f pmd-migrating.xml' % (ant_libs), 'pmdm.log', 'pmdu')            
         else: # if the distro could not be built, there's not much use doing the other stuff
             print 'Distro compile failed. Generating error page'
             srcFile = os.path.join(nightly_dir, 'build.log')
@@ -1450,7 +1452,42 @@ if __name__ == '__main__':
                             os.path.join(nightly_web, 'pmd.log'))
             resultTable.addCell("<a href=\"pmd.log\">pmd.log</a>")
 
-            
+    resultTable.addRow()
+    resultTable.addCell("<ahref=\"http://pmd.sourceforge.net/\">PMD</a> results:<br><i><b>Migration (1.5)</b></i>")
+    if successPMDMigrate:
+	print '  Generating PMD-Migrating section'
+        os.mkdir(os.path.join(nightly_web,'pmd-migrating'))
+        # transform the PMD XML output to nice HTML
+        xmlFiles = glob.glob(os.path.join(nightly_repo,'reports/pmd-migrating/*.xml'))
+        xmlFiles.sort()
+        count = 1
+        s = ''
+        for xmlFile in xmlFiles:
+            prefix = os.path.basename(xmlFile).split('.')[0]
+            htmlFile = os.path.join(nightly_web, 'pmd-migrating', prefix)+'.html'
+            xsltFile = os.path.join(nightly_repo,'pmd','wz-pmd-report.xslt')
+            transformXML2HTML(xmlFile, htmlFile, xsltFile)
+            s = s+"<a href=\"pmd-migrating/%s\">%s</a>\n" % (os.path.basename(htmlFile), prefix)
+            if count % per_line == 0: s += "<br>"
+            count += 1
+        resultTable.addCell(s)
+
+        pmdSummary = parsePMDOutput('pmd-migrating', 'CDK PMD Migrating Code Summary')
+        if not pmdSummary == None:
+            o = open(os.path.join(nightly_web, 'pmdmsummary.html'), 'w')
+            o.write(pmdSummary)
+            o.close()
+            resultTable.addCell('<a href="pmdmsummary.html">Summary</a>')
+
+    else: # PMD stage failed for some reason
+        resultTable.addCell("<b>FAILED</b>", klass="tdfail")
+        if os.path.exists( os.path.join(nightly_dir, 'pmdm.log') ):
+            shutil.copyfile(os.path.join(nightly_dir, 'pmdm.log'),
+                            os.path.join(nightly_web, 'pmdm.log'))
+            resultTable.addCell("<a href=\"pmdm.log\">pmdm.log</a>")
+
+
+	        
     resultTable.addRow()
     resultTable.addCell("<a href=\"http://pmd.sourceforge.net/\">PMD</a> results:<br><i><b>Unused Code</b></i>")
     if successPMDUnused:
