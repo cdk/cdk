@@ -363,6 +363,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
 	Point3d middlePoint = new Point3d();
 	double angle;
 	
+	descriptorNames = new String[gdr_desc_length];
 	if(doubles.size() > -0.0001) {
 		IAtom goodAtom0;
 		IAtom goodAtom1;
@@ -376,6 +377,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
 		int goodPosition = 0;
 		org.openscience.cdk.interfaces.IBond goodBond;
 		ArrayList gDr_function = new ArrayList(7);
+		int counter = 0;
 		for(double ghd = limitInf; ghd < limitSup; ghd = ghd + step) {
 			sum = 0;
 			for( int dou = 0; dou < doubles.size(); dou++ ) {
@@ -409,11 +411,15 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
 			//gDr_function.add(new Double(sum));
 			rdfProtonCalculatedValues.add(sum);
 			logger.debug("GDR prob dist.: " + sum + " at distance " + ghd);
-
+			descriptorNames[counter] = "gDr_" + (counter+1);
+			counter++;
 		}
 	}
 	else {
-		for (int i=0; i<gdr_desc_length; i++) rdfProtonCalculatedValues.add(Double.NaN);
+		for (int i=0; i<gdr_desc_length; i++) {
+			rdfProtonCalculatedValues.add(Double.NaN);
+			descriptorNames[i] = "gDr_" + (i+1);
+		}
 	}
 	return new DescriptorValue(
 		getSpecification(), getParameterNames(), 

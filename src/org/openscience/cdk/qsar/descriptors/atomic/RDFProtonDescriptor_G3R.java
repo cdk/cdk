@@ -476,6 +476,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		Vector3d b_b = new Vector3d();
 		double angle = 0;
 
+		descriptorNames = new String[g3r_desc_length];
 		if (bondsInCycloex.size() > 0) {
 			IAtom cycloexBondAtom0;
 			IAtom cycloexBondAtom1;
@@ -489,6 +490,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 			angle = 0;
 			int ya_counter = 0;
 			List<IAtom> connAtoms;
+			int counter = 0;
 			for (double g3r = 0; g3r < limitSup; g3r = g3r + step) {
 				sum = 0;
                 for (Integer aBondsInCycloex : bondsInCycloex) {
@@ -539,10 +541,15 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
                 // g3r_function.add(new Double(sum));
 				rdfProtonCalculatedValues.add(sum);
 				logger.debug("RDF g3r prob.: "+sum+ " at distance "+g3r);
+				descriptorNames[counter] = "g3r_" + (counter+1);
+				counter++;
 			}
 		}
 		else {
-			for (int i=0; i<g3r_desc_length; i++) rdfProtonCalculatedValues.add(Double.NaN);
+			for (int i=0; i<g3r_desc_length; i++) {
+				rdfProtonCalculatedValues.add(Double.NaN);
+				descriptorNames[i] = "g3r_" + (i+1);
+			}
 		}
 		return new DescriptorValue(
 			getSpecification(), getParameterNames(), 

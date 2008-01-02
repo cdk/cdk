@@ -366,9 +366,11 @@ public class RDFProtonDescriptor_GHR implements IAtomicDescriptor {
         IAtom atom2;
 
 ///////////////////////THE FIRST CALCULATED DESCRIPTOR IS g(H)r	 WITH PARTIAL CHARGES:		
-	String s=new String();
+        String s=new String();
 	
+        descriptorNames = new String[ghr_desc_length];
 		if(atoms.size() > 0) {
+			int counter = 0;
 			for(double ghr = limitInf; ghr < limitSup; ghr = ghr + step) {
 				sum = 0;
                 for (Object atom1 : atoms) {
@@ -384,10 +386,15 @@ public class RDFProtonDescriptor_GHR implements IAtomicDescriptor {
                 rdfProtonCalculatedValues.add(sum);
 				
 				logger.debug("RDF gr distance prob.: "+sum+ " at distance "+ghr);
+				descriptorNames[counter] = "gHr_" + (counter+1);
+				counter++;
 			}
 		}
 		else {
-			for (int i=0; i<ghr_desc_length; i++) rdfProtonCalculatedValues.add(Double.NaN);
+			for (int i=0; i<ghr_desc_length; i++) {
+				rdfProtonCalculatedValues.add(Double.NaN);
+				descriptorNames[i] = "gHr_" + (i+1);
+			}
 		}
 		return new DescriptorValue(
 			getSpecification(), getParameterNames(), 

@@ -382,8 +382,10 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
 	limitSup = 4;
 	step = (limitSup - limitInf)/15;
 	
+	descriptorNames = new String[ghr_topol_desc_length];
 	if(atoms.size() > 0) {
 		//ArrayList gHr_topol_function = new ArrayList(15);
+		int counter = 0;
 		for(double ghrt = limitInf; ghrt < limitSup; ghrt = ghrt + step) {  
 			sum = 0;
 			for( int at = 0; at < atoms.size(); at++ ) {
@@ -406,10 +408,15 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
 			//gHr_topol_function.add(new Double(sum));
 			rdfProtonCalculatedValues.add(sum);
 			logger.debug("RDF gr-topol distance prob.: "+sum+ " at distance "+ghrt);
+			descriptorNames[counter] = "gHrTop_" + (counter+1);
+			counter++;
 		}
 	}
 	else {
-		for (int i=0; i<ghr_topol_desc_length; i++) rdfProtonCalculatedValues.add(Double.NaN);
+		for (int i=0; i<ghr_topol_desc_length; i++) {
+			rdfProtonCalculatedValues.add(Double.NaN);
+			descriptorNames[i] = "gHrTop_" + (i+1);
+		}
 	}
 	return new DescriptorValue(
 		getSpecification(), getParameterNames(), 
