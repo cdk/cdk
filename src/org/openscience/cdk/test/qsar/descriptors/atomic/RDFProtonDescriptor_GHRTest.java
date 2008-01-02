@@ -51,14 +51,14 @@ public class RDFProtonDescriptor_GHRTest extends AtomicDescriptorTest {
 		RDFProtonDescriptor_GHR descriptor = new RDFProtonDescriptor_GHR();
 		int hNumber =0;
 		for (int i=0; i < mol.getAtomCount(); i++) {
-			System.out.println("Atom: " + mol.getAtom(i).getSymbol());
-			System.out.println("  charge: " + mol.getAtom(i).getCharge());
+//			System.out.println("Atom: " + mol.getAtom(i).getSymbol());
+//			System.out.println("  charge: " + mol.getAtom(i).getCharge());
 			if(mol.getAtom(i).getSymbol().equals("H")){
 				hNumber++;
 				//secondly perform calculation on it.
 				DescriptorValue dv = descriptor.calculate(mol.getAtom(i),mol );
 				IDescriptorResult result = dv.getValue();
-				System.out.println("array: " + result.toString());
+//				System.out.println("array: " + result.toString());
 				assertNotNull(result);
 			}
 		}

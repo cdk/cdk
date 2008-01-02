@@ -45,13 +45,13 @@ public class RDFProtonDescriptor_GSRTest extends AtomicDescriptorTest {
 		IMolecule mol = som.getMolecule(0);
 
 		for (int i=0; i < mol.getAtomCount(); i++) {
-			System.out.println("Atom: " + mol.getAtom(i).getSymbol());
+//			System.out.println("Atom: " + mol.getAtom(i).getSymbol());
 			if(mol.getAtom(i).getSymbol().equals("H")){
 				//secondly perform calculation on it.
 				RDFProtonDescriptor_GSR descriptor = new RDFProtonDescriptor_GSR();
 				DescriptorValue dv = descriptor.calculate(mol.getAtom(i),mol );
 				IDescriptorResult result = dv.getValue();
-				System.out.println("array: " + result.toString());
+//				System.out.println("array: " + result.toString());
 				assertNotNull(result);
 			}		
 
