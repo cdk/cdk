@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.graph.invariant;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
@@ -33,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.created 2003-06-30
  * @cdk.keyword Morgan number
  */
+@TestClass("org.openscience.cdk.test.graph.invariant.MorganNumbersToolsTest")
 public class MorganNumbersTools {
 
   /**
@@ -41,13 +44,14 @@ public class MorganNumbersTools {
    * @param  atomContainer  The atomContainer to analyse.
    * @return                The morgan numbers value.
    */
+  @TestMethod("testGetMorganNumbers_IAtomContainer")
   public static long[] getMorganNumbers(IAtomContainer atomContainer) {
     long[] morganMatrix;
     long[] tempMorganMatrix;
     int N = atomContainer.getAtomCount();
     morganMatrix = new long[N];
     tempMorganMatrix = new long[N];
-    java.util.List atoms = null;
+    java.util.List<IAtom> atoms;
     for (int f = 0; f < N; f++) {
       morganMatrix[f] = atomContainer.getConnectedBondsCount(f);
       tempMorganMatrix[f] = atomContainer.getConnectedBondsCount(f);
@@ -56,9 +60,9 @@ public class MorganNumbersTools {
       for (int f = 0; f < N; f++) {
         morganMatrix[f] = 0;
         atoms = atomContainer.getConnectedAtomsList(atomContainer.getAtom(f));
-        for (int g = 0; g < atoms.size(); g++) {
-          morganMatrix[f] += tempMorganMatrix[atomContainer.getAtomNumber((IAtom)atoms.get(g))];
-        }
+          for (IAtom atom : atoms) {
+              morganMatrix[f] += tempMorganMatrix[atomContainer.getAtomNumber(atom)];
+          }
       }
       System.arraycopy(morganMatrix, 0, tempMorganMatrix, 0, N);
     }
@@ -73,6 +77,7 @@ public class MorganNumbersTools {
    * @param  atomContainer  The atomContainer to analyse.
    * @return                The morgan numbers value.
    */
+  @TestMethod("testPhenylamine")
   public static String[] getMorganNumbersWithElementSymbol(IAtomContainer atomContainer) {
     long[] morgannumbers = getMorganNumbers(atomContainer);
     String[] morgannumberswithelement = new String[morgannumbers.length];

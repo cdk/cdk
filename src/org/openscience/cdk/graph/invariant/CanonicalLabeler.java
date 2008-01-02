@@ -28,6 +28,8 @@
 package org.openscience.cdk.graph.invariant;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.InvPair;
@@ -48,6 +50,7 @@ import java.util.*;
  *
  * @cdk.keyword canonicalization
  */
+@TestClass("org.openscience.cdk.test.graph.invariant.CanonicalLabelerTest")
 public class CanonicalLabeler {
 
   public CanonicalLabeler() {
@@ -65,12 +68,14 @@ public class CanonicalLabeler {
    * this method does not check
    * the correctness of the AtomContainer. Negative H counts will 
    * cause a NumberFormatException to be thrown.
+   * @param atomContainer The molecule to label
    */
+  @TestMethod("testCanonLabel_IAtomContainer,testSomeMoleculeWithDifferentStartingOrder")
   public synchronized void canonLabel(IAtomContainer atomContainer) {
     if (atomContainer.getAtomCount() == 0)
     	return;
     if (atomContainer.getAtomCount() == 1) {
-    	atomContainer.getAtom(0).setProperty(InvPair.CANONICAL_LABEL, new Integer(1));
+    	atomContainer.getAtom(0).setProperty(InvPair.CANONICAL_LABEL, 1);
     }
       
     ArrayList vect = createInvarLabel(atomContainer);
@@ -100,9 +105,8 @@ public class CanonicalLabeler {
             step2(v, atoms);
         }
         // now apply the ranking
-        Iterator it = v.iterator();
-        while (it.hasNext()) {
-        	((InvPair) it.next()).commit();
+        for (Object aV : v) {
+            ((InvPair) aV).commit();
         }
     }
   }

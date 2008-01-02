@@ -116,7 +116,7 @@ public class MstandardTests {
         suite.addTest(AtomContainerSetManipulatorTest.suite());
         suite.addTest(MoleculeSetManipulatorTest.suite());
         suite.addTest(RebondToolTest.suite());
-        suite.addTest(CanonicalLabelerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(CanonicalLabelerTest.class));
         // from cdk.test.fingerprint
         suite.addTest(new JUnit4TestAdapter(FingerprinterTest.class));
         suite.addTest(new JUnit4TestAdapter(GraphOnlyFingerprinterTest.class));
@@ -142,7 +142,7 @@ public class MstandardTests {
         suite.addTest(BsptTest.suite());
         suite.addTest(PointTest.suite());
         suite.addTest(new JUnit4TestAdapter(BiconnectivityInspectorTest.class));
-        suite.addTest(MorganNumbersToolsTest.suite());
+        suite.addTest(new JUnit4TestAdapter(MorganNumbersToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(PathTest.class));
         suite.addTest(new JUnit4TestAdapter(QueueTest.class));
         suite.addTest(SSSRFinderTest.suite());

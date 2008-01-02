@@ -24,31 +24,28 @@
  */
 package org.openscience.cdk.test.graph.invariant;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * Checks the functionality of the MorganNumberTools.
  *
  * @cdk.module test-standard
  */
-public class MorganNumbersToolsTest extends CDKTestCase
+public class MorganNumbersToolsTest extends NewCDKTestCase
 {
-	public MorganNumbersToolsTest(String name) {
-		super(name);
-	}
-	
-	public static Test suite() {
-		return new TestSuite(MorganNumbersToolsTest.class);
+	public MorganNumbersToolsTest() {
+		super();
 	}
 
-	public void testGetMorganNumbers_IAtomContainer()
+
+    @Test
+    public void testGetMorganNumbers_IAtomContainer()
 	{
 		// This is an array with the expected Morgan Numbers for a-pinene
 		long[] reference = {
@@ -66,24 +63,25 @@ public class MorganNumbersToolsTest extends CDKTestCase
 
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		long[] morganNumbers = MorganNumbersTools.getMorganNumbers((AtomContainer)mol);
-		assertEquals(reference.length, morganNumbers.length);
+		Assert.assertEquals(reference.length, morganNumbers.length);
 		for (int f = 0; f < morganNumbers.length; f ++)
 		{
 			//logger.debug(morganNumbers[f]);
-			assertEquals(reference[f], morganNumbers[f]);
+			Assert.assertEquals(reference[f], morganNumbers[f]);
 		}
 	}
 
-	public void testPhenylamine() {
+    @Test
+    public void testPhenylamine() {
 		// This is an array with the expected Morgan Numbers for a-pinene
 		String[] reference = {"C-457","C-428","C-325","C-354","C-325","C-428","N-251"};
 
 		Molecule mol = MoleculeFactory.makePhenylAmine();
 		String[] morganNumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol((AtomContainer)mol);
-		assertEquals(reference.length, morganNumbers.length);
+		Assert.assertEquals(reference.length, morganNumbers.length);
 		for (int f = 0; f < morganNumbers.length; f ++) {
 			//logger.debug(morganNumbers[f]);
-			assertEquals(reference[f], morganNumbers[f]);
+			Assert.assertEquals(reference[f], morganNumbers[f]);
 		}
 	}
 	
