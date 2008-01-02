@@ -40,7 +40,6 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  */
 public class IPMolecularDescriptorTest extends MolecularDescriptorTest {
 	
-	IPMolecularDescriptor descriptor;
 	private SmilesParser sp;
 	/**
 	 *  Constructor for the IPMolecularDescriptorTest object
@@ -96,7 +95,7 @@ public class IPMolecularDescriptorTest extends MolecularDescriptorTest {
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(mol);
 		
-		DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculatePlus(mol).getValue());
+		DoubleArrayResult dar = ((DoubleArrayResult)((IPMolecularDescriptor)descriptor).calculatePlus(mol).getValue());
         
         double resultAccordingNIST = 9.37; 
         
@@ -115,13 +114,13 @@ public class IPMolecularDescriptorTest extends MolecularDescriptorTest {
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(mol);
 		
-		DoubleArrayResult dar = ((DoubleArrayResult)descriptor.calculatePlus(mol).getValue());
+		DoubleArrayResult dar = ((DoubleArrayResult)((IPMolecularDescriptor)descriptor).calculatePlus(mol).getValue());
 
         double resultAccordingNIST = 9.50; 
         assertEquals(2, dar.length());
         assertEquals(resultAccordingNIST, dar.get(0), 0.15);
         
-        IReactionSet reactionSet = descriptor.getReactionSet();
+        IReactionSet reactionSet = ((IPMolecularDescriptor)descriptor).getReactionSet();
         assertEquals(3, reactionSet.getReactionCount());
     }
     /**
@@ -141,7 +140,7 @@ public class IPMolecularDescriptorTest extends MolecularDescriptorTest {
 		
 		descriptor.calculate(mol);
 		
-		IReactionSet reactionSet = descriptor.getReactionSet();
+		IReactionSet reactionSet = ((IPMolecularDescriptor)descriptor).getReactionSet();
 		double resultAccordingNIST = 11.26; 
 
 		double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
@@ -165,7 +164,7 @@ public class IPMolecularDescriptorTest extends MolecularDescriptorTest {
 		
 		descriptor.calculate(mol);
 		
-		IReactionSet reactionSet = descriptor.getReactionSet();
+		IReactionSet reactionSet = ((IPMolecularDescriptor)descriptor).getReactionSet();
 		
         assertEquals(0, reactionSet.getReactionCount());
     }
@@ -186,7 +185,7 @@ public class IPMolecularDescriptorTest extends MolecularDescriptorTest {
 		
 		descriptor.calculate(mol);
 		
-		IReactionSet reactionSet = descriptor.getReactionSet();
+		IReactionSet reactionSet = ((IPMolecularDescriptor)descriptor).getReactionSet();
 		
         assertEquals(3, reactionSet.getReactionCount());
     }
@@ -207,7 +206,7 @@ public class IPMolecularDescriptorTest extends MolecularDescriptorTest {
 		
 		descriptor.calculate(mol);
 		
-		IReactionSet reactionSet = descriptor.getReactionSet();
+		IReactionSet reactionSet = ((IPMolecularDescriptor)descriptor).getReactionSet();
 		
         assertEquals(3, reactionSet.getReactionCount());
     }
