@@ -479,7 +479,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     					neighborcount == 1) {
     				IAtomType type = getAtomType("S.minus");
     				if (isAcceptable(atom, atomContainer, type)) return type;
-    			}
+    			} else if (atom.getFormalCharge() == +2 &&
+    					neighborcount == 4) {
+    				IAtomType type = getAtomType("S.onyl.charged");
+    				if (isAcceptable(atom, atomContainer, type)) return type;
+    			} 
     		} else if (neighborcount == 6) {
     			IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     			if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {

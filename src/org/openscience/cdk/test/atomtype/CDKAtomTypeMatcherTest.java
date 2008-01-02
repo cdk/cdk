@@ -485,6 +485,31 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "O.sp3", atm.findMatchingAtomType(mol, atom5));
     }
 
+    @Test public void testSulphuricAcid_Charged() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("S");
+        IAtom atom3 = new Atom("O");
+        IAtom atom4 = new Atom("O");
+        IAtom atom5 = new Atom("O");
+        mol.addAtom(atom); atom.setFormalCharge(-1);
+        mol.addAtom(atom2); atom2.setFormalCharge(+2);
+        mol.addAtom(atom3); atom3.setFormalCharge(-1);
+        mol.addAtom(atom4);
+        mol.addAtom(atom5);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,4,CDKConstants.BONDORDER_SINGLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "O.minus", atm.findMatchingAtomType(mol, atom));
+        assertAtomType(testedAtomTypes, "S.onyl.charged", atm.findMatchingAtomType(mol, atom2));
+        assertAtomType(testedAtomTypes, "O.minus", atm.findMatchingAtomType(mol, atom3));
+        assertAtomType(testedAtomTypes, "O.sp3", atm.findMatchingAtomType(mol, atom4));
+        assertAtomType(testedAtomTypes, "O.sp3", atm.findMatchingAtomType(mol, atom5));
+    }
+
     @Test public void testSF6() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("F");
