@@ -408,7 +408,7 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
 			//gSr_function.add(new Double(sum));
 			rdfProtonCalculatedValues.add(sum);
 			logger.debug("RDF gSr prob.: " + sum +  " at distance " + ghs);
-			descriptorNames[counter-1] = "gSr_" + counter;
+			descriptorNames[counter] = "gSr_" + (counter+1);
 			counter++;
 		}
 	}
