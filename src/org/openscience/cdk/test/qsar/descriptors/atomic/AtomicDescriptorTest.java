@@ -61,7 +61,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
     public void testCalculate_IAtomContainer() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         
-        DescriptorValue v = descriptor.calculate(mol.getAtom(0), mol);
+        DescriptorValue v = descriptor.calculate(mol.getAtom(1), mol);
         assertNotNull(v);
         assertNotSame(
         	"The descriptor did not calculate any value.",
