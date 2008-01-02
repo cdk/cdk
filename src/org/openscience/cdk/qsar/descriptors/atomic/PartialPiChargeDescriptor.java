@@ -139,8 +139,10 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
-        Object[] params = new Object[1];
+        Object[] params = new Object[3];
         params[0] = maxIterations;
+        params[1] = lpeChecker;
+        params[2] = maxResonStruc;
         return params;
     }
 
@@ -192,8 +194,10 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      */
     @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
-    	String[] params = new String[1];
+    	String[] params = new String[3];
         params[0] = "maxIterations";
+        params[1] = "lpeChecker";
+        params[2] = "maxResonStruc";
         return params;
     }
 
@@ -207,7 +211,10 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      */
     @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
-        return new Integer[]{0};
+    	if ("maxIterations".equals(name)) return Integer.MAX_VALUE;
+    	if ("lpeChecker".equals(name)) return Boolean.TRUE;
+    	if ("maxResonStruc".equals(name)) return Integer.MAX_VALUE;
+        return null;
     }
 }
 
