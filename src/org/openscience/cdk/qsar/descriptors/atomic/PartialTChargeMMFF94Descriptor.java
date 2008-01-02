@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.MMFF94PartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -55,6 +57,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:partialTChargeMMFF94
  * @see MMFF94PartialCharges
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest")
 public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
 
 	private MMFF94PartialCharges mmff;
@@ -73,6 +76,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *
      *@return    The specification value
      */
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialTChargeMMFF94",
@@ -85,6 +89,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
     /**
      * This descriptor does not have any parameter to be set.
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
     	// no parameters
     }
@@ -97,6 +102,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@return    The parameters value
      *@see #setParameters
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         return null;
     }
@@ -111,6 +117,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
      *@exception  CDKException  Possible Exceptions
      */
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
     	DoubleResult aphaPartialCharge;
     	try {
@@ -129,6 +136,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *
      * @return    The parameterNames value
      */
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -141,6 +149,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
     	 return null;
     }

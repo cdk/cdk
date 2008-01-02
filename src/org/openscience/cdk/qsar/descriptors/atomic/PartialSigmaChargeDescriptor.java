@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -63,6 +65,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:partialSigmaCharge
  * @see GasteigerMarsiliPartialCharges
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.PartialSigmaChargeDescriptorTest")
 public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
 
     private GasteigerMarsiliPartialCharges peoe = null;
@@ -83,6 +86,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *
      *@return    The specification value
      */
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialSigmaCharge",
@@ -99,6 +103,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *@param  params            Number of maximum iterations
      *@exception  CDKException  Description of the Exception
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("PartialSigmaChargeDescriptor only expects one parameter");
@@ -115,6 +120,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *
      *@return    The parameters value
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -133,6 +139,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *@return                   Value of the alpha partial charge
      *@exception  CDKException  Possible Exceptions
      */
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
     	if (!isCachedAtomContainer(ac)) {
     		IMolecule mol = new NNMolecule(ac);
@@ -161,6 +168,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *
      *@return    The parameterNames value
      */
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "maxIterations";
@@ -175,6 +183,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         return new Integer[]{0};
     }

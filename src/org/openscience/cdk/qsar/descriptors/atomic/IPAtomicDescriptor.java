@@ -25,6 +25,8 @@ import java.util.List;
 
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
@@ -76,6 +78,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref      qsar-descriptors:ionizationPotential
  * 
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.IPAtomicDescriptorTest")
 public class IPAtomicDescriptor implements IAtomicDescriptor {
 
 	private IReactionSet reactionSet;
@@ -90,7 +93,8 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 	 *
 	 *@return    The specification value
 	 */
-	public DescriptorSpecification getSpecification() {
+	@TestMethod(value="testGetSpecification")
+    public DescriptorSpecification getSpecification() {
 		return new DescriptorSpecification(
 				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential",
 				this.getClass().getName(),
@@ -100,6 +104,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
     /**
      * This descriptor does have any parameter.
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
     }
 
@@ -110,6 +115,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
      *@return    The parameters value
      * @see #setParameters
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         return null;
     }
@@ -121,7 +127,8 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 	 *@return                   The ionization potential. Not possible the ionization.
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) throws CDKException{
+	@TestMethod(value="testCalculate_IAtomContainer")
+    public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) throws CDKException{
         IAtomContainer localClone;
         try {
             localClone= (IAtomContainer) atomContainer.clone();
@@ -1181,6 +1188,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
      *
      * @return    The parameterNames value
      */
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -1192,6 +1200,7 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }

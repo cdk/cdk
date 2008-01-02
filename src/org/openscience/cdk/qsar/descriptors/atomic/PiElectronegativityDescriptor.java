@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -61,6 +63,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:piElectronegativity
  * @cdk.bug     1558660
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.PiElectronegativityDescriptorTest")
 public class PiElectronegativityDescriptor implements IAtomicDescriptor {
 
 	/**Number of maximum iterations*/
@@ -86,6 +89,7 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
      *
      *@return    The specification value
      */
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piElectronegativity",
@@ -102,6 +106,7 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
      *@param  params            The number of maximum iterations. 1= maxIterations. 2= maxResonStruc.
      *@exception  CDKException  Description of the Exception
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 2) {
             throw new CDKException("PiElectronegativityDescriptor only expects two parameter");
@@ -124,6 +129,7 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
      *
      *@return    The parameters value
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -141,6 +147,7 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
      *@return                   return the pi electronegativity
      *@exception  CDKException  Possible Exceptions
      */
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
         double piElectronegativity = 0.0;
         try {
@@ -184,6 +191,7 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
      *
      *@return    The parameterNames value
      */
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "maxIterations";
@@ -198,6 +206,7 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         return 0; 
     }

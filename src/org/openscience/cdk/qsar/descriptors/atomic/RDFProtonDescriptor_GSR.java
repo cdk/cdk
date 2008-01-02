@@ -32,6 +32,8 @@ import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
@@ -74,6 +76,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
  * @cdk.bug     1632419
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptor_GSRTest")
 public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
 
     private boolean checkAromaticity = false;
@@ -97,6 +100,7 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
      *
      * @return The specification value
      */
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues",
@@ -112,6 +116,7 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
      * @param params Parameters are the proton position and a boolean (true if you need to detect aromaticity)
      * @throws CDKException Possible Exceptions
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("RDFProtonDescriptor only expects one parameters");
@@ -129,6 +134,7 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
      *
      * @return The parameters value
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -136,10 +142,12 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
         return params;
     }
 
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer varAtomContainerSet) throws CDKException {
         return (calculate(atom, varAtomContainerSet, null));
     }
 
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer, IRingSet precalculatedringset) throws CDKException {
         IAtomContainer varAtomContainer;
         try {
@@ -549,6 +557,7 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[2];
         params[0] = "atomPosition";
@@ -564,6 +573,7 @@ public class RDFProtonDescriptor_GSR implements IAtomicDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         if (name.equals("atomPosition")) return 0;
         return Boolean.TRUE;

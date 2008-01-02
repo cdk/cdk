@@ -23,10 +23,13 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import static org.openscience.cdk.graph.BFSShortestPath.findPathBetween;
+
 import org._3pq.jgrapht.Edge;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
-import static org.openscience.cdk.graph.BFSShortestPath.findPathBetween;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -59,6 +62,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.set        qsar-descriptors
  * @cdk.dictref    qsar-descriptors:bondsToAtom
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.BondsToAtomDescriptorTest")
 public class BondsToAtomDescriptor implements IAtomicDescriptor {
 
     private int focusPosition = 0;
@@ -78,6 +82,7 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
      *
      *@return    The specification value
      */
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondsToAtom",
@@ -93,6 +98,7 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
      * @param  params            The parameter is the position to focus
      * @exception  CDKException  Description of the Exception
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("BondsToAtomDescriptor only expects one parameters");
@@ -109,6 +115,7 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
      *
      *@return    The parameters value 
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         Object[] params = new Object[1];
         params[0] = focusPosition;
@@ -125,6 +132,7 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
      *@exception  CDKException  Description of the Exception
      */
 
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
         mygraph = MoleculeGraphs.getMoleculeGraph((Molecule)container);
         int bondsToAtom = 0;
@@ -148,6 +156,7 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
      *
      *@return    The parameterNames value
      */
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "focusPosition";
@@ -161,6 +170,7 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         return 0;
     }

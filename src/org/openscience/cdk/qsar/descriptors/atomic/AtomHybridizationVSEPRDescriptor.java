@@ -25,6 +25,8 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -88,6 +90,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomHybridizationVSEPR
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptorTest")
 public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 
 	org.openscience.cdk.interfaces.IAtom atom = null;
@@ -107,7 +110,8 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 	 *
 	 *@return    The specification value
 	 */
-	public DescriptorSpecification getSpecification() {
+	@TestMethod(value="testGetSpecification")
+    public DescriptorSpecification getSpecification() {
 		return new DescriptorSpecification(
 				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridizationVSEPR",
 				this.getClass().getName(),
@@ -119,7 +123,8 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 	/**
      * This descriptor does have any parameter.
      */
-	public void setParameters(Object[] params) throws CDKException {
+	@TestMethod(value="testSetParameters_arrayObject")
+    public void setParameters(Object[] params) throws CDKException {
 	}
 
 
@@ -129,7 +134,8 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 	 * @return    The parameters value
      * @see       #setParameters
 	 */
-	public Object[] getParameters() {
+	@TestMethod(value="testGetParameters")
+    public Object[] getParameters() {
 		return null;
 	}
 
@@ -143,7 +149,8 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 	 *@exception  CDKException  Description of the Exception
 	 */
 
-	public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException
+	@TestMethod(value="testCalculate_IAtomContainer")
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException
 	{		
 		IAtomType atomType = findMatchingAtomType(container, atom);
 		
@@ -211,7 +218,8 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 	 *
 	 *@return    The parameterNames value
 	 */
-	public String[] getParameterNames() {
+	@TestMethod(value="testGetParameterNames")
+    public String[] getParameterNames() {
         return new String[0];
 	}
 
@@ -222,7 +230,8 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 	 *@param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
 	 */
-	public Object getParameterType(String name) {
+	@TestMethod(value="testGetParameterType_String")
+    public Object getParameterType(String name) {
 		String[] params = new String[1];
 		params[0] = "targetPosition";
 		return params;

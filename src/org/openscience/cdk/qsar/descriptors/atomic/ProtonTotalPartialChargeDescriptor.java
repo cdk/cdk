@@ -25,6 +25,8 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -58,6 +60,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:protonPartialCharge
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptorTest")
 public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
 
     private GasteigerMarsiliPartialCharges peoe = null;
@@ -75,6 +78,7 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
      *
      *@return    The specification value
      */
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#protonPartialCharge",
@@ -87,6 +91,7 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
     /**
      * This descriptor does not have any parameter to be set.
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
     	// no parameters
     }
@@ -99,6 +104,7 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
      *@return    The parameters value
      *@see #setParameters
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         return null;
     }
@@ -113,6 +119,7 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
      *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
      *@exception  CDKException  Possible Exceptions
      */
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
         Molecule mol = new Molecule(ac);
         try {
@@ -144,6 +151,7 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
      *
      * @return    The parameterNames value
      */
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -156,6 +164,7 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }

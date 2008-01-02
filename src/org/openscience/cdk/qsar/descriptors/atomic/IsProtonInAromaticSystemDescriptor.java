@@ -25,6 +25,8 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -64,6 +66,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:isProtonInAromaticSystem
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptorTest")
 public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 
 	private boolean checkAromaticity = false;
@@ -81,7 +84,8 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 	 *
 	 *@return    The specification value
 	 */
-	public DescriptorSpecification getSpecification() {
+	@TestMethod(value="testGetSpecification")
+    public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInAromaticSystem",
 		    this.getClass().getName(),
@@ -97,7 +101,8 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 	 *@param  params            The new parameters value
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public void setParameters(Object[] params) throws CDKException {
+	@TestMethod(value="testSetParameters_arrayObject")
+    public void setParameters(Object[] params) throws CDKException {
 		if (params.length > 1) {
 			throw new CDKException("IsProtonInAromaticSystemDescriptor only expects two parameters");
 		}
@@ -114,7 +119,8 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 	 *
 	 *@return    The parameters value
 	 */
-	public Object[] getParameters() {
+	@TestMethod(value="testGetParameters")
+    public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
 		Object[] params = new Object[1];
 		params[0] = checkAromaticity;
@@ -131,7 +137,8 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 	 *@return                   true if the proton is bonded to an aromatic atom.
 	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) throws CDKException {
+	@TestMethod(value="testCalculate_IAtomContainer")
+    public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) throws CDKException {
         IAtomContainer clonedAtomContainer;
         try {
             clonedAtomContainer = (IAtomContainer) atomContainer.clone();
@@ -177,7 +184,8 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 	 *
 	 *@return    The parameterNames value
 	 */
-	public String[] getParameterNames() {
+	@TestMethod(value="testGetParameterNames")
+    public String[] getParameterNames() {
 		String[] params = new String[1];
 		params[0] = "checkAromaticity";
 		return params;
@@ -191,7 +199,8 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value
 	 */
-	public Object getParameterType(String name) {
+	@TestMethod(value="testGetParameterType_String")
+    public Object getParameterType(String name) {
 		return true;
 	}
 }

@@ -62,7 +62,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 @TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.AtomDegreeDescriptorTest")
 public class AtomDegreeDescriptor implements IAtomicDescriptor {
 
-	@TestMethod(value="testGetSpecification")
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree",
@@ -74,7 +74,7 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
     /**
      * This descriptor does not have any parameter to be set.
      */
-	@TestMethod(value="testSetParameters_arrayObject")
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
     	// no parameters
     }
@@ -86,7 +86,7 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
      *@return    The parameters value
      *@see #setParameters
      */
-	@TestMethod(value="testGetParameters")
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         return null;
     }
@@ -100,7 +100,7 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
      * @return   The number of bonds on the shortest path between two atoms
      * @throws  CDKException  NOT CLEAR
      */
-	@TestMethod(value="testCalculate_IAtomContainer")
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
         int atomDegree = 0;
         List<IAtom> neighboors = container.getConnectedAtomsList(atom);
@@ -120,7 +120,7 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
      *
      * @return    The parameterNames value
      */
-	@TestMethod(value="testGetParameterNames")
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -132,7 +132,7 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-	@TestMethod(value="testGetParameterType_String")
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }

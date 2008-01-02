@@ -24,6 +24,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.io.IOException;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -34,8 +38,6 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.IOException;
 
 /**
  *  This class return the covalent radius of a given atom.
@@ -61,6 +63,7 @@ import java.io.IOException;
  * @cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:covalentradius
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.CovalentRadiusDescriptorTest")
 public class CovalentRadiusDescriptor implements IAtomicDescriptor {
 
     private AtomTypeFactory factory = null;
@@ -93,6 +96,7 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
      *
      * @return An object containing the descriptor specification
      */
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#covalentradius",
@@ -105,6 +109,7 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
     /**
      * This descriptor does have any parameter.
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
     }
 
@@ -115,6 +120,7 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
      * @return    The parameters value
      * @see #setParameters
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         return null;
     }
@@ -129,6 +135,7 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
      *@exception  CDKException  if an error occurs during atom typing
      */
 
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
         if (factory == null) 
             try {
@@ -158,6 +165,7 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
      *
      * @return    The parameterNames value
      */
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -168,6 +176,7 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }

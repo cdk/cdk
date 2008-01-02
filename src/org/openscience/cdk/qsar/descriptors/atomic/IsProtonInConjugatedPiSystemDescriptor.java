@@ -26,6 +26,8 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
@@ -61,6 +63,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:isProtonInConjugatedPiSystem
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemDescriptorTest")
 public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescriptor {
 
     private boolean checkAromaticity = false;
@@ -80,6 +83,7 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
      *
      *@return    The specification value
      */
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInConjugatedPiSystem",
@@ -96,6 +100,7 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
      *@param  params            Parameters are an integer (heavy atom position) and a boolean (true if is needed a checkAromaticity)
      *@exception  CDKException  Description of the Exception
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("IsProtonInConjugatedPiSystemDescriptor only expects one parameters");
@@ -113,6 +118,7 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
      *
      *@return    The parameters value
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -129,6 +135,7 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
      *@return                   true if the proton is bonded to a conjugated system
      *@exception  CDKException  Possible Exceptions
      */
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) throws CDKException {
         IAtomContainer clonedAtomContainer;
         try {
@@ -171,6 +178,7 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
      *
      *@return    The parameterNames value
      */
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "checkAromaticity";
@@ -185,6 +193,7 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         return true;
     }

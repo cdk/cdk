@@ -24,6 +24,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import javax.vecmath.Point3d;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -31,8 +35,6 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-
-import javax.vecmath.Point3d;
 
 /**
  *  This class returns the 3D distance between two atoms. Only works with 3D coordinates, which must be calculated beforehand.
@@ -58,6 +60,7 @@ import javax.vecmath.Point3d;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:distanceToAtom
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.DistanceToAtomDescriptorTest")
 public class DistanceToAtomDescriptor implements IAtomicDescriptor {
 
     private int focusPosition = 0;
@@ -73,6 +76,7 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
      *
      *@return    The specification value
      */
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#distanceToAtom",
@@ -88,6 +92,7 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
      *@param  params            The parameter is the position to focus
      *@exception  CDKException  Description of the Exception
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("DistanceToAtomDescriptor only expects two parameters");
@@ -104,6 +109,7 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
      *
      *@return    The parameters value
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         Object[] params = new Object[1];
         params[0] = focusPosition;
@@ -120,6 +126,7 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
      *@exception  CDKException  Description of the Exception
      */
 
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
         double distanceToAtom;
 
@@ -156,6 +163,7 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
      *
      *@return    The parameterNames value
      */
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "The position of the focus atom";
@@ -169,6 +177,7 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         return 0;
     }

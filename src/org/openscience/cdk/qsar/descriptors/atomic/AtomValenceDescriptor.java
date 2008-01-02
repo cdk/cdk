@@ -24,6 +24,11 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -31,9 +36,6 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class returns the valence of an atom.
@@ -59,6 +61,7 @@ import java.util.Map;
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomValence
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.AtomValenceDescriptorTest")
 public class AtomValenceDescriptor implements IAtomicDescriptor {
 
     public Map<String,Integer> valencesTable;
@@ -119,6 +122,7 @@ public class AtomValenceDescriptor implements IAtomicDescriptor {
      *
      * @return The specification value
      */
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomValence",
@@ -130,6 +134,7 @@ public class AtomValenceDescriptor implements IAtomicDescriptor {
     /**
      * This descriptor does have any parameter.
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
     }
 
@@ -140,6 +145,7 @@ public class AtomValenceDescriptor implements IAtomicDescriptor {
      *@return    The parameters value
      * @see #setParameters
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         return null;
     }
@@ -153,6 +159,7 @@ public class AtomValenceDescriptor implements IAtomicDescriptor {
      * @throws CDKException Description of the Exception
      */
 
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
         int atomValence;
         String symbol = atom.getSymbol();
@@ -166,6 +173,7 @@ public class AtomValenceDescriptor implements IAtomicDescriptor {
      *
      *@return    The parameterNames value
      */
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -176,6 +184,7 @@ public class AtomValenceDescriptor implements IAtomicDescriptor {
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }

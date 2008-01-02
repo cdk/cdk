@@ -24,6 +24,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.Hashtable;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -31,8 +35,6 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
-
-import java.util.Hashtable;
 
 /**
  *  This class returns the period in the periodic table of an atom belonging to an atom container
@@ -58,6 +60,7 @@ import java.util.Hashtable;
  *@cdk.set        qsar-descriptors
  *@cdk.dictref qsar-descriptors:period
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest")
 public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 
 	public Hashtable<String, Integer> periodicTable;
@@ -116,7 +119,8 @@ public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 	 *
 	 *@return    The specification value
 	 */
-	public DescriptorSpecification getSpecification() {
+	@TestMethod(value="testGetSpecification")
+    public DescriptorSpecification getSpecification() {
 		return new DescriptorSpecification(
 				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#period",
 				this.getClass().getName(),
@@ -128,6 +132,7 @@ public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 	/**
      * This descriptor does not have any parameter to be set.
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
     	// no parameters
     }
@@ -139,6 +144,7 @@ public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 	 *@return    The parameters value
      *@see #setParameters
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         return null;
     }
@@ -153,7 +159,8 @@ public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 	 *@exception  CDKException   Description of the Exception
 	 */
 
-	public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
+	@TestMethod(value="testCalculate_IAtomContainer")
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
 		int period;
 		String symbol = atom.getSymbol();
 		period = (Integer) periodicTable.get(symbol);
@@ -166,7 +173,8 @@ public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 	 *
 	 *@return    The parameterNames value
 	 */
-	public String[] getParameterNames() {
+	@TestMethod(value="testGetParameterNames")
+    public String[] getParameterNames() {
         return new String[0];
 	}
 
@@ -177,7 +185,8 @@ public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value
 	 */
-	public Object getParameterType(String name) {
+	@TestMethod(value="testGetParameterType_String")
+    public Object getParameterType(String name) {
         return null;
 	}
 }

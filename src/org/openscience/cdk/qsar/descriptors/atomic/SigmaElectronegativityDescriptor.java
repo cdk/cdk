@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -58,6 +60,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:sigmaElectronegativity
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.SigmaElectronegativityDescriptorTest")
 public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
 	/**Number of maximum iterations*/
     private int maxIterations = 0;
@@ -80,6 +83,7 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
      *
      *@return    The specification value
      */
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#sigmaElectronegativity",
@@ -96,6 +100,7 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
      *@param  params            1: max iterations (optional, defaults to 20)
      *@exception  CDKException  Description of the Exception
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("SigmaElectronegativityDescriptor only expects one parameter");
@@ -115,6 +120,7 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
      *
      *@return    The parameters value
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -132,6 +138,7 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
      *@return                   return the sigma electronegativity
      *@exception  CDKException  Possible Exceptions
      */
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
         double sigmaElectronegativity = 0;
         int atomPosition =ac.getAtomNumber(atom);
@@ -161,6 +168,7 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
      *
      *@return    The parameterNames value
      */
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "maxIterations";
@@ -175,6 +183,7 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         return 0; 
     }

@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -58,6 +60,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:effectivePolarizability
  * @see Polarizability
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptorTest")
 public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor {
 
 	private Polarizability pol;
@@ -77,6 +80,7 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
      *
      *@return    The specification value
      */
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#effectivePolarizability",
@@ -89,6 +93,7 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
     /**
      * This descriptor does have any parameter.
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
     }
 
@@ -100,6 +105,7 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
      * @return    The parameters value
      * @see #setParameters
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         return null;
     }
@@ -114,6 +120,7 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
      *@return                   return the efective polarizability
      *@exception  CDKException  Possible Exceptions
      */
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
         double polarizability;
         try {
@@ -132,6 +139,7 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
      *
      *@return    The parameterNames value
      */
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -144,6 +152,7 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
