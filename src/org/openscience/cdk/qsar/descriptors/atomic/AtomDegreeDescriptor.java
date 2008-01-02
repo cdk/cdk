@@ -23,6 +23,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.List;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -30,8 +34,6 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
-
-import java.util.List;
 
 /**
  * This class returns the number of not-Hs substituents of an atom, also defined as "atom degree".
@@ -57,8 +59,10 @@ import java.util.List;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomDegree
  */
+@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.AtomDegreeDescriptorTest")
 public class AtomDegreeDescriptor implements IAtomicDescriptor {
 
+	@TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree",
@@ -70,6 +74,7 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
     /**
      * This descriptor does not have any parameter to be set.
      */
+	@TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
     	// no parameters
     }
@@ -81,6 +86,7 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
      *@return    The parameters value
      *@see #setParameters
      */
+	@TestMethod(value="testGetParameters")
     public Object[] getParameters() {
         return null;
     }
@@ -94,13 +100,18 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
      * @return   The number of bonds on the shortest path between two atoms
      * @throws  CDKException  NOT CLEAR
      */
+	@TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
         int atomDegree = 0;
         List<IAtom> neighboors = container.getConnectedAtomsList(atom);
         for (IAtom neighboor : neighboors) {
             if (!neighboor.getSymbol().equals("H")) atomDegree += 1;
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(atomDegree));
+        return new DescriptorValue(
+        	getSpecification(), getParameterNames(), getParameters(), 
+        	new IntegerResult(atomDegree),
+        	new String[]{"aDeg"}
+        );
     }
 
 
@@ -109,6 +120,7 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
      *
      * @return    The parameterNames value
      */
+	@TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -120,6 +132,7 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
+	@TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
