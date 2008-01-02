@@ -26,7 +26,7 @@ public class RDFProtonDescriptor_GHRTest extends AtomicDescriptorTest {
     }
 
     public void setUp() throws Exception {
-    	setDescriptor(RDFProtonDescriptor_GHRTest.class);
+    	setDescriptor(RDFProtonDescriptor_GHR.class);
     }
     
 	public static Test suite() {
