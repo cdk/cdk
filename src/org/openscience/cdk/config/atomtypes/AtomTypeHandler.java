@@ -162,17 +162,17 @@ public class AtomTypeHandler extends DefaultHandler {
                 } else if (scalarType == SCALAR_SPHERICALMATCHER){	
                     atomType.setProperty(CDKConstants.SPHERICAL_MATCHER, currentChars);
                 } else if (scalarType == SCALAR_RINGSIZE){	
-                    atomType.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(currentChars));
+                    atomType.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, Integer.valueOf(currentChars));
                 } else if (scalarType == SCALAR_CHEMICALGROUPCONSTANT){	
-                    atomType.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, new Integer(currentChars));
+                    atomType.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, Integer.valueOf(currentChars));
                 } else if (scalarType == SCALAR_ISAROMATIC){
                     atomType.setFlag(CDKConstants.ISAROMATIC, true);
                 } else if (scalarType == SCALAR_VANDERWAALSRADIUS){
                     atomType.setVanderwaalsRadius(Double.parseDouble(currentChars));
                 } else if (scalarType == SCALAR_PIBONDCOUNT){
-                    atomType.setProperty(CDKConstants.PI_BOND_COUNT, new Integer(currentChars));
+                    atomType.setProperty(CDKConstants.PI_BOND_COUNT, Integer.valueOf(currentChars));
                 } else if (scalarType == SCALAR_LONEPAIRCOUNT){
-                    atomType.setProperty(CDKConstants.LONE_PAIR_COUNT, new Integer(currentChars));
+                    atomType.setProperty(CDKConstants.LONE_PAIR_COUNT, Integer.valueOf(currentChars));
                 }
                 
             } catch (Exception exception) {
