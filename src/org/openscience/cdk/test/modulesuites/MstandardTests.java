@@ -126,7 +126,7 @@ public class MstandardTests {
         suite.addTest(ProblemMarkerTest.suite());
         suite.addTest(SymbolsTest.suite());
         suite.addTest(GeometryToolsInternalCoordinatesTest.suite());
-        suite.addTest(BondToolsTest.suite());
+        suite.addTest(new JUnit4TestAdapter(BondToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(UnsupportedChemObjectExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(InvalidSmilesExceptionTest.class));
         suite.addTest(AminoAcidManipulatorTest.suite());

@@ -31,6 +31,8 @@
 package org.openscience.cdk.geometry;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -51,6 +53,7 @@ import java.util.Vector;
  * @cdk.module  standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.geometry.BondToolsTest")
 public class BondTools {
   /**
    *  Tells if a certain bond is center of a valid double bond configuration.
@@ -59,16 +62,16 @@ public class BondTools {
    * @param  bond       The bond.
    * @return            true=is a potential configuration, false=is not.
    */
+  @TestMethod("testIsValidDoubleBondConfiguration_IAtomContainer_IBond")
   public static boolean isValidDoubleBondConfiguration(IAtomContainer container, IBond bond) {
     //org.openscience.cdk.interfaces.IAtom[] atoms = bond.getAtoms();
-    java.util.List connectedAtoms = container.getConnectedAtomsList(bond.getAtom(0));
+    List<IAtom> connectedAtoms = container.getConnectedAtomsList(bond.getAtom(0));
     IAtom from = null;
-    for (int i = 0; i < connectedAtoms.size(); i++) {
-    	IAtom conAtom = (IAtom)connectedAtoms.get(i);
-    	if (conAtom != bond.getAtom(1)) {
-    		from = conAtom;
-    	}
-    }
+      for (IAtom connectedAtom : connectedAtoms) {
+          if (connectedAtom != bond.getAtom(1)) {
+              from = connectedAtom;
+          }
+      }
     boolean[] array = new boolean[container.getBondCount()];
     for (int i = 0; i < array.length; i++) {
       array[i] = true;
@@ -93,17 +96,14 @@ public class BondTools {
    * @return                   true=trans, false=cis.
    * @exception  CDKException  The atoms are not in a double bond configuration (no double bond in the middle, same atoms on one side)
    */
+  @TestMethod("testIsCisTrans_IAtom_IAtom_IAtom_IAtom_IAtomContainer")
   public static boolean isCisTrans(IAtom firstOuterAtom, IAtom firstInnerAtom, IAtom secondInnerAtom, IAtom secondOuterAtom, IAtomContainer ac) throws CDKException {
     if (!isValidDoubleBondConfiguration(ac, ac.getBond(firstInnerAtom, secondInnerAtom))) {
       throw new CDKException("There is no valid double bond configuration between your inner atoms!");
     }
     boolean firstDirection = isLeft(firstOuterAtom, firstInnerAtom, secondInnerAtom);
     boolean secondDirection = isLeft(secondOuterAtom, secondInnerAtom, firstInnerAtom);
-    if (firstDirection == secondDirection) {
-      return true;
-    } else {
-      return false;
-    }
+      return firstDirection == secondDirection;
   }
 
 
@@ -116,6 +116,7 @@ public class BondTools {
    * @param  viewTo    The atom to which to look
    * @return           true=is left, false = is not
    */
+  @TestMethod("testIsLeft_IAtom_IAtom_IAtom")
   public static boolean isLeft(IAtom whereIs, IAtom viewFrom, IAtom viewTo) {
     double angle = giveAngleBothMethods(viewFrom, viewTo, whereIs, false);
     if (angle < 0) {
@@ -137,6 +138,7 @@ public class BondTools {
    * @cdk.keyword                 join-the-dots
    * @cdk.keyword                 bond creation
    */
+  @TestMethod("testCloseEnoughToBond_IAtom_IAtom_double")
   public static boolean closeEnoughToBond(IAtom atom1, IAtom atom2, double distanceFudgeFactor) {
 
     if (atom1 != atom2) {
@@ -162,11 +164,12 @@ public class BondTools {
    * @param  bool  true=angle is 0 to 2PI, false=angel is -PI to PI.
    * @return       The angle in rad.
    */
+  @TestMethod("testGiveAngleBothMethods_IAtom_IAtom_IAtom_boolean")
   public static double giveAngleBothMethods(IAtom from, IAtom to1, IAtom to2, boolean bool) {
 	  return giveAngleBothMethods(from.getPoint2d(), to1.getPoint2d(), to2.getPoint2d(),bool);
   }
 
-
+  @TestMethod("testGiveAngleBothMethods_Point2d_Point2d_Point2d_boolean")
   public static double giveAngleBothMethods(Point2d from, Point2d to1, Point2d to2, boolean bool) {
 	    double[] A = new double[2];
 	    from.get(A);
@@ -219,17 +222,16 @@ public class BondTools {
       
     if (container.getBond(atom, parent) != null) {
       if (container.getBond(atom, parent).getOrder() == CDKConstants.BONDORDER_DOUBLE && (lengthAtom == 3 || (lengthAtom == 2 && atom.getSymbol().equals("N"))) && (lengthParent == 3 || (lengthParent == 2 && parent.getSymbol().equals("N")))) {
-        java.util.List atoms = container.getConnectedAtomsList(atom);
+        List<IAtom> atoms = container.getConnectedAtomsList(atom);
         IAtom one = null;
         IAtom two = null;
-        for (int i = 0; i < atoms.size(); i++) {
-        	IAtom conAtom = (IAtom)atoms.get(i);
-          if (conAtom != parent && one == null) {
-            one = conAtom;
-          } else if (conAtom != parent && one != null) {
-            two = conAtom;
+          for (IAtom conAtom : atoms) {
+              if (conAtom != parent && one == null) {
+                  one = conAtom;
+              } else if (conAtom != parent && one != null) {
+                  two = conAtom;
+              }
           }
-        }
         String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
         if ((one != null && two == null && atom.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(parent, atom, one, true)) > Math.PI / 10) || (!atom.getSymbol().equals("N") && one != null && two != null && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)]))) {
           return (true);
@@ -260,26 +262,25 @@ public class BondTools {
 
     int lengthAtom = container.getConnectedAtomsList(a).size() + hcount;
       
-    if (lengthAtom != 3 && (lengthAtom != 2 && a.getSymbol() != ("N"))) {
+    if (lengthAtom != 3 && (lengthAtom != 2 && !(a.getSymbol().equals("N")))) {
       return (false);
     }
-    java.util.List atoms = container.getConnectedAtomsList(a);
+    List<IAtom> atoms = container.getConnectedAtomsList(a);
     IAtom one = null;
     IAtom two = null;
     boolean doubleBond = false;
     IAtom nextAtom = null;
-    for (int i = 0; i < atoms.size(); i++) {
-    	IAtom atom = (IAtom)atoms.get(i);
-    	if (atom != parent && container.getBond(atom, a).getOrder() == CDKConstants.BONDORDER_DOUBLE && isEndOfDoubleBond(container, atom, a, doubleBondConfiguration)) {
-    		doubleBond = true;
-    		nextAtom = atom;
-    	}
-    	if (atom != nextAtom && one == null) {
-    		one = atom;
-    	} else if (atom != nextAtom && one != null) {
-    		two = atom;
-    	}
-    }
+      for (IAtom atom : atoms) {
+          if (atom != parent && container.getBond(atom, a).getOrder() == CDKConstants.BONDORDER_DOUBLE && isEndOfDoubleBond(container, atom, a, doubleBondConfiguration)) {
+              doubleBond = true;
+              nextAtom = atom;
+          }
+          if (atom != nextAtom && one == null) {
+              one = atom;
+          } else if (atom != nextAtom && one != null) {
+              two = atom;
+          }
+      }
     String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
     if (one != null && ((!a.getSymbol().equals("N") && two != null && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)]) && doubleBond && doubleBondConfiguration[container.getBondNumber(a, nextAtom)]) || (doubleBond && a.getSymbol().equals("N") && Math.abs(giveAngleBothMethods(nextAtom, a, parent, true)) > Math.PI / 10))) {
     	return (true);
@@ -297,31 +298,27 @@ public class BondTools {
 	 *@return            0=is not tetrahedral;>1 is a certain depiction of
 	 *      tetrahedrality (evaluated in parse chain)
 	 */
-	public static int isTetrahedral(IAtomContainer container, IAtom a, boolean strict)
+    @TestMethod("testIsTetrahedral_IAtomContainer_IAtom_boolean()")
+    public static int isTetrahedral(IAtomContainer container, IAtom a, boolean strict)
 	{
 		java.util.List atoms = container.getConnectedAtomsList(a);
 		if (atoms.size() != 4)
 		{
 			return (0);
 		}
-		java.util.List bonds = container.getConnectedBondsList(a);
+		java.util.List<IBond> bonds = container.getConnectedBondsList(a);
         int up = 0;
 		int down = 0;
-		for (int i = 0; i < bonds.size(); i++)
-		{
-			IBond bond = (IBond)bonds.get(i);
-			if (bond.getStereo() == CDKConstants.STEREO_BOND_NONE || bond.getStereo() == CDKConstants.STEREO_BOND_UNDEFINED)
-			{
+        for (IBond bond : bonds) {
+            if (bond.getStereo() == CDKConstants.STEREO_BOND_NONE || bond.getStereo() == CDKConstants.STEREO_BOND_UNDEFINED) {
             }
-			if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
-			{
-				up++;
-			}
-			if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN)
-			{
-				down++;
-			}
-		}
+            if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
+                up++;
+            }
+            if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+                down++;
+            }
+        }
 		if (up == 1 && down == 1)
 		{
 			return 1;
@@ -362,31 +359,27 @@ public class BondTools {
 	 *@param  container  The atomContainer the atom is in
 	 *@return            true=is square planar, false=is not
 	 */
-	public static int isTrigonalBipyramidalOrOctahedral(IAtomContainer container, IAtom a)
+    @TestMethod("testIsTrigonalBipyramidalOrOctahedral_IAtomContainer_IAtom")
+    public static int isTrigonalBipyramidalOrOctahedral(IAtomContainer container, IAtom a)
 	{
 		java.util.List atoms = container.getConnectedAtomsList(a);
 		if (atoms.size() < 5 || atoms.size() > 6)
 		{
 			return (0);
 		}
-		java.util.List bonds = container.getConnectedBondsList(a);
+		java.util.List<IBond> bonds = container.getConnectedBondsList(a);
         int up = 0;
 		int down = 0;
-		for (int i = 0; i < bonds.size(); i++)
-		{
-			IBond bond = (IBond)bonds.get(i);
-			if (bond.getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || bond.getStereo() == CDKConstants.STEREO_BOND_NONE)
-			{
+        for (IBond bond : bonds) {
+            if (bond.getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || bond.getStereo() == CDKConstants.STEREO_BOND_NONE) {
             }
-			if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
-			{
-				up++;
-			}
-			if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN)
-			{
-				down++;
-			}
-		}
+            if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
+                up++;
+            }
+            if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+                down++;
+            }
+        }
 		if (up == 1 && down == 1)
 		{
 			if(atoms.size()==5)
@@ -405,22 +398,21 @@ public class BondTools {
 	 *@param  container  The atomContainer the atom is in
 	 *@return            true=is a stereo atom, false=is not
 	 */
-	public static boolean isStereo(IAtomContainer container, IAtom a)
+    @TestMethod("testIsStereo_IAtomContainer_IAtom")
+    public static boolean isStereo(IAtomContainer container, IAtom a)
 	{
-		java.util.List atoms = container.getConnectedAtomsList(a);
+		java.util.List<IAtom> atoms = container.getConnectedAtomsList(a);
 		if (atoms.size() < 4 || atoms.size() > 6)
 		{
 			return (false);
 		}
-		java.util.List bonds = container.getConnectedBondsList(a);
+		java.util.List<IBond> bonds = container.getConnectedBondsList(a);
 		int stereo = 0;
-		for (int i = 0; i < bonds.size(); i++)
-		{
-			if (((IBond)bonds.get(i)).getStereo() != 0)
-			{
-				stereo++;
-			}
-		}
+        for (IBond bond : bonds) {
+            if (bond.getStereo() != 0) {
+                stereo++;
+            }
+        }
 		if (stereo == 0)
 		{
 			return false;
@@ -431,7 +423,7 @@ public class BondTools {
 			boolean isDifferent = true;
 			for (int k = 0; k < i; k++)
 			{
-				if (((IAtom)atoms.get(i)).getSymbol().equals(((IAtom)atoms.get(i)).getSymbol()))
+				if (atoms.get(i).getSymbol().equals(atoms.get(i).getSymbol()))
 				{
 					isDifferent = false;
 					break;
@@ -446,28 +438,21 @@ public class BondTools {
 		{
 			long[] morgannumbers = MorganNumbersTools.getMorganNumbers(container);
 			Vector<String> differentSymbols = new Vector<String>();
-			for (int i = 0; i < atoms.size(); i++)
-			{
-				IAtom atom = (IAtom)atoms.get(i);
-				if (!differentSymbols.contains(atom.getSymbol()))
-				{
-					differentSymbols.add(atom.getSymbol());
-				}
-			}
+            for (IAtom atom : atoms) {
+                if (!differentSymbols.contains(atom.getSymbol())) {
+                    differentSymbols.add(atom.getSymbol());
+                }
+            }
 			int[] onlyRelevantIfTwo = new int[2];
 			if (differentSymbols.size() == 2)
 			{
-				for (int i = 0; i < atoms.size(); i++)
-				{
-					IAtom atom = (IAtom)atoms.get(i);
-					if (differentSymbols.indexOf(atom.getSymbol()) == 0)
-					{
-						onlyRelevantIfTwo[0]++;
-					} else
-					{
-						onlyRelevantIfTwo[1]++;
-					}
-				}
+                for (IAtom atom : atoms) {
+                    if (differentSymbols.indexOf(atom.getSymbol()) == 0) {
+                        onlyRelevantIfTwo[0]++;
+                    } else {
+                        onlyRelevantIfTwo[1]++;
+                    }
+                }
 			}
 			boolean[] symbolsWithDifferentMorganNumbers = new boolean[differentSymbols.size()];
 			Vector<Long>[] symbolsMorganNumbers = new Vector[symbolsWithDifferentMorganNumbers.length];
@@ -476,38 +461,28 @@ public class BondTools {
 				symbolsWithDifferentMorganNumbers[i] = true;
 				symbolsMorganNumbers[i] = new Vector<Long>();
 			}
-			for (int k = 0; k < atoms.size(); k++)
-			{
-				IAtom atom = (IAtom)atoms.get(k);
-				int elementNumber = differentSymbols.indexOf(atom.getSymbol());
-				if (symbolsMorganNumbers[elementNumber].contains(morgannumbers[container.getAtomNumber(atom)]))
-				{
-					symbolsWithDifferentMorganNumbers[elementNumber] = false;
-				} else
-				{
-					symbolsMorganNumbers[elementNumber].add(morgannumbers[container.getAtomNumber(atom)]);
-				}
-			}
+            for (IAtom atom : atoms) {
+                int elementNumber = differentSymbols.indexOf(atom.getSymbol());
+                if (symbolsMorganNumbers[elementNumber].contains(morgannumbers[container.getAtomNumber(atom)])) {
+                    symbolsWithDifferentMorganNumbers[elementNumber] = false;
+                } else {
+                    symbolsMorganNumbers[elementNumber].add(morgannumbers[container.getAtomNumber(atom)]);
+                }
+            }
 			int numberOfSymbolsWithDifferentMorganNumbers = 0;
-			for (int i = 0; i < symbolsWithDifferentMorganNumbers.length; i++)
-			{
-				if (symbolsWithDifferentMorganNumbers[i] == true)
-				{
-					numberOfSymbolsWithDifferentMorganNumbers++;
-				}
-			}
+            for (boolean symbolWithDifferentMorganNumber : symbolsWithDifferentMorganNumbers) {
+                if (symbolWithDifferentMorganNumber) {
+                    numberOfSymbolsWithDifferentMorganNumbers++;
+                }
+            }
 			if (numberOfSymbolsWithDifferentMorganNumbers != differentSymbols.size())
 			{
 				if ((atoms.size() == 5 || atoms.size() == 6) && (numberOfSymbolsWithDifferentMorganNumbers + differentAtoms > 2 || (differentAtoms == 2 && onlyRelevantIfTwo[0] > 1 && onlyRelevantIfTwo[1] > 1)))
 				{
 					return (true);
 				}
-				if (isSquarePlanar(container, a) && (numberOfSymbolsWithDifferentMorganNumbers + differentAtoms > 2 || (differentAtoms == 2 && onlyRelevantIfTwo[0] > 1 && onlyRelevantIfTwo[1] > 1)))
-				{
-					return (true);
-				}
-				return false;
-			}
+                return isSquarePlanar(container, a) && (numberOfSymbolsWithDifferentMorganNumbers + differentAtoms > 2 || (differentAtoms == 2 && onlyRelevantIfTwo[0] > 1 && onlyRelevantIfTwo[1] > 1));
+            }
 		}
 		return (true);
 	}
@@ -520,37 +495,29 @@ public class BondTools {
 	 *@param  container  The atomContainer the atom is in
 	 *@return            true=is square planar, false=is not
 	 */
-	public static boolean isSquarePlanar(IAtomContainer container, IAtom a)
+    @TestMethod("testIsSquarePlanar_IAtomContainer_IAtom")
+    public static boolean isSquarePlanar(IAtomContainer container, IAtom a)
 	{
-		java.util.List atoms = container.getConnectedAtomsList(a);
+		java.util.List<IAtom> atoms = container.getConnectedAtomsList(a);
 		if (atoms.size() != 4)
 		{
 			return (false);
 		}
-		java.util.List bonds = container.getConnectedBondsList(a);
+		java.util.List<IBond> bonds = container.getConnectedBondsList(a);
         int up = 0;
 		int down = 0;
-		for (int i = 0; i < bonds.size(); i++)
-		{
-			IBond bond = (IBond)bonds.get(i);
-			if (bond.getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || bond.getStereo() == CDKConstants.STEREO_BOND_NONE)
-			{
+        for (IBond bond : bonds) {
+            if (bond.getStereo() == CDKConstants.STEREO_BOND_UNDEFINED || bond.getStereo() == CDKConstants.STEREO_BOND_NONE) {
             }
-			if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
-			{
-				up++;
-			}
-			if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN)
-			{
-				down++;
-			}
-		}
-		if (up == 2 && down == 2 && !stereosAreOpposite(container, a))
-		{
-			return true;
-		}
-		return false;
-	}
+            if (bond.getStereo() == CDKConstants.STEREO_BOND_UP) {
+                up++;
+            }
+            if (bond.getStereo() == CDKConstants.STEREO_BOND_DOWN) {
+                down++;
+            }
+        }
+        return up == 2 && down == 2 && !stereosAreOpposite(container, a);
+    }
 
 
 	/**
@@ -562,24 +529,19 @@ public class BondTools {
 	 *@param  container  The atomContainer the atom is in
 	 *@return            true=are opposite, false=are not
 	 */
-	public static boolean stereosAreOpposite(IAtomContainer container, IAtom a)
+    @TestMethod("testStereosAreOpposite_IAtomContainer_IAtom")
+    public static boolean stereosAreOpposite(IAtomContainer container, IAtom a)
 	{
 		List atoms = container.getConnectedAtomsList(a);
 		TreeMap<Double, Integer> hm = new TreeMap<Double, Integer>();
 		for (int i = 1; i < atoms.size(); i++)
 		{
-			hm.put(new Double(giveAngle(a, (IAtom) atoms.get(0), ((IAtom) atoms.get(i)))), new Integer(i));
+			hm.put(giveAngle(a, (IAtom) atoms.get(0), ((IAtom) atoms.get(i))), i);
 		}
 		Object[] ohere = hm.values().toArray();
 		int stereoOne = container.getBond(a, (IAtom) atoms.get(0)).getStereo();
-		int stereoOpposite = container.getBond(a, (IAtom) atoms.get((((Integer) ohere[1])).intValue())).getStereo();
-		if (stereoOpposite == stereoOne)
-		{
-			return true;
-		} else
-		{
-			return false;
-		}
+		int stereoOpposite = container.getBond(a, (IAtom) atoms.get((Integer) ohere[1])).getStereo();
+        return stereoOpposite == stereoOne;
 	}
 
 
@@ -591,7 +553,8 @@ public class BondTools {
 	 *@param  to2   second direction to look in
 	 *@return       The angle in rad from 0 to 2*PI
 	 */
-	public static double giveAngle(IAtom from, IAtom to1, IAtom to2)
+    @TestMethod("testGiveAngle_IAtom_IAtom_IAtom")
+    public static double giveAngle(IAtom from, IAtom to1, IAtom to2)
 	{
 		return (giveAngleBothMethods(from, to1, to2, true));
 	}
@@ -605,7 +568,8 @@ public class BondTools {
 	 *@param  to2   second direction to look in
 	 *@return       The angle in rad from -PI to PI
 	 */
-	public static double giveAngleFromMiddle(IAtom from, IAtom to1, IAtom to2)
+    @TestMethod("testGiveAngleFromMiddle_IAtom_IAtom_IAtom")
+    public static double giveAngleFromMiddle(IAtom from, IAtom to1, IAtom to2)
 	{
 		return (giveAngleBothMethods(from, to1, to2, false));
 	}
@@ -619,7 +583,7 @@ public class BondTools {
 	          int hs = 0;
 	          IAtom h = null;
 	          for (int k = 0; k < 4; k++) {
-	        	  IAtom conAtom = (IAtom)container.getConnectedAtomsList(a).get(k);
+	        	  IAtom conAtom = container.getConnectedAtomsList(a).get(k);
 	        	  int stereo = container.getBond(a,conAtom).getStereo();
 	        	  if (stereo  == CDKConstants.STEREO_BOND_UP) {
 	        		  up++;
