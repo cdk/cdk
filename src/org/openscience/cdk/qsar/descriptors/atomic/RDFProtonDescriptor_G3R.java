@@ -607,7 +607,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 	// this method calculates the angle between two bonds given coordinates of
 	// their atoms
 
-	public double calculateAngleBetweenTwoLines(Vector3d a, Vector3d b,
+	private double calculateAngleBetweenTwoLines(Vector3d a, Vector3d b,
 			Vector3d c, Vector3d d) {
 		Vector3d firstLine = new Vector3d();
 		firstLine.sub(a, b);
