@@ -564,9 +564,8 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
      */
     @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
-        String[] params = new String[2];
-        params[0] = "atomPosition";
-        params[1] = "checkAromaticity";
+        String[] params = new String[1];
+        params[0] = "checkAromaticity";
         return params;
     }
 
@@ -580,7 +579,7 @@ public class RDFProtonDescriptor_GDR implements IAtomicDescriptor {
      */
     @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
-        if (name.equals("atomPosition")) return 0;
+        if (name.equals("checkAromaticity")) return null;
         return Boolean.TRUE;
     }
 }
