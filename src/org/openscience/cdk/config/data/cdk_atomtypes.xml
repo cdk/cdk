@@ -395,6 +395,15 @@
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
   </atomType>
 
+  <atomType id="Cl.perchlorate.charged">
+    <atom elementType="Cl" formalCharge="3">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
+  </atomType>
+
   <atomType id="Cl.chlorate">
     <atom elementType="Cl" formalCharge="0">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
@@ -528,6 +537,20 @@
   <atomType id="Po">
     <atom elementType="Po" formalCharge="0">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Zn">
+    <atom elementType="Zn" formalCharge="0">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Zn.2plus">
+    <atom elementType="Zn" formalCharge="+2">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
     </atom>
   </atomType>

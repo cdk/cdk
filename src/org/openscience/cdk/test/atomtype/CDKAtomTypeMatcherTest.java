@@ -984,6 +984,31 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, atom5));
     }
 
+    @Test public void testPerchlorate_ChargedBonds() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("Cl");
+        IAtom atom3 = new Atom("O");
+        IAtom atom4 = new Atom("O");
+        IAtom atom5 = new Atom("O");
+        mol.addAtom(atom);
+        mol.addAtom(atom2); atom2.setFormalCharge(+3);
+        mol.addAtom(atom3); atom3.setFormalCharge(-1);
+        mol.addAtom(atom4); atom4.setFormalCharge(-1);
+        mol.addAtom(atom5); atom5.setFormalCharge(-1);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,4,CDKConstants.BONDORDER_SINGLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "O.sp3", atm.findMatchingAtomType(mol, atom));
+        assertAtomType(testedAtomTypes, "Cl.perchlorate.charged", atm.findMatchingAtomType(mol, atom2));
+        assertAtomType(testedAtomTypes, "O.minus", atm.findMatchingAtomType(mol, atom3));
+        assertAtomType(testedAtomTypes, "O.minus", atm.findMatchingAtomType(mol, atom4));
+        assertAtomType(testedAtomTypes, "O.minus", atm.findMatchingAtomType(mol, atom5));
+    }
+
     @Test public void testChlorate() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("O");
@@ -1225,6 +1250,30 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 
     	mol.addAtom(new Atom("He"));
     	assertAtomType(testedAtomTypes, "He", atm.findMatchingAtomType(mol, mol.getAtom(0)));
+    }
+    
+    @Test public void testZincChloride() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+    	
+    	mol.addAtom(new Atom("Zn"));
+    	mol.addAtom(new Atom("Cl"));
+    	mol.addAtom(new Atom("Cl"));
+    	mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+    	mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+
+    	assertAtomType(testedAtomTypes, "Zn", atm.findMatchingAtomType(mol, mol.getAtom(0)));
+    	assertAtomType(testedAtomTypes, "Cl", atm.findMatchingAtomType(mol, mol.getAtom(1)));
+    	assertAtomType(testedAtomTypes, "Cl", atm.findMatchingAtomType(mol, mol.getAtom(2)));
+    }
+    
+    @Test public void testZinc() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+    	
+    	mol.addAtom(new Atom("Zn")); mol.getAtom(0).setFormalCharge(+2);
+
+    	assertAtomType(testedAtomTypes, "Zn.2plus", atm.findMatchingAtomType(mol, mol.getAtom(0)));
     }
     
     @Test public void testAssumeExplicitHydrogens() throws Exception {

@@ -603,6 +603,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				atom.getFormalCharge() == -1)) {
     			IAtomType type = getAtomType("Cl.minus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
+    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() == +3) && atomContainer.getConnectedBondsCount(atom) == 4) {
+    			IAtomType type = getAtomType("Cl.perchlorate.charged");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
     		} else if (atomContainer.getConnectedBondsCount(atom) == 1 ||
     				atomContainer.getConnectedBondsCount(atom) == 0) {
     			IAtomType type = getAtomType("Cl");
@@ -711,6 +715,17 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			IAtomType type = getAtomType("Po");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
+    	} else if ("Zn".equals(atom.getSymbol())) {
+    		if (atomContainer.getConnectedBondsCount(atom) == 2 &&
+    			(atom.getFormalCharge() == CDKConstants.UNSET ||
+    		     atom.getFormalCharge() == 0)) {
+    			IAtomType type = getAtomType("Zn");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		} else if (atom.getFormalCharge() != CDKConstants.UNSET ||
+      		           atom.getFormalCharge() == 2) {
+      		    IAtomType type = getAtomType("Zn.2plus");
+      		    if (isAcceptable(atom, atomContainer, type)) return type;
+      		}
     	}
     	return null;
     }
