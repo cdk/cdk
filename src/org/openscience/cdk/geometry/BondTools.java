@@ -298,7 +298,7 @@ public class BondTools {
 	 *@return            0=is not tetrahedral;>1 is a certain depiction of
 	 *      tetrahedrality (evaluated in parse chain)
 	 */
-    @TestMethod("testIsTetrahedral_IAtomContainer_IAtom_boolean()")
+    @TestMethod("testIsTetrahedral_IAtomContainer_IAtom_boolean")
     public static int isTetrahedral(IAtomContainer container, IAtom a, boolean strict)
 	{
 		java.util.List atoms = container.getConnectedAtomsList(a);
@@ -574,7 +574,8 @@ public class BondTools {
 		return (giveAngleBothMethods(from, to1, to2, false));
 	}
 	
-	public static void  makeUpDownBonds(IAtomContainer container){
+    @TestMethod("testMakeUpDownBonds_IAtomContainer")
+    public static void  makeUpDownBonds(IAtomContainer container){
 	    for (int i = 0; i < container.getAtomCount(); i++) {
 	        IAtom a = container.getAtom(i);
 	        if (container.getConnectedAtomsList(a).size() == 4) {
