@@ -121,6 +121,11 @@ public abstract class DescriptorTest extends CDKTestCase {
 
         for (int i=0; i<paramNames.length; i++) {
         	Object type = descriptor.getParameterType(paramNames[i]);
+        	assertNotNull(
+        		"The getParameterType(String) return type is null for the " +
+        		"parameter: " + paramNames[i],
+        		type
+        	);
         	assertEquals(
         		"The getParameterType(String) return type is not consistent " +
         		"with the getParameters() types for parameter " + i,
