@@ -28,14 +28,6 @@
  */
 
 package org.openscience.cdk.graph;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
@@ -45,6 +37,10 @@ import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
 import org._3pq.jgrapht.event.GraphVertexChangeEvent;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org._3pq.jgrapht.graph.Subgraph;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
+import java.util.*;
 
 /**
  * Finds the biconnected components of a graph.
@@ -59,6 +55,7 @@ import org._3pq.jgrapht.graph.Subgraph;
  * @cdk.builddepends jgrapht-0.5.3.jar
  * @cdk.depends jgrapht-0.5.3.jar
  */
+@TestClass("org.openscience.cdk.test.graph.BiconnectivityInspectorTest")
 public class BiconnectivityInspector {
 	private List          biconnectedSets;
 	private UndirectedGraph graph;
@@ -212,7 +209,8 @@ public class BiconnectivityInspector {
 	 * @return a list of <code>Set</code>s, where each set contains all edge that are
 	 * in the same biconnected component
 	 */
-	public List biconnectedSets(  ) {
+    @TestMethod("testBiconnectedSets")
+    public List biconnectedSets(  ) {
 		return lazyFindBiconnectedSets(  );
 	}
 	

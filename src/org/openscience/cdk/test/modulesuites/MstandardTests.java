@@ -93,7 +93,6 @@ public class MstandardTests {
         suite.addTest(GeometryToolsTest.suite());
         suite.addTest(MinimalPathIteratorTest.suite());
         suite.addTest(new JUnit4TestAdapter(ConnectivityCheckerTest.class));
-        suite.addTest(BiconnectivityInspectorTest.suite());
         suite.addTest(UniversalIsomorphismTesterTest.suite());
         suite.addTest(IsomorphismTesterTest.suite());
         suite.addTest(RMapTest.suite());
@@ -142,7 +141,7 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(ConnectionMatrixTest.class));
         suite.addTest(BsptTest.suite());
         suite.addTest(PointTest.suite());
-        suite.addTest(BiconnectivityInspectorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(BiconnectivityInspectorTest.class));
         suite.addTest(MorganNumbersToolsTest.suite());
         suite.addTest(new JUnit4TestAdapter(PathTest.class));
         suite.addTest(new JUnit4TestAdapter(QueueTest.class));
