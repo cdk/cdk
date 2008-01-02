@@ -118,9 +118,9 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     	IAtomContainer mol = someoneBringMeSomeWater();
         DescriptorValue v = descriptor.calculate(mol);
         
-    	assertEquals(
+    	assertTrue(
     		"The getDescriptorResultType() is inconsistent with the calculated descriptor results",
-    		v.getValue().getClass().getName(), result.getClass().getName()
+    		result.getClass().getName().contains(v.getValue().getClass().getName()) 
     	);
     	assertEquals(
     		"The specified getDescriptorResultType() length does not match the actually calculated result vector length",
