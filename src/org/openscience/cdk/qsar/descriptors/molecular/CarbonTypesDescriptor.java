@@ -1,5 +1,8 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -9,11 +12,9 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResultType;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Topological descriptor characterizing the carbon connectivity.
@@ -198,7 +199,7 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     public IDescriptorResult getDescriptorResultType() {
-        return new IntegerArrayResult();
+        return new IntegerArrayResultType(9);
     }
 
 }

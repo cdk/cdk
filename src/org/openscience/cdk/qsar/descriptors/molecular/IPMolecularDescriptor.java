@@ -20,8 +20,15 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -29,10 +36,8 @@ import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.IPBondDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.DoubleResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  *  This class returns the ionization potential of a molecule. It is
@@ -234,7 +239,7 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     public IDescriptorResult getDescriptorResultType() {
-        return new DoubleArrayResult();
+        return new DoubleResultType();
     }
 
     /**

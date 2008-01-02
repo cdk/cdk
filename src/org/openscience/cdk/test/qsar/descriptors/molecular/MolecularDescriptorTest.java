@@ -32,6 +32,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.test.qsar.descriptors.DescriptorTest;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Tests for molecular descriptors.
@@ -128,7 +129,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     	);
     }
     
-    private IMolecule someoneBringMeSomeWater() {
+    private IMolecule someoneBringMeSomeWater() throws Exception {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
         c1.setPoint3d(new Point3d(0.0, 0.0, 0.0));
@@ -141,6 +142,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         mol.addAtom(h2);
         mol.addBond(0,1,IBond.Order.SINGLE);
         mol.addBond(0,2,IBond.Order.SINGLE);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         return mol;
     }
     

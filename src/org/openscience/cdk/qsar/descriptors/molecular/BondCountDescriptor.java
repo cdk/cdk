@@ -188,7 +188,8 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-        return IBond.Order.DOUBLE;
+    	if ("order".equals(name)) return IBond.Order.DOUBLE;
+    	return null;
     }
 }
 

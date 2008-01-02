@@ -278,9 +278,8 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
      * @return An Object of class equal to that of the parameter being requested
      */
     public Object getParameterType(String name) {
-        Object[] paramTypes = new Object[1];
-        paramTypes[0] = new Boolean(true);
-        return paramTypes;
+        if ("checkAromaticity".equals(name)) return Boolean.FALSE;
+    	return null;
     }
 }
 
