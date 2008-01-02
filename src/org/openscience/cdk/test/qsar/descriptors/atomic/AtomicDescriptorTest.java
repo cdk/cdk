@@ -77,7 +77,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
     public void testLabels() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         
-        DescriptorValue v = descriptor.calculate(mol.getAtom(0), mol);
+        DescriptorValue v = descriptor.calculate(mol.getAtom(1), mol);
         assertNotNull(v);
         String[] names = v.getNames();
         assertNotNull(
