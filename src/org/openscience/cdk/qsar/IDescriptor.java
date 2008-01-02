@@ -52,7 +52,8 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * 
  * <p>The length of the first of these three result types is fixed at
  * 1. However, the length of the array result types varies, depending
- * on the used descriptor parameters. 
+ * on the used descriptor parameters. The length must not depend on the
+ * IAtomContainer, but only on the parameters.
  * 
  * <p><b>Parameters</b><br />
  * A descriptor may have parameters that specify how the descriptor
