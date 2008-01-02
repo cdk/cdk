@@ -1,6 +1,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import Jama.Matrix;
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
@@ -10,10 +11,11 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
 
-import javax.vecmath.Point3d;
+import Jama.Matrix;
 
 /**
  * Evaluates length over breadth descriptors.
@@ -166,7 +168,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     public IDescriptorResult getDescriptorResultType() {
-        return new DoubleArrayResult();
+        return new DoubleArrayResultType(2);
     }
 
     private void rotateZ(double[][] coords, double theta) {

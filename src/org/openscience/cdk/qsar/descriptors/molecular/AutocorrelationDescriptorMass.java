@@ -28,6 +28,7 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.MFAnalyser;
 
@@ -137,7 +138,7 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 	}
 	
 	public IDescriptorResult getDescriptorResultType() {
-        return new DoubleArrayResult();
+        return new DoubleArrayResultType(5);
     }
 
 	public void setParameters(Object[] params) throws CDKException {

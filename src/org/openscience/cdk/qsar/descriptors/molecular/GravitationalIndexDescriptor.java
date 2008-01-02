@@ -24,6 +24,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.Vector;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -31,11 +35,9 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
-
-import javax.vecmath.Point3d;
-import java.util.Vector;
 
 
 /**
@@ -307,7 +309,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     public IDescriptorResult getDescriptorResultType() {
-        return new DoubleArrayResult();
+        return new DoubleArrayResultType(9);
     }
 
 }

@@ -23,8 +23,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
+import java.util.Iterator;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -40,13 +40,15 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
-import java.util.Iterator;
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 
 /**
  * Eigenvalue based descriptor noted for its utility in chemical diversity.
@@ -421,7 +423,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     public IDescriptorResult getDescriptorResultType() {
-        return new DoubleArrayResult();
+        return new DoubleArrayResultType(6);
     }
 }
 
