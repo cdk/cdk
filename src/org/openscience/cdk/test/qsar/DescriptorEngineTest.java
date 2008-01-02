@@ -118,7 +118,7 @@ public class    DescriptorEngineTest extends CDKTestCase {
         for (int i=0; i<availClasses.length; i++) {
         	System.out.println("avail class: " + availClasses[i]);
         }
-        Assert.assertEquals(6, availClasses.length);
+        Assert.assertEquals(5, availClasses.length);
     }
 }
 
