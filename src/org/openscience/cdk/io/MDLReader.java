@@ -342,7 +342,6 @@ public class MDLReader extends DefaultChemObjectReader {
             logger.info("Reading rest of file");
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
-            System.out.println("Line " + linecount + ": " + line);
             if (mode == Mode.STRICT) {
             	if (line.contains("V2000") || line.contains("v2000")) {
             		throw new CDKException("This file must be read with the MDLV2000Reader.");
