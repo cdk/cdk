@@ -38,7 +38,6 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.test.NewCDKTestCase;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -68,6 +67,17 @@ public class SmilesParserTest extends NewCDKTestCase {
 		Assert.assertEquals(7, mol.getAtomCount());
 	}
 
+	@org.junit.Test (timeout=1000)
+	public void testPositivePhosphor() throws Exception {
+		String smiles = "[Cl+3]([O-])([O-])([O-])[O-].[P+]([O-])(c1ccccc1)(c1ccccc1)c1cc([nH0+](C)c(c1)c1ccccc1)c1ccccc1";
+		IMolecule mol = sp.parseSmiles(smiles);
+		Assert.assertEquals(38, mol.getAtomCount());
+		Assert.assertEquals("P", mol.getAtom(5).getSymbol());
+		Assert.assertEquals(+1, mol.getAtom(5).getFormalCharge());
+		Assert.assertEquals("Cl", mol.getAtom(0).getSymbol());
+		Assert.assertEquals(+3, mol.getAtom(0).getFormalCharge());
+	}
+	
 	/*
 	 * The next methods tests compounds with several conjugated rings
 	 * These compounds would not fail if the Aromaticity Detection was changed
