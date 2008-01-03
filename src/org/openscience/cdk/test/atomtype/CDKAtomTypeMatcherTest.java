@@ -21,30 +21,20 @@
  */
 package org.openscience.cdk.test.atomtype;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.*;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -1267,6 +1257,30 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
 
     	assertAtomType(testedAtomTypes, "C.minus.sp2", atm.findMatchingAtomType(mol, atom1));
+    }
+
+    // [C-]#[N+]C
+    @Test public void testIsonitrile() throws CDKException {
+        IMolecule mol = new Molecule();
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+
+        IAtom atom1 = new Atom("C");
+        IAtom atom2 = new Atom("N");
+        atom2.setFormalCharge(1);
+        IAtom atom3 = new Atom("C");
+        atom3.setFormalCharge(-1);
+
+        mol.addAtom(atom1);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+
+        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1, 2, CDKConstants.BONDORDER_TRIPLE);
+
+        assertAtomType(testedAtomTypes, "C.sp3", atm.findMatchingAtomType(mol, atom1));
+        assertAtomType(testedAtomTypes, "N.plus.sp1", atm.findMatchingAtomType(mol, atom2));
+        assertAtomType(testedAtomTypes, "C.minus.sp1", atm.findMatchingAtomType(mol, atom3));
+
     }
     
     @Test public void testNobleGases() throws Exception {
