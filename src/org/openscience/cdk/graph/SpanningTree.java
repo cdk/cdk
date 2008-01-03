@@ -70,7 +70,7 @@ public class SpanningTree {
 		buildSpanningTree(atomContainer);
 	}
 	
-	public void clear() {
+	private void clear() {
 		molecule = null;
 		cb = null;
 		parent = null;
@@ -175,15 +175,6 @@ public class SpanningTree {
 		return ac;
 	}
 	
-	public static void resetFlags(IAtomContainer ac) {
-		for (int f = 0; f < ac.getAtomCount(); f++) {
-			ac.getAtom(f).setFlag(CDKConstants.VISITED, false);
-		}
-		for (int f = 0; f < ac.getElectronContainerCount(); f++) {
-			ac.getElectronContainer(f).setFlag(CDKConstants.VISITED, false);
-		}
-	}	
-
 	public IAtomContainer getPath(IAtomContainer spt,IAtom a1, IAtom a2) throws NoSuchAtomException {
 		IAtomContainer path = spt.getBuilder().newAtomContainer();
 		PathTools.resetFlags(spt);
