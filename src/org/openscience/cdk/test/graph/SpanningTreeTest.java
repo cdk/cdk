@@ -25,6 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -39,8 +40,8 @@ import java.io.InputStream;
 public class SpanningTreeTest extends NewCDKTestCase {
     
 	private static SpanningTree azulene = null;
+	private static SpanningTree ethane = null;
 	
-
     @Before
     public void setUp() throws Exception {
     	if (azulene == null) {
@@ -55,6 +56,15 @@ public class SpanningTreeTest extends NewCDKTestCase {
     		Assert.assertEquals(10, azuleneMolecule.getAtomCount());
     		Assert.assertEquals(11, azuleneMolecule.getBondCount());
     		azulene = new SpanningTree(azuleneMolecule);
+    	}
+    	if (ethane == null) {
+    		// create ethane
+    		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+    		IMolecule ethaneMolecule = builder.newMolecule();
+    		ethaneMolecule.addAtom(builder.newAtom("C"));
+    		ethaneMolecule.addAtom(builder.newAtom("C"));
+    		ethaneMolecule.addBond(0, 1, IBond.Order.SINGLE);
+    		ethane = new SpanningTree(ethaneMolecule);
     	}
     }
     
@@ -75,44 +85,80 @@ public class SpanningTreeTest extends NewCDKTestCase {
     @Test
     public void testGetBondsCyclicCount() throws Exception {
 		Assert.assertEquals(11, azulene.getBondsCyclicCount());
+		Assert.assertEquals(0, ethane.getBondsCyclicCount());
 	}
 
     @Test
     public void testGetBondsAcyclicCount() throws Exception {
 		Assert.assertEquals(0, azulene.getBondsAcyclicCount());
+		Assert.assertEquals(1, ethane.getBondsAcyclicCount());
 	}
 
     @Test
-    public void testClear() {
-		Assert.fail("Missing JUnit test");
-	}
-    @Test
-    public void testGetPath_IAtomContainer_IAtom_IAtom() {
-		Assert.fail("Missing JUnit test");
-	}
-    @Test
-    public void testResetFlags_IAtomContainer() {
-		Assert.fail("Missing JUnit test");
-	}
+    public void testGetPath_IAtomContainer_IAtom_IAtom() throws Exception {
+		IAtomContainer ethaneMol = ethane.getSpanningTree();
+		IAtomContainer path = ethane.getPath(ethaneMol, ethaneMol.getAtom(0), ethaneMol.getAtom(1));
+		Assert.assertEquals(2, path.getAtomCount());
+		Assert.assertEquals(1, path.getBondCount());
+
+    	IChemObjectBuilder builder = azulene.getSpanningTree().getBuilder();
+    	IAtomContainer disconnectedStructure = builder.newAtomContainer();
+    	disconnectedStructure.addAtom(builder.newAtom("Na"));
+    	disconnectedStructure.getAtom(0).setFormalCharge(+1);
+    	disconnectedStructure.addAtom(builder.newAtom("Cl"));
+    	disconnectedStructure.getAtom(1).setFormalCharge(-1);
+    	path = ethane.getPath(
+    		disconnectedStructure,
+    		disconnectedStructure.getAtom(0),
+    		disconnectedStructure.getAtom(1)
+    	);
+    	Assert.assertNotNull(path);
+    	Assert.assertEquals(0, path.getAtomCount());
+    	Assert.assertEquals(0, path.getBondCount());
+    }
     @Test
     public void testIsDisconnected() {
-		Assert.fail("Missing JUnit test");
+    	Assert.assertFalse(azulene.isDisconnected());
+    	
+    	IChemObjectBuilder builder = azulene.getSpanningTree().getBuilder();
+    	IAtomContainer disconnectedStructure = builder.newAtomContainer();
+    	disconnectedStructure.addAtom(builder.newAtom("Na"));
+    	disconnectedStructure.getAtom(0).setFormalCharge(+1);
+    	disconnectedStructure.addAtom(builder.newAtom("Cl"));
+    	disconnectedStructure.getAtom(1).setFormalCharge(-1);
+    	SpanningTree stree = new SpanningTree(disconnectedStructure);
+    	Assert.assertTrue(stree.isDisconnected());
 	}
     @Test
     public void testGetSpanningTree() {
-		Assert.fail("Missing JUnit test");
+		IAtomContainer container = azulene.getSpanningTree();
+		Assert.assertEquals(10, container.getAtomCount());
+		Assert.assertEquals(9, container.getBondCount()); // two rings to be broken to make a tree
+
+		container = ethane.getSpanningTree();
+		Assert.assertEquals(2, container.getAtomCount());
+		Assert.assertEquals(1, container.getBondCount());
+    }
+    @Test
+    public void testGetBasicRings() throws Exception {
+		IRingSet ringSet = azulene.getBasicRings();
+		Assert.assertEquals(2, ringSet.getAtomContainerCount());
+		
+		ringSet = ethane.getBasicRings();
+		Assert.assertEquals(0, ringSet.getAtomContainerCount());
 	}
     @Test
-    public void testGetBasicRings() {
-		Assert.fail("Missing JUnit test");
-	}
-    @Test
-    public void testGetAllRings() {
-		Assert.fail("Missing JUnit test");
+    public void testGetAllRings() throws Exception {
+		IRingSet ringSet = azulene.getAllRings();
+		Assert.assertEquals(3, ringSet.getAtomContainerCount());
+		
+		ringSet = ethane.getAllRings();
+		Assert.assertEquals(0, ringSet.getAtomContainerCount());
 	}
     @Test
     public void testGetSpanningTreeSize() {
-		Assert.fail("Missing JUnit test");
+		Assert.assertEquals(9, azulene.getSpanningTreeSize());
+		Assert.assertEquals(1, ethane.getSpanningTreeSize());
 	}
 	
 }
