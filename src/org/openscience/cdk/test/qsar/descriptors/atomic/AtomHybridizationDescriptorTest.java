@@ -32,6 +32,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
@@ -57,11 +58,22 @@ public class AtomHybridizationDescriptorTest extends AtomicDescriptorTest {
     }
 
     public void testAtomHybridizationDescriptorTest() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        IAtomicDescriptor descriptor = new AtomHybridizationDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("C#CC=C"); //
+        IAtomContainer mol = sp.parseSmiles("C#CC=CC"); //
         addExplicitHydrogens(mol);
-        assertEquals(1, ((IntegerResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).intValue());
+        IAtomType.Hybridization[] expectedStates = new IAtomType.Hybridization[]{
+        	IAtomType.Hybridization.SP1,
+        	IAtomType.Hybridization.SP1,
+        	IAtomType.Hybridization.SP2,
+        	IAtomType.Hybridization.SP2,
+        	IAtomType.Hybridization.SP3
+        };
+        for (int i=0; i<expectedStates.length; i++) {
+            assertEquals(
+               	expectedStates[i].ordinal(),
+               	((IntegerResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).intValue()
+            );
+        }
     }
 
     public void testBug1701073() throws Exception {
@@ -80,7 +92,6 @@ public class AtomHybridizationDescriptorTest extends AtomicDescriptorTest {
                         "c1(ccc(cc1)C#Cc1ccc(cc1)C#C)OC"
                 };
 
-        IAtomicDescriptor descriptor = new AtomHybridizationDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol;
         Iterator atoms;
