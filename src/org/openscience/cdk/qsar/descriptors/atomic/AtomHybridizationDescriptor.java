@@ -26,12 +26,13 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.atomtype.HybridizationStateATMatcher;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -67,14 +68,16 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 public class AtomHybridizationDescriptor implements IAtomicDescriptor {
 
 	AtomTypeManipulator atman = null;
-	HybridizationStateATMatcher atm = null;
+	CDKAtomTypeMatcher atm = null;
 	IAtom atom = null;
 	IAtomType matched = null;
 	
 	/**
 	 *  Constructor for the AtomHybridizationDescriptor object
 	 */
-	public AtomHybridizationDescriptor() {}
+	public AtomHybridizationDescriptor() {
+		atm = CDKAtomTypeMatcher.getInstance(NoNotificationChemObjectBuilder.getInstance());
+	}
 
 
 	/**
@@ -122,16 +125,14 @@ public class AtomHybridizationDescriptor implements IAtomicDescriptor {
 
 	@TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
-		atm = new HybridizationStateATMatcher();
 		matched = atm.findMatchingAtomType(container, atom);
 		if (matched == null) {
             int atnum = container.getAtomNumber(atom);
             throw new CDKException("The matched atom type was null (atom number "+atnum+") "+atom.getSymbol());
 		}
-		AtomTypeManipulator.configure(atom, matched);
-
-		Hybridization atomHybridization = atom.getHybridization();
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(atomHybridization.ordinal()));
+		Hybridization atomHybridization = matched.getHybridization();
+		IntegerResult result = new IntegerResult(atomHybridization == null ? 0 : atomHybridization.ordinal());
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result, new String[]{"aHyb"});
 	}
 
     /**
