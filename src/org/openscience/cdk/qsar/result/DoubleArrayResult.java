@@ -45,7 +45,7 @@ public class DoubleArrayResult extends DoubleArrayResultType {
     }
 
     public void add(double value) {
-        array.add(new Double(value));
+        array.add(value);
     }
 
     /**

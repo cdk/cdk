@@ -45,7 +45,7 @@ public class IntegerArrayResult extends IntegerArrayResultType {
     }
 
     public void add(int value) {
-        array.add(new Integer(value));
+        array.add(value);
     }
 
     /**
