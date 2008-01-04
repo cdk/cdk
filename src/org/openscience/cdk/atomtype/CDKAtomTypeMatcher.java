@@ -730,6 +730,20 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
       		    IAtomType type = getAtomType("Zn.2plus");
       		    if (isAcceptable(atom, atomContainer, type)) return type;
       		}
+    	} else if ("Sn".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() == 0 &&
+    				atomContainer.getConnectedBondsCount(atom) <= 4)) {
+    			IAtomType type = getAtomType("Sn.sp3");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		}
+    	} else if ("As".equals(atom.getSymbol())) {
+    		if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() == +1 &&
+    				atomContainer.getConnectedBondsCount(atom) <= 4)) {
+    			IAtomType type = getAtomType("As.plus");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		}
     	}
     	return null;
     }
