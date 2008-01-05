@@ -27,8 +27,10 @@ package org.openscience.cdk.charges;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.HOSECodeGenerator;
 
 /**
@@ -39,6 +41,7 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
  * @cdk.module  charges
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.charges.AtomTypeChargesTest")
 public class AtomTypeCharges {
 	HOSECodeGenerator hcg = new HOSECodeGenerator();
 	Pattern pOC = Pattern.compile("O-[1][-];=?+C[(]=?+O.*+");
@@ -68,6 +71,7 @@ public class AtomTypeCharges {
 	 *@return                AtomContainer with set charges
 	 *@exception  Exception  Description of the Exception
 	 */
+	@TestMethod("testCharges_pOC,testCharges_pOP,testCharges_pOS,testCharges_p_p,testCharges_p_n")
 	public IAtomContainer setCharges(IAtomContainer atomContainer) throws Exception {
 		
 		atomContainer = setInitialCharges(atomContainer);
