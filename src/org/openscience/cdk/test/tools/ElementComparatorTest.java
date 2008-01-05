@@ -20,41 +20,38 @@
  */
 package org.openscience.cdk.test.tools;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.test.CDKTestCase;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.ElementComparator;
 
 /**
  * @cdk.module test-standard
  */
-public class ElementComparatorTest extends CDKTestCase {
+public class ElementComparatorTest extends NewCDKTestCase {
     
-    public ElementComparatorTest(String name) {
-        super(name);
+    public ElementComparatorTest() {
+        super();
     }
-    
-	public static Test suite() {
-		return new TestSuite(ElementComparatorTest.class);
-	}
-	
-	public void testElementComparator() {
+
+    @Test
+    public void testElementComparator() {
 		ElementComparator comp = new ElementComparator();
-		assertNotNull(comp);
+		Assert.assertNotNull(comp);
 	}
 	
 	/**
 	 * @cdk.bug 1638375
 	 */
-	public void testCompare_Object_Object() {
+    @Test
+    public void testCompare_Object_Object() {
 		ElementComparator comp = new ElementComparator();
 		
-		assertTrue(comp.compare("C", "H") < 0);
-		assertTrue(comp.compare("H", "O") < 0);
-		assertTrue(comp.compare("N", "O") < 0);
-		assertEquals(0, comp.compare("Cl", "Cl"));
-		assertTrue(comp.compare("Cl", "C") > 0);
+		Assert.assertTrue(comp.compare("C", "H") < 0);
+		Assert.assertTrue(comp.compare("H", "O") < 0);
+		Assert.assertTrue(comp.compare("N", "O") < 0);
+		Assert.assertEquals(0, comp.compare("Cl", "Cl"));
+		Assert.assertTrue(comp.compare("Cl", "C") > 0);
 	}
 
 }

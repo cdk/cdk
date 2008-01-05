@@ -20,30 +20,46 @@
  */
 package org.openscience.cdk.test.tools.manipulator;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.RingSet;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.RingSizeComparator;
 
 /**
  * @cdk.module test-standard
  */
-public class RingSizeComparatorTest extends CDKTestCase {
+public class RingSizeComparatorTest extends NewCDKTestCase {
     
-    public RingSizeComparatorTest(String name) {
-        super(name);
+    public RingSizeComparatorTest() {
+        super();
     }
-    
-	public static Test suite() {
-		return new TestSuite(RingSizeComparatorTest.class);
-	}
-	
-	public void testRingSizeComparator_int() {
+
+    @Test
+    public void testRingSizeComparator_int() {
 		RingSizeComparator comp = new RingSizeComparator(RingSet.LARGE_FIRST);
-		assertNotNull(comp);
+		Assert.assertNotNull(comp);
 	}
+
+    @Test
+    public void testCompare() {
+        DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+		IRing cycloPentane = builder.newRing(5, "C");
+		IRing cycloHexane = builder.newRing(6, "C");
+        IRing cycloHexane2 = builder.newRing(6, "C");
+
+        RingSizeComparator ringSizeComparator = new RingSizeComparator(RingSizeComparator.LARGE_FIRST);
+        Assert.assertTrue(ringSizeComparator.compare(cycloHexane, cycloPentane) == -1);
+        Assert.assertTrue(ringSizeComparator.compare(cycloPentane, cycloHexane) == 1);
+        Assert.assertTrue(ringSizeComparator.compare(cycloHexane, cycloHexane2) == 0);
+
+        ringSizeComparator = new RingSizeComparator(RingSizeComparator.SMALL_FIRST);
+        Assert.assertTrue(ringSizeComparator.compare(cycloHexane, cycloPentane) == 1);
+        Assert.assertTrue(ringSizeComparator.compare(cycloPentane, cycloHexane) == -1);
+        Assert.assertTrue(ringSizeComparator.compare(cycloHexane, cycloHexane2) == 0);
+    }
 
 }
 

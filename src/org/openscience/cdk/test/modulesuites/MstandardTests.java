@@ -129,13 +129,13 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(UnsupportedChemObjectExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(InvalidSmilesExceptionTest.class));
         suite.addTest(AminoAcidManipulatorTest.suite());
-        suite.addTest(AtomTypeManipulatorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(AtomTypeManipulatorTest.class));
         suite.addTest(ChemFileManipulatorTest.suite());
         suite.addTest(ChemModelManipulatorTest.suite());
         suite.addTest(ChemSequenceManipulatorTest.suite());
         suite.addTest(ReactionSetManipulatorTest.suite());
-        suite.addTest(RingSizeComparatorTest.suite());
-        suite.addTest(ElementComparatorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(RingSizeComparatorTest.class));
+        suite.addTest(new JUnit4TestAdapter(ElementComparatorTest.class));
         suite.addTest(new JUnit4TestAdapter(BFSShortestPathTest.class));
         suite.addTest(new JUnit4TestAdapter(MoleculeGraphsTest.class));
         suite.addTest(new JUnit4TestAdapter(ConnectionMatrixTest.class));
@@ -163,7 +163,7 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(RandomNumbersToolTest.class));
         suite.addTest(new JUnit4TestAdapter(InvPairTest.class));
         suite.addTest(new JUnit4TestAdapter(EStateAtomTypeMatcherTest.class));
-        suite.addTest(AtomContainerComparatorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(AtomContainerComparatorTest.class));
         suite.addTest(new JUnit4TestAdapter(CDKHueckelAromaticityDetectorTest.class));
 
         return suite;

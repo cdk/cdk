@@ -20,52 +20,44 @@
  */
 package org.openscience.cdk.test.tools.manipulator;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomType;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * @cdk.module test-standard
  */
-public class AtomTypeManipulatorTest extends CDKTestCase {
+public class AtomTypeManipulatorTest extends NewCDKTestCase {
     
-    public AtomTypeManipulatorTest(String name) {
-        super(name);
+    public AtomTypeManipulatorTest() {
+        super();
     }
-    
-	public static Test suite() {
-		return new TestSuite(AtomTypeManipulatorTest.class);
-	}
 
-	public void testConfigure_IAtom_IAtomType() {
+    @Test
+    public void testConfigure_IAtom_IAtomType() {
 		IAtom atom = new NNAtom(Elements.CARBON);
 		IAtomType atomType = new NNAtomType(Elements.CARBON);
 		atomType.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, true);
 		AtomTypeManipulator.configure(atom, atomType);
-		assertEquals(
+		Assert.assertEquals(
 			atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR),
 			atom.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR)
 		);
 	}
-	
-	public void testConfigure_IAtom_Null() {
-		IAtom atom = new NNAtom(Elements.CARBON);
-		IAtomType atomType = null;
-		try {
-			AtomTypeManipulator.configure(atom, atomType);
-			fail("Expected an IllegalArgumentException");
-		} catch (IllegalArgumentException exception) {
-			// OK, expected behavior
-		}
-	}
+
+    @Test(expected = IllegalAccessException.class)
+    public void testConfigure_IAtom_Null() {
+        IAtom atom = new NNAtom(Elements.CARBON);
+        IAtomType atomType = null;
+        AtomTypeManipulator.configure(atom, atomType);
+    }
 	
 }
 

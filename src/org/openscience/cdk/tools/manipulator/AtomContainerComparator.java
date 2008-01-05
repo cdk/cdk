@@ -28,15 +28,17 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.io.IOException;
-import java.util.Comparator;
-import java.util.Iterator;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.IOException;
+import java.util.Comparator;
+import java.util.Iterator;
 
 /**
  * <p>Compares two IAtomContainers for order with the following criteria with decreasing priority:</p>
@@ -54,6 +56,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module   standard
  * @cdk.svnrev  $Revision: 9162 $
  */
+@TestClass("org.openscience.cdk.test.tools.manipulator.AtomContainerComparatorTest")
 public class AtomContainerComparator implements Comparator {
   
   /** Configure LoggingTool */
@@ -82,6 +85,7 @@ public class AtomContainerComparator implements Comparator {
    * @return a negative integer, zero, or a positive integer as the first argument is less than, equal
    *         to, or greater than the second.
    */
+    @TestMethod("testCompare_Object_Object")
   public int compare(Object o1, Object o2) {
     // Check for nulls
     if (o1 == null && o2 == null)

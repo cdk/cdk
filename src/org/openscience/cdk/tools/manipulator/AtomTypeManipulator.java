@@ -29,6 +29,8 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 
@@ -42,6 +44,7 @@ import org.openscience.cdk.interfaces.IAtomType;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.tools.manipulator.AtomTypeManipulatorTest")
 public class AtomTypeManipulator {
 	
 	/**
@@ -52,7 +55,8 @@ public class AtomTypeManipulator {
 	 * @param  atom     Atom to configure
 	 * @param  atomType AtomType. Must not be null.
 	 */
-	public static void configure(IAtom atom, IAtomType atomType) {
+    @TestMethod("testConfigure_IAtom_IAtomType")
+    public static void configure(IAtom atom, IAtomType atomType) {
 		if (atomType == null) {
 			throw new IllegalArgumentException("The IAtomType was null.");
 		}
