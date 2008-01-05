@@ -23,8 +23,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Iterator;
-
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -47,8 +47,7 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
+import java.util.Iterator;
 
 /**
  * Eigenvalue based descriptor noted for its utility in chemical diversity.
@@ -66,11 +65,20 @@ import Jama.Matrix;
  * <p>By default, the descriptor will return the highest and lowest eigenvalues for the three
  * classes of descriptor in a single ArrayList (in the order shown above). However it is also
  * possible to supply a parameter list indicating how many of the highest and lowest eigenvalues
- * (for each class of descriptor) are required.
+ * (for each class of descriptor) are required. The descriptor works with the hydrogen depleted molecule.
  * <p/>
- * <p>The descriptor works with the hydrogen depleted molecule and thus the maximum number
- * of eigenvalues calculated for any class of BCUT descriptor is equal to the number
- * of heavy atoms present.
+ * A side effect of specifying the number of highest and lowest eigenvalues is that it is possible
+ * to get two copies of all the eigenvalues. That is, if a molecule has 5 heavy atoms, then specifying
+ * the 5 highest eigenvalues returns all of them, and specifying the 5 lowest eigenvalues returns
+ * all of them, resulting in two copies of all the eigenvalues.
+ * <p/>
+ * <p> Note that it is possible to
+ * specify an arbitrarily large number of eigenvalues to be returned. However if the number
+ * (i.e., nhigh or nlow) is larger than the number of heavy atoms, the remaining eignevalues
+ * will be NaN.
+ * <p/>
+ * Given the above description, if the aim is to gt all the eigenvalues for a molecule, you should
+ * set nlow to 0 and specify the number of heavy atoms (or some large number) for nhigh (or vice versa).
  * <p>This descriptor uses these parameters:
  * <table border="1">
  * <tr>
@@ -110,7 +118,7 @@ import Jama.Matrix;
  * @cdk.builddepends Jama-1.0.1.jar
  * @cdk.depends Jama-1.0.1.jar
  * @cdk.module qsarmolecular
- * @cdk.svnrev  $Revision$
+ * @cdk.svnrev $Revision$
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:BCUT
  * @cdk.keyword BCUT
@@ -170,7 +178,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         this.checkAromaticity = (Boolean) params[2];
 
         if (this.nhigh < 0 || this.nlow < 0) {
-            throw new CDKException("Number of eigenvalues to return must be positive or 0");
+            throw new CDKException("Number of eigenvalues to return must be zero or more");
         }
     }
 
@@ -234,7 +242,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
                     for (int k = 0; k < local.getBondCount(); k++) {
                         org.openscience.cdk.interfaces.IBond bond = local.getBond(k);
                         if (bond.contains(local.getAtom(i)) && bond.contains(local.getAtom(j))) {
-                        	if (bond.getFlag(CDKConstants.ISAROMATIC)) matrix[i][j] = 0.15;
+                            if (bond.getFlag(CDKConstants.ISAROMATIC)) matrix[i][j] = 0.15;
                             else if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) matrix[i][j] = 0.1;
                             else if (bond.getOrder() == CDKConstants.BONDORDER_DOUBLE) matrix[i][j] = 0.2;
                             else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE) matrix[i][j] = 0.3;
@@ -278,28 +286,28 @@ public class BCUTDescriptor implements IMolecularDescriptor {
             molecule = (Molecule) container.clone();
         } catch (CloneNotSupportedException e) {
             logger.debug("Error during clone");
-            throw new CDKException("Error occured during clone "+e);
+            throw new CDKException("Error occured during clone " + e);
         }
 
         // add H's in case they're not present
         try {
-        	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        	Iterator<IAtom> atoms = container.atoms();
-        	while (atoms.hasNext()) {
-        		IAtom atom = atoms.next();
-        		IAtomType type = matcher.findMatchingAtomType(container, atom);
-        		AtomTypeManipulator.configure(atom, type);
-        	}
-        	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
-        	hAdder.addImplicitHydrogens(container);
-        	AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+            Iterator<IAtom> atoms = container.atoms();
+            while (atoms.hasNext()) {
+                IAtom atom = atoms.next();
+                IAtomType type = matcher.findMatchingAtomType(container, atom);
+                AtomTypeManipulator.configure(atom, type);
+            }
+            CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+            hAdder.addImplicitHydrogens(container);
+            AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
         } catch (Exception e) {
             throw new CDKException("Could not add hydrogens: " + e.getMessage(), e);
         }
 
         // do aromaticity detecttion for calculating polarizability later on
         if (this.checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
             CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         }
 
@@ -307,10 +315,6 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         int nheavy = 0;
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             if (!molecule.getAtom(i).getSymbol().equals("H")) nheavy++;
-        }
-
-        if (this.nhigh > nheavy || this.nlow > nheavy) {
-            throw new CDKException("Number of negative or positive eigenvalues cannot be more than number of heavy atoms");
         }
 
         double[] diagvalue = new double[nheavy];
@@ -369,41 +373,50 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         String[] names;
         String[] suffix = {"w", "c", "p"};
 
-        if (nhigh == 0 || nlow == 0) {
-            // return all calculated eigenvalues
-            for (double anEval1 : eval1) retval.add(anEval1);
-            for (double anEval2 : eval2) retval.add(anEval2);
-            for (double anEval3 : eval3) retval.add(anEval3);
-
-            names = new String[retval.length()];
-            for (String aSuffix : suffix) {
-                for (int i = 0; i < eval1.length; i++) {
-                    names[i] = "BCUT" + aSuffix + "-" + (i + 1) + "l";
-                }
-                for (int i = 0; i < eval1.length; i++) {
-                    names[i] = "BCUT" + aSuffix + "-" + (i + 1) + "h";
-                }
-            }
+        // return only the n highest & lowest eigenvalues
+        int lnlow, lnhigh, enlow, enhigh;
+        if (nlow > nheavy) {
+            lnlow = nheavy;
+            enlow = nlow - nheavy;
         } else {
-            // return only the n highest & lowest eigenvalues
-            for (int i = 0; i < nlow; i++) retval.add(eval1[i]);
-            for (int i = 0; i < nhigh; i++) retval.add(eval1[eval1.length - i - 1]);
+            lnlow = nlow;
+            enlow = 0;
+        }
 
-            for (int i = 0; i < nlow; i++) retval.add(eval2[i]);
-            for (int i = 0; i < nhigh; i++) retval.add(eval2[eval2.length - i - 1]);
+        if (nhigh > nheavy) {
+            lnhigh = nheavy;
+            enhigh = nhigh - nheavy;
+        } else {
+            lnhigh = nhigh;
+            enhigh = 0;
+        }
 
-            for (int i = 0; i < nlow; i++) retval.add(eval3[i]);
-            for (int i = 0; i < nhigh; i++) retval.add(eval3[eval3.length - i - 1]);
+        for (int i = 0; i < lnlow; i++) retval.add(eval1[i]);
+        for (int i = 0; i < enlow; i++) retval.add(Double.NaN);
+        for (int i = 0; i < lnhigh; i++) retval.add(eval1[eval1.length - i - 1]);
+        for (int i = 0; i < enhigh; i++) retval.add(Double.NaN);
 
-            names = new String[3 * nhigh + 3 * nlow];
-            counter = 0;
-            for (String aSuffix : suffix) {
-                for (int i = 0; i < nhigh; i++) {
-                    names[counter++] = "BCUT" + aSuffix + "-" + (i + 1) + "l";
-                }
-                for (int i = 0; i < nlow; i++) {
-                    names[counter++] = "BCUT" + aSuffix + "-" + (i + 1) + "h";
-                }
+
+        for (int i = 0; i < lnlow; i++) retval.add(eval2[i]);
+        for (int i = 0; i < enlow; i++) retval.add(Double.NaN);
+        for (int i = 0; i < lnhigh; i++) retval.add(eval2[eval2.length - i - 1]);
+        for (int i = 0; i < enhigh; i++) retval.add(Double.NaN);
+
+
+        for (int i = 0; i < lnlow; i++) retval.add(eval3[i]);
+        for (int i = 0; i < enlow; i++) retval.add(Double.NaN);
+        for (int i = 0; i < lnhigh; i++) retval.add(eval3[eval3.length - i - 1]);
+        for (int i = 0; i < enhigh; i++) retval.add(Double.NaN);
+
+
+        names = new String[3 * nhigh + 3 * nlow];
+        counter = 0;
+        for (String aSuffix : suffix) {
+            for (int i = 0; i < nhigh; i++) {
+                names[counter++] = "BCUT" + aSuffix + "-" + (i + 1) + "l";
+            }
+            for (int i = 0; i < nlow; i++) {
+                names[counter++] = "BCUT" + aSuffix + "-" + (i + 1) + "h";
             }
         }
 

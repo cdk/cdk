@@ -19,12 +19,8 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
-import java.io.InputStream;
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -34,6 +30,9 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 
 /**
@@ -52,7 +51,7 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
     }
 
     public void setUp() throws Exception {
-    	setDescriptor(BCUTDescriptor.class);
+        setDescriptor(BCUTDescriptor.class);
     }
 
     public void testBCUT() throws Exception {
@@ -64,9 +63,9 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer ac = (IAtomContainer) cList.get(0);
 
         Object[] params = new Object[3];
-        params[0] = new Integer(2);
-        params[1] = new Integer(2);
-        params[2] = new Boolean(true);
+        params[0] = 2;
+        params[1] = 2;
+        params[2] = true;
         descriptor.setParameters(params);
         DescriptorValue descriptorValue = descriptor.calculate(ac);
 
@@ -75,13 +74,13 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         /* System.out.println("Num ret = "+retval.size()); */
         for (int i = 0; i < retval.length(); i++) {
             assertTrue(
-            	"The returned value must be non-zero",
-            	Math.abs(0.0 - retval.get(i)) > 0.0000001
+                    "The returned value must be non-zero",
+                    Math.abs(0.0 - retval.get(i)) > 0.0000001
             );
         }
 
         String[] names = descriptorValue.getNames();
-        for (int i = 0; i < names.length; i++) assertNotNull(names[i]);
+        for (String name : names) assertNotNull(name);
 
         /*
         assertEquals(1756.5060703860984, ((Double)retval.get(0)).doubleValue(), 0.00000001);
@@ -94,6 +93,32 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         assertEquals(65.82626658920714,  ((Double)retval.get(7)).doubleValue(), 0.00000001);
         assertEquals(16.302948232909483, ((Double)retval.get(8)).doubleValue(), 0.00000001);
         */
+    }
+
+    public void testExtraEigenvalues() throws Exception {
+        String filename = "data/hin/gravindex.hin";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        IChemObjectReader reader = new HINReader(ins);
+        ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
+        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = (IAtomContainer) cList.get(0);
+                
+        Object[] params = new Object[3];
+        params[0] = 0;
+        params[1] = 25;
+        params[2] = true;
+        descriptor.setParameters(params);
+        DescriptorValue descriptorValue = descriptor.calculate(ac);
+
+        DoubleArrayResult retval = (DoubleArrayResult) descriptorValue.getValue();
+        int nheavy = 20;
+       
+        assertEquals(75, retval.length());        
+        for (int i = 0; i < nheavy; i++) assertTrue(retval.get(i) != Double.NaN);
+        for (int i = nheavy; i < nheavy+5; i++) {
+            assertTrue("Extra eigenvalue should have been NaN", Double.isNaN(retval.get(i)));
+        }
+
     }
 }
 
