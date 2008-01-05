@@ -27,6 +27,8 @@
  *  */
 package org.openscience.cdk.smiles;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.math.Primes;
 
@@ -37,6 +39,7 @@ import org.openscience.cdk.math.Primes;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.smiles.InvPairTest")
 public class InvPair implements java.io.Serializable{
 
     private static final long serialVersionUID = -1397634098919863122L;
@@ -62,21 +65,25 @@ public class InvPair implements java.io.Serializable{
     a.setProperty(INVARIANCE_PAIR, this);
   }
 
-  public long getLast() {
-    return last;
-  }
+    @TestMethod("testGetLast")
+    public long getLast() {
+        return last;
+    }
   
   /*
    * Todo make the following robust!
    */
+    @TestMethod("testSetCurr_long")
   public void setCurr(long newCurr) {
     curr = newCurr;
   }
 
+    @TestMethod("testGetCurr")
   public long getCurr() {
     return curr;
   }
 
+    @TestMethod("testEquals_Object")
   public boolean equals(Object e){
     if(e instanceof InvPair){
       InvPair o = (InvPair)e;
@@ -88,22 +95,27 @@ public class InvPair implements java.io.Serializable{
     }
   }
 
+    @TestMethod("testSetLast_long")
   public void setLast(long newLast) {
     last = newLast;
   }
 
+    @TestMethod("testSetAtom_IAtom")
   public void setAtom(IAtom newAtom) {
     atom = newAtom;
   }
 
+    @TestMethod("testGetAtom")
   public IAtom getAtom() {
     return atom;
   }
 
+    @TestMethod("testCommit")
   public void commit(){
     atom.setProperty(CANONICAL_LABEL, new Long(curr));
   }
 
+    @TestMethod("testToString")
   public String toString(){
     StringBuffer buff = new StringBuffer();
     buff.append(curr);
@@ -111,10 +123,12 @@ public class InvPair implements java.io.Serializable{
     return buff.toString();
   }
 
+    @TestMethod("testGetPrime")
   public int getPrime() {
     return prime;
   }
 
+    @TestMethod("testSetPrime")
   public void setPrime(){
     prime = Primes.getPrimeAt((int)curr - 1);
   }
