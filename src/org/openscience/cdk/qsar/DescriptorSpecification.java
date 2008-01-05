@@ -24,6 +24,8 @@
 package org.openscience.cdk.qsar;
 
 import org.openscience.cdk.IImplementationSpecification;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Class that is used to distribute descriptor specifications.
@@ -31,6 +33,7 @@ import org.openscience.cdk.IImplementationSpecification;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.qsar.DescriptorSpecificationTest")
 public class DescriptorSpecification implements IImplementationSpecification {
 
     private String specificationReference;
@@ -64,19 +67,23 @@ public class DescriptorSpecification implements IImplementationSpecification {
         this.implementationIdentifier = implementationIdentifier;
         this.implementationVendor = implementationVendor;
     }
-    
+
+    @TestMethod("testGetSpecificationReference")
     public String getSpecificationReference() {
         return this.specificationReference;
     }
-    
+
+    @TestMethod("testGetImplementationTitle")
     public String getImplementationTitle() {
         return this.implementationTitle;
     }
-    
+
+    @TestMethod("testGetImplementationIdentifier")
     public String getImplementationIdentifier() {
         return this.implementationIdentifier;
     }
-    
+
+    @TestMethod("testGetImplementationVendor")
     public String getImplementationVendor() {
         return this.implementationVendor;
     }

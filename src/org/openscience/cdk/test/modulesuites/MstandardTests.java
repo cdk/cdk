@@ -156,8 +156,8 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(IntegerResultTypeTest.class));
         suite.addTest(new JUnit4TestAdapter(DoubleResultTypeTest.class));
         suite.addTest(new JUnit4TestAdapter(BooleanResultTypeTest.class));
-        suite.addTest(DescriptorValueTest.suite());
-        suite.addTest(DescriptorSpecificationTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DescriptorValueTest.class));
+        suite.addTest(new JUnit4TestAdapter(DescriptorSpecificationTest.class));
         suite.addTest(new JUnit4TestAdapter(FortranFormatTest.class));
         suite.addTest(new JUnit4TestAdapter(PrimesTest.class));
         suite.addTest(new JUnit4TestAdapter(RandomNumbersToolTest.class));

@@ -24,6 +24,8 @@
 package org.openscience.cdk.qsar;
 
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.qsar.result.*;
 
 /**
@@ -32,6 +34,7 @@ import org.openscience.cdk.qsar.result.*;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.qsar.DescriptorValueTest")
 public class DescriptorValue {
 
     private DescriptorSpecification specification;
@@ -74,18 +77,22 @@ public class DescriptorValue {
         this.descriptorNames = descriptorNames;
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return this.specification;
     }
 
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return this.parameterSettings;
     }
 
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         return this.parameterNames;
     }
 
+    @TestMethod("testGetValue")
     public IDescriptorResult getValue() {
         return this.value;
     }
@@ -112,6 +119,7 @@ public class DescriptorValue {
      *
      * @return An array of descriptor names.
      */
+    @TestMethod("testGetNames")
     public String[] getNames() {
         if (descriptorNames == null || descriptorNames.length == 0) {
             String title = specification.getImplementationTitle();

@@ -20,33 +20,29 @@
  */
 package org.openscience.cdk.test.qsar;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class DescriptorValueTest extends CDKTestCase {
+public class DescriptorValueTest extends NewCDKTestCase {
     
-    public DescriptorValueTest(String name) {
-        super(name);
+    public DescriptorValueTest() {
+        super();
     }
-    
-	public static Test suite() {
-		return new TestSuite(DescriptorValueTest.class);
-	}
 
 	private final static String DESC_REF = "bla"; 
 	private final static String DESC_IMPL_TITLE = "bla2"; 
 	private final static String DESC_IMPL_VENDOR = "bla3"; 
 	private final static String DESC_IMPL_ID = "bla4"; 
 
-	public void testDescriptorValue_DescriptorSpecification_arrayString_arrayObject_IDescriptorResult_arrayString() {
+    @Test
+    public void testDescriptorValue_DescriptorSpecification_arrayString_arrayObject_IDescriptorResult_arrayString() {
 		DescriptorSpecification spec = new DescriptorSpecification(
 	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
 		);
@@ -55,10 +51,11 @@ public class DescriptorValueTest extends CDKTestCase {
 			new DoubleResult(0.7), 
 			new String[]{ "bla" }
 		);
-		assertNotNull(value);
+		Assert.assertNotNull(value);
 	}
-	
-	public void testDescriptorValue_DescriptorSpecification_arrayString_arrayObject_IDescriptorResult() {
+
+    @Test
+    public void testDescriptorValue_DescriptorSpecification_arrayString_arrayObject_IDescriptorResult() {
 		DescriptorSpecification spec = new DescriptorSpecification(
 	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
 		);
@@ -66,23 +63,11 @@ public class DescriptorValueTest extends CDKTestCase {
 			spec, new String[0], new Object[0], 
 			new DoubleResult(0.7)
 		);
-		assertNotNull(value);
-	}
-	
-	public void testGetValue() {
-		DescriptorSpecification spec = new DescriptorSpecification(
-	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
-		);
-		DoubleResult doubleVal = new DoubleResult(0.7); 
-		DescriptorValue value = new DescriptorValue(
-			spec, new String[0], new Object[0], 
-			doubleVal, 
-			new String[]{ "bla" }
-		);
-		assertEquals(doubleVal, value.getValue());
+		Assert.assertNotNull(value);
 	}
 
-	public void testGetSpecification() {
+    @Test
+    public void testGetValue() {
 		DescriptorSpecification spec = new DescriptorSpecification(
 	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
 		);
@@ -92,10 +77,11 @@ public class DescriptorValueTest extends CDKTestCase {
 			doubleVal, 
 			new String[]{ "bla" }
 		);
-		assertEquals(spec, value.getSpecification());
+		Assert.assertEquals(doubleVal, value.getValue());
 	}
 
-	public void testGetParameters() {
+    @Test
+    public void testGetSpecification() {
 		DescriptorSpecification spec = new DescriptorSpecification(
 	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
 		);
@@ -105,10 +91,11 @@ public class DescriptorValueTest extends CDKTestCase {
 			doubleVal, 
 			new String[]{ "bla" }
 		);
-		assertEquals(0, value.getParameters().length);
+		Assert.assertEquals(spec, value.getSpecification());
 	}
 
-	public void testGetParameterNames() {
+    @Test
+    public void testGetParameters() {
 		DescriptorSpecification spec = new DescriptorSpecification(
 	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
 		);
@@ -118,10 +105,11 @@ public class DescriptorValueTest extends CDKTestCase {
 			doubleVal, 
 			new String[]{ "bla" }
 		);
-		assertEquals(0, value.getParameterNames().length);
+		Assert.assertEquals(0, value.getParameters().length);
 	}
 
-	public void testGetNames() {
+    @Test
+    public void testGetParameterNames() {
 		DescriptorSpecification spec = new DescriptorSpecification(
 	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
 		);
@@ -131,7 +119,21 @@ public class DescriptorValueTest extends CDKTestCase {
 			doubleVal, 
 			new String[]{ "bla" }
 		);
-		assertEquals(1, value.getNames().length);
+		Assert.assertEquals(0, value.getParameterNames().length);
+	}
+
+    @Test
+    public void testGetNames() {
+		DescriptorSpecification spec = new DescriptorSpecification(
+	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
+		);
+		DoubleResult doubleVal = new DoubleResult(0.7); 
+		DescriptorValue value = new DescriptorValue(
+			spec, new String[0], new Object[0], 
+			doubleVal, 
+			new String[]{ "bla" }
+		);
+		Assert.assertEquals(1, value.getNames().length);
 	}
 }
 

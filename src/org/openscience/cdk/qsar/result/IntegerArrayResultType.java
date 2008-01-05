@@ -43,7 +43,7 @@ public class IntegerArrayResultType implements IDescriptorResult {
         return "IntegerArrayResultType";
     }
 
-    @TestMethod("testlength")
+    @TestMethod("testLength")
     public int length() {
     	return size;
     }
