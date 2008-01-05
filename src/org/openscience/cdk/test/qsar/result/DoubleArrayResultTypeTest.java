@@ -20,37 +20,35 @@
  */
 package org.openscience.cdk.test.qsar.result;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class DoubleArrayResultTypeTest extends CDKTestCase {
+public class DoubleArrayResultTypeTest extends NewCDKTestCase {
     
-    public DoubleArrayResultTypeTest(String name) {
-        super(name);
+    public DoubleArrayResultTypeTest() {
+        super();
     }
-    
-	public static Test suite() {
-		return new TestSuite(DoubleArrayResultTypeTest.class);
+
+    @Test
+    public void testDoubleArrayResultType() {
+		IDescriptorResult type = new DoubleArrayResultType(6);
+		Assert.assertNotNull(type);
 	}
 
-	public void testDoubleArrayResultType() {
-		IDescriptorResult type = new DoubleArrayResultType(6);
-		assertNotNull(type);
+    @Test
+    public void testToString() {
+		Assert.assertEquals("DoubleArrayResultType", new DoubleArrayResultType(7).toString());
 	}
-	
-	public void testToString() {
-		assertEquals("DoubleArrayResultType", new DoubleArrayResultType(7).toString());
-	}
-	
-	public void testLength() {
-		assertEquals(7, new DoubleArrayResultType(7).length());
+
+    @Test
+    public void testLength() {
+		Assert.assertEquals(7, new DoubleArrayResultType(7).length());
 	}
 	
 }

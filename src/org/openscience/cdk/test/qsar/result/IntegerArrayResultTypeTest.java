@@ -20,37 +20,35 @@
  */
 package org.openscience.cdk.test.qsar.result;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResultType;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class IntegerArrayResultTypeTest extends CDKTestCase {
+public class IntegerArrayResultTypeTest extends NewCDKTestCase {
     
-    public IntegerArrayResultTypeTest(String name) {
-        super(name);
+    public IntegerArrayResultTypeTest() {
+        super();
     }
-    
-	public static Test suite() {
-		return new TestSuite(IntegerArrayResultTypeTest.class);
-	}
 
+    @Test
 	public void testIntegerArrayResultType() {
 		IDescriptorResult type = new IntegerArrayResultType(6);
-		assertNotNull(type);
+		Assert.assertNotNull(type);
 	}
-	
+
+    @Test
 	public void testToString() {
-		assertEquals("IntegerArrayResultType", new IntegerArrayResultType(7).toString());
+		Assert.assertEquals("IntegerArrayResultType", new IntegerArrayResultType(7).toString());
 	}
-	
-	public void testLength() {
-		assertEquals(7, new IntegerArrayResultType(7).length());
+
+    @Test
+    public void testLength() {
+		Assert.assertEquals(7, new IntegerArrayResultType(7).length());
 	}
 	
 }

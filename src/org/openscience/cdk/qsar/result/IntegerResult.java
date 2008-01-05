@@ -23,28 +23,36 @@
  */
 package org.openscience.cdk.qsar.result;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * Object that provides access to the calculated descriptor value.
  *
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.qsar.result.IntegerResultTest")
 public class IntegerResult implements IDescriptorResult {
     
     private int value;
-    
+
+
     public IntegerResult(int value) {
         this.value = value;
     }
-    
+
+    @TestMethod("testIntValue")
     public int intValue() {
         return this.value;
     }
 
+    @TestMethod("testToString")
     public String toString() {
         return Integer.toString(value);
     }
-    
+
+    @TestMethod("testLength")
     public int length() {
     	return 1;
     }

@@ -20,18 +20,24 @@
  */
 package org.openscience.cdk.qsar.result;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * IDescriptorResult type for booleans. 
  *
  * @cdk.module standard
  * @cdk.svnrev $Revision: 9170 $
  */
+@TestClass("org.openscience.cdk.test.qsar.result.DoubleResultTypeTest")
 public class DoubleResultType implements IDescriptorResult {
-    
+
+    @TestMethod("testToString")
     public String toString() {
         return "DoubleResultType";
     }
-    
+
+    @TestMethod("testLength")
     public int length() {
     	return 1;
     }

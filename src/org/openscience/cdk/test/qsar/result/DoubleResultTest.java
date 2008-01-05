@@ -20,39 +20,44 @@
  */
 package org.openscience.cdk.test.qsar.result;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class DoubleResultTest extends CDKTestCase {
+public class DoubleResultTest extends NewCDKTestCase {
     
-    public DoubleResultTest(String name) {
-        super(name);
+    public DoubleResultTest() {
+        super();
     }
     
-	public static Test suite() {
-		return new TestSuite(DoubleResultTest.class);
-	}
 
+    @Test
 	public void testDoubleResult_double() {
 		DoubleResult result = new DoubleResult(5.0);
-		assertNotNull(result);
+		Assert.assertNotNull(result);
 	}
-	
-	public void testToString() {
+
+    @Test
+    public void testToString() {
 		DoubleResult result = new DoubleResult(5.0);
-		assertEquals("5.0", result.toString());
+		Assert.assertEquals("5.0", result.toString());
 	}
-	
-	public void testDoubleValue() {
+
+    @Test
+    public void testDoubleValue() {
 		DoubleResult result = new DoubleResult(5);
-		assertEquals(5.0, result.doubleValue(), 0.000001);
+		Assert.assertEquals(5.0, result.doubleValue(), 0.000001);
 	}
+
+    @Test
+    public void testLength() {
+        DoubleResult result = new DoubleResult(5);
+        Assert.assertEquals(1, result.length());
+    }
 }
 
 

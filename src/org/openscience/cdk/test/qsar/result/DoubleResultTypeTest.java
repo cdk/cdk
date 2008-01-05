@@ -20,37 +20,35 @@
  */
 package org.openscience.cdk.test.qsar.result;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.qsar.result.DoubleResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class DoubleResultTypeTest extends CDKTestCase {
+public class DoubleResultTypeTest extends NewCDKTestCase {
     
-    public DoubleResultTypeTest(String name) {
-        super(name);
+    public DoubleResultTypeTest() {
+        super();
     }
     
-	public static Test suite() {
-		return new TestSuite(DoubleResultTypeTest.class);
-	}
-
+	@Test
 	public void testDoubleResultType() {
 		IDescriptorResult type = new DoubleResultType();
-		assertNotNull(type);
+		Assert.assertNotNull(type);
 	}
-	
-	public void testToString() {
-		assertEquals("DoubleResultType", new DoubleResultType().toString());
+
+    @Test
+    public void testToString() {
+		Assert.assertEquals("DoubleResultType", new DoubleResultType().toString());
 	}
-	
-	public void testLength() {
-		assertEquals(1, new DoubleResultType().length());
+
+    @Test
+    public void testLength() {
+		Assert.assertEquals(1, new DoubleResultType().length());
 	}
 	
 }

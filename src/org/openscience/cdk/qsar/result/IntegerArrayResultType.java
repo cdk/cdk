@@ -20,12 +20,16 @@
  */
 package org.openscience.cdk.qsar.result;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * IDescriptorResult type for booleans. 
  *
  * @cdk.module standard
  * @cdk.svnrev $Revision: 9170 $
  */
+@TestClass("org.openscience.cdk.test.qsar.result.IntegerArrayResultType")
 public class IntegerArrayResultType implements IDescriptorResult {
     
 	private int size;
@@ -33,11 +37,13 @@ public class IntegerArrayResultType implements IDescriptorResult {
 	public IntegerArrayResultType(int size) {
 		this.size = size;
 	}
-	
+
+    @TestMethod("testToString")
     public String toString() {
         return "IntegerArrayResultType";
     }
-    
+
+    @TestMethod("testlength")
     public int length() {
     	return size;
     }

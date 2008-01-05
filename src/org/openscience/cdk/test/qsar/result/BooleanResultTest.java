@@ -20,40 +20,38 @@
  */
 package org.openscience.cdk.test.qsar.result;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.qsar.result.BooleanResult;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class BooleanResultTest extends CDKTestCase {
+public class BooleanResultTest extends NewCDKTestCase {
     
-    public BooleanResultTest(String name) {
-        super(name);
+    public BooleanResultTest() {
+        super();
     }
-    
-	public static Test suite() {
-		return new TestSuite(BooleanResultTest.class);
-	}
 
 	// well, these tests are not shocking...
-	
-	public void testBooleanResult_boolean() {
+
+    @Test
+    public void testBooleanResult_boolean() {
 		BooleanResult result = new BooleanResult(true);
-		assertNotNull(result);
+		Assert.assertNotNull(result);
 	}
-	
-	public void testBooleanValue() {
-		assertTrue(new BooleanResult(true).booleanValue());
-		assertFalse(new BooleanResult(false).booleanValue());
+
+    @Test
+    public void testBooleanValue() {
+		Assert.assertTrue(new BooleanResult(true).booleanValue());
+		Assert.assertFalse(new BooleanResult(false).booleanValue());
 	}
-	
-	public void testToString() {
-		assertEquals("true", new BooleanResult(true).toString());
-		assertEquals("false", new BooleanResult(false).toString());
+
+    @Test
+    public void testToString() {
+		Assert.assertEquals("true", new BooleanResult(true).toString());
+		Assert.assertEquals("false", new BooleanResult(false).toString());
 	}
 	
 }

@@ -23,12 +23,16 @@
  */
 package org.openscience.cdk.qsar.result;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * Object that provides access to the calculated descriptor value.
  *
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.qsar.result.BooleanResultTest")
 public class BooleanResult extends BooleanResultType {
     
     private boolean value;
@@ -36,11 +40,13 @@ public class BooleanResult extends BooleanResultType {
     public BooleanResult(boolean value) {
         this.value = value;
     }
-    
+
+    @TestMethod("testBooleanValue")
     public boolean booleanValue() {
         return this.value;
     }
 
+    @TestMethod("testToString")
     public String toString() {
         return Boolean.toString(value);
     }

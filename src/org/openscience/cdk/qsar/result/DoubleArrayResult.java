@@ -23,6 +23,9 @@
  */
 package org.openscience.cdk.qsar.result;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +33,7 @@ import java.util.List;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.qsar.result.DoubleArrayResultTest")
 public class DoubleArrayResult extends DoubleArrayResultType {
 
     private List<Double> array;
@@ -44,6 +48,7 @@ public class DoubleArrayResult extends DoubleArrayResultType {
         this.array = new ArrayList<Double>(size);
     }
 
+    @TestMethod("testAdd_double")
     public void add(double value) {
         array.add(value);
     }
@@ -51,6 +56,7 @@ public class DoubleArrayResult extends DoubleArrayResultType {
     /**
      * The first double is at index = 0;
      */
+    @TestMethod("testGet_int")
     public double get(int index) {
     	if (index >= this.array.size()) {
     		return 0.0;
@@ -58,10 +64,12 @@ public class DoubleArrayResult extends DoubleArrayResultType {
         return this.array.get(index);
     }
 
+    @TestMethod("testSize")
     public int length() {
         return Math.max(super.length(), this.array.size());
     }
 
+    @TestMethod("testToString")
     public String toString() {
         StringBuffer buf = new StringBuffer();
         for (int i=0; i<length(); i++) {
