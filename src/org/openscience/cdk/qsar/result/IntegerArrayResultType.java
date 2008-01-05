@@ -29,7 +29,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module standard
  * @cdk.svnrev $Revision: 9170 $
  */
-@TestClass("org.openscience.cdk.test.qsar.result.IntegerArrayResultType")
+@TestClass("org.openscience.cdk.test.qsar.result.IntegerArrayResultTypeTest")
 public class IntegerArrayResultType implements IDescriptorResult {
     
 	private int size;
