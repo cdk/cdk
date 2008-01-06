@@ -28,6 +28,8 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
@@ -49,6 +51,7 @@ import java.util.*;
  * @author  Egon Willighagen
  * @cdk.created 2003-08-07
  */
+@TestClass("org.openscience.cdk.test.tools.manipulator.AtomContainerManipulatorTest")
 public class AtomContainerManipulator {
 	
 	/**
@@ -59,7 +62,8 @@ public class AtomContainerManipulator {
 	 * @return An atom having id id
 	 * @throws CDKException There is no such atom
 	 */
-	public static IAtom getAtomById(IAtomContainer ac, String id) throws CDKException{
+    @TestMethod("testGetAtomById_IAtomContainer_String")
+    public static IAtom getAtomById(IAtomContainer ac, String id) throws CDKException{
 		for(int i=0;i<ac.getAtomCount();i++){
 			if(ac.getAtom(i).getID()!=null && ac.getAtom(i).getID().equals(id))
 				return ac.getAtom(i);
@@ -67,6 +71,7 @@ public class AtomContainerManipulator {
 		throw new CDKException("no suc atom");
 	}
 
+    @TestMethod("testReplaceAtom")
     public static boolean replaceAtomByAtom(IAtomContainer container, IAtom atom, IAtom newAtom) {
         if (!container.contains(atom)) {
             // it should complain
@@ -103,6 +108,7 @@ public class AtomContainerManipulator {
      * @param  atomContainer The IAtomContainer to manipulate
      * @return The summed charges of all atoms in this AtomContainer.
      */
+    @TestMethod("testGetTotalCharge")
     public static double getTotalCharge(IAtomContainer atomContainer) {
         double charge = 0.0;
         Iterator<IAtom> iterAtoms = atomContainer.atoms();
@@ -118,6 +124,7 @@ public class AtomContainerManipulator {
      * @param  atomContainer The IAtomContainer to manipulate
      * @return The summed exact mass of all atoms in this AtomContainer.
      */
+    @TestMethod("testGetTotalExactMass_IAtomContainer")
     public static double getTotalExactMass(IAtomContainer atomContainer) {
         double mass = 0.0;
         Iterator<IAtom> iterAtoms = atomContainer.atoms();
@@ -133,6 +140,7 @@ public class AtomContainerManipulator {
      * @param  atomContainer The IAtomContainer to manipulate
      * @return The summed natural abundance of all atoms in this AtomContainer.
      */
+    @TestMethod("testGetTotalNaturalAbundance_IAtomContainer")
     public static double getTotalNaturalAbundance(IAtomContainer atomContainer) {
         double abundance =  1.0;
         Iterator<IAtom> iterAtoms = atomContainer.atoms();
@@ -146,6 +154,7 @@ public class AtomContainerManipulator {
     /**
      * @return The summed formal charges of all atoms in this AtomContainer.
      */
+    @TestMethod("testGetTotalFormalCharge_IAtomContainer")
     public static int getTotalFormalCharge(IAtomContainer atomContainer) {
         int chargeP = getTotalNegativeFormalCharge(atomContainer);
         int chargeN = getTotalPositiveFormalCharge(atomContainer);
@@ -155,6 +164,7 @@ public class AtomContainerManipulator {
     /**
      * @return The summed negative formal charges of all atoms in this AtomContainer. 
      */
+    @TestMethod("testGetTotalNegativeFormalCharge_IAtomContainer")
     public static int getTotalNegativeFormalCharge(IAtomContainer atomContainer) {
         int charge = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
@@ -167,6 +177,7 @@ public class AtomContainerManipulator {
     /**
      * @return The summed positive formal charges of all atoms in this AtomContainer. 
      */
+    @TestMethod("testGetTotalPositiveFormalCharge_IAtomContainer")
     public static int getTotalPositiveFormalCharge(IAtomContainer atomContainer) {
         int charge = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
@@ -180,6 +191,7 @@ public class AtomContainerManipulator {
     /**
      * @return The summed implicit hydrogens of all atoms in this AtomContainer.
      */
+    @TestMethod("testGetTotalHydrogenCount_IAtomContainer,testGetTotalHydrogenCount_IAtomContainer_zeroImplicit,testGetTotalHydrogenCount_IAtomContainer_nullImplicit,testGetTotalHydrogenCount_ImplicitHydrogens")
     public static int getTotalHydrogenCount(IAtomContainer atomContainer) {
         int hCount = 0;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
@@ -193,6 +205,7 @@ public class AtomContainerManipulator {
     /**
      * @return The number of explicit hydrogens on the given IAtom.
      */
+    @TestMethod("testCountExplicitH")
     public static int countExplicitHydrogens(IAtomContainer atomContainer, IAtom atom) {
     	int hCount = 0;
         for (IAtom iAtom : atomContainer.getConnectedAtomsList(atom)) {
@@ -207,6 +220,7 @@ public class AtomContainerManipulator {
      * Adds explicit hydrogens (without coordinates) to the IAtomContainer,
      * equaling the number of set implicit hydrogens.
      */
+    @TestMethod("testConvertImplicitToExplicitHydrogens_IAtomContainer")
     public static void convertImplicitToExplicitHydrogens(IAtomContainer atomContainer) {
     	Iterator<IAtom> atoms = atomContainer.atoms();
         while (atoms.hasNext()) {
@@ -214,7 +228,7 @@ public class AtomContainerManipulator {
             if (!atom.getSymbol().equals("H")) {            	
             	Integer hCount = atom.getHydrogenCount();
             	if (hCount != null) {
-            		for (int i=0; i<hCount.intValue(); i++) {
+            		for (int i=0; i< hCount; i++) {
             			IAtom hydrogen = atom.getBuilder().newAtom("H");
             			atomContainer.addAtom(hydrogen);
             			atomContainer.addBond(
@@ -233,12 +247,14 @@ public class AtomContainerManipulator {
     /**
      * @return The summed implicit + explicit hydrogens of the given IAtom.
      */
-	public static int countHydrogens(IAtomContainer atomContainer, IAtom atom) {
+    @TestMethod("testCountH")
+    public static int countHydrogens(IAtomContainer atomContainer, IAtom atom) {
         int hCount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
         hCount += countExplicitHydrogens(atomContainer, atom);
         return hCount;
 	}
 
+    @TestMethod("testGetAllIDs_IAtomContainer")
     public static List<String> getAllIDs(IAtomContainer mol) {
     	List<String> idList = new ArrayList<String>();
         if (mol != null) {
@@ -267,6 +283,7 @@ public class AtomContainerManipulator {
      * @return              The molecule without Hs.
      * @cdk.keyword         hydrogen, removal
      */
+    @TestMethod("testRemoveHydrogens_IAtomContainer")
     public static IAtomContainer removeHydrogens(IAtomContainer atomContainer)
     {
         Map<IAtom, IAtom> map = new HashMap<IAtom,IAtom>();        // maps original atoms to clones.
@@ -412,7 +429,8 @@ public class AtomContainerManipulator {
 	 * @return            An AtomContainer containing the intersection between
 	 *                    container1 and container2
 	 */
-	public static IAtomContainer getIntersection(
+    @TestMethod("testGetIntersection_IAtomContainer_IAtomContainer")
+    public static IAtomContainer getIntersection(
 		IAtomContainer container1, IAtomContainer container2)
 	{
 		IAtomContainer intersection = container1.getBuilder().newAtomContainer();
@@ -439,7 +457,8 @@ public class AtomContainerManipulator {
 	 * @param  container The original AtomContainer.
 	 * @return The array of Atom objects.
 	 */
-	public static IAtom[] getAtomArray(IAtomContainer container) {
+    @TestMethod("testGetAtomArray_IAtomContainer")
+    public static IAtom[] getAtomArray(IAtomContainer container) {
 		IAtom[] ret = new IAtom[container.getAtomCount()];
 		for (int i = 0; i < ret.length; ++i) ret[i] = container.getAtom(i);
 		return ret;
@@ -450,7 +469,8 @@ public class AtomContainerManipulator {
 	 * @param  list The original List.
 	 * @return The array of Atom objects.
 	 */
-	public static IAtom[] getAtomArray(java.util.List<IAtom> list) {
+    @TestMethod("testGetAtomArray_List")
+    public static IAtom[] getAtomArray(java.util.List<IAtom> list) {
 		IAtom[] ret = new IAtom[list.size()];
 		for (int i = 0; i < ret.length; ++i) ret[i] = list.get(i);
 		return ret;
@@ -461,7 +481,8 @@ public class AtomContainerManipulator {
 	 * @param  container The original AtomContainer.
 	 * @return The array of Bond objects.
 	 */
-	public static IBond[] getBondArray(IAtomContainer container) {
+    @TestMethod("testGetBondArray_IAtomContainer")
+    public static IBond[] getBondArray(IAtomContainer container) {
 		IBond[] ret = new IBond[container.getBondCount()];
 		for (int i = 0; i < ret.length; ++i) ret[i] = container.getBond(i);
 		return ret;
@@ -472,7 +493,8 @@ public class AtomContainerManipulator {
 	 * @param  list The original List.
 	 * @return The array of Atom objects.
 	 */
-	public static IBond[] getBondArray(java.util.List<IBond> list) {
+    @TestMethod("testGetBondArray_List")
+    public static IBond[] getBondArray(java.util.List<IBond> list) {
 		IBond[] ret = new IBond[list.size()];
 		for (int i = 0; i < ret.length; ++i) ret[i] = list.get(i);
 		return ret;
@@ -510,7 +532,8 @@ public class AtomContainerManipulator {
 	 * @param container
 	 * @throws CDKException
 	 */
-	public static void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws CDKException {
+    @TestMethod("testPerceiveAtomTypesAndConfigureAtoms")
+    public static void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws CDKException {
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
         Iterator<IAtom> atoms = container.atoms();
         while (atoms.hasNext()) {
@@ -527,25 +550,27 @@ public class AtomContainerManipulator {
 	 * @param container
 	 * @return
 	 */
-	public static int getSingleBondEquivalentSum(IAtomContainer container) {
+    @TestMethod("testGetSBE")
+    public static int getSingleBondEquivalentSum(IAtomContainer container) {
 		int sum = 0;
 		Iterator<IBond> bonds = container.bonds();
 		while (bonds.hasNext()) {
 			IBond nextBond = bonds.next();
-			if (nextBond.getOrder() == IBond.Order.SINGLE) {
+			if (nextBond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
 				sum += 1;
-			} else if (nextBond.getOrder() == IBond.Order.DOUBLE) {
+			} else if (nextBond.getOrder() == CDKConstants.BONDORDER_DOUBLE) {
 				sum += 2;
-			} else if (nextBond.getOrder() == IBond.Order.TRIPLE) {
+			} else if (nextBond.getOrder() == CDKConstants.BONDORDER_TRIPLE) {
 				sum += 3;
-			} else if (nextBond.getOrder() == IBond.Order.QUADRUPLE) {
+			} else if (nextBond.getOrder() == CDKConstants.BONDORDER_QUADRUPLE) {
 				sum += 4;
 			}
 		}
 		return sum;
 	}
-	
-	public static IBond.Order getMaximumBondOrder(IAtomContainer container) {
+
+    @TestMethod("testGetMaxBondOrder")
+    public static IBond.Order getMaximumBondOrder(IAtomContainer container) {
 		return BondManipulator.getMaximumBondOrder(container.bonds());
 	}
 	

@@ -110,7 +110,7 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(MFAnalyserTest.class));
         suite.addTest(MoleculeSetManipulatorTest.suite());
         suite.addTest(new JUnit4TestAdapter(ReactionManipulatorTest.class));
-        suite.addTest(AtomContainerManipulatorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(AtomContainerManipulatorTest.class));
         suite.addTest(RingSetManipulatorTest.suite());
         suite.addTest(new JUnit4TestAdapter(RingManipulatorTest.class));
         suite.addTest(AtomContainerSetManipulatorTest.suite());
