@@ -94,7 +94,7 @@ public class MdataTests {
         suite.addTest(ChemSequenceTest.suite());
         suite.addTest(new JUnit4TestAdapter(ConformerContainerTest.class));
         suite.addTest(CrystalTest.suite());
-        suite.addTest(DefaultChemObjectBuilderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DefaultChemObjectBuilderTest.class));
         suite.addTest(ElectronContainerTest.suite());
         suite.addTest(ElementTest.suite());
         suite.addTest(IsotopeTest.suite());

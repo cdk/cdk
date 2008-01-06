@@ -23,9 +23,9 @@ package org.openscience.cdk.test;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
@@ -66,103 +66,95 @@ import org.openscience.cdk.interfaces.IStrand;
  *
  * @cdk.module test-data
  */
-public class DefaultChemObjectBuilderTest extends CDKTestCase {
+public class DefaultChemObjectBuilderTest extends NewCDKTestCase {
 
-	protected org.openscience.cdk.ChemObject rootObject;
+	protected static org.openscience.cdk.ChemObject rootObject;
 	
-    public DefaultChemObjectBuilderTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
         rootObject = new org.openscience.cdk.ChemObject();
     }
 
-    public static Test suite() {
-        return new TestSuite(DefaultChemObjectBuilderTest.class);
-    }
-
-    public void testGetInstance() {
+    @Test public void testGetInstance() {
     	Object builder = DefaultChemObjectBuilder.getInstance();
-    	assertNotNull(builder);
-    	assertTrue(builder instanceof IChemObjectBuilder);
-        assertTrue(builder instanceof DefaultChemObjectBuilder);
+    	Assert.assertNotNull(builder);
+    	Assert.assertTrue(builder instanceof IChemObjectBuilder);
+        Assert.assertTrue(builder instanceof DefaultChemObjectBuilder);
     }
     
-	public void testNewAminoAcid() {
+	@Test public void testNewAminoAcid() {
 		Object object = rootObject.getBuilder().newAminoAcid();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IAminoAcid);
+		Assert.assertTrue(object instanceof IAminoAcid);
 	}
 	 
-	public void testNewAtom() {
+	@Test public void testNewAtom() {
 		Object object = rootObject.getBuilder().newAtom();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IAtom);
+		Assert.assertTrue(object instanceof IAtom);
 	}
 	 
-	public void testNewAtom_IElement() {
+	@Test public void testNewAtom_IElement() {
 		IElement element = rootObject.getBuilder().newElement();
 		Object object = rootObject.getBuilder().newAtom(element);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IAtom);
+		Assert.assertTrue(object instanceof IAtom);
 	}
 	 
-	public void testNewAtom_String() {
+	@Test public void testNewAtom_String() {
 		Object object = rootObject.getBuilder().newAtom("C");
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IAtom);
+		Assert.assertTrue(object instanceof IAtom);
 	}
 	
-	public void testNewAtom_String_Point2d() {
+	@Test public void testNewAtom_String_Point2d() {
 		Object object = rootObject.getBuilder().newAtom("C", new Point2d(1.0, 2.0));
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IAtom);
+		Assert.assertTrue(object instanceof IAtom);
 	}
 	
-	public void testNewAtom_String_Point3d() {
+	@Test public void testNewAtom_String_Point3d() {
 		Object object = rootObject.getBuilder().newAtom("C", new Point3d(1.0, 2.0, 3.0));
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IAtom);
+		Assert.assertTrue(object instanceof IAtom);
 	}
 	
-	public void testNewAtomContainer() {
+	@Test public void testNewAtomContainer() {
 		Object object = rootObject.getBuilder().newAtomContainer();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IAtomContainer);
+		Assert.assertTrue(object instanceof IAtomContainer);
 	}
 	
-	public void testNewAtomContainer_int_int_int_int() {
+	@Test public void testNewAtomContainer_int_int_int_int() {
 		Object object = rootObject.getBuilder().newAtomContainer(10,10,0,0);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IAtomContainer);
+		Assert.assertTrue(object instanceof IAtomContainer);
 	}
 	
-	public void testNewAtomContainer_IAtomContainer() {
+	@Test public void testNewAtomContainer_IAtomContainer() {
 		Object object = rootObject.getBuilder().newAtomContainer(rootObject.getBuilder().newAtomContainer());
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IAtomContainer);
+		Assert.assertTrue(object instanceof IAtomContainer);
 	}
 	
-	public void testNewAtomParity_IAtom_IAtom_IAtom_IAtom_IAtom_int() {
+	@Test public void testNewAtomParity_IAtom_IAtom_IAtom_IAtom_IAtom_int() {
 		Object object = rootObject.getBuilder().newAtomParity(
 				rootObject.getBuilder().newAtom(),
 				rootObject.getBuilder().newAtom(),
@@ -171,506 +163,506 @@ public class DefaultChemObjectBuilderTest extends CDKTestCase {
 				rootObject.getBuilder().newAtom(),
 				1
 		);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IAtomParity);
+		Assert.assertTrue(object instanceof IAtomParity);
 	}
 	
-	public void testNewAtomType_String() {
+	@Test public void testNewAtomType_String() {
 		Object object = rootObject.getBuilder().newAtomType("Carom");
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IAtomType);
+		Assert.assertTrue(object instanceof IAtomType);
 	}
 	
-	public void testNewAtomType_IElement() {
+	@Test public void testNewAtomType_IElement() {
 		IElement element = rootObject.getBuilder().newElement();
 		Object object = rootObject.getBuilder().newAtomType(element);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IAtomType);
+		Assert.assertTrue(object instanceof IAtomType);
 	}
 	
-	public void testNewAtomType_String_String() {
+	@Test public void testNewAtomType_String_String() {
 		Object object = rootObject.getBuilder().newAtomType("Carom");
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IAtomType);
+		Assert.assertTrue(object instanceof IAtomType);
 	}
 	
-	public void testNewBioPolymer() {
+	@Test public void testNewBioPolymer() {
 		Object object = rootObject.getBuilder().newBioPolymer();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IBioPolymer);
+		Assert.assertTrue(object instanceof IBioPolymer);
 	}
 	
-	public void testNewBond() {
+	@Test public void testNewBond() {
 		Object object = rootObject.getBuilder().newBond();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IBond);
+		Assert.assertTrue(object instanceof IBond);
 	}
 	
-	public void testNewBond_IAtom_IAtom() {
+	@Test public void testNewBond_IAtom_IAtom() {
 		Object object = rootObject.getBuilder().newBond(
 			rootObject.getBuilder().newAtom(),
 			rootObject.getBuilder().newAtom()
 		);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IBond);
+		Assert.assertTrue(object instanceof IBond);
 	}
 	
-	public void testNewBond_IAtom_IAtom_IBond_Order() {
+	@Test public void testNewBond_IAtom_IAtom_IBond_Order() {
 		Object object = rootObject.getBuilder().newBond(
 			rootObject.getBuilder().newAtom(),
 			rootObject.getBuilder().newAtom(),
 			IBond.Order.SINGLE
 		);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IBond);
+		Assert.assertTrue(object instanceof IBond);
 	}
 	
-	public void testNewBond_IAtom_IAtom_IBond_Order_int() {
+	@Test public void testNewBond_IAtom_IAtom_IBond_Order_int() {
 		Object object = rootObject.getBuilder().newBond(
 			rootObject.getBuilder().newAtom(),
 			rootObject.getBuilder().newAtom(),
 			IBond.Order.SINGLE, 1
 		);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IBond);
+		Assert.assertTrue(object instanceof IBond);
 	}
 	
-	public void testNewChemFile() {
+	@Test public void testNewChemFile() {
 		Object object = rootObject.getBuilder().newChemFile();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IChemFile);
+		Assert.assertTrue(object instanceof IChemFile);
 	}
 	
-	public void testNewChemModel() {
+	@Test public void testNewChemModel() {
 		Object object = rootObject.getBuilder().newChemModel();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IChemModel);
+		Assert.assertTrue(object instanceof IChemModel);
 	}
 
-	public void testNewChemObject() {
+	@Test public void testNewChemObject() {
 		Object object = rootObject.getBuilder().newChemObject();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 	}
 
-	public void testNewChemObject_IChemObject() {
+	@Test public void testNewChemObject_IChemObject() {
 		IChemObject chemObject = rootObject.getBuilder().newChemObject();
 		Object object = rootObject.getBuilder().newChemObject(chemObject);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 	}
 
-	public void testNewChemSequence() {
+	@Test public void testNewChemSequence() {
 		Object object = rootObject.getBuilder().newChemSequence();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IChemSequence);
+		Assert.assertTrue(object instanceof IChemSequence);
 	}
 	
-	public void testNewCrystal() {
+	@Test public void testNewCrystal() {
 		Object object = rootObject.getBuilder().newCrystal();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof ICrystal);
+		Assert.assertTrue(object instanceof ICrystal);
 	}
 	
-	public void testNewCrystal_IAtomContainer() {
+	@Test public void testNewCrystal_IAtomContainer() {
 		Object object = rootObject.getBuilder().newCrystal(
 			rootObject.getBuilder().newAtomContainer()
 		);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof ICrystal);
+		Assert.assertTrue(object instanceof ICrystal);
 	}
 	
-	public void testNewElectronContainer() {
+	@Test public void testNewElectronContainer() {
 		Object object = rootObject.getBuilder().newElectronContainer();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IElectronContainer);
+		Assert.assertTrue(object instanceof IElectronContainer);
 	}
 
-	public void testNewElement() {
+	@Test public void testNewElement() {
 		Object object = rootObject.getBuilder().newElement();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IElement);
+		Assert.assertTrue(object instanceof IElement);
 	}
 	
-	public void testNewElement_IElement() {
+	@Test public void testNewElement_IElement() {
 		IElement element = rootObject.getBuilder().newElement();
 		Object object = rootObject.getBuilder().newElement(element);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IElement);
+		Assert.assertTrue(object instanceof IElement);
 	}
 	
-	public void testNewElement_String() {
+	@Test public void testNewElement_String() {
 		Object object = rootObject.getBuilder().newElement("C");
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IElement);
+		Assert.assertTrue(object instanceof IElement);
 	}
 	
-	public void testNewElement_String_int() {
+	@Test public void testNewElement_String_int() {
 		Object object = rootObject.getBuilder().newElement("C", 6);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IElement);
+		Assert.assertTrue(object instanceof IElement);
 	}
 
-	public void testNewIsotope_int_String_double_double() {
+	@Test public void testNewIsotope_int_String_double_double() {
 		Object object = rootObject.getBuilder().newIsotope(
 			12, "C", 12.001, 100.0
 		);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IIsotope);
+		Assert.assertTrue(object instanceof IIsotope);
 	}
 	
-	public void testNewIsotope_int_String_int_double_double() {
+	@Test public void testNewIsotope_int_String_int_double_double() {
 		Object object = rootObject.getBuilder().newIsotope(
 			12, "C", 6, 12.001, 100.0
 		);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 		
-		assertTrue(object instanceof IIsotope);
+		Assert.assertTrue(object instanceof IIsotope);
 	}
 	
-	public void testNewIsotope_IElement() {
+	@Test public void testNewIsotope_IElement() {
 		IElement element = rootObject.getBuilder().newElement();
 		Object object = rootObject.getBuilder().newIsotope(element);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 		
-		assertTrue(object instanceof IIsotope);
+		Assert.assertTrue(object instanceof IIsotope);
 	}
 	
-	public void testNewIsotope_String() {
+	@Test public void testNewIsotope_String() {
 		Object object = rootObject.getBuilder().newIsotope("N");
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 		
-		assertTrue(object instanceof IIsotope);
+		Assert.assertTrue(object instanceof IIsotope);
 	}
 	
-	public void testNewIsotope_String_int() {
+	@Test public void testNewIsotope_String_int() {
 		Object object = rootObject.getBuilder().newIsotope("N", 5);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 		
-		assertTrue(object instanceof IIsotope);
+		Assert.assertTrue(object instanceof IIsotope);
 	}
 
-	public void testNewLonePair() {
+	@Test public void testNewLonePair() {
 		Object object = rootObject.getBuilder().newLonePair();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof ILonePair);
+		Assert.assertTrue(object instanceof ILonePair);
 	}	
 
-	public void testNewLonePair_IAtom() {
+	@Test public void testNewLonePair_IAtom() {
 		Object object = rootObject.getBuilder().newLonePair(
 			rootObject.getBuilder().newAtom()
 		);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof ILonePair);
+		Assert.assertTrue(object instanceof ILonePair);
 	}	
 
-    public void testNewMapping_IChemObject_IChemObject() {
+    @Test public void testNewMapping_IChemObject_IChemObject() {
 		Object object = rootObject.getBuilder().newMapping(rootObject.getBuilder().newAtom(), 
                                                            rootObject.getBuilder().newAtom());
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.Mapping);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.Mapping);
 
-		assertTrue(object instanceof org.openscience.cdk.interfaces.IMapping);
+		Assert.assertTrue(object instanceof org.openscience.cdk.interfaces.IMapping);
 	}
     
-	public void testNewMolecule() {
+	@Test public void testNewMolecule() {
 		Object object = rootObject.getBuilder().newMolecule();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IMolecule);
+		Assert.assertTrue(object instanceof IMolecule);
 	}	
 
-	public void testNewMolecule_int_int_int_int() {
+	@Test public void testNewMolecule_int_int_int_int() {
 		Object object = rootObject.getBuilder().newMolecule(5,5,1,1);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IMolecule);
+		Assert.assertTrue(object instanceof IMolecule);
 	}	
 
-	public void testNewMolecule_IAtomContainer() {
+	@Test public void testNewMolecule_IAtomContainer() {
 		Object object = rootObject.getBuilder().newMolecule(
 			rootObject.getBuilder().newAtomContainer()
 		);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IMolecule);
+		Assert.assertTrue(object instanceof IMolecule);
 	}	
 
-	public void testNewMonomer() {
+	@Test public void testNewMonomer() {
 		Object object = rootObject.getBuilder().newMonomer();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IMonomer);
+		Assert.assertTrue(object instanceof IMonomer);
 	}	
 
-	public void testNewPolymer() {
+	@Test public void testNewPolymer() {
 		Object object = rootObject.getBuilder().newPolymer();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IPolymer);
+		Assert.assertTrue(object instanceof IPolymer);
 	}	
 	
-	public void testNewPDBAtom_IElement() {
+	@Test public void testNewPDBAtom_IElement() {
 		IElement element = rootObject.getBuilder().newElement();
 		Object object = rootObject.getBuilder().newPDBAtom(element);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IPDBAtom);
+		Assert.assertTrue(object instanceof IPDBAtom);
 	}	
 	
-	public void testNewPDBAtom_String() {
+	@Test public void testNewPDBAtom_String() {
 		Object object = rootObject.getBuilder().newPDBAtom("C");
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IPDBAtom);
+		Assert.assertTrue(object instanceof IPDBAtom);
 	}	
 	
-	public void testNewPDBAtom_String_Point3D() {
+	@Test public void testNewPDBAtom_String_Point3D() {
 		Object object = rootObject.getBuilder().newPDBAtom("C", new Point3d(1.0, 2.0, 3.0));
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IPDBAtom);
+		Assert.assertTrue(object instanceof IPDBAtom);
 	}
 	
-	public void testNewPDBPolymer() {
+	@Test public void testNewPDBPolymer() {
 		Object object = rootObject.getBuilder().newPDBPolymer();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IPDBPolymer);
+		Assert.assertTrue(object instanceof IPDBPolymer);
 	}
 	
-	public void testNewPDBStructure() {
+	@Test public void testNewPDBStructure() {
 		Object object = rootObject.getBuilder().newPDBStructure();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IPDBStructure);
+		Assert.assertTrue(object instanceof IPDBStructure);
 	}
 	
-	public void testNewPDBMonomer() {
+	@Test public void testNewPDBMonomer() {
 		Object object = rootObject.getBuilder().newPDBMonomer();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IPDBMonomer);
+		Assert.assertTrue(object instanceof IPDBMonomer);
 	}
 
 	
-	public void testNewPseudoAtom() {
+	@Test public void testNewPseudoAtom() {
 		Object object = rootObject.getBuilder().newPseudoAtom();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IPseudoAtom);
+		Assert.assertTrue(object instanceof IPseudoAtom);
 	}
 
-	public void testNewPseudoAtom_IElement() {
+	@Test public void testNewPseudoAtom_IElement() {
 		IElement element = rootObject.getBuilder().newElement();
 		Object object = rootObject.getBuilder().newPseudoAtom(element);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IPseudoAtom);
+		Assert.assertTrue(object instanceof IPseudoAtom);
 	}	
 
-	public void testNewPseudoAtom_IAtom() {
+	@Test public void testNewPseudoAtom_IAtom() {
 		Object object = rootObject.getBuilder().newPseudoAtom(
 			rootObject.getBuilder().newAtom()
 		);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IPseudoAtom);
+		Assert.assertTrue(object instanceof IPseudoAtom);
 	}	
 
-	public void testNewPseudoAtom_String() {
+	@Test public void testNewPseudoAtom_String() {
 		Object object = rootObject.getBuilder().newPseudoAtom("Glu178");
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IPseudoAtom);
+		Assert.assertTrue(object instanceof IPseudoAtom);
 	}	
 
-	public void testNewPseudoAtom_String_Point2d() {
+	@Test public void testNewPseudoAtom_String_Point2d() {
 		Object object = rootObject.getBuilder().newPseudoAtom("Glue178", new Point2d(1.0,2.0));
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IPseudoAtom);
+		Assert.assertTrue(object instanceof IPseudoAtom);
 	}	
 
-	public void testNewPseudoAtom_String_Point3d() {
+	@Test public void testNewPseudoAtom_String_Point3d() {
 		Object object = rootObject.getBuilder().newPseudoAtom("Glue178", new Point3d(1.0,2.0,3.0));
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IPseudoAtom);
+		Assert.assertTrue(object instanceof IPseudoAtom);
 	}	
 
-	public void testNewPDBAtom_String_Point3d() {
+	@Test public void testNewPDBAtom_String_Point3d() {
 		Object object = rootObject.getBuilder().newPDBAtom("CA", new Point3d(1.0,2.0,3.0));
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IPDBAtom);
+		Assert.assertTrue(object instanceof IPDBAtom);
 	}	
 
-	public void testNewReaction() {
+	@Test public void testNewReaction() {
 		Object object = rootObject.getBuilder().newReaction();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IReaction);
+		Assert.assertTrue(object instanceof IReaction);
 	}
 
-	public void testNewRing() {
+	@Test public void testNewRing() {
 		Object object = rootObject.getBuilder().newRing();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IRing);
+		Assert.assertTrue(object instanceof IRing);
 	}	
 
-	public void testNewRing_int() {
+	@Test public void testNewRing_int() {
 		Object object = rootObject.getBuilder().newRing(5);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IRing);
+		Assert.assertTrue(object instanceof IRing);
 	}	
 
-	public void testNewRing_int_String() {
+	@Test public void testNewRing_int_String() {
 		Object object = rootObject.getBuilder().newRing(5,"C");
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IRing);
+		Assert.assertTrue(object instanceof IRing);
 	}	
 
-	public void testNewRing_IAtomContainer() {
+	@Test public void testNewRing_IAtomContainer() {
 		Object object = rootObject.getBuilder().newRing(
 			rootObject.getBuilder().newAtomContainer()
 		);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IRing);
+		Assert.assertTrue(object instanceof IRing);
 	}	
 
-	public void testNewRingSet() {
+	@Test public void testNewRingSet() {
 		Object object = rootObject.getBuilder().newRingSet();
-		assertNotNull(object);
+		Assert.assertNotNull(object);
         // FIXME: apparently RingSet does not extend IChemObject !
-		// assertTrue(object instanceof org.openscience.cdk.interfaces.IChemObject);
+		// Assert.assertTrue(object instanceof org.openscience.cdk.interfaces.IChemObject);
 
-		assertTrue(object instanceof IRingSet);
+		Assert.assertTrue(object instanceof IRingSet);
 	}
 
-	public void testNewAtomContainerSet() {
+	@Test public void testNewAtomContainerSet() {
 		Object object = rootObject.getBuilder().newAtomContainerSet();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IAtomContainerSet);
+		Assert.assertTrue(object instanceof IAtomContainerSet);
 	}
 
-	public void testNewMoleculeSet() {
+	@Test public void testNewMoleculeSet() {
 		Object object = rootObject.getBuilder().newMoleculeSet();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IMoleculeSet);
+		Assert.assertTrue(object instanceof IMoleculeSet);
 	}
 
-	public void testNewReactionSet() {
+	@Test public void testNewReactionSet() {
 		Object object = rootObject.getBuilder().newReactionSet();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IReactionSet);
+		Assert.assertTrue(object instanceof IReactionSet);
 	}
 
-	public void testNewSingleElectron() {
+	@Test public void testNewSingleElectron() {
 		Object object = rootObject.getBuilder().newSingleElectron();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof ISingleElectron);
+		Assert.assertTrue(object instanceof ISingleElectron);
 	}
 
-	public void testNewSingleElectron_IAtom() {
+	@Test public void testNewSingleElectron_IAtom() {
 		Object object = rootObject.getBuilder().newSingleElectron(
 			rootObject.getBuilder().newAtom()
 		);
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof ISingleElectron);
+		Assert.assertTrue(object instanceof ISingleElectron);
 	}
 	
-	public void testNewStrand() {
+	@Test public void testNewStrand() {
 		Object object = rootObject.getBuilder().newStrand();
-		assertNotNull(object);
-		assertTrue(object instanceof org.openscience.cdk.ChemObject);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
-		assertTrue(object instanceof IStrand);
+		Assert.assertTrue(object instanceof IStrand);
 	}
 	
 }

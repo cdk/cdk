@@ -25,9 +25,8 @@
 
 package org.openscience.cdk.test.debug;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.test.DefaultChemObjectBuilderTest;
@@ -39,23 +38,15 @@ import org.openscience.cdk.test.DefaultChemObjectBuilderTest;
  */
 public class DebugChemObjectBuilderTest extends DefaultChemObjectBuilderTest {
 
-    public DebugChemObjectBuilderTest(String name) {
-        super(name);
+    @BeforeClass public static void setUp() {
+    	DefaultChemObjectBuilderTest.rootObject = new org.openscience.cdk.debug.DebugChemObject();
     }
 
-    public void setUp() {
-        super.rootObject = new org.openscience.cdk.debug.DebugChemObject();
-    }
-
-    public static Test suite() {
-        return new TestSuite(DebugChemObjectBuilderTest.class);
-    }
-
-    public void testGetInstance() {
+    @org.junit.Test public void testGetInstance() {
     	Object builder = DebugChemObjectBuilder.getInstance();
-    	assertNotNull(builder);
-    	assertTrue(builder instanceof IChemObjectBuilder);
-        assertTrue(builder instanceof DebugChemObjectBuilder);
+    	Assert.assertNotNull(builder);
+    	Assert.assertTrue(builder instanceof IChemObjectBuilder);
+    	Assert.assertTrue(builder instanceof DebugChemObjectBuilder);
     }
     
 }

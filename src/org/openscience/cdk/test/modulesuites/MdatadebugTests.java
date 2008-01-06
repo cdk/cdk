@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.test.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -68,7 +69,7 @@ public class MdatadebugTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.debug Tests");
         
-        suite.addTest(DebugChemObjectBuilderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DebugChemObjectBuilderTest.class));
         
         suite.addTest(DebugAminoAcidTest.suite());
         suite.addTest(DebugAtomContainerTest.suite());

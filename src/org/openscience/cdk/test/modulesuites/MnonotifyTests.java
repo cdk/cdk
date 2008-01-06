@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.test.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -68,7 +69,7 @@ public class MnonotifyTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.debug Tests");
         
-        suite.addTest(NNChemObjectBuilderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(NNChemObjectBuilderTest.class));
         
         suite.addTest(NNAminoAcidTest.suite());
         suite.addTest(NNAtomContainerTest.suite());

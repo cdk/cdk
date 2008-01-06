@@ -25,9 +25,9 @@
 
 package org.openscience.cdk.test.nonotify;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NNChemObject;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -40,23 +40,15 @@ import org.openscience.cdk.test.DefaultChemObjectBuilderTest;
  */
 public class NNChemObjectBuilderTest extends DefaultChemObjectBuilderTest {
 
-    public NNChemObjectBuilderTest(String name) {
-        super(name);
+    @BeforeClass public static void setUp() {
+    	DefaultChemObjectBuilderTest.rootObject = new NNChemObject();
     }
 
-    public void setUp() {
-        super.rootObject = new NNChemObject();
-    }
-
-    public static Test suite() {
-        return new TestSuite(NNChemObjectBuilderTest.class);
-    }
-
-    public void testGetInstance() {
+    @Test public void testGetInstance() {
     	Object builder = NoNotificationChemObjectBuilder.getInstance();
-    	assertNotNull(builder);
-    	assertTrue(builder instanceof IChemObjectBuilder);
-        assertTrue(builder instanceof NoNotificationChemObjectBuilder);
+    	Assert.assertNotNull(builder);
+    	Assert.assertTrue(builder instanceof IChemObjectBuilder);
+    	Assert.assertTrue(builder instanceof NoNotificationChemObjectBuilder);
     }
     
 }
