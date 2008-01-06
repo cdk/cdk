@@ -20,6 +20,9 @@
  */
 package org.openscience.cdk.graph.rebond;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 
 /**
  * @author      Miguel Howard
@@ -27,6 +30,7 @@ package org.openscience.cdk.graph.rebond;
  * @cdk.module  standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.graph.rebond.PointTest")
 public class Point implements Bspt.Tuple {
   double x;
   double y;
@@ -38,6 +42,7 @@ public class Point implements Bspt.Tuple {
     this.z = z;
   }
 
+    @TestMethod("testGetDimValue_int")
   public double getDimValue(int dim) {
     if (dim == 0)
       return x;
@@ -46,6 +51,7 @@ public class Point implements Bspt.Tuple {
     return z;
   }
 
+    @TestMethod("testToString")
   public String toString() {
     return "<" + x + "," + y + "," + z + ">";
   }

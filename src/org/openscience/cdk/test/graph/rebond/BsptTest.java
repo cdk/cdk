@@ -20,33 +20,30 @@
  */
 package org.openscience.cdk.test.graph.rebond;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.graph.rebond.Bspt;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class BsptTest extends CDKTestCase {
+public class BsptTest extends NewCDKTestCase {
     
-    public BsptTest(String name) {
-        super(name);
+    public BsptTest() {
+        super();
     }
-    
-	public static Test suite() {
-		return new TestSuite(BsptTest.class);
+
+    @Test
+    public void testToString() {
+		Bspt bspt = new Bspt(3);
+		Assert.assertNotNull(bspt.toString());
 	}
 
-	public void testToString() {
+    @Test
+    public void testBspt() {
 		Bspt bspt = new Bspt(3);
-		assertNotNull(bspt.toString());
-	}
-	
-	public void testBspt() {
-		Bspt bspt = new Bspt(3);
-		assertNotNull(bspt);
+		Assert.assertNotNull(bspt);
 	}
 }
 
