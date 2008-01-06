@@ -83,7 +83,7 @@ public class MdataTests {
         suite.addTest(new JUnit4TestAdapter(AminoAcidTest.class));
         suite.addTest(new JUnit4TestAdapter(AtomContainerTest.class));
         //suite.addTest(AtomEnumerationTest.suite());
-        suite.addTest(AtomParityTest.suite());
+        suite.addTest(new JUnit4TestAdapter(AtomParityTest.class));
         suite.addTest(AtomTest.suite());
         suite.addTest(AtomTypeTest.suite());
         suite.addTest(BioPolymerTest.suite());

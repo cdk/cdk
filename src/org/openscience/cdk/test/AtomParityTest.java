@@ -23,9 +23,9 @@
  */
 package org.openscience.cdk.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.AtomParity;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
@@ -38,23 +38,15 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @see org.openscience.cdk.AtomParity
  */
-public class AtomParityTest extends CDKTestCase {
+public class AtomParityTest extends NewCDKTestCase {
 
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 	
-    public AtomParityTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
 
-    public static Test suite() {
-        return new TestSuite(AtomParityTest.class);
-    }
-    
-    public void testAtomParity_IAtom_IAtom_IAtom_IAtom_IAtom_int() {
+    @Test public void testAtomParity_IAtom_IAtom_IAtom_IAtom_IAtom_int() {
         IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
         IAtom carbon1 = builder.newAtom("C");
@@ -67,10 +59,10 @@ public class AtomParityTest extends CDKTestCase {
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
-        assertNotNull(parity);
+        Assert.assertNotNull(parity);
     }
     
-    public void testGetAtom() {
+    @Test public void testGetAtom() {
         IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
         IAtom carbon1 = builder.newAtom("C");
@@ -83,10 +75,10 @@ public class AtomParityTest extends CDKTestCase {
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
-        assertEquals(carbon, parity.getAtom());
+        Assert.assertEquals(carbon, parity.getAtom());
     }
     
-    public void testGetSurroundingAtoms() {
+    @Test public void testGetSurroundingAtoms() {
         IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
         IAtom carbon1 = builder.newAtom("C");
@@ -100,14 +92,14 @@ public class AtomParityTest extends CDKTestCase {
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
         org.openscience.cdk.interfaces.IAtom[] neighbors = parity.getSurroundingAtoms();
-        assertEquals(4, neighbors.length);
-        assertEquals(carbon1, neighbors[0]);
-        assertEquals(carbon2, neighbors[1]);
-        assertEquals(carbon3, neighbors[2]);
-        assertEquals(carbon4, neighbors[3]);
+        Assert.assertEquals(4, neighbors.length);
+        Assert.assertEquals(carbon1, neighbors[0]);
+        Assert.assertEquals(carbon2, neighbors[1]);
+        Assert.assertEquals(carbon3, neighbors[2]);
+        Assert.assertEquals(carbon4, neighbors[3]);
     }
     
-    public void testGetParity() {
+    @Test public void testGetParity() {
         IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
         IAtom carbon1 = builder.newAtom("C");
@@ -120,11 +112,11 @@ public class AtomParityTest extends CDKTestCase {
         carbon4.setID("c4");
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
-        assertEquals(parityInt, parity.getParity());
+        Assert.assertEquals(parityInt, parity.getParity());
     }
     
     /** Test for RFC #9 */
-    public void testToString() {
+    @Test public void testToString() {
         IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
         IAtom carbon1 = builder.newAtom("C");
@@ -139,12 +131,12 @@ public class AtomParityTest extends CDKTestCase {
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
         String description = parity.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue(description.charAt(i) != '\n');
-            assertTrue(description.charAt(i) != '\r');
+            Assert.assertTrue(description.charAt(i) != '\n');
+            Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
 
-	public void testClone() throws Exception {
+	@Test public void testClone() throws Exception {
         IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
         IAtom carbon1 = builder.newAtom("C");
@@ -158,10 +150,10 @@ public class AtomParityTest extends CDKTestCase {
         int parityInt = 1;
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
         Object clone = parity.clone();
-        assertTrue(clone instanceof AtomParity);
+        Assert.assertTrue(clone instanceof AtomParity);
     }    
         
-    public void testClone_SurroundingAtoms() throws Exception {
+    @Test public void testClone_SurroundingAtoms() throws Exception {
         IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
         IAtom carbon1 = builder.newAtom("C");
@@ -178,17 +170,17 @@ public class AtomParityTest extends CDKTestCase {
 		AtomParity clone = (AtomParity)parity.clone();
 		org.openscience.cdk.interfaces.IAtom[] atoms = parity.getSurroundingAtoms();
 		org.openscience.cdk.interfaces.IAtom[] atomsClone = clone.getSurroundingAtoms();
-        assertEquals(atoms.length, atomsClone.length);
+        Assert.assertEquals(atoms.length, atomsClone.length);
 		for (int f = 0; f < atoms.length; f++) {
 			for (int g = 0; g < atomsClone.length; g++) {
-				assertNotNull(atoms[f]);
-				assertNotNull(atomsClone[g]);
-				assertNotSame(atoms[f], atomsClone[g]);
+				Assert.assertNotNull(atoms[f]);
+				Assert.assertNotNull(atomsClone[g]);
+				Assert.assertNotSame(atoms[f], atomsClone[g]);
 			}
 		}        
     }
     
-    public void testClone_IAtom() throws Exception {
+    @Test public void testClone_IAtom() throws Exception {
         IAtom carbon = builder.newAtom("C");
         carbon.setID("central");
         IAtom carbon1 = builder.newAtom("C");
@@ -203,6 +195,6 @@ public class AtomParityTest extends CDKTestCase {
         AtomParity parity = new AtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
 
 		AtomParity clone = (AtomParity)parity.clone();
-        assertNotSame(parity.getAtom(), clone.getAtom());
+        Assert.assertNotSame(parity.getAtom(), clone.getAtom());
     }
 }

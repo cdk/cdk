@@ -31,6 +31,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.test.nonotify.NNAminoAcidTest;
 import org.openscience.cdk.test.nonotify.NNAtomContainerSetTest;
 import org.openscience.cdk.test.nonotify.NNAtomContainerTest;
+import org.openscience.cdk.test.nonotify.NNAtomParityTest;
 import org.openscience.cdk.test.nonotify.NNAtomTest;
 import org.openscience.cdk.test.nonotify.NNAtomTypeTest;
 import org.openscience.cdk.test.nonotify.NNBioPolymerTest;
@@ -73,6 +74,7 @@ public class MnonotifyTests {
         
         suite.addTest(new JUnit4TestAdapter(NNAminoAcidTest.class));
         suite.addTest(new JUnit4TestAdapter(NNAtomContainerTest.class));
+        suite.addTest(new JUnit4TestAdapter(NNAtomParityTest.class));
         suite.addTest(NNAtomTest.suite());
         suite.addTest(NNAtomTypeTest.suite());
         suite.addTest(NNBioPolymerTest.suite());

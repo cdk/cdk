@@ -29,7 +29,9 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.debug.DebugAminoAcidTest;
+import org.openscience.cdk.test.debug.DebugAtomContainerSetTest;
 import org.openscience.cdk.test.debug.DebugAtomContainerTest;
+import org.openscience.cdk.test.debug.DebugAtomParityTest;
 import org.openscience.cdk.test.debug.DebugAtomTest;
 import org.openscience.cdk.test.debug.DebugAtomTypeTest;
 import org.openscience.cdk.test.debug.DebugBioPolymerTest;
@@ -44,16 +46,15 @@ import org.openscience.cdk.test.debug.DebugElectronContainerTest;
 import org.openscience.cdk.test.debug.DebugElementTest;
 import org.openscience.cdk.test.debug.DebugIsotopeTest;
 import org.openscience.cdk.test.debug.DebugLonePairTest;
+import org.openscience.cdk.test.debug.DebugMoleculeSetTest;
 import org.openscience.cdk.test.debug.DebugMoleculeTest;
 import org.openscience.cdk.test.debug.DebugMonomerTest;
 import org.openscience.cdk.test.debug.DebugPolymerTest;
 import org.openscience.cdk.test.debug.DebugPseudoAtomTest;
+import org.openscience.cdk.test.debug.DebugReactionSetTest;
 import org.openscience.cdk.test.debug.DebugReactionTest;
 import org.openscience.cdk.test.debug.DebugRingSetTest;
 import org.openscience.cdk.test.debug.DebugRingTest;
-import org.openscience.cdk.test.debug.DebugAtomContainerSetTest;
-import org.openscience.cdk.test.debug.DebugMoleculeSetTest;
-import org.openscience.cdk.test.debug.DebugReactionSetTest;
 import org.openscience.cdk.test.debug.DebugSingleElectronTest;
 import org.openscience.cdk.test.debug.DebugStrandTest;
 
@@ -73,6 +74,7 @@ public class MdatadebugTests {
         
         suite.addTest(new JUnit4TestAdapter(DebugAminoAcidTest.class));
         suite.addTest(new JUnit4TestAdapter(DebugAtomContainerTest.class));
+        suite.addTest(new JUnit4TestAdapter(DebugAtomParityTest.class));
         suite.addTest(DebugAtomTest.suite());
         suite.addTest(DebugAtomTypeTest.suite());
         suite.addTest(DebugBioPolymerTest.suite());

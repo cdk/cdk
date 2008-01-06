@@ -24,9 +24,11 @@
  */
 package org.openscience.cdk.test.nonotify;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtomParity;
+import org.openscience.cdk.nonotify.NNAtomParity;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.AtomParityTest;
 
@@ -37,16 +39,16 @@ import org.openscience.cdk.test.AtomParityTest;
  */
 public class NNAtomParityTest extends AtomParityTest {
 
-    public NNAtomParityTest(String name) {
-        super(name);
+    @BeforeClass public static void setUp() {
+    	AtomParityTest.builder = NoNotificationChemObjectBuilder.getInstance();
     }
 
-    public void setUp() {
-    	super.builder = NoNotificationChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(NNAtomParityTest.class);
+    @Test public void testCorrectInstance() {
+    	IAtomParity parity = builder.newAtomParity(builder.newAtom(), builder.newAtom(), builder.newAtom(), builder.newAtom(), builder.newAtom(), 1); 
+    	Assert.assertTrue(
+    		"Object not instance of NNAtomParity, but: " + parity.getClass().getName(),
+    		parity instanceof NNAtomParity
+    	);
     }
 
 }

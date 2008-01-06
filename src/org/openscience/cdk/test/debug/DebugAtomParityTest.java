@@ -24,10 +24,12 @@
  */
 package org.openscience.cdk.test.debug;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.debug.DebugAtomParity;
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.test.AtomParityTest;
 
 /**
@@ -37,16 +39,16 @@ import org.openscience.cdk.test.AtomParityTest;
  */
 public class DebugAtomParityTest extends AtomParityTest {
 
-    public DebugAtomParityTest(String name) {
-        super(name);
+    @BeforeClass public static void setUp() {
+    	AtomParityTest.builder = DebugChemObjectBuilder.getInstance();
     }
-
-    public void setUp() {
-    	super.builder = DebugChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(DebugAtomParityTest.class);
+    
+    @Test public void testCorrectInstance() {
+    	IAtomParity parity = builder.newAtomParity(builder.newAtom(), builder.newAtom(), builder.newAtom(), builder.newAtom(), builder.newAtom(), 1); 
+    	Assert.assertTrue(
+    		"Object not instance of DebugAtomParity, but: " + parity.getClass().getName(),
+    		parity instanceof DebugAtomParity
+    	);
     }
 
 }
