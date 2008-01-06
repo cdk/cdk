@@ -55,6 +55,8 @@ public class CDKConstants {
     /** A bond of degree 3.0. */
     public final static IBond.Order BONDORDER_TRIPLE = IBond.Order.TRIPLE;
 
+    public final static IBond.Order BONDORDER_QUADRUPLE = IBond.Order.QUADRUPLE;
+
     /** A bonds which end is above the drawing plane. */
     public final static int STEREO_BOND_UP = 1;
     /** A bonds which start is above the drawing plane. */
