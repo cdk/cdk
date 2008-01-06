@@ -122,7 +122,7 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(GraphOnlyFingerprinterTest.class));
         suite.addTest(new JUnit4TestAdapter(ExtendedFingerprinterTest.class));
         suite.addTest(new JUnit4TestAdapter(FingerprinterToolTest.class));
-        suite.addTest(ProblemMarkerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ProblemMarkerTest.class));
         suite.addTest(SymbolsTest.suite());
         suite.addTest(GeometryToolsInternalCoordinatesTest.suite());
         suite.addTest(new JUnit4TestAdapter(BondToolsTest.class));

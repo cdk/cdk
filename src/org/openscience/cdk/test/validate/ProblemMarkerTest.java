@@ -20,69 +20,69 @@
  */
 package org.openscience.cdk.test.validate;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.validate.ProblemMarker;
 
 /**
  * @cdk.module test-standard
  */
-public class ProblemMarkerTest extends CDKTestCase {
+public class ProblemMarkerTest extends NewCDKTestCase {
     
     public ProblemMarkerTest(String name) {
-        super(name);
+        super();
     }
-    
-	public static Test suite() {
-		return new TestSuite(ProblemMarkerTest.class);
+
+    @Test
+    public void testUnmarkWithError_IChemObject() {
+		IChemObject object = new ChemObject();
+		Assert.assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+		ProblemMarker.markWithError(object);
+		Assert.assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+		ProblemMarker.unmarkWithError(object);
+		Assert.assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
 	}
 
-	public void testUnmarkWithError_IChemObject() {
+    @Test
+    public void testUnmarkWithWarning_IChemObject() {
 		IChemObject object = new ChemObject();
-		assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
-		ProblemMarker.markWithError(object);
-		assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
-		ProblemMarker.unmarkWithError(object);
-		assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
-	}
-	
-	public void testUnmarkWithWarning_IChemObject() {
-		IChemObject object = new ChemObject();
-		assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+		Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
 		ProblemMarker.markWithWarning(object);
-		assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+		Assert.assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
 		ProblemMarker.unmarkWithWarning(object);
-		assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+		Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
 	}
-	
-	public void testUnmark_IChemObject() {
+
+    @Test
+    public void testUnmark_IChemObject() {
 		IChemObject object = new ChemObject();
-		assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+		Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
 		ProblemMarker.markWithWarning(object);
-		assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+		Assert.assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
 		ProblemMarker.markWithError(object);
-		assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+		Assert.assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
 		ProblemMarker.unmark(object);
-		assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
-		assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+		Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+		Assert.assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
 	}
-	
-	public void testMarkWithError_IChemObject() {
+
+    @Test
+    public void testMarkWithError_IChemObject() {
 		IChemObject object = new ChemObject();
-		assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+		Assert.assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
 		ProblemMarker.markWithError(object);
-		assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+		Assert.assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
 	}
-	
-	public void testMarkWithWarning_IChemObject() {
+
+    @Test
+    public void testMarkWithWarning_IChemObject() {
 		IChemObject object = new ChemObject();
-		assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+		Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
 		ProblemMarker.markWithWarning(object);
-		assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+		Assert.assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
 	}
 	
 }

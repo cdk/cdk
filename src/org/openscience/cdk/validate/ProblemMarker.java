@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.validate;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
 
 /**
@@ -36,27 +38,33 @@ import org.openscience.cdk.interfaces.IChemObject;
  * @author   Egon Willighagen
  * @cdk.created  2003-08-11
  */
+@TestClass("org.openscience.cdk.test.validate.ProblemMarkerTest")
 public class ProblemMarker {
 
     public static String ERROR_MARKER = "org.openscience.cdk.validate.error";
     public static String WARNING_MARKER = "org.openscience.cdk.validate.warning";
-    
+
+    @TestMethod("testMarkWithError_IChemObject")
     public static void markWithError(IChemObject object) {
         object.setProperty(ERROR_MARKER, new Boolean(true));
     }
 
+    @TestMethod("testMarkWithWarning_IChemObject")
     public static void markWithWarning(IChemObject object) {
         object.setProperty(WARNING_MARKER, new Boolean(true));
     }
 
+    @TestMethod("testUnmarkWithError_IChemObject")
     public static void unmarkWithError(IChemObject object) {
         object.removeProperty(ERROR_MARKER);
     }
 
+    @TestMethod("testUnmarkWithWarning_IChemObject")
     public static void unmarkWithWarning(IChemObject object) {
         object.removeProperty(WARNING_MARKER);
     }
-    
+
+    @TestMethod("testUnmark_IChemObject")
     public static void unmark(IChemObject object) {
         unmarkWithWarning(object);
         unmarkWithError(object);
