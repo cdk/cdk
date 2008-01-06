@@ -193,7 +193,7 @@ public class ReactionManipulator {
     }
 
     @TestMethod("testGetAllIDs_IReaction")
-    public static Vector getAllIDs(IReaction reaction) {
+    public static Vector<String> getAllIDs(IReaction reaction) {
         Vector<String> idList = new Vector<String>();
         if (reaction.getID() != null) idList.addElement(reaction.getID());
         IMoleculeSet reactants = reaction.getReactants();
