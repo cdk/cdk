@@ -72,7 +72,7 @@ public class MdatadebugTests {
         suite.addTest(new JUnit4TestAdapter(DebugChemObjectBuilderTest.class));
         
         suite.addTest(new JUnit4TestAdapter(DebugAminoAcidTest.class));
-        suite.addTest(DebugAtomContainerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DebugAtomContainerTest.class));
         suite.addTest(DebugAtomTest.suite());
         suite.addTest(DebugAtomTypeTest.suite());
         suite.addTest(DebugBioPolymerTest.suite());
