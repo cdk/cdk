@@ -27,13 +27,15 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Class with convenience methods that provide methods from
@@ -44,6 +46,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.tools.manipulator.ChemSequenceManipulatorTest")
 public class ChemSequenceManipulator {
 
 	/**
@@ -52,6 +55,7 @@ public class ChemSequenceManipulator {
 	 * @param sequence   The IChemSequence object.
 	 * @return           The number of Atom objects inside.
 	 */
+    @TestMethod("testGetAtomCount_IChemSequence")
     public static int getAtomCount(IChemSequence sequence) {
     	int count = 0;
         for (int i=0; i<sequence.getChemModelCount(); i++) {
@@ -66,6 +70,7 @@ public class ChemSequenceManipulator {
 	 * @param sequence   The IChemSequence object.
 	 * @return           The number of Bond objects inside.
 	 */
+    @TestMethod("testGetBondCount_IChemSequence")
     public static int getBondCount(IChemSequence sequence) {
     	int count = 0;
         for (int i=0; i<sequence.getChemModelCount(); i++) {
@@ -77,6 +82,7 @@ public class ChemSequenceManipulator {
     /**
      * Returns all the AtomContainer's of a ChemSequence.
      */
+    @TestMethod("testGetAllAtomContainers_IChemSequence")
     public static List getAllAtomContainers(IChemSequence sequence) {
         Iterator models = sequence.chemModels();
         List acList = new ArrayList();
@@ -92,7 +98,8 @@ public class ChemSequenceManipulator {
      *
      * @return  A List of all ChemObjects.
      */
-	public static List getAllChemObjects(IChemSequence sequence) {
+    @TestMethod("testGetAllChemObjects_IChemSequence")
+    public static List getAllChemObjects(IChemSequence sequence) {
 		ArrayList list = new ArrayList();
         // list.add(sequence);
         for (int i=0; i<sequence.getChemModelCount(); i++) {
@@ -107,8 +114,9 @@ public class ChemSequenceManipulator {
 		return list;
 	}
 
-	public static List getAllIDs(IChemSequence sequence) {
-		ArrayList list = new ArrayList();
+    @TestMethod("testGetAllIDs_IChemSequence")
+    public static List<String> getAllIDs(IChemSequence sequence) {
+		ArrayList<String> list = new ArrayList<String>();
 		if (sequence.getID() != null) list.add(sequence.getID());
         for (int i=0; i<sequence.getChemModelCount(); i++) {
         	list.addAll(ChemModelManipulator.getAllIDs(sequence.getChemModel(i)));

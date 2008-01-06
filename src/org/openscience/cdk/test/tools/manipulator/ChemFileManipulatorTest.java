@@ -20,45 +20,28 @@
  */
 package org.openscience.cdk.test.tools.manipulator;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.openscience.cdk.*;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.tools.IDCreator;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.ChemSequence;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.MoleculeSet;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.ReactionSet;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.test.CDKTestCase;
-import org.openscience.cdk.tools.IDCreator;
-import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
 /**
  * @cdk.module test-standard
  */
-public class ChemFileManipulatorTest extends CDKTestCase {
+public class ChemFileManipulatorTest extends NewCDKTestCase {
     
 	private final static LoggingTool logger = new LoggingTool(ChemFileManipulatorTest.class);
 	
@@ -75,10 +58,11 @@ public class ChemFileManipulatorTest extends CDKTestCase {
 	IChemSequence chemSequence2 = null;
 	IChemFile chemFile = null;
 	
-    public ChemFileManipulatorTest(String name) {
-        super(name);
+    public ChemFileManipulatorTest() {
+        super();
     }
-    
+
+    @Before
     public void setUp() {
 		molecule1 = new Molecule();
 		atomInMol1 = new Atom("Cl");
@@ -108,11 +92,8 @@ public class ChemFileManipulatorTest extends CDKTestCase {
 		chemFile.addChemSequence(chemSequence1);
 		chemFile.addChemSequence(chemSequence2);
 	}
-    
-	public static Test suite() {
-		return new TestSuite(ChemFileManipulatorTest.class);
-	}
 
+    @Test
     public void testGetAllAtomContainers_IChemFile() throws Exception {
         String filename = "data/mdl/prev2000.sd";
         logger.info("Testing: " + filename);
@@ -120,36 +101,40 @@ public class ChemFileManipulatorTest extends CDKTestCase {
 
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-        assertNotNull(chemFile);
+        Assert.assertNotNull(chemFile);
         List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        assertEquals(2, containersList.size());
+        Assert.assertEquals(2, containersList.size());
     }
-    
+
+    @Test
     public void testGetAllIDs_IChemFile() {
-    	assertEquals(0, ChemFileManipulator.getAllIDs(chemFile).size());
+    	Assert.assertEquals(0, ChemFileManipulator.getAllIDs(chemFile).size());
     	IDCreator.createIDs(chemFile);
     	List allIDs = ChemFileManipulator.getAllIDs(chemFile);
-    	assertEquals(19, ChemFileManipulator.getAllIDs(chemFile).size());
+    	Assert.assertEquals(19, ChemFileManipulator.getAllIDs(chemFile).size());
     	Set uniq = new HashSet(allIDs);
-    	assertEquals(13, uniq.size());
+    	Assert.assertEquals(13, uniq.size());
     }
-    
+
+    @Test
     public void testGetAtomCount_IChemFile()
     {
     	int count = ChemFileManipulator.getAtomCount(chemFile);
-    	assertEquals(6, count);
+    	Assert.assertEquals(6, count);
     }
-    
+
+    @Test
     public void testGetBondCount_IChemFile()
     {
     	int count = ChemFileManipulator.getBondCount(chemFile);
-    	assertEquals(2, count);
+    	Assert.assertEquals(2, count);
     }
-    
+
+    @Test
     public void testGetAllChemObjects_IChemFile()
     {
     	List list = ChemFileManipulator.getAllChemObjects(chemFile);
-    	assertEquals(8, list.size()); // not the file itself
+    	Assert.assertEquals(8, list.size()); // not the file itself
     	int atomCount = 0;
     	int bondCount = 0;
     	int molCount = 0;
@@ -168,22 +153,23 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     		else if (o instanceof IReactionSet) ++reactionSetCount;
     		else if (o instanceof IChemModel) ++chemModelCount;
     		else if (o instanceof IChemSequence) ++chemSequenceCount;
-    		else fail("Unexpected Object of type " + o.getClass());
+    		else Assert.fail("Unexpected Object of type " + o.getClass());
     	}
-    	assertEquals(0, atomCount); /// it does not recurse into IAtomContainer
-    	assertEquals(0, bondCount);
-    	assertEquals(2, molCount);
-    	assertEquals(1, molSetCount);
-    	assertEquals(1, reactionCount);
-    	assertEquals(1, reactionSetCount);
-    	assertEquals(1, chemModelCount);
-    	assertEquals(2, chemSequenceCount);
+    	Assert.assertEquals(0, atomCount); /// it does not recurse into IAtomContainer
+    	Assert.assertEquals(0, bondCount);
+    	Assert.assertEquals(2, molCount);
+    	Assert.assertEquals(1, molSetCount);
+    	Assert.assertEquals(1, reactionCount);
+    	Assert.assertEquals(1, reactionSetCount);
+    	Assert.assertEquals(1, chemModelCount);
+    	Assert.assertEquals(2, chemSequenceCount);
     }
-    
+
+    @Test
     public void testGetAllChemModels_IChemFile()
     {
     	List list = ChemFileManipulator.getAllChemModels(chemFile);
-    	assertEquals(1, list.size());
+    	Assert.assertEquals(1, list.size());
     }
     
 

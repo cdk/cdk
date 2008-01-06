@@ -130,9 +130,9 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(InvalidSmilesExceptionTest.class));
         suite.addTest(AminoAcidManipulatorTest.suite());
         suite.addTest(new JUnit4TestAdapter(AtomTypeManipulatorTest.class));
-        suite.addTest(ChemFileManipulatorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ChemFileManipulatorTest.class));
         suite.addTest(ChemModelManipulatorTest.suite());
-        suite.addTest(ChemSequenceManipulatorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ChemSequenceManipulatorTest.class));
         suite.addTest(ReactionSetManipulatorTest.suite());
         suite.addTest(new JUnit4TestAdapter(RingSizeComparatorTest.class));
         suite.addTest(new JUnit4TestAdapter(ElementComparatorTest.class));
