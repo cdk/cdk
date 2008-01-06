@@ -145,7 +145,7 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(MorganNumbersToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(PathTest.class));
         suite.addTest(new JUnit4TestAdapter(QueueTest.class));
-        suite.addTest(SSSRFinderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SSSRFinderTest.class));
         suite.addTest(new JUnit4TestAdapter(DoubleArrayResultTest.class));
         suite.addTest(new JUnit4TestAdapter(IntegerArrayResultTest.class));
         suite.addTest(new JUnit4TestAdapter(IntegerResultTest.class));

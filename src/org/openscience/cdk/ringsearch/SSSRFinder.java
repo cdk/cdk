@@ -28,8 +28,11 @@
  */
 
 package org.openscience.cdk.ringsearch;
+
 import org._3pq.jgrapht.UndirectedGraph;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -64,6 +67,7 @@ import java.util.List;
  * @cdk.depends jgrapht-0.5.3.jar
  */
 
+@TestClass("org.openscience.cdk.test.ringsearch.SSSRFinderTest")
 public class SSSRFinder {
 
 	private org.openscience.cdk.interfaces.IAtomContainer atomContainer;
@@ -92,7 +96,8 @@ public class SSSRFinder {
 	 *
 	 * @return      a RingSet containing the SSSR   
 	 */
-	public IRingSet findSSSR() {
+    @TestMethod("testFindSSSR,testFindSSSR_IAtomContainer")
+    public IRingSet findSSSR() {
 		if (atomContainer==null) {
 			return null;
 		}
@@ -150,10 +155,10 @@ public class SSSRFinder {
 			return null;
 		}
 		
-		List equivalenceClasses = new ArrayList();
-		for (Iterator i=cycleBasis().equivalenceClasses().iterator(); i.hasNext();) {
-			equivalenceClasses.add(toRingSet(atomContainer, (Collection) i.next()));
-		}
+		List<IRingSet> equivalenceClasses = new ArrayList<IRingSet>();
+        for (Object o : cycleBasis().equivalenceClasses()) {
+            equivalenceClasses.add(toRingSet(atomContainer, (Collection) o));
+        }
 		
 		return equivalenceClasses;	  
 
@@ -232,7 +237,7 @@ public class SSSRFinder {
 				ring.addElectronContainer(ac.getBond(atoms[i-1], atoms[i]));
 			}
 
-            for (int i = 0; i < atoms.length; i++) atoms[i].setFlag(CDKConstants.ISINRING, true);
+            for (IAtom atom : atoms) atom.setFlag(CDKConstants.ISINRING, true);
 
             ring.addElectronContainer(ac.getBond(atoms[vertices.size() - 1], atoms[0]));
 			ring.setAtoms(atoms);

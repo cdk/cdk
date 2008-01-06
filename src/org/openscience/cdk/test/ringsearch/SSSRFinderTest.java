@@ -20,73 +20,65 @@
  */
 package org.openscience.cdk.test.ringsearch;
 
-import java.io.InputStream;
-import java.util.Iterator;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.InputStream;
+import java.util.Iterator;
 
 /**
  * @cdk.module test-standard
  */
-public class SSSRFinderTest extends CDKTestCase {
+public class SSSRFinderTest extends NewCDKTestCase {
 
     private final LoggingTool logger = new LoggingTool(SSSRFinderTest.class);
 
-    public SSSRFinderTest(String name) {
-        super(name);
+    public SSSRFinderTest() {
+        super();
     }
 
-    public static Test suite() {
-        return new TestSuite(SSSRFinderTest.class);
-    }
-
+    @Test
     public void testSSSRFinder_IAtomContainer()
     {
         IMolecule molecule = MoleculeFactory.makeAlphaPinene();
         SSSRFinder finder = new SSSRFinder(molecule);
-        assertNotNull(finder);
+        Assert.assertNotNull(finder);
     }
 
-    public void testFindSSSR()
+    @Test public void testFindSSSR()
     {
         IMolecule molecule = MoleculeFactory.makeAlphaPinene();
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-        assertEquals(2, ringSet.getAtomContainerCount());
+        Assert.assertEquals(2, ringSet.getAtomContainerCount());
     }
 
-    public void testFindSSSR_IAtomContainer()
+    @Test public void testFindSSSR_IAtomContainer()
     {
         IMolecule molecule = MoleculeFactory.makeAlphaPinene();
         SSSRFinder sssrFinder = new SSSRFinder(molecule);
         IRingSet ringSet = sssrFinder.findSSSR();
-        assertEquals(2, ringSet.getAtomContainerCount());
+        Assert.assertEquals(2, ringSet.getAtomContainerCount());
     }
 
-    public void testGetAtomContainerCount() throws Exception
+    @Test public void testGetAtomContainerCount() throws Exception
     {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule molecule = sp.parseSmiles("c1ccccc1");
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-        assertEquals(1, ringSet.getAtomContainerCount());
+        Assert.assertEquals(1, ringSet.getAtomContainerCount());
     }
 
-    public void testRingFlags1() throws Exception {
+    @Test public void testRingFlags1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule molecule = sp.parseSmiles("c1ccccc1");
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -97,10 +89,10 @@ public class SSSRFinderTest extends CDKTestCase {
             IAtom atom = (IAtom) atoms.next();
             if (atom.getFlag(CDKConstants.ISINRING)) count++;
         }
-        assertEquals("All atoms in benzene were not marked as being in a ring", 6, count);
+        Assert.assertEquals("All atoms in benzene were not marked as being in a ring", 6, count);
     }
 
-    public void testRingFlags2() throws Exception {
+    @Test public void testRingFlags2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule molecule = sp.parseSmiles("c1cccc1CC");
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -111,29 +103,29 @@ public class SSSRFinderTest extends CDKTestCase {
             IAtom atom = (IAtom) atoms.next();
             if (atom.getFlag(CDKConstants.ISINRING)) count++;
         }
-        assertEquals("All ring atoms in 2-ethyl cyclopentane were not marked as being in a ring", 5, count);
+        Assert.assertEquals("All ring atoms in 2-ethyl cyclopentane were not marked as being in a ring", 5, count);
     }
 
-    public void testBicyclicCompound() throws Exception
+    @Test public void testBicyclicCompound() throws Exception
     {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule molecule = sp.parseSmiles("C1CCC(CCCCC2)C2C1");
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-        assertEquals(2, ringSet.getAtomContainerCount());
+        Assert.assertEquals(2, ringSet.getAtomContainerCount());
     }
 
     /**
      * @cdk.bug 826942
      */
-    public void testSFBug826942() throws Exception
+    @Test public void testSFBug826942() throws Exception
     {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule molecule = sp.parseSmiles("C1CCC2C(C1)C4CCC3(CCCCC23)(C4)");
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
-        assertEquals(4, ringSet.getAtomContainerCount());
+        Assert.assertEquals(4, ringSet.getAtomContainerCount());
     }
 
-    public void testProblem1() throws Exception
+    @Test public void testProblem1() throws Exception
     {
         IMolecule molecule = null;
         IRing ring = null;
@@ -145,7 +137,7 @@ public class SSSRFinderTest extends CDKTestCase {
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
-        assertEquals(3, ringSet.getAtomContainerCount());
+        Assert.assertEquals(3, ringSet.getAtomContainerCount());
         for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
         {
             ring = (IRing) ringSet.getAtomContainer(f);
@@ -153,7 +145,7 @@ public class SSSRFinderTest extends CDKTestCase {
         }
     }
 
-    public void testLoopProblem() throws Exception
+    @Test public void testLoopProblem() throws Exception
     {
         String filename = "data/mdl/ring_03419.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -163,7 +155,7 @@ public class SSSRFinderTest extends CDKTestCase {
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
-        assertEquals(12, ringSet.getAtomContainerCount());
+        Assert.assertEquals(12, ringSet.getAtomContainerCount());
         for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
         {
             IRing ring = (IRing) ringSet.getAtomContainer(f);
@@ -172,7 +164,7 @@ public class SSSRFinderTest extends CDKTestCase {
     }
 
 
-    public void testProblem2() throws Exception
+    @Test public void testProblem2() throws Exception
     {
         IMolecule molecule = null;
         IRing ring = null;
@@ -184,7 +176,7 @@ public class SSSRFinderTest extends CDKTestCase {
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
-        assertEquals(10, ringSet.getAtomContainerCount());
+        Assert.assertEquals(10, ringSet.getAtomContainerCount());
         for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
         {
             ring = (IRing) ringSet.getAtomContainer(f);
@@ -192,7 +184,7 @@ public class SSSRFinderTest extends CDKTestCase {
         }
     }
 
-    public void testProblem3() throws Exception {
+    @Test public void testProblem3() throws Exception {
         IMolecule molecule = null;
         IRing ring = null;
         String filename = "data/mdl/figueras-test-inring.mol";
@@ -203,7 +195,7 @@ public class SSSRFinderTest extends CDKTestCase {
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
-        assertEquals(5, ringSet.getAtomContainerCount());
+        Assert.assertEquals(5, ringSet.getAtomContainerCount());
         for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
         {
             ring = (IRing) ringSet.getAtomContainer(f);
@@ -214,7 +206,7 @@ public class SSSRFinderTest extends CDKTestCase {
     /**
      * @cdk.bug 891021
      */
-    public void testBug891021() throws Exception {
+    @Test public void testBug891021() throws Exception {
         IMolecule molecule = null;
         String filename = "data/mdl/too.many.rings.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -224,7 +216,7 @@ public class SSSRFinderTest extends CDKTestCase {
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
-        assertEquals(57, ringSet.getAtomContainerCount());
+        Assert.assertEquals(57, ringSet.getAtomContainerCount());
     }
 
 
