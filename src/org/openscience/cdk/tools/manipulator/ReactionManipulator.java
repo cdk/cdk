@@ -244,7 +244,7 @@ public class ReactionManipulator {
     }
 
     @TestMethod("testGetAllChemObjects_IReactionSet")
-    public static List getAllChemObjects(IReaction reaction) {
+    public static List<IChemObject> getAllChemObjects(IReaction reaction) {
         ArrayList<IChemObject> list = new ArrayList<IChemObject>();
         list.add(reaction);
         IMoleculeSet reactants = reaction.getReactants();
