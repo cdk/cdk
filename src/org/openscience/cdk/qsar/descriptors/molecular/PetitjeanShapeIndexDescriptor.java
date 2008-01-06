@@ -19,8 +19,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.graph.PathTools;
@@ -32,6 +30,8 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point3d;
 
 
 /**
@@ -176,7 +176,7 @@ public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
             }
             retval.add((gdiameter - gradius) / gradius);
         } else {
-            throw new CDKException("Structure must have 3D coordinates");
+            retval.add(Double.NaN);
         }
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,

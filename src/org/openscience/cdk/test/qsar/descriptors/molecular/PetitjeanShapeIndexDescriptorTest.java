@@ -23,14 +23,11 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
-import java.io.InputStream;
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader;
@@ -38,7 +35,11 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanShapeIndexDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -56,7 +57,7 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
     }
 
     public void setUp() throws Exception {
-    	setDescriptor(PetitjeanShapeIndexDescriptor.class);
+        setDescriptor(PetitjeanShapeIndexDescriptor.class);
     }
 
     public void testPetitjeanShapeIndexDescriptor() throws ClassNotFoundException, CDKException, Exception {
@@ -74,10 +75,19 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
         assertEquals(0.606477, dar.get(1), 0.000001);
 
         ac = (IAtomContainer) cList.get(1);
-        result = descriptor.calculate(ac) ;
-        dar = (DoubleArrayResult)result.getValue();
+        result = descriptor.calculate(ac);
+        dar = (DoubleArrayResult) result.getValue();
         assertEquals(0.666666, dar.get(0), 0.000001);
         assertEquals(0.845452, dar.get(1), 0.000001);
+
+    }
+
+    public void testPetiteJeanShapeNo3D() throws CDKException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer = sp.parseSmiles("CCCOCCC(O)=O");
+        DescriptorValue result = descriptor.calculate(atomContainer);
+        DoubleArrayResult dar = (DoubleArrayResult) result.getValue();
+        assertTrue(Double.isNaN(dar.get(1)));
 
     }
 }
