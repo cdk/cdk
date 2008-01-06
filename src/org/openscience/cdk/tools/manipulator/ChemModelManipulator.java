@@ -27,6 +27,8 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.*;
 
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ import java.util.List;
  *
  * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(IAtom)
  */
+@TestClass("org.openscience.cdk.test.tools.manipulator.ChemModelManipulatorTest")
 public class ChemModelManipulator {
     
 	/**
@@ -56,6 +59,7 @@ public class ChemModelManipulator {
 	 * @param chemModel  The IChemModel object.
 	 * @return           The number of Atom object inside.
 	 */
+    @TestMethod("testGetAtomCount_IChemModel")
     public static int getAtomCount(IChemModel chemModel) {
     	int count = 0;
         ICrystal crystal = chemModel.getCrystal();
@@ -79,6 +83,7 @@ public class ChemModelManipulator {
 	 * @param chemModel  The IChemModel object.
 	 * @return           The number of Bond object inside.
 	 */
+    @TestMethod("testGetBondCount_IChemModel")
     public static int getBondCount(IChemModel chemModel) {
     	int count = 0;
         ICrystal crystal = chemModel.getCrystal();
@@ -103,6 +108,8 @@ public class ChemModelManipulator {
      * @param chemModel  The IChemModel object.
      * @param atom       The Atom object to remove.
      */
+
+    @TestMethod("testRemoveAtomAndConnectedElectronContainers_IChemModel_IAtom")
     public static void removeAtomAndConnectedElectronContainers(IChemModel chemModel, IAtom atom) {
         ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
@@ -128,6 +135,7 @@ public class ChemModelManipulator {
      * @param chemModel  The IChemModel object.
      * @param electrons  The ElectronContainer to remove.
      */
+    @TestMethod("testRemoveElectronContainer_IChemModel_IElectronContainer")
     public static void removeElectronContainer(IChemModel chemModel, IElectronContainer electrons) {
         ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
@@ -153,6 +161,7 @@ public class ChemModelManipulator {
      * @param chemModel  The ChemModel object.
      * @return           The created Molecule object.
      */
+    @TestMethod("testCreateNewMolecule_IChemModel")
     public static IAtomContainer createNewMolecule(IChemModel chemModel) {
         // Add a new molecule either the set of molecules
         IMolecule molecule = chemModel.getBuilder().newMolecule();
@@ -179,6 +188,7 @@ public class ChemModelManipulator {
      * @param  atomContainer  The AtomContainer to have inside the ChemModel.
      * @return                The new IChemModel object.
      */
+    @TestMethod("testNewChemModel_IAtomContainer")
     public static IChemModel newChemModel(IAtomContainer atomContainer) {
         IChemModel model = atomContainer.getBuilder().newChemModel();
         IMoleculeSet moleculeSet = model.getBuilder().newMoleculeSet();
@@ -191,6 +201,7 @@ public class ChemModelManipulator {
      * This badly named methods tries to determine which AtomContainer in the
      * ChemModel is best suited to contain added Atom's and Bond's.
      */
+    @TestMethod("testGetRelevantAtomContainer_IChemModel_IAtom")
     public static IAtomContainer getRelevantAtomContainer(IChemModel chemModel, IAtom atom) {
         IAtomContainer result = null;
         if (chemModel.getMoleculeSet() != null) {
@@ -216,6 +227,7 @@ public class ChemModelManipulator {
      * @param bond       The IBond object to search.
      * @return           The IAtomContainer object found, null if none is found.
      */
+    @TestMethod("testGetRelevantAtomContainer_IChemModel_IBond")
     public static IAtomContainer getRelevantAtomContainer(IChemModel chemModel, IBond bond) {
         IAtomContainer result = null;
         if (chemModel.getMoleculeSet() != null) {
@@ -241,6 +253,7 @@ public class ChemModelManipulator {
      * @param atom       The IAtom object to search.
      * @return           The IAtomContainer object found, null if none is found.
      */
+    @TestMethod("testGetRelevantReaction_IChemModel_IAtom")
     public static IReaction getRelevantReaction(IChemModel chemModel, IAtom atom) {
         IReaction reaction = null;
         if (chemModel.getReactionSet() != null) {
@@ -253,6 +266,7 @@ public class ChemModelManipulator {
     /**
      * Returns all the AtomContainer's of a ChemModel.
      */
+    @TestMethod("testGetAllAtomContainers_IChemModel")
     public static List getAllAtomContainers(IChemModel chemModel) {
         IMoleculeSet moleculeSet = chemModel.getBuilder().newMoleculeSet();
         if (chemModel.getMoleculeSet() != null) {
@@ -275,6 +289,7 @@ public class ChemModelManipulator {
      * @param propKey    The key of the property.
      * @param propVal    The value of the property.
      */
+    @TestMethod("testSetAtomProperties_IChemModel_Object_Object")
     public static void setAtomProperties(IChemModel chemModel, Object propKey, Object propVal) {
         if (chemModel.getMoleculeSet() != null) {
             MoleculeSetManipulator.setAtomProperties(
@@ -299,7 +314,8 @@ public class ChemModelManipulator {
      * @param chemModel  The IChemModel object.
      * @return           A List of all ChemObjects inside.
      */
-	public static List getAllChemObjects(IChemModel chemModel) {
+    @TestMethod("testGetAllChemObjects_IChemModel")
+    public static List getAllChemObjects(IChemModel chemModel) {
 		ArrayList list = new ArrayList();
         // list.add(chemModel); // only add ChemObjects contained within
         ICrystal crystal = chemModel.getCrystal();
@@ -327,7 +343,8 @@ public class ChemModelManipulator {
 		return list;
 	}
 
-	public static List<String> getAllIDs(IChemModel chemModel) {
+    @TestMethod("testGetAllIDs_IChemModel")
+    public static List<String> getAllIDs(IChemModel chemModel) {
 		ArrayList<String> list = new ArrayList<String>();
 		if (chemModel.getID() != null) list.add(chemModel.getID());
         ICrystal crystal = chemModel.getCrystal();

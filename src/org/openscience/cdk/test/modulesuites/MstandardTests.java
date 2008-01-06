@@ -131,9 +131,9 @@ public class MstandardTests {
         suite.addTest(AminoAcidManipulatorTest.suite());
         suite.addTest(new JUnit4TestAdapter(AtomTypeManipulatorTest.class));
         suite.addTest(new JUnit4TestAdapter(ChemFileManipulatorTest.class));
-        suite.addTest(ChemModelManipulatorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ChemModelManipulatorTest.class));
         suite.addTest(new JUnit4TestAdapter(ChemSequenceManipulatorTest.class));
-        suite.addTest(ReactionSetManipulatorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ReactionSetManipulatorTest.class));
         suite.addTest(new JUnit4TestAdapter(RingSizeComparatorTest.class));
         suite.addTest(new JUnit4TestAdapter(ElementComparatorTest.class));
         suite.addTest(new JUnit4TestAdapter(BFSShortestPathTest.class));

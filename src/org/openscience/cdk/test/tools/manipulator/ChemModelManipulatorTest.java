@@ -20,39 +20,26 @@
  */
 package org.openscience.cdk.test.tools.manipulator;
 
-import java.io.InputStream;
-import java.util.Iterator;
-import java.util.List;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.MoleculeSet;
-import org.openscience.cdk.Reaction;
-import org.openscience.cdk.ReactionSet;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionSet;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.openscience.cdk.*;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @cdk.module test-standard
  */
-public class ChemModelManipulatorTest extends CDKTestCase {
+public class ChemModelManipulatorTest extends NewCDKTestCase {
     
 	private final static LoggingTool logger = new LoggingTool(ChemModelManipulatorTest.class);
 	
@@ -66,14 +53,11 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 	IReactionSet reactionSet = null;
 	IChemModel chemModel = null;
 	
-	public ChemModelManipulatorTest(String name) {
-        super(name);
+	public ChemModelManipulatorTest() {
+        super();
     }
-    
-	public static Test suite() {
-		return new TestSuite(ChemModelManipulatorTest.class);
-	}
-	
+
+	@Before
 	public void setUp() {
 		molecule1 = new Molecule();
 		atomInMol1 = new Atom("Cl");
@@ -101,6 +85,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 		chemModel.setReactionSet(reactionSet);
 	}
 
+    @Test
     public void testGetAllAtomContainers_IChemModel() throws Exception {
         String filename = "data/mdl/a-pinene.mol";
         logger.info("Testing: " + filename);
@@ -108,31 +93,31 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemModel chemFile = (ChemModel)reader.read((ChemObject)new ChemModel());
-        assertNotNull(chemFile);
+        Assert.assertNotNull(chemFile);
         List containersList = ChemModelManipulator.getAllAtomContainers(chemFile);
-        assertEquals(1, containersList.size());
+        Assert.assertEquals(1, containersList.size());
     }
     
-    public void testNewChemModel_IAtomContainer()
+    @Test public void testNewChemModel_IAtomContainer()
     {
     	IAtomContainer ac = new AtomContainer();
     	IChemModel model = ChemModelManipulator.newChemModel(ac);
-    	assertEquals(ac, model.getMoleculeSet().getAtomContainer(0));
+    	Assert.assertEquals(ac, model.getMoleculeSet().getAtomContainer(0));
     }
     
-    public void testGetAtomCount_IChemModel()
+    @Test public void testGetAtomCount_IChemModel()
     {
     	int count = ChemModelManipulator.getAtomCount(chemModel);
-    	assertEquals(6, count);
+    	Assert.assertEquals(6, count);
     }
     
-    public void testGetBondCount_IChemModel()
+    @Test public void testGetBondCount_IChemModel()
     {
     	int count = ChemModelManipulator.getBondCount(chemModel);
-    	assertEquals(2, count);
+    	Assert.assertEquals(2, count);
     }
     
-    public void testRemoveElectronContainer_IChemModel_IElectronContainer()
+    @Test public void testRemoveElectronContainer_IChemModel_IElectronContainer()
     {
     	IMolecule mol1 = new Molecule();
 		mol1.addAtom(new Atom("Cl"));
@@ -154,16 +139,16 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 		model.setMoleculeSet(molSet);
 		model.setReactionSet(rSet);
 		IBond otherBond = new Bond();
-		assertEquals(2, ChemModelManipulator.getBondCount(model));
+		Assert.assertEquals(2, ChemModelManipulator.getBondCount(model));
 		ChemModelManipulator.removeElectronContainer(model, otherBond);
-		assertEquals(2, ChemModelManipulator.getBondCount(model));
+		Assert.assertEquals(2, ChemModelManipulator.getBondCount(model));
 		ChemModelManipulator.removeElectronContainer(model, bond1);
-		assertEquals(1, ChemModelManipulator.getBondCount(model));
+		Assert.assertEquals(1, ChemModelManipulator.getBondCount(model));
 		ChemModelManipulator.removeElectronContainer(model, bond2);
-		assertEquals(0, ChemModelManipulator.getBondCount(model));
+		Assert.assertEquals(0, ChemModelManipulator.getBondCount(model));
     }
     
-    public void testRemoveAtomAndConnectedElectronContainers_IChemModel_IAtom()
+    @Test public void testRemoveAtomAndConnectedElectronContainers_IChemModel_IAtom()
     {
     	IMolecule mol1 = new Molecule();
     	IAtom atom1 = new Atom("Cl");
@@ -187,84 +172,94 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 		model.setMoleculeSet(molSet);
 		model.setReactionSet(rSet);
 		IAtom otherAtom = new Atom("Cl");
-		assertEquals(2, ChemModelManipulator.getBondCount(model));
-		assertEquals(4, ChemModelManipulator.getAtomCount(model));
+		Assert.assertEquals(2, ChemModelManipulator.getBondCount(model));
+		Assert.assertEquals(4, ChemModelManipulator.getAtomCount(model));
 		ChemModelManipulator.removeAtomAndConnectedElectronContainers(model, otherAtom);
-		assertEquals(2, ChemModelManipulator.getBondCount(model));
-		assertEquals(4, ChemModelManipulator.getAtomCount(model));
+		Assert.assertEquals(2, ChemModelManipulator.getBondCount(model));
+		Assert.assertEquals(4, ChemModelManipulator.getAtomCount(model));
 		ChemModelManipulator.removeAtomAndConnectedElectronContainers(model, atom1);
-		assertEquals(1, ChemModelManipulator.getBondCount(model));
-		assertEquals(3, ChemModelManipulator.getAtomCount(model));
+		Assert.assertEquals(1, ChemModelManipulator.getBondCount(model));
+		Assert.assertEquals(3, ChemModelManipulator.getAtomCount(model));
 		ChemModelManipulator.removeAtomAndConnectedElectronContainers(model, atom2);
-		assertEquals(0, ChemModelManipulator.getBondCount(model));
-		assertEquals(2, ChemModelManipulator.getAtomCount(model));
+		Assert.assertEquals(0, ChemModelManipulator.getBondCount(model));
+		Assert.assertEquals(2, ChemModelManipulator.getAtomCount(model));
     }
     
-    public void testSetAtomProperties_IChemModel_Object_Object()
+    @Test public void testSetAtomProperties_IChemModel_Object_Object()
     {
     	String key = "key";
     	String value = "value";
     	ChemModelManipulator.setAtomProperties(chemModel, key, value);
-		assertEquals(value, atomInMol1.getProperty(key));
-		assertEquals(value, atomInMol2.getProperty(key));
+		Assert.assertEquals(value, atomInMol1.getProperty(key));
+		Assert.assertEquals(value, atomInMol2.getProperty(key));
     }
     
-    public void testGetRelevantAtomContainer_IChemModel_IAtom()
+    @Test public void testGetRelevantAtomContainer_IChemModel_IAtom()
     {
     	IAtomContainer ac1 = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInMol1);
-		assertEquals(molecule1, ac1);
+		Assert.assertEquals(molecule1, ac1);
 		IAtomContainer ac2 = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInMol2);
-		assertEquals(molecule2, ac2);
+		Assert.assertEquals(molecule2, ac2);
     }
     
-    public void testGetRelevantAtomContainer_IChemModel_IBond()
+    @Test public void testGetRelevantAtomContainer_IChemModel_IBond()
     {
     	IAtomContainer ac1 = ChemModelManipulator.getRelevantAtomContainer(chemModel, bondInMol1);
-		assertEquals(molecule1, ac1);
+		Assert.assertEquals(molecule1, ac1);
     }
     
-    public void testGetAllChemObjects_IChemModel()
+    @Test public void testGetAllChemObjects_IChemModel()
     {
     	List list = ChemModelManipulator.getAllChemObjects(chemModel);
-    	assertEquals(5, list.size());
+    	Assert.assertEquals(5, list.size());
     	//int atomCount = 0; // not traversed
     	//int bondCount = 0; // not traversed
     	int molCount = 0;
     	int molSetCount = 0;
     	int reactionCount = 0;
     	int reactionSetCount = 0;
-    	for (Iterator iter = list.iterator(); iter.hasNext();) {
-    		Object o = iter.next();
-    		//if (o instanceof IAtom) ++atomCount;
-    		//if (o instanceof IBond) ++bondCount;
-    		if (o instanceof IMolecule) ++molCount;
-    		else if (o instanceof IMoleculeSet) ++molSetCount;
-    		else if (o instanceof IReaction) ++reactionCount;
-    		else if (o instanceof IReactionSet) ++reactionSetCount;
-    		else fail("Unexpected Object of type " + o.getClass());
-    	}
-    	//assertEquals(3, atomCount);
-    	//assertEquals(1, bondCount);
-    	assertEquals(2, molCount);
-    	assertEquals(1, molSetCount);
-    	assertEquals(1, reactionCount);
-    	assertEquals(1, reactionSetCount);
+        for (Object o : list) {
+            //if (o instanceof IAtom) ++atomCount;
+            //if (o instanceof IBond) ++bondCount;
+            if (o instanceof IMolecule) ++molCount;
+            else if (o instanceof IMoleculeSet) ++molSetCount;
+            else if (o instanceof IReaction) ++reactionCount;
+            else if (o instanceof IReactionSet) ++reactionSetCount;
+            else Assert.fail("Unexpected Object of type " + o.getClass());
+        }
+    	//Assert.assertEquals(3, atomCount);
+    	//Assert.assertEquals(1, bondCount);
+    	Assert.assertEquals(2, molCount);
+    	Assert.assertEquals(1, molSetCount);
+    	Assert.assertEquals(1, reactionCount);
+    	Assert.assertEquals(1, reactionSetCount);
     }
     
-    public void testCreateNewMolecule_IChemModel()
+    @Test public void testCreateNewMolecule_IChemModel()
     {
     	IChemModel model = new ChemModel();
     	IAtomContainer ac = ChemModelManipulator.createNewMolecule(model);
-    	assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
-    	assertEquals(ac, model.getMoleculeSet().getAtomContainer(0));
+    	Assert.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
+    	Assert.assertEquals(ac, model.getMoleculeSet().getAtomContainer(0));
     }
     
-    public void testGetRelevantReaction_IChemModel_IAtom()
+    @Test public void testGetRelevantReaction_IChemModel_IAtom()
     {
     	IReaction r = ChemModelManipulator.getRelevantReaction(chemModel, atomInMol1);
-    	assertNotNull(r);
-    	assertEquals(reaction, r);
+    	Assert.assertNotNull(r);
+    	Assert.assertEquals(reaction, r);
     }
+
+    @Test
+    public void testGetAllIDs_IChemModel() {
+    	Assert.assertEquals(0, ChemModelManipulator.getAllIDs(chemModel).size());
+    	IDCreator.createIDs(chemModel);
+    	List allIDs = ChemModelManipulator.getAllIDs(chemModel);
+    	Assert.assertEquals(16, ChemModelManipulator.getAllIDs(chemModel).size());
+    	Set<String> uniq = new HashSet<String>(allIDs);
+    	Assert.assertEquals(10, uniq.size());
+    }
+
     
 }
 

@@ -27,16 +27,12 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.*;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
  * @cdk.module standard
@@ -44,8 +40,10 @@ import org.openscience.cdk.interfaces.IReactionSet;
  *
  * @see ChemModelManipulator
  */
+@TestClass("org.openscience.cdk.test.tools.manipulator.ReactionSetManipulatorTest")
 public class ReactionSetManipulator {
-    
+
+    @TestMethod("testGetAtomCount_IReactionSet")
     public static int getAtomCount(IReactionSet set) {
     	int count = 0;
         for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {
@@ -54,6 +52,7 @@ public class ReactionSetManipulator {
         return count;
     }
 
+    @TestMethod("testGetBondCount_IReactionSet")
     public static int getBondCount(IReactionSet set) {
     	int count = 0;
     	for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {
@@ -75,7 +74,8 @@ public class ReactionSetManipulator {
             ReactionManipulator.removeElectronContainer(reaction, electrons);
         }
     }
-    
+
+    @TestMethod("testGetAllMolecules_IReactionSet")
     public static IMoleculeSet getAllMolecules(IReactionSet set) {
         IMoleculeSet moleculeSet = set.getBuilder().newMoleculeSet();
         for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {
@@ -86,7 +86,7 @@ public class ReactionSetManipulator {
     }
     
     public static List getAllIDs(IReactionSet set) {
-        List IDlist = new ArrayList();
+        List<String> IDlist = new ArrayList<String>();
         if (set.getID() != null) IDlist.add(set.getID());
         for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {
             IReaction reaction = (IReaction)iter.next();
@@ -97,14 +97,18 @@ public class ReactionSetManipulator {
     
     /**
      * Returns all the AtomContainer's of a Reaction.
+     * @param set  the reaction set to get the molecules from
+     * @return  a List containing the IAtomContainer objects in the IReactionSet
      */
+    @TestMethod("testGetAllAtomContainers_IReactionSet")
     public static List getAllAtomContainers(IReactionSet set) {
     	
 		return MoleculeSetManipulator.getAllAtomContainers(
             getAllMolecules(set)
         );
     }
-    
+
+    @TestMethod("testGetRelevantReaction_IReactionSet_IAtom")
     public static IReaction getRelevantReaction(IReactionSet set, IAtom atom) {
     	for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {
             IReaction reaction = (IReaction)iter.next();
@@ -116,6 +120,7 @@ public class ReactionSetManipulator {
         return null;
     }
 
+    @TestMethod("testGetRelevantReaction_IReactionSet_IBond")
     public static IReaction getRelevantReaction(IReactionSet set, IBond bond) {
     	for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {
             IReaction reaction = (IReaction)iter.next();
@@ -127,6 +132,7 @@ public class ReactionSetManipulator {
         return null;
     }
 
+    @TestMethod("testGetRelevantAtomContainer_IReactionSet_IAtom")
     public static IAtomContainer getRelevantAtomContainer(IReactionSet set, IAtom atom) {
     	for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {
             IReaction reaction = (IReaction)iter.next();
@@ -138,6 +144,7 @@ public class ReactionSetManipulator {
         return null;
     }
 
+    @TestMethod("testGetRelevantAtomContainer_IReactionSet_IBond")
     public static IAtomContainer getRelevantAtomContainer(IReactionSet set, IBond bond) {
     	for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {
             IReaction reaction = (IReaction)iter.next();
@@ -148,16 +155,18 @@ public class ReactionSetManipulator {
         }
         return null;
     }
-    
+
+    @TestMethod("testSetAtomProperties_IReactionSet_Object_Object")
     public static void setAtomProperties(IReactionSet set, Object propKey, Object propVal) {
     	for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {
             IReaction reaction = (IReaction)iter.next();
             ReactionManipulator.setAtomProperties(reaction, propKey, propVal);
         }
     }
-    
+
+    @TestMethod("testGetAllChemObjects_IReactionSet")
     public static List getAllChemObjects(IReactionSet set) {
-        ArrayList list = new ArrayList();
+        ArrayList<IChemObject> list = new ArrayList<IChemObject>();
         list.add(set);
         for (java.util.Iterator iter = set.reactions(); iter.hasNext();) {
             IReaction reaction = (IReaction)iter.next();
