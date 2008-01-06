@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author: egonw $    
- * $Date: 2006-04-12 11:16:35 +0200 (Wed, 12 Apr 2006) $    
- * $Revision: 5921 $
+/* $Revision: 5921 $ $Author: egonw $ $Date: 2006-04-12 11:16:35 +0200 (Wed, 12 Apr 2006) $    
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -24,9 +21,8 @@
  */
 package org.openscience.cdk.test.nonotify;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.AminoAcidTest;
 
@@ -37,16 +33,38 @@ import org.openscience.cdk.test.AminoAcidTest;
  */
 public class NNAminoAcidTest extends AminoAcidTest {
 
-    public NNAminoAcidTest(String name) {
-        super(name);
+    @BeforeClass public static void setUp() {
+    	AminoAcidTest.builder = NoNotificationChemObjectBuilder.getInstance();
     }
 
-    public void setUp() {
-    	super.builder = NoNotificationChemObjectBuilder.getInstance();
+    @Test public void testAminoAcid() {
+        super.testAminoAcid();
+    }
+    
+    @Test public void testAddCTerminus_IAtom() {
+        super.testAddCTerminus_IAtom();
+    }
+    
+    @Test public void testGetCTerminus() {
+        super.testGetCTerminus();
     }
 
-    public static Test suite() {
-        return new TestSuite(NNAminoAcidTest.class);
+    @Test public void testAddNTerminus_IAtom() {
+        super.testAddNTerminus_IAtom();
+    }
+    
+    @Test public void testGetNTerminus() {
+        super.testGetNTerminus();
+    }
+    
+    /**
+     * Method to test wether the class complies with RFC #9.
+     */
+    @Test public void testToString() {
+    	super.testToString();
     }
 
+    @Test public void testClone() throws Exception {
+        super.testClone();
+    }
 }

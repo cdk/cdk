@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -27,9 +24,9 @@
  *  */
 package org.openscience.cdk.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
@@ -43,60 +40,52 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09
  */
-public class AminoAcidTest extends CDKTestCase {
+public class AminoAcidTest extends NewCDKTestCase {
 
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 	
-    public AminoAcidTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
        	builder = DefaultChemObjectBuilder.getInstance();
     }
     
-    public static Test suite() {
-        return new TestSuite(AminoAcidTest.class);
-    }
-
-    public void testAminoAcid() {
+    @Test public void testAminoAcid() {
         IAminoAcid oAminoAcid = builder.newAminoAcid();
-        assertNotNull(oAminoAcid);
+        Assert.assertNotNull(oAminoAcid);
     }
     
-    public void testAddCTerminus_IAtom() {
+    @Test public void testAddCTerminus_IAtom() {
         IAminoAcid m = builder.newAminoAcid();
         IAtom cTerminus = builder.newAtom("C");
         m.addCTerminus(cTerminus);
-        assertEquals(cTerminus, m.getCTerminus());
+        Assert.assertEquals(cTerminus, m.getCTerminus());
     }
-    public void testGetCTerminus() {
+    @Test public void testGetCTerminus() {
         IAminoAcid m = builder.newAminoAcid();
-        assertNull(m.getCTerminus());
+        Assert.assertNull(m.getCTerminus());
     }
 
-    public void testAddNTerminus_IAtom() {
+    @Test public void testAddNTerminus_IAtom() {
         IAminoAcid m = builder.newAminoAcid();
         IAtom nTerminus = builder.newAtom("N");
         m.addNTerminus(nTerminus);
-        assertEquals(nTerminus, m.getNTerminus());
+        Assert.assertEquals(nTerminus, m.getNTerminus());
     }
-    public void testGetNTerminus() {
+    @Test public void testGetNTerminus() {
         IAminoAcid m = builder.newAminoAcid();
-        assertNull(m.getNTerminus());
+        Assert.assertNull(m.getNTerminus());
     }
     
     /**
      * Method to test wether the class complies with RFC #9.
      */
-    public void testToString() {
+    @Test public void testToString() {
         IAminoAcid m = builder.newAminoAcid();
         IAtom nTerminus = builder.newAtom("N");
         m.addNTerminus(nTerminus);
         String description = m.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue('\n' != description.charAt(i));
-            assertTrue('\r' != description.charAt(i));
+            Assert.assertTrue('\n' != description.charAt(i));
+            Assert.assertTrue('\r' != description.charAt(i));
         }
 
         m = builder.newAminoAcid();
@@ -104,29 +93,29 @@ public class AminoAcidTest extends CDKTestCase {
         m.addNTerminus(cTerminus);
         description = m.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue('\n' != description.charAt(i));
-            assertTrue('\r' != description.charAt(i));
+            Assert.assertTrue('\n' != description.charAt(i));
+            Assert.assertTrue('\r' != description.charAt(i));
         }
 }
 
-    public void testClone() throws Exception {
+    @Test public void testClone() throws Exception {
         IAminoAcid aa = builder.newAminoAcid();
         Object clone = aa.clone();
-        assertTrue(clone instanceof IAminoAcid);
-        assertNotSame(aa, clone);
+        Assert.assertTrue(clone instanceof IAminoAcid);
+        Assert.assertNotSame(aa, clone);
         
         aa = builder.newAminoAcid();
         IAtom nTerminus = builder.newAtom("N");
         aa.addNTerminus(nTerminus);
         clone = aa.clone();
-        assertTrue(clone instanceof IAminoAcid);
-        assertNotSame(aa, clone);
+        Assert.assertTrue(clone instanceof IAminoAcid);
+        Assert.assertNotSame(aa, clone);
 
         aa = builder.newAminoAcid();
         IAtom cTerminus = builder.newAtom("C");
         aa.addNTerminus(cTerminus);
         clone = aa.clone();
-        assertTrue(clone instanceof IAminoAcid);
-        assertNotSame(aa, clone);
+        Assert.assertTrue(clone instanceof IAminoAcid);
+        Assert.assertNotSame(aa, clone);
     }
 }

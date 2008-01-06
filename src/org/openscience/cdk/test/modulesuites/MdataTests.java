@@ -80,7 +80,7 @@ public class MdataTests {
         
         suite.addTest(DataCoverageTest.suite());
         
-        suite.addTest(AminoAcidTest.suite());
+        suite.addTest(new JUnit4TestAdapter(AminoAcidTest.class));
         suite.addTest(AtomContainerTest.suite());
         //suite.addTest(AtomEnumerationTest.suite());
         suite.addTest(AtomParityTest.suite());

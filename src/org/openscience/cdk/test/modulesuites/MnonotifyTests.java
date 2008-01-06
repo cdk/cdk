@@ -71,7 +71,7 @@ public class MnonotifyTests {
         
         suite.addTest(new JUnit4TestAdapter(NNChemObjectBuilderTest.class));
         
-        suite.addTest(NNAminoAcidTest.suite());
+        suite.addTest(new JUnit4TestAdapter(NNAminoAcidTest.class));
         suite.addTest(NNAtomContainerTest.suite());
         suite.addTest(NNAtomTest.suite());
         suite.addTest(NNAtomTypeTest.suite());
