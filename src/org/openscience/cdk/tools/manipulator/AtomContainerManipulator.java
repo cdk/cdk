@@ -112,8 +112,11 @@ public class AtomContainerManipulator {
     public static double getTotalCharge(IAtomContainer atomContainer) {
         double charge = 0.0;
         Iterator<IAtom> iterAtoms = atomContainer.atoms();
-        while(iterAtoms.hasNext()) {
-            charge += iterAtoms.next().getCharge();
+        while (iterAtoms.hasNext()) {
+            // we assume CDKConstant.UNSET is equal to 0
+            Double thisCharge = iterAtoms.next().getCharge();
+            if (thisCharge != CDKConstants.UNSET)
+                charge += thisCharge;
         }
         return charge;
     }
