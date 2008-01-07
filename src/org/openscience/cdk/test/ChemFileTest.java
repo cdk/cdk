@@ -25,119 +25,111 @@
 
 package org.openscience.cdk.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
- * Checks the funcitonality of the ChemSequence class.
+ * Checks the functionality of the ChemSequence class.
  *
  * @cdk.module test-data
  *
  * @see org.openscience.cdk.ChemSequence
  */
-public class ChemFileTest extends CDKTestCase {
+public class ChemFileTest extends NewCDKTestCase {
 
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 	
-    public ChemFileTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
 
-    public static Test suite() {
-        return new TestSuite(ChemFileTest.class);
-    }
-    
-    public void testChemFile() {
+    @Test public void testChemFile() {
         ChemFile cs = new ChemFile();
-        assertNotNull(cs);
+        Assert.assertNotNull(cs);
     }
 
-    public void testAddChemSequence_IChemSequence() {
+    @Test public void testAddChemSequence_IChemSequence() {
         ChemFile cs = new ChemFile();
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
-        assertEquals(3, cs.getChemSequenceCount());
+        Assert.assertEquals(3, cs.getChemSequenceCount());
     }
     
-    public void testRemoveChemSequence_int() {
+    @Test public void testRemoveChemSequence_int() {
     	ChemFile cs = new ChemFile();
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
-        assertEquals(3, cs.getChemSequenceCount());
+        Assert.assertEquals(3, cs.getChemSequenceCount());
         cs.removeChemSequence(1);
-        assertEquals(2, cs.getChemSequenceCount());
+        Assert.assertEquals(2, cs.getChemSequenceCount());
     }
     
-    public void testGetChemSequence_int() {
+    @Test public void testGetChemSequence_int() {
         ChemFile cs = new ChemFile();
         cs.addChemSequence(new ChemSequence());
         ChemSequence second = new ChemSequence();
         cs.addChemSequence(second);
         cs.addChemSequence(new ChemSequence());
-        assertEquals(second, cs.getChemSequence(1));
+        Assert.assertEquals(second, cs.getChemSequence(1));
     }
     
-    public void testGrowChemSequenceArray() {
+    @Test public void testGrowChemSequenceArray() {
         ChemFile cs = new ChemFile();
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
-        assertEquals(3, cs.getChemSequenceCount());
+        Assert.assertEquals(3, cs.getChemSequenceCount());
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence()); // this one should enfore array grow
-        assertEquals(6, cs.getChemSequenceCount());
+        Assert.assertEquals(6, cs.getChemSequenceCount());
     }
 
-    public void testChemSequences() {
+    @Test public void testChemSequences() {
         ChemFile cs = new ChemFile();
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
 
-        assertNotNull(cs.chemSequences());
-        assertEquals(3, cs.getChemSequenceCount());
+        Assert.assertNotNull(cs.chemSequences());
+        Assert.assertEquals(3, cs.getChemSequenceCount());
     }
 
-    public void testGetChemSequenceCount() {
+    @Test public void testGetChemSequenceCount() {
         ChemFile cs = new ChemFile();
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
         cs.addChemSequence(new ChemSequence());
  
-        assertEquals(3, cs.getChemSequenceCount());
+        Assert.assertEquals(3, cs.getChemSequenceCount());
     }
 
     /** Test for RFC #9 */
-    public void testToString() {
+    @Test public void testToString() {
         ChemFile cs = new ChemFile();
         String description = cs.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue(description.charAt(i) != '\n');
-            assertTrue(description.charAt(i) != '\r');
+            Assert.assertTrue(description.charAt(i) != '\n');
+            Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
 
-    public void testStateChanged_IChemObjectChangeEvent() {
+    @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         ChemFile chemObject = new ChemFile();
         chemObject.addListener(listener);
         
         chemObject.addChemSequence(new ChemSequence());
-        assertTrue(listener.changed);
+        Assert.assertTrue(listener.changed);
     }
 
     private class ChemObjectListenerImpl implements IChemObjectListener {
@@ -147,22 +139,22 @@ public class ChemFileTest extends CDKTestCase {
             changed = false;
         }
         
-        public void stateChanged(IChemObjectChangeEvent e) {
+        @Test public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }
         
-        public void reset() {
+        @Test public void reset() {
             changed = false;
         }
     }
 
-	public void testClone() throws Exception {
+	@Test public void testClone() throws Exception {
         ChemFile file = new ChemFile();
         Object clone = file.clone();
-        assertTrue(clone instanceof ChemFile);
+        Assert.assertTrue(clone instanceof ChemFile);
     }    
         
-    public void testClone_ChemSequence() throws Exception {
+    @Test public void testClone_ChemSequence() throws Exception {
 		ChemFile file = new ChemFile();
 		file.addChemSequence(new ChemSequence()); // 1
 		file.addChemSequence(new ChemSequence()); // 2
@@ -170,12 +162,12 @@ public class ChemFileTest extends CDKTestCase {
 		file.addChemSequence(new ChemSequence()); // 4
 
 		ChemFile clone = (ChemFile)file.clone();
-		assertEquals(file.getChemSequenceCount(), clone.getChemSequenceCount());
+		Assert.assertEquals(file.getChemSequenceCount(), clone.getChemSequenceCount());
 		for (int f = 0; f < file.getChemSequenceCount(); f++) {
 			for (int g = 0; g < clone.getChemSequenceCount(); g++) {
-				assertNotNull(file.getChemSequence(f));
-				assertNotNull(clone.getChemSequence(g));
-				assertNotSame(file.getChemSequence(f), clone.getChemSequence(g));
+				Assert.assertNotNull(file.getChemSequence(f));
+				Assert.assertNotNull(clone.getChemSequence(g));
+				Assert.assertNotSame(file.getChemSequence(f), clone.getChemSequence(g));
 			}
 		}        
     }

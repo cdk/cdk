@@ -24,29 +24,19 @@
  */
 package org.openscience.cdk.test.debug;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.BeforeClass;
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.test.ChemFileTest;
 
 /**
- * Checks the funcitonality of the AtomContainer.
+ * Checks the functionality of the AtomContainer.
  *
  * @cdk.module test-datadebug
  */
 public class DebugChemFileTest extends ChemFileTest {
 
-    public DebugChemFileTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
-    	super.builder = DebugChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(DebugChemFileTest.class);
+    @BeforeClass public static void setUp() {
+    	ChemFileTest.builder = DebugChemObjectBuilder.getInstance();
     }
 
 }

@@ -77,10 +77,10 @@ public class MdatadebugTests {
         suite.addTest(new JUnit4TestAdapter(DebugAtomParityTest.class));
         suite.addTest(new JUnit4TestAdapter(DebugAtomTest.class));
         suite.addTest(new JUnit4TestAdapter(DebugAtomTypeTest.class));
-        suite.addTest(DebugBioPolymerTest.suite());
-        suite.addTest(DebugBondTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DebugBioPolymerTest.class));
+        suite.addTest(new JUnit4TestAdapter(DebugBondTest.class));
         suite.addTest(DebugChemObjectTest.suite());
-        suite.addTest(DebugChemFileTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DebugChemFileTest.class));
         suite.addTest(DebugChemModelTest.suite());
         suite.addTest(DebugChemSequenceTest.suite());
         suite.addTest(DebugCrystalTest.suite());

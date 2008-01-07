@@ -24,29 +24,19 @@
  */
 package org.openscience.cdk.test.debug;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.BeforeClass;
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.test.BondTest;
 
 /**
- * Checks the funcitonality of the AtomContainer.
+ * Checks the functionality of the AtomContainer.
  *
  * @cdk.module test-datadebug
  */
 public class DebugBondTest extends BondTest {
 
-    public DebugBondTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
-    	super.builder = DebugChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(DebugBondTest.class);
+    @BeforeClass public static void setUp() {
+    	BondTest.builder = DebugChemObjectBuilder.getInstance();
     }
 
 }

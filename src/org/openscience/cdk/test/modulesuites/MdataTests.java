@@ -86,9 +86,9 @@ public class MdataTests {
         suite.addTest(new JUnit4TestAdapter(AtomParityTest.class));
         suite.addTest(new JUnit4TestAdapter(AtomTest.class));
         suite.addTest(new JUnit4TestAdapter(AtomTypeTest.class));
-        suite.addTest(BioPolymerTest.suite());
-        suite.addTest(BondTest.suite());
-        suite.addTest(ChemFileTest.suite());
+        suite.addTest(new JUnit4TestAdapter(BioPolymerTest.class));
+        suite.addTest(new JUnit4TestAdapter(BondTest.class));
+        suite.addTest(new JUnit4TestAdapter(ChemFileTest.class));
         suite.addTest(ChemModelTest.suite());
         suite.addTest(ChemObjectTest.suite());
         suite.addTest(ChemSequenceTest.suite());
