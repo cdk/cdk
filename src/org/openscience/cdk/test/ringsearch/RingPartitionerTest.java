@@ -23,16 +23,17 @@
  */
 package org.openscience.cdk.test.ringsearch;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
+
+import java.util.List;
 //import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -43,57 +44,52 @@ import org.openscience.cdk.test.CDKTestCase;
  * @author         kaihartmann
  * @cdk.created    2005-05-24
  */
-public class RingPartitionerTest extends CDKTestCase
+public class RingPartitionerTest extends NewCDKTestCase
 {
 
 	static boolean standAlone = false;
 	//private LoggingTool logger = null;
 
 
-	/**
-	 *  Constructor for the RingPartitionerTest object
-	 *
-	 *@param  name  Description of the Parameter
-	 */
-	public RingPartitionerTest(String name)
+
+	public RingPartitionerTest()
 	{
-		super(name);
+		super();
 	}
 
-
-	/**
-	 *  The JUnit setup method
-	 */
-	public void setUp() throws Exception {
-        super.setUp();
-		//logger = new LoggingTool(this);
-	}
-
-
-	/**
-	 *  A unit test suite for JUnit
-	 *
-	 *@return    The test suite
-	 */
-	public static Test suite()
-	{
-		return new TestSuite(RingPartitionerTest.class);
-	}
-
-
-	/**
-	 *  A unit test for JUnit
-	 */
-	public void testConvertToAtomContainer_IRingSet()
+    @Test
+    public void testConvertToAtomContainer_IRingSet()
 	{
 		IMolecule molecule = MoleculeFactory.makeAlphaPinene();
 		SSSRFinder sssrf = new SSSRFinder(molecule);
 
 		IRingSet ringSet = sssrf.findSSSR();
 		IAtomContainer ac = RingPartitioner.convertToAtomContainer(ringSet);
-        assertEquals(7, ac.getAtomCount());
-        assertEquals(8, ac.getBondCount());
+        Assert.assertEquals(7, ac.getAtomCount());
+        Assert.assertEquals(8, ac.getBondCount());
 	}
-	
+
+    @Test
+    public void testPartitionIntoRings() {
+        IMolecule azulene = MoleculeFactory.makeAzulene();
+        SSSRFinder sssrf = new SSSRFinder(azulene);
+        IRingSet ringSet = sssrf.findSSSR();
+        List list = RingPartitioner.partitionRings(ringSet);
+        Assert.assertEquals(1, list.size());
+
+//        IMolecule biphenyl = MoleculeFactory.makeBiphenyl();
+//        sssrf = new SSSRFinder(biphenyl);
+//        ringSet = sssrf.findSSSR();
+//        list = RingPartitioner.partitionRings(ringSet);
+//        Assert.assertEquals(0, list.size());
+
+        IMolecule spiro = MoleculeFactory.makeSpiroRings();
+        sssrf = new SSSRFinder(spiro);
+        ringSet = sssrf.findSSSR();
+        list = RingPartitioner.partitionRings(ringSet);
+        Assert.assertEquals(1, list.size());
+
+    }
+
 }
 

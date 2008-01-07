@@ -100,7 +100,7 @@ public class MstandardTests {
         suite.addTest(RNodeTest.suite());
         suite.addTest(new JUnit4TestAdapter(MathToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(AllRingsFinderTest.class));
-        suite.addTest(RingPartitionerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(RingPartitionerTest.class));
         suite.addTest(SimpleCycleTest.suite());
         suite.addTest(SimpleCycleBasisTest.suite());
         suite.addTest(CycleBasisTest.suite());

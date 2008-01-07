@@ -28,13 +28,15 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  *  Partitions a RingSet into RingSets of connected rings. Rings which share an
@@ -44,6 +46,7 @@ import org.openscience.cdk.interfaces.IRingSet;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.ringsearch.RingPartitionerTest")
 public class RingPartitioner {
     
     /**
@@ -61,6 +64,7 @@ public class RingPartitioner {
      *@param  ringSet  The RingSet to be partitioned
      *@return          A List of connected RingSets
      */
+    @TestMethod("testPartitionIntoRings")
     public static List partitionRings(IRingSet ringSet) {
         List ringSets = new ArrayList();
         if (ringSet.getAtomContainerCount() == 0) return ringSets;
@@ -91,6 +95,7 @@ public class RingPartitioner {
      *@param  ringSet  The RingSet to be converted.
      *@return          The AtomContainer containing the bonds and atoms of the ringSet.
      */
+    @TestMethod("testConvertToAtomContainer_IRingSet")
     public static IAtomContainer convertToAtomContainer(IRingSet ringSet) {
     	IRing ring = (IRing) ringSet.getAtomContainer(0);
     	if (ring == null) return null;
