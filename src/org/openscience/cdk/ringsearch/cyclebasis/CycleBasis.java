@@ -28,22 +28,16 @@
  */
 
 package org.openscience.cdk.ringsearch.cyclebasis;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.alg.DijkstraShortestPath;
 import org._3pq.jgrapht.graph.UndirectedSubgraph;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.BiconnectivityInspector;
+
+import java.util.*;
 
 /**
  * A minimum basis of all cycles in a graph.
@@ -62,6 +56,7 @@ import org.openscience.cdk.graph.BiconnectivityInspector;
  * @cdk.depends jgrapht-0.5.3.jar
  */
 
+@TestClass("org.openscience.cdk.test.ringsearch.cyclebasis.CycleBasisTest")
 public class CycleBasis {
 		
 	//private List cycles = new Vector();
@@ -157,8 +152,9 @@ public class CycleBasis {
 		}
 	}
 	
-	
-	public int[] weightVector() {
+
+    @TestMethod("testWeightVector")
+    public int[] weightVector() {
 		SimpleCycleBasis basis = simpleBasis();
 		List cycles = basis.cycles();
 		
@@ -176,12 +172,12 @@ public class CycleBasis {
 		if (cachedCycleBasis == null) {
 			List cycles = new ArrayList();
 			List edgeList = new ArrayList();
-			
-			for (Iterator it = subgraphBases.iterator(); it.hasNext();) {
-				SimpleCycleBasis subgraphBase = (SimpleCycleBasis) it.next();
-				cycles.addAll(subgraphBase.cycles());
-				edgeList.addAll(subgraphBase.edges());
-			}
+
+            for (Object subgraphBase1 : subgraphBases) {
+                SimpleCycleBasis subgraphBase = (SimpleCycleBasis) subgraphBase1;
+                cycles.addAll(subgraphBase.cycles());
+                edgeList.addAll(subgraphBase.edges());
+            }
 			
 			cycles.addAll(mulitEdgeCycles);
 			edgeList.addAll(multiEdgeList);
@@ -202,7 +198,8 @@ public class CycleBasis {
 	 * @return a <Code>Collection</code> of the basis cycles
 	 */
 
-	public Collection cycles() {
+    @TestMethod("testCycles")
+    public Collection cycles() {
 		return simpleBasis().cycles();
 	}
 	
@@ -213,14 +210,15 @@ public class CycleBasis {
 	 * @return a <Code>Collection</code> of the essential cycles
 	 */
 
-	public Collection essentialCycles() {
+    @TestMethod("testEssentialCycles")
+    public Collection essentialCycles() {
 		Collection result = new HashSet();
 		//minimize();
-		
-		for (Iterator it = subgraphBases.iterator(); it.hasNext();) {
-			SimpleCycleBasis cycleBasis = (SimpleCycleBasis) it.next();
-			result.addAll(cycleBasis.essentialCycles());
-		}
+
+        for (Object subgraphBase : subgraphBases) {
+            SimpleCycleBasis cycleBasis = (SimpleCycleBasis) subgraphBase;
+            result.addAll(cycleBasis.essentialCycles());
+        }
 		
 		return result;
 	}
@@ -233,14 +231,15 @@ public class CycleBasis {
 	 * basis cycle in this basis
 	 */
 
-	public Map relevantCycles() {
+    @TestMethod("testRelevantCycles")
+    public Map relevantCycles() {
 		Map result = new HashMap();
 		//minimize();
-		
-		for (Iterator it = subgraphBases.iterator(); it.hasNext();) {
-			SimpleCycleBasis cycleBasis = (SimpleCycleBasis) it.next();
-			result.putAll(cycleBasis.relevantCycles());
-		}
+
+        for (Object subgraphBase : subgraphBases) {
+            SimpleCycleBasis cycleBasis = (SimpleCycleBasis) subgraphBase;
+            result.putAll(cycleBasis.relevantCycles());
+        }
 		
 		return result;
 	}
@@ -254,14 +253,15 @@ public class CycleBasis {
 	 * equivalence class.
 	 */
 
-	public List equivalenceClasses() {
+    @TestMethod("testEquivalenceClasses")
+    public List equivalenceClasses() {
 		List result = new ArrayList();
 		//minimize();
-		
-		for (Iterator it = subgraphBases.iterator(); it.hasNext();) {
-			SimpleCycleBasis cycleBasis = (SimpleCycleBasis) it.next();
-			result.addAll(cycleBasis.equivalenceClasses());
-		}
+
+        for (Object subgraphBase : subgraphBases) {
+            SimpleCycleBasis cycleBasis = (SimpleCycleBasis) subgraphBase;
+            result.addAll(cycleBasis.equivalenceClasses());
+        }
 		
 		return result;
 	}

@@ -101,9 +101,9 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(MathToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(AllRingsFinderTest.class));
         suite.addTest(new JUnit4TestAdapter(RingPartitionerTest.class));
-        suite.addTest(SimpleCycleTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SimpleCycleTest.class));
         suite.addTest(SimpleCycleBasisTest.suite());
-        suite.addTest(CycleBasisTest.suite());
+        suite.addTest(new JUnit4TestAdapter(CycleBasisTest.class));
         suite.addTest(new JUnit4TestAdapter(DeAromatizationToolTest.class));
         suite.addTest(new JUnit4TestAdapter(FormatStringBufferTest.class));
         suite.addTest(new JUnit4TestAdapter(IDCreatorTest.class));

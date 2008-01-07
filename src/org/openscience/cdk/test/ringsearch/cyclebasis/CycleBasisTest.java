@@ -27,15 +27,16 @@
  * 
  */
 package org.openscience.cdk.test.ringsearch.cyclebasis;
-import java.util.Arrays;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import org._3pq.jgrapht.alg.ConnectivityInspector;
 import org._3pq.jgrapht.graph.SimpleGraph;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
+
+import java.util.Arrays;
 
 /**
  * This class tests the CycleBasis class.
@@ -45,16 +46,13 @@ import org.openscience.cdk.test.CDKTestCase;
  * @author     Ulrich Bauer <baueru@cs.tum.edu>
  */
 
-public class CycleBasisTest extends CDKTestCase {
-	
-	public static Test suite() {
-		return new TestSuite(CycleBasisTest.class);
-	}
+public class CycleBasisTest extends NewCDKTestCase {
 
 	CycleBasis basis;
 	SimpleGraph g;
 
-	protected void setUp() {
+    @Before
+    protected void setUp() {
 		g = new SimpleGraph(  );
 		
 		g.addVertex( "a" );
@@ -89,32 +87,38 @@ public class CycleBasisTest extends CDKTestCase {
 		
 		basis = new CycleBasis(g);
 	}
-	
-	public void testCycleBasis_UndirectedGraph() {
+
+    @Test
+    public void testCycleBasis_UndirectedGraph() {
 		this.setUp(); // just run it once more
-		assertNotNull(basis);
+		Assert.assertNotNull(basis);
 	}
-	
-	public void testCycles() {
+
+    @Test
+    public void testCycles() {
 		int trueCycleCount = g.edgeSet().size() - g.vertexSet().size() 
 			+ new ConnectivityInspector(g).connectedSets().size(); 
-		assertEquals(trueCycleCount, basis.cycles().size());
+		Assert.assertEquals(trueCycleCount, basis.cycles().size());
 	}
-		
-	public void testWeightVector() {
-		assertTrue(Arrays.equals(basis.weightVector(), new int[] {3,3,3,3}) );
+
+    @Test
+    public void testWeightVector() {
+		Assert.assertTrue(Arrays.equals(basis.weightVector(), new int[] {3,3,3,3}) );
 	}
-	
-	public void testEssentialCycles() {
-		assertEquals(4, basis.essentialCycles().size());
+
+    @Test
+    public void testEssentialCycles() {
+		Assert.assertEquals(4, basis.essentialCycles().size());
 	}
-	
-	public void testRelevantCycles() {
-		assertEquals(4, basis.relevantCycles().size());
+
+    @Test
+    public void testRelevantCycles() {
+		Assert.assertEquals(4, basis.relevantCycles().size());
 	}
-	
-	public void testEquivalenceClasses() {
-		assertEquals(4, basis.equivalenceClasses().size());
+
+    @Test
+    public void testEquivalenceClasses() {
+		Assert.assertEquals(4, basis.equivalenceClasses().size());
 	}
 	
 }
