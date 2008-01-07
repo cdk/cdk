@@ -24,29 +24,20 @@
  */
 package org.openscience.cdk.test.debug;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.BeforeClass;
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.test.IsotopeTest;
 
 /**
- * Checks the funcitonality of the AtomContainer.
+ * Checks the functionality of the AtomContainer.
  *
  * @cdk.module test-datadebug
  */
 public class DebugIsotopeTest extends IsotopeTest {
 
-    public DebugIsotopeTest(String name) {
-        super(name);
+    @BeforeClass public static void setUp() {
+    	IsotopeTest.builder = DebugChemObjectBuilder.getInstance();
     }
-
-    public void setUp() {
-    	super.builder = DebugChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(DebugIsotopeTest.class);
-    }
-
+    
 }
+

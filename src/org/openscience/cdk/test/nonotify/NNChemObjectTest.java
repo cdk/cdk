@@ -21,10 +21,8 @@
  */
 package org.openscience.cdk.test.nonotify;
 
-import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
@@ -33,18 +31,14 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.ChemObjectTest;
 
 /**
- * Checks the funcitonality of the AtomContainer.
+ * Checks the functionality of the NNChemObject.
  *
  * @cdk.module test-nonotify
  */
 public class NNChemObjectTest extends ChemObjectTest {
 
-    @Before public void setUp() {
-    	super.builder = NoNotificationChemObjectBuilder.getInstance();
-    }
-
-	public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(NNChemObjectTest.class);
+    @BeforeClass public static void setUp() {
+    	ChemObjectTest.builder = NoNotificationChemObjectBuilder.getInstance();
     }
 
     // Overwrite default methods: no notifications are expected!

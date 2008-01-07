@@ -25,56 +25,48 @@
 
 package org.openscience.cdk.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 
 /**
- * Checks the funcitonality of the Molecule class.
+ * Checks the functionality of the Molecule class.
  *
  * @cdk.module test-data
  *
  * @see org.openscience.cdk.Molecule
  */
-public class MoleculeTest extends CDKTestCase {
+public class MoleculeTest extends NewCDKTestCase {
 
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 	
-    public MoleculeTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
 
-    public static Test suite() {
-        return new TestSuite(MoleculeTest.class);
-    }
-    
     // test constructors
     
-    public void testMolecule() {
+    @Test public void testMolecule() {
         IMolecule m = builder.newMolecule();
-        assertTrue(m != null);
+        Assert.assertTrue(m != null);
     }
 
-    public void testMolecule_int_int_int_int() {
+    @Test public void testMolecule_int_int_int_int() {
         IMolecule m = builder.newMolecule(5,5,1,1);
-        assertTrue(m != null);
-        assertEquals(0, m.getAtomCount());
-        assertEquals(0, m.getBondCount());
-        assertEquals(0, m.getLonePairCount());
-        assertEquals(0, m.getSingleElectronCount());
+        Assert.assertTrue(m != null);
+        Assert.assertEquals(0, m.getAtomCount());
+        Assert.assertEquals(0, m.getBondCount());
+        Assert.assertEquals(0, m.getLonePairCount());
+        Assert.assertEquals(0, m.getSingleElectronCount());
     }
 
-    public void testMolecule_IAtomContainer() {
+    @Test public void testMolecule_IAtomContainer() {
         IAtomContainer acetone = new org.openscience.cdk.AtomContainer();
         IAtom c1 = builder.newAtom("C");
         IAtom c2 = builder.newAtom("C");
@@ -92,25 +84,25 @@ public class MoleculeTest extends CDKTestCase {
         acetone.addBond(b3);
         
         IMolecule m = builder.newMolecule(acetone);
-        assertTrue(m != null);
-        assertEquals(4, m.getAtomCount());
-        assertEquals(3, m.getBondCount());
+        Assert.assertTrue(m != null);
+        Assert.assertEquals(4, m.getAtomCount());
+        Assert.assertEquals(3, m.getBondCount());
     }
 
-	public void testClone() throws Exception {
+	@Test public void testClone() throws Exception {
         IMolecule molecule = builder.newMolecule();
         Object clone = molecule.clone();
-        assertTrue(clone instanceof IMolecule);
-	assertNotSame(molecule, clone);
+        Assert.assertTrue(clone instanceof IMolecule);
+	Assert.assertNotSame(molecule, clone);
     }    
 
     /** Test for RFC #9 */
-    public void testToString() {
+    @Test public void testToString() {
         IMolecule m = builder.newMolecule();
         String description = m.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue(description.charAt(i) != '\n');
-            assertTrue(description.charAt(i) != '\r');
+            Assert.assertTrue(description.charAt(i) != '\n');
+            Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
 }

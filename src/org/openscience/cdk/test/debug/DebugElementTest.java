@@ -20,24 +20,19 @@
  */
 package org.openscience.cdk.test.debug;
 
-import junit.framework.JUnit4TestAdapter;
-
+import org.junit.BeforeClass;
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.test.ElementTest;
 
 /**
- * Checks the funcitonality of DebugElement.
+ * Checks the functionality of DebugElement.
  *
  * @cdk.module test-datadebug
  */
 public class DebugElementTest extends ElementTest {
 
-    public void setUp() {
-    	super.builder = DebugChemObjectBuilder.getInstance();
-    }
-
-    public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(DebugElementTest.class);
+    @BeforeClass public static void setUp() {
+    	ElementTest.builder = DebugChemObjectBuilder.getInstance();
     }
 
 }

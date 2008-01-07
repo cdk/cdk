@@ -20,10 +20,8 @@
  */
 package org.openscience.cdk.test;
 
-import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -31,24 +29,20 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
- * Checks the funcitonality of the Element class.
+ * Checks the functionality of the Element class.
  *
  * @cdk.module test-data
  *
  * @see org.openscience.cdk.Element
  */
-public class ElementTest {
+public class ElementTest extends NewCDKTestCase {
 
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 	
-	@Before public void setUp() {
+	@BeforeClass public static void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
     
-	public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(ElementTest.class);
-    }
-	
     // test constructors
     
     @Test public void testElement() {

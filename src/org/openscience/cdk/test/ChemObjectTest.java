@@ -26,10 +26,8 @@ package org.openscience.cdk.test;
 
 import java.util.Hashtable;
 
-import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
@@ -47,13 +45,9 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  */
 public class ChemObjectTest extends NewCDKTestCase {
 
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 	
-	public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(ChemObjectTest.class);
-    }
-	
-	@Before public void setUp() {
+	@BeforeClass public static void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
 

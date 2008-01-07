@@ -21,26 +21,18 @@
  */
 package org.openscience.cdk.test.debug;
 
-import junit.framework.JUnit4TestAdapter;
-
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.test.ChemObjectTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the ChemObject.
  *
  * @cdk.module test-datadebug
  */
 public class DebugChemObjectTest extends ChemObjectTest {
-
-
-	@Before public void setUp() {
-    	super.builder = DebugChemObjectBuilder.getInstance();
-    }
-
-	public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(DebugChemObjectTest.class);
+	@BeforeClass public static void setUp() {
+    	ChemObjectTest.builder = DebugChemObjectBuilder.getInstance();
     }
 
 }

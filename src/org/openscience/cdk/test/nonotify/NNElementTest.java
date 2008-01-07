@@ -24,18 +24,19 @@
  */
 package org.openscience.cdk.test.nonotify;
 
+import org.junit.BeforeClass;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.ElementTest;
 
 /**
- * Checks the funcitonality of DebugElement.
+ * Checks the functionality of DebugElement.
  *
  * @cdk.module test-nonotify
  */
 public class NNElementTest extends ElementTest {
 
-    public void setUp() {
-    	super.builder = NoNotificationChemObjectBuilder.getInstance();
+    @BeforeClass public static void setUp() {
+    	ElementTest.builder = NoNotificationChemObjectBuilder.getInstance();
     }
 
 }
