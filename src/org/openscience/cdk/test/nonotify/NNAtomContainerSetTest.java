@@ -1,8 +1,5 @@
-/* $RCSfile$
- * $Author: egonw $    
- * $Date: 2006-04-12 11:16:35 +0200 (Wed, 12 Apr 2006) $    
- * $Revision: 5921 $
- * 
+/* $Revision: 5921 $ $Author: egonw $ $Date: 2006-04-12 11:16:35 +0200 (Wed, 12 Apr 2006) $    
+ *
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
@@ -20,36 +17,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
 package org.openscience.cdk.test.nonotify;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.AtomContainerSetTest;
 
 /**
- * Checks the funcitonality of the AtomContainer.
+ * Checks the functionality of the AtomContainer.
  *
  * @cdk.module test-nonotify
  */
 public class NNAtomContainerSetTest extends AtomContainerSetTest {
 
-    public NNAtomContainerSetTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
-    	super.builder = NoNotificationChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(NNAtomContainerSetTest.class);
+    @BeforeClass public static void setUp() {
+    	AtomContainerSetTest.builder = NoNotificationChemObjectBuilder.getInstance();
     }
 
     // Overwrite default methods: no notifications are expected!
@@ -60,7 +47,7 @@ public class NNAtomContainerSetTest extends AtomContainerSetTest {
         chemObject.addListener(listener);
         
         chemObject.addAtomContainer(builder.newAtomContainer());
-        assertFalse(listener.changed);
+        Assert.assertFalse(listener.changed);
     }
 
     private class ChemObjectListenerImpl implements IChemObjectListener {

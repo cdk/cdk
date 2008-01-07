@@ -24,290 +24,283 @@
  */
 package org.openscience.cdk.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 /**
  * Checks the functionality of the AtomTypeFactory
  *
  * @cdk.module test-data
  */
-public class AtomTest extends CDKTestCase {
+public class AtomTest extends NewCDKTestCase {
 
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 	
-    public AtomTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
 
-    public static Test suite() {
-        return new TestSuite(AtomTest.class);
-    }
-
     /**
      * Method to test the Atom(String symbol) method.
      */
-    public void testAtom() {
+    @Test public void testAtom() {
         IAtom a = builder.newAtom();
-        assertNotNull(a);
+        Assert.assertNotNull(a);
     }
 
-    public void testAtom_IElement() {
+    @Test public void testAtom_IElement() {
     	IElement element = builder.newElement();
         IAtom a = builder.newAtom(element);
-        assertNotNull(a);
+        Assert.assertNotNull(a);
     }
 
     /**
      * Method to test the Atom(String symbol) method.
      */
-    public void testAtom_String() {
+    @Test public void testAtom_String() {
         IAtom a = builder.newAtom("C");
-        assertEquals("C", a.getSymbol());
-        assertNull(a.getPoint2d());
-        assertNull(a.getPoint3d());
-        assertNull(a.getFractionalPoint3d());
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getFractionalPoint3d());
     }
 
     /**
      * Method to test the Atom(String symbol, javax.vecmath.Point3d point3D) method.
      */
-    public void testAtom_String_Point3d() {
+    @Test public void testAtom_String_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
 
         IAtom a = builder.newAtom("C", point3d);
-        assertEquals("C", a.getSymbol());
-        assertEquals(point3d, a.getPoint3d());
-        assertNull(a.getPoint2d());
-        assertNull(a.getFractionalPoint3d());
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertEquals(point3d, a.getPoint3d());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getFractionalPoint3d());
     }
 
     /**
      * Method to test the Atom(String symbol, javax.vecmath.Point3d point3D) method.
      */
-    public void testAtom_String_Point2d() {
+    @Test public void testAtom_String_Point2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
 
         IAtom a = builder.newAtom("C", point2d);
-        assertEquals("C", a.getSymbol());
-        assertEquals(point2d, a.getPoint2d());
-        assertNull(a.getPoint3d());
-        assertNull(a.getFractionalPoint3d());
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertEquals(point2d, a.getPoint2d());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getFractionalPoint3d());
     }
 
     /**
      * Method to test the get/setCharge() methods.
      */
-    public void testSetCharge_Double() {
+    @Test public void testSetCharge_Double() {
         double charge = 0.15;
 
         IAtom a = builder.newAtom("C");
         a.setCharge(charge);
-        assertEquals(charge, a.getCharge(), 0.001);
+        Assert.assertEquals(charge, a.getCharge(), 0.001);
     }
-    public void testGetCharge() {
+    @Test public void testGetCharge() {
         testSetCharge_Double();
     }
 
     /**
      * Method to test the get/setHydrogenCount() methods.
      */
-    public void testSetHydrogenCount_Integer() {
+    @Test public void testSetHydrogenCount_Integer() {
         Integer count = 1;
 
         IAtom a = builder.newAtom("C");
         a.setHydrogenCount(count);
-        assertEquals(count, a.getHydrogenCount());
+        Assert.assertEquals(count, a.getHydrogenCount());
     }
-    public void testGetHydrogenCount() {
+    @Test public void testGetHydrogenCount() {
     	// should be null by default
     	IAtom a = builder.newAtom("C");
-    	assertNull(a.getHydrogenCount());
+    	Assert.assertNull(a.getHydrogenCount());
     }
 
     /**
      * Method to test the setFractional3D() methods.
      */
-    public void testSetFractionalPoint3d_Point3d() {
+    @Test public void testSetFractionalPoint3d_Point3d() {
         IAtom a = builder.newAtom("C");
         a.setFractionalPoint3d(new Point3d(0.5, 0.5, 0.5));
         Point3d fract = a.getFractionalPoint3d();
-        assertNotNull(fract);
-        assertEquals(0.5, fract.x, 0.001);
-        assertEquals(0.5, fract.y, 0.001);
-        assertEquals(0.5, fract.z, 0.001);
+        Assert.assertNotNull(fract);
+        Assert.assertEquals(0.5, fract.x, 0.001);
+        Assert.assertEquals(0.5, fract.y, 0.001);
+        Assert.assertEquals(0.5, fract.z, 0.001);
     }
-    public void testGetFractionalPoint3d() {
+    @Test public void testGetFractionalPoint3d() {
         testSetFractionalPoint3d_Point3d();
     }
     
-    public void testGetPoint3d() {
+    @Test public void testGetPoint3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
         IAtom a = builder.newAtom("C", point3d);
-        assertNotNull(a.getPoint3d());
+        Assert.assertNotNull(a.getPoint3d());
         assertEquals(point3d, a.getPoint3d(), 0.001);
     }
-    public void testSetPoint3d_Point3d() {
+    @Test public void testSetPoint3d_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
         IAtom a = builder.newAtom("C");
         a.setPoint3d(point3d);
-        assertEquals(point3d, a.getPoint3d());
+        Assert.assertEquals(point3d, a.getPoint3d());
     }
         
-    public void testGetPoint2d() {
+    @Test public void testGetPoint2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
         
         IAtom a = builder.newAtom("C", point2d);
-        assertNotNull(a.getPoint2d());
-        assertEquals(point2d.x, a.getPoint2d().x, 0.001);
-        assertEquals(point2d.y, a.getPoint2d().y, 0.001);
+        Assert.assertNotNull(a.getPoint2d());
+        Assert.assertEquals(point2d.x, a.getPoint2d().x, 0.001);
+        Assert.assertEquals(point2d.y, a.getPoint2d().y, 0.001);
     }
-    public void testSetPoint2d_Point2d() {
+    @Test public void testSetPoint2d_Point2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
         
         IAtom a = builder.newAtom("C");
         a.setPoint2d(point2d);
-        assertEquals(point2d, a.getPoint2d());
+        Assert.assertEquals(point2d, a.getPoint2d());
     }
 
     /**
      * Method to test the get/setHydrogenCount() methods.
      */
-    public void testSetStereoParity_Integer() {
+    @Test public void testSetStereoParity_Integer() {
         int parity = CDKConstants.STEREO_ATOM_PARITY_PLUS;
 
         IAtom a = builder.newAtom("C");
         a.setStereoParity(parity);
-        assertEquals(parity, a.getStereoParity().intValue());
+        Assert.assertEquals(parity, a.getStereoParity().intValue());
     }
-    public void testGetStereoParity() {
+    @Test public void testGetStereoParity() {
         testSetStereoParity_Integer();
     }
     
     /**
      * Method to test the compare() method.
      */
-    public void testCompare_Object() {
+    @Test public void testCompare_Object() {
         IAtom someAtom = builder.newAtom("C");
         if (someAtom instanceof org.openscience.cdk.Atom) {
         	org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)someAtom;
-        	assertTrue(atom.compare(atom));
+        	Assert.assertTrue(atom.compare(atom));
         	IAtom hydrogen = builder.newAtom("H");
-        	assertFalse(atom.compare(hydrogen));
-        	assertFalse(atom.compare("C"));
+        	Assert.assertFalse(atom.compare(hydrogen));
+        	Assert.assertFalse(atom.compare("C"));
         }
     }
     
     /**
      * Method to test the clone() method
      */
-    public void testClone() throws Exception {
+    @Test public void testClone() throws Exception {
         IAtom atom = builder.newAtom("C");
         Object clone = atom.clone();
-        assertTrue(clone instanceof IAtom);
+        Assert.assertTrue(clone instanceof IAtom);
     }
     
     /**
      * Method to test the clone() method
      */
-    public void testClone_Point2d() throws Exception {
+    @Test public void testClone_Point2d() throws Exception {
         IAtom atom = builder.newAtom("C");
         atom.setPoint2d(new Point2d(2, 3));
         IAtom clone = (IAtom)atom.clone();
-        assertEquals(clone.getPoint2d().x, 2.0, 0.001);
+        Assert.assertEquals(clone.getPoint2d().x, 2.0, 0.001);
     }
 
     /**
      * Method to test the clone() method
      */
-    public void testClone_Point3d() throws Exception {
+    @Test public void testClone_Point3d() throws Exception {
         IAtom atom = builder.newAtom("C");
         atom.setPoint3d(new Point3d(2, 3, 4));
         IAtom clone = (IAtom)atom.clone();
-        assertEquals(clone.getPoint3d().x, 2.0, 0.001);
+        Assert.assertEquals(clone.getPoint3d().x, 2.0, 0.001);
     }
 
     /**
      * Method to test the clone() method
      */
-    public void testClone_FractionalPoint3d() throws Exception {
+    @Test public void testClone_FractionalPoint3d() throws Exception {
         IAtom atom = builder.newAtom("C");
         atom.setFractionalPoint3d(new Point3d(2, 3, 4));
         IAtom clone = (IAtom)atom.clone();
-        assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
+        Assert.assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
     }
 
     /**
      * Method to test the clone() method
      */
-    public void testClone_HydrogenCount() throws Exception {
+    @Test public void testClone_HydrogenCount() throws Exception {
         IAtom atom = builder.newAtom("C");
         atom.setHydrogenCount(Integer.valueOf(3));
         IAtom clone = (IAtom)atom.clone();
 
         // test cloning
         atom.setHydrogenCount(Integer.valueOf(4));
-        assertEquals(3, clone.getHydrogenCount().intValue());
+        Assert.assertEquals(3, clone.getHydrogenCount().intValue());
     }
 
     /**
      * Method to test the clone() method
      */
-    public void testClone_StereoParity() throws Exception {
+    @Test public void testClone_StereoParity() throws Exception {
         IAtom atom = builder.newAtom("C");
         atom.setStereoParity(3);
         IAtom clone = (IAtom)atom.clone();
 
         // test cloning
         atom.setStereoParity(4);
-        assertEquals(3, clone.getStereoParity().intValue());
+        Assert.assertEquals(3, clone.getStereoParity().intValue());
     }
 
     /**
      * Method to test the clone() method
      */
-    public void testClone_Charge() throws Exception {
+    @Test public void testClone_Charge() throws Exception {
         IAtom atom = builder.newAtom("C");
         atom.setCharge(1.0);
         IAtom clone = (IAtom)atom.clone();
 
         // test cloning
         atom.setCharge(5.0);
-        assertEquals(1.0, clone.getCharge(), 0.001);
+        Assert.assertEquals(1.0, clone.getCharge(), 0.001);
     }
 
     /**
      * Method to test wether the class complies with RFC #9.
      */
-    public void testToString() {
+    @Test public void testToString() {
         IAtom atom = builder.newAtom("C");
         String description = atom.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue('\n' != description.charAt(i));
-            assertTrue('\r' != description.charAt(i));
+            Assert.assertTrue('\n' != description.charAt(i));
+            Assert.assertTrue('\r' != description.charAt(i));
         }
     }
 
     /**
      * Checks that the default charge is set to NaN
      */
-    public void testDefaultChargeValue() {
+    @Test public void testDefaultChargeValue() {
         IAtom atom = builder.newAtom("C");
-        assertEquals(CDKConstants.UNSET, atom.getCharge());
-//        assertEquals(0.0, atom.getCharge(), 0.00000001);
+        Assert.assertEquals(CDKConstants.UNSET, atom.getCharge());
+//        Assert.assertEquals(0.0, atom.getCharge(), 0.00000001);
     }
 }

@@ -24,29 +24,19 @@
  */
 package org.openscience.cdk.test.nonotify;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.BeforeClass;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.AtomTypeTest;
 
 /**
- * Checks the funcitonality of the AtomContainer.
+ * Checks the functionality of the AtomContainer.
  *
  * @cdk.module test-nonotify
  */
 public class NNAtomTypeTest extends AtomTypeTest {
 
-    public NNAtomTypeTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
-    	super.builder = NoNotificationChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(NNAtomTypeTest.class);
+    @BeforeClass public static void setUp() {
+    	AtomTypeTest.builder = NoNotificationChemObjectBuilder.getInstance();
     }
 
 }

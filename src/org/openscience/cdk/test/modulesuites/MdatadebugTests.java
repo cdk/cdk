@@ -75,8 +75,8 @@ public class MdatadebugTests {
         suite.addTest(new JUnit4TestAdapter(DebugAminoAcidTest.class));
         suite.addTest(new JUnit4TestAdapter(DebugAtomContainerTest.class));
         suite.addTest(new JUnit4TestAdapter(DebugAtomParityTest.class));
-        suite.addTest(DebugAtomTest.suite());
-        suite.addTest(DebugAtomTypeTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DebugAtomTest.class));
+        suite.addTest(new JUnit4TestAdapter(DebugAtomTypeTest.class));
         suite.addTest(DebugBioPolymerTest.suite());
         suite.addTest(DebugBondTest.suite());
         suite.addTest(DebugChemObjectTest.suite());
@@ -95,7 +95,7 @@ public class MdatadebugTests {
         suite.addTest(DebugReactionTest.suite());
         suite.addTest(DebugRingTest.suite());
         suite.addTest(DebugRingSetTest.suite());
-        suite.addTest(DebugAtomContainerSetTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DebugAtomContainerSetTest.class));
         suite.addTest(DebugMoleculeSetTest.suite());
         suite.addTest(DebugReactionSetTest.suite());
         suite.addTest(DebugSingleElectronTest.suite());
