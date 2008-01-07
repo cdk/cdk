@@ -27,193 +27,191 @@
  */
 package org.openscience.cdk.test.tools;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.test.CDKTestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.FormatStringBuffer;
 
 /**
  * @author     egonw
  * @cdk.module test-standard
  */
-public class FormatStringBufferTest extends CDKTestCase {
+public class FormatStringBufferTest extends NewCDKTestCase {
 
 	private FormatStringBuffer fsb;
 	
-	public FormatStringBufferTest(String name) {
-		super(name);
+	public FormatStringBufferTest() {
+		super();
 	}
 
-	public static Test suite() {
-		return new TestSuite(FormatStringBufferTest.class);
-	}
-	
-	public void setUp() {
+    @Before
+    public void setUp() {
 		fsb = new FormatStringBuffer("[%s]");
 	}
 	
-	public void testFormat_String() {
+	@Test
+    public void testFormat_String() {
 		fsb.reset("[%s]").format("test");
-		assertEquals("[test]", fsb.toString());
+		Assert.assertEquals("[test]", fsb.toString());
 		
 		fsb.reset("[%5s]").format("test");
-		assertEquals("[ test]", fsb.toString());
+		Assert.assertEquals("[ test]", fsb.toString());
 	}
 	
-	public void testToString() {
+	@Test public void testToString() {
 		fsb.reset("[%-5s]").format("test");
-		assertEquals("[test ]", fsb.toString());
+		Assert.assertEquals("[test ]", fsb.toString());
 		
 		fsb.reset("[%5.2s]").format("test");
-		assertEquals("[   te]", fsb.toString());
+		Assert.assertEquals("[   te]", fsb.toString());
 		
 		fsb.reset("[%-5.2s]").format("test");
-		assertEquals("[te   ]", fsb.toString());
+		Assert.assertEquals("[te   ]", fsb.toString());
 	}
 	
-	public void testFormat_char() {
+	@Test public void testFormat_char() {
 		fsb.reset("[%c]").format('A');
-		assertEquals("[A]", fsb.toString());
+		Assert.assertEquals("[A]", fsb.toString());
 		
 		fsb.reset("[%2c]").format('A');
-		assertEquals("[ A]", fsb.toString());
+		Assert.assertEquals("[ A]", fsb.toString());
 		
 		fsb.reset("[%-2c]").format('A');
-		assertEquals("[A ]", fsb.toString());
+		Assert.assertEquals("[A ]", fsb.toString());
 	}
 	
-	public void testFormat_double() {
-		fsb.reset("[%f]").format((double)3.1415);
-		assertEquals("[3.1415]", fsb.toString());
+	@Test public void testFormat_double() {
+		fsb.reset("[%f]").format(3.1415);
+		Assert.assertEquals("[3.1415]", fsb.toString());
 		
-		fsb.reset("[%g]").format((double)3.1415);
-		assertEquals("[3.1415]", fsb.toString());
+		fsb.reset("[%g]").format(3.1415);
+		Assert.assertEquals("[3.1415]", fsb.toString());
 		
-		fsb.reset("[%+f]").format((double)3.1415);
-		assertEquals("[+3.1415]", fsb.toString());
+		fsb.reset("[%+f]").format(3.1415);
+		Assert.assertEquals("[+3.1415]", fsb.toString());
 		
-		fsb.reset("[%+10f]").format((double)3.1415);
-		assertEquals("[   +3.1415]", fsb.toString());
+		fsb.reset("[%+10f]").format(3.1415);
+		Assert.assertEquals("[   +3.1415]", fsb.toString());
 		
-		fsb.reset("[%-+10f]").format((double)3.1415);
-		assertEquals("[+3.1415   ]", fsb.toString());
+		fsb.reset("[%-+10f]").format(3.1415);
+		Assert.assertEquals("[+3.1415   ]", fsb.toString());
 		
-		fsb.reset("[%.3f]").format((double)3.1415);
-		assertEquals("[3.142]", fsb.toString());
+		fsb.reset("[%.3f]").format(3.1415);
+		Assert.assertEquals("[3.142]", fsb.toString());
 		
-		fsb.reset("[%e]").format((double)3.1415);
-		assertEquals("[3.1415e00]", fsb.toString());
+		fsb.reset("[%e]").format(3.1415);
+		Assert.assertEquals("[3.1415e00]", fsb.toString());
 		
-		fsb.reset("[%+e]").format((double)3.1415);
-		assertEquals("[+3.1415e00]", fsb.toString());
+		fsb.reset("[%+e]").format(3.1415);
+		Assert.assertEquals("[+3.1415e00]", fsb.toString());
 		
-		fsb.reset("[%+11e]").format((double)3.1415);
-		assertEquals("[ +3.1415e00]", fsb.toString());
+		fsb.reset("[%+11e]").format(3.1415);
+		Assert.assertEquals("[ +3.1415e00]", fsb.toString());
 		
-		fsb.reset("[%-+11e]").format((double)3.1415);
-		assertEquals("[+3.1415e00 ]", fsb.toString());
+		fsb.reset("[%-+11e]").format(3.1415);
+		Assert.assertEquals("[+3.1415e00 ]", fsb.toString());
 		
-		fsb.reset("[%.3e]").format((double)3.1415);
-		assertEquals("[3.142e00]", fsb.toString());
+		fsb.reset("[%.3e]").format(3.1415);
+		Assert.assertEquals("[3.142e00]", fsb.toString());
 		
-		fsb.reset("[%E]").format((double)3.1415);
-		assertEquals("[3.1415E00]", fsb.toString());		
+		fsb.reset("[%E]").format(3.1415);
+		Assert.assertEquals("[3.1415E00]", fsb.toString());
 	}
 
-	public void testFormat_int() {
+	@Test public void testFormat_int() {
 		fsb.reset("[%d]").format(600);
-		assertEquals("[600]", fsb.toString());
+		Assert.assertEquals("[600]", fsb.toString());
 		
 		fsb.reset("[%5d]").format(600);
-		assertEquals("[  600]", fsb.toString());
+		Assert.assertEquals("[  600]", fsb.toString());
 		
 		fsb.reset("[%5d]").format(-600);
-		assertEquals("[ -600]", fsb.toString());
+		Assert.assertEquals("[ -600]", fsb.toString());
 		
 		fsb.reset("[%05d]").format(600);
-		assertEquals("[00600]", fsb.toString());
+		Assert.assertEquals("[00600]", fsb.toString());
 		
 		fsb.reset("[%05d]").format(-600);
-		assertEquals("[-0600]", fsb.toString());
+		Assert.assertEquals("[-0600]", fsb.toString());
 		
 		fsb.reset("[%x]").format(10);
-		assertEquals("[a]", fsb.toString());
+		Assert.assertEquals("[a]", fsb.toString());
 		
 		fsb.reset("[%X]").format(10);
-		assertEquals("[A]", fsb.toString());
+		Assert.assertEquals("[A]", fsb.toString());
 		
 		fsb.reset("[%o]").format(10);
-		assertEquals("[12]", fsb.toString());
+		Assert.assertEquals("[12]", fsb.toString());
 		
 		fsb.reset("[%4X]").format(10);
-		assertEquals("[   A]", fsb.toString());
+		Assert.assertEquals("[   A]", fsb.toString());
 		
 		fsb.reset("[%#4x]").format(10);
-		assertEquals("[ 0xa]", fsb.toString());
+		Assert.assertEquals("[ 0xa]", fsb.toString());
 		
 		fsb.reset("[%#4o]").format(10);
-		assertEquals("[ 012]", fsb.toString());
+		Assert.assertEquals("[ 012]", fsb.toString());
 		
 		fsb.reset("[%#04x]").format(10);
-		assertEquals("[0x0a]", fsb.toString());
+		Assert.assertEquals("[0x0a]", fsb.toString());
 		
 		fsb.reset("[%#04o]").format(10);
-		assertEquals("[0012]", fsb.toString());
+		Assert.assertEquals("[0012]", fsb.toString());
 		
 		fsb.reset();
-		assertEquals("[%#04o]", fsb.toString());		
+		Assert.assertEquals("[%#04o]", fsb.toString());
 	}
 
-	public void testFormat_long() {
+	@Test public void testFormat_long() {
 		fsb.reset("[%d]").format((long)600);
-		assertEquals("[600]", fsb.toString());
+		Assert.assertEquals("[600]", fsb.toString());
 		
 		fsb.reset("[%5d]").format((long)600);
-		assertEquals("[  600]", fsb.toString());
+		Assert.assertEquals("[  600]", fsb.toString());
 		
 		fsb.reset("[%5d]").format((long)-600);
-		assertEquals("[ -600]", fsb.toString());
+		Assert.assertEquals("[ -600]", fsb.toString());
 		
 		fsb.reset("[%05d]").format((long)600);
-		assertEquals("[00600]", fsb.toString());
+		Assert.assertEquals("[00600]", fsb.toString());
 		
 		fsb.reset("[%05d]").format((long)-600);
-		assertEquals("[-0600]", fsb.toString());
+		Assert.assertEquals("[-0600]", fsb.toString());
 		
 		fsb.reset("[%x]").format((long)10);
-		assertEquals("[a]", fsb.toString());
+		Assert.assertEquals("[a]", fsb.toString());
 		
 		fsb.reset("[%X]").format((long)10);
-		assertEquals("[A]", fsb.toString());
+		Assert.assertEquals("[A]", fsb.toString());
 		
 		fsb.reset("[%o]").format((long)10);
-		assertEquals("[12]", fsb.toString());
+		Assert.assertEquals("[12]", fsb.toString());
 		
 		fsb.reset("[%4X]").format((long)10);
-		assertEquals("[   A]", fsb.toString());
+		Assert.assertEquals("[   A]", fsb.toString());
 		
 		fsb.reset("[%#4x]").format((long)10);
-		assertEquals("[ 0xa]", fsb.toString());
+		Assert.assertEquals("[ 0xa]", fsb.toString());
 		
 		fsb.reset("[%#4o]").format((long)10);
-		assertEquals("[ 012]", fsb.toString());
+		Assert.assertEquals("[ 012]", fsb.toString());
 		
 		fsb.reset("[%#04x]").format((long)10);
-		assertEquals("[0x0a]", fsb.toString());
+		Assert.assertEquals("[0x0a]", fsb.toString());
 		
 		fsb.reset("[%#04o]").format((long)10);
-		assertEquals("[0012]", fsb.toString());
+		Assert.assertEquals("[0012]", fsb.toString());
 	}
 	
-	public void testReset() {
+	@Test public void testReset() {
 		fsb.reset();
-		assertEquals("[%s]", fsb.toString());
+		Assert.assertEquals("[%s]", fsb.toString());
 	}
 	
-	public void testReset_String() {
+	@Test public void testReset_String() {
 		fsb.reset("[%#04o]").format((long)10);
 		fsb.reset();
-		assertEquals("[%#04o]", fsb.toString());		
+		Assert.assertEquals("[%#04o]", fsb.toString());
 	}
 }

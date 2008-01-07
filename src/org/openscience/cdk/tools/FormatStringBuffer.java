@@ -38,8 +38,11 @@
  */
 package org.openscience.cdk.tools;
 
-import java.text.NumberFormat;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * A class for formatting output similar to the C <tt>printf</tt> command.
@@ -61,6 +64,7 @@ import java.text.DecimalFormat;
  * @cdk.svnrev  $Revision$
  * @cdk.license BSD
  */
+@TestClass("org.openscience.cdk.test.tools.FormatStringBufferTest")
 public class FormatStringBuffer {
 
     // ==================================================================== //
@@ -136,6 +140,7 @@ public class FormatStringBuffer {
      *
      * @param format the format string.
      */
+    @TestMethod("testReset_String")
     public FormatStringBuffer reset(String format) {
     	reset();
     	this.format = format;
@@ -147,6 +152,7 @@ public class FormatStringBuffer {
      * given in the constructor or last call to <tt>reset(String)</tt>.
      * This is automatically called after <tt>toString()</tt>.
      */
+    @TestMethod("testReset")
     public FormatStringBuffer reset() {
     	this.buffer = new StringBuffer();
     	this.index = 0;
@@ -291,6 +297,7 @@ public class FormatStringBuffer {
     /**
      * Format a <tt>char</tt>.
      */
+    @TestMethod("testFormat_char")
     public FormatStringBuffer format(char ch) {
     	
     	Format fmt = getFormat();
@@ -311,6 +318,7 @@ public class FormatStringBuffer {
     /**
      * Format a <tt>float</tt>.
      */
+    @TestMethod("testFormat_floatr")
     public FormatStringBuffer format(float flt) {
     	
     	return format((double)flt);
@@ -320,6 +328,7 @@ public class FormatStringBuffer {
     /**
      * Format a <tt>double</tt>.
      */
+    @TestMethod("testFormat_double")
     public FormatStringBuffer format(double dbl) {
     	
     	Format fmt = getFormat();
@@ -365,6 +374,7 @@ public class FormatStringBuffer {
     /**
      * Format a <tt>float</tt>.
      */
+    @TestMethod("testFormat_int")
     public FormatStringBuffer format(int i) {
     	
     	return format((long)i);
@@ -374,6 +384,7 @@ public class FormatStringBuffer {
     /**
      * Format a <tt>float</tt>.
      */
+    @TestMethod("testFormat_long")
     public FormatStringBuffer format(long l) {
     	
     	Format fmt = getFormat();
@@ -458,6 +469,7 @@ public class FormatStringBuffer {
     /**
      * Format a <tt>String</tt>.
      */
+    @TestMethod("testFormat_String")
     public FormatStringBuffer format(String str) {
     	
     	if (str == null)
@@ -491,6 +503,7 @@ public class FormatStringBuffer {
      * Get the result of the formatting. <tt>reset()</tt> is automatically
      * called from this method.
      */
+    @TestMethod("testToString")
     public String toString() {
     	
     	if (index < format.length())

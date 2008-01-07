@@ -28,13 +28,15 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.Iterator;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
+
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Methods that takes a ring of which all bonds are aromatic, and assigns single
@@ -48,6 +50,7 @@ import org.openscience.cdk.interfaces.IRing;
  * @cdk.svnrev  $Revision$
  * @cdk.keyword    aromatic ring, bond order adjustment
  */
+@TestClass("org.openscience.cdk.test.tools.DeAromatizationToolTest")
 public class DeAromatizationTool {
 
 	/**
@@ -58,7 +61,8 @@ public class DeAromatizationTool {
 	 * @param ring Ring to dearomatize
 	 * @return  False if it could not convert the aromatic ring bond into single and double bonds
 	 */
-	public static boolean deAromatize(IRing ring) {
+    @TestMethod("testDeAromatize_IRing,testPyridine,testBezene")
+    public static boolean deAromatize(IRing ring) {
 		boolean allaromatic=true;
 		for(int i=0;i<ring.getBondCount();i++){
 			if(!ring.getBond(i).getFlag(CDKConstants.ISAROMATIC))

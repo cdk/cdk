@@ -104,8 +104,8 @@ public class MstandardTests {
         suite.addTest(SimpleCycleTest.suite());
         suite.addTest(SimpleCycleBasisTest.suite());
         suite.addTest(CycleBasisTest.suite());
-        suite.addTest(DeAromatizationToolTest.suite());
-        suite.addTest(FormatStringBufferTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DeAromatizationToolTest.class));
+        suite.addTest(new JUnit4TestAdapter(FormatStringBufferTest.class));
         suite.addTest(new JUnit4TestAdapter(IDCreatorTest.class));
         suite.addTest(new JUnit4TestAdapter(MFAnalyserTest.class));
         suite.addTest(MoleculeSetManipulatorTest.suite());
