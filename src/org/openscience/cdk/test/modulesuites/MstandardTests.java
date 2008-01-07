@@ -89,7 +89,7 @@ public class MstandardTests {
         // before each release!
         suite.addTest(new JUnit4TestAdapter(AromaticityCalculatorTest.class));
         suite.addTest(new JUnit4TestAdapter(DictRefTest.class));
-        suite.addTest(CrystalGeometryToolsTest.suite());
+        suite.addTest(new JUnit4TestAdapter(CrystalGeometryToolsTest.class));
         suite.addTest(GeometryToolsTest.suite());
         suite.addTest(MinimalPathIteratorTest.suite());
         suite.addTest(new JUnit4TestAdapter(ConnectivityCheckerTest.class));

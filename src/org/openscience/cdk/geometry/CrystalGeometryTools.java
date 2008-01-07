@@ -27,12 +27,14 @@
  *  */
 package org.openscience.cdk.geometry;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.ICrystal;
+
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.ICrystal;
 
 /**
  * A set of static methods for working with crystal coordinates.
@@ -44,6 +46,7 @@ import org.openscience.cdk.interfaces.ICrystal;
  *
  * @cdk.keyword fractional coordinates, crystal
  */
+@TestClass("org.openscience.cdk.test.geometry.CrystalGeometryToolsTest")
 public class CrystalGeometryTools {
 
     /**
@@ -52,6 +55,7 @@ public class CrystalGeometryTools {
      * @return         a 3x3 matrix with the three cartesian vectors representing
      *                 the unit cell axes. The a axis is the first row.
      */
+    @TestMethod("testCalcInvertedAxes_Vector3d_Vector3d_Vector3d")
     public static Vector3d[] calcInvertedAxes(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis) {
          double det = aAxis.x*bAxis.y*cAxis.z - aAxis.x*bAxis.z*cAxis.y -
                       aAxis.y*bAxis.x*cAxis.z + aAxis.y*bAxis.z*cAxis.x +
@@ -77,6 +81,7 @@ public class CrystalGeometryTools {
     /**
      * @cdk.dictref blue-obelisk:convertCartesianIntoFractionalCoordinates
      */
+    @TestMethod("testCartesianToFractional_Vector3d_Vector3d_Vector3d_Point3d")
     public static Point3d cartesianToFractional(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis,
                                                  Point3d cartPoint) {
         Vector3d[] invaxis = calcInvertedAxes(aAxis,bAxis,cAxis);
@@ -103,7 +108,7 @@ public class CrystalGeometryTools {
      * @cdk.keyword     cartesian coordinates
      * @cdk.keyword     fractional coordinates
      *
-     * @see #cartesianToFractional(double[], double[], double[], double[])
+     * @see #cartesianToFractional(javax.vecmath.Vector3d, javax.vecmath.Vector3d, javax.vecmath.Vector3d, javax.vecmath.Point3d)
      * @deprecated
      */
     public static double[] fractionalToCartesian(double[] aAxis, double[] bAxis, double[] cAxis,
@@ -118,6 +123,7 @@ public class CrystalGeometryTools {
     /**
      * @cdk.dictref blue-obelisk:convertFractionIntoCartesianCoordinates
      */
+    @TestMethod("testFractionalToCartesian_Vector3d_Vector3d_Vector3d_Point3d")
     public static Point3d fractionalToCartesian(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis,
                                                  Point3d frac) {
         Point3d cart = new Point3d();
@@ -162,6 +168,7 @@ public class CrystalGeometryTools {
      * @cdk.keyword  notional coordinates
      * @cdk.dictref  blue-obelisk:convertNotionalIntoCartesianCoordinates
      */
+    @TestMethod("testNotionalToCartesian_double_double_double_double_double_double")
     public static Vector3d[] notionalToCartesian(double alength, double blength,
                                                  double clength, double alpha,
                                                  double beta, double gamma) {
@@ -204,6 +211,7 @@ public class CrystalGeometryTools {
     /**
      * @cdk.dictref  blue-obelisk:convertCartesianIntoNotionalCoordinates
      */
+    @TestMethod("testCartesianToNotional_Vector3d_Vector3d_Vector3d")
     public static double[] cartesianToNotional(Vector3d aAxis, Vector3d bAxis, Vector3d cAxis) {
         double[] notionalCoords = new double[6];
         notionalCoords[0] = aAxis.length();
