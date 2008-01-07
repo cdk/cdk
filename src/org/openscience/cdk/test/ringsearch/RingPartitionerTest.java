@@ -77,11 +77,11 @@ public class RingPartitionerTest extends NewCDKTestCase
         List list = RingPartitioner.partitionRings(ringSet);
         Assert.assertEquals(1, list.size());
 
-//        IMolecule biphenyl = MoleculeFactory.makeBiphenyl();
-//        sssrf = new SSSRFinder(biphenyl);
-//        ringSet = sssrf.findSSSR();
-//        list = RingPartitioner.partitionRings(ringSet);
-//        Assert.assertEquals(0, list.size());
+        IMolecule biphenyl = MoleculeFactory.makeBiphenyl();
+        sssrf = new SSSRFinder(biphenyl);
+        ringSet = sssrf.findSSSR();
+        list = RingPartitioner.partitionRings(ringSet);
+        Assert.assertEquals(0, list.size());
 
         IMolecule spiro = MoleculeFactory.makeSpiroRings();
         sssrf = new SSSRFinder(spiro);
