@@ -29,7 +29,7 @@ import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.test.PseudoAtomTest;
 
 /**
- * Checks the funcitonality of the AtomContainer.
+ * Checks the functionality of the AtomContainer.
  *
  * @cdk.module test-datadebug
  */

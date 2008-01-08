@@ -31,7 +31,7 @@ import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.test.protein.data.PDBStructureTest;
 
 /**
- * Checks the funcitonality of the AtomContainer.
+ * Checks the functionality of the AtomContainer.
  *
  * @cdk.module test-datadebug
  */

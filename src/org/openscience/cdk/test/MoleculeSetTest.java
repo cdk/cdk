@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
- * Checks the funcitonality of the MoleculeSet class.
+ * Checks the functionality of the MoleculeSet class.
  *
  * @cdk.module test-data
  *

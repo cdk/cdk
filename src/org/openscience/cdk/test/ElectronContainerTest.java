@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElectronContainer;
 
 /**
- * Checks the funcitonality of the ElectronContainer class.
+ * Checks the functionality of the ElectronContainer class.
  *
  * @cdk.module test-data
  *

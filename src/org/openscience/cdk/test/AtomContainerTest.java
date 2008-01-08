@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.ISingleElectron;
 
 /**
- * Checks the funcitonality of the AtomContainer.
+ * Checks the functionality of the AtomContainer.
  *
  * @cdk.module test-data
  */

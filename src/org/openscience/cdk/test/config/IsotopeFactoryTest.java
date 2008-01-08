@@ -52,7 +52,7 @@ import javax.xml.validation.Validator;
 import java.io.*;
 
 /**
- * Checks the funcitonality of the IsotopeFactory
+ * Checks the functionality of the IsotopeFactory
  *
  * @cdk.module test-core
  */

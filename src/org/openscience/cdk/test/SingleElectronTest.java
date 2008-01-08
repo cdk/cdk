@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * Checks the funcitonality of the SingleElectron class.
+ * Checks the functionality of the SingleElectron class.
  *
  * @see org.openscience.cdk.SingleElectron
  *

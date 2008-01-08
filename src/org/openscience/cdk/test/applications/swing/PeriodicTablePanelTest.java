@@ -29,7 +29,7 @@ import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- *  Checks the funcitonality of the PeriodicTablePanelTest
+ *  Checks the functionality of the PeriodicTablePanelTest
  *
  *@author        Steinbeck
  *@cdk.created       February 10, 2004

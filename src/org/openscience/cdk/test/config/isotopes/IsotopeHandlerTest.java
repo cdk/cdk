@@ -31,7 +31,7 @@ import org.openscience.cdk.config.isotopes.IsotopeHandler;
 import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
- * Checks the funcitonality of the IsotopeFactory
+ * Checks the functionality of the IsotopeFactory
  *
  * @cdk.module test-core
  */

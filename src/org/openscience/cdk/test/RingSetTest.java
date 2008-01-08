@@ -40,7 +40,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Checks the funcitonality of the RingSet class.
+ * Checks the functionality of the RingSet class.
  *
  * @cdk.module test-data
  *

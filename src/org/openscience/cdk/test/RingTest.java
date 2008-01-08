@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * Checks the funcitonality of the Ring class.
+ * Checks the functionality of the Ring class.
  *
  * @cdk.module test-data
  *

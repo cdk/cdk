@@ -31,7 +31,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.ReactionSetTest;
 
 /**
- * Checks the funcitonality of the AtomContainer.
+ * Checks the functionality of the AtomContainer.
  *
  * @cdk.module test-nonotify
  */

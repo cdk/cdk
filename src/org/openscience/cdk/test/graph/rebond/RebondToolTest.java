@@ -35,7 +35,7 @@ import org.openscience.cdk.test.NewCDKTestCase;
 import javax.vecmath.Point3d;
 
 /**
- * Checks the funcitonality of the RebondTool.
+ * Checks the functionality of the RebondTool.
  *
  * @cdk.module test-standard
  */

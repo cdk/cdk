@@ -35,7 +35,7 @@ import java.io.StringReader;
 import java.util.List;
 
 /**
- * Checks the funcitonality of the AtomTypeReader.
+ * Checks the functionality of the AtomTypeReader.
  *
  * @cdk.module test-core
  */

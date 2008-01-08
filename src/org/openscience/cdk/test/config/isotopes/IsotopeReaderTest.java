@@ -34,7 +34,7 @@ import java.io.ByteArrayInputStream;
 import java.util.List;
 
 /**
- * Checks the funcitonality of the IsotopeFactory
+ * Checks the functionality of the IsotopeFactory
  *
  * @cdk.module test-core
  */

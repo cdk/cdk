@@ -34,7 +34,7 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 
 /**
- * Checks the funcitonality of the Mapping class.
+ * Checks the functionality of the Mapping class.
  *
  * @cdk.module test-data
  *

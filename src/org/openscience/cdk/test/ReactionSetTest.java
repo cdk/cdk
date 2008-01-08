@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 
 /**
- * Checks the funcitonality of the ReactionSet class.
+ * Checks the functionality of the ReactionSet class.
  *
  * @cdk.module test-data
  *

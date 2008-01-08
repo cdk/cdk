@@ -30,7 +30,7 @@ import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
- * Checks the funcitonality of the NoSuchAtomTypeException class.
+ * Checks the functionality of the NoSuchAtomTypeException class.
  *
  * @cdk.module test-core
  *
