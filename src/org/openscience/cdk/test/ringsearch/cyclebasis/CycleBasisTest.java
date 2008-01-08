@@ -90,7 +90,6 @@ public class CycleBasisTest extends NewCDKTestCase {
 
     @Test
     public void testCycleBasis_UndirectedGraph() {
-		this.setUp(); // just run it once more
 		Assert.assertNotNull(basis);
 	}
 
