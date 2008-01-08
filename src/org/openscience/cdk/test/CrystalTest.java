@@ -26,45 +26,37 @@ package org.openscience.cdk.test;
 
 import javax.vecmath.Vector3d;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.ICrystal;
 
 /**
  * Checks the functionality of the Crystal.
  *
  * @cdk.module test-data
  */
-public class CrystalTest extends CDKTestCase {
+public class CrystalTest extends NewCDKTestCase {
 
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 	
-    public CrystalTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
 
-    public static Test suite() {
-        return new TestSuite(CrystalTest.class);
-    }
-
-    public void testCrystal() {
+    @Test public void testCrystal() {
         ICrystal crystal = builder.newCrystal();
-        assertNotNull(crystal);
-        assertEquals(0, crystal.getAtomCount());
-        assertEquals(0, crystal.getBondCount());
+        Assert.assertNotNull(crystal);
+        Assert.assertEquals(0, crystal.getAtomCount());
+        Assert.assertEquals(0, crystal.getBondCount());
     }
     
-    public void testCrystal_IAtomContainer() {
+    @Test public void testCrystal_IAtomContainer() {
         IAtomContainer acetone = builder.newAtomContainer();
         IAtom c1 = builder.newAtom("C");
         IAtom c2 = builder.newAtom("C");
@@ -82,12 +74,12 @@ public class CrystalTest extends CDKTestCase {
         acetone.addBond(b3);
         
         ICrystal crystal = builder.newCrystal(acetone);
-        assertNotNull(crystal);
-        assertEquals(4, crystal.getAtomCount());
-        assertEquals(3, crystal.getBondCount());
+        Assert.assertNotNull(crystal);
+        Assert.assertEquals(4, crystal.getAtomCount());
+        Assert.assertEquals(3, crystal.getBondCount());
     }
     
-    public void testAdd_IAtomContainer() {
+    @Test public void testAdd_IAtomContainer() {
         IAtomContainer acetone = builder.newAtomContainer();
         IAtom c1 = builder.newAtom("C");
         IAtom c2 = builder.newAtom("C");
@@ -106,115 +98,115 @@ public class CrystalTest extends CDKTestCase {
         
         ICrystal crystal = builder.newCrystal();
         crystal.add(acetone);
-        assertEquals(4, crystal.getAtomCount());
-        assertEquals(3, crystal.getBondCount());
+        Assert.assertEquals(4, crystal.getAtomCount());
+        Assert.assertEquals(3, crystal.getBondCount());
     }
     
-    public void testAddAtom_IAtom() {
+    @Test public void testAddAtom_IAtom() {
         IAtom c1 = builder.newAtom("C");
         ICrystal crystal = builder.newCrystal();
         crystal.addAtom(c1);
-        assertEquals(1, crystal.getAtomCount());
+        Assert.assertEquals(1, crystal.getAtomCount());
     }
 
-    public void testSetA_Vector3d() {
+    @Test public void testSetA_Vector3d() {
         ICrystal crystal = builder.newCrystal();
         
         crystal.setA(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getA();
-        assertEquals(1.0, a.x, 0.001);
-        assertEquals(2.0, a.y, 0.001);
-        assertEquals(3.0, a.z, 0.001);
+        Assert.assertEquals(1.0, a.x, 0.001);
+        Assert.assertEquals(2.0, a.y, 0.001);
+        Assert.assertEquals(3.0, a.z, 0.001);
     }
     
-    public void testGetA() {
+    @Test public void testGetA() {
         ICrystal crystal = builder.newCrystal();
         
         crystal.setA(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getA();
-        assertNotNull(a);
+        Assert.assertNotNull(a);
     }
     
-    public void testGetB() {
+    @Test public void testGetB() {
         ICrystal crystal = builder.newCrystal();
         
         crystal.setB(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getB();
-	assertNotNull(a);
+	Assert.assertNotNull(a);
     }
     
-    public void testGetC() {
+    @Test public void testGetC() {
         ICrystal crystal = builder.newCrystal();
         
         crystal.setC(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getC();
-	assertNotNull(a);
+	Assert.assertNotNull(a);
     }
     
-    public void testSetB_Vector3d() {
+    @Test public void testSetB_Vector3d() {
         ICrystal crystal = builder.newCrystal();
         
         crystal.setB(new Vector3d(1.0, 2.0, 3.0));
         Vector3d b = crystal.getB();
-        assertEquals(1.0, b.x, 0.001);
-        assertEquals(2.0, b.y, 0.001);
-        assertEquals(3.0, b.z, 0.001);
+        Assert.assertEquals(1.0, b.x, 0.001);
+        Assert.assertEquals(2.0, b.y, 0.001);
+        Assert.assertEquals(3.0, b.z, 0.001);
     }
     
-    public void testSetC_Vector3d() {
+    @Test public void testSetC_Vector3d() {
         ICrystal crystal = builder.newCrystal();
         
         crystal.setC(new Vector3d(1.0, 2.0, 3.0));
         Vector3d c = crystal.getC();
-        assertEquals(1.0, c.x, 0.001);
-        assertEquals(2.0, c.y, 0.001);
-        assertEquals(3.0, c.z, 0.001);
+        Assert.assertEquals(1.0, c.x, 0.001);
+        Assert.assertEquals(2.0, c.y, 0.001);
+        Assert.assertEquals(3.0, c.z, 0.001);
     }
     
-    public void testSetSpaceGroup_String() {
+    @Test public void testSetSpaceGroup_String() {
         ICrystal crystal = builder.newCrystal();
         String spacegroup = "P 2_1 2_1 2_1";
         crystal.setSpaceGroup(spacegroup);
-        assertEquals(spacegroup, crystal.getSpaceGroup());
+        Assert.assertEquals(spacegroup, crystal.getSpaceGroup());
     }
 
-    public void testGetSpaceGroup() {
+    @Test public void testGetSpaceGroup() {
         ICrystal crystal = builder.newCrystal();
         String spacegroup = "P 2_1 2_1 2_1";
         crystal.setSpaceGroup(spacegroup);
-        assertNotNull(crystal.getSpaceGroup());
-        assertEquals(spacegroup, crystal.getSpaceGroup());
+        Assert.assertNotNull(crystal.getSpaceGroup());
+        Assert.assertEquals(spacegroup, crystal.getSpaceGroup());
     }
 
-    public void testSetZ_int() {
+    @Test public void testSetZ_int() {
         ICrystal crystal = builder.newCrystal();
         int z = 2;
         crystal.setZ(z);
-        assertEquals(z, crystal.getZ());
+        Assert.assertEquals(z, crystal.getZ());
     }
-    public void testGetZ() {
+    @Test public void testGetZ() {
         testSetZ_int();
     }
 
     /**
      * Method to test wether the class complies with RFC #9.
      */
-    public void testToString() {
+    @Test public void testToString() {
         ICrystal crystal = builder.newCrystal();
         String description = crystal.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue(description.charAt(i) != '\n');
-            assertTrue(description.charAt(i) != '\r');
+            Assert.assertTrue(description.charAt(i) != '\n');
+            Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
 
-    public void testClone() throws Exception {
+    @Test public void testClone() throws Exception {
         ICrystal crystal = builder.newCrystal();
         Object clone = crystal.clone();
-        assertTrue(clone instanceof ICrystal);
+        Assert.assertTrue(clone instanceof ICrystal);
     }
 
-    public void testClone_Axes() throws Exception {
+    @Test public void testClone_Axes() throws Exception {
         ICrystal crystal1 = builder.newCrystal();
         Vector3d axes = new Vector3d(1.0, 2.0, 3.0);
         crystal1.setA(axes);
@@ -222,15 +214,15 @@ public class CrystalTest extends CDKTestCase {
 
         // test cloning of axes
         crystal1.getA().x = 5.0;
-        assertEquals(1.0, crystal2.getA().x, 0.001);
+        Assert.assertEquals(1.0, crystal2.getA().x, 0.001);
     }
     
-    public void testSetZeroAxes() {
+    @Test public void testSetZeroAxes() {
         ICrystal crystal = builder.newCrystal();
         
         crystal.setA(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getA();
-        assertNotNull(a);
+        Assert.assertNotNull(a);
     }
     
     

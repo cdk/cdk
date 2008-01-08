@@ -24,137 +24,130 @@
  */
 package org.openscience.cdk.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 /**
  * Checks the functionality of the AtomTypeFactory
  *
  * @cdk.module test-data
  */
-public class PseudoAtomTest extends CDKTestCase {
+public class PseudoAtomTest extends NewCDKTestCase {
 
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 	
-    public PseudoAtomTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
        	builder = DefaultChemObjectBuilder.getInstance();
     }
 
-    public static Test suite() {
-        return new TestSuite(PseudoAtomTest.class);
-    }
-
-    public void testPseudoAtom() {
+    @Test public void testPseudoAtom() {
         IPseudoAtom a = builder.newPseudoAtom();
-        assertEquals("R", a.getSymbol());
-        assertNull(a.getPoint3d());
-        assertNull(a.getPoint2d());
-        assertNull(a.getFractionalPoint3d());
+        Assert.assertEquals("R", a.getSymbol());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getFractionalPoint3d());
     }
     
-    public void testPseudoAtom_IElement() {
+    @Test public void testPseudoAtom_IElement() {
     	IElement element = builder.newElement();
         IPseudoAtom a = builder.newPseudoAtom(element);
-        assertEquals("R", a.getSymbol());
-        assertNull(a.getPoint3d());
-        assertNull(a.getPoint2d());
-        assertNull(a.getFractionalPoint3d());
+        Assert.assertEquals("R", a.getSymbol());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getFractionalPoint3d());
     }
     
-    public void testPseudoAtom_String() {
+    @Test public void testPseudoAtom_String() {
         String label = "Arg255";
         IPseudoAtom a = builder.newPseudoAtom(label);
-        assertEquals("R", a.getSymbol());
-        assertEquals(label, a.getLabel());
-        assertNull(a.getPoint3d());
-        assertNull(a.getPoint2d());
-        assertNull(a.getFractionalPoint3d());
+        Assert.assertEquals("R", a.getSymbol());
+        Assert.assertEquals(label, a.getLabel());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getFractionalPoint3d());
     }
 
-    public void testPseudoAtom_String_Point2d() {
+    @Test public void testPseudoAtom_String_Point2d() {
         Point2d point = new Point2d(1.0, 2.0);
         String label = "Arg255";
         IPseudoAtom a = builder.newPseudoAtom(label, point);
-        assertEquals("R", a.getSymbol());
-        assertEquals(label, a.getLabel());
-        assertEquals(point, a.getPoint2d());
-        assertNull(a.getPoint3d());
-        assertNull(a.getFractionalPoint3d());
+        Assert.assertEquals("R", a.getSymbol());
+        Assert.assertEquals(label, a.getLabel());
+        Assert.assertEquals(point, a.getPoint2d());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getFractionalPoint3d());
     }
 
-    public void testPseudoAtom_String_Point3d() {
+    @Test public void testPseudoAtom_String_Point3d() {
         Point3d point = new Point3d(1.0, 2.0, 3.0);
         String label = "Arg255";
         IPseudoAtom a = builder.newPseudoAtom(label, point);
-        assertEquals("R", a.getSymbol());
-        assertEquals(label, a.getLabel());
-        assertEquals(point, a.getPoint3d());
-        assertNull(a.getPoint2d());
-        assertNull(a.getFractionalPoint3d());
+        Assert.assertEquals("R", a.getSymbol());
+        Assert.assertEquals(label, a.getLabel());
+        Assert.assertEquals(point, a.getPoint3d());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getFractionalPoint3d());
     }
 
-    public void testGetLabel() {
+    @Test public void testGetLabel() {
         String label = "Arg255";
         IPseudoAtom a = builder.newPseudoAtom(label);
-        assertEquals(label, a.getLabel());
+        Assert.assertEquals(label, a.getLabel());
     }
 
-    public void testSetLabel_String() {
+    @Test public void testSetLabel_String() {
         String label = "Arg255";
         IPseudoAtom atom = builder.newPseudoAtom(label);
         String label2 = "His66";
         atom.setLabel(label2);
-        assertEquals(label2, atom.getLabel());
+        Assert.assertEquals(label2, atom.getLabel());
     }
 
-    public void testGetFormalCharge() {
+    @Test public void testGetFormalCharge() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
-        assertEquals(0, atom.getFormalCharge().intValue());
+        Assert.assertEquals(0, atom.getFormalCharge().intValue());
     }
 
-    public void testSetFormalCharge_int() {
+    @Test public void testSetFormalCharge_int() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setFormalCharge(+5);
-        assertEquals(5, atom.getFormalCharge().intValue());
+        Assert.assertEquals(5, atom.getFormalCharge().intValue());
     }
 
-    public void testSetHydrogenCount_int() {
+    @Test public void testSetHydrogenCount_int() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setHydrogenCount(+5);
-        assertEquals(5, atom.getHydrogenCount().intValue());
+        Assert.assertEquals(5, atom.getHydrogenCount().intValue());
     }
 
-    public void testSetCharge_double() {
+    @Test public void testSetCharge_double() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setCharge(0.78);
-        assertEquals(0.78, atom.getCharge(), 0.001);
+        Assert.assertEquals(0.78, atom.getCharge(), 0.001);
     }
 
-    public void testSetExactMass_double() {
+    @Test public void testSetExactMass_double() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setExactMass(12.001);
-        assertEquals(0.0, atom.getExactMass(), 0.001);
+        Assert.assertEquals(0.0, atom.getExactMass(), 0.001);
     }
 
-    public void testSetStereoParity_int() {
+    @Test public void testSetStereoParity_int() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setStereoParity(-1);
-        assertEquals(-1, atom.getStereoParity().intValue());
+        Assert.assertEquals(-1, atom.getStereoParity().intValue());
     }
 
-    public void testPseudoAtom_IAtom() {
+    @Test public void testPseudoAtom_IAtom() {
         IAtom atom = builder.newAtom("C");
         Point3d fract = new Point3d(0.5, 0.5, 0.5);
         Point3d threeD = new Point3d(0.5, 0.5, 0.5);
@@ -172,21 +165,21 @@ public class PseudoAtomTest extends CDKTestCase {
     /**
      * Method to test the clone() method
      */
-    public void testClone() throws Exception {
+    @Test public void testClone() throws Exception {
         IAtom atom = builder.newPseudoAtom("C");
         Object clone = atom.clone();
-        assertTrue(clone instanceof IPseudoAtom);
+        Assert.assertTrue(clone instanceof IPseudoAtom);
     }
     
     /**
      * Method to test wether the class complies with RFC #9.
      */
-    public void testToString() {
+    @Test public void testToString() {
         IAtom atom = builder.newPseudoAtom("R");
         String description = atom.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue(description.charAt(i) != '\n');
-            assertTrue(description.charAt(i) != '\r');
+            Assert.assertTrue(description.charAt(i) != '\n');
+            Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
     
@@ -198,9 +191,9 @@ public class PseudoAtomTest extends CDKTestCase {
      * 
      * @cdk.bug 1778479
      */
-    public void testBug1778479DefaultLabel() {
+    @Test public void testBug1778479DefaultLabel() {
         IPseudoAtom atom = builder.newPseudoAtom();
-        assertNotNull("Test for PseudoAtom's default label", atom.getLabel());
-        assertEquals("Test for PseudoAtom's default label", "*", atom.getLabel());
+        Assert.assertNotNull("Test for PseudoAtom's default label", atom.getLabel());
+        Assert.assertEquals("Test for PseudoAtom's default label", "*", atom.getLabel());
     }
 }

@@ -24,9 +24,7 @@
  */
 package org.openscience.cdk.test.nonotify;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.BeforeClass;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.PseudoAtomTest;
 
@@ -37,16 +35,8 @@ import org.openscience.cdk.test.PseudoAtomTest;
  */
 public class NNPseudoAtomTest extends PseudoAtomTest {
 
-    public NNPseudoAtomTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
-    	super.builder = NoNotificationChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(NNPseudoAtomTest.class);
+    @BeforeClass public static void setUp() {
+    	PseudoAtomTest.builder = NoNotificationChemObjectBuilder.getInstance();
     }
 
 }

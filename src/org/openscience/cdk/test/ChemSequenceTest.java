@@ -25,125 +25,117 @@
 
 package org.openscience.cdk.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
- * Checks the funcitonality of the ChemSequence class.
+ * Checks the functionality of the ChemSequence class.
  *
  * @cdk.module test-data
  *
  * @see org.openscience.cdk.ChemSequence
  */
-public class ChemSequenceTest extends CDKTestCase {
+public class ChemSequenceTest extends NewCDKTestCase {
 
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 	
-    public ChemSequenceTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
 
-    public static Test suite() {
-        return new TestSuite(ChemSequenceTest.class);
-    }
-    
-    public void testChemSequence() {
+    @Test public void testChemSequence() {
         ChemSequence cs = new ChemSequence();
-	assertNotNull(cs);
+	Assert.assertNotNull(cs);
     }
     
-    public void testAddChemModel_IChemModel() {
+    @Test public void testAddChemModel_IChemModel() {
         ChemSequence cs = new ChemSequence();
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
-        assertEquals(3, cs.getChemModelCount());
+        Assert.assertEquals(3, cs.getChemModelCount());
     }
 
-    public void testRemoveChemModel_int() {
+    @Test public void testRemoveChemModel_int() {
         ChemSequence cs = new ChemSequence();
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
-        assertEquals(3, cs.getChemModelCount());
+        Assert.assertEquals(3, cs.getChemModelCount());
         cs.removeChemModel(1);
-        assertEquals(2, cs.getChemModelCount());
+        Assert.assertEquals(2, cs.getChemModelCount());
     }
     
-    public void testGrowChemModelArray() {
+    @Test public void testGrowChemModelArray() {
         ChemSequence cs = new ChemSequence();
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
-        assertEquals(3, cs.getChemModelCount());
+        Assert.assertEquals(3, cs.getChemModelCount());
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel()); // this one should enfore array grow
-        assertEquals(6, cs.getChemModelCount());
+        Assert.assertEquals(6, cs.getChemModelCount());
     }
 
-    public void testGetChemModelCount() {
+    @Test public void testGetChemModelCount() {
         ChemSequence cs = new ChemSequence();
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
-        assertEquals(3, cs.getChemModelCount());
+        Assert.assertEquals(3, cs.getChemModelCount());
     }
 
-    public void testGetChemModel_int() {
+    @Test public void testGetChemModel_int() {
         ChemSequence cs = new ChemSequence();
         cs.addChemModel(new ChemModel());
         ChemModel second = new ChemModel();
         cs.addChemModel(second);
         cs.addChemModel(new ChemModel());
         
-        assertEquals(second, cs.getChemModel(1));
+        Assert.assertEquals(second, cs.getChemModel(1));
     }
 
-    public void testChemModels() {
+    @Test public void testChemModels() {
         ChemSequence cs = new ChemSequence();
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
         cs.addChemModel(new ChemModel());
 
-        assertEquals(3, cs.getChemModelCount());
+        Assert.assertEquals(3, cs.getChemModelCount());
         java.util.Iterator models = cs.chemModels();
         int count = 0;
         while (models.hasNext()) {
-        	assertNotNull(models.next());
+        	Assert.assertNotNull(models.next());
         	++count;
         }
-        assertEquals(3, count);
+        Assert.assertEquals(3, count);
     }
 
     /** Test for RFC #9 */
-    public void testToString() {
+    @Test public void testToString() {
         ChemSequence cs = new ChemSequence();
         String description = cs.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue(description.charAt(i) != '\n');
-            assertTrue(description.charAt(i) != '\r');
+            Assert.assertTrue(description.charAt(i) != '\n');
+            Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
     
-    public void testStateChanged_IChemObjectChangeEvent() {
+    @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         ChemSequence chemObject = new ChemSequence();
         chemObject.addListener(listener);
         
         chemObject.addChemModel(new ChemModel());
-        assertTrue(listener.changed);
+        Assert.assertTrue(listener.changed);
     }
 
     private class ChemObjectListenerImpl implements IChemObjectListener {
@@ -153,22 +145,22 @@ public class ChemSequenceTest extends CDKTestCase {
             changed = false;
         }
         
-        public void stateChanged(IChemObjectChangeEvent e) {
+        @Test public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }
         
-        public void reset() {
+        @Test public void reset() {
             changed = false;
         }
     }
 
-	public void testClone() throws Exception {
+	@Test public void testClone() throws Exception {
         ChemSequence sequence = new ChemSequence();
         Object clone = sequence.clone();
-        assertTrue(clone instanceof ChemSequence);
+        Assert.assertTrue(clone instanceof ChemSequence);
     }    
         
-    public void testClone_IChemModel() throws Exception {
+    @Test public void testClone_IChemModel() throws Exception {
 		ChemSequence sequence = new ChemSequence();
 		sequence.addChemModel(new ChemModel()); // 1
 		sequence.addChemModel(new ChemModel()); // 2
@@ -176,12 +168,12 @@ public class ChemSequenceTest extends CDKTestCase {
 		sequence.addChemModel(new ChemModel()); // 4
 
 		ChemSequence clone = (ChemSequence)sequence.clone();
-		assertEquals(sequence.getChemModelCount(), clone.getChemModelCount());
+		Assert.assertEquals(sequence.getChemModelCount(), clone.getChemModelCount());
 		for (int f = 0; f < sequence.getChemModelCount(); f++) {
 			for (int g = 0; g < clone.getChemModelCount(); g++) {
-				assertNotNull(sequence.getChemModel(f));
-				assertNotNull(clone.getChemModel(g));
-				assertNotSame(sequence.getChemModel(f), clone.getChemModel(g));
+				Assert.assertNotNull(sequence.getChemModel(f));
+				Assert.assertNotNull(clone.getChemModel(g));
+				Assert.assertNotSame(sequence.getChemModel(f), clone.getChemModel(g));
 			}
 		}        
     }

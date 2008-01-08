@@ -24,9 +24,7 @@
  */
 package org.openscience.cdk.test.debug;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.BeforeClass;
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.test.PseudoAtomTest;
 
@@ -37,16 +35,8 @@ import org.openscience.cdk.test.PseudoAtomTest;
  */
 public class DebugPseudoAtomTest extends PseudoAtomTest {
 
-    public DebugPseudoAtomTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
-    	super.builder = DebugChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(DebugPseudoAtomTest.class);
+    @BeforeClass public static void setUp() {
+    	PseudoAtomTest.builder = DebugChemObjectBuilder.getInstance();
     }
 
 }

@@ -27,60 +27,52 @@
  */
 package org.openscience.cdk.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 
 /**
  * TestCase for the Reaction class.
  *
  * @cdk.module test-data
  */
-public class ReactionTest extends CDKTestCase {
+public class ReactionTest extends NewCDKTestCase {
 
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 	
-	public ReactionTest(String name) {
-		super(name);
-	}
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
        	builder = DefaultChemObjectBuilder.getInstance();
     }
 
-    public static Test suite() {
-		return new TestSuite(ReactionTest.class);
-	}
-
-    public void testReaction() {
+    @Test public void testReaction() {
         IReaction reaction = builder.newReaction();
-        assertNotNull(reaction);
-        assertEquals(0, reaction.getReactantCount());
-        assertEquals(0, reaction.getProductCount());
-        assertEquals(IReaction.FORWARD, reaction.getDirection());
+        Assert.assertNotNull(reaction);
+        Assert.assertEquals(0, reaction.getReactantCount());
+        Assert.assertEquals(0, reaction.getProductCount());
+        Assert.assertEquals(IReaction.FORWARD, reaction.getDirection());
     }
     
-    public void testGetReactantCount() {
+    @Test public void testGetReactantCount() {
         IReaction reaction = builder.newReaction();
-        assertEquals(0, reaction.getReactantCount());
+        Assert.assertEquals(0, reaction.getReactantCount());
 	reaction.addReactant(builder.newMolecule());
-        assertEquals(1, reaction.getReactantCount());
+        Assert.assertEquals(1, reaction.getReactantCount());
     }
     
-    public void testGetProductCount() {
+    @Test public void testGetProductCount() {
         IReaction reaction = builder.newReaction();
-        assertEquals(0, reaction.getProductCount());
+        Assert.assertEquals(0, reaction.getProductCount());
 	reaction.addProduct(builder.newMolecule());
-        assertEquals(1, reaction.getProductCount());
+        Assert.assertEquals(1, reaction.getProductCount());
     }
     
-    public void testAddReactant_IMolecule() {
+    @Test public void testAddReactant_IMolecule() {
         IReaction reaction = builder.newReaction();
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
@@ -89,16 +81,16 @@ public class ReactionTest extends CDKTestCase {
         reaction.addReactant(sodiumhydroxide);
         reaction.addReactant(aceticAcid);
         reaction.addReactant(water);
-        assertEquals(3, reaction.getReactantCount());
+        Assert.assertEquals(3, reaction.getReactantCount());
         // next one should trigger a growArray, if the grow
         // size is still 3.
         reaction.addReactant(acetate);
-        assertEquals(4, reaction.getReactantCount());
+        Assert.assertEquals(4, reaction.getReactantCount());
         
-        assertEquals(1.0, reaction.getReactantCoefficient(aceticAcid), 0.00001);
+        Assert.assertEquals(1.0, reaction.getReactantCoefficient(aceticAcid), 0.00001);
     }
 
-    public void testSetReactants_IMoleculeSet() {
+    @Test public void testSetReactants_IMoleculeSet() {
         IReaction reaction = builder.newReaction();
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
@@ -108,22 +100,22 @@ public class ReactionTest extends CDKTestCase {
         reactants.addMolecule(aceticAcid);
         reactants.addMolecule(water);
         reaction.setReactants(reactants);
-        assertEquals(3, reaction.getReactantCount());
+        Assert.assertEquals(3, reaction.getReactantCount());
         
-        assertEquals(1.0, reaction.getReactantCoefficient(aceticAcid), 0.00001);
+        Assert.assertEquals(1.0, reaction.getReactantCoefficient(aceticAcid), 0.00001);
     }
 
-    public void testAddReactant_IMolecule_double() {
+    @Test public void testAddReactant_IMolecule_double() {
         IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
         IMolecule sulfate = builder.newMolecule();
         reaction.addReactant(proton, 2);
         reaction.addReactant(sulfate, 1);
-        assertEquals(2.0, reaction.getReactantCoefficient(proton), 0.00001);
-        assertEquals(1.0, reaction.getReactantCoefficient(sulfate), 0.00001);
+        Assert.assertEquals(2.0, reaction.getReactantCoefficient(proton), 0.00001);
+        Assert.assertEquals(1.0, reaction.getReactantCoefficient(sulfate), 0.00001);
     }
     
-    public void testAddProduct_IMolecule() {
+    @Test public void testAddProduct_IMolecule() {
         IReaction reaction = builder.newReaction();
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
@@ -132,16 +124,16 @@ public class ReactionTest extends CDKTestCase {
         reaction.addProduct(sodiumhydroxide);
         reaction.addProduct(aceticAcid);
         reaction.addProduct(water);
-        assertEquals(3, reaction.getProductCount());
+        Assert.assertEquals(3, reaction.getProductCount());
         // next one should trigger a growArray, if the grow
         // size is still 3.
         reaction.addProduct(acetate);
-        assertEquals(4, reaction.getProductCount());
+        Assert.assertEquals(4, reaction.getProductCount());
         
-        assertEquals(1.0, reaction.getProductCoefficient(aceticAcid), 0.00001);
+        Assert.assertEquals(1.0, reaction.getProductCoefficient(aceticAcid), 0.00001);
     }
 
-    public void testSetProducts_IMoleculeSet() {
+    @Test public void testSetProducts_IMoleculeSet() {
         IReaction reaction = builder.newReaction();
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
@@ -151,87 +143,87 @@ public class ReactionTest extends CDKTestCase {
         products.addMolecule(aceticAcid);
         products.addMolecule(water);
         reaction.setProducts(products);
-        assertEquals(3, reaction.getProductCount());
+        Assert.assertEquals(3, reaction.getProductCount());
         
-        assertEquals(1.0, reaction.getProductCoefficient(aceticAcid), 0.00001);
+        Assert.assertEquals(1.0, reaction.getProductCoefficient(aceticAcid), 0.00001);
     }
 
-    public void testAddProduct_IMolecule_double() {
+    @Test public void testAddProduct_IMolecule_double() {
         IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
         IMolecule sulfate = builder.newMolecule();
         reaction.addProduct(proton, 2.0);
         reaction.addProduct(sulfate, 1.0);
-        assertEquals(2.0, reaction.getProductCoefficient(proton), 0.00001);
-        assertEquals(1.0, reaction.getProductCoefficient(sulfate), 0.00001);
+        Assert.assertEquals(2.0, reaction.getProductCoefficient(proton), 0.00001);
+        Assert.assertEquals(1.0, reaction.getProductCoefficient(sulfate), 0.00001);
     }
     
-    public void testAddAgent_IMolecule() {
+    @Test public void testAddAgent_IMolecule() {
         IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
         reaction.addAgent(proton);
-        assertEquals(1, reaction.getAgents().getMoleculeCount());
+        Assert.assertEquals(1, reaction.getAgents().getMoleculeCount());
     }
 
-    public void testGetReactantCoefficient_IMolecule() {
+    @Test public void testGetReactantCoefficient_IMolecule() {
         IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
         reaction.addReactant(proton, 2.0);
-        assertEquals(2.0, reaction.getReactantCoefficient(proton), 0.00001);
+        Assert.assertEquals(2.0, reaction.getReactantCoefficient(proton), 0.00001);
         
-        assertEquals(-1.0, reaction.getReactantCoefficient(builder.newMolecule()), 0.00001);
+        Assert.assertEquals(-1.0, reaction.getReactantCoefficient(builder.newMolecule()), 0.00001);
     }
 
-    public void testGetProductCoefficient_IMolecule() {
+    @Test public void testGetProductCoefficient_IMolecule() {
         IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
         reaction.addProduct(proton, 2.0);
-        assertEquals(2.0, reaction.getProductCoefficient(proton), 0.00001);
+        Assert.assertEquals(2.0, reaction.getProductCoefficient(proton), 0.00001);
 
-        assertEquals(-1.0, reaction.getProductCoefficient(builder.newMolecule()), 0.00001);
+        Assert.assertEquals(-1.0, reaction.getProductCoefficient(builder.newMolecule()), 0.00001);
     }
     
-	public void testSetReactantCoefficient_IMolecule_double() {
+	@Test public void testSetReactantCoefficient_IMolecule_double() {
 		IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
 		reaction.addReactant(proton, 2.0);
 		reaction.setReactantCoefficient(proton, 3.0);
-		assertEquals(3.0, reaction.getReactantCoefficient(proton), 0.00001);
+		Assert.assertEquals(3.0, reaction.getReactantCoefficient(proton), 0.00001);
 	}
 	
-	public void testSetProductCoefficient_IMolecule_double() {
+	@Test public void testSetProductCoefficient_IMolecule_double() {
 		IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
 		reaction.addProduct(proton, 2.0);
 		reaction.setProductCoefficient(proton, 1.0);
-		assertEquals(1.0, reaction.getProductCoefficient(proton), 0.00001);
+		Assert.assertEquals(1.0, reaction.getProductCoefficient(proton), 0.00001);
 	}
 	
-	public void testGetReactantCoefficients() {
+	@Test public void testGetReactantCoefficients() {
         IReaction reaction = builder.newReaction();
 		IMolecule ed1 = builder.newMolecule();
 		IMolecule ed2 = builder.newMolecule();
 		reaction.addReactant(ed1, 2);
 		reaction.addReactant(ed2, 3);
 		double[] ec = reaction.getReactantCoefficients();
-		assertEquals(2.0, ec.length, 0.00001);
-		assertEquals(reaction.getReactantCoefficient(ed1), ec[0], 0.00001);
-		assertEquals(3.0, ec[1], 0.00001);
+		Assert.assertEquals(2.0, ec.length, 0.00001);
+		Assert.assertEquals(reaction.getReactantCoefficient(ed1), ec[0], 0.00001);
+		Assert.assertEquals(3.0, ec[1], 0.00001);
     }
 	
-	public void testGetProductCoefficients() {
+	@Test public void testGetProductCoefficients() {
         IReaction reaction = builder.newReaction();
 		IMolecule pr1 = builder.newMolecule();
 		IMolecule pr2 = builder.newMolecule();
 		reaction.addProduct(pr1, 1);
 		reaction.addProduct(pr2, 2);
 		double[] pc = reaction.getProductCoefficients();
-		assertEquals(2.0, pc.length, 0.00001);
-		assertEquals(reaction.getProductCoefficient(pr1), pc[0], 0.00001);
-		assertEquals(2.0, pc[1], 0.00001);
+		Assert.assertEquals(2.0, pc.length, 0.00001);
+		Assert.assertEquals(reaction.getProductCoefficient(pr1), pc[0], 0.00001);
+		Assert.assertEquals(2.0, pc[1], 0.00001);
     }
 	
-	public void testSetReactantCoefficients_arraydouble() {
+	@Test public void testSetReactantCoefficients_arraydouble() {
         IReaction reaction = builder.newReaction();
 		IMolecule ed1 = builder.newMolecule();
 		IMolecule ed2 = builder.newMolecule();
@@ -239,26 +231,26 @@ public class ReactionTest extends CDKTestCase {
 		reaction.addReactant(ed2, 3);
 		double[] ec = { 1.0, 2.0 };
 		boolean coeffSet = reaction.setReactantCoefficients(ec);
-		assertTrue(coeffSet);
-		assertEquals(1.0, reaction.getReactantCoefficient(ed1), 0.00001);
-		assertEquals(2.0, reaction.getReactantCoefficient(ed2), 0.00001);
+		Assert.assertTrue(coeffSet);
+		Assert.assertEquals(1.0, reaction.getReactantCoefficient(ed1), 0.00001);
+		Assert.assertEquals(2.0, reaction.getReactantCoefficient(ed2), 0.00001);
 		double[] ecFalse = { 1.0 };
-		assertFalse(reaction.setReactantCoefficients(ecFalse));
+		Assert.assertFalse(reaction.setReactantCoefficients(ecFalse));
     }
 	
-	public void testSetProductCoefficients_arraydouble() {
+	@Test public void testSetProductCoefficients_arraydouble() {
         IReaction reaction = builder.newReaction();
 		IMolecule pr1 = builder.newMolecule();
 		reaction.addProduct(pr1, 1);
 		double[] pc = { 2.0 };
 		boolean coeffSet = reaction.setProductCoefficients(pc);
-		assertTrue(coeffSet);
-		assertEquals(2.0, reaction.getProductCoefficient(pr1), 0.00001);
+		Assert.assertTrue(coeffSet);
+		Assert.assertEquals(2.0, reaction.getProductCoefficient(pr1), 0.00001);
 		double[] pcFalse = { 1.0 , 2.0 };
-		assertFalse(reaction.setProductCoefficients(pcFalse));
+		Assert.assertFalse(reaction.setProductCoefficients(pcFalse));
     }
 	
-    public void testGetReactants() {
+    @Test public void testGetReactants() {
         IReaction reaction = builder.newReaction();
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
@@ -266,10 +258,10 @@ public class ReactionTest extends CDKTestCase {
         reaction.addReactant(sodiumhydroxide);
         reaction.addReactant(aceticAcid);
         reaction.addReactant(water);
-        assertEquals(3, reaction.getReactants().getMoleculeCount());
+        Assert.assertEquals(3, reaction.getReactants().getMoleculeCount());
     }
 	
-    public void testGetProducts() {    
+    @Test public void testGetProducts() {    
         IReaction reaction = builder.newReaction();
         IMolecule sodiumhydroxide = builder.newMolecule();
         IMolecule aceticAcid = builder.newMolecule();
@@ -277,98 +269,98 @@ public class ReactionTest extends CDKTestCase {
         reaction.addProduct(sodiumhydroxide);
         reaction.addProduct(aceticAcid);
         reaction.addProduct(water);
-        assertEquals(3, reaction.getProducts().getMoleculeCount());
+        Assert.assertEquals(3, reaction.getProducts().getMoleculeCount());
     }
     
-    public void testGetAgents() {    
+    @Test public void testGetAgents() {    
         IReaction reaction = builder.newReaction();
         IMolecule water = builder.newMolecule();
         reaction.addAgent(water);
-        assertEquals(1, reaction.getAgents().getMoleculeCount());
+        Assert.assertEquals(1, reaction.getAgents().getMoleculeCount());
     }
     
-    public void testSetDirection_int() {
+    @Test public void testSetDirection_int() {
         IReaction reaction = builder.newReaction();
         int direction = IReaction.BIDIRECTIONAL;
         reaction.setDirection(direction);
-        assertEquals(direction, reaction.getDirection());
+        Assert.assertEquals(direction, reaction.getDirection());
     }
 
-    public void testGetDirection() {
+    @Test public void testGetDirection() {
         IReaction reaction = builder.newReaction();
-        assertEquals(IReaction.FORWARD, reaction.getDirection());
+        Assert.assertEquals(IReaction.FORWARD, reaction.getDirection());
     }
 
     /**
      * Method to test wether the class complies with RFC #9.
      */
-    public void testToString() {
+    @Test public void testToString() {
         IReaction reaction = builder.newReaction();
         String description = reaction.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue(description.charAt(i) != '\n');
-            assertTrue(description.charAt(i) != '\r');
+            Assert.assertTrue(description.charAt(i) != '\n');
+            Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
     
-    public void testClone() throws Exception {
+    @Test public void testClone() throws Exception {
         IReaction reaction = builder.newReaction();
         Object clone = reaction.clone();
-        assertNotNull(clone);
-        assertTrue(clone instanceof IReaction);
+        Assert.assertNotNull(clone);
+        Assert.assertTrue(clone instanceof IReaction);
     }
     
-    public void testClone_Mapping() throws Exception {
+    @Test public void testClone_Mapping() throws Exception {
         IReaction reaction = builder.newReaction();
         IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
         reaction.addMapping(mapping);
         IReaction clonedReaction = (IReaction)reaction.clone();
         java.util.Iterator mappings = reaction.mappings();
         java.util.Iterator clonedMappings = clonedReaction.mappings();
-        assertNotNull(mappings);
-        assertTrue(mappings.hasNext());
-        assertNotNull(clonedMappings);
-        assertTrue(clonedMappings.hasNext());
+        Assert.assertNotNull(mappings);
+        Assert.assertTrue(mappings.hasNext());
+        Assert.assertNotNull(clonedMappings);
+        Assert.assertTrue(clonedMappings.hasNext());
     }
     
-    public void testAddMapping_IMapping() {
+    @Test public void testAddMapping_IMapping() {
         IReaction reaction = builder.newReaction();
         IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
         reaction.addMapping(mapping);
         java.util.Iterator mappings = reaction.mappings();
-        assertNotNull(mappings);
-        assertTrue(mappings.hasNext());
-        assertEquals(mapping, (IMapping)mappings.next());
+        Assert.assertNotNull(mappings);
+        Assert.assertTrue(mappings.hasNext());
+        Assert.assertEquals(mapping, (IMapping)mappings.next());
     }
     
-    public void testRemoveMapping_int() {
+    @Test public void testRemoveMapping_int() {
         IReaction reaction = builder.newReaction();
         IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
         reaction.addMapping(mapping);
-        assertEquals(1, reaction.getMappingCount());
+        Assert.assertEquals(1, reaction.getMappingCount());
         reaction.removeMapping(0);
-        assertEquals(0, reaction.getMappingCount());
+        Assert.assertEquals(0, reaction.getMappingCount());
     }
     
-    public void testGetMapping_int() {
+    @Test public void testGetMapping_int() {
     	IReaction reaction = builder.newReaction();
         IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
         reaction.addMapping(mapping);
         IMapping gotIt = reaction.getMapping(0);
-        assertEquals(mapping, gotIt);
+        Assert.assertEquals(mapping, gotIt);
     }
     
-    public void testGetMappingCount() {
+    @Test public void testGetMappingCount() {
     	IReaction reaction = builder.newReaction();
         IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
         reaction.addMapping(mapping);
-        assertEquals(1, reaction.getMappingCount());
+        Assert.assertEquals(1, reaction.getMappingCount());
     }
     
-    public void testMappings() {
+    @Test public void testMappings() {
     	IReaction reaction = builder.newReaction();
         IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
         reaction.addMapping(mapping);
-        assertEquals(1, reaction.getMappingCount());
+        Assert.assertEquals(1, reaction.getMappingCount());
     }
 }
