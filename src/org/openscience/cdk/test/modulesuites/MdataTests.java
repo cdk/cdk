@@ -112,18 +112,18 @@ public class MdataTests {
         suite.addTest(new JUnit4TestAdapter(ReactionSetTest.class));
         suite.addTest(new JUnit4TestAdapter(SingleElectronTest.class));
         suite.addTest(new JUnit4TestAdapter(StrandTest.class));
-        suite.addTest(ChangeEventPropagationTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ChangeEventPropagationTest.class));
 
-        suite.addTest(FragmentAtomTest.suite());
+        suite.addTest(new JUnit4TestAdapter(FragmentAtomTest.class));
         
         // test from test.event
-        suite.addTest(ChemObjectChangeEventTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ChemObjectChangeEventTest.class));
         
         // tests from test.protein.data
-        suite.addTest(PDBAtomTest.suite());
-        suite.addTest(PDBMonomerTest.suite());
-        suite.addTest(PDBPolymerTest.suite());
-        suite.addTest(PDBStructureTest.suite());
+        suite.addTest(new JUnit4TestAdapter(PDBAtomTest.class));
+        suite.addTest(new JUnit4TestAdapter(PDBMonomerTest.class));
+        suite.addTest(new JUnit4TestAdapter(PDBPolymerTest.class));
+        suite.addTest(new JUnit4TestAdapter(PDBStructureTest.class));
         
         return suite;
     }

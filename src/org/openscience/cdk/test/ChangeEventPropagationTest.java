@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -20,24 +17,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
-
 package org.openscience.cdk.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.ChemSequence;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 
 /**
@@ -48,19 +43,11 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
  *
  * @see org.openscience.cdk.ChemFile
  */
-public class ChangeEventPropagationTest extends CDKTestCase {
+public class ChangeEventPropagationTest extends NewCDKTestCase {
 
-    public ChangeEventPropagationTest(String name) {
-        super(name);
-    }
+    @BeforeClass public static void setUp() {}
 
-    public void setUp() {}
-
-    public static Test suite() {
-        return new TestSuite(ChangeEventPropagationTest.class);
-    }
-    
-    public void testPropagation() {
+    @Test public void testPropagation() {
         ChemFile cf = new ChemFile();
 	ChemSequence cs = new ChemSequence();
 	ChemModel cm = new ChemModel();
@@ -79,8 +66,8 @@ public class ChangeEventPropagationTest extends CDKTestCase {
 	TestListener ts = new TestListener();
 	cf.addListener(ts);
 	a2.setSymbol("N");
-	assertTrue(ts.changedObject instanceof Atom);
-	assertTrue(((Atom)ts.changedObject).getSymbol().equals("N"));
+	Assert.assertTrue(ts.changedObject instanceof Atom);
+	Assert.assertTrue(((Atom)ts.changedObject).getSymbol().equals("N"));
     }
 
     class TestListener implements IChemObjectListener

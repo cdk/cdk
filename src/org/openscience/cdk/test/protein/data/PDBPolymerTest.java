@@ -22,14 +22,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-
 package org.openscience.cdk.test.protein.data;
 
 import java.util.Hashtable;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
@@ -39,7 +38,7 @@ import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * Checks the functionality of the PDBPolymer class.
@@ -48,26 +47,18 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see PDBPolymer
  */
-public class PDBPolymerTest extends CDKTestCase {
+public class PDBPolymerTest extends NewCDKTestCase {
 	
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 
-	public PDBPolymerTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
 
-    public static Test suite() {
-        return new TestSuite(PDBPolymerTest.class);
-    }
-    
-	public void testPDBPolymer() {
+	@Test public void testPDBPolymer() {
 		PDBPolymer pdbPolymer = new PDBPolymer();
-		assertNotNull(pdbPolymer);
-		assertEquals(pdbPolymer.getMonomerCount(), 0);
+		Assert.assertNotNull(pdbPolymer);
+		Assert.assertEquals(pdbPolymer.getMonomerCount(), 0);
 		
 		Strand oStrand1 = new Strand();
 		oStrand1.setStrandName("A");
@@ -90,48 +81,48 @@ public class PDBPolymerTest extends CDKTestCase {
 		pdbPolymer.addAtom(oPDBAtom3, oMono1, oStrand1);
 		pdbPolymer.addAtom(oPDBAtom4, oMono2, oStrand2);
 		pdbPolymer.addAtom(oPDBAtom5, oMono3, oStrand2);
-		assertNotNull(pdbPolymer.getAtom(0));
-		assertNotNull(pdbPolymer.getAtom(1));
-		assertNotNull(pdbPolymer.getAtom(2));
-		assertNotNull(pdbPolymer.getAtom(3));
-		assertNotNull(pdbPolymer.getAtom(4));
-		assertEquals(oPDBAtom1, pdbPolymer.getAtom(0));
-		assertEquals(oPDBAtom2, pdbPolymer.getAtom(1));
-		assertEquals(oPDBAtom3, pdbPolymer.getAtom(2));
-		assertEquals(oPDBAtom4, pdbPolymer.getAtom(3));
-		assertEquals(oPDBAtom5, pdbPolymer.getAtom(4));
+		Assert.assertNotNull(pdbPolymer.getAtom(0));
+		Assert.assertNotNull(pdbPolymer.getAtom(1));
+		Assert.assertNotNull(pdbPolymer.getAtom(2));
+		Assert.assertNotNull(pdbPolymer.getAtom(3));
+		Assert.assertNotNull(pdbPolymer.getAtom(4));
+		Assert.assertEquals(oPDBAtom1, pdbPolymer.getAtom(0));
+		Assert.assertEquals(oPDBAtom2, pdbPolymer.getAtom(1));
+		Assert.assertEquals(oPDBAtom3, pdbPolymer.getAtom(2));
+		Assert.assertEquals(oPDBAtom4, pdbPolymer.getAtom(3));
+		Assert.assertEquals(oPDBAtom5, pdbPolymer.getAtom(4));
 
-		assertNull(pdbPolymer.getMonomer("0815", "A"));
-		assertNull(pdbPolymer.getMonomer("0815", "B"));
-		assertNull(pdbPolymer.getMonomer("0815", ""));
-		assertNull(pdbPolymer.getStrand(""));
-		assertNotNull(pdbPolymer.getMonomer("TRP279", "A"));
-		assertEquals(oMono1, pdbPolymer.getMonomer("TRP279", "A"));
-		assertEquals(pdbPolymer.getMonomer("TRP279", "A").getAtomCount(), 1);
-		assertNotNull(pdbPolymer.getMonomer("HOH", "B"));
-		assertEquals(oMono2, pdbPolymer.getMonomer("HOH", "B"));
-		assertEquals(pdbPolymer.getMonomer("HOH", "B").getAtomCount(), 1);
-		assertEquals(pdbPolymer.getStrand("B").getAtomCount(), 2);
-		assertEquals(pdbPolymer.getStrand("B").getMonomerCount(), 2);
-		assertNull(pdbPolymer.getStrand("C"));
-		assertNotNull(pdbPolymer.getStrand("B"));
+		Assert.assertNull(pdbPolymer.getMonomer("0815", "A"));
+		Assert.assertNull(pdbPolymer.getMonomer("0815", "B"));
+		Assert.assertNull(pdbPolymer.getMonomer("0815", ""));
+		Assert.assertNull(pdbPolymer.getStrand(""));
+		Assert.assertNotNull(pdbPolymer.getMonomer("TRP279", "A"));
+		Assert.assertEquals(oMono1, pdbPolymer.getMonomer("TRP279", "A"));
+		Assert.assertEquals(pdbPolymer.getMonomer("TRP279", "A").getAtomCount(), 1);
+		Assert.assertNotNull(pdbPolymer.getMonomer("HOH", "B"));
+		Assert.assertEquals(oMono2, pdbPolymer.getMonomer("HOH", "B"));
+		Assert.assertEquals(pdbPolymer.getMonomer("HOH", "B").getAtomCount(), 1);
+		Assert.assertEquals(pdbPolymer.getStrand("B").getAtomCount(), 2);
+		Assert.assertEquals(pdbPolymer.getStrand("B").getMonomerCount(), 2);
+		Assert.assertNull(pdbPolymer.getStrand("C"));
+		Assert.assertNotNull(pdbPolymer.getStrand("B"));
 	}
 	
-	public void testGetStructures() {
+	@Test public void testGetStructures() {
 		
 	}
 	
-	public void testAddStructure_IPDBStructure(){
+	@Test public void testAddStructure_IPDBStructure(){
 		
 	}
 	
-	public void testGetMonomerNamesInSequentialOrder() {
+	@Test public void testGetMonomerNamesInSequentialOrder() {
 		
 	}
 	
-	public void testGetMonomerCount() {
+	@Test public void testGetMonomerCount() {
 		PDBPolymer pdbPolymer = new PDBPolymer();
-		assertEquals(0, pdbPolymer.getMonomerCount());
+		Assert.assertEquals(0, pdbPolymer.getMonomerCount());
 		
 		Strand oStrand1 = new Strand();
 		oStrand1.setStrandName("A");
@@ -147,19 +138,19 @@ public class PDBPolymerTest extends CDKTestCase {
 		pdbPolymer.addAtom(oPDBAtom1);
 		pdbPolymer.addAtom(oPDBAtom2, oMono1, oStrand1);
 		pdbPolymer.addAtom(oPDBAtom3, oMono2, oStrand2);
-		assertNotNull(pdbPolymer.getAtom(0));
-		assertNotNull(pdbPolymer.getAtom(1));
-		assertNotNull(pdbPolymer.getAtom(2));
-		assertEquals(oPDBAtom1, pdbPolymer.getAtom(0));
-		assertEquals(oPDBAtom2, pdbPolymer.getAtom(1));
-		assertEquals(oPDBAtom3, pdbPolymer.getAtom(2));
+		Assert.assertNotNull(pdbPolymer.getAtom(0));
+		Assert.assertNotNull(pdbPolymer.getAtom(1));
+		Assert.assertNotNull(pdbPolymer.getAtom(2));
+		Assert.assertEquals(oPDBAtom1, pdbPolymer.getAtom(0));
+		Assert.assertEquals(oPDBAtom2, pdbPolymer.getAtom(1));
+		Assert.assertEquals(oPDBAtom3, pdbPolymer.getAtom(2));
 
-		assertEquals(2, pdbPolymer.getMonomerCount());
+		Assert.assertEquals(2, pdbPolymer.getMonomerCount());
 	}
 	
-	public void testGetMonomerNames() {
+	@Test public void testGetMonomerNames() {
 		PDBPolymer pdbPolymer = new PDBPolymer();
-		assertEquals(0, pdbPolymer.getMonomerNames().size());
+		Assert.assertEquals(0, pdbPolymer.getMonomerNames().size());
 		
 		Strand oStrand1 = new Strand();
 		oStrand1.setStrandName("A");
@@ -175,19 +166,19 @@ public class PDBPolymerTest extends CDKTestCase {
 		pdbPolymer.addAtom(oPDBAtom1);
 		pdbPolymer.addAtom(oPDBAtom2, oMono1, oStrand1);
 		pdbPolymer.addAtom(oPDBAtom3, oMono2, oStrand2);
-		assertNotNull(pdbPolymer.getAtom(0));
-		assertNotNull(pdbPolymer.getAtom(1));
-		assertNotNull(pdbPolymer.getAtom(2));
-		assertEquals(oPDBAtom1, pdbPolymer.getAtom(0));
-		assertEquals(oPDBAtom2, pdbPolymer.getAtom(1));
-		assertEquals(oPDBAtom3, pdbPolymer.getAtom(2));
+		Assert.assertNotNull(pdbPolymer.getAtom(0));
+		Assert.assertNotNull(pdbPolymer.getAtom(1));
+		Assert.assertNotNull(pdbPolymer.getAtom(2));
+		Assert.assertEquals(oPDBAtom1, pdbPolymer.getAtom(0));
+		Assert.assertEquals(oPDBAtom2, pdbPolymer.getAtom(1));
+		Assert.assertEquals(oPDBAtom3, pdbPolymer.getAtom(2));
 
-		assertEquals(3, pdbPolymer.getMonomerNames().size());
-		assertTrue(pdbPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
-		assertTrue(pdbPolymer.getMonomerNames().contains(oMono2.getMonomerName()));
+		Assert.assertEquals(3, pdbPolymer.getMonomerNames().size());
+		Assert.assertTrue(pdbPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
+		Assert.assertTrue(pdbPolymer.getMonomerNames().contains(oMono2.getMonomerName()));
 	}
 	
-	public void testGetMonomer_String_String() {
+	@Test public void testGetMonomer_String_String() {
 		PDBPolymer pdbPolymer = new PDBPolymer();
 		
 		Strand oStrand1 = new Strand();
@@ -205,11 +196,11 @@ public class PDBPolymerTest extends CDKTestCase {
 		pdbPolymer.addAtom(oPDBAtom2, oMono1, oStrand1);
 		pdbPolymer.addAtom(oPDBAtom3, oMono2, oStrand2);
 
-		assertEquals(oMono1, pdbPolymer.getMonomer("TRP279", "A"));
-		assertEquals(oMono2, pdbPolymer.getMonomer("HOH", "B"));
+		Assert.assertEquals(oMono1, pdbPolymer.getMonomer("TRP279", "A"));
+		Assert.assertEquals(oMono2, pdbPolymer.getMonomer("HOH", "B"));
 	}
     
-	public void testAddAtom_IPDBAtom() {
+	@Test public void testAddAtom_IPDBAtom() {
 		PDBPolymer pdbPolymer = new PDBPolymer();
 		
 		PDBAtom oPDBAtom1 = new PDBAtom("C1");
@@ -217,10 +208,10 @@ public class PDBPolymerTest extends CDKTestCase {
 		pdbPolymer.addAtom(oPDBAtom1);
 		pdbPolymer.addAtom(oPDBAtom2);
 
-		assertEquals(2, pdbPolymer.getAtomCount());
+		Assert.assertEquals(2, pdbPolymer.getAtomCount());
 	}
     
-	public void testAddAtom_IPDBAtom_IStrand() {
+	@Test public void testAddAtom_IPDBAtom_IStrand() {
 		PDBPolymer pdbPolymer = new PDBPolymer();
 		Strand oStrand1 = new Strand();
 		oStrand1.setStrandName("A");
@@ -233,12 +224,12 @@ public class PDBPolymerTest extends CDKTestCase {
 		pdbPolymer.addAtom(oPDBAtom2, oStrand1);
 		pdbPolymer.addAtom(oPDBAtom3, oMono1, oStrand1);
 
-		assertEquals(2, pdbPolymer.getMonomer("", "A").getAtomCount());
-		assertEquals(1, pdbPolymer.getMonomer("TRP279", "A").getAtomCount());
-		assertEquals(3, pdbPolymer.getAtomCount());
+		Assert.assertEquals(2, pdbPolymer.getMonomer("", "A").getAtomCount());
+		Assert.assertEquals(1, pdbPolymer.getMonomer("TRP279", "A").getAtomCount());
+		Assert.assertEquals(3, pdbPolymer.getAtomCount());
 	}
 	
-	public void testAddAtom_IPDBAtom_IMonomer_IStrand()	{
+	@Test public void testAddAtom_IPDBAtom_IMonomer_IStrand()	{
 		PDBPolymer pdbPolymer = new PDBPolymer();
 		Strand oStrand1 = new Strand();
 		oStrand1.setStrandName("A");
@@ -251,13 +242,13 @@ public class PDBPolymerTest extends CDKTestCase {
 		pdbPolymer.addAtom(oPDBAtom2, oStrand1);
 		pdbPolymer.addAtom(oPDBAtom3, oMono1, oStrand1);
 
-		assertEquals(2, pdbPolymer.getMonomer("", "A").getAtomCount());
-		assertEquals(1, pdbPolymer.getMonomer("TRP279", "A").getAtomCount());
-		assertEquals(3, pdbPolymer.getAtomCount());
+		Assert.assertEquals(2, pdbPolymer.getMonomer("", "A").getAtomCount());
+		Assert.assertEquals(1, pdbPolymer.getMonomer("TRP279", "A").getAtomCount());
+		Assert.assertEquals(3, pdbPolymer.getAtomCount());
 	}
 
 	
-	public void testAddAtom_IPDBAtom_IMonomer() {
+	@Test public void testAddAtom_IPDBAtom_IMonomer() {
 		PDBPolymer pdbPolymer = new PDBPolymer();
 		PDBMonomer oMono1 = new PDBMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
@@ -266,10 +257,10 @@ public class PDBPolymerTest extends CDKTestCase {
 		PDBAtom oPDBAtom1 = new PDBAtom("C1");
 		pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
 
-		assertEquals(1, pdbPolymer.getMonomer("TRP279", "A").getAtomCount());
+		Assert.assertEquals(1, pdbPolymer.getMonomer("TRP279", "A").getAtomCount());
 	}
 	
-	public void testGetStrandCount()	{
+	@Test public void testGetStrandCount()	{
 		PDBPolymer pdbPolymer = new PDBPolymer();
 		Strand oStrand1 = new Strand();
 		oStrand1.setStrandName("A");
@@ -278,10 +269,10 @@ public class PDBPolymerTest extends CDKTestCase {
 		PDBAtom oPDBAtom1 = new PDBAtom("C1");
 		pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
 
-		assertEquals(1, pdbPolymer.getStrandCount());
+		Assert.assertEquals(1, pdbPolymer.getStrandCount());
 	}
 	
-	public void testGetStrand_String()	{
+	@Test public void testGetStrand_String()	{
 		PDBPolymer pdbPolymer = new PDBPolymer();
 		Strand oStrand1 = new Strand();
 		oStrand1.setStrandName("A");
@@ -290,10 +281,10 @@ public class PDBPolymerTest extends CDKTestCase {
 		PDBAtom oPDBAtom1 = new PDBAtom("C1");
 		pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
 		
-		assertEquals(oStrand1, pdbPolymer.getStrand("A"));
+		Assert.assertEquals(oStrand1, pdbPolymer.getStrand("A"));
 	}
 	
-	public void testGetStrandNames()	{
+	@Test public void testGetStrandNames()	{
 		PDBPolymer pdbPolymer = new PDBPolymer();
 		Strand oStrand1 = new Strand();
 		Strand oStrand2 = new Strand();
@@ -312,10 +303,10 @@ public class PDBPolymerTest extends CDKTestCase {
 		strands.put("A", oStrand1);
 		strands.put("B", oStrand2);
 		
-		assertEquals(strands.keySet(), pdbPolymer.getStrandNames());
+		Assert.assertEquals(strands.keySet(), pdbPolymer.getStrandNames());
 	}
 	
-	public void testRemoveStrand_String()	{
+	@Test public void testRemoveStrand_String()	{
 		PDBPolymer pdbPolymer = new PDBPolymer();
 		Strand oStrand1 = new Strand();
 		oStrand1.setStrandName("A");
@@ -324,14 +315,14 @@ public class PDBPolymerTest extends CDKTestCase {
 		PDBAtom oPDBAtom1 = new PDBAtom("C1");
 		pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
 		
-		assertTrue(pdbPolymer.getStrandNames().contains(oStrand1.getStrandName()));
-		assertEquals(1, pdbPolymer.getAtomCount());
+		Assert.assertTrue(pdbPolymer.getStrandNames().contains(oStrand1.getStrandName()));
+		Assert.assertEquals(1, pdbPolymer.getAtomCount());
 		pdbPolymer.removeStrand("A");
-		assertFalse(pdbPolymer.getStrandNames().contains(oStrand1.getStrandName()));
-		assertEquals(0, pdbPolymer.getAtomCount());
+		Assert.assertFalse(pdbPolymer.getStrandNames().contains(oStrand1.getStrandName()));
+		Assert.assertEquals(0, pdbPolymer.getAtomCount());
 	}
 	
-	public void testGetStrands()	{
+	@Test public void testGetStrands()	{
 		PDBPolymer pdbPolymer = new PDBPolymer();
 		Strand oStrand1 = new Strand();
 		Strand oStrand2 = new Strand();
@@ -350,28 +341,28 @@ public class PDBPolymerTest extends CDKTestCase {
 		strands.put("A", oStrand1);
 		strands.put("B", oStrand2);
 		
-		assertEquals(strands, pdbPolymer.getStrands());
+		Assert.assertEquals(strands, pdbPolymer.getStrands());
 	}
     
     /**
      * Method to test wether the class complies with RFC #9.
      */
-    public void testToString() {
+    @Test public void testToString() {
     	PDBPolymer pdbPolymer = new PDBPolymer();
         String description = pdbPolymer.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue('\n' != description.charAt(i));
-            assertTrue('\r' != description.charAt(i));
+            Assert.assertTrue('\n' != description.charAt(i));
+            Assert.assertTrue('\r' != description.charAt(i));
         }
     }
     
     /**
      * Method to test the clone() method
      */
-    public void testClone() throws Exception {
+    @Test public void testClone() throws Exception {
     	IPDBPolymer polymer = builder.newPDBPolymer();
         Object clone = polymer.clone();
-        assertTrue(clone instanceof IBioPolymer);
+        Assert.assertTrue(clone instanceof IBioPolymer);
     }
 
 }

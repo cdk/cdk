@@ -20,9 +20,9 @@
  */
 package org.openscience.cdk.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -37,67 +37,59 @@ import org.openscience.cdk.interfaces.IFragmentAtom;
  *
  * @cdk.module test-data
  */
-public class FragmentAtomTest extends CDKTestCase {
+public class FragmentAtomTest extends NewCDKTestCase {
 
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 	
-    public FragmentAtomTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(FragmentAtomTest.class);
     }
 
     /**
      * Method to test the Atom(String symbol) method.
      */
-    public void testFragmentAtom() {
+    @Test public void testFragmentAtom() {
         IFragmentAtom a = new FragmentAtom();
-        assertNotNull(a);
+        Assert.assertNotNull(a);
     }
     
-    public void testGetFragment() {
+    @Test public void testGetFragment() {
     	IFragmentAtom a = new FragmentAtom();
     	// make sure that we start with a not-null, but empty container
-        assertNotNull(a.getFragment());
-        assertEquals(0, a.getFragment().getAtomCount());
-        assertEquals(0, a.getFragment().getBondCount());
+    	Assert.assertNotNull(a.getFragment());
+    	Assert.assertEquals(0, a.getFragment().getAtomCount());
+    	Assert.assertEquals(0, a.getFragment().getBondCount());
     }
     
-    public void testIsExpanded() {
+    @Test public void testIsExpanded() {
     	IFragmentAtom a = new FragmentAtom();
-        assertNotNull(a);
-        assertFalse(a.isExpanded()); // test the default state
+    	Assert.assertNotNull(a);
+    	Assert.assertFalse(a.isExpanded()); // test the default state
     }
     
-    public void testSetExpanded_boolean() {
+    @Test public void testSetExpanded_boolean() {
     	IFragmentAtom a = new FragmentAtom();
-        assertNotNull(a);
+    	Assert.assertNotNull(a);
         a.setExpanded(true);
-        assertTrue(a.isExpanded());
+        Assert.assertTrue(a.isExpanded());
         a.setExpanded(false);
-        assertFalse(a.isExpanded());
+        Assert.assertFalse(a.isExpanded());
     }
     
-    public void testSetFragment_IAtomContainer() {
+    @Test public void testSetFragment_IAtomContainer() {
     	IFragmentAtom a = new FragmentAtom();
-        assertNotNull(a);
+    	Assert.assertNotNull(a);
     	IAtomContainer container = new AtomContainer();
     	container.addAtom(new Atom("N"));
     	container.addAtom(new Atom("C"));
     	container.addBond(0, 1, IBond.Order.TRIPLE);
     	a.setFragment(container);
-    	assertEquals(container, a.getFragment());
+    	Assert.assertEquals(container, a.getFragment());
     }
     
-    public void testGetExactMass() {
+    @Test public void testGetExactMass() {
     	FragmentAtom a = new FragmentAtom();
-        assertNotNull(a);
+    	Assert.assertNotNull(a);
     	IAtomContainer container = new AtomContainer();
     	container.addAtom(new Atom("N"));
     	container.getAtom(0).setExactMass(5.5);
@@ -105,7 +97,7 @@ public class FragmentAtomTest extends CDKTestCase {
     	container.getAtom(1).setExactMass(3.5);
     	container.addBond(0, 1, IBond.Order.TRIPLE);
     	a.setFragment(container);
-    	assertEquals(9.0, a.getExactMass(), 0.0001);
+    	Assert.assertEquals(9.0, a.getExactMass(), 0.0001);
     }
 
 }

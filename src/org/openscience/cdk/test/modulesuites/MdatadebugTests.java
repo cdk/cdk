@@ -49,6 +49,10 @@ import org.openscience.cdk.test.debug.DebugLonePairTest;
 import org.openscience.cdk.test.debug.DebugMoleculeSetTest;
 import org.openscience.cdk.test.debug.DebugMoleculeTest;
 import org.openscience.cdk.test.debug.DebugMonomerTest;
+import org.openscience.cdk.test.debug.DebugPDBAtomTest;
+import org.openscience.cdk.test.debug.DebugPDBMonomerTest;
+import org.openscience.cdk.test.debug.DebugPDBPolymerTest;
+import org.openscience.cdk.test.debug.DebugPDBStructureTest;
 import org.openscience.cdk.test.debug.DebugPolymerTest;
 import org.openscience.cdk.test.debug.DebugPseudoAtomTest;
 import org.openscience.cdk.test.debug.DebugReactionSetTest;
@@ -101,6 +105,12 @@ public class MdatadebugTests {
         suite.addTest(new JUnit4TestAdapter(DebugSingleElectronTest.class));
         suite.addTest(new JUnit4TestAdapter(DebugStrandTest.class));
         
+        // tests from test.protein.data
+        suite.addTest(new JUnit4TestAdapter(DebugPDBAtomTest.class));
+        suite.addTest(new JUnit4TestAdapter(DebugPDBMonomerTest.class));
+        suite.addTest(new JUnit4TestAdapter(DebugPDBPolymerTest.class));
+        suite.addTest(new JUnit4TestAdapter(DebugPDBStructureTest.class));
+
         return suite;
     }
     

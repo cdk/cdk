@@ -22,16 +22,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-
 package org.openscience.cdk.test.protein.data;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.protein.data.PDBStructure;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * Checks the functionality of the PDBStructure class.
@@ -40,77 +39,84 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see PDBStructure
  */
-public class PDBStructureTest extends CDKTestCase {
+public class PDBStructureTest extends NewCDKTestCase {
 	
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 
-	public PDBStructureTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
-
-    public static Test suite() {
-        return new TestSuite(PDBStructureTest.class);
-    }
     
-	public void testPDBStructure() {
+	@Test public void testPDBStructure() {
 		PDBStructure structure = new PDBStructure();
-		assertNotNull(structure);
+		Assert.assertNotNull(structure);
 	}
 	
-	public void testGetEndChainID() {
+	@Test public void testGetEndChainID() {
+		Assert.fail("Not tested yet");
     }
 
-    public void testSetEndChainID_char(char endChainID) {
+    @Test public void testSetEndChainID_char() {
+		Assert.fail("Not tested yet");
     }
 
-    public void testGetEndInsertionCode() {
+    @Test public void testGetEndInsertionCode() {
+		Assert.fail("Not tested yet");
     }
 
-    public void testSetEndInsertionCode_char(char endInsertionCode) {
+    @Test public void testSetEndInsertionCode_char() {
+		Assert.fail("Not tested yet");
     }
 
-    public void testGetEndSequenceNumber() {
+    @Test public void testGetEndSequenceNumber() {
+		Assert.fail("Not tested yet");
     }
 
-    public void testSetEndSequenceNumber_int(int endSequenceNumber) {
+    @Test public void testSetEndSequenceNumber_int() {
+		Assert.fail("Not tested yet");
     }
 
-    public void testGetStartChainID() {
+    @Test public void testGetStartChainID() {
+		Assert.fail("Not tested yet");
     }
 
-    public void testSetStartChainID_char(char startChainID) {
+    @Test public void testSetStartChainID_char() {
+		Assert.fail("Not tested yet");
     }
 
-    public void testGetStartInsertionCode() {
+    @Test public void testGetStartInsertionCode() {
+		Assert.fail("Not tested yet");
     }
 
-    public void testSetStartInsertionCode_char(char startInsertionCode) {
+    @Test public void testSetStartInsertionCode_char() {
+		Assert.fail("Not tested yet");
     }
 
-    public void testGetStartSequenceNumber() {
+    @Test public void testGetStartSequenceNumber() {
+		Assert.fail("Not tested yet");
     }
 
-    public void testSetStartSequenceNumber_int(int startSequenceNumber) {
+    @Test public void testSetStartSequenceNumber_int() {
+		Assert.fail("Not tested yet");
     }
 
-    public void testGetStructureType() {
+    @Test public void testGetStructureType() {
+		Assert.fail("Not tested yet");
     }
 
-    public void testSetStructureType_String(String structureType) {
+    @Test public void testSetStructureType_String() {
+		Assert.fail("Not tested yet");
     }
+
     /**
      * Method to test wether the class complies with RFC #9.
      */
-    public void testToString() {
+    @Test public void testToString() {
     	PDBStructure structure = new PDBStructure();
         String description = structure.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue('\n' != description.charAt(i));
-            assertTrue('\r' != description.charAt(i));
+            Assert.assertTrue('\n' != description.charAt(i));
+            Assert.assertTrue('\r' != description.charAt(i));
         }
     }
 }

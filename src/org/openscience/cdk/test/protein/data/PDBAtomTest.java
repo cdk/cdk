@@ -26,16 +26,16 @@ package org.openscience.cdk.test.protein.data;
 
 import javax.vecmath.Point3d;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.protein.data.PDBAtom;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * Checks the functionality of the AtomTypeFactory
@@ -43,275 +43,267 @@ import org.openscience.cdk.test.CDKTestCase;
  * @cdk.module test-data
  * @see PDBAtom
  */
-public class PDBAtomTest extends CDKTestCase {
+public class PDBAtomTest extends NewCDKTestCase {
 
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 	
-    public PDBAtomTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
 
-    public static Test suite() {
-        return new TestSuite(PDBAtomTest.class);
-    }
-    
-    public void testPDBAtom_IElement() {
+    @Test public void testPDBAtom_IElement() {
     	IElement element = builder.newElement();
         IAtom a = builder.newPDBAtom(element);
-        assertNotNull(a);
+        Assert.assertNotNull(a);
     }
     
     /**
      * Method to test the Atom(String symbol) method.
      */
-    public void testPDBAtom_String() {
+    @Test public void testPDBAtom_String() {
     	IPDBAtom a = builder.newPDBAtom("C");
-        assertEquals("C", a.getSymbol());
-        assertNull(a.getPoint2d());
-        assertNull(a.getPoint3d());
-        assertNull(a.getFractionalPoint3d());
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getFractionalPoint3d());
     }
 
     /**
      * Method to test the Atom(String symbol, javax.vecmath.Point3d point3D) method.
      */
-    public void testPDBAtom_String_Point3d() {
+    @Test public void testPDBAtom_String_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
 
         IPDBAtom a = builder.newPDBAtom("C", point3d);
-        assertEquals("C", a.getSymbol());
-        assertEquals(point3d, a.getPoint3d());
-        assertNull(a.getPoint2d());
-        assertNull(a.getFractionalPoint3d());
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertEquals(point3d, a.getPoint3d());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getFractionalPoint3d());
     }
 
 
     /**
      * Method to test the setFractional3D() methods.
      */
-    public void testSetFractionalPoint3d_Point3d() {
+    @Test public void testSetFractionalPoint3d_Point3d() {
     	IPDBAtom a = builder.newPDBAtom("C");
         a.setFractionalPoint3d(new Point3d(0.5, 0.5, 0.5));
         Point3d fract = a.getFractionalPoint3d();
-        assertNotNull(fract);
-        assertEquals(0.5, fract.x, 0.001);
-        assertEquals(0.5, fract.y, 0.001);
-        assertEquals(0.5, fract.z, 0.001);
+        Assert.assertNotNull(fract);
+        Assert.assertEquals(0.5, fract.x, 0.001);
+        Assert.assertEquals(0.5, fract.y, 0.001);
+        Assert.assertEquals(0.5, fract.z, 0.001);
     }
-    public void testGetFractionalPoint3d() {
+    @Test public void testGetFractionalPoint3d() {
         testSetFractionalPoint3d_Point3d();
     }
     
-    public void testGetPoint3d() {
+    @Test public void testGetPoint3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
         IPDBAtom a = builder.newPDBAtom("C", point3d);
-        assertNotNull(a.getPoint3d());
+        Assert.assertNotNull(a.getPoint3d());
         assertEquals(point3d, a.getPoint3d(), 0.001);
     }
-    public void testSetPoint3d_Point3d() {
+    @Test public void testSetPoint3d_Point3d() {
     	Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
     	IPDBAtom a = builder.newPDBAtom("C");
         a.setPoint3d(point3d);
-        assertEquals(point3d, a.getPoint3d());
+        Assert.assertEquals(point3d, a.getPoint3d());
     }
     
     /**
      * Method to test the compare() method.
      */
-    public void testCompare_Object() {
+    @Test public void testCompare_Object() {
     	IPDBAtom someAtom = builder.newPDBAtom("C");
         if (someAtom instanceof org.openscience.cdk.Atom) {
         	org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)someAtom;
-        	assertTrue(atom.compare(atom));
+        	Assert.assertTrue(atom.compare(atom));
         	IAtom hydrogen = builder.newAtom("H");
-        	assertFalse(atom.compare(hydrogen));
-        	assertFalse(atom.compare("C"));
+        	Assert.assertFalse(atom.compare(hydrogen));
+        	Assert.assertFalse(atom.compare("C"));
         }
     }
     
     /**
      * Method to test the clone() method
      */
-    public void testClone() throws Exception {
+    @Test public void testClone() throws Exception {
     	IPDBAtom atom = builder.newPDBAtom("C");
         Object clone = atom.clone();
-        assertTrue(clone instanceof IAtom);
+        Assert.assertTrue(clone instanceof IAtom);
     }
     
     /**
      * Method to test the clone() method
      */
-    public void testClone_Point3d() throws Exception {
+    @Test public void testClone_Point3d() throws Exception {
     	IPDBAtom atom = builder.newPDBAtom("C");
         atom.setPoint3d(new Point3d(2, 3, 4));
         IAtom clone = (IAtom)atom.clone();
-        assertEquals(clone.getPoint3d().x, 2.0, 0.001);
+        Assert.assertEquals(clone.getPoint3d().x, 2.0, 0.001);
     }
 
     /**
      * Method to test the clone() method
      */
-    public void testClone_FractionalPoint3d() throws Exception {
+    @Test public void testClone_FractionalPoint3d() throws Exception {
     	IPDBAtom atom = builder.newPDBAtom("C");
         atom.setFractionalPoint3d(new Point3d(2, 3, 4));
         IAtom clone = (IAtom)atom.clone();
-        assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
+        Assert.assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
     }
 
 
     /**
      * Method to test wether the class complies with RFC #9.
      */
-    public void testToString() {
+    @Test public void testToString() {
     	IPDBAtom atom = builder.newPDBAtom("C");
         String description = atom.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue('\n' != description.charAt(i));
-            assertTrue('\r' != description.charAt(i));
+            Assert.assertTrue('\n' != description.charAt(i));
+            Assert.assertTrue('\r' != description.charAt(i));
         }
     }
 
     /**
      * Checks that the default charge is set to NaN
      */
-    public void testDefaultChargeValue() {
+    @Test public void testDefaultChargeValue() {
     	IPDBAtom atom = builder.newPDBAtom("C");
-        assertEquals(0.00, atom.getCharge(), 0.00000001);
+        Assert.assertEquals(0.00, atom.getCharge(), 0.00000001);
     }
     
-    public void testGetRecord(){
+    @Test public void testGetRecord(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setRecord("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N");
-        assertTrue(atom.getRecord().equals("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N"));
+        Assert.assertTrue(atom.getRecord().equals("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N"));
     }
     
-    public void testSetRecord_String(){
+    @Test public void testSetRecord_String(){
     	testGetRecord();
     }
     
-    public void testGetTempFactor(){
+    @Test public void testGetTempFactor(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setTempFactor(0.0);
-        assertEquals(atom.getTempFactor(),0.0, 001);
+        Assert.assertEquals(atom.getTempFactor(),0.0, 001);
     }
     
-    public void testSetTempFactor_double(){
+    @Test public void testSetTempFactor_double(){
     	testGetTempFactor();
     }
     
-    public void testSetResName_String(){
+    @Test public void testSetResName_String(){
     	testGetResName();
     }
     
-    public void testGetResName(){
+    @Test public void testGetResName(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setResName("PHE");
-        assertTrue(atom.getResName().equals("PHE"));
+        Assert.assertTrue(atom.getResName().equals("PHE"));
     }
     
-    public void testSetICode_String(){
+    @Test public void testSetICode_String(){
     	testGetICode();
     }
     
-    public void testGetICode(){
+    @Test public void testGetICode(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setICode("123");
-        assertTrue(atom.getICode().equals("123"));
+        Assert.assertTrue(atom.getICode().equals("123"));
     }
     
-    public void testSetChainID_String(){
+    @Test public void testSetChainID_String(){
     	testGetChainID();
     }
     
-    public void testGetChainID(){
+    @Test public void testGetChainID(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setChainID("123");
-        assertTrue(atom.getChainID().equals("123"));
+        Assert.assertTrue(atom.getChainID().equals("123"));
     }
     
-    public void testSetAltLoc_String(){
+    @Test public void testSetAltLoc_String(){
     	testGetAltLoc();
     }
     
-    public void testGetAltLoc(){
+    @Test public void testGetAltLoc(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setAltLoc("123");
-        assertTrue(atom.getAltLoc().equals("123"));
+        Assert.assertTrue(atom.getAltLoc().equals("123"));
     }
     
-    public void testSetSegID_String(){
+    @Test public void testSetSegID_String(){
     	testGetSegID();
     }
     
-    public void testGetSegID(){
+    @Test public void testGetSegID(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setSegID("123");
-        assertTrue(atom.getSegID().equals("123"));
+        Assert.assertTrue(atom.getSegID().equals("123"));
     }
     
-    public void testSetSerial_int(){
+    @Test public void testSetSerial_int(){
     	testGetSerial();
     }
     
-    public void testGetSerial(){
+    @Test public void testGetSerial(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setSerial(123);
-        assertEquals(atom.getSerial(),123);
+        Assert.assertEquals(atom.getSerial(),123);
     }
     
-    public void testSetResSeq_String(){
+    @Test public void testSetResSeq_String(){
     	testGetResSeq();
     }
     
-    public void testGetResSeq(){
+    @Test public void testGetResSeq(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setResSeq("123");
-        assertTrue(atom.getResSeq().equals("123"));
+        Assert.assertTrue(atom.getResSeq().equals("123"));
     }
     
-    public void testSetOxt_boolean(){
+    @Test public void testSetOxt_boolean(){
     	testGetOxt();
     }
     
-    public void testGetOxt(){
+    @Test public void testGetOxt(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setOxt(true);
-        assertTrue(atom.getOxt());
+        Assert.assertTrue(atom.getOxt());
     }
     
-    public void testSetHetAtom_boolean(){
+    @Test public void testSetHetAtom_boolean(){
     	testGetHetAtom();
     }
     
-    public void testGetHetAtom(){
+    @Test public void testGetHetAtom(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setHetAtom(true);
-        assertTrue(atom.getHetAtom());
+        Assert.assertTrue(atom.getHetAtom());
     }
     
-    public void testSetOccupancy_double(){
+    @Test public void testSetOccupancy_double(){
     	testGetOccupancy();
     }
     
-    public void testGetOccupancy(){
+    @Test public void testGetOccupancy(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setOccupancy(1.0);
-        assertEquals(atom.getOccupancy(),1.0,0.01);
+        Assert.assertEquals(atom.getOccupancy(),1.0,0.01);
     }
     
-    public void testGetName(){
+    @Test public void testGetName(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setName("123");
-        assertTrue(atom.getName().equals("123"));
+        Assert.assertTrue(atom.getName().equals("123"));
     }
     
-    public void testSetName_String(){
+    @Test public void testSetName_String(){
     	testGetName();
     }
 }

@@ -22,18 +22,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-
 package org.openscience.cdk.test.protein.data;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * Checks the functionality of the PDBMonomer class.
@@ -42,76 +41,68 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see PDBPolymer
  */
-public class PDBMonomerTest extends CDKTestCase {
+public class PDBMonomerTest extends NewCDKTestCase {
 	
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 
-	public PDBMonomerTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
     	builder = DefaultChemObjectBuilder.getInstance();
     }
-
-    public static Test suite() {
-        return new TestSuite(PDBMonomerTest.class);
-    }
     
-	public void testPDBMonomer() {
+	@Test public void testPDBMonomer() {
 		PDBMonomer monomer = new PDBMonomer();
-		assertNotNull(monomer);
-		assertEquals(monomer.getICode(), null);
+		Assert.assertNotNull(monomer);
+		Assert.assertEquals(monomer.getICode(), null);
 	}
 	
-	public void testSetICode_String() {
+	@Test public void testSetICode_String() {
 		PDBMonomer monomer = new PDBMonomer();
 		monomer.setICode(null);
-		assertNull(monomer.getICode());
+		Assert.assertNull(monomer.getICode());
 	}
 	
-	public void testGetICode() {
+	@Test public void testGetICode() {
 		PDBMonomer monomer = new PDBMonomer();
-		assertNull(monomer.getICode());
+		Assert.assertNull(monomer.getICode());
 		monomer.setICode("iCode");
-		assertNotNull(monomer.getICode());
-		assertEquals("iCode", monomer.getICode());
+		Assert.assertNotNull(monomer.getICode());
+		Assert.assertEquals("iCode", monomer.getICode());
 	}
 	
-	public void testSetChainID_String() {
+	@Test public void testSetChainID_String() {
 		PDBMonomer monomer = new PDBMonomer();
 		monomer.setChainID(null);
-		assertNull(monomer.getChainID());
+		Assert.assertNull(monomer.getChainID());
 	}
 	
-	public void testGetChainID() {
+	@Test public void testGetChainID() {
 		PDBMonomer monomer = new PDBMonomer();
-		assertNull(monomer.getChainID());
+		Assert.assertNull(monomer.getChainID());
 		monomer.setChainID("chainA");
-		assertNotNull(monomer.getChainID());
-		assertEquals("chainA", monomer.getChainID());
+		Assert.assertNotNull(monomer.getChainID());
+		Assert.assertEquals("chainA", monomer.getChainID());
 	}
 	
-	public void testSetResSeq_String() {
+	@Test public void testSetResSeq_String() {
 		PDBMonomer monomer = new PDBMonomer();
 		monomer.setResSeq(null);
-		assertNull(monomer.getResSeq());
+		Assert.assertNull(monomer.getResSeq());
 	}
 	
-	public void testGetResSeq() {
+	@Test public void testGetResSeq() {
 		PDBMonomer monomer = new PDBMonomer();
-		assertNull(monomer.getResSeq());
+		Assert.assertNull(monomer.getResSeq());
 		monomer.setResSeq("reqSeq");
-		assertNotNull(monomer.getResSeq());
-		assertEquals("reqSeq", monomer.getResSeq());
+		Assert.assertNotNull(monomer.getResSeq());
+		Assert.assertEquals("reqSeq", monomer.getResSeq());
 	}
 	
-	public void testToString() {
+	@Test public void testToString() {
 		IPDBMonomer monomer = builder.newPDBMonomer();
         String description = monomer.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue('\n' != description.charAt(i));
-            assertTrue('\r' != description.charAt(i));
+            Assert.assertTrue('\n' != description.charAt(i));
+            Assert.assertTrue('\r' != description.charAt(i));
         }
 	}
 

@@ -24,9 +24,7 @@
  */
 package org.openscience.cdk.test.debug;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.BeforeClass;
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.test.protein.data.PDBPolymerTest;
 
@@ -37,16 +35,8 @@ import org.openscience.cdk.test.protein.data.PDBPolymerTest;
  */
 public class DebugPDBPolymerTest extends PDBPolymerTest {
 
-    public DebugPDBPolymerTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
-    	super.builder = DebugChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(DebugPDBPolymerTest.class);
+    @BeforeClass public static void setUp() {
+    	PDBPolymerTest.builder = DebugChemObjectBuilder.getInstance();
     }
 
 }

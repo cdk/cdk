@@ -49,6 +49,10 @@ import org.openscience.cdk.test.nonotify.NNLonePairTest;
 import org.openscience.cdk.test.nonotify.NNMoleculeSetTest;
 import org.openscience.cdk.test.nonotify.NNMoleculeTest;
 import org.openscience.cdk.test.nonotify.NNMonomerTest;
+import org.openscience.cdk.test.nonotify.NNPDBAtomTest;
+import org.openscience.cdk.test.nonotify.NNPDBMonomerTest;
+import org.openscience.cdk.test.nonotify.NNPDBPolymerTest;
+import org.openscience.cdk.test.nonotify.NNPDBStructureTest;
 import org.openscience.cdk.test.nonotify.NNPolymerTest;
 import org.openscience.cdk.test.nonotify.NNPseudoAtomTest;
 import org.openscience.cdk.test.nonotify.NNReactionSetTest;
@@ -101,6 +105,12 @@ public class MnonotifyTests {
         suite.addTest(new JUnit4TestAdapter(NNSingleElectronTest.class));
         suite.addTest(new JUnit4TestAdapter(NNStrandTest.class));
         
+        // tests from test.protein.data
+        suite.addTest(new JUnit4TestAdapter(NNPDBAtomTest.class));
+        suite.addTest(new JUnit4TestAdapter(NNPDBMonomerTest.class));
+        suite.addTest(new JUnit4TestAdapter(NNPDBPolymerTest.class));
+        suite.addTest(new JUnit4TestAdapter(NNPDBStructureTest.class));
+
         return suite;
     }
     

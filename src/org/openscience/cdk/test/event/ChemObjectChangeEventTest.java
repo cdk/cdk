@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  * 
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -19,17 +16,16 @@
  * 
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.test.event;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.event.ChemObjectChangeEvent;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * Checks the functionality of the ChemObjectChangeEvent class.
@@ -38,20 +34,12 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.event.ChemObjectChangeEvent
  */
-public class ChemObjectChangeEventTest extends CDKTestCase {
+public class ChemObjectChangeEventTest extends NewCDKTestCase {
 
-    public ChemObjectChangeEventTest(String name) {
-        super(name);
-    }
+    @BeforeClass public static void setUp() {}
 
-    public void setUp() {}
-
-    public static Test suite() {
-        return new TestSuite(ChemObjectChangeEventTest.class);
-    }
-
-    public void testChemObjectChangeEvent_Object() {
+    @Test public void testChemObjectChangeEvent_Object() {
         ChemObjectChangeEvent event = new ChemObjectChangeEvent(new Atom());
-        assertNotNull(event);
+        Assert.assertNotNull(event);
     }    
 }
