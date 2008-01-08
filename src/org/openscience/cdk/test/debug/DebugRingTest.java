@@ -24,9 +24,7 @@
  */
 package org.openscience.cdk.test.debug;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.BeforeClass;
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.test.RingTest;
 
@@ -37,16 +35,8 @@ import org.openscience.cdk.test.RingTest;
  */
 public class DebugRingTest extends RingTest {
 
-    public DebugRingTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
-    	super.builder = DebugChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(DebugRingTest.class);
+    @BeforeClass public static void setUp() {
+    	RingTest.builder = DebugChemObjectBuilder.getInstance();
     }
 
 }

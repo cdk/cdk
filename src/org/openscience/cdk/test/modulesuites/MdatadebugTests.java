@@ -93,13 +93,13 @@ public class MdatadebugTests {
         suite.addTest(new JUnit4TestAdapter(DebugPseudoAtomTest.class));
         suite.addTest(new JUnit4TestAdapter(DebugPolymerTest.class));
         suite.addTest(new JUnit4TestAdapter(DebugReactionTest.class));
-        suite.addTest(DebugRingTest.suite());
-        suite.addTest(DebugRingSetTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DebugRingTest.class));
+        suite.addTest(new JUnit4TestAdapter(DebugRingSetTest.class));
         suite.addTest(new JUnit4TestAdapter(DebugAtomContainerSetTest.class));
-        suite.addTest(DebugMoleculeSetTest.suite());
-        suite.addTest(DebugReactionSetTest.suite());
-        suite.addTest(DebugSingleElectronTest.suite());
-        suite.addTest(DebugStrandTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DebugMoleculeSetTest.class));
+        suite.addTest(new JUnit4TestAdapter(DebugReactionSetTest.class));
+        suite.addTest(new JUnit4TestAdapter(DebugSingleElectronTest.class));
+        suite.addTest(new JUnit4TestAdapter(DebugStrandTest.class));
         
         return suite;
     }

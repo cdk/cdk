@@ -24,9 +24,7 @@
  */
 package org.openscience.cdk.test.nonotify;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.BeforeClass;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.ReactionSetTest;
 
@@ -37,16 +35,8 @@ import org.openscience.cdk.test.ReactionSetTest;
  */
 public class NNReactionSetTest extends ReactionSetTest {
 
-    public NNReactionSetTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
-    	super.builder = NoNotificationChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(NNReactionSetTest.class);
+    @BeforeClass public static void setUp() {
+    	ReactionSetTest.builder = NoNotificationChemObjectBuilder.getInstance();
     }
 
 }

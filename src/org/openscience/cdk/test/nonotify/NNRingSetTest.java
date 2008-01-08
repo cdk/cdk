@@ -24,9 +24,7 @@
  */
 package org.openscience.cdk.test.nonotify;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.BeforeClass;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.test.RingSetTest;
 
@@ -37,16 +35,8 @@ import org.openscience.cdk.test.RingSetTest;
  */
 public class NNRingSetTest extends RingSetTest {
 
-    public NNRingSetTest(String name) {
-        super(name);
+    @BeforeClass public static void setUp() {
+    	RingSetTest.builder = NoNotificationChemObjectBuilder.getInstance();
     }
-
-    public void setUp() {
-    	super.builder = NoNotificationChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(NNRingSetTest.class);
-    }
-
+    
 }

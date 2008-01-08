@@ -22,22 +22,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-
 package org.openscience.cdk.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Checks the functionality of the RingSet class.
@@ -46,29 +45,21 @@ import java.util.List;
  *
  * @see org.openscience.cdk.RingSet
  */
-public class RingSetTest extends CDKTestCase {
+public class RingSetTest extends NewCDKTestCase {
 
-  protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
   
-    public RingSetTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
         builder = DefaultChemObjectBuilder.getInstance();
     }
 
-    public static Test suite() {
-        return new TestSuite(RingSetTest.class);
-    }
-    
-    public void testRingSet() {
+    @Test public void testRingSet() {
         IRingSet rs = builder.newRingSet();
-        assertNotNull(rs);
+        Assert.assertNotNull(rs);
     }
     
     
-    public void testAdd_IRingSet() {
+    @Test public void testAdd_IRingSet() {
         IRing r1 = builder.newRing(5, "C");
         IRing r2 = builder.newRing(3, "C");
         
@@ -79,33 +70,33 @@ public class RingSetTest extends CDKTestCase {
         rs2.addAtomContainer(r2);
         rs2.add(rs);
         
-        assertEquals(1, rs.getAtomContainerCount());
-        assertEquals(2, rs2.getAtomContainerCount());
+        Assert.assertEquals(1, rs.getAtomContainerCount());
+        Assert.assertEquals(2, rs2.getAtomContainerCount());
     }
 
-    public void testToString() {
+    @Test public void testToString() {
         IRingSet ringset = builder.newRingSet();
         String description = ringset.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue(description.charAt(i) != '\n');
-            assertTrue(description.charAt(i) != '\r');
+            Assert.assertTrue(description.charAt(i) != '\n');
+            Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
     
     /* FIXME: make RingSet inherited from IChemObject, see #1117775
-    public void testClone() {
+    @Test public void testClone() {
         RingSet ringset = builder.newRingSet();
         Ring ring = builder.newRing();
         ringset.add(ring);
         
         RingSet clone = (RingSet)ringset.clone();
-        assertNotNull(clone);
-        assertTrue(clone instanceof RingSet);
-        assertEquals(1, clone.size());
-        assertNotSame(ring, clone.elementAt(0));
+        Assert.assertNotNull(clone);
+        Assert.assertTrue(clone instanceof RingSet);
+        Assert.assertEquals(1, clone.size());
+        Assert.assertNotSame(ring, clone.elementAt(0));
     } */
     
-    public void testContains_IAtom() {
+    @Test public void testContains_IAtom() {
         IRingSet ringset = builder.newRingSet();
 
         IAtom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
@@ -144,15 +135,15 @@ public class RingSetTest extends CDKTestCase {
         ringset.addAtomContainer(ring1);
         ringset.addAtomContainer(ring2);
         
-        assertTrue(ringset.contains(ring1Atom1));
-        assertTrue(ringset.contains(ring1Atom2));
-        assertTrue(ringset.contains(sharedAtom1));
-        assertTrue(ringset.contains(sharedAtom2));
-        assertTrue(ringset.contains(ring2Atom1));
-        assertTrue(ringset.contains(ring2Atom2));
+        Assert.assertTrue(ringset.contains(ring1Atom1));
+        Assert.assertTrue(ringset.contains(ring1Atom2));
+        Assert.assertTrue(ringset.contains(sharedAtom1));
+        Assert.assertTrue(ringset.contains(sharedAtom2));
+        Assert.assertTrue(ringset.contains(ring2Atom1));
+        Assert.assertTrue(ringset.contains(ring2Atom2));
     }
     
-    public void testContains_IAtomContainer() {
+    @Test public void testContains_IAtomContainer() {
         IRingSet ringset = builder.newRingSet();
 
         IAtom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
@@ -191,11 +182,11 @@ public class RingSetTest extends CDKTestCase {
         ringset.addAtomContainer(ring1);
         ringset.addAtomContainer(ring2);
         
-        assertTrue(ringset.contains(ring1));
-        assertTrue(ringset.contains(ring2));
+        Assert.assertTrue(ringset.contains(ring1));
+        Assert.assertTrue(ringset.contains(ring2));
     }
 
-    public void testGetRings_IBond() {
+    @Test public void testGetRings_IBond() {
         IRingSet ringset = builder.newRingSet();
 
         IAtom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
@@ -234,16 +225,16 @@ public class RingSetTest extends CDKTestCase {
         ringset.addAtomContainer(ring1);
         ringset.addAtomContainer(ring2);
         
-        assertEquals(1, ringset.getRings(ring1Bond1).size());
-        assertEquals(1, ringset.getRings(ring1Bond2).size());
-        assertEquals(1, ringset.getRings(ring1Bond3).size());
-        assertEquals(2, ringset.getRings(sharedBond).size());
-        assertEquals(1, ringset.getRings(ring2Bond1).size());
-        assertEquals(1, ringset.getRings(ring2Bond2).size());
-        assertEquals(1, ringset.getRings(ring2Bond3).size());
+        Assert.assertEquals(1, ringset.getRings(ring1Bond1).size());
+        Assert.assertEquals(1, ringset.getRings(ring1Bond2).size());
+        Assert.assertEquals(1, ringset.getRings(ring1Bond3).size());
+        Assert.assertEquals(2, ringset.getRings(sharedBond).size());
+        Assert.assertEquals(1, ringset.getRings(ring2Bond1).size());
+        Assert.assertEquals(1, ringset.getRings(ring2Bond2).size());
+        Assert.assertEquals(1, ringset.getRings(ring2Bond3).size());
     }
 
-    public void testGetRings_IAtom() {
+    @Test public void testGetRings_IAtom() {
         IRingSet ringset = builder.newRingSet();
 
         IAtom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
@@ -282,15 +273,15 @@ public class RingSetTest extends CDKTestCase {
         ringset.addAtomContainer(ring1);
         ringset.addAtomContainer(ring2);
         
-        assertEquals(1, ringset.getRings(ring1Atom1).getAtomContainerCount());
-        assertEquals(1, ringset.getRings(ring1Atom1).getAtomContainerCount());
-        assertEquals(2, ringset.getRings(sharedAtom1).getAtomContainerCount());
-        assertEquals(2, ringset.getRings(sharedAtom2).getAtomContainerCount());
-        assertEquals(1, ringset.getRings(ring2Atom1).getAtomContainerCount());
-        assertEquals(1, ringset.getRings(ring2Atom2).getAtomContainerCount());
+        Assert.assertEquals(1, ringset.getRings(ring1Atom1).getAtomContainerCount());
+        Assert.assertEquals(1, ringset.getRings(ring1Atom1).getAtomContainerCount());
+        Assert.assertEquals(2, ringset.getRings(sharedAtom1).getAtomContainerCount());
+        Assert.assertEquals(2, ringset.getRings(sharedAtom2).getAtomContainerCount());
+        Assert.assertEquals(1, ringset.getRings(ring2Atom1).getAtomContainerCount());
+        Assert.assertEquals(1, ringset.getRings(ring2Atom2).getAtomContainerCount());
     }
     
-    public void testGetConnectedRings_IRing() {
+    @Test public void testGetConnectedRings_IRing() {
         IRingSet ringset = builder.newRingSet();
 
         IAtom ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
@@ -329,14 +320,14 @@ public class RingSetTest extends CDKTestCase {
         ringset.addAtomContainer(ring1);
         ringset.addAtomContainer(ring2);
         
-        assertEquals(1, ringset.getConnectedRings(ring2).size());
-        assertEquals(1, ringset.getConnectedRings(ring1).size());
+        Assert.assertEquals(1, ringset.getConnectedRings(ring2).size());
+        Assert.assertEquals(1, ringset.getConnectedRings(ring1).size());
     }
 
-    public void testClone() {
+    @Test public void testClone() {
         // Added to make the Coverage tool happy
         // The method is apparently not part of the interface yet
-      assertTrue(true);
+      Assert.assertTrue(true);
     }
     
     /**
@@ -346,7 +337,7 @@ public class RingSetTest extends CDKTestCase {
      * Bug fix by Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
      * @cdk.bug 1772613
      */
-    public void testGetConnectedRingsBug1772613() throws Exception {
+    @Test public void testGetConnectedRingsBug1772613() throws Exception {
         // Build a bridged and fused norbomane like ring system
         // C1CCC2C(C1)C4CC2C3CCCCC34
         IRing leftCyclohexane = builder.newRing(6, "C");
@@ -403,7 +394,7 @@ public class RingSetTest extends CDKTestCase {
         for (Iterator iterator = connectedRings.iterator(); iterator.hasNext(); ) {
             IRing connectedRing = (IRing) iterator.next();
             if (foundRings.contains(connectedRing))
-                fail("The list of connected rings contains duplicates.");
+                Assert.fail("The list of connected rings contains duplicates.");
             foundRings.add(connectedRing);
         }
     }

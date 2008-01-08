@@ -93,13 +93,13 @@ public class MnonotifyTests {
         suite.addTest(new JUnit4TestAdapter(NNPseudoAtomTest.class));
         suite.addTest(new JUnit4TestAdapter(NNPolymerTest.class));
         suite.addTest(new JUnit4TestAdapter(NNReactionTest.class));
-        suite.addTest(NNRingTest.suite());
-        suite.addTest(NNRingSetTest.suite());
+        suite.addTest(new JUnit4TestAdapter(NNRingTest.class));
+        suite.addTest(new JUnit4TestAdapter(NNRingSetTest.class));
         suite.addTest(new JUnit4TestAdapter(NNAtomContainerSetTest.class));
-        suite.addTest(NNMoleculeSetTest.suite());
-        suite.addTest(NNReactionSetTest.suite());
-        suite.addTest(NNSingleElectronTest.suite());
-        suite.addTest(NNStrandTest.suite());
+        suite.addTest(new JUnit4TestAdapter(NNMoleculeSetTest.class));
+        suite.addTest(new JUnit4TestAdapter(NNReactionSetTest.class));
+        suite.addTest(new JUnit4TestAdapter(NNSingleElectronTest.class));
+        suite.addTest(new JUnit4TestAdapter(NNStrandTest.class));
         
         return suite;
     }

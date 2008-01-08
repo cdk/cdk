@@ -105,13 +105,13 @@ public class MdataTests {
         suite.addTest(new JUnit4TestAdapter(PolymerTest.class));
         suite.addTest(new JUnit4TestAdapter(PseudoAtomTest.class));
         suite.addTest(new JUnit4TestAdapter(ReactionTest.class));
-        suite.addTest(RingTest.suite());
-        suite.addTest(RingSetTest.suite());
+        suite.addTest(new JUnit4TestAdapter(RingTest.class));
+        suite.addTest(new JUnit4TestAdapter(RingSetTest.class));
         suite.addTest(new JUnit4TestAdapter(AtomContainerSetTest.class));
-        suite.addTest(MoleculeSetTest.suite());
-        suite.addTest(ReactionSetTest.suite());
-        suite.addTest(SingleElectronTest.suite());
-        suite.addTest(StrandTest.suite());
+        suite.addTest(new JUnit4TestAdapter(MoleculeSetTest.class));
+        suite.addTest(new JUnit4TestAdapter(ReactionSetTest.class));
+        suite.addTest(new JUnit4TestAdapter(SingleElectronTest.class));
+        suite.addTest(new JUnit4TestAdapter(StrandTest.class));
         suite.addTest(ChangeEventPropagationTest.suite());
 
         suite.addTest(FragmentAtomTest.suite());

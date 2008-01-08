@@ -24,9 +24,7 @@
  */
 package org.openscience.cdk.test.debug;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.BeforeClass;
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.test.SingleElectronTest;
 
@@ -37,16 +35,8 @@ import org.openscience.cdk.test.SingleElectronTest;
  */
 public class DebugSingleElectronTest extends SingleElectronTest {
 
-    public DebugSingleElectronTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
-    	super.builder = DebugChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(DebugSingleElectronTest.class);
+    @BeforeClass public static void setUp() {
+    	SingleElectronTest.builder = DebugChemObjectBuilder.getInstance();
     }
 
 }

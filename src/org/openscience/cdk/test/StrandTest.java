@@ -29,10 +29,9 @@ package org.openscience.cdk.test;
 
 import java.util.Hashtable;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -46,26 +45,18 @@ import org.openscience.cdk.interfaces.IStrand;
  * @author     Martin Eklund <martin.eklund@farmbio.uu.se>
  * @cdk.module test-data
  */
-public class StrandTest extends TestCase {
+public class StrandTest extends NewCDKTestCase {
 	
-	protected IChemObjectBuilder builder;
+	protected static IChemObjectBuilder builder;
 	
-    public StrandTest(String name) {
-		super(name);
-	}
-
-    public void setUp() {
+    @BeforeClass public static void setUp() {
        	builder = DefaultChemObjectBuilder.getInstance();
     }
 
-    public static Test suite() {
-		return new TestSuite(StrandTest.class);
-	}
-
-	public void testStrand() {
+	@Test public void testStrand() {
 		IStrand oStrand = builder.newStrand();
-		assertNotNull(oStrand);
-		assertEquals(oStrand.getMonomerCount(), 0);
+		Assert.assertNotNull(oStrand);
+		Assert.assertEquals(oStrand.getMonomerCount(), 0);
 
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
@@ -84,42 +75,42 @@ public class StrandTest extends TestCase {
 		oStrand.addAtom(oAtom3, oMono1);
 		oStrand.addAtom(oAtom4, oMono2);
 		oStrand.addAtom(oAtom5, oMono3);
-		assertNotNull(oStrand.getAtom(0));
-		assertNotNull(oStrand.getAtom(1));
-		assertNotNull(oStrand.getAtom(2));
-		assertNotNull(oStrand.getAtom(3));
-		assertNotNull(oStrand.getAtom(4));
-		assertEquals(oAtom1, oStrand.getAtom(0));
-		assertEquals(oAtom2, oStrand.getAtom(1));
-		assertEquals(oAtom3, oStrand.getAtom(2));
-		assertEquals(oAtom4, oStrand.getAtom(3));
-		assertEquals(oAtom5, oStrand.getAtom(4));
+		Assert.assertNotNull(oStrand.getAtom(0));
+		Assert.assertNotNull(oStrand.getAtom(1));
+		Assert.assertNotNull(oStrand.getAtom(2));
+		Assert.assertNotNull(oStrand.getAtom(3));
+		Assert.assertNotNull(oStrand.getAtom(4));
+		Assert.assertEquals(oAtom1, oStrand.getAtom(0));
+		Assert.assertEquals(oAtom2, oStrand.getAtom(1));
+		Assert.assertEquals(oAtom3, oStrand.getAtom(2));
+		Assert.assertEquals(oAtom4, oStrand.getAtom(3));
+		Assert.assertEquals(oAtom5, oStrand.getAtom(4));
 
-		assertNull(oStrand.getMonomer("0815"));
-		assertNotNull(oStrand.getMonomer(""));
-		assertNotNull(oStrand.getMonomer("TRP279"));
-		assertEquals(oMono1, oStrand.getMonomer("TRP279"));
-		assertEquals(oStrand.getMonomer("TRP279").getAtomCount(), 1);
-		assertNotNull(oStrand.getMonomer("HOH"));
-		assertEquals(oMono2, oStrand.getMonomer("HOH"));
-		assertEquals(oStrand.getMonomer("HOH").getAtomCount(), 1);
-		assertEquals(oStrand.getMonomer("").getAtomCount(), 2);
-		assertEquals(oStrand.getAtomCount(), 5);
-		assertEquals(oStrand.getMonomerCount(), 3);
+		Assert.assertNull(oStrand.getMonomer("0815"));
+		Assert.assertNotNull(oStrand.getMonomer(""));
+		Assert.assertNotNull(oStrand.getMonomer("TRP279"));
+		Assert.assertEquals(oMono1, oStrand.getMonomer("TRP279"));
+		Assert.assertEquals(oStrand.getMonomer("TRP279").getAtomCount(), 1);
+		Assert.assertNotNull(oStrand.getMonomer("HOH"));
+		Assert.assertEquals(oMono2, oStrand.getMonomer("HOH"));
+		Assert.assertEquals(oStrand.getMonomer("HOH").getAtomCount(), 1);
+		Assert.assertEquals(oStrand.getMonomer("").getAtomCount(), 2);
+		Assert.assertEquals(oStrand.getAtomCount(), 5);
+		Assert.assertEquals(oStrand.getMonomerCount(), 3);
 	}
 	
-	public void testGetStrandName()	{
+	@Test public void testGetStrandName()	{
 		IStrand oStrand = builder.newStrand();
 		oStrand.setStrandName("A");
 		
-		assertEquals("A", oStrand.getStrandName());
+		Assert.assertEquals("A", oStrand.getStrandName());
 	}
 	
-	public void testGetStrandType()	{
+	@Test public void testGetStrandType()	{
 		IStrand oStrand = builder.newStrand();
 		oStrand.setStrandType("DNA");
 		
-		assertEquals("DNA", oStrand.getStrandType());
+		Assert.assertEquals("DNA", oStrand.getStrandType());
 	}
 	
 	/** The methods above effectively test SetStrandName and
@@ -127,31 +118,31 @@ public class StrandTest extends TestCase {
 	 * SetStrandType explicitly as well (for concinstency).  
 	 */
 	
-	public void testSetStrandName_String()	{
+	@Test public void testSetStrandName_String()	{
 		IStrand oStrand = builder.newStrand();
 		oStrand.setStrandName("A");
 		
-		assertEquals("A", oStrand.getStrandName());
+		Assert.assertEquals("A", oStrand.getStrandName());
 	}
 	
-	public void testSetStrandType_String()	{
+	@Test public void testSetStrandType_String()	{
 		IStrand oStrand = builder.newStrand();
 		oStrand.setStrandType("DNA");
 		
-		assertEquals("DNA", oStrand.getStrandType());
+		Assert.assertEquals("DNA", oStrand.getStrandType());
 	}
 	
-	public void testAddAtom_IAtom() {
+	@Test public void testAddAtom_IAtom() {
 		IStrand oStrand = builder.newStrand();
 		IAtom oAtom1 = builder.newAtom("C1");
 		IAtom oAtom2 = builder.newAtom("C2");
 		oStrand.addAtom(oAtom1);
 		oStrand.addAtom(oAtom2);
 
-		assertEquals(2, oStrand.getAtomCount());
+		Assert.assertEquals(2, oStrand.getAtomCount());
 	}
     
-	public void testAddAtom_IAtom_IMonomer() {
+	@Test public void testAddAtom_IAtom_IMonomer() {
 		IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
@@ -162,11 +153,11 @@ public class StrandTest extends TestCase {
 		oStrand.addAtom(oAtom2);
 		oStrand.addAtom(oAtom3, oMono1);
 
-		assertEquals(2, oStrand.getMonomer("").getAtomCount());
-		assertEquals(1, oStrand.getMonomer("TRP279").getAtomCount());
+		Assert.assertEquals(2, oStrand.getMonomer("").getAtomCount());
+		Assert.assertEquals(1, oStrand.getMonomer("TRP279").getAtomCount());
 	}
 	
-	public void testGetMonomerCount() {
+	@Test public void testGetMonomerCount() {
 		IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
@@ -177,10 +168,10 @@ public class StrandTest extends TestCase {
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
 
-		assertEquals(2, oStrand.getMonomerCount());
+		Assert.assertEquals(2, oStrand.getMonomerCount());
 	}
 	 
-	public void testGetMonomer_String() {
+	@Test public void testGetMonomer_String() {
 		IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
@@ -191,12 +182,12 @@ public class StrandTest extends TestCase {
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
 
-		assertEquals(oMono1, oStrand.getMonomer("TRP279"));
-		assertEquals(oMono2, oStrand.getMonomer("HOH"));
-		assertNull(oStrand.getMonomer("TEST"));
+		Assert.assertEquals(oMono1, oStrand.getMonomer("TRP279"));
+		Assert.assertEquals(oMono2, oStrand.getMonomer("HOH"));
+		Assert.assertNull(oStrand.getMonomer("TEST"));
 	}
 	
-	public void testGetMonomerNames() {
+	@Test public void testGetMonomerNames() {
 		IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
@@ -214,28 +205,28 @@ public class StrandTest extends TestCase {
 		monomers.put("TRP279", oMono1);
 		monomers.put("HOH", oMono2);
 		
-		assertEquals(monomers.keySet(), oStrand.getMonomerNames());
+		Assert.assertEquals(monomers.keySet(), oStrand.getMonomerNames());
 /*
-		assertEquals(3, oStrand.getMonomerNames().size());
-		assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
-		assertTrue(oStrand.getMonomerNames().contains(oMono2.getMonomerName()));
+		Assert.assertEquals(3, oStrand.getMonomerNames().size());
+		Assert.assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
+		Assert.assertTrue(oStrand.getMonomerNames().contains(oMono2.getMonomerName()));
 */		
 	}
 	
-	public void testRemoveMonomer_String()	{
+	@Test public void testRemoveMonomer_String()	{
 		IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		IAtom oAtom1 = builder.newAtom("C1");
 		oStrand.addAtom(oAtom1, oMono1);		
-		assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
-		assertEquals(1, oStrand.getAtomCount());
+		Assert.assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
+		Assert.assertEquals(1, oStrand.getAtomCount());
 		oStrand.removeMonomer("TRP279");
-		assertFalse(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
-		assertEquals(0, oStrand.getAtomCount());
+		Assert.assertFalse(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
+		Assert.assertEquals(0, oStrand.getAtomCount());
 	}
 	
-	public void testGetMonomers()	{
+	@Test public void testGetMonomers()	{
 		IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
@@ -253,13 +244,13 @@ public class StrandTest extends TestCase {
 		monomers.put("TRP279", oMono1);
 		monomers.put("HOH", oMono2);
 		
-		assertEquals(monomers.keySet(), oStrand.getMonomerNames());
+		Assert.assertEquals(monomers.keySet(), oStrand.getMonomerNames());
 	}
 
     /**
      * Method to test wether the class complies with RFC #9.
      */
-    public void testToString() {
+    @Test public void testToString() {
         IStrand oStrand = builder.newStrand();
 		IMonomer oMono1 = builder.newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
@@ -278,18 +269,18 @@ public class StrandTest extends TestCase {
 		monomers.put("HOH", oMono2);
         String description = oStrand.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue('\n' != description.charAt(i));
-            assertTrue('\r' != description.charAt(i));
+            Assert.assertTrue('\n' != description.charAt(i));
+            Assert.assertTrue('\r' != description.charAt(i));
         }
     }
     
     /**
      * Method to test the clone() method
      */
-    public void testClone() throws Exception {
+    @Test public void testClone() throws Exception {
     	IStrand strand = builder.newStrand();
         Object clone = strand.clone();
-        assertTrue(clone instanceof IStrand);
+        Assert.assertTrue(clone instanceof IStrand);
     }
     
 }

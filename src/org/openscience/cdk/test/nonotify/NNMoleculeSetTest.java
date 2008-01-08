@@ -24,9 +24,8 @@
  */
 package org.openscience.cdk.test.nonotify;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -40,16 +39,8 @@ import org.openscience.cdk.test.MoleculeSetTest;
  */
 public class NNMoleculeSetTest extends MoleculeSetTest {
 
-    public NNMoleculeSetTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {
-    	super.builder = NoNotificationChemObjectBuilder.getInstance();
-    }
-
-    public static Test suite() {
-        return new TestSuite(NNMoleculeSetTest.class);
+    @BeforeClass public static void setUp() {
+    	MoleculeSetTest.builder = NoNotificationChemObjectBuilder.getInstance();
     }
 
     // Overwrite default methods: no notifications are expected!
@@ -60,7 +51,7 @@ public class NNMoleculeSetTest extends MoleculeSetTest {
         chemObject.addListener(listener);
         
         chemObject.addMolecule(builder.newMolecule());
-        assertFalse(listener.changed);
+        Assert.assertFalse(listener.changed);
     }
 
     private class ChemObjectListenerImpl implements IChemObjectListener {
