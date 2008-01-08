@@ -43,6 +43,7 @@ import java.util.List;
  *  Atom, a Bond or three or more atoms with at least on other ring in the
  *  RingSet are considered connected.
  *
+ *
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
@@ -59,7 +60,12 @@ public class RingPartitioner {
     /**
      *  Partitions a RingSet into RingSets of connected rings. Rings which share
      *  an Atom, a Bond or three or more atoms with at least on other ring in
-     *  the RingSet are considered connected.
+     *  the RingSet are considered connected. Thus molecules such as azulene and
+     * indole will return a List with 1 element.
+     *
+     *  Note that an isolated ring is considered to be <i>self-connect</i>. As a result
+     * a molecule such as biphenyl will result in a 2-element List being returned (each
+     * element corresponding to a phenyl ring).
      *
      *@param  ringSet  The RingSet to be partitioned
      *@return          A List of connected RingSets
