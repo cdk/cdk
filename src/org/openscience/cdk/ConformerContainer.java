@@ -210,7 +210,9 @@ public class ConformerContainer implements List<IAtomContainer> {
         }
 
         if (!title.equals(atomContainer.getProperty(CDKConstants.TITLE)))
-            throw new IllegalArgumentException("The input molecules does not have the same title as the other conformers");
+            throw new IllegalArgumentException(
+            	"The input molecules does not have the same title ('" + title + 
+            	"') as the other conformers ('" + atomContainer.getProperty(CDKConstants.TITLE) + "')");
 
         if (atomContainer.getAtomCount() != this.atomContainer.getAtomCount())
             throw new IllegalArgumentException("Doesn't have the same number of atoms as the rest of the conformers");

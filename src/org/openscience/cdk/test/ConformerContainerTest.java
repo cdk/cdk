@@ -54,6 +54,7 @@ public class ConformerContainerTest extends NewCDKTestCase {
         IAtomContainer[] ret = new IAtomContainer[nconf];
         for (int i = 0; i < nconf; i++) {
             IAtomContainer aClone = (IAtomContainer) base.clone();
+            aClone.setProperty(CDKConstants.TITLE, base.getProperty(CDKConstants.TITLE));
             for (int j = 0; j < aClone.getAtomCount(); j++) {
                 Point3d p = aClone.getAtom(j).getPoint3d();
                 p.x = rnd.nextDouble();
@@ -76,6 +77,7 @@ public class ConformerContainerTest extends NewCDKTestCase {
     public void testConformerContainer() {
         ConformerContainer container = new ConformerContainer();
         Assert.assertNotNull(container);
+        base.setProperty(CDKConstants.TITLE, "myMolecule");
         container.add(base);
         Assert.assertEquals(1, container.size());
 
@@ -180,10 +182,12 @@ public class ConformerContainerTest extends NewCDKTestCase {
     }
 
     @Test public void testAdd_int_IAtomContainer() {
-    	Assert.fail("Missing JUnit test");
+    	ConformerContainer container = new ConformerContainer(confs);
+    	container.add(5, confs[5]);
     };
     @Test public void testAdd_int_Object() {
-    	Assert.fail("Missing JUnit test");
+    	ConformerContainer container = new ConformerContainer(confs);
+    	container.add(5, confs[5]);
     };
     @Test public void testAdd_Object() {
         ConformerContainer container = new ConformerContainer();
@@ -225,8 +229,10 @@ public class ConformerContainerTest extends NewCDKTestCase {
     	Assert.assertEquals(nconfs, container.size());
     	Assert.assertTrue(container.contains(container.get(3)));
     };
-    @Test public void testAddAll_int_Collection() {
-    	Assert.fail("Missing JUnit test");
+    @Test(expected=UnsupportedOperationException.class)
+    public void testAddAll_int_Collection() {
+    	ConformerContainer container = new ConformerContainer(confs);
+    	container.addAll(5, null);
     };
     @Test(expected=UnsupportedOperationException.class) 
     public void testToArray_arrayObject() {
@@ -243,12 +249,21 @@ public class ConformerContainerTest extends NewCDKTestCase {
     	Assert.assertFalse(cContainer.contains(container));
     };
     @Test public void testSet_int_IAtomContainer() {
-    	Assert.fail("Missing JUnit test");
+    	ConformerContainer container = new ConformerContainer(confs);
+    	int location = 5;
+        Assert.assertNotSame(container.get(location+1), container.get(location));
+        container.set(location, container.get(location+1));
+        Assert.assertEquals(container.get(location+1), container.get(location));
     };
     @Test public void testSet_int_Object() {
-    	Assert.fail("Missing JUnit test");
+    	ConformerContainer container = new ConformerContainer(confs);
+    	int location = 5;
+        Assert.assertNotSame(container.get(location+1), container.get(location));
+        container.set(location, container.get(location+1));
+        Assert.assertEquals(container.get(location+1), container.get(location));
     };
-    @Test public void testContainsAll_Collection() {
+    @Test(expected=UnsupportedOperationException.class)
+    public void testContainsAll_Collection() {
         ConformerContainer container = new ConformerContainer(confs);
         Assert.assertNotNull(container);
         Assert.assertEquals(nconfs, container.size());        
@@ -263,17 +278,25 @@ public class ConformerContainerTest extends NewCDKTestCase {
         container.removeAll(container);
         Assert.assertEquals(0, container.size());
     };       
-    @Test public void testRetainAll_Collection() {
-    	Assert.fail("Missing JUnit test");
+    @Test(expected=UnsupportedOperationException.class)
+    public void testRetainAll_Collection() {
+    	ConformerContainer container = new ConformerContainer(base);
+        container.retainAll(null);
     };
-    @Test public void testSubList_int_int() {
-    	Assert.fail("Missing JUnit test");
+    @Test(expected=UnsupportedOperationException.class)
+    public void testSubList_int_int() {
+    	ConformerContainer container = new ConformerContainer(base);
+        container.subList(3, 4);
     };
-    @Test public void testListIterator() {
-    	Assert.fail("Missing JUnit test");
+    @Test(expected=UnsupportedOperationException.class)
+    public void testListIterator() {
+        ConformerContainer container = new ConformerContainer(base);
+        container.listIterator();
     };
-    @Test public void testListIterator_int() {
-    	Assert.fail("Missing JUnit test");
+    @Test(expected=UnsupportedOperationException.class)
+    public void testListIterator_int() {
+    	ConformerContainer container = new ConformerContainer(base);
+        container.listIterator(1);
     };
     @Test public void testConformerContainer_IAtomContainer() {
         ConformerContainer container = new ConformerContainer(base);
