@@ -29,6 +29,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.protein.data.PDBStructure;
 import org.openscience.cdk.test.NewCDKTestCase;
 
@@ -48,64 +49,99 @@ public class PDBStructureTest extends NewCDKTestCase {
     }
     
 	@Test public void testPDBStructure() {
-		PDBStructure structure = new PDBStructure();
+		IPDBStructure structure = builder.newPDBStructure();
 		Assert.assertNotNull(structure);
 	}
 	
 	@Test public void testGetEndChainID() {
-		Assert.fail("Not tested yet");
+		IPDBStructure structure = builder.newPDBStructure();
+		Assert.assertNotNull(structure.getEndChainID());
+		// FIXME: test the default value
     }
 
     @Test public void testSetEndChainID_char() {
-		Assert.fail("Not tested yet");
+    	IPDBStructure structure = builder.newPDBStructure();
+    	char endChainID = 'x';
+		structure.setEndChainID(endChainID);
+		Assert.assertEquals(endChainID, structure.getEndChainID());
     }
 
     @Test public void testGetEndInsertionCode() {
-		Assert.fail("Not tested yet");
+		IPDBStructure structure = builder.newPDBStructure();
+		Assert.assertNotNull(structure.getEndInsertionCode());
+		// FIXME: test the default value
     }
 
     @Test public void testSetEndInsertionCode_char() {
-		Assert.fail("Not tested yet");
+    	IPDBStructure structure = builder.newPDBStructure();
+    	char endInsertionCode = 'x';
+		structure.setEndInsertionCode(endInsertionCode);
+		Assert.assertEquals(endInsertionCode, structure.getEndInsertionCode());
     }
 
     @Test public void testGetEndSequenceNumber() {
-		Assert.fail("Not tested yet");
+		IPDBStructure structure = builder.newPDBStructure();
+		Assert.assertNotNull(structure.getEndSequenceNumber());
+		Assert.assertEquals(0, structure.getEndSequenceNumber());
     }
 
     @Test public void testSetEndSequenceNumber_int() {
-		Assert.fail("Not tested yet");
+    	IPDBStructure structure = builder.newPDBStructure();
+    	int endSequenceNumber = 5;
+		structure.setEndSequenceNumber(endSequenceNumber);
+		Assert.assertEquals(endSequenceNumber, structure.getEndSequenceNumber());
     }
 
     @Test public void testGetStartChainID() {
-		Assert.fail("Not tested yet");
+		IPDBStructure structure = builder.newPDBStructure();
+		Assert.assertNotNull(structure.getStartChainID());
+		// FIXME: test the default value
     }
 
     @Test public void testSetStartChainID_char() {
-		Assert.fail("Not tested yet");
+    	IPDBStructure structure = builder.newPDBStructure();
+    	char startChainID = 'x';
+		structure.setStartChainID(startChainID);
+		Assert.assertEquals(startChainID, structure.getStartChainID());
     }
 
     @Test public void testGetStartInsertionCode() {
-		Assert.fail("Not tested yet");
+		IPDBStructure structure = builder.newPDBStructure();
+		Assert.assertNotNull(structure.getStartInsertionCode());
+		// FIXME: test the default value
     }
 
     @Test public void testSetStartInsertionCode_char() {
-		Assert.fail("Not tested yet");
+    	IPDBStructure structure = builder.newPDBStructure();
+    	char startInsertionCode = 'x';
+		structure.setStartInsertionCode(startInsertionCode);
+		Assert.assertEquals(startInsertionCode, structure.getStartInsertionCode());
     }
 
     @Test public void testGetStartSequenceNumber() {
-		Assert.fail("Not tested yet");
+		IPDBStructure structure = builder.newPDBStructure();
+		Assert.assertNotNull(structure.getStartSequenceNumber());
+		Assert.assertEquals(0, structure.getStartSequenceNumber());
     }
 
     @Test public void testSetStartSequenceNumber_int() {
-		Assert.fail("Not tested yet");
+    	IPDBStructure structure = builder.newPDBStructure();
+    	int startSequenceNumber = 5;
+		structure.setStartSequenceNumber(startSequenceNumber);
+		Assert.assertEquals(startSequenceNumber, structure.getStartSequenceNumber());
     }
 
     @Test public void testGetStructureType() {
-		Assert.fail("Not tested yet");
+    	IPDBStructure structure = builder.newPDBStructure();
+		String type = structure.getStructureType();
+		Assert.assertNull(type);
     }
 
     @Test public void testSetStructureType_String() {
-		Assert.fail("Not tested yet");
+    	IPDBStructure structure = builder.newPDBStructure();
+    	String type = "alpha-barrel";
+		structure.setStructureType(type);
+		Assert.assertEquals(type, structure.getStructureType());
     }
 
     /**
