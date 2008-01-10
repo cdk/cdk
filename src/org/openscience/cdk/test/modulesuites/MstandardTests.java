@@ -94,7 +94,7 @@ public class MstandardTests {
         suite.addTest(MinimalPathIteratorTest.suite());
         suite.addTest(new JUnit4TestAdapter(ConnectivityCheckerTest.class));
         suite.addTest(UniversalIsomorphismTesterTest.suite());
-        suite.addTest(IsomorphismTesterTest.suite());
+        suite.addTest(new JUnit4TestAdapter(IsomorphismTesterTest.class));
         suite.addTest(RMapTest.suite());
         suite.addTest(RGraphTest.suite());
         suite.addTest(RNodeTest.suite());

@@ -24,29 +24,30 @@
  */
 package org.openscience.cdk.test.isomorphism;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
 
 /**
  * Checks the functionality of the IsomorphismTester
  *
  * @cdk.module test-standard
  */
-public class IsomorphismTesterTest extends CDKTestCase
+public class IsomorphismTesterTest extends NewCDKTestCase
 {
 	Molecule pinene_1 = null, pinene_2 = null, pinene_non = null;
-	public IsomorphismTesterTest(String name)
+	public IsomorphismTesterTest()
 	{
-		super(name);
+		super();
 	}
-	
-	public void setUp()
+
+    @Before
+    public void setUp()
 	{
 		pinene_1 = new Molecule();
 		pinene_1.addAtom(new Atom("C")); // 1
@@ -120,30 +121,30 @@ public class IsomorphismTesterTest extends CDKTestCase
 		pinene_non.addBond(4, 5, IBond.Order.DOUBLE); // 10
 		pinene_non.addBond(7, 9, IBond.Order.SINGLE); // 11
 	}
-	
-	public static Test suite() {
-		return new TestSuite(IsomorphismTesterTest.class);
-	}
 
+    @Test
 	public void testIsomorphismTester_IMolecule() throws Exception {
 		IsomorphismTester it = new IsomorphismTester(pinene_1);
-		assertNotNull(it);
-	}
-	
-	public void testIsomorphismTester() throws Exception {
-		IsomorphismTester it = new IsomorphismTester();
-		assertNotNull(it);
-	}
-	
-	public void testIsIsomorphic_IMolecule() throws Exception {
-		IsomorphismTester it = new IsomorphismTester(pinene_1);
-		assertTrue(it.isIsomorphic(pinene_2));
-		assertFalse(it.isIsomorphic(pinene_non));
+		Assert.assertNotNull(it);
 	}
 
-	public void testIsIsomorphic_IMolecule_IMolecule() throws Exception {
+    @Test
+    public void testIsomorphismTester() throws Exception {
 		IsomorphismTester it = new IsomorphismTester();
-		assertTrue(it.isIsomorphic(pinene_2, pinene_1));
-		assertFalse(it.isIsomorphic(pinene_2, pinene_non));
+		Assert.assertNotNull(it);
+	}
+
+    @Test
+    public void testIsIsomorphic_IMolecule() throws Exception {
+		IsomorphismTester it = new IsomorphismTester(pinene_1);
+		Assert.assertTrue(it.isIsomorphic(pinene_2));
+		Assert.assertFalse(it.isIsomorphic(pinene_non));
+	}
+
+    @Test
+    public void testIsIsomorphic_IMolecule_IMolecule() throws Exception {
+		IsomorphismTester it = new IsomorphismTester();
+		Assert.assertTrue(it.isIsomorphic(pinene_2, pinene_1));
+		Assert.assertFalse(it.isIsomorphic(pinene_2, pinene_non));
 	}
 }
