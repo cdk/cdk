@@ -52,7 +52,7 @@ public class CycleBasisTest extends NewCDKTestCase {
 	SimpleGraph g;
 
     @Before
-    protected void setUp() {
+    public void setUp() {
 		g = new SimpleGraph(  );
 		
 		g.addVertex( "a" );

@@ -52,7 +52,7 @@ public class AtomTypeManipulatorTest extends NewCDKTestCase {
 		);
 	}
 
-    @Test(expected = IllegalAccessException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testConfigure_IAtom_Null() {
         IAtom atom = new NNAtom(Elements.CARBON);
         IAtomType atomType = null;

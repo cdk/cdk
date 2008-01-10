@@ -32,7 +32,7 @@ import org.openscience.cdk.validate.ProblemMarker;
  */
 public class ProblemMarkerTest extends NewCDKTestCase {
     
-    public ProblemMarkerTest(String name) {
+    public ProblemMarkerTest() {
         super();
     }
 
