@@ -28,10 +28,12 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.exception.CDKException;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -43,6 +45,7 @@ import org.openscience.cdk.exception.CDKException;
  * @author      Egon Willighagen
  * @cdk.created 2005-08-19
  */
+@TestClass("org.openscience.cdk.test.tools.manipulator.AminoAcidManipulatorTest")
 public class AminoAcidManipulator {
 
 	/**
@@ -51,23 +54,23 @@ public class AminoAcidManipulator {
 	 * @param acid AminoAcid from which to remove the oxygen
 	 * @throws CDKException when the C-terminus is not defined for the given AminoAcid 
 	 */
-	public static void removeAcidicOxygen(IAminoAcid acid) throws CDKException {
+    @TestMethod("testRemoveAcidicOxygen_IAminoAcid")
+    public static void removeAcidicOxygen(IAminoAcid acid) throws CDKException {
 		if (acid.getCTerminus() == null) 
 			throw new CDKException("Cannot remove oxygen: C-terminus is not defined!");
 		
-		java.util.List bonds = acid.getConnectedBondsList(acid.getCTerminus());
+		java.util.List<IBond> bonds = acid.getConnectedBondsList(acid.getCTerminus());
 		// ok, look for the oxygen which is singly bonded
-		for (int i=0; i<bonds.size(); i++) {
-			IBond bond = (IBond)bonds.get(i);
-			if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
-				for (int j=0; j<bond.getAtomCount(); j++) {
-					if (bond.getAtom(j).getSymbol().equals("O")) {
-						// yes, we found a singly bonded oxygen!
-						acid.removeAtomAndConnectedElectronContainers(bond.getAtom(j));
-					}
-				}
-			}
-		}
+        for (IBond bond : bonds) {
+            if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
+                for (int j = 0; j < bond.getAtomCount(); j++) {
+                    if (bond.getAtom(j).getSymbol().equals("O")) {
+                        // yes, we found a singly bonded oxygen!
+                        acid.removeAtomAndConnectedElectronContainers(bond.getAtom(j));
+                    }
+                }
+            }
+        }
 	}
 
 	/**
@@ -76,7 +79,8 @@ public class AminoAcidManipulator {
 	 * @param  acid         AminoAcid to which to add the oxygen
 	 * @throws CDKException when the C-terminus is not defined for the given AminoAcid 
 	 */
-	public static void addAcidicOxygen(IAminoAcid acid) throws CDKException {
+    @TestMethod("testAddAcidicOxygen_IAminoAcid")
+    public static void addAcidicOxygen(IAminoAcid acid) throws CDKException {
 		if (acid.getCTerminus() == null) 
 			throw new CDKException("Cannot add oxygen: C-terminus is not defined!");
 

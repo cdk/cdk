@@ -127,7 +127,7 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(BondToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(UnsupportedChemObjectExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(InvalidSmilesExceptionTest.class));
-        suite.addTest(AminoAcidManipulatorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(AminoAcidManipulatorTest.class));
         suite.addTest(new JUnit4TestAdapter(AtomTypeManipulatorTest.class));
         suite.addTest(new JUnit4TestAdapter(ChemFileManipulatorTest.class));
         suite.addTest(new JUnit4TestAdapter(ChemModelManipulatorTest.class));
