@@ -222,7 +222,8 @@ public class ConformerContainerTest extends NewCDKTestCase {
     @Test public void testLastIndexOf_Object() {
     	ConformerContainer container = new ConformerContainer(confs);
     	Assert.assertEquals(nconfs, container.size());
-    	Assert.assertEquals(3, container.lastIndexOf(container.get(3)));
+        int x = container.lastIndexOf(container.get(3));
+        Assert.assertEquals(3, container.lastIndexOf(container.get(3)));
     }
 
     @Test public void testContains_Object() {
