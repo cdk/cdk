@@ -25,6 +25,8 @@ import org.junit.Test;
 import org.openscience.cdk.math.RandomNumbersTool;
 import org.openscience.cdk.test.NewCDKTestCase;
 
+import java.util.Random;
+
 /**
  * @cdk.module test-standard
  */
@@ -45,6 +47,12 @@ public class RandomNumbersToolTest extends NewCDKTestCase {
         long seed = System.currentTimeMillis();
         RandomNumbersTool.setRandomSeed(seed);
         Assert.assertEquals(seed, RandomNumbersTool.getRandomSeed());
+    }
+
+    @Test public void testSetRandom() {
+        Random rng = new Random();
+        RandomNumbersTool.setRandom(rng);
+        Assert.assertEquals(rng, RandomNumbersTool.getRandom());
     }
 
     @Test public void testRandomInt() {

@@ -59,6 +59,7 @@ public class RandomNumbersTool extends Random {
      *
      * @param base_random a <code>java.util.Random</code> subclass.
      */
+    @TestMethod("testSetRandom")
     public static void setRandom(java.util.Random base_random) {
         random = base_random;
     }
@@ -81,8 +82,19 @@ public class RandomNumbersTool extends Random {
      *
      * @return the <code>long</code> seed.
      */
+    @TestMethod("testGetRandomSeed")
     public static long getRandomSeed() {
         return randomSeed;
+    }
+
+    /**
+     * Returns the instance of Random used by this class.
+     *
+     * @return An object of Random
+     */
+    @TestMethod("testSetRandom")
+    public static Random getRandom() {
+        return random;
     }
 
     /**
