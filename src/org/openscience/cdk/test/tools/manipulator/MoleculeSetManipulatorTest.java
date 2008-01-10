@@ -23,22 +23,18 @@
  */
 package org.openscience.cdk.test.tools.manipulator;
 
-import java.util.List;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
+
+import java.util.List;
 
 /**
  * @cdk.module test-standard
@@ -46,7 +42,7 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
  * @author     Kai Hartmann
  * @cdk.created    2004-02-20
  */
-public class MoleculeSetManipulatorTest extends CDKTestCase {
+public class MoleculeSetManipulatorTest extends NewCDKTestCase {
 	
 	
 	IMolecule mol1 = null;
@@ -56,10 +52,11 @@ public class MoleculeSetManipulatorTest extends CDKTestCase {
 	IAtom atomInMol2 = null;
 	IMoleculeSet som = new MoleculeSet();
 	
-	public MoleculeSetManipulatorTest(String name) {
-		super(name);
+	public MoleculeSetManipulatorTest() {
+		super();
 	}
-	
+
+    @Before
     public void setUp() {
 		mol1 = new Molecule();
 		atomInMol1 = new Atom("Cl");
@@ -77,25 +74,21 @@ public class MoleculeSetManipulatorTest extends CDKTestCase {
 		som.addMolecule(mol1);
 		som.addMolecule(mol2);
 	}
-	
-    public static Test suite() {
-        TestSuite suite = new TestSuite(MoleculeSetManipulatorTest.class);
-        return suite;
-	}
 
+    @Test
     public void testGetAtomCount_IAtomContainerSet()
     {
     	int count = MoleculeSetManipulator.getAtomCount(som);
-    	assertEquals(3, count);
+    	Assert.assertEquals(3, count);
     }
     
-    public void testGetBondCount_IAtomContainerSet()
+    @Test public void testGetBondCount_IAtomContainerSet()
     {
     	int count = MoleculeSetManipulator.getBondCount(som);
-    	assertEquals(1, count);
+    	Assert.assertEquals(1, count);
     }
     
-    public void testRemoveElectronContainer_IMoleculeSet_IElectronContainer()
+    @Test public void testRemoveElectronContainer_IMoleculeSet_IElectronContainer()
     {
     	IMoleculeSet ms = new MoleculeSet();
     	IMolecule mol = new Molecule();
@@ -106,12 +99,12 @@ public class MoleculeSetManipulatorTest extends CDKTestCase {
     	ms.addMolecule(mol);
     	IBond otherBond = new Bond(new Atom(), new Atom());
     	MoleculeSetManipulator.removeElectronContainer(ms, otherBond);
-    	assertEquals(1, MoleculeSetManipulator.getBondCount(ms));
+    	Assert.assertEquals(1, MoleculeSetManipulator.getBondCount(ms));
     	MoleculeSetManipulator.removeElectronContainer(ms, bond);
-    	assertEquals(0, MoleculeSetManipulator.getBondCount(ms));
+    	Assert.assertEquals(0, MoleculeSetManipulator.getBondCount(ms));
     }
     
-    public void testRemoveAtomAndConnectedElectronContainers_IMoleculeSet_IAtom()
+    @Test public void testRemoveAtomAndConnectedElectronContainers_IMoleculeSet_IAtom()
     {
     	IMoleculeSet ms = new MoleculeSet();
     	IMolecule mol = new Molecule();
@@ -122,71 +115,71 @@ public class MoleculeSetManipulatorTest extends CDKTestCase {
     	ms.addMolecule(mol);
     	IAtom otherAtom = new Atom("O");
     	MoleculeSetManipulator.removeAtomAndConnectedElectronContainers(ms, otherAtom);
-    	assertEquals(1, MoleculeSetManipulator.getBondCount(ms));
-    	assertEquals(2, MoleculeSetManipulator.getAtomCount(ms));
+    	Assert.assertEquals(1, MoleculeSetManipulator.getBondCount(ms));
+    	Assert.assertEquals(2, MoleculeSetManipulator.getAtomCount(ms));
     	MoleculeSetManipulator.removeAtomAndConnectedElectronContainers(ms, atom);
-    	assertEquals(0, MoleculeSetManipulator.getBondCount(ms));
-    	assertEquals(1, MoleculeSetManipulator.getAtomCount(ms));
+    	Assert.assertEquals(0, MoleculeSetManipulator.getBondCount(ms));
+    	Assert.assertEquals(1, MoleculeSetManipulator.getAtomCount(ms));
     }
     
-    public void testGetTotalCharge_IMoleculeSet() {
+    @Test public void testGetTotalCharge_IMoleculeSet() {
         double charge = MoleculeSetManipulator.getTotalCharge(som);
-		assertEquals(-1.0, charge, 0.000001);
+		Assert.assertEquals(-1.0, charge, 0.000001);
     }
 	
-	public void testGetTotalFormalCharge_IMoleculeSet() {
+	@Test public void testGetTotalFormalCharge_IMoleculeSet() {
         double charge = MoleculeSetManipulator.getTotalFormalCharge(som);
-		assertEquals(-1.0, charge, 0.000001);
+		Assert.assertEquals(-1.0, charge, 0.000001);
     }
 	
-	public void testGetTotalHydrogenCount_IMoleculeSet() {
+	@Test public void testGetTotalHydrogenCount_IMoleculeSet() {
 		int hCount = MoleculeSetManipulator.getTotalHydrogenCount(som);
-		assertEquals(3, hCount);
+		Assert.assertEquals(3, hCount);
 	}
 	
-	public void testGetAllIDs_IMoleculeSet()
+	@Test public void testGetAllIDs_IMoleculeSet()
 	{
 		som.setID("som");
 		mol2.setID("mol");
 		atomInMol2.setID("atom");
 		bondInMol1.setID("bond");
 		List list = MoleculeSetManipulator.getAllIDs(som);
-		assertEquals(4, list.size());
+		Assert.assertEquals(4, list.size());
 	}
 	
-	public void testGetAllAtomContainers_IMoleculeSet()
+	@Test public void testGetAllAtomContainers_IMoleculeSet()
 	{
 		List list = MoleculeSetManipulator.getAllAtomContainers(som);
-		assertEquals(2, list.size());
+		Assert.assertEquals(2, list.size());
 	}
 	
-	public void testSetAtomProperties_IMoleculeSet_Object_Object()
+	@Test public void testSetAtomProperties_IMoleculeSet_Object_Object()
 	{
 		String key = "key";
 		String value = "value";
 		MoleculeSetManipulator.setAtomProperties(som, key, value);
-		assertEquals(value, atomInMol1.getProperty(key));
-		assertEquals(value, atomInMol2.getProperty(key));
+		Assert.assertEquals(value, atomInMol1.getProperty(key));
+		Assert.assertEquals(value, atomInMol2.getProperty(key));
 	}
 	
-	public void testGetRelevantAtomContainer_IMoleculeSet_IAtom()
+	@Test public void testGetRelevantAtomContainer_IMoleculeSet_IAtom()
 	{
 		IAtomContainer ac1 = MoleculeSetManipulator.getRelevantAtomContainer(som, atomInMol1);
-		assertEquals(mol1, ac1);
+		Assert.assertEquals(mol1, ac1);
 		IAtomContainer ac2 = MoleculeSetManipulator.getRelevantAtomContainer(som, atomInMol2);
-		assertEquals(mol2, ac2);
+		Assert.assertEquals(mol2, ac2);
 	}
 	
-	public void testGetRelevantAtomContainer_IMoleculeSet_IBond()
+	@Test public void testGetRelevantAtomContainer_IMoleculeSet_IBond()
 	{
 		IAtomContainer ac1 = MoleculeSetManipulator.getRelevantAtomContainer(som, bondInMol1);
-		assertEquals(mol1, ac1);
+		Assert.assertEquals(mol1, ac1);
 	}
 	
-	public void testGetAllChemObjects_IMoleculeSet()
+	@Test public void testGetAllChemObjects_IMoleculeSet()
 	{
 		List list = MoleculeSetManipulator.getAllChemObjects(som);
-		assertEquals(3, list.size()); // only MoleculeSets and AtomContainers at the moment (see source code comment)
+		Assert.assertEquals(3, list.size()); // only MoleculeSets and AtomContainers at the moment (see source code comment)
 	}
 }
 
