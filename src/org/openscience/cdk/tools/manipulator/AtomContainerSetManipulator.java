@@ -66,7 +66,7 @@ public class AtomContainerSetManipulator {
         return count;
 	}
 
-    @TestMethod("estRemoveAtomAndConnectedElectronContainers_IAtomContainerSet_IAtom")
+    @TestMethod("testRemoveAtomAndConnectedElectronContainers_IAtomContainerSet_IAtom")
     public static void removeAtomAndConnectedElectronContainers(IAtomContainerSet set, IAtom atom) {
     	java.util.Iterator acs = set.atomContainers();
         while (acs.hasNext()) {
