@@ -69,7 +69,7 @@ public class PathTools {
 
 
     /**
-     * All-Pairs-Shortest-Path computation based on Floyds algorithm Takes an nxn
+     * All-Pairs-Shortest-Path computation based on Floyds algorithm. Takes an nxn
      * matrix C of edge costs and produces an nxn matrix A of lengths of shortest
      * paths.
      *
@@ -213,7 +213,7 @@ public class PathTools {
      * @param max           the number of neighbours to return
      * @return the average bond length
      */
-    public static IAtom[] findClosestByBond(IAtomContainer atomContainer, IAtom atom, int max) {
+    private static IAtom[] findClosestByBond(IAtomContainer atomContainer, IAtom atom, int max) {
         IMolecule mol = atomContainer.getBuilder().newMolecule();
         Vector<IAtom> v = new Vector<IAtom>();
         v.add(atom);
@@ -336,7 +336,7 @@ public class PathTools {
         return -1;
     }
 
-    public static void resetFlags(IAtomContainer atomContainer) {
+    protected static void resetFlags(IAtomContainer atomContainer) {
         for (int f = 0; f < atomContainer.getAtomCount(); f++) {
             atomContainer.getAtom(f).setFlag(CDKConstants.VISITED, false);
         }

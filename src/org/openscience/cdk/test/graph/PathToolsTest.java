@@ -202,11 +202,57 @@ public class PathToolsTest extends NewCDKTestCase {
 
     @Test
     public void testComputeFloydAPSP_arrayintint() {
-    	Assert.fail("Missing JUnit test");
+    	int[][] start = new int[5][5]; // default to all zeros
+    	start[0][1] = 1;
+    	start[1][2] = 1;
+    	start[1][4] = 1;
+    	start[3][4] = 1;
+    	start[1][0] = 1;
+    	start[2][1] = 1;
+    	start[4][1] = 1;
+    	start[4][3] = 1;
+    	
+    	int[][] floydAPSP = PathTools.computeFloydAPSP(start);
+    	Assert.assertEquals(5, floydAPSP.length);
+    	Assert.assertEquals(5, floydAPSP[0].length);
+    	
+    	Assert.assertEquals(1, floydAPSP[0][1]);
+    	Assert.assertEquals(2, floydAPSP[0][2]);
+    	Assert.assertEquals(3, floydAPSP[0][3]);
+    	Assert.assertEquals(2, floydAPSP[0][4]);
+    	Assert.assertEquals(1, floydAPSP[1][2]);
+    	Assert.assertEquals(2, floydAPSP[1][3]);
+    	Assert.assertEquals(1, floydAPSP[1][4]);
+    	Assert.assertEquals(3, floydAPSP[2][3]);
+    	Assert.assertEquals(2, floydAPSP[2][4]);
+    	Assert.assertEquals(1, floydAPSP[3][4]);
     }
     @Test
     public void testComputeFloydAPSP_arraydoubledouble() {
-    	Assert.fail("Missing JUnit test");
+    	double[][] start = new double[5][5]; // default to all zeros
+    	start[0][1] = 1.0;
+    	start[1][2] = 1.0;
+    	start[1][4] = 2.0;
+    	start[3][4] = 1.0;
+    	start[1][0] = 1.0;
+    	start[2][1] = 1.0;
+    	start[4][1] = 2.0;
+    	start[4][3] = 1.0;
+    	
+    	int[][] floydAPSP = PathTools.computeFloydAPSP(start);
+    	Assert.assertEquals(5, floydAPSP.length);
+    	Assert.assertEquals(5, floydAPSP[0].length);
+    	
+    	Assert.assertEquals(1, floydAPSP[0][1]);
+    	Assert.assertEquals(2, floydAPSP[0][2]);
+    	Assert.assertEquals(3, floydAPSP[0][3]);
+    	Assert.assertEquals(2, floydAPSP[0][4]);
+    	Assert.assertEquals(1, floydAPSP[1][2]);
+    	Assert.assertEquals(2, floydAPSP[1][3]);
+    	Assert.assertEquals(1, floydAPSP[1][4]);
+    	Assert.assertEquals(3, floydAPSP[2][3]);
+    	Assert.assertEquals(2, floydAPSP[2][4]);
+    	Assert.assertEquals(1, floydAPSP[3][4]);
     }
     @Test
     public void testDepthFirstTargetSearch_IAtomContainer_IAtom_IAtom_IAtomContainer() {
@@ -218,14 +264,6 @@ public class PathToolsTest extends NewCDKTestCase {
     }
     @Test
     public void testBreadthFirstSearch_IAtomContainer_Vector_IMolecule_int() {
-    	Assert.fail("Missing JUnit test");
-    }
-    @Test
-    public void testFindClosestByBond_IAtomContainer_IAtom_int() {
-    	Assert.fail("Missing JUnit test");
-    }
-    @Test
-    public void testResetFlags_IAtomContainer() {
     	Assert.fail("Missing JUnit test");
     }
 }
