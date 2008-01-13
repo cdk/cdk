@@ -228,8 +228,8 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 *
 	 * @param  atomContainerSet  The AtomContainerSet
 	 */
-	public void add(org.openscience.cdk.interfaces.IAtomContainerSet atomContainerSet) {
-		for (java.util.Iterator iter = atomContainerSet.atomContainers();iter.hasNext();) {
+	public void add(IAtomContainerSet atomContainerSet) {
+		for (Iterator<IAtomContainer> iter = atomContainerSet.atomContainers();iter.hasNext();) {
 			addAtomContainer((IAtomContainer)iter.next());
 		}
 		/*

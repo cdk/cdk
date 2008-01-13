@@ -25,10 +25,10 @@ package org.openscience.cdk;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -121,7 +121,7 @@ public class AtomContainer extends ChemObject
 	/**
 	 * Internal list of atom parities.
 	 */
-	protected Hashtable<IAtom, IAtomParity> atomParities;
+	protected Map<IAtom, IAtomParity> atomParities;
 
 
 	/**
@@ -1546,10 +1546,10 @@ public class AtomContainer extends ChemObject
 		}
 		
         stringContent.append(", AP:[#").append(atomParities.size()).append(", ");
-        Enumeration parities = atomParities.elements();
-        while (parities.hasMoreElements()) {
-			stringContent.append(parities.nextElement().toString());
-            if (parities.hasMoreElements()) stringContent.append(", ");
+        Iterator<IAtomParity> parities = atomParities.values().iterator();
+        while (parities.hasNext()) {
+			stringContent.append(parities.next().toString());
+            if (parities.hasNext()) stringContent.append(", ");
 		}
 		stringContent.append("])");
 		return stringContent.toString();

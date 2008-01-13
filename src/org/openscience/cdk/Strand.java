@@ -241,11 +241,11 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
     public Object clone() throws CloneNotSupportedException {
         Strand clone = (Strand)super.clone();
         clone.monomers.clear();
-        for (Iterator iter = clone.getMonomerNames().iterator(); iter.hasNext();) {
+        for (Iterator<String> iter = clone.getMonomerNames().iterator(); iter.hasNext();) {
         	Monomer monomerClone = (Monomer)(clone.getMonomer(iter.next().toString()).clone());
-        	java.util.Iterator atoms = monomerClone.atoms();
+        	Iterator<IAtom> atoms = monomerClone.atoms();
             while (atoms.hasNext()) {
-            	clone.addAtom((IAtom)atoms.next(), monomerClone);
+            	clone.addAtom(atoms.next(), monomerClone);
             }
         }
         return clone;

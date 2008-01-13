@@ -1,7 +1,4 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2001-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
@@ -23,6 +20,14 @@
  */
 package org.openscience.cdk.config;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -32,13 +37,6 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
 
 /**
  *  General class for defining AtomTypes. This class itself does not define the
@@ -96,7 +94,7 @@ public class AtomTypeFactory {
     private final static String XML_EXTENSION = "xml";
     
     private static LoggingTool logger;
-    private static Hashtable<String, AtomTypeFactory> tables = null;
+    private static Map<String, AtomTypeFactory> tables = null;
     private List<IAtomType> atomTypes = null;
 
 	/**

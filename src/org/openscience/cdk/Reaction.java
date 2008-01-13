@@ -28,6 +28,7 @@ package org.openscience.cdk;
 import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMapping;
@@ -65,7 +66,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
 
     protected IMoleculeSet reactants;
     protected IMoleculeSet products;
-    /** These are the used solvent, catalysist etc that normally appear above
+    /** These are the used solvent, catalysts etc that normally appear above
         the reaction arrow */
     protected IMoleculeSet agents;
     
@@ -456,7 +457,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         clone.products = (MoleculeSet)((MoleculeSet)products).clone();
         // create a Map of corresponding atoms for molecules (key: original Atom, 
         // value: clone Atom)
-        Hashtable<IAtom, IAtom> atomatom = new Hashtable<IAtom, IAtom>();
+        Map<IAtom, IAtom> atomatom = new Hashtable<IAtom, IAtom>();
         for (int i = 0; i < ((MoleculeSet)reactants).getMoleculeCount(); ++i) {
             Molecule mol = (Molecule)((MoleculeSet)reactants).getMolecule(i);
             Molecule mol2 = (Molecule)clone.reactants.getMolecule(i);

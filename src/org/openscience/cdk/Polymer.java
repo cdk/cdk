@@ -30,6 +30,7 @@ package org.openscience.cdk;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
@@ -56,7 +57,7 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 	 */
 	private static final long serialVersionUID = -2596790658835319339L;
 
-	private Hashtable<String, IMonomer> monomers;	// the list of all the contained Monomers. 
+	private Map<String, IMonomer> monomers;	// the list of all the contained Monomers. 
 	
 	/**
 	 * Contructs a new Polymer to store the Monomers.
@@ -145,11 +146,11 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
     public Object clone() throws CloneNotSupportedException {
     	Polymer clone = (Polymer)super.clone();
         clone.removeAllElements();
-        for (Iterator iter = clone.getMonomerNames().iterator(); iter.hasNext();) {
+        for (Iterator<String> iter = clone.getMonomerNames().iterator(); iter.hasNext();) {
             Monomer monomerClone = (Monomer)(clone.getMonomer(iter.next().toString()).clone());
-            java.util.Iterator atoms = monomerClone.atoms();
+            Iterator<IAtom> atoms = monomerClone.atoms();
             while (atoms.hasNext()) {
-                clone.addAtom((IAtom)atoms.next(), monomerClone);
+                clone.addAtom(atoms.next(), monomerClone);
             }
         }
         return clone;

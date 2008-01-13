@@ -28,7 +28,6 @@
 package org.openscience.cdk;
 
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
@@ -59,16 +58,15 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
-     * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
-     * /serialization/spec/version.doc.html>details</a>.
+     * of this class is incompatible with the old version. See Sun docs
+     * for <a href="http://java.sun.com/products/jdk/1.1/docs/guide/serialization/spec/version.doc.html">details</a>.
 	 */
 	private static final long serialVersionUID = -5001873073769634393L;
 
-	private Hashtable<String, IStrand> strands;	// the list of all the contained Strands.
+	private Map<String, IStrand> strands;	// the list of all the contained Strands.
 	
 	/**
-	 * Contructs a new Polymer to store the Strands.
+	 * Constructs a new Polymer to store the Strands.
 	 */	
 	public BioPolymer() {
 		super();
@@ -91,7 +89,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 		super.addAtom(oAtom);
 
 		if (atomCount != super.getAtomCount() && 
-		    oStrand != null) {	// Maybe better to throw nullpointer exception here, so user realises that
+		    oStrand != null) {	// Maybe better to throw null pointer exception here, so user realises that
 								// Strand == null and Atom only gets added to this BioPolymer, but not to a Strand.
 			oStrand.addAtom(oAtom);	
 			if (!strands.containsKey(oStrand.getStrandName())) {
@@ -116,7 +114,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 		// Add atom to AtomContainer
 		super.addAtom(oAtom);
 
-		if(atomCount != super.getAtomCount() && // ok, super did not yet contain the atom
+		if(atomCount != super.getAtomCount() && // OK, super did not yet contain the atom
 			   // Add atom to Strand (also adds the atom to the monomer).
 		       oStrand != null)	{
 			oStrand.addAtom(oAtom, oMonomer);	// Same problem as above: better to throw nullpointer exception?
@@ -137,14 +135,13 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	 * Return the number of monomers present in BioPolymer.
 	 *
 	 * @return number of monomers
-	 *
 	 */
 	public int getMonomerCount() {
-		Enumeration keys = strands.keys();
+		Iterator<String> keys = strands.keySet().iterator();
 		int number = 0;
 		
-		while(keys.hasMoreElements())	{
-			Strand tmp = (Strand)strands.get(keys.nextElement());	// Cast exception?!
+		while(keys.hasNext())	{
+			Strand tmp = (Strand)strands.get(keys.next());	// Cast exception?!
 			number += (tmp.getMonomers()).size() - 1;
 		}
 		return number;
@@ -195,11 +192,11 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	 * @return a <code>Collection</code> of all the monomer names.
 	 */
 	public Collection<String> getMonomerNames() {
-		Enumeration keys = strands.keys();
-		Hashtable<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
+		Iterator<String> keys = strands.keySet().iterator();
+		Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
 		
-		while(keys.hasMoreElements())	{
-			Strand oStrand = (Strand)strands.get(keys.nextElement());
+		while(keys.hasNext())	{
+			Strand oStrand = (Strand)strands.get(keys.next());
 			monomers.putAll(oStrand.getMonomers());
 		}		
 		return monomers.keySet();
@@ -270,11 +267,11 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
     public Object clone() throws CloneNotSupportedException {
     	BioPolymer clone = (BioPolymer)super.clone();
         clone.strands.clear();
-        for (Iterator strands = clone.getStrandNames().iterator(); strands.hasNext();) {
+        for (Iterator<String> strands = clone.getStrandNames().iterator(); strands.hasNext();) {
             Strand strand = (Strand)clone.getStrand(strands.next().toString()).clone();
-            for (Iterator iter = strand.getMonomerNames().iterator(); iter.hasNext();) {
+            for (Iterator<String> iter = strand.getMonomerNames().iterator(); iter.hasNext();) {
             	IMonomer monomer = strand.getMonomer(iter.next().toString());
-            	java.util.Iterator atoms = monomer.atoms();
+            	Iterator<IAtom> atoms = monomer.atoms();
             	while (atoms.hasNext()) {
                     clone.addAtom((IAtom)atoms.next(), monomer, strand);
                 } 
