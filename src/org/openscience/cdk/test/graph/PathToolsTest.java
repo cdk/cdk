@@ -23,6 +23,10 @@
  */
 package org.openscience.cdk.test.graph;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,11 +41,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.NewCDKTestCase;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
 /**
  * @cdk.module test-atomtype
  */
@@ -54,11 +53,11 @@ public class PathToolsTest extends NewCDKTestCase {
     }
 
     @Test
-    public void testBreadthFirstTargetSearch_IAtomContainer_Vector_IAtom_int_int() {
+    public void testBreadthFirstTargetSearch_IAtomContainer_List_IAtom_int_int() {
         org.openscience.cdk.interfaces.IAtom atom1 = molecule.getAtom(0);
         org.openscience.cdk.interfaces.IAtom atom2 = molecule.getAtom(8);
-        Vector<IAtom> sphere = new Vector<IAtom>();
-        sphere.addElement(atom1);
+        List<IAtom> sphere = new ArrayList<IAtom>();
+        sphere.add(atom1);
         int length = PathTools.breadthFirstTargetSearch(molecule, sphere, atom2, 0, 3);
         //logger.debug("PathLengthTest->length: " + length);
         Assert.assertEquals(3, length);
@@ -259,11 +258,11 @@ public class PathToolsTest extends NewCDKTestCase {
     	Assert.fail("Missing JUnit test");
     }
     @Test
-    public void testBreadthFirstSearch_IAtomContainer_Vector_IMolecule() {
+    public void testBreadthFirstSearch_IAtomContainer_List_IMolecule() {
     	Assert.fail("Missing JUnit test");
     }
     @Test
-    public void testBreadthFirstSearch_IAtomContainer_Vector_IMolecule_int() {
+    public void testBreadthFirstSearch_IAtomContainer_List_IMolecule_int() {
     	Assert.fail("Missing JUnit test");
     }
 }
