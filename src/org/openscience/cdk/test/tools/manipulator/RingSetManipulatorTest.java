@@ -24,25 +24,25 @@
  */
 package org.openscience.cdk.test.tools.manipulator;
 
-import java.util.List;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import java.util.List;
 
 /**
  * @cdk.module test-standard
  */
-public class RingSetManipulatorTest extends CDKTestCase {
+public class RingSetManipulatorTest extends NewCDKTestCase {
 
 	protected IChemObjectBuilder builder;
 	
@@ -53,12 +53,9 @@ public class RingSetManipulatorTest extends CDKTestCase {
 	private IBond bondRing2Ring3 = null;
 	private IRing ring2 = null;
 	private IRing ring3 = null;
-	
-	public RingSetManipulatorTest(String name) {
-        super(name);
-    }
-	
-	public void setUp() {
+
+    @Before
+    public void setUp() {
        	builder = DefaultChemObjectBuilder.getInstance();
        	ringset = builder.newRingSet();
        	ring1Atom1 = builder.newAtom("C"); // rather artificial molecule
@@ -127,43 +124,41 @@ public class RingSetManipulatorTest extends CDKTestCase {
         ringset.addAtomContainer(ring3);
         ringset.addAtomContainer(ring4);
     }
-	
-	public static Test suite() {
-		return new TestSuite(RingSetManipulatorTest.class);
-	}
-	
+
+
+    @Test
     public void testIsSameRing_IRingSet_IAtom_IAtom() {
-        assertTrue(RingSetManipulator.isSameRing(ringset, ring1Atom1, ring1Atom3));
-        assertFalse(RingSetManipulator.isSameRing(ringset, ring1Atom1, ring2Atom3));
+        Assert.assertTrue(RingSetManipulator.isSameRing(ringset, ring1Atom1, ring1Atom3));
+        Assert.assertFalse(RingSetManipulator.isSameRing(ringset, ring1Atom1, ring2Atom3));
     }
 
-    public void testRingAlreadyInSet_IRing_IRingSet() {
+    @Test public void testRingAlreadyInSet_IRing_IRingSet() {
         IRing r1 = builder.newRing(5, "C");
         IRing r2 = builder.newRing(3, "C");
         
         IRingSet rs = builder.newRingSet();
-        assertFalse(RingSetManipulator.ringAlreadyInSet(r1, rs));
-        assertFalse(RingSetManipulator.ringAlreadyInSet(r2, rs));
+        Assert.assertFalse(RingSetManipulator.ringAlreadyInSet(r1, rs));
+        Assert.assertFalse(RingSetManipulator.ringAlreadyInSet(r2, rs));
         
         rs.addAtomContainer(r1);
-        assertTrue(RingSetManipulator.ringAlreadyInSet(r1, rs));
-        assertFalse(RingSetManipulator.ringAlreadyInSet(r2, rs));
+        Assert.assertTrue(RingSetManipulator.ringAlreadyInSet(r1, rs));
+        Assert.assertFalse(RingSetManipulator.ringAlreadyInSet(r2, rs));
         
         rs.addAtomContainer(r2);
-        assertTrue(RingSetManipulator.ringAlreadyInSet(r1, rs));
-        assertTrue(RingSetManipulator.ringAlreadyInSet(r2, rs));
+        Assert.assertTrue(RingSetManipulator.ringAlreadyInSet(r1, rs));
+        Assert.assertTrue(RingSetManipulator.ringAlreadyInSet(r2, rs));
     }
     
-    public void testGetAllAtomContainers_IRingSet()
+    @Test public void testGetAllAtomContainers_IRingSet()
     {
     	IRingSet rs = builder.newRingSet();
     	rs.addAtomContainer(builder.newRing());
     	rs.addAtomContainer(builder.newRing());
     	List list = RingSetManipulator.getAllAtomContainers(rs);
-    	assertEquals(2, list.size());
+    	Assert.assertEquals(2, list.size());
     }
     
-    public void testGetAllInOneContainer_IRingSet()
+    @Test public void testGetAllInOneContainer_IRingSet()
     {
     	IRingSet rs = builder.newRingSet();
     	IAtomContainer ac1 = builder.newRing();
@@ -174,32 +169,60 @@ public class RingSetManipulatorTest extends CDKTestCase {
     	ac2.addAtom(builder.newAtom("C"));
     	ac2.addBond(0, 1, IBond.Order.DOUBLE);
     	rs.addAtomContainer(ac2);
-    	assertEquals(3, RingSetManipulator.getAtomCount(rs));
-    	assertEquals(1, RingSetManipulator.getBondCount(rs));
+    	Assert.assertEquals(3, RingSetManipulator.getAtomCount(rs));
+    	Assert.assertEquals(1, RingSetManipulator.getBondCount(rs));
     }
     
-    public void testGetHeaviestRing_IRingSet_IBond()
+    @Test public void testGetHeaviestRing_IRingSet_IBond()
     {
     	IRing ring = RingSetManipulator.getHeaviestRing(ringset, bondRing2Ring3);
-    	assertEquals(ring2, ring);
+    	Assert.assertEquals(ring2, ring);
     }
     
-    public void testGetMostComplexRing_IRingSet()
+    @Test public void testGetMostComplexRing_IRingSet()
     {
     	IRing ring = RingSetManipulator.getMostComplexRing(ringset);
-    	assertEquals(ring3, ring);
+    	Assert.assertEquals(ring3, ring);
     }
     
-    public void testSort_IRingSet()
+    @Test public void testSort_IRingSet()
     {
     	RingSetManipulator.sort(ringset);
-    	assertEquals(4, ringset.getAtomContainerCount());
+    	Assert.assertEquals(4, ringset.getAtomContainerCount());
     	int currentSize = ringset.getAtomContainer(0).getAtomCount();
     	for (int i = 1; i < ringset.getAtomContainerCount(); ++i) {
-    		assertTrue(ringset.getAtomContainer(i).getAtomCount() >= currentSize);
+    		Assert.assertTrue(ringset.getAtomContainer(i).getAtomCount() >= currentSize);
     		currentSize = ringset.getAtomContainer(i).getAtomCount();
     	}
     }
-    
-	
+
+    @Test
+    public void testGetBondCount() throws CDKException {
+        IAtomContainer mol = MoleculeFactory.makeAdenine();
+        AllRingsFinder arf = new AllRingsFinder();
+        IRingSet ringSet = arf.findAllRings(mol);
+        Assert.assertEquals(3, ringSet.getAtomContainerCount());
+        Assert.assertEquals(20, RingSetManipulator.getBondCount(ringSet));
+
+        mol = MoleculeFactory.makeBiphenyl();
+        ringSet = arf.findAllRings(mol);
+        Assert.assertEquals(2, ringSet.getAtomContainerCount());
+        Assert.assertEquals(12, RingSetManipulator.getBondCount(ringSet));
+    }
+
+    @Test
+    public void markAromatic() throws CDKException {
+        IAtomContainer mol = MoleculeFactory.makeBiphenyl();
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        
+        AllRingsFinder arf = new AllRingsFinder();
+        IRingSet ringSet = arf.findAllRings(mol);
+        Assert.assertEquals(2, ringSet.getAtomContainerCount());
+
+        RingSetManipulator.markAromaticRings(ringSet);
+        for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
+            IRing ring = (IRing) ringSet.getAtomContainer(i);
+            Assert.assertTrue(ring.getFlag(CDKConstants.ISAROMATIC));
+        }
+    }
 }

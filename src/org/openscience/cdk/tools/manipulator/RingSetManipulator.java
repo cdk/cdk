@@ -27,6 +27,8 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.*;
 
 import java.util.ArrayList;
@@ -38,9 +40,16 @@ import java.util.List;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.tools.manipulator.RingSetManipulatorTest")
 public class RingSetManipulator {
-    
-	public static int getAtomCount(IRingSet set) {
+    /**
+     * Return the total number of atoms over all the rings in the colllection.
+     *
+     * @param set The collection of rings
+     * @return  The total number of atoms
+     */
+    @TestMethod("testGetAllInOneContainer_IRingSet")
+    public static int getAtomCount(IRingSet set) {
 		int count = 0;
 		Iterator acs = set.atomContainers();
         while (acs.hasNext()) {
@@ -48,41 +57,53 @@ public class RingSetManipulator {
         }
         return count;
 	}
-	
-	public static int getBondCount(IRingSet set) {
-		int count = 0;
-		Iterator acs = set.atomContainers();
+
+    /**
+     * Return the total number of bonds over all the rings in the colllection.
+     *
+     * @param set The collection of rings
+     * @return The total number of  bonds
+     */
+    @TestMethod("testGetBondCount")
+    public static int getBondCount(IRingSet set) {
+        int count = 0;
+        Iterator acs = set.atomContainers();
         while (acs.hasNext()) {
-        	count += ((IAtomContainer)acs.next()).getBondCount();
+            count += ((IAtomContainer) acs.next()).getBondCount();
         }
         return count;
 	}
 	
 	/**
      * Returns all the AtomContainer's in a RingSet.
+     * @param set The collection of rings
+     * @return A list of IAtomContainer objects corresponding to individual rings
      */
-    public static List getAllAtomContainers(IRingSet set) {
-    	List atomContainerList = new ArrayList();
+    @TestMethod("testGetAllAtomContainers_IRingSet")
+    public static List<IAtomContainer> getAllAtomContainers(IRingSet set) {
+    	List<IAtomContainer> atomContainerList = new ArrayList<IAtomContainer>();
     	Iterator acs = set.atomContainers();
     	while(acs.hasNext()){
-    		atomContainerList.add((IAtomContainer)acs.next());
+    		atomContainerList.add((IAtomContainer) acs.next());
     	}
     	return atomContainerList;
     }
+
     /**
      * Sorts the rings in the set by size. The smallest ring comes
      * first.
+     * @param ringSet The collection of rings
      */
-	public static void sort(IRingSet ringSet) {
-		List ringList = new ArrayList();
+    @TestMethod("testSort_IRingSet")
+    public static void sort(IRingSet ringSet) {
+		List<IAtomContainer> ringList = new ArrayList<IAtomContainer>();
 		java.util.Iterator rings = ringSet.atomContainers();
 		while (rings.hasNext()) {
-			ringList.add(rings.next());
+			ringList.add((IAtomContainer) rings.next());
 		}
 		Collections.sort(ringList, new RingSizeComparator(RingSizeComparator.SMALL_FIRST));
 		ringSet.removeAllAtomContainers();
-		Iterator iter = ringList.iterator();
-		while (iter.hasNext()) ringSet.addAtomContainer((IRing)iter.next());
+        for (IAtomContainer aRingList : ringList) ringSet.addAtomContainer(aRingList);
 		
 	}
 
@@ -90,31 +111,33 @@ public class RingSetManipulator {
 	 * We define the heaviest ring as the one with the highest number of double bonds.
 	 * Needed for example for the placement of in-ring double bonds.
 	 *
-	 * @param   bond  A bond which must be contained by the heaviest ring 
+	 * @param ringSet The collection of rings
+     * @param   bond  A bond which must be contained by the heaviest ring
 	 * @return  The ring with the higest number of double bonds connected to a given bond
 	 */
-	public static IRing getHeaviestRing(IRingSet ringSet, IBond bond)
+    @TestMethod("testGetHeaviestRing_IRingSet_IBond")
+    public static IRing getHeaviestRing(IRingSet ringSet, IBond bond)
 	{
 		List rings = ringSet.getRings(bond);
 		IRing ring = null;
 		int maxOrderSum = 0;
-		for (int i = 0; i < rings.size(); i++)
-		{
-			if (maxOrderSum < ((IRing)rings.get(i)).getBondOrderSum()) 
-			{
-				ring = (IRing)rings.get(i);
-				maxOrderSum = ring.getBondOrderSum();
-			} 
-		}
+        for (Object ring1 : rings) {
+            if (maxOrderSum < ((IRing) ring1).getBondOrderSum()) {
+                ring = (IRing) ring1;
+                maxOrderSum = ring.getBondOrderSum();
+            }
+        }
 		return ring;
 	}
 
 	/**
 	 * Returns the ring with the highest numbers of other rings attached to it.
 	 *
-	 * @return the ring with the highest numbers of other rings attached to it.    
+	 * @param ringSet The collection of rings
+     * @return the ring with the highest numbers of other rings attached to it.
 	 */
-	public static IRing getMostComplexRing(IRingSet ringSet)
+    @TestMethod("testGetMostComplexRing_IRingSet")
+    public static IRing getMostComplexRing(IRingSet ringSet)
 	{
 		int[] neighbors = new int[ringSet.getAtomContainerCount()];
 		IRing ring1, ring2;
@@ -168,11 +191,13 @@ public class RingSetManipulator {
 	   * <p><B>Important:</B> This method only returns meaningful results if <code>atom1</code> and
 	   * <code>atom2</code> are members of the same molecule for which the RingSet was calculated!
 	   *
-	   * @param  atom1   The first atom
+	   * @param ringSet The collection of rings
+       * @param  atom1   The first atom
 	   * @param  atom2   The second atom
 	   * @return boolean true if <code>atom1</code> and <code>atom2</code> share membership of at least one ring or ring system, false otherwise
 	   */
-	  public static boolean isSameRing(IRingSet ringSet, IAtom atom1, IAtom atom2)
+      @TestMethod("testIsSameRing_IRingSet_IAtom_IAtom")
+      public static boolean isSameRing(IRingSet ringSet, IAtom atom1, IAtom atom2)
 	  {
 	    java.util.Iterator rings = ringSet.atomContainers();
 	    while (rings.hasNext()) {
@@ -190,8 +215,10 @@ public class RingSetManipulator {
 	   * objects, but compares all Bond objects of the ring. 
 	   *
 	   * @param   newRing  The ring to be tested if it is already stored
-	   * @return     true if it is already stored
+	   * @param ringSet The collection of rings
+       * @return     true if it is already stored
 	   */
+      @TestMethod("testRingAlreadyInSet_IRing_IRingSet")
       public static boolean ringAlreadyInSet(IRing newRing, IRingSet ringSet) {
           IRing ring;
 //		  IBond[] bonds;
@@ -235,10 +262,13 @@ public class RingSetManipulator {
     /**
      * Iterates over the rings in the ring set, and marks the ring
      * aromatic if all atoms and all bonds are aromatic.
+     *
+     * This method assumes that aromaticity perception has been done before hand.
      * 
-     * @param ringset
+     * @param ringset The collection of rings
      */
-	public static void markAromaticRings(IRingSet ringset) {
+    @TestMethod("markAromatic")
+    public static void markAromaticRings(IRingSet ringset) {
 		Iterator<IAtomContainer> rings = ringset.atomContainers();
 		while (rings.hasNext()) {
 			RingManipulator.markAromaticRings((IRing)rings.next());
