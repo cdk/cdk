@@ -42,24 +42,27 @@ public class RingManipulator {
 
     /**
      * Marks the ring aromatic if all atoms and all bonds are aromatic.
+     *
+     * The method assumes that aromaticity of atoms and bonds have been
+     * detected beforehand
      * 
-     * @param next
+     * @param ring The ring to examine
      */
     @TestMethod("testMarkAromaticRings")
-    public static void markAromaticRings(IRing next) {
+    public static void markAromaticRings(IRing ring) {
 		// return as soon as the conditions are not met:
 		// 1. all atoms are labeled aromatic
-		Iterator<IAtom> atoms = next.atoms();
+		Iterator<IAtom> atoms = ring.atoms();
 		while (atoms.hasNext()) {
 			if (!atoms.next().getFlag(CDKConstants.ISAROMATIC)) return;
 		}
 		// 2. all bonds are labeled aromatic
-		Iterator<IBond> bonds = next.bonds();
+		Iterator<IBond> bonds = ring.bonds();
 		while (bonds.hasNext()) {
 			if (!bonds.next().getFlag(CDKConstants.ISAROMATIC)) return;
 		}
 		// OK, all conditions are met, so ring is aromatic
-		next.setFlag(CDKConstants.ISAROMATIC, true);
+		ring.setFlag(CDKConstants.ISAROMATIC, true);
 	}
 
 }
