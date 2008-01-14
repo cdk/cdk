@@ -91,7 +91,7 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(DictRefTest.class));
         suite.addTest(new JUnit4TestAdapter(CrystalGeometryToolsTest.class));
         suite.addTest(GeometryToolsTest.suite());
-        suite.addTest(MinimalPathIteratorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(MinimalPathIteratorTest.class));
         suite.addTest(new JUnit4TestAdapter(ConnectivityCheckerTest.class));
         suite.addTest(UniversalIsomorphismTesterTest.suite());
         suite.addTest(new JUnit4TestAdapter(IsomorphismTesterTest.class));

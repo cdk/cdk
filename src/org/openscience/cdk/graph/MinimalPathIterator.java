@@ -28,12 +28,6 @@
  */
 
 package org.openscience.cdk.graph;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
 
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
@@ -41,6 +35,10 @@ import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.graph.DefaultDirectedGraph;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org._3pq.jgrapht.traverse.BreadthFirstIterator;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
+import java.util.*;
 
 /**
  * Iterates over all shortest paths between two vertices in an undirected, unweighted graph.
@@ -54,6 +52,7 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
  * @cdk.builddepends jgrapht-0.5.3.jar
  * @cdk.depends jgrapht-0.5.3.jar
  */
+@TestClass("org.openscience.cdk.test.graph.MinimalPathIteratorTest")
 public class MinimalPathIterator implements Iterator {
 	
 	private Object sourceVertex, targetVertex;
@@ -221,8 +220,9 @@ public class MinimalPathIterator implements Iterator {
 //		vertexStack.push(sourceVertex);
 //		
 //	}
-	
-	public boolean hasNext() {
+
+    @TestMethod("testMinimalPathIterator")
+    public boolean hasNext() {
 		
 		if (next == null) {
 			
@@ -256,8 +256,9 @@ public class MinimalPathIterator implements Iterator {
 		return (next != null);
 		
 	}
-		
-	public Object next() {
+
+    @TestMethod("testMinimalPathIterator")
+    public Object next() {
 		if (hasNext()) {
 			Object result = next;
 			next = null;
@@ -268,7 +269,8 @@ public class MinimalPathIterator implements Iterator {
 		}
 	}
 
-	public void remove() {
+    @TestMethod("testRemove")
+    public void remove() {
 		throw new UnsupportedOperationException();
 	}
 	

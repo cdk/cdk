@@ -27,14 +27,15 @@
  * 
  */
 package org.openscience.cdk.test.graph;
-import java.util.List;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.graph.MinimalPathIterator;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
+
+import java.util.List;
 
 /**
  * This class tests the MinimalPathIteratorTest class.
@@ -43,15 +44,13 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @author     Ulrich Bauer <baueru@cs.tum.edu>
  */
-public class MinimalPathIteratorTest extends CDKTestCase {
-	
-	public static Test suite() {
-		return new TestSuite(MinimalPathIteratorTest.class);
-	}
+public class MinimalPathIteratorTest extends NewCDKTestCase {
+	public SimpleGraph g;
 
-	public void testMinimalPathIterator() {
-		 SimpleGraph g    = new SimpleGraph(  );
-		 
+    @Before
+    public void createGraph() {
+        g    = new SimpleGraph(  );
+
 		 g.addVertex( "a" );
 		 g.addVertex( "b" );
 		 g.addVertex( "c" );
@@ -64,44 +63,55 @@ public class MinimalPathIteratorTest extends CDKTestCase {
 		 g.addVertex( "j" );
 		 g.addVertex( "k" );
 		 g.addVertex( "l" );
-		 
+
 		 g.addVertex( "m" );
 		 g.addVertex( "n" );
-		 
+
 		 g.addEdge( "a", "b" );
 		 g.addEdge( "b", "c" );
 		 g.addEdge( "c", "d" );
-		 
+
 		 g.addEdge( "a", "e" );
 		 g.addEdge( "b", "f" );
 		 g.addEdge( "c", "g" );
 		 g.addEdge( "d", "h" );
-		 
+
 		 g.addEdge( "e", "f" );
 		 g.addEdge( "f", "g" );
 		 g.addEdge( "g", "h" );
-		 
+
 		 g.addEdge( "e", "i" );
 		 g.addEdge( "f", "j" );
 		 g.addEdge( "g", "k" );
 		 g.addEdge( "h", "l" );
-		 
+
 		 g.addEdge( "i", "j" );
 		 g.addEdge( "j", "k" );
 		 g.addEdge( "k", "l" );
-		 
+
 		 g.addEdge( "l", "m" );
 		 g.addEdge( "l", "n" );
 		 g.addEdge( "m", "n" );
+    }
 
+    @Test
+    public void testMinimalPathIterator() {
 		 int count = 0;
 		 for (MinimalPathIterator i = new MinimalPathIterator(g, "a", "l"); i.hasNext();) {
-		 	assertTrue(((List)i.next()).size() == 5);
+		 	Assert.assertTrue(((List)i.next()).size() == 5);
 		 	count++;
 		 }
-		 
-		 assertEquals(10, count);
-
+		 Assert.assertEquals(10, count);
 	}
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRemove() {
+        int count = 0;
+        for (MinimalPathIterator i = new MinimalPathIterator(g, "a", "l"); i.hasNext();) {
+            Assert.assertTrue(((List) i.next()).size() == 5);
+            i.remove();
+            count++;
+        }
+    }
 	
 }
