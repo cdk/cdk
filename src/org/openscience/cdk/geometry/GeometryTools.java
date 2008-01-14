@@ -29,6 +29,8 @@
  */
 package org.openscience.cdk.geometry;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
@@ -55,6 +57,7 @@ import java.util.List;
  * @cdk.module    standard
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.test.geometry.GeometryToolsTest")
 public class GeometryTools {
 
 	private static LoggingTool logger = new LoggingTool(GeometryTools.class);
@@ -70,7 +73,8 @@ public class GeometryTools {
 	 *      positive coordinates
 	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 */
-	public static void translateAllPositive(IAtomContainer atomCon,HashMap renderingCoordinates) {
+    @TestMethod("testTranslateAllPositive_IAtomContainer_HashMap")
+    public static void translateAllPositive(IAtomContainer atomCon,HashMap renderingCoordinates) {
 		double minX = Double.MAX_VALUE;
 		double
 				minY = Double.MAX_VALUE;
@@ -198,7 +202,8 @@ public class GeometryTools {
 	 *@param  container  Description of the Parameter
 	 *@return            An four int array as defined above.
 	 */
-	public static double[] getMinMax(IAtomContainer container, HashMap renderingCoordinates) {
+    @TestMethod("testGetMinMax_IAtomContainer_HashMap")
+    public static double[] getMinMax(IAtomContainer container, HashMap renderingCoordinates) {
 		double maxX = Double.MIN_VALUE;
 		double
 				maxY = Double.MIN_VALUE;
@@ -243,7 +248,8 @@ public class GeometryTools {
 	 *
 	 *@return            An four int array as defined above.
 	 */
-	public static double[] getMinMax(IMoleculeSet setOfMolecules, HashMap renderingCoordinates) {
+    @TestMethod("testGetMinMax_IMoleculeSet_HashMap")
+    public static double[] getMinMax(IMoleculeSet setOfMolecules, HashMap renderingCoordinates) {
 		double maxX = Double.MIN_VALUE;
 		double
 				maxY = Double.MIN_VALUE;
@@ -403,7 +409,8 @@ public class GeometryTools {
 	 *@return        The center of the given atoms as Point2d
 	 *
 	 */
-	public static Point2d get2DCenter(IAtom[] atoms, HashMap renderingCoordinates) {
+    @TestMethod("testGet2DCenter_arrayIAtom_HashMap")
+    public static Point2d get2DCenter(IAtom[] atoms, HashMap renderingCoordinates) {
 		IAtom atom;
 		double x = 0;
 		double y = 0;
@@ -428,7 +435,8 @@ public class GeometryTools {
 	 *@return        The center of the given atoms as Point2d
 	 *
 	 */
-	public static Point2d get2DCenter(Iterator atoms, HashMap renderingCoordinates) {
+    @TestMethod("testGet2DCenter_Iterator_HashMap")
+    public static Point2d get2DCenter(Iterator atoms, HashMap renderingCoordinates) {
 		IAtom atom;
 		double x = 0;
 		double y = 0;
@@ -453,7 +461,8 @@ public class GeometryTools {
 	 **@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 *@return            the geometric center of the atoms in this atomContainer
 	 */
-	public static Point2d get2DCenter(IAtomContainer container, HashMap renderingCoordinates) {
+    @TestMethod("testGet2DCenter_IAtomContainer_HashMap")
+    public static Point2d get2DCenter(IAtomContainer container, HashMap renderingCoordinates) {
 		double centerX = 0;
 		double centerY = 0;
 		double counter = 0;
@@ -673,7 +682,8 @@ public class GeometryTools {
 	 *@param   renderingCoordinates  The set of coordinates to use coming from RendererModel2D
 	 *@return       The geometric length of this bond
 	 */
-	public static double getLength2D(IBond bond, HashMap renderingCoordinates) {
+    @TestMethod("testGetLength2D_IBond_HashMap")
+    public static double getLength2D(IBond bond, HashMap renderingCoordinates) {
 		if (bond.getAtom(0) == null ||
 				bond.getAtom(1) == null) {
 			return 0.0;
@@ -743,24 +753,24 @@ public class GeometryTools {
 	 *@param  m  Description of the Parameter
 	 *@return    boolean indication that 2D coordinates are available
 	 */
-	public static boolean has2DCoordinates(IAtomContainer m) {
+    @TestMethod("testHas2DCoordinates_IAtomContainer,testHas2DCoordinates_EmptyAtomContainer,testHas2DCoordinatesNew_IAtomContainer")
+    public static boolean has2DCoordinates(IAtomContainer m) {
 		return GeometryToolsInternalCoordinates.has2DCoordinatesNew(m)>0;
 	}
-	
-	/**
-	 *  Determines if this model contains 3D coordinates
-	 *
-	 *@param  ac  Description of the Parameter
-	 *@return    boolean indication that 3D coordinates are available
-	 */
-	public static boolean has3DCoordinates(IChemModel model) {
-		Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
-		while (containers.hasNext()) {
-			IAtomContainer ac = (IAtomContainer)containers.next();
-			boolean hasCoords = GeometryToolsInternalCoordinates.has3DCoordinates(ac); 
-			if (!hasCoords) return false; 
-		}
-		return true;
+
+    /**
+     * Determines if this model contains 3D coordinates
+     *
+     * @param model The model
+     * @return boolean indication that 3D coordinates are available
+     */
+    public static boolean has3DCoordinates(IChemModel model) {
+        for (Object o : ChemModelManipulator.getAllAtomContainers(model)) {
+            IAtomContainer ac = (IAtomContainer) o;
+            boolean hasCoords = GeometryToolsInternalCoordinates.has3DCoordinates(ac);
+            if (!hasCoords) return false;
+        }
+        return true;
 	}
 		
 	/**
@@ -769,28 +779,29 @@ public class GeometryTools {
 	 *@param  ac  Description of the Parameter
 	 *@return    boolean indication that 3D coordinates are available
 	 */
-	public static boolean has3DCoordinates(IAtomContainer ac) {
+    @TestMethod("testHas3DCoordinates_IAtomContainer")
+    public static boolean has3DCoordinates(IAtomContainer ac) {
 		return GeometryToolsInternalCoordinates.has3DCoordinates(ac);
 	}
-	
-	/**
-	 *  Determines if this AtomContainer contains 2D coordinates for some or all molecules.
-	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
-	 *
-	 *@param  ac  Description of the Parameter
-	 *@return    0 no 2d, 1=some, 2= for each atom
-	 */
-	public static int has2DCoordinatesNew(IChemModel model) {
-		Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
-		int oldCoords = -1;
-		while (containers.hasNext()) {
-			IAtomContainer ac = (IAtomContainer)containers.next();
-			int hasCoords = GeometryToolsInternalCoordinates.has2DCoordinatesNew(ac); 
-			if (hasCoords == 1) return 1;
-			if (oldCoords != -1 && oldCoords != hasCoords) return 1;
-			oldCoords = hasCoords;
-		}
-		return oldCoords;
+
+    /**
+     * Determines if this AtomContainer contains 2D coordinates for some or all molecules.
+     * See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
+     *
+     * @param model The model
+     * @return 0 no 2d, 1=some, 2= for each atom
+     */
+    public static int has2DCoordinatesNew(IChemModel model) {
+        Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
+        int oldCoords = -1;
+        while (containers.hasNext()) {
+            IAtomContainer ac = (IAtomContainer) containers.next();
+            int hasCoords = GeometryToolsInternalCoordinates.has2DCoordinatesNew(ac);
+            if (hasCoords == 1) return 1;
+            if (oldCoords != -1 && oldCoords != hasCoords) return 1;
+            oldCoords = hasCoords;
+        }
+        return oldCoords;
 	}
 
 	/**

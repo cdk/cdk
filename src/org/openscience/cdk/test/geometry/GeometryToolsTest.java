@@ -23,29 +23,23 @@
  */
 package org.openscience.cdk.test.geometry;
 
-import java.util.HashMap;
-import java.util.Iterator;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.MoleculeSet;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.*;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomContainer;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.test.NewCDKTestCase;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * This class defines regression tests that should ensure that the source code
@@ -58,35 +52,21 @@ import org.openscience.cdk.test.CDKTestCase;
  *
  * @see org.openscience.cdk.geometry.GeometryTools
  */
-public class GeometryToolsTest extends CDKTestCase {
+public class GeometryToolsTest extends NewCDKTestCase {
 
-    public GeometryToolsTest(String name) {
-        super(name);
-    }
-    
-    public void setUp() {}
-    
-    /**
-     * Defines a set of tests that can be used in automatic regression testing
-     * with JUnit.
-     */
-    public static Test suite() {
-        TestSuite suite = new TestSuite(GeometryToolsTest.class);
-        return suite;
-    }
-    
-	public void testTranslateAllPositive_IAtomContainer_HashMap() {
+	@Test
+    public void testTranslateAllPositive_IAtomContainer_HashMap() {
 		IAtomContainer container = new NNAtomContainer();
 		IAtom atom = new NNAtom(Elements.CARBON);
 		atom.setPoint2d(new Point2d(-3, -2));
 		container.addAtom(atom);
 		HashMap map=this.makeCoordsMap(container);
 		GeometryTools.translateAllPositive(container,map);
-		assertTrue(0 <= ((Point2d)map.get(atom)).x);
-		assertTrue(0 <= ((Point2d)map.get(atom)).y);
+		Assert.assertTrue(0 <= ((Point2d)map.get(atom)).x);
+		Assert.assertTrue(0 <= ((Point2d)map.get(atom)).y);
 	}
 	
-    public void testGetLength2D_IBond_HashMap() {
+    @Test public void testGetLength2D_IBond_HashMap() {
         Atom o = new Atom("O", new Point2d(0.0, 0.0));
         Atom c = new Atom("C", new Point2d(1.0, 0.0));
         Bond bond = new Bond(c,o);
@@ -95,7 +75,7 @@ public class GeometryToolsTest extends CDKTestCase {
         container.addAtom(c);
         container.addBond(bond);
         HashMap map=this.makeCoordsMap(container);
-        assertEquals(1.0, GeometryTools.getLength2D(bond,map), 0.001);
+        Assert.assertEquals(1.0, GeometryTools.getLength2D(bond,map), 0.001);
     }
 
     
@@ -109,7 +89,7 @@ public class GeometryToolsTest extends CDKTestCase {
     	return map;
     }
     
-    public void testGetMinMax_IAtomContainer_HashMap(){
+    @Test public void testGetMinMax_IAtomContainer_HashMap(){
     	Atom atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(1,1));
     	Atom atom2=new Atom("C");
@@ -119,13 +99,13 @@ public class GeometryToolsTest extends CDKTestCase {
     	ac.addAtom(atom2);
     	HashMap map=makeCoordsMap(ac);
     	double [] minmax=GeometryTools.getMinMax(ac,map);
-    	assertEquals(minmax[0],1d,.1);
-    	assertEquals(minmax[1],0d,.1);
-    	assertEquals(minmax[2],1d,.1);
-    	assertEquals(minmax[3],1d,.1);
+    	Assert.assertEquals(minmax[0],1d,.1);
+    	Assert.assertEquals(minmax[1],0d,.1);
+    	Assert.assertEquals(minmax[2],1d,.1);
+    	Assert.assertEquals(minmax[3],1d,.1);
     }
     
-    public void testGetMinMax_IMoleculeSet_HashMap(){
+    @Test public void testGetMinMax_IMoleculeSet_HashMap(){
     	Atom atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(1,1));
     	Atom atom2=new Atom("C");
@@ -137,13 +117,13 @@ public class GeometryToolsTest extends CDKTestCase {
     	molSet.addAtomContainer(ac);
     	HashMap map=makeCoordsMap(ac);
     	double [] minmax=GeometryTools.getMinMax(molSet,map);
-    	assertEquals(minmax[0],1d,.1);
-    	assertEquals(minmax[1],0d,.1);
-    	assertEquals(minmax[2],1d,.1);
-    	assertEquals(minmax[3],1d,.1);
+    	Assert.assertEquals(minmax[0],1d,.1);
+    	Assert.assertEquals(minmax[1],0d,.1);
+    	Assert.assertEquals(minmax[2],1d,.1);
+    	Assert.assertEquals(minmax[3],1d,.1);
     }
     
-    public void testGet2DCenter_IAtomContainer_HashMap(){
+    @Test public void testGet2DCenter_IAtomContainer_HashMap(){
     	Atom atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(1,1));
     	Atom atom2=new Atom("C");
@@ -152,12 +132,12 @@ public class GeometryToolsTest extends CDKTestCase {
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
     	Point2d p=GeometryTools.get2DCenter(ac, this.makeCoordsMap(ac));
-    	assertEquals(p.x,1.0,.1);
-    	assertEquals(p.y,0.5,.1);
+    	Assert.assertEquals(p.x,1.0,.1);
+    	Assert.assertEquals(p.y,0.5,.1);
     }
 
     
-    public void testGet2DCenter_Iterator_HashMap(){
+    @Test public void testGet2DCenter_Iterator_HashMap(){
     	Atom atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(1,1));
     	Atom atom2=new Atom("C");
@@ -166,12 +146,12 @@ public class GeometryToolsTest extends CDKTestCase {
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
     	Point2d p=GeometryTools.get2DCenter(ac.atoms(),this.makeCoordsMap(ac));
-    	assertEquals(p.x,1.0,.1);
-    	assertEquals(p.y,0.5,.1);
+    	Assert.assertEquals(p.x,1.0,.1);
+    	Assert.assertEquals(p.y,0.5,.1);
     }
 
     
-    public void testGet2DCenter_arrayIAtom_HashMap(){
+    @Test public void testGet2DCenter_arrayIAtom_HashMap(){
     	Atom atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(1,1));
     	Atom atom2=new Atom("C");
@@ -183,11 +163,11 @@ public class GeometryToolsTest extends CDKTestCase {
     	hm.put(atom1, atom1.getPoint2d());
     	hm.put(atom2, atom2.getPoint2d());
     	Point2d p=GeometryTools.get2DCenter(array,hm);
-    	assertEquals(p.x,1.0,.1);
-    	assertEquals(p.y,0.5,.1);
+    	Assert.assertEquals(p.x,1.0,.1);
+    	Assert.assertEquals(p.y,0.5,.1);
     }
     
-    public void testHas2DCoordinates_IAtomContainer() {
+    @Test public void testHas2DCoordinates_IAtomContainer() {
     	Atom atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(1,1));
     	Atom atom2=new Atom("C");
@@ -195,7 +175,7 @@ public class GeometryToolsTest extends CDKTestCase {
     	IAtomContainer container = new AtomContainer();
     	container.addAtom(atom1);
     	container.addAtom(atom2);
-    	assertTrue(GeometryTools.has2DCoordinates(container));
+    	Assert.assertTrue(GeometryTools.has2DCoordinates(container));
 
     	atom1=new Atom("C");
     	atom1.setPoint3d(new Point3d(1,1,1));
@@ -204,16 +184,16 @@ public class GeometryToolsTest extends CDKTestCase {
     	container = new AtomContainer();
     	container.addAtom(atom1);
     	container.addAtom(atom2);
-    	assertFalse(GeometryTools.has2DCoordinates(container));
+    	Assert.assertFalse(GeometryTools.has2DCoordinates(container));
     }
 
-    public void testHas2DCoordinates_EmptyAtomContainer() {
+    @Test public void testHas2DCoordinates_EmptyAtomContainer() {
     	IAtomContainer container = new AtomContainer();
-    	assertFalse(GeometryTools.has2DCoordinates(container));
-    	assertFalse(GeometryTools.has2DCoordinates(null));
+    	Assert.assertFalse(GeometryTools.has2DCoordinates(container));
+    	Assert.assertFalse(GeometryTools.has2DCoordinates(null));
 }
 
-    public void testHas2DCoordinatesNew_IAtomContainer() {
+    @Test public void testHas2DCoordinatesNew_IAtomContainer() {
     	Atom atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(1,1));
     	Atom atom2=new Atom("C");
@@ -221,7 +201,7 @@ public class GeometryToolsTest extends CDKTestCase {
     	IAtomContainer container = new AtomContainer();
     	container.addAtom(atom1);
     	container.addAtom(atom2);
-    	assertEquals(2, GeometryTools.has2DCoordinatesNew(container));
+    	Assert.assertEquals(2, GeometryTools.has2DCoordinatesNew(container));
 
     	atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(1,1));
@@ -230,7 +210,7 @@ public class GeometryToolsTest extends CDKTestCase {
     	container = new AtomContainer();
     	container.addAtom(atom1);
     	container.addAtom(atom2);
-    	assertEquals(1, GeometryTools.has2DCoordinatesNew(container));
+    	Assert.assertEquals(1, GeometryTools.has2DCoordinatesNew(container));
 
     	atom1=new Atom("C");
     	atom1.setPoint3d(new Point3d(1,1,1));
@@ -239,10 +219,10 @@ public class GeometryToolsTest extends CDKTestCase {
     	container = new AtomContainer();
     	container.addAtom(atom1);
     	container.addAtom(atom2);
-    	assertEquals(0, GeometryTools.has2DCoordinatesNew(container));
+    	Assert.assertEquals(0, GeometryTools.has2DCoordinatesNew(container));
     }
 
-    public void testHas3DCoordinates_IAtomContainer() {
+    @Test public void testHas3DCoordinates_IAtomContainer() {
     	Atom atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(1,1));
     	Atom atom2=new Atom("C");
@@ -250,7 +230,7 @@ public class GeometryToolsTest extends CDKTestCase {
     	IAtomContainer container = new AtomContainer();
     	container.addAtom(atom1);
     	container.addAtom(atom2);
-    	assertFalse(GeometryTools.has3DCoordinates(container));
+    	Assert.assertFalse(GeometryTools.has3DCoordinates(container));
 
     	atom1=new Atom("C");
     	atom1.setPoint3d(new Point3d(1,1,1));
@@ -259,10 +239,10 @@ public class GeometryToolsTest extends CDKTestCase {
     	container = new AtomContainer();
     	container.addAtom(atom1);
     	container.addAtom(atom2);
-    	assertTrue(GeometryTools.has3DCoordinates(container));
+    	Assert.assertTrue(GeometryTools.has3DCoordinates(container));
     }
 
-    public void testTranslateAllPositive_IAtomContainer_HashMap2(){
+    @Test public void testTranslateAllPositive_IAtomContainer_HashMap2(){
     	Atom atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(-1,-1));
     	Atom atom2=new Atom("C");
@@ -272,13 +252,13 @@ public class GeometryToolsTest extends CDKTestCase {
     	ac.addAtom(atom2);
     	HashMap hm=this.makeCoordsMap(ac);
     	GeometryTools.translateAllPositive(ac,hm);
-    	assertEquals(((Point2d)hm.get(atom1)).x,0.0, 0.01);
-    	assertEquals(((Point2d)hm.get(atom1)).y,0.0, 0.01);
-    	assertEquals(((Point2d)hm.get(atom2)).x,2.0, 0.01);
-    	assertEquals(((Point2d)hm.get(atom2)).y,1.0, 0.01);
+    	Assert.assertEquals(((Point2d)hm.get(atom1)).x,0.0, 0.01);
+    	Assert.assertEquals(((Point2d)hm.get(atom1)).y,0.0, 0.01);
+    	Assert.assertEquals(((Point2d)hm.get(atom2)).x,2.0, 0.01);
+    	Assert.assertEquals(((Point2d)hm.get(atom2)).y,1.0, 0.01);
     }
     
-    public void testGetLength2D_IBond_HashMap2(){
+    @Test public void testGetLength2D_IBond_HashMap2(){
     	Atom atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(-1,-1));
     	Atom atom2=new Atom("C");
@@ -288,7 +268,7 @@ public class GeometryToolsTest extends CDKTestCase {
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
     	HashMap hm=this.makeCoordsMap(ac);
-    	assertEquals(GeometryTools.getLength2D(bond,hm),2.23,0.01);
+    	Assert.assertEquals(GeometryTools.getLength2D(bond,hm),2.23,0.01);
     }
 }
 
