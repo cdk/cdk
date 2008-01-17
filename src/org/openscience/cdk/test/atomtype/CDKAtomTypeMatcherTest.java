@@ -1357,6 +1357,32 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	assertAtomType(testedAtomTypes, "Zn.2plus", atm.findMatchingAtomType(mol, mol.getAtom(0)));
     }
     
+    /**
+     * @cdk.bug 1872969
+     */
+    @Test public void bug1872969() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+    	
+    	mol.addAtom(new Atom("C"));
+    	mol.addAtom(new Atom("S"));
+    	mol.addAtom(new Atom("O"));
+    	mol.addAtom(new Atom("O"));
+    	mol.addAtom(new Atom("O")); mol.getAtom(4).setFormalCharge(-1);
+    	mol.addAtom(new Atom("Na")); mol.getAtom(5).setFormalCharge(+1);
+    	mol.addBond(0,1, IBond.Order.SINGLE);
+    	mol.addBond(1,2, IBond.Order.DOUBLE);
+    	mol.addBond(1,3, IBond.Order.DOUBLE);
+    	mol.addBond(1,4, IBond.Order.SINGLE);
+
+    	assertAtomType(testedAtomTypes, "C.sp3", atm.findMatchingAtomType(mol, mol.getAtom(0)));
+    	assertAtomType(testedAtomTypes, "S.onyl", atm.findMatchingAtomType(mol, mol.getAtom(1)));
+    	assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, mol.getAtom(2)));
+    	assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, mol.getAtom(3)));
+    	assertAtomType(testedAtomTypes, "O.minus", atm.findMatchingAtomType(mol, mol.getAtom(4)));
+    	assertAtomType(testedAtomTypes, "Na.plus", atm.findMatchingAtomType(mol, mol.getAtom(5)));
+    }
+    
     @Test public void testAssumeExplicitHydrogens() throws Exception {
     	IMolecule mol = new Molecule();
     	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(

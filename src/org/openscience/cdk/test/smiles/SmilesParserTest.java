@@ -1183,5 +1183,16 @@ public class SmilesParserTest extends NewCDKTestCase {
 		Assert.assertEquals(1, mol.getAtom(1).getFormalCharge().intValue());
 	}
 	
+	/**
+	 * @cdk.bug 1872969
+	 */
+	@org.junit.Test public void bug1872969() throws Exception {
+		String smiles = "CS(=O)(=O)[O-].[Na+]";
+		IMolecule mol = sp.parseSmiles(smiles);
+		for (int i=0; i<6; i++) {
+			Assert.assertNotNull(mol.getAtom(i).getAtomTypeName());
+		}
+	}
+	
 }
 
