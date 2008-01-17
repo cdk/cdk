@@ -28,6 +28,8 @@
  */
 package org.openscience.cdk.tools;
 
+import org.openscience.cdk.annotations.TestClass;
+
 /**
  * Class with constants for possible data features defined in the
  * a Data Feature Ontology. Actual integers are random
@@ -47,6 +49,7 @@ package org.openscience.cdk.tools;
  * @cdk.module core
  * @cdk.svnrev  $Revision: 9162 $
  **/
+@TestClass("org.openscience.cdk.test.tool.DataFeaturesTest")
 public class DataFeatures {
 
     public final static int NONE = 0;
