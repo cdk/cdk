@@ -27,10 +27,9 @@ package org.openscience.cdk.test.io;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import junit.framework.Test;
@@ -423,11 +422,11 @@ public class MDLV2000ReaderTest extends CDKTestCase {
         assertEquals(0, container.getBondCount());
 
 
-        Hashtable props = container.getProperties();
-        Enumeration keys = props.keys();
+        Map<Object,Object> props = container.getProperties();
+        Iterator<Object> keys = props.keySet().iterator();
         ArrayList<String> obsKeys = new ArrayList<String>();
-        while (keys.hasMoreElements()) {
-            String s = (String) keys.nextElement();
+        while (keys.hasNext()) {
+            String s = (String) keys.next();
             obsKeys.add(s);
         }
 

@@ -20,7 +20,7 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -113,7 +112,7 @@ public class DebugBond extends org.openscience.cdk.Bond
 		return super.getProperty(description);
 	}
 
-	public Hashtable getProperties() {
+	public Map<Object,Object> getProperties() {
 		logger.debug("Getting properties");
 		return super.getProperties();
 	}
@@ -138,7 +137,7 @@ public class DebugBond extends org.openscience.cdk.Bond
 		return super.getFlag(flag_type);
 	}
 
-	public void setProperties(Hashtable properties) {
+	public void setProperties(Map<Object,Object> properties) {
 		logger.debug("Setting properties: ", properties);
 		super.setProperties(properties);
 	}

@@ -20,13 +20,13 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -83,7 +83,7 @@ public class DebugAtomContainerSet extends org.openscience.cdk.AtomContainerSet
 		return super.getProperty(description);
 	}
 
-	public Hashtable getProperties() {
+	public Map<Object,Object> getProperties() {
 		logger.debug("Getting properties");
 		return super.getProperties();
 	}
@@ -108,7 +108,7 @@ public class DebugAtomContainerSet extends org.openscience.cdk.AtomContainerSet
 		return super.getFlag(flag_type);
 	}
 
-	public void setProperties(Hashtable properties) {
+	public void setProperties(Map<Object,Object> properties) {
 		logger.debug("Setting properties: ", properties);
 		super.setProperties(properties);
 	}

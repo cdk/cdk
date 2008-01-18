@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.templates;
 
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -129,10 +128,10 @@ public class AminoAcids {
         		logger.debug("Adding AA: ", ac);
         		// convert into an AminoAcid
         		AminoAcid aminoAcid = new AminoAcid();
-        		java.util.Iterator atoms = ac.atoms();
-        		Enumeration props = ac.getProperties().keys();
-        		while (props.hasMoreElements()) {
-        			Object next = props.nextElement();
+        		Iterator<IAtom> atoms = ac.atoms();
+        		Iterator<Object> props = ac.getProperties().keySet().iterator();
+        		while (props.hasNext()) {
+        			Object next = props.next();
         			logger.debug("Prop class: " + next.getClass().getName());
         			logger.debug("Prop: " + next.toString());
         			if (next instanceof DictRef) {

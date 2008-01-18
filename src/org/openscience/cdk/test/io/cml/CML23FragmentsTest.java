@@ -28,7 +28,7 @@
 package org.openscience.cdk.test.io.cml;
 
 import java.io.ByteArrayInputStream;
-import java.util.Enumeration;
+import java.util.Iterator;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -315,10 +315,10 @@ public class CML23FragmentsTest extends CDKTestCase {
     	IChemFile chemFile = parseCMLString(cmlString);
         IMolecule mol = checkForSingleMoleculeFile(chemFile);
         
-        Enumeration props = mol.getProperties().keys();
+        Iterator<Object> props = mol.getProperties().keySet().iterator();
         boolean foundDictRefs = false;
-		while (props.hasMoreElements()) {
-			Object next = props.nextElement();
+		while (props.hasNext()) {
+			Object next = props.next();
 			if (next instanceof DictRef) foundDictRefs = true;
 		}
 		assertTrue(foundDictRefs);

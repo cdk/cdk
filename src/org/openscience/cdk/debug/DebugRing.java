@@ -20,8 +20,8 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.interfaces.IAtom;
@@ -502,7 +502,7 @@ public class DebugRing extends org.openscience.cdk.Ring
 		return super.getProperty(description);
 	}
 
-	public Hashtable getProperties() {
+	public Map<Object,Object> getProperties() {
 		logger.debug("Getting properties");
 		return super.getProperties();
 	}
@@ -527,7 +527,7 @@ public class DebugRing extends org.openscience.cdk.Ring
 		return super.getFlag(flag_type);
 	}
 
-	public void setProperties(Hashtable properties) {
+	public void setProperties(Map<Object,Object> properties) {
 		logger.debug("Setting properties: ", properties);
 		super.setProperties(properties);
 	}

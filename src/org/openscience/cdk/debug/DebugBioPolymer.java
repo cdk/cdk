@@ -21,7 +21,6 @@
 package org.openscience.cdk.debug;
 
 import java.util.Collection;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -481,7 +480,7 @@ public class DebugBioPolymer extends org.openscience.cdk.BioPolymer
 		return super.getProperty(description);
 	}
 
-	public Hashtable getProperties() {
+	public Map<Object,Object> getProperties() {
 		logger.debug("Getting properties");
 		return super.getProperties();
 	}
@@ -506,7 +505,7 @@ public class DebugBioPolymer extends org.openscience.cdk.BioPolymer
 		return super.getFlag(flag_type);
 	}
 
-	public void setProperties(Hashtable properties) {
+	public void setProperties(Map<Object,Object> properties) {
 		logger.debug("Setting properties: ", properties);
 		super.setProperties(properties);
 	}

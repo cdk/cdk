@@ -20,16 +20,16 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -86,7 +86,7 @@ public class DebugChemModel extends org.openscience.cdk.ChemModel
 		return super.getProperty(description);
 	}
 
-	public Hashtable getProperties() {
+	public Map<Object,Object> getProperties() {
 		logger.debug("Getting properties");
 		return super.getProperties();
 	}
@@ -111,7 +111,7 @@ public class DebugChemModel extends org.openscience.cdk.ChemModel
 		return super.getFlag(flag_type);
 	}
 
-	public void setProperties(Hashtable properties) {
+	public void setProperties(Map<Object,Object> properties) {
 		logger.debug("Setting properties: ", properties);
 		super.setProperties(properties);
 	}

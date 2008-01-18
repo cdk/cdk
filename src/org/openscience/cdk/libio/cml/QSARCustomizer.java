@@ -28,23 +28,23 @@
  */
 package org.openscience.cdk.libio.cml;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 
 import nu.xom.Attribute;
 import nu.xom.Element;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.BooleanResult;
-import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.xmlcml.cml.element.CMLArray;
@@ -128,11 +128,11 @@ public class QSARCustomizer implements ICMLCustomizer {
     		throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
     	
     	Element element = (Element)nodeToAdd;
-        Hashtable props = object.getProperties();
-        Enumeration keys = props.keys();
+    	Map<Object,Object> props = object.getProperties();
+        Iterator<Object> keys = props.keySet().iterator();
         Element propList = null;
-        while (keys.hasMoreElements()) {
-            Object key = keys.nextElement();
+        while (keys.hasNext()) {
+            Object key = keys.next();
             if (key instanceof DescriptorSpecification) {
                 DescriptorSpecification specs = (DescriptorSpecification)key;
                 DescriptorValue value = (DescriptorValue)props.get(key);

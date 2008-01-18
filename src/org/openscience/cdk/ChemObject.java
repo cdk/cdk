@@ -25,17 +25,19 @@
  */
 package org.openscience.cdk;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.openscience.cdk.event.ChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
 
 /**
  *  The base class for all chemical objects in this cdk. It provides methods for
@@ -66,7 +68,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	/**
 	 *  A hashtable for the storage of any kind of properties of this IChemObject.
 	 */
-	private Hashtable<Object, Object> properties;
+	private Map<Object, Object> properties;
 	/**
 	 *  You will frequently have to use some flags on a IChemObject. For example, if
 	 *  you want to draw a molecule and see if you've already drawn an atom, or in
@@ -215,11 +217,11 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 *
 	 * @return    Returns in instance of the properties
 	 */
-	private Hashtable<Object, Object> lazyProperties()
+	private Map<Object, Object> lazyProperties()
 	{
 		if (properties == null)
 		{
-			properties = new Hashtable<Object, Object>();
+			properties = new HashMap<Object, Object>();
 		}
 		return properties;
 	}
@@ -283,7 +285,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 *@return    The object's properties as an Hashtable
 	 *@see       #setProperties
 	 */
-	public Hashtable getProperties()
+	public Map<Object,Object> getProperties()
 	{
 		return lazyProperties();
 	}
@@ -304,9 +306,9 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
         // clone the properties
 		if (properties != null) {
 			Hashtable<Object, Object> clonedHashtable = new Hashtable<Object, Object>();
-			Enumeration keys = properties.keys();
-			while (keys.hasMoreElements()) {
-				Object key = keys.nextElement();
+			Iterator<Object> keys = properties.keySet().iterator();
+			while (keys.hasNext()) {
+				Object key = keys.next();
 				Object value = properties.get(key);
 				clonedHashtable.put(key, value);
 			}
@@ -393,12 +395,12 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 *@param  properties  a Hashtable specifying the property values
 	 *@see                #getProperties
 	 */
-	public void setProperties(Hashtable properties)
+	public void setProperties(Map<Object,Object> properties)
 	{
-		Enumeration keys = properties.keys();
-		while (keys.hasMoreElements())
+		Iterator<Object> keys = properties.keySet().iterator();
+		while (keys.hasNext())
 		{
-			Object key = keys.nextElement();
+			Object key = keys.next();
 			lazyProperties().put(key, properties.get(key));
 		}
 		notifyChanged();

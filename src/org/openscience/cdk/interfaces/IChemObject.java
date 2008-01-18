@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * The base class for all chemical objects in this cdk. It provides methods for
@@ -134,7 +134,7 @@ public interface IChemObject extends Cloneable {
 	 *@return    The object's properties as an Hashtable
 	 *@see       #setProperties
 	 */
-	public Hashtable getProperties();
+	public Map<Object,Object> getProperties();
 
 	/**
 	 * Returns the identifier (ID) of this object.
@@ -177,7 +177,7 @@ public interface IChemObject extends Cloneable {
 	 * @param  properties  a Hashtable specifying the property values
 	 * @see                #getProperties
 	 */
-	public void setProperties(Hashtable properties);
+	public void setProperties(Map<Object,Object> properties);
     
 	/**
 	 * Sets the whole set of flags.

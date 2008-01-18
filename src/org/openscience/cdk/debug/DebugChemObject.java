@@ -20,7 +20,7 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -92,7 +92,7 @@ public class DebugChemObject extends org.openscience.cdk.ChemObject
 		return super.getProperty(description);
 	}
 
-	public Hashtable getProperties() {
+	public Map<Object,Object> getProperties() {
 		logger.debug("Getting properties");
 		return super.getProperties();
 	}
@@ -117,7 +117,7 @@ public class DebugChemObject extends org.openscience.cdk.ChemObject
 		return super.getFlag(flag_type);
 	}
 
-	public void setProperties(Hashtable properties) {
+	public void setProperties(Map<Object,Object> properties) {
 		logger.debug("Setting properties: ", properties);
 		super.setProperties(properties);
 	}

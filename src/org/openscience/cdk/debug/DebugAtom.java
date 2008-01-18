@@ -20,12 +20,19 @@
  */
 package org.openscience.cdk.debug;
 
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.tools.LoggingTool;
+import java.util.Map;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-import java.util.Hashtable;
+
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Debugging data class.
@@ -326,7 +333,7 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		return super.getProperty(description);
 	}
 
-	public Hashtable getProperties() {
+	public Map<Object,Object> getProperties() {
 		logger.debug("Getting properties");
 		return super.getProperties();
 	}
@@ -351,7 +358,7 @@ public class DebugAtom extends org.openscience.cdk.Atom implements IAtom {
 		return super.getFlag(flag_type);
 	}
 
-	public void setProperties(Hashtable properties) {
+	public void setProperties(Map<Object,Object> properties) {
 		logger.debug("Setting properties: ", properties);
 		super.setProperties(properties);
 	}
