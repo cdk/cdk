@@ -28,7 +28,7 @@
 package org.openscience.cdk.interfaces;
 
 import java.util.Collection;
-import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * A Strand is an AtomContainer which stores additional strand specific
@@ -122,7 +122,7 @@ public interface IStrand extends IAtomContainer {
 	/**
 	 * Returns the monomers in this strand. 
 	 * 
-	 * @return hashtable containing the monomers in the strand.
+	 * @return Map containing the monomers in the strand.
 	 */
-	public Hashtable<String,IMonomer> getMonomers();
+	public Map<String,IMonomer> getMonomers();
 }

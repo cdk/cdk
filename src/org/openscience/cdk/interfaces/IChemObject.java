@@ -131,7 +131,7 @@ public interface IChemObject extends Cloneable {
 	/**
 	 *  Returns a Map with the IChemObject's properties.
 	 *
-	 *@return    The object's properties as an Hashtable
+	 *@return    The object's properties as an Map
 	 *@see       #setProperties
 	 */
 	public Map<Object,Object> getProperties();
@@ -174,7 +174,7 @@ public interface IChemObject extends Cloneable {
 	/**
 	 * Sets the properties of this object.
 	 *
-	 * @param  properties  a Hashtable specifying the property values
+	 * @param  properties  a Map specifying the property values
 	 * @see                #getProperties
 	 */
 	public void setProperties(Map<Object,Object> properties);

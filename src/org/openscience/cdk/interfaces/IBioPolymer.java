@@ -131,7 +131,7 @@ public interface IBioPolymer extends IPolymer {
 	public void removeStrand(String name);
 	
 	/**
-	 * Returns a Hashtable containing the strands in the Polymer.
+	 * Returns a Map containing the strands in the Polymer.
 	 * 
 	 * @return hashtable containing the strands in the Polymer
 	 */
