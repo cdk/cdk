@@ -1194,5 +1194,17 @@ public class SmilesParserTest extends NewCDKTestCase {
 		}
 	}
 	
+	/**
+	 * @cdk.bug 1875949
+	 */
+	@org.junit.Test public void testResonanceStructure() throws Exception {
+		String smiles = "[F+]=C-[C-]";
+		IMolecule mol = sp.parseSmiles(smiles);
+		Assert.assertEquals(3, mol.getAtomCount());
+		Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(0).getOrder());
+		Assert.assertEquals(+1, mol.getAtom(0).getFormalCharge().intValue());
+		Assert.assertEquals(-1, mol.getAtom(2).getFormalCharge().intValue());
+	}
+	
 }
 
