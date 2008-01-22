@@ -77,7 +77,7 @@ public class ChemObjectTest extends NewCDKTestCase {
         Assert.assertEquals(cProperty, chemObject.getProperty(cDescription));
     }
 
-    @Test public void testSetProperties_Hashtable() {
+    @Test public void testSetProperties_Map() {
         IChemObject chemObject = builder.newChemObject();
         Hashtable props = new Hashtable();
         String cDescription = new String("description");
