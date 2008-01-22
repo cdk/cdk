@@ -49,7 +49,6 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.module core
  * @cdk.svnrev  $Revision: 9162 $
  **/
-@TestClass("org.openscience.cdk.test.tool.DataFeaturesTest")
 public class DataFeatures {
 
     public final static int NONE = 0;
