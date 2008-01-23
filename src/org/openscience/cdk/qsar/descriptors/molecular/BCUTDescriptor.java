@@ -368,7 +368,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         eigenDecomposition = new EigenvalueDecomposition(matrix);
         double[] eval3 = eigenDecomposition.getRealEigenvalues();
 
-        DoubleArrayResult retval = new DoubleArrayResult(eval1.length + eval2.length + eval3.length);
+
 
         String[] names;
         String[] suffix = {"w", "c", "p"};
@@ -390,6 +390,8 @@ public class BCUTDescriptor implements IMolecularDescriptor {
             lnhigh = nhigh;
             enhigh = 0;
         }
+
+        DoubleArrayResult retval = new DoubleArrayResult( (lnlow+enlow+lnhigh+enhigh) * 3);
 
         for (int i = 0; i < lnlow; i++) retval.add(eval1[i]);
         for (int i = 0; i < enlow; i++) retval.add(Double.NaN);
