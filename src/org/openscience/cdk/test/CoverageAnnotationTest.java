@@ -132,8 +132,14 @@ abstract public class CoverageAnnotationTest extends CDKTestCase {
         // methods mighthave TestMethod annotations
         TestClass testClassAnnotation = (TestClass) coreClass.getAnnotation(TestClass.class);
         if (testClassAnnotation == null) {
-            System.out.println(className + " did not have a TestClass annotation");
-            return methodAnnotations.size() + missingTestCount + 1;
+        	if (coreClass.getDeclaredMethods().length == 0 && coreClass.getDeclaredConstructors().length <= 1) {
+        		// that's fine, no functionality; something like CDKConstants or DataFeatures
+        		// the 1 is for the default constructor; maybe the tested class should be 'abstract final'?
+        		return 0;
+        	} else {
+        		System.out.println(className + " did not have a TestClass annotation");
+        		return methodAnnotations.size() + missingTestCount + 1;
+        	}
         }
         Class testClass;
         try {
