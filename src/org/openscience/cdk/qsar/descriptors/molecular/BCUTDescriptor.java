@@ -291,16 +291,16 @@ public class BCUTDescriptor implements IMolecularDescriptor {
 
         // add H's in case they're not present
         try {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-            Iterator<IAtom> atoms = container.atoms();
+            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+            Iterator<IAtom> atoms = molecule.atoms();
             while (atoms.hasNext()) {
                 IAtom atom = atoms.next();
-                IAtomType type = matcher.findMatchingAtomType(container, atom);
+                IAtomType type = matcher.findMatchingAtomType(molecule, atom);
                 AtomTypeManipulator.configure(atom, type);
             }
-            CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
-            hAdder.addImplicitHydrogens(container);
-            AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+            CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
+            hAdder.addImplicitHydrogens(molecule);
+            AtomContainerManipulator.convertImplicitToExplicitHydrogens(molecule);
         } catch (Exception e) {
             throw new CDKException("Could not add hydrogens: " + e.getMessage(), e);
         }

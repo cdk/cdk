@@ -23,10 +23,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Hashtable;
-
-import javax.vecmath.Point3d;
-
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -38,8 +36,8 @@ import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
+import javax.vecmath.Point3d;
+import java.util.Hashtable;
 
 
 /**
@@ -341,7 +339,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
             }
             for (int i = 0; i < ac.getAtomCount(); i++) {
                 String sym = ac.getAtom(i).getSymbol();
-                wt[i] = ((Double) hash.get(sym)).doubleValue();
+                wt[i] = (Double) hash.get(sym);
             }
         }
 
