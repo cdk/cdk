@@ -1206,5 +1206,14 @@ public class SmilesParserTest extends NewCDKTestCase {
 		Assert.assertEquals(-1, mol.getAtom(2).getFormalCharge().intValue());
 	}
 	
+	/**
+	 * @cdk.bug 1879589
+	 */
+	@org.junit.Test public void testSP2HybridizedSulphur() throws Exception {
+		String smiles = "[s+]1c2c(nc3c1cccc3)cccc2";
+		IMolecule mol = sp.parseSmiles(smiles);
+		assertAtomTypesPerceived(mol);
+	}
+	
 }
 
