@@ -119,6 +119,25 @@ public class NewCDKTestCase {
     }
 
     /**
+     * Tests method that asserts that for all atoms an reasonable CDK atom
+     * type can be perceived.
+     * 
+     * @param container IAtomContainer to test atom types of
+     */
+    public void assertAtomTypesPerceived(IAtomContainer container) throws Exception {
+    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+    	Iterator<IAtom> atoms = container.atoms();
+    	while (atoms.hasNext()) {
+    		IAtom atom = atoms.next();
+    		IAtomType type = matcher.findMatchingAtomType(container, atom);
+    		Assert.assertNotNull(
+    			"Could not perceive atom type for: " + atom,
+    			type
+    		);
+    	}
+    }
+
+    /**
      * Convenience method that perceives atom types (CDK scheme) and
      * adds explicit hydrogens accordingly. It does not create 2D or 3D
      * coordinates for the new hydrogens.
