@@ -473,11 +473,23 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	if ("S".equals(atom.getSymbol())) {
     		List<IBond> neighbors = atomContainer.getConnectedBondsList(atom);
     		int neighborcount = neighbors.size();
-    		if (atom.getFormalCharge() != CDKConstants.UNSET &&
-    				atom.getFormalCharge() != 0) {
+    		if (atom.getHybridization() != CDKConstants.UNSET &&
+    				(atom.getFormalCharge() == CDKConstants.UNSET ||
+    						atom.getFormalCharge() == 0)) {
+    			if (atom.getHybridization() == Hybridization.SP2 &&
+    				atom.getFormalCharge() == +1) {
+    				IAtomType type = getAtomType("S.plus");
+    				if (isAcceptable(atom, atomContainer, type)) return type;
+    			}
+    		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
+    		  		   atom.getFormalCharge() != 0) {
     			if (atom.getFormalCharge() == -1 &&
     					neighborcount == 1) {
     				IAtomType type = getAtomType("S.minus");
+    				if (isAcceptable(atom, atomContainer, type)) return type;
+    			} else if (atom.getFormalCharge() == +1 &&
+    					   neighborcount == 2) {
+    				IAtomType type = getAtomType("S.plus");
     				if (isAcceptable(atom, atomContainer, type)) return type;
     			} else if (atom.getFormalCharge() == +2 &&
     					neighborcount == 4) {

@@ -1154,6 +1154,27 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 		}
 	}
     
+	/**
+	 * @cdk.bug 1879589
+	 */
+    @Test public void testChargedSulphurSpecies() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.sp2",
+			"C.sp2",
+			"C.sp2",
+			"S.plus",
+			"C.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makePyridine();
+		molecule.getAtom(4).setSymbol("S");
+		molecule.getAtom(4).setFormalCharge(+1);
+		CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+		for (int f = 0; f < molecule.getAtomCount(); f++) {
+			assertAtomType(testedAtomTypes, expectedTypes[f], atm.findMatchingAtomType(molecule, molecule.getAtom(f)));
+		}
+	}
+    
     @Test public void testPyridineOxide() throws Exception {
 		String[] expectedTypes = {
 			"C.sp2",

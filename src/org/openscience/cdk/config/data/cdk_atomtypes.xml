@@ -260,7 +260,7 @@
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
   </atomType>
 
-  <atomType id="S.2"> <!-- e.g. DMSO -->
+  <atomType id="S.2"> <!-- e.g. DMSO  FIXME: WTF??? -->
     <atom elementType="S" formalCharge="0">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">2</scalar>
@@ -276,6 +276,15 @@
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
     </atom>
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
+  </atomType>
+
+  <atomType id="S.plus"> <!-- FIXME: needs confirmation -->
+    <atom elementType="S" formalCharge="1">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">1</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
   </atomType>
 
   <atomType id="S.planar3"> <!-- e.g. thiophene -->
