@@ -28,6 +28,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -283,6 +284,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 	public void testAromaticSmilesWithCharge() throws Exception {
 		String smiles = "c1cc[c-]cc1";
 		IMolecule molecule = sp.parseSmiles(smiles);
+		assertAtomTypesPerceived(molecule);
 		Assert.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
 		Assert.assertTrue(molecule.getBond(0).getFlag(CDKConstants.ISAROMATIC));
 	}
@@ -609,6 +611,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 		String smiles = "[c+]1ccccc1";
 		// C6H5+, phenyl cation
 		IMolecule mol = sp.parseSmiles(smiles);
+		assertAtomTypesPerceived(mol);
 		Assert.assertEquals(6, mol.getAtomCount());
 		Assert.assertEquals(1, mol.getAtom(0).getFormalCharge().intValue());
 
@@ -1213,6 +1216,12 @@ public class SmilesParserTest extends NewCDKTestCase {
 		String smiles = "[s+]1c2c(nc3c1cccc3)cccc2";
 		IMolecule mol = sp.parseSmiles(smiles);
 		assertAtomTypesPerceived(mol);
+		Iterator<IAtom> atoms = mol.atoms();
+		while (atoms.hasNext()) {
+			IAtom atom = atoms.next();
+			Assert.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
+			Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+		}
 	}
 	
 }
