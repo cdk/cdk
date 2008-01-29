@@ -449,6 +449,7 @@
             <antcall target="compile-module"><param name="module" value="control"/></antcall>
             <antcall target="compile-module"><param name="module" value="datadebug"/></antcall>
             <antcall target="compile-module"><param name="module" value="nonotify"/></antcall>
+            <antcall target="compile-module"><param name="module" value="formula"/></antcall>
             <antcall target="compile-module"><param name="module" value="structgen"/></antcall>
             <antcall target="compile-module"><param name="module" value="pdb"/></antcall>
             <antcall target="compile-module"><param name="module" value="extra"/></antcall>
@@ -474,7 +475,7 @@
             <antcall target="compile-module"><param name="module" value="experimental"/></antcall>
             <antcall target="compile-module"><param name="module" value="pcore"/></antcall>
             <antcall target="compile-module"><param name="module" value="applications"/></antcall>
-            <antcall target="compile-module"><param name="module" value="inchi"/></antcall>
+    		<antcall target="compile-module"><param name="module" value="inchi"/></antcall>
         </target>
 
 	<target id="test-dist-all" name="test-dist-all" description="test-dist-all">
@@ -507,6 +508,7 @@
         <antcall target="compile-module"><param name="module" value="test-libiomd"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-smarts"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-pcore"/></antcall>
+    	<antcall target="compile-module"><param name="module" value="test-formula"/></antcall>
 	</target>
 
 	<target id="dist-large" name="dist-large" depends="dist-all"
@@ -551,6 +553,7 @@
                     <includesfile name="${metainf}/inchi.libdepends"/>
                     <includesfile name="${metainf}/smarts.libdepends"/>
                     <includesfile name="${metainf}/pcore.libdepends"/>
+                    <includesfile name="${metainf}/formula.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-applications.jar"/>
@@ -592,6 +595,7 @@
                     <include name="cdk-sdg.jar"/>
                     <include name="cdk-inchi.jar"/>
                     <include name="cdk-pcore.jar"/>
+                    <include name="cdk-formula.jar"/>
                 </fileset>
             </unjar>
 
@@ -659,6 +663,7 @@
                     <include name="cdk-sdg.jar"/>
                     <include name="cdk-inchi.jar"/>
                     <include name="cdk-pcore.jar"/>
+    				<include name="cdk-formula.jar"/>
                 </fileset>
             </unjar>
 
@@ -714,6 +719,7 @@
                     <includesfile name="${metainf}/test-weka.libdepends"/>
                     <includesfile name="${metainf}/test-libiomd.libdepends"/>
                     <includesfile name="${metainf}/test-pcore.libdepends"/>
+                    <includesfile name="${metainf}/test-formula.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-test-core.jar"/>
@@ -742,6 +748,7 @@
                     <include name="cdk-test-weka.jar"/>
                     <include name="cdk-test-libiomd.jar"/>
                     <include name="cdk-test-pcore.jar"/>
+                    <include name="cdk-test-formula.jar"/>
                 </fileset>
             </unjar>
 
@@ -985,6 +992,7 @@
             <antcall target="test-module"><param name="module" value="inchi"/></antcall>
             <antcall target="test-module"><param name="module" value="structgen"/></antcall>
             <antcall target="test-module"><param name="module" value="libiomd"/></antcall>
+            	<antcall target="test-module"><param name="module" value="formula"/></antcall>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"

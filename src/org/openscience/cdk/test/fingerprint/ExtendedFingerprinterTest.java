@@ -40,7 +40,7 @@ import org.openscience.cdk.test.NewCDKTestCase;
 import java.util.BitSet;
 
 /**
- * @cdk.module test-standard
+ * @cdk.module test-extra
  */
 public class ExtendedFingerprinterTest extends NewCDKTestCase {
 	

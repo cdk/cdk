@@ -42,7 +42,7 @@ import java.util.Iterator;
 /**
  * Tests the DeAromatizationTool.
  *
- * @cdk.module test-standard
+ * @cdk.module test-extra
  */
 public class DeAromatizationToolTest extends NewCDKTestCase {
 	

@@ -76,7 +76,7 @@ import org.openscience.cdk.test.protein.data.PDBStructureTest;
 public class MdataTests {
 
     public static Test suite () {
-        TestSuite suite= new TestSuite("The CDK data module Tests");
+TestSuite suite= new TestSuite("The CDK data module Tests");
         
         suite.addTest(DataCoverageTest.suite());
         

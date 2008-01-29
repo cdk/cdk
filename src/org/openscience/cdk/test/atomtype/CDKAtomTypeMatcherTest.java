@@ -21,20 +21,30 @@
  */
 package org.openscience.cdk.test.atomtype;
 
-import junit.framework.JUnit4TestAdapter;
-import org.junit.Assert;
-import org.junit.Test;
-import org.openscience.cdk.*;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.templates.MoleculeFactory;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import junit.framework.JUnit4TestAdapter;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * This class tests the matching of atom types defined in the

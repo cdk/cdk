@@ -38,9 +38,11 @@ import org.openscience.cdk.test.applications.undoredo.ConvertToRadicalEditTest;
 import org.openscience.cdk.test.applications.undoredo.FlipEditTest;
 import org.openscience.cdk.test.applications.undoredo.RemoveAtomsAndBondsEditTest;
 import org.openscience.cdk.test.dict.DictDBTest;
+import org.openscience.cdk.test.fingerprint.ExtendedFingerprinterTest;
 import org.openscience.cdk.test.geometry.RDFCalculatorTest;
 import org.openscience.cdk.test.geometry.alignment.KabschAlignmentTest;
 import org.openscience.cdk.test.index.CASNumberTest;
+import org.openscience.cdk.test.io.ShelXWriterTest;
 import org.openscience.cdk.test.layout.HydrogenPlacerTest;
 import org.openscience.cdk.test.layout.OverlapResolverTest;
 import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
@@ -48,6 +50,7 @@ import org.openscience.cdk.test.layout.TemplateHandlerTest;
 import org.openscience.cdk.test.libio.openbabel.OpenBabelConvertTest;
 import org.openscience.cdk.test.similarity.DistanceMomentTest;
 import org.openscience.cdk.test.similarity.TanimotoTest;
+import org.openscience.cdk.test.tools.DeAromatizationToolTest;
 import org.openscience.cdk.test.tools.HOSECodeAnalyserTest;
 import org.openscience.cdk.test.tools.HOSECodeGeneratorTest;
 
@@ -91,6 +94,9 @@ public class MextraTests {
         suite.addTest(DistanceMomentTest.suite());
         suite.addTest(HOSECodeGeneratorTest.suite());
         suite.addTest(HOSECodeAnalyserTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ExtendedFingerprinterTest.class));
+        suite.addTest(new JUnit4TestAdapter(DeAromatizationToolTest.class));
+        suite.addTest(ShelXWriterTest.suite());
         
         // Below are the tests that are not always possible to execute, because
         // the class might not be compiled (depeding on Ant and Java VM versions).

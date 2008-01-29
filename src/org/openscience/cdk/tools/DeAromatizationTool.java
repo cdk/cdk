@@ -46,7 +46,7 @@ import java.util.Map;
  *
  * @author         seb
  * @cdk.created    13. April 2005
- * @cdk.module     standard
+ * @cdk.module     extra
  * @cdk.svnrev  $Revision$
  * @cdk.keyword    aromatic ring, bond order adjustment
  */

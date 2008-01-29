@@ -152,6 +152,11 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
             CDKHueckelAromaticityDetector.detectAromaticity(ac);
         }
 
+        if (checkAromaticity) {
+        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+            CDKHueckelAromaticityDetector.detectAromaticity(ac);
+        }
+
         //org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
     // labelled for loop to allow for labelled continue statements within the loop
     atomloop:

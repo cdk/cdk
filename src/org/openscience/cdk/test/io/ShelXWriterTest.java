@@ -43,7 +43,7 @@ import org.openscience.cdk.io.ShelXWriter;
 import org.openscience.cdk.test.CDKTestCase;
 
 /**
- * @cdk.module test-io
+ * @cdk.module test-extra
  */
 public class ShelXWriterTest extends CDKTestCase {
 

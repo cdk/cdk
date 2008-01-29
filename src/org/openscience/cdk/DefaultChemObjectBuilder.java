@@ -60,7 +60,6 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
@@ -143,11 +142,11 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 		return new Bond(atom1, atom2);
 	}
 	
-	public IBond newBond(IAtom atom1, IAtom atom2, Order order) {
+	public IBond newBond(IAtom atom1, IAtom atom2, IBond.Order order) {
 		return new Bond(atom1, atom2, order);
 	}
 	
-	public IBond newBond(IAtom atom1, IAtom atom2, Order order, int stereo) {
+	public IBond newBond(IAtom atom1, IAtom atom2, IBond.Order order, int stereo) {
 		return new Bond(atom1, atom2, order, stereo);
 	}
 	
@@ -232,7 +231,7 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 	public IMolecule newMolecule(IAtomContainer container) {
 		return new Molecule(container);
 	}
-	
+
 	public IMonomer newMonomer () {
 		return new Monomer();
 	}

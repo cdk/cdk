@@ -23,11 +23,8 @@
  */
 package org.openscience.cdk.test.qsar.descriptors.molecular;
 
-import java.util.Iterator;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -38,6 +35,8 @@ import org.openscience.cdk.qsar.descriptors.molecular.AromaticBondsCountDescript
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+
+import java.util.Iterator;
 
 /**
  * TestSuite that runs all QSAR tests.

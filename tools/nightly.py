@@ -1252,6 +1252,8 @@ if __name__ == '__main__':
 
     if successTest:
         print '  Generating JUnit section'
+<<<<<<< .working
+<<<<<<< .working
 
         # we'll want to do a diff against the previous runs results,
         # but only if it is not a dry run
@@ -1319,6 +1321,283 @@ if __name__ == '__main__':
 
         
         
+>>>>>>> .merge-right.r9860
+=======
+
+        # we'll want to do a diff against the previous runs results,
+        # but only if it is not a dry run
+        nTestFixed = 'NA'
+        nTestFails = 'NA'
+        if not dryRun:
+            reports = glob.glob(os.path.join(nightly_repo, 'reports', '*.txt'))
+            reports.sort()
+            newReports = []
+            for report in reports:
+                for line in open(report, 'r'):
+                    if line.startswith('Testcase:'):
+                        newReports.append(''.join(line.split(':')[:2]))
+
+            import difflib
+            diff = difflib.unified_diff(oldReports, newReports)
+            nTestFixed = -1
+            nTestFails = -1
+            for i in diff:
+                if i.startswith('-'): nTestFixed += 1
+                if i.startswith('+'): nTestFails += 1
+                
+            # dump the new report to the pickle file
+            # so that it's the old report for the
+            # next run. Byt only do so, if the current version
+	    # is newer than the older version
+	    if currentRevision != oldRevision:		
+	        data = [newReports, currentRevision]
+        	pickle.dump(data, open(pickle_file, 'w'))                
+
+            # dump out a nice HTML diff page
+            oldReports = [x.replace('Testcase', '') for x in oldReports]
+            newReports = [x.replace('Testcase', '') for x in newReports]
+
+            oldReports = [x.replace('org.openscience.cdk.test', 'o.o.c.t') for x in oldReports]
+            newReports = [x.replace('org.openscience.cdk.test', 'o.o.c.t') for x in newReports]
+
+            htmlDiff = difflib.HtmlDiff()
+            difffile = htmlDiff.make_file(oldReports, newReports, numlines=0, context=True)
+            difffile = difffile.replace('<title></title>',
+                                        """
+                                        <title>Fixed and New JUnit Failures</title>""")
+            difffile = difffile.replace("<body>",
+                                        """
+                                        <body>
+                                        <center><h2>Fixed and New JUnit Failures
+                                        </center></h2>
+                                        """)
+            difffile= difffile.replace("<tbody>",
+                                       """
+                                       <tbody>
+                                       <tr>
+                                       <td></td>
+                                       <td></td>                                                                  
+                                       <td align='center'><b>Tests fixed since Rev %s</b></td>
+                                       <td></td>
+                                       <td></td>                                                                                                         
+                                       <td align='center'><b>New failures in Rev %s</b></td>
+                                       </tr>
+                                       """ % (oldRevision, currentRevision), 1)
+            f = open(os.path.join(nightly_web,'junitdiff.html'), 'w')
+            f.write(difffile)
+            f.close()
+
+
+        
+        
+>>>>>>> .merge-right.r9861
+=======
+
+        # we'll want to do a diff against the previous runs results,
+        # but only if it is not a dry run
+        nTestFixed = 'NA'
+        nTestFails = 'NA'
+        if not dryRun:
+            reports = glob.glob(os.path.join(nightly_repo, 'reports', '*.txt'))
+            reports.sort()
+            newReports = []
+            for report in reports:
+                for line in open(report, 'r'):
+                    if line.startswith('Testcase:'):
+                        newReports.append(''.join(line.split(':')[:2]))
+
+            import difflib
+            diff = difflib.unified_diff(oldReports, newReports)
+            nTestFixed = -1
+            nTestFails = -1
+            for i in diff:
+                if i.startswith('-'): nTestFixed += 1
+                if i.startswith('+'): nTestFails += 1
+                
+            # dump the new report to the pickle file
+            # so that it's the old report for the
+            # next run. Byt only do so, if the current version
+	    # is newer than the older version
+	    if currentRevision != oldRevision:		
+	        data = [newReports, currentRevision]
+        	pickle.dump(data, open(pickle_file, 'w'))                
+
+            # dump out a nice HTML diff page
+            oldReports = [x.replace('Testcase', '') for x in oldReports]
+            newReports = [x.replace('Testcase', '') for x in newReports]
+
+            oldReports = [x.replace('org.openscience.cdk.test', 'o.o.c.t') for x in oldReports]
+            newReports = [x.replace('org.openscience.cdk.test', 'o.o.c.t') for x in newReports]
+
+            htmlDiff = difflib.HtmlDiff()
+            difffile = htmlDiff.make_file(oldReports, newReports, numlines=0, context=True)
+            difffile = difffile.replace('<title></title>',
+                                        """
+                                        <title>Fixed and New JUnit Failures</title>""")
+            difffile = difffile.replace("<body>",
+                                        """
+                                        <body>
+                                        <center><h2>Fixed and New JUnit Failures
+                                        </center></h2>
+                                        """)
+            difffile= difffile.replace("<tbody>",
+                                       """
+                                       <tbody>
+                                       <tr>
+                                       <td></td>
+                                       <td></td>                                                                  
+                                       <td align='center'><b>Tests fixed since Rev %s</b></td>
+                                       <td></td>
+                                       <td></td>                                                                                                         
+                                       <td align='center'><b>New failures in Rev %s</b></td>
+                                       </tr>
+                                       """ % (oldRevision, currentRevision), 1)
+            f = open(os.path.join(nightly_web,'junitdiff.html'), 'w')
+            f.write(difffile)
+            f.close()
+
+
+        
+        
+>>>>>>> .merge-right.r9868
+=======
+
+        # we'll want to do a diff against the previous runs results,
+        # but only if it is not a dry run
+        nTestFixed = 'NA'
+        nTestFails = 'NA'
+        if not dryRun:
+            reports = glob.glob(os.path.join(nightly_repo, 'reports', '*.txt'))
+            reports.sort()
+            newReports = []
+            for report in reports:
+                for line in open(report, 'r'):
+                    if line.startswith('Testcase:'):
+                        newReports.append(''.join(line.split(':')[:2]))
+
+            import difflib
+            diff = difflib.unified_diff(oldReports, newReports)
+            nTestFixed = -1
+            nTestFails = -1
+            for i in diff:
+                if i.startswith('-'): nTestFixed += 1
+                if i.startswith('+'): nTestFails += 1
+                
+            # dump the new report to the pickle file
+            # so that it's the old report for the
+            # next run. Byt only do so, if the current version
+	    # is newer than the older version
+	    if currentRevision != oldRevision:		
+	        data = [newReports, currentRevision]
+        	pickle.dump(data, open(pickle_file, 'w'))                
+
+            # dump out a nice HTML diff page
+            oldReports = [x.replace('Testcase', '') for x in oldReports]
+            newReports = [x.replace('Testcase', '') for x in newReports]
+
+            oldReports = [x.replace('org.openscience.cdk.test', 'o.o.c.t') for x in oldReports]
+            newReports = [x.replace('org.openscience.cdk.test', 'o.o.c.t') for x in newReports]
+
+            htmlDiff = difflib.HtmlDiff()
+            difffile = htmlDiff.make_file(oldReports, newReports, numlines=0, context=True)
+            difffile = difffile.replace('<title></title>',
+                                        """
+                                        <title>Fixed and New JUnit Failures</title>""")
+            difffile = difffile.replace("<body>",
+                                        """
+                                        <body>
+                                        <center><h2>Fixed and New JUnit Failures
+                                        </center></h2>
+                                        """)
+            difffile= difffile.replace("<tbody>",
+                                       """
+                                       <tbody>
+                                       <tr>
+                                       <td></td>
+                                       <td></td>                                                                  
+                                       <td align='center'><b>Tests fixed since Rev %s</b></td>
+                                       <td></td>
+                                       <td></td>                                                                                                         
+                                       <td align='center'><b>New failures in Rev %s</b></td>
+                                       </tr>
+                                       """ % (oldRevision, currentRevision), 1)
+            f = open(os.path.join(nightly_web,'junitdiff.html'), 'w')
+            f.write(difffile)
+            f.close()
+
+
+        
+        
+>>>>>>> .merge-right.r9868
+=======
+
+        # we'll want to do a diff against the previous runs results,
+        # but only if it is not a dry run
+        nTestFixed = 'NA'
+        nTestFails = 'NA'
+        if not dryRun:
+            reports = glob.glob(os.path.join(nightly_repo, 'reports', '*.txt'))
+            reports.sort()
+            newReports = []
+            for report in reports:
+                for line in open(report, 'r'):
+                    if line.startswith('Testcase:'):
+                        newReports.append(''.join(line.split(':')[:2]))
+
+            import difflib
+            diff = difflib.unified_diff(oldReports, newReports)
+            nTestFixed = -1
+            nTestFails = -1
+            for i in diff:
+                if i.startswith('-'): nTestFixed += 1
+                if i.startswith('+'): nTestFails += 1
+                
+            # dump the new report to the pickle file
+            # so that it's the old report for the
+            # next run. Byt only do so, if the current version
+	    # is newer than the older version
+	    if currentRevision != oldRevision:		
+	        data = [newReports, currentRevision]
+        	pickle.dump(data, open(pickle_file, 'w'))                
+
+            # dump out a nice HTML diff page
+            oldReports = [x.replace('Testcase', '') for x in oldReports]
+            newReports = [x.replace('Testcase', '') for x in newReports]
+
+            oldReports = [x.replace('org.openscience.cdk.test', 'o.o.c.t') for x in oldReports]
+            newReports = [x.replace('org.openscience.cdk.test', 'o.o.c.t') for x in newReports]
+
+            htmlDiff = difflib.HtmlDiff()
+            difffile = htmlDiff.make_file(oldReports, newReports, numlines=0, context=True)
+            difffile = difffile.replace('<title></title>',
+                                        """
+                                        <title>Fixed and New JUnit Failures</title>""")
+            difffile = difffile.replace("<body>",
+                                        """
+                                        <body>
+                                        <center><h2>Fixed and New JUnit Failures
+                                        </center></h2>
+                                        """)
+            difffile= difffile.replace("<tbody>",
+                                       """
+                                       <tbody>
+                                       <tr>
+                                       <td></td>
+                                       <td></td>                                                                  
+                                       <td align='center'><b>Tests fixed since Rev %s</b></td>
+                                       <td></td>
+                                       <td></td>                                                                                                         
+                                       <td align='center'><b>New failures in Rev %s</b></td>
+                                       </tr>
+                                       """ % (oldRevision, currentRevision), 1)
+            f = open(os.path.join(nightly_web,'junitdiff.html'), 'w')
+            f.write(difffile)
+            f.close()
+
+
+        
+        
+>>>>>>> .merge-right.r9869
         # make the directory for reports
         testDir = os.path.join(nightly_web, 'test')
         os.mkdir(testDir)
@@ -1356,12 +1635,32 @@ if __name__ == '__main__':
                             os.path.join(nightly_web, 'test.log'))
             resultTable.addCell("<a href=\"test.log\">test.log</a>")
             resultTable.appendToCell("<a href=\"junitsummary.html\">Stable</a>")
+<<<<<<< .working
+<<<<<<< .working
             resultTable.appendToCell("<a href=\"junitsummary-unstable.html\">Unstable</a>")
 
             if not dryRun:
                 resultTable.appendToCell("<br>No. old fails fixed since r%s = %s" % (oldRevision,str(nTestFixed)))
                 resultTable.appendToCell("No. new fails since r%s = %s" % (oldRevision,str(nTestFails)))
                 resultTable.appendToCell("<a href='%s'>Comparison</a>" % ('junitdiff.html'))
+            resultTable.appendToCell("<a href=\"junitsummary-unstable.html\">Unstable</a>")
+
+=======
+            resultTable.appendToCell("<a href=\"junitsummary-unstable.html\">Unstable</a>")
+
+            if not dryRun:
+                resultTable.appendToCell("<br>No. old fails fixed since r%s = %s" % (oldRevision,str(nTestFixed)))
+                resultTable.appendToCell("No. new fails since r%s = %s" % (oldRevision,str(nTestFails)))
+                resultTable.appendToCell("<a href='%s'>Comparison</a>" % ('junitdiff.html'))
+>>>>>>> .merge-right.r9868
+=======
+            resultTable.appendToCell("<a href=\"junitsummary-unstable.html\">Unstable</a>")
+
+            if not dryRun:
+                resultTable.appendToCell("<br>No. old fails fixed since r%s = %s" % (oldRevision,str(nTestFixed)))
+                resultTable.appendToCell("No. new fails since r%s = %s" % (oldRevision,str(nTestFails)))
+                resultTable.appendToCell("<a href='%s'>Comparison</a>" % ('junitdiff.html'))
+>>>>>>> .merge-right.r9869
     else:
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         if os.path.exists( os.path.join(nightly_dir, 'test.log') ):

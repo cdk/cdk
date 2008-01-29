@@ -24,7 +24,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.AssociationTest;
-import org.openscience.cdk.test.aromaticity.CDKHueckelAromaticityDetectorTest;
 import org.openscience.cdk.test.atomtype.MM2AtomTypeMatcherTest;
 import org.openscience.cdk.test.atomtype.MMFF94AtomTypeMatcherTest;
 import org.openscience.cdk.test.io.VASPReaderTest;

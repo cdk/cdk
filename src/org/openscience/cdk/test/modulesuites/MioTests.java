@@ -25,7 +25,33 @@ package org.openscience.cdk.test.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.test.io.*;
+
+import org.openscience.cdk.test.io.CDKSourceCodeWriterTest;
+import org.openscience.cdk.test.io.ChemObjectIOInstantionTests;
+import org.openscience.cdk.test.io.CrystClustReaderTest;
+import org.openscience.cdk.test.io.GamessReaderTest;
+import org.openscience.cdk.test.io.Gaussian98ReaderTest;
+import org.openscience.cdk.test.io.GhemicalReaderTest;
+import org.openscience.cdk.test.io.HINReaderTest;
+import org.openscience.cdk.test.io.INChIPlainTextReaderTest;
+import org.openscience.cdk.test.io.INChIReaderTest;
+import org.openscience.cdk.test.io.MDLRXNReaderTest;
+import org.openscience.cdk.test.io.MDLRXNV2000ReaderTest;
+import org.openscience.cdk.test.io.MDLRXNV3000ReaderTest;
+import org.openscience.cdk.test.io.MDLRXNWriterTest;
+import org.openscience.cdk.test.io.MDLReaderTest;
+import org.openscience.cdk.test.io.MDLV2000ReaderTest;
+import org.openscience.cdk.test.io.MDLV3000ReaderTest;
+import org.openscience.cdk.test.io.MDLWriterTest;
+import org.openscience.cdk.test.io.Mol2ReaderTest;
+import org.openscience.cdk.test.io.PDBWriterTest;
+import org.openscience.cdk.test.io.PMPReaderTest;
+import org.openscience.cdk.test.io.ReaderFactoryTest;
+import org.openscience.cdk.test.io.SDFReaderTest;
+import org.openscience.cdk.test.io.ShelXReaderTest;
+import org.openscience.cdk.test.io.WriterFactoryTest;
+import org.openscience.cdk.test.io.XYZReaderTest;
+import org.openscience.cdk.test.io.XYZWriterTest;
 import org.openscience.cdk.test.io.cml.CMLIOTests;
 import org.openscience.cdk.test.io.iterator.IteratingMDLConformerReaderTest;
 import org.openscience.cdk.test.io.iterator.IteratingMDLReaderTest;
@@ -63,7 +89,6 @@ public class MioTests {
         suite.addTest(PDBWriterTest.suite());
         suite.addTest(PMPReaderTest.suite());
         suite.addTest(ShelXReaderTest.suite());
-        suite.addTest(ShelXWriterTest.suite());
         //suite.addTest(VASPReaderTest.suite()); Class is in experimental
         /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test yet! */
         suite.addTest(XYZReaderTest.suite());

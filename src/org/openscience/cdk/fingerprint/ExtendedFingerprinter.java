@@ -43,8 +43,8 @@ import java.util.BitSet;
  * @cdk.created    2006-01-13
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity
- * @cdk.module     standard
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.module     extra
+ * @cdk.svnrev     $Revision: 9162 $
  * 
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */

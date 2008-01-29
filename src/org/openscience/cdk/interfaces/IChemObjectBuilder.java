@@ -434,16 +434,16 @@ public interface IChemObjectBuilder {
      * @return             IMolecule implementation defined for this IChemObjectBuilder
 	 */
 	public IMolecule newMolecule(IAtomContainer container);
-	
+
 	/**
-	 * Contructs a new IMonomer.
+	 * Constructs a new IMonomer.
 	 * 
      * @return IMonomer implementation defined for this IChemObjectBuilder
 	 */	
 	public IMonomer newMonomer ();
 	
 	/**
-	 * Contructs a new IPolymer to store the IMonomers.
+	 * Constructs a new IPolymer to store the IMonomers.
 	 * 
      * @return IPolymer implementation defined for this IChemObjectBuilder
 	 */	

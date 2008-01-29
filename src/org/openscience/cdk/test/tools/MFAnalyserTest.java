@@ -20,6 +20,9 @@
  */
 package org.openscience.cdk.test.tools;
 
+import java.io.IOException;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,11 +40,8 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.MFAnalyser;
 
-import java.io.IOException;
-import java.util.Map;
-
 /**
- * @cdk.module test-standard
+ * @cdk.module test-formula
  */
 public class MFAnalyserTest extends NewCDKTestCase {
 	static Molecule molecule;

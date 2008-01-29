@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.MFAnalyser;
  * <p>Serializes a MoleculeSet or a Molecule object to ShelX code.
  * The output can be read with Platon.
  *
- * @cdk.module io
+ * @cdk.module  extra
  * @cdk.svnrev  $Revision$
  *
  * @author Egon Willighagen
