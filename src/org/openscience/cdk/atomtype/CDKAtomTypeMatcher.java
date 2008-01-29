@@ -475,7 +475,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		int neighborcount = neighbors.size();
     		if (atom.getHybridization() != CDKConstants.UNSET &&
     				(atom.getFormalCharge() == CDKConstants.UNSET ||
-    						atom.getFormalCharge() == 0)) {
+    				 atom.getFormalCharge() != 0)) {
     			if (atom.getHybridization() == Hybridization.SP2 &&
     				atom.getFormalCharge() == +1) {
     				IAtomType type = getAtomType("S.plus");
