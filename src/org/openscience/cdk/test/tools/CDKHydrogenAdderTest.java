@@ -683,6 +683,54 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         }
         assertEquals(1, hCount);
     }
+    
+    public void testMercaptan() throws Exception {
+    	IMolecule mol = new Molecule();
+    	mol.addAtom(mol.getBuilder().newAtom("C"));
+    	mol.addAtom(mol.getBuilder().newAtom("C"));
+    	mol.addAtom(mol.getBuilder().newAtom("C"));
+    	mol.addAtom(mol.getBuilder().newAtom("S"));
+    	mol.addBond(mol.getBuilder().newBond(
+    		mol.getAtom(0), 
+    		mol.getAtom(1),
+    		CDKConstants.BONDORDER_DOUBLE)
+    	);
+    	mol.addBond(mol.getBuilder().newBond(
+        	mol.getAtom(1), 
+        	mol.getAtom(2),
+       		CDKConstants.BONDORDER_SINGLE)
+       	);
+    	mol.addBond(mol.getBuilder().newBond(
+       		mol.getAtom(2), 
+       		mol.getAtom(3),
+       		CDKConstants.BONDORDER_SINGLE)
+       	);
+        addExplicitHydrogens(mol);
+        int hCount = 0;
+        Iterator<IAtom> neighbors = mol.getConnectedAtomsList(mol.getAtom(0)).iterator(); 
+        while (neighbors.hasNext()) {
+        	if (neighbors.next().getSymbol().equals("H")) hCount++;
+        }
+        assertEquals(2, hCount);
+        hCount = 0;
+        neighbors = mol.getConnectedAtomsList(mol.getAtom(1)).iterator(); 
+        while (neighbors.hasNext()) {
+        	if (neighbors.next().getSymbol().equals("H")) hCount++;
+        }
+        assertEquals(1, hCount);
+        hCount = 0;
+        neighbors = mol.getConnectedAtomsList(mol.getAtom(2)).iterator(); 
+        while (neighbors.hasNext()) {
+        	if (neighbors.next().getSymbol().equals("H")) hCount++;
+        }
+        assertEquals(2, hCount);
+        hCount = 0;
+        neighbors = mol.getConnectedAtomsList(mol.getAtom(3)).iterator(); 
+        while (neighbors.hasNext()) {
+        	if (neighbors.next().getSymbol().equals("H")) hCount++;
+        }
+        assertEquals(1, hCount);
+    }
 
     private void findAndConfigureAtomTypesForAllAtoms(IAtomContainer container) throws CDKException {
     	Iterator<IAtom> atoms = container.atoms();
