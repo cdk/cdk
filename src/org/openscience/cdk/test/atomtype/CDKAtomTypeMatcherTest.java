@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 
@@ -343,6 +344,16 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addBond(b1);
         mol.addBond(b2);
 
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(0));
+        assertAtomType(testedAtomTypes, "S.3", matched);
+    }
+
+    @Test public void testH2S_Hybridization() throws CDKException {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
+        s.setHybridization(Hybridization.SP3);
+        mol.addAtom(s);
         CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
         IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(0));
         assertAtomType(testedAtomTypes, "S.3", matched);

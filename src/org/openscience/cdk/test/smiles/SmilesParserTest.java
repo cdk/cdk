@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -1222,6 +1223,11 @@ public class SmilesParserTest extends NewCDKTestCase {
 			Assert.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
 			Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
 		}
+	}
+	
+	@Test public void testMercaptan() throws Exception {
+		IMolecule mol = sp.parseSmiles("C=CCS");
+		assertAtomTypesPerceived(mol);
 	}
 	
 }
