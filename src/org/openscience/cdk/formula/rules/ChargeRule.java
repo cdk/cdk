@@ -110,10 +110,13 @@ public class ChargeRule implements IRule{
     public double validate(IMolecularFormula formula) throws CDKException {
     	logger.info("Start validation of ",formula);
     	
-    	if(formula.getCharge() == charge)
-    		return 1.0;
-    	else
+    	if (formula.getCharge() == null) {
     		return 0.0;
+    	} else if(formula.getCharge() == charge) {
+    		return 1.0;
+    	} else {
+    		return 0.0;
+    	}
     }
     
 }
