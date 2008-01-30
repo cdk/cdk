@@ -106,7 +106,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
 	 *
 	 * @return    An Iterable with the IMolecularFormula in this MolecularFormulaSet
 	 */
-    @TestMethod("testMolecularFormulas_Iterable")
+    @TestMethod("testMolecularFormulas")
 	public Iterable<IMolecularFormula> molecularFormulas() {
 		return components;
 	}
@@ -117,7 +117,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
 	 *
 	 * @return    An Iterator with the IMolecularFormula in this MolecularFormulaSet
 	 */
-    @TestMethod("testMolecularFormulas_Iterator")
+    @TestMethod("testIterator")
 	public Iterator<IMolecularFormula> iterator() {
 		return components.iterator();
 	}

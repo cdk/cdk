@@ -68,8 +68,7 @@ public class MolecularFormulaCheckerTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-    public void testNotnull(){
-    	
+    public void testMolecularFormulaChecker_List(){
     	
 		Assert.assertNotNull(new MolecularFormulaChecker(new ArrayList<IRule>()));
 	}

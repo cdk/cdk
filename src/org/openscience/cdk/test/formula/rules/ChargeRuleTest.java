@@ -47,6 +47,17 @@ public class ChargeRuleTest extends FormulaRuleTest {
     	builder = DefaultChemObjectBuilder.getInstance();
     	setRule(ChargeRule.class);
     }
+    /**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testChargeRule() throws ClassNotFoundException, CDKException, Exception {
+		
+		IRule rule  = new ChargeRule();
+		Assert.assertNotNull(rule);
+		
+	}
 	
 	/**
 	 * A unit test suite for JUnit.

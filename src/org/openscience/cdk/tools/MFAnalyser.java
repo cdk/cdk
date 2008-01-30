@@ -67,18 +67,7 @@ public class MFAnalyser {
 	
 	private LoggingTool logger = new LoggingTool(MFAnalyser.class);
 	
-	/**
-	 * Construct an instance of MFAnalyser, initialized with a molecular
-	 * formula string. The string is immediatly analysed and a set of Nodes
-	 * is built based on this analysis
-	 *
-	 * @param  stringMF  Description of the Parameter
-	 * @param target TODO
-	 */
-	public MFAnalyser(IMolecularFormula molecularFormula, IAtomContainer target) {
-		this.molecularFormula = molecularFormula;
-		this.atomContainer = analyseMF(stringMF, target);
-	}
+	
 	/**
 	 * Construct an instance of MFAnalyser, initialized with a molecular
 	 * formula string. The string is immediatly analysed and a set of Nodes

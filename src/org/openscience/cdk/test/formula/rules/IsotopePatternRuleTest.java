@@ -52,7 +52,18 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
     	ifac = IsotopeFactory.getInstance(builder);
     	setRule(IsotopePatternRule.class);
     }
-	
+
+    /**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testIsotopePatternRule() throws Exception {
+		
+		IRule rule  = new IsotopePatternRule();
+		Assert.assertNotNull(rule);
+		
+	}
 	/**
 	 * A unit test suite for JUnit.
 	 *

@@ -154,7 +154,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
 	 * @return                   The occurrence of this isotope in this adduct
 	 * @see                      #getIsotopeCount()
 	 */
-    @TestMethod("testGetIsotopeCount_Isotope")
+    @TestMethod("testGetIsotopeCount_IIsotope")
 	public int getIsotopeCount(IIsotope isotope) {
 		int count = 0;
 		Iterator<IMolecularFormula> componentIterator = components.iterator();
@@ -182,7 +182,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
 	 *
 	 * @return    An Iterator with the isotopes in this adduct formula
 	 */
-    @TestMethod("testIsotope_Iterator")
+    @TestMethod("testIsotopes")
 	public Iterator<IIsotope> isotopes() {
 		return isotopesList().iterator();
 	}
@@ -216,6 +216,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
      *
      * @see    #getCharge
      */
+     @TestMethod("testSetCharge")
 	public void setCharge(Double charge) {
 		throw new java.lang.IllegalAccessError();
 	}
@@ -226,7 +227,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
 	 *
 	 * @return    An Iterable with the IMolecularFormula in this adduct formula
 	 */
-    @TestMethod("testMolecularFormulas_Iterable")
+    @TestMethod("testMolecularFormulas")
 	public Iterable<IMolecularFormula> molecularFormulas() {
 		return components;
 	}
@@ -237,7 +238,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
 	 *
 	 * @return    An Iterator with the IMolecularFormula in this adduct formula
 	 */
-    @TestMethod("testMolecularFormulas_Iterator")
+    @TestMethod("testIterator")
 	public Iterator<IMolecularFormula> iterator() {
 		return components.iterator();
 	}

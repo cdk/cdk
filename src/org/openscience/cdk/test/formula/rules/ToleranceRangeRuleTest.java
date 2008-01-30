@@ -47,7 +47,17 @@ public class ToleranceRangeRuleTest extends FormulaRuleTest {
     	builder = DefaultChemObjectBuilder.getInstance();
     	setRule(ToleranceRangeRule.class);
     }
-	
+    /**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testToleranceRangeRule() throws Exception {
+		
+		IRule rule  = new ToleranceRangeRule();
+		Assert.assertNotNull(rule);
+		
+	}
 	/**
 	 * A unit test suite for JUnit.
 	 *

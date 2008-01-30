@@ -54,7 +54,26 @@ public class MolecularFormulaSetTest extends NewCDKTestCase {
     public MolecularFormulaSetTest() {
         super();
     }
-    
+    /**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+    @Test 
+    public void testMolecularFormulaSet() {
+        IMolecularFormulaSet mfS = new MolecularFormulaSet();
+        Assert.assertNotNull(mfS);
+    }
+    /**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+    @Test 
+    public void testMolecularFormulaSet_IMolecularFormula() {
+        IMolecularFormulaSet mfS = new MolecularFormulaSet(new MolecularFormula());
+        Assert.assertEquals(1, mfS.size());
+    }
     /**
 	 * A unit test suite for JUnit.
 	 *
@@ -63,8 +82,8 @@ public class MolecularFormulaSetTest extends NewCDKTestCase {
     @Test 
     public void testSize() {
         IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        Assert.assertNotNull(mfS);
-        Assert.assertEquals(0, mfS.size());
+        mfS.addMolecularFormula(new MolecularFormula());
+        Assert.assertEquals(1, mfS.size());
     }
     /**
 	 * A unit test suite for JUnit.
@@ -86,7 +105,7 @@ public class MolecularFormulaSetTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-    public void testMolecularFormulas_Iterator() {
+    public void testIterator() {
         IMolecularFormulaSet mfS = new MolecularFormulaSet();
         mfS.addMolecularFormula(new MolecularFormula());
         mfS.addMolecularFormula(new MolecularFormula());
@@ -110,7 +129,7 @@ public class MolecularFormulaSetTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-    public void testMolecularFormulas_Iterable() {
+    public void testMolecularFormulas() {
         IMolecularFormulaSet mfS = new MolecularFormulaSet();
         mfS.addMolecularFormula(new MolecularFormula());
         mfS.addMolecularFormula(new MolecularFormula());

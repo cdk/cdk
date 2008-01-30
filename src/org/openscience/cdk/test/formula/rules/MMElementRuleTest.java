@@ -46,7 +46,18 @@ public class MMElementRuleTest extends FormulaRuleTest {
     	builder = DefaultChemObjectBuilder.getInstance();
     	setRule(MMElementRule.class);
     }
-	
+
+    /**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testMMElementRule() throws Exception {
+		
+		IRule rule  = new MMElementRule();
+		Assert.assertNotNull(rule);
+		
+	}
 	/**
 	 * A unit test suite for JUnit.
 	 *

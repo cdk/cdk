@@ -49,6 +49,18 @@ public class ElementRuleTest extends FormulaRuleTest {
     	setRule(ElementRule.class);
     }
 	
+
+    /**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testElementRule() throws Exception {
+		
+		IRule rule  = new ElementRule();
+		Assert.assertNotNull(rule);
+		
+	}
 	/**
 	 * A unit test suite for JUnit.
 	 *

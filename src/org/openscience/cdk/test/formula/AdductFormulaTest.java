@@ -57,6 +57,26 @@ public class AdductFormulaTest extends NewCDKTestCase {
         super();
     }
 
+	/**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+    @Test 
+    public void testAdductFormula() {
+        IAdductFormula mfS = new AdductFormula();
+        Assert.assertNotNull(mfS);
+    }
+    /**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+    @Test 
+    public void testAdductFormula_IMolecularFormula() {
+        IAdductFormula mfS = new AdductFormula(new MolecularFormula());
+        Assert.assertEquals(1, mfS.size());
+    }
     /**
 	 * A unit test suite for JUnit.
 	 *
@@ -65,7 +85,6 @@ public class AdductFormulaTest extends NewCDKTestCase {
     @Test 
     public void testSize() {
         IAdductFormula mfS = new AdductFormula();
-        Assert.assertNotNull(mfS);
         Assert.assertEquals(0, mfS.size());
     }
     /**
@@ -104,7 +123,7 @@ public class AdductFormulaTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test
-    public void testMolecularFormulas_Iterator() {
+    public void testIterator() {
         IAdductFormula mfS = new AdductFormula();
         mfS.addMolecularFormula(new MolecularFormula());
         mfS.addMolecularFormula(new MolecularFormula());
@@ -129,7 +148,7 @@ public class AdductFormulaTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test
-    public void testMolecularFormulas_Iterable() {
+    public void testMolecularFormulas() {
         IAdductFormula mfS = new AdductFormula();
         mfS.addMolecularFormula(new MolecularFormula());
         mfS.addMolecularFormula(new MolecularFormula());
@@ -293,6 +312,16 @@ public class AdductFormulaTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test
+    public void testSetCharge_Double() {
+    	testGetCharge();
+        
+    }
+    /**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+    @Test
     public void testClone() throws Exception {
         IAdductFormula mfS = new AdductFormula();
         Object clone = mfS.clone();
@@ -392,7 +421,7 @@ public class AdductFormulaTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test
-    public void testIsotope_Iterator() {
+    public void testIsotopes() {
     	IAdductFormula add = new AdductFormula();
     	
     	IMolecularFormula formula1 = new MolecularFormula();
@@ -444,7 +473,7 @@ public class AdductFormulaTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test
-    public void testGetIsotopeCount_Isotope() {
+    public void testGetIsotopeCount_IIsotope() {
     	
     	IAdductFormula add = new AdductFormula();
         Assert.assertEquals(0, add.getIsotopeCount());
