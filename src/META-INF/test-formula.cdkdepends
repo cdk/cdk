@@ -4,3 +4,8 @@ cdk-nonotify.jar
 cdk-core.jar
 cdk-standard.jar
 cdk-test.jar
+cdk-formula.jar
+cdk-extra.jar
+cdk-smiles.jar
+cdk-valencycheck.jar
+cdk-atomtype.jar
