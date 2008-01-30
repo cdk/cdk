@@ -23,65 +23,47 @@
  */
 package org.openscience.cdk.test.formula.rules;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Isotope;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.IMolecularFormula;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.formula.MolecularFormulaRange;
 import org.openscience.cdk.formula.rules.ElementRule;
 import org.openscience.cdk.formula.rules.IRule;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-formula
  */
-public class ElementRuleTest extends CDKTestCase {
+public class ElementRuleTest extends FormulaRuleTest {
 	
-	private DefaultChemObjectBuilder builder;
-	/**
-	 *  Constructor for the ElementRuleTest object
-	 *
-	 */
-	public  ElementRuleTest(String name){
-		
-		super(name);
-	}
-	
+	private static DefaultChemObjectBuilder builder;
+
 	/**
     *  The JUnit setup method
     */
-    public void setUp() throws Exception {
+    @BeforeClass public static void setUp() throws Exception {
     	builder = DefaultChemObjectBuilder.getInstance();
+    	setRule(ElementRule.class);
     }
 	
 	/**
-	 *  A unit test suite for JUnit.
-	 *
-	 *@return    The test suite
-	 */
-	public static Test suite() {
-		return new TestSuite(ElementRuleTest.class);
-	}
-	
-	/**
 	 * A unit test suite for JUnit.
 	 *
 	 * @return    The test suite
 	 */
-	public void testDefault() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testDefault() throws Exception {
 		
 		IRule rule  = new ElementRule();
 		Object[] objects = rule.getParameters();
-		assertEquals(1, objects.length);
+		Assert.assertEquals(1, objects.length);
 		
 		MolecularFormulaRange mfRange = (MolecularFormulaRange) objects[0];
-		assertEquals(93, mfRange.getIsotopeCount());
-		assertEquals(0, mfRange.getIsotopeCountMin(new Isotope("C")));
-		assertEquals(50, mfRange.getIsotopeCountMax(new Isotope("C")));
+		Assert.assertEquals(93, mfRange.getIsotopeCount());
+		Assert.assertEquals(0, mfRange.getIsotopeCountMin(new Isotope("C")));
+		Assert.assertEquals(50, mfRange.getIsotopeCountMax(new Isotope("C")));
 		
 	}
 	
@@ -90,7 +72,7 @@ public class ElementRuleTest extends CDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-	public void testSetParameters() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testSetParameters() throws Exception {
 		
 		IRule rule  = new ElementRule();
 		
@@ -104,20 +86,20 @@ public class ElementRuleTest extends CDKTestCase {
     	rule.setParameters(params);
 		
         Object[] objects = rule.getParameters();
-		assertEquals(1, objects.length);
+        Assert.assertEquals(1, objects.length);
 		
 		MolecularFormulaRange mfRange2 = (MolecularFormulaRange) objects[0];
-		assertEquals(mfRange.getIsotopeCount(), mfRange2.getIsotopeCount());
-		assertEquals(mfRange.getIsotopeCountMin(new Isotope("C")), mfRange2.getIsotopeCountMin(new Isotope("C")));
-		assertEquals(mfRange.getIsotopeCountMax(new Isotope("C")), mfRange2.getIsotopeCountMax(new Isotope("C")));
-		
+		Assert.assertEquals(mfRange.getIsotopeCount(), mfRange2.getIsotopeCount());
+		Assert.assertEquals(mfRange.getIsotopeCountMin(new Isotope("C")), mfRange2.getIsotopeCountMin(new Isotope("C")));
+		Assert.assertEquals(mfRange.getIsotopeCountMax(new Isotope("C")), mfRange2.getIsotopeCountMax(new Isotope("C")));
 	}
+	
 	/**
 	 * A unit test suite for JUnit.
 	 *
 	 * @return    The test suite
 	 */
-	public void testDefaultValidFalse() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testDefaultValidFalse() throws Exception {
 		
 		IRule rule  = new ElementRule();
 		
@@ -125,7 +107,7 @@ public class ElementRuleTest extends CDKTestCase {
 		formula.addIsotope(builder.newIsotope("C"),2);
 		formula.addIsotope(builder.newIsotope("H"),200);
 		
-		assertEquals(0.0, rule.validate(formula),0.0001);
+		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
 	}
 
 	/**
@@ -133,7 +115,7 @@ public class ElementRuleTest extends CDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-	public void testDefaultValidFalse_SetParam() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testDefaultValidFalse_SetParam() throws Exception {
 		
 		IRule rule  = new ElementRule();
 		
@@ -151,7 +133,7 @@ public class ElementRuleTest extends CDKTestCase {
 		
     	rule.setParameters(params);
 
-		assertEquals(0.0, rule.validate(formula),0.0001);
+    	Assert.assertEquals(0.0, rule.validate(formula),0.0001);
 	}
 
 	/**
@@ -159,7 +141,7 @@ public class ElementRuleTest extends CDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-	public void testDefaultValidTrue() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testDefaultValidTrue() throws Exception {
 		
 		IRule rule  = new ElementRule();
 		
@@ -167,7 +149,7 @@ public class ElementRuleTest extends CDKTestCase {
 		formula.addIsotope(builder.newIsotope("C"),2);
 		formula.addIsotope(builder.newIsotope("H"),6);
 
-		assertEquals(1.0, rule.validate(formula),0.0001);
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
 
 }

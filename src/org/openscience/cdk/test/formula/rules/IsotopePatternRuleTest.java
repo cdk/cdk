@@ -26,62 +26,44 @@ package org.openscience.cdk.test.formula.rules;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.IMolecularFormula;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.IsotopePatternRule;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-formula
  */
-public class IsotopePatternRuleTest extends CDKTestCase {
+public class IsotopePatternRuleTest extends FormulaRuleTest {
 	
-	private DefaultChemObjectBuilder builder;
-	private IsotopeFactory ifac;
-	/**
-	 *  Constructor for the IsotopePatternRuleTest object
-	 *
-	 */
-	public  IsotopePatternRuleTest(String name){
-		
-		super(name);
-	}
+	private static DefaultChemObjectBuilder builder;
+	private static IsotopeFactory ifac;
 	
 	/**
-    *  The JUnit setup method
-    */
-    public void setUp() throws Exception {
+     *  The JUnit setup method
+     */
+    @BeforeClass public static void setUp() throws Exception {
     	builder = DefaultChemObjectBuilder.getInstance();
     	ifac = IsotopeFactory.getInstance(builder);
+    	setRule(IsotopePatternRule.class);
     }
-	
-	/**
-	 *  A unit test suite for JUnit.
-	 *
-	 *@return    The test suite
-	 */
-	public static Test suite() {
-		return new TestSuite(IsotopePatternRuleTest.class);
-	}
 	
 	/**
 	 * A unit test suite for JUnit.
 	 *
 	 * @return    The test suite
 	 */
-	public void testDefault() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testDefault() throws Exception {
 		
 		IRule rule  = new IsotopePatternRule();
 		Object[] objects = rule.getParameters();
 		
-		assertNull(objects[0]);
+		Assert.assertNull(objects[0]);
 	}
 	
 	/**
@@ -89,7 +71,7 @@ public class IsotopePatternRuleTest extends CDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-	public void testSetParameters() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testSetParameters() throws Exception {
 
 		IRule rule  = new IsotopePatternRule();
 		
@@ -101,16 +83,16 @@ public class IsotopePatternRuleTest extends CDKTestCase {
 		
 		Object[] objects = rule.getParameters();
 		
-		
-		assertNotNull(objects[0]);
-		assertEquals(2,objects.length);
+		Assert.assertNotNull(objects[0]);
+		Assert.assertEquals(2,objects.length);
 	}
+
 	/**
 	 * A unit test suite for JUnit.
 	 *
 	 * @return    The test suite
 	 */
-	public void testValid_Bromine() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testValid_Bromine() throws Exception {
 		
 		List<double[]> spectrum = new ArrayList<double[]>();
 		spectrum.add(new double[]{157.8367,51.399});
@@ -128,7 +110,7 @@ public class IsotopePatternRuleTest extends CDKTestCase {
 		formula.addIsotope( ifac.getMajorIsotope("Br"),2);
         formula.setCharge(0.0);
 
-		assertEquals(0.0, rule.validate(formula),0.0001);
+        Assert.assertEquals(0.0, rule.validate(formula),0.0001);
 	}
 	
 
@@ -137,7 +119,7 @@ public class IsotopePatternRuleTest extends CDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-	public void testDefaultValidTrue() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testDefaultValidTrue() throws Exception {
 
 		IMolecularFormula formula = new MolecularFormula();
 		formula.addIsotope(ifac.getMajorIsotope("C"),5);
@@ -160,7 +142,7 @@ public class IsotopePatternRuleTest extends CDKTestCase {
 		params[1] = 0.001;
 		rule.setParameters(params);
 
-		assertEquals(0.81103, rule.validate(formula),0.0001);
-	
+		Assert.assertEquals(0.81103, rule.validate(formula),0.0001);
 	}
+	
 }

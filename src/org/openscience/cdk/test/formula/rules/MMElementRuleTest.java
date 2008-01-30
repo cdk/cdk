@@ -23,60 +23,42 @@
  */
 package org.openscience.cdk.test.formula.rules;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.IMolecularFormula;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.MMElementRule;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-formula
  */
-public class MMElementRuleTest extends CDKTestCase {
+public class MMElementRuleTest extends FormulaRuleTest {
 	
-	private DefaultChemObjectBuilder builder;
-	/**
-	 *  Constructor for the MMElementRuleTest object
-	 *
-	 */
-	public  MMElementRuleTest(String name){
-		
-		super(name);
-	}
+	private static DefaultChemObjectBuilder builder;
 	
 	/**
     *  The JUnit setup method
     */
-    public void setUp() throws Exception {
+    @BeforeClass public static void setUp() throws Exception {
     	builder = DefaultChemObjectBuilder.getInstance();
+    	setRule(MMElementRule.class);
     }
-	
-	/**
-	 *  A unit test suite for JUnit.
-	 *
-	 *@return    The test suite
-	 */
-	public static Test suite() {
-		return new TestSuite(MMElementRuleTest.class);
-	}
 	
 	/**
 	 * A unit test suite for JUnit.
 	 *
 	 * @return    The test suite
 	 */
-	public void testDefault() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testDefault() throws Exception {
 		
 		IRule rule  = new MMElementRule();
 		Object[] objects = rule.getParameters();
 		
-		assertSame(MMElementRule.Database.WILEY, objects[0]);
-		assertSame(MMElementRule.RangeMass.Minus500, objects[1]);
+		Assert.assertSame(MMElementRule.Database.WILEY, objects[0]);
+		Assert.assertSame(MMElementRule.RangeMass.Minus500, objects[1]);
 		
 	}
 	
@@ -85,7 +67,7 @@ public class MMElementRuleTest extends CDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-	public void testSetParameters() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testSetParameters() throws Exception {
 		
 		IRule rule  = new MMElementRule();
 		
@@ -96,18 +78,17 @@ public class MMElementRuleTest extends CDKTestCase {
 		
 		rule.setParameters(params);
 		Object[] objects = rule.getParameters();
-		
-		
-		assertSame(MMElementRule.Database.DNP, objects[0]);
-		assertSame(MMElementRule.RangeMass.Minus1000, objects[1]);
-		
+				
+		Assert.assertSame(MMElementRule.Database.DNP, objects[0]);
+		Assert.assertSame(MMElementRule.RangeMass.Minus1000, objects[1]);
 	}
+	
 	/**
 	 * A unit test suite for JUnit.
 	 *
 	 * @return    The test suite
 	 */
-	public void testDefaultValidFalse() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testDefaultValidFalse() throws Exception {
 		
 		IRule rule  = new MMElementRule();
 		
@@ -115,16 +96,15 @@ public class MMElementRuleTest extends CDKTestCase {
 		formula.addIsotope(builder.newIsotope("C"),2);
 		formula.addIsotope(builder.newIsotope("H"),200);
 
-		assertEquals(0.0, rule.validate(formula),0.0001);
+		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
 	}
-	
 
 	/**
 	 * A unit test suite for JUnit.
 	 *
 	 * @return    The test suite
 	 */
-	public void testDefaultValidTrue() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testDefaultValidTrue() throws Exception {
 		
 		IRule rule  = new MMElementRule();
 		
@@ -132,6 +112,6 @@ public class MMElementRuleTest extends CDKTestCase {
 		formula.addIsotope(builder.newIsotope("C"),2);
 		formula.addIsotope(builder.newIsotope("H"),6);
 
-		assertEquals(1.0, rule.validate(formula),0.0001);
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
 }

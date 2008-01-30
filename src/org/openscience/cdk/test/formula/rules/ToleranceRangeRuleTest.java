@@ -23,65 +23,46 @@
  */
 package org.openscience.cdk.test.formula.rules;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.IMolecularFormula;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.ToleranceRangeRule;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.test.CDKTestCase;
 
 /**
  * @cdk.module test-formula
  */
-public class ToleranceRangeRuleTest extends CDKTestCase {
+public class ToleranceRangeRuleTest extends FormulaRuleTest {
 	
-	private DefaultChemObjectBuilder builder;
-	/**
-	 *  Constructor for the ChargeRuleTest object
-	 *
-	 */
-	public  ToleranceRangeRuleTest(String name){
-		
-		super(name);
-	}
+	private static DefaultChemObjectBuilder builder;
 	
 	/**
     *  The JUnit setup method
     */
-    public void setUp() throws Exception {
+    @BeforeClass public static void setUp() throws Exception {
     	builder = DefaultChemObjectBuilder.getInstance();
+    	setRule(ToleranceRangeRule.class);
     }
 	
 	/**
-	 *  A unit test suite for JUnit.
-	 *
-	 *@return    The test suite
-	 */
-	public static Test suite() {
-		return new TestSuite(ToleranceRangeRuleTest.class);
-	}
-	
-	/**
 	 * A unit test suite for JUnit.
 	 *
 	 * @return    The test suite
 	 */
-	public void testDefault() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testDefault() throws Exception {
 		
 		IRule rule  = new ToleranceRangeRule();
 		Object[] objects = rule.getParameters();
-		assertEquals(2, objects.length);
+		Assert.assertEquals(2, objects.length);
 		
 		double mass = (Double) objects[0];
-		assertEquals(0.0, mass, 0.00001);
+		Assert.assertEquals(0.0, mass, 0.00001);
 		double tolerance = (Double) objects[1];
-		assertEquals(0.05, tolerance, 0.00001);
-		
+		Assert.assertEquals(0.05, tolerance, 0.00001);
 		
 	}
 	
@@ -90,7 +71,7 @@ public class ToleranceRangeRuleTest extends CDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-	public void testSetParameters() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testSetParameters() throws Exception {
 		
 		IRule rule  = new ToleranceRangeRule();
 		
@@ -101,12 +82,12 @@ public class ToleranceRangeRuleTest extends CDKTestCase {
 		
         Object[] objects = rule.getParameters();
 		
-        assertEquals(2, objects.length);
+        Assert.assertEquals(2, objects.length);
 		
 		double mass = (Double) objects[0];
-		assertEquals(133.0, mass, 0.00001);
+		Assert.assertEquals(133.0, mass, 0.00001);
 		double tolerance = (Double) objects[1];
-		assertEquals(0.00005, tolerance, 0.00001);
+		Assert.assertEquals(0.00005, tolerance, 0.00001);
 		
 	}
 	/**
@@ -114,7 +95,7 @@ public class ToleranceRangeRuleTest extends CDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-	public void testDefaultValidFalse() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testDefaultValidFalse() throws Exception {
 		
 		IRule rule  = new ToleranceRangeRule();
 		
@@ -126,7 +107,7 @@ public class ToleranceRangeRuleTest extends CDKTestCase {
         formula.addIsotope(carb);
         formula.addIsotope(cl);
 		
-		assertEquals(0.0, rule.validate(formula),0.0001);
+        Assert.assertEquals(0.0, rule.validate(formula),0.0001);
 	}
 
 	/**
@@ -134,7 +115,7 @@ public class ToleranceRangeRuleTest extends CDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-	public void testDefaultValidFalse_SetParam() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testDefaultValidFalse_SetParam() throws Exception {
 		
 		IRule rule  = new ToleranceRangeRule();
 		
@@ -151,7 +132,7 @@ public class ToleranceRangeRuleTest extends CDKTestCase {
         params[1] = 0.00005;
 		rule.setParameters(params);
 
-		assertEquals(0.0, rule.validate(formula),0.0001);
+		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
 	}
 
 	/**
@@ -159,9 +140,9 @@ public class ToleranceRangeRuleTest extends CDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-	public void testDefaultValidTrue() throws ClassNotFoundException, CDKException, Exception {
+	@Test public void testDefaultValidTrue() throws Exception {
 		
-IRule rule  = new ToleranceRangeRule();
+		IRule rule  = new ToleranceRangeRule();
 		
 		IMolecularFormula formula = new MolecularFormula();
 		IIsotope carb = builder.newIsotope("C");
@@ -176,7 +157,7 @@ IRule rule  = new ToleranceRangeRule();
         params[1] = 0.00005;
 		rule.setParameters(params);
 
-		assertEquals(1.0, rule.validate(formula),0.0001);
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
 
 }
