@@ -69,7 +69,7 @@ public class MolecularFormulaRange implements Cloneable {
 	 * @param  countMin The minimal number of occurrences to add
 	 * 
 	 */
-	@TestMethod("testAddIsotope_Isotope_int_int")
+	@TestMethod("testAddIsotope_IIsotope_int_int")
 	public void addIsotope(IIsotope isotope, int countMin, int countMax) {
 		boolean flag = false;
 		for(Iterator<IIsotope> it = isotopes(); it.hasNext(); ) {
@@ -165,7 +165,7 @@ public class MolecularFormulaRange implements Cloneable {
 	 *
 	 * @return    An Iterator with the isotopes in this MolecularFormulaExpand
 	 */
-	@TestMethod("testIsotopes_Iterator")
+	@TestMethod("testIsotopes")
 	public Iterator<IIsotope> isotopes() {
 		return isotopesMax.keySet().iterator();
 	}

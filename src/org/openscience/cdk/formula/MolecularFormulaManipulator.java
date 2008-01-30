@@ -67,7 +67,7 @@ public class MolecularFormulaManipulator {
 	 * @param   formula  The MolecularFormula to check
 	 * @return           The occurrence total 
 	 */
-	@TestMethod("testAtomCount_IMolecularFormula")
+	@TestMethod("testGetAtomCount_IMolecularFormula")
 	public static int getAtomCount(IMolecularFormula formula){
 		
 		int count = 0;
@@ -231,7 +231,7 @@ public class MolecularFormulaManipulator {
 	 * @see              #getHTML(IMolecularFormula)
 	 * 
 	 */
-	@TestMethod("testGetHTML_IMolecularFormulaWithCharge")
+	@TestMethod("testGetHTML_IMolecularFormula_boolean_boolean")
 	public static String getHTML(IMolecularFormula formula, boolean chargeB, boolean isotopeB) {
 		String htmlString = "";
 		String[] orderElements = generateOrderEle();

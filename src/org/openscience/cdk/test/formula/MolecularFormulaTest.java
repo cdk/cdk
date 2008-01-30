@@ -62,10 +62,9 @@ public class MolecularFormulaTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-    public void testNotNullGetIsotopeCount() {
+    public void testMolecularFormula() {
 
         IMolecularFormula mf = new MolecularFormula();
-    	
     	Assert.assertNotNull(mf);
     }
     
@@ -173,7 +172,7 @@ public class MolecularFormulaTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-    public void addIsotope_IIsotope_int() {
+    public void testAddIsotope_IIsotope_int() {
         IMolecularFormula mf = new MolecularFormula();
         
         IIsotope carb = builder.newIsotope("C");
@@ -275,7 +274,7 @@ public class MolecularFormulaTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-    public void testSet_Iterator() {
+    public void testIsotopes() {
 
         IMolecularFormula mf = new MolecularFormula();
         mf.addIsotope( builder.newIsotope("C") );
@@ -375,7 +374,7 @@ public class MolecularFormulaTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-    public void testCharge_sum() {
+    public void testSetCharge_Double() {
     	
 
         IMolecularFormula mf = new MolecularFormula();
@@ -496,4 +495,55 @@ public class MolecularFormulaTest extends NewCDKTestCase {
 
         Assert.assertEquals(3, ((IMolecularFormula) clone).getIsotopeCount());
 	}  
+    /**
+	 * A unit test suite for JUnit.
+   	*/
+    @Test 
+	public void testSetProperty_Object_Object() throws Exception {
+        IMolecularFormula mf = new MolecularFormula();
+        mf.setProperty("blabla", 2);
+        Assert.assertNotNull(mf.getProperty("blabla"));
+	} 
+    /**
+	 * A unit test suite for JUnit.
+   	*/
+    @Test 
+	public void testRemoveProperty_Object() throws Exception {
+    	 IMolecularFormula mf = new MolecularFormula();
+    	 String blabla = "blabla";
+    	 double number = 2;
+         mf.setProperty(blabla,number);
+         Assert.assertNotNull(mf.getProperty(blabla));
+         
+         mf.removeProperty("blabla");
+         Assert.assertNull(mf.getProperty(blabla));
+        
+	} 
+    /**
+	 * A unit test suite for JUnit.
+   	*/
+    @Test 
+	public void testGetProperty_Object() throws Exception {
+    	testSetProperty_Object_Object();
+        
+	} 
+    /**
+	 * A unit test suite for JUnit.
+   	*/
+    @Test 
+	public void testGetProperties() throws Exception {
+    	 IMolecularFormula mf = new MolecularFormula();
+         mf.setProperty("blabla", 2);
+         mf.setProperty("blabla3", 3);
+         Assert.assertEquals(2,mf.getProperties().size());
+	} 
+    /**
+	 * A unit test suite for JUnit.
+   	*/
+    @Test 
+	public void testSetProperties_Hashtable() throws Exception {
+    	testGetProperties();
+        
+	} 
+    
 }

@@ -58,7 +58,7 @@ public class MolecularFormulaSetManipulatorTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-	public void testGetMaxOccurrenceElements_IMolecularFormula() {
+	public void testGetMaxOccurrenceElements_IMolecularFormulaSet() {
 		IMolecularFormula mf1 = new MolecularFormula(); /*C4H12NO4*/
 		mf1.addIsotope(builder.newIsotope("C"),4);
 		mf1.addIsotope(builder.newIsotope("H"),12);

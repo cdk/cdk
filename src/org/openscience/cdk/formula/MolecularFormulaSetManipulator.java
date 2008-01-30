@@ -61,7 +61,7 @@ public class MolecularFormulaSetManipulator {
 	 * @return         A IMolecularFormula containing the maximum occurrence of the elements
 	 * @see            #getMinOccurrenceElements(IMolecularFormulaSet)
 	 */
-    @TestMethod("testGetMaxOccurrenceElements_IMolecularFormula")
+    @TestMethod("testGetMaxOccurrenceElements_IMolecularFormulaSet")
 	public static IMolecularFormula getMaxOccurrenceElements(IMolecularFormulaSet mfSet){
 		
 		IMolecularFormula molecularFormula = new MolecularFormula();

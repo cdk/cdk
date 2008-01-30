@@ -61,7 +61,7 @@ public class MolecularFormulaRangeTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-    public void testNotNull() {
+    public void testMolecularFormulaRange() {
     	
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
     	
@@ -86,7 +86,7 @@ public class MolecularFormulaRangeTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-    public void testAddIsotope_Isotope_int_int() {
+    public void testAddIsotope_IIsotope_int_int() {
     	
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
     	mfRange.addIsotope( builder.newIsotope("C"), 0, 10);
@@ -252,7 +252,7 @@ public class MolecularFormulaRangeTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-    public void testIsotopes_Iterator() {
+    public void testIsotopes() {
 
     	MolecularFormulaRange mfRange = new MolecularFormulaRange();
     	mfRange.addIsotope( builder.newIsotope("C"), 0, 10);

@@ -115,7 +115,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 * @param  count    The number of occurrences to add
 	 * @see             #addIsotope(IIsotope)
 	 */
-    @TestMethod("addIsotope_IIsotope_int")
+    @TestMethod("testAddIsotope_IIsotope_int")
 	public IMolecularFormula addIsotope(IIsotope isotope, int count) {
 		boolean flag = false;
 		for(Iterator<IIsotope> it = isotopes(); it.hasNext(); ) {
@@ -198,7 +198,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 * @param  isotope The IIsotope for looking for
 	 * @return         The IIsotope instance
      *
-     * @see    #isotopes
+  �� ��* @see �� ��#isotopes
 	 */
 	private IIsotope getIsotope(IIsotope isotope){
 		for(Iterator<IIsotope> it = isotopes(); it.hasNext(); ) {
@@ -213,7 +213,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 *
 	 * @return    An Iterator with the isotopes in this IMolecularFormula
 	 */
-    @TestMethod("testSet_Iterator")
+    @TestMethod("testIsotopes")
 	public Iterator<IIsotope> isotopes() {
 		return isotopes.keySet().iterator();
 	}
@@ -225,7 +225,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
      *
      * @see    #getCharge
      */
-    @TestMethod("testCharge")
+    @TestMethod("testCharge_Double")
 	public void setCharge(Double charge) {
 		this.charge = charge;
 	}
@@ -302,6 +302,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 *@see                 #getProperty
 	 *@see                 #removeProperty
 	 */
+    @TestMethod("testSetProperty_Object_Object")
 	public void setProperty(Object description, Object property){
 		lazyProperties().put(description, property);
 	}
@@ -316,6 +317,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 *@see                 #setProperty
 	 *@see                 #getProperty
 	 */
+    @TestMethod("testRemoveProperty_Object")
 	public void removeProperty(Object description){
 		if (properties == null) {
             return;
@@ -335,6 +337,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 *@see                 #setProperty
 	 *@see                 #removeProperty
 	 */
+    @TestMethod("testGetProperty_Object")
 	public Object getProperty(Object description){
         if (properties != null) {
             return lazyProperties().get(description);
@@ -350,6 +353,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 *@return    The object's properties as an Hashtable
 	 *@see       #setProperties
 	 */
+    @TestMethod("testGetProperties")
 	public Hashtable<Object, Object> getProperties(){
 		return lazyProperties();
 	}
@@ -359,6 +363,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 *@param  properties  a Hashtable specifying the property values
 	 *@see                #getProperties
 	 */
+    @TestMethod("testSetProperties_Hashtable")
 	public void setProperties(Hashtable<Object, Object> properties){
 		
 		Enumeration<Object> keys = properties.keys();

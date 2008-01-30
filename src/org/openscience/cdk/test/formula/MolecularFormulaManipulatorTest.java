@@ -68,7 +68,7 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-    public void testAtomCount_IMolecularFormula() {
+    public void testGetAtomCount_IMolecularFormula() {
     	
         IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(builder.newIsotope("C") );
@@ -404,7 +404,7 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-    public void testGetHTML_IMolecularFormulaWithCharge() {
+    public void testGetHTML_IMolecularFormula_boolean_boolean() {
     	MolecularFormula formula = new MolecularFormula();
     	formula.addIsotope(builder.newIsotope("C"),10);
     	

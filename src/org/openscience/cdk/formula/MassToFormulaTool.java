@@ -113,7 +113,7 @@ public class MassToFormulaTool {
 	 * @see #setRestrictionsDefault()
 	 * @see IRule
 	 */
-	@TestMethod("testSetRestrictions_ListIRule")
+	@TestMethod("testSetRestrictions_List")
 	public void setRestrictions(List<IRule> rulesNew)  throws CDKException {
 		
 		Iterator<IRule> itRules = rulesNew.iterator();

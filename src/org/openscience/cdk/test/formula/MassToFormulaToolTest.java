@@ -161,7 +161,7 @@ public class MassToFormulaToolTest extends NewCDKTestCase {
 	 * @throws CDKException 
 	 */
     @Test 
-	public void testSetRestrictions_ListIRule() throws CDKException{
+	public void testSetRestrictions_List() throws CDKException{
 		
     	MassToFormulaTool mfTool = new MassToFormulaTool();
 		List<IRule> rules = mfTool.getRestrictions();

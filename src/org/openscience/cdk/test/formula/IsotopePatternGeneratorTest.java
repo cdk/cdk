@@ -53,6 +53,26 @@ public class IsotopePatternGeneratorTest extends NewCDKTestCase{
 	public IsotopePatternGeneratorTest(){
 		super();
 	}
+	
+	/**
+	 * A unit test for JUnit.
+	 *
+	 * @return    Description of the Return Value
+	 */
+    @Test public void testIsotopePatternGenerator() {
+    	IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator();
+		Assert.assertNotNull(isotopeGe);
+    }
+	/**
+	 * A unit test for JUnit.
+	 *
+	 * @return    Description of the Return Value
+	 */
+    @Test public void testIsotopePatternGenerator_double() {
+    	IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator();
+		Assert.assertNotNull(isotopeGe);
+    }
+	
 	/**
 	 * A unit test for JUnit: Isotopes of the Bromine.
 	 *
