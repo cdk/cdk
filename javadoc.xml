@@ -123,6 +123,7 @@
       <antcall target="doccheck-module"><param name="module" value="io"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="inchi"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="extra"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="formula"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="render"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="reaction"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="libio-cml"/></antcall>

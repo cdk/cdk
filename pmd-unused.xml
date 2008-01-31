@@ -37,6 +37,7 @@
       <antcall target="test-module"><param name="module" value="atomtype"/></antcall>
       <antcall target="test-module"><param name="module" value="io"/></antcall>
       <antcall target="test-module"><param name="module" value="extra"/></antcall>
+      <antcall target="test-module"><param name="module" value="formula"/></antcall>
       <antcall target="test-module"><param name="module" value="render"/></antcall>
       <antcall target="test-module"><param name="module" value="reaction"/></antcall>
       <antcall target="test-module"><param name="module" value="libio-cml"/></antcall>
