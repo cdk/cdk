@@ -39,6 +39,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
@@ -789,5 +790,20 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		assertEquals(moleculeSmile1, moleculeSmile2);
 	}
 
+	/**
+	 * @cdk.bug 1875946
+	 */
+	public void testPreservingFormalCharge() throws Exception {
+		IMolecule mol = new Molecule();
+		mol.addAtom(new Atom(Elements.OXYGEN));
+		mol.getAtom(0).setFormalCharge(-1);
+		mol.addAtom(new Atom(Elements.CARBON));
+		mol.addBond(0,1,IBond.Order.SINGLE);
+		SmilesGenerator generator = new SmilesGenerator();
+		generator.createSMILES(new Molecule(mol));
+		assertEquals(-1, mol.getAtom(0).getFormalCharge().intValue());
+		// mmm, that does not reproduce the bug findings yet :(
+	}
+	
 }
 
