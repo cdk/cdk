@@ -21,10 +21,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- * 
- * @cdk.set       libio-cml-customizers
  */
-
 package org.openscience.cdk.libio.cml;
 
 import java.util.Iterator;
@@ -44,11 +41,13 @@ import org.xmlcml.cml.element.CMLMolecule;
 import org.xmlcml.cml.element.CMLScalar;
 
 /**
- * Customize persistence of MDMolecule by adding support for residues and chargegroups
+ * Customize persistence of MDMolecule by adding support for residues and charge groups.
  * 
  * @author ola
  * @cdk.module libiomd
  * @cdk.svnrev  $Revision: 9162 $
+ * 
+ * @cdk.set       libio-cml-customizers
  */
 public class MDMoleculeCustomizer implements ICMLCustomizer {
 
