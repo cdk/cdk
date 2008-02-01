@@ -70,13 +70,13 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *   </tr>
  * </table>
  *
- * @author           Miguel Rojas
- * @cdk.created      2006-05-26
- * @cdk.module       qsarmolecular
- * @cdk.svnrev  $Revision: 9162 $
- * @cdk.set          qsar-descriptors
- * @cdk.dictref      qsar-descriptors:ionizationPotential
- * 
+ * @author       Miguel Rojas
+ * @cdk.created  2006-05-26
+ * @cdk.module   qsarmolecular
+ * @cdk.svnrev   $Revision: 9162 $
+ * @cdk.set      qsar-descriptors
+ * @cdk.dictref  qsar-descriptors:ionizationPotential
+ * @cdk.bug      1860497
  */
 @TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.IPAtomicDescriptorTest")
 public class IPAtomicDescriptor implements IAtomicDescriptor {

@@ -59,6 +59,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:sigmaElectronegativity
+ * @cdk.bug     1860497
  */
 @TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.SigmaElectronegativityDescriptorTest")
 public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {

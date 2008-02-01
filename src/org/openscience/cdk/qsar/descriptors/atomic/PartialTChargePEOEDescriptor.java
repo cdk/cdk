@@ -62,7 +62,8 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:PartialTChargePEOE
- * @cdk.bug     1558660
+ * @cdk.bug     1701065
+ * @cdk.bug     1860497
  * @see         GasteigerMarsiliPartialCharges
  * @see         GasteigerPEPEPartialCharges
  */

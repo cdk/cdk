@@ -69,7 +69,7 @@ import org.openscience.cdk.smiles.SmilesGenerator;
  * @cdk.module  experimental
  * @cdk.svnrev  $Revision$
  * @cdk.keyword Murcko fragments
- * 
+ * @cdk.bug     1848591
  **/
 public class GenerateFragments {
 	

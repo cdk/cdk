@@ -44,6 +44,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.module  qsarmolecular
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
+ * @cdk.bug     1728862
  */
 
 public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{

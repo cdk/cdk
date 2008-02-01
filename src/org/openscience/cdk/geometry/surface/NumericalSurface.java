@@ -48,10 +48,11 @@ import java.util.Iterator;
  * Van der Waals surface. The accuracy can be increased by increasing the tessellation 
  * level, though the default of 4 is a good balance between accuracy and speed.
  *
- * @author Rajarshi Guha
+ * @author      Rajarshi Guha
  * @cdk.created 2005-05-08  
- * @cdk.module extra
+ * @cdk.module  extra
  * @cdk.svnrev  $Revision$
+ * @cdk.bug     1846421
  */
 public class NumericalSurface {
     private LoggingTool logger;

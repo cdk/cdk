@@ -62,6 +62,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:piElectronegativity
  * @cdk.bug     1558660
+ * @cdk.bug     1701065
  */
 @TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.PiElectronegativityDescriptorTest")
 public class PiElectronegativityDescriptor implements IAtomicDescriptor {

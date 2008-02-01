@@ -59,6 +59,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondPartialTCharge
+ * @cdk.bug     1860497
  * @see org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor
  * @see org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor
  */

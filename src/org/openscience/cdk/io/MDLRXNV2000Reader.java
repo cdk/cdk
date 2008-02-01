@@ -63,6 +63,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created    2003-07-24
  *
  * @cdk.keyword    file format, MDL RXN
+ * @cdk.bug        1849923
  */
 public class MDLRXNV2000Reader extends DefaultChemObjectReader {
 

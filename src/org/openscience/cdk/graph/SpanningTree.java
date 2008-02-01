@@ -41,6 +41,7 @@ import java.util.Iterator;
  * @cdk.dictref blue-obelisk:graphSpanningTree
  * @cdk.keyword spanning tree
  * @cdk.keyword ring finding
+ * @cdk.bug     1817487
  */
 public class SpanningTree {
 	

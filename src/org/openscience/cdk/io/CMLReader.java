@@ -59,7 +59,6 @@ import org.xml.sax.XMLReader;
  * @cdk.module  io
  * @cdk.svnrev  $Revision$
  * @cdk.keyword file format, CML
- * @cdk.bug     1455346
  * @cdk.bug     1544406
  */
 public class CMLReader extends DefaultChemObjectReader {

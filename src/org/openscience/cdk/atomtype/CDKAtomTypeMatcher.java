@@ -47,7 +47,9 @@ import org.openscience.cdk.interfaces.IAtomType.Hybridization;
  * @author         egonw
  * @cdk.created    2007-07-20
  * @cdk.module     atomtype
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev     $Revision: 9162 $
+ * @cdk.bug        1802998
+ * @cdk.bug        1851197
  */
 public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 

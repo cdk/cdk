@@ -68,12 +68,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *   </tr>
  * </table>
  *
- * @author           Miguel Rojas
- * @cdk.created      2006-05-26
- * @cdk.module       qsarmolecular
+ * @author      Miguel Rojas
+ * @cdk.created 2006-05-26
+ * @cdk.module  qsarmolecular
  * @cdk.svnrev  $Revision: 9162 $
- * @cdk.set          qsar-descriptors
- * @cdk.dictref      qsar-descriptors:ionizationPotential
+ * @cdk.set     qsar-descriptors
+ * @cdk.dictref qsar-descriptors:ionizationPotential
+ * @cdk.bug     1860497
+ * @cdk.bug     1861626
  */
 public class IPBondDescriptor implements IBondDescriptor {
 	

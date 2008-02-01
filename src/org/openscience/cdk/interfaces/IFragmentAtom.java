@@ -30,6 +30,7 @@ package org.openscience.cdk.interfaces;
  * 
  * @cdk.module data
  * @cdk.svnrev $Revision: 9162 $
+ * @cdk.bug    1872765
  * 
  * @author egonw
  */

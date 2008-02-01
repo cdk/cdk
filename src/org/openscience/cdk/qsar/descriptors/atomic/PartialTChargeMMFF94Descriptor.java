@@ -55,6 +55,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:partialTChargeMMFF94
+ * @cdk.bug     1628461
  * @see MMFF94PartialCharges
  */
 @TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest")

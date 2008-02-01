@@ -68,7 +68,6 @@ import java.util.StringTokenizer;
  * @cdk.keyword    SMILES, parser
  * @cdk.bug        1274464
  * @cdk.bug        1363882
- * @cdk.bug        1503541
  * @cdk.bug        1535587
  * @cdk.bug        1541333
  * @cdk.bug        1579229
@@ -76,7 +75,8 @@ import java.util.StringTokenizer;
  * @cdk.bug        1579231
  * @cdk.bug        1579235
  * @cdk.bug        1579244
- *
+ * @cdk.bug        1719287
+ * @cdk.bug        1875949
  */
 public class SmilesParser {
 

@@ -79,6 +79,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.keyword SMARTS
  * @cdk.keyword substructure search
+ * @cdk.bug     1760973
+ * @cdk.bug     1761027
  */
 public class SMARTSQueryTool {
     private LoggingTool logger;

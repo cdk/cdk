@@ -61,6 +61,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondPartialSigmaCharge
+ * @cdk.bug     1860497
  * @see PartialSigmaChargeDescriptor
  */
 public class BondPartialSigmaChargeDescriptor implements IBondDescriptor {

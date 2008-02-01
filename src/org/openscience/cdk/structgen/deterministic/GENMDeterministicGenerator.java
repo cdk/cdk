@@ -75,6 +75,8 @@ import org.openscience.cdk.tools.MFAnalyser;
  * @cdk.module  structgen
  * @cdk.svnrev  $Revision$
  * @cdk.bug     1678346
+ * @cdk.bug     1743861
+ * @cdk.bug     1744463
  */
 public class GENMDeterministicGenerator {
 

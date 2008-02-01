@@ -60,6 +60,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondPartialPiCharge
+ * @cdk.bug     1860497
  * @see PartialPiChargeDescriptor
  */
 public class BondPartialPiChargeDescriptor implements IBondDescriptor {

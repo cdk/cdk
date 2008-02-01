@@ -75,6 +75,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.svnrev  $Revision$
  * @cdk.bug     1610997
  * @cdk.bug     1536561
+ * @cdk.bug     1788686
  */
 public class StructureDiagramGenerator
 {

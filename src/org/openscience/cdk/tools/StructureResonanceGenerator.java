@@ -69,6 +69,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created  2006-5-05
  * @cdk.module   reaction
  * @cdk.svnrev   $Revision: 9162 $
+ * @cdk.bug      1728830
  * 
  * @see org.openscience.cdk.reaction.IReactionProcess
  */

@@ -79,6 +79,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:resonancePositiveCharge
+ * @cdk.bug     1860497
  * @see GasteigerPEPEPartialCharges
  */
 public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
