@@ -5,7 +5,7 @@ cdk-extra.jar
 cdk-experimental.jar
 cdk-interfaces.jar
 cdk-io.jar
-cdk-libio-cml.jar
+cdk-libiocml.jar
 cdk-render.jar
 cdk-standard.jar
 cdk-jchempaint.jar

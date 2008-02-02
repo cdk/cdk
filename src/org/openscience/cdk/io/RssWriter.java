@@ -18,7 +18,7 @@ import java.util.*;
  * Generatas an rss feed. It the object is a MoleculeSet, the molecules
  * are put in separtly. All other objects are made cml and put in.
  *
- * @cdk.module       libio-cml
+ * @cdk.module       libiocml
  * @cdk.svnrev  $Revision$
  * @cdk.builddepends xom-1.0.jar
  *

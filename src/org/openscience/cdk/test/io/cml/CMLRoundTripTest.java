@@ -68,7 +68,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * TestCase for the reading CML 2 files using a few test files
  * in data/cmltest.
  *
- * @cdk.module  test-io
+ * @cdk.module  test-libiocml
  * @cdk.require xom-1.0.jar
  * @cdk.require java1.5+
  */

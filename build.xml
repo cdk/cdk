@@ -454,7 +454,7 @@
             <antcall target="compile-module"><param name="module" value="pdb"/></antcall>
             <antcall target="compile-module"><param name="module" value="extra"/></antcall>
             <antcall target="compile-module"><param name="module" value="smiles"/></antcall>
-            <antcall target="compile-module"><param name="module" value="libio-cml"/></antcall>
+            <antcall target="compile-module"><param name="module" value="libiocml"/></antcall>
             <antcall target="compile-module"><param name="module" value="libio-openbabel"/></antcall>
             <antcall target="compile-module"><param name="module" value="libiomd"/></antcall>
             <antcall target="compile-module"><param name="module" value="pdb-cml"/></antcall>
@@ -531,7 +531,7 @@
                     <includesfile name="${metainf}/extra.libdepends"/>
                     <includesfile name="${metainf}/io-jmol.libdepends"/>
                     <includesfile name="${metainf}/io.libdepends"/>
-                    <includesfile name="${metainf}/libio-cml.libdepends"/>
+                    <includesfile name="${metainf}/libiocml.libdepends"/>
                     <includesfile name="${metainf}/libioweka.libdepends"/>
                     <includesfile name="${metainf}/nonotify.libdepends"/>
                     <includesfile name="${metainf}/pdb-cml.libdepends"/>
@@ -570,7 +570,7 @@
                     <include name="cdk-interfaces.jar"/>
                     <include name="cdk-io.jar"/>
                     <include name="cdk-io-jmol.jar"/>
-                    <include name="cdk-libio-cml.jar"/>
+                    <include name="cdk-libiocml.jar"/>
                     <include name="cdk-libioweka.jar"/>
                     <include name="cdk-libiomd.jar"/>
                     <include name="cdk-nonotify.jar"/>
@@ -638,7 +638,7 @@
                     <include name="cdk-interfaces.jar"/>
                     <include name="cdk-io.jar"/>
                     <include name="cdk-io-jmol.jar"/>
-                    <include name="cdk-libio-cml.jar"/>
+                    <include name="cdk-libiocml.jar"/>
                     <include name="cdk-libioweka.jar"/>
                     <include name="cdk-libiomd.jar"/>
                     <include name="cdk-nonotify.jar"/>
@@ -992,6 +992,7 @@
             <antcall target="test-module"><param name="module" value="inchi"/></antcall>
             <antcall target="test-module"><param name="module" value="structgen"/></antcall>
             <antcall target="test-module"><param name="module" value="libiomd"/></antcall>
+            <antcall target="test-module"><param name="module" value="libiocml"/></antcall>
             	<antcall target="test-module"><param name="module" value="formula"/></antcall>
         </target>
 

@@ -12,4 +12,4 @@ cdk-test.jar
 cdk-test-core.jar
 cdk-sdg.jar
 cdk-libio.jar
-cdk-libio-cml.jar
+cdk-libiocml.jar

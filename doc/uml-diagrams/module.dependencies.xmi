@@ -35,7 +35,7 @@
     <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="163" isRoot="false" isAbstract="false" name="builder3d" />
     <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="167" isRoot="false" isAbstract="false" name="io-jmol" />
     <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="171" isRoot="false" isAbstract="false" name="experimental" />
-    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="175" isRoot="false" isAbstract="false" name="libio-cml" />
+    <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="175" isRoot="false" isAbstract="false" name="libiocml" />
     <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="179" isRoot="false" isAbstract="false" name="test" />
     <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="200" isRoot="false" isAbstract="false" name="pdb" />
     <UML:Component executable="0" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="201" isRoot="false" isAbstract="false" name="pdb-cml" />
@@ -225,7 +225,7 @@
      </assocwidget>
     </associations>
    </diagram>
-   <diagram snapgrid="0" showattsig="1" fillcolor="#ffffc0" linewidth="0" zoom="100" showgrid="0" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="940" snapy="10" showatts="1" xmi.id="209" documentation="" type="406" showops="1" showpackage="0" name="libio-cml dependencies" localid="900000" showstereotype="0" showscope="1" snapcsgrid="0" font="Charter,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" canvasheight="619" >
+   <diagram snapgrid="0" showattsig="1" fillcolor="#ffffc0" linewidth="0" zoom="100" showgrid="0" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="940" snapy="10" showatts="1" xmi.id="209" documentation="" type="406" showops="1" showpackage="0" name="libiocml dependencies" localid="900000" showstereotype="0" showscope="1" snapcsgrid="0" font="Charter,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" canvasheight="619" >
     <widgets>
      <componentwidget usesdiagramfillcolour="1" width="129" usesdiagramusefillcolour="1" x="365" y="102" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="175" font="Charter,10,-1,5,75,1,0,0,0,0" linecolor="none" />
      <componentwidget usesdiagramfillcolour="1" width="75" usesdiagramusefillcolour="1" x="383" y="19" linewidth="none" fillcolour="none" height="66" usefillcolor="1" isinstance="0" xmi.id="138" font="Charter,10,-1,5,75,1,0,0,0,0" linecolor="none" />

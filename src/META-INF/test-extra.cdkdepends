@@ -9,7 +9,7 @@ cdk-control.jar
 cdk-sdg.jar
 cdk-experimental.jar
 cdk-extra.jar
-cdk-libio-cml.jar
+cdk-libiocml.jar
 cdk-libio-openbabel.jar
 cdk-pdb.jar
 cdk-render.jar

@@ -74,7 +74,7 @@
                 <includesfile name="${metainf}/experimental.libdepends"/>
                 <includesfile name="${metainf}/extra.libdepends"/>
                 <includesfile name="${metainf}/io.libdepends"/>
-                <includesfile name="${metainf}/libio-cml.libdepends"/>
+                <includesfile name="${metainf}/libiocml.libdepends"/>
                 <includesfile name="${metainf}/qsar.libdepends"/>
                 <includesfile name="${metainf}/render.libdepends"/>
                 <includesfile name="${metainf}/standard.libdepends"/>
@@ -95,7 +95,7 @@
                 <includesfile name="${metainf}/experimental.libdepends"/>
                 <includesfile name="${metainf}/extra.libdepends"/>
                 <includesfile name="${metainf}/io.libdepends"/>
-                <includesfile name="${metainf}/libio-cml.libdepends"/>
+                <includesfile name="${metainf}/libiocml.libdepends"/>
                 <includesfile name="${metainf}/qsar.libdepends"/>
                 <includesfile name="${metainf}/render.libdepends"/>
                 <includesfile name="${metainf}/standard.libdepends"/>
@@ -116,7 +116,7 @@
                 <include name="cdk-interfaces.jar"/>
                 <include name="cdk-inchi.jar"/>
                 <include name="cdk-io.jar"/>
-                <include name="cdk-libio-cml.jar"/>
+                <include name="cdk-libiocml.jar"/>
                 <include name="cdk-qsar.jar"/>
                 <include name="cdk-render.jar"/>
                 <include name="cdk-standard.jar"/>

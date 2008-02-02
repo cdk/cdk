@@ -40,7 +40,7 @@
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="formula"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="render"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="reaction"/></antcall>
-      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="libio-cml"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="libiocml"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="libio-biojava"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="builder3d"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="smiles"/></antcall>

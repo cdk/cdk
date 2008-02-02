@@ -7,3 +7,10 @@ cdk-libiomd.jar
 cdk-io.jar
 cdk-libiocml.jar
 cdk-test.jar
+cdk-qsar.jar
+cdk-qsarmolecular.jar
+cdk-qsar-cml.jar
+cdk-atomtype.jar
+cdk-nonotify.jar
+cdk-pdb.jar
+cdk-pdb-cml.jar

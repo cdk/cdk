@@ -79,7 +79,7 @@ import org.xmlcml.cml.element.CMLSubstance;
 import org.xmlcml.cml.element.CMLSubstanceList;
 
 /**
- * @cdk.module       libio-cml
+ * @cdk.module       libiocml
  * @cdk.svnrev  $Revision$
  * @cdk.keyword      CML
  * @cdk.keyword      class convertor

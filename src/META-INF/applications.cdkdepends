@@ -8,7 +8,7 @@ cdk-extra.jar
 cdk-io.jar
 cdk-interfaces.jar
 cdk-libio.jar
-cdk-libio-cml.jar
+cdk-libiocml.jar
 cdk-qsar.jar
 cdk-render.jar
 cdk-standard.jar

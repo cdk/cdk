@@ -252,14 +252,10 @@
         </target>
 
         <target id="compile-libio" name="compile-libio" depends="dist-standard,
-                                         compile-libio-joelib, compile-libio-cml" />
+                                         compile-libio-joelib" />
         
         <target name="dont-compile-libio-joelib" unless="joelib.present">
             <echo message="Not compiling libio for JOELib, jar/libio/joelib.jar is not present" /> 
-        </target>
-        
-        <target name="dont-compile-libio-cml" unless="cmllibs.present">
-            <echo message="Not compiling libio for CMLDOM, jar/cmlAll.jar is not present" /> 
         </target>
         
         <target name="compile-libio-joelib" if="joelib.present" depends="dont-compile-libio-joelib">
@@ -275,25 +271,6 @@
                 <classpath>
                     <fileset dir="${lib}/libio">
                         <include name="*.jar" />
-                    </fileset>
-                </classpath>
-            </javac>
-        </target>
-
-        <target name="compile-libio-cml" if="cmllibs.present" depends="dont-compile-libio-cml">
-            <!-- Task to build the libio classes for CMLDOM. -->
-            <echo message="Compiling libio for CMLDOM" /> 
-
-            <javac destdir="${build}" optimize="${optimization}" 
-                   debug="${debug}" deprecation="${deprecation}">
-                <src path="${src}/org/openscience/cdk/libio/cml" />
-                
-                <classpath refid="project.class.path" />
-                <classpath>
-                    <fileset dir="${lib}">
-                        <include name="base.jar" />
-                        <include name="cmlAll.jar" />
-                        <include name="pmrlib.jar" />
                     </fileset>
                 </classpath>
             </javac>
