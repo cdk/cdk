@@ -1,6 +1,6 @@
 /* $Revision: 6963 $ $Author: egonw $$Date: 2006-09-20 12:48:23 +0200 (Wed, 20 Sep 2006) $
  *
- * Copyright (C) 2007  Egon Willighagen <ewilligh@users.sf.net>
+ * Copyright (C) 2006-2008  Egon Willighagen <ewilligh@uni-koeln.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -22,42 +22,36 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.interfaces;
+package org.openscience.cdk.nonotify;
+
+import org.openscience.cdk.FragmentAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  * Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much
  * like the MDL molfile <code>Group</code> concept.
  * 
- * @cdk.module interfaces
+ * @cdk.module nonotify
  * @cdk.svnrev $Revision: 9162 $
- * @cdk.bug    1872765
  * 
  * @author egonw
  */
-public interface IFragmentAtom extends IPseudoAtom {
+public class NNFragmentAtom extends FragmentAtom {
 
-	/**
-	 * Helper method to indicate that the method should be drawn fully, and not
-	 * just the abbreviated form.
-	 * 
-	 * @return true, if it should be considered in expended form
-	 */
-	public boolean isExpanded();
+	private static final long serialVersionUID = -2148233630708060763L;
 
-	public void setExpanded(boolean bool);
-
-	/**
-	 * Returns the fully expended form of the IFragmentAtom.
-	 * 
-	 * @return
-	 */
-	public IAtomContainer getFragment();
-
-	/**
-	 * Sets the fully expended form of the IFragmentAtom.
-	 * 
-	 * @param fragment
-	 */
-	public void setFragment(IAtomContainer fragment);
-
+	public NNFragmentAtom() {
+		super();
+		setNotification(false);
+	}
+	
+	public IChemObjectBuilder getBuilder() {
+		return NoNotificationChemObjectBuilder.getInstance();
+	}
+	
+	public void addListener(IChemObjectListener col) {
+		// Ignore this: we do not listen anyway
+	}
+	
 }

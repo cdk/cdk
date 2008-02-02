@@ -579,6 +579,12 @@ public interface IChemObjectBuilder {
      */
     public IPseudoAtom newPseudoAtom(String label, javax.vecmath.Point2d point2d);
 		
+    
+    /**
+     * Constructs a IFragmentAtom.
+     */
+    public IFragmentAtom newFragmentAtom();
+    
 }
 
 

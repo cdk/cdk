@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IFragmentAtom;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -665,4 +666,12 @@ public class DefaultChemObjectBuilderTest extends NewCDKTestCase {
 		Assert.assertTrue(object instanceof IStrand);
 	}
 	
+	@Test public void testNewFragmentAtom() {
+		Object object = rootObject.getBuilder().newFragmentAtom();
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		Assert.assertTrue(object instanceof IFragmentAtom);
+	}
+	 
 }

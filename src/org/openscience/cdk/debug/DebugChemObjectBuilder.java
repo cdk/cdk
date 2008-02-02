@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IFragmentAtom;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
@@ -357,6 +358,10 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 
 	public IPseudoAtom newPseudoAtom(IElement element) {
 		return new DebugPseudoAtom(element);
+	}
+
+	public IFragmentAtom newFragmentAtom() {
+		return new DebugFragmentAtom();
 	}
 }
 
