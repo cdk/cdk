@@ -724,6 +724,15 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "C.plus.planar", atm.findMatchingAtomType(mol, atom2));
     }
 
+    @Test public void testCarbokation_implicitHydrogen() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom2 = new Atom("C"); atom2.setFormalCharge(+1);
+        mol.addAtom(atom2);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "C.plus.sp2", atm.findMatchingAtomType(mol, atom2));
+    }
+
     @Test public void testHydrogen() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("H");
