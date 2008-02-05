@@ -25,8 +25,6 @@
 
 package org.openscience.cdk.test;
 
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -178,6 +176,16 @@ public class AtomTypeTest extends NewCDKTestCase {
     }
     @Test public void testGetHybridization() {
     	testSetHybridization_IAtomType_Hybridization();
+    }
+
+    @Test public void testSetHybridization_Null() {
+        Hybridization hybridization = Hybridization.SP1;
+
+        IAtomType atom = builder.newAtomType("C");
+        atom.setHybridization(hybridization);
+        Assert.assertEquals(hybridization, atom.getHybridization());
+        atom.setHybridization(null);
+        Assert.assertNull(atom.getHybridization());
     }
 
     @Test public void testSetAcceptor_boolean(){
