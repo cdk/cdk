@@ -37,6 +37,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -206,6 +207,23 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
         assertAtomType(testedAtomTypes, "O.sp3", atm.findMatchingAtomType(mol, atom));
         assertAtomType(testedAtomTypes, "C.sp3", atm.findMatchingAtomType(mol, atom2));
+    }
+    
+    @Test public void testLithiumMethanoxide() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("Li");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0,2,CDKConstants.BONDORDER_SINGLE);
+
+        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        assertAtomType(testedAtomTypes, "O.sp3", atm.findMatchingAtomType(mol, atom));
+        assertAtomType(testedAtomTypes, "C.sp3", atm.findMatchingAtomType(mol, atom2));
+        assertAtomType(testedAtomTypes, "Li", atm.findMatchingAtomType(mol, atom3));
     }
     
     @Test public void testHCN() throws Exception {
@@ -1408,6 +1426,108 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	assertAtomType(testedAtomTypes, "Zn.2plus", atm.findMatchingAtomType(mol, mol.getAtom(0)));
     }
     
+    @Test public void testScandium() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+    	
+    	mol.addAtom(new Atom("Sc")); mol.getAtom(0).setFormalCharge(-3);
+    	assertAtomType(testedAtomTypes, "Sc.3minus", atm.findMatchingAtomType(mol, mol.getAtom(0)));
+    	Assert.fail("Look up MolBase example...");
+
+    }
+    
+    @Test public void testVanadium() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+    	
+    	mol.addAtom(new Atom("V")); mol.getAtom(0).setFormalCharge(-3);
+    	assertAtomType(testedAtomTypes, "V.3minus", atm.findMatchingAtomType(mol, mol.getAtom(0)));
+    	Assert.fail("Look up MolBase example...");
+
+    }
+    
+    @Test public void testTitanium() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+    	
+    	mol.addAtom(new Atom("Ti")); mol.getAtom(0).setFormalCharge(-3);
+    	assertAtomType(testedAtomTypes, "Ti.3minus", atm.findMatchingAtomType(mol, mol.getAtom(0)));
+    	Assert.fail("Look up MolBase example...");
+
+    }
+    
+    @Test public void testBoronTetraFluoride() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+    	
+    	mol.addAtom(new Atom("B")); mol.getAtom(0).setFormalCharge(-1);
+    	mol.addAtom(new Atom("F"));
+    	mol.addAtom(new Atom("F"));
+    	mol.addAtom(new Atom("F"));
+    	mol.addAtom(new Atom("F"));
+    	mol.addBond(0,1,IBond.Order.SINGLE);
+    	mol.addBond(0,2,IBond.Order.SINGLE);
+    	mol.addBond(0,3,IBond.Order.SINGLE);
+    	mol.addBond(0,4,IBond.Order.SINGLE);
+    	
+    	assertAtomType(testedAtomTypes, "B.minus", atm.findMatchingAtomType(mol, mol.getAtom(0)));
+    }
+    
+    @Test public void testBerylliumTetraFluoride() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+    	
+    	mol.addAtom(new Atom("Be")); mol.getAtom(0).setFormalCharge(-2);
+    	mol.addAtom(new Atom("F"));
+    	mol.addAtom(new Atom("F"));
+    	mol.addAtom(new Atom("F"));
+    	mol.addAtom(new Atom("F"));
+    	mol.addBond(0,1,IBond.Order.SINGLE);
+    	mol.addBond(0,2,IBond.Order.SINGLE);
+    	mol.addBond(0,3,IBond.Order.SINGLE);
+    	mol.addBond(0,4,IBond.Order.SINGLE);
+    	
+    	assertAtomType(testedAtomTypes, "Be.2minus", atm.findMatchingAtomType(mol, mol.getAtom(0)));
+    }
+
+    @Test public void testBoron() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+    	
+    	mol.addAtom(new Atom("B"));
+    	mol.addAtom(new Atom("H"));
+    	mol.addAtom(new Atom("H"));
+    	mol.addAtom(new Atom("H"));
+    	mol.addBond(0,1,IBond.Order.SINGLE);
+    	mol.addBond(0,2,IBond.Order.SINGLE);
+    	mol.addBond(0,3,IBond.Order.SINGLE);
+    	
+    	assertAtomType(testedAtomTypes, "B", atm.findMatchingAtomType(mol, mol.getAtom(0)));
+
+    }
+
+    @Test public void testCarbonMonoxide() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+    	
+    	mol.addAtom(new Atom("C")); mol.getAtom(0).setFormalCharge(-1);
+    	mol.addAtom(new Atom("O")); mol.getAtom(1).setFormalCharge(1);
+    	mol.addBond(0,1,IBond.Order.TRIPLE);
+    	
+    	assertAtomType(testedAtomTypes, "C.minus.sp1", atm.findMatchingAtomType(mol, mol.getAtom(0)));
+    	assertAtomType(testedAtomTypes, "O.plus.sp1", atm.findMatchingAtomType(mol, mol.getAtom(1)));
+    }
+
+    @Test public void testTitaniumFourCoordinate() throws Exception {
+    	IMolecule mol = new Molecule();
+    	CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+    	
+    	mol.addAtom(new Atom("Ti"));
+    	assertAtomType(testedAtomTypes, "Ti.sp3", atm.findMatchingAtomType(mol, mol.getAtom(0)));
+    	Assert.fail("Look up MolBase example...");
+    	
+    }
+    
     /**
      * @cdk.bug 1872969
      */
@@ -1432,6 +1552,33 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	assertAtomType(testedAtomTypes, "O.sp2", atm.findMatchingAtomType(mol, mol.getAtom(3)));
     	assertAtomType(testedAtomTypes, "O.minus", atm.findMatchingAtomType(mol, mol.getAtom(4)));
     	assertAtomType(testedAtomTypes, "Na.plus", atm.findMatchingAtomType(mol, mol.getAtom(5)));
+    }
+
+    /**
+     * Test if all elements up to and include Uranium have atom types.
+     * 
+     * @throws Exception
+     */
+    @Test public void testAllElementsRepresented() throws Exception {
+    	AtomTypeFactory factory = AtomTypeFactory.getInstance(
+                "org/openscience/cdk/config/data/cdk_atomtypes.xml",
+            NoNotificationChemObjectBuilder.getInstance()
+        );
+        String errorMessage = "Elements without atom types:";
+        final int testUptoAtomicNumber = 10; // TODO: 92 ?
+        int elementsMissingTypes = 0;
+    	for (int i=1; i<testUptoAtomicNumber; i++) {
+    		String symbol = Symbols.byAtomicNumber[i];
+    		IAtomType[] expectedTypes = factory.getAtomTypes(symbol);
+    		if (expectedTypes.length == 0) {
+    			errorMessage += " " + symbol;
+    			elementsMissingTypes++;
+    		}
+    	}
+		Assert.assertEquals(
+			errorMessage,
+			0, elementsMissingTypes
+		);
     }
     
     @Test public void testAssumeExplicitHydrogens() throws Exception {

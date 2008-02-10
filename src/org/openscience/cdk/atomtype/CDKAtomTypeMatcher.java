@@ -90,6 +90,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         	return factory.getAtomType("X");
         }
         type = perceiveCarbons(atomContainer, atom);
+        if (type == null) type = perceiveLithium(atomContainer, atom);
         if (type == null) type = perceiveOxygens(atomContainer, atom);
         if (type == null) type = perceiveNitrogens(atomContainer, atom);
         if (type == null) type = perceiveHydrogens(atomContainer, atom);
@@ -100,10 +101,49 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if (type == null) type = perceiveSilicon(atomContainer, atom);
         if (type == null) type = perceiveOrganometallicCenters(atomContainer, atom);
         if (type == null) type = perceiveNobelGases(atomContainer, atom);
+        if (type == null) type = perceiveBorons(atomContainer, atom);
+        if (type == null) type = perceiveBeryllium(atomContainer, atom);
         return type;
     }
     
-    private IAtomType perceiveCarbons(IAtomContainer atomContainer, IAtom atom)
+    private IAtomType perceiveBorons(IAtomContainer atomContainer, IAtom atom)
+		throws CDKException {
+    	if ("B".equals(atom.getSymbol())) {
+    		IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    		if (atom.getFormalCharge() != CDKConstants.UNSET &&
+    			atom.getFormalCharge() != 0) {
+    			if (atom.getFormalCharge() == -1 &&
+    				maxBondOrder == IBond.Order.SINGLE &&
+    				atomContainer.getConnectedAtomsCount(atom) <= 4) {
+    				IAtomType type = getAtomType("B.minus");
+    				if (isAcceptable(atom, atomContainer, type)) return type;
+    			}
+    		} else if (atomContainer.getConnectedAtomsCount(atom) <= 3) {
+    			IAtomType type = getAtomType("B");
+				if (isAcceptable(atom, atomContainer, type)) return type;
+    		}
+    	}
+    	return null;
+    }
+
+    private IAtomType perceiveBeryllium(IAtomContainer atomContainer, IAtom atom)
+    	throws CDKException {
+	if ("Be".equals(atom.getSymbol())) {
+		IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+		if (atom.getFormalCharge() != CDKConstants.UNSET &&
+			atom.getFormalCharge() != 0) {
+			if (atom.getFormalCharge() == -2 &&
+				maxBondOrder == IBond.Order.SINGLE &&
+				atomContainer.getConnectedAtomsCount(atom) <= 4) {
+				IAtomType type = getAtomType("Be.2minus");
+				if (isAcceptable(atom, atomContainer, type)) return type;
+			}
+		}
+	}
+	return null;
+}
+
+	private IAtomType perceiveCarbons(IAtomContainer atomContainer, IAtom atom)
     	throws CDKException {
     	if ("C".equals(atom.getSymbol())) {
     		// if hybridization is given, use that
@@ -249,6 +289,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     				if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
     					IAtomType type = getAtomType("O.plus.sp2");
+    					if (isAcceptable(atom, atomContainer, type)) return type;
+    				} else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
+    					IAtomType type = getAtomType("O.plus.sp1");
     					if (isAcceptable(atom, atomContainer, type)) return type;
     				} else {
     					IAtomType type = getAtomType("O.plus");
@@ -607,6 +650,21 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				if (isAcceptable(atom, atomContainer, type)) return type;
     			} else if (atom.getFormalCharge() == -1){
     				IAtomType type = getAtomType("H.minus");
+    				if (isAcceptable(atom, atomContainer, type)) return type;
+    			}
+    		}
+    	}
+    	return null;
+    }
+
+    private IAtomType perceiveLithium(IAtomContainer atomContainer, IAtom atom)
+    	throws CDKException {
+    	if ("Li".equals(atom.getSymbol())) {
+    		int neighborcount = atomContainer.getConnectedBondsCount(atom);
+    		if (neighborcount == 1) {
+    			if (atom.getFormalCharge() == CDKConstants.UNSET ||
+    				atom.getFormalCharge() == 0) {
+    				IAtomType type = getAtomType("Li");
     				if (isAcceptable(atom, atomContainer, type)) return type;
     			}
     		}
