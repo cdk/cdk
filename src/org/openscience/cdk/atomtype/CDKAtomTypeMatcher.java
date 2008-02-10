@@ -816,6 +816,32 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			IAtomType type = getAtomType("As.plus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
+    	} else if ("Ti".equals(atom.getSymbol())) {
+    		if (atom.getFormalCharge() != CDKConstants.UNSET &&
+    			atom.getFormalCharge() == -3 &&
+    			atomContainer.getConnectedBondsCount(atom) == 6) {
+    			IAtomType type = getAtomType("Ti.3minus");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		} else if ((atom.getFormalCharge() == CDKConstants.UNSET ||
+           			    atom.getFormalCharge() == 0) &&
+        			   atomContainer.getConnectedBondsCount(atom) == 4) {
+    			IAtomType type = getAtomType("Ti.sp3");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		}
+    	} else if ("V".equals(atom.getSymbol())) {
+    		if (atom.getFormalCharge() != CDKConstants.UNSET &&
+    			atom.getFormalCharge() == -3 &&
+    			atomContainer.getConnectedBondsCount(atom) == 6) {
+    			IAtomType type = getAtomType("V.3minus");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		}
+    	} else if ("Sc".equals(atom.getSymbol())) {
+    		if (atom.getFormalCharge() != CDKConstants.UNSET &&
+    			atom.getFormalCharge() == -3 &&
+    			atomContainer.getConnectedBondsCount(atom) == 6) {
+    			IAtomType type = getAtomType("Sc.3minus");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		}
     	}
     	return null;
     }
