@@ -117,7 +117,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 			System.err.println("SMILES 2: " + smiles2);
 		}
 		assertNotNull(smiles2);
-		assertTrue(smiles2.equals("C1=C(C)C2CC(C1)C2(C)(C)"));
+		assertEquals("C1=C(C)C2CC(C1)C2(C)(C)", smiles2);
 	}
 
 
@@ -140,7 +140,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("c2cc1c3ccc(cc3(ccc1c(c2)CC))CCC"));
+		assertEquals("c2cc1c3ccc(cc3(ccc1c(c2)CC))CCC", smiles1);
 	}
 
 	
@@ -174,7 +174,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("CCCC1CC1"));
+		assertEquals("CCCC1CC1", smiles1);
 	}
 	
 	
@@ -230,7 +230,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("[H]OC(=O)[C@](F)(N([H])[H])C([H])([H])[H]"));
+		assertEquals("[H]OC(=O)[C@](F)(N([H])[H])C([H])([H])[H]", smiles1);
 		mol1.getBond(1).setStereo(CDKConstants.STEREO_BOND_DOWN);
 		mol1.getBond(2).setStereo(CDKConstants.STEREO_BOND_UP);
 		smiles1 = sg.createSMILES(mol1, true, new boolean[mol1.getBondCount()]);
@@ -239,7 +239,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("[H]OC(=O)[C@](F)(C([H])([H])[H])N([H])[H]"));
+		assertEquals("[H]OC(=O)[C@](F)(C([H])([H])[H])N([H])[H]", smiles1);
 	}
 
 
@@ -323,7 +323,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("[H]O[C@]1(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]1(O[H])([H]))([H])"));
+		assertEquals("[H]O[C@]1(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]1(O[H])([H]))([H])", smiles1);
 		mol1 = (Molecule) AtomContainerManipulator.removeHydrogens(mol1);
 		try
 		{
@@ -341,7 +341,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("OC1CCCCC1(O)"));
+		assertEquals("OC1CCCCC1(O)", smiles1);
 	}
 
 
@@ -435,7 +435,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("[H]C1([H])(C([H])([H])C([H])([H])C\\2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])C\\2([H])(C1([H])([H]))))"));
+		assertEquals("[H]C1([H])(C([H])([H])C([H])([H])C\\2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])C\\2([H])(C1([H])([H]))))", smiles1);
 		mol1.getBond(6).setStereo(CDKConstants.STEREO_BOND_UP);
 		String smiles3 = null;
 		try
@@ -514,7 +514,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("F/C(=C/(F)S)S"));
+		assertEquals("F/C(=C/(F)S)S", smiles1);
 		mol1.getAtom(4).setPoint2d(new Point2d(0, 3));
 		mol1.getAtom(5).setPoint2d(new Point2d(2, 3));
 		try
@@ -533,7 +533,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 			System.err.println("SMILES 1: " + smiles1);
 		}
 		assertNotNull(smiles1);
-		assertTrue(smiles1.equals("F/C(=C\\(F)S)S"));
+		assertEquals("F/C(=C\\(F)S)S", smiles1);
 		try
 		{
 			addExplicitHydrogens(mol1);
@@ -556,7 +556,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 				fail();
 			}
 		}
-		assertTrue(smiles1.equals("[H]S/C(F)=C/(F)S[H]"));
+		assertEquals("[H]S/C(F)=C/(F)S[H]", smiles1);
 		mol1.getAtom(5).setPoint2d(new Point2d(0, 3));
 		mol1.getAtom(4).setPoint2d(new Point2d(2, 3));
 		try
@@ -570,7 +570,7 @@ public class SmilesGeneratorTest extends CDKTestCase
 				fail();
 			}
 		}
-		assertTrue(smiles1.equals("[H]S/C(F)=C\\(F)S[H]"));
+		assertEquals("[H]S/C(F)=C\\(F)S[H]", smiles1);
 	}
 
 

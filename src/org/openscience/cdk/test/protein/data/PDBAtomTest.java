@@ -180,7 +180,7 @@ public class PDBAtomTest extends NewCDKTestCase {
     @Test public void testGetRecord(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setRecord("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N");
-        Assert.assertTrue(atom.getRecord().equals("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N"));
+        Assert.assertEquals("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N", atom.getRecord());
     }
     
     @Test public void testSetRecord_String(){
@@ -204,7 +204,7 @@ public class PDBAtomTest extends NewCDKTestCase {
     @Test public void testGetResName(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setResName("PHE");
-        Assert.assertTrue(atom.getResName().equals("PHE"));
+        Assert.assertEquals("PHE", atom.getResName());
     }
     
     @Test public void testSetICode_String(){
@@ -214,7 +214,7 @@ public class PDBAtomTest extends NewCDKTestCase {
     @Test public void testGetICode(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setICode("123");
-        Assert.assertTrue(atom.getICode().equals("123"));
+        Assert.assertEquals("123", atom.getICode());
     }
     
     @Test public void testSetChainID_String(){
@@ -224,7 +224,7 @@ public class PDBAtomTest extends NewCDKTestCase {
     @Test public void testGetChainID(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setChainID("123");
-        Assert.assertTrue(atom.getChainID().equals("123"));
+        Assert.assertEquals("123", atom.getChainID());
     }
     
     @Test public void testSetAltLoc_String(){
@@ -234,7 +234,7 @@ public class PDBAtomTest extends NewCDKTestCase {
     @Test public void testGetAltLoc(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setAltLoc("123");
-        Assert.assertTrue(atom.getAltLoc().equals("123"));
+        Assert.assertEquals("123", atom.getAltLoc());
     }
     
     @Test public void testSetSegID_String(){
@@ -244,7 +244,7 @@ public class PDBAtomTest extends NewCDKTestCase {
     @Test public void testGetSegID(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setSegID("123");
-        Assert.assertTrue(atom.getSegID().equals("123"));
+        Assert.assertEquals("123", atom.getSegID());
     }
     
     @Test public void testSetSerial_int(){
@@ -264,7 +264,7 @@ public class PDBAtomTest extends NewCDKTestCase {
     @Test public void testGetResSeq(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setResSeq("123");
-        Assert.assertTrue(atom.getResSeq().equals("123"));
+        Assert.assertEquals("123", atom.getResSeq());
     }
     
     @Test public void testSetOxt_boolean(){
@@ -300,7 +300,7 @@ public class PDBAtomTest extends NewCDKTestCase {
     @Test public void testGetName(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setName("123");
-        Assert.assertTrue(atom.getName().equals("123"));
+        Assert.assertEquals("123", atom.getName());
     }
     
     @Test public void testSetName_String(){

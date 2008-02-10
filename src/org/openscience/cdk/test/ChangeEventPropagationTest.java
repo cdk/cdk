@@ -67,7 +67,7 @@ public class ChangeEventPropagationTest extends NewCDKTestCase {
 	cf.addListener(ts);
 	a2.setSymbol("N");
 	Assert.assertTrue(ts.changedObject instanceof Atom);
-	Assert.assertTrue(((Atom)ts.changedObject).getSymbol().equals("N"));
+	Assert.assertEquals("N", ((Atom)ts.changedObject).getSymbol());
     }
 
     class TestListener implements IChemObjectListener

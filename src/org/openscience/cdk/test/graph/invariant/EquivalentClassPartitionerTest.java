@@ -165,7 +165,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
 		assertNotNull(equivalentClass);
 		assertTrue(equivalentClass[0]==10);//number of Class
 		assertTrue(equivalentClass[40]==10);
-		assertTrue(strEquivalent.equals("111112221333444556667878222879995555444"));
+		assertEquals("111112221333444556667878222879995555444", strEquivalent);
 	}
 
 	public void testFullereneC24D6D() throws Exception

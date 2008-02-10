@@ -51,7 +51,7 @@ public class ChangeAtomSymbolEditTest extends CDKTestCase {
 					symbols[1]);
 			edit.undo();
 			edit.redo();
-			assertTrue(atom.getSymbol().equals(symbols[1]));
+			assertEquals(symbols[1], atom.getSymbol());
 		}
 	}
 
@@ -69,7 +69,7 @@ public class ChangeAtomSymbolEditTest extends CDKTestCase {
 			UndoableEdit edit = new ChangeAtomSymbolEdit(atom, symbols[0],
 					symbols[1]);
 			edit.undo();
-			assertTrue(atom.getSymbol().equals(symbols[0]));
+			assertEquals(symbols[0], atom.getSymbol());
 		}
 	}
 
