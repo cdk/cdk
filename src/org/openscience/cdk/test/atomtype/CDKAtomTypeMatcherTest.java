@@ -108,9 +108,8 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addAtom(atom2);
         mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
 
-        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
-        assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom));
-        assertAtomType(testedAtomTypes, "C.sp2", atm.findMatchingAtomType(mol, atom2));
+        String[] expectedTypes = {"C.sp2", "C.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
     @Test public void testGuanineMethyl() throws Exception {
@@ -153,17 +152,10 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addBond(8,11,CDKConstants.BONDORDER_SINGLE);
         mol.addBond(8,9,CDKConstants.BONDORDER_SINGLE);
 
-        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
         String[] expectedTypes = {"C.sp2", "N.planar3", "C.sp2", "N.sp2", "C.sp3",
         		                  "C.sp2", "N.sp2", "C.sp2", "C.sp2", "N.planar3",
         		                  "O.sp2", "N.sp3"};
-        for (int i=0; i<expectedTypes.length; i++) {
-        	System.out.println("Tested AT " + (i+1) + ": " + expectedTypes[i]);
-        	assertAtomType(testedAtomTypes,
-        		expectedTypes[i], 
-        		atm.findMatchingAtomType(mol, mol.getAtom(i))
-        	);
-        }
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
     @Test public void testPropyne() throws Exception {
@@ -177,10 +169,8 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addBond(0,1,CDKConstants.BONDORDER_TRIPLE);
         mol.addBond(2,1,CDKConstants.BONDORDER_SINGLE);
 
-        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
-        assertAtomType(testedAtomTypes, "C.sp", atm.findMatchingAtomType(mol, atom));
-        assertAtomType(testedAtomTypes, "C.sp", atm.findMatchingAtomType(mol, atom2));
-        assertAtomType(testedAtomTypes, "C.sp3", atm.findMatchingAtomType(mol, atom3));
+        String[] expectedTypes = {"C.sp", "C.sp", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
     @Test public void testFormaldehyde() throws Exception {

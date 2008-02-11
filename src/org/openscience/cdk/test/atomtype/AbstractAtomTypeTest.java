@@ -24,8 +24,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * Helper class that all atom type matcher test classes must implement.
@@ -36,11 +41,32 @@ import org.openscience.cdk.test.NewCDKTestCase;
  */
 abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 
-	public void assertAtomType(Map<String, Integer> testedAtomTypes, String expectedID, IAtomType foundAtomType) {
-		addTestedAtomType(testedAtomTypes, expectedID);
+	public void assertAtomTypes(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol) throws CDKException {
+		Assert.assertEquals(
+			"The number of expected atom types is unequal to the number of atoms",
+			expectedTypes.length, mol.getAtomCount()
+		);
+		CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+        for (int i=0; i<expectedTypes.length; i++) {
+        	IAtom testedAtom = mol.getAtom(i);
+        	IAtomType foundType = atm.findMatchingAtomType(mol, testedAtom); 
+        	assertAtomType(testedAtomTypes, expectedTypes[i], foundType);
+        	// test for bug #1890702: configure, and then make sure the same atom type is perceived
+        	AtomTypeManipulator.configure(testedAtom, foundType);
+        	IAtomType secondType = atm.findMatchingAtomType(mol, testedAtom);
+        	assertAtomType(testedAtomTypes, 
+        		"Incorrect perception *after* assigning atom type properties.",
+        		expectedTypes[i], secondType
+        	);
+        }
+	}
 
-		Assert.assertNotNull("No atom type percieved! Expected atom type: " + expectedID, foundAtomType);
-		Assert.assertEquals(expectedID, foundAtomType.getAtomTypeName());
+	public void assertAtomType(Map<String, Integer> testedAtomTypes, String expectedID, IAtomType foundAtomType) {
+		this.assertAtomType(
+			testedAtomTypes, 
+			"No atom type percieved! Expected atom type: " + expectedID, 
+			expectedID, foundAtomType
+		);
 	}
 
 	public void assertAtomType(Map<String, Integer> testedAtomTypes, String error, String expectedID, IAtomType foundAtomType) {
