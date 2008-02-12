@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomException;
@@ -37,7 +36,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
-import org.openscience.cdk.smiles.SmilesGenerator;
 
 /**
  * Atom Type matcher... TO BE WRITTEN.
@@ -185,19 +183,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				if (maxBondOrder == CDKConstants.BONDORDER_SINGLE &&
     						atomContainer.getConnectedBondsCount(atom) <= 3) {
     					if (isRingAtom(atom, atomContainer)) {
-    						boolean bothNeighborsSP2 = true;
-    						Iterator<IAtom> atoms = atomContainer.getConnectedAtomsList(atom).iterator();
-    						while (atoms.hasNext() && bothNeighborsSP2) {
-    							IAtom nextAtom = atoms.next();
-    							if (!nextAtom.getSymbol().equals("H")) {
-    								if (nextAtom.getHybridization() != CDKConstants.UNSET && 
-    										nextAtom.getHybridization() != Hybridization.SP2 && 
-    										countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
-    									bothNeighborsSP2 = false;
-    								}
-    							}
-    						}
-    						if (bothNeighborsSP2) {
+    						if (bothNeighborsAreSp2(atom, atomContainer)) {
     							IAtomType type = getAtomType("C.minus.planar");
         						if (isAcceptable(atom, atomContainer, type)) return type;
     						}
@@ -340,7 +326,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		IAtom nextAtom = atoms.next();
     		if (!nextAtom.getSymbol().equals("H")) {
     			if (nextAtom.getHybridization() != CDKConstants.UNSET &&
-    					nextAtom.getHybridization() == Hybridization.SP2) {
+    				nextAtom.getHybridization() == Hybridization.SP2) {
     				// OK, it's SP2
     				count++;
     			} else if (countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
@@ -370,10 +356,16 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				// but an sp2 hyb N might N.sp2 or N.planar3 (pyrrole), so check for the latter
     				int hcount = atom.getHydrogenCount() == null ? 0 : atom.getHydrogenCount();
     				boolean isRingAtom = isRingAtom(atom, atomContainer);
-    				if (isRingAtom && atomContainer.getConnectedAtomsCount(atom) + hcount == 3 &&
+    				if (isRingAtom &&
     					bothNeighborsAreSp2(atom, atomContainer)) {
-    					IAtomType type = getAtomType("N.planar3");
-        				if (isAcceptable(atom, atomContainer, type)) return type;
+    					if (atomContainer.getConnectedAtomsCount(atom) + hcount == 3) {
+    						IAtomType type = getAtomType("N.planar3");
+    						if (isAcceptable(atom, atomContainer, type)) return type;
+    					} else if (atomContainer.getConnectedAtomsCount(atom) + hcount == 2 &&
+    							   atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
+    						IAtomType type = getAtomType("N.planar3");
+    						if (isAcceptable(atom, atomContainer, type)) return type;
+    					}
     				} else if (!isRingAtom && isAmide(atom, atomContainer)) {
 						IAtomType type = getAtomType("N.amide");
 						if (isAcceptable(atom, atomContainer, type)) return type;
