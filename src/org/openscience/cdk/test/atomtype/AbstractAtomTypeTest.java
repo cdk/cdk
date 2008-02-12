@@ -50,12 +50,15 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
         for (int i=0; i<expectedTypes.length; i++) {
         	IAtom testedAtom = mol.getAtom(i);
         	IAtomType foundType = atm.findMatchingAtomType(mol, testedAtom); 
-        	assertAtomType(testedAtomTypes, expectedTypes[i], foundType);
+        	assertAtomType(testedAtomTypes, 
+        		"Incorrect perception for atom " + i,
+        		expectedTypes[i], foundType
+        	);
         	// test for bug #1890702: configure, and then make sure the same atom type is perceived
         	AtomTypeManipulator.configure(testedAtom, foundType);
         	IAtomType secondType = atm.findMatchingAtomType(mol, testedAtom);
         	assertAtomType(testedAtomTypes, 
-        		"Incorrect perception *after* assigning atom type properties.",
+        		"Incorrect perception *after* assigning atom type properties for atom " + i,
         		expectedTypes[i], secondType
         	);
         }
@@ -63,9 +66,7 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 
 	public void assertAtomType(Map<String, Integer> testedAtomTypes, String expectedID, IAtomType foundAtomType) {
 		this.assertAtomType(
-			testedAtomTypes, 
-			"No atom type percieved! Expected atom type: " + expectedID, 
-			expectedID, foundAtomType
+			testedAtomTypes, "", expectedID, foundAtomType
 		);
 	}
 
