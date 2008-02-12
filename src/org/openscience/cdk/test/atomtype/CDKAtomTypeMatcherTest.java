@@ -396,7 +396,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     @Test public void testAdenine() throws Exception {
     	IMolecule mol = MoleculeFactory.makeAdenine();
         String[] expectedTypes = {"C.sp2", "C.sp2", "C.sp2", "N.sp2", "N.sp2", "N.planar3",
-        	"N.sp2", "N.sp2", "C.sp2", "C.sp2"
+        	"N.sp2", "N.sp3", "C.sp2", "C.sp2"
         };        
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
@@ -975,7 +975,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	ferrocene.addBond(6,7,CDKConstants.BONDORDER_SINGLE);
     	ferrocene.addBond(7,8,CDKConstants.BONDORDER_DOUBLE);
     	ferrocene.addBond(8,9,CDKConstants.BONDORDER_SINGLE);
-    	ferrocene.addBond(0,9,CDKConstants.BONDORDER_SINGLE);
+    	ferrocene.addBond(9,5,CDKConstants.BONDORDER_SINGLE);
 
     	String[] expectedTypes = new String[]{
     		"C.sp2","C.sp2","C.sp2","C.sp2","C.minus.planar",
@@ -1481,7 +1481,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	mol.addBond(1,3, IBond.Order.DOUBLE);
     	mol.addBond(1,4, IBond.Order.SINGLE);
 
-    	String[] expectedTypes = {"C.sp3", "S.only", "O.sp2", "O.sp2", "O.minus", "Na.plus"}; 
+    	String[] expectedTypes = {"C.sp3", "S.onyl", "O.sp2", "O.sp2", "O.minus", "Na.plus"}; 
     	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
