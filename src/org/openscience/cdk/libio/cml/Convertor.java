@@ -25,6 +25,7 @@
 package org.openscience.cdk.libio.cml;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OptionalDataException;
@@ -54,6 +55,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
@@ -77,7 +79,6 @@ import org.xmlcml.cml.element.CMLReactionList;
 import org.xmlcml.cml.element.CMLScalar;
 import org.xmlcml.cml.element.CMLSubstance;
 import org.xmlcml.cml.element.CMLSubstanceList;
-
 /**
  * @cdk.module       libiocml
  * @cdk.svnrev  $Revision$
@@ -384,6 +385,22 @@ public class Convertor {
             cmlMolecule.addAtom(cmlAtom, false);
        	}
         return cmlMolecule;
+    }
+    public IMolecule cmlMoleculeTocdkAtomContainer(CMLMolecule mol) throws Exception {
+        String cmlString = "<!-- failed -->";
+        cmlString = mol.toXML();
+        
+        IMolecule roundTrippedMol = null;
+        logger.debug("CML string: ", cmlString);
+        CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
+
+        IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        IChemSequence sequence = file.getChemSequence(0);
+        IChemModel chemModel = sequence.getChemModel(0);
+        IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
+        roundTrippedMol = moleculeSet.getMolecule(0);
+        
+        return roundTrippedMol;
     }
 
     public CMLMolecule cdkMoleculeToCMLMolecule(IMolecule structure) {
