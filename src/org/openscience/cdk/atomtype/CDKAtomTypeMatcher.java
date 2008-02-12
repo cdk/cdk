@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomException;
@@ -36,6 +37,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.smiles.SmilesGenerator;
 
 /**
  * Atom Type matcher... TO BE WRITTEN.
@@ -367,12 +369,15 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			} else if (atom.getHybridization() == Hybridization.SP2) {
     				// but an sp2 hyb N might N.sp2 or N.planar3 (pyrrole), so check for the latter
     				int hcount = atom.getHydrogenCount() == null ? 0 : atom.getHydrogenCount();
-    				if (isRingAtom(atom, atomContainer) &&
-    						atomContainer.getConnectedAtomsCount(atom) + hcount == 3 &&
-    						bothNeighborsAreSp2(atom, atomContainer)) {
+    				boolean isRingAtom = isRingAtom(atom, atomContainer);
+    				if (isRingAtom && atomContainer.getConnectedAtomsCount(atom) + hcount == 3 &&
+    					bothNeighborsAreSp2(atom, atomContainer)) {
     					IAtomType type = getAtomType("N.planar3");
         				if (isAcceptable(atom, atomContainer, type)) return type;
-    				}
+    				} else if (!isRingAtom && isAmide(atom, atomContainer)) {
+						IAtomType type = getAtomType("N.amide");
+						if (isAcceptable(atom, atomContainer, type)) return type;
+					}
     				IAtomType type = getAtomType("N.sp2");
     				if (isAcceptable(atom, atomContainer, type)) return type;
     			} else if (atom.getHybridization() == Hybridization.SP3) {
@@ -440,7 +445,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     					}
     					List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
     					if (bonds.get(0).getFlag(CDKConstants.ISAROMATIC) &&
-    							bonds.get(1).getFlag(CDKConstants.ISAROMATIC)) {
+    						bonds.get(1).getFlag(CDKConstants.ISAROMATIC)) {
     						IAtomType type = getAtomType("N.sp2");
     						if (isAcceptable(atom, atomContainer, type)) return type;
     					} else {
@@ -519,13 +524,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		List<IBond> neighbors = atomContainer.getConnectedBondsList(atom);
     		int neighborcount = neighbors.size();
     		if (atom.getHybridization() != CDKConstants.UNSET &&
-    				(atom.getFormalCharge() == CDKConstants.UNSET ||
-    				 atom.getFormalCharge() != 0)) {
-    			if (atom.getHybridization() == Hybridization.SP2 &&
-    				atom.getFormalCharge() == +1) {
-    				IAtomType type = getAtomType("S.plus");
-    				if (isAcceptable(atom, atomContainer, type)) return type;
-    			}
+    			atom.getHybridization() == Hybridization.SP2 &&
+    			atom.getFormalCharge() != CDKConstants.UNSET &&
+    		    atom.getFormalCharge() == +1) {
+    		    IAtomType type = getAtomType("S.plus");
+    		    if (isAcceptable(atom, atomContainer, type)) return type;
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
     		  		   atom.getFormalCharge() != 0) {
     			if (atom.getFormalCharge() == -1 &&
