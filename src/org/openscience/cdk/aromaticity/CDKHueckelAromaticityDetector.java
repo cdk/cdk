@@ -75,7 +75,7 @@ public class CDKHueckelAromaticityDetector {
 			IAtomContainer isolatedSystem = isolatedRingSystems.next();
 			IRingSet singleRings = new SSSRFinder(isolatedSystem).findSSSR();
 			Iterator<IAtomContainer> singleRingsIterator = singleRings.atomContainers();
-			int maxRingSize = 0;
+			int maxRingSize = 20;
 			boolean atLeastOneRingIsSprouted = false;
 			// test single rings in SSSR
 			while (singleRingsIterator.hasNext()) {
@@ -91,14 +91,14 @@ public class CDKHueckelAromaticityDetector {
 			}
 			// OK, what about the one larger ring (if no aromaticity found in SSSR)?
 			if (!foundSomeAromaticity && !atLeastOneRingIsSprouted &&
-				singleRings.getAtomContainerCount() == 2) {
+				singleRings.getAtomContainerCount() <= 3) {
 				// every ring system consisting of more than two rings is too difficult
 				Iterator<IAtomContainer> allRingsIterator = new AllRingsFinder().findAllRingsInIsolatedRingSystem(isolatedSystem).atomContainers();
 				while (allRingsIterator.hasNext()) {
 					// there should be exactly three rings, of which only one has a size larger
 					// than the two previous ones
 					IAtomContainer ring = allRingsIterator.next();
-					if (ring.getAtomCount() > maxRingSize) {
+					if (ring.getAtomCount() <= maxRingSize) {
 						// possibly aromatic
 						foundSomeAromaticity |= isRingAllSP2AndHueckelValid(ring);
 					}
@@ -133,6 +133,8 @@ public class CDKHueckelAromaticityDetector {
 				} else if ("S.2".equals(ringAtom.getAtomTypeName())) {
                     electronCount += 2;
 				} else if ("S.planar3".equals(ringAtom.getAtomTypeName())) {
+                    electronCount += 2;
+                } else if ("C.minus.planar".equals(ringAtom.getAtomTypeName())) {
                     electronCount += 2;
                 } else if ("O.planar3".equals(ringAtom.getAtomTypeName())) {
                     electronCount += 2;
