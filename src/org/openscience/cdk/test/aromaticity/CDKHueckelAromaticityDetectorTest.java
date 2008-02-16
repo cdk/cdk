@@ -22,13 +22,25 @@
  */
 package org.openscience.cdk.test.aromaticity;
 
+import java.io.InputStream;
+import java.util.Iterator;
+
+import javax.vecmath.Point2d;
+
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -37,10 +49,6 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import javax.vecmath.Point2d;
-import java.io.InputStream;
-import java.util.Iterator;
 
 /**
  * @author steinbeck
@@ -102,10 +110,26 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
     }
 
     @Test public void testPyridine() throws Exception {
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-
-        IMolecule mol = sp.parseSmiles("c1ccncc1");
+        IMolecule mol = new Molecule();
+        mol.addAtom(new Atom("N"));
+        mol.addAtom(new Atom("C"));
+        mol.addBond(0,1,IBond.Order.SINGLE);
+        mol.addAtom(new Atom("C"));
+        mol.addBond(1,2,IBond.Order.DOUBLE);
+        mol.addAtom(new Atom("C"));
+        mol.addBond(2,3,IBond.Order.SINGLE);
+        mol.addAtom(new Atom("C"));
+        mol.addBond(3,4,IBond.Order.DOUBLE);
+        mol.addAtom(new Atom("C"));
+        mol.addBond(4,5,IBond.Order.SINGLE);
+        mol.addBond(0,5,IBond.Order.DOUBLE);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+        Iterator<IAtom> atoms = mol.atoms();
+        while (atoms.hasNext()) {
+        	Assert.assertTrue(atoms.next().getFlag(CDKConstants.ISAROMATIC));
+        }
 
         IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
         int numberOfAromaticRings = 0;
@@ -116,7 +140,26 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
         }
         Assert.assertEquals(1, numberOfAromaticRings);
     }
-    
+
+    @Test public void testCyclopentadienyl() throws Exception {
+        IMolecule mol = new Molecule();
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(0).setFormalCharge(-1);
+        for (int i=1; i<5; i++) {
+        	mol.addAtom(new Atom("C"));
+        	mol.getAtom(i).setHybridization(IAtomType.Hybridization.SP2);
+        	mol.addBond(i-1,i, IBond.Order.SINGLE);
+        }
+        mol.addBond(0,4,IBond.Order.SINGLE);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+        Iterator<IAtom> atoms = mol.atoms();
+        while (atoms.hasNext()) {
+        	Assert.assertTrue(atoms.next().getFlag(CDKConstants.ISAROMATIC));
+        }
+    }
+
     @Test public void testPyridineOxide() throws Exception {
 		Molecule molecule = MoleculeFactory.makePyridineOxide();
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
