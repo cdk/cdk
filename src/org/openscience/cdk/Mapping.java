@@ -48,7 +48,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
+     * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
 	 */
@@ -99,7 +99,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
     }
     
     /**
-     * Retrieve the first or second of the related IChemObjects.
+     * Retrieves the first or second of the related IChemObjects.
      * 
      * @param   pos  The position of the IChemObject.
      * @return  The IChemObject to retrieve.

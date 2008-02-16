@@ -53,7 +53,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
+     * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
 	 */
@@ -113,7 +113,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * Returns the atomic number of this element.
      * 
 	 *  <p>Once instantiated all field not filled by passing parameters
-	 * to the constructured are null. Elements can be configured by using
+	 * to the constructor are null. Elements can be configured by using
 	 * the IsotopeFactory.configure() method:
 	 * <pre>
 	 *   Element element = new Element("C");
@@ -180,10 +180,10 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
     }
 
     /**
-     * Compare an Element with this Element.
+     * Compares an Element with this Element.
      *
      * @param  object Object of type AtomType
-     * @return        Return true, if the atomtypes are equal
+     * @return        true if the atom types are equal
      */
     public boolean compare(Object object) {
         if (!(object instanceof Element)) {

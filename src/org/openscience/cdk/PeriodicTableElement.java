@@ -42,7 +42,7 @@ public class PeriodicTableElement extends Element
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
+     * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
 	 */
@@ -53,12 +53,12 @@ public class PeriodicTableElement extends Element
 	/** The name for this element. */
 	protected String name;
 	
-	/** The chemical serie for this element. 
+	/** The chemical series for this element. 
 	*  A chemical series is a group of chemical elements whose physical and 
 	*    chemical characteristics vary progressively from one end of the series 
 	*    to another.
 	*  Chemical series were discovered before the creation of the periodic 
-	*    table of the chemical elements, which was created to try to organise 
+	*    table of the chemical elements, which was created to try to organize 
 	*    the elements according to their chemical properties. 
 	*/
 	protected String chemicalSerie;
@@ -125,9 +125,9 @@ public class PeriodicTableElement extends Element
 	}
 
 	/**
-	* Returns the chemical serie of this element.
+	* Returns the chemical series of this element.
 	*
-	* @return The chemical serie of this element. Null if unset.
+	* @return The chemical series of this element. Null if unset.
 	*
 	* @see    #setChemicalSerie
 	*/
@@ -137,9 +137,9 @@ public class PeriodicTableElement extends Element
 	}
 
 	/**
-	* Sets the chemical serie of this element.
+	* Sets the chemical series of this element.
 	*
-	* @param chemicalSerie The chemical serie to be assigned to this element
+	* @param chemicalSerie The chemical series to be assigned to this element
 	*
 	* @see    #getChemicalSerie
 	*/
@@ -162,7 +162,7 @@ public class PeriodicTableElement extends Element
 	}
 	
 	/**
-	* Sets the chemical serie of this element.
+	* Sets the chemical series of this element.
 	*
 	* @param period The period to be assigned to this element
 	*

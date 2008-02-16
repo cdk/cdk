@@ -52,7 +52,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
+     * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
 	 */
@@ -359,7 +359,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 *  Compares a bond with this bond.
 	 *
 	 *@param  object  Object of type Bond
-	 *@return         Return true, if the bond is equal to this bond
+	 *@return         true if the bond is equal to this bond
 	 */
 	public boolean compare(Object object)
 	{
@@ -383,11 +383,11 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 
 
 	/**
-	 * Checks wether a bond is connected to another one.
+	 * Checks whether a bond is connected to another one.
 	 * This can only be true if the bonds have an Atom in common.
 	 *
 	 * @param  bond  The bond which is checked to be connect with this one
-	 * @return       True, if the bonds share an atom, otherwise false
+	 * @return       true if the bonds share an atom, otherwise false
 	 */
 	public boolean isConnectedTo(IBond bond)
 	{

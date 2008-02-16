@@ -63,7 +63,7 @@ public class ConformerContainer implements List<IAtomContainer> {
      * {@link #add} method.
      * <p/>
      * Note that the constructor will use the title of the input molecule
-     * when adding new molecles as conformers. That is, the title of any molecule
+     * when adding new molecules as conformers. That is, the title of any molecule
      * to be added as a conformer should match the title of the input molecule.
      *
      * @param atomContainer The base molecule (or first conformer).
@@ -78,7 +78,7 @@ public class ConformerContainer implements List<IAtomContainer> {
     /**
      * Create a ConformerContainer from an array of molecules.
      * <p/>
-     * Ths constructor can be used when you have an array of conformers of a given
+     * This constructor can be used when you have an array of conformers of a given
      * molecule. Note that this constructor will assume that all molecules in the
      * input array will have the same title.
      *
@@ -138,7 +138,7 @@ public class ConformerContainer implements List<IAtomContainer> {
      * <p/>
      * This method first checks whether the title of the supplied molecule
      * matches the stored title. If not, it returns false. If the title matches
-     * it then checks all the coodinates to see whether they match. If all
+     * it then checks all the coordinates to see whether they match. If all
      * coordinates match it returns true else false.
      *
      * @param o The IAtomContainer to check for
@@ -152,7 +152,7 @@ public class ConformerContainer implements List<IAtomContainer> {
      * Gets an iterator over the conformers.
      *
      * @return an iterator over the conformers. Each iteration will return an IAtomContainer object
-     *         correpsonding to the current conformer.
+     *         corresponding to the current conformer.
      */
     public Iterator<IAtomContainer> iterator() {
         return new CCIterator();
@@ -326,7 +326,7 @@ public class ConformerContainer implements List<IAtomContainer> {
      * <p/>
      * A given IAtomContainer will occur in the list if the title matches the stored title for
      * the conformers in this container and if the coordinates for each atom in the specified molecule
-     * are equal to the coordinates of the correpsonding atoms in a conformer.
+     * are equal to the coordinates of the corresponding atoms in a conformer.
      *
      * @param o The IAtomContainer whose presence is being tested
      * @return The index where o was found
@@ -359,7 +359,7 @@ public class ConformerContainer implements List<IAtomContainer> {
      * <p/>
      * A given IAtomContainer will occur in the list if the title matches the stored title for
      * the conformers in this container and if the coordinates for each atom in the specified molecule
-     * are equal to the coordinates of the correpsonding atoms in a conformer.
+     * are equal to the coordinates of the corresponding atoms in a conformer.
      *
      * @param o The IAtomContainer whose presence is being tested
      * @return The index where o was found

@@ -53,7 +53,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
+     * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
 	 */
@@ -64,12 +64,12 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	 */
 	IBond.Order maxBondOrder = null;
 	/**
-	 *  The maximum sum of all bondorders allowed for this atom type.
+	 *  The maximum sum of all bond orders allowed for this atom type.
 	 */
 	Double bondOrderSum = (Double) CDKConstants.UNSET;
 
     /**
-     * The Vanderwaals radius of this atom type.
+     * The van der Waals radius of this atom type.
      */
     Double vanderwaalsRadius = (Double) CDKConstants.UNSET;
     /**
@@ -138,7 +138,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	 * number from the given IIsotope. It does not copy the
 	 * listeners and properties. If the element is an instanceof
 	 * IAtomType, then the maximum bond order, bond order sum,
-	 * vanderwaals and covalent radii, formal charge, hybridization,
+	 * van der Waals and covalent radii, formal charge, hybridization,
 	 * electron valency, formal neighbour count and atom type name
 	 * are copied too.
 	 * 
@@ -309,10 +309,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
     
     /**
-     * Compare a atom type with this atom type.
+     * Compares a atom type with this atom type.
      *
      * @param  object Object of type AtomType
-     * @return        Return true, if the atomtypes are equal
+     * @return        true if the atom types are equal
      */
     public boolean compare(Object object) {
         if (!(object instanceof IAtomType)) {
@@ -328,9 +328,9 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
     
     /**
-     * Sets the Vanderwaals radius for this AtomType.
+     * Sets the van der Waals radius for this AtomType.
      *
-     * @param radius The Vanderwaals radius for this AtomType
+     * @param radius The van der Waals radius for this AtomType
      * @see   #getVanderwaalsRadius
      */
     public void setVanderwaalsRadius(Double radius) {
@@ -339,9 +339,9 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     }
     
     /**
-     * Returns the Vanderwaals radius for this AtomType.
+     * Returns the van der waals radius for this AtomType.
      *
-     * @return The Vanderwaals radius for this AtomType
+     * @return The van der Waals radius for this AtomType
      * @see    #setVanderwaalsRadius
      */
     public Double getVanderwaalsRadius() {

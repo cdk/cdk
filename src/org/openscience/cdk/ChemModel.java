@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.*;
 import java.io.Serializable;
 
 /** 
- * An object containig multiple MoleculeSet and 
+ * An object containing multiple MoleculeSet and 
  * the other lower level concepts like rings, sequences, 
  * fragments, etc.
  *
@@ -43,7 +43,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
+     * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
 	 */

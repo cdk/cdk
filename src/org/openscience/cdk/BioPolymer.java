@@ -132,7 +132,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	}
 	
 	/**
-	 * Return the number of monomers present in BioPolymer.
+	 * Returns the number of monomers present in BioPolymer.
 	 *
 	 * @return number of monomers
 	 */
@@ -148,7 +148,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	}
 	
 	/**
-	 * Retrieve a Monomer object by specifying its name. [You have to specify the strand to enable
+	 * Retrieves a Monomer object by specifying its name. [You have to specify the strand to enable
 	 * monomers with the same name in different strands. There is at least one such case: every
 	 * strand contains a monomer called "".]
 	 *
@@ -204,7 +204,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	
 	/**
 	 *
-	 * Return the number of strands present in the BioPolymer.
+	 * Returns the number of strands present in the BioPolymer.
 	 *
 	 * @return number of strands
 	 *
@@ -215,7 +215,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
 	
 	/**
 	 *
-	 * Retrieve a Monomer object by specifying its name.
+	 * Retrieves a Monomer object by specifying its name.
 	 *
 	 * @param cName  The name of the monomer to look for
 	 * @return The Monomer object which was asked for

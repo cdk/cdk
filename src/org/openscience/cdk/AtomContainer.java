@@ -66,7 +66,7 @@ public class AtomContainer extends ChemObject
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
+     * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
 	 */
@@ -93,7 +93,7 @@ public class AtomContainer extends ChemObject
 	protected int singleElectronCount;
 	
 	/**
-	 *  Amount by which the bond and arom arrays grow when elements are added and
+	 *  Amount by which the bond and atom arrays grow when elements are added and
 	 *  the arrays are not large enough for that.
 	 */
 	protected int growArraySize = 10;
@@ -272,7 +272,7 @@ public class AtomContainer extends ChemObject
 
 
 	/**
-	 *  Set the atom at position <code>number</code> in [0,..].
+	 *  Sets the atom at position <code>number</code> in [0,..].
 	 *
 	 *@param  number  The position of the atom to be set.
 	 *@param  atom    The atom to be stored at position <code>number</code>
@@ -662,11 +662,11 @@ public class AtomContainer extends ChemObject
 
 
 	/**
-	 * Returns the bond that connectes the two given atoms.
+	 * Returns the bond that connects the two given atoms.
 	 *
 	 * @param  atom1  The first atom
 	 * @param  atom2  The second atom
-	 * @return        The bond that connectes the two atoms
+	 * @return        The bond that connects the two atoms
 	 */
 	public IBond getBond(IAtom atom1, IAtom atom2)
 	{
@@ -894,7 +894,7 @@ public class AtomContainer extends ChemObject
 	 * Returns the sum of the bond orders for a given Atom.
 	 *
 	 * @param  atom  The atom
-	 * @return       The number of bondorders for this atom
+	 * @return       The number of bond orders for this atom
 	 * 
 	 * @deprecated
 	 */
@@ -942,7 +942,7 @@ public class AtomContainer extends ChemObject
 	 *  of this AtomContainer.
 	 *
 	 *@param  atom  The atom
-	 *@return       The minimim bond order that this atom currently has
+	 *@return       The minimum bond order that this atom currently has
 	 */
 	public Order getMinimumBondOrder(IAtom atom)
 	{
@@ -1130,7 +1130,7 @@ public class AtomContainer extends ChemObject
 	
 	/**
 	 *  Removes the given atom from the AtomContainer. Note that the
-	 *  electronContainers are unaffected: you also have to take care of removeing
+	 *  electronContainers are unaffected: you also have to take care of removing
 	 *  all electronContainers to this atom from the container.
 	 *
 	 *@param  atom  The atom to be removed
@@ -1168,7 +1168,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 * @param  atom1  The first atom
 	 * @param  atom2  The second atom
-	 * @return        The bond that connectes the two atoms
+	 * @return        The bond that connects the two atoms
 	 */
 	public IBond removeBond(IAtom atom1, IAtom atom2)
 	{
@@ -1443,7 +1443,7 @@ public class AtomContainer extends ChemObject
 	 *  True, if the AtomContainer contains the given atom object.
 	 *
 	 *@param  atom  the atom this AtomContainer is searched for
-	 *@return       True, if the AtomContainer contains the given atom object
+	 *@return       true if the AtomContainer contains the given atom object
 	 */
 	public boolean contains(IAtom atom)
 	{
@@ -1458,7 +1458,7 @@ public class AtomContainer extends ChemObject
 	 *  True, if the AtomContainer contains the given bond object.
 	 *
 	 *@param  bond  the bond this AtomContainer is searched for
-	 *@return       True, if the AtomContainer contains the given bond object
+	 *@return       true if the AtomContainer contains the given bond object
 	 */
 	public boolean contains(IBond bond)
 	{
@@ -1473,7 +1473,7 @@ public class AtomContainer extends ChemObject
 	 *  True, if the AtomContainer contains the given LonePair object.
 	 *
 	 *@param  lonePair  the LonePair this AtomContainer is searched for
-	 *@return           True, if the AtomContainer contains the given LonePair object
+	 *@return           true if the AtomContainer contains the given LonePair object
 	 */
 	public boolean contains(ILonePair lonePair)
 	{
@@ -1488,7 +1488,7 @@ public class AtomContainer extends ChemObject
 	 *  True, if the AtomContainer contains the given SingleElectron object.
 	 *
 	 *@param  singleElectron  the LonePair this AtomContainer is searched for
-	 *@return           True, if the AtomContainer contains the given LonePair object
+	 *@return           true if the AtomContainer contains the given LonePair object
 	 */
 	public boolean contains(ISingleElectron singleElectron)
 	{
@@ -1503,7 +1503,7 @@ public class AtomContainer extends ChemObject
 	 *  True, if the AtomContainer contains the given ElectronContainer object.
 	 *
 	 *@param  electronContainer ElectronContainer that is searched for
-	 *@return                   True, if the AtomContainer contains the given bond object
+	 *@return                   true if the AtomContainer contains the given bond object
 	 */
 	public boolean contains(IElectronContainer electronContainer)
 	{

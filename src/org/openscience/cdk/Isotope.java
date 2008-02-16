@@ -47,7 +47,7 @@ import java.io.Serializable;
  * </pre>
  * 
  * <p>Once instantiated all field not filled by passing parameters
- * to the constructured are null. Isotopes can be configured by using
+ * to the constructor are null. Isotopes can be configured by using
  * the IsotopeFactory.configure() method:
  * <pre>
  *   Isotope isotope = new Isotope("C", 13);
@@ -70,7 +70,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
+     * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
 	 */
@@ -181,7 +181,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 	 *  Gets the NaturalAbundance attribute of the Isotope object.
 	 *  
 	 *  <p>Once instantiated all field not filled by passing parameters
-	 * to the constructured are null. Isotopes can be configured by using
+	 * to the constructor are null. Isotopes can be configured by using
 	 * the IsotopeFactory.configure() method:
 	 * <pre>
 	 *   Isotope isotope = new Isotope("C", 13);
@@ -202,7 +202,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 	/**
 	 *  Gets the ExactMass attribute of the Isotope object.
 	 *  <p>Once instantiated all field not filled by passing parameters
-	 * to the constructured are null. Isotopes can be configured by using
+	 * to the constructor are null. Isotopes can be configured by using
 	 * the IsotopeFactory.configure() method:
 	 * <pre>
 	 *   Isotope isotope = new Isotope("C", 13);
@@ -223,7 +223,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      * Returns the atomic mass of this element.
      * 
      * <p>Once instantiated all field not filled by passing parameters
-	 * to the constructured are null. Isotopes can be configured by using
+	 * to the constructor are null. Isotopes can be configured by using
 	 * the IsotopeFactory.configure() method:
 	 * <pre>
 	 *   Isotope isotope = new Isotope("C", 13);
@@ -269,10 +269,10 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 	}
     
     /**
-     * Compare a atom type with this atom type.
+     * Compares a atom type with this atom type.
      *
      * @param  object Object of type AtomType
-     * @return        Return true, if the atomtypes are equal
+     * @return        true if the atom types are equal
      */
     public boolean compare(Object object) {
         if (!(object instanceof Isotope)) {

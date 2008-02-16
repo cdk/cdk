@@ -48,7 +48,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
+     * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
 	 */
@@ -61,7 +61,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
 
 	/**
 	 *
-	 * Contructs a new Monomer.
+	 * Constructs a new Monomer.
 	 *
 	 */	
 	public Monomer () {
@@ -70,7 +70,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
 	
 	/**
 	 *
-	 * Retrieve the monomer name.
+	 * Retrieves the monomer name.
 	 *
 	 * @return The name of the Monomer object
 	 *
@@ -82,7 +82,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
 
 	/**
 	 *
-	 * Retrieve the monomer type.
+	 * Retrieves the monomer type.
 	 *
 	 * @return The type of the Monomer object
 	 *
@@ -94,7 +94,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
 	
 	/**
 	 *
-	 * Set the name of the Monomer object.
+	 * Sets the name of the Monomer object.
 	 *
 	 * @param cMonomerName  The new name for this monomer
 	 *
@@ -107,7 +107,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
 	
 	/**
 	 *
-	 * Set the type of the Monomer object.
+	 * Sets the type of the Monomer object.
 	 *
 	 * @param cMonomerType  The new type for this monomer
 	 *

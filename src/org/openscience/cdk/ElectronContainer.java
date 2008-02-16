@@ -45,7 +45,7 @@ public class ElectronContainer extends ChemObject implements Serializable, IElec
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
+     * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
 	 */
@@ -75,7 +75,7 @@ public class ElectronContainer extends ChemObject implements Serializable, IElec
 
 
 	/**
-	 * Sets the number of electorn in this electron container.
+	 * Sets the number of electrons in this electron container.
 	 *
 	 * @param   electronCount The number of electrons in this electron container.
      *

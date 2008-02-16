@@ -113,35 +113,35 @@ public class CDKConstants {
      *  with three p orbitals with five d orbitals. */
     public final static int HYBRIDIZATION_SP3D5 = 8;
     /** 
-     * Carbon NMR shift contant for use as a key in the
+     * Carbon NMR shift constant for use as a key in the
      * IChemObject.physicalProperties hashtable.
      * @see org.openscience.cdk.ChemObject
      */
     public final static String NMRSHIFT_CARBON = "carbon nmr shift";
-    /** Hydrogen NMR shift contant for use as a key in the
+    /** Hydrogen NMR shift constant for use as a key in the
      * IChemObject.physicalProperties hashtable.
      * @see org.openscience.cdk.ChemObject
      */
     public final static String NMRSHIFT_HYDROGEN = "hydrogen nmr shift";
-    /** Nitrogen NMR shift contant for use as a key in the
+    /** Nitrogen NMR shift constant for use as a key in the
      * IChemObject.physicalProperties hashtable.
      * @see org.openscience.cdk.ChemObject
      */
     public final static String NMRSHIFT_NITROGEN = "nitrogen nmr shift";
 
-    /** Phosphorus NMR shift contant for use as a key in the
+    /** Phosphorus NMR shift constant for use as a key in the
      * IChemObject.physicalProperties hashtable.
      * @see org.openscience.cdk.ChemObject
      */
     public final static String NMRSHIFT_PHOSPORUS = "phosphorus nmr shift";
 
-    /** Fluorine NMR shift contant for use as a key in the
+    /** Fluorine NMR shift constant for use as a key in the
      * IChemObject.physicalProperties hashtable.
      * @see org.openscience.cdk.ChemObject
      */
     public final static String NMRSHIFT_FLUORINE = "fluorine nmr shift";
 
-    /** Deuterium NMR shift contant for use as a key in the
+    /** Deuterium NMR shift constant for use as a key in the
      * IChemObject.physicalProperties hashtable.
      * @see org.openscience.cdk.ChemObject
      */
@@ -163,7 +163,7 @@ public class CDKConstants {
     /** Flag that is set when the chemobject is part of a ring.
      */
     public final static int ISNOTINRING = 2;
-    /** Flag that is set if a chemobject is part of an alipahtic chain.
+    /** Flag that is set if a chemobject is part of an aliphatic chain.
      */
     public final static int ISALIPHATIC = 3;
     /** Flag is set if chemobject has been visited.
@@ -178,9 +178,9 @@ public class CDKConstants {
      */
     public final static int MAPPED = 7;
 
-    /** Set to true if the atom is an hydrogen bond donor. */
+    /** Sets to true if the atom is an hydrogen bond donor. */
     public final static int IS_HYDROGENBOND_DONOR = 8;
-    /** Set to true if the atom is an hydrogen bond acceptor. */
+    /** Sets to true if the atom is an hydrogen bond acceptor. */
     public final static int IS_HYDROGENBOND_ACCEPTOR = 9;
         
     /** Flag is set if a chemobject has reactive center.

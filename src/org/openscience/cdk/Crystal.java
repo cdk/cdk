@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.ICrystal;
  * The crystal is described with molecules in fractional
  * coordinates and three cell axes: a,b and c.
  *
- * <p>The crystal is designed to store only the asymetric atoms.
+ * <p>The crystal is designed to store only the asymmetric atoms.
  * Though this is not enforced, it is assumed by all methods.
  *
  * @cdk.module data
@@ -49,7 +49,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
+     * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide/serialization/spec/version.doc.html>details</a>.
 	 */
 	private static final long serialVersionUID = 5919649450390509278L;
@@ -91,8 +91,8 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     }
 
     /**
-     * Sets the A unit cell axes in carthesian coordinates in a 
-     * eucledian space.
+     * Sets the A unit cell axes in Cartesian coordinates in a 
+     * Euclidean space.
      *
      * @param  newAxis the new A axis
      *
@@ -104,7 +104,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     }
 
     /**
-     * Gets the A unit cell axes in carthesian coordinates
+     * Gets the A unit cell axes in Cartesian coordinates
      * as a three element double array.
      *
      * @return a Vector3D representing the A axis
@@ -116,7 +116,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     }
 
     /**
-     * Sets the B unit cell axes in carthesian coordinates.
+     * Sets the B unit cell axes in Cartesian coordinates.
      *
      * @param  newAxis the new B axis
      *
@@ -128,7 +128,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     }
 
     /**
-     * Gets the B unit cell axes in carthesian coordinates
+     * Gets the B unit cell axes in Cartesian coordinates
      * as a three element double array.
      *
      * @return a Vector3D representing the B axis
@@ -140,7 +140,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     }
 
     /**
-     * Sets the C unit cell axes in carthesian coordinates.
+     * Sets the C unit cell axes in Cartesian coordinates.
      *
      * @param  newAxis the new C axis
      *
@@ -152,7 +152,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     }
 
     /**
-     * Gets the C unit cell axes in carthesian coordinates
+     * Gets the C unit cell axes in Cartesian coordinates
      * as a three element double array.
      *
      * @return a Vector3D representing the C axis
@@ -189,7 +189,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     /**
      * Gets the number of asymmetric parts in the unit cell.
      *
-     * @return the number of assymetric parts in the unit cell
+     * @return the number of asymmetric parts in the unit cell
      * @see    #setZ
      */
     public int getZ() {
@@ -197,9 +197,9 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     }
 
     /**
-     * Sets the number of assymmetric parts in the unit cell.
+     * Sets the number of asymmetric parts in the unit cell.
      *
-     * @param   value the number of assymetric parts in the unit cell
+     * @param   value the number of asymmetric parts in the unit cell
      * @see           #getZ
      */
     public void setZ(int value) {

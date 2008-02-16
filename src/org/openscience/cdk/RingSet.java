@@ -134,7 +134,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 	}
 
 	/**
-	 * Adds all rings of another RingSet if they are not allready part of this ring set.
+	 * Adds all rings of another RingSet if they are not already part of this ring set.
 	 *
 	 * @param   ringSet  the ring set to be united with this one.
 	 */
@@ -150,7 +150,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 	}
 
 	/**
-	 * True, if at least one of the rings in the ringset cotains
+	 * True, if at least one of the rings in the ringset contains
 	 * the given atom.
 	 *
      * @param  atom Atom to check

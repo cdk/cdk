@@ -41,7 +41,7 @@ public interface IImplementationSpecification {
     public String getSpecificationReference();
     
     /**
-     * Human-readble name for the implementation for the algorithm
+     * Human-readable name for the implementation for the algorithm
      * specified by the reference.
      * 
      * @return the name of this implementation
