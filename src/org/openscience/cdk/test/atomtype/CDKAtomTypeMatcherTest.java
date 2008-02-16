@@ -1128,6 +1128,31 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
+    @Test public void testPyridineDirect() throws Exception {
+		String[] expectedTypes = {
+			"N.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2"
+		};
+		IMolecule mol = new Molecule();
+		mol.addAtom(new Atom("N"));
+		mol.addAtom(new Atom("C"));
+		mol.addBond(0,1,IBond.Order.SINGLE);
+		mol.addAtom(new Atom("C"));
+		mol.addBond(1,2,IBond.Order.DOUBLE);
+		mol.addAtom(new Atom("C"));
+		mol.addBond(2,3,IBond.Order.SINGLE);
+		mol.addAtom(new Atom("C"));
+		mol.addBond(3,4,IBond.Order.DOUBLE);
+		mol.addAtom(new Atom("C"));
+		mol.addBond(4,5,IBond.Order.SINGLE);
+		mol.addBond(0,5,IBond.Order.DOUBLE);
+    	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
 	/**
 	 * @cdk.bug 1879589
 	 */
