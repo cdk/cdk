@@ -82,12 +82,8 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         atom.setHybridization(thisHybridization);
         mol.addAtom(atom);
 
-        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
-        IAtomType matched = atm.findMatchingAtomType(mol, atom);
-        Assert.assertNotNull(matched);
-        assertAtomType(testedAtomTypes, "C.sp3", matched);
-
-        Assert.assertEquals(thisHybridization, matched.getHybridization());
+        String[] expectedTypes = {"C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
     @Test public void testDummy() throws Exception {
@@ -95,9 +91,8 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         IAtom atom = new PseudoAtom("R");
         mol.addAtom(atom);
 
-        CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
-        IAtomType matched = atm.findMatchingAtomType(mol, atom);
-        assertAtomType(testedAtomTypes, "X", matched);
+        String[] expectedTypes = {"X"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
     @Test public void testEthene() throws Exception {
