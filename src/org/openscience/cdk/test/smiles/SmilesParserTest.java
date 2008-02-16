@@ -283,7 +283,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 	 */
 	@org.junit.Test (timeout=1000)
 	public void testAromaticSmilesWithCharge() throws Exception {
-		String smiles = "c1cc[c-]cc1";
+		String smiles = "c1cc[c-]c1";
 		IMolecule molecule = sp.parseSmiles(smiles);
 		assertAtomTypesPerceived(molecule);
 		Assert.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
@@ -906,9 +906,16 @@ public class SmilesParserTest extends NewCDKTestCase {
 		Assert.assertEquals(6, mol.getAtomCount());
 		// I can also check whether the total neighbor count around the
 		// nitrogen is 3, all single bonded
-		org.openscience.cdk.interfaces.IAtom nitrogen = mol.getAtom(3);
+		IAtom nitrogen = mol.getAtom(3);
 		// the second atom
 		Assert.assertEquals("N", nitrogen.getSymbol());
+		Iterator<IAtom> atoms = mol.atoms();
+		while (atoms.hasNext()) {
+			Assert.assertEquals(
+				IAtomType.Hybridization.SP2,
+				atoms.next().getHybridization()
+			);
+		}
 	}
 
 	/**
