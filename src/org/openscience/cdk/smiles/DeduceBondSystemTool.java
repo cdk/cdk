@@ -58,6 +58,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module smiles
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.keyword bond order
+ * 
+ * @cdk.bug 1895805
+ * @cdk.bug 1895807
  */
 public class DeduceBondSystemTool {
 
