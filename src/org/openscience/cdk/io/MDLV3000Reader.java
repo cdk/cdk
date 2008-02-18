@@ -204,7 +204,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         while (isReady() && !foundEND) {
             String command = readCommand(readLine());
             if ("END ATOM".equals(command)) {
-                // FIXME: should check wether 3D is really 2D
+                // FIXME: should check whether 3D is really 2D
                 foundEND = true;
             } else {
                 logger.debug("Parsing atom from: " + command);

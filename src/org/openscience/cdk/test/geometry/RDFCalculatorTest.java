@@ -90,10 +90,10 @@ public class RDFCalculatorTest extends CDKTestCase {
         double[] rdf1 = calculator.calculate(h2mol, h1);
         double[] rdf2 = calculator.calculate(h2mol, h2);
 
-        // test wether the double array length is ok
+        // test whether the double array length is ok
         assertEquals(51, rdf1.length);
         
-        // test wether the RDFs are identical
+        // test whether the RDFs are identical
         assertEquals(rdf1.length, rdf2.length);
         for (int i=0; i<rdf1.length; i++) {
             assertEquals(rdf1[i], rdf2[i], 0.00001);
@@ -117,10 +117,10 @@ public class RDFCalculatorTest extends CDKTestCase {
         double[] rdf1 = calculator.calculate(h2mol, h1);
         double[] rdf2 = calculator.calculate(h2mol, h2);
 
-        // test wether the double array length is ok
+        // test whether the double array length is ok
         assertEquals(51, rdf1.length);
         
-        // test wether the RDFs are identical
+        // test whether the RDFs are identical
         assertEquals(rdf1.length, rdf2.length);
         for (int i=0; i<rdf1.length; i++) {
             assertEquals(rdf1[i], rdf2[i], 0.00001);
@@ -146,10 +146,10 @@ public class RDFCalculatorTest extends CDKTestCase {
         double[] rdf1 = calculator.calculate(h2mol, h1);
         double[] rdf2 = calculator.calculate(h2mol, h2);
 
-        // test wether the double array length is ok
+        // test whether the double array length is ok
         assertEquals(51, rdf1.length);
         
-        // test wether the RDFs are identical
+        // test whether the RDFs are identical
         assertEquals(rdf1.length, rdf2.length);
         for (int i=0; i<rdf1.length; i++) {
             assertEquals(rdf1[i], rdf2[i], 0.00001);

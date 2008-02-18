@@ -377,7 +377,7 @@ public class GIMatrix {
     } // method isTriangularInferior()
 
     /**
-     * Verifies wether or not the matrix is diagonal. A diagonal matrix only has elements on its diagonal
+     * Verifies whether or not the matrix is diagonal. A diagonal matrix only has elements on its diagonal
      * and zeros (0) at every other index. The matrix must be square.
      * @return true if the matrix is diagonal
      * @exception BadMatrixFormatException if the matrix is not square

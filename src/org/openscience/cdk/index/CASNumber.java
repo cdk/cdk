@@ -55,7 +55,7 @@ import java.util.regex.Pattern;
 public class CASNumber {
 
     /**
-     * Checks wether the registry number is valid.
+     * Checks whether the registry number is valid.
      *
      * @cdk.keyword CAS number
      * @cdk.keyword validation

@@ -148,7 +148,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
     }
     
     /**
-     * Returns wether a bond is unsaturated. A bond is unsaturated if 
+     * Returns whether a bond is unsaturated. A bond is unsaturated if 
      * <b>all</b> Atoms in the bond are unsaturated.
      */
     public boolean isUnsaturated(IBond bond, IAtomContainer atomContainer) throws CDKException {
@@ -198,7 +198,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
     }
 
     /**
-     * Returns wether a bond is saturated. A bond is saturated if 
+     * Returns whether a bond is saturated. A bond is saturated if 
      * <b>both</b> Atoms in the bond are saturated.
      */
     public boolean isSaturated(IBond bond, IAtomContainer atomContainer) throws CDKException {
@@ -307,7 +307,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
     }
 
     /**
-     * Checks wether an Atom is saturated by comparing it with known AtomTypes.
+     * Checks whether an Atom is saturated by comparing it with known AtomTypes.
      * It returns true if the atom is an PseudoAtom and when the element is not in the list.
      */
 	public boolean isSaturated(IAtom atom, IAtomContainer container) throws CDKException {

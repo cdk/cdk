@@ -298,7 +298,7 @@ public class SaturationCheckerTest extends CDKTestCase {
     }
     
     /**
-     * Tests wether the saturation checker gets a proton right.
+     * Tests whether the saturation checker gets a proton right.
      */
 	public void testIsSaturated_Proton() throws CDKException {
 		// test H+

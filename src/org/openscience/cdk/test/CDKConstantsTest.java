@@ -44,7 +44,7 @@ public class CDKConstantsTest extends NewCDKTestCase {
         Assert.assertFalse(CDKConstants.ISAROMATIC == -1);
     }
     
-    // FIXME: should add a test here that used introspection and test wether there
+    // FIXME: should add a test here that used introspection and test whether there
     // are not constant conflicts
     
 }

@@ -69,7 +69,7 @@ public class AtomContainerTest extends NewCDKTestCase {
     }
 
     /**
-     * Only test wether the atoms are correctly cloned.
+     * Only test whether the atoms are correctly cloned.
      */
 	@Test public void testClone() throws Exception {
         IAtomContainer molecule = builder.newAtomContainer();
@@ -401,7 +401,7 @@ public class AtomContainerTest extends NewCDKTestCase {
         Assert.assertEquals(0, ac.getElectronContainerCount());
         
         
-        // test wether the ElectronContainer is correctly initialized
+        // test whether the ElectronContainer is correctly initialized
         ac.addBond(builder.newBond(builder.newAtom("C"), builder.newAtom("C"), IBond.Order.DOUBLE));
         ac.addLonePair(builder.newLonePair(builder.newAtom("N")));
     }
@@ -413,7 +413,7 @@ public class AtomContainerTest extends NewCDKTestCase {
         Assert.assertEquals(0, container.getAtomCount());
         Assert.assertEquals(0, container.getBondCount());
         
-        // test wether the ElectronContainer is correctly initialized
+        // test whether the ElectronContainer is correctly initialized
         container.addBond(builder.newBond(builder.newAtom("C"), builder.newAtom("C"), IBond.Order.DOUBLE));
         container.addLonePair(builder.newLonePair(builder.newAtom("N")));
     }

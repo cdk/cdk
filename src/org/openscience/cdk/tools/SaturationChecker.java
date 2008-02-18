@@ -145,7 +145,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     }
 
     /**
-     * Returns wether a bond is unsaturated. A bond is unsaturated if 
+     * Returns whether a bond is unsaturated. A bond is unsaturated if 
      * <b>both</b> Atoms in the bond are unsaturated.
      */
     public boolean isUnsaturated(IBond bond, IAtomContainer atomContainer) throws CDKException {
@@ -159,7 +159,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     }
     
     /**
-     * Returns wether a bond is saturated. A bond is saturated if 
+     * Returns whether a bond is saturated. A bond is saturated if 
      * <b>both</b> Atoms in the bond are saturated.
      */
     public boolean isSaturated(IBond bond, IAtomContainer atomContainer) throws CDKException {
@@ -172,7 +172,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     }
     
     /**
-     * Checks wether an Atom is saturated by comparing it with known AtomTypes.
+     * Checks whether an Atom is saturated by comparing it with known AtomTypes.
      */
 	public boolean isSaturated(IAtom atom, IAtomContainer ac) throws CDKException {
 		IAtomType[] atomTypes = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());

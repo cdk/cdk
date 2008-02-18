@@ -423,7 +423,7 @@ public class CMLFragmentsTest extends CDKTestCase {
     }
 
     /**
-     * Tests wether the file is indeed a single molecule file
+     * Tests whether the file is indeed a single molecule file
      */
     private IMolecule checkForSingleMoleculeFile(IChemFile chemFile) {
         return checkForXMoleculeFile(chemFile, 1);

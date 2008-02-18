@@ -168,7 +168,7 @@ public interface IBond extends IElectronContainer {
 	public boolean compare(Object object);
 
 	/**
-	 * Checks wether a bond is connected to another one.
+	 * Checks whether a bond is connected to another one.
 	 * This can only be true if the bonds have an Atom in common.
 	 *
 	 * @param  bond  The bond which is checked to be connect with this one

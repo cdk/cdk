@@ -140,7 +140,7 @@ public class SaturationCheckerTest extends CDKTestCase
 	}
 
     /**
-     * Tests wether the saturation checker considers negative
+     * Tests whether the saturation checker considers negative
      * charges.
      */
 	public void testIsSaturated_NegativelyChargedOxygen() throws CDKException {
@@ -169,7 +169,7 @@ public class SaturationCheckerTest extends CDKTestCase
 	}
     
     /**
-     * Tests wether the saturation checker considers positive
+     * Tests whether the saturation checker considers positive
      * charges.
      */
 	public void testIsSaturated_PositivelyChargedNitrogen() throws CDKException {

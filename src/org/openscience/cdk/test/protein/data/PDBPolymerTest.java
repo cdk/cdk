@@ -345,7 +345,7 @@ public class PDBPolymerTest extends NewCDKTestCase {
 	}
     
     /**
-     * Method to test wether the class complies with RFC #9.
+     * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
     	PDBPolymer pdbPolymer = new PDBPolymer();

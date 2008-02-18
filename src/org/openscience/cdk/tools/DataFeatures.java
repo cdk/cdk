@@ -35,7 +35,7 @@ import org.openscience.cdk.annotations.TestClass;
  * a Data Feature Ontology. Actual integers are random
  * and should <b>not</b> be used directly.
  * 
- * <p>To test wether a IChemFormat supports a certain feature, the
+ * <p>To test whether a IChemFormat supports a certain feature, the
  * following code can be used:
  * <pre>
  * int features = new XYZFormat().getSupportedDataFeatures();

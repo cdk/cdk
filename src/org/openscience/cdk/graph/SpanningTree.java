@@ -243,7 +243,7 @@ public class SpanningTree {
     }
 
     /**
-	 * Identifies wether bonds are cyclic or not. It is used by several other methods.
+	 * Identifies whether bonds are cyclic or not. It is used by several other methods.
 	 * 
 	 * @throws NoSuchAtomException
 	 */

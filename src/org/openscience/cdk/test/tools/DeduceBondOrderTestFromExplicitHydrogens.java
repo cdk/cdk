@@ -84,7 +84,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		// now have the algorithm have a go at it
 		dboTool.saturate(keto);
 		
-		// now check wether it did the right thing
+		// now check whether it did the right thing
 		assertEquals(CDKConstants.BONDORDER_TRIPLE, bond1.getOrder());
 	}
 
@@ -114,7 +114,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		// now have the algorithm have a go at it
 		dboTool.saturate(keto);
 		
-		// now check wether it did the right thing
+		// now check whether it did the right thing
 		assertEquals(CDKConstants.BONDORDER_SINGLE, bond1.getOrder());
 		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond2.getOrder());
 	}
@@ -146,7 +146,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		// now have the algorithm have a go at it
 		dboTool.saturate(enol);
 		
-		// now check wether it did the right thing
+		// now check whether it did the right thing
 		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder());
 		assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder());
 	}
@@ -183,7 +183,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		// now have the algorithm have a go at it
 		dboTool.saturate(enol);
 		
-		// now check wether it did the right thing
+		// now check whether it did the right thing
 		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder());
 		assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder());
 		assertEquals(CDKConstants.BONDORDER_SINGLE, bond3.getOrder());
@@ -239,7 +239,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		// now have the algorithm have a go at it
 		dboTool.saturate(enol);
 		
-		// now check wether it did the right thing
+		// now check whether it did the right thing
 		assertEquals(CDKConstants.BONDORDER_SINGLE, bond1.getOrder());
 		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond2.getOrder());
 		assertEquals(CDKConstants.BONDORDER_SINGLE, bond3.getOrder());
@@ -294,7 +294,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		// now have the algorithm have a go at it
 		dboTool.saturate(enol);
 		
-		// now check wether it did the right thing
+		// now check whether it did the right thing
 		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
 				bond1.getOrder().ordinal() + bond6.getOrder().ordinal()); // around atom1
 		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
@@ -348,7 +348,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		// now have the algorithm have a go at it
 		dboTool.saturate(enol);
 		
-		// now check wether it did the right thing
+		// now check whether it did the right thing
 		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder());
 		assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder());
 		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond3.getOrder());
@@ -399,7 +399,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		// now have the algorithm have a go at it
 		dboTool.saturate(enol);
 		
-		// now check wether it did the right thing
+		// now check whether it did the right thing
 		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
 				bond1.getOrder().ordinal() + bond6.getOrder().ordinal()); // around atom1
 		assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 

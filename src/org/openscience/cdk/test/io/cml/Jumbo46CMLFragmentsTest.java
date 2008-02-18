@@ -303,7 +303,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
     }
 
     /**
-     * Tests wether the file is indeed a single molecule file
+     * Tests whether the file is indeed a single molecule file
      */
     private org.openscience.cdk.interfaces.IMolecule checkForSingleMoleculeFile(IChemFile chemFile) {
         return checkForXMoleculeFile(chemFile, 1);

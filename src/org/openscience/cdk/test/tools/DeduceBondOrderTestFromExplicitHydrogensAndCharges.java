@@ -90,7 +90,7 @@ public class DeduceBondOrderTestFromExplicitHydrogensAndCharges extends CDKTestC
 		// now have the algorithm have a go at it
 		dboTool.saturate(keto);
 		
-		// now check wether it did the right thing
+		// now check whether it did the right thing
 		assertEquals(CDKConstants.BONDORDER_SINGLE, bond1.getOrder());
 		assertEquals(CDKConstants.BONDORDER_DOUBLE, bond2.getOrder());
 	}

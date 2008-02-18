@@ -154,7 +154,7 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
     }
     
     /**
-     * Sets wether the number of implicit hydrogens is update when an
+     * Sets whether the number of implicit hydrogens is update when an
      * Atom is edited.
      */
     public void setAutoUpdateImplicitHydrogens(boolean update) {

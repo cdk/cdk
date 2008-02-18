@@ -450,7 +450,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     /**
-     * This test tests wether the CMLReader is able to ignore the CMLSpect part
+     * This test tests whether the CMLReader is able to ignore the CMLSpect part
      * of a CML file, while extracting the molecule.
      */
     public void testCMLSpectMolExtraction() throws Exception {
@@ -480,7 +480,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     /**
-     * This test tests wether the CMLReader is able to ignore the CMLReaction part
+     * This test tests whether the CMLReader is able to ignore the CMLReaction part
      * of a CML file, while extracting the reaction.
      */
     public void testCMLReaction() throws Exception {
@@ -511,7 +511,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     /**
-     * This test tests wether the CMLReader is able to ignore the CMLReaction part
+     * This test tests whether the CMLReader is able to ignore the CMLReaction part
      * of a CML file, while extracting the reaction.
      */
     public void testCMLReactionWithAgents() throws Exception {
@@ -542,7 +542,7 @@ public class CML2Test extends CDKTestCase {
         assertEquals(6, reaction.getReactants().getAtomContainer(0).getAtomCount());
     }
     /**
-     * This test tests wether the CMLReader is able to ignore the CMLReaction part
+     * This test tests whether the CMLReader is able to ignore the CMLReaction part
      * of a CML file, while extracting the reaction.
      */
     public void testCMLReactionList() throws Exception {

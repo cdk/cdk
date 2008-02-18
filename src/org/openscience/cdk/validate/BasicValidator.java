@@ -185,7 +185,7 @@ public class BasicValidator extends AbstractValidator {
             // that's fine
             report.addOK(isElementOrPseudo);
         } else {
-            // check wether atom is really an element
+            // check whether atom is really an element
             try {
                 IsotopeFactory isotopeFactory = IsotopeFactory.getInstance(atom.getBuilder());
                 IElement element = isotopeFactory.getElement(atom.getSymbol());

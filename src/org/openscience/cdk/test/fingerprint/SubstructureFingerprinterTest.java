@@ -100,7 +100,7 @@ public class SubstructureFingerprinterTest extends CDKTestCase {
 
 		assertNotNull(set);
 
-		// test wether all molecules have an amine and carboxylic acid group
+		// test whether all molecules have an amine and carboxylic acid group
 		for (int i=0; i<aas.length; i++) {
 			AminoAcidManipulator.addAcidicOxygen(aas[i]);
 			IMolecule aminoAcid = aas[i].getBuilder().newMolecule(aas[i]);

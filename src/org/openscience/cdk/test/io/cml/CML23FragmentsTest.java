@@ -380,7 +380,7 @@ public class CML23FragmentsTest extends CDKTestCase {
     }
 
     /**
-     * Tests wether the file is indeed a single molecule file
+     * Tests whether the file is indeed a single molecule file
      */
     private IMolecule checkForSingleMoleculeFile(IChemFile chemFile) {
         return checkForXMoleculeFile(chemFile, 1);
@@ -445,7 +445,7 @@ public class CML23FragmentsTest extends CDKTestCase {
     }
     
     /**
-     * Tests wether the file is indeed a single reaction file
+     * Tests whether the file is indeed a single reaction file
      */
     private IReaction checkForSingleReactionFile(IChemFile chemFile) {
         return checkForXReactionFile(chemFile, 1);

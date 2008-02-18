@@ -157,7 +157,7 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
     }
     
     /**
-     * Returns wether a bond is unsaturated. A bond is unsaturated if 
+     * Returns whether a bond is unsaturated. A bond is unsaturated if 
      * <b>all</b> Atoms in the bond are unsaturated.
      */
     public boolean isUnsaturated(IBond bond, IAtomContainer atomContainer) throws CDKException {
@@ -207,7 +207,7 @@ public class ValencyHybridChecker implements IValencyChecker, IDeduceBondOrderTo
     }
 
     /**
-     * Returns wether a bond is saturated. A bond is saturated if 
+     * Returns whether a bond is saturated. A bond is saturated if 
      * <b>both</b> Atoms in the bond are saturated.
      */
     public boolean isSaturated(IBond bond, IAtomContainer atomContainer) throws CDKException {

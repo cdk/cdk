@@ -71,7 +71,7 @@ public interface IChemObject extends Cloneable {
 	public void setNotification(boolean bool);
 
 	/**
-	 * Returns the flag that indicates wether notification messages are sent around.
+	 * Returns the flag that indicates whether notification messages are sent around.
 	 * 
 	 * @return true if messages are sent.
 	 * @see    #setNotification(boolean)

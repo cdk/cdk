@@ -72,7 +72,7 @@ public class MoleculeFeaturesTool {
     }
 
     /**
-     * Checks wether all bonds have exactly two atoms.
+     * Checks whether all bonds have exactly two atoms.
      */
     public static boolean hasGraphRepresentation(IMolecule molecule) {
 

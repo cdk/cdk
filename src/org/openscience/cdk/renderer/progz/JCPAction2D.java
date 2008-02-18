@@ -283,7 +283,7 @@ public class JCPAction2D extends AbstractAction
 		if (index >= 0)
 		{
 			classname = actionname.substring(0, index);
-			// FIXME: it should actually properly check wether there are more chars
+			// FIXME: it should actually properly check whether there are more chars
 			// than just the "@".
 			type = actionname.substring(index + 1);
 		} else

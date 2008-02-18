@@ -44,7 +44,7 @@ public class DataFeaturesTest extends NewCDKTestCase {
         Assert.assertFalse(DataFeatures.HAS_2D_COORDINATES == -1);
     }
     
-    // FIXME: should add a test here that used introspection and test wether there
+    // FIXME: should add a test here that used introspection and test whether there
     // are not constant conflicts
     
 }

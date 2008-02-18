@@ -241,7 +241,7 @@ public class CrystalGeometryToolsTest extends NewCDKTestCase {
     }
     
     /**
-     * This method tests wether two times inversion of the axes
+     * This method tests whether two times inversion of the axes
      * gives back the original axes.
      */
     @Test public void testCalcInvertedAxes_Vector3d_Vector3d_Vector3d() {

@@ -58,7 +58,7 @@ public class MappingTest extends CDKTestCase {
     }
     
     /**
-     * Method to test wether the class complies with RFC #9.
+     * Method to test whether the class complies with RFC #9.
      */
     public void testToString() {
         Mapping mapping = new Mapping(new Atom(), new Atom());

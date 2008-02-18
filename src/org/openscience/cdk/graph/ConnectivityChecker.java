@@ -35,7 +35,7 @@ import java.util.Vector;
 /**
  * Tool class for checking whether the (sub)structure in an
  * AtomContainer is connected.
- * To check wether an AtomContainer is connected this code
+ * To check whether an AtomContainer is connected this code
  * can be used:
  * <pre>
  *  boolean isConnected = ConnectivityChecker.isConnected(atomContainer);

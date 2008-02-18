@@ -121,28 +121,28 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 	private Vector lassoPoints = new Vector();
     
-    /** Determines wether structures should be drawn as Kekule structures,
+    /** Determines whether structures should be drawn as Kekule structures,
      *  thus giving each carbon element explicitely, instead of not displaying
      *  the element symbol. Example C-C-C instead of /\.
      */
     private boolean kekuleStructure = false;
 
-    /** Determines wether methyl carbons' symbols should be drawn explicit
+    /** Determines whether methyl carbons' symbols should be drawn explicit
      *  for methyl carbons. Example C/\C instead of /\. 
      */
     private boolean showEndCarbons = false;
 
-    /** Determines wether implicit hydrogens should be drawn. */
+    /** Determines whether implicit hydrogens should be drawn. */
     private boolean showImplicitHydrogens = true;
 
-    /** Determines wether implicit hydrogens should be drawn. */
+    /** Determines whether implicit hydrogens should be drawn. */
     private boolean showExplicitHydrogens = true;
 
-    /** Determines wether rings should be drawn with a circle if they are aromatic. */
+    /** Determines whether rings should be drawn with a circle if they are aromatic. */
     private boolean showAromaticity = false;
     private boolean showAromaticityInCDKStyle = false;
 
-    /** Determines wether atoms are colored by type. */
+    /** Determines whether atoms are colored by type. */
     private boolean colorAtomsByType = true;
 
     private Dimension backgroundDimension = new Dimension(794,1123);
@@ -579,7 +579,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 
     /**
-     * Sets wether Atom-Atom mapping must be shown.
+     * Sets whether Atom-Atom mapping must be shown.
      */
     public void setShowAtomAtomMapping(boolean value) {
         this.showAtomAtomMapping = value;

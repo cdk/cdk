@@ -41,7 +41,7 @@ package org.openscience.cdk.io.formats;
 public interface IChemFormatMatcher extends IChemFormat {
 
     /**
-     * Method that checks wether the given line is part of the format
+     * Method that checks whether the given line is part of the format
      * read by this reader.
      *
      * @param lineNumber  number of the line

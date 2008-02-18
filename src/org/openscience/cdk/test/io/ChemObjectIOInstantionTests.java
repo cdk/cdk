@@ -39,7 +39,7 @@ import org.openscience.cdk.test.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * Tests wether all Reader and Writer classes can be instantiated.
+ * Tests whether all Reader and Writer classes can be instantiated.
  *
  * @cdk.module test-io
  *

@@ -202,7 +202,7 @@ public class IsotopeFactory
     }
 
     /**
-     * Checks wether the given element exists.
+     * Checks whether the given element exists.
      *
      * @param  elementName   The element name to test
      * @return               True is the element exists, false otherwise

@@ -129,7 +129,7 @@ public class ValencyCheckerTest extends CDKTestCase
 	}
 
     /**
-     * Tests wether the saturation checker considers negative
+     * Tests whether the saturation checker considers negative
      * charges.
      */
 	public void testIsSaturated_NegativelyChargedOxygen() throws CDKException {
@@ -158,7 +158,7 @@ public class ValencyCheckerTest extends CDKTestCase
 	}
     
     /**
-     * Tests wether the saturation checker gets a proton right.
+     * Tests whether the saturation checker gets a proton right.
      */
 	public void testIsSaturated_Proton() throws CDKException {
 		// test H+
@@ -170,7 +170,7 @@ public class ValencyCheckerTest extends CDKTestCase
 	}
     
     /**
-     * Tests wether the saturation checker considers positive
+     * Tests whether the saturation checker considers positive
      * charges.
      */
 	public void testIsSaturated_PositivelyChargedNitrogen() throws CDKException {

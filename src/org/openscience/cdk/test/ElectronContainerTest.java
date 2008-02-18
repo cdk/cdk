@@ -72,7 +72,7 @@ public class ElectronContainerTest extends NewCDKTestCase {
     }
     
     /**
-     * Method to test wether the class complies with RFC #9.
+     * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
         IElectronContainer at = builder.newElectronContainer();
