@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.test.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,7 +48,7 @@ public class MvalencycheckTests {
         suite.addTest(SaturationCheckerTest.suite());
         suite.addTest(ValencyCheckerTest.suite());
         suite.addTest(ValencyHybridCheckerTest.suite());
-        suite.addTest(DeduceBondOrderTestFromHybridization.suite());
+        suite.addTest(new JUnit4TestAdapter(DeduceBondOrderTestFromHybridization.class));
         suite.addTest(DeduceBondOrderTestFromExplicitHydrogens.suite());
         suite.addTest(DeduceBondOrderTestFromExplicitHydrogensAndCharges.suite());
         
