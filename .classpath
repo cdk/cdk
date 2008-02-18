@@ -3,7 +3,6 @@
 	<classpathentry excluding="org/openscience/cdk/libio/joelib/Convertor.java|org/openscience/cdk/test/libio/joelib/JOELibIOTest.java" kind="src" path="src"/>
 	<classpathentry kind="lib" path="develjar/ant_doxygen.jar"/>
 	<classpathentry kind="lib" path="develjar/dbdoclet.jar"/>
-	<classpathentry kind="lib" path="doc/jar/jabref.jar"/>
 	<classpathentry kind="lib" path="jar/antlr.jar"/>
 	<classpathentry kind="lib" path="jar/batik-awt-util.jar"/>
 	<classpathentry kind="lib" path="jar/batik-dom.jar"/>
