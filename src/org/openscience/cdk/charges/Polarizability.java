@@ -23,9 +23,6 @@
  */
 package org.openscience.cdk.charges;
 
-import java.util.Iterator;
-import java.util.Vector;
-
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
@@ -40,6 +37,9 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * Calculation of the polarizability of a molecule by the method of Kang and
@@ -117,17 +117,23 @@ public class Polarizability {
      *@param  atomContainer                     IAtomContainer
      *@param  atom                   atom for which effective atom polarizability should be calculated
      *@param  influenceSphereCutOff  cut off for spheres whoch should taken into account for calculation
+     * @param addExplicitH if set to true, then explicit H's will be added, otherwise it assumes that they have
+     * been added to the molecule before being called
      *@return                        polarizabilitiy
      */
     public double calculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer,
                                                          org.openscience.cdk.interfaces.IAtom atom,
-                                                         int influenceSphereCutOff) {
+                                                         int influenceSphereCutOff,
+                                                         boolean addExplicitH) {
         double polarizabilitiy = 0;
         Molecule acH = new Molecule(atomContainer);
         Vector<IAtom> startAtom = new Vector<IAtom>(1);
         startAtom.add(0, atom);
         double bond;
-        addExplicitHydrogens(acH);
+
+        if (addExplicitH)
+            addExplicitHydrogens(acH);
+
         polarizabilitiy += getKJPolarizabilityFactor(acH, atom);
         for (int i = 0; i < acH.getAtomCount(); i++) {
             if (acH.getAtom(i) != atom) {
