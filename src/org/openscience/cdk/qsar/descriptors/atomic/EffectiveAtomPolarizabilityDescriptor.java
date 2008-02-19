@@ -124,7 +124,7 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
         double polarizability;
         try {
-            polarizability = pol.calculateGHEffectiveAtomPolarizability(ac,atom,100);
+            polarizability = pol.calculateGHEffectiveAtomPolarizability(ac,atom,100, true);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(polarizability));
         } catch (Exception ex1) {
         	ex1.printStackTrace();

@@ -49,12 +49,13 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
 	private static double[] listpolarizability (IAtomContainer container)throws CDKException{
 		int natom = container.getAtomCount();
 		double[] polars = new double[natom];
-		
-		for(int i = 0; i < natom; i++){
+
+        // TODO: Add explicit H's here rather than in the pol calculation
+        for(int i = 0; i < natom; i++){
 			IAtom atom = container.getAtom(i);
 			try{
 				Polarizability polar = new Polarizability();
-				polars[i] = polar.calculateGHEffectiveAtomPolarizability(container, atom, 100);
+				polars[i] = polar.calculateGHEffectiveAtomPolarizability(container, atom, 100, true);
 			}catch(Exception ex1) {
 				throw new CDKException("Problems with assign Polarizability due to " + ex1.toString(), ex1);
 			}
