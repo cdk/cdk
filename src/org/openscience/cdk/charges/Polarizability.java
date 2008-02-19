@@ -126,13 +126,18 @@ public class Polarizability {
                                                          int influenceSphereCutOff,
                                                          boolean addExplicitH) {
         double polarizabilitiy = 0;
-        Molecule acH = new Molecule(atomContainer);
+
+        Molecule acH = null;
+        if (addExplicitH) {
+            acH = new Molecule(atomContainer);
+            addExplicitHydrogens(acH);
+        } else {
+            acH = (Molecule) atomContainer;
+        }
+
         Vector<IAtom> startAtom = new Vector<IAtom>(1);
         startAtom.add(0, atom);
-        double bond;
-
-        if (addExplicitH)
-            addExplicitHydrogens(acH);
+        double bond;        
 
         polarizabilitiy += getKJPolarizabilityFactor(acH, atom);
         for (int i = 0; i < acH.getAtomCount(); i++) {

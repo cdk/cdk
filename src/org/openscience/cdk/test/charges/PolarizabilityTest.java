@@ -65,9 +65,9 @@ public class PolarizabilityTest extends NewCDKTestCase {
 		Polarizability pol=new Polarizability();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("NCCN(C)(C)");
-		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(0),100);
+		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(0),100, true);
 		Assert.assertEquals(testResult[0],result,0.01);
-		result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100);
+		result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100, true);
 		Assert.assertEquals(testResult[1],result,0.01);
 	}
 	
@@ -94,7 +94,7 @@ public class PolarizabilityTest extends NewCDKTestCase {
 		Polarizability pol=new Polarizability();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("CCCl");
-		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(2),100);
+		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(2),100, true);
 		Assert.assertEquals(testResult,result,0.01);
 	}
 	
@@ -107,7 +107,7 @@ public class PolarizabilityTest extends NewCDKTestCase {
 		Polarizability pol=new Polarizability();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C=CCBr");
-		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100);
+		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100, true);
 		Assert.assertEquals(testResult,result,0.01);
 	}
 	
@@ -120,7 +120,7 @@ public class PolarizabilityTest extends NewCDKTestCase {
 		Polarizability pol=new Polarizability();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C(C)(C)CCI");
-		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(5),100);
+		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(5),100, true);
 		Assert.assertEquals(testResult,result,0.01);
 	}
 	
@@ -133,7 +133,7 @@ public class PolarizabilityTest extends NewCDKTestCase {
 		Polarizability pol=new Polarizability();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("CCOCC");
-		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(2),100);
+		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(2),100, true);
 		Assert.assertEquals(testResult,result,0.01);
 	}
 	
@@ -146,9 +146,9 @@ public class PolarizabilityTest extends NewCDKTestCase {
 		Polarizability pol=new Polarizability();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("NCCO");
-		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100);
+		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100, true);
 		Assert.assertEquals(testResult[1],result,0.01);
-		result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(0),100);
+		result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(0),100, true);
 		Assert.assertEquals(testResult[0],result,0.01);
 	}
 
@@ -161,7 +161,7 @@ public class PolarizabilityTest extends NewCDKTestCase {
 		Polarizability pol=new Polarizability();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C=CCS");
-		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100);
+		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100, true);
 		Assert.assertEquals(testResult,result,0.01);
 	}
 }
