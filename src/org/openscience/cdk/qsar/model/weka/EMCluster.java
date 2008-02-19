@@ -71,7 +71,7 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  * @author      Mario Baseda
  * @cdk.require weka.jar
  * @cdk.license GPL
- * @cdk.module  qsar-weka
+ * @cdk.module  qsarweka
  * @cdk.svnrev  $Revision: 9162 $
  * @see Weka
  * 

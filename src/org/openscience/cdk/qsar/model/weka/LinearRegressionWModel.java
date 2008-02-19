@@ -77,7 +77,7 @@ import weka.classifiers.functions.LinearRegression;
  * @author      Miguel Rojas
  * @cdk.require weka.jar
  * @cdk.license GPL
- * @cdk.module  qsar-weka
+ * @cdk.module  qsarweka
  * @cdk.svnrev  $Revision: 9162 $
  * @see Weka
  * 

@@ -8,14 +8,14 @@ import org.openscience.cdk.test.libio.weka.WekaTest;
 /**
  * TestSuite that runs all the tests for the CDK reaction module.
  *
- * @cdk.module  test-weka
+ * @cdk.module  test-qsarweka
  * @cdk.depends weka.jar
  * @cdk.depends junit.jar
  */
-public class MwekaTests {
+public class MqsarwekaTests {
     
     public static Test suite() {
-        TestSuite suite= new TestSuite("CDK weka Tests");
+        TestSuite suite= new TestSuite("CDK QSAR weka Tests");
 
         // Individual Tests
         
