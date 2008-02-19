@@ -359,8 +359,8 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         Polarizability pol = new Polarizability();
         counter = 0;
         for (int i = 0; i < molecule.getAtomCount(); i++) {
-            if (molecule.getAtom(i).getSymbol().equals("H")) continue;
-            diagvalue[counter] = pol.calculateGHEffectiveAtomPolarizability(molecule, molecule.getAtom(i), 1000);
+            if (molecule.getAtom(i).getSymbol().equals("H")) continue;            
+            diagvalue[counter] = pol.calculateGHEffectiveAtomPolarizability(molecule, molecule.getAtom(i), 1000, false);
             counter++;
         }
         burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
