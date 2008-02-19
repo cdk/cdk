@@ -44,11 +44,12 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.CDKValencyChecker;
 import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.SmilesValencyChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Tool that tries to deduce bond orders based on connectivity and hybridization
@@ -79,7 +80,7 @@ public class DeduceBondSystemTool {
     public DeduceBondSystemTool() {
     	allRingsFinder = new AllRingsFinder();
         logger = new LoggingTool(this);
-        valencyChecker = new SmilesValencyChecker();
+        valencyChecker = CDKValencyChecker.getInstance(NoNotificationChemObjectBuilder.getInstance());
     }
 
     public boolean isOK(IMolecule m) throws CDKException {
