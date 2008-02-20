@@ -21,14 +21,17 @@
 package org.openscience.cdk.test.atomtype;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.test.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
@@ -54,6 +57,7 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
         		"Incorrect perception for atom " + i,
         		expectedTypes[i], foundType
         	);
+        	assertConsistentProperties(mol, testedAtom, foundType);
         	// test for bug #1890702: configure, and then make sure the same atom type is perceived
         	AtomTypeManipulator.configure(testedAtom, foundType);
         	IAtomType secondType = atm.findMatchingAtomType(mol, testedAtom);
@@ -62,6 +66,34 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
         		expectedTypes[i], secondType
         	);
         }
+	}
+
+	private void assertConsistentProperties(IAtomContainer mol, IAtom atom, IAtomType matched) {
+		// X has no properties; nothing to match
+		if ("X".equals(matched.getAtomTypeName())) {
+			return;
+		}
+		
+    	if (atom.getHybridization() != CDKConstants.UNSET) {
+    		Assert.assertEquals(
+    			"Hybridization does not match",
+    			atom.getHybridization(), matched.getHybridization()
+    		);
+    	}
+    	if (atom.getFormalCharge() != CDKConstants.UNSET) {
+    		Assert.assertEquals(
+    			"Formal charge does not match",
+    			atom.getFormalCharge(), matched.getFormalCharge()
+    		);
+    	}
+    	List<IBond> connections = mol.getConnectedBondsList(atom);
+    	int connectionCount = connections.size();
+    	if (matched.getFormalNeighbourCount() != CDKConstants.UNSET) {
+    		Assert.assertFalse(
+    			"Number of neighbors is too high",
+    			connectionCount > matched.getFormalNeighbourCount()
+    		);
+    	}
 	}
 
 	public void assertAtomType(Map<String, Integer> testedAtomTypes, String expectedID, IAtomType foundAtomType) {
