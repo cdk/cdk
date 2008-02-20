@@ -603,7 +603,7 @@
   </atomType>
 
   <atomType id="Zn.2plus">
-    <atom elementType="Zn" formalCharge="+2">
+    <atom elementType="Zn" formalCharge="2">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
     </atom>
