@@ -68,6 +68,9 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
         }
 	}
 
+	/**
+	 * @cdk.bug 1897589
+	 */
 	private void assertConsistentProperties(IAtomContainer mol, IAtom atom, IAtomType matched) {
 		// X has no properties; nothing to match
 		if ("X".equals(matched.getAtomTypeName())) {
