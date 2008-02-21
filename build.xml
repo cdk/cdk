@@ -583,7 +583,7 @@
                     <include name="cdk-qsarmolecular.jar"/>
                     <include name="cdk-qsarprotein.jar"/>
                     <include name="cdk-qsar-cml.jar"/>
-                    <include name="cdk-qsar-weka.jar"/>
+                    <include name="cdk-qsarweka.jar"/>
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>
@@ -651,7 +651,7 @@
                     <include name="cdk-qsarmolecular.jar"/>
                     <include name="cdk-qsarprotein.jar"/>
                     <include name="cdk-qsar-cml.jar"/>
-                    <include name="cdk-qsar-weka.jar"/>
+                    <include name="cdk-qsarweka.jar"/>
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>

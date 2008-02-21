@@ -7,7 +7,7 @@ cdk-qsar.jar
 cdk-charges.jar
 cdk-reaction.jar
 cdk-smiles.jar
-cdk-qsar-weka.jar
+cdk-qsarweka.jar
 cdk-valencycheck.jar
 cdk-extra.jar
 cdk-test.jar

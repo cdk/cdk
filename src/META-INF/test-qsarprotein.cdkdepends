@@ -13,7 +13,7 @@ cdk-charges.jar
 cdk-qsar.jar
 cdk-qsarprotein.jar
 cdk-qsar-pdb.jar
-cdk-qsar-weka.jar
+cdk-qsarweka.jar
 cdk-smiles.jar
 cdk-test.jar
 cdk-applications.jar
