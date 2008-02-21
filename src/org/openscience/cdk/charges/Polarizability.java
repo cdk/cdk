@@ -114,18 +114,18 @@ public class Polarizability {
     /**
      *  calculate effective atom polarizability
      *
-     *@param  atomContainer                     IAtomContainer
-     *@param  atom                   atom for which effective atom polarizability should be calculated
-     *@param  influenceSphereCutOff  cut off for spheres whoch should taken into account for calculation
+     * @param  atomContainer                     IAtomContainer
+     * @param  atom                   atom for which effective atom polarizability should be calculated
+     * @param  influenceSphereCutOff  cut off for spheres whoch should taken into account for calculation
      * @param addExplicitH if set to true, then explicit H's will be added, otherwise it assumes that they have
-     * been added to the molecule before being called
-     *@return                        polarizabilitiy
+     *  been added to the molecule before being called
+     * @return polarizabilitiy
      */
     public double calculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer,
                                                          org.openscience.cdk.interfaces.IAtom atom,
                                                          int influenceSphereCutOff,
                                                          boolean addExplicitH) {
-        double polarizabilitiy = 0;
+        double polarizabilitiy = 0;        
 
         Molecule acH = null;
         if (addExplicitH) {
@@ -144,6 +144,55 @@ public class Polarizability {
             if (acH.getAtom(i) != atom) {
                 bond = PathTools.breadthFirstTargetSearch(acH,
                         startAtom, acH.getAtom(i), 0, influenceSphereCutOff);
+                if (bond == 1) {
+                    polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtom(i));
+                } else {
+                    polarizabilitiy += (Math.pow(0.5, bond - 1) * getKJPolarizabilityFactor(acH, acH.getAtom(i)));
+                }//if bond==0
+            }//if !=atom
+        }//for
+        return polarizabilitiy;
+    }
+
+    /**
+     * calculate effective atom polarizability
+     *
+     * @param atomContainer         IAtomContainer
+     * @param atom                  atom for which effective atom polarizability should be calculated
+     * @param influenceSphereCutOff cut off for spheres whoch should taken into account for calculation
+     * @param addExplicitH          if set to true, then explicit H's will be added, otherwise it assumes that they have
+     *                              been added to the molecule before being called
+     * @param distanceMatrix        an n x n matrix of topological distances between all the atoms in the molecule.
+     *                              if this argument is non-null, then BFS will not be used and instead path lengths will be looked up. This
+     *                              form of the method is useful, if it is being called for multiple atoms in the same molecule
+     * @return polarizabilitiy
+     */
+    public double calculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer,
+                                                         org.openscience.cdk.interfaces.IAtom atom,
+                                                         int influenceSphereCutOff,
+                                                         boolean addExplicitH,
+                                                         int[][] distanceMatrix) {
+        double polarizabilitiy = 0;
+
+        Molecule acH = null;
+        if (addExplicitH) {
+            acH = new Molecule(atomContainer);
+            addExplicitHydrogens(acH);
+        } else {
+            acH = (Molecule) atomContainer;
+        }
+
+        Vector<IAtom> startAtom = new Vector<IAtom>(1);
+        startAtom.add(0, atom);
+        double bond;
+
+        polarizabilitiy += getKJPolarizabilityFactor(acH, atom);
+        for (int i = 0; i < acH.getAtomCount(); i++) {
+            if (acH.getAtom(i) != atom) {
+                int atomIndex = atomContainer.getAtomNumber(atom);
+                bond = distanceMatrix[atomIndex][i];
+//                bond = PathTools.breadthFirstTargetSearch(acH,
+//                        startAtom, acH.getAtom(i), 0, influenceSphereCutOff);
                 if (bond == 1) {
                     polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtom(i));
                 } else {

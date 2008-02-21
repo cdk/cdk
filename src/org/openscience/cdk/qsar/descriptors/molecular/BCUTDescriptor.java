@@ -33,6 +33,8 @@ import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.PathTools;
+import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -317,6 +319,8 @@ public class BCUTDescriptor implements IMolecularDescriptor {
             if (!molecule.getAtom(i).getSymbol().equals("H")) nheavy++;
         }
 
+        if (nheavy == 0) throw new CDKException("No heavy atoms in the molecule");
+
         double[] diagvalue = new double[nheavy];
 
         // get atomic mass weighted BCUT
@@ -355,12 +359,14 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         eigenDecomposition = new EigenvalueDecomposition(matrix);
         double[] eval2 = eigenDecomposition.getRealEigenvalues();
 
+        int[][] topoDistance = PathTools.computeFloydAPSP(AdjacencyMatrix.getMatrix(molecule));
+
         // get polarizability weighted BCUT
         Polarizability pol = new Polarizability();
         counter = 0;
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             if (molecule.getAtom(i).getSymbol().equals("H")) continue;            
-            diagvalue[counter] = pol.calculateGHEffectiveAtomPolarizability(molecule, molecule.getAtom(i), 1000, false);
+            diagvalue[counter] = pol.calculateGHEffectiveAtomPolarizability(molecule, molecule.getAtom(i), 1000, false, topoDistance);
             counter++;
         }
         burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
