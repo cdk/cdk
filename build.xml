@@ -543,7 +543,7 @@
                     <includesfile name="${metainf}/qsarmolecular.libdepends"/>
                     <includesfile name="${metainf}/qsarprotein.libdepends"/>
                     <includesfile name="${metainf}/qsar-cml.libdepends"/>
-                    <includesfile name="${metainf}/qsar-weka.libdepends"/>
+                    <includesfile name="${metainf}/qsarweka.libdepends"/>
                     <includesfile name="${metainf}/reaction.libdepends"/>
                     <includesfile name="${metainf}/render.libdepends"/>
                     <includesfile name="${metainf}/standard.libdepends"/>
