@@ -158,8 +158,7 @@ public class Polarizability {
      * calculate effective atom polarizability
      *
      * @param atomContainer         IAtomContainer
-     * @param atom                  atom for which effective atom polarizability should be calculated
-     * @param influenceSphereCutOff cut off for spheres whoch should taken into account for calculation
+     * @param atom                  atom for which effective atom polarizability should be calculated     
      * @param addExplicitH          if set to true, then explicit H's will be added, otherwise it assumes that they have
      *                              been added to the molecule before being called
      * @param distanceMatrix        an n x n matrix of topological distances between all the atoms in the molecule.
@@ -169,7 +168,6 @@ public class Polarizability {
      */
     public double calculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer,
                                                          org.openscience.cdk.interfaces.IAtom atom,
-                                                         int influenceSphereCutOff,
                                                          boolean addExplicitH,
                                                          int[][] distanceMatrix) {
         double polarizabilitiy = 0;
@@ -191,8 +189,6 @@ public class Polarizability {
             if (acH.getAtom(i) != atom) {
                 int atomIndex = atomContainer.getAtomNumber(atom);
                 bond = distanceMatrix[atomIndex][i];
-//                bond = PathTools.breadthFirstTargetSearch(acH,
-//                        startAtom, acH.getAtom(i), 0, influenceSphereCutOff);
                 if (bond == 1) {
                     polarizabilitiy += getKJPolarizabilityFactor(acH, acH.getAtom(i));
                 } else {
