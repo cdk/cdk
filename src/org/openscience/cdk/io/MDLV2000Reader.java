@@ -24,36 +24,21 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.StringTokenizer;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.io.*;
+import java.util.StringTokenizer;
 
 /**
  * Reads a molecule from an MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
@@ -354,19 +339,19 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             	} else if (!line.contains("V2000") && !line.contains("v2000")) {
             		throw new CDKException("This file must be read with the MDLReader.");
             	}
-            }
-            atoms = Integer.valueOf(line.substring(0,3).trim()).intValue();
+            }            
+            atoms = Integer.parseInt(line.substring(0, 3).trim());
             logger.debug("Atomcount: " + atoms);
-            bonds = Integer.valueOf(line.substring(3,6).trim()).intValue();
+            bonds = Integer.parseInt(line.substring(3, 6).trim());
             logger.debug("Bondcount: " + bonds);
             
             // read ATOM block
             logger.info("Reading atom block");
             for (int f = 0; f < atoms; f++) {
                 line = input.readLine(); linecount++;
-                x = new Double(line.substring( 0,10).trim()).doubleValue();
-                y = new Double(line.substring(10,20).trim()).doubleValue();
-                z = new Double(line.substring(20,30).trim()).doubleValue();
+                x = Double.parseDouble(line.substring(0, 10).trim());
+                y = Double.parseDouble(line.substring(10, 20).trim());
+                z = Double.parseDouble(line.substring(20, 30).trim());
                 totalZ += Math.abs(z); // *all* values should be zero, not just the sum
                 logger.debug("Coordinates: " + x + "; " + y + "; " + z);
                 String element = line.substring(31,34).trim();
@@ -390,7 +375,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     rGroup=element.split("^R");
                     if (rGroup.length >1){
                     	try{
-                    		Rnumber=new Integer(rGroup[(rGroup.length-1)]).intValue();
+                    		Rnumber= new Integer(rGroup[(rGroup.length - 1)]);
                     		RGroupCounter=Rnumber;
                     	}catch(Exception ex){
                     		Rnumber=RGroupCounter;
@@ -468,11 +453,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 //shk3: This reads shifts from after the molecule. I don't think this is an official format, but I saw it frequently 80=>78 for alk
                 if(line.length()>=78){
                 	double shift=Double.parseDouble(line.substring(69,80).trim());
-                	atom.setProperty("first shift",new Double(shift));
+                	atom.setProperty("first shift", shift);
                 }
                 if(line.length()>=87){
                 	double shift=Double.parseDouble(line.substring(79,87).trim());
-                	atom.setProperty("second shift",new Double(shift));
+                	atom.setProperty("second shift", shift);
                 }
                 
                 molecule.addAtom(atom);
@@ -494,14 +479,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             logger.info("Reading bond block");
             for (int f = 0; f < bonds; f++) {
                 line = input.readLine(); linecount++;
-                atom1 = java.lang.Integer.valueOf(line.substring(0,3).trim()).intValue();
-                atom2 = java.lang.Integer.valueOf(line.substring(3,6).trim()).intValue();
-                order = java.lang.Integer.valueOf(line.substring(6,9).trim()).intValue();
+                atom1 = Integer.parseInt(line.substring(0, 3).trim());
+                atom2 = Integer.parseInt(line.substring(3, 6).trim());
+                order = Integer.parseInt(line.substring(6, 9).trim());
                 if (line.length() >= 12) {
                 	if (line.length() > 12) {
-                		stereo = java.lang.Integer.valueOf(line.substring(9,12).trim()).intValue();
+                		stereo = Integer.parseInt(line.substring(9, 12).trim());
                 	} else {
-                		stereo = java.lang.Integer.valueOf(line.substring(9).trim()).intValue();
+                		stereo = Integer.parseInt(line.substring(9).trim());
                 	}
                 } else {
                 	logger.warn("Missing expected stereo field at line: " + line);
