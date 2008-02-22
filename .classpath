@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="org/openscience/cdk/libio/joelib/Convertor.java|org/openscience/cdk/test/libio/joelib/JOELibIOTest.java" kind="src" path="src"/>
+	<classpathentry excluding="org/openscience/cdk/libio/joelib/JOELibIOTest.java" kind="src" path="src/test"/>
+	<classpathentry excluding="test/|main/" kind="src" path="src"/>
+	<classpathentry kind="src" path="src/main"/>
 	<classpathentry kind="lib" path="develjar/ant_doxygen.jar"/>
 	<classpathentry kind="lib" path="develjar/dbdoclet.jar"/>
 	<classpathentry kind="lib" path="jar/antlr.jar"/>

@@ -1,0 +1,290 @@
+<dictionary xmlns="http://www.xml-cml.org/schema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.xml-cml.org/schema ../../io/cml/data/cml23.xsd"
+
+  xmlns:cvs="https://www.cvshome.org/"
+
+  id="chemical" title="Chemical Concepts Dictionary">
+
+  <annotation>
+    <documentation>
+      <metadata name="cvs:last-change-by" content="$Author$"/>
+      <metadata name="cvs:date" content="$Date$"/>
+    </documentation>
+  </annotation>
+  
+  <description>
+    A dictionary of chemical concepts. 
+    Many entries refer to the entries in the
+    "IUPAC Compendium of Chemical Terminology"
+    (http://www.iupac.org/publications/compendium/)
+    matching entry@term == 'term in compendium'. 
+    Copyright for the descriptions of these entries is given
+    on the IUPAC website.
+  </description>
+  
+  <!-- IMPORTANT: these document *does not* have an OpenSource like license! 
+       
+        -->
+
+  <entry id="association" term="Association">
+    <annotation>
+      <documentation>
+        <metadata name="dc:creator" content="IUPAC"/>
+        <metadata name="dc:identifier" content="COMPENDIUM:A00472"/>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-03-13"/>
+      </documentation>
+    </annotation>
+    <definition>
+      The assembling of separate molecular entities into any aggregate.
+    </definition>
+  </entry>
+
+  <entry id="atom" term="Atom">
+    <annotation>
+      <documentation>
+        <metadata name="dc:creator" content="IUPAC"/>
+        <metadata name="dc:identifier" content="COMPENDIUM:A00493"/>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-03-13"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Smallest particle still characterizing a chemical element.
+    </definition>
+  </entry>
+
+  <entry id="atomicSymbol" term="Atom Symbol">
+    <annotation>
+      <documentation>
+        <metadata name="dc:creator" content="IUPAC"/>
+        <metadata name="dc:identifier" content="COMPENDIUM:A00503"/>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-03-13"/>
+      </documentation>
+    </annotation>
+    <definition>
+      One, two or three letters used to represent the atom in the
+      chemical formulae.
+    </definition>
+  </entry>
+  
+  <entry id="bond" term="Bond">
+    <annotation>
+      <documentation>
+        <metadata name="dc:creator" content="IUPAC"/>
+        <metadata name="dc:identifier" content="COMPENDIUM:B00697"/>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-03-13"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Entity that aggregates two atoms or groups of atoms by means of
+      forces acting between them such that they lead to the formation
+      of an aggregate with sufficient stability to make it convenient for
+      the chemist to consider it as an independent 'molecular species'.
+    </definition>
+  </entry>
+
+  <entry id="bondOrder" term="Bond Order">
+    <annotation>
+      <documentation>
+        <metadata name="dc:creator" content="IUPAC"/>
+        <metadata name="dc:identifier" content="COMPENDIUM:B00707"/>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-03-13"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Theoretical index of the degree of bonding between two atoms relative
+      to that of a single bond.
+    </definition>
+  </entry>
+
+  <entry id="covalentBond" term="Covalent Bond">
+    <annotation>
+      <documentation>
+        <metadata name="dc:creator" content="IUPAC"/>
+        <metadata name="dc:identifier" content="COMPENDIUM:B00697"/>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-03-13"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Entity that aggregates two atoms or groups of atoms by means of
+      forces acting between them such that they lead to the formation
+      of an aggregate with sufficient stability to make it convenient for
+      the chemist to consider it as an independent 'molecular species'.
+    </definition>
+  </entry>
+
+  <entry id="hydrogenBond" term="Hydrogen Bond">
+    <annotation>
+      <documentation>
+        <metadata name="dc:creator" content="IUPAC"/>
+        <metadata name="dc:identifier" content="COMPENDIUM:H02899"/>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-03-13"/>
+      </documentation>
+    </annotation>
+    <definition>
+      A form of association between an electronegative atom and a hydrogen atom
+      attached to a second, relatively electronegative atom.
+    </definition>
+  </entry>
+
+  <entry id="ionicBond" term="Ionic Bond">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-03-13"/>
+      </documentation>
+    </annotation>
+    <definition>
+      A conceptual bond between two ions.
+    </definition>
+  </entry>
+  
+  <entry id="ionPair" term="Ion Pair">
+    <annotation>
+      <documentation>
+        <metadata name="dc:creator" content="IUPAC"/>
+        <metadata name="dc:identifier" content="COMPENDIUM:I03231"/>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-03-13"/>
+      </documentation>
+    </annotation>
+    <definition>
+      A pair of oppositely charged ions held together by Coulomb attraction
+      without formation of a covalent bond.
+    </definition>
+  </entry>
+
+  <entry id="isotope" term="Isotope">
+    <annotation>
+      <documentation>
+        <metadata name="dc:creator" content="IUPAC"/>
+        <metadata name="dc:identifier" content="COMPENDIUM:I03331"/>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-09"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Isotopes are nuclides with the same specific atomic number but different
+      mass number.
+    </definition>
+  </entry>
+
+  <entry id="atomicNumber" term="Atomic Number">
+    <annotation>
+      <documentation>
+        <metadata name="dc:creator" content="IUPAC"/>
+        <metadata name="dc:identifier" content="COMPENDIUM:I00499"/>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-09"/>
+      </documentation>
+    </annotation>
+    <definition>
+      The number of protons in the atomic nucleus.
+    </definition>
+  </entry>
+
+  <entry id="molecule" term="Molecule">
+    <annotation>
+      <documentation>
+        <metadata name="dc:creator" content="IUPAC"/>
+        <metadata name="dc:identifier" content="COMPENDIUM:I04002"/>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-09"/>
+      </documentation>
+    </annotation>
+    <definition>
+      An electrically neutral entity consisting of more than one atom
+      (n > 1). Rigorously, a molecule, in which n > 1 must correspond to
+      a depression on the potential energy surface that is deep enough
+      to confine at least on vibrational state.
+    </definition>
+  </entry>
+
+  <entry id="molecularEntity" term="Molecular Entity">
+    <annotation>
+      <documentation>
+        <metadata name="dc:creator" content="IUPAC"/>
+        <metadata name="dc:identifier" content="COMPENDIUM:I04002"/>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-09"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Any constitutaionally or isotopically distinct atom, molecule, ion,
+      ion pair, radical, radical ion, complex, conformer etc, identifiable
+      as a separately distinguishable entity.
+    </definition>
+  </entry>
+  
+  <entry id="atomicMass" term="Atomic Mass">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-15"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Mass of the atom.
+    </definition>
+  </entry>
+
+  <entry id="naturalAbundance" term="Natural Abundance">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-15"/>
+      </documentation>
+    </annotation>
+    <definition>
+      The relative or percentual concentration of the isotope
+      in a random, natural sample of the element.
+    </definition>
+  </entry>
+
+  <entry id="relativeConcentration" term="Relative Concentration">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-15"/>
+      </documentation>
+    </annotation>
+    <definition>
+      The concentration of the subject in a sample quantified by
+      a number that indicates the relative amounts as compared with
+      the other species in the sample.
+    </definition>
+    <description>
+      If a sample contains three species, and their relative
+      concentrations are 100, 60, 40, then their percentual
+      concentrations are 50, 30, 20.
+    </description>
+  </entry>
+
+  <entry id="percentualConcentration" term="Percentuel Concentration">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="Egon Willighagen"/>
+        <metadata name="dc:date" content="2003-08-15"/>
+      </documentation>
+    </annotation>
+    <definition>
+      The concentration of the subject in a sample quantified by
+      a percentage. The sum of the percentages of all specied in the
+      sample sum up to 100%.
+    </definition>
+    <description>
+      If a sample contains three species, and their relative
+      concentrations are 100, 60, 40, then their percentual
+      concentrations are 50, 30, 20.
+    </description>
+  </entry>
+
+</dictionary>
+

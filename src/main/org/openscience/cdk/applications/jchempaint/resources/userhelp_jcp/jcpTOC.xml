@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+<!DOCTYPE toc
+  PUBLIC 
+  "-//Sun Microsystems Inc.//DTD 
+  JavaHelp TOC Version 1.0//EN"
+  "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+
+<toc version="1.0">
+<tocitem text="JChemPaint User's Guide" image="openbook">
+
+   <tocitem text="Preface" image="topic" target="top"/>
+
+   <tocitem text="About JChemPaint" image="chapter" target="aboutJCP">
+       <tocitem text="What is JChemPaint" image="topic" target="whatIs"/>
+       <tocitem text="How can I participate" image="topic" target="participate"/>
+       <tocitem text="Requirements" image="topic" target="requirements"/>
+       <tocitem text="Finding and Reporting bugs" image="topic" target="bugs"/>
+   </tocitem>
+
+   <tocitem text="Tutorial" image="chapter" target="tutorial">
+       <tocitem text="Creating Molecules" image="topic" target="molecules"/>
+       <tocitem text="Creating Reactions" image="topic" target="reactions"/>
+   </tocitem>
+
+   <tocitem text="Reference Guide" image="chapter" target="referenceGuide">
+       <tocitem text="The Button Panel" image="chapter" target="button">
+          <tocitem text="The drawing buttons" image="topic" target="drawingButtons"/>
+          <tocitem text="Move Buttons" image="topic" target="moveButtons"/>
+          <tocitem text="Buttons for other Operations" image="topic" target="otherButtons"/>
+          
+<!--           <tocitem text="The Ring templates" image="topic" target="over.search"/>
+          <tocitem text="The Ring templates" image="topic" target="over.search"/>
+          <tocitem text="Buttons for Moving" image="topic" target="over.search"/>
+          <tocitem text="The Translate Button" image="topic" target="over.search"/>
+          <tocitem text="The Toggle Symbol Button" image="topic" target="over.search"/>
+          <tocitem text="The Element Symbol Button" image="topic" target="over.search"/>
+          <tocitem text="The Eraser Button" image="topic" target="over.search"/>
+          <tocitem text="The Select (Lasso) Button" image="topic" target="over.search"/>
+          <tocitem text="The Cleanup Button" image="topic" target="over.search"/>
+-->
+       </tocitem>
+       <tocitem text="Menu description" image="chapter" target="menu">
+          <tocitem text="The File menu" image="chapter" target="menuFile">
+	    <tocitem text="New" image="chapter" target="over.intro"/>
+	    <tocitem text="Open" image="chapter" target="over.intro"/>
+	    <tocitem text="Save" image="chapter" target="over.intro"/>
+	    <tocitem text="Export as Image" image="chapter" target="over.intro"/>
+	    <tocitem text="Export CompChem" image="chapter" target="over.intro"/>
+	    <tocitem text="Exit" image="chapter" target="over.intro"/>
+	    <tocitem text="Clean Up" image="chapter" target="over.intro"/>
+	    <tocitem text="Model Properties" image="chapter" target="over.intro"/>
+	    </tocitem>
+          <tocitem text="The Edit menu" image="chapter" target="menuEdit">
+	    <tocitem text="Undo" image="chapter" target="over.intro"/>
+	    <tocitem text="Cut selected" image="chapter" target="over.intro"/>
+	    <tocitem text="Select all" image="chapter" target="over.intro"/>
+	    <tocitem text="Hydrogens" image="chapter" target="over.intro">
+	       <tocitem text="Add Implicit Hydrogens" image="chapter" target="over.intro"/>
+	       <tocitem text="Make Hydrogens Explicit" image="chapter" target="over.intro"/>
+	       <tocitem text="Make Hydrogens Implicit" image="chapter" target="over.intro"/>
+	       </tocitem>
+	    <tocitem text="Adjust Bond Orders" image="chapter" target="over.intro"/>
+	    <tocitem text="Reset Bond Orders" image="chapter" target="over.intro"/>
+	    <tocitem text="Clean Up" image="chapter" target="over.intro"/>
+	    <tocitem text="Model Properties" image="chapter" target="over.intro"/>
+	    </tocitem>
+          <tocitem text="The View Menu" image="chapter" target="menuView">
+	    <tocitem text="Zoom in" image="chapter" target="over.intro"/>
+	    <tocitem text="Zoom out" image="chapter" target="over.intro"/>
+	    <tocitem text="Zoom 100%" image="chapter" target="over.intro"/>
+	    </tocitem>
+          <tocitem text="The Insert menu" image="chapter" target="menuInsert">
+	    <tocitem text="From internet" image="chapter" target="over.intro"/>
+	    <tocitem text="Insert SMILES" image="chapter" target="over.intro"/>
+	    </tocitem>
+          <tocitem text="The Report menu" image="chapter" target="menuReport">
+	    <tocitem text="Valide" image="chapter" target="over.intro">
+	       <tocitem text="Run Validate" image="chapter" target="over.intro"/>
+	       <tocitem text="Clear Validate Results" image="chapter" target="over.intro"/>
+	       </tocitem>
+	    <tocitem text="Create SMILES" image="chapter" target="over.intro"/>
+	    </tocitem>
+          <tocitem text="The Plugins Menu" image="chapter" target="menuPlugins"/>
+          <tocitem text="The Help Menu" image="chapter" target="menuHelp">
+	    <tocitem text="Info" image="chapter" target="over.intro"/>
+	    <tocitem text="Help" image="chapter" target="over.intro"/>
+	    <tocitem text="About" image="chapter" target="over.intro"/>
+	    <tocitem text="License" image="chapter" target="over.intro"/>
+	    </tocitem>
+       </tocitem>
+       	<tocitem text="Fitting JChemPaint to your needs" image="topic" target="fitting"/> 
+    </tocitem>
+    <tocitem text="Beyond JChempaint" image="chapter" target="beyondJCP">
+       <tocitem text="Extending JChemPaint" image="topic" target="extendingJCP"/>
+       <tocitem text="Bibliography" image="topic" target="bibliography"/>
+</tocitem>
+</toc>

@@ -1,0 +1,280 @@
+<atomTypeList xmlns="http://www.xml-cml.org/schema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.xml-cml.org/schema ../../io/cml/data/cml25b1.xsd"
+
+  xmlns:cvs="https://www.cvshome.org/"
+  xmlns:cdk="http://cdk.sf.net/dict/cdk/"
+
+  id="valency" title="Valency AtomTypes">
+
+  <metadataList>
+    <metadata name="cvs:last-change-by" content="$Author$"/>
+    <metadata name="cvs:date" content="$Date$"/>
+    <metadata name="cvs:revision" content="$Revision$"/>
+  </metadataList>
+  
+  <atomType id="H">
+    <atom elementType="H">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="He">
+    <atom elementType="He">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">8</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Li">
+    <atom elementType="Li">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Be">
+    <atom elementType="Be">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">2</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="B">
+    <atom elementType="B">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">3</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="C">
+    <atom elementType="C">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="N">
+    <atom elementType="N">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="O">
+    <atom elementType="O">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="F">
+    <atom elementType="F">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">7</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Ne">
+    <atom elementType="Ne">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">8</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Na">
+    <atom elementType="Na">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Mg">
+    <atom elementType="Mg">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">2</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Al">
+    <atom elementType="Al">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">3</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Si">
+    <atom elementType="Si">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="P">
+    <atom elementType="P">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="S">
+    <atom elementType="S">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Cl">
+    <atom elementType="Cl">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">7</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Ar">
+    <atom elementType="Ar">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">8</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="K">
+    <atom elementType="K">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Ca">
+    <atom elementType="Ca">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">2</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Ga">
+    <atom elementType="Ga">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">3</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Ge">
+    <atom elementType="Ge">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="As">
+    <atom elementType="As">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Se">
+    <atom elementType="Se">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Br">
+    <atom elementType="Br">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">7</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Kr">
+    <atom elementType="Kr">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">8</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Rb">
+    <atom elementType="Rb">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Sr">
+    <atom elementType="Sr">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">2</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="In">
+    <atom elementType="In">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">3</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Sn">
+    <atom elementType="Sn">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Sb">
+    <atom elementType="Sb">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Te">
+    <atom elementType="Te">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="I">
+    <atom elementType="I">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">7</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Xe">
+    <atom elementType="Xe">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">8</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Cs">
+    <atom elementType="Cs">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Ba">
+    <atom elementType="Ba">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">2</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Tl">
+    <atom elementType="Tl">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">3</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Pb">
+    <atom elementType="Pb">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Bi">
+    <atom elementType="Bi">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">5</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Po">
+    <atom elementType="Po">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">6</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="At">
+    <atom elementType="At">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">7</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Rn">
+    <atom elementType="Rn">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">8</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Fr">
+    <atom elementType="Fr">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">1</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Ra">
+    <atom elementType="Ra">
+      <scalar dataType="xsd:integer" dictRef="cdk:valency">2</scalar>
+    </atom>
+  </atomType>
+
+</atomTypeList>

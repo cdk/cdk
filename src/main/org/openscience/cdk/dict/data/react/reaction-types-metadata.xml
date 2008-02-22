@@ -1,0 +1,175 @@
+<dictionary
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core cmlAll.xsd
+                      http://bibtexml.sf.net/                 bibtexml.xsd"
+  
+  xmlns="http://www.xml-cml.org/schema/cml2/core"
+  xmlns:bibtex="http://bibtexml.sf.net/"
+  xmlns:cvs="https://www.cvshome.org/"
+  xmlns:dc="http://dublincore.org/"
+  
+  xmlns:reaction-types-metadata="http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionMetadata"
+  id="reaction-types-metadata" title="REACTION.sf.net Metadata Dictionary">
+
+  <annotation>
+    <documentation>
+      <metadata name="cvs:revision" content="$Revision: 0.1 $"/>
+      <metadata name="cvs:last-change-by" content="$Author: mrc $"/>
+      <metadata name="cvs:date" content="$Date: 2006/05/08 13:49:48 $"/>
+      <metadata name="cvs:id" content="$Id: reaction-types-metadata.xml,v 0.1 2006/05/08 13:49:48 mrc Exp $"/>
+    </documentation>
+    <appinfo>
+      <contributor id="mrc">Miguel Rojas</contributor>
+    </appinfo>
+    <documentation title="bibliography">
+      <bibtex:file>
+        <bibtex:entry id="REACTIONDICT">
+          <bibtex:misc>
+            <bibtex:author>The REACTION.sf.net Project</bibtex:author>
+            <bibtex:title>REACTION types Dictionary</bibtex:title>
+            <bibtex:url>http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict</bibtex:url>
+          </bibtex:misc>
+        </bibtex:entry>
+      </bibtex:file>
+    </documentation>
+  </annotation>
+
+  <description>
+    This dictionary describes reactions used in the reaction-types <bibtex:cite ref="REACTIONDICT"/>
+    dictionary. 
+  </description>
+	
+  <entry id="electronImpact" term="Electron Impact">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      This reaction type is a representation of the processes which occure in the mass spectrometer.
+    </definition>
+    <relatedEntry type="reaction-types-metadata:instanceOf" href="reactionType"/>
+  </entry>
+  
+  <entry id="displacement" term="Displacement">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-06-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      This reaction type is a representation of displacement of the electron which are in a 
+      orbital pi.
+    </definition>
+    <relatedEntry type="reaction-types-metadata:instanceOf" href="reactionType"/>
+  </entry>
+  
+  <entry id="rearrangementCharge" term="Rearrangement of Charge">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      This reaction type represents a rearrangment of charge .
+    </definition>
+    <relatedEntry type="reaction-types-metadata:instanceOf" href="reactionType"/>
+  </entry>
+  
+  
+  <entry id="reactionClass" term="Reaction Class">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Class of reaction.
+    </definition>
+    <relatedEntry type="reaction-type-metadata:instanceOf" href="reactionClassifier"/>
+  </entry>
+
+  <entry id="reactionClassification" term="Reaction Classification">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Classification of the reaction.
+    </definition>
+  </entry>
+
+  <entry id="reactionClassifier" term="Reaction Classifier">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Concept that allows reaction to be classified into groups.
+    </definition>
+  </entry>
+
+  <entry id="reactionType" term="Reaction Type">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Type of reaction.
+    </definition>
+    <relatedEntry type="reaction-type-metadata:instanceOf" href="reactionClassifier"/>
+  </entry>
+  
+  <entry id="instanceOf" term="Is a">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Indicates that the entry is a instance of the linked entry.
+    </definition>
+  </entry>
+
+  <entry id="isAModificationOf" term="Is a Modification Of">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Indicates a relation between two reactions of which the first is a
+      modification of the second.
+    </definition>
+  </entry>
+
+  <entry id="isModificatedAs" term="Is Modificated Into">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+      Indicates a relation between two reactions of which the second is a
+      modification of the first.
+    </definition>
+  </entry>
+
+  
+
+  
+
+</dictionary>

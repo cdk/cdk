@@ -1,0 +1,30 @@
+<dictionary xmlns="http://www.xml-cml.org/schema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.xml-cml.org/schema ../../io/cml/data/cml23.xsd"
+
+  xmlns:cvs="https://www.cvshome.org/"
+
+  id="emboss" title="The Emboss Dictionary: http://emboss.sourceforge.net/">
+
+  <annotation>
+    <documentation>
+      <metadata name="cvs:last-change-by" content="$Author$"/>
+      <metadata name="cvs:date" content="$Date$"/>
+    </documentation>
+  </annotation>
+
+  <description>
+    This dictionary describes terminology used on CDK classes and configuration
+    files. The items are listed in alphabetical order.
+  </description>
+  
+  <entry id="vdwrad" term="van der Waals radii">
+    <definition>
+      the van der Waals radius taken from the emboss file Evdw.dat
+    </definition>
+    <description>
+    </description>
+  </entry>
+  
+</dictionary>
+

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<html>
+<head>
+<title>The Drawing Buttons</title>
+<link rel="stylesheet" type="text/css" href="../jcp.css" title="Style">
+</head>
+<body bgcolor="#ffffff">
+
+<div class="navheader">
+  <table width="100%">
+   <tr>
+    <th align="center" colspan="3">The Button Panel</th>
+   </tr>
+   <tr>
+    <td align="left" width="20%"><a href="button.html">Prev</a>&nbsp;</td>
+     <th align="center" width="60%">&nbsp;</th>
+     <td align="right" width="20%">&nbsp;<a href="moveButtons.html">Next</a></td>
+     </tr>
+  </table>
+  <hr>
+</div>  
+
+<h3>The Drawing Buttons</h3><br>
+   <ul type="circle">
+     <li>The drawing button <img src="../../small-bin/bond.gif"></li>
+   </ul>
+     <p>Puts JChemapint in the draw mode, which is the standard mode in which 
+     build up chemical structures. If selected you can click on a point on 
+     the document and you'll create a single atom at this point. If you click, 
+     hold and drag the mouse, a bond is created. Multiple clicking on an 
+     existing bond will cycle its bond order between the values 1, 2 and 3.</p>
+     <p>The algorithms behind this button are provided by the 
+     controller.Controller2D class.</p><br>
+   
+   <ul type="circle">
+     <li>The up-bond button <img src="../../small-bin/up_bond.gif"></li>
+   </ul>
+     <p>This mode enables you to change an existing bond into a filled
+     wedge - the standard stereo bond desribing that the atom at the thick 
+     end is above the 2D plane in which your are supposed to imagine the atom 
+     at the thin end. Further, if selected, multiple clicking on an existing 
+     bond will change it to a filled wedge and if it already has this shape 
+     it will toggle between the two possible orientations</p>.
+     <p>The algorithms behind this button are provided by the 
+     controller.Controller2D class.</p><br>
+     
+   <ul type="circle">
+     <li>The down-bond button <img src="../../small-bin/down_bond.gif"></li>
+   </ul>
+     <p>This mode enables you to change an existing bond into a dashed 
+     wedge - the standard stereo bond describing that the atom at the thin end
+     is below the 2D plane in which your are supposed to imagine the atom at 
+     the thick end. Further, if selected, multiple clicking on an existing 
+     bond will change it to a dashed wedge and if it already has this shape it 
+     will toggle between the two possible orientations.</p>
+     </p>The algorithms behind this button are provided by the 
+     controller.Controller2D class.</p><br>
+     
+   <ul type="circle">
+     <li>The Ring templates</li>
+   </ul>
+     <p>The ring templates, like, <img src="../../small-bin/triangle.gif">,
+     <img src="../../small-bin/pentagon.gif">,  <img src="../../small-bin/hexagon.gif">, 
+     allow you to draw single 
+     rings and complex ringsystems from a few predefined templates.</p>
+     <p>A click on an atom places the preselected ring such that the atoms 
+     on which you clicked is one of the ring atoms. Click on a bond and it 
+     will be part of the newly created ring. A new ring is always placed 
+     on the least hindered side of the system. If you don't like the result, 
+     you can click on a bond, hold the mouse button and use the appearing 
+     gray line to indicate side of the bond on which you want to have the 
+     ring placed. Atoms of the newly place ring that are within the snap 
+     radius of existing atoms will be fused with these.</p>
+     </p>The algorithms behind this button are provided by the 
+     controller.Controller2D class.</p><br>
+     
+   
+     
+
+     
+
+<div class="navfooter"><hr>
+ <table width="100%">
+  <tr>
+   <td align="left" width="40%"><a href="button.html">Prev</a>&nbsp;</td>
+   <td align="center" width="20%"><a href="../jcp.html">Home</a></td>
+   <td align="right" width="40%"><a href="moveButtons.html">Next</a></td>
+  </tr>
+  <tr>
+   <td align="left" width="40%">&nbsp;</td>
+   <td align="center" width="20%"><a href="button.html">Up</a></td>
+   <td align="right" width="40%">&nbsp;</td>
+  </tr>
+ </table>
+</div>
+
+
+</body>
+</html> 

@@ -1,0 +1,18 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+
+  xmlns:cdk="http://cdk.sf.net/atomtypes/cdk#"
+  xmlns:mm2="http://cdk.sf.net/atomtypes/mm2#"
+  xmlns:mmff94="http://cdk.sf.net/atomtypes/mmff94#"
+  xmlns:mol2="http://cdk.sf.net/atomtypes/mol2#"
+  xmlns:pdb="http://cdk.sf.net/atomtypes/pdb#"
+  xmlns:structgen="http://cdk.sf.net/atomtypes/structgen#"
+  xmlns:valency="http://cdk.sf.net/atomtypes/valency#"
+  xmlns:hybrid="http://cdk.sf.net/atomtypes/hybrid#"
+>
+
+  <rdf:Description rdf:about="cdk:C.sp2">
+    <owl:sameAs rdf:resource="mol2:C.2"/>
+  </rdf:Description>
+
+</rdf:RDF>

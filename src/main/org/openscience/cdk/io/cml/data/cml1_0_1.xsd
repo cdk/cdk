@@ -1,0 +1,571 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:group name="scalar.content">
+    <xs:sequence />
+  </xs:group>
+
+  <xs:group name="array.content">
+    <xs:sequence />
+  </xs:group>
+
+  <xs:group name="matrix.content">
+    <xs:sequence />
+  </xs:group>
+
+  <xs:group name="angle.content">
+    <xs:sequence />
+  </xs:group>
+
+  <xs:group name="coordinate.content">
+    <xs:sequence />
+  </xs:group>
+
+  <xs:group name="molecule.content">
+    <xs:sequence>
+      <xs:element ref="ANY" />
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="molecule.content">
+    <xs:sequence>
+      <xs:element ref="atomArray" />
+
+      <xs:element ref="bondArray" />
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="atom.content">
+    <xs:sequence>
+      <xs:element ref="ANY" />
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="atomArray.content">
+    <xs:sequence>
+      <xs:element ref="ANY" />
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="atomArray.content">
+    <xs:sequence>
+      <xs:choice>
+        <xs:element maxOccurs="unbounded" ref="atom" />
+
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="stringArray" />
+
+          <xs:element ref="floatArray" />
+
+          <xs:element ref="integerArray" />
+        </xs:choice>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="bond.content">
+    <xs:sequence>
+      <xs:element ref="ANY" />
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="bondArray.content">
+    <xs:sequence>
+      <xs:element ref="ANY" />
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="bondArray.content">
+    <xs:sequence>
+      <xs:choice>
+        <xs:element maxOccurs="unbounded" ref="bond" />
+
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="stringArray" />
+
+          <xs:element ref="floatArray" />
+
+          <xs:element ref="integerArray" />
+        </xs:choice>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+
+  <xs:group name="crystal.content">
+    <xs:sequence>
+      <xs:element ref="ANY" />
+    </xs:sequence>
+  </xs:group>
+
+  <xs:attributeGroup name="tit_id_conv">
+    <xs:attribute name="title" type="xs:string" />
+
+    <xs:attribute name="id" type="xs:string" />
+
+    <xs:attribute name="convention" type="xs:string"
+    default="CML" />
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="tit_id_conv_dict">
+    <xs:attributeGroup ref="tit_id_conv" />
+
+    <xs:attribute name="dictRef" type="xs:string" />
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="simpleLink">
+    <xs:attribute name="href" type="xs:string" use="required" />
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="count">
+    <xs:attribute name="count" type="xs:string" default="1" />
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="rows">
+    <xs:attribute name="rows" type="xs:string" use="required" />
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="columns">
+    <xs:attribute name="columns" type="xs:string" use="required" />
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="delimiter">
+    <xs:attribute name="delimiter" type="xs:string" />
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="units">
+    <xs:attribute name="units" type="xs:string" />
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="min">
+    <xs:attribute name="min" type="xs:string" />
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="max">
+    <xs:attribute name="max" type="xs:string" />
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="angleUnits">
+    <xs:attribute name="units" default="degrees">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="degrees" />
+
+          <xs:enumeration value="radians" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="unitsRef">
+    <xs:attribute name="unitsRef" type="xs:string" />
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="atomRefs">
+    <xs:attribute name="atomRefs" type="xs:string" />
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="stringBuiltin">
+    <xs:attribute name="builtin">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="id" />
+
+          <xs:enumeration value="elementType" />
+
+          <xs:enumeration value="atomId" />
+
+          <xs:enumeration value="residueType" />
+
+          <xs:enumeration value="residueId" />
+
+          <xs:enumeration value="atomRef" />
+
+          <xs:enumeration value="atomRefs" />
+
+          <xs:enumeration value="order" />
+
+          <xs:enumeration value="stereo" />
+
+          <xs:enumeration value="spacegroup" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="floatBuiltin">
+    <xs:attribute name="builtin">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="x2" />
+
+          <xs:enumeration value="y2" />
+
+          <xs:enumeration value="x3" />
+
+          <xs:enumeration value="y3" />
+
+          <xs:enumeration value="z3" />
+
+          <xs:enumeration value="xFract" />
+
+          <xs:enumeration value="yFract" />
+
+          <xs:enumeration value="zFract" />
+
+          <xs:enumeration value="occupancy" />
+
+          <xs:enumeration value="isotope" />
+
+          <xs:enumeration value="formalCharge" />
+
+          <xs:enumeration value="hydrogenCount" />
+
+          <xs:enumeration value="nonHydrogenCount" />
+
+          <xs:enumeration value="atomParity" />
+
+          <xs:enumeration value="length" />
+
+          <xs:enumeration value="acell" />
+
+          <xs:enumeration value="bcell" />
+
+          <xs:enumeration value="ccell" />
+
+          <xs:enumeration value="alpha" />
+
+          <xs:enumeration value="beta" />
+
+          <xs:enumeration value="gamma" />
+
+          <xs:enumeration value="z" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="integerBuiltin">
+    <xs:attribute name="builtin">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="isotope" />
+
+          <xs:enumeration value="formalCharge" />
+
+          <xs:enumeration value="hydrogenCount" />
+
+          <xs:enumeration value="nonHydrogenCount" />
+
+          <xs:enumeration value="atomParity" />
+
+          <xs:enumeration value="z" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="coordinate2Builtin">
+    <xs:attribute name="builtin">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="xy2" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="coordinate3Builtin">
+    <xs:attribute name="builtin">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="xyz3" />
+
+          <xs:enumeration value="xyzFract" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:element name="string">
+    <xs:complexType mixed="true">
+      <xs:group ref="scalar.content" />
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="stringBuiltin" />
+
+      <xs:attributeGroup ref="atomRefs" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="link">
+    <xs:complexType mixed="true">
+      <xs:group ref="scalar.content" />
+
+      <xs:attributeGroup ref="tit_id_conv" />
+
+      <xs:attributeGroup ref="simpleLink" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="float">
+    <xs:complexType mixed="true">
+      <xs:group ref="scalar.content" />
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="floatBuiltin" />
+
+      <xs:attributeGroup ref="units" />
+
+      <xs:attributeGroup ref="atomRefs" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="integer">
+    <xs:complexType mixed="true">
+      <xs:group ref="scalar.content" />
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="integerBuiltin" />
+
+      <xs:attributeGroup ref="units" />
+
+      <xs:attributeGroup ref="atomRefs" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="stringArray">
+    <xs:complexType mixed="true">
+      <xs:group ref="array.content" />
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="stringBuiltin" />
+
+      <xs:attribute name="size" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="floatArray">
+    <xs:complexType mixed="true">
+      <xs:group ref="array.content" />
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="floatBuiltin" />
+
+      <xs:attribute name="size" type="xs:string" />
+
+      <xs:attributeGroup ref="delimiter" />
+
+      <xs:attributeGroup ref="units" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="integerArray">
+    <xs:complexType mixed="true">
+      <xs:group ref="array.content" />
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="integerBuiltin" />
+
+      <xs:attribute name="size" type="xs:string" />
+
+      <xs:attributeGroup ref="delimiter" />
+
+      <xs:attributeGroup ref="units" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="floatMatrix">
+    <xs:complexType mixed="true">
+      <xs:group ref="matrix.content" />
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="units" />
+
+      <xs:attributeGroup ref="delimiter" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="coordinate2">
+    <xs:complexType mixed="true">
+      <xs:group ref="coordinate.content" />
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="coordinate2Builtin" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="coordinate3">
+    <xs:complexType mixed="true">
+      <xs:group ref="coordinate.content" />
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="coordinate3Builtin" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="angle">
+    <xs:complexType mixed="true">
+      <xs:group ref="angle.content" />
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="atomRefs" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="torsion">
+    <xs:complexType mixed="true">
+      <xs:group ref="angle.content" />
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="atomRefs" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="list">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ANY" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="molecule">
+    <xs:complexType>
+      <xs:group ref="molecule.content" />
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="count" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="formula">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ANY" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="count" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="atom">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="string" />
+
+        <xs:element ref="float" />
+
+        <xs:element ref="integer" />
+      </xs:choice>
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="count" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="atomArray">
+    <xs:complexType>
+      <xs:group ref="atomArray.content" />
+
+      <xs:attributeGroup ref="tit_id_conv" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="bond">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="string" />
+
+        <xs:element ref="float" />
+
+        <xs:element ref="integer" />
+      </xs:choice>
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="atomRefs" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="bondArray">
+    <xs:complexType>
+      <xs:group ref="bondArray.content" />
+
+      <xs:attributeGroup ref="tit_id_conv" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="electron">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ANY" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+
+      <xs:attributeGroup ref="count" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="reaction">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ANY" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="crystal">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="string" />
+
+        <xs:element ref="float" />
+
+        <xs:element ref="integer" />
+      </xs:choice>
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="sequence">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ANY" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="feature">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ANY" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="tit_id_conv_dict" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+
+
+

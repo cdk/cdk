@@ -1,0 +1,150 @@
+<dictionary xmlns="http://www.xml-cml.org/schema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.xml-cml.org/schema ../../io/cml/data/cml23.xsd"
+
+  xmlns:cvs="https://www.cvshome.org/"
+  
+  namespace="http://cdk.sf.net/dict"
+  id="cdk" title="The Chemistry Development Kit Dictionary">
+
+  <annotation>
+    <documentation>
+      <metadata name="cvs:last-change-by" content="$Author$"/>
+      <metadata name="cvs:date" content="$Date$"/>
+    </documentation>
+  </annotation>
+
+  <description>
+    This dictionary describes terminology used on CDK classes and configuration
+    files. The items are listed in alphabetical order.
+  </description>
+  
+  <entry id="absoluteAbundance" term="Absolute Abundance">
+    <description>
+       For each isotope the abundance is given as a percentage, and the sum
+       of all these abundances is 100%.
+    </description>
+    <relatedEntry type="seeAlso" href="isotopeAbundance"/>
+  </entry>
+  
+  <entry id="aromaticAtom" term="Aromatic Atom">
+    <definition>
+       No explicit definition yet.
+    </definition>
+  </entry>
+
+  <entry id="atomicNumber" term="Atomic Number">
+    <definition>
+       No explicit definition yet.
+    </definition>
+  </entry>
+  
+  <entry id="bondOrder" term="Bond Order">
+    <definition>
+      No explicit definition yet.
+    </definition>
+  </entry>
+  
+  <entry id="bondOrderSum" term="Bond Order Sum">
+    <definition>
+      The exact sum of bond orders that this atom type can have.
+    </definition>
+  </entry>
+
+  <entry id="DA" term="Donor Acceptor">
+    <definition>
+       Denotes if an atom type is a lewis/bronsted acceptor or donor.
+    </definition>
+    <description>
+       Abbreviations used:
+       A: Acceptor
+       D: Donor.
+    </description>
+  </entry>
+ 
+  <entry id="exactMass" term="Exact Mass">
+    <definition>
+       No explicit definition yet.
+    </definition>
+  </entry>
+
+  <entry id="formalCharge" term="Formal Charge">
+    <definition>
+       No explicit definition yet.
+    </definition>
+  </entry>
+
+  <entry id="hybridization" term="Hybridization">
+    <definition>
+       Denotes the geometrical orientation of the atom with respect
+       to it's bonded neighbors.
+    </definition>
+    <description>
+       Accepted values are: sp1, sp2 and sp3. See the CDKConstants class.
+    </description>
+  </entry>
+
+  <entry id="isotopeAbundance" term="Isotope Abundance">
+    <description>
+      The amount of isotope of one element compared with the amounts of the
+      other isotopes of that element in a natural mixture of isotopes.
+    </description>
+  </entry>
+  
+  <entry id="maxBondOrder" term="Maximal Bond Order">
+    <definition>
+      The maximal bond order that this atom type can have. 
+    </definition>
+  </entry>
+  
+  <entry id="partialCharge" term="Partial Atomic Charge">
+    <definition>
+      Partial charge identified as point charge with the associated atom in
+      electron equivalents.
+    </definition>
+  </entry>
+  
+  <entry id="relativeAbundance" term="Relative Abundance">
+    <description>
+      The major isotope has abundance 100 by default, and the other isotopes
+      have abundances relative to the major one.
+    </description>
+    <relatedEntry type="seeAlso" href="isotopeAbundance"/>
+  </entry>
+
+  <entry id="ringConstant" term="specifies a ring system">
+    <definition>
+       The ring constants are defined in CDKRingConstants.java.
+    </definition>
+    <description>
+    </description>
+  </entry>
+ 
+   <entry id="ringSize" term="size of a ring system">
+    <definition>
+       Denotes the size of a ring system.
+    </definition>
+    <description>
+    </description>
+  </entry>
+  
+   <entry id="sphericalMatcher" term="Spherical Matcher">
+    <definition>
+    	A pattern which can be matched onto a string representation of the environment
+    	of an atom, e.g.a spherical Matcher can be a regular expression for 
+    	the hose code of an atom
+    </definition>
+    <description>
+    </description>
+  </entry>
+  
+   <entry id="valency" term="Valency">
+    <definition>
+      Electrons of outer shells
+    </definition>
+    <description>
+    </description>
+  </entry>   
+
+</dictionary>
+

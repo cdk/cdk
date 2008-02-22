@@ -1,0 +1,136 @@
+body {background-color: #FFFFFF;
+      font-size: 12pt;
+	font-family: SansSerif, Arial, Helvetica, sans-serif}       
+
+h1  {font-size: 20pt;
+     font-weight: bold;
+     color: #8080C0;
+     margin-top: 0;
+     margin-bottom: 0}
+
+h1.cover {border-top="300em";
+	  margin-botttom="120";
+	  font-family: Palatino; font-size: 24pt; font-style: normal; font-weight: bold}
+
+h2 {font-size: 18pt;
+    font-weight: bold;
+    color: #8080C0;
+    margin-top: 0;
+    margin-bottom: -5}
+
+h3 {font-size: 14pt;
+    font-weight: bold;
+    color: #8080C0;
+    margin-top: 10;
+    margin-bottom: -5}
+
+h4 {font-size: 10pt;
+    font-weight: bold;
+    color: #8080C0;
+    margin-top: 10;
+    margin-bottom: -5}
+
+p   {font-size: 12pt;
+     font-family: SansSerif, Arial, Helvetica, sans-serif;       
+     margin-top: 10;
+     margin-bottom: 0}
+
+p.code {font-family: Monospaced;
+	margin-left: 22}
+
+p.glossTitle   {margin-top: 0;
+     		font-weight: bold;
+     	       	color: #8080C0;}
+
+p.indent1  {margin-left: 3}
+
+p.indent2  {margin-left: 12}
+
+p.indent3  {margin-left: 32}
+
+p.note {margin-top: -19;
+	margin-left: 22}
+
+p.table {font-size: 12pt;
+     font-family: SansSerif, Arial, Helvetica, sans-serif;
+     margin-top:0;
+     margin-bottom: 0}
+
+blockquote.menu {margin-left: 18;
+		margin-top: 10}
+
+center {margin-top: 10}
+
+dl {margin-left: 10;
+    margin-top: 10;
+    margin-bottom: 10}
+
+dd.hang {margin-left:15;
+	 margin-bottom:10}
+
+dd.hang_last {margin-left:15;
+	 margin-bottom:0}
+
+dd.next {margin-left: 31}
+
+dd p {margin-left: 20;
+    margin-top: 0;
+    margin-bottom: 0}
+
+ol {margin-top: 5;
+     margin-bottom: 0;
+     margin-left: 21}
+
+li {margin-top: 0;
+    margin-bottom: 5}
+        
+li p{font-size: 12pt;
+     font-family: SansSerif, Arial, Helvetica, sans-serif;
+     margin-top: 5;
+     margin-bottom: 0}
+
+ul {margin-top: 5;
+    margin-bottom: 0;
+    margin-left: 21;
+    list-style: circle}
+
+pre.code_table {font-size: x-small;
+	   margin-left: 10; font-family: Monospaced, "Courier New", Courier, mono}
+
+[border] {border: solid thin;
+       border-color: silver}
+
+table {border: none;
+       border-color: white;
+       margin-top: 5;
+       margin-bottom: 5}
+
+td {font-size: 12pt;
+    font-family: SansSerif, Arial, Helvetica, sans-serif;
+    padding-left: 1;
+    padding-right: 1;
+    padding-top: 1;
+    padding-bottom: 1} 
+
+
+th {padding-left: 1;
+    padding-right: 1;
+    padding-top: 1;
+    padding-bottom: 1}
+
+
+small {font-size: x-small}
+
+dl.see_also {margin-left: 0;
+    margin-top: 10;
+    margin-bottom: 10}
+a.nounderline {text-decoration: none }
+pre {  font-family: Monospaced, "Courier New", Courier, mono; font-size: x-small}
+code {  font-family: Monospaced, "Courier New", Courier, mono; font-size: x-small}
+
+.abbrev {
+	font-weight: bold;
+}
+.biblioset {
+	font-style: italic;
+}

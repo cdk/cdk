@@ -1,0 +1,205 @@
+package org.openscience.cdk.qsar.descriptors.molecular;
+
+import java.util.Iterator;
+import java.util.List;
+
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.qsar.DescriptorSpecification;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResultType;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+/**
+ * Topological descriptor characterizing the carbon connectivity.
+ * <p/>
+ * The class calculates 9 descriptors in the following order
+ * <ul>
+ * <li>C1SP1 triply hound carbon bound to one other carbon
+ * <li>C2SP1	triply bound carbon bound to two other carbons
+ * <li>C1SP2	doubly hound carbon bound to one other carbon
+ * <li>C2SP2	doubly bound carbon bound to two other carbons
+ * <li>C3SP2	doubly bound carbon bound to three other carbons
+ * <li>C1SP3	singly bound carbon bound to one other carbon
+ * <li>C2SP3	singly bound carbon bound to two other carbons
+ * <li>C3SP3	singly bound carbon bound to three other carbons
+ * <li>C4SP3	singly bound carbon bound to four other carbons
+ * </ul>
+ * <p>This descriptor uses these parameters:
+ * <table border="1">
+ * <tr>
+ * <td>Name</td>
+ * <td>Default</td>
+ * <td>Description</td>
+ * </tr>
+ * <tr>
+ * <td></td>
+ * <td></td>
+ * <td>no parameters</td>
+ * </tr>
+ * </table>
+ *
+ * @author Rajarshi Guha
+ * @cdk.created 2007-09-28
+ * @cdk.module qsarmolecular
+ * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.set qsar-descriptors
+ * @cdk.dictref qsar-descriptors:carbonTypes
+ * @cdk.keyword topological bond order ctypes
+ * @cdk.keyword descriptor
+ */
+public class CarbonTypesDescriptor implements IMolecularDescriptor {
+
+    private LoggingTool logger;
+
+
+    public CarbonTypesDescriptor() {
+        logger = new LoggingTool(this);
+    }
+
+    public DescriptorSpecification getSpecification() {
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes",
+                this.getClass().getName(),
+                "$Id: CarbonTypesDescriptor.java 8804 2007-09-01 18:56:24Z rajarshi $",
+                "The Chemistry Development Kit");
+    }
+
+
+    /**
+     * Sets the parameters attribute of the GravitationalIndexDescriptor object.
+     *
+     * @param params The new parameters value
+     * @throws org.openscience.cdk.exception.CDKException
+     *          Description of the Exception
+     * @see #getParameters
+     */
+    public void setParameters(Object[] params) throws CDKException {
+        // no parameters for this descriptor
+    }
+
+    /**
+     * Gets the parameters attribute of the GravitationalIndexDescriptor object.
+     *
+     * @return The parameters value
+     * @see #setParameters
+     */
+    public Object[] getParameters() {
+        // no parameters to return
+        return (null);
+    }
+
+    /**
+     * Gets the parameterNames attribute of the GravitationalIndexDescriptor object.
+     *
+     * @return The parameterNames value
+     */
+    public String[] getParameterNames() {
+        // no param names to return
+        return (null);
+    }
+
+
+    /**
+     * Gets the parameterType attribute of the GravitationalIndexDescriptor object.
+     *
+     * @param name Description of the Parameter
+     * @return The parameterType value
+     */
+    public Object getParameterType(String name) {
+        return (null);
+    }
+
+    /**
+     * Calculates the 9 carbon types descriptors
+     *
+     * @param container Parameter is the atom container.
+     * @return An ArrayList containing 9 elements in the order described above
+     */
+
+    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+        int c1sp1 = 0;
+        int c2sp1 = 0;
+        int c1sp2 = 0;
+        int c2sp2 = 0;
+        int c3sp2 = 0;
+        int c1sp3 = 0;
+        int c2sp3 = 0;
+        int c3sp3 = 0;
+        int c4sp3 = 0;
+
+        Iterator<IAtom> atoms = container.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            if (!atom.getSymbol().equals("C") && !atom.getSymbol().equals("c")) continue;
+            List<IAtom> connectedAtoms = container.getConnectedAtomsList(atom);
+
+            int cc = 0;
+            for (IAtom connectedAtom : connectedAtoms) {
+                if (connectedAtom.getSymbol().equals("C") || connectedAtom.getSymbol().equals("c")) cc++;
+            }
+
+            IBond.Order maxBondOrder = getHighestBondOrder(container, atom);
+
+            if (maxBondOrder == IBond.Order.TRIPLE && cc == 1) c1sp1++;
+            else if (maxBondOrder == IBond.Order.TRIPLE && cc == 2) c2sp1++;
+            else if (maxBondOrder == IBond.Order.DOUBLE && cc == 1) c1sp2++;
+            else if (maxBondOrder == IBond.Order.DOUBLE && cc == 2) c2sp2++;
+            else if (maxBondOrder == IBond.Order.DOUBLE && cc == 3) c3sp2++;
+            else if (maxBondOrder == IBond.Order.SINGLE && cc == 1) c1sp3++;
+            else if (maxBondOrder == IBond.Order.SINGLE && cc == 2) c2sp3++;
+            else if (maxBondOrder == IBond.Order.SINGLE && cc == 3) c3sp3++;
+            else if (maxBondOrder == IBond.Order.SINGLE && cc == 4) c4sp3++;
+        }
+
+        IntegerArrayResult retval = new IntegerArrayResult(9);
+        retval.add(c1sp1);
+        retval.add(c2sp1);
+        retval.add(c1sp2);
+        retval.add(c2sp2);
+        retval.add(c3sp2);
+        retval.add(c1sp3);
+        retval.add(c2sp3);
+        retval.add(c3sp3);
+        retval.add(c4sp3);
+
+        String[] names = {
+                "C1SP1", "C2SP1",
+                "C1SP2", "C2SP2", "C3SP2",
+                "C1SP3", "C2SP3", "C3SP3", "C4SP3"
+        };
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
+    }
+
+    private IBond.Order getHighestBondOrder(IAtomContainer container, IAtom atom) {
+        List<IBond> bonds = container.getConnectedBondsList(atom);
+        IBond.Order maxOrder = IBond.Order.SINGLE;
+        for (IBond bond : bonds) {
+            if (BondManipulator.isHigherOrder(bond.getOrder(), maxOrder))
+            	maxOrder = bond.getOrder();
+        }
+        return maxOrder;
+    }
+
+    /**
+     * Returns the specific type of the DescriptorResult object.
+     * <p/>
+     * The return value from this method really indicates what type of result will
+     * be obtained from the {@link org.openscience.cdk.qsar.DescriptorValue} object. Note that the same result
+     * can be achieved by interrogating the {@link org.openscience.cdk.qsar.DescriptorValue} object; this method
+     * allows you to do the same thing, without actually calculating the descriptor.
+     *
+     * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
+     *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
+     */
+    public IDescriptorResult getDescriptorResultType() {
+        return new IntegerArrayResultType(9);
+    }
+
+}

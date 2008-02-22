@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE map
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/map_1_0.dtd">
+
+<map version="1.0">
+	<mapID target="aboutJCP" url="contain/aboutJCP.html" />
+	  <mapID target="whatIs" url="contain/whatIs.html" />
+	  <mapID target="participate" url="contain/participate.html" />
+	  <mapID target="requirements" url="contain/requirements.html" />
+	  <mapID target="bugs" url="contain/bugs.html" />
+	
+	<mapID target="tutorial" url="contain/tutorial.html" />
+	<mapID target="molecules" url="contain/molecules.html" />
+	<mapID target="reactions" url="contain/reactions.html" />
+	<mapID target="referenceGuide" url="contain/referenceGuide.html" />
+	  <mapID target="button" url="contain/button.html" />
+	  <mapID target="menu" url="contain/menu.html" />
+	    <mapID target="menuFile" url="contain/menuFile.html" />
+	    <mapID target="menuEdit" url="contain/menuEdit.html" />
+	    <mapID target="menuView" url="contain/menuView.html" />
+	    <mapID target="menuInsert" url="contain/menuInsert.html" />
+	    <mapID target="menuReport" url="contain/menuReport.html" />
+	    <mapID target="menuPlugins" url="contain/menuPlugins.html" />
+	    <mapID target="menuHelp" url="contain/menuHelp.html" />
+	  <mapID target="fitting" url="contain/fitting.html" />
+	  <mapID target="drawingButtons" url="contain/drawingButtons.html" />
+	  <mapID target="otherButtons" url="contain/otherButtons.html" />
+	  <mapID target="moveButtons" url="contain/moveButtons.html" />
+        
+   <mapID target="beyondJCP" url="contain/beyondJCP.html" />     
+	<mapID target="extendingJCP" url="contain/extendingJCP.html" />
+	<mapID target="bibliography" url="contain/bibliography.html" />
+	
+	<mapID target="toplevelfolder" url="images/toplevel.gif" />
+	<mapID target="chapter" url="images/chapTopic.gif" />
+	<mapID target="topic" url="images/topic.gif" />
+	<mapID target="tocspacer1" url="images/tocspacer1.gif" />
+	<mapID target="openbook" url="images/openbook.gif" />
+
+	<mapID target="top" url="jcp.html" />
+
+
+</map>
