@@ -309,7 +309,7 @@
             <delete dir="${build.src}"/>
             <mkdir dir="${build.src}"/>
             <copy todir="${build.src}">
-                <fileset dir="${src}/main/">
+                <fileset dir="${source}">
                     <excludesfile name="${build}/java1.4+.javafiles" if="isJava13"/>
                     <!-- excludesfile name="${build}/java1.4.javafiles" unless="isJava14"/ -->
                     <!-- excludesfile name="${build}/java1.5.javafiles" unless="isJava15"/ -->
