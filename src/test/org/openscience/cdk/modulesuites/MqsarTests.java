@@ -28,7 +28,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.test.qsar.model.R2.RJavaEnvironmentTest;
-import org.openscience.cdk.test.qsar.model.weka.QSARWekaModelTests;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -59,8 +58,6 @@ public class MqsarTests {
 
 //      from cdk.test.qsar.model.R2
  
-        suite.addTest(QSARWekaModelTests.suite());
-
         return suite;
     }
 

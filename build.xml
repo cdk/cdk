@@ -472,7 +472,6 @@
             <antcall target="compile-module"><param name="module" value="qsarmolecular"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsarprotein"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar-cml"/><param name="source" value="${src}/main"/></antcall>
-     	    <antcall target="compile-module"><param name="module" value="qsarweka"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="forcefield"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3d"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3dtools"/><param name="source" value="${src}/main"/></antcall>
@@ -508,7 +507,6 @@
         <antcall target="compile-module"><param name="module" value="test-qsarbond"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarprotein"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsarweka"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-pdb"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-inchi"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-libiomd"/><param name="source" value="${src}/test"/></antcall>
@@ -539,7 +537,6 @@
                     <includesfile name="${metainf}/io-jmol.libdepends"/>
                     <includesfile name="${metainf}/io.libdepends"/>
                     <includesfile name="${metainf}/libiocml.libdepends"/>
-                    <includesfile name="${metainf}/libioweka.libdepends"/>
                     <includesfile name="${metainf}/nonotify.libdepends"/>
                     <includesfile name="${metainf}/pdb-cml.libdepends"/>
                     <includesfile name="${metainf}/pdb.libdepends"/>
@@ -549,7 +546,6 @@
                     <includesfile name="${metainf}/qsarmolecular.libdepends"/>
                     <includesfile name="${metainf}/qsarprotein.libdepends"/>
                     <includesfile name="${metainf}/qsar-cml.libdepends"/>
-                    <includesfile name="${metainf}/qsarweka.libdepends"/>
                     <includesfile name="${metainf}/reaction.libdepends"/>
                     <includesfile name="${metainf}/render.libdepends"/>
                     <includesfile name="${metainf}/standard.libdepends"/>
@@ -578,7 +574,6 @@
                     <include name="cdk-io.jar"/>
                     <include name="cdk-io-jmol.jar"/>
                     <include name="cdk-libiocml.jar"/>
-                    <include name="cdk-libioweka.jar"/>
                     <include name="cdk-libiomd.jar"/>
                     <include name="cdk-nonotify.jar"/>
                     <include name="cdk-pdb-cml.jar"/>
@@ -589,7 +584,6 @@
                     <include name="cdk-qsarmolecular.jar"/>
                     <include name="cdk-qsarprotein.jar"/>
                     <include name="cdk-qsar-cml.jar"/>
-                    <include name="cdk-qsarweka.jar"/>
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>
@@ -646,7 +640,6 @@
                     <include name="cdk-io.jar"/>
                     <include name="cdk-io-jmol.jar"/>
                     <include name="cdk-libiocml.jar"/>
-                    <include name="cdk-libioweka.jar"/>
                     <include name="cdk-libiomd.jar"/>
                     <include name="cdk-nonotify.jar"/>
                     <include name="cdk-pdb-cml.jar"/>
@@ -657,7 +650,6 @@
                     <include name="cdk-qsarmolecular.jar"/>
                     <include name="cdk-qsarprotein.jar"/>
                     <include name="cdk-qsar-cml.jar"/>
-                    <include name="cdk-qsarweka.jar"/>
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>
@@ -723,7 +715,6 @@
                     <includesfile name="${metainf}/test-structgen.libdepends"/>
                     <includesfile name="${metainf}/test-valencycheck.libdepends"/>
                     <includesfile name="${metainf}/test-charges.libdepends"/>
-                    <includesfile name="${metainf}/test-weka.libdepends"/>
                     <includesfile name="${metainf}/test-libiomd.libdepends"/>
                     <includesfile name="${metainf}/test-pcore.libdepends"/>
                     <includesfile name="${metainf}/test-formula.libdepends"/>
@@ -752,7 +743,6 @@
                     <include name="cdk-test-structgen.jar"/>
                     <include name="cdk-test-valencycheck.jar"/>
                     <include name="cdk-test-charges.jar"/>
-                    <include name="cdk-test-weka.jar"/>
                     <include name="cdk-test-libiomd.jar"/>
                     <include name="cdk-test-pcore.jar"/>
                     <include name="cdk-test-formula.jar"/>
@@ -991,7 +981,6 @@
                 <antcall target="test-module"><param name="module" value="qsarbond"/></antcall>
                 <antcall target="test-module"><param name="module" value="qsarmolecular"/></antcall>
                 <antcall target="test-module"><param name="module" value="qsarprotein"/></antcall>
-                <antcall target="test-module"><param name="module" value="weka"/></antcall>
         	<antcall target="test-module"><param name="module" value="pdb"/></antcall> 
         	<antcall target="test-module"><param name="module" value="pcore"/></antcall> 
             <antcall target="test-module"><param name="module" value="inchi"/></antcall>
