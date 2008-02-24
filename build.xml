@@ -257,14 +257,14 @@
         	    srcdir="${src}/main/" destdir="${build}" optimize="${optimization}"
         	    debug="${debug}" deprecation="${deprecation}"/>
         	<java classpath="${build}" classname="net.sf.cdk.tools.MakeJavafilesFiles">
-                <arg value="${src}"/>
-                <arg value="${src}/main"/>
-                <arg value="${build}"/>
+                  <arg value="${src}/META-INF"/>
+                  <arg value="${src}/main"/>
+                  <arg value="${build}"/>
         	</java>
         	<java classpath="${build}" classname="net.sf.cdk.tools.MakeJavafilesFiles">
-                <arg value="${src}"/>
-                <arg value="${src}/test"/>
-                <arg value="${build}"/>
+                  <arg value="${src}/META-INF"/>
+                  <arg value="${src}/test"/>
+                  <arg value="${build}"/>
         	</java>
         </target>
 
