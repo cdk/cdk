@@ -386,11 +386,11 @@
                <fileset dir="${build}">
                     <include name="${module}.javafiles" />
                </fileset>
-               <fileset dir="${src}/main/">
+               <fileset dir="${src}">
                     <exclude name="**/*" unless="module.datafiles.present"/>
                     <includesfile name="${metainf}/${module}.datafiles" if="module.datafiles.present" />
                </fileset>
-               <fileset dir="${src}/main/">
+               <fileset dir="${src}">
                     <exclude name="**/*" unless="module.extrafiles.present"/>
                     <includesfile name="${metainf}/${module}.extrafiles" if="module.extrafiles.present" />
                </fileset>
