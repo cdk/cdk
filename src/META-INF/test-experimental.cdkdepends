@@ -20,3 +20,5 @@ cdk-smiles.jar
 cdk-test.jar
 cdk-test-core.jar
 cdk-test-atomtype.jar
+cdk-test-qsar.jar
+cdk-test-qsarmolecular.jar

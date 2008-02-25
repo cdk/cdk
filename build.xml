@@ -503,11 +503,11 @@
         <antcall target="compile-module"><param name="module" value="test-forcefield"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-valencycheck"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-charges"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-experimental"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsar"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsaratomic"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarbond"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/><param name="source" value="${src}/test"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-experimental"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarprotein"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-pdb"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-inchi"/><param name="source" value="${src}/test"/></antcall>
