@@ -307,6 +307,7 @@
                  we explicitely make it impossible to compile files that are not
                  marked for a specific module -->
             <delete dir="${build.src}"/>
+            <delete dir="${build}/org"/> <!-- remove the previously compiled .class output -->
             <mkdir dir="${build.src}"/>
             <copy todir="${build.src}">
                 <fileset dir="${source}">
