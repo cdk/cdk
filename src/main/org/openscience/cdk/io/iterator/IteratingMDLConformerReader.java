@@ -39,7 +39,7 @@ import java.util.NoSuchElementException;
  * <p/>
  * </pre>
  *
- * @cdk.module io
+ * @cdk.module extra
  * @cdk.svnrev  $Revision: 9162 $
  * @author Rajarshi Guha
  * @see org.openscience.cdk.ConformerContainer

@@ -6,3 +6,5 @@ cdk-io.jar
 cdk-render.jar
 cdk-standard.jar
 cdk-valencycheck.jar
+cdk-atomtype.jar
+cdk-formula.jar

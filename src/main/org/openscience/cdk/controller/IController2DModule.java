@@ -35,7 +35,8 @@ import javax.vecmath.Point2d;
  * 
  * @author egonw
  * @cdk.svnrev  $Revision: 9162 $
- * 
+ * @cdk.module  progzjcp
+ *
  * @see    Controller2DModel
  */
 public interface IController2DModule {

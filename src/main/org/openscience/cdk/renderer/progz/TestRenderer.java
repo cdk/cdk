@@ -51,8 +51,9 @@ import java.io.IOException;
 /**
  * Test class for testing the new Java2DRenderer.
  * 
- * @author nielsout
+ * @author      nielsout
  * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.module  progzjcp
  */
 public class TestRenderer extends JPanel {
 

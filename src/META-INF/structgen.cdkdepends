@@ -3,3 +3,5 @@ cdk-core.jar
 cdk-standard.jar
 cdk-nonotify.jar
 cdk-formula.jar
+cdk-atomtype.jar
+cdk-valencycheck.jar

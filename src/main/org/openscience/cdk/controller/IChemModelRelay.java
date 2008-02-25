@@ -31,6 +31,9 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.renderer.progz.IJava2DRenderer;
 import org.openscience.cdk.interfaces.IChemModel;
 
+/**
+ * @cdk.module progzjcp
+ */
 public interface IChemModelRelay {
 
 	public abstract IAtom getClosestAtom(Point2d worldCoord);

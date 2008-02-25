@@ -28,6 +28,9 @@ import javax.vecmath.Point2d;
 
 import org.openscience.cdk.renderer.ISimpleRenderer2D;
 
+/**
+ * @cdk.module progzjcp
+ */
 public interface IJava2DRenderer extends ISimpleRenderer2D {
 	
 	/**

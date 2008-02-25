@@ -47,9 +47,9 @@ import org.openscience.cdk.Atom;
 /**
  * Adds an atom on the given location on mouseclick
  * 
- * @author Niels Out
+ * @author      Niels Out
  * @cdk.svnrev  $Revision: 9162 $
- *
+ * @cdk.module  progzjcp
  */
 public class Controller2DModuleAddAtom implements IController2DModule {
 

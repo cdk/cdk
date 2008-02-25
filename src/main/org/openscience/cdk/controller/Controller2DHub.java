@@ -47,9 +47,10 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * 
  * <p>FIXME: will replace the old Controller2D class.
  * 
- * @author egonw
  * @cdk.svnrev  $Revision: 9162 $
- * @auther Niels Out
+ * @cdk.module  progzjcp
+ * @author      Niels Out
+ * @author      egonw
  */
 public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 	

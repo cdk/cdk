@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * 
  * @author Niels Out
  * @cdk.svnrev  $Revision: 9162 $
- *
+ * @cdk.module  progzjcp
  */
 public class Controller2DModuleRemove implements IController2DModule {
 

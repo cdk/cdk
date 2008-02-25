@@ -68,8 +68,9 @@ import org.openscience.cdk.validate.ProblemMarker;
 /**
  * A Java2D based 2D renderer for IChemObjects.
  * 
- * @author nielsout
+ * @author      nielsout
  * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.module  progzjcp
  */
 public class Java2DRenderer implements IJava2DRenderer {
 

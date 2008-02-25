@@ -481,7 +481,8 @@
             <antcall target="compile-module"><param name="module" value="experimental"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="pcore"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="applications"/><param name="source" value="${src}/main"/></antcall>
-    		<antcall target="compile-module"><param name="module" value="inchi"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="inchi"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="progzjcp"/><param name="source" value="${src}/main"/></antcall>
         </target>
 
 	<target id="test-dist-all" name="test-dist-all" description="test-dist-all">

@@ -4,5 +4,9 @@ cdk-standard.jar
 cdk-render.jar
 cdk-io.jar
 cdk-valencycheck.jar
+cdk-sdg.jar
 cdk-atomtype.jar
-
+cdk-data.jar
+cdk-extra.jar
+cdk-control.jar
+cdk-render.jar

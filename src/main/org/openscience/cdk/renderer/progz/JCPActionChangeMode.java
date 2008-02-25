@@ -41,8 +41,8 @@ import org.openscience.cdk.controller.*;
 /**
  * JChemPaint menu actions
  *
- * @author     nielsout
- * @cdk.module jchempaint
+ * @author      nielsout
+ * @cdk.module  jchempaint
  * @cdk.svnrev  $Revision: 9162 $
  */
 public class JCPActionChangeMode extends AbstractAction

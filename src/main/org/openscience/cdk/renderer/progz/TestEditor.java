@@ -58,9 +58,9 @@ import org.openscience.cdk.Molecule;
 /**
  * Test class for testing the new Java2DRenderer and Controller2DHub.
  * 
- * @author nielsout
- * @author egonw
- * @cdk.module jchempaint
+ * @author      nielsout
+ * @author      egonw
+ * @cdk.module  jchempaint
  * @cdk.svnrev  $Revision: 9162 $
  */
 public class TestEditor extends JPanel {

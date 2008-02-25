@@ -54,8 +54,8 @@ import java.util.List;
  * @author        Ludovic Petain
  * @author        Christian Hoppe
  * 
- * @cdk.module    standard
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.module    progzjcp
+ * @cdk.svnrev    $Revision: 9162 $
  */
 public class GeometryToolsInternalCoordinates {
 

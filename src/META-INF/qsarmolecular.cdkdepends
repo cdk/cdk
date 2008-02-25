@@ -9,3 +9,6 @@ cdk-reaction.jar
 cdk-charges.jar
 cdk-qsar.jar
 cdk-qsaratomic.jar
+cdk-atomtype.jar
+cdk-smiles.jar
+cdk-formula.jar

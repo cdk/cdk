@@ -46,9 +46,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 /**
  * Changes (Increases or Decreases) Formal Charge of an atom
  * 
- * @author Niels Out
+ * @author      Niels Out
  * @cdk.svnrev  $Revision: 9162 $
- *
+ * @cdk.module  progzjcp
  */
 public class Controller2DModuleChangeFormalC implements IController2DModule {
 

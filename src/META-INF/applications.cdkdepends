@@ -10,7 +10,9 @@ cdk-interfaces.jar
 cdk-libio.jar
 cdk-libiocml.jar
 cdk-qsar.jar
+cdk-qsarmolecular.jar
 cdk-render.jar
 cdk-standard.jar
 cdk-svg.jar
 cdk-smiles.jar
+cdk-atomtype.jar
