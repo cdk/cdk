@@ -386,7 +386,7 @@
                <fileset dir="${build}">
                     <include name="${module}.javafiles" />
                </fileset>
-               <fileset dir="${src}">
+               <fileset dir="${source}">
                     <exclude name="**/*" unless="module.datafiles.present"/>
                     <includesfile name="${metainf}/${module}.datafiles" if="module.datafiles.present" />
                </fileset>
