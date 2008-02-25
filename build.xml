@@ -283,7 +283,7 @@
                 depends="check, dist.init, compile-needed-test"
                 unless="module-uptodate">
 
-            <echo message="Compiling classes for CDK's ${module} module." />
+            <echo message="Compiling classes for CDK's ${module} module from ${source}..." />
 
             <!-- check for availability for meta info files -->
             <available file="${metainf}/${module}.datafiles" property="module.datafiles.present"/>
