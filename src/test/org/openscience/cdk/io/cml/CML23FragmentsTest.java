@@ -25,7 +25,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
-package org.openscience.cdk.test.io.cml;
+package org.openscience.cdk.io.cml;
 
 import java.io.ByteArrayInputStream;
 import java.util.Iterator;
@@ -46,11 +46,11 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Atomic tests for the reading CML documents. All tested CML strings are valid CML 2.3,
- * as can be determined in cdk/src/org/openscience/cdk/test/io/cml/cml23TestFramework.xml.
+ * as can be determined in cdk/src/org.openscience.cdk/io/cml/cml23TestFramework.xml.
  *
  * @cdk.module test-io
  *

@@ -26,7 +26,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
 
-package org.openscience.cdk.test.renderer;
+package org.openscience.cdk.renderer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

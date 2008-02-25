@@ -18,7 +18,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.smiles;
+package org.openscience.cdk.smiles;
 
 import java.util.Iterator;
 import java.util.List;
@@ -39,7 +39,7 @@ import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.module     test-smiles
  * @cdk.created    2003-09-19
  * 
- * @see org.openscience.cdk.test.gui.SmilesParserTest
+ * @see org.openscience.cdk.gui.SmilesParserTest
  */
 public class SmilesParserTest extends NewCDKTestCase {
 	

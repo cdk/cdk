@@ -18,26 +18,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.test.CDKConstantsTest;
-import org.openscience.cdk.test.CoreCoverageTest;
-import org.openscience.cdk.test.config.AtomTypeFactoryTest;
-import org.openscience.cdk.test.config.CDKBasedAtomTypeConfiguratorTest;
-import org.openscience.cdk.test.config.IsotopeFactoryTest;
-import org.openscience.cdk.test.config.TXTBasedAtomTypeConfiguratorTest;
-import org.openscience.cdk.test.config.atomtypes.AtomTypeHandlerTest;
-import org.openscience.cdk.test.config.atomtypes.AtomTypeReaderTest;
-import org.openscience.cdk.test.config.isotopes.IsotopeHandlerTest;
-import org.openscience.cdk.test.config.isotopes.IsotopeReaderTest;
-import org.openscience.cdk.test.exception.CDKExceptionTest;
-import org.openscience.cdk.test.exception.NoSuchAtomExceptionTest;
-import org.openscience.cdk.test.exception.NoSuchAtomTypeExceptionTest;
-import org.openscience.cdk.test.tools.DataFeaturesTest;
-import org.openscience.cdk.test.tools.LoggingToolTest;
+import org.openscience.cdk.CDKConstantsTest;
+import org.openscience.cdk.CoreCoverageTest;
+import org.openscience.cdk.config.AtomTypeFactoryTest;
+import org.openscience.cdk.config.CDKBasedAtomTypeConfiguratorTest;
+import org.openscience.cdk.config.IsotopeFactoryTest;
+import org.openscience.cdk.config.TXTBasedAtomTypeConfiguratorTest;
+import org.openscience.cdk.config.atomtypes.AtomTypeHandlerTest;
+import org.openscience.cdk.config.atomtypes.AtomTypeReaderTest;
+import org.openscience.cdk.config.isotopes.IsotopeHandlerTest;
+import org.openscience.cdk.config.isotopes.IsotopeReaderTest;
+import org.openscience.cdk.exception.CDKExceptionTest;
+import org.openscience.cdk.exception.NoSuchAtomExceptionTest;
+import org.openscience.cdk.exception.NoSuchAtomTypeExceptionTest;
+import org.openscience.cdk.tools.DataFeaturesTest;
+import org.openscience.cdk.tools.LoggingToolTest;
 
 /**
  * TestSuite that runs all the tests for the CDK core module.

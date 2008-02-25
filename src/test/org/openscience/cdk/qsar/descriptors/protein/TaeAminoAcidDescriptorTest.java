@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.qsar.descriptors.protein;
+package org.openscience.cdk.qsar.descriptors.protein;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -9,7 +9,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.protein.TaeAminoAcidDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.ProteinBuilderTool;
 
 /**

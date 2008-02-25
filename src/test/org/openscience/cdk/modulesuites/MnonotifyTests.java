@@ -22,45 +22,45 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.nonotify.NNAminoAcidTest;
-import org.openscience.cdk.test.nonotify.NNAtomContainerSetTest;
-import org.openscience.cdk.test.nonotify.NNAtomContainerTest;
-import org.openscience.cdk.test.nonotify.NNAtomParityTest;
-import org.openscience.cdk.test.nonotify.NNAtomTest;
-import org.openscience.cdk.test.nonotify.NNAtomTypeTest;
-import org.openscience.cdk.test.nonotify.NNBioPolymerTest;
-import org.openscience.cdk.test.nonotify.NNBondTest;
-import org.openscience.cdk.test.nonotify.NNChemFileTest;
-import org.openscience.cdk.test.nonotify.NNChemModelTest;
-import org.openscience.cdk.test.nonotify.NNChemObjectBuilderTest;
-import org.openscience.cdk.test.nonotify.NNChemObjectTest;
-import org.openscience.cdk.test.nonotify.NNChemSequenceTest;
-import org.openscience.cdk.test.nonotify.NNCrystalTest;
-import org.openscience.cdk.test.nonotify.NNElectronContainerTest;
-import org.openscience.cdk.test.nonotify.NNElementTest;
-import org.openscience.cdk.test.nonotify.NNIsotopeTest;
-import org.openscience.cdk.test.nonotify.NNLonePairTest;
-import org.openscience.cdk.test.nonotify.NNMoleculeSetTest;
-import org.openscience.cdk.test.nonotify.NNMoleculeTest;
-import org.openscience.cdk.test.nonotify.NNMonomerTest;
-import org.openscience.cdk.test.nonotify.NNPDBAtomTest;
-import org.openscience.cdk.test.nonotify.NNPDBMonomerTest;
-import org.openscience.cdk.test.nonotify.NNPDBPolymerTest;
-import org.openscience.cdk.test.nonotify.NNPDBStructureTest;
-import org.openscience.cdk.test.nonotify.NNPolymerTest;
-import org.openscience.cdk.test.nonotify.NNPseudoAtomTest;
-import org.openscience.cdk.test.nonotify.NNReactionSetTest;
-import org.openscience.cdk.test.nonotify.NNReactionTest;
-import org.openscience.cdk.test.nonotify.NNRingSetTest;
-import org.openscience.cdk.test.nonotify.NNRingTest;
-import org.openscience.cdk.test.nonotify.NNSingleElectronTest;
-import org.openscience.cdk.test.nonotify.NNStrandTest;
+import org.openscience.cdk.nonotify.NNAminoAcidTest;
+import org.openscience.cdk.nonotify.NNAtomContainerSetTest;
+import org.openscience.cdk.nonotify.NNAtomContainerTest;
+import org.openscience.cdk.nonotify.NNAtomParityTest;
+import org.openscience.cdk.nonotify.NNAtomTest;
+import org.openscience.cdk.nonotify.NNAtomTypeTest;
+import org.openscience.cdk.nonotify.NNBioPolymerTest;
+import org.openscience.cdk.nonotify.NNBondTest;
+import org.openscience.cdk.nonotify.NNChemFileTest;
+import org.openscience.cdk.nonotify.NNChemModelTest;
+import org.openscience.cdk.nonotify.NNChemObjectBuilderTest;
+import org.openscience.cdk.nonotify.NNChemObjectTest;
+import org.openscience.cdk.nonotify.NNChemSequenceTest;
+import org.openscience.cdk.nonotify.NNCrystalTest;
+import org.openscience.cdk.nonotify.NNElectronContainerTest;
+import org.openscience.cdk.nonotify.NNElementTest;
+import org.openscience.cdk.nonotify.NNIsotopeTest;
+import org.openscience.cdk.nonotify.NNLonePairTest;
+import org.openscience.cdk.nonotify.NNMoleculeSetTest;
+import org.openscience.cdk.nonotify.NNMoleculeTest;
+import org.openscience.cdk.nonotify.NNMonomerTest;
+import org.openscience.cdk.nonotify.NNPDBAtomTest;
+import org.openscience.cdk.nonotify.NNPDBMonomerTest;
+import org.openscience.cdk.nonotify.NNPDBPolymerTest;
+import org.openscience.cdk.nonotify.NNPDBStructureTest;
+import org.openscience.cdk.nonotify.NNPolymerTest;
+import org.openscience.cdk.nonotify.NNPseudoAtomTest;
+import org.openscience.cdk.nonotify.NNReactionSetTest;
+import org.openscience.cdk.nonotify.NNReactionTest;
+import org.openscience.cdk.nonotify.NNRingSetTest;
+import org.openscience.cdk.nonotify.NNRingTest;
+import org.openscience.cdk.nonotify.NNSingleElectronTest;
+import org.openscience.cdk.nonotify.NNStrandTest;
 
 /**
  * TestSuite that runs the nonotify tests.

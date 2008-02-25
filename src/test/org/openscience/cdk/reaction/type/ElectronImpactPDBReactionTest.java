@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.reaction.type;
+package org.openscience.cdk.reaction.type;
 
 
 import java.util.Iterator;
@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.ElectronImpactPDBReaction;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * TestSuite that runs a test for the ElectronImpactPDBReactionTest.

@@ -18,14 +18,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.event;
+package org.openscience.cdk.event;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.event.ChemObjectChangeEvent;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * Checks the functionality of the ChemObjectChangeEvent class.

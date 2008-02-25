@@ -21,13 +21,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.templates;
+package org.openscience.cdk.templates;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.AminoAcid;
 import org.openscience.cdk.templates.AminoAcids;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.applications.undoredo;
+package org.openscience.cdk.applications.undoredo;
 
 import java.io.IOException;
 import java.io.OptionalDataException;
@@ -17,7 +17,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.undoredo.ChangeIsotopeEdit;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Junit test for the ChangeIsotopeEdit class

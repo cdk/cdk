@@ -18,7 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.atomtype;
+package org.openscience.cdk.atomtype;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**

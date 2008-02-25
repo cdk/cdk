@@ -19,13 +19,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.qsar.descriptors.molecular.AminoAcidCountDescriptorTest;
-import org.openscience.cdk.test.qsar.descriptors.protein.TaeAminoAcidDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.AminoAcidCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.protein.TaeAminoAcidDescriptorTest;
 
 /**
  * TestSuite that runs all the sample tests.

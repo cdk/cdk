@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.qsar.model.R2;
+package org.openscience.cdk.qsar.model.R2;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -45,9 +45,9 @@ public class QSARRModelTests {
 
             Class testClass;
 
-            testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.R2.LinearRegressionModelTest");
+            testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.qsar.model.R2.LinearRegressionModelTest");
             suite.addTest(new TestSuite(testClass));
-            testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.qsar.model.R2.CNNRegressionModelTest");
+            testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.qsar.model.R2.CNNRegressionModelTest");
             suite.addTest(new TestSuite(testClass));
             System.out.println("Found RJava, running R tests...");
         } catch (ClassNotFoundException exception) {

@@ -18,12 +18,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.libio.cml.ConvertorTest;
+import org.openscience.cdk.libio.cml.ConvertorTest;
 
 /**
  * TestSuite that runs all the unit tests for the CDK module libiocml.
@@ -43,7 +43,7 @@ public class MlibiocmlTests {
         	System.getProperty("java.version").startsWith("1.7")) {
             System.out.println("Found required Java 1.5 (or better), so running the CML2 tests.");
             try {
-                Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.io.cml.CML2Test");
+                Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.io.cml.CML2Test");
                 suite.addTest(new TestSuite(testClass));
             } catch (Exception exception) {
                 // ok, do without. Probably compiled not Java 1.4
@@ -51,7 +51,7 @@ public class MlibiocmlTests {
                 exception.printStackTrace();
             }
             try {
-                Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.io.cml.CML2WriterTest");
+                Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.io.cml.CML2WriterTest");
                 suite.addTest(new TestSuite(testClass));
             } catch (Exception exception) {
                 // ok, do without. Probably compiled not Java 1.4
@@ -59,7 +59,7 @@ public class MlibiocmlTests {
                 exception.printStackTrace();
             }
             try {
-                Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.test.io.cml.CMLRoundTripTest");
+                Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.io.cml.CMLRoundTripTest");
                 suite.addTest(new TestSuite(testClass));
             } catch (Exception exception) {
                 // ok, do without. Probably compiled not Java 1.4

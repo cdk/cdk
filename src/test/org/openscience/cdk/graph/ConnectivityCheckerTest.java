@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-package org.openscience.cdk.test.graph;
+package org.openscience.cdk.graph;
 
 
 import org.junit.Assert;
@@ -31,7 +31,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  *  Checks the functionality of the ConnectivityChecker

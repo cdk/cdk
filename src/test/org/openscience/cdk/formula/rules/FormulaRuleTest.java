@@ -18,7 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.formula.rules;
+package org.openscience.cdk.formula.rules;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,7 +27,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.IMolecularFormula;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.formula.rules.IRule;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * Tests for formula restriction rules.

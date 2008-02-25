@@ -25,7 +25,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
-package org.openscience.cdk.test.io;
+package org.openscience.cdk.io;
 
 import java.io.StringReader;
 
@@ -35,7 +35,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.io.GhemicalMMReader;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * TestCase for the reading Ghemical molecular dynamics files using one test file.

@@ -18,16 +18,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.AssociationTest;
-import org.openscience.cdk.test.atomtype.MM2AtomTypeMatcherTest;
-import org.openscience.cdk.test.atomtype.MMFF94AtomTypeMatcherTest;
-import org.openscience.cdk.test.io.VASPReaderTest;
-import org.openscience.cdk.test.tools.GenerateFragmentsTest;
+import org.openscience.cdk.AssociationTest;
+import org.openscience.cdk.atomtype.MM2AtomTypeMatcherTest;
+import org.openscience.cdk.atomtype.MMFF94AtomTypeMatcherTest;
+import org.openscience.cdk.io.VASPReaderTest;
+import org.openscience.cdk.tools.GenerateFragmentsTest;
 
 /**
  * TestSuite that runs all the sample tests for experimental classes.

@@ -22,45 +22,45 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.debug.DebugAminoAcidTest;
-import org.openscience.cdk.test.debug.DebugAtomContainerSetTest;
-import org.openscience.cdk.test.debug.DebugAtomContainerTest;
-import org.openscience.cdk.test.debug.DebugAtomParityTest;
-import org.openscience.cdk.test.debug.DebugAtomTest;
-import org.openscience.cdk.test.debug.DebugAtomTypeTest;
-import org.openscience.cdk.test.debug.DebugBioPolymerTest;
-import org.openscience.cdk.test.debug.DebugBondTest;
-import org.openscience.cdk.test.debug.DebugChemFileTest;
-import org.openscience.cdk.test.debug.DebugChemModelTest;
-import org.openscience.cdk.test.debug.DebugChemObjectBuilderTest;
-import org.openscience.cdk.test.debug.DebugChemObjectTest;
-import org.openscience.cdk.test.debug.DebugChemSequenceTest;
-import org.openscience.cdk.test.debug.DebugCrystalTest;
-import org.openscience.cdk.test.debug.DebugElectronContainerTest;
-import org.openscience.cdk.test.debug.DebugElementTest;
-import org.openscience.cdk.test.debug.DebugIsotopeTest;
-import org.openscience.cdk.test.debug.DebugLonePairTest;
-import org.openscience.cdk.test.debug.DebugMoleculeSetTest;
-import org.openscience.cdk.test.debug.DebugMoleculeTest;
-import org.openscience.cdk.test.debug.DebugMonomerTest;
-import org.openscience.cdk.test.debug.DebugPDBAtomTest;
-import org.openscience.cdk.test.debug.DebugPDBMonomerTest;
-import org.openscience.cdk.test.debug.DebugPDBPolymerTest;
-import org.openscience.cdk.test.debug.DebugPDBStructureTest;
-import org.openscience.cdk.test.debug.DebugPolymerTest;
-import org.openscience.cdk.test.debug.DebugPseudoAtomTest;
-import org.openscience.cdk.test.debug.DebugReactionSetTest;
-import org.openscience.cdk.test.debug.DebugReactionTest;
-import org.openscience.cdk.test.debug.DebugRingSetTest;
-import org.openscience.cdk.test.debug.DebugRingTest;
-import org.openscience.cdk.test.debug.DebugSingleElectronTest;
-import org.openscience.cdk.test.debug.DebugStrandTest;
+import org.openscience.cdk.debug.DebugAminoAcidTest;
+import org.openscience.cdk.debug.DebugAtomContainerSetTest;
+import org.openscience.cdk.debug.DebugAtomContainerTest;
+import org.openscience.cdk.debug.DebugAtomParityTest;
+import org.openscience.cdk.debug.DebugAtomTest;
+import org.openscience.cdk.debug.DebugAtomTypeTest;
+import org.openscience.cdk.debug.DebugBioPolymerTest;
+import org.openscience.cdk.debug.DebugBondTest;
+import org.openscience.cdk.debug.DebugChemFileTest;
+import org.openscience.cdk.debug.DebugChemModelTest;
+import org.openscience.cdk.debug.DebugChemObjectBuilderTest;
+import org.openscience.cdk.debug.DebugChemObjectTest;
+import org.openscience.cdk.debug.DebugChemSequenceTest;
+import org.openscience.cdk.debug.DebugCrystalTest;
+import org.openscience.cdk.debug.DebugElectronContainerTest;
+import org.openscience.cdk.debug.DebugElementTest;
+import org.openscience.cdk.debug.DebugIsotopeTest;
+import org.openscience.cdk.debug.DebugLonePairTest;
+import org.openscience.cdk.debug.DebugMoleculeSetTest;
+import org.openscience.cdk.debug.DebugMoleculeTest;
+import org.openscience.cdk.debug.DebugMonomerTest;
+import org.openscience.cdk.debug.DebugPDBAtomTest;
+import org.openscience.cdk.debug.DebugPDBMonomerTest;
+import org.openscience.cdk.debug.DebugPDBPolymerTest;
+import org.openscience.cdk.debug.DebugPDBStructureTest;
+import org.openscience.cdk.debug.DebugPolymerTest;
+import org.openscience.cdk.debug.DebugPseudoAtomTest;
+import org.openscience.cdk.debug.DebugReactionSetTest;
+import org.openscience.cdk.debug.DebugReactionTest;
+import org.openscience.cdk.debug.DebugRingSetTest;
+import org.openscience.cdk.debug.DebugRingTest;
+import org.openscience.cdk.debug.DebugSingleElectronTest;
+import org.openscience.cdk.debug.DebugStrandTest;
 
 /**
  * TestSuite that runs the datadebug tests.

@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-package org.openscience.cdk.test.nonotify;
+package org.openscience.cdk.nonotify;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.test.MoleculeSetTest;
+import org.openscience.cdk.MoleculeSetTest;
 
 /**
  * Checks the functionality of the AtomContainer.

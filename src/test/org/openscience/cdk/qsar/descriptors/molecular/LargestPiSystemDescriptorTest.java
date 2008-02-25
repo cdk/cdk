@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.qsar.descriptors.molecular;
+package org.openscience.cdk.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

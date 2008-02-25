@@ -25,14 +25,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
-package org.openscience.cdk.test.libio.weka;
+package org.openscience.cdk.libio.weka;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.libio.weka.Weka;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import weka.classifiers.functions.LinearRegression;
 import weka.classifiers.trees.J48;

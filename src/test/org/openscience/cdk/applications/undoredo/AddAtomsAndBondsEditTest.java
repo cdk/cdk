@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.applications.undoredo;
+package org.openscience.cdk.applications.undoredo;
 
 import javax.swing.undo.UndoableEdit;
 
@@ -13,7 +13,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEdit;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Junit test for the RemoveAtomsAndBondsEdit class

@@ -19,14 +19,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.QsarbondCoverageTest;
-import org.openscience.cdk.test.qsar.descriptors.bond.MassNumberDifferenceDescriptorTest;
+import org.openscience.cdk.QsarbondCoverageTest;
+import org.openscience.cdk.qsar.descriptors.bond.MassNumberDifferenceDescriptorTest;
 
 /**
  * TestSuite that runs all the sample tests.

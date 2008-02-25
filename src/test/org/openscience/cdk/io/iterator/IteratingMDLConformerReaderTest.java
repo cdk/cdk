@@ -1,11 +1,11 @@
-package org.openscience.cdk.test.io.iterator;
+package org.openscience.cdk.io.iterator;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 import java.io.InputStream;

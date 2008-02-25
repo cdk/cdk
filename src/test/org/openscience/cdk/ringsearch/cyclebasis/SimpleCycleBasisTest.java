@@ -26,7 +26,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-package org.openscience.cdk.test.ringsearch.cyclebasis;
+package org.openscience.cdk.ringsearch.cyclebasis;
 import java.util.Arrays;
 
 import junit.framework.Test;
@@ -35,7 +35,7 @@ import junit.framework.TestSuite;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleBasis;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * This class tests the SimpleCycleBasis class.

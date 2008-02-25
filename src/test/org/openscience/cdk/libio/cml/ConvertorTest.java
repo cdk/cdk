@@ -23,7 +23,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * 
  */
-package org.openscience.cdk.test.libio.cml;
+package org.openscience.cdk.libio.cml;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,7 +32,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.libio.md.MDMolecule;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xmlcml.cml.element.CMLAtom;
 

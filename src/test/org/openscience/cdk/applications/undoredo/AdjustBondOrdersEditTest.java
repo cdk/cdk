@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.applications.undoredo;
+package org.openscience.cdk.applications.undoredo;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.undoredo.AdjustBondOrdersEdit;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.SaturationChecker;
 
 /**

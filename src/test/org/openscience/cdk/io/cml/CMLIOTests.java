@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.io.cml;
+package org.openscience.cdk.io.cml;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test-io
  * 
- * @see org.openscience.cdk.test.modulesuites.MlibiocmlTests
+ * @see org.openscience.cdk.modulesuites.MlibiocmlTests
  */
 public class CMLIOTests {
 

@@ -21,14 +21,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.test.io.PDBReaderTest;
-import org.openscience.cdk.test.templates.AminoAcidsTest;
-import org.openscience.cdk.test.tools.ProteinBuilderToolTest;
+import org.openscience.cdk.io.PDBReaderTest;
+import org.openscience.cdk.templates.AminoAcidsTest;
+import org.openscience.cdk.tools.ProteinBuilderToolTest;
 
 /**
  * TestSuite that runs all the sample tests for the CDK module pdb.

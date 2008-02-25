@@ -22,12 +22,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.qsar.model.R2.RJavaEnvironmentTest;
+import org.openscience.cdk.qsar.model.R2.RJavaEnvironmentTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -50,9 +50,9 @@ public class MqsarTests {
         	ldlibrarypath != null && ldlibrarypath.equals("")) {
 
 //      	from cdk.test.qsar.model.R2
-        	suite.addTest(org.openscience.cdk.test.qsar.model.R2.CNNRegressionModelTest.suite());
-        	suite.addTest(org.openscience.cdk.test.qsar.model.R2.LinearRegressionModelTest.suite());
-        	suite.addTest(org.openscience.cdk.test.qsar.model.R2.QSARRModelTests.suite());
+        	suite.addTest(org.openscience.cdk.qsar.model.R2.CNNRegressionModelTest.suite());
+        	suite.addTest(org.openscience.cdk.qsar.model.R2.LinearRegressionModelTest.suite());
+        	suite.addTest(org.openscience.cdk.qsar.model.R2.QSARRModelTests.suite());
         	suite.addTest(RJavaEnvironmentTest.suite());
         }
 

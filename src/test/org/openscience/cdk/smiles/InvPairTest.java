@@ -18,7 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.smiles;
+package org.openscience.cdk.smiles;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,7 +26,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.smiles.InvPair;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * @cdk.module     test-standard

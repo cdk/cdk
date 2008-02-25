@@ -22,11 +22,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-package org.openscience.cdk.test.debug;
+package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.test.PolymerTest;
+import org.openscience.cdk.PolymerTest;
 
 /**
  * Checks the functionality of the AtomContainer.

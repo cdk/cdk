@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.applications.undoredo;
+package org.openscience.cdk.applications.undoredo;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -8,7 +8,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.applications.undoredo.ConvertToPseudoAtomEdit;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**

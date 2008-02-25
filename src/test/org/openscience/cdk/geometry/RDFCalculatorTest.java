@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.geometry;
+package org.openscience.cdk.geometry;
 
 import javax.vecmath.Point3d;
 
@@ -32,7 +32,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.geometry.RDFCalculator;
 import org.openscience.cdk.geometry.IRDFWeightFunction;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * This class defines regression tests that should ensure that the source code

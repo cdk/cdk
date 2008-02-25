@@ -18,7 +18,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.modeling.forcefield;
+package org.openscience.cdk.modeling.forcefield;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,7 +32,7 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
 import org.openscience.cdk.modeling.forcefield.*;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 import javax.vecmath.GVector;

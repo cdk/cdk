@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.applications.undoredo;
+package org.openscience.cdk.applications.undoredo;
 
 import java.util.HashMap;
 
@@ -42,7 +42,7 @@ public class CleanUpEditTest extends ChangeCoordsEditTest {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.openscience.cdk.test.applications.undoredo.ChangeCoordsEditTest#testUndo()
+	 * @see org.openscience.cdk.applications.undoredo.ChangeCoordsEditTest#testUndo()
 	 */
 	public void testUndo() throws Exception {
 		super.testUndo();
@@ -51,7 +51,7 @@ public class CleanUpEditTest extends ChangeCoordsEditTest {
 	/*
 	 * (non-Javadoc).
 	 * 
-	 * @see org.openscience.cdk.test.applications.undoredo.ChangeCoordsEditTest#testRedo()
+	 * @see org.openscience.cdk.applications.undoredo.ChangeCoordsEditTest#testRedo()
 	 */
 	public void testRedo() throws Exception {
 		super.testRedo();

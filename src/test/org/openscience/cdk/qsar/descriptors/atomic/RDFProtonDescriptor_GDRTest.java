@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.qsar.descriptors.atomic;
+package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.io.InputStream;
 

@@ -23,7 +23,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * 
  */
-package org.openscience.cdk.test.libio.md;
+package org.openscience.cdk.libio.md;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
@@ -45,7 +45,7 @@ import org.openscience.cdk.libio.cml.MDMoleculeCustomizer;
 import org.openscience.cdk.libio.md.ChargeGroup;
 import org.openscience.cdk.libio.md.MDMolecule;
 import org.openscience.cdk.libio.md.Residue;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 

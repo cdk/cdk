@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
-package org.openscience.cdk.test.io;
+package org.openscience.cdk.io;
 
 import java.io.InputStream;
 import java.io.StringReader;
@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV3000Reader;
 import org.openscience.cdk.nonotify.NNMolecule;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module test-io
  *
  * @see org.openscience.cdk.io.MDLReader
- * @see org.openscience.cdk.test.io.SDFReaderTest
+ * @see org.openscience.cdk.io.SDFReaderTest
  */
 public class MDLV3000ReaderTest extends CDKTestCase {
 

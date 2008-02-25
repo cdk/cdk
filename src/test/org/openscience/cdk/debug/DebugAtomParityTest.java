@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-package org.openscience.cdk.test.debug;
+package org.openscience.cdk.debug;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -30,7 +30,7 @@ import org.junit.Test;
 import org.openscience.cdk.debug.DebugAtomParity;
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.test.AtomParityTest;
+import org.openscience.cdk.AtomParityTest;
 
 /**
  * Checks the functionality of the AtomContainer.

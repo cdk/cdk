@@ -21,12 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.limitations;
+package org.openscience.cdk.limitations;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.limitations.tools.SaturationCheckerTest;
+import org.openscience.cdk.limitations.tools.SaturationCheckerTest;
 
 /**
  * TestSuite that runs all JUnit tests that fail bacause of limitations of

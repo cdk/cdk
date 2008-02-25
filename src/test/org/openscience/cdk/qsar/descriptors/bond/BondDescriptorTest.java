@@ -18,7 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.qsar.descriptors.bond;
+package org.openscience.cdk.qsar.descriptors.bond;
 
 import javax.vecmath.Point3d;
 
@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
-import org.openscience.cdk.test.qsar.descriptors.DescriptorTest;
+import org.openscience.cdk.qsar.descriptors.DescriptorTest;
 
 /**
  * Tests for bond descriptors.

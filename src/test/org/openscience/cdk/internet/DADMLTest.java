@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
 
-package org.openscience.cdk.test.internet;
+package org.openscience.cdk.internet;
 
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.AtomicTable;

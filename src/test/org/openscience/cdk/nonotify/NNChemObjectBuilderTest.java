@@ -23,7 +23,7 @@
  * 
  */
 
-package org.openscience.cdk.test.nonotify;
+package org.openscience.cdk.nonotify;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -31,7 +31,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NNChemObject;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.test.DefaultChemObjectBuilderTest;
+import org.openscience.cdk.DefaultChemObjectBuilderTest;
 
 /**
  * Checks the functionality of the Crystal.

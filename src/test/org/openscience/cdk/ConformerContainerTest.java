@@ -1,4 +1,4 @@
-package org.openscience.cdk.test;
+package org.openscience.cdk;
 
 import org.junit.Assert;
 import org.junit.Before;

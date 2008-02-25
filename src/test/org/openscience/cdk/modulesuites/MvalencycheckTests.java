@@ -18,20 +18,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.tools.CDKHydrogenAdderTest;
-import org.openscience.cdk.test.tools.CDKValencyCheckerTest;
-import org.openscience.cdk.test.tools.DeduceBondOrderTestFromExplicitHydrogens;
-import org.openscience.cdk.test.tools.DeduceBondOrderTestFromExplicitHydrogensAndCharges;
-import org.openscience.cdk.test.tools.DeduceBondOrderTestFromHybridization;
-import org.openscience.cdk.test.tools.SaturationCheckerTest;
-import org.openscience.cdk.test.tools.ValencyCheckerTest;
-import org.openscience.cdk.test.tools.ValencyHybridCheckerTest;
+import org.openscience.cdk.tools.CDKHydrogenAdderTest;
+import org.openscience.cdk.tools.CDKValencyCheckerTest;
+import org.openscience.cdk.tools.DeduceBondOrderTestFromExplicitHydrogens;
+import org.openscience.cdk.tools.DeduceBondOrderTestFromExplicitHydrogensAndCharges;
+import org.openscience.cdk.tools.DeduceBondOrderTestFromHybridization;
+import org.openscience.cdk.tools.SaturationCheckerTest;
+import org.openscience.cdk.tools.ValencyCheckerTest;
+import org.openscience.cdk.tools.ValencyHybridCheckerTest;
 
 /**
  * TestSuite that runs all the tests for the valency module.

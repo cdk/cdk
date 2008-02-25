@@ -1,10 +1,10 @@
-package org.openscience.cdk.test.qsar.model.R2;
+package org.openscience.cdk.qsar.model.R2;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.openscience.cdk.qsar.model.R2.RModel;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 
 /**

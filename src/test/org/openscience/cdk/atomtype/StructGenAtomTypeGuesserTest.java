@@ -18,7 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.atomtype;
+package org.openscience.cdk.atomtype;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,7 +29,7 @@ import org.openscience.cdk.atomtype.StructGenAtomTypeGuesser;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 import java.util.List;
 

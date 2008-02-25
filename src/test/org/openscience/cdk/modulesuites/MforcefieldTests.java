@@ -22,13 +22,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
 
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.test.charges.MMFF94PartialChargesTest;
-import org.openscience.cdk.test.modeling.forcefield.ForceFieldTests;
+import org.openscience.cdk.charges.MMFF94PartialChargesTest;
+import org.openscience.cdk.modeling.forcefield.ForceFieldTests;
 
 /**
  * TestSuite that runs all the sample tests.

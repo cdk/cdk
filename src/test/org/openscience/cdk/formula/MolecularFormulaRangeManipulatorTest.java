@@ -18,7 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.formula;
+package org.openscience.cdk.formula;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,7 +30,7 @@ import org.openscience.cdk.formula.MolecularFormulaRangeManipulator;
 import org.openscience.cdk.formula.MolecularFormulaSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * Checks the functionality of the MolecularFormulaRangeManipulator.

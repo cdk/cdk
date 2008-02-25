@@ -18,16 +18,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.test.ChargesCoverageTest;
-import org.openscience.cdk.test.charges.AtomTypeChargesTest;
-import org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest;
-import org.openscience.cdk.test.charges.InductivePartialChargesTest;
-import org.openscience.cdk.test.charges.PolarizabilityTest;
+import org.openscience.cdk.ChargesCoverageTest;
+import org.openscience.cdk.charges.AtomTypeChargesTest;
+import org.openscience.cdk.charges.GasteigerMarsiliPartialChargesTest;
+import org.openscience.cdk.charges.InductivePartialChargesTest;
+import org.openscience.cdk.charges.PolarizabilityTest;
 
 /**
  * TestSuite that runs all the sample tests for the charges module.

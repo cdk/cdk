@@ -22,35 +22,35 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.ReactionCoverageTest;
-import org.openscience.cdk.test.reaction.type.BreakingBondReactionTest;
-import org.openscience.cdk.test.reaction.type.CarbonylEliminationReactionTest;
-import org.openscience.cdk.test.reaction.type.CleavageBondMultiReactionTest;
-import org.openscience.cdk.test.reaction.type.CleavageBondReactionTest;
-import org.openscience.cdk.test.reaction.type.DisplacementChargeFromAcceptorReactionTest;
-import org.openscience.cdk.test.reaction.type.DisplacementChargeFromDonorReactionTest;
-import org.openscience.cdk.test.reaction.type.ElectronImpactNBEReactionTest;
-import org.openscience.cdk.test.reaction.type.ElectronImpactPDBReactionTest;
-import org.openscience.cdk.test.reaction.type.HydrogenRearrangementDeltaReactionTest;
-import org.openscience.cdk.test.reaction.type.HydrogenRearrangementGammaReactionTest;
-import org.openscience.cdk.test.reaction.type.HyperconjugationReactionTest;
-import org.openscience.cdk.test.reaction.type.RadicalSiteInitiationHReactionTest;
-import org.openscience.cdk.test.reaction.type.RadicalSiteInitiationReactionTest;
-import org.openscience.cdk.test.reaction.type.RearrangementAnion1ReactionTest;
-import org.openscience.cdk.test.reaction.type.RearrangementAnion2ReactionTest;
-import org.openscience.cdk.test.reaction.type.RearrangementAnion3ReactionTest;
-import org.openscience.cdk.test.reaction.type.RearrangementCation1ReactionTest;
-import org.openscience.cdk.test.reaction.type.RearrangementCation2ReactionTest;
-import org.openscience.cdk.test.reaction.type.RearrangementCation3ReactionTest;
-import org.openscience.cdk.test.reaction.type.RearrangementRadical1ReactionTest;
-import org.openscience.cdk.test.reaction.type.RearrangementRadical2ReactionTest;
-import org.openscience.cdk.test.reaction.type.RearrangementRadical3ReactionTest;
-import org.openscience.cdk.test.tools.StructureResonanceGeneratorTest;
+import org.openscience.cdk.ReactionCoverageTest;
+import org.openscience.cdk.reaction.type.BreakingBondReactionTest;
+import org.openscience.cdk.reaction.type.CarbonylEliminationReactionTest;
+import org.openscience.cdk.reaction.type.CleavageBondMultiReactionTest;
+import org.openscience.cdk.reaction.type.CleavageBondReactionTest;
+import org.openscience.cdk.reaction.type.DisplacementChargeFromAcceptorReactionTest;
+import org.openscience.cdk.reaction.type.DisplacementChargeFromDonorReactionTest;
+import org.openscience.cdk.reaction.type.ElectronImpactNBEReactionTest;
+import org.openscience.cdk.reaction.type.ElectronImpactPDBReactionTest;
+import org.openscience.cdk.reaction.type.HydrogenRearrangementDeltaReactionTest;
+import org.openscience.cdk.reaction.type.HydrogenRearrangementGammaReactionTest;
+import org.openscience.cdk.reaction.type.HyperconjugationReactionTest;
+import org.openscience.cdk.reaction.type.RadicalSiteInitiationHReactionTest;
+import org.openscience.cdk.reaction.type.RadicalSiteInitiationReactionTest;
+import org.openscience.cdk.reaction.type.RearrangementAnion1ReactionTest;
+import org.openscience.cdk.reaction.type.RearrangementAnion2ReactionTest;
+import org.openscience.cdk.reaction.type.RearrangementAnion3ReactionTest;
+import org.openscience.cdk.reaction.type.RearrangementCation1ReactionTest;
+import org.openscience.cdk.reaction.type.RearrangementCation2ReactionTest;
+import org.openscience.cdk.reaction.type.RearrangementCation3ReactionTest;
+import org.openscience.cdk.reaction.type.RearrangementRadical1ReactionTest;
+import org.openscience.cdk.reaction.type.RearrangementRadical2ReactionTest;
+import org.openscience.cdk.reaction.type.RearrangementRadical3ReactionTest;
+import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
 
 /**
  * TestSuite that runs all the tests for the CDK reaction module.

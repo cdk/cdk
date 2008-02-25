@@ -15,7 +15,7 @@
  *   License along with this library; if not, write to the Free Software
  *   Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.iupac;
+package org.openscience.cdk.iupac;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,7 +27,7 @@ import org.openscience.cdk.iupac.parser.NomParser;
 import org.openscience.cdk.iupac.parser.ParseException;
 import org.openscience.cdk.iupac.parser.TokenMgrError;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * JUnit test routines for the core parser.

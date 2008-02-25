@@ -28,7 +28,7 @@
  * 
  */
 
-package org.openscience.cdk.test.similarity;
+package org.openscience.cdk.similarity;
 
 import java.util.BitSet;
 
@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.similarity.Tanimoto;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-extra

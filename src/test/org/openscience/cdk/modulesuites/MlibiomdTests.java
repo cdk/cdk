@@ -18,12 +18,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.libio.md.MDMoleculeTest;
+import org.openscience.cdk.libio.md.MDMoleculeTest;
 
 /**
  * TestSuite that runs all the sample tests for the CDK module libiomd.

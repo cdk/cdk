@@ -21,40 +21,40 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.io.CDKSourceCodeWriterTest;
-import org.openscience.cdk.test.io.ChemObjectIOInstantionTests;
-import org.openscience.cdk.test.io.CrystClustReaderTest;
-import org.openscience.cdk.test.io.GamessReaderTest;
-import org.openscience.cdk.test.io.Gaussian98ReaderTest;
-import org.openscience.cdk.test.io.GhemicalReaderTest;
-import org.openscience.cdk.test.io.HINReaderTest;
-import org.openscience.cdk.test.io.INChIPlainTextReaderTest;
-import org.openscience.cdk.test.io.INChIReaderTest;
-import org.openscience.cdk.test.io.MDLRXNReaderTest;
-import org.openscience.cdk.test.io.MDLRXNV2000ReaderTest;
-import org.openscience.cdk.test.io.MDLRXNV3000ReaderTest;
-import org.openscience.cdk.test.io.MDLRXNWriterTest;
-import org.openscience.cdk.test.io.MDLReaderTest;
-import org.openscience.cdk.test.io.MDLV2000ReaderTest;
-import org.openscience.cdk.test.io.MDLV3000ReaderTest;
-import org.openscience.cdk.test.io.MDLWriterTest;
-import org.openscience.cdk.test.io.Mol2ReaderTest;
-import org.openscience.cdk.test.io.PDBWriterTest;
-import org.openscience.cdk.test.io.PMPReaderTest;
-import org.openscience.cdk.test.io.ReaderFactoryTest;
-import org.openscience.cdk.test.io.SDFReaderTest;
-import org.openscience.cdk.test.io.ShelXReaderTest;
-import org.openscience.cdk.test.io.WriterFactoryTest;
-import org.openscience.cdk.test.io.XYZReaderTest;
-import org.openscience.cdk.test.io.XYZWriterTest;
-import org.openscience.cdk.test.io.cml.CMLIOTests;
-import org.openscience.cdk.test.io.iterator.IteratingMDLConformerReaderTest;
-import org.openscience.cdk.test.io.iterator.IteratingMDLReaderTest;
+import org.openscience.cdk.io.CDKSourceCodeWriterTest;
+import org.openscience.cdk.io.ChemObjectIOInstantionTests;
+import org.openscience.cdk.io.CrystClustReaderTest;
+import org.openscience.cdk.io.GamessReaderTest;
+import org.openscience.cdk.io.Gaussian98ReaderTest;
+import org.openscience.cdk.io.GhemicalReaderTest;
+import org.openscience.cdk.io.HINReaderTest;
+import org.openscience.cdk.io.INChIPlainTextReaderTest;
+import org.openscience.cdk.io.INChIReaderTest;
+import org.openscience.cdk.io.MDLRXNReaderTest;
+import org.openscience.cdk.io.MDLRXNV2000ReaderTest;
+import org.openscience.cdk.io.MDLRXNV3000ReaderTest;
+import org.openscience.cdk.io.MDLRXNWriterTest;
+import org.openscience.cdk.io.MDLReaderTest;
+import org.openscience.cdk.io.MDLV2000ReaderTest;
+import org.openscience.cdk.io.MDLV3000ReaderTest;
+import org.openscience.cdk.io.MDLWriterTest;
+import org.openscience.cdk.io.Mol2ReaderTest;
+import org.openscience.cdk.io.PDBWriterTest;
+import org.openscience.cdk.io.PMPReaderTest;
+import org.openscience.cdk.io.ReaderFactoryTest;
+import org.openscience.cdk.io.SDFReaderTest;
+import org.openscience.cdk.io.ShelXReaderTest;
+import org.openscience.cdk.io.WriterFactoryTest;
+import org.openscience.cdk.io.XYZReaderTest;
+import org.openscience.cdk.io.XYZWriterTest;
+import org.openscience.cdk.io.cml.CMLIOTests;
+import org.openscience.cdk.io.iterator.IteratingMDLConformerReaderTest;
+import org.openscience.cdk.io.iterator.IteratingMDLReaderTest;
 
 /**
  * TestSuite that runs all the sample tests for the cdk.io package.

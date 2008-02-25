@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.pharmacophore;
+package org.openscience.cdk.pharmacophore;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;

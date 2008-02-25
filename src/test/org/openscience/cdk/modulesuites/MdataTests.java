@@ -22,51 +22,51 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
 
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.AminoAcidTest;
-import org.openscience.cdk.test.AtomContainerSetTest;
-import org.openscience.cdk.test.AtomContainerTest;
-import org.openscience.cdk.test.AtomParityTest;
-import org.openscience.cdk.test.AtomTest;
-import org.openscience.cdk.test.AtomTypeTest;
-import org.openscience.cdk.test.BioPolymerTest;
-import org.openscience.cdk.test.BondTest;
-import org.openscience.cdk.test.ChangeEventPropagationTest;
-import org.openscience.cdk.test.ChemFileTest;
-import org.openscience.cdk.test.ChemModelTest;
-import org.openscience.cdk.test.ChemObjectTest;
-import org.openscience.cdk.test.ChemSequenceTest;
-import org.openscience.cdk.test.ConformerContainerTest;
-import org.openscience.cdk.test.CrystalTest;
-import org.openscience.cdk.test.DataCoverageTest;
-import org.openscience.cdk.test.DefaultChemObjectBuilderTest;
-import org.openscience.cdk.test.ElectronContainerTest;
-import org.openscience.cdk.test.ElementTest;
-import org.openscience.cdk.test.FragmentAtomTest;
-import org.openscience.cdk.test.IsotopeTest;
-import org.openscience.cdk.test.LonePairTest;
-import org.openscience.cdk.test.MappingTest;
-import org.openscience.cdk.test.MoleculeSetTest;
-import org.openscience.cdk.test.MoleculeTest;
-import org.openscience.cdk.test.MonomerTest;
-import org.openscience.cdk.test.PolymerTest;
-import org.openscience.cdk.test.PseudoAtomTest;
-import org.openscience.cdk.test.ReactionSetTest;
-import org.openscience.cdk.test.ReactionTest;
-import org.openscience.cdk.test.RingSetTest;
-import org.openscience.cdk.test.RingTest;
-import org.openscience.cdk.test.SingleElectronTest;
-import org.openscience.cdk.test.StrandTest;
-import org.openscience.cdk.test.event.ChemObjectChangeEventTest;
-import org.openscience.cdk.test.protein.data.PDBAtomTest;
-import org.openscience.cdk.test.protein.data.PDBMonomerTest;
-import org.openscience.cdk.test.protein.data.PDBPolymerTest;
-import org.openscience.cdk.test.protein.data.PDBStructureTest;
+import org.openscience.cdk.AminoAcidTest;
+import org.openscience.cdk.AtomContainerSetTest;
+import org.openscience.cdk.AtomContainerTest;
+import org.openscience.cdk.AtomParityTest;
+import org.openscience.cdk.AtomTest;
+import org.openscience.cdk.AtomTypeTest;
+import org.openscience.cdk.BioPolymerTest;
+import org.openscience.cdk.BondTest;
+import org.openscience.cdk.ChangeEventPropagationTest;
+import org.openscience.cdk.ChemFileTest;
+import org.openscience.cdk.ChemModelTest;
+import org.openscience.cdk.ChemObjectTest;
+import org.openscience.cdk.ChemSequenceTest;
+import org.openscience.cdk.ConformerContainerTest;
+import org.openscience.cdk.CrystalTest;
+import org.openscience.cdk.DataCoverageTest;
+import org.openscience.cdk.DefaultChemObjectBuilderTest;
+import org.openscience.cdk.ElectronContainerTest;
+import org.openscience.cdk.ElementTest;
+import org.openscience.cdk.FragmentAtomTest;
+import org.openscience.cdk.IsotopeTest;
+import org.openscience.cdk.LonePairTest;
+import org.openscience.cdk.MappingTest;
+import org.openscience.cdk.MoleculeSetTest;
+import org.openscience.cdk.MoleculeTest;
+import org.openscience.cdk.MonomerTest;
+import org.openscience.cdk.PolymerTest;
+import org.openscience.cdk.PseudoAtomTest;
+import org.openscience.cdk.ReactionSetTest;
+import org.openscience.cdk.ReactionTest;
+import org.openscience.cdk.RingSetTest;
+import org.openscience.cdk.RingTest;
+import org.openscience.cdk.SingleElectronTest;
+import org.openscience.cdk.StrandTest;
+import org.openscience.cdk.event.ChemObjectChangeEventTest;
+import org.openscience.cdk.protein.data.PDBAtomTest;
+import org.openscience.cdk.protein.data.PDBMonomerTest;
+import org.openscience.cdk.protein.data.PDBPolymerTest;
+import org.openscience.cdk.protein.data.PDBStructureTest;
 
 /**
  * TestSuite that runs all the sample tests.

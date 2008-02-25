@@ -21,7 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.formula.rules;
+package org.openscience.cdk.formula.rules;
 
 import java.util.ArrayList;
 import java.util.List;

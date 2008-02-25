@@ -28,14 +28,14 @@
  * 
  */
 
-package org.openscience.cdk.test.fingerprint;
+package org.openscience.cdk.fingerprint;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.fingerprint.StandardSubstructureSets;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-extra

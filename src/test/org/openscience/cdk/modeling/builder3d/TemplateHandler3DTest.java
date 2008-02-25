@@ -21,14 +21,14 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.modeling.builder3d;
+package org.openscience.cdk.modeling.builder3d;
 
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.modeling.builder3d.TemplateHandler3D;
 import org.openscience.cdk.nonotify.NNAtomContainer;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * @cdk.module test-builder3d

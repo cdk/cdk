@@ -18,7 +18,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.applications.swing;
+package org.openscience.cdk.applications.swing;
 
 import java.awt.BorderLayout;
 
@@ -26,7 +26,7 @@ import javax.swing.JFrame;
 
 import org.openscience.cdk.applications.swing.PeriodicTablePanel;
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  *  Checks the functionality of the PeriodicTablePanelTest

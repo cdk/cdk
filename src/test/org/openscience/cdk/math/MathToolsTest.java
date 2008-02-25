@@ -22,12 +22,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-package org.openscience.cdk.test.math;
+package org.openscience.cdk.math;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.math.MathTools;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard

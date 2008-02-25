@@ -18,17 +18,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.test.AtomtypeCoverageTest;
-import org.openscience.cdk.test.atomtype.*;
-import org.openscience.cdk.test.graph.PathToolsTest;
-import org.openscience.cdk.test.graph.SpanningTreeTest;
-import org.openscience.cdk.test.graph.matrix.AdjacencyMatrixTest;
-import org.openscience.cdk.test.tools.manipulator.BondManipulatorTest;
+import org.openscience.cdk.AtomtypeCoverageTest;
+import org.openscience.cdk.atomtype.*;
+import org.openscience.cdk.graph.PathToolsTest;
+import org.openscience.cdk.graph.SpanningTreeTest;
+import org.openscience.cdk.graph.matrix.AdjacencyMatrixTest;
+import org.openscience.cdk.tools.manipulator.BondManipulatorTest;
 
 /**
  * TestSuite that runs all the tests for the CDK core module.

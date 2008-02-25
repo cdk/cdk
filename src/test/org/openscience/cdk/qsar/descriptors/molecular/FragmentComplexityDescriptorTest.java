@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.qsar.descriptors.molecular;
+package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.io.InputStream;
 import java.util.List;

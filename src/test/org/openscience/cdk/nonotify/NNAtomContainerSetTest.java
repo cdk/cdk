@@ -18,7 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.nonotify;
+package org.openscience.cdk.nonotify;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -26,7 +26,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.test.AtomContainerSetTest;
+import org.openscience.cdk.AtomContainerSetTest;
 
 /**
  * Checks the functionality of the AtomContainer.

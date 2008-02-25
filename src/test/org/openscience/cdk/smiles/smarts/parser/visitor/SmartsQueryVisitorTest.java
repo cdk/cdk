@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.smiles.smarts.parser.visitor;
+package org.openscience.cdk.smiles.smarts.parser.visitor;
 
 import java.io.StringReader;
 
@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.smiles.smarts.parser.ASTStart;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitor;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * JUnit testing routine for SmartsQueryVisitor

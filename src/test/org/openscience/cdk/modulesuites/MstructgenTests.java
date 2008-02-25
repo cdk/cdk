@@ -18,19 +18,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.StructgenCoverageTest;
-import org.openscience.cdk.test.structgen.RandomStructureGeneratorTest;
-import org.openscience.cdk.test.structgen.VicinitySamplerTest;
-import org.openscience.cdk.test.structgen.deterministic.EquivalentClassesDeterministicGeneratorTest;
-import org.openscience.cdk.test.structgen.deterministic.GENMDeterministicGeneratorTest;
-import org.openscience.cdk.test.structgen.stochastic.PartialFilledStructureMergerTest;
-import org.openscience.cdk.test.structgen.stochastic.operator.ChemGraphTest;
-import org.openscience.cdk.test.structgen.stochastic.operator.CrossoverMachineTest;
+import org.openscience.cdk.StructgenCoverageTest;
+import org.openscience.cdk.structgen.RandomStructureGeneratorTest;
+import org.openscience.cdk.structgen.VicinitySamplerTest;
+import org.openscience.cdk.structgen.deterministic.EquivalentClassesDeterministicGeneratorTest;
+import org.openscience.cdk.structgen.deterministic.GENMDeterministicGeneratorTest;
+import org.openscience.cdk.structgen.stochastic.PartialFilledStructureMergerTest;
+import org.openscience.cdk.structgen.stochastic.operator.ChemGraphTest;
+import org.openscience.cdk.structgen.stochastic.operator.CrossoverMachineTest;
 
 /**
  * TestSuite that runs all the sample tests for the structgen module.

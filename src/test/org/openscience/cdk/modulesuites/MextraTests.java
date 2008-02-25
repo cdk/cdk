@@ -18,41 +18,41 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
-import org.openscience.cdk.test.VariousTests;
-import org.openscience.cdk.test.applications.undoredo.AddAtomsAndBondsEditTest;
-import org.openscience.cdk.test.applications.undoredo.AddHydrogenEditTest;
-import org.openscience.cdk.test.applications.undoredo.AdjustBondOrdersEditTest;
-import org.openscience.cdk.test.applications.undoredo.ChangeAtomSymbolEditTest;
-import org.openscience.cdk.test.applications.undoredo.ChangeChargeEditTest;
-import org.openscience.cdk.test.applications.undoredo.ChangeIsotopeEditTest;
-import org.openscience.cdk.test.applications.undoredo.CleanUpEditTest;
-import org.openscience.cdk.test.applications.undoredo.ConvertToPseudoAtomEditTest;
-import org.openscience.cdk.test.applications.undoredo.ConvertToRadicalEditTest;
-import org.openscience.cdk.test.applications.undoredo.FlipEditTest;
-import org.openscience.cdk.test.applications.undoredo.RemoveAtomsAndBondsEditTest;
-import org.openscience.cdk.test.dict.DictDBTest;
-import org.openscience.cdk.test.fingerprint.ExtendedFingerprinterTest;
-import org.openscience.cdk.test.geometry.RDFCalculatorTest;
-import org.openscience.cdk.test.geometry.alignment.KabschAlignmentTest;
-import org.openscience.cdk.test.index.CASNumberTest;
-import org.openscience.cdk.test.io.ShelXWriterTest;
-import org.openscience.cdk.test.layout.HydrogenPlacerTest;
-import org.openscience.cdk.test.layout.OverlapResolverTest;
-import org.openscience.cdk.test.layout.StructureDiagramGeneratorTest;
-import org.openscience.cdk.test.layout.TemplateHandlerTest;
-import org.openscience.cdk.test.libio.openbabel.OpenBabelConvertTest;
-import org.openscience.cdk.test.similarity.DistanceMomentTest;
-import org.openscience.cdk.test.similarity.TanimotoTest;
-import org.openscience.cdk.test.tools.DeAromatizationToolTest;
-import org.openscience.cdk.test.tools.HOSECodeAnalyserTest;
-import org.openscience.cdk.test.tools.HOSECodeGeneratorTest;
+import org.openscience.cdk.VariousTests;
+import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEditTest;
+import org.openscience.cdk.applications.undoredo.AddHydrogenEditTest;
+import org.openscience.cdk.applications.undoredo.AdjustBondOrdersEditTest;
+import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEditTest;
+import org.openscience.cdk.applications.undoredo.ChangeChargeEditTest;
+import org.openscience.cdk.applications.undoredo.ChangeIsotopeEditTest;
+import org.openscience.cdk.applications.undoredo.CleanUpEditTest;
+import org.openscience.cdk.applications.undoredo.ConvertToPseudoAtomEditTest;
+import org.openscience.cdk.applications.undoredo.ConvertToRadicalEditTest;
+import org.openscience.cdk.applications.undoredo.FlipEditTest;
+import org.openscience.cdk.applications.undoredo.RemoveAtomsAndBondsEditTest;
+import org.openscience.cdk.dict.DictDBTest;
+import org.openscience.cdk.fingerprint.ExtendedFingerprinterTest;
+import org.openscience.cdk.geometry.RDFCalculatorTest;
+import org.openscience.cdk.geometry.alignment.KabschAlignmentTest;
+import org.openscience.cdk.index.CASNumberTest;
+import org.openscience.cdk.io.ShelXWriterTest;
+import org.openscience.cdk.layout.HydrogenPlacerTest;
+import org.openscience.cdk.layout.OverlapResolverTest;
+import org.openscience.cdk.layout.StructureDiagramGeneratorTest;
+import org.openscience.cdk.layout.TemplateHandlerTest;
+import org.openscience.cdk.libio.openbabel.OpenBabelConvertTest;
+import org.openscience.cdk.similarity.DistanceMomentTest;
+import org.openscience.cdk.similarity.TanimotoTest;
+import org.openscience.cdk.tools.DeAromatizationToolTest;
+import org.openscience.cdk.tools.HOSECodeAnalyserTest;
+import org.openscience.cdk.tools.HOSECodeGeneratorTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -103,7 +103,7 @@ public class MextraTests {
 
         // from cdk.test.iupac
         try {
-            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.iupac.ParserTest");
+            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.iupac.ParserTest");
             suite.addTest(new TestSuite(testClass));
             System.out.println("Found IUPAC Parser test.");
         } catch (Exception exception) {

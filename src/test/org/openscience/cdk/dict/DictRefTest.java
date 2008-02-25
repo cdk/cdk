@@ -23,12 +23,12 @@
  * 
  */
 
-package org.openscience.cdk.test.dict;
+package org.openscience.cdk.dict;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.dict.DictRef;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * Checks the functionality of the DictRef class.

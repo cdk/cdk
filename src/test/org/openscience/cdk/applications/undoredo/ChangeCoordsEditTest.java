@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.applications.undoredo;
+package org.openscience.cdk.applications.undoredo;
 
 import java.util.HashMap;
 
@@ -6,7 +6,7 @@ import javax.vecmath.Point2d;
 
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.applications.undoredo.ChangeCoordsEdit;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Junit test for the ChangeCoordsEdit class

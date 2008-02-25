@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.graph.matrix;
+package org.openscience.cdk.graph.matrix;
 
 import java.io.InputStream;
 
@@ -11,7 +11,7 @@ import org.openscience.cdk.graph.matrix.TopologicalMatrix;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard

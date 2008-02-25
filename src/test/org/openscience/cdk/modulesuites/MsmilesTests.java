@@ -21,18 +21,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.io.SMILESReaderTest;
-import org.openscience.cdk.test.io.iterator.IteratingSMILESReaderTest;
-import org.openscience.cdk.test.smiles.DeduceBondSystemToolTest;
-import org.openscience.cdk.test.smiles.SmilesGeneratorTest;
-import org.openscience.cdk.test.smiles.SmilesParserTest;
-import org.openscience.cdk.test.tools.NormalizerTest;
+import org.openscience.cdk.io.SMILESReaderTest;
+import org.openscience.cdk.io.iterator.IteratingSMILESReaderTest;
+import org.openscience.cdk.smiles.DeduceBondSystemToolTest;
+import org.openscience.cdk.smiles.SmilesGeneratorTest;
+import org.openscience.cdk.smiles.SmilesParserTest;
+import org.openscience.cdk.tools.NormalizerTest;
 
 /**
  * TestSuite that runs all the sample tests for the SMILES functionality.

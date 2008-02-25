@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-package org.openscience.cdk.test.isomorphism;
+package org.openscience.cdk.isomorphism;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,7 +31,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * Checks the functionality of the IsomorphismTester

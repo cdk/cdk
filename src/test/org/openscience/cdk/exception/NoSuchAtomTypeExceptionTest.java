@@ -22,12 +22,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-package org.openscience.cdk.test.exception;
+package org.openscience.cdk.exception;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
-import org.openscience.cdk.test.NewCDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * Checks the functionality of the NoSuchAtomTypeException class.

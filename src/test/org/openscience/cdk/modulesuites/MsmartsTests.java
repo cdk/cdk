@@ -18,11 +18,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.test.isomorphism.SMARTSTest;
+import org.openscience.cdk.isomorphism.SMARTSTest;
 
 /**
  * TestSuite that runs all the sample tests for experimental classes.
@@ -36,17 +36,17 @@ public class MsmartsTests {
         suite.addTest(SMARTSTest.suite());
         
         try {
-            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.parser.ParserTest");
+            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.ParserTest");
             suite.addTest(new TestSuite(testClass));
-            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.parser.SMARTSSearchTest");
+            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest");
             suite.addTest(new TestSuite(testClass));
-            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.parser.RecursiveTest");
+            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.RecursiveTest");
             suite.addTest(new TestSuite(testClass));
-            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.parser.visitor.SmartsDumpVisitorTest");
+            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.visitor.SmartsDumpVisitorTest");
             suite.addTest(new TestSuite(testClass));
-            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.parser.visitor.SmartsQueryVisitorTest");
+            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitorTest");
             suite.addTest(new TestSuite(testClass));
-            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.test.smiles.smarts.SMARTSQueryToolTest");
+            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.SMARTSQueryToolTest");
             suite.addTest(new TestSuite(testClass));
         } catch (Exception exception) {
             // ok, does not exist, just skip

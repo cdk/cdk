@@ -25,7 +25,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.test.io;
+package org.openscience.cdk.io;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -40,7 +40,7 @@ import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.ShelXReader;
 import org.openscience.cdk.io.ShelXWriter;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-extra

@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.geometry.alignment;
+package org.openscience.cdk.geometry.alignment;
 
 import java.io.InputStream;
 import java.util.List;
@@ -16,7 +16,7 @@ import org.openscience.cdk.geometry.alignment.KabschAlignment;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.test.CDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**

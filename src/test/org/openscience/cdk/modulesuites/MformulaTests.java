@@ -19,23 +19,23 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
 
-package org.openscience.cdk.test.modulesuites;
+package org.openscience.cdk.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.test.FormulaCoverageTest;
-import org.openscience.cdk.test.formula.AdductFormulaTest;
-import org.openscience.cdk.test.formula.IsotopePatternGeneratorTest;
-import org.openscience.cdk.test.formula.MassToFormulaToolTest;
-import org.openscience.cdk.test.formula.MolecularFormulaManipulatorTest;
-import org.openscience.cdk.test.formula.MolecularFormulaRangeManipulatorTest;
-import org.openscience.cdk.test.formula.MolecularFormulaRangeTest;
-import org.openscience.cdk.test.formula.MolecularFormulaSetManipulatorTest;
-import org.openscience.cdk.test.formula.MolecularFormulaSetTest;
-import org.openscience.cdk.test.formula.MolecularFormulaTest;
-import org.openscience.cdk.test.tools.MFAnalyserTest;
+import org.openscience.cdk.FormulaCoverageTest;
+import org.openscience.cdk.formula.AdductFormulaTest;
+import org.openscience.cdk.formula.IsotopePatternGeneratorTest;
+import org.openscience.cdk.formula.MassToFormulaToolTest;
+import org.openscience.cdk.formula.MolecularFormulaManipulatorTest;
+import org.openscience.cdk.formula.MolecularFormulaRangeManipulatorTest;
+import org.openscience.cdk.formula.MolecularFormulaRangeTest;
+import org.openscience.cdk.formula.MolecularFormulaSetManipulatorTest;
+import org.openscience.cdk.formula.MolecularFormulaSetTest;
+import org.openscience.cdk.formula.MolecularFormulaTest;
+import org.openscience.cdk.tools.MFAnalyserTest;
 
 /**
  * TestSuite that runs all the JUnit tests for the formula module.

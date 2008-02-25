@@ -1,4 +1,4 @@
-package org.openscience.cdk.test.modeling.forcefield;
+package org.openscience.cdk.modeling.forcefield;
 
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;

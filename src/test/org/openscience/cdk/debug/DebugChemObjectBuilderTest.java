@@ -23,13 +23,13 @@
  * 
  */
 
-package org.openscience.cdk.test.debug;
+package org.openscience.cdk.debug;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.test.DefaultChemObjectBuilderTest;
+import org.openscience.cdk.DefaultChemObjectBuilderTest;
 
 /**
  * Checks the functionality of the Crystal.

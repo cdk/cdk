@@ -26,7 +26,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  
  */
-package org.openscience.cdk.test.math.qm;
+package org.openscience.cdk.math.qm;
  
 import java.io.FileInputStream;
 import java.io.FileReader;

@@ -23,7 +23,7 @@
  * 
  */
 
-package org.openscience.cdk.test;
+package org.openscience.cdk;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
