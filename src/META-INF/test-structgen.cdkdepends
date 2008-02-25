@@ -10,3 +10,5 @@ cdk-smiles.jar
 cdk-extra.jar
 cdk-test.jar
 cdk-formula.jar
+cdk-applications.jar
+cdk-sdg.jar
