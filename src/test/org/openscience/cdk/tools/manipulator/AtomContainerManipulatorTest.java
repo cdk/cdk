@@ -33,6 +33,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.io.IOException;
@@ -557,6 +558,65 @@ public class AtomContainerManipulatorTest extends NewCDKTestCase {
         AtomContainerManipulator.replaceAtomByAtom(container, atom2, atom3);
         Assert.assertEquals(atom3, container.getAtom(1));
     }
+    
+    /**
+     * Test removeHydrogensPreserveMultiplyBonded for B2H6, which contains two multiply bonded H.
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     */
+    @Test public void testRemoveHydrogensPreserveMultiplyBonded() throws Exception {
+    	IAtomContainer borane = new Molecule();
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("B"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("B"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addAtom(borane.getBuilder().newAtom("H"));
+    	borane.addBond(0,2,CDKConstants.BONDORDER_SINGLE);
+    	borane.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+    	borane.addBond(2,3,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
+    	borane.addBond(2,4,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
+    	borane.addBond(3,5,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
+    	borane.addBond(4,5,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
+    	borane.addBond(5,6,CDKConstants.BONDORDER_SINGLE);
+    	borane.addBond(5,7,CDKConstants.BONDORDER_SINGLE);
+        IAtomContainer ac = new MFAnalyser(borane).removeHydrogensPreserveMultiplyBonded();
+
+        // Should be two connected Bs with H-count == 2 and two explicit Hs.
+        Assert.assertEquals("incorrect atom count", 4, ac.getAtomCount());
+        Assert.assertEquals("incorrect bond count", 4, ac.getBondCount());
+
+        int b = 0;
+        int h = 0;
+        for (int i = 0;
+                i < ac.getAtomCount();
+                i++)
+        {
+            final org.openscience.cdk.interfaces.IAtom atom = ac.getAtom(i);
+            String sym = atom.getSymbol();
+            if (sym.equals("B"))
+            {
+                // Each B has two explicit and two implicit H.
+                b++;
+                Assert.assertEquals("incorrect hydrogen count", 2, atom.getHydrogenCount());
+                List<IAtom> nbs = ac.getConnectedAtomsList(atom);
+                Assert.assertEquals("incorrect connected count", 2, nbs.size());
+                Assert.assertEquals("incorrect bond", "H", ((IAtom)nbs.get(0)).getSymbol());
+                Assert.assertEquals("incorrect bond", "H", ((IAtom)nbs.get(1)).getSymbol());
+            }
+            else if (sym.equals("H"))
+            {
+                h++;
+            }
+        }
+        Assert.assertEquals("incorrect no. Bs", 2, b);
+        Assert.assertEquals("incorrect no. Hs", 2, h);
+    }
+
 }
 
 

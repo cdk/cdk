@@ -31,6 +31,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 
@@ -374,7 +375,121 @@ public class AtomContainerManipulator {
         return (mol);
     }
     
-    /**
+	/**
+	 * Produces an AtomContainer without explicit Hs but with H count from one with Hs.
+	 * Hs bonded to more than one heavy atom are preserved.  The new molecule is a deep copy.
+	 *
+	 * @return         The mol without Hs.
+	 * @cdk.keyword    hydrogen, removal
+	 */
+    @TestMethod("testRemoveHydrogensPreserveMultiplyBonded")
+	public static IAtomContainer removeHydrogensPreserveMultiplyBonded(IAtomContainer ac) {
+		List<IAtom> h = new ArrayList<IAtom>();
+		// H list.
+		List<IAtom> multi_h = new ArrayList<IAtom>();
+		// multiply bonded H
+
+		// Find multiply bonded H.
+		int count = ac.getBondCount();
+		for (int i = 0; i < count; i++) {
+			Iterator<IAtom> atoms = ac.getBond(i).atoms();
+			while (atoms.hasNext()) {
+				final IAtom atom = (IAtom)atoms.next();
+				if (atom.getSymbol().equals(Symbols.byAtomicNumber[1])) {
+					(h.contains(atom) ? multi_h : h).add(atom);
+				}
+			}
+		}
+
+		return removeHydrogens(ac, multi_h);
+	}
+
+	/**
+	 * Produces an AtomContainer without explicit Hs (except those listed) but with H count from one with Hs.
+	 * The new molecule is a deep copy.
+	 *
+	 * @param  preserve  a list of H atoms to preserve.
+	 * @return           The mol without Hs.
+	 * @cdk.keyword      hydrogen, removal
+	 */
+	private static IAtomContainer removeHydrogens(IAtomContainer ac, List<IAtom> preserve) {
+		Map<IAtom,IAtom> map = new HashMap<IAtom,IAtom>();
+		// maps original atoms to clones.
+		List<IAtom> remove = new ArrayList<IAtom>();
+		// lists removed Hs.
+
+		// Clone atoms except those to be removed.
+		IMolecule mol = ac.getBuilder().newMolecule();
+		int count = ac.getAtomCount();
+		for (int i = 0;
+				i < count;
+				i++) {
+			// Clone/remove this atom?
+			IAtom atom = ac.getAtom(i);
+			if (!atom.getSymbol().equals(Symbols.byAtomicNumber[1]) || preserve.contains(atom)) {
+				IAtom a = null;
+				try {
+					a = (IAtom) atom.clone();
+				} catch (CloneNotSupportedException e) {
+					e.printStackTrace();
+				}
+				a.setHydrogenCount(0);
+				mol.addAtom(a);
+				map.put(atom, a);
+			} else {
+				remove.add(atom);
+				// maintain list of removed H.
+			}
+		}
+
+		// Clone bonds except those involving removed atoms.
+		count = ac.getBondCount();
+		for (int i = 0;
+				i < count;
+				i++) {
+			// Check bond.
+			final IBond bond = ac.getBond(i);
+			IAtom atom0 = bond.getAtom(0);
+			IAtom atom1 = bond.getAtom(1);
+			Iterator<IAtom> atoms = bond.atoms();
+			boolean remove_bond = false;
+			while (atoms.hasNext()){
+				if (remove.contains((IAtom)atoms.next())) {
+					remove_bond = true;
+					break;
+				}
+			}
+
+			// Clone/remove this bond?
+			if (!remove_bond) {
+				// if (!remove.contains(atoms[0]) && !remove.contains(atoms[1]))
+
+				IBond clone = null;
+				try {
+					clone = (IBond) ac.getBond(i).clone();
+				} catch (CloneNotSupportedException e) {
+					e.printStackTrace();
+				}
+				clone.setAtoms(new IAtom[]{map.get(atom0), map.get(atom1)});
+				mol.addBond(clone);
+			}
+		}
+
+		// Recompute hydrogen counts of neighbours of removed Hydrogens.
+		for (Iterator<IAtom> i = remove.iterator();
+				i.hasNext(); ) {
+			// Process neighbours.
+			for (Iterator<IAtom> n = ac.getConnectedAtomsList(i.next()).iterator();
+					n.hasNext(); ) {
+				final IAtom neighb = map.get(n.next());
+				neighb.setHydrogenCount(neighb.getHydrogenCount() + 1);
+			}
+		}
+
+		return (mol);
+	}
+
+	/**
      * Sets a property on all <code>Atom</code>s in the given container.
      */
     public static void setAtomProperties(IAtomContainer container, Object propKey, Object propVal) {
