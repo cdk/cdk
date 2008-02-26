@@ -73,7 +73,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.keyword    atom, type
  * @see        IAtomTypeConfigurator
  */
-@TestClass("org.openscience.cdk.test.config.AtomTypeFactoryTest")
+@TestClass("org.openscience.cdk.config.AtomTypeFactoryTest")
 public class AtomTypeFactory {
 
     /**

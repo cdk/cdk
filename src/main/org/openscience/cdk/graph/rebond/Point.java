@@ -30,7 +30,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module  standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.graph.rebond.PointTest")
+@TestClass("org.openscience.cdk.graph.rebond.PointTest")
 public class Point implements Bspt.Tuple {
   double x;
   double y;

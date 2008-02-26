@@ -66,7 +66,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:isProtonInAromaticSystem
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptorTest")
 public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 
 	private boolean checkAromaticity = false;

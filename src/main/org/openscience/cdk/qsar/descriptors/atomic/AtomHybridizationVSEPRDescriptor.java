@@ -90,7 +90,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomHybridizationVSEPR
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptorTest")
 public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 
 	org.openscience.cdk.interfaces.IAtom atom = null;

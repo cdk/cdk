@@ -42,7 +42,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.math.FortranFormatTest")
+@TestClass("org.openscience.cdk.math.FortranFormatTest")
 public class FortranFormat {
     /**
      * Converts a string of digits to an double

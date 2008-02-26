@@ -40,7 +40,7 @@ import java.util.Random;
  * @cdk.module standard
  * @cdk.svnrev $Revision$
  */
-@TestClass("org.openscience.cdk.test.math.RandomNumbersToolTest")
+@TestClass("org.openscience.cdk.math.RandomNumbersToolTest")
 public class RandomNumbersTool extends Random {
 
     private static final long serialVersionUID = -8238833473383641882L;

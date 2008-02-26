@@ -43,7 +43,7 @@ import java.util.List;
  *
  * @see ChemModelManipulator
  */
-@TestClass("org.openscience.cdk.test.tools.manipulator.AtomContainerSetManipulatorTest")
+@TestClass("org.openscience.cdk.tools.manipulator.AtomContainerSetManipulatorTest")
 public class AtomContainerSetManipulator {
 
     @TestMethod("testGetAtomCount_IAtomContainerSet")

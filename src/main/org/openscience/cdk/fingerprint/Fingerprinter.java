@@ -75,7 +75,7 @@ import java.util.*;
  * @cdk.module     standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.fingerprint.FingerprinterTest")
+@TestClass("org.openscience.cdk.fingerprint.FingerprinterTest")
 public class Fingerprinter implements IFingerprinter {
 	
 	public final static int defaultSize = 1024;

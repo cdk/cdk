@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.keyword bond order
  * @cdk.keyword stereochemistry
  */
-@TestClass("org.openscience.cdk.test.CDKConstantsTest")
+@TestClass("org.openscience.cdk.CDKConstantsTest")
 public class CDKConstants {
 	
 	public final static Object UNSET = null;	

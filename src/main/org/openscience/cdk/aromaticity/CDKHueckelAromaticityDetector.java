@@ -50,7 +50,7 @@ import java.util.Iterator;
  * 
  * @see org.openscience.cdk.CDKConstants
  */
-@TestClass("org.openscience.cdk.test.aromaticity.CDKHueckelAromaticityDetectorTest")
+@TestClass("org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetectorTest")
 public class CDKHueckelAromaticityDetector {
 
 	private static AtomTypeFactory factory = null;

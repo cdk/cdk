@@ -45,7 +45,7 @@ import java.util.*;
  * @cdk.builddepends jgrapht-0.5.3.jar
  * @cdk.depends jgrapht-0.5.3.jar
  */
-@TestClass("org.openscience.cdk.test.ringsearch.cyclebasis.SimpleCycleTest")
+@TestClass("org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleTest")
 public class SimpleCycle extends UndirectedSubgraph {
 
     private static final long serialVersionUID = -3330742084804445688L;

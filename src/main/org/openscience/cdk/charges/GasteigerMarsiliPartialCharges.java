@@ -49,7 +49,7 @@ import java.util.Iterator;
  * @cdk.keyword electronegativities, partial equalization of orbital
  * @cdk.keyword PEOE
  */
-@TestClass("org.openscience.cdk.test.charges.GasteigerMarsiliPartialChargesTest")
+@TestClass("org.openscience.cdk.charges.GasteigerMarsiliPartialChargesTest")
 public class GasteigerMarsiliPartialCharges {
 
     private double DEOC_HYDROGEN = 20.02;

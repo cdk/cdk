@@ -90,7 +90,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomicSoftness
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.InductiveAtomicSoftnessDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.InductiveAtomicSoftnessDescriptorTest")
 public class InductiveAtomicSoftnessDescriptor implements IAtomicDescriptor {
 
 	private LoggingTool logger;

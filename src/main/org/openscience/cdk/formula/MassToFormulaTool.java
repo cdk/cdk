@@ -65,7 +65,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created 2007-03-01
  * @cdk.svnrev  $Revision: 9162 $
  */
-@TestClass("org.openscience.cdk.test.formula.MassToFormulaToolTest")
+@TestClass("org.openscience.cdk.formula.MassToFormulaToolTest")
 public class MassToFormulaTool {
 
 	private LoggingTool logger = new LoggingTool(MassToFormulaTool.class);

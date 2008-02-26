@@ -62,7 +62,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.set        qsar-descriptors
  * @cdk.dictref    qsar-descriptors:bondsToAtom
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.BondsToAtomDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptorTest")
 public class BondsToAtomDescriptor implements IAtomicDescriptor {
 
     private int focusPosition = 0;

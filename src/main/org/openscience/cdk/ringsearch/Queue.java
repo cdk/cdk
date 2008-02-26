@@ -39,7 +39,7 @@ import java.util.Vector;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.ringsearch.QueueTest")
+@TestClass("org.openscience.cdk.ringsearch.QueueTest")
 public class Queue extends Vector
 {
 

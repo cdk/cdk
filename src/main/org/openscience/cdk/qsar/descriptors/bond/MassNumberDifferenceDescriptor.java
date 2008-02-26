@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondMassNumberInbalance
  */
-@TestClass("org.openscience.cdk.test.qsar.descriptors.bond.MassNumberDifferenceDescriptorTest")
+@TestClass("org.openscience.cdk.qsar.descriptors.bond.MassNumberDifferenceDescriptorTest")
 public class MassNumberDifferenceDescriptor implements IBondDescriptor {
 
 	private static IsotopeFactory factory = null;

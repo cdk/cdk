@@ -38,7 +38,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module core
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.exception.NoSuchAtomTypeExceptionTest")
+@TestClass("org.openscience.cdk.exception.NoSuchAtomTypeExceptionTest")
 public class NoSuchAtomTypeException extends CDKException {
 
 	private static final long serialVersionUID = 2689048410917221667L;

@@ -67,7 +67,7 @@ import java.util.List;
  * @cdk.depends jgrapht-0.5.3.jar
  */
 
-@TestClass("org.openscience.cdk.test.ringsearch.SSSRFinderTest")
+@TestClass("org.openscience.cdk.ringsearch.SSSRFinderTest")
 public class SSSRFinder {
 
 	private org.openscience.cdk.interfaces.IAtomContainer atomContainer;

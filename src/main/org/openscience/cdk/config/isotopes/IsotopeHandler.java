@@ -54,7 +54,7 @@ import java.util.List;
  * @cdk.module core
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.config.isotopes.IsotopeHandlerTest")
+@TestClass("org.openscience.cdk.config.isotopes.IsotopeHandlerTest")
 public class IsotopeHandler extends DefaultHandler {
 
     private LoggingTool logger;

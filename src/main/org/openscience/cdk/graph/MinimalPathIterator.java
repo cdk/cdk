@@ -52,7 +52,7 @@ import java.util.*;
  * @cdk.builddepends jgrapht-0.5.3.jar
  * @cdk.depends jgrapht-0.5.3.jar
  */
-@TestClass("org.openscience.cdk.test.graph.MinimalPathIteratorTest")
+@TestClass("org.openscience.cdk.graph.MinimalPathIteratorTest")
 public class MinimalPathIterator implements Iterator {
 	
 	private Object sourceVertex, targetVertex;

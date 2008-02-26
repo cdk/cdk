@@ -53,7 +53,7 @@ import java.util.Vector;
  * @cdk.module  standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.geometry.BondToolsTest")
+@TestClass("org.openscience.cdk.geometry.BondToolsTest")
 public class BondTools {
   /**
    *  Tells if a certain bond is center of a valid double bond configuration.

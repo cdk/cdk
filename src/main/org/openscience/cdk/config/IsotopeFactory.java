@@ -62,7 +62,7 @@ import java.util.List;
  * @cdk.keyword    isotope
  * @cdk.keyword    element
  */
-@TestClass("org.openscience.cdk.test.config.IsotopeFactoryTest")
+@TestClass("org.openscience.cdk.config.IsotopeFactoryTest")
 public class IsotopeFactory
 {
 

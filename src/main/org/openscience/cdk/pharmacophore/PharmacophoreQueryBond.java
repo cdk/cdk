@@ -18,7 +18,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
  * @see org.openscience.cdk.isomorphism.matchers.QueryAtomContainer
  */
-@TestClass("org.openscience.cdk.test.pharmacophore.PharmacophoreQueryBondTest")
+@TestClass("org.openscience.cdk.pharmacophore.PharmacophoreQueryBondTest")
 public class PharmacophoreQueryBond extends Bond implements IQueryBond {
     private PharmacophoreQueryAtom[] atoms;
     private double upper;

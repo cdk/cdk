@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.created 2003-06-30
  * @cdk.keyword Morgan number
  */
-@TestClass("org.openscience.cdk.test.graph.invariant.MorganNumbersToolsTest")
+@TestClass("org.openscience.cdk.graph.invariant.MorganNumbersToolsTest")
 public class MorganNumbersTools {
 
   /**

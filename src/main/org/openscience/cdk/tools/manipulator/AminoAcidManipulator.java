@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @author      Egon Willighagen
  * @cdk.created 2005-08-19
  */
-@TestClass("org.openscience.cdk.test.tools.manipulator.AminoAcidManipulatorTest")
+@TestClass("org.openscience.cdk.tools.manipulator.AminoAcidManipulatorTest")
 public class AminoAcidManipulator {
 
 	/**

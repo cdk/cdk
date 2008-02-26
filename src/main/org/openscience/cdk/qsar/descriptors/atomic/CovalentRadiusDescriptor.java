@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:covalentradius
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.CovalentRadiusDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.CovalentRadiusDescriptorTest")
 public class CovalentRadiusDescriptor implements IAtomicDescriptor {
 
     private AtomTypeFactory factory = null;

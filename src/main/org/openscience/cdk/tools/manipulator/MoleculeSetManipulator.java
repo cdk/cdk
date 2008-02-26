@@ -40,7 +40,7 @@ import java.util.List;
  *
  * @see ChemModelManipulator
  */
-@TestClass("org.openscience.cdk.test.tools.manipulator.MoleculeSetManipulatorTest")
+@TestClass("org.openscience.cdk.tools.manipulator.MoleculeSetManipulatorTest")
 public class MoleculeSetManipulator {
 
     @TestMethod("testGetAtomCount_IAtomContainerSet")

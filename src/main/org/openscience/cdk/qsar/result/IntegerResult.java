@@ -32,7 +32,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.qsar.result.IntegerResultTest")
+@TestClass("org.openscience.cdk.qsar.result.IntegerResultTest")
 public class IntegerResult implements IDescriptorResult {
     
     private int value;

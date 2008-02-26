@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.IIsotope;
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
  */
-@TestClass("org.openscience.cdk.test.formula.MolecularFormulaRangeTest")
+@TestClass("org.openscience.cdk.formula.MolecularFormulaRangeTest")
 public class MolecularFormulaRange implements Cloneable {
 
 	

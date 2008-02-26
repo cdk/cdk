@@ -44,7 +44,7 @@ import java.util.List;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.tools.manipulator.ChemFileManipulatorTest")
+@TestClass("org.openscience.cdk.tools.manipulator.ChemFileManipulatorTest")
 public class ChemFileManipulator {
 
 	/**

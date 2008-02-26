@@ -33,7 +33,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.qsar.DescriptorSpecificationTest")
+@TestClass("org.openscience.cdk.qsar.DescriptorSpecificationTest")
 public class DescriptorSpecification implements IImplementationSpecification {
 
     private String specificationReference;

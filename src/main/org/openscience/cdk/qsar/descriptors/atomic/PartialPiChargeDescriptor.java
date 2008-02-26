@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  * @cdk.bug     1558660
  * @see         GasteigerPEPEPartialCharges
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.PartialPiChargeDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptorTest")
 public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
 
     private GasteigerPEPEPartialCharges pepe = null;

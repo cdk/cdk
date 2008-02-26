@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.builddepends jgrapht-0.5.3.jar
  * @cdk.depends jgrapht-0.5.3.jar
  */
-@TestClass("org.openscience.cdk.test.graph.MoleculeGraphsTest")
+@TestClass("org.openscience.cdk.graph.MoleculeGraphsTest")
 public class MoleculeGraphs {
 	// make class non-instantiable
 	private MoleculeGraphs() {}

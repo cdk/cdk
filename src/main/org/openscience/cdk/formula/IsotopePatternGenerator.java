@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.keyword    isotope
  * 
  */
-@TestClass("org.openscience.cdk.test.formula.IsotopePatternGeneratorTest")
+@TestClass("org.openscience.cdk.formula.IsotopePatternGeneratorTest")
 public class IsotopePatternGenerator{
 
 	private LoggingTool logger = new LoggingTool(IsotopePatternGenerator.class);

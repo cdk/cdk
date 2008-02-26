@@ -33,7 +33,7 @@ import java.util.List;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.qsar.result.DoubleArrayResultTest")
+@TestClass("org.openscience.cdk.qsar.result.DoubleArrayResultTest")
 public class DoubleArrayResult extends DoubleArrayResultType {
 
     private List<Double> array;

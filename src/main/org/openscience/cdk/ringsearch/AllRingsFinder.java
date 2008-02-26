@@ -56,7 +56,7 @@ import java.util.List;
  * @cdk.module    standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.ringsearch.AllRingsFinderTest")
+@TestClass("org.openscience.cdk.ringsearch.AllRingsFinderTest")
 public class AllRingsFinder
 {
 	private final LoggingTool logger = new LoggingTool(AllRingsFinder.class);

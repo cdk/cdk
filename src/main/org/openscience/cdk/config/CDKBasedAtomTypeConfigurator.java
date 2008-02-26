@@ -43,7 +43,7 @@ import java.util.List;
  * @cdk.module core
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.config.CDKBasedAtomTypeConfiguratorTest")
+@TestClass("org.openscience.cdk.config.CDKBasedAtomTypeConfiguratorTest")
 public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
     private String configFile = "org.openscience.cdk.config.data.structgen_atomtypes.xml";

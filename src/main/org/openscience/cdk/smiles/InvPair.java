@@ -39,7 +39,7 @@ import org.openscience.cdk.math.Primes;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.smiles.InvPairTest")
+@TestClass("org.openscience.cdk.smiles.InvPairTest")
 public class InvPair implements java.io.Serializable{
 
     private static final long serialVersionUID = -1397634098919863122L;

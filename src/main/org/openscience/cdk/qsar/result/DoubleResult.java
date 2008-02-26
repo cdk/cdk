@@ -30,7 +30,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.qsar.result.DoubleResultTest")
+@TestClass("org.openscience.cdk.qsar.result.DoubleResultTest")
 public class DoubleResult implements IDescriptorResult {
     
     private double value;

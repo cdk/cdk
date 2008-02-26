@@ -57,7 +57,7 @@ import org.openscience.cdk.interfaces.IIsotope;
  * 
  * TODO: MF: move to package org.openscience.cdk.manipulator (miguelrojasch)
  */
-@TestClass("org.openscience.cdk.test.formula.MolecularFormulaManipulatorTest")
+@TestClass("org.openscience.cdk.formula.MolecularFormulaManipulatorTest")
 public class MolecularFormulaManipulator {
 	
 	/**

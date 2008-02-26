@@ -50,7 +50,7 @@ import java.util.Map;
  * @cdk.svnrev  $Revision$
  * @cdk.keyword    aromatic ring, bond order adjustment
  */
-@TestClass("org.openscience.cdk.test.tools.DeAromatizationToolTest")
+@TestClass("org.openscience.cdk.tools.DeAromatizationToolTest")
 public class DeAromatizationTool {
 
 	/**

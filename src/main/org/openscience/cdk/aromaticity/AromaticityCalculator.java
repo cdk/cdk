@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IRing;
  *
  * @cdk.keyword aromaticity detector
  */
-@TestClass("org.openscience.cdk.test.aromaticity.AromaticityCalculatorTest")
+@TestClass("org.openscience.cdk.aromaticity.AromaticityCalculatorTest")
 public class AromaticityCalculator
 {
 

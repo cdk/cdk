@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IAtomType;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.tools.manipulator.AtomTypeManipulatorTest")
+@TestClass("org.openscience.cdk.tools.manipulator.AtomTypeManipulatorTest")
 public class AtomTypeManipulator {
 	
 	/**

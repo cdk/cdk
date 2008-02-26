@@ -41,7 +41,7 @@ import java.util.Vector;
  *
  * @see ChemModelManipulator
  */
-@TestClass("org.openscience.cdk.test.tools.manipulator.ReactionManipulatorTest")
+@TestClass("org.openscience.cdk.tools.manipulator.ReactionManipulatorTest")
 public class ReactionManipulator {
 
     @TestMethod("testGetAtomCount_IReaction")

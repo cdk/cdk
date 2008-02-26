@@ -60,7 +60,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:protonPartialCharge
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptorTest")
 public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
 
     private GasteigerMarsiliPartialCharges peoe = null;

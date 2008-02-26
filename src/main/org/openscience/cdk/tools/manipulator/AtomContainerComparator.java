@@ -56,7 +56,7 @@ import java.util.Iterator;
  * @cdk.module   standard
  * @cdk.svnrev  $Revision: 9162 $
  */
-@TestClass("org.openscience.cdk.test.tools.manipulator.AtomContainerComparatorTest")
+@TestClass("org.openscience.cdk.tools.manipulator.AtomContainerComparatorTest")
 public class AtomContainerComparator implements Comparator {
   
   /** Configure LoggingTool */

@@ -48,7 +48,7 @@ import java.io.IOException;
  * @cdk.keyword charge distribution
  * @cdk.keyword electronegativity
  */
-@TestClass("org.openscience.cdk.test.charges.InductivePartialChargesTest")
+@TestClass("org.openscience.cdk.charges.InductivePartialChargesTest")
 public class InductivePartialCharges {
 
 	private static double[] pauling;

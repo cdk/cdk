@@ -45,7 +45,7 @@ import java.util.List;
  * @cdk.module core
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.config.atomtypes.AtomTypeHandlerTest")
+@TestClass("org.openscience.cdk.config.atomtypes.AtomTypeHandlerTest")
 public class AtomTypeHandler extends DefaultHandler {
 
     private final int SCALAR_UNSET = 0;

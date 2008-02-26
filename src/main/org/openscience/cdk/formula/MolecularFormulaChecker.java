@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.keyword molecule, molecular formula
  * @see         IRule
  */
-@TestClass("org.openscience.cdk.test.formula.MolecularFormulaCheckerTest")
+@TestClass("org.openscience.cdk.formula.MolecularFormulaCheckerTest")
 public class MolecularFormulaChecker {
 
 	private LoggingTool logger = new LoggingTool(MolecularFormulaChecker.class);

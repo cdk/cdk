@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IRing;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.tools.manipulator.RingSizeComparatorTest")
+@TestClass("org.openscience.cdk.tools.manipulator.RingSizeComparatorTest")
 public class RingSizeComparator implements java.util.Comparator {
     
     /** Flag to denote that the set is order with the largest ring first */

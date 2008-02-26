@@ -48,7 +48,7 @@ import java.util.BitSet;
  * 
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */
-@TestClass("org.openscience.cdk.test.fingerprint.ExtendedFingerprinterTest")
+@TestClass("org.openscience.cdk.fingerprint.ExtendedFingerprinterTest")
 public class ExtendedFingerprinter implements IFingerprinter {
 
 	private final int RESERVED_BITS = 25;

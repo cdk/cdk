@@ -67,7 +67,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @see         GasteigerMarsiliPartialCharges
  * @see         GasteigerPEPEPartialCharges
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.PartialTChargePEOEDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.PartialTChargePEOEDescriptorTest")
 public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 
 	private AbstractAtomicDescriptor sigmaCharge;

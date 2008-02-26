@@ -49,7 +49,7 @@ import org.openscience.cdk.interfaces.IBond;
  *
  * @see org.openscience.cdk.graph.rebond.Bspt
  */
-@TestClass("org.openscience.cdk.test.graph.rebond.RebondToolTest")
+@TestClass("org.openscience.cdk.graph.rebond.RebondToolTest")
 public class RebondTool {
 
   private double maxCovalentRadius;

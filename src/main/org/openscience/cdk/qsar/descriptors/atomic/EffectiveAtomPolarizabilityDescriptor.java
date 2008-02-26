@@ -60,7 +60,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:effectivePolarizability
  * @see Polarizability
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptorTest")
 public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor {
 
 	private Polarizability pol;

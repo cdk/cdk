@@ -34,7 +34,7 @@ import org.openscience.cdk.annotations.TestClass;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.exception.UnsupportedChemObjectExceptionTest")
+@TestClass("org.openscience.cdk.exception.UnsupportedChemObjectExceptionTest")
 public class UnsupportedChemObjectException extends CDKException {
 
     private static final long serialVersionUID = -5348883360384907383L;

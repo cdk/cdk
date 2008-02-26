@@ -32,7 +32,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.qsar.result.BooleanResultTest")
+@TestClass("org.openscience.cdk.qsar.result.BooleanResultTest")
 public class BooleanResult extends BooleanResultType {
     
     private boolean value;

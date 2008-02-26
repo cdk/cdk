@@ -40,7 +40,7 @@ import java.util.List;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.tools.manipulator.RingSetManipulatorTest")
+@TestClass("org.openscience.cdk.tools.manipulator.RingSetManipulatorTest")
 public class RingSetManipulator {
     /**
      * Return the total number of atoms over all the rings in the colllection.

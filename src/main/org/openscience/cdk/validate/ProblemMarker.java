@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  * @author   Egon Willighagen
  * @cdk.created  2003-08-11
  */
-@TestClass("org.openscience.cdk.test.validate.ProblemMarkerTest")
+@TestClass("org.openscience.cdk.validate.ProblemMarkerTest")
 public class ProblemMarker {
 
     public static String ERROR_MARKER = "org.openscience.cdk.validate.error";

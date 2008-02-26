@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
  * @cdk.module  charges
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.charges.AtomTypeChargesTest")
+@TestClass("org.openscience.cdk.charges.AtomTypeChargesTest")
 public class AtomTypeCharges {
 	HOSECodeGenerator hcg = new HOSECodeGenerator();
 	Pattern pOC = Pattern.compile("O-[1][-];=?+C[(]=?+O.*+");

@@ -33,7 +33,7 @@ import java.util.List;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.qsar.result.IntegerArrayResultTest")
+@TestClass("org.openscience.cdk.qsar.result.IntegerArrayResultTest")
 public class IntegerArrayResult extends IntegerArrayResultType {
 
     private List<Integer> array;

@@ -90,7 +90,7 @@ import java.util.*;
  * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryAtom
  * @see org.openscience.cdk.pharmacophore.PharmacophoreQueryBond
  */
-@TestClass("org.openscience.cdk.test.pharmacophore.PharmacophoreMatcherTest")
+@TestClass("org.openscience.cdk.pharmacophore.PharmacophoreMatcherTest")
 public class PharmacophoreMatcher {
     private LoggingTool logger = new LoggingTool(PharmacophoreMatcher.class);
     private IQueryAtomContainer pharmacophoreQuery = null;

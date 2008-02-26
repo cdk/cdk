@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.*;
  */
 
 	
-@TestClass("org.openscience.cdk.test.atomtype.EStateAtomTypeMatcherTest")
+@TestClass("org.openscience.cdk.atomtype.EStateAtomTypeMatcherTest")
 public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 
 	IRingSet ringSet = null;

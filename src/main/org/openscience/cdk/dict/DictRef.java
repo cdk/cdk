@@ -40,7 +40,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module  standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.dict.DictRefTest")
+@TestClass("org.openscience.cdk.dict.DictRefTest")
 public class DictRef implements java.io.Serializable, Cloneable  {
 
     private static final long serialVersionUID = -3691244168587563625L;

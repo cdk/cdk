@@ -56,7 +56,7 @@ import java.util.*;
  * @cdk.depends jgrapht-0.5.3.jar
  */
 
-@TestClass("org.openscience.cdk.test.ringsearch.cyclebasis.CycleBasisTest")
+@TestClass("org.openscience.cdk.ringsearch.cyclebasis.CycleBasisTest")
 public class CycleBasis {
 		
 	//private List cycles = new Vector();

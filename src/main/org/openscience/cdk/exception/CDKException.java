@@ -36,7 +36,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module core
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.exception.CDKExceptionTest")
+@TestClass("org.openscience.cdk.exception.CDKExceptionTest")
 public class CDKException extends Exception {
 
 	private static final long serialVersionUID = 8371328769230823678L;

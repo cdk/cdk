@@ -60,7 +60,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *@cdk.set        qsar-descriptors
  *@cdk.dictref qsar-descriptors:period
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest")
 public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 
 	public Hashtable<String, Integer> periodicTable;

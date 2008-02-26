@@ -50,7 +50,7 @@ import java.util.List;
  *
  * @see org.openscience.cdk.AtomContainer#removeAtomAndConnectedElectronContainers(IAtom)
  */
-@TestClass("org.openscience.cdk.test.tools.manipulator.ChemModelManipulatorTest")
+@TestClass("org.openscience.cdk.tools.manipulator.ChemModelManipulatorTest")
 public class ChemModelManipulator {
     
 	/**

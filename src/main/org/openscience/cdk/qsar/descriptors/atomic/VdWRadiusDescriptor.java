@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:vdwradius
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.VdWRadiusDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptorTest")
 public class VdWRadiusDescriptor implements IAtomicDescriptor {
 
     private AtomTypeFactory factory = null;

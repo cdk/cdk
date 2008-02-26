@@ -49,7 +49,7 @@ import java.util.List;
  * @cdk.module core
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.config.atomtypes.AtomTypeReaderTest")
+@TestClass("org.openscience.cdk.config.atomtypes.AtomTypeReaderTest")
 public class AtomTypeReader {
 
     private XMLReader parser;

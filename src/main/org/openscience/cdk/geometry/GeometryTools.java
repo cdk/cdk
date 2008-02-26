@@ -57,7 +57,7 @@ import java.util.List;
  * @cdk.module    standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.geometry.GeometryToolsTest")
+@TestClass("org.openscience.cdk.geometry.GeometryToolsTest")
 public class GeometryTools {
 
 	private static LoggingTool logger = new LoggingTool(GeometryTools.class);

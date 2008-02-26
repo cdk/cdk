@@ -42,7 +42,7 @@ import java.util.Comparator;
   *
   * @cdk.keyword element, sorting
   */
-@TestClass("org.openscience.cdk.test.tools.ElementComparatorTest")
+@TestClass("org.openscience.cdk.tools.ElementComparatorTest")
 public class ElementComparator implements Comparator {
 
     private static final String H_ELEMENT_SYMBOL = "H";

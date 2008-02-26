@@ -51,7 +51,7 @@ import java.util.Arrays;
  * @see        org.openscience.cdk.graph.invariant.MorganNumbersTools
  * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */
-@TestClass("org.openscience.cdk.test.isomorphism.IsomorphismTesterTest")
+@TestClass("org.openscience.cdk.isomorphism.IsomorphismTesterTest")
 public class IsomorphismTester implements java.io.Serializable
 {
 

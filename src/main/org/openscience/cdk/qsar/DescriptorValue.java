@@ -34,7 +34,7 @@ import org.openscience.cdk.qsar.result.*;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.qsar.DescriptorValueTest")
+@TestClass("org.openscience.cdk.qsar.DescriptorValueTest")
 public class DescriptorValue {
 
     private DescriptorSpecification specification;

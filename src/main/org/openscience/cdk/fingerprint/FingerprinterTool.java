@@ -41,7 +41,7 @@ import java.util.List;
  * @cdk.module     standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.fingerprint.FingerprinterToolTest")
+@TestClass("org.openscience.cdk.fingerprint.FingerprinterToolTest")
 public class FingerprinterTool {
 	
 	private final static LoggingTool logger = new LoggingTool(FingerprinterTool.class);

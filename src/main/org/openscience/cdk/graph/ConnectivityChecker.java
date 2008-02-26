@@ -53,7 +53,7 @@ import java.util.Vector;
  *
  * @cdk.keyword connectivity
  */
-@TestClass("org.openscience.cdk.test.graph.ConnectivityCheckerTest")
+@TestClass("org.openscience.cdk.graph.ConnectivityCheckerTest")
 public class ConnectivityChecker 
 {
 	/**

@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.dictref    qsar-descriptors:atomHybridization
  * @cdk.bug        1558660
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.AtomHybridizationDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationDescriptorTest")
 public class AtomHybridizationDescriptor implements IAtomicDescriptor {
 
 	AtomTypeManipulator atman = null;

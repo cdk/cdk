@@ -37,7 +37,7 @@ import java.util.Iterator;
  * @cdk.module standard
  * @cdk.svnrev  $Revision: 9162 $
  */
-@TestClass("org.openscience.cdk.test.tools.manipulator.RingManipulatorTest")
+@TestClass("org.openscience.cdk.tools.manipulator.RingManipulatorTest")
 public class RingManipulator {
 
     /**

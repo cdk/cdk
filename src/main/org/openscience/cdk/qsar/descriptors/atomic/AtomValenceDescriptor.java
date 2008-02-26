@@ -61,7 +61,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomValence
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.AtomValenceDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptorTest")
 public class AtomValenceDescriptor implements IAtomicDescriptor {
 
     public Map<String,Integer> valencesTable;

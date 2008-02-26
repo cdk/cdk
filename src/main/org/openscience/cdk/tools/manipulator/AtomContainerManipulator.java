@@ -51,7 +51,7 @@ import java.util.*;
  * @author  Egon Willighagen
  * @cdk.created 2003-08-07
  */
-@TestClass("org.openscience.cdk.test.tools.manipulator.AtomContainerManipulatorTest")
+@TestClass("org.openscience.cdk.tools.manipulator.AtomContainerManipulatorTest")
 public class AtomContainerManipulator {
 	
 	/**

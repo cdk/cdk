@@ -22,7 +22,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * @see org.openscience.cdk.isomorphism.matchers.QueryAtomContainer
  * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
  */
-@TestClass("org.openscience.cdk.test.pharmacophore.PharmacophoreQueryAtomTest")
+@TestClass("org.openscience.cdk.pharmacophore.PharmacophoreQueryAtomTest")
 public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
     private String smarts;
 

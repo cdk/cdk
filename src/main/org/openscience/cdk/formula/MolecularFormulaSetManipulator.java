@@ -49,7 +49,7 @@ import org.openscience.cdk.interfaces.IIsotope;
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  */
-@TestClass("org.openscience.cdk.test.formula.MolecularFormulaSetManipulatorTest")
+@TestClass("org.openscience.cdk.formula.MolecularFormulaSetManipulatorTest")
 public class MolecularFormulaSetManipulator {
 	
 	

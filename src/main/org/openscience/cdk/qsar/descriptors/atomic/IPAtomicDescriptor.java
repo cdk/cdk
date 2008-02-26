@@ -78,7 +78,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref  qsar-descriptors:ionizationPotential
  * @cdk.bug      1860497
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.IPAtomicDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.IPAtomicDescriptorTest")
 public class IPAtomicDescriptor implements IAtomicDescriptor {
 
 	private IReactionSet reactionSet;

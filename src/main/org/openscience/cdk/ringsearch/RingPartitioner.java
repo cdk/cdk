@@ -47,7 +47,7 @@ import java.util.List;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.ringsearch.RingPartitionerTest")
+@TestClass("org.openscience.cdk.ringsearch.RingPartitionerTest")
 public class RingPartitioner {
     
     /**

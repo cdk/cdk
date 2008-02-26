@@ -32,7 +32,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.test.math.MathToolsTest")
+@TestClass("org.openscience.cdk.math.MathToolsTest")
 public class MathTools {
 	
 	/**

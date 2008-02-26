@@ -25,7 +25,7 @@ import java.util.Arrays;
  * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
  * @see org.openscience.cdk.pharmacophore.PharmacophoreBond
  */
-@TestClass("org.openscience.cdk.test.pharmacophore.PharmacophoreAtomTest")
+@TestClass("org.openscience.cdk.pharmacophore.PharmacophoreAtomTest")
 public class PharmacophoreAtom extends Atom {
 
     private String smarts;

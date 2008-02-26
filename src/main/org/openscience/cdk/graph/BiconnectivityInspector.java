@@ -55,7 +55,7 @@ import java.util.*;
  * @cdk.builddepends jgrapht-0.5.3.jar
  * @cdk.depends jgrapht-0.5.3.jar
  */
-@TestClass("org.openscience.cdk.test.graph.BiconnectivityInspectorTest")
+@TestClass("org.openscience.cdk.graph.BiconnectivityInspectorTest")
 public class BiconnectivityInspector {
 	private List          biconnectedSets;
 	private UndirectedGraph graph;

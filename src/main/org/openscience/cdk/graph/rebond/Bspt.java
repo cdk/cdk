@@ -77,7 +77,7 @@ import java.util.Enumeration;
  * @cdk.keyword Binary Space Partitioning Tree
  * @cdk.keyword join-the-dots
  */
-@TestClass("org.openscience.cdk.test.graph.rebond.BsptTest")
+@TestClass("org.openscience.cdk.graph.rebond.BsptTest")
 public final class Bspt {
 
   private final static int leafCount = 4;

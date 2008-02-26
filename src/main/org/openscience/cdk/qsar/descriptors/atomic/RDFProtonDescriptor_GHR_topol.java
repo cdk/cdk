@@ -78,7 +78,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
  * @cdk.bug     1632419
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.RDFProtonDescriptor_GHR_topolTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GHR_topolTest")
 public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
 
     private boolean checkAromaticity = false;

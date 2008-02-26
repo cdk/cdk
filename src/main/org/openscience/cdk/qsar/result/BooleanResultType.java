@@ -29,7 +29,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module standard
  * @cdk.svnrev $Revision: 9170 $
  */
-@TestClass("org.openscience.cdk.test.qsar.result.BooleanResultTypeTest")
+@TestClass("org.openscience.cdk.qsar.result.BooleanResultTypeTest")
 public class BooleanResultType implements IDescriptorResult {
 
     @TestMethod("testToString")

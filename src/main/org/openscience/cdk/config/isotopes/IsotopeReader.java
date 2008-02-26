@@ -53,7 +53,7 @@ import java.util.List;
  *
  * @author     Egon Willighagen
  */
-@TestClass("org.openscience.cdk.test.config.isotopes.IsotopeReaderTest")
+@TestClass("org.openscience.cdk.config.isotopes.IsotopeReaderTest")
 public class IsotopeReader {
 
     private XMLReader parser;

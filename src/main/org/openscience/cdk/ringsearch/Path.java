@@ -46,7 +46,7 @@ import java.util.Vector;
  * @author     steinbeck
  * @cdk.created    2002-02-28
  */
-@TestClass("org.openscience.cdk.test.ringsearch.PathTest")
+@TestClass("org.openscience.cdk.ringsearch.PathTest")
 public class Path extends Vector
 {
 

@@ -45,7 +45,7 @@ import java.util.Random;
  * 
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */
-@TestClass("org.openscience.cdk.test.fingerprint.GraphOnlyFingerprinterTest")
+@TestClass("org.openscience.cdk.fingerprint.GraphOnlyFingerprinterTest")
 public class GraphOnlyFingerprinter extends Fingerprinter {
 	
 	/**

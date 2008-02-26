@@ -47,7 +47,7 @@ import java.util.List;
  *
  * @cdk.keyword  id, creation
  */
-@TestClass("org.openscience.cdk.test.tools.IDCreatorTest")
+@TestClass("org.openscience.cdk.tools.IDCreatorTest")
 public abstract class IDCreator {
 
 	private final static String REACTION_PREFIX = "r";

@@ -61,7 +61,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:sigmaElectronegativity
  * @cdk.bug     1860497
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.SigmaElectronegativityDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.SigmaElectronegativityDescriptorTest")
 public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
 	/**Number of maximum iterations*/
     private int maxIterations = 0;

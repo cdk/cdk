@@ -39,7 +39,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
  */
-@TestClass("org.openscience.cdk.test.formula.MolecularFormulaSetTest")
+@TestClass("org.openscience.cdk.formula.MolecularFormulaSetTest")
 public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecularFormulaSet, Cloneable {
 
 	/**

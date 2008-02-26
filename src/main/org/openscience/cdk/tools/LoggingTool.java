@@ -92,7 +92,7 @@ import java.io.StringReader;
  * @cdk.svnrev  $Revision$
  * @cdk.builddepends log4j.jar
  */
-@TestClass("org.openscience.cdk.test.tools.LoggingToolTest")
+@TestClass("org.openscience.cdk.tools.LoggingToolTest")
 public class LoggingTool {
 
     private boolean doDebug = false;

@@ -14,7 +14,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.keyword 3D isomorphism
  * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom
  */
-@TestClass("org.openscience.cdk.test.pharmacophore.PharmacophoreBondTest")
+@TestClass("org.openscience.cdk.pharmacophore.PharmacophoreBondTest")
 public class PharmacophoreBond extends Bond {
 
     /**

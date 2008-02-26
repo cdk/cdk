@@ -50,7 +50,7 @@ import java.util.StringTokenizer;
  *
  * @cdk.keyword    atom, type
  */
-@TestClass("org.openscience.cdk.test.config.TXTBasedAtomTypeConfiguratorTest")
+@TestClass("org.openscience.cdk.config.TXTBasedAtomTypeConfiguratorTest")
 public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
     private String configFile = "org/openscience/cdk/config/data/jmol_atomtypes.txt";

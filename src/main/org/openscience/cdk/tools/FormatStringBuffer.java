@@ -64,7 +64,7 @@ import java.text.NumberFormat;
  * @cdk.svnrev  $Revision$
  * @cdk.license BSD
  */
-@TestClass("org.openscience.cdk.test.tools.FormatStringBufferTest")
+@TestClass("org.openscience.cdk.tools.FormatStringBufferTest")
 public class FormatStringBuffer {
 
     // ==================================================================== //

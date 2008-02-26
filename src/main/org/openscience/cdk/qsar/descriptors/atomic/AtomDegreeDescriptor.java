@@ -59,7 +59,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomDegree
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.AtomDegreeDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.AtomDegreeDescriptorTest")
 public class AtomDegreeDescriptor implements IAtomicDescriptor {
 
     @TestMethod(value="testGetSpecification")

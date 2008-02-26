@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @author      steinbeck
  * @cdk.created 2004-07-04
  */
-@TestClass("org.openscience.cdk.test.graph.matrix.ConnectionMatrixTest")
+@TestClass("org.openscience.cdk.graph.matrix.ConnectionMatrixTest")
 public class ConnectionMatrix implements IGraphMatrix {
 
 	/**

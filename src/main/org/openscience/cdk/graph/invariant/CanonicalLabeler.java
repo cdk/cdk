@@ -50,7 +50,7 @@ import java.util.*;
  *
  * @cdk.keyword canonicalization
  */
-@TestClass("org.openscience.cdk.test.graph.invariant.CanonicalLabelerTest")
+@TestClass("org.openscience.cdk.graph.invariant.CanonicalLabelerTest")
 public class CanonicalLabeler {
 
   public CanonicalLabeler() {

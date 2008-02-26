@@ -60,7 +60,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:distanceToAtom
  */
-@TestClass(value="org.openscience.cdk.test.qsar.descriptors.atomic.DistanceToAtomDescriptorTest")
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.DistanceToAtomDescriptorTest")
 public class DistanceToAtomDescriptor implements IAtomicDescriptor {
 
     private int focusPosition = 0;

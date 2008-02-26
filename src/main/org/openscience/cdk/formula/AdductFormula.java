@@ -46,7 +46,7 @@ import org.openscience.cdk.formula.IMolecularFormula;
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
  */
-@TestClass("org.openscience.cdk.test.formula.AdductFormulaTest")
+@TestClass("org.openscience.cdk.formula.AdductFormulaTest")
 public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormula, Cloneable{
 
 	/**

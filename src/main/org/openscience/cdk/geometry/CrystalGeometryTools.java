@@ -46,7 +46,7 @@ import javax.vecmath.Vector3d;
  *
  * @cdk.keyword fractional coordinates, crystal
  */
-@TestClass("org.openscience.cdk.test.geometry.CrystalGeometryToolsTest")
+@TestClass("org.openscience.cdk.geometry.CrystalGeometryToolsTest")
 public class CrystalGeometryTools {
 
     /**
