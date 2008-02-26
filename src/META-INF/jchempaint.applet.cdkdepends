@@ -13,3 +13,4 @@ cdk-smiles.jar
 cdk-valencycheck.jar
 cdk-sdg.jar
 cdk-control.jar
+cdk-atomtype.jar

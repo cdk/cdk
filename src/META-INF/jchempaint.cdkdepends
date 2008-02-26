@@ -1,5 +1,6 @@
 cdk-applications.jar
 cdk-core.jar
+cdk-atomtype.jar
 cdk-data.jar
 cdk-extra.jar
 cdk-experimental.jar
@@ -15,3 +16,5 @@ cdk-smiles.jar
 cdk-sdg.jar
 cdk-control.jar
 cdk-inchi.jar
+cdk-progzjcp.jar
+cdk-formula.jar
