@@ -41,7 +41,6 @@ import junit.framework.Test;
 abstract public class CoverageTest extends CDKTestCase {
 
     private final String basePackageName = "org.openscience.cdk.";
-    private final String testPackageName = "test.";
     
     private ClassLoader classLoader;
     private List<String> classesToTest;
@@ -260,7 +259,7 @@ abstract public class CoverageTest extends CDKTestCase {
     }
     
     private String getTestClassName(String className) {
-        return basePackageName + testPackageName + className + "Test";
+        return basePackageName + className + "Test";
     }
     
     private String getClassName(String className) {
