@@ -1851,6 +1851,15 @@ public class AtomContainerTest extends NewCDKTestCase {
         mol.addSingleElectron(1);
         Assert.assertEquals(2, mol.getSingleElectronCount());
         Assert.assertNotNull(mol.getSingleElectron(1));
+        Iterator<ISingleElectron> singles = mol.singleElectrons();
+        ISingleElectron singleElectron = singles.next();
+        Assert.assertNotNull(singleElectron);
+        Assert.assertEquals(c1, singleElectron.getAtom());
+        Assert.assertTrue(singleElectron.contains(c1));
+        singleElectron = singles.next();
+        Assert.assertNotNull(singleElectron);
+        Assert.assertEquals(c1, singleElectron.getAtom());
+        Assert.assertTrue(singleElectron.contains(c1));
     }
     
     @Test public void testGetConnectedSingleElectronsList_IAtom() {

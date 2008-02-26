@@ -20,29 +20,28 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.CDKConstants;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
-import org.openscience.cdk.reaction.type.DisplacementChargeFromAcceptorReaction;
-import org.openscience.cdk.reaction.type.DisplacementChargeFromDonorReaction;
-import org.openscience.cdk.reaction.type.HyperconjugationReaction;
-import org.openscience.cdk.reaction.type.RearrangementAnion1Reaction;
-import org.openscience.cdk.reaction.type.RearrangementAnion2Reaction;
-import org.openscience.cdk.reaction.type.RearrangementAnion3Reaction;
-import org.openscience.cdk.reaction.type.RearrangementCation1Reaction;
-import org.openscience.cdk.reaction.type.RearrangementCation2Reaction;
-import org.openscience.cdk.reaction.type.RearrangementCation3Reaction;
-import org.openscience.cdk.reaction.type.RearrangementRadical1Reaction;
-import org.openscience.cdk.reaction.type.RearrangementRadical2Reaction;
-import org.openscience.cdk.reaction.type.RearrangementRadical3Reaction;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.reaction.type.PiBondingMovementReaction;
+import org.openscience.cdk.reaction.type.RearrangementAnionReaction;
+import org.openscience.cdk.reaction.type.RearrangementCationReaction;
+import org.openscience.cdk.reaction.type.RearrangementLonePairReaction;
+import org.openscience.cdk.reaction.type.RearrangementRadicalReaction;
+import org.openscience.cdk.reaction.type.SharingLonePairReaction;
 
 /**
  * <p>This class try to generate resonance structure for a determinate molecule.</p>
@@ -55,7 +54,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * 
  * <pre>
  * StructureResonanceGenerator srG = new StructureReseonanceGenerator(true,true,true,true,false);
- * MoleculeSet setOf = gf.getResonances(new Molecule());
+ * MoleculeSet setOf = srG.getResonances(new Molecule());
  * </pre>
  * 
  * <p>We have the possibility to localize the reactive center. Good method if you
@@ -73,6 +72,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * 
  * @see org.openscience.cdk.reaction.IReactionProcess
  */
+@TestClass("org.openscience.cdk.test.tools.StructureResonanceGeneratorTest")
 public class StructureResonanceGenerator {
 	
 	private boolean cationR = true;
@@ -85,307 +85,177 @@ public class StructureResonanceGenerator {
 	private int maxStructuresToObtain = -1;
 	
 	private LoggingTool logger = new LoggingTool(StructureResonanceGenerator.class);
+	private List<IReactionProcess> reactionsList = new ArrayList<IReactionProcess>();
 	
 	/**
-	 * Constructor of StructureResonanceGenerator object
-	 *
-	 * Default search: (Radical,Cation,Anion,Bond,hyperconjugation, no limit resonance structures)
+	 * Construct an instance of StructureResonanceGenerator. Default restrictions 
+	 * are initiated.
+	 * 
+	 * @see #setDefaultReactionss()
 	 */
 	public StructureResonanceGenerator(){
-		this(true,true,true,true,false,false, -1);
-	}
-	/**
-	 * Constructor of StructureResonanceGenerator object
-	 *
-	 * @param cationR           True, search of Cation.
-	 * @param anionR            True, search of Anion.
-	 * @param radicalR          True, search of Radical.
-	 * @param bondR             True, search of Bond.
-	 * @param hyperconjugationR True, search of hyperconjugation.
-	 * @param hasActiveCenter   True, search of active Center.
-	 */
-	public StructureResonanceGenerator(
-			boolean cationR,
-			boolean anionR,
-			boolean radicalR,
-			boolean bondR,
-			boolean hyperconjugationR,
-			boolean hasActiveCenter,
-			int maxStructuresToObtain){
-		this.cationR = cationR;
-		this.anionR = anionR;
-		this.radicalR = radicalR;
-		this.bondR = bondR;
-		this.hyperconjugationR = hyperconjugationR;
-		this.hasActiveCenter = hasActiveCenter;
-		this.maxStructuresToObtain = maxStructuresToObtain;
+        logger.info("Initiate StructureResonanceGenerator");
+		setDefaultReactions();
 		
 	}
 	/**
-	 * <p>Get the resonance structures from an atomContainer. </p>
-	 * <p>This generator of resonances is limited only structures whose have the same order sum of bonds or higher.
+	 * Set the reactions that must be used in the generation of the resonance.
 	 * 
-	 * @param atomContainer The atomContainer to analyze
-	 * @return The different resonance structures
+	 * @param newReactionsList  The IReactionsProcess's to use
+	 * 
+	 * @see #getReactions()
+	 * @see #setReactionsDefault()
+	 * @see IReactionProcess
 	 */
-	public IAtomContainerSet getStructures(IAtomContainer atomContainer) {
-		IAtomContainerSet setOfAC = atomContainer.getBuilder().newAtomContainerSet();
-		
-		IAtomContainerSet set = getAllStructures(atomContainer); 
-		/*analize sum of bonds */
-		int bondSum = AtomContainerManipulator.getSingleBondEquivalentSum(atomContainer);
-		for(int i = 0; i < set.getAtomContainerCount(); i++){
-			int bondSumI = AtomContainerManipulator.getSingleBondEquivalentSum(set.getAtomContainer(i));
-			if(bondSumI >= bondSum)
-				setOfAC.addAtomContainer(set.getAtomContainer(i));
-		}
-		return setOfAC;
+	@TestMethod("testSetReactions_List")
+	public void setReactions(List<IReactionProcess> newReactionsList)  throws CDKException {
+		reactionsList = newReactionsList;
 	}
 	/**
-	 * <p>Get all resonance structures from an atomContainer. </p>
+	 * Get the reactions that must be presents in the generation of the resonance.
 	 * 
-	 * @param atomContainer The atomContainer to analyze
-	 * @return The different resonance structures
+	 * @return The reactions to be imposed
+	 * 
+	 * @see #getReactions(IRreactionProcess)
+	 * @see #setDefaultReactions()
 	 */
-	public IAtomContainerSet getAllStructures(IAtomContainer atomContainer){
+	@TestMethod("testGetReactions")
+	public List<IReactionProcess> getReactions(){
+		return this.reactionsList;
+	}
+	/**
+	 * Set the default reactions that must be presents to generate the resonance.
+	 *  
+	 * @return The reactions imposed
+	 * 
+	 * @see #getReactions(IReactionProcess)
+	 * @see #setDefaultReactions()
+	 */
+	@TestMethod("testSetDefaultReactions")
+	public void setDefaultReactions(){
+		callDefaultReactions();
 		
-		IAtomContainerSet setOfAtomContainer = atomContainer.getBuilder().newAtomContainerSet();
-		setOfAtomContainer.addAtomContainer(atomContainer);
+	}
+	/**
+	 * Create the default reactions List. They are:<p>
+	 * 
+	 * @throws CDKException 
+	 * 
+	 */
+	private void callDefaultReactions() {
 		Object[] params = new Object[1];
-		if(hasActiveCenter)
-			params[0] = Boolean.TRUE;
-		else
-			params[0] = Boolean.FALSE;
-
+		params[0] = Boolean.FALSE;
+		
+		IReactionProcess type  = new SharingLonePairReaction();
+        try {
+			type.setParameters(params);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+		reactionsList.add(type);
+		
+		type  = new PiBondingMovementReaction();
 		try {
-			for(int i = 0 ; i < setOfAtomContainer.getAtomContainerCount() ; i++){
-
-				IMoleculeSet setOfReactants = atomContainer.getBuilder().newMoleculeSet();
-				setOfReactants.addAtomContainer(setOfAtomContainer.getAtomContainer(i));
-				if(cationR){
-					/* RearrangementCation1Reaction */
-					IReactionProcess type  = new RearrangementCation1Reaction();
-			        type.setParameters(params);
-					
-			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-			        
-			        if(setOfReactions.getReactionCount() != 0)
-						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
-						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
-							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-//							logger.debug("RearrangementCation1Reaction");
-							if(!existAC(setOfAtomContainer,set))
-								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
-						}
-
-					/* RearrangementCation2Reaction*/
-					type  = new RearrangementCation2Reaction();
-			        type.setParameters(params);
-					
-			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        setOfReactions = type.initiate(setOfReactants, null);
-			        
-					if(setOfReactions.getReactionCount() != 0)
-						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
-						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
-							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-//							logger.debug("RearrangementCation2Reaction");
-							if(!existAC(setOfAtomContainer,set))
-								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
-						}
-					/* RearrangementCation3Reaction*/
-					type  = new RearrangementCation3Reaction();
-			        type.setParameters(params);
-					
-			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        setOfReactions = type.initiate(setOfReactants, null);
-			        
-			        if(setOfReactions.getReactionCount() != 0)
-						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
-						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
-							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-//							logger.debug("RearrangementCation3Reaction");
-							if(!existAC(setOfAtomContainer,set))
-								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
-						}
-				}
-				if(anionR){
-					/* RearrangementAnion1Reaction*/
-					IReactionProcess type  = new RearrangementAnion1Reaction();
-			        type.setParameters(params);
-					
-			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-			        
-			        if(setOfReactions.getReactionCount() != 0)
-						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
-						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
-							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-//							logger.debug("RearrangementAnion1Reaction");
-							if(!existAC(setOfAtomContainer,set))
-								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
-						}
-					/* RearrangementAnion2Reaction*/
-			        type  = new RearrangementAnion2Reaction();
-			        type.setParameters(params);
-					
-			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        setOfReactions = type.initiate(setOfReactants, null);
-			        
-			        if(setOfReactions.getReactionCount() != 0)
-						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
-						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
-							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-//							logger.debug("RearrangementAnion2Reaction");
-							if(!existAC(setOfAtomContainer,set))
-								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
-						}
-					/* RearrangementAnion3Reaction*/
-					type  = new RearrangementAnion3Reaction();
-			        type.setParameters(params);
-					
-			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        setOfReactions = type.initiate(setOfReactants, null);
-			        
-			        if(setOfReactions.getReactionCount() != 0)
-						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
-						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
-							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-//							logger.debug("RearrangementAnion3Reaction");
-							if(!existAC(setOfAtomContainer,set))
-								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
-						}
-				}
-				if(radicalR){
-					/* RearrangementRadical1Reaction*/
-					IReactionProcess type  = new RearrangementRadical1Reaction();
-			        type.setParameters(params);
-					
-			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-			        
-			        if(setOfReactions.getReactionCount() != 0)
-						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
-						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
-							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-//							logger.debug("RearrangementRadical1Reaction");
-							if(!existAC(setOfAtomContainer,set))
-								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
-						}
-					/* RearrangementRadical2Reaction*/
-					type  = new RearrangementRadical2Reaction();
-			        type.setParameters(params);
-					
-			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        setOfReactions = type.initiate(setOfReactants, null);
-			        
-			        if(setOfReactions.getReactionCount() != 0)
-						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
-						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
-							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-//							logger.debug("RearrangementRadical2Reaction");
-							if(!existAC(setOfAtomContainer,set))
-								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
-						}
-					/* RearrangementRadical3Reaction*/
-					type  = new RearrangementRadical3Reaction();
-			        type.setParameters(params);
-					
-			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        setOfReactions = type.initiate(setOfReactants, null);
-			        
-			        if(setOfReactions.getReactionCount() != 0)
-						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
-						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
-							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-//							logger.debug("RearrangementRadical3Reaction");
-							if(!existAC(setOfAtomContainer,set))
-								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
-						}
-				}
-				if(bondR){
-					/* DisplacementChargeFromAcceptorReaction*/
-					IReactionProcess type  = new DisplacementChargeFromAcceptorReaction();
-			        type.setParameters(params);
-
-			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-			        
-			        if(setOfReactions.getReactionCount() != 0)
-						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
-						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
-							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-//							logger.debug("DisplacementChargeFromAcceptorReaction");
-							if(!existAC(setOfAtomContainer,set))
-								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
-						}
-			        /* DisplacementChargeFromDonorReaction*/
-					type  = new DisplacementChargeFromDonorReaction();
-			        type.setParameters(params);
-					
-			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        setOfReactions = type.initiate(setOfReactants, null);
-			        
-			        if(setOfReactions.getReactionCount() != 0)
-						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
-						for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
-							IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-//							logger.debug("DisplacementChargeFromDonorReaction");
-							if(!existAC(setOfAtomContainer,set))
-								setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
-						}
-				}
-				if(hyperconjugationR){
-					/* HyperconjugationReaction*/
-					IReactionProcess type  = new HyperconjugationReaction();
-			        type.setParameters(params);
-
-			        removeFlags(setOfAtomContainer.getAtomContainer(i));
-			        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-			        
-			        if(setOfReactions.getReactionCount() != 0)
+			type.setParameters(params);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+		reactionsList.add(type);
+		
+		type  = new RearrangementAnionReaction();
+		try {
+			type.setParameters(params);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+		reactionsList.add(type);
+		
+		type  = new RearrangementCationReaction();
+		try {
+			type.setParameters(params);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+		reactionsList.add(type);
+		
+		type  = new RearrangementLonePairReaction();
+		try {
+			type.setParameters(params);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+		reactionsList.add(type);
+		
+		type  = new RearrangementRadicalReaction();
+		try {
+			type.setParameters(params);
+		} catch (CDKException e) {
+			e.printStackTrace();
+		}
+		reactionsList.add(type);
+		
+	}
+	/**
+	 * <p>Get the resonance structures from an IMolecule. </p>
+	 * 
+	 * @param molecule The IMolecule to analyze
+	 * @return         The different resonance structures
+	 */
+    @TestMethod("testGetStructures_IMolecule")
+	public IMoleculeSet getStructures(IMolecule molecule) {
+		IMoleculeSet setOfMol = molecule.getBuilder().newMoleculeSet();
+		setOfMol.addMolecule(molecule);
+		
+		for(int i = 0 ; i < setOfMol.getMoleculeCount() ; i++){
+			IMolecule mol = setOfMol.getMolecule(i);
+			Iterator<IReactionProcess> itReact = reactionsList.iterator();
+			while(itReact.hasNext()){
+				IReactionProcess reaction = itReact.next();
+				IMoleculeSet setOfReactants = molecule.getBuilder().newMoleculeSet();
+				setOfReactants.addMolecule(mol);
+				try {
+					IReactionSet setOfReactions = reaction.initiate(setOfReactants, null);
+					 if(setOfReactions.getReactionCount() != 0)
 						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
 							for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
-								IAtomContainer set = setOfReactions.getReaction(k).getProducts().getAtomContainer(j);
-//								logger.debug("HyperconjugationReaction");
-								if(!existAC(setOfAtomContainer,set))
-									setOfAtomContainer.addAtomContainer(setOfReactions.getReaction(k).getProducts().getAtomContainer(j));
-							}
-			    }
-
-				/* this makes a limition of the search */
-				if(maxStructuresToObtain != -1)
-					if(setOfAtomContainer.getAtomContainerCount() > maxStructuresToObtain)
-						break;
-				
-				if(i == 0 && setOfAtomContainer.getAtomContainerCount() > 9)
-					return setOfAtomContainer;
+								IMolecule product = setOfReactions.getReaction(k).getProducts().getMolecule(j);
+								if(!existAC(setOfMol,product))
+									setOfMol.addMolecule(product);
+						}
+				} catch (CDKException e) {
+					e.printStackTrace();
+				}
 			}
-		} catch (CDKException e) {
-			logger.error("Error while getting all resonance structures: ");
-			logger.error(e.getMessage());
-			logger.debug(e);
 		}
-		return setOfAtomContainer;
+		return setOfMol;
 	}
 	/**
-	 * Search if the setOfAtomContainer contains the atomContainer 
+	 * Search if the setOfAtomContainer contains the atomContainer
+	 *  
+	 * FIXME: REACT: The isomorph method is not accurate. The resonance in benzene e.g. will always fail.
 	 * 
 	 * @param set            ISetOfAtomContainer object where to search
 	 * @param atomContainer  IAtomContainer to search
 	 * @return   			 True, if the atomContainer is contained
 	 */
 	private boolean existAC(IAtomContainerSet set, IAtomContainer atomContainer) {
-//		logger.debug("smiles: "+(new SmilesGenerator(set.getBuilder())).createSMILES((IMolecule) atomContainer));
-		atomContainer = setID(atomContainer);
+//		atomContainer = setID(atomContainer);
+		for(int i = 0 ; i < atomContainer.getAtomCount(); i++)
+			atomContainer.getAtom(i).setID(""+atomContainer.getAtomNumber(atomContainer.getAtom(i)));
+		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(atomContainer);
 		for(int i = 0 ; i < set.getAtomContainerCount(); i++){
-			IAtomContainer ac = setID(set.getAtomContainer(i));
-			QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(ac);
+//			IAtomContainer ac = setID(set.getAtomContainer(i));
+			IAtomContainer ss = set.getAtomContainer(i);
+			for(int j = 0 ; j < ss.getAtomCount(); j++)
+				ss.getAtom(j).setID(""+ss.getAtomNumber(ss.getAtom(j)));
+//			QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(ac);
 //			QueryAtomContainer qAC = QueryAtomContainerCreator.createAnyAtomContainer(atomContainer,false);
 			try {
-				if(UniversalIsomorphismTester.isIsomorph(atomContainer,qAC)){
+				if(UniversalIsomorphismTester.isIsomorph(ss,qAC)){
 //					logger.debug("exist");
+//					SmilesGenerator sg = new SmilesGenerator();
+//					System.out.println(sg.createSMILES((IMolecule) atomContainer));
+//					System.out.println(sg.createSMILES((IMolecule) ss));
 					return true;
 				}
 			} catch (CDKException e1) {
@@ -396,31 +266,4 @@ public class StructureResonanceGenerator {
 		}
 		return false;
 	}
-	/**
-	 * remove the possible flags about CDKConstants.REACTIVE_CENTER
-	 * 
-	 * @param atomContainer
-	 * @return
-	 */
-	private IAtomContainer removeFlags(IAtomContainer atomContainer){
-		for(int i = 0 ; i < atomContainer.getAtomCount(); i++)
-			atomContainer.getAtom(i).setFlag(CDKConstants.REACTIVE_CENTER,false);
-
-		for(int i = 0 ; i < atomContainer.getBondCount(); i++)
-			atomContainer.getBond(i).setFlag(CDKConstants.REACTIVE_CENTER,false);
-		return atomContainer;
-	}
-	/**
-	 * Set the ID as position
-	 * 
-	 * @param atomContainer
-	 * @return
-	 */
-	private IAtomContainer setID(IAtomContainer atomContainer){
-		for(int i = 0 ; i < atomContainer.getAtomCount(); i++){
-			atomContainer.getAtom(i).setID(""+atomContainer.getAtomNumber(atomContainer.getAtom(i)));
-		}
-		return atomContainer;
-	}
-
 }

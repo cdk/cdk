@@ -50,7 +50,7 @@ import org.openscience.cdk.qsar.descriptors.atomic.PiElectronegativityDescriptor
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.reaction.type.BreakingBondReaction;
+import org.openscience.cdk.reaction.type.HeterolyticCleavageSBReaction;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -181,7 +181,7 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
     		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),dar);
     	}
     	
-    	BreakingBondReaction type = new BreakingBondReaction();
+    	HeterolyticCleavageSBReaction type = new HeterolyticCleavageSBReaction();
     	
         Object[] paramsR = {Boolean.TRUE};
         type.setParameters(paramsR);
@@ -227,9 +227,13 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
 	        		 else
 	        			 maxNumbStruc = 5;
 	        	}
-	        	StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,false,false,true,false,maxNumbStruc);
+	        	StructureResonanceGenerator gRI = new StructureResonanceGenerator();
 	        	
-	        	IAtomContainerSet setOfResonance = gRI.getAllStructures(product);
+	        	IAtomContainerSet setOfResonance = gRI.getStructures(
+	        		product instanceof IMolecule ?
+	        			(IMolecule)product :
+	        			product.getBuilder().newMolecule(product)
+	        	);
 	    		if(setOfResonance.getAtomContainerCount() == 1)
 	    			continue;
 

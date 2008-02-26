@@ -558,5 +558,26 @@ public class MolecularFormulaManipulator {
 		return true;
 	}
 	
+	/**
+	 * Returns a set of nodes excluding all the hydrogens
+	 * 
+	 * @param   formula The IMolecularFormula
+	 * @return          The heavyElements value into a List
+	 * 
+	 * @cdk.keyword    hydrogen, removal
+	 */
+	@TestMethod("testGetHeavyElements_IMolecularFormula")
+	public static List<IElement> getHeavyElements(IMolecularFormula formula) {
+		List<IElement> newEle = new ArrayList<IElement>();
+		Iterator<IElement> itEle = elements(formula).iterator();
+		while(itEle.hasNext()){
+			IElement element = itEle.next();
+			if (!element.getSymbol().equals("H")) {
+				newEle.add(element);
+			}
+		}
+		return newEle;
+	}
+	
 }
 

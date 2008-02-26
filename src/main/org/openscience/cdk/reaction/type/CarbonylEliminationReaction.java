@@ -24,31 +24,29 @@
  */
 package org.openscience.cdk.reaction.type;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.LonePair;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionSpecification;
+import org.openscience.cdk.reaction.mechanism.HeterolyticCleavageMechanism;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * <p>IReactionProcess which participate mass spectrum process.  
  * This reaction could be represented as RC-C#[O+] => R[C] + |C#[O+]</p>
- * <p>Make sure that the molecule has the corresponend lone pair electrons
+ * <p>Make sure that the molecule has the correspond lone pair electrons
  * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
+ * <p>It is processed by the HeterolyticCleavageMechanism class</p>
  * 
  * <pre>
  *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
@@ -64,7 +62,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
  * <p>Moreover you must put the parameter Boolean.TRUE</p>
  * <p>If the reactive center is not localized then the reaction process will
- * try to find automatically the posible reactive center.</p>
+ * try to find automatically the possible reactive center.</p>
  * 
  * 
  * @author         Miguel Rojas
@@ -74,22 +72,23 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set        reaction-types
  * 
+ * @see HeterolyticCleavageMechanism
  **/
 public class CarbonylEliminationReaction implements IReactionProcess{
 	private LoggingTool logger;
 	private boolean hasActiveCenter;
-	private static final int BONDTOFLAG1 = 8;
-	private static final int BONDTOFLAG2 = 9;
+	private IReactionMechanism mechanism;
 	
 	/**
-	 * Constructor of the CarbonylEliminationReaction object
+	 * Constructor of the CarbonylEliminationReaction object.
 	 *
 	 */
 	public CarbonylEliminationReaction(){
 		logger = new LoggingTool(this);
+		mechanism = new HeterolyticCleavageMechanism();
 	}
 	/**
-	 *  Gets the specification attribute of the CarbonylEliminationReaction object
+	 *  Gets the specification attribute of the CarbonylEliminationReaction object.
 	 *
 	 *@return    The specification value
 	 */
@@ -102,10 +101,10 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 	}
 	
 	/**
-	 *  Sets the parameters attribute of the CarbonylEliminationReaction object
+	 *  Sets the parameters attribute of the CarbonylEliminationReaction object.
 	 *
 	 *@param  params            The parameter is if the molecule has already fixed the center active or not. It 
-	 *							should be set before to inize the reaction with a setFlag:  CDKConstants.REACTIVE_CENTER
+	 *							should be set before to initiate the reaction with a setFlag:  CDKConstants.REACTIVE_CENTER
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public void setParameters(Object[] params) throws CDKException {
@@ -120,7 +119,7 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 
 
 	/**
-	 *  Gets the parameters attribute of the CarbonylEliminationReaction object
+	 *  Gets the parameters attribute of the CarbonylEliminationReaction object.
 	 *
 	 *@return    The parameters value
 	 */
@@ -133,8 +132,8 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 	/**
 	 *  Initiate process.
 	 *
-	 *@param  reactants         reactants of the reaction.
-	 *@param  agents            agents of the reaction (Must be in this case null).
+	 *@param  reactants         reactants of the reaction
+	 *@param  agents            agents of the reaction (Must be in this case null)
 	 *
 	 *@exception  CDKException  Description of the Exception
 	 */
@@ -156,92 +155,53 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 			setActiveCenters(reactant);
 		}
 		
-		for(int i = 0 ; i < reactant.getBondCount() ; i++) {
-			IBond bond = reactant.getBond(i);
-			if(bond.getOrder() == IBond.Order.TRIPLE ){
-				IAtom atom1 = null;
-				IAtom atom2 = null;
-				if(bond.getAtom(0).getSymbol().equals("C") && bond.getAtom(1).getSymbol().equals("O") && 
-						bond.getAtom(0).getFormalCharge() == 0 && bond.getAtom(1).getFormalCharge() == 1) {
-					atom1 = bond.getAtom(1); /*Oxygen*/
-					atom2 = bond.getAtom(0);
-				}else if(bond.getAtom(1).getSymbol().equals("C") && bond.getAtom(0).getSymbol().equals("O") && 
-								bond.getAtom(1).getFormalCharge() == 0 && bond.getAtom(0).getFormalCharge() == 1){
-					atom1 = bond.getAtom(0);/*Oxygen*/
-					atom2 = bond.getAtom(1);
-				}
-				if(atom1 != null && atom2 != null)
-				if(atom1.getFlag(CDKConstants.REACTIVE_CENTER) && atom2.getFlag(CDKConstants.REACTIVE_CENTER)){
-					List atomConL = reactant.getConnectedAtomsList(atom2);
-					 Iterator iterator = atomConL.iterator();
-					 IAtom atom3 = null;
-					 while(iterator.hasNext()){
-						 IAtom a = (IAtom) iterator.next();
-						 if(a != atom1)
-							 atom3 = a;
-					 }
-					 if(atom3 != null){
-						 IBond bondCon = reactant.getBond(atom2, atom3);
+		Iterator<IAtom> atomis = reactant.atoms();
+		while(atomis.hasNext()){
+			IAtom atomi = atomis.next();
+			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getSymbol().equals("O") &&
+					atomi.getFormalCharge() == 1){
+				
+				Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
+				while(bondis.hasNext()){
+					IBond bondi = bondis.next();
 					
-							IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-							reaction.addReactant(reactant);
+					if(bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder()== IBond.Order.TRIPLE){
+						IAtom atomj = bondi.getConnectedAtom(atomi);
+						if(atomj.getFlag(CDKConstants.REACTIVE_CENTER)){ 
+							Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
+							while (bondjs.hasNext()) {
+					            IBond bondj = bondjs.next();
+					            
+					            if(bondj.equals(bondi))
+					            	continue;
+	
+					            if(bondj.getFlag(CDKConstants.REACTIVE_CENTER) && bondj.getOrder() == IBond.Order.SINGLE){
+									
+					            	IAtom atomk = bondj.getConnectedAtom(atomj);
+									if(atomk.getFlag(CDKConstants.REACTIVE_CENTER)&& atomk.getFormalCharge() == 0 ){
 
-							cleanFlagBOND(reactants.getMolecule(0));
-							/* positions atoms and bonds */
-							int atom1P = reactant.getAtomNumber(atom1);
-							bond.setFlag(BONDTOFLAG1, true);
-							int atom2P = reactant.getAtomNumber(atom2);
-							bondCon.setFlag(BONDTOFLAG2, true);
-							int atom3P = reactant.getAtomNumber(atom3);
+										ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+					                	atomList.add(atomk);
+					                	atomList.add(atomj);
+					                	ArrayList<IBond> bondList = new ArrayList<IBond>();
+					                	bondList.add(bondj);
 
-							/* action */
-							IMolecule acCloned;
-							try {
-								acCloned = (IMolecule) reactant.clone();
-							} catch (CloneNotSupportedException e) {
-								throw new CDKException("Could not clone IMolecule!", e);
+										IMoleculeSet moleculeSet = reactant.getBuilder().newMoleculeSet();
+										moleculeSet.addMolecule(reactant);
+										IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
+										if(reaction == null)
+											continue;
+										else
+											setOfReactions.addReaction(reaction);
+					                	
+									}
+					            }
 							}
-							
-							int charge = acCloned.getAtom(atom3P).getFormalCharge();
-							acCloned.getAtom(atom3P).setFormalCharge(charge+1);
-							
-							acCloned.addLonePair(new LonePair(acCloned.getAtom(atom2P)));
-							acCloned.getAtom(atom2P).setFormalCharge(-1);
-							
-							IBond bondClon = null;
-							for(int l = 0 ; l<acCloned.getBondCount();l++){
-								if(acCloned.getBond(l).getFlag(BONDTOFLAG1)){
-									IBond bb = acCloned.getBond(l);
-									bondClon = bb;
-								}else if(acCloned.getBond(l).getFlag(BONDTOFLAG2)){
-									IBond bb = acCloned.getBond(l);
-									acCloned.removeBond(bb.getAtom(0), bb.getAtom(1));
-								}
-							}
-							
-							/* mapping */
-							IMapping mapping = atom1.getBuilder().newMapping(atom1, acCloned.getAtom(atom1P));
-					        reaction.addMapping(mapping);
-					        mapping = atom1.getBuilder().newMapping(atom2, acCloned.getAtom(atom2P));
-					        reaction.addMapping(mapping);
-					        mapping = atom1.getBuilder().newMapping(atom3, acCloned.getAtom(atom3P));
-					        reaction.addMapping(mapping);
-					        mapping = atom1.getBuilder().newMapping(bond, bondClon);
-					        reaction.addMapping(mapping);
-					        
-							IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(acCloned);
-							for(int z = 0; z < moleculeSet.getAtomContainerCount() ; z++){
-								reaction.addProduct(moleculeSet.getMolecule(z));
-							}
-							
-							setOfReactions.addReaction(reaction);
-
-							bond.setFlag(BONDTOFLAG1, false);
-							bondCon.setFlag(BONDTOFLAG2, false);
-					 	}
+						}
 					}
 				}
 			}
+		}
 		return setOfReactions;
 		
 	}
@@ -260,43 +220,44 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		for(int i = 0 ; i < reactant.getBondCount() ; i++) {
-			IBond bond = reactant.getBond(i);
-			if(bond.getOrder() == IBond.Order.TRIPLE ){
-				IAtom atom1 = null;
-				IAtom atom2 = null;
-				if(bond.getAtom(0).getSymbol().equals("C") && bond.getAtom(1).getSymbol().equals("O") && 
-						bond.getAtom(0).getFormalCharge() == 0 && bond.getAtom(1).getFormalCharge() == 1) {
-					atom1 = bond.getAtom(1); /*Oxygen*/
-					atom2 = bond.getAtom(0);
-				}else if(bond.getAtom(1).getSymbol().equals("C") && bond.getAtom(0).getSymbol().equals("O") && 
-								bond.getAtom(1).getFormalCharge() == 0 && bond.getAtom(0).getFormalCharge() == 1){
-					atom1 = bond.getAtom(0);/*Oxygen*/
-					atom2 = bond.getAtom(1);
-				}
-				if(atom1 != null && atom2 != null){
-					 List atomConL = reactant.getConnectedAtomsList(atom2);
-					 Iterator iterator = atomConL.iterator();
-					 IAtom atom3 = null;
-					 while(iterator.hasNext()){
-						 IAtom a = (IAtom) iterator.next();
-						 if(a != atom1)
-							 atom3 = a;
-					 }
-					 if(atom3 != null){
-						 IBond bondCon = reactant.getBond(atom2, atom3);
-						 atom1.setFlag(CDKConstants.REACTIVE_CENTER,true);
-						 bond.setFlag(CDKConstants.REACTIVE_CENTER,true); 
-						 atom2.setFlag(CDKConstants.REACTIVE_CENTER,true);
-						 bondCon.setFlag(CDKConstants.REACTIVE_CENTER,true); 
-						 atom3.setFlag(CDKConstants.REACTIVE_CENTER,true);
+		Iterator<IAtom> atomis = reactant.atoms();
+		while(atomis.hasNext()){
+			IAtom atomi = atomis.next();
+			if(atomi.getSymbol().equals("O") &&
+					atomi.getFormalCharge() == 1){
+				
+				Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
+				while(bondis.hasNext()){
+					IBond bondi = bondis.next();
+					
+					if(bondi.getOrder()== IBond.Order.TRIPLE){
+						IAtom atomj = bondi.getConnectedAtom(atomi);
+						Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
+						while (bondjs.hasNext()) {
+				            IBond bondj = bondjs.next();
+				            
+				            if(bondj.equals(bondi))
+				            	continue;
+
+				            if(bondj.getOrder() == IBond.Order.SINGLE){
+								
+				            	IAtom atomk = bondj.getConnectedAtom(atomj);
+								if(atomk.getFormalCharge() == 0 ){
+									atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
+									bondi.setFlag(CDKConstants.REACTIVE_CENTER,true); 
+									atomj.setFlag(CDKConstants.REACTIVE_CENTER,true); 
+									bondj.setFlag(CDKConstants.REACTIVE_CENTER,true);
+									atomk.setFlag(CDKConstants.REACTIVE_CENTER,true);
+								}
+				            }
+						}
 					 }
 				}
 			}
 		}
 	}
 	/**
-	 *  Gets the parameterNames attribute of the CarbonylEliminationReaction object
+	 *  Gets the parameterNames attribute of the CarbonylEliminationReaction object.
 	 *
 	 *@return    The parameterNames value
 	 */
@@ -308,23 +269,12 @@ public class CarbonylEliminationReaction implements IReactionProcess{
 
 
 	/**
-	 *  Gets the parameterType attribute of the CarbonylEliminationReaction object
+	 *  Gets the parameterType attribute of the CarbonylEliminationReaction object.
 	 *
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value
 	 */
 	public Object getParameterType(String name) {
 		return new Boolean(false);
-	}
-	/**
-     * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
-     * 
-	 * @param mol
-	 */
-	public void cleanFlagBOND(IAtomContainer ac){
-		for(int j = 0 ; j < ac.getBondCount(); j++){
-			ac.getBond(j).setFlag(BONDTOFLAG1, false);
-			ac.getBond(j).setFlag(BONDTOFLAG2, false);
-		}
 	}
 }

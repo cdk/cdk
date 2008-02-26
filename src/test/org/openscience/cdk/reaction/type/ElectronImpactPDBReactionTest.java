@@ -26,22 +26,26 @@ package org.openscience.cdk.reaction.type;
 
 import java.util.Iterator;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.ElectronImpactPDBReaction;
-import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.reaction.ReactionProcessTest;
+import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
  * TestSuite that runs a test for the ElectronImpactPDBReactionTest.
@@ -49,36 +53,62 @@ import org.openscience.cdk.CDKTestCase;
  * @cdk.module test-reaction
  */
  
-public class ElectronImpactPDBReactionTest extends CDKTestCase {
-	
-	public  ElectronImpactPDBReactionTest() {}
-    
-	public static Test suite() {
-		return new TestSuite(ElectronImpactPDBReactionTest.class);
-	}
+public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
+
+	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	private final static LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	/**
-	 *  A unit test for JUnit
+	 *  The JUnit setup method
+	 */
+	 @BeforeClass public static void setUp() throws Exception {
+	 	setReaction(ElectronImpactPDBReaction.class);
+	 }
+	 
+	/**
+	 *  A unit test for JUnit with the compound 2_5_Hexen_3_one.
+	 *
+	 * @cdk.inchi InChI=1/C6H10O/c1-3-5-6(7)4-2/h3H,1,4-5H2,2H3
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void test1_5_Hexen_3_one() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void testManual_Set_Active_Bond() throws Exception {
 		/* ionize >C=C< , set the reactive center*/
-		IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=CCC(=O)CC");
+		IMolecule reactant = builder.newMolecule();//Smiles("C=CCC(=O)CC")
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addAtom(builder.newAtom("O"));
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addBond(0, 1, IBond.Order.DOUBLE);
+		reactant.addBond(1, 2, IBond.Order.SINGLE);
+		reactant.addBond(2, 3, IBond.Order.SINGLE);
+		reactant.addBond(3, 4, IBond.Order.DOUBLE);
+		reactant.addBond(3, 5, IBond.Order.SINGLE);
+		reactant.addBond(5, 6, IBond.Order.SINGLE);
+		addExplicitHydrogens(reactant);
 		
-		Iterator bonds = reactant.bonds();
+		Iterator<IBond> bonds = reactant.bonds();
 		while (bonds.hasNext()){
 			IBond bond = (IBond)bonds.next();
-			IAtom atom0 = bond.getAtom(0);
-			IAtom atom1 = bond.getAtom(1);
+			IAtom atom1 = bond.getAtom(0);
+			IAtom atom2 = bond.getAtom(1);
 			if(bond.getOrder() == IBond.Order.DOUBLE &&
-					atom0.getSymbol().equals("C")&&
-					atom1.getSymbol().equals("C")){
+					atom1.getSymbol().equals("C")&&
+					atom2.getSymbol().equals("C")){
 				bond.setFlag(CDKConstants.REACTIVE_CENTER,true);
+				atom1.setFlag(CDKConstants.REACTIVE_CENTER,true);
+				atom2.setFlag(CDKConstants.REACTIVE_CENTER,true);
 			}
 		}
 		
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(reactant);
+
+		/* initiate */
+	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
+		makeSureAtomTypesAreRecognized(reactant);
 		
 		IReactionProcess type  = new ElectronImpactPDBReaction();
         Object[] params = {Boolean.TRUE};
@@ -88,58 +118,89 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
         Assert.assertEquals(2, setOfReactions.getReactionCount());
 
         IMolecule molecule = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        Assert.assertEquals(1, molecule.getAtom(1).getFormalCharge().intValue());
-        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)));
-
-        molecule = setOfReactions.getReaction(1).getProducts().getMolecule(0);
+          
         Assert.assertEquals(1, molecule.getAtom(0).getFormalCharge().intValue());
         Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)));
-        
+        Assert.assertEquals(1, molecule.getSingleElectronCount());
+
+        molecule = setOfReactions.getReaction(1).getProducts().getMolecule(0);
+        Assert.assertEquals(1, molecule.getAtom(1).getFormalCharge().intValue());
+        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)));
+        Assert.assertEquals(1, molecule.getSingleElectronCount());
+
         Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
 		
 	}
 	/**
-	 *  A unit test for JUnit
+	 *  A unit test for JUnit with the compound propene.
+	 *
+	 * @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void test_Propene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void testAutomatic_Set_Active_Bond() throws Exception {
 		/* ionize all possible double bonds */
-		IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=CC");
-		
+		IMolecule reactant = builder.newMolecule();//miles("C=CC")
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addBond(0, 1, IBond.Order.DOUBLE);
+		reactant.addBond(1, 2, IBond.Order.SINGLE);
+		addExplicitHydrogens(reactant);
 		
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(reactant);
+
+		/* initiate */
+	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
+		makeSureAtomTypesAreRecognized(reactant);
 		
 		IReactionProcess type  = new ElectronImpactPDBReaction();
-//        Object[] params = {false};
-//        type.setParameters(params);
 		IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
 		Assert.assertEquals(2, setOfReactions.getReactionCount());
 
         
         IMolecule molecule = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        Assert.assertEquals(1, molecule.getAtom(1).getFormalCharge().intValue());
-        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)));
-
-        molecule = setOfReactions.getReaction(1).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtom(0).getFormalCharge().intValue());
         Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)));
+
+        molecule = setOfReactions.getReaction(1).getProducts().getMolecule(0);
+        Assert.assertEquals(1, molecule.getAtom(1).getFormalCharge().intValue());
+        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)));
 		
 	}
 	/**
-	 *  A unit test for JUnit
+	 *  A unit test for JUnit with the compound 2_5_Hexen_3_one.
+	 *
+	 * @cdk.inchi InChI=1/C6H10O/c1-3-5-6(7)4-2/h3H,1,4-5H2,2H3
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void test2_5_Hexen_3_one() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void testAutomatic_Set_Active_Bond2() throws Exception {
 		/* ionize >C=C< , set the reactive center*/
-		IMolecule reactant = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=CCC(=O)CC");
-		
+		IMolecule reactant = builder.newMolecule();//Smiles("C=CCC(=O)CC")
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addAtom(builder.newAtom("O"));
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addAtom(builder.newAtom("C"));
+		reactant.addBond(0, 1, IBond.Order.DOUBLE);
+		reactant.addBond(1, 2, IBond.Order.SINGLE);
+		reactant.addBond(2, 3, IBond.Order.SINGLE);
+		reactant.addBond(3, 4, IBond.Order.DOUBLE);
+		reactant.addBond(3, 5, IBond.Order.SINGLE);
+		reactant.addBond(5, 6, IBond.Order.SINGLE);
+		addExplicitHydrogens(reactant);
 			
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		setOfReactants.addMolecule(reactant);
+
+		/* initiate */
+	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
+		makeSureAtomTypesAreRecognized(reactant);
 		
 		IReactionProcess type  = new ElectronImpactPDBReaction();
         Object[] params = {Boolean.FALSE};
@@ -149,14 +210,162 @@ public class ElectronImpactPDBReactionTest extends CDKTestCase {
         Assert.assertEquals(2, setOfReactions.getReactionCount());
 
         IMolecule molecule = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        Assert.assertEquals(1, molecule.getAtom(1).getFormalCharge().intValue());
-        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)));
-
-        molecule = setOfReactions.getReaction(1).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtom(0).getFormalCharge().intValue());
         Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)));
+
+        molecule = setOfReactions.getReaction(1).getProducts().getMolecule(0);
+        Assert.assertEquals(1, molecule.getAtom(1).getFormalCharge().intValue());
+        Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(0)));
         
         Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
 		
+	}
+	/**
+	 * A unit test suite for JUnit. 
+	 * 
+	 * @return    The test suite
+	 */
+	@Test public void testCentreActive() throws Exception {
+		IReactionProcess type  = new ElectronImpactPDBReaction();
+
+		Object[] object = type.getParameters();
+		Assert.assertFalse(((Boolean) object[0]).booleanValue());
+		 
+		Object[] params = {Boolean.TRUE};
+        type.setParameters(params);
+		Assert.assertTrue(((Boolean) params[0]).booleanValue());
+        
+	}
+	/**
+	 * A unit test suite for JUnit. Reaction:propene
+	 * Manually put of the reactive center.
+	 *
+	 * @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
+	 * 
+	 * @return    The test suite
+	 */
+	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+		IReactionProcess type  = new ElectronImpactPDBReaction();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+
+		IMolecule molecule = builder.newMolecule();//miles("C=CC")
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(0, 1, IBond.Order.DOUBLE);
+		molecule.addBond(1, 2, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addBond(0, 3, IBond.Order.SINGLE);
+		molecule.addBond(0, 4, IBond.Order.SINGLE);
+		molecule.addBond(1, 5, IBond.Order.SINGLE);
+		molecule.addBond(2, 6, IBond.Order.SINGLE);
+		molecule.addBond(2, 7, IBond.Order.SINGLE);
+		molecule.addBond(2, 8, IBond.Order.SINGLE);
+		
+	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+		lpcheck.saturate(molecule);
+		setOfReactants.addMolecule(molecule);
+		
+		/*manually put the reactive center*/
+		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		
+        Object[] params = {Boolean.TRUE};
+        type.setParameters(params);
+        
+        /* initiate */
+		makeSureAtomTypesAreRecognized(molecule);
+		
+        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+
+        Assert.assertEquals(2, setOfReactions.getReactionCount());
+        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+
+        IMolecule reactant = setOfReactions.getReaction(0).getReactants().getMolecule(0);
+		Assert.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
+		Assert.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
+		Assert.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+		Assert.assertTrue(reactant.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+		Assert.assertTrue(molecule.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
+		Assert.assertTrue(reactant.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
+	}
+
+	/**
+	 * A unit test suite for JUnit. Reaction: propene
+	 * Manually put of the reactive center.
+	 *
+	 * @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
+	 *  
+	 * @return    The test suite
+	 */
+	@Test public void testMapping() throws Exception {
+		IReactionProcess type  = new ElectronImpactPDBReaction();
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		
+		IMolecule molecule = builder.newMolecule();//miles("C=CC")
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(0, 1, IBond.Order.DOUBLE);
+		molecule.addBond(1, 2, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addBond(0, 3, IBond.Order.SINGLE);
+		molecule.addBond(0, 4, IBond.Order.SINGLE);
+		molecule.addBond(1, 5, IBond.Order.SINGLE);
+		molecule.addBond(2, 6, IBond.Order.SINGLE);
+		molecule.addBond(2, 7, IBond.Order.SINGLE);
+		molecule.addBond(2, 8, IBond.Order.SINGLE);
+		
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+		lpcheck.saturate(molecule);
+		setOfReactants.addMolecule(molecule);
+		
+		/*automatic search of the center active*/
+        Object[] params = {Boolean.FALSE};
+        type.setParameters(params);
+        
+        /* initiate */
+		makeSureAtomTypesAreRecognized(molecule);
+		
+        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+        
+        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+
+        Assert.assertEquals(3,setOfReactions.getReaction(0).getMappingCount());
+        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
+        Assert.assertEquals(mappedProductA1, product.getAtom(0));
+        IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
+        Assert.assertEquals(mappedProductA2, product.getAtom(1));
+        IBond mappedProductB1 = (IBond)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getBond(0));
+        Assert.assertEquals(mappedProductB1, product.getBond(0));     
+	}
+	/**
+	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
+	 * 
+	 * @param molecule          The IMolecule to analyze
+	 * @throws CDKException
+	 */
+	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws CDKException {
+
+		Iterator<IAtom> atoms = molecule.atoms();
+		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+		while (atoms.hasNext()) {
+				IAtom nextAtom = atoms.next();
+				Assert.assertNotNull(
+					"Missing atom type for: " + nextAtom, 
+					matcher.findMatchingAtomType(molecule, nextAtom)
+				);
+		}
 	}
 }

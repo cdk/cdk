@@ -41,6 +41,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * that all atom types are tested.
  *
  * @cdk.module test-atomtype
+ * @cdk.bug    1890702
  */
 abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 

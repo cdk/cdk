@@ -710,5 +710,26 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
     	Assert.assertFalse(MolecularFormulaManipulator.compare(formula1, formula3));
         
 	}
+	/**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testGetHeavyElements() {
+		IMolecularFormula formula = new MolecularFormula();
+		formula.addIsotope(builder.newIsotope("C"),10);
+		formula.addIsotope(builder.newIsotope("H"),16);
+        Assert.assertEquals(1, MolecularFormulaManipulator.getHeavyElements(formula).size());
+    }
+
+	/**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+    @Test public void testGetHeavyElements2() {
+    	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("CH3OH");
+        Assert.assertEquals(2, MolecularFormulaManipulator.getHeavyElements(formula).size());
+    }
 }
 

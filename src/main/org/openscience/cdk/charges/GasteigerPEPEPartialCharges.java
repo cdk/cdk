@@ -24,6 +24,7 @@
 package org.openscience.cdk.charges;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -38,7 +39,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
-import org.openscience.cdk.reaction.type.BreakingBondReaction;
+import org.openscience.cdk.reaction.type.HeterolyticCleavageSBReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
@@ -129,8 +130,10 @@ public class GasteigerPEPEPartialCharges {
 		}
 		
 		/*1: detect resonance structure*/
-		StructureResonanceGenerator gR = new StructureResonanceGenerator(true,true,true,true,false,false,MX_RESON);/*according G. should be integrated the breaking bonding*/
-		IAtomContainerSet iSet = gR.getAllStructures(ac);
+		StructureResonanceGenerator gR = new StructureResonanceGenerator();/*according G. should be integrated the breaking bonding*/
+		List<IReactionProcess> reactionList = gR.getReactions();
+                IMoleculeSet iSet = gR.getStructures((IMolecule) ac);
+
 //		logger.debug("iset: "+iSet.getAtomContainerCount());
 		
 		/* detect hyperconjugation interactions */
@@ -297,7 +300,7 @@ public class GasteigerPEPEPartialCharges {
 	 */
 	private IAtomContainerSet getHyperconjugationInteractions(IAtomContainer ac, IAtomContainerSet iSet) throws IOException, ClassNotFoundException, CDKException {
 		IAtomContainerSet set = ac.getBuilder().newAtomContainerSet();
-        IReactionProcess type = new BreakingBondReaction();
+        IReactionProcess type = new HeterolyticCleavageSBReaction();
         cleanFlagReactiveCenter(ac);
         boolean found = false; /* control obtained containers */
 		IMoleculeSet setOfReactants = ac.getBuilder().newMoleculeSet();

@@ -25,26 +25,32 @@
 package org.openscience.cdk.reaction.type;
 
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.SingleElectron;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.reaction.IReactionProcess;
-import org.openscience.cdk.reaction.ReactionSpecification;
-import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.BondManipulator;
-
+import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.reaction.IReactionProcess;
+import org.openscience.cdk.reaction.ReactionSpecification;
+import org.openscience.cdk.reaction.mechanism.RemovingSEofBMechanism;
+import org.openscience.cdk.tools.LoggingTool;
+
 /**
- * <p>IReactionProcess which make an alectron impact for pi-Bond Dissociation.</p>
- * This reaction type is a representation of the processes which occure in the mass spectrometer.</p>
+ * <p>IReactionProcess which make an electron impact for pi-Bond Dissociation.</p>
+ * This reaction type is a representation of the processes which occurs in the mass spectrometer.</p>
+ * <p>It is processed by the RemovingSEofPBMechanism class</p>
  * 
  * <pre>
  *  IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
  *  setOfReactants.addMolecule(new Molecule());
- *  IReactionProcess type = new RearrangementAnion1Reaction();
+ *  IReactionProcess type = new ElectronImpactPDBReaction();
  *  Object[] params = {Boolean.FALSE};
     type.setParameters(params);
  *  IReactionSet setOfReactions = type.initiate(setOfReactants, null);
@@ -55,7 +61,7 @@ import java.util.Iterator;
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
  * <p>Moreover you must put the parameter Boolean.TRUE</p>
  * <p>If the reactive center is not localized then the reaction process will
- * try to find automatically the posible reactive center.</p>
+ * try to find automatically the possible reactive center.</p>
  * 
  * 
  * @author         Miguel Rojas
@@ -65,21 +71,24 @@ import java.util.Iterator;
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set        reaction-types
  * 
+ * @see RemovingSEofBMechanism
+ * 
  **/
 public class ElectronImpactPDBReaction implements IReactionProcess{
     private LoggingTool logger;
     private boolean hasActiveCenter;
-    private static final int BONDTOFLAG1 = 8;
+	private RemovingSEofBMechanism mechanism;
 
     /**
-     * Constructor of the ElectronImpactPDBReaction object
+     * Constructor of the ElectronImpactPDBReaction object.
      *
      */
     public ElectronImpactPDBReaction(){
         logger = new LoggingTool(this);
+        mechanism = new RemovingSEofBMechanism();
     }
     /**
-     *  Gets the specification attribute of the ElectronImpactPDBReaction object
+     *  Gets the specification attribute of the ElectronImpactPDBReaction object.
      *
      *@return    The specification value
      */
@@ -92,10 +101,10 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
     }
 
     /**
-     *  Sets the parameters attribute of the ElectronImpactPDBReaction object
+     *  Sets the parameters attribute of the ElectronImpactPDBReaction object.
      *
      *@param  params            The parameter is if the molecule has already fixed the center active or not. It
-     *							should be set before to inize the reaction with a setFlag:  CDKConstants.REACTIVE_CENTER
+     *							should be set before to ionize the reaction with a setFlag:  CDKConstants.REACTIVE_CENTER
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
@@ -110,7 +119,7 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 
 
     /**
-     *  Gets the parameters attribute of the ElectronImpactPDBReaction object
+     *  Gets the parameters attribute of the ElectronImpactPDBReaction object.
      *
      *@return    The parameters value
      */
@@ -142,68 +151,47 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
         }
 
         IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
-
+        IMolecule reactant = reactants.getMolecule(0);
+        
         /* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
         if(!hasActiveCenter){
-            setActiveCenters(reactants.getMolecule(0));
+            setActiveCenters(reactant);
         }
 
-        Iterator bonds = reactants.getMolecule(0).bonds();
+        Iterator<IBond> bonds = reactant.bonds();
         while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+        	IBond bondi = bonds.next();
+            IAtom atom1 = bondi.getAtom(0);
+            IAtom atom2 = bondi.getAtom(1);
+            if(bondi.getFlag(CDKConstants.REACTIVE_CENTER)
+        		&& (bondi.getOrder() == IBond.Order.DOUBLE || bondi.getOrder() == IBond.Order.TRIPLE)
+				&& atom1.getFlag(CDKConstants.REACTIVE_CENTER) && atom2.getFlag(CDKConstants.REACTIVE_CENTER)
+				&& (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
+				&& (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0
+ 				&& reactant.getConnectedSingleElectronsCount(atom1) == 0 && reactant.getConnectedSingleElectronsCount(atom2) == 0){
+            	
+            	for (int j = 0; j < 2; j++){
+                    
+                	ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                	if (j == 0){
+                		atomList.add(atom1);
+                		atomList.add(atom2);
+                	}else{
+                		atomList.add(atom2);
+                		atomList.add(atom1);
+                	}
+                	ArrayList<IBond> bondList = new ArrayList<IBond>();
+                	bondList.add(bondi);
 
-            if(bond.getFlag(CDKConstants.REACTIVE_CENTER) && 
-               bond.getOrder() != IBond.Order.SINGLE){
-                /**/
-                for (int j = 0; j < 2; j++){
-                    IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
-                    reaction.addReactant(reactants.getMolecule(0));
-                    IMolecule reactant = reaction.getReactants().getMolecule(0);
-
-                    int posA1 = reactant.getAtomNumber(bond.getAtom(0));
-                    int posA2 = reactant.getAtomNumber(bond.getAtom(1));
-                    cleanFlagBOND(reactants.getMolecule(0));
-                    int posB1 = 0;
-                    bond.setFlag(BONDTOFLAG1, true);
-                    IMolecule reactantCloned;
-                    try {
-                        reactantCloned = (IMolecule) reactant.clone();
-                    } catch (CloneNotSupportedException e) {
-                        throw new CDKException("Could not clone IMolecule!", e);
-                    }
-
-                    for(int l = 0 ; l<reactantCloned.getBondCount();l++){
-                        if(reactantCloned.getBond(l).getFlag(BONDTOFLAG1)){
-                            BondManipulator.decreaseBondOrder(reactantCloned.getBond(l));
-                            posB1 = reactantCloned.getBondNumber(reactantCloned.getBond(l));
-                            break;
-                        }
-                    }
-
-                    if (j == 0){
-                        reactantCloned.getAtom(posA1).setFormalCharge(1);
-                        reactantCloned.addSingleElectron(
-                                new SingleElectron(reactantCloned.getAtom(posA2)));
-                    } else{
-                        reactantCloned.getAtom(posA2).setFormalCharge(1);
-                        reactantCloned.addSingleElectron(
-                                new SingleElectron(reactantCloned.getAtom(posA1)));
-                    }
-
-                    /* mapping */
-                    IMapping mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond, reactantCloned.getBond(posB1));
-                    reaction.addMapping(mapping);
-                    mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond.getAtom(0), reactantCloned.getAtom(posA1));
-                    reaction.addMapping(mapping);
-                    mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond.getAtom(1), reactantCloned.getAtom(posA2));
-                    reaction.addMapping(mapping);
-
-
-                    reaction.addProduct(reactantCloned);
-                    setOfReactions.addReaction(reaction);
-
-                    bond.setFlag(BONDTOFLAG1, false);
-                }
+					IMoleculeSet moleculeSet = reactant.getBuilder().newMoleculeSet();
+					moleculeSet.addMolecule(reactant);
+					IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
+					if(reaction == null)
+						continue;
+					else
+						setOfReactions.addReaction(reaction);
+            	}
+                    
             }
         }
         return setOfReactions;
@@ -211,32 +199,32 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 
     }
     /**
-     * set the active center for this molecule. The active center will be double bonds.
+     * Set the active center for this molecule. The active center will be double bonds.
+     * As default is only those atoms without charge and between a double bond.
      *
      * @param reactant The molecule to set the activity
      * @throws CDKException
      */
     private void setActiveCenters(IMolecule reactant) throws CDKException {
-        Iterator bonds = reactant.bonds();
-        IAtom atom0;
-        IAtom atom1;
+    	Iterator<IBond> bonds = reactant.bonds();
         while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
-            atom0 = bond.getAtom(0);
-            atom1 = bond.getAtom(1);
-            if (bond.getOrder() != IBond.Order.SINGLE &&
-                    atom0.getSymbol().equals("C") &&
-                    atom1.getSymbol().equals("C")) {
-                bond.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                atom0.setFlag(CDKConstants.REACTIVE_CENTER, true);
-                atom1.setFlag(CDKConstants.REACTIVE_CENTER, true);
+        	IBond bondi = bonds.next();
+            IAtom atom1 = bondi.getAtom(0);
+            IAtom atom2 = bondi.getAtom(1);
+            if((bondi.getOrder() == IBond.Order.DOUBLE || bondi.getOrder() == IBond.Order.TRIPLE)
+					&& (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
+					&& (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0
+	 				&& reactant.getConnectedSingleElectronsCount(atom1) == 0 && reactant.getConnectedSingleElectronsCount(atom2) == 0){
+            	bondi.setFlag(CDKConstants.REACTIVE_CENTER, true);
+            	atom1.setFlag(CDKConstants.REACTIVE_CENTER, true);
+            	atom2.setFlag(CDKConstants.REACTIVE_CENTER, true);
             }
         }
     }
     /**
-     *  Gets the parameterNames attribute of the ElectronImpactPDBReaction object
+     *  Gets the parameterNames attribute of the ElectronImpactPDBReaction object.
      *
-     *@return    The parameterNames value
+     * @return    The parameterNames value
      */
     public String[] getParameterNames() {
         String[] params = new String[1];
@@ -246,22 +234,12 @@ public class ElectronImpactPDBReaction implements IReactionProcess{
 
 
     /**
-     *  Gets the parameterType attribute of the ElectronImpactPDBReaction object
+     *  Gets the parameterType attribute of the ElectronImpactPDBReaction object.
      *
-     *@param  name  Description of the Parameter
-     *@return       The parameterType value
+     * @param  name  Description of the Parameter
+     * @return       The parameterType value
      */
     public Object getParameterType(String name) {
         return new Boolean(false);
-    }
-    /**
-     * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
-     * 
-     * @param mol
-     */
-    public void cleanFlagBOND(IAtomContainer ac){
-        for(int j = 0 ; j < ac.getBondCount(); j++){
-            ac.getBond(j).setFlag(BONDTOFLAG1, false);
-        }
     }
 }

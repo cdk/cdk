@@ -57,7 +57,7 @@ public interface IReactionProcess {
     /** 
      * Returns the names of the parameters for this reaction. 
      *
-     * @return An array of String containing the names of the paraneters 
+     * @return An array of String containing the names of the parameters 
      * that this reaction can accept
      */
     public String[] getParameterNames();

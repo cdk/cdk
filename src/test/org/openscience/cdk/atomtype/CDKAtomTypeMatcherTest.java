@@ -107,6 +107,69 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+    @Test public void testEthyneKation() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("C"); atom2.setFormalCharge(+1);
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addBond(0,1,CDKConstants.BONDORDER_TRIPLE);
+
+        String[] expectedTypes = {"C.sp", "C.plus.sp1"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testEthyneRadical() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addSingleElectron(1);
+        mol.addBond(0,1,CDKConstants.BONDORDER_TRIPLE);
+
+        String[] expectedTypes = {"C.sp", "C.radical.sp1"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testImine() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("N");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+
+        String[] expectedTypes = {"C.sp2", "N.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testImineRadical() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("N");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addSingleElectron(1);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+
+        String[] expectedTypes = {"C.sp2", "N.sp2.radical"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testEtheneRadical() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addSingleElectron(1);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+
+        String[] expectedTypes = {"C.sp2", "C.radical.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
     @Test public void testGuanineMethyl() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom1 = new Atom("C");
@@ -180,6 +243,19 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+    @Test public void testFormaldehydeRadicalKation() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O"); atom.setFormalCharge(+1);
+        IAtom atom2 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        mol.addSingleElectron(0);
+
+        String[] expectedTypes = {"O.plus.sp2.radical", "C.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
     @Test public void testMethanol() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("O");
@@ -246,6 +322,20 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
 
         String[] expectedTypes = {"N.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testMethylAmineRadical() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("N");
+        IAtom atom2 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addSingleElectron(0);
+        atom.setFormalCharge(+1);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"N.plus.sp3.radical", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
@@ -544,6 +634,21 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testNitrogenRadical() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("H");
+        IAtom atom2 = new Atom("N");
+        IAtom atom3 = new Atom("H");
+        mol.addAtom(atom);
+        mol.addAtom(atom2); mol.addSingleElectron(1);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"H", "N.sp3.radical", "H"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testTMS() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("C");
@@ -822,6 +927,16 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testFluorRadical() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("F");
+        mol.addAtom(atom);
+        mol.addSingleElectron(0);
+
+        String[] expectedTypes = {"F.radical"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testHydride() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("H");
@@ -829,6 +944,16 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addAtom(atom);
 
         String[] expectedTypes = new String[]{"H.minus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testHydrogenRadical() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("H");
+        mol.addAtom(atom);
+        mol.addSingleElectron(0);
+
+        String[] expectedTypes = new String[]{"H.radical"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -910,7 +1035,20 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     	
-    @Test public void testSalts() throws Exception {
+    @Test public void testStronglyBoundKations() throws Exception {
+    	IMolecule mol = new Molecule();
+    	mol.addAtom(new Atom("C"));
+    	mol.addAtom(new Atom("O")); mol.getAtom(1).setFormalCharge(+1);
+    	mol.addBond(0,1, IBond.Order.DOUBLE);    	
+        IAtom atom = new Atom("Na");
+        mol.addAtom(atom);
+        mol.addBond(1,2, IBond.Order.SINGLE);
+        
+        String[] expectedTypes = new String[]{"C.sp2", "O.plus.sp2", "Na"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+     }
+
+     @Test public void testSalts() throws Exception {
     	IMolecule mol = new Molecule();
         
         IAtom atom = new Atom("Na");
@@ -1557,6 +1695,93 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         Assert.assertNotNull(matcher);
     }
 
+    @Test public void testCarbonRadical() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("C");
+        IAtom atom4 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2); mol.addSingleElectron(1);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"C.sp3", "C.radical.planar", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testEthoxyEthaneRadical() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("C");
+        mol.addAtom(atom); atom.setFormalCharge(+1);
+        mol.addSingleElectron(0);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(2,1,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"O.plus.radical", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testMethylFluorRadical() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("F");
+        mol.addAtom(atom);
+        mol.addAtom(atom2); atom2.setFormalCharge(+1);
+        mol.addSingleElectron(1);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"C.sp3", "F.plus.radical"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testMethyleneFluorKation() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("F");
+        mol.addAtom(atom);
+        mol.addAtom(atom2); atom2.setFormalCharge(+1);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+
+        String[] expectedTypes = {"C.sp2", "F.plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testMethanolRadical() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("O");
+        mol.addAtom(atom);
+        mol.addAtom(atom2); mol.addSingleElectron(1);
+        mol.addBond(0,1,IBond.Order.SINGLE);
+
+        String[] expectedTypes = {"C.sp3", "O.sp3.radical"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testMethylMethylimineRadical() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("N");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("C");
+        mol.addAtom(atom); atom.setFormalCharge(+1);
+        mol.addSingleElectron(0);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(2,1,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"N.plus.sp2.radical", "C.sp2", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void countTestedAtomTypes() {
         AtomTypeFactory factory = AtomTypeFactory.getInstance(
                 "org/openscience/cdk/config/data/cdk_atomtypes.xml",
@@ -1576,5 +1801,5 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
                 );
         }
     }
-
+    
 }

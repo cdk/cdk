@@ -52,17 +52,22 @@ import org.openscience.cdk.tools.LoggingTool;
  *  <p>It counts the number of electron pairs in the lewis dot diagram which
  *   are attached to an atom. Then uses the following table.
  * <pre>
- *    pairs on  	   hybridization 
- *    an atom              of the atom          geomtry             number for CDK.Constants
- *  ******************************************************************************************
- *      2                     sp                  linear                        1
- *      3                     sp^2            trigonal planarb                  2
- *      4                     sp^3              tetrahedral                     3
- *      5                     sp^3d         trigonal bipyramid                  4
- *      6                     sp^3d^2           octahedral                      5
- *      7                     sp^3d^3       pentagonal bipyramid                6
- *      8                     sp^3d^4        square antiprim                    7
- *      9                     sp^3d^5     tricapped trigonal prism              8
+ * <table border="1">
+ *   <tr>  
+ * 	  <td>pairs on an atom</td>
+ *    <td>hybridization of the atom</td>
+ *    <td>geomtry</td>
+ *    <td>number for CDK.Constants</td> 
+ *   </tr>   
+ *   <tr><td>2</td><td>sp</td><td>linear</td><td>1</td></tr>
+ *   <tr><td>3</td><td>sp^2</td><td>trigonal planarb</td><td>2</td></tr>
+ *   <tr><td>4</td><td>sp^3</td><td>tetrahedral</td><td>3</td></tr>
+ *   <tr><td>5</td><td>sp^3d</td><td>trigonal bipyramid</td><td>4</td></tr>
+ *   <tr><td>6</td><td>sp^3d^2</td><td>octahedral</td><td>5</td></tr>
+ *   <tr><td>7</td><td>sp^3d^3</td><td>pentagonal bipyramid</td><td>6</td></tr>
+ *   <tr><td>8</td><td>sp^3d^4</td><td>square antiprim</td><td>7</td></tr>
+ *   <tr><td>9</td><td>sp^3d^5</td><td>tricapped trigonal prism</td><td>8</td></tr>
+ * </table>
  * </pre>
  *
  *  <p>This table only works if the central atom is a p-block element 

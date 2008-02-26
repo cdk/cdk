@@ -24,24 +24,25 @@
 package org.openscience.cdk.reaction.type;
 
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import java.util.Iterator;
 
-import org.openscience.cdk.Atom;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
-import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.reaction.ReactionProcessTest;
 
 /**
  * TestSuite that runs a test for the HyperconjugationReactionTest.
@@ -49,68 +50,100 @@ import org.openscience.cdk.CDKTestCase;
  *
  * @cdk.module test-reaction
  */
-public class HyperconjugationReactionTest extends CDKTestCase {
-	
-	private IReactionProcess type;
+public class HyperconjugationReactionTest extends ReactionProcessTest {
+
+	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 
 	/**
-	 * Constructror of the HyperconjugationReactionTest object
-	 *
+	 *  The JUnit setup method
 	 */
-	public  HyperconjugationReactionTest() {
-		type  = new HyperconjugationReaction();
-	}
-    
-	public static Test suite() {
-		return new TestSuite(HyperconjugationReactionTest.class);
-	}
+	 @BeforeClass public static void setUp() throws Exception {
+	 	setReaction(HyperconjugationReaction.class);
+	 }
 
 	/**
 	 * A unit test suite for JUnit. Reaction: [C+]-CC => C=CC + [H+]
-	 * Automatic sarch of the centre active.
+	 * Automatic search of the center active.
 	 *
 	 * @return    The test suite
 	 */
-	public void testBB_AutomaticSearchCentreActiveFormaldehyde() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void testBB_AutomaticSearchCentreActiveFormaldehyde() throws Exception {
+		IReactionProcess type = new HyperconjugationReaction();
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		
 		/*[C+]CC*/
-		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]CC");
-		for(int i = 0; i < 7 ; i++)
-			molecule.addAtom(new Atom("H"));
-	    molecule.addBond(0, 3, IBond.Order.SINGLE);
-	    molecule.addBond(0, 4, IBond.Order.SINGLE);
-	    molecule.addBond(1, 5, IBond.Order.SINGLE);
-	    molecule.addBond(1, 6, IBond.Order.SINGLE);
-	    molecule.addBond(2, 7, IBond.Order.SINGLE);
-	    molecule.addBond(2, 8, IBond.Order.SINGLE);
-	    molecule.addBond(2, 9, IBond.Order.SINGLE);
+//		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[C+]CC");
+		IMolecule molecule = builder.newMolecule();
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.getAtom(0).setFormalCharge(1);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(0, 1, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(1, 2, IBond.Order.SINGLE);
+		addExplicitHydrogens(molecule);
+		
+//		for(int i = 0; i < 7 ; i++)
+//			molecule.addAtom(new Atom("H"));
+//	    molecule.addBond(0, 3, IBond.Order.SINGLE);
+//	    molecule.addBond(0, 4, IBond.Order.SINGLE);
+//	    molecule.addBond(1, 5, IBond.Order.SINGLE);
+//	    molecule.addBond(1, 6, IBond.Order.SINGLE);
+//	    molecule.addBond(2, 7, IBond.Order.SINGLE);
+//	    molecule.addBond(2, 8, IBond.Order.SINGLE);
+//	    molecule.addBond(2, 9, IBond.Order.SINGLE);
 		setOfReactants.addMolecule(molecule);
 		
-		/*automatic search of the centre active*/
+		/*automatic search of the center active*/
         Object[] params = {Boolean.FALSE};
         type.setParameters(params);
         
-        /* iniciate */
+		/* initiate */
+		makeSureAtomTypesAreRecognized(molecule);
+		
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        Assert.assertEquals(2, setOfReactions.getReactionCount());
         Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
         IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         /*C=CC*/
-		IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=CC");
-		addExplicitHydrogens(molecule2);
+//		IMolecule molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C=CC");
+        IMolecule molecule2 = builder.newMolecule();
+		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addBond(0, 1, IBond.Order.DOUBLE);
+		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addBond(1, 2, IBond.Order.SINGLE);
+        addExplicitHydrogens(molecule2);
 		
-        QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
+		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,product));
 		
 		product = setOfReactions.getReaction(0).getProducts().getMolecule(1);
         /*[H+]*/
-		molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[H+]");
-        
-        qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,qAC));
+//		molecule2 = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("[H+]");
+		molecule2 = builder.newMolecule();
+		molecule2.addAtom(builder.newAtom("H"));
+		molecule2.getAtom(0).setFormalCharge(1);
+		
+		Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,product));
+	}
+	/**
+	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
+	 * 
+	 * @param molecule          The IMolecule to analyze
+	 * @throws CDKException
+	 */
+	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws CDKException {
+
+		Iterator<IAtom> atoms = molecule.atoms();
+		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+		while (atoms.hasNext()) {
+				IAtom nextAtom = atoms.next();
+				Assert.assertNotNull(
+					"Missing atom type for: " + nextAtom, 
+					matcher.findMatchingAtomType(molecule, nextAtom)
+				);
+		}
 	}
 
 }
