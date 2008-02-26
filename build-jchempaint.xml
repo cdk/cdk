@@ -28,12 +28,15 @@
             description="Builds the JChemPaint application">
         <antcall target="compile-module">
             <param name="module" value="jchempaint"/>
+            <param name="source" value="${src}/main"/>
         </antcall>
         <antcall target="compile-module">
             <param name="module" value="jchempaint.application"/>
+            <param name="source" value="${src}/main"/>
         </antcall>
         <antcall target="compile-module">
             <param name="module" value="jchempaint.applet"/>
+            <param name="source" value="${src}/main"/>
         </antcall>
         <unjar dest="${appjars.dir}">
             <fileset dir="${dist}/jar">
@@ -136,12 +139,15 @@
     <target id="compile-jcp" name="compile-jcp">
         <antcall target="compile-module">
             <param name="module" value="jchempaint"/>
+            <param name="source" value="${src}/main"/>
         </antcall>
         <antcall target="compile-module">
             <param name="module" value="jchempaint.application"/>
+            <param name="source" value="${src}/main"/>
         </antcall>
         <antcall target="compile-module">
             <param name="module" value="jchempaint.applet"/>
+            <param name="source" value="${src}/main"/>
         </antcall>
     </target>
     
