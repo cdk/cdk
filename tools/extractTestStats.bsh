@@ -13,7 +13,7 @@ String line = reader.readLine();
 String moduleName = "";
 
 Pattern junit = Pattern.compile(".*\\[junit\\].*");
-Pattern module = Pattern.compile(".*test.modulesuites.M(.*)Tests.*");
+Pattern module = Pattern.compile(".*cdk.modulesuites.M(.*)Tests.*");
 Pattern stats = Pattern.compile(".*Tests\\srun:\\s(\\d*),\\sFailures:\\s(\\d*),\\sErrors:\\s(\\d*),\\sTime\\selapsed:\\s([\\d|\\.|\\,]*)\\ssec.*");
 Pattern failed = Pattern.compile(".*FAILED.*");
 
