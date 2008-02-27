@@ -36,14 +36,16 @@ import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.formula.IMolecularFormula;
+import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.tools.FormatStringBuffer;
-import org.openscience.cdk.tools.MFAnalyser;
 
 /**
  * <p>Serializes a MoleculeSet or a Molecule object to ShelX code.
@@ -169,15 +171,17 @@ public class ShelXWriter extends DefaultChemObjectWriter {
             write("SYMM     -X   , 1/2+Y   , 1/2-Z\n");
             write("SYMM  1/2-X   ,    -Y   , 1/2+Z\n");
         }
-        MFAnalyser mfa = new MFAnalyser(crystal);
+//        MFAnalyser mfa = new MFAnalyser(crystal);
         String elemNames = "";
         String elemCounts = "";
-        List asortedElements = mfa.getElements();
-        Iterator elements = asortedElements.iterator();
+        IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(crystal);
+        List<IElement> asortedElements = MolecularFormulaManipulator.elements(formula);
+        Iterator<IElement> elements = asortedElements.iterator();
         while (elements.hasNext()) {
-            String symbol = (String)elements.next();
+        	IElement element = elements.next();
+            String symbol = element.getSymbol();
             elemNames += symbol + "    ".substring(symbol.length());
-            String countS = new Integer(mfa.getAtomCount(symbol)).toString();
+            String countS = new Integer(MolecularFormulaManipulator.getElementCount(formula, element)).toString();
             elemCounts += countS + "    ".substring(countS.length());
         }
         write("SFAC  " + elemNames + "\n");

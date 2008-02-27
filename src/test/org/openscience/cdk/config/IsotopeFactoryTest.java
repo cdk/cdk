@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Element;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IElement;
@@ -290,6 +291,10 @@ public class IsotopeFactoryTest extends NewCDKTestCase
 			// warnings are fine			
 		}
     	
+    }
+    @Test public void testGetNaturalMass_IElement() throws Exception {
+		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
+        Assert.assertEquals(1.0079760, isofac.getNaturalMass(new Element("H")), 0.1);
     }
 
 }

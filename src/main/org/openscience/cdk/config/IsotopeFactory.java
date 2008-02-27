@@ -335,6 +335,26 @@ public class IsotopeFactory
 			configure(container.getAtom(f));
 		}
 	}
+    /**
+	 *  Gets the natural mass of this element, defined as average of masses of isotopes, 
+	 *  weighted by abundance.
+	 *
+	 * @param  element                     Description of the Parameter
+	 * @return                             The natural mass value
+	 */
+    @TestMethod("testGetNaturalMass_IElement")
+	public double getNaturalMass(IElement element){
+		IIsotope[] isotopes = getIsotopes(element.getSymbol());
+		double summedAbundances = 0;
+		double summedWeightedAbundances = 0;
+		double getNaturalMass = 0;
+		for (int i = 0; i < isotopes.length; i++) {
+			summedAbundances += isotopes[i].getNaturalAbundance();
+			summedWeightedAbundances += isotopes[i].getNaturalAbundance() * isotopes[i].getExactMass();
+			getNaturalMass = summedWeightedAbundances / summedAbundances;
+		}
+		return getNaturalMass;
+	}
 
 }
 

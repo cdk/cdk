@@ -35,13 +35,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.controller.Controller2DModel;
 import org.openscience.cdk.event.ICDKChangeListener;
+import org.openscience.cdk.formula.MolecularFormulaManipulator;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -227,11 +227,11 @@ public class JChemPaintModel implements java.io.Serializable, ICDKChangeListener
 		else if (position == 1) {
 			// depict bruto formula
 			IAtomContainer wholeModel = model.getBuilder().newAtomContainer();
-        	Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
+        	Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
         	while (containers.hasNext()) {
-        		wholeModel.add((IAtomContainer)containers.next());
+        		wholeModel.add(containers.next());
         	}
-			String formula = new MFAnalyser(wholeModel,true).getHTMLMolecularFormulaWithCharge();
+			String formula = MolecularFormulaManipulator.getHTML(MolecularFormulaManipulator.getMolecularFormula(wholeModel),true,false);
 			int impliciths=0;
 			for(int i=0;i<wholeModel.getAtomCount();i++){
 				if(wholeModel.getAtom(i).getHydrogenCount()==null)
@@ -244,7 +244,7 @@ public class JChemPaintModel implements java.io.Serializable, ICDKChangeListener
 			// depict brutto formula of the selected molecule or part of molecule
 			if (rendererModel.getSelectedPart() != null) {
 				IAtomContainer selectedPart = rendererModel.getSelectedPart();
-				String formula = new MFAnalyser(selectedPart,true).getHTMLMolecularFormulaWithCharge();
+				String formula = MolecularFormulaManipulator.getHTML(MolecularFormulaManipulator.getMolecularFormula(selectedPart),true,false);
 				status = "<html>" + formula + "</html>";
 			}
 		}

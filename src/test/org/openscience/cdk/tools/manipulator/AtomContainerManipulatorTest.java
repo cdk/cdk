@@ -23,21 +23,28 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.*;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.MFAnalyser;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
  * @cdk.module test-standard
@@ -558,6 +565,16 @@ public class AtomContainerManipulatorTest extends NewCDKTestCase {
         AtomContainerManipulator.replaceAtomByAtom(container, atom2, atom3);
         Assert.assertEquals(atom3, container.getAtom(1));
     }
+
+    @Test public void testGetHeavyAtoms_IAtomContainer() {
+        DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtomContainer container = builder.newAtomContainer();
+        container.addAtom(builder.newAtom("C"));
+        for(int i = 0; i < 4; i++)
+            container.addAtom(builder.newAtom("H"));
+        container.addAtom(builder.newAtom("O"));
+        Assert.assertEquals(2, AtomContainerManipulator.getHeavyAtoms(container).size());
+    }
     
     /**
      * Test removeHydrogensPreserveMultiplyBonded for B2H6, which contains two multiply bonded H.
@@ -584,7 +601,7 @@ public class AtomContainerManipulatorTest extends NewCDKTestCase {
     	borane.addBond(4,5,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
     	borane.addBond(5,6,CDKConstants.BONDORDER_SINGLE);
     	borane.addBond(5,7,CDKConstants.BONDORDER_SINGLE);
-        IAtomContainer ac = new MFAnalyser(borane).removeHydrogensPreserveMultiplyBonded();
+        IAtomContainer ac = AtomContainerManipulator.removeHydrogensPreserveMultiplyBonded(borane);
 
         // Should be two connected Bs with H-count == 2 and two explicit Hs.
         Assert.assertEquals("incorrect atom count", 4, ac.getAtomCount());

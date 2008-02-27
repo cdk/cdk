@@ -24,15 +24,15 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.util.BitSet;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.tools.MFAnalyser;
-
-import java.util.BitSet;
 
 /**
  * Generates an extended fingerprint for a given AtomContainer, that
@@ -107,8 +107,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
     public BitSet getFingerprint(IAtomContainer ac, IRingSet rs) throws Exception {
 		BitSet bs = fingerprinter.getFingerprint(ac);
 		int size = this.getSize();
-		MFAnalyser mfa=new MFAnalyser(ac);
-		float weight=mfa.getNaturalMass();
+		double weight = MolecularFormulaManipulator.getTotalNaturalAbundance(MolecularFormulaManipulator.getMolecularFormula(ac));
 		for(int i=1;i<11;i++){
 			if(weight>(100*i))
 				bs.set(size-26+i); // 26 := RESERVED_BITS+1

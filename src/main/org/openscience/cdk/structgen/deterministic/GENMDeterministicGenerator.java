@@ -25,6 +25,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openscience.cdk.formula.IMolecularFormula;
+import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -32,7 +34,6 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.structgen.IStructureGenerationListener;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.MFAnalyser;
 
 
 /**
@@ -117,7 +118,6 @@ public class GENMDeterministicGenerator {
 		numberOfSetFragment=0;
 		numberOfStructures=0;
 		logger.debug(mf);
-		MFAnalyser mfa = new MFAnalyser(mf, builder.newAtomContainer());
 		molecularFormula=new int[12];
 		numberOfBasicUnit=new int[23];
 		numberOfBasicFragment=new int[34];
@@ -129,7 +129,7 @@ public class GENMDeterministicGenerator {
         else structureout = null;
 
         initializeParameters();
-		analyseMolecularFormula(mfa);
+		analyseMolecularFormula(MolecularFormulaManipulator.getMolecularFormula(mf));
 
 	}
 
@@ -256,19 +256,19 @@ public class GENMDeterministicGenerator {
 	 *
 	 * @param mfa	MFAnalyser object to operate the molecular formula
 	 */
-	 public void analyseMolecularFormula(MFAnalyser mfa) throws java.lang.Exception
+	 public void analyseMolecularFormula(IMolecularFormula formula) throws java.lang.Exception
 	 {
-	 	 molecularFormula[1]=mfa.getAtomCount("C");
-		 molecularFormula[2]=mfa.getAtomCount("H");
-		 molecularFormula[3]=mfa.getAtomCount("O");
-		 molecularFormula[4]=mfa.getAtomCount("N");
-		 molecularFormula[5]=mfa.getAtomCount("S");
-		 molecularFormula[6]=mfa.getAtomCount("P");
-		 molecularFormula[7]=mfa.getAtomCount("Si");
-		 molecularFormula[8]=mfa.getAtomCount("F");
-		 molecularFormula[9]=mfa.getAtomCount("Cl");
-		 molecularFormula[10]=mfa.getAtomCount("Br");
-		 molecularFormula[11]=mfa.getAtomCount("I");
+	 	 molecularFormula[1]= MolecularFormulaManipulator.getElementCount(formula, builder.newElement("C"));
+		 molecularFormula[2]= MolecularFormulaManipulator.getElementCount(formula, builder.newElement("H"));
+		 molecularFormula[3]= MolecularFormulaManipulator.getElementCount(formula, builder.newElement("O"));
+		 molecularFormula[4]= MolecularFormulaManipulator.getElementCount(formula, builder.newElement("N"));
+		 molecularFormula[5]= MolecularFormulaManipulator.getElementCount(formula, builder.newElement("S"));
+		 molecularFormula[6]= MolecularFormulaManipulator.getElementCount(formula, builder.newElement("P"));
+		 molecularFormula[7]= MolecularFormulaManipulator.getElementCount(formula, builder.newElement("Si"));
+		 molecularFormula[8]= MolecularFormulaManipulator.getElementCount(formula, builder.newElement("F"));
+		 molecularFormula[9]= MolecularFormulaManipulator.getElementCount(formula, builder.newElement("Cl"));
+		 molecularFormula[10]= MolecularFormulaManipulator.getElementCount(formula, builder.newElement("Br"));
+		 molecularFormula[11]= MolecularFormulaManipulator.getElementCount(formula, builder.newElement("I"));
 
 		 molecularFormula[0]=2*molecularFormula[1]+molecularFormula[4]+molecularFormula[6]+
 			2*molecularFormula[7]+2-molecularFormula[2]-molecularFormula[8]-molecularFormula[9]-

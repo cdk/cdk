@@ -20,28 +20,40 @@
  */
 package org.openscience.cdk.tools;
 
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.vecmath.Point2d;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.*;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.formula.IMolecularFormula;
+import org.openscience.cdk.formula.MolecularFormulaManipulator;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.MFAnalyser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import javax.vecmath.Point2d;
-import java.io.InputStream;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Tests CDK's hydrogen adding capabilities in terms of
@@ -219,7 +231,8 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	adder.addImplicitHydrogens(mol);
 
     	assertEquals(1, mol.getAtomCount());
-    	assertEquals(1, new MFAnalyser(mol).getAtomCount("H"));
+    	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(mol);
+    	assertEquals(1, MolecularFormulaManipulator.getElementCount(formula,mol.getBuilder().newElement("H")));
     	assertEquals(0, mol.getConnectedBondsCount(proton));
     	assertNotNull(proton.getHydrogenCount());
     	assertEquals(0, proton.getHydrogenCount().intValue());
@@ -236,7 +249,8 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	adder.addImplicitHydrogens(mol);
 
     	assertEquals(1, mol.getAtomCount());
-    	assertEquals(1, new MFAnalyser(mol).getAtomCount("H"));
+    	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(mol);
+    	assertEquals(1, MolecularFormulaManipulator.getElementCount(formula,mol.getBuilder().newElement("H")));
     	assertEquals(0, mol.getConnectedBondsCount(proton));
     	assertNotNull(proton.getHydrogenCount());
     	assertEquals(1, proton.getHydrogenCount().intValue());

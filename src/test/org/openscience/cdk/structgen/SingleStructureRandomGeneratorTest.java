@@ -34,11 +34,10 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.structgen.SingleStructureRandomGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.tools.MFAnalyser;
 
 /**
  * @cdk.module test-structgen
@@ -57,7 +56,7 @@ public class SingleStructureRandomGeneratorTest
 		ssrg = new SingleStructureRandomGenerator();
 		System.out.println("Assining unbonded set of atoms");
 		AtomContainer ac = getBunchOfUnbondedAtoms();
-		mf = new MFAnalyser(ac).getMolecularFormula();
+		mf = MolecularFormulaManipulator.getString(MolecularFormulaManipulator.getMolecularFormula(ac));
 		System.out.println("Molecular Formula is: " + mf);
 		ssrg.setAtomContainer(ac);
 	}

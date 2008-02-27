@@ -23,6 +23,8 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.formula.IMolecularFormula;
+import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -32,7 +34,6 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.MFAnalyser;
 
 import Jama.EigenvalueDecomposition;
 import Jama.Matrix;
@@ -231,10 +232,10 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
 
         // finally get the radius of gyration
         double pri = 0.0;
-        MFAnalyser mfa = new MFAnalyser(container);
+        IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(container);
         if (Math.abs(eval[2]) > eps) pri = Math.pow(eval[0] * eval[1] * eval[2], 1.0 / 3.0);
-        else pri = Math.sqrt(eval[0] * ccf / mfa.getMass());
-        retval.add(Math.sqrt(Math.PI * 2 * pri * ccf / mfa.getMass()));
+        else pri = Math.sqrt(eval[0] * ccf / MolecularFormulaManipulator.getTotalExactMass(formula));
+        retval.add(Math.sqrt(Math.PI * 2 * pri * ccf / MolecularFormulaManipulator.getTotalExactMass(formula)));
 
         String[] names = {
                 "MOMI-X", "MOMI-Y", "MOMI-Z",

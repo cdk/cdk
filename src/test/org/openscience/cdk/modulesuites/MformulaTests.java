@@ -35,7 +35,6 @@ import org.openscience.cdk.formula.MolecularFormulaRangeTest;
 import org.openscience.cdk.formula.MolecularFormulaSetManipulatorTest;
 import org.openscience.cdk.formula.MolecularFormulaSetTest;
 import org.openscience.cdk.formula.MolecularFormulaTest;
-import org.openscience.cdk.tools.MFAnalyserTest;
 
 /**
  * TestSuite that runs all the JUnit tests for the formula module.
@@ -58,7 +57,6 @@ public class MformulaTests {
         suite.addTest(new JUnit4TestAdapter(MolecularFormulaSetManipulatorTest.class));
         suite.addTest(new JUnit4TestAdapter(MolecularFormulaSetTest.class));
         suite.addTest(new JUnit4TestAdapter(MolecularFormulaTest.class));
-        suite.addTest(new JUnit4TestAdapter(MFAnalyserTest.class));
 
         return suite;
     }

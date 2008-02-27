@@ -687,9 +687,25 @@ public class AtomContainerManipulator {
 		return sum;
 	}
 
-    @TestMethod("testGetMaxBondOrder")
+    @TestMethod("testGetMaxBondOrder_IAtomContainer")
     public static IBond.Order getMaximumBondOrder(IAtomContainer container) {
 		return BondManipulator.getMaximumBondOrder(container.bonds());
+	}
+    /**
+	 * Returns a set of nodes excluding all the hydrogens.
+	 *
+	 * @return         The heavyAtoms value
+	 * @cdk.keyword    hydrogen, removal
+	 */
+    @TestMethod("testGetHeavyAtoms_IAtomContainer")
+	public static  List<IAtom> getHeavyAtoms(IAtomContainer container) {
+		List<IAtom> newAc = new ArrayList<IAtom>();
+		for (int f = 0; f < container.getAtomCount(); f++) {
+			if (!container.getAtom(f).getSymbol().equals("H")) {
+				newAc.add(container.getAtom(f));
+			}
+		}
+		return newAc;
 	}
 	
 }

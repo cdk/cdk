@@ -31,7 +31,7 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.tools.MFAnalyser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *   Vertex adjacency information (magnitude): 
@@ -113,8 +113,7 @@ public class VAdjMaDescriptor implements IMolecularDescriptor {
 	 *@exception  CDKException  Possible Exceptions
 	 */
 	public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
-		MFAnalyser formula = new MFAnalyser(atomContainer);
-		int magnitude = formula.getHeavyAtoms().size();
+		int magnitude = AtomContainerManipulator.getHeavyAtoms(atomContainer).size();
 		double vadjMa = 0;
 		if (magnitude > 0) {
 			vadjMa += (Math.log(magnitude) / Math.log(2)) + 1;

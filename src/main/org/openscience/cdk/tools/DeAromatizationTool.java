@@ -28,15 +28,17 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Element;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.formula.IMolecularFormula;
+import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
-
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Methods that takes a ring of which all bonds are aromatic, and assigns single
@@ -75,18 +77,19 @@ public class DeAromatizationTool {
 				ring.getBond(i).setOrder(IBond.Order.SINGLE);
 		}
 		boolean result = false;
-		Map elementCounts = new MFAnalyser(ring).getFormulaHashtable();
+		IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(ring);
+//		Map elementCounts = new MFAnalyser(ring).getFormulaHashtable();
 		if (ring.getRingSize() == 6) {
-			if (((Integer)elementCounts.get("C")).intValue() == 6) {
+			if (MolecularFormulaManipulator.getElementCount(formula, new Element("C")) == 6) {
 				result = DeAromatizationTool.deAromatizeBenzene(ring);
-			} else if (((Integer)elementCounts.get("C")).intValue() == 5 &&
-			           ((Integer)elementCounts.get("N")).intValue() == 1) {
+			} else if (MolecularFormulaManipulator.getElementCount(formula, new Element("C")) == 5 &&
+			           MolecularFormulaManipulator.getElementCount(formula, new Element("N")) == 1) {
 				result = DeAromatizationTool.deAromatizePyridine(ring);
 			}
 		}
 		if (ring.getRingSize() == 5) {
-            if (((Integer)elementCounts.get("C")).intValue() == 4 &&
-			           ((Integer)elementCounts.get("N")).intValue() == 1) {
+            if (MolecularFormulaManipulator.getElementCount(formula, new Element("C")) == 4 &&
+            		MolecularFormulaManipulator.getElementCount(formula, new Element("N")) == 1) {
 				result= deAromatizePyrolle(ring);
 			}
 		}
