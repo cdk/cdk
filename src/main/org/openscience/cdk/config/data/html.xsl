@@ -32,7 +32,10 @@
                     <td><b>neighbours</b></td>
                     <td><b>pi bonds</b></td>
                     <td><b>lone pairs</b></td>
-                    <xsl:apply-templates select="//cml:atomType"/>
+                    <xsl:for-each select="cml:atomTypeList/cml:atomType">
+                      <xsl:sort select="./cml:atom/@elementType"/>
+                      <xsl:apply-templates select="."/>
+                    </xsl:for-each>
                   </table>
                </xsl:element>
             </body>
