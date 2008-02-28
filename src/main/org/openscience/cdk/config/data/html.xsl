@@ -3,7 +3,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:cml="http://www.xml-cml.org/schema"
     exclude-result-prefixes="cml">
- 
+
     <xsl:output method="html" encoding="utf-8" indent="yes"/>
 
     <!-- Change this depending on where we are using the development or the production server -->
@@ -32,6 +32,7 @@
                     <td><b>neighbours</b></td>
                     <td><b>pi bonds</b></td>
                     <td><b>lone pairs</b></td>
+                    <td><b>unpaired electron</b></td>
                     <xsl:for-each select="cml:atomTypeList/cml:atomType">
                       <xsl:sort select="./cml:atom/@elementType"/>
                       <xsl:apply-templates select="."/>
@@ -51,6 +52,7 @@
             <td><xsl:value-of select="cml:atom/cml:scalar[@dictRef='cdk:formalNeighbourCount']"/></td>
             <td><xsl:value-of select="cml:atom/cml:scalar[@dictRef='cdk:piBondCount']"/></td>
             <td><xsl:value-of select="cml:atom/cml:scalar[@dictRef='cdk:lonePairCount']"/></td>
+            <td><xsl:if test="cml:atom/cml:scalar[@dictRef='cdk:radicalElectronCount']"><xsl:text>yes</xsl:text></xsl:if></td>
         </tr>
     </xsl:template>
 
