@@ -6,9 +6,6 @@
 
     <xsl:output method="html" encoding="utf-8" indent="yes"/>
 
-    <!-- Change this depending on where we are using the development or the production server -->
-    <xsl:parameter name="serverRoot" select="'http://cb.openmolecules.net/'"/>
-
     <xsl:template match="/">
         <html>
             <head>
