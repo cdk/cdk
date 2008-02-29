@@ -11,31 +11,31 @@
             <head>
                 <title>
                     <xsl:value-of select="cml:atomTypeList/@title"/>
-                    <style type="text/css">
+                </title>
+                <style type="text/css">
                       body { font-family: Verdana,Arial,Helvetica, sans-serif; font-size: 11px; }
+                      th { font-weight: bold; text-align: left; }
                       td { font-family: Verdana,Arial,Helvetica, sans-serif; font-size: 11px; }
                       .header { text-align:right; font-weight:bold; color:rgb(0,0,0); }
-                    </style>
-                </title>
+                 </style>
             </head>
             <body>
                <h2>Atom Types</h2>
-               <xsl:element name="div">
-                  <table>
-                    <td><b>identifier</b></td>
-                    <td><b>element</b></td>
-                    <td><b>formal charge</b></td>
-                    <td><b>hybridization</b></td>
-                    <td><b>neighbours</b></td>
-                    <td><b>pi bonds</b></td>
-                    <td><b>lone pairs</b></td>
-                    <td><b>unpaired electron</b></td>
-                    <xsl:for-each select="cml:atomTypeList/cml:atomType">
-                      <xsl:sort select="./cml:atom/@elementType"/>
-                      <xsl:apply-templates select="."/>
-                    </xsl:for-each>
-                  </table>
-               </xsl:element>
+               <table>
+                  <tr>
+                     <th>identifier</th>
+                     <th>element</th>
+                     <th>formal charge</th>
+                     <th>hybridization</th>
+                     <th>neighbours</th>
+                     <th>pi bonds</th>
+                     <th>lone pairs</th>
+                     <th>unpaired electron</th>
+                  </tr>
+                  <xsl:apply-templates select="cml:atomTypeList/cml:atomType">
+                     <xsl:sort select="cml:atom/@elementType"/>
+                  </xsl:apply-templates>
+               </table>
             </body>
         </html>
     </xsl:template>
