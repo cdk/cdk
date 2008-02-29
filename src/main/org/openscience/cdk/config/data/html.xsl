@@ -22,19 +22,23 @@
             <body>
                <h2>Atom Types</h2>
                <table>
-                  <tr>
-                     <th>identifier</th>
-                     <th>element</th>
-                     <th>formal charge</th>
-                     <th>hybridization</th>
-                     <th>neighbours</th>
-                     <th>pi bonds</th>
-                     <th>lone pairs</th>
-                     <th>unpaired electron</th>
-                  </tr>
-                  <xsl:apply-templates select="cml:atomTypeList/cml:atomType">
-                     <xsl:sort select="cml:atom/@elementType"/>
-                  </xsl:apply-templates>
+                  <thead>
+                     <tr>
+                        <th>identifier</th>
+                        <th>element</th>
+                        <th>formal charge</th>
+                        <th>hybridization</th>
+                        <th>neighbours</th>
+                        <th>pi bonds</th>
+                        <th>lone pairs</th>
+                        <th>unpaired electron</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <xsl:apply-templates select="cml:atomTypeList/cml:atomType">
+                        <xsl:sort select="cml:atom/@elementType"/>
+                     </xsl:apply-templates>
+                  </tbody>
                </table>
             </body>
         </html>
