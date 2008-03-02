@@ -206,22 +206,22 @@ public class CDKConstants {
      ****************************************/
 
     /** The title for a IChemObject. */
-    public static final String TITLE = "Title";
+    public static final String TITLE = "cdk:Title";
 
     /** A remark for a IChemObject.*/
-    public static final String REMARK = "Remark";
+    public static final String REMARK = "cdk:Remark";
 
     /** A String comment. */
-    public static final String COMMENT = "Comment";
+    public static final String COMMENT = "cdk:Comment";
 
     /** A List of names. */
-    public static final String NAMES = "Names";
+    public static final String NAMES = "cdk:Names";
 
     /** A List of annotation remarks. */
-    public static final String ANNOTATIONS = "Annotations";
+    public static final String ANNOTATIONS = "cdk:Annotations";
 
     /** A description for a IChemObject. */
-    public static final String DESCRIPTION = "Description";
+    public static final String DESCRIPTION = "cdk:Description";
 
 
     /****************************************
@@ -230,37 +230,37 @@ public class CDKConstants {
     ****************************************/
 
     /** The Daylight SMILES. */
-	public static final String SMILES = "SMILES";
+	public static final String SMILES = "cdk:SMILES";
     
     /** The IUPAC International Chemical Identifier. */
-	public static final String INCHI = "InChI";
+	public static final String INCHI = "cdk:InChI";
     
     /** The IUPAC compatible name generated with AutoNom. */
-    public static final String AUTONOMNAME = "AutonomName";
+    public static final String AUTONOMNAME = "cdk:AutonomName";
 
     /** The Beilstein Registry Number. */
-    public static final String BEILSTEINRN = "BeilsteinRN";
+    public static final String BEILSTEINRN = "cdk:BeilsteinRN";
 
     /** The CAS Registry Number. */
-    public static final String CASRN = "CasRN";
+    public static final String CASRN = "cdk:CasRN";
     
     /** A set of all rings computed for this molecule. */
-    public static final String ALL_RINGS = "AllRings";
+    public static final String ALL_RINGS = "cdk:AllRings";
 
     /** A smallest set of smallest rings computed for this molecule. */
-    public static final String SMALLEST_RINGS = "SmallestRings";
+    public static final String SMALLEST_RINGS = "cdk:SmallestRings";
 
     /** The essential rings computed for this molecule. 
      *  The concept of Essential Rings is defined in 
      *  SSSRFinder
      */
-    public static final String ESSENTIAL_RINGS = "EssentialRings";
+    public static final String ESSENTIAL_RINGS = "cdk:EssentialRings";
     
     /** The relevant rings computed for this molecule. 
      *  The concept of relevant Rings is defined in 
      *  SSSRFinder
      */
-    public static final String RELEVANT_RINGS = "RelevantRings";
+    public static final String RELEVANT_RINGS = "cdk:RelevantRings";
 
     
     /****************************************
@@ -273,24 +273,24 @@ public class CDKConstants {
      * element of the list indicates the size of the ring the given
      * atom belongs to (if it is a ring atom at all).
      */
-    public static final String RING_SIZES = "RingSizes";
+    public static final String RING_SIZES = "cdk:RingSizes";
 
     /**
      * This property indicates how many ring bonds are connected to
      * the given atom.
      */
-    public static final String RING_CONNECTIONS = "RingConnections";
+    public static final String RING_CONNECTIONS = "cdk:RingConnections";
     
      /*
      *This property indicate how many bond are present on the atom.
      *
      */
-    public static final String TOTAL_CONNECTIONS = "TotalConnections";
+    public static final String TOTAL_CONNECTIONS = "cdk:TotalConnections";
     /*
      *Hydrogen count
      *
      */
-    public static final String TOTAL_H_COUNT = "TotalHydrogenCount";
+    public static final String TOTAL_H_COUNT = "cdk:TotalHydrogenCount";
 
     /** The Isotropic Shielding, usually calculated by
       * a quantum chemistry program like Gaussian.
@@ -298,7 +298,7 @@ public class CDKConstants {
       * shifts by subtracting the value from the 
       * isotropic shielding value of a standard (e.g. TMS).
       */
-    public static final String ISOTROPIC_SHIELDING = "IsotropicShielding";
+    public static final String ISOTROPIC_SHIELDING = "cdk:IsotropicShielding";
 
     /****************************************
     * Some predefined property names for    *
@@ -306,19 +306,19 @@ public class CDKConstants {
     ****************************************/
 
     /** Used as property key for indicating the ring size of a certain atom type. */
-    public static final String PART_OF_RING_OF_SIZE = "Part of ring of size";
+    public static final String PART_OF_RING_OF_SIZE = "cdk:Part of ring of size";
 
     /** Used as property key for indicating the chemical group of a certain atom type. */
-    public static final String CHEMICAL_GROUP_CONSTANT = "Chemical Group";
+    public static final String CHEMICAL_GROUP_CONSTANT = "cdk:Chemical Group";
 
     /** Used as property key for indicating the HOSE code for a certain atom type. */
-    public static final String SPHERICAL_MATCHER = "HOSE code spherical matcher";
+    public static final String SPHERICAL_MATCHER = "cdk:HOSE code spherical matcher";
 
     /** Used as property key for indicating the HOSE code for a certain atom type. */
-    public static final String PI_BOND_COUNT = "Pi Bond Count";
+    public static final String PI_BOND_COUNT = "cdk:Pi Bond Count";
 
     /** Used as property key for indicating the HOSE code for a certain atom type. */
-    public static final String LONE_PAIR_COUNT = "Lone Pair Count";
+    public static final String LONE_PAIR_COUNT = "cdk:Lone Pair Count";
 
 }
 
