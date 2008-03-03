@@ -45,6 +45,16 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 
+	/**
+	 * Helper method to test if atom types are correctly perceived. Meanwhile, it maintains a list
+	 * of atom types that have been tested so far, which allows testing afterwards that all atom
+	 * types are at least tested once.
+	 * 
+	 * @param testedAtomTypes   List of atom types tested so far.
+	 * @param expectedTypes     Expected atom types for the atoms given in <code>mol</code>.
+	 * @param mol               The <code>IAtomContainer</code> with <code>IAtom</code>s for which atom types should be perceived.
+	 * @throws CDKException     Thrown if something went wrong during the atom type perception.
+	 */
 	public void assertAtomTypes(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol) throws CDKException {
 		Assert.assertEquals(
 			"The number of expected atom types is unequal to the number of atoms",
@@ -70,6 +80,9 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 	}
 
 	/**
+	 * Method that tests if the matched <code>IAtomType</code> and the <code>IAtom</code> are
+	 * consistent. For example, it tests if hybridization states and formal charges are equal.
+	 * 
 	 * @cdk.bug 1897589
 	 */
 	private void assertConsistentProperties(IAtomContainer mol, IAtom atom, IAtomType matched) {
