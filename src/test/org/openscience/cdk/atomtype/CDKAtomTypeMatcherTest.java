@@ -1712,7 +1712,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         String[] expectedTypes = {"C.sp3", "C.radical.planar", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
-    
+
     @Test public void testEthoxyEthaneRadical() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("O");
@@ -1783,23 +1783,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     }
 
     @Test public void countTestedAtomTypes() {
-        AtomTypeFactory factory = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/data/cdk_atomtypes.xml",
-            NoNotificationChemObjectBuilder.getInstance()
-        );
-
-            IAtomType[] expectedTypes = factory.getAllAtomTypes();
-        if (expectedTypes.length != testedAtomTypes.size()) {
-            String errorMessage = "Atom types not tested:";
-            for (int i=0; i<expectedTypes.length; i++) {
-                if (!testedAtomTypes.containsKey(expectedTypes[i].getAtomTypeName()))
-                        errorMessage += " " + expectedTypes[i].getAtomTypeName();
-            }
-                Assert.assertEquals(errorMessage,
-                        factory.getAllAtomTypes().length,
-                        testedAtomTypes.size()
-                );
-        }
+    	super.countTestedAtomTypes(testedAtomTypes);
     }
     
 }

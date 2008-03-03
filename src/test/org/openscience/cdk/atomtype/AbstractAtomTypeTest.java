@@ -26,13 +26,15 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -45,6 +47,12 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 
+	private final static String ATOMTYPE_LIST = "cdk_atomtypes.xml"; 
+	
+	private final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
+		"org/openscience/cdk/config/data/" + ATOMTYPE_LIST, NoNotificationChemObjectBuilder.getInstance()
+    );
+	
 	/**
 	 * Helper method to test if atom types are correctly perceived. Meanwhile, it maintains a list
 	 * of atom types that have been tested so far, which allows testing afterwards that all atom
@@ -130,7 +138,19 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 		if (testedAtomTypes == null) {
 			testedAtomTypes = new HashMap<String, Integer>();
 		}
-	
+
+		try {
+			IAtomType type = factory.getAtomType(expectedID);
+			Assert.assertNotNull(
+				"Attempt to test atom type which is not defined in the " + ATOMTYPE_LIST + ": " + expectedID,
+				type
+			);
+		} catch (NoSuchAtomTypeException exception) {
+			Assert.assertNotNull(
+				"Attempt to test atom type which is not defined in the " + ATOMTYPE_LIST + ": " + 
+				exception.getMessage()
+			);
+		}
 		if (testedAtomTypes.containsKey(expectedID)) {
 			// increase the count, so that redundancy can be calculated
 			testedAtomTypes.put(expectedID,
@@ -140,5 +160,20 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 			testedAtomTypes.put(expectedID, 1);
 		}
 	}
+	
+    public void countTestedAtomTypes(Map<String, Integer> testedAtomTypes) {
+        IAtomType[] expectedTypes = factory.getAllAtomTypes();
+        if (expectedTypes.length != testedAtomTypes.size()) {
+            String errorMessage = "Atom types not tested:";
+            for (int i=0; i<expectedTypes.length; i++) {
+                if (!testedAtomTypes.containsKey(expectedTypes[i].getAtomTypeName()))
+                        errorMessage += " " + expectedTypes[i].getAtomTypeName();
+            }
+                Assert.assertEquals(errorMessage,
+                        factory.getAllAtomTypes().length,
+                        testedAtomTypes.size()
+                );
+        }
+    }
 	
 }
