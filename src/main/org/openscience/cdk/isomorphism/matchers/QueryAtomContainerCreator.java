@@ -1,10 +1,8 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision: $
+ *  $Author: $
+ *  $Date: $
  *
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2008  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -36,14 +34,16 @@ import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
 
 /**
- *@cdk.module    extra
+ *@cdk.module   isomorphism
  * @cdk.svnrev  $Revision$
  */
 public class QueryAtomContainerCreator {
 
     /**
-     *  Creates a QueryAtomContainer with SymbolQueryAtom's and
-     *  OrderQueryBond's.
+     * Creates a QueryAtomContainer with SymbolQueryAtom's, AromaticQueryBond's and
+     * OrderQueryBond's. If a IBond of the input <code>container</code> is flagged
+     * aromatic, then it disregards bond order information and only match against
+     * an aromatic target atom instead.
      *
      *@param  container  The AtomContainer that stands as model
      *@return            The new QueryAtomContainer created from container.
@@ -71,6 +71,35 @@ public class QueryAtomContainerCreator {
         return queryContainer;
     }
 
+    /**
+     * Creates a QueryAtomContainer with SymbolQueryAtom's and OrderQueryBond's. Unlike
+     * <code>createBasicQueryContainer</code>, it disregards aromaticity flags.
+     *
+     * @param  container  The AtomContainer that stands as model
+     * @return            The new QueryAtomContainer created from container.
+     * 
+     * @see               createBasicQueryContainer
+     */
+    public static QueryAtomContainer createSymbolAndBondOrderQueryContainer(IAtomContainer container) {
+        QueryAtomContainer queryContainer = new QueryAtomContainer();
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            queryContainer.addAtom(new SymbolQueryAtom(container.getAtom(i)));
+        }
+        Iterator<IBond> bonds = container.bonds();
+        while (bonds.hasNext()) {
+        	IBond bond = (IBond)bonds.next();
+            int index1 = container.getAtomNumber(bond.getAtom(0));
+            int index2 = container.getAtomNumber(bond.getAtom(1));
+            queryContainer.addBond(
+            	new OrderQueryBondOrderOnly(
+            		(IQueryAtom) queryContainer.getAtom(index1),
+                    (IQueryAtom) queryContainer.getAtom(index2),
+                    bond.getOrder()
+                )
+            );
+        }
+        return queryContainer;
+    }
     
     /**
      *  Creates a QueryAtomContainer with SymbolAncChargeQueryAtom's and
