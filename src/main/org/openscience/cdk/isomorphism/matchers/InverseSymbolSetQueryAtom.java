@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.svnrev  $Revision$
  *@cdk.created   2004-09-16
  *@see           SymbolSetQueryAtom
- *@cdk.module    extra
+ *@cdk.module    isomorphism
  */
 public class InverseSymbolSetQueryAtom extends org.openscience.cdk.PseudoAtom implements IQueryAtom {
 

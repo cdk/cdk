@@ -8,3 +8,4 @@ cdk-standard.jar
 cdk-valencycheck.jar
 cdk-smarts.jar
 cdk-extra.jar
+cdk-isomorphism.jar

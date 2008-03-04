@@ -7,3 +7,4 @@ cdk-render.jar
 cdk-standard.jar
 cdk-valencycheck.jar
 cdk-extra.jar
+cdk-isomorphism.jar

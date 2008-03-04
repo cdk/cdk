@@ -26,10 +26,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * General concept of a IAtomContainer aimed at doing molecular subgraph
  * queries using the UniversalIsomorphismTester.
  * 
- * @author     egonw
- * @cdk.module standard
+ * @author      egonw
+ * @cdk.module  interfaces
  * @cdk.svnrev  $Revision: 9162 $
- * @see        UniversalIsomorphismTester
+ * @see         UniversalIsomorphismTester
  */
 public interface IQueryAtomContainer extends IAtomContainer {
 

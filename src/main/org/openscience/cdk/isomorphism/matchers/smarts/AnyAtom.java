@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * This matcher any Atom.
  *
- * @cdk.module extra
+ * @cdk.module  isomorphism
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */

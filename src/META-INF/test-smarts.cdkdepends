@@ -9,3 +9,4 @@ cdk-smiles.jar
 cdk-valencycheck.jar
 cdk-test.jar
 cdk-smarts.jar
+cdk-isomorphism.jar

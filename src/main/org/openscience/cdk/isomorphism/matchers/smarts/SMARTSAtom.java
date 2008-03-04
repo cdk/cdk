@@ -29,7 +29,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 /**
  * Abstract smarts atom
  * 
- * @cdk.module extra
+ * @cdk.module  isomorphism
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS 
  */

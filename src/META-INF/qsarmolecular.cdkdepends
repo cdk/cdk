@@ -12,3 +12,4 @@ cdk-qsaratomic.jar
 cdk-atomtype.jar
 cdk-smiles.jar
 cdk-formula.jar
+cdk-isomorphism.jar

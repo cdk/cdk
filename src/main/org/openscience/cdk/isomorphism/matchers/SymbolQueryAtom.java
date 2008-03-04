@@ -26,7 +26,7 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * @cdk.module extra
+ * @cdk.module  isomorphism
  * @cdk.svnrev  $Revision$
  */
 public class SymbolQueryAtom extends org.openscience.cdk.Atom implements IQueryAtom {
