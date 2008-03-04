@@ -1,0 +1,6 @@
+cdk-interfaces.jar
+cdk-core.jar
+cdk-atomtype.jar
+cdk-data.jar
+cdk-test.jar
+cdk-isomorphism.jar
