@@ -532,7 +532,16 @@
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">s</scalar>
   </atomType>
 
-  <atomType id="F.plus">
+  <atomType id="F.plus.sp3">
+    <atom elementType="F" formalCharge="1">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
+  </atomType>
+  
+  <atomType id="F.plus.sp2">
     <atom elementType="F" formalCharge="1">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">2</scalar>
@@ -560,6 +569,24 @@
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">s</scalar>
   </atomType>
 
+  <atomType id="Cl.plus.sp3">
+    <atom elementType="Cl" formalCharge="1">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
+  </atomType>
+  
+  <atomType id="Cl.plus.sp2">
+    <atom elementType="Cl" formalCharge="1">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">1</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
+  </atomType>
+  
   <atomType id="Cl.minus">
     <atom elementType="Cl" formalCharge="-1">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
@@ -569,6 +596,16 @@
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">s</scalar>
   </atomType>
 
+  <atomType id="Cl.radical">
+    <atom elementType="Cl" formalCharge="0">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:radicalElectronCount">1</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">s</scalar>
+  </atomType>
+  
   <atomType id="Cl.perchlorate">
     <atom elementType="Cl" formalCharge="0">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
@@ -614,15 +651,35 @@
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">s</scalar>
   </atomType>
 
-  <atomType id="I.plus">
+  <atomType id="I.radical">
+    <atom elementType="I" formalCharge="0">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:radicalElectronCount">1</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">s</scalar>
+  </atomType>
+  
+  <atomType id="I.plus.sp3">
     <atom elementType="I" formalCharge="1">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">2</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
     </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
+  </atomType>
+  
+  <atomType id="I.radical">
+    <atom elementType="I" formalCharge="0">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:radicalElectronCount">1</scalar>
+    </atom>
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">s</scalar>
   </atomType>
-
+  
   <atomType id="Br">
     <atom elementType="Br" formalCharge="0">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
@@ -640,7 +697,35 @@
     </atom>
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">s</scalar>
   </atomType>
-
+  
+  <atomType id="Br.radical">
+    <atom elementType="Br" formalCharge="0">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:radicalElectronCount">1</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">s</scalar>
+  </atomType>
+  
+  <atomType id="Br.plus.sp3">
+    <atom elementType="Br" formalCharge="1">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
+  </atomType>
+  
+  <atomType id="Br.plus.sp2">
+    <atom elementType="Br" formalCharge="1">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">1</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
+  </atomType>
+  
   <atomType id="P.ate">
     <atom elementType="P" formalCharge="0">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
