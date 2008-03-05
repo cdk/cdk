@@ -46,7 +46,7 @@ public class MformulaTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The CDK formula module Tests");
         
-        suite.addTest(FormulaCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(FormulaCoverageTest.class));	
         
         suite.addTest(new JUnit4TestAdapter(AdductFormulaTest.class));
         suite.addTest(new JUnit4TestAdapter(IsotopePatternGeneratorTest.class));

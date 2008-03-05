@@ -76,7 +76,7 @@ public class MreactionTests {
     public static Test suite() {
         TestSuite suite= new TestSuite("CDK standard Tests");
 
-        suite.addTest(ReactionCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ReactionCoverageTest.class));	
         
         // Individual Tests
 
@@ -118,6 +118,7 @@ public class MreactionTests {
         suite.addTest(new JUnit4TestAdapter(SharingLonePairReactionTest.class));
         suite.addTest(new JUnit4TestAdapter(TautomerizationReactionTest.class));
         
+        // tools test
         suite.addTest(new JUnit4TestAdapter(StructureResonanceGeneratorTest.class));
         
         return suite;
