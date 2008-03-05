@@ -41,8 +41,8 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
-import org.openscience.cdk.reaction.type.ElectronImpactPDBReaction;
 import org.openscience.cdk.reaction.ReactionProcessTest;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
@@ -207,8 +207,8 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
-        Assert.assertEquals(2, setOfReactions.getReactionCount());
-
+        Assert.assertEquals(3, setOfReactions.getReactionCount());
+        
         IMolecule molecule = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         Assert.assertEquals(1, molecule.getAtom(0).getFormalCharge().intValue());
         Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)));

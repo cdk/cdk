@@ -844,9 +844,9 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	        IMolecule expected1 = builder.newMolecule();
 	        expected1.addAtom(builder.newAtom("C"));
 	        expected1.addAtom(builder.newAtom("N"));
-			expected1.addSingleElectron(builder.newSingleElectron(expected1.getAtom(0)));
-	        expected1.addAtom(builder.newAtom("C"));
 			expected1.addSingleElectron(builder.newSingleElectron(expected1.getAtom(1)));
+	        expected1.addAtom(builder.newAtom("C"));
+			expected1.addSingleElectron(builder.newSingleElectron(expected1.getAtom(2)));
 	        expected1.addBond(0, 1, IBond.Order.SINGLE);
 	        expected1.addBond(1, 2, IBond.Order.SINGLE);
 	        expected1.addAtom(builder.newAtom("H"));
@@ -1435,6 +1435,10 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(molecule);
 		
+
+		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
@@ -1584,7 +1588,10 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(molecule);
-		
+
+		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
