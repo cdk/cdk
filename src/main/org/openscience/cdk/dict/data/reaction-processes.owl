@@ -397,6 +397,26 @@
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
+    <Reaction rdf:ID="RadicalChargeSiteInitiationH">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RadicalChargeSiteInitiation">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
     <Reaction rdf:ID="RadicalSiteHrAlpha">
         <rdfs:label>    </rdfs:label>
         <dc:contributor rdf:resource="#miguelrojasch"/>
