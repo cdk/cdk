@@ -715,7 +715,7 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testGetHeavyElements() {
+	@Test public void testGetHeavyElements_IMolecularFormula() {
 		IMolecularFormula formula = new MolecularFormula();
 		formula.addIsotope(builder.newIsotope("C"),10);
 		formula.addIsotope(builder.newIsotope("H"),16);
@@ -727,7 +727,7 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 	 *
 	 * @return    The test suite
 	 */
-    @Test public void testGetHeavyElements2() {
+    @Test public void testGetHeavyElements_IMolecularFormula_2() {
     	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("CH3OH");
         Assert.assertEquals(2, MolecularFormulaManipulator.getHeavyElements(formula).size());
     }
