@@ -518,5 +518,71 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product2,queryAtom));
         
 	}
+	/**
+	 * A unit test suite for JUnit. Reaction:.
+	 * [F+]!-!C => F + [C+]
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testFspChargeSingleB() throws Exception {
+		//Smiles("[F+]C")
+		IMolecule molecule = builder.newMolecule();
+		molecule.addAtom(builder.newAtom("F"));
+		molecule.getAtom(0).setFormalCharge(+1);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(0, 1, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addBond(0, 2, IBond.Order.SINGLE);
+		molecule.addBond(1, 3, IBond.Order.SINGLE);
+		molecule.addBond(1, 4, IBond.Order.SINGLE);
+		molecule.addBond(1, 5, IBond.Order.SINGLE);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+		lpcheck.saturate(molecule);
+		
+		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
+		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+
+        IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+        setOfReactants.addMolecule(molecule);
+		
+		IReactionProcess type  = new SharingChargeSBReaction(); 
+		Object[] params = {Boolean.TRUE};
+        type.setParameters(params);
+        
+        /* initiate */
+		IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+
+        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        
+        //Smiles("FH")
+        IMolecule expected1 = builder.newMolecule();
+        expected1.addAtom(builder.newAtom("F"));
+        expected1.addAtom(builder.newAtom("H"));
+        expected1.addBond(0, 1, IBond.Order.SINGLE);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
+		lpcheck.saturate(expected1);
+        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
+        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
+        
+        //Smiles("[C+]")
+        IMolecule expected2 = builder.newMolecule();
+        expected2.addAtom(builder.newAtom("C"));
+        expected2.getAtom(0).setFormalCharge(+1);
+        expected2.addAtom(builder.newAtom("H"));
+        expected2.addAtom(builder.newAtom("H"));
+        expected2.addAtom(builder.newAtom("H"));
+        expected2.addBond(0, 1, IBond.Order.SINGLE);
+        expected2.addBond(0, 2, IBond.Order.SINGLE);
+        expected2.addBond(0, 3, IBond.Order.SINGLE);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected2);
+        IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(1);
+        queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected2);
+        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product2,queryAtom));
+	}
 
 }
