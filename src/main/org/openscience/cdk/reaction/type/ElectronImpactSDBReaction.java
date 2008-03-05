@@ -4,7 +4,7 @@
  *  $Date: 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) $
  *  $Revision: 5855 $
  *
- *  Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
+ *  Copyright (C) 2008 Miguel Rojas <miguelrojasch@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -92,9 +92,9 @@ public class ElectronImpactSDBReaction implements IReactionProcess{
      */
     public ReactionSpecification getSpecification() {
         return new ReactionSpecification(
-                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#ElectronImpactPDBReaction",
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#ElectronImpactSDB",
                 this.getClass().getName(),
-                "$Id: ElectronImpactPDBReaction.java,v 1.6 2006/04/01 08:26:47 mrc Exp $",
+                "$Id: ElectronImpactSDBReaction.java,v 1.6 2006/04/01 08:26:47 mrc Exp $",
                 "The Chemistry Development Kit");
     }
 
