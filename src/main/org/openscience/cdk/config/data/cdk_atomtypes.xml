@@ -515,7 +515,7 @@
 
   <atomType id="F.radical">
     <atom elementType="F" formalCharge="0">
-      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">3</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:radicalElectronCount">1</scalar>
