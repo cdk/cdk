@@ -177,19 +177,100 @@
         <dc:date>2007-02-28</dc:date>
     </Category>
 
+    <Mechanism rdf:ID="AdductionLPMechanism">
+        <rdfs:label>        </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
+        <description>       </description>
+        <isAs rdf:resource="#mechanisms"/>
+    </Mechanism>
+
+    <Mechanism rdf:ID="AdductionPBMechanism">
+        <rdfs:label>        </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
+        <description>       </description>
+        <isAs rdf:resource="#mechanisms"/>
+    </Mechanism>
+
+    <Mechanism rdf:ID="HeterolyticCleavageMechanism">
+        <rdfs:label>        </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
+        <description>       </description>
+        <isAs rdf:resource="#mechanisms"/>
+    </Mechanism>
+
+    <Mechanism rdf:ID="HomolyticCleavageMechanism">
+        <rdfs:label>        </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
+        <description>       </description>
+        <isAs rdf:resource="#mechanisms"/>
+    </Mechanism>
+
+    <Mechanism rdf:ID="RadicalSiteIonizationMechanism">
+        <rdfs:label>        </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
+        <description>       </description>
+        <isAs rdf:resource="#mechanisms"/>
+    </Mechanism>
+
+    <Mechanism rdf:ID="RadicalSiteRearrangementMechanism">
+        <rdfs:label>        </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
+        <description>       </description>
+        <isAs rdf:resource="#mechanisms"/>
+    </Mechanism>
+
+    <Mechanism rdf:ID="RearrangementChargeMechanism">
+        <rdfs:label>        </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
+        <description>       </description>
+        <isAs rdf:resource="#mechanisms"/>
+    </Mechanism>
+
+    <Mechanism rdf:ID="RemovingSEofBMechanism">
+        <rdfs:label>        </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
+        <description>       </description>
+        <isAs rdf:resource="#mechanisms"/>
+    </Mechanism>
+
     <Mechanism rdf:ID="RemovingSEofNBMechanism">
         <rdfs:label>Removing Single Electrons of Non-Bonding</rdfs:label>
         <dc:contributor rdf:resource="#miguelrojasch"/>
         <dc:date>2007-02-28</dc:date>
-        <definition>
-            D.
-        </definition>
+        <description>       </description>
+        <isAs rdf:resource="#mechanisms"/>
+    </Mechanism>
+
+    <Mechanism rdf:ID="SharingElectronMechanism">
+        <rdfs:label>        </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
+        <description>       </description>
+        <isAs rdf:resource="#mechanisms"/>
+    </Mechanism>
+
+    <Mechanism rdf:ID="TautomerizationMechanism">
+        <rdfs:label>        </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
+        <description>       </description>
         <isAs rdf:resource="#mechanisms"/>
     </Mechanism>
 
     <!-- the facts: Processes -->
 
     <Reaction rdf:ID="AdductionProtonLP">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -197,6 +278,9 @@
     </Reaction>
 
     <Reaction rdf:ID="AdductionProtonPB">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -204,6 +288,9 @@
     </Reaction>
 
     <Reaction rdf:ID="AdductionSodiumLP">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -211,6 +298,9 @@
     </Reaction>
 
     <Reaction rdf:ID="CarbonylElimination">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -219,12 +309,8 @@
     
     <Reaction rdf:ID="electronImpactNBE">
         <rdfs:label>Electron Impact Reaction for Non-Bonding Electrons</rdfs:label>
-        <annotation>
-            <documentation>
-      		  <dc:contributor rdf:resource="#miguelrojasch"/>
-      		  <dc:date>2007-02-28</dc:date>
-            </documentation>
-        </annotation>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
         <definition>
      	   This reaction is the process generated in mass spectrometry when is applied an electron 
     	   impact technique in non-bonding electrons.
@@ -240,20 +326,31 @@
     </Reaction>
 
     <Reaction rdf:ID="ElectronImpactPDB">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+   		<isClassifiedAs rdf:resource="#electronImpact"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="ElectronImpactSDB">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+   		<isClassifiedAs rdf:resource="#electronImpact"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="HeterolyticCleavagePB">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -261,6 +358,9 @@
     </Reaction>
 
     <Reaction rdf:ID="HeterolyticCleavageSB">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -268,6 +368,9 @@
     </Reaction>
 
     <Reaction rdf:ID="HomolyticCleavage">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -275,6 +378,9 @@
     </Reaction>
 
     <Reaction rdf:ID="Hyperconjugation">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -282,6 +388,9 @@
     </Reaction>
 
     <Reaction rdf:ID="PiBondingMovement">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -289,6 +398,9 @@
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteHrAlpha">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -296,6 +408,9 @@
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteHrBeta">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -303,6 +418,9 @@
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteHrDelta">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -310,6 +428,9 @@
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteHrGamma">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -317,6 +438,9 @@
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteInitiationH">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -324,6 +448,9 @@
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteInitiation">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -331,6 +458,9 @@
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteRrAlpha">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -338,6 +468,9 @@
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteRrBeta">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -345,6 +478,9 @@
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteRrDelta">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -352,6 +488,9 @@
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteRrGamma">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -359,6 +498,9 @@
     </Reaction>
 
     <Reaction rdf:ID="RearrangementAnion">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -366,6 +508,9 @@
     </Reaction>
 
     <Reaction rdf:ID="RearrangementCation">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -373,6 +518,9 @@
     </Reaction>
 
     <Reaction rdf:ID="RearrangementLonePair">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -380,6 +528,9 @@
     </Reaction>
 
     <Reaction rdf:ID="RearrangementRadical">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -387,6 +538,9 @@
     </Reaction>
 
     <Reaction rdf:ID="SharingAnion">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -394,6 +548,9 @@
     </Reaction>
 
     <Reaction rdf:ID="SharingChargeDB">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -401,6 +558,9 @@
     </Reaction>
 
     <Reaction rdf:ID="SharingChargeSB">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -408,6 +568,9 @@
     </Reaction>
 
     <Reaction rdf:ID="SharingLonePair">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
@@ -415,6 +578,9 @@
     </Reaction>
 
     <Reaction rdf:ID="Tautomerization">
+        <rdfs:label>    </rdfs:label>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
+        <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
