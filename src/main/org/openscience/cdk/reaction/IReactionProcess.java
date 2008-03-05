@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.reaction;
 
+import java.util.HashMap;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -37,7 +39,6 @@ import org.openscience.cdk.interfaces.IReactionSet;
  */
 public interface IReactionProcess {
 	
-    
 	/**
 	 * Returns a <code>Map</code> which specifies which reaction
 	 * is implemented by this class. 
@@ -54,20 +55,6 @@ public interface IReactionProcess {
 	 * @return An object containing the reaction specification
 	 */
     public ReactionSpecification getSpecification();
-    /** 
-     * Returns the names of the parameters for this reaction. 
-     *
-     * @return An array of String containing the names of the parameters 
-     * that this reaction can accept
-     */
-    public String[] getParameterNames();
-    /** 
-     * Returns a class matching that of the parameter with the given name.
-     *
-     * @param name The name of the parameter whose type is requested
-     * @return An Object of the class corresponding to the parameter with the supplied name
-     */
-    public Object getParameterType(String name);
     
     /** 
      * Sets the parameters for this reaction. 
@@ -75,20 +62,22 @@ public interface IReactionProcess {
      * Must be done before calling
      * calculate as the parameters influence the calculation outcome.
      *
-     * @param params An array of Object containing the parameters for this reaction
+     * @param params A HashMap of Objects containing the parameters for this reaction. 
+     * 				 The key must be included into the Dictionary reacton-processes
      * @throws CDKException if invalid number of type of parameters are passed to it
      * 
      * @see #getParameters
      */
-    public void setParameters(Object[] params) throws CDKException;
+    public void setParameters(HashMap<String,Object> params) throws CDKException;
     
     /** 
      * Returns the current parameter values.
      *
-     * @return An array of Object containing the parameter values
+     * @return A HashMap of Object containing the name and the type of the parameter
      * @see #setParameters
      * */
-    public Object[] getParameters();
+    public HashMap<String,Object> getParameters();
+    
     /** 
      * Initiates the process for the given Reaction.
      * 

@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.reaction.type;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -39,6 +38,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.reaction.IReactionProcess;
+import org.openscience.cdk.reaction.ReactionEngine;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.reaction.mechanism.AdductionPBMechanism;
 import org.openscience.cdk.tools.LoggingTool;
@@ -78,9 +78,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * 
  * @see AdductionPBMechanism
  **/
-public class AdductionProtonPBReaction implements IReactionProcess{
+public class AdductionProtonPBReaction extends ReactionEngine implements IReactionProcess{
 	private LoggingTool logger;
-	private boolean hasActiveCenter;
 	private IReactionMechanism mechanism;
 	
 	/**
@@ -106,35 +105,6 @@ public class AdductionProtonPBReaction implements IReactionProcess{
 	}
 	
 	/**
-	 *  Sets the parameters attribute of the AdductionProtonPBReaction object.
-	 *
-	 * @param  params            The parameter is if the molecule has already fixed the center active or not. It 
-	 *						     should be set before to initiate the reaction with a setFlag:  CDKConstants.REACTIVE_CENTER
-	 *@exception  CDKException   Description of the Exception
-	 */
-	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 1) {
-			throw new CDKException("AdductionProtonPBReaction only expects one parameter");
-		}
-		if (!(params[0] instanceof Boolean)) {
-			throw new CDKException("The parameter 1 must be of type boolean");
-		}
-		hasActiveCenter = ((Boolean) params[0]).booleanValue();
-	}
-
-
-	/**
-	 *  Gets the parameters attribute of the AdductionProtonPBReaction object.
-	 *
-	 *@return    The parameters value
-	 */
-	public Object[] getParameters() {
-		Object[] params = new Object[1];
-		params[0] = new Boolean (hasActiveCenter);
-		return params;
-	}
-	
-	/**
 	 *  Initiate process.
 	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
 	 *  from the class tools.HydrogenAdder.
@@ -157,9 +127,9 @@ public class AdductionProtonPBReaction implements IReactionProcess{
 		
 		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
 		IMolecule reactant = reactants.getMolecule(0);
-		
+
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
-		if(!hasActiveCenter){
+		if(!(Boolean)paramsMap.get("hasActiveCenter")){
 			setActiveCenters(reactant);
 		}
 		
@@ -249,25 +219,4 @@ public class AdductionProtonPBReaction implements IReactionProcess{
             }
         }
     }
-	/**
-	 *  Gets the parameterNames attribute of the AdductionProtonPBReaction object.
-	 *
-	 *@return    The parameterNames value
-	 */
-	public String[] getParameterNames() {
-		String[] params = new String[1];
-		params[0] = "hasActiveCenter";
-		return params;
-	}
-
-
-	/**
-	 *  Gets the parameterType attribute of the AdductionProtonPBReaction object.
-	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
-	 */
-	public Object getParameterType(String name) {
-		return new Boolean(false);
-	}
 }

@@ -24,6 +24,7 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.junit.Assert;
@@ -94,7 +95,8 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the center active*/
-        Object[] params = {Boolean.FALSE};
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.FALSE);;
         type.setParameters(params);
         
 		/* initiate */

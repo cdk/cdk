@@ -1,6 +1,6 @@
 /* $Revision: 8418 $ $Author: egonw $ $Date: 2007-06-25 22:05:44 +0200 (Mon, 25 Jun 2007) $
  * 
- * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2008  Miguel Rojas <miguelrojasch@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -20,11 +20,17 @@
  */
 package org.openscience.cdk.reaction;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.exception.CDKException;
-
 import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.dict.Dictionary;
+import org.openscience.cdk.dict.DictionaryDatabase;
+import org.openscience.cdk.dict.EntryReact;
+import org.openscience.cdk.exception.CDKException;
 
 /**
  * Tests for IReactionProcess implementations.
@@ -34,17 +40,40 @@ import org.openscience.cdk.NewCDKTestCase;
 public abstract class ReactionProcessTest extends NewCDKTestCase {
 	
 	protected static IReactionProcess reaction;
+	private static Dictionary dictionary;
+	private static String entryString;
 	
-	public static void setReaction(Class<?> descriptorClass) throws Exception {
-		if (ReactionProcessTest.reaction == null) {
-			Object descriptor = (Object)descriptorClass.newInstance();
-			if (!(descriptor instanceof IReactionProcess)) {
-				throw new CDKException("The passed reaction class must be a IReactionProcess");
-			}
-			ReactionProcessTest.reaction = (IReactionProcess)descriptor;
+	/**
+	 * Set the IReactionProcess to analyzed
+	 * 
+	 * @param descriptorClass   The IReactionProcess class
+	 * @throws Exception
+	 */
+	public static void setReaction(Class<?> reactionClass) throws Exception {
+		if(ReactionProcessTest.dictionary == null)
+			ReactionProcessTest.dictionary = openingDictionary();
+		
+		Object reaction = (Object)reactionClass.newInstance();
+		if (!(reaction instanceof IReactionProcess)) {
+			throw new CDKException("The passed reaction class must be a IReactionProcess");
 		}
+		ReactionProcessTest.reaction = (IReactionProcess)reaction;
+		ReactionProcessTest.entryString = "";
+		
+		
 	}
 	
+	/**
+	 * Open the Dictionary OWLReact.
+	 * 
+	 * @return The dictionary reaction-processes
+	 */
+	private static Dictionary openingDictionary() {
+		DictionaryDatabase db = new DictionaryDatabase();
+    	Dictionary dict = db.getDictionary("reaction-processes");
+		return dict;
+	}
+
 	/**
 	 * Makes sure that the extending class has set the super.descriptor.
 	 * Each extending class should have this bit of code (JUnit3 formalism):
@@ -64,86 +93,100 @@ public abstract class ReactionProcessTest extends NewCDKTestCase {
 	}
 	
 	/**
-	 * Checks if the parameterization is consistent.
+	 * Test if this entry has a definition schema in the Dictionary.
+	 * 
+	 * @throws Exception
+	 */
+	@Test public void testGetEntryDefinition() throws Exception {
+    	
+		ReactionProcessTest.entryString = reaction.getSpecification().getSpecificationReference();
+		ReactionProcessTest.entryString = ReactionProcessTest.entryString.substring(ReactionProcessTest.entryString.indexOf("#")+1, ReactionProcessTest.entryString.length());
+    	
+    	EntryReact entry = (EntryReact) dictionary.getEntry(ReactionProcessTest.entryString.toLowerCase());
+    	
+    	Assert.assertNotNull(
+    			"The definition entry for ["+entryString+"] must not be null.",
+    			entry.getDefinition());
+    	
+    }   
+	/**
+	 * Checks if the parameterization key is consistent.
 	 * 
 	 * @throws Exception 
 	 */
-	@Test public void testGetParameterNames() throws Exception {
-        String[] paramNames = reaction.getParameterNames();
-//        FIXME: the next would be nice, but not currently agreed-upon policy
-//        assertNotNull(
-//        	"The method getParameterNames() must return a non-null value, possible a zero length String[] array",
-//        	paramNames
-//        );
-//        FIXME: so instead:
-        if (paramNames == null) paramNames = new String[0];
-        for (int i=0; i<paramNames.length; i++) {
-        	Assert.assertNotNull(
-        		"A parameter name must not be null.",
-        		paramNames[i]
-        	);
-        	Assert.assertNotSame(
-            	"A parameter name String must not be empty.",
-            	0, paramNames[i].length()
-            );
-        }
-    }
-    
-	@Test public void testGetParameters() {
-        Object[] params = reaction.getParameters();
-//      FIXME: the next would be nice, but not currently agreed-upon policy
-//      Assert.assertNotNull(
-//      	"The method getParameters() must return a non-null value, possible a zero length Object[] array",
-//      	paramNames
-//      );
-//      FIXME: so instead:
-        if (params == null) params = new Object[0];
-        for (int i=0; i<params.length; i++) {
-        	Assert.assertNotNull(
-        		"A parameter default must not be null.",
-        		params[i]
-        	);
-        }
-    }
-    
-	@Test public void testGetParameterType_String() {
-        String[] paramNames = reaction.getParameterNames();
-//      FIXME: see testGetParameterNames() comment on the same line 
-        if (paramNames == null) paramNames = new String[0];
-        Object[] params = reaction.getParameters();
-//      FIXME: see testGetParameters() comment on the same line
-        if (params == null) params = new Object[0];
-
-        for (int i=0; i<paramNames.length; i++) {
-        	Object type = reaction.getParameterType(paramNames[i]);
-        	Assert.assertNotNull(
-        		"The getParameterType(String) return type is null for the " +
-        		"parameter: " + paramNames[i],
-        		type
-        	);
-        	Assert.assertEquals(
-        		"The getParameterType(String) return type is not consistent " +
-        		"with the getParameters() types for parameter " + i,
-        		type.getClass().getName(),
-        		params[i].getClass().getName()
-        	);
-        }
-    }
-    
-	@Test public void testParameterConsistency() {
-        String[] paramNames = reaction.getParameterNames();
-//      FIXME: see testGetParameterNames() comment on the same line 
-        if (paramNames == null) paramNames = new String[0];
-        Object[] params = reaction.getParameters();
-//      FIXME: see testGetParameters() comment on the same line
-        if (params == null) params = new Object[0];
+	@Test public void testGetParameters() throws Exception {
+        HashMap<String,Object> paramObj = reaction.getParameters();
+        EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
+        HashMap<String, String> paramDic = entry.getParameters();
         
-        Assert.assertEquals(
-        	"The number of returned parameter names must equate the number of returned parameters",
-        	paramNames.length, params.length
-        );
+        Assert.assertSame(
+    			"The parameters entry for ["+entryString+"]  must contain the same lenght as the reaction object.",
+    			paramObj.size(),paramDic.size());
+	}
+    /**
+	 * Checks if the parameterization key is consistent.
+	 * 
+	 * @throws Exception 
+	 */
+	@Test public void testGetParameterKeyDict() throws Exception {
+        HashMap<String,Object> paramObj = reaction.getParameters();
+        EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
+        HashMap<String, String> paramDic = entry.getParameters();
+        
+        Set<String> set= paramDic.keySet(); 
+	    Iterator<String> iter = set.iterator(); 
+	    while(iter.hasNext()){  
+	       String key = iter.next();
+	       Assert.assertTrue("The key "+key+" doesn't exist into the IReactionProcess. ",
+	    		   paramObj.containsKey(key));
+        }
     }
-
+	/**
+	 * Checks if the parameterization key is consistent.
+	 * 
+	 * @throws Exception 
+	 */
+	@Test public void testGetParameterKeyReact() throws Exception {
+        HashMap<String,Object> paramObj = reaction.getParameters();
+        EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
+        HashMap<String, String> paramDic = entry.getParameters();
+        
+        Set<String> set= paramObj.keySet(); 
+	    Iterator<String> iter = set.iterator(); 
+	    while(iter.hasNext()){  
+	       String key = iter.next();
+	       Assert.assertTrue("The key "+key+" doesn't exist into the Dictionary. ",
+	    		   paramDic.containsKey(key));
+        }
+    }
+    
+//	/**
+//	 * Checks if the parameterization type is consistent.
+//	 * 
+//	 * @throws Exception 
+//	 */
+//	@Test public void testGetParameterObject() throws Exception {
+//
+//		 HashMap<String,Object> paramObj = reaction.getParameters();
+//         EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
+//         HashMap<String, String> paramDic = entry.getParameters();
+//        
+//         Set<String> set= paramObj.keySet(); 
+//	     Iterator<String> iter = set.iterator(); 
+//	     while(iter.hasNext()){  
+//	        String key = iter.next();
+//	        Object valueDict = paramDic.get(key); 
+//	        Object valueObj = paramObj.get(key);
+//	        Assert.assertSame(
+//	    			"The parameters entry for ["+entryString+"]  must contain the same lenght as the reaction object.",
+//	    			valueDict,valueObj);
+//         }
+//    }
+	
+	/**
+	 * Test the specification of the IReactionProcess.
+	 * 
+	 */
 	@Test public void testGetSpecification() {
     	ReactionSpecification spec = reaction.getSpecification();
     	Assert.assertNotNull(
@@ -189,7 +232,49 @@ public abstract class ReactionProcessTest extends NewCDKTestCase {
     }
     
 	@Test public void testSetParameters_arrayObject() throws Exception {
-    	Object[] defaultParams = reaction.getParameters();
+    	HashMap<String,Object> defaultParams = reaction.getParameters();
     	reaction.setParameters(defaultParams);
     }    
+	
+	/**
+	 * Test if the reaction process is contained in the Dictionary as a entry.
+	 * 
+	 * @throws Exception
+	 */
+	@Test public void testGetDictionaryEntry() throws Exception {
+    	
+    	EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
+    	Assert.assertNotNull(
+    			"The Entry ["+entryString+"] doesn't exist in OWL Dictionary.",
+    			entry);
+    	
+    }    
+	
+	/**
+	 * Test if this entry has a definition schema in the Dictionary.
+	 * 
+	 * @throws Exception
+	 */
+	@Test public void testGetEntryDescription() throws Exception {
+    	
+		EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
+    	
+    	Assert.assertNotNull(
+    			"The description entry for ["+entryString+"] must not be null.",
+    			entry.getDescription());
+    }  
+	
+	/**
+	 * Test if this entry has at least one representation schema in the Dictionary.
+	 * 
+	 * @throws Exception
+	 */
+	@Test public void testGetEntryRepresentation() throws Exception {
+    	
+    	EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
+    	
+    	Assert.assertNotSame(
+    			"The representation entry for ["+entryString+"]  must contain at least one representation.",
+    			0,entry.getRepresentations().size());
+    }  
 }

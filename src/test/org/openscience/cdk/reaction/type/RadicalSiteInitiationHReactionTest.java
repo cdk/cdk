@@ -24,6 +24,7 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.junit.Assert;
@@ -83,7 +84,8 @@ public class RadicalSiteInitiationHReactionTest extends ReactionProcessTest {
 		/* initiate */
 		makeSureAtomTypesAreRecognized(molecule);
 		
-        Object[] params = {Boolean.FALSE};
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.FALSE);;
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
@@ -135,7 +137,8 @@ public class RadicalSiteInitiationHReactionTest extends ReactionProcessTest {
 		molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-        Object[] params = {Boolean.TRUE};
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.TRUE);;
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
@@ -169,13 +172,14 @@ public class RadicalSiteInitiationHReactionTest extends ReactionProcessTest {
 	@Test public void testCentreActive() throws Exception {
 		IReactionProcess type  = new RadicalSiteInitiationHReaction();
 
-		Object[] object = type.getParameters();
-		Assert.assertFalse(((Boolean) object[0]).booleanValue());
-		 
-		Object[] params = {Boolean.TRUE};
+		HashMap<String,Object> params = type.getParameters();
+		Assert.assertTrue(params.get("hasActiveCenter") instanceof Boolean);
+		Assert.assertFalse((Boolean)params.get("hasActiveCenter"));
+
+        params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.TRUE);
         type.setParameters(params);
-		Assert.assertTrue(((Boolean) params[0]).booleanValue());
-        
+		Assert.assertTrue((Boolean)params.get("hasActiveCenter"));
 	}
 	/**
 	 * A unit test suite for JUnit.
@@ -200,7 +204,8 @@ IReactionProcess type = new RadicalSiteInitiationHReaction();
 		molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-        Object[] params = {Boolean.TRUE};
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.TRUE);;
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
@@ -239,7 +244,8 @@ IReactionProcess type = new RadicalSiteInitiationHReaction();
 		molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-        Object[] params = {Boolean.TRUE};
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.TRUE);;
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         

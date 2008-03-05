@@ -24,6 +24,7 @@
 package org.openscience.cdk.charges;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
@@ -335,7 +336,8 @@ public class GasteigerPEPEPartialCharges {
 		
 		
 		setOfReactants.addMolecule((IMolecule) ac);
-		Object[] params = {Boolean.TRUE};
+		HashMap<String,Object> params = new HashMap<String,Object>();
+		params.put("hasActiveCenter",Boolean.TRUE);;
 		
 		type.setParameters(params);
 		IReactionSet setOfReactions = type.initiate(setOfReactants, null);
@@ -349,7 +351,8 @@ public class GasteigerPEPEPartialCharges {
     			mol.getBond(k).getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,false);
     		}
     		setOfM2.addMolecule((IMolecule) mol);
-    		Object[] params2 = {Boolean.FALSE};
+    		HashMap<String,Object> params2 = new HashMap<String,Object>();
+    		params2.put("hasActiveCenter",Boolean.FALSE);;
 			type.setParameters(params2);
 			IReactionSet setOfReactions2 = type.initiate(setOfM2, null);
 			if(setOfReactions2.getReactionCount() > 0){

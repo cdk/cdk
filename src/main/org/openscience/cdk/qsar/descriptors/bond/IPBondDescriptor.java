@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.openscience.cdk.AtomContainerSet;
@@ -199,7 +200,8 @@ public class IPBondDescriptor implements IBondDescriptor {
 			setOfReactants.addMolecule((IMolecule) localClone);
 			IReactionProcess type  = new ElectronImpactPDBReaction();
 			bond.setFlag(CDKConstants.REACTIVE_CENTER,true);
-	        Object[] params = {Boolean.TRUE};
+			HashMap<String,Object> params = new HashMap<String,Object>();
+			params.put("hasActiveCenter",Boolean.TRUE);;
 	        type.setParameters(params);
 	        IReactionSet pbb = type.initiate(setOfReactants, null);
 	        Iterator it = pbb.reactions();

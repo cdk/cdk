@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -189,7 +190,8 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 				setOfReactants.addMolecule((IMolecule) localClone);
 				IReactionProcess type  = new ElectronImpactNBEReaction();
 				atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
-		        Object[] params = {Boolean.TRUE};
+				HashMap<String,Object> params = new HashMap<String,Object>();
+				params.put("hasActiveCenter",Boolean.TRUE);
 		        type.setParameters(params);
 		        IReactionSet nbe = type.initiate(setOfReactants, null);
 		        Iterator it = nbe.reactions();

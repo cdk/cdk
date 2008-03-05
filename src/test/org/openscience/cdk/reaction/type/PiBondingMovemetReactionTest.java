@@ -24,6 +24,7 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.junit.Assert;
@@ -100,7 +101,8 @@ public class PiBondingMovemetReactionTest extends ReactionProcessTest {
 			setOfReactants.addMolecule(molecule);
 
 			/* initiate */
-			Object[] params = {Boolean.FALSE};
+			HashMap<String,Object> params = new HashMap<String,Object>();
+			params.put("hasActiveCenter",Boolean.FALSE);;
 	        type.setParameters(params);
 	        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 	        
@@ -152,7 +154,8 @@ public class PiBondingMovemetReactionTest extends ReactionProcessTest {
 		setOfReactants.addMolecule(molecule);
 
 		/* initiate */
-		Object[] params = {Boolean.FALSE};
+		HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.FALSE);;
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
@@ -211,7 +214,8 @@ public class PiBondingMovemetReactionTest extends ReactionProcessTest {
 		setOfReactants.addMolecule(molecule);
 
 		/* initiate */
-		Object[] params = {Boolean.FALSE};
+		HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.FALSE);;
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
@@ -294,7 +298,8 @@ public class PiBondingMovemetReactionTest extends ReactionProcessTest {
 		setOfReactants.addMolecule(molecule);
 
 		/* initiate */
-        Object[] params = {Boolean.TRUE};
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.TRUE);;
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         

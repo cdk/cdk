@@ -24,6 +24,7 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.junit.Assert;
@@ -84,7 +85,8 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 
 		/* initiate */
 		
-        Object[] params = {Boolean.FALSE};
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.FALSE);;
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
@@ -122,7 +124,8 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-        Object[] params = {Boolean.TRUE};
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.TRUE);;
         type.setParameters(params);
         
 		/* initiate */
@@ -150,13 +153,14 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 	@Test public void testCentreActive() throws Exception {
 		IReactionProcess type  = new SharingLonePairReaction();
 
-		Object[] object = type.getParameters();
-		Assert.assertFalse(((Boolean) object[0]).booleanValue());
-		 
-		Object[] params = {Boolean.TRUE};
+		HashMap<String,Object> params = type.getParameters();
+		Assert.assertTrue(params.get("hasActiveCenter") instanceof Boolean);
+		Assert.assertFalse((Boolean)params.get("hasActiveCenter"));
+
+        params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.TRUE);
         type.setParameters(params);
-		Assert.assertTrue(((Boolean) params[0]).booleanValue());
-        
+		Assert.assertTrue((Boolean)params.get("hasActiveCenter"));
 	}
 	/**
 	 * A unit test suite for JUnit.
@@ -175,7 +179,8 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
 		setOfReactants.addMolecule(molecule);
-		Object[] params = {Boolean.TRUE};
+		HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.TRUE);;
         type.setParameters(params);
         
         /* initiate */
@@ -204,7 +209,8 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the center active*/
-        Object[] params = {Boolean.FALSE};
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.FALSE);;
         type.setParameters(params);
 
 		/* initiate */

@@ -24,6 +24,7 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.junit.Assert;
@@ -100,7 +101,8 @@ public class ElectronImpactSBEReactionTest extends ReactionProcessTest {
 		makeSureAtomTypesAreRecognized(reactant);
 		
 		IReactionProcess type  = new ElectronImpactSDBReaction();
-        Object[] params = {Boolean.TRUE};
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.TRUE);;
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         

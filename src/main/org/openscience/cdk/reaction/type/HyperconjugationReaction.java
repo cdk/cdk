@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
+import org.openscience.cdk.reaction.ReactionEngine;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
@@ -80,9 +81,8 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.set        reaction-types
  * 
  **/
-public class HyperconjugationReaction implements IReactionProcess{
+public class HyperconjugationReaction extends ReactionEngine implements IReactionProcess{
 	private LoggingTool logger;
-	private boolean hasActiveCenter;
 	private CDKAtomTypeMatcher atMatcher;
 
 	/**
@@ -108,36 +108,6 @@ public class HyperconjugationReaction implements IReactionProcess{
 				"$Id: HyperconjugationReaction.java,v 1.6 2006/04/01 08:26:47 mrc Exp $",
 				"The Chemistry Development Kit");
 	}
-	
-	/**
-	 *  Sets the parameters attribute of the HyperconjugationReaction object
-	 *
-	 *@param  params            The parameter is if the molecule has already fixed the center active or not. It 
-	 *							should be set before to initiate the reaction with a setFlag:  CDKConstants.REACTIVE_CENTER
-	 *@exception  CDKException  Description of the Exception
-	 */
-	public void setParameters(Object[] params) throws CDKException {
-		if (params.length > 1) {
-			throw new CDKException("HyperconjugationReaction only expects one parameter");
-		}
-		if (!(params[0] instanceof Boolean)) {
-			throw new CDKException("The parameter 1 must be of type boolean");
-		}
-		hasActiveCenter = ((Boolean) params[0]).booleanValue();
-	}
-
-
-	/**
-	 *  Gets the parameters attribute of the HyperconjugationReaction object
-	 *
-	 *@return    The parameters value
-	 */
-	public Object[] getParameters() {
-		Object[] params = new Object[1];
-		params[0] = new Boolean (hasActiveCenter);
-		return params;
-	}
-	
 	/**
 	 *  Initiate process.
 	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
@@ -163,7 +133,7 @@ public class HyperconjugationReaction implements IReactionProcess{
 		IMolecule reactant = reactants.getMolecule(0);
 		
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
-		if(!hasActiveCenter){
+		if(!(Boolean)paramsMap.get("hasActiveCenter")){
 			setActiveCenters(reactant);
 		}
 		Iterator<IAtom> atoms = reactants.getMolecule(0).atoms();
@@ -311,45 +281,5 @@ public class HyperconjugationReaction implements IReactionProcess{
 				}
 			}
 		}
-	}
-//	/**
-//	 * controll if the new product was already found before
-//	 * @param acSet 
-//	 * @param fragment
-//	 * @return True, if it contains
-//	 */
-//	private boolean existAC(IAtomContainerSet acSet, IMolecule fragment) {
-//		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(fragment);
-//		for(int i = 0; i < acSet.getAtomContainerCount(); i++){
-//			IAtomContainer ac = acSet.getAtomContainer(i);
-//			try {
-//				if(UniversalIsomorphismTester.isIsomorph(ac, qAC))
-//					return true;
-//			} catch (CDKException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		return false;
-//	}
-	/**
-	 *  Gets the parameterNames attribute of the HyperconjugationReaction object
-	 *
-	 *@return    The parameterNames value
-	 */
-	public String[] getParameterNames() {
-		String[] params = new String[1];
-		params[0] = "hasActiveCenter";
-		return params;
-	}
-
-
-	/**
-	 *  Gets the parameterType attribute of the HyperconjugationReaction object
-	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
-	 */
-	public Object getParameterType(String name) {
-		return new Boolean(false);
 	}
 }

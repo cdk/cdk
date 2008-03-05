@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.bond;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -182,8 +183,9 @@ public class ResonancePositiveChargeDescriptor implements IBondDescriptor {
     	}
     	
     	HeterolyticCleavageSBReaction type = new HeterolyticCleavageSBReaction();
-    	
-        Object[] paramsR = {Boolean.TRUE};
+
+		HashMap<String,Object> paramsR = new HashMap<String,Object>();
+		paramsR.put("hasActiveCenter",Boolean.TRUE);
         type.setParameters(paramsR);
         
         IMoleculeSet setOfReactants = secondClone.getBuilder().newMoleculeSet();

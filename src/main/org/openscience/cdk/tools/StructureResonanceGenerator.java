@@ -21,6 +21,7 @@
 package org.openscience.cdk.tools;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -74,15 +75,6 @@ import org.openscience.cdk.reaction.type.SharingLonePairReaction;
  */
 @TestClass("org.openscience.cdk.test.tools.StructureResonanceGeneratorTest")
 public class StructureResonanceGenerator {
-	
-	private boolean cationR = true;
-	private boolean anionR = true;
-	private boolean radicalR = true;
-	private boolean bondR = true;
-	private boolean hasActiveCenter = false;
-	private boolean hyperconjugationR = false;
-	/**-1 means that there is not restrictions how many structures will be obtained*/
-	private int maxStructuresToObtain = -1;
 	
 	private LoggingTool logger = new LoggingTool(StructureResonanceGenerator.class);
 	private List<IReactionProcess> reactionsList = new ArrayList<IReactionProcess>();
@@ -143,8 +135,8 @@ public class StructureResonanceGenerator {
 	 * 
 	 */
 	private void callDefaultReactions() {
-		Object[] params = new Object[1];
-		params[0] = Boolean.FALSE;
+		HashMap<String,Object> params = new HashMap<String,Object>();
+		params.put("hasActiveCenter",Boolean.FALSE);;
 		
 		IReactionProcess type  = new SharingLonePairReaction();
         try {

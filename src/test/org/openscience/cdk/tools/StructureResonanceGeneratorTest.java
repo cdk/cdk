@@ -21,6 +21,7 @@
 package org.openscience.cdk.tools;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -101,34 +102,34 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 		Assert.assertEquals(6, reactionList.size());
 		
 		SharingLonePairReaction slReaction = (SharingLonePairReaction)reactionList.get(0);
-		Assert.assertEquals(1, slReaction.getParameters().length);
-		Object[] objects = slReaction.getParameters();
-		Assert.assertFalse((Boolean) objects[0]);
+		Assert.assertEquals(1, slReaction.getParameters().size());
+		HashMap<String,Object> objects = slReaction.getParameters();
+		Assert.assertFalse((Boolean) objects.get("hasActiveCenter"));
 		
 		PiBondingMovementReaction pBReaction = (PiBondingMovementReaction)reactionList.get(1);
-		Assert.assertEquals(1, pBReaction.getParameters().length);
+		Assert.assertEquals(1, pBReaction.getParameters().size());
 		objects = pBReaction.getParameters();
-		Assert.assertFalse((Boolean) objects[0]);
+		Assert.assertFalse((Boolean) objects.get("hasActiveCenter"));
 		
 		RearrangementAnionReaction raReaction = (RearrangementAnionReaction)reactionList.get(2);
-		Assert.assertEquals(1, raReaction.getParameters().length);
+		Assert.assertEquals(1, raReaction.getParameters().size());
 		objects = raReaction.getParameters();
-		Assert.assertFalse((Boolean) objects[0]);
+		Assert.assertFalse((Boolean) objects.get("hasActiveCenter"));
 		
 		RearrangementCationReaction rcReaction = (RearrangementCationReaction)reactionList.get(3);
-		Assert.assertEquals(1, rcReaction.getParameters().length);
+		Assert.assertEquals(1, rcReaction.getParameters().size());
 		objects = rcReaction.getParameters();
-		Assert.assertFalse((Boolean) objects[0]);
+		Assert.assertFalse((Boolean) objects.get("hasActiveCenter"));
 		
 		RearrangementLonePairReaction lnReaction = (RearrangementLonePairReaction)reactionList.get(4);
-		Assert.assertEquals(1, lnReaction.getParameters().length);
+		Assert.assertEquals(1, lnReaction.getParameters().size());
 		objects = lnReaction.getParameters();
-		Assert.assertFalse((Boolean) objects[0]);
+		Assert.assertFalse((Boolean) objects.get("hasActiveCenter"));
 		
 		RearrangementRadicalReaction rrReaction = (RearrangementRadicalReaction)reactionList.get(5);
-		Assert.assertEquals(1, rrReaction.getParameters().length);
+		Assert.assertEquals(1, rrReaction.getParameters().size());
 		objects = rrReaction.getParameters();
-		Assert.assertFalse((Boolean) objects[0]);
+		Assert.assertFalse((Boolean) objects.get("hasActiveCenter"));
 		
 	}
     /**
@@ -379,8 +380,8 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 		molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
-		Object[] params = new Object[1];
-		params[0] = Boolean.TRUE;
+		HashMap<String,Object> params = new HashMap<String,Object>();
+		params.put("hasActiveCenter",Boolean.TRUE);;
 		
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
 		Iterator<IReactionProcess> itReaction = sRG.getReactions().iterator();
@@ -807,7 +808,8 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		LonePairElectronChecker lpChecker = new LonePairElectronChecker();
 		lpChecker.saturate(molecule);
-		
+		SmilesGenerator sg = new SmilesGenerator();
+		System.out.println(sg.createSMILES(molecule));
 		Assert.assertEquals(18, molecule.getAtomCount());
 
 		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -820,7 +822,7 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 		
 		IMoleculeSet resonanceStructures = gRI.getStructures(molecule);
 
-		SmilesGenerator sg = new SmilesGenerator();
+//		SmilesGenerator sg = new SmilesGenerator();
 		for(int i = 0; i < resonanceStructures.getMoleculeCount(); i++)
 			System.out.println(sg.createSMILES((IMolecule) resonanceStructures.getMolecule(i)));
 		Assert.assertEquals(2,resonanceStructures.getAtomContainerCount());

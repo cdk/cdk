@@ -24,6 +24,7 @@
 package org.openscience.cdk.reaction.type;
 
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.junit.Assert;
@@ -98,7 +99,8 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 		setOfReactants.addMolecule(molecule);
 		
 		/* initiate */
-        Object[] params = {Boolean.FALSE};
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.FALSE);;
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
@@ -182,7 +184,8 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 		molecule.getBond(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(4).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
-        Object[] params = {Boolean.TRUE};
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.TRUE);;
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
@@ -256,7 +259,8 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 		setOfReactants.addMolecule(molecule);
 		
 		/* initiate */
-        Object[] params = {Boolean.FALSE};
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.FALSE);;
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
