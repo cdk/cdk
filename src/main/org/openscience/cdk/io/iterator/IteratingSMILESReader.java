@@ -29,6 +29,7 @@ package org.openscience.cdk.io.iterator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
@@ -72,10 +73,10 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
      *
      * @param  in  The Reader to read from
      */
-    public IteratingSMILESReader(Reader in) {
+    public IteratingSMILESReader(Reader in, IChemObjectBuilder builder) {
         logger = new LoggingTool(this);
         input = new BufferedReader(in);
-        sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        sp = new SmilesParser(builder);
         nextMolecule = null;
         nextAvailableIsKnown = false;
         hasNext = false;
@@ -84,11 +85,24 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
     /**
      * Contructs a new IteratingSMILESReader that can read Molecule from a given InputStream.
      *
+     * This method will use @link{DefaultChemObjectBuilder} to build the actual molecules
+     *
      * @param  in  The InputStream to read from
      */
     public IteratingSMILESReader(InputStream in) {
-        this(new InputStreamReader(in));
+        this(new InputStreamReader(in), DefaultChemObjectBuilder.getInstance());
     }
+
+    /**
+     * Contructs a new IteratingSMILESReader that can read Molecule from a given InputStream and IChemObjectBuilder.
+     *
+     * @param in      The input stream
+     * @param builder The builder
+     */
+    public IteratingSMILESReader(InputStream in, IChemObjectBuilder builder) {
+        this(new InputStreamReader(in), builder);
+    }
+
 
     public IResourceFormat getFormat() {
         return SMILESFormat.getInstance();
