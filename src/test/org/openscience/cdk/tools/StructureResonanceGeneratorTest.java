@@ -30,7 +30,9 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.LonePair;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.SingleElectron;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -51,8 +53,6 @@ import org.openscience.cdk.reaction.type.RearrangementRadicalReaction;
 import org.openscience.cdk.reaction.type.SharingLonePairReaction;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import org.openscience.cdk.NewCDKTestCase;
 
 /**
 * TestSuite that runs all tests.
@@ -826,5 +826,74 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 		for(int i = 0; i < resonanceStructures.getMoleculeCount(); i++)
 			System.out.println(sg.createSMILES((IMolecule) resonanceStructures.getMolecule(i)));
 		Assert.assertEquals(2,resonanceStructures.getAtomContainerCount());
+	}
+	
+	/**
+	 * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
+	 *
+	 * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testPreservingAromaticity() throws Exception {
+
+		 IMolecule molecule = builder.newMolecule();
+		 molecule.addAtom(builder.newAtom("F"));
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(0, 1, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(1, 2, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(2, 3, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(3, 4, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(4, 5, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(5, 6, IBond.Order.DOUBLE);
+		 molecule.addBond(6, 1, IBond.Order.SINGLE);
+		
+		addExplicitHydrogens(molecule);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
+		
+        boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        Assert.assertTrue("Molecule is expected to be marked aromatic!", isAromatic);
+        
+        Assert.assertTrue("Bond is expected to be marked aromatic!", molecule.getBond(1).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", molecule.getBond(2).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", molecule.getBond(3).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", molecule.getBond(4).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", molecule.getBond(5).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", molecule.getBond(6).getFlag(CDKConstants.ISAROMATIC));
+        
+        StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+		IMoleculeSet setOfMolecules = gRI.getStructures(molecule);
+		
+		Assert.assertEquals(4,setOfMolecules.getMoleculeCount());
+		
+		IMolecule prod1 = setOfMolecules.getMolecule(1);
+		Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(1).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(2).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(3).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(4).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(5).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod1.getBond(6).getFlag(CDKConstants.ISAROMATIC));
+		IMolecule prod2 = setOfMolecules.getMolecule(2);
+		Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(1).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(2).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(3).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(4).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(5).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod2.getBond(6).getFlag(CDKConstants.ISAROMATIC));
+		IMolecule prod3 = setOfMolecules.getMolecule(3);
+		Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(1).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(2).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(3).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(4).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(5).getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertTrue("Bond is expected to be marked aromatic!", prod3.getBond(6).getFlag(CDKConstants.ISAROMATIC));
+		
+		
 	}
 }
