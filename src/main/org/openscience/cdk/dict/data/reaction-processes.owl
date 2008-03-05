@@ -190,18 +190,30 @@
     <!-- the facts: Processes -->
 
     <Reaction rdf:ID="AdductionProtonLP">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="AdductionProtonPB">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="AdductionSodiumLP">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="CarbonylElimination">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
     
@@ -228,106 +240,184 @@
     </Reaction>
 
     <Reaction rdf:ID="ElectronImpactPDB">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="ElectronImpactSDB">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="HeterolyticCleavagePB">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="HeterolyticCleavageSB">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="HomolyticCleavage">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="Hyperconjugation">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="PiBondingMovement">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteHrAlpha">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteHrBeta">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteHrDelta">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteHrGamma">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteInitiationH">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteInitiation">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteRrAlpha">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteRrBeta">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteRrDelta">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteRrGamma">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="RearrangementAnion">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="RearrangementCation">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="RearrangementLonePair">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="RearrangementRadical">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="SharingAnion">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="SharingChargeDB">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="SharingChargeSB">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="SharingLonePair">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
     <Reaction rdf:ID="Tautomerization">
+    	<definition>	</definition>
+    	<description>   </description>
+        <representation id="a1" content="" />
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
