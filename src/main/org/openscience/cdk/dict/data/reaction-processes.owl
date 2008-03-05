@@ -150,7 +150,7 @@
         <rdfs:label>Egon Willighagen</rdfs:label>
     </Contributor>
 
-    <Contributor rdf:ID="mrc">
+    <Contributor rdf:ID="miguelrojasch">
         <rdfs:label>Miguel Rojas-Cherto</rdfs:label>
     </Contributor>
 
@@ -158,13 +158,13 @@
 
     <Category rdf:ID="ReactionCategories">
         <rdfs:label>DescriptorCategories</rdfs:label>
-        <dc:contributor rdf:resource="#mrc"/>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
         <dc:date>2007-02-28</dc:date>
     </Category>
 
     <Category rdf:ID="electronImpact">
         <rdfs:label>Electron Impact</rdfs:label>
-        <dc:contributor rdf:resource="#mrc"/>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
         <dc:date>2007-02-28</dc:date>
         <isClassifiedAs rdf:resource="#ReactionCategories"/>
     </Category>
@@ -173,13 +173,13 @@
 
     <Category rdf:ID="mechanisms">
         <rdfs:label>Mechanisms</rdfs:label>
-        <dc:contributor rdf:resource="#mrc"/>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
         <dc:date>2007-02-28</dc:date>
     </Category>
 
     <Mechanism rdf:ID="RemovingSEofNBMechanism">
         <rdfs:label>Removing Single Electrons of Non-Bonding</rdfs:label>
-        <dc:contributor rdf:resource="#mrc"/>
+        <dc:contributor rdf:resource="#miguelrojasch"/>
         <dc:date>2007-02-28</dc:date>
         <definition>
             D.
@@ -189,11 +189,27 @@
 
     <!-- the facts: Processes -->
 
+    <Reaction rdf:ID="AdductionProtonLP">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="AdductionProtonPB">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="AdductionSodiumLP">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="CarbonylElimination">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+    
     <Reaction rdf:ID="electronImpactNBE">
         <rdfs:label>Electron Impact Reaction for Non-Bonding Electrons</rdfs:label>
         <annotation>
             <documentation>
-      		  <dc:contributor rdf:resource="#mrc"/>
+      		  <dc:contributor rdf:resource="#miguelrojasch"/>
       		  <dc:date>2007-02-28</dc:date>
             </documentation>
         </annotation>
@@ -208,6 +224,110 @@
         </description>
         <representation id="a1" content="[&#196;] => [A+&#183;]" />
    		<isClassifiedAs rdf:resource="#electronImpact"/>
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="ElectronImpactPDB">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="ElectronImpactSDB">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="HeterolyticCleavagePB">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="HeterolyticCleavageSB">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="HomolyticCleavage">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="Hyperconjugation">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="PiBondingMovement">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RadicalSiteHrAlpha">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RadicalSiteHrBeta">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RadicalSiteHrDelta">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RadicalSiteHrGamma">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RadicalSiteInitiationH">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RadicalSiteInitiation">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RadicalSiteRrAlpha">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RadicalSiteRrBeta">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RadicalSiteRrDelta">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RadicalSiteRrGamma">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RearrangementAnion">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RearrangementCation">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RearrangementLonePair">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="RearrangementRadical">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="SharingAnion">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="SharingChargeDB">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="SharingChargeSB">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="SharingLonePair">
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <Reaction rdf:ID="Tautomerization">
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
