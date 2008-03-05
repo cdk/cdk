@@ -88,8 +88,9 @@ public class Fingerprinter implements IFingerprinter {
 	static int debugCounter = 0;
 
 	private static LoggingTool logger = new LoggingTool(Fingerprinter.class);
+    
 
-	/**
+    /**
 	 * Creates a fingerprint generator of length <code>defaultSize</code>
 	 * and with a search depth of <code>defaultSearchDepth</code>.
 	 */
@@ -112,7 +113,8 @@ public class Fingerprinter implements IFingerprinter {
 	public Fingerprinter(int size, int searchDepth) {
 		this.size = size;
 		this.searchDepth = searchDepth;
-	}
+
+    }
 	
 	/**
 	 * Generates a fingerprint of the default size for the given AtomContainer.
@@ -253,26 +255,23 @@ public class Fingerprinter implements IFingerprinter {
 
 	private void checkAndStore(List newPath, Map paths)
 	{
-		String newPathString = "";
-		for (int f = 0; f < newPath.size(); f++)
-		{
-			if ((newPath.get(f)) instanceof IAtom)
-			{
-				newPathString += convertSymbol(((IAtom) newPath.get(f)).getSymbol());
-			} else
-			{
-				newPathString += (String) newPath.get(f);
-			}
-		}
+		StringBuilder newPathString = new StringBuilder();
+        for (Object aNewPath : newPath) {
+            if (aNewPath instanceof IAtom) {
+                newPathString.append(convertSymbol(((IAtom) aNewPath).getSymbol()));
+            } else {
+                newPathString.append((String) aNewPath);
+            }
+        }
 		//logger.debug("Checking for existence of Path " +  newPathString);
-		String storePath = new String(newPathString);
-		String reversePath = new StringBuffer(storePath).reverse().toString();
+		String storePath = newPathString.toString();
+		String reversePath = newPathString.reverse().toString();
 		/*
 		 *  Pathes can be found twice (search from one or the other side)
 		 *  so they will occur in reversed order. We only handle the
 		 *  lexicographically smaller path (This is an arbitrary choice)
 		 */
-		if (reversePath.compareTo(newPathString) < 0)
+		if (reversePath.compareTo(storePath) < 0)
 		{
 			/*
 			 *  reversePath is smaller than newPath
@@ -296,7 +295,8 @@ public class Fingerprinter implements IFingerprinter {
 
 	private String convertSymbol(String symbol)
 	{
-		String returnSymbol = symbol;
+
+        String returnSymbol = symbol;
 		if (symbol.equals("Cl"))
 		{
 			symbol = "X";
@@ -308,6 +308,7 @@ public class Fingerprinter implements IFingerprinter {
 			symbol = "Z";
 		}
 		return returnSymbol;
+
 	}
 
 
