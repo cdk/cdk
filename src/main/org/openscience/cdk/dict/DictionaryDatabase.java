@@ -52,10 +52,10 @@ public class DictionaryDatabase {
     private LoggingTool logger;
     
     private String[] dictionaryNames = {
-        "chemical", "elements", "descriptor-algorithms"
+        "chemical", "elements", "descriptor-algorithms","reaction-processes"
     };
     private String[] dictionaryTypes = {
-        "xml", "xml", "owl"
+        "xml", "xml", "owl", "owl_React"
     };
     
     private Hashtable<String, Dictionary> dictionaries;
@@ -80,13 +80,19 @@ public class DictionaryDatabase {
 
     private Dictionary readDictionary(String databaseLocator, String type) {
         Dictionary dictionary;
-        databaseLocator += "." + type;
+        // to distinguish between OWL: QSAR & REACT
+        if(type.contains("_React"))
+        	databaseLocator += "." + type.substring(0, type.length()-6);
+        else
+        	databaseLocator += "." + type;
         logger.info("Reading dictionary from ", databaseLocator);
         try {
             InputStreamReader reader = new InputStreamReader(
                 this.getClass().getClassLoader().getResourceAsStream(databaseLocator));
             if (type.equals("owl")) {
                 dictionary = OWLFile.unmarshal(reader);
+            } else if (type.equals("owl_React")) {
+                dictionary = OWLReact.unmarshal(reader);
             } else { // assume XML using Castor
                 dictionary = Dictionary.unmarshal(reader);
             }
@@ -170,7 +176,7 @@ public class DictionaryDatabase {
     /**
      * Returns true if the database contains the dictionary.
      */
-    public Enumeration listDictionaries() {
+    public Enumeration<String> listDictionaries() {
         return dictionaries.keys();
     }
     

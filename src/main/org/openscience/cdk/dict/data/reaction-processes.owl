@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF [
+        <!ENTITY rdf  "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+        <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+        <!ENTITY xsd  "http://www.w3.org/2001/XMLSchema#" >
+        <!ENTITY owl  "http://www.w3.org/2002/07/owl#" >
+        ]>
+<rdf:RDF
+        xmlns="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/"
+        xmlns:owl="&owl;"
+        xml:base="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/"
+        xmlns:rdf="&rdf;"
+        xmlns:rdfs="&rdfs;"
+        xmlns:bibtex="http://bibtexml.sf.net/"
+        xmlns:dc="http://dublincore.org/"
+        xmlns:cvs="https://www.cvshome.org/"
+        >
+
+    <owl:Ontology rdf:about="">
+        <rdfs:label>Reaction Ontology</rdfs:label>
+        <owl:versionInfo>$Id: reaction-processes.owl 9612 2008-02-14 21:44:28Z miguelrojasch $</owl:versionInfo>
+        <dc:date>$Date: 2008-02-28 22:44:28 +0100 (Fri, 28 Feb 2008) $</dc:date>
+        <cvs:last-changed-by>$Author: Miguel Rojas-Cherto $</cvs:last-changed-by>
+        <cvs:revision>$Revision: 9612 $</cvs:revision>
+        <rdfs:comment rdf:parseType="literal">
+            Add some comment here.
+        </rdfs:comment>
+    </owl:Ontology>
+
+
+    <!-- classes and properties -->
+
+    <owl:Class rdf:ID="Mechanism"/>
+
+    <owl:Class rdf:ID="Reaction"/>
+
+    <owl:Class rdf:ID="Process">
+        <owl:subClassOf rdf:resource="#Reaction"/>
+        <rdfs:comment>
+            A process is o reaction or a serial of them that operates on a chemical entity 
+            (commonly molecules and agents) and returns a IReaction object which described
+            the products and reactants taking part.
+        </rdfs:comment>
+    </owl:Class>
+
+    <owl:Class rdf:ID="Reference"/>
+
+    <owl:Class rdf:ID="Contributor"/>
+
+    <owl:Class rdf:ID="DataFeature"/>
+
+    <owl:Class rdf:ID="DataRepresentation">
+        <owl:subClassOf rdf:resource="#DataFeature"/>
+    </owl:Class>
+
+    <owl:Class rdf:ID="Implementation"/>
+
+    <owl:Class rdf:ID="DescriptorValue">
+        <rdfs:label>Descriptor Value</rdfs:label>
+        <rdfs:comment>One or more output values calculated by an Implementation
+            of a certain Algorithm for a certain molecule.
+        </rdfs:comment>
+    </owl:Class>
+
+    <owl:ObjectProperty rdf:ID="isA">
+        <rdfs:label>Is A</rdfs:label>
+        <rdf:domain rdf:resource="&owl;Thing"/>
+        <rdf:range rdf:resource="&owl;Thing"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="instanceOf">
+        <rdfs:label>Instance Of</rdfs:label>
+        <rdf:domain rdf:resource="&owl;Implementation"/>
+        <rdf:range rdf:resource="&owl;Algorithm"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="isClassifiedAs">
+        <rdfs:label>Is Classified As</rdfs:label>
+        <rdf:domain rdf:resource="&owl;Thing"/>
+        <rdf:range rdf:resource="#Category"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="requires">
+        <rdfs:label>Requires</rdfs:label>
+        <rdf:domain rdf:resource="#process"/>
+        <rdf:range rdf:resource="#DataFeature"/>
+        <rdfs:comment>
+        	Some processes can require some extra information.
+        </rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:ID="constraints">
+        <rdfs:label>Constraints</rdfs:label>
+        <rdf:domain rdf:resource="#process"/>
+        <rdf:range rdf:resource="#DataFeature"/>
+        <rdfs:comment>
+        	Possible constraints for processes.
+        </rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:ID="smilesRepresentation">
+        <rdfs:label>Smiles Representation</rdfs:label>
+        <rdf:domain rdf:resource="#process"/>
+        <rdf:range rdf:resource="#DataFeature"/>
+        <rdfs:comment>
+        	Smiles representation of the reaction process.
+        </rdfs:comment>
+    </owl:ObjectProperty>
+
+    <owl:DataProperty rdf:ID="definition">
+        <rdf:domain rdf:resource="&owl;Thing"/>
+        <rdf:range rdf:resource="rdfs:XMLLiteral"/>
+    </owl:DataProperty>
+
+    <owl:DataProperty rdf:ID="description">
+        <rdf:domain rdf:resource="&owl;Thing"/>
+        <rdf:range rdf:resource="rdfs:XMLLiteral"/>
+    </owl:DataProperty>
+
+
+    <!-- the facts: Data Features -->
+
+    <DataFeature rdf:ID="has3DCoordinates">
+        <!-- In a futur should be possible specific reaction with 3D coordinates-->
+        <rdfs:label>has 3D Coordinates</rdfs:label>
+    </DataFeature>
+
+    <DataFeature rdf:ID="hasActiveCenter">
+        <rdfs:label>has Active Center</rdfs:label>
+    </DataFeature>
+
+    <DataFeature rdf:ID="searchOnLibrary">
+        <rdfs:label>search On Library</rdfs:label>
+        <description>
+            Search of equivalent structures into a Library.
+        </description>
+    </DataFeature>
+    
+    <DataFeature rdf:ID="predictReactivity">
+        <rdfs:label>predictReactivity</rdfs:label>
+        <description>
+            Predict the reactivity of a reaction according some
+            descriptor value.
+        </description>
+    </DataFeature>
+
+    <!-- the facts: Contributors -->
+
+    <Contributor rdf:ID="elw">
+        <rdfs:label>Egon Willighagen</rdfs:label>
+    </Contributor>
+
+    <Contributor rdf:ID="mrc">
+        <rdfs:label>Miguel Rojas-Cherto</rdfs:label>
+    </Contributor>
+
+	<!-- the facts: Categories -->
+
+    <Category rdf:ID="ReactionCategories">
+        <rdfs:label>DescriptorCategories</rdfs:label>
+        <dc:contributor rdf:resource="#mrc"/>
+        <dc:date>2007-02-28</dc:date>
+    </Category>
+
+    <Category rdf:ID="electronImpact">
+        <rdfs:label>Electron Impact</rdfs:label>
+        <dc:contributor rdf:resource="#mrc"/>
+        <dc:date>2007-02-28</dc:date>
+        <isClassifiedAs rdf:resource="#ReactionCategories"/>
+    </Category>
+    
+    <!-- the facts: Mechanisms -->
+
+    <Category rdf:ID="mechanisms">
+        <rdfs:label>Mechanisms</rdfs:label>
+        <dc:contributor rdf:resource="#mrc"/>
+        <dc:date>2007-02-28</dc:date>
+    </Category>
+
+    <Mechanism rdf:ID="RemovingSEofNBMechanism">
+        <rdfs:label>Removing Single Electrons of Non-Bonding</rdfs:label>
+        <dc:contributor rdf:resource="#mrc"/>
+        <dc:date>2007-02-28</dc:date>
+        <definition>
+            D.
+        </definition>
+        <isAs rdf:resource="#mechanisms"/>
+    </Mechanism>
+
+    <!-- the facts: Processes -->
+
+    <Reaction rdf:ID="electronImpactNBE">
+        <rdfs:label>Electron Impact Reaction for Non-Bonding Electrons</rdfs:label>
+        <annotation>
+            <documentation>
+      		  <dc:contributor rdf:resource="#mrc"/>
+      		  <dc:date>2007-02-28</dc:date>
+            </documentation>
+        </annotation>
+        <definition>
+     	   This reaction is the process generated in mass spectrometry when is applied an electron 
+    	   impact technique in non-bonding electrons.
+        </definition>
+        <description>
+      	   The process extract an electron from orbitals which doesn't take part in a bond. The 
+      	   resulting product is the atom with a electron less. It is symbolized with +&#183;
+      	   meaning that it contains a radical and is deficiency of charge. 
+        </description>
+        <representation id="a1" content="[&#196;] => [A+&#183;]" />
+   		<isClassifiedAs rdf:resource="#electronImpact"/>
+        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    </Reaction>
+
+    <!-- The Bibliography -->
+
+</rdf:RDF>
