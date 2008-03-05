@@ -79,6 +79,7 @@ public class MreactionTests {
         suite.addTest(new JUnit4TestAdapter(ReactionCoverageTest.class));	
         
         // Individual Tests
+//        suite.addTest(new JUnit4TestAdapter(ReactionEngine.class));
 
         // from cdk.test.reaction.mechanism
         

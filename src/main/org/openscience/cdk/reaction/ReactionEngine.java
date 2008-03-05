@@ -29,6 +29,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.EntryReact;
@@ -47,6 +49,7 @@ import org.openscience.cdk.exception.CDKException;
  * @cdk.set        reaction-types
  * 
  */
+@TestClass("org.openscience.cdk.reaction.ReactionEngineTest")
 public class ReactionEngine{
     
 	private Dictionary dictionary;
@@ -114,6 +117,7 @@ public class ReactionEngine{
      *
      * @return A HashMap of Object containing the name and the type of the parameter
      * */
+    @TestMethod("testGetParameters")
     public HashMap<String,Object> getParameters(){
     	return paramsMap;
     }
@@ -124,6 +128,7 @@ public class ReactionEngine{
 	 *							 should be set before to ionize the reaction with a setFlag:  CDKConstants.REACTIVE_CENTER
 	 * @exception  CDKException  Description of the Exception
 	 */
+    @TestMethod("testSetParameters_HashMap")
 	public void setParameters(HashMap<String,Object> params) throws CDKException {
 		
 		if (params.size() != paramsMap.size()) {
