@@ -41,12 +41,9 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
-import org.openscience.cdk.reaction.type.HeterolyticCleavageSBReaction;
-import org.openscience.cdk.reaction.type.SharingChargeDBReaction;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -61,7 +58,6 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 public class SharingChargeDBReactionTest extends ReactionProcessTest {
 
 	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
-	private final static LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	/**
 	 *  The JUnit setup method
 	 */
@@ -306,59 +302,4 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 		}
 	}
 
-	/**
-	 * A unit test suite for JUnit. Reaction:.
-	 * [N+]!#!C => N=[C+]
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testNspChargeTripleB() throws Exception {
-		//Smiles("[N+]#C")
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(builder.newAtom("N"));
-		molecule.addAtom(builder.newAtom("C"));
-		molecule.getAtom(0).setFormalCharge(+1);
-		molecule.addBond(0, 1, IBond.Order.TRIPLE);
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addAtom(builder.newAtom("H"));
-		molecule.addBond(0, 2, IBond.Order.SINGLE);
-		molecule.addBond(1, 3, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
-		
-		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
-
-        IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
-        setOfReactants.addMolecule(molecule);
-		
-		IReactionProcess type  = new HeterolyticCleavageSBReaction(); 
-		Object[] params = {Boolean.TRUE};
-        type.setParameters(params);
-        
-        /* initiate */
-		IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-
-        Assert.assertEquals(1, setOfReactions.getReactionCount());
-        
-        // expected products 
-
-        //Smiles("N=[C+]")
-        IMolecule expected1 = builder.newMolecule();
-        expected1.addAtom(builder.newAtom("N"));
-        expected1.addAtom(builder.newAtom("C"));
-		expected1.getAtom(1).setFormalCharge(+1);
-        expected1.addBond(0, 1, IBond.Order.DOUBLE);
-        expected1.addAtom(builder.newAtom("H"));
-        expected1.addAtom(builder.newAtom("H"));
-        expected1.addBond(0, 2, IBond.Order.SINGLE);
-        expected1.addBond(1, 3, IBond.Order.SINGLE);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
-		lpcheck.saturate(expected1);
-        IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
-        QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(expected1);
-        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product1,queryAtom));
-		
-	}
 }
