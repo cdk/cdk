@@ -51,7 +51,6 @@ import org.openscience.cdk.reaction.type.RearrangementCationReaction;
 import org.openscience.cdk.reaction.type.RearrangementLonePairReaction;
 import org.openscience.cdk.reaction.type.RearrangementRadicalReaction;
 import org.openscience.cdk.reaction.type.SharingLonePairReaction;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -772,7 +771,7 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
 		IMoleculeSet resonanceStructures = gRI.getStructures(molecule);
 		
-		Assert.assertEquals(4,resonanceStructures.getAtomContainerCount());
+		Assert.assertEquals(5,resonanceStructures.getAtomContainerCount());
 	}
 	/**
 	 * 
@@ -808,8 +807,7 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		LonePairElectronChecker lpChecker = new LonePairElectronChecker();
 		lpChecker.saturate(molecule);
-		SmilesGenerator sg = new SmilesGenerator();
-		System.out.println(sg.createSMILES(molecule));
+		
 		Assert.assertEquals(18, molecule.getAtomCount());
 
 		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
@@ -821,10 +819,7 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 		gRI.setReactions(newReactionList);
 		
 		IMoleculeSet resonanceStructures = gRI.getStructures(molecule);
-
-//		SmilesGenerator sg = new SmilesGenerator();
-		for(int i = 0; i < resonanceStructures.getMoleculeCount(); i++)
-			System.out.println(sg.createSMILES((IMolecule) resonanceStructures.getMolecule(i)));
+		
 		Assert.assertEquals(2,resonanceStructures.getAtomContainerCount());
 	}
 	

@@ -231,24 +231,18 @@ public class StructureResonanceGenerator {
 	 * @return   			 True, if the atomContainer is contained
 	 */
 	private boolean existAC(IAtomContainerSet set, IAtomContainer atomContainer) {
-//		atomContainer = setID(atomContainer);
 		for(int i = 0 ; i < atomContainer.getAtomCount(); i++)
 			atomContainer.getAtom(i).setID(""+atomContainer.getAtomNumber(atomContainer.getAtom(i)));
 		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(atomContainer);
 		for(int i = 0 ; i < set.getAtomContainerCount(); i++){
-//			IAtomContainer ac = setID(set.getAtomContainer(i));
 			IAtomContainer ss = set.getAtomContainer(i);
 			for(int j = 0 ; j < ss.getAtomCount(); j++)
 				ss.getAtom(j).setID(""+ss.getAtomNumber(ss.getAtom(j)));
-//			QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(ac);
-//			QueryAtomContainer qAC = QueryAtomContainerCreator.createAnyAtomContainer(atomContainer,false);
 			try {
 				if(UniversalIsomorphismTester.isIsomorph(ss,qAC)){
-//					logger.debug("exist");
-//					SmilesGenerator sg = new SmilesGenerator();
-//					System.out.println(sg.createSMILES((IMolecule) atomContainer));
-//					System.out.println(sg.createSMILES((IMolecule) ss));
-					return true;
+					QueryAtomContainer qAC2 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(atomContainer);
+					if(UniversalIsomorphismTester.isIsomorph(ss,qAC2))
+						return true;
 				}
 			} catch (CDKException e1) {
 				System.err.println(e1);
