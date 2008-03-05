@@ -25,7 +25,6 @@ package org.openscience.cdk.reaction.type;
 
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -33,8 +32,6 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SingleElectron;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -271,23 +268,5 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
         molecule.addSingleElectron(new SingleElectron(molecule.getAtom(0)));
 		
 		return molecule;
-	}
-	/**
-	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
-	 * 
-	 * @param molecule          The IMolecule to analyze
-	 * @throws CDKException
-	 */
-	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws CDKException {
-
-		Iterator<IAtom> atoms = molecule.atoms();
-		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
-		while (atoms.hasNext()) {
-				IAtom nextAtom = atoms.next();
-				Assert.assertNotNull(
-					"Missing atom type for: " + nextAtom, 
-					matcher.findMatchingAtomType(molecule, nextAtom)
-				);
-		}
 	}
 }
