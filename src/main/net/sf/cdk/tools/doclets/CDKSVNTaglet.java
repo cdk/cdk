@@ -74,7 +74,7 @@ public class CDKSVNTaglet implements Taglet {
         return false;
     }
     
-    public static void register(Map tagletMap) {
+    public static void register(Map<String, CDKSVNTaglet> tagletMap) {
        CDKSVNTaglet tag = new CDKSVNTaglet();
        Taglet t = (Taglet) tagletMap.get(tag.getName());
        if (t != null) {

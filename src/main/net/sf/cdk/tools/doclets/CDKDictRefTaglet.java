@@ -42,12 +42,12 @@ public class CDKDictRefTaglet implements Taglet {
     
     private static final String NAME = "cdk.dictref";
     
-    private static final Map dictURLs;
-    private static final Map dictNames;
+    private static final Map<String, String> dictURLs;
+    private static final Map<String, String> dictNames;
     
     static {
-        dictURLs = new Hashtable(5);
-        dictNames = new Hashtable(5);
+        dictURLs = new Hashtable<String, String>(5);
+        dictNames = new Hashtable<String, String>(5);
         
         dictURLs.put("bodf", "http://qsar.sourceforge.net/ontologies/data-features/index.xhtml");
         dictNames.put("bodf", "Blue Obelisk Data Features Dictionary");
@@ -91,7 +91,7 @@ public class CDKDictRefTaglet implements Taglet {
         return false;
     }
     
-    public static void register(Map tagletMap) {
+    public static void register(Map<String, CDKDictRefTaglet> tagletMap) {
        CDKDictRefTaglet tag = new CDKDictRefTaglet();
        Taglet t = (Taglet) tagletMap.get(tag.getName());
        if (t != null) {

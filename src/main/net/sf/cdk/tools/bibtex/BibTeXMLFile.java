@@ -52,9 +52,11 @@ public class BibTeXMLFile {
 	
 	/**
 	 * Returns an Iterator&lt;BibTeXMLEntry>.
+	 * 
+	 * @return The BibTeXMLEntry
 	 */
-	public Iterator getEntries() {
-		List entries = new ArrayList();
+	public Iterator<BibTeXMLEntry> getEntries() {
+		List<BibTeXMLEntry> entries = new ArrayList<BibTeXMLEntry>();
 		Nodes results = root.query("//b:entry", context);
 		for (int i=0; i<results.size(); i++) {
 			entries.add(new BibTeXMLEntry(results.get(i)));

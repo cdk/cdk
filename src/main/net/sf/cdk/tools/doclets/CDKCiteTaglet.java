@@ -94,7 +94,7 @@ public class CDKCiteTaglet implements Taglet {
         return true;
     }
     
-    public static void register(Map tagletMap) {
+    public static void register(Map<String, CDKCiteTaglet> tagletMap) {
        CDKCiteTaglet tag = new CDKCiteTaglet();
        Taglet t = (Taglet) tagletMap.get(tag.getName());
        if (t != null) {

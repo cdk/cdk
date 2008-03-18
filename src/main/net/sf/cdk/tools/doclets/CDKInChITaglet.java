@@ -65,7 +65,7 @@ public class CDKInChITaglet implements Taglet {
         return false;
     }
     
-    public static void register(Map tagletMap) {
+    public static void register(Map<String, CDKInChITaglet> tagletMap) {
        CDKInChITaglet tag = new CDKInChITaglet();
        Taglet t = (Taglet) tagletMap.get(tag.getName());
        if (t != null) {

@@ -65,7 +65,7 @@ public class CDKBugTaglet implements Taglet {
         return false;
     }
     
-    public static void register(Map tagletMap) {
+    public static void register(Map<String, CDKBugTaglet> tagletMap) {
        CDKBugTaglet tag = new CDKBugTaglet();
        Taglet t = (Taglet) tagletMap.get(tag.getName());
        if (t != null) {

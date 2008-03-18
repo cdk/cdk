@@ -62,7 +62,7 @@ public class CDKModuleTaglet implements Taglet {
         return false;
     }
     
-    public static void register(Map tagletMap) {
+    public static void register(Map<String, CDKModuleTaglet> tagletMap) {
        CDKModuleTaglet tag = new CDKModuleTaglet();
        Taglet t = (Taglet) tagletMap.get(tag.getName());
        if (t != null) {
