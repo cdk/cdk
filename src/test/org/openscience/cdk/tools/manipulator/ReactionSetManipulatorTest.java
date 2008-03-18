@@ -61,11 +61,28 @@ public class ReactionSetManipulatorTest extends NewCDKTestCase {
 		IReactionSet reactionSet = builder.newReactionSet();
 		reactionSet.addReaction(builder.newReaction()); // 1
 		reactionSet.addReaction(builder.newReaction()); // 2
+		
 		Assert.assertEquals(0, ReactionSetManipulator.getAllMolecules(reactionSet).getMoleculeCount());
-		// FIXME: should test something with actual molecules in it
+		
+	}
+    
+    @Test public void testGetAllMolecules_IReactionSet2() {
+		IReactionSet reactionSet = builder.newReactionSet();
+		IReaction reaction1 = builder.newReaction();
+		IMolecule molecule = builder.newMolecule();
+		reaction1.addProduct(molecule);
+		reaction1.addReactant(builder.newMolecule());
+		reactionSet.addReaction(reaction1);
+		IReaction reaction2 = builder.newReaction();
+		reaction2.addProduct(builder.newMolecule());
+		reaction2.addReactant(molecule);
+		reactionSet.addReaction(reaction2);
+		
+		Assert.assertEquals(3, ReactionSetManipulator.getAllMolecules(reactionSet).getMoleculeCount());
+		
 	}
 	
-	@Test
+    @Test
     public void testGetAtomCount_IReactionSet() throws Exception {
         Assert.assertEquals(19, ReactionSetManipulator.getAtomCount(set));
 	}
