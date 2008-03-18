@@ -29,7 +29,6 @@
 	<classpathentry kind="lib" path="jar/postgresql7.0-1.2.jar"/>
 	<classpathentry kind="lib" path="jar/sjava-0.68.jar"/>
 	<classpathentry kind="lib" path="jar/vecmath1.2-1.14.jar"/>
-	<classpathentry kind="lib" path="jar/weka.jar"/>
 	<classpathentry kind="lib" path="jar/xindice.jar"/>
 	<classpathentry kind="lib" path="jar/xml-apis.jar"/>
 	<classpathentry kind="lib" path="jar/xmldb.jar"/>
