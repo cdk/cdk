@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -91,10 +92,22 @@ public class ReactionSetManipulator {
      */
     @TestMethod("testGetAllMolecules_IReactionSet")
     public static IMoleculeSet getAllMolecules(IReactionSet set) {
-    	IMoleculeSet moleculeSet = set.getBuilder().newMoleculeSet();
+        IMoleculeSet moleculeSet = set.getBuilder().newMoleculeSet();
         for (Iterator<IReaction> iter = set.reactions(); iter.hasNext();) {
             IReaction reaction = iter.next();
-            moleculeSet.add(ReactionManipulator.getAllMolecules(reaction));
+            IMoleculeSet newMoleculeSet = ReactionManipulator.getAllMolecules(reaction);
+            for(Iterator<IAtomContainer> it = newMoleculeSet.molecules(); it.hasNext(); ){
+            	IAtomContainer ac = it.next();
+            	boolean contain = false;
+            	for(Iterator<IAtomContainer> it2 = moleculeSet.molecules(); it2.hasNext(); )
+                	if(it2.next().equals(ac)){
+                		contain = true;
+                		break;
+                	}
+            	
+            	if(!contain)
+            		moleculeSet.addMolecule((IMolecule)(ac));
+            }
         }
         return moleculeSet;
     }
