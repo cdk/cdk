@@ -189,4 +189,10 @@
 		</substanceList>
 	</reaction>
 	
+  <!-- not tested yet -->
+  <molecule>
+    <formula concise="C 1 H 4" dictRef="mb:possibleMatch"/>
+    <formula concise="C 2 H 6" dictRef="mb:possibleMatch"/>
+  </molecule>
+	
 </cml>
