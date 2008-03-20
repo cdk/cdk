@@ -231,8 +231,12 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
         StringBuffer stringContent = new StringBuffer(32);
         stringContent.append("Strand(");
         stringContent.append(this.hashCode());
-        stringContent.append(", N:").append(getStrandName());
-        stringContent.append(", T:").append(getStrandType()).append(", ");
+        if (getStrandName() != null) {
+        	stringContent.append(", N:").append(getStrandName());
+        }
+        if (getStrandType() != null) {
+            stringContent.append(", T:").append(getStrandType()).append(", ");
+        }
         stringContent.append(super.toString());
         stringContent.append(')');
         return stringContent.toString();

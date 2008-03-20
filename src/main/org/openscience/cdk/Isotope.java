@@ -260,10 +260,17 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 	 */
 	public String toString() {
         StringBuffer resultString = new StringBuffer(32);
-		resultString.append("Isotope("); resultString.append(massNumber);
-		resultString.append(", EM:"); resultString.append(exactMass);
-		resultString.append(", AB:"); resultString.append(naturalAbundance);
-        resultString.append(", "); resultString.append(super.toString());
+		resultString.append("Isotope(").append(hashCode());
+		if (massNumber > 0) {
+			resultString.append(", MN:").append(massNumber);
+		}
+		if (exactMass > 0) {
+			resultString.append(", EM:"); resultString.append(exactMass);
+		}
+		if (naturalAbundance > 0) {
+			resultString.append(", AB:"); resultString.append(naturalAbundance);
+		}
+        resultString.append(", ").append(super.toString());
         resultString.append(')');
 		return resultString.toString();
 	}

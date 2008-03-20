@@ -93,8 +93,10 @@ public class ElectronContainer extends ChemObject implements Serializable, IElec
 
     public String toString() {
         StringBuffer resultString = new StringBuffer(64);
-        resultString.append("ElectronContainer(");
-        resultString.append("EC:").append(getElectronCount());
+        resultString.append("ElectronContainer(").append(hashCode());
+        if (getElectronCount() > -1) {
+        	resultString.append("EC:").append(getElectronCount());
+        }
         resultString.append(')');
         return resultString.toString(); 
     }

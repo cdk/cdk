@@ -118,4 +118,17 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
 		notifyChanged();
 	}
 
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("Monomer{").append(this.hashCode());
+		if (getMonomerName() != null) {
+			buffer.append(", N=").append(getMonomerName());
+		}
+		if (getMonomerType() != null) {
+			buffer.append(", T=").append(getMonomerType());
+		}
+		buffer.append("}");
+		return buffer.toString();
+	}
+	
 }

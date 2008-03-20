@@ -204,13 +204,15 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
         StringBuffer buffer = new StringBuffer(32);
         buffer.append("RingSet(");
         buffer.append(this.hashCode());
-        buffer.append(", R=").append(getAtomContainerCount()).append(", ");
-        for (int i = 0; i < atomContainerCount; i++) {
-            IRing possibleRing = (IRing)atomContainers[i];
-            buffer.append(possibleRing.toString());
-            if (i+1 < atomContainerCount) {
-                buffer.append(", ");
-            }
+        if (getAtomContainerCount() > 0) {
+        	buffer.append(", R=").append(getAtomContainerCount()).append(", ");
+        	for (int i = 0; i < atomContainerCount; i++) {
+        		IRing possibleRing = (IRing)atomContainers[i];
+        		buffer.append(possibleRing.toString());
+        		if (i+1 < atomContainerCount) {
+        			buffer.append(", ");
+        		}
+        	}
         }
         buffer.append(')');
         return buffer.toString();

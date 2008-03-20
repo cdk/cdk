@@ -105,6 +105,20 @@ public class Fragment extends AtomContainer implements java.io.Serializable, Clo
         this.free_valences = count;
 	notifyChanged();
     }
+    
+    public String toString() {
+    	StringBuffer buffer = new StringBuffer();
+    	buffer.append("Fragment{").append(hashCode());
+    	if (getTitle() != null) {
+    		buffer.append(", T=").append(getTitle());
+    	}
+    	if (getFreeValences() > -1) {
+    		buffer.append(", FV=").append(getFreeValences());
+    	}
+    	buffer.append(super.toString());
+    	buffer.append('}');
+    	return buffer.toString();
+    }
 }
 
 

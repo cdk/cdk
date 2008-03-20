@@ -226,13 +226,23 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      */
     public String toString() {
         StringBuffer resultString = new StringBuffer(64);
-        resultString.append("Crystal(SG=");
-        resultString.append(getSpaceGroup());
-        resultString.append(", Z=").append(getZ());
-        resultString.append(", a=(").append(aAxis.x).append(", ").append(aAxis.y).append(", ").append(aAxis.z);
-        resultString.append("), b=(").append(bAxis.x).append(", ").append(bAxis.y).append(", ").append(bAxis.z);
-        resultString.append("), c=(").append(cAxis.x).append(", ").append(cAxis.y).append(", ").append(cAxis.z);
-        resultString.append("), #A=").append(getAtomCount()).append(')');
+        resultString.append("Crystal(").append(hashCode());
+        if (getSpaceGroup() != null) {
+        	resultString.append(", SG=").append(getSpaceGroup());
+        }
+        if (getZ() > 0) {
+        	resultString.append(", Z=").append(getZ());
+        }
+        if (getA() != null) {
+        	resultString.append(", a=(").append(aAxis.x).append(", ").append(aAxis.y).append(", ").append(aAxis.z);
+        }
+        if (getB() != null) {
+        	resultString.append("), b=(").append(bAxis.x).append(", ").append(bAxis.y).append(", ").append(bAxis.z);
+        }
+        if (getC() != null) {
+        	resultString.append("), c=(").append(cAxis.x).append(", ").append(cAxis.y).append(", ").append(cAxis.z);
+        }
+        resultString.append(", ").append(super.toString());
         return resultString.toString();
     }
 

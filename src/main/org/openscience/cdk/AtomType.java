@@ -400,17 +400,35 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	
     public String toString() {
         StringBuffer resultString = new StringBuffer(64);
-        resultString.append("AtomType(");
-        resultString.append(getAtomTypeName());
-        resultString.append(", MBO:").append(getMaxBondOrder());
-        resultString.append(", BOS:").append(getBondOrderSum());
-        resultString.append(", FC:").append(getFormalCharge());
-        resultString.append(", H:").append(getHybridization());
-        resultString.append(", NC:").append(getFormalNeighbourCount());
-        resultString.append(", CR:").append(getCovalentRadius());
-        resultString.append(", VDWR:").append(getVanderwaalsRadius());
-        resultString.append(", EV:").append(getValency()).append(", ");
-        resultString.append(super.toString());
+        resultString.append("AtomType(").append(hashCode());
+        if (getAtomTypeName() != null) {
+        	resultString.append(", N:").append(getAtomTypeName());
+        }
+        if (getMaxBondOrder() != null) {
+        	resultString.append(", MBO:").append(getMaxBondOrder());
+        }
+        if (getBondOrderSum() != null) {
+        	resultString.append(", BOS:").append(getBondOrderSum());
+        }
+        if (getFormalCharge() != null) {
+        	resultString.append(", FC:").append(getFormalCharge());
+        }
+        if (getHybridization() != null) {
+        	resultString.append(", H:").append(getHybridization());
+        }
+        if (getFormalNeighbourCount() != null) {
+        	resultString.append(", NC:").append(getFormalNeighbourCount());
+        }
+        if (getCovalentRadius() != null) {
+        	resultString.append(", CR:").append(getCovalentRadius());
+        }
+        if (getVanderwaalsRadius() != null) {
+        	resultString.append(", VDWR:").append(getVanderwaalsRadius());
+        }
+        if (getValency() != null) {
+        	resultString.append(", EV:").append(getValency());
+        }
+        resultString.append(", ").append(super.toString());
         resultString.append(')');
         return resultString.toString(); 
     }

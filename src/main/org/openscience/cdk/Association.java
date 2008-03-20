@@ -169,7 +169,7 @@ public class Association extends ElectronContainer implements java.io.Serializab
         s.append("Association(");
         s.append(this.hashCode());
         for (int i=0; i<atomCount; i++) {
-            s.append(atoms[i].toString());
+            s.append(", ").append(atoms[i].toString());
         }
         s.append(")");
         return s.toString();

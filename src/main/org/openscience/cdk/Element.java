@@ -167,10 +167,16 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
 
     public String toString() {
         StringBuffer resultString = new StringBuffer(32);
-        resultString.append("Element(");
-        resultString.append(getSymbol());
-        resultString.append(", ID:").append(getID());
-        resultString.append(", AN:").append(getAtomicNumber());
+        resultString.append("Element(").append(hashCode());
+        if (getSymbol() != null) {
+        	resultString.append(", S:").append(getSymbol());
+        }
+        if (getID() != null) {
+        	resultString.append(", ID:").append(getID());
+        }
+        if (getAtomicNumber() > 0) {
+        	resultString.append(", AN:").append(getAtomicNumber());
+        }
         resultString.append(')');
         return resultString.toString();
     }

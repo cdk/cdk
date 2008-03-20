@@ -95,7 +95,10 @@ public class Molecule extends AtomContainer implements Serializable, IMolecule, 
     public String toString() {
         StringBuffer description = new StringBuffer();
         description.append("Molecule(");
-        description.append(getID()).append(", ");
+        description.append(hashCode());
+        if (getID() != null) {
+        	description.append(", ID=").append(getID());
+        }
         description.append(super.toString());
         description.append(')');
         return description.toString();

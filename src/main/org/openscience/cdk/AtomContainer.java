@@ -1524,34 +1524,39 @@ public class AtomContainer extends ChemObject
 		StringBuffer stringContent = new StringBuffer(64);
 		stringContent.append("AtomContainer(");
 		stringContent.append(this.hashCode());
-		stringContent.append(", #A:").append(getAtomCount());
-		stringContent.append(", #B:").append(getBondCount()).append(", ");
-		stringContent.append(", #LP:").append(getLonePairCount()).append(", ");
-		stringContent.append(", #SE:").append(getSingleElectronCount()).append(", ");
-		for (int i = 0; i < getAtomCount(); i++)
-		{
-			stringContent.append(getAtom(i).toString()).append(", ");
+		if (getAtomCount() > 0) {
+			stringContent.append(", #A:").append(getAtomCount());
+			for (int i = 0; i < getAtomCount(); i++) {
+				stringContent.append(", ").append(getAtom(i).toString());
+			}
 		}
-		for (int i = 0; i < getBondCount(); i++)
-		{
-			stringContent.append(getBond(i).toString()).append(", ");
+		if (getBondCount() > 0) {
+			stringContent.append(", #B:").append(getBondCount());
+			for (int i = 0; i < getBondCount(); i++) {
+				stringContent.append(", ").append(getBond(i).toString());
+			}
 		}
-		for (int i = 0; i < getLonePairCount(); i++)
-		{
-			stringContent.append(getLonePair(i).toString()).append(", ");
+		if (getLonePairCount() > 0) {
+			stringContent.append(", #LP:").append(getLonePairCount());
+			for (int i = 0; i < getLonePairCount(); i++) {
+				stringContent.append(", ").append(getLonePair(i).toString());
+			}
 		}
-		for (int i = 0; i < getSingleElectronCount(); i++)
-		{
-			stringContent.append(getSingleElectron(i).toString()).append(", ");
+		if (getSingleElectronCount() > 0) {
+			stringContent.append(", #SE:").append(getSingleElectronCount());
+			for (int i = 0; i < getSingleElectronCount(); i++) {
+				stringContent.append(", ").append(getSingleElectron(i).toString());
+			}
 		}
-		
-        stringContent.append(", AP:[#").append(atomParities.size()).append(", ");
-        Iterator<IAtomParity> parities = atomParities.values().iterator();
-        while (parities.hasNext()) {
-			stringContent.append(parities.next().toString());
-            if (parities.hasNext()) stringContent.append(", ");
+		if (atomParities.size() > 0) {
+			stringContent.append(", AP:[#").append(atomParities.size());
+			Iterator<IAtomParity> parities = atomParities.values().iterator();
+			while (parities.hasNext()) {
+				stringContent.append(", ").append(parities.next().toString());
+			}
+			stringContent.append(']');
 		}
-		stringContent.append("])");
+		stringContent.append(')');
 		return stringContent.toString();
 	}
 

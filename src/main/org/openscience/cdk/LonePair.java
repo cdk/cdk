@@ -144,8 +144,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
         resultString.append("LonePair(");
         resultString.append(this.hashCode());
         if (atom != null) {
-            resultString.append(", ");
-            resultString.append(atom.toString());
+            resultString.append(", ").append(atom.toString());
         }
         resultString.append(')');
         return resultString.toString();

@@ -79,5 +79,16 @@ public class FragmentAtom extends PseudoAtom implements IFragmentAtom {
 		}
 		return totalMass;
 	}
+
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("FragmentAtom{").append(hashCode());
+		buffer.append(", A=").append(super.toString());
+		if (fragment != null) {
+			buffer.append(", F=").append(fragment.toString());
+		}
+		buffer.append('}');
+		return buffer.toString();
+	}
 	
 }

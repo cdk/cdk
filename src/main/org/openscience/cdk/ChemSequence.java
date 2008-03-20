@@ -195,9 +195,11 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
         StringBuffer buffer = new StringBuffer(32);
         buffer.append("ChemSequence(#M=");
         buffer.append(chemModelCount);
-        buffer.append(", ");
-        for (int i=0; i<chemModelCount; i++) {
-            buffer.append(chemModels[i].toString());
+        if (chemModelCount > 0) {
+        	buffer.append(", ");
+        	for (int i=0; i<chemModelCount; i++) {
+        		buffer.append(chemModels[i].toString());
+        	}
         }
         buffer.append(')');
         return buffer.toString();

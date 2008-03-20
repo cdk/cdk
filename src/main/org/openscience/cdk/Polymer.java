@@ -136,8 +136,6 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
         StringBuffer stringContent = new StringBuffer();
         stringContent.append("Polymer(");
         stringContent.append(this.hashCode()).append(", ");
-//        stringContent.append("N:").append(getStrandName()).append(", ");
-//        stringContent.append("T:").append(getStrandType()).append(", ");
         stringContent.append(super.toString());
         stringContent.append(')');
         return stringContent.toString();

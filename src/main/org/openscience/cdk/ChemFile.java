@@ -198,13 +198,14 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 	{
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("ChemFile(#S=");
-		java.util.Iterator seqs = chemSequences();
 		buffer.append(chemSequenceCount);
-		buffer.append(", ");
-		while (seqs.hasNext())
-		{
-			IChemSequence sequence = (IChemSequence)seqs.next();
-			buffer.append(sequence.toString());
+		if (chemSequenceCount > 0) {
+			Iterator<IChemSequence> seqs = chemSequences();
+			while (seqs.hasNext()) {
+				buffer.append(", ");
+				IChemSequence sequence = (IChemSequence)seqs.next();
+				buffer.append(sequence.toString());
+			}
 		}
 		buffer.append(')');
 		return buffer.toString();

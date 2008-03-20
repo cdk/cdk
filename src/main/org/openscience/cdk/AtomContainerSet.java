@@ -340,11 +340,10 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 		StringBuffer buffer = new StringBuffer(32);
 		buffer.append("AtomContainerSet(");
 		buffer.append(this.hashCode());
-		buffer.append(", M=").append(getAtomContainerCount()).append(", ");
-		for (int i = 0; i < atomContainerCount; i++) {
-			buffer.append(atomContainers[i].toString());
-			if (i < atomContainerCount - 1) {
-				buffer.append(", ");
+		if (getAtomContainerCount() > 0) {
+			buffer.append(", M=").append(getAtomContainerCount());
+			for (int i = 0; i < atomContainerCount; i++) {
+				buffer.append(", ").append(atomContainers[i].toString());
 			}
 		}
 		buffer.append(')');

@@ -365,15 +365,28 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          */
         public String toString() {
                 StringBuffer stringContent = new StringBuffer(64);
-                stringContent.append("Atom(");
-                stringContent.append(this.hashCode()).append(", ");
-                stringContent.append(getSymbol());
-                stringContent.append(", H:").append(getHydrogenCount());
-                stringContent.append(", SP:").append(getStereoParity());
-                stringContent.append(", 2D:[").append(getPoint2d());
-                stringContent.append("], 3D:[").append(getPoint3d());
-                stringContent.append("], Fract3D:[").append(getFractionalPoint3d());
-                stringContent.append("], C:").append(getCharge());
+                stringContent.append("Atom(").append(hashCode());
+                if (getSymbol() != null) {
+                	stringContent.append(", S:").append(getSymbol());
+                }
+                if (getHydrogenCount() != null) {
+                	stringContent.append(", H:").append(getHydrogenCount());
+                }
+                if (getStereoParity() != null) {
+                	stringContent.append(", SP:").append(getStereoParity());
+                }
+                if (getPoint2d() != null) {
+                	stringContent.append(", 2D:[").append(getPoint2d()).append(']');
+                }
+                if (getPoint3d() != null) {
+                	stringContent.append(", 3D:[").append(getPoint3d()).append(']');
+                }
+                if (getFractionalPoint3d() != null) {
+                	stringContent.append(", F3D:[").append(getFractionalPoint3d());
+                }
+                if (getCharge() != null) {
+                	stringContent.append(", C:").append(getCharge());
+                }
                 stringContent.append(", ").append(super.toString());
                 stringContent.append(')');
                 return stringContent.toString();

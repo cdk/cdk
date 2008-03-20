@@ -189,20 +189,14 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
         if (getMoleculeSet() != null) {
             buffer.append(", ");
             buffer.append(getMoleculeSet().toString());
-        } else {
-            buffer.append(", No MoleculeSet");
         }
         if (getCrystal() != null) {
-            buffer.append(getCrystal().toString());
             buffer.append(", ");
-        } else {
-            buffer.append(", No Crystal");
+            buffer.append(getCrystal().toString());
         }
         if (getReactionSet() != null) {
-            buffer.append(getReactionSet().toString());
             buffer.append(", ");
-        } else {
-            buffer.append(", No ReactionSet");
+            buffer.append(getReactionSet().toString());
         }
         buffer.append(')');
         return buffer.toString();
