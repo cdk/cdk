@@ -195,6 +195,17 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 		Assert.assertEquals(MolecularFormulaManipulator.getString(mf2), MolecularFormulaManipulator.getString(mf1));
 		
 	}
+
+	@Test 
+    public void testGetString_Isotopes()	{
+		IMolecularFormula mf1 = new MolecularFormula();
+		mf1.addIsotope(builder.newIsotope("C",12),9);
+		mf1.addIsotope(builder.newIsotope("C",13),1);
+		mf1.addIsotope(builder.newIsotope("H"),16);
+		
+		Assert.assertEquals("C10H16", MolecularFormulaManipulator.getString(mf1));
+	}
+
 	/**
 	 * A unit test suite for JUnit.
 	 *
