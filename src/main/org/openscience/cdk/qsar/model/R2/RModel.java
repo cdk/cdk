@@ -89,7 +89,7 @@ public abstract class RModel implements IModel {
      * A boolean that indicates whether the R/Java subsystem has been initialized or not.
      */
     private static boolean doneInit = false;
-    private static LoggingTool logger;
+    private static LoggingTool logger = new LoggingTool(RModel.class);
 
     private void initRengine(String[] args, boolean useDisk) throws QSARModelException {
         if (!doneInit) {
@@ -199,7 +199,6 @@ public abstract class RModel implements IModel {
 
         params = new HashMap();
         String[] args = {"--vanilla", "--quiet", "--slave"};
-        logger = new LoggingTool(this);
         
         String initRFromString = System.getProperty("initRFromString");
         boolean useDisk = true;
@@ -542,6 +541,11 @@ public abstract class RModel implements IModel {
         }
 
         public void rSaveHistory(Rengine re, String filename) {
+        }
+
+		@Override
+        public void rWriteConsole(Rengine arg0, String message, int arg2) {
+			System.out.println("rShowMessage \"" + message + "\"");
         }
     }
 
