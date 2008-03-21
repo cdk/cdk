@@ -543,7 +543,6 @@ public abstract class RModel implements IModel {
         public void rSaveHistory(Rengine re, String filename) {
         }
 
-		@Override
         public void rWriteConsole(Rengine arg0, String message, int arg2) {
 			System.out.println("rShowMessage \"" + message + "\"");
         }
