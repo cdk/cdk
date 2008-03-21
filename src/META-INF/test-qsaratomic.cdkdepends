@@ -13,12 +13,10 @@ cdk-charges.jar
 cdk-qsar.jar
 cdk-qsaratomic.jar
 cdk-qsar-pdb.jar
-cdk-qsarweka.jar
 cdk-smiles.jar
 cdk-test.jar
 cdk-applications.jar
 cdk-builder3d.jar
 cdk-forcefield.jar
-cdk-libioweka.jar
 cdk-sdg.jar
 cdk-test-qsar.jar
