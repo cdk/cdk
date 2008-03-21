@@ -26,12 +26,12 @@ package org.openscience.cdk.controller;
 
 import java.util.Iterator;
 
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
@@ -104,7 +104,7 @@ public class Controller2D extends SimpleController2D
 				IReaction reaction = (IReaction)reactionIter.next();
 				Iterator atomCons = ReactionManipulator.getAllAtomContainers(reaction).iterator();
 				while (atomCons.hasNext()) {
-					double[] minmax = GeometryTools.getMinMax((IAtomContainer)atomCons.next(),r2dm.getRenderingCoordinates());
+					double[] minmax = GeometryToolsInternalCoordinates.getMinMax((IAtomContainer)atomCons.next());
 					if ((X <= minmax[2]) && (X >= minmax[0]) &&
 							(Y <= minmax[3]) && (Y >= minmax[1]))
 					{

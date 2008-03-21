@@ -24,16 +24,19 @@
  */
 package org.openscience.cdk.renderer;
 
-import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.tools.LoggingTool;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
-import java.awt.*;
-import java.awt.geom.Arc2D;
-import java.awt.geom.Ellipse2D;
+
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * A Renderer class which draws 2D representations of curly arrows as used for
@@ -112,7 +115,7 @@ public class ArrowRenderer2D {
 		IAtomContainer atomContainer = start.getBuilder().newAtomContainer();
 		atomContainer.addAtom(start);
 		atomContainer.addAtom(end);
-		center = GeometryTools.get2DCenter(atomContainer,r2dm.getRenderingCoordinates());
+		center = GeometryToolsInternalCoordinates.get2DCenter(atomContainer);
 		Point2d point1 = new Point2d((Point2d)r2dm.getRenderingCoordinate(start));
 		Point2d point2 = new Point2d((Point2d)r2dm.getRenderingCoordinate(end));
 		Vector2d vector1 = new Vector2d(point1);
@@ -120,7 +123,7 @@ public class ArrowRenderer2D {
 		vector2.sub(vector1);
 		
 
-		rotAngle = GeometryTools.getAngle(vector2.x, vector2.y);
+		rotAngle = GeometryToolsInternalCoordinates.getAngle(vector2.x, vector2.y);
 		offsetAngle = rotAngle + (Math.PI/2);
 		vector3 = new Vector2d(Math.cos(offsetAngle), Math.sin(offsetAngle));
 		vector3.normalize();

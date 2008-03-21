@@ -28,11 +28,8 @@
  */
 package org.openscience.cdk.layout;
 
-import java.util.HashMap;
-
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -54,10 +51,6 @@ public class HydrogenPlacer {
 	public final static boolean debug1 = false;
 	
 	public  void placeHydrogens2D(IAtomContainer atomContainer, double bondLength){
-		this.placeHydrogens2D(atomContainer,bondLength,null);
-	}
-	
-	public  void placeHydrogens2D(IAtomContainer atomContainer, double bondLength, HashMap renderingCoordinates){
 	    LoggingTool logger = new LoggingTool(this);
 	    logger.debug("Entering Hydrogen Placement...");
 	    IAtom atom = null; 
@@ -68,7 +61,7 @@ public class HydrogenPlacer {
 //	        {
 	            if (debug1) System.out.println("Now placing hydrogens at atom " + f);
 	            logger.debug("Now placing hydrogens at atom " + f);
-	            placeHydrogens2D(atomContainer, atom, bondLength, renderingCoordinates);
+	            placeHydrogens2D(atomContainer, atom, bondLength);
 //	        }
 	    }
 	    logger.debug("Hydrogen Placement finished");
@@ -84,11 +77,6 @@ public class HydrogenPlacer {
 	}
 	
 	public  void placeHydrogens2D(IAtomContainer atomContainer, IAtom atom, double bondLength){
-		placeHydrogens2D(atomContainer, atom, bondLength, null);
-	}
-	
-	public  void placeHydrogens2D(IAtomContainer atomContainer, IAtom atom, double bondLength, HashMap renderingCoordinates)
-	{
 		LoggingTool logger = new LoggingTool(this);
 		
 		//double startAngle = 0.0;
@@ -116,26 +104,12 @@ public class HydrogenPlacer {
 			logger.debug("H-" + f, ": ", unplacedAtoms.getAtom(f).getPoint2d());
 		}
         Point2d centerPlacedAtoms = null;
-        if (placedAtoms.getAtomCount() > 0) {
-        	if(renderingCoordinates==null)
-        		centerPlacedAtoms = GeometryToolsInternalCoordinates.get2DCenter(placedAtoms);
-        	else
-        		centerPlacedAtoms = GeometryTools.get2DCenter(placedAtoms, renderingCoordinates);
-        } else {
-        	if(renderingCoordinates==null)
-        		centerPlacedAtoms = atom.getPoint2d();
-        	else
-        		centerPlacedAtoms = (Point2d)renderingCoordinates.get(atom);
-        }
-        if(renderingCoordinates==null)
-        	atomPlacer.distributePartners(atom, placedAtoms, centerPlacedAtoms, unplacedAtoms, bondLength);
-        else
-        	atomPlacer.distributePartners(atom, placedAtoms, centerPlacedAtoms, unplacedAtoms, bondLength, renderingCoordinates);
+        atomPlacer.distributePartners(atom, placedAtoms, centerPlacedAtoms, unplacedAtoms, bondLength);
 		logger.debug("Atom placement after procedure:");
 		logger.debug("Center atom ", atom.getSymbol(), ": ", atom.getPoint2d());
 		for (int f = 0; f < unplacedAtoms.getAtomCount(); f++)
 		{
-			logger.debug("H-" + f, ": ", renderingCoordinates!=null ? ((Point2d)renderingCoordinates.get(unplacedAtoms.getAtom(f))) : unplacedAtoms.getAtom(f).getPoint2d());
+			logger.debug("H-" + f, ": ", unplacedAtoms.getAtom(f).getPoint2d());
 		}				
 	}
 }

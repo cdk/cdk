@@ -1,12 +1,20 @@
 package org.openscience.cdk.pharmacophore;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -16,9 +24,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.tools.LoggingTool;
-
-import javax.vecmath.Point3d;
-import java.util.*;
 
 /**
  * Identifies atoms whose 3D arrangement matches a specified pharmacophore query.
@@ -127,7 +132,7 @@ public class PharmacophoreMatcher {
      */
     @TestMethod("testCNSPcore")
     public boolean matches(IAtomContainer atomContainer) throws CDKException {
-        if (!GeometryTools.has3DCoordinates(atomContainer)) throw new CDKException("Molecule must have 3D coordinates");
+        if (!GeometryToolsInternalCoordinates.has3DCoordinates(atomContainer)) throw new CDKException("Molecule must have 3D coordinates");
         if (pharmacophoreQuery == null) throw new CDKException("Must set the query pharmacophore before matching");
         if (!checkQuery(pharmacophoreQuery))
             throw new CDKException("A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");

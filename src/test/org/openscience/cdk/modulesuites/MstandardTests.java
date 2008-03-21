@@ -42,7 +42,6 @@ import org.openscience.cdk.fingerprint.GraphOnlyFingerprinterTest;
 import org.openscience.cdk.geometry.BondToolsTest;
 import org.openscience.cdk.geometry.CrystalGeometryToolsTest;
 import org.openscience.cdk.geometry.GeometryToolsInternalCoordinatesTest;
-import org.openscience.cdk.geometry.GeometryToolsTest;
 import org.openscience.cdk.graph.BFSShortestPathTest;
 import org.openscience.cdk.graph.BiconnectivityInspectorTest;
 import org.openscience.cdk.graph.ConnectivityCheckerTest;
@@ -122,7 +121,6 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(AromaticityCalculatorTest.class));
         suite.addTest(new JUnit4TestAdapter(DictRefTest.class));
         suite.addTest(new JUnit4TestAdapter(CrystalGeometryToolsTest.class));
-        suite.addTest(new JUnit4TestAdapter(GeometryToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(MinimalPathIteratorTest.class));
         suite.addTest(new JUnit4TestAdapter(ConnectivityCheckerTest.class));
         suite.addTest(UniversalIsomorphismTesterTest.suite());

@@ -76,7 +76,7 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.geometry.BondTools;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -316,9 +316,9 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			int endY = 0;
 			double angle = 0;
 			double pointerVectorLength = c2dm.getRingPointerLength();
-			Point2d center = GeometryTools.get2DCenter(getHighlighted(),r2dm.getRenderingCoordinates());
+			Point2d center = GeometryToolsInternalCoordinates.get2DCenter(getHighlighted());
 			r2dm.setPointerVectorStart(new Point((int) center.x, (int) center.y));
-			angle = GeometryTools.getAngle(center.x - mouseX, center.y - mouseY);
+			angle = GeometryToolsInternalCoordinates.getAngle(center.x - mouseX, center.y - mouseY);
 			endX = (int) center.x - (int) (Math.cos(angle) * pointerVectorLength);
 			endY = (int) center.y - (int) (Math.sin(angle) * pointerVectorLength);
 			r2dm.setPointerVectorEnd(new Point(endX, endY));
@@ -794,7 +794,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			undoRedoContainer.add(newRing);
 		} else if (sharedAtoms.getAtomCount() == 1)	{
 			spiroAtom = sharedAtoms.getAtom(0);
-			sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms,r2dm.getRenderingCoordinates());
+			sharedAtomsCenter = GeometryToolsInternalCoordinates.get2DCenter(sharedAtoms);
 			newRing = createAttachRing(sharedAtoms, ringSize, symbol);
 			if (c2dm.getDrawMode() == Controller2DModel.DrawMode.BENZENERING)
 			{
@@ -829,7 +829,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			atomCon.add(newRing);
 			undoRedoContainer.add(newRing);
 		} else if (sharedAtoms.getAtomCount() == 2)	{
-			sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms,r2dm.getRenderingCoordinates());
+			sharedAtomsCenter = GeometryToolsInternalCoordinates.get2DCenter(sharedAtoms);
 
 			// calculate two points that are perpendicular to the highlighted bond
 			// and have a certain distance from the bondcenter
@@ -838,7 +838,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			xDiff = ((Point2d)r2dm.getRenderingCoordinate(secondAtom)).x - ((Point2d)r2dm.getRenderingCoordinate(firstAtom)).x;
 			yDiff = ((Point2d)r2dm.getRenderingCoordinate(secondAtom)).y - ((Point2d)r2dm.getRenderingCoordinate(firstAtom)).y;
 			bondLength = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
-			angle = GeometryTools.getAngle(xDiff, yDiff);
+			angle = GeometryToolsInternalCoordinates.getAngle(xDiff, yDiff);
 			newPoint1 = new Point2d((Math.cos(angle + (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.x, (Math.sin(angle + (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.y);
 			newPoint2 = new Point2d((Math.cos(angle - (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.x, (Math.sin(angle - (Math.PI / 2)) * bondLength / 4) + sharedAtomsCenter.y);
 
@@ -1234,14 +1234,14 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				unplacedAtoms.addAtom(newAtom2);
 				AtomPlacer atomPlacer = new AtomPlacer();
 				atomPlacer.setMolecule(atomCon.getBuilder().newMolecule(atomCon));
-				Point2d center2D = GeometryTools.get2DCenter(placedAtoms,r2dm.getRenderingCoordinates());
+				Point2d center2D = GeometryToolsInternalCoordinates.get2DCenter(placedAtoms);
 				logger.debug("placedAtoms.getAtomCount(): " + placedAtoms.getAtomCount());
 				logger.debug("unplacedAtoms.getAtomCount(): " + unplacedAtoms.getAtomCount());
 				if (placedAtoms.getAtomCount() == 1)
 				{
 					Vector2d bondVector = atomPlacer.getNextBondVector(
 							atomInRange, placedAtoms.getAtom(0), 
-							GeometryTools.get2DCenter(atomCon.getBuilder().newMolecule(atomCon),r2dm.getRenderingCoordinates()),
+							GeometryToolsInternalCoordinates.get2DCenter(atomCon.getBuilder().newMolecule(atomCon)),
 							true // FIXME: is this correct? (see SF bug #1367002)
 					);
 					Point2d atomPoint = new Point2d(((Point2d)r2dm.getRenderingCoordinate(atomInRange)));
@@ -1357,7 +1357,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 							else
 								unplacedNeighbours.addAtom((IAtom)l.get(i));
 						}
-						ap.distributePartners(lastplaced, placedNeighbours, GeometryTools.get2DCenter(placedNeighbours,r2dm.getRenderingCoordinates()), unplacedNeighbours, r2dm.getBondLength(), r2dm.getRenderingCoordinates());
+						ap.distributePartners(lastplaced, placedNeighbours, GeometryToolsInternalCoordinates.get2DCenter(placedNeighbours), unplacedNeighbours, r2dm.getBondLength());
 						lastplaced=ac.getAtom(counter);
 						counter++;
 						if(counter==ac.getAtomCount())
@@ -1765,25 +1765,27 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 	private IAtom getAtomInRange(int X, int Y, IAtom ignore)
 	{
 		double highlightRadius = r2dm.getHighlightRadius();
-		IAtom closestAtom = GeometryTools.getClosestAtom(X, Y, chemModel, ignore, r2dm.getRenderingCoordinates());
-		if (closestAtom != null)
-		{
-			//logger.debug("getAtomInRange(): An atom is near");
-			if (!(Math.sqrt(Math.pow(r2dm.getRenderingCoordinate(closestAtom).x - X, 2) +
-					Math.pow(r2dm.getRenderingCoordinate(closestAtom).y - Y, 2)) < highlightRadius))
-			{
-				closestAtom = null;
-			} else {
-				// we got a winner!
-				// set the associated AtomContainer, for use by JCP's Molecule Properties action
-                // COMMENTED OUT: causes cloning trouble
-/*				closestAtom.setProperty(
-					SimpleController2D.MATCHING_ATOMCONTAINER,
-					ChemModelManipulator.getRelevantAtomContainer(chemModel, closestAtom)
-				);*/
-			}
-		}
-		return closestAtom;
+		// FIXME: JCP: what to do about this method??
+//		IAtom closestAtom = GeometryTools.getClosestAtom(X, Y, chemModel, ignore);
+//		if (closestAtom != null)
+//		{
+//			//logger.debug("getAtomInRange(): An atom is near");
+//			if (!(Math.sqrt(Math.pow(r2dm.getRenderingCoordinate(closestAtom).x - X, 2) +
+//					Math.pow(r2dm.getRenderingCoordinate(closestAtom).y - Y, 2)) < highlightRadius))
+//			{
+//				closestAtom = null;
+//			} else {
+//				// we got a winner!
+//				// set the associated AtomContainer, for use by JCP's Molecule Properties action
+//                // COMMENTED OUT: causes cloning trouble
+///*				closestAtom.setProperty(
+//					SimpleController2D.MATCHING_ATOMCONTAINER,
+//					ChemModelManipulator.getRelevantAtomContainer(chemModel, closestAtom)
+//				);*/
+//			}
+//		}
+//		return closestAtom;
+		return null;
 	}
 
 	private IAtomContainer getBondInRangeTemporaryAtomContainer = null;
@@ -1811,14 +1813,14 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 			getBondInRangeTemporaryAtomContainer.add((IAtomContainer)atomCons.next());
 		}
         if (getBondInRangeTemporaryAtomContainer.getBondCount() != 0) {
-            IBond closestBond = GeometryTools.getClosestBond(X, Y, getBondInRangeTemporaryAtomContainer,r2dm.getRenderingCoordinates());
+            IBond closestBond = GeometryToolsInternalCoordinates.getClosestBond(X, Y, getBondInRangeTemporaryAtomContainer);
     		if (closestBond == null)
     		{
     			return null;
     		}
     		// logger.debug("closestBond  "+ closestBond);
-    		int[] coords = GeometryTools.distanceCalculator(
-    				GeometryTools.getBondCoordinates(closestBond, r2dm.getRenderingCoordinates()), highlightRadius);
+    		int[] coords = GeometryToolsInternalCoordinates.distanceCalculator(
+    				GeometryToolsInternalCoordinates.getBondCoordinates(closestBond), highlightRadius);
     		int[] xCoords = {coords[0], coords[2], coords[4], coords[6]};
     		int[] yCoords = {coords[1], coords[3], coords[5], coords[7]};
     		if ((new Polygon(xCoords, yCoords, 4)).contains(new Point(X, Y)))
@@ -1918,7 +1920,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 				conAtoms.addAtom((IAtom)atoms.next());
 			}
 		}
-		return GeometryTools.get2DCenter(conAtoms,r2dm.getRenderingCoordinates());
+		return GeometryToolsInternalCoordinates.get2DCenter(conAtoms);
 	}
 
 
@@ -2094,7 +2096,7 @@ abstract class AbstractController2D implements MouseMotionListener, MouseListene
 		double angle = 0;
 		IAtom atomInRange;
 
-		angle = GeometryTools.getAngle(startX - mouseX, startY - mouseY);
+		angle = GeometryToolsInternalCoordinates.getAngle(startX - mouseX, startY - mouseY);
 		if (c2dm.getSnapToGridAngle())
 		{
 			angle = snapAngle(angle);

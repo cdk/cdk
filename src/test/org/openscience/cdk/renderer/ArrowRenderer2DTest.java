@@ -35,7 +35,6 @@ import javax.swing.JPanel;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
@@ -107,9 +106,10 @@ public class ArrowRenderer2DTest extends JPanel {
 			r2dm.setDrawNumbers(true);
 			ht.put(molecule.getAtom(an1), Color.red);
 			ht.put(molecule.getAtom(an2), Color.red);
-			GeometryTools.translateAllPositive(molecule,r2dm.getRenderingCoordinates());
-			GeometryTools.scaleMolecule(molecule, getPreferredSize(), 0.8,r2dm.getRenderingCoordinates());
-			GeometryTools.center(molecule, getPreferredSize(),r2dm.getRenderingCoordinates());
+			// FIXME: JCP: uncomment the below line
+//			GeometryTools.translateAllPositive(molecule,r2dm.getRenderingCoordinates());
+//			GeometryTools.scaleMolecule(molecule, getPreferredSize(), 0.8,r2dm.getRenderingCoordinates());
+//			GeometryTools.center(molecule, getPreferredSize(),r2dm.getRenderingCoordinates());
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}

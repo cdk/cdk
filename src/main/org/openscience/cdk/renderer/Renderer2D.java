@@ -24,14 +24,20 @@
  */
 package org.openscience.cdk.renderer;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
-
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.util.Iterator;
+
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 
 /**
  *  A Renderer class which draws 2D representations of molecules onto a given
@@ -269,8 +275,8 @@ public class Renderer2D extends SimpleRenderer2D implements IRenderer2D
 		}
 
 		// calculate some boundaries
-		double[] minmaxReactants = GeometryTools.getMinMax(reactantContainer,r2dm.getRenderingCoordinates());
-		double[] minmaxProducts = GeometryTools.getMinMax(productContainer,r2dm.getRenderingCoordinates());
+		double[] minmaxReactants = GeometryToolsInternalCoordinates.getMinMax(reactantContainer);
+		double[] minmaxProducts = GeometryToolsInternalCoordinates.getMinMax(productContainer);
 		
 		// paint box around total
 		int width = 13;

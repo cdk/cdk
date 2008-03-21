@@ -41,16 +41,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
-//import javax.swing.JFrame;
 
-import org.openscience.cdk.tools.LoggingTool;
-
-import org.openscience.cdk.applications.jchempaint.JCPPropertyHandler;
-import org.openscience.cdk.applications.jchempaint.StringHelper;
-
-import org.openscience.cdk.applications.jchempaint.JCPLocalizationHandler;
 import org.openscience.cdk.applications.jchempaint.JCPConstants;
-import org.openscience.cdk.controller.Controller2DHub;
+import org.openscience.cdk.applications.jchempaint.JCPLocalizationHandler;
+import org.openscience.cdk.applications.jchempaint.StringHelper;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  This class makes the JCPToolBar

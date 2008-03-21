@@ -33,7 +33,7 @@ import javax.swing.JPanel;
 
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.event.ICDKChangeListener;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
@@ -195,9 +195,9 @@ public class MoleculeViewer2DPanel extends JPanel implements ICDKChangeListener
         super.paint(graphics);
         if (atomContainer != null) {
             setBackground(r2dm.getBackColor());
-            GeometryTools.translateAllPositive(atomContainer,r2dm.getRenderingCoordinates());
-            GeometryTools.scaleMolecule(atomContainer, r2dm.getBackgroundDimension(), 0.8,r2dm.getRenderingCoordinates());
-            GeometryTools.center(atomContainer, r2dm.getBackgroundDimension(),r2dm.getRenderingCoordinates());
+            GeometryToolsInternalCoordinates.translateAllPositive(atomContainer);
+            GeometryToolsInternalCoordinates.scaleMolecule(atomContainer, r2dm.getBackgroundDimension(), 0.8);
+            GeometryToolsInternalCoordinates.center(atomContainer, r2dm.getBackgroundDimension());
             renderer.paintMolecule(atomContainer, (Graphics2D)graphics,false,true);
         }
     }
