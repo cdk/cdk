@@ -47,7 +47,7 @@ import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.formats.IChemFormat;
@@ -160,7 +160,7 @@ public class WWMMatrixReader {
         wwmm.setCollection(coll);
         wwmm.setQuery(index, query);
         IMolecule m = (IMolecule)wwmm.read(new org.openscience.cdk.Molecule());
-        if (!GeometryToolsInternalCoordinates.has2DCoordinates(m)) {
+        if (!GeometryTools.has2DCoordinates(m)) {
                         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
                         try {
                                 sdg.setMolecule(new org.openscience.cdk.Molecule(m));

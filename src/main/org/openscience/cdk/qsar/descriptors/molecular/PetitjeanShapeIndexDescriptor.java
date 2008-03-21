@@ -20,7 +20,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -143,7 +143,7 @@ public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
         retval.add((double) (tdiameter - tradius) / (double) tradius);
 
         // get the 3D distance matrix
-        if (GeometryToolsInternalCoordinates.has3DCoordinates(container)) {
+        if (GeometryTools.has3DCoordinates(container)) {
             int natom = container.getAtomCount();
             double[][] distanceMatrix = new double[natom][natom];
             for (int i = 0; i < natom; i++) {

@@ -36,7 +36,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -116,7 +116,7 @@ public class SimpleRenderer2D extends AbstractRenderer2D implements ISimpleRende
 		// draw the molecule name
 		if (r2dm.getShowMoleculeTitle() && 
 		    atomCon.getProperty(CDKConstants.TITLE) != null) {
-			double[] minmax = GeometryToolsInternalCoordinates.getMinMax(atomCon);
+			double[] minmax = GeometryTools.getMinMax(atomCon);
 			int[] ints = new int[4];
 			for (int i=0;i<4;i++) ints[i] = (int)minmax[i];
 			int[] screenCoords = getScreenCoordinates(ints);

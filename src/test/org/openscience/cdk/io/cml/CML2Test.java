@@ -34,7 +34,7 @@ import java.io.StringWriter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -93,8 +93,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(4, mol.getAtomCount());
         assertEquals(2, mol.getBondCount());
-        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertTrue(!GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertTrue(GeometryTools.has3DCoordinates(mol));
+        assertTrue(!GeometryTools.has2DCoordinates(mol));
 
         java.util.Iterator atoms = mol.atoms();
         while (atoms.hasNext()) {
@@ -126,8 +126,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(4, mol.getAtomCount());
         assertEquals(3, mol.getBondCount());
-        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertTrue(!GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertTrue(GeometryTools.has3DCoordinates(mol));
+        assertTrue(!GeometryTools.has2DCoordinates(mol));
 
         java.util.Iterator atoms = mol.atoms();
         while (atoms.hasNext()) {
@@ -159,8 +159,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(38, mol.getAtomCount());
         assertEquals(48, mol.getBondCount());
-        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertTrue(GeometryTools.has3DCoordinates(mol));
+        assertFalse(GeometryTools.has2DCoordinates(mol));
     }
 
     public void testCMLOK2() throws Exception {
@@ -185,8 +185,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(38, mol.getAtomCount());
         assertEquals(29, mol.getBondCount());
-        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertTrue(GeometryTools.has3DCoordinates(mol));
+        assertFalse(GeometryTools.has2DCoordinates(mol));
     }
 
     public void testCMLOK3() throws Exception {
@@ -211,8 +211,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(13, mol.getAtomCount());
         assertEquals(12, mol.getBondCount());
-        assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertFalse(GeometryTools.has3DCoordinates(mol));
+        assertTrue(GeometryTools.has2DCoordinates(mol));
     }
 
     public void testCMLOK4() throws Exception {
@@ -237,8 +237,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(13, mol.getAtomCount());
         assertEquals(12, mol.getBondCount());
-        assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertFalse(GeometryTools.has3DCoordinates(mol));
+        assertTrue(GeometryTools.has2DCoordinates(mol));
     }
 
     public void testCMLOK5() throws Exception {
@@ -263,8 +263,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(13, mol.getAtomCount());
         assertEquals(12, mol.getBondCount());
-        assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertFalse(GeometryTools.has3DCoordinates(mol));
+        assertTrue(GeometryTools.has2DCoordinates(mol));
     }
 
     public void testCMLOK6() throws Exception {
@@ -289,8 +289,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(13, mol.getAtomCount());
         assertEquals(12, mol.getBondCount());
-        assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertFalse(GeometryTools.has3DCoordinates(mol));
+        assertTrue(GeometryTools.has2DCoordinates(mol));
     }
 
     public void testCMLOK7() throws Exception {
@@ -315,8 +315,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(27, mol.getAtomCount());
         assertEquals(27, mol.getBondCount());
-        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertTrue(GeometryTools.has3DCoordinates(mol));
+        assertFalse(GeometryTools.has2DCoordinates(mol));
     }
 
     public void testCMLOK8() throws Exception {
@@ -341,8 +341,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(15, mol.getAtomCount());
         assertEquals(14, mol.getBondCount());
-        assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertFalse(GeometryTools.has3DCoordinates(mol));
+        assertTrue(GeometryTools.has2DCoordinates(mol));
     }
 
     public void testCMLOK9() throws Exception {
@@ -367,8 +367,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(15, mol.getAtomCount());
         assertEquals(15, mol.getBondCount());
-        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertTrue(GeometryTools.has3DCoordinates(mol));
+        assertFalse(GeometryTools.has2DCoordinates(mol));
     }
 
     public void testCMLOK10() throws Exception {
@@ -393,8 +393,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(15, mol.getAtomCount());
         assertEquals(15, mol.getBondCount());
-        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertTrue(GeometryTools.has3DCoordinates(mol));
+        assertFalse(GeometryTools.has2DCoordinates(mol));
     }
 
     public void testCMLOK11() throws Exception {
@@ -419,8 +419,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(15, mol.getAtomCount());
         assertEquals(15, mol.getBondCount());
-        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertTrue(GeometryTools.has3DCoordinates(mol));
+        assertFalse(GeometryTools.has2DCoordinates(mol));
     }
 
     public void testCMLOK12() throws Exception {
@@ -445,8 +445,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(15, mol.getAtomCount());
         assertEquals(15, mol.getBondCount());
-        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertFalse(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertTrue(GeometryTools.has3DCoordinates(mol));
+        assertFalse(GeometryTools.has2DCoordinates(mol));
     }
 
     /**
@@ -475,8 +475,8 @@ public class CML2Test extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(17, mol.getAtomCount());
         assertEquals(18, mol.getBondCount());
-        assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertFalse(GeometryTools.has3DCoordinates(mol));
+        assertTrue(GeometryTools.has2DCoordinates(mol));
     }
 
     /**

@@ -14,7 +14,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -132,7 +132,7 @@ public class PharmacophoreMatcher {
      */
     @TestMethod("testCNSPcore")
     public boolean matches(IAtomContainer atomContainer) throws CDKException {
-        if (!GeometryToolsInternalCoordinates.has3DCoordinates(atomContainer)) throw new CDKException("Molecule must have 3D coordinates");
+        if (!GeometryTools.has3DCoordinates(atomContainer)) throw new CDKException("Molecule must have 3D coordinates");
         if (pharmacophoreQuery == null) throw new CDKException("Must set the query pharmacophore before matching");
         if (!checkQuery(pharmacophoreQuery))
             throw new CDKException("A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");

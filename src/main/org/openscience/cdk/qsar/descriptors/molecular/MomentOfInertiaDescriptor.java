@@ -25,7 +25,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.IMolecularFormula;
 import org.openscience.cdk.formula.MolecularFormulaManipulator;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -169,7 +169,7 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
         double eps = 1e-5;
 
         double[][] imat = new double[3][3];
-        Point3d centerOfMass = GeometryToolsInternalCoordinates.get3DCentreOfMass(container);
+        Point3d centerOfMass = GeometryTools.get3DCentreOfMass(container);
 
         double xdif;
         double ydif;

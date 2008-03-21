@@ -43,7 +43,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -455,7 +455,7 @@ public class MDLV2000ReaderTest extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(5, mol.getAtomCount());
 
-        boolean has3d = GeometryToolsInternalCoordinates.has3DCoordinates(mol);
+        boolean has3d = GeometryTools.has3DCoordinates(mol);
         assertTrue(has3d);
     }
 

@@ -43,7 +43,7 @@ import javax.vecmath.Vector2d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -1105,9 +1105,9 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintRingRing(IRing ring, Color bondColor, Graphics2D graphics)
 	{
-		Point2d center = GeometryToolsInternalCoordinates.get2DCenter(ring);
+		Point2d center = GeometryTools.get2DCenter(ring);
 
-		double[] minmax = GeometryToolsInternalCoordinates.getMinMax(ring);
+		double[] minmax = GeometryTools.getMinMax(ring);
 		double width = (minmax[2] - minmax[0]) * 0.7;
 		double height = (minmax[3] - minmax[1]) * 0.7;
 		int[] coords = {
@@ -1159,9 +1159,9 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintSingleBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
-		if (GeometryToolsInternalCoordinates.has2DCoordinates(bond))
+		if (GeometryTools.has2DCoordinates(bond))
 		{
-			paintOneBond(GeometryToolsInternalCoordinates.getBondCoordinates(bond), bondColor, graphics);
+			paintOneBond(GeometryTools.getBondCoordinates(bond), bondColor, graphics);
 		}
 	}
 
@@ -1173,9 +1173,9 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintAnyBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
-		if (GeometryToolsInternalCoordinates.has2DCoordinates(bond))
+		if (GeometryTools.has2DCoordinates(bond))
 		{
-			int[] screencoords=getScreenCoordinates(GeometryToolsInternalCoordinates.getBondCoordinates(bond));
+			int[] screencoords=getScreenCoordinates(GeometryTools.getBondCoordinates(bond));
 			int dashlength=4;
 			int spacelength=4;
             if ((screencoords[0] == screencoords[2]) && (screencoords[1] == screencoords[3]))
@@ -1209,7 +1209,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintDoubleBond(org.openscience.cdk.interfaces.IBond bond, Color bondColor, Graphics2D graphics)
 	{
-		int[] coords = GeometryToolsInternalCoordinates.distanceCalculator(GeometryToolsInternalCoordinates.getBondCoordinates(bond), r2dm.getBondDistance() / 2);
+		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), r2dm.getBondDistance() / 2);
 
 		int[] newCoords1 = {coords[0], coords[1], coords[6], coords[7]};
 		paintOneBond(newCoords1, bondColor, graphics);
@@ -1228,7 +1228,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	{
 		paintSingleBond(bond, bondColor, graphics);
 
-		int[] coords = GeometryToolsInternalCoordinates.distanceCalculator(GeometryToolsInternalCoordinates.getBondCoordinates(bond), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
+		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
 
 		int[] newCoords1 = {coords[0], coords[1], coords[6], coords[7]};
 		paintOneBond(newCoords1, bondColor, graphics);
@@ -1247,9 +1247,9 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	 */
 	public void paintInnerBond(org.openscience.cdk.interfaces.IBond bond, IRing ring, Color bondColor, Graphics2D graphics)
 	{
-		Point2d center = GeometryToolsInternalCoordinates.get2DCenter(ring);
+		Point2d center = GeometryTools.get2DCenter(ring);
 
-		int[] coords = GeometryToolsInternalCoordinates.distanceCalculator(GeometryToolsInternalCoordinates.getBondCoordinates(bond), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
+		int[] coords = GeometryTools.distanceCalculator(GeometryTools.getBondCoordinates(bond), (r2dm.getBondWidth() / 2 + r2dm.getBondDistance()));
 		double dist1 = Math.sqrt(Math.pow((coords[0] - center.x), 2) + Math.pow((coords[1] - center.y), 2));
 		double dist2 = Math.sqrt(Math.pow((coords[2] - center.x), 2) + Math.pow((coords[3] - center.y), 2));
 		if (dist1 < dist2)
@@ -1291,7 +1291,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	public void paintOneBond(int[] coords, Color bondColor, Graphics2D graphics)
 	{
 		graphics.setColor(bondColor);
-        int[] newCoords = GeometryToolsInternalCoordinates.distanceCalculator(coords, r2dm.getBondWidth() / 2);
+        int[] newCoords = GeometryTools.distanceCalculator(coords, r2dm.getBondWidth() / 2);
 		int[] screenCoords = getScreenCoordinates(newCoords);
     int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
 		int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};
@@ -1310,10 +1310,10 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		double wedgeWidth = r2dm.getBondWidth() * 2.0;
 		// this value should be made customazible
 
-		int[] coords = GeometryToolsInternalCoordinates.getBondCoordinates(bond);
+		int[] coords = GeometryTools.getBondCoordinates(bond);
 		int[] screenCoords = getScreenCoordinates(coords);
 		graphics.setColor(bondColor);
-		int[] newCoords = GeometryToolsInternalCoordinates.distanceCalculator(coords, wedgeWidth);
+		int[] newCoords = GeometryTools.distanceCalculator(coords, wedgeWidth);
 		int[] newScreenCoords = getScreenCoordinates(newCoords);
 		if (bond.getStereo() == CDKConstants.STEREO_BOND_UP)
 		{
@@ -1339,7 +1339,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 	{
 		graphics.setColor(bondColor);
 
-		double bondLength = GeometryToolsInternalCoordinates.getLength2D(bond);
+		double bondLength = GeometryTools.getLength2D(bond);
 		int numberOfLines = (int) (bondLength / 4.0);
 		// this value should be made customizable
 		double wedgeWidth = r2dm.getBondWidth() * 2.0;
@@ -1357,7 +1357,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		Vector2d lengthStep = new Vector2d(point2);
 		lengthStep.sub(point1);
 		lengthStep.scale(1.0 / numberOfLines);
-		Vector2d vector2d = GeometryToolsInternalCoordinates.calculatePerpendicularUnitVector(point1, point2);
+		Vector2d vector2d = GeometryTools.calculatePerpendicularUnitVector(point1, point2);
 
 		Point2d currentPoint = new Point2d(point1);
 		Point2d q1 = new Point2d();
@@ -1389,7 +1389,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 				Point startPoint = r2dm.getPointerVectorStart();
 				Point endPoint = r2dm.getPointerVectorEnd();
 				int[] points = {startPoint.x, startPoint.y, endPoint.x, endPoint.y};
-				int[] newCoords = GeometryToolsInternalCoordinates.distanceCalculator(points, r2dm.getBondWidth() / 2);
+				int[] newCoords = GeometryTools.distanceCalculator(points, r2dm.getBondWidth() / 2);
 				int[] screenCoords = getScreenCoordinates(newCoords);
 				int[] xCoords = {screenCoords[0], screenCoords[2], screenCoords[4], screenCoords[6]};
 				int[] yCoords = {screenCoords[1], screenCoords[3], screenCoords[5], screenCoords[7]};

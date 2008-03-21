@@ -33,7 +33,7 @@ import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -271,7 +271,7 @@ public class StructureDiagramGenerator
 		// do layout on the shallow copy
 		molecule = shallowCopy;
 		generateCoordinates(firstBondVector);
-		double bondLength = GeometryToolsInternalCoordinates.getBondLengthAverage(molecule);
+		double bondLength = GeometryTools.getBondLengthAverage(molecule);
 		// ok, now create the coordinates for the hydrogens
 		HydrogenPlacer hPlacer = new HydrogenPlacer();
 		molecule = original;
@@ -545,7 +545,7 @@ public class StructureDiagramGenerator
 			 *  Call the method which lays out the new ring.
 			 */
 			ringCenterVector = ringPlacer.getRingCenterOfFirstRing(ring, firstBondVector, bondLength);
-			ringPlacer.placeRing(ring, sharedAtoms, GeometryToolsInternalCoordinates.get2DCenter(sharedAtoms), ringCenterVector, bondLength);
+			ringPlacer.placeRing(ring, sharedAtoms, GeometryTools.get2DCenter(sharedAtoms), ringCenterVector, bondLength);
 			/*
 			 *  Mark the ring as placed
 			 */
@@ -624,7 +624,7 @@ public class StructureDiagramGenerator
 					{
 						logger.debug("More than one atoms placed already");
 						logger.debug("trying to place neighbors of atom " + (molecule.getAtomNumber(atom) + 1));
-						atomPlacer.distributePartners(atom, placedAtoms, GeometryToolsInternalCoordinates.get2DCenter(placedAtoms), unplacedAtoms, bondLength);
+						atomPlacer.distributePartners(atom, placedAtoms, GeometryTools.get2DCenter(placedAtoms), unplacedAtoms, bondLength);
 						direction = new Vector2d(longestUnplacedChain.getAtom(1).getPoint2d());
 						startVector = new Vector2d(atom.getPoint2d());
 						direction.sub(startVector);
@@ -633,7 +633,7 @@ public class StructureDiagramGenerator
 					{
 						logger.debug("Less than or equal one atoms placed already");
 						logger.debug("Trying to get next bond vector.");
-						direction = atomPlacer.getNextBondVector(atom, placedAtoms.getAtom(0), GeometryToolsInternalCoordinates.get2DCenter(molecule),true);
+						direction = atomPlacer.getNextBondVector(atom, placedAtoms.getAtom(0), GeometryTools.get2DCenter(molecule),true);
 
 					}
 
@@ -737,8 +737,8 @@ public class StructureDiagramGenerator
 			logger.debug("newPoint1: " + newPoint1);
 			logger.debug("newPoint2: " + newPoint2);
 
-			double oldAngle = GeometryToolsInternalCoordinates.getAngle(oldPoint2.x - oldPoint1.x, oldPoint2.y - oldPoint1.y);
-			double newAngle = GeometryToolsInternalCoordinates.getAngle(newPoint2.x - newPoint1.x, newPoint2.y - newPoint1.y);
+			double oldAngle = GeometryTools.getAngle(oldPoint2.x - oldPoint1.x, oldPoint2.y - oldPoint1.y);
+			double newAngle = GeometryTools.getAngle(newPoint2.x - newPoint1.x, newPoint2.y - newPoint1.y);
 			double angleDiff = oldAngle - newAngle;
 
 			logger.debug("oldAngle: " + oldAngle + ", newAngle: " + newAngle + "; diff = " + angleDiff);
@@ -749,12 +749,12 @@ public class StructureDiagramGenerator
 			/*
 			 * Move to fit old attachment bond orientation
 			 */
-			GeometryToolsInternalCoordinates.translate2D(ringSystem, translationVector);
+			GeometryTools.translate2D(ringSystem, translationVector);
 
 			/*
 			 * Rotate to fit old attachment bond orientation
 			 */
-			GeometryToolsInternalCoordinates.rotate(ringSystem, oldPoint1, angleDiff);
+			GeometryTools.rotate(ringSystem, oldPoint1, angleDiff);
 
 			logger.debug("...done translating/rotating new ringset to fit old attachment bond orientation.");
 		}

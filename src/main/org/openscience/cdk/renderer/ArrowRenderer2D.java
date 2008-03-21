@@ -33,7 +33,7 @@ import java.awt.geom.Ellipse2D;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.LoggingTool;
@@ -115,7 +115,7 @@ public class ArrowRenderer2D {
 		IAtomContainer atomContainer = start.getBuilder().newAtomContainer();
 		atomContainer.addAtom(start);
 		atomContainer.addAtom(end);
-		center = GeometryToolsInternalCoordinates.get2DCenter(atomContainer);
+		center = GeometryTools.get2DCenter(atomContainer);
 		Point2d point1 = new Point2d((Point2d)r2dm.getRenderingCoordinate(start));
 		Point2d point2 = new Point2d((Point2d)r2dm.getRenderingCoordinate(end));
 		Vector2d vector1 = new Vector2d(point1);
@@ -123,7 +123,7 @@ public class ArrowRenderer2D {
 		vector2.sub(vector1);
 		
 
-		rotAngle = GeometryToolsInternalCoordinates.getAngle(vector2.x, vector2.y);
+		rotAngle = GeometryTools.getAngle(vector2.x, vector2.y);
 		offsetAngle = rotAngle + (Math.PI/2);
 		vector3 = new Vector2d(Math.cos(offsetAngle), Math.sin(offsetAngle));
 		vector3.normalize();

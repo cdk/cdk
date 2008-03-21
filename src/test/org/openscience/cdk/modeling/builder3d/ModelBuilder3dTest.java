@@ -26,7 +26,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -224,7 +224,7 @@ public class ModelBuilder3dTest extends NewCDKTestCase {
     	addExplicitHydrogens(ac);
     	ac = mb3d.generate3DCoordinates(ac, false);
     	Assert.assertNotNull(ac.getAtom(0).getPoint3d());
-    	double avlength=GeometryToolsInternalCoordinates.getBondLengthAverage3D(ac);
+    	double avlength=GeometryTools.getBondLengthAverage3D(ac);
     	for(int i=0;i<ac.getBondCount();i++){
     		double distance=ac.getBond(i).getAtom(0).getPoint3d().distance(ac.getBond(i).getAtom(1).getPoint3d());
     		Assert.assertTrue("Unreasonable bond length (" + distance + ") for bond " + i,

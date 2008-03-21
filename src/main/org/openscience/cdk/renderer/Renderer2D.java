@@ -28,7 +28,7 @@ import java.awt.Graphics2D;
 import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -275,8 +275,8 @@ public class Renderer2D extends SimpleRenderer2D implements IRenderer2D
 		}
 
 		// calculate some boundaries
-		double[] minmaxReactants = GeometryToolsInternalCoordinates.getMinMax(reactantContainer);
-		double[] minmaxProducts = GeometryToolsInternalCoordinates.getMinMax(productContainer);
+		double[] minmaxReactants = GeometryTools.getMinMax(reactantContainer);
+		double[] minmaxProducts = GeometryTools.getMinMax(productContainer);
 		
 		// paint box around total
 		int width = 13;

@@ -36,7 +36,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.layout.HydrogenPlacer;
@@ -132,7 +132,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
 		org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
 		org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
 		org.openscience.cdk.interfaces.IMolecule mol = model.getMoleculeSet().getMolecule(0);
-		double bondLength = GeometryToolsInternalCoordinates.getBondLengthAverage(mol);
+		double bondLength = GeometryTools.getBondLengthAverage(mol);
 		logger.debug("Read Reserpine");
 		logger.debug("Starting addition of H's");
 		addExplicitHydrogens(mol);

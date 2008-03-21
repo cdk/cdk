@@ -36,7 +36,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -134,7 +134,7 @@ public class RingPlacer
 				primaryAtoms.removeAllElements();
 				atom = ring.getAtom(k);
 				rings = rs.getRings(atom);
-				centerOfRingGravity = GeometryToolsInternalCoordinates.get2DCenter(rings);
+				centerOfRingGravity = GeometryTools.get2DCenter(rings);
 				atomPlacer.partitionPartners(atom, unplacedPartners, sharedAtoms);
 				atomPlacer.markNotPlaced(unplacedPartners);
 				try
@@ -261,7 +261,7 @@ public class RingPlacer
 				direction = -1;
 			}
 		}
-		startAngle = GeometryToolsInternalCoordinates.getAngle(startAtom.getPoint2d().x - ringCenter.x, startAtom.getPoint2d().y - ringCenter.y);
+		startAngle = GeometryTools.getAngle(startAtom.getPoint2d().x - ringCenter.x, startAtom.getPoint2d().y - ringCenter.y);
 
 		IAtom currentAtom = startAtom;
         // determine first bond in Ring
@@ -325,7 +325,7 @@ public class RingPlacer
 		//int direction = 1;
 
 		IAtom currentAtom = startAtom;
-		double startAngle = GeometryToolsInternalCoordinates.getAngle(startAtom.getPoint2d().x - ringCenter.x, startAtom.getPoint2d().y - ringCenter.y);
+		double startAngle = GeometryTools.getAngle(startAtom.getPoint2d().x - ringCenter.x, startAtom.getPoint2d().y - ringCenter.y);
 		/* 
 		 * Get one bond connected to the spiro bridge atom.
 		 * It doesn't matter in which direction we draw.
@@ -453,7 +453,7 @@ public class RingPlacer
 				direction = -1;
 			}
 		}
-		startAngle = GeometryToolsInternalCoordinates.getAngle(startAtom.getPoint2d().x - ringCenter.x, startAtom.getPoint2d().y - ringCenter.y);
+		startAngle = GeometryTools.getAngle(startAtom.getPoint2d().x - ringCenter.x, startAtom.getPoint2d().y - ringCenter.y);
 	
 		IAtom currentAtom = startAtom;
         // determine first bond in Ring
@@ -614,7 +614,7 @@ public class RingPlacer
 		double radius = bondLength / (2 * Math.sin((Math.PI) / size));
 		double newRingPerpendicular = Math.sqrt(Math.pow(radius, 2) - Math.pow(bondLength/2, 2));		
 		/* get the angle between the x axis and the bond vector */
-		double rotangle = GeometryToolsInternalCoordinates.getAngle(bondVector.x, bondVector.y);
+		double rotangle = GeometryTools.getAngle(bondVector.x, bondVector.y);
 		/* Add 90 Degrees to this angle, this is supposed to be the new ringcenter vector */
 		rotangle += Math.PI / 2;
 		return new Vector2d(Math.cos(rotangle) * newRingPerpendicular, Math.sin(rotangle) * newRingPerpendicular);
@@ -649,8 +649,8 @@ public class RingPlacer
 				logger.debug("placeConnectedRings-> connectedRing: " + (ring.toString()));
 				if ((sac == 2 && handleType == FUSED) ||(sac == 1 && handleType == SPIRO)||(sac > 2 && handleType == BRIDGED))
 				{
-					sharedAtomsCenter = GeometryToolsInternalCoordinates.get2DCenter(sharedAtoms);
-					oldRingCenter = GeometryToolsInternalCoordinates.get2DCenter(ring);
+					sharedAtomsCenter = GeometryTools.get2DCenter(sharedAtoms);
+					oldRingCenter = GeometryTools.get2DCenter(ring);
 					tempVector = (new Vector2d(sharedAtomsCenter));
 					newRingCenterVector = new Vector2d(tempVector);
 					newRingCenterVector.sub(new Vector2d(oldRingCenter));

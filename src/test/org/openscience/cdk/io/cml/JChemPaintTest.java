@@ -32,7 +32,7 @@ import java.io.InputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
@@ -87,7 +87,7 @@ public class JChemPaintTest extends CDKTestCase {
         IMolecule mol = model.getMoleculeSet().getMolecule(0);
         assertNotNull(mol);
         assertEquals(4, mol.getAtomCount());
-        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertTrue(GeometryTools.has3DCoordinates(mol));
     }
 
     /**
@@ -116,6 +116,6 @@ public class JChemPaintTest extends CDKTestCase {
         IMolecule mol = moleculeSet.getMolecule(0);
         assertNotNull(mol);
         assertEquals(2, mol.getAtomCount());
-        assertTrue(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
+        assertTrue(GeometryTools.has3DCoordinates(mol));
     }
 }

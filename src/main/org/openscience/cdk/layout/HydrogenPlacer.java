@@ -28,9 +28,11 @@
  */
 package org.openscience.cdk.layout;
 
+import java.util.List;
+
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.LoggingTool;
@@ -70,7 +72,7 @@ public class HydrogenPlacer {
 	
 	public  void placeHydrogens2D(IAtomContainer atomContainer, IAtom atom)
 	{
-		double bondLength = GeometryToolsInternalCoordinates.getBondLengthAverage(atomContainer);
+		double bondLength = GeometryTools.getBondLengthAverage(atomContainer);
 		placeHydrogens2D(atomContainer, atom, bondLength);
 		
 	
@@ -85,7 +87,7 @@ public class HydrogenPlacer {
 		atomPlacer.setMolecule(atomContainer);
 		//Vector atomVector = new Vector();
 		logger.debug("bondLength ", bondLength);
-		java.util.List connectedAtoms = atomContainer.getConnectedAtomsList(atom);
+		List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
 		IAtomContainer placedAtoms = atomContainer.getBuilder().newAtomContainer();
 		IAtomContainer unplacedAtoms = atomContainer.getBuilder().newAtomContainer();
 		
@@ -103,7 +105,7 @@ public class HydrogenPlacer {
 		{
 			logger.debug("H-" + f, ": ", unplacedAtoms.getAtom(f).getPoint2d());
 		}
-        Point2d centerPlacedAtoms = null;
+        Point2d centerPlacedAtoms = GeometryTools.get2DCenter(placedAtoms);
         atomPlacer.distributePartners(atom, placedAtoms, centerPlacedAtoms, unplacedAtoms, bondLength);
 		logger.debug("Atom placement after procedure:");
 		logger.debug("Center atom ", atom.getSymbol(), ": ", atom.getPoint2d());

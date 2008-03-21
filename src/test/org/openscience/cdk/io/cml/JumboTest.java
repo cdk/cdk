@@ -32,7 +32,7 @@ import java.io.InputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
@@ -92,8 +92,8 @@ public class JumboTest extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(mol.getAtomCount(), 24);
         assertEquals(mol.getBondCount(), 28);
-        assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertFalse(GeometryTools.has3DCoordinates(mol));
+        assertTrue(GeometryTools.has2DCoordinates(mol));
     }
 
     /**
@@ -123,8 +123,8 @@ public class JumboTest extends CDKTestCase {
         assertNotNull(mol);
         assertEquals(mol.getAtomCount(), 15);
         assertEquals(mol.getBondCount(), 16);
-        assertFalse(GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertFalse(GeometryTools.has3DCoordinates(mol));
+        assertTrue(GeometryTools.has2DCoordinates(mol));
     }
 
     /**
@@ -155,8 +155,8 @@ public class JumboTest extends CDKTestCase {
         assertNotNull(mol);
         assertEquals("Incorrect number of atoms", 11, mol.getAtomCount());
         assertEquals("Incorrect number of bonds", 12, mol.getBondCount());
-        assertFalse("File does not have 3D coordinates", GeometryToolsInternalCoordinates.has3DCoordinates(mol));
-        assertFalse("File does not have 2D coordinates", GeometryToolsInternalCoordinates.has2DCoordinates(mol));
+        assertFalse("File does not have 3D coordinates", GeometryTools.has3DCoordinates(mol));
+        assertFalse("File does not have 2D coordinates", GeometryTools.has2DCoordinates(mol));
     }
 
 }

@@ -39,7 +39,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinates;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -162,7 +162,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 
 		IAtomContainer ac = generateCoordinates(mol);
 //		MoleculeViewer2D.display(new Molecule(ac), false);
-		assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 	
@@ -174,7 +174,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeAlphaPinene();
 		IAtomContainer ac = generateCoordinates(m);
-		assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -186,7 +186,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeBiphenyl();
 		IAtomContainer ac = generateCoordinates(m);
-		assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -198,7 +198,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 	{
 		Molecule m = MoleculeFactory.make4x3CondensedRings();
 		IAtomContainer ac = generateCoordinates(m);
-		assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -210,7 +210,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 	{
 		Molecule m = MoleculeFactory.makePhenylEthylBenzene();
 		IAtomContainer ac = generateCoordinates(m);
-		assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -222,7 +222,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeSpiroRings();
 		IAtomContainer ac = generateCoordinates(m);
-		assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+		assertTrue(GeometryTools.has2DCoordinates(ac));
 		if (standAlone)MoleculeViewer2D.display(new Molecule(ac), false);
 	}
 
@@ -235,7 +235,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeMethylDecaline();
 		IAtomContainer ac = generateCoordinates(m);
-		assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -247,7 +247,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeBranchedAliphatic();
 		IAtomContainer ac = generateCoordinates(m);
-		assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -259,7 +259,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeDiamantane();
 		IAtomContainer ac = generateCoordinates(m);
-		assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 	
 
@@ -276,7 +276,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		IMolecule mol = sp.parseSmiles("CC(=O)OC1C=CC(SC23CC4CC(CC(C4)C2)C3)N(C1SC56CC7CC(CC(C7)C5)C6)C(C)=O");
 		IAtomContainer ac = generateCoordinates(mol);
 		//MoleculeViewer2D.display(new Molecule(ac), false);
-		assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -289,7 +289,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeEthylCyclohexane();
 		IAtomContainer ac = generateCoordinates(m);
-		assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -301,7 +301,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 	{
 		Molecule m = MoleculeFactory.makeBicycloRings();
 		IAtomContainer ac = generateCoordinates(m);
-		assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 	
@@ -334,7 +334,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("c1ccccc1");
 		IAtomContainer ac = generateCoordinates(mol);
-		assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 
 
@@ -347,7 +347,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C"));
 		IAtomContainer ac = generateCoordinates(mol);
-		assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+		assertTrue(GeometryTools.has2DCoordinates(ac));
 	}
 	
 	/**
@@ -400,7 +400,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		IMolecule mol = sp.parseSmiles("[N+](=O)([O-])C1=C(O)C(=CC(=C1)[N+](=O)[O-])[N+](=O)[O-].C23N(CCCC2)CCCC3");
 		try{
 			IAtomContainer ac = generateCoordinates(mol);
-			assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(ac));
+			assertTrue(GeometryTools.has2DCoordinates(ac));
 			fail("This should have thrown a 'Molecule not connected' exception.");
 		} catch(Exception exc) {
 			// OK, an exception should have been thrown
@@ -437,7 +437,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 				SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 				IMolecule cdkMol = parser.parseSmiles(problematicMol2AsSmiles);
 				new StructureDiagramGenerator(cdkMol).generateCoordinates();
-				assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(cdkMol));
+				assertTrue(GeometryTools.has2DCoordinates(cdkMol));
 				
 				String problematicMol2 = "@<TRIPOS>MOLECULE\n"
 						+ "mol_197219.smi\n"
@@ -718,7 +718,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 				final IMolecule mol = model.getMoleculeSet().getMolecule(0);
 				final IMolecule clone = (IMolecule)mol.clone();
 				new StructureDiagramGenerator(clone).generateCoordinates();
-				assertTrue(GeometryToolsInternalCoordinates.has2DCoordinates(clone));
+				assertTrue(GeometryTools.has2DCoordinates(clone));
 	}
 
 	Molecule makeTetraMethylCycloButane()

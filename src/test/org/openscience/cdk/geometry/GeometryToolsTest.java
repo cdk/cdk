@@ -87,7 +87,7 @@ public class GeometryToolsTest extends NewCDKTestCase {
     @Test public void testHas2DCoordinates_EmptyAtomContainer() {
     	IAtomContainer container = new AtomContainer();
     	Assert.assertFalse(GeometryTools.has2DCoordinates(container));
-    	Assert.assertFalse(GeometryTools.has2DCoordinates(null));
+    	Assert.assertFalse(GeometryTools.has2DCoordinates((IAtomContainer)null));
 }
 
     @Test public void testHas2DCoordinatesNew_IAtomContainer() {
