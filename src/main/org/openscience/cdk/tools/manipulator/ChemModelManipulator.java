@@ -267,7 +267,7 @@ public class ChemModelManipulator {
      * Returns all the AtomContainer's of a ChemModel.
      */
     @TestMethod("testGetAllAtomContainers_IChemModel")
-    public static List getAllAtomContainers(IChemModel chemModel) {
+    public static List<IAtomContainer> getAllAtomContainers(IChemModel chemModel) {
         IMoleculeSet moleculeSet = chemModel.getBuilder().newMoleculeSet();
         if (chemModel.getMoleculeSet() != null) {
             moleculeSet.add(chemModel.getMoleculeSet());
@@ -315,8 +315,8 @@ public class ChemModelManipulator {
      * @return           A List of all ChemObjects inside.
      */
     @TestMethod("testGetAllChemObjects_IChemModel")
-    public static List getAllChemObjects(IChemModel chemModel) {
-		ArrayList list = new ArrayList();
+    public static List<IChemObject> getAllChemObjects(IChemModel chemModel) {
+		List<IChemObject> list = new ArrayList<IChemObject>();
         // list.add(chemModel); // only add ChemObjects contained within
         ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
@@ -325,18 +325,18 @@ public class ChemModelManipulator {
         IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
         if (moleculeSet != null) {
         	list.add(moleculeSet);
-        	List current = MoleculeSetManipulator.getAllChemObjects(moleculeSet);
-        	for (Iterator iter = current.iterator(); iter.hasNext();) {
-        		Object o = iter.next();
+        	List<IChemObject> current = MoleculeSetManipulator.getAllChemObjects(moleculeSet);
+        	for (Iterator<IChemObject> iter = current.iterator(); iter.hasNext();) {
+        		IChemObject o = iter.next();
         		if (!list.contains(o)) list.add(o);
         	}
         }
         IReactionSet reactionSet = chemModel.getReactionSet();
         if (reactionSet != null) {
         	list.add(reactionSet);
-            List current = ReactionSetManipulator.getAllChemObjects(reactionSet);
-        	for (Iterator iter = current.iterator(); iter.hasNext();) {
-        		Object o = iter.next();
+            List<IChemObject> current = ReactionSetManipulator.getAllChemObjects(reactionSet);
+        	for (Iterator<IChemObject> iter = current.iterator(); iter.hasNext();) {
+        		IChemObject o = iter.next();
         		if (!list.contains(o)) list.add(o);
         	}
         }

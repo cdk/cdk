@@ -49,7 +49,7 @@ public class AtomContainerSetManipulator {
     @TestMethod("testGetAtomCount_IAtomContainerSet")
     public static int getAtomCount(IAtomContainerSet set) {
 		int count = 0;
-		java.util.Iterator acs = set.atomContainers();
+		Iterator<IAtomContainer> acs = set.atomContainers();
         while (acs.hasNext()) {
         	count += ((IAtomContainer)acs.next()).getAtomCount();
         }
@@ -59,7 +59,7 @@ public class AtomContainerSetManipulator {
     @TestMethod("testGetBondCount_IAtomContainerSet")
     public static int getBondCount(IAtomContainerSet set) {
 		int count = 0;
-		java.util.Iterator acs = set.atomContainers();
+		Iterator<IAtomContainer> acs = set.atomContainers();
         while (acs.hasNext()) {
         	count += ((IAtomContainer)acs.next()).getBondCount();
         }
@@ -68,7 +68,7 @@ public class AtomContainerSetManipulator {
 
     @TestMethod("testRemoveAtomAndConnectedElectronContainers_IAtomContainerSet_IAtom")
     public static void removeAtomAndConnectedElectronContainers(IAtomContainerSet set, IAtom atom) {
-    	java.util.Iterator acs = set.atomContainers();
+    	Iterator<IAtomContainer> acs = set.atomContainers();
         while (acs.hasNext()) {
             IAtomContainer container = (IAtomContainer)acs.next();
             if (container.contains(atom)) {
@@ -87,7 +87,7 @@ public class AtomContainerSetManipulator {
 
     @TestMethod("testRemoveElectronContainer_IAtomContainerSet_IElectronContainer")
     public static void removeElectronContainer(IAtomContainerSet set, IElectronContainer electrons) {
-    	java.util.Iterator acs = set.atomContainers();
+    	Iterator<IAtomContainer> acs = set.atomContainers();
         while (acs.hasNext()) {
             IAtomContainer container = (IAtomContainer)acs.next();
             if (container.contains(electrons)) {
@@ -186,7 +186,7 @@ public class AtomContainerSetManipulator {
 
     @TestMethod("testGetRelevantAtomContainer_IAtomContainerSet_IAtom")
     public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet containerSet, IAtom atom) {
-    	java.util.Iterator acs = containerSet.atomContainers();
+    	Iterator<IAtomContainer> acs = containerSet.atomContainers();
         while (acs.hasNext()) {
         	IAtomContainer ac = (IAtomContainer)acs.next();
             if (ac.contains(atom)) {
@@ -198,7 +198,7 @@ public class AtomContainerSetManipulator {
 
     @TestMethod("testGetRelevantAtomContainer_IAtomContainerSet_IBond")
     public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet containerSet, IBond bond) {
-    	java.util.Iterator acs = containerSet.atomContainers();
+    	Iterator<IAtomContainer> acs = containerSet.atomContainers();
         while (acs.hasNext()) {
         	IAtomContainer ac = (IAtomContainer)acs.next();
             if (ac.contains(bond)) {
@@ -218,7 +218,7 @@ public class AtomContainerSetManipulator {
     public static List<IChemObject> getAllChemObjects(IAtomContainerSet set) {
         ArrayList<IChemObject> list = new ArrayList<IChemObject>();
         list.add(set);
-        java.util.Iterator acs = set.atomContainers();
+        Iterator<IAtomContainer> acs = set.atomContainers();
         while (acs.hasNext()) {
             list.add((IAtomContainer)acs.next());
         }

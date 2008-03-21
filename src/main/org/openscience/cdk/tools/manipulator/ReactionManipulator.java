@@ -27,13 +27,21 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 
 /**
  * @cdk.module standard
@@ -186,16 +194,16 @@ public class ReactionManipulator {
      * @return a list of the IAtomContainer objects comprising the reaction
      */
     @TestMethod("testGetAllAtomContainers_IReaction")
-    public static List getAllAtomContainers(IReaction reaction) {
+    public static List<IAtomContainer> getAllAtomContainers(IReaction reaction) {
 		return MoleculeSetManipulator.getAllAtomContainers(
             getAllMolecules(reaction)
         );
     }
 
     @TestMethod("testGetAllIDs_IReaction")
-    public static Vector<String> getAllIDs(IReaction reaction) {
-        Vector<String> idList = new Vector<String>();
-        if (reaction.getID() != null) idList.addElement(reaction.getID());
+    public static List<String> getAllIDs(IReaction reaction) {
+        List<String> idList = new ArrayList<String>();
+        if (reaction.getID() != null) idList.add(reaction.getID());
         IMoleculeSet reactants = reaction.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
             IMolecule mol = reactants.getMolecule(i);
@@ -266,9 +274,9 @@ public class ReactionManipulator {
      */
     @TestMethod("testGetMappedChemObject_IReaction_IAtom,testGetMappedChemObject_IReaction_IBond")
     public static IChemObject getMappedChemObject(IReaction reaction, IChemObject chemObject){
-    	java.util.Iterator mappings = reaction.mappings();
+    	Iterator<IMapping> mappings = reaction.mappings();
     	while (mappings.hasNext()){
-    		IMapping mapping = (IMapping)mappings.next();
+    		IMapping mapping = mappings.next();
 			if (mapping.getChemObject(0).equals(chemObject)){
 				return mapping.getChemObject(1);
 			} else if (mapping.getChemObject(1).equals(chemObject))

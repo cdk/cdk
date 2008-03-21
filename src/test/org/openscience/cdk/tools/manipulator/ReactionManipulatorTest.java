@@ -88,7 +88,7 @@ public class ReactionManipulatorTest extends NewCDKTestCase {
         reaction.addReactant(water);
         reaction.addProduct(water);
         
-        Vector ids = ReactionManipulator.getAllIDs(reaction);
+        List ids = ReactionManipulator.getAllIDs(reaction);
         Assert.assertNotNull(ids);
         Assert.assertEquals(5, ids.size());
     }

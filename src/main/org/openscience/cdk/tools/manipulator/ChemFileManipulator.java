@@ -84,8 +84,8 @@ public class ChemFileManipulator {
      * @return  A list of all ChemObjects
      */
     @TestMethod("testGetAllChemObjects_IChemFile")
-    public static List getAllChemObjects(IChemFile file) {
-    	ArrayList list = new ArrayList();
+    public static List<IChemObject> getAllChemObjects(IChemFile file) {
+    	List<IChemObject> list = new ArrayList<IChemObject>();
     	//list.add(file); // should not add the original file
         for (int i=0; i<file.getChemSequenceCount(); i++) {
         	list.add(file.getChemSequence(i));
@@ -97,8 +97,8 @@ public class ChemFileManipulator {
     }
 
     @TestMethod("testGetAllIDs_IChemFile")
-    public static List getAllIDs(IChemFile file) {
-    	ArrayList list = new ArrayList();
+    public static List<String> getAllIDs(IChemFile file) {
+    	List<String> list = new ArrayList<String>();
     	if (file.getID() != null) list.add(file.getID());
         for (int i=0; i<file.getChemSequenceCount(); i++) {
             list.addAll(ChemSequenceManipulator.getAllIDs(
@@ -112,11 +112,11 @@ public class ChemFileManipulator {
      * Returns all the AtomContainer's of a ChemFile.
      */
     @TestMethod("testGetAllAtomContainers_IChemFile")
-    public static List getAllAtomContainers(IChemFile file) {
-        Iterator sequences = file.chemSequences();
+    public static List<IAtomContainer> getAllAtomContainers(IChemFile file) {
+        Iterator<IChemSequence> sequences = file.chemSequences();
         List<IAtomContainer> acList = new ArrayList<IAtomContainer>();
         while (sequences.hasNext()) {
-        	IChemSequence chemseq  = (IChemSequence)sequences.next();
+        	IChemSequence chemseq = sequences.next();
             acList.addAll(ChemSequenceManipulator.getAllAtomContainers(chemseq));
         }
         return acList;
@@ -129,14 +129,12 @@ public class ChemFileManipulator {
      * @return      The List of IChemModel objects inside.
      */
     @TestMethod("testGetAllChemModels_IChemFile")
-    public static List getAllChemModels(IChemFile file)
-    {
+    public static List<IChemModel> getAllChemModels(IChemFile file) {
         List<IChemModel> modelsList = new ArrayList<IChemModel>();
 
 	    for (int f = 0; f < file.getChemSequenceCount(); f++){
 		    java.util.Iterator<IChemModel> iter = file.getChemSequence(f).chemModels();
-		    while (iter.hasNext())
-		    {
+		    while (iter.hasNext()) {
 			    modelsList.add(iter.next());
 		    }
 	    }

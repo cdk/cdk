@@ -27,6 +27,8 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.Comparator;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IRing;
@@ -36,7 +38,7 @@ import org.openscience.cdk.interfaces.IRing;
  * @cdk.svnrev  $Revision$
  */
 @TestClass("org.openscience.cdk.tools.manipulator.RingSizeComparatorTest")
-public class RingSizeComparator implements java.util.Comparator {
+public class RingSizeComparator implements Comparator<IRing> {
     
     /** Flag to denote that the set is order with the largest ring first */
     public final static int LARGE_FIRST = 1;
@@ -56,10 +58,10 @@ public class RingSizeComparator implements java.util.Comparator {
     }
 
     @TestMethod("testCompare")
-    public int compare(Object object1, Object object2) throws ClassCastException
+    public int compare(IRing object1, IRing object2) throws ClassCastException
     {
-        int size1 = ((IRing)object1).getAtomCount();
-        int size2 = ((IRing)object2).getAtomCount();
+        int size1 = object1.getAtomCount();
+        int size2 = object2.getAtomCount();
         if (size1 == size2) return 0;
         if (size1 > size2 && sortOrder == SMALL_FIRST) {
             return 1;

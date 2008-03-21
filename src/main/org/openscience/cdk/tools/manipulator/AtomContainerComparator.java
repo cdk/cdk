@@ -57,7 +57,7 @@ import java.util.Iterator;
  * @cdk.svnrev  $Revision: 9162 $
  */
 @TestClass("org.openscience.cdk.tools.manipulator.AtomContainerComparatorTest")
-public class AtomContainerComparator implements Comparator {
+public class AtomContainerComparator implements Comparator<IAtomContainer> {
   
   /** Configure LoggingTool */
   private LoggingTool logger = new LoggingTool(AtomContainerComparator.class);
@@ -86,7 +86,7 @@ public class AtomContainerComparator implements Comparator {
    *         to, or greater than the second.
    */
     @TestMethod("testCompare_Object_Object")
-  public int compare(Object o1, Object o2) {
+  public int compare(IAtomContainer o1, IAtomContainer o2) {
     // Check for nulls
     if (o1 == null && o2 == null)
       return 0;
@@ -158,7 +158,7 @@ public class AtomContainerComparator implements Comparator {
    */
   private double getMolecularWeight(IAtomContainer atomContainer) throws CDKException {
     double mw = 0.0;
-    Iterator iterator = atomContainer.atoms();
+    Iterator<IAtom> iterator = atomContainer.atoms();
     try {
       while (iterator.hasNext()) {
         IAtom atom = ((IAtom) iterator.next());

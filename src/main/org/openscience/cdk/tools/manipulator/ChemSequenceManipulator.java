@@ -30,7 +30,9 @@ package org.openscience.cdk.tools.manipulator;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 
 import java.util.ArrayList;
@@ -83,11 +85,11 @@ public class ChemSequenceManipulator {
      * Returns all the AtomContainer's of a ChemSequence.
      */
     @TestMethod("testGetAllAtomContainers_IChemSequence")
-    public static List getAllAtomContainers(IChemSequence sequence) {
-        Iterator models = sequence.chemModels();
-        List acList = new ArrayList();
+    public static List<IAtomContainer> getAllAtomContainers(IChemSequence sequence) {
+        Iterator<IChemModel> models = sequence.chemModels();
+        List<IAtomContainer> acList = new ArrayList<IAtomContainer>();
         while (models.hasNext()) {
-    		IChemModel chemmodel = (IChemModel)models.next();
+    		IChemModel chemmodel = models.next();
             acList.addAll(ChemModelManipulator.getAllAtomContainers(chemmodel));
         }
         return acList;
@@ -99,14 +101,14 @@ public class ChemSequenceManipulator {
      * @return  A List of all ChemObjects.
      */
     @TestMethod("testGetAllChemObjects_IChemSequence")
-    public static List getAllChemObjects(IChemSequence sequence) {
-		ArrayList list = new ArrayList();
+    public static List<IChemObject> getAllChemObjects(IChemSequence sequence) {
+		List<IChemObject> list = new ArrayList<IChemObject>();
         // list.add(sequence);
         for (int i=0; i<sequence.getChemModelCount(); i++) {
         	list.add(sequence.getChemModel(i));
-        	List current = ChemModelManipulator.getAllChemObjects(sequence.getChemModel(i));
-            for (Iterator iter = current.iterator(); iter.hasNext();) {
-            	Object o = iter.next();
+        	List<IChemObject> current = ChemModelManipulator.getAllChemObjects(sequence.getChemModel(i));
+            for (Iterator<IChemObject> iter = current.iterator(); iter.hasNext();) {
+            	IChemObject o = iter.next();
             	if (!list.contains(o)) list.add(o);
             }
             
