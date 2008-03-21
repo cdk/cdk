@@ -1,9 +1,0 @@
-usr/share/java/batik.jar 		usr/share/libcdk-java/lib/batik.jar
-usr/share/java/commons-cli.jar 		usr/share/libcdk-java/lib/commons-cli.jar
-usr/share/java/gnujaxp.jar 		usr/share/libcdk-java/lib/gnujaxp.jar
-usr/share/java/junit.jar 		usr/share/libcdk-java/lib/junit.jar
-usr/share/java/log4j-1.2.jar 		usr/share/libcdk-java/lib/log4j-1.2.jar
-usr/share/java/mysql.jar 		usr/share/libcdk-java/lib/mysql.jar
-usr/share/java/postgresql.jar 		usr/share/libcdk-java/lib/postgresql.jar
-usr/share/java/xercesImpl.jar 		usr/share/libcdk-java/lib/xercesImpl.jar
-usr/share/java/xmlParserAPIs.jar 	usr/share/libcdk-java/lib/xmlParserAPIs.jar				

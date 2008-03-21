@@ -1,6 +1,0 @@
-Makefile
-Makefile.in
-aclocal.m4
-configure
-config.*
-cdk-test-*.tar.gz

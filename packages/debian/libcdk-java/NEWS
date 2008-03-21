@@ -1,9 +1,0 @@
-libcdk-java (20040626-2+3) unstable; urgency=low
-
-  * The package is split into 4 packages
-  	1) libcdk-java (base CDK libs)
-	2) libcdk-java-common (common CDK libs)
-	3) libcdk-java-doc (API documentation of base CDK libs)
-	4) cdk (shell wrappers for the CDK)
-
- -- Daniel Leidert (dale) <daniel.leidert@wgdd.de>  Fri, 20 Aug 2004 23:13:38 +0200

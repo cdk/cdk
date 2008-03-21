@@ -1,9 +1,0 @@
-libcdk-java-common for Debian
------------------------------
-
-This package contains not all common Java-libraries, originally needed by the
-CDK, because there are some up-to-date libraries, provided by other
-debian-packages. These are symlinked from /usr/share/libcdk-java/lib
-to /usr/share/java.
-
- -- Daniel Leidert (dale) <daniel.leidert@wgdd.de>, Sun, 20 Aug 2004 12:28:40 +0200

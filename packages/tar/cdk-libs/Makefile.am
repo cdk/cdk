@@ -1,6 +1,0 @@
-
-PREFIX="@prefix@"
-SUBDIRS= jar
-
-EXTRA_DIST=VERSION
-

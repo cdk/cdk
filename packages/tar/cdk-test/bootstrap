@@ -1,4 +1,0 @@
-#! /bin/sh -e
-# bootstrap this software
-
-aclocal && automake --verbose --gnu && autoconf

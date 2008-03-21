@@ -1,7 +1,0 @@
-IMPORTANT:
-
-These libraries are NOT the CDK libraries, but libraries needed to get
-the CDK libraries to work. The CDK libraries itself are distributed in
-the cdk-bin distribution.
-
-Egon Willighagen <egonw@sci.kun.nl>

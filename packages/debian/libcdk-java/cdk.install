@@ -1,3 +1,0 @@
-debian/reportbug/* usr/share/bug/cdk
-
-debian/cdk-binary/* usr/bin
