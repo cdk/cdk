@@ -24,11 +24,8 @@
  */
 package org.openscience.cdk;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.Association;
-import org.openscience.cdk.Atom;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Checks the functionality of the Association class.
@@ -37,68 +34,58 @@ import org.openscience.cdk.Atom;
  *
  * @see org.openscience.cdk.Association
  */
-public class AssociationTest extends CDKTestCase {
+public class AssociationTest extends NewCDKTestCase {
 
-    public AssociationTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {}
-
-    public static Test suite() {
-        return new TestSuite(AssociationTest.class);
-    }
-    
-    public void testAssociation() {
+    @Test public void testAssociation() {
         Association association = new Association();
-        assertEquals(0, association.getElectronCount());
-        assertEquals(0, association.getAtomCount());
+        Assert.assertEquals(0, association.getElectronCount());
+        Assert.assertEquals(0, association.getAtomCount());
     }
     
-    public void testAssociation_IAtom_IAtom() {
+    @Test public void testAssociation_IAtom_IAtom() {
         Association association = new Association(new Atom("C"), new Atom("C"));
-        assertEquals(0, association.getElectronCount());
-        assertEquals(2, association.getAtomCount());
+        Assert.assertEquals(0, association.getElectronCount());
+        Assert.assertEquals(2, association.getAtomCount());
     }
     
     /** Test for RFC #9 */
-    public void testToString() {
+    @Test public void testToString() {
         Association association = new Association();
         String description = association.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue(description.charAt(i) != '\n');
-            assertTrue(description.charAt(i) != '\r');
+        	Assert.assertTrue(description.charAt(i) != '\n');
+        	Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
 
-    public void testContains() {
+    @Test public void testContains() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
         
         Association association = new Association(c, o);
         
-        assertTrue(association.contains(c));
-        assertTrue(association.contains(o));
+        Assert.assertTrue(association.contains(c));
+        Assert.assertTrue(association.contains(o));
     }
     
-    public void testGetAtomCount() {
+    @Test public void testGetAtomCount() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
         
         Association association = new Association(c, o);
         
-        assertEquals(2, association.getAtomCount());
+        Assert.assertEquals(2, association.getAtomCount());
     }
     
-    public void testGetAtoms() {
+    @Test public void testGetAtoms() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
         
         Association association = new Association(c, o);
         
         Atom[] atoms = association.getAtoms();
-        assertEquals(2, atoms.length);
-        assertNotNull(atoms[0]);
-        assertNotNull(atoms[1]);
+        Assert.assertEquals(2, atoms.length);
+        Assert.assertNotNull(atoms[0]);
+        Assert.assertNotNull(atoms[1]);
     }
 }

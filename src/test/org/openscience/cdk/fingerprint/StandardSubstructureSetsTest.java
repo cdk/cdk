@@ -1,5 +1,4 @@
-/*
- * $RCSfile$    
+/* $RCSfile$    
  * $Author$    
  * $Date$    
  * $Revision$
@@ -25,37 +24,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
-
 package org.openscience.cdk.fingerprint;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.fingerprint.StandardSubstructureSets;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-extra
  */
-public class StandardSubstructureSetsTest extends CDKTestCase {
+public class StandardSubstructureSetsTest extends NewCDKTestCase {
 	
-	public StandardSubstructureSetsTest(String name) {
-		super(name);
-	}
-	
-	public static Test suite() {
-		return new TestSuite(StandardSubstructureSetsTest.class);
-	}
-
-	public void testGetFunctionalGroupSubstructureSet() throws Exception {
+	@Test public void testGetFunctionalGroupSubstructureSet() throws Exception {
 		IAtomContainerSet set = null;
 		set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
 
-		assertNotNull(set);
-		assertEquals(8, set.getAtomContainerCount());
+		Assert.assertNotNull(set);
+		Assert.assertEquals(8, set.getAtomContainerCount());
 	}
 	
 }

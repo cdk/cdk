@@ -24,9 +24,8 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
-import org.openscience.cdk.applications.swing.PeriodicTablePanel;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  *  Checks the functionality of the PeriodicTablePanelTest
@@ -35,28 +34,9 @@ import org.openscience.cdk.CDKTestCase;
  *@cdk.created       February 10, 2004
  *@cdk.module    test-extra
  */
-public class PeriodicTablePanelTest extends CDKTestCase {
+public class PeriodicTablePanelTest extends NewCDKTestCase {
 
 	AtomTypeFactory atf = null;
-
-
-	/**
-	 *  Constructor for the AtomTypeFactoryTest object
-	 *
-	 *@param  name  Description of the Parameter
-	 */
-	public PeriodicTablePanelTest(String name)
-	{
-		super(name);
-	}
-
-
-	/**
-	 *  The JUnit setup method
-	 */
-	public void setUp()
-	{
-	}
 
 	public void runVisual()
 	{

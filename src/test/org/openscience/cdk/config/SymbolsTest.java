@@ -20,35 +20,26 @@
  */
 package org.openscience.cdk.config;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Test;
 
-import org.openscience.cdk.config.Symbols;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class SymbolsTest extends CDKTestCase {
+public class SymbolsTest extends NewCDKTestCase {
     
-    public SymbolsTest(String name) {
-        super(name);
-    }
-    
-	public static Test suite() {
-		return new TestSuite(SymbolsTest.class);
+	@Test public void testCarbon() {
+		Assert.assertEquals("C", Symbols.byAtomicNumber[6]);
 	}
 
-	public void testCarbon() {
-		assertEquals("C", Symbols.byAtomicNumber[6]);
-	}
-
-	public void testDummy() {
-		assertEquals("Xx", Symbols.byAtomicNumber[0]);
+	@Test public void testDummy() {
+		Assert.assertEquals("Xx", Symbols.byAtomicNumber[0]);
 	}
 	
-	public void testLastEntry() {
-		assertEquals("Uuh", Symbols.byAtomicNumber[116]);
+	@Test public void testLastEntry() {
+		Assert.assertEquals("Uuh", Symbols.byAtomicNumber[116]);
 	}
 
 }

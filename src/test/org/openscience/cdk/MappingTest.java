@@ -24,13 +24,10 @@
  */
 package org.openscience.cdk;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import java.util.Iterator;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Mapping;
-import org.openscience.cdk.PseudoAtom;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 
 /**
@@ -40,21 +37,11 @@ import org.openscience.cdk.interfaces.IChemObject;
  *
  * @see org.openscience.cdk.Mapping
  */
-public class MappingTest extends CDKTestCase {
+public class MappingTest extends NewCDKTestCase {
 
-    public MappingTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {}
-
-    public static Test suite() {
-        return new TestSuite(MappingTest.class);
-    }
-    
-    public void testMapping_IChemObject_IChemObject() {
+    @Test public void testMapping_IChemObject_IChemObject() {
         Mapping mapping = new Mapping(new Atom(), new Atom());
-        assertNotNull(mapping);
+        Assert.assertNotNull(mapping);
     }
     
     /**
@@ -64,23 +51,23 @@ public class MappingTest extends CDKTestCase {
         Mapping mapping = new Mapping(new Atom(), new Atom());
         String description = mapping.toString();
         for (int i=0; i< description.length(); i++) {
-            assertTrue(description.charAt(i) != '\n');
-            assertTrue(description.charAt(i) != '\r');
+        	Assert.assertTrue(description.charAt(i) != '\n');
+        	Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
 
 	public void testClone() throws Exception {
         Mapping mapping = new Mapping(new Atom(), new Atom());
         Object clone = mapping.clone();
-        assertTrue(clone instanceof Mapping);
+        Assert.assertTrue(clone instanceof Mapping);
     }    
         
 	public void testGetChemObject_int() {
 		Atom atom0 = new Atom();
 		Atom atom1 = new Atom();
 		Mapping mapping = new Mapping(atom0, atom1);
-		assertEquals(atom0, mapping.getChemObject(0));
-		assertEquals(atom1, mapping.getChemObject(1));
+		Assert.assertEquals(atom0, mapping.getChemObject(0));
+		Assert.assertEquals(atom1, mapping.getChemObject(1));
 	}
 	
     public void testRelatedChemObjects() {
@@ -88,12 +75,12 @@ public class MappingTest extends CDKTestCase {
 		Atom atom1 = new Atom();
 		Mapping mapping = new Mapping(atom0, atom1);
 
-		java.util.Iterator iter = mapping.relatedChemObjects();
-		assertTrue(iter.hasNext());
-		assertEquals(atom0, (Atom)iter.next());
-		assertTrue(iter.hasNext());
-		assertEquals(atom1, (Atom)iter.next());
-        assertFalse(iter.hasNext());
+		Iterator<IChemObject> iter = mapping.relatedChemObjects();
+		Assert.assertTrue(iter.hasNext());
+		Assert.assertEquals(atom0, (Atom)iter.next());
+		Assert.assertTrue(iter.hasNext());
+		Assert.assertEquals(atom1, (Atom)iter.next());
+		Assert.assertFalse(iter.hasNext());
     }
 
     public void testClone_ChemObject() throws Exception {
@@ -105,9 +92,9 @@ public class MappingTest extends CDKTestCase {
         //assertEquals(map.length, mapClone.length);
 		for (int f = 0; f < 2; f++) {
 			for (int g = 0; g < 2; g++) {
-				assertNotNull(mapping.getChemObject(f));
-				assertNotNull(clone.getChemObject(g));
-				assertNotSame(mapping.getChemObject(f), clone.getChemObject(g));
+				Assert.assertNotNull(mapping.getChemObject(f));
+				Assert.assertNotNull(clone.getChemObject(g));
+				Assert.assertNotSame(mapping.getChemObject(f), clone.getChemObject(g));
 			}
 		}        
     }

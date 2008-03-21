@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -39,7 +40,7 @@ public class MexperimentalTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.experimental Tests");
 
-        suite.addTest(AssociationTest.suite());
+        suite.addTest(new JUnit4TestAdapter(AssociationTest.class));
         suite.addTest(VASPReaderTest.suite());
         suite.addTest(GenerateFragmentsTest.suite());
 

@@ -24,13 +24,9 @@
  */
 package org.openscience.cdk.dict;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.dict.Dictionary;
-import org.openscience.cdk.dict.DictionaryDatabase;
-import org.openscience.cdk.dict.Entry;
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * Checks the functionality of the DictionaryDatabase class.
@@ -39,42 +35,32 @@ import org.openscience.cdk.CDKTestCase;
  *
  * @see org.openscience.cdk.dict.DictionaryDatabase
  */
-public class DictDBTest extends CDKTestCase {
+public class DictDBTest extends NewCDKTestCase {
 
-    public DictDBTest(String name) {
-        super(name);
-    }
-
-    public void setUp() {}
-
-    public static Test suite() {
-        return new TestSuite(DictDBTest.class);
-    }
-    
-    public void testDictionaryDatabase() {
+    @Test public void testDictionaryDatabase() {
         DictionaryDatabase db = new DictionaryDatabase();
-        assertTrue(db.hasDictionary("chemical"));
-        assertTrue(db.hasDictionary("elements"));
-        assertTrue(db.hasDictionary("descriptor-algorithms"));
-        assertTrue(db.hasDictionary("reaction-processes"));
+        Assert.assertTrue(db.hasDictionary("chemical"));
+        Assert.assertTrue(db.hasDictionary("elements"));
+        Assert.assertTrue(db.hasDictionary("descriptor-algorithms"));
+        Assert.assertTrue(db.hasDictionary("reaction-processes"));
     }
     
-    public void testOWLDictionary() {
+    @Test public void testOWLDictionary() {
     	DictionaryDatabase db = new DictionaryDatabase();
     	Dictionary dict = db.getDictionary("descriptor-algorithms");
-    	assertTrue(dict.size() > 0);
-        assertTrue(dict.getNS() != null);
+    	Assert.assertTrue(dict.size() > 0);
+    	Assert.assertTrue(dict.getNS() != null);
     }
     
-    public void testOWLEntry() {
+    @Test public void testOWLEntry() {
     	DictionaryDatabase db = new DictionaryDatabase();
     	Dictionary dict = db.getDictionary("descriptor-algorithms");
     	Entry entry = dict.getEntry("apol");
-    	assertNotNull(entry);
-    	assertEquals("Atomic Polarizabilities", entry.getLabel());
+    	Assert.assertNotNull(entry);
+    	Assert.assertEquals("Atomic Polarizabilities", entry.getLabel());
     	String def = entry.getDefinition();
-    	assertNotNull(def);
-    	assertTrue(def.length() > 0);
+    	Assert.assertNotNull(def);
+    	Assert.assertTrue(def.length() > 0);
     }
     
 }

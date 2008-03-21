@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.Test;
+import junit.framework.TestCase;
 
 /**
  * This test class is <b>not</b> intended to be tested directly,
@@ -38,7 +39,7 @@ import junit.framework.Test;
  *
  * @cdk.module test
  */
-abstract public class CoverageTest extends CDKTestCase {
+abstract public class CoverageTest extends TestCase {
 
     private final String basePackageName = "org.openscience.cdk.";
     

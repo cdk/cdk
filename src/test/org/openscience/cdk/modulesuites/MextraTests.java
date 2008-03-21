@@ -24,8 +24,9 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.VariousTests;
+import org.openscience.cdk.applications.APIVersionTesterTest;
+import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEditTest;
 import org.openscience.cdk.applications.undoredo.AddHydrogenEditTest;
 import org.openscience.cdk.applications.undoredo.AdjustBondOrdersEditTest;
@@ -39,6 +40,8 @@ import org.openscience.cdk.applications.undoredo.FlipEditTest;
 import org.openscience.cdk.applications.undoredo.RemoveAtomsAndBondsEditTest;
 import org.openscience.cdk.dict.DictDBTest;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinterTest;
+import org.openscience.cdk.fingerprint.StandardSubstructureSetsTest;
+import org.openscience.cdk.fingerprint.SubstructureFingerprinterTest;
 import org.openscience.cdk.geometry.RDFCalculatorTest;
 import org.openscience.cdk.geometry.alignment.KabschAlignmentTest;
 import org.openscience.cdk.index.CASNumberTest;
@@ -53,6 +56,8 @@ import org.openscience.cdk.similarity.TanimotoTest;
 import org.openscience.cdk.tools.DeAromatizationToolTest;
 import org.openscience.cdk.tools.HOSECodeAnalyserTest;
 import org.openscience.cdk.tools.HOSECodeGeneratorTest;
+
+import org.openscience.cdk.CloneAtomContainerTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -70,14 +75,16 @@ public class MextraTests {
         TestSuite suite= new TestSuite("All CDK Tests");
 
         // Individual Tests
+        suite.addTest(new JUnit4TestAdapter(CloneAtomContainerTest.class));
         // from cdk.test.applications
+        suite.addTest(new JUnit4TestAdapter(APIVersionTesterTest.class));
         // from cdk.test.aromaticity
         // from cdk.test.dict
-        suite.addTest(DictDBTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DictDBTest.class));
         // from cdk.test.geometry
         suite.addTest(RDFCalculatorTest.suite());
         // from cdk.test.geometry.align
-        suite.addTest(KabschAlignmentTest.suite());
+        suite.addTest(new JUnit4TestAdapter(KabschAlignmentTest.class));
         // from cdk.test.index
         suite.addTest(CASNumberTest.suite());
         // from cdk.test.isomorphism
@@ -95,6 +102,8 @@ public class MextraTests {
         suite.addTest(HOSECodeGeneratorTest.suite());
         suite.addTest(HOSECodeAnalyserTest.suite());
         suite.addTest(new JUnit4TestAdapter(ExtendedFingerprinterTest.class));
+        suite.addTest(new JUnit4TestAdapter(SubstructureFingerprinterTest.class));
+        suite.addTest(new JUnit4TestAdapter(StandardSubstructureSetsTest.class));
         suite.addTest(new JUnit4TestAdapter(DeAromatizationToolTest.class));
         suite.addTest(ShelXWriterTest.suite());
         

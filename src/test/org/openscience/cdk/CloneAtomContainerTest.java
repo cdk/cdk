@@ -27,10 +27,8 @@
  *  */
 package org.openscience.cdk;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.Molecule;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
@@ -41,28 +39,20 @@ import org.openscience.cdk.templates.MoleculeFactory;
  * @author  Christoph Steinbeck
  * @cdk.created 2001-08-09
  */
-public class CloneAtomContainerTest extends CDKTestCase {
+public class CloneAtomContainerTest extends NewCDKTestCase {
 
-	public CloneAtomContainerTest(String name) {
-		super(name);
-	}
-
-	public static Test suite() {
-		return new TestSuite(CloneAtomContainerTest.class);
-	}
-
-	public void testClone() throws Exception  
+	@Test public void testClone() throws Exception  
 	{
 		Molecule molecule = MoleculeFactory.makeAlphaPinene();
 		Molecule clonedMol = (Molecule)molecule.clone();
-		assertTrue(molecule.getAtomCount() == clonedMol.getAtomCount());
+		Assert.assertTrue(molecule.getAtomCount() == clonedMol.getAtomCount());
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
 			for (int g = 0; g < clonedMol.getAtomCount(); g++)
 			{
-				assertNotNull(molecule.getAtom(f));
-				assertNotNull(clonedMol.getAtom(g));
-				assertTrue(molecule.getAtom(f) != clonedMol.getAtom(g));
+				Assert.assertNotNull(molecule.getAtom(f));
+				Assert.assertNotNull(clonedMol.getAtom(g));
+				Assert.assertTrue(molecule.getAtom(f) != clonedMol.getAtom(g));
 			}
 		}
 	}

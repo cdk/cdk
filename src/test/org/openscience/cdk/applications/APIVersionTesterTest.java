@@ -24,39 +24,27 @@
  */
 package org.openscience.cdk.applications;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.applications.APIVersionTester;
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * Checks the functionality of the APIVersionTester.
  *
  * @cdk.module test-extra
  */
-public class APIVersionTesterTest extends CDKTestCase {
+public class APIVersionTesterTest extends NewCDKTestCase {
 
-    public APIVersionTesterTest(String name) {
-        super(name);
+    @Test public void testIsBiggerOrEqual() {
+        Assert.assertTrue(APIVersionTester.isBiggerOrEqual("1.6", "1.6"));
+        Assert.assertTrue(APIVersionTester.isBiggerOrEqual("1.6", "1.12"));
+        Assert.assertFalse(APIVersionTester.isBiggerOrEqual("1.12", "1.7"));
     }
 
-    public void setUp() {}
-
-    public static Test suite() {
-        return new TestSuite(APIVersionTesterTest.class);
-    }
-
-    public void testIsBiggerOrEqual() {
-        assertTrue(APIVersionTester.isBiggerOrEqual("1.6", "1.6"));
-        assertTrue(APIVersionTester.isBiggerOrEqual("1.6", "1.12"));
-        assertFalse(APIVersionTester.isBiggerOrEqual("1.12", "1.7"));
-    }
-
-    public void testIsSmaller() {
-        assertFalse(APIVersionTester.isSmaller("1.6", "1.6"));
-        assertFalse(APIVersionTester.isSmaller("1.6", "1.12"));
-        assertTrue(APIVersionTester.isSmaller("1.12", "1.7"));
+    @Test public void testIsSmaller() {
+    	Assert.assertFalse(APIVersionTester.isSmaller("1.6", "1.6"));
+    	Assert.assertFalse(APIVersionTester.isSmaller("1.6", "1.12"));
+    	Assert.assertTrue(APIVersionTester.isSmaller("1.12", "1.7"));
     }
 
 }

@@ -5,18 +5,16 @@ import java.util.List;
 
 import javax.vecmath.Point3d;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.alignment.KabschAlignment;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -30,35 +28,22 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @see org.openscience.cdk.geometry.alignment.KabschAlignment
  */
-public class KabschAlignmentTest extends CDKTestCase {
+public class KabschAlignmentTest extends NewCDKTestCase {
 
-    public KabschAlignmentTest(String name)
-    {
-    	super(name);
-    }
-    /**
-     * Defines a set of tests that can be used in automatic regression testing
-     * with JUnit.
-     */
-    public static Test suite() {
-        TestSuite suite = new TestSuite(KabschAlignmentTest.class);
-        return suite;
-    }
-    
-    public void testAlign() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testAlign() throws ClassNotFoundException, CDKException, java.lang.Exception{
         IAtomContainer ac;
         String filename = "data/hin/gravindex.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IChemObjectReader reader = new HINReader(ins);
         ChemFile content = (ChemFile)reader.read((ChemObject)new ChemFile());
-        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
         ac = (IAtomContainer) cList.get(0);
 
         KabschAlignment ka = new KabschAlignment(ac,ac);
         ka.align();
         double rmsd = ka.getRMSD();
-        assertTrue(1e-8 > rmsd);
-        assertNotNull(ka.getRotationMatrix());
+        Assert.assertTrue(1e-8 > rmsd);
+        Assert.assertNotNull(ka.getRotationMatrix());
 
         double[][] p1 = {
             {16.754  ,20.462  ,45.049  },
@@ -103,7 +88,7 @@ public class KabschAlignmentTest extends CDKTestCase {
         ka = new KabschAlignment(a1,a2);
         ka.align();
         rmsd = ka.getRMSD();
-        assertEquals(0.13479726, rmsd, 0.00000001);
+        Assert.assertEquals(0.13479726, rmsd, 0.00000001);
     }
     
 }
