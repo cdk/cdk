@@ -24,6 +24,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CloneAtomContainerTest;
 import org.openscience.cdk.VariousTests;
 import org.openscience.cdk.applications.APIVersionTesterTest;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
@@ -50,14 +51,11 @@ import org.openscience.cdk.layout.HydrogenPlacerTest;
 import org.openscience.cdk.layout.OverlapResolverTest;
 import org.openscience.cdk.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.layout.TemplateHandlerTest;
-import org.openscience.cdk.libio.openbabel.OpenBabelConvertTest;
 import org.openscience.cdk.similarity.DistanceMomentTest;
 import org.openscience.cdk.similarity.TanimotoTest;
 import org.openscience.cdk.tools.DeAromatizationToolTest;
 import org.openscience.cdk.tools.HOSECodeAnalyserTest;
 import org.openscience.cdk.tools.HOSECodeGeneratorTest;
-
-import org.openscience.cdk.CloneAtomContainerTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -93,8 +91,6 @@ public class MextraTests {
         suite.addTest(HydrogenPlacerTest.suite());
         suite.addTest(OverlapResolverTest.suite());
         suite.addTest(TemplateHandlerTest.suite());
-        // from cdk.test.libio.openbabel
-        suite.addTest(OpenBabelConvertTest.suite());
         // from cdk.test.math
         // from cdk.test.similarity
         suite.addTest(TanimotoTest.suite());
