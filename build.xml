@@ -11,10 +11,6 @@
 
         <!-- patches to apply -->
 
-        <!-- where to find some libraries -->
-        <property name="pathtojoelib" value="jar/libio" />
-        <property name="pathtojmol" value="jar/libio" />
-
        <!-- directories -->
         <property name="build" value="build" />
         <property name="build.src" value="${build}/src" />
@@ -441,8 +437,6 @@
         <target id="dist-optional" name="dist-optional" depends="dist-all"
         	description="Compile CDK modules that require optional libraries">
         	<antcall target="dist-java3d"/>
-        	<antcall target="dist-jmol"/>
-      		<antcall target="dist-joelib"/>
         </target>
 
     <target id="parallel-all" name="parallel-all" description="dist-all in parallel mode">
@@ -611,7 +605,6 @@
                     <includesfile name="${metainf}/data.libdepends"/>
                     <includesfile name="${metainf}/experimental.libdepends"/>
                     <includesfile name="${metainf}/extra.libdepends"/>
-                    <includesfile name="${metainf}/io-jmol.libdepends"/>
                     <includesfile name="${metainf}/io.libdepends"/>
                     <includesfile name="${metainf}/libiocml.libdepends"/>
                     <includesfile name="${metainf}/nonotify.libdepends"/>
@@ -650,7 +643,6 @@
                     <include name="cdk-extra.jar"/>
                     <include name="cdk-interfaces.jar"/>
                     <include name="cdk-io.jar"/>
-                    <include name="cdk-io-jmol.jar"/>
                     <include name="cdk-libiocml.jar"/>
                     <include name="cdk-libiomd.jar"/>
                     <include name="cdk-nonotify.jar"/>
@@ -717,7 +709,6 @@
                     <include name="cdk-extra.jar"/>
                     <include name="cdk-interfaces.jar"/>
                     <include name="cdk-io.jar"/>
-                    <include name="cdk-io-jmol.jar"/>
                     <include name="cdk-libiocml.jar"/>
                     <include name="cdk-libiomd.jar"/>
                     <include name="cdk-nonotify.jar"/>
