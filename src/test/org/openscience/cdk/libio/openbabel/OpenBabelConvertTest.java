@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * TestCase for the convertor using OpenBabel.
  *
- * @cdk.module test-extra
+ * @cdk.module nocompile
  * 
  * @author     Miguel Rojas <miguelrojasch@uni-koeln.de>
  */
