@@ -7,11 +7,22 @@ import org._3pq.jgrapht.traverse.*;
 import java.io.*;
 import java.util.*;
 
-boolean cdkLibsOnly = false;
+boolean cdkLibs = true;
+boolean testLibs = true;
+boolean otherLibs = true;
 
-if (bsh.args.length == 1) {
-  if ("--cdkLibsOnly".equals(bsh.args[0])) {
-    cdkLibsOnly = true;
+if (bsh.args.length > 0) {
+  cdkLibs = false;
+  testLibs = false;
+  otherLibs = false;
+  for (int i=0; i<bsh.args.length; i++) {
+    if ("--cdkLibs".equals(bsh.args[i])) {
+      cdkLibs = true;
+    } else if ("--testLibs".equals(bsh.args[i])) {
+      testLibs = true;
+    } else if ("--otherLibs".equals(bsh.args[i])) {
+      otherLibs = true;
+    }
   }
 }
 
@@ -38,6 +49,10 @@ for (int i=0; i<depFiles.length; i++) {
     module =  filename.substring(0,filename.indexOf(".cdkdepends"));
   if (filename.endsWith(".libdepends")) {
     module =  filename.substring(0,filename.indexOf(".libdepends"));
+    isLibDep = true;
+  }
+  if (filename.endsWith(".devellibdepends")) {
+    module =  filename.substring(0,filename.indexOf(".devellibdepends"));
     isLibDep = true;
   }
   if (!graph.containsVertex(module)) graph.addVertex(module);
@@ -113,16 +128,16 @@ Iterator iter = output.vertexSet().iterator();
 while (iter.hasNext()) {
   Object vertex = iter.next();
   if (libModules.contains(vertex)) {
-    if (!cdkLibsOnly) {
+    if (otherLibs) {
       System.out.println("    " + Sanatizer.clean(vertex) + " [shape=box];");
     }
-  } else { // a CDK module
-    if (vertex.startsWith("test")) {
-      if (!cdkLibsOnly) {
-        System.out.println("    " + Sanatizer.clean(vertex) + 
-          " [style=filled,color=lightblue];");
-      }
-    } else {
+  } else if (vertex.startsWith("test")) {
+    if (testLibs) {
+      System.out.println("    " + Sanatizer.clean(vertex) + 
+        " [style=filled,color=lightblue];");
+    }
+  } else {
+    if (cdkLibs) { 
       System.out.println("    " + Sanatizer.clean(vertex) + 
         " [style=filled,color=gray];");
     }
@@ -131,17 +146,24 @@ while (iter.hasNext()) {
   Iterator deps = output.outgoingEdgesOf(vertex).iterator();
   while (deps.hasNext()) {
     Object target = ((Edge)deps.next()).getTarget();
-    if (!cdkLibsOnly) {
-      System.out.println("    " + Sanatizer.clean(target) + 
-                         " -> " + Sanatizer.clean(vertex) + ";");
+    boolean outputDep = true;
+    if (libModules.contains(vertex)) {
+      if (!otherLibs) outputDep = false;
+    } else if (vertex.startsWith("test")) {
+      if (!testLibs) outputDep = false;
     } else {
-      if (target.startsWith("test") || vertex.startsWith("test") ||
-          libModules.contains(vertex) || libModules.contains(target)) {
-        // don't output these now
-      } else {
-        System.out.println("    " + Sanatizer.clean(target) + 
-                           " -> " + Sanatizer.clean(vertex) + ";");
-      }
+      if (!cdkLibs) outputDep = false;
+    }
+    if (libModules.contains(target)) {
+      if (!otherLibs) outputDep = false;
+    } else if (target.startsWith("test")) {
+      if (!testLibs) outputDep = false;
+    } else {
+      if (!cdkLibs) outputDep = false;
+    }
+    if (outputDep) {
+      System.out.println("    " + Sanatizer.clean(target) + 
+                        " -> " + Sanatizer.clean(vertex) + ";");
     }
   }
 }
