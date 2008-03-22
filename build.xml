@@ -400,7 +400,7 @@
             </jar>
 
             <!-- clean up afterwards -->
-            <delete dir="${build.src}"/>
+            <delete dir="${build.src}/${module}"/>
             <delete dir="${build}/${module}"/>
        </target>
 
@@ -444,6 +444,76 @@
         	<antcall target="dist-jmol"/>
       		<antcall target="dist-joelib"/>
         </target>
+
+    <target id="parallel-all" name="parallel-all" description="dist-all in parallel mode">
+      <sequential>
+        <antcall target="compile-init"/>
+        <antcall target="compile-module"><param name="module" value="interfaces"/><param name="source" value="${src}/main"/></antcall>
+        <antcall target="compile-module"><param name="module" value="core"/><param name="source" value="${src}/main"/></antcall>
+        <parallel>
+          <antcall target="compile-module"><param name="module" value="data"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="atomtype"/><param name="source" value="${src}/main"/></antcall>
+        </parallel>
+        <parallel>
+          <antcall target="compile-module"><param name="module" value="datadebug"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="nonotify"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="standard"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="isomorphism"/><param name="source" value="${src}/main"/></antcall>
+        </parallel>
+        <parallel>
+          <antcall target="compile-module"><param name="module" value="io"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="render"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="formula"/><param name="source" value="${src}/main"/></antcall>
+        </parallel>
+        <parallel>
+          <antcall target="compile-module"><param name="module" value="libio-openbabel"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="pdb"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="valencycheck"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="svg"/><param name="source" value="${src}/main"/></antcall>
+        </parallel>
+        <parallel>
+          <antcall target="compile-module"><param name="module" value="structgen"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="extra"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="sdg"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="inchi"/><param name="source" value="${src}/main"/></antcall>
+        </parallel>
+        <parallel>
+          <antcall target="compile-module"><param name="module" value="control"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="smiles"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="smarts"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="libiocml"/><param name="source" value="${src}/main"/></antcall>
+        </parallel>
+        <parallel>
+          <antcall target="compile-module"><param name="module" value="pcore"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="libiomd"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="pdb-cml"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="reaction"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="progzjcp"/><param name="source" value="${src}/main"/></antcall>
+        </parallel>
+        <parallel>
+          <antcall target="compile-module"><param name="module" value="charges"/><param name="source" value="${src}/main"/></antcall>
+        </parallel>
+        <parallel>
+          <antcall target="compile-module"><param name="module" value="qsar"/><param name="source" value="${src}/main"/></antcall>
+        </parallel>
+        <parallel>
+          <antcall target="compile-module"><param name="module" value="qsaratomic"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="qsarbond"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="qsarprotein"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="qsar-cml"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="experimental"/><param name="source" value="${src}/main"/></antcall>
+        </parallel>
+        <parallel>
+          <antcall target="compile-module"><param name="module" value="qsarmolecular"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="forcefield"/><param name="source" value="${src}/main"/></antcall>
+        </parallel>
+        <parallel>
+          <antcall target="compile-module"><param name="module" value="builder3d"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="builder3dtools"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="applications"/><param name="source" value="${src}/main"/></antcall>
+        </parallel>
+      </sequential>
+    </target>
 
     <target id="dist-all" name="dist-all" description="dist-all">
             <antcall target="compile-init"/>
