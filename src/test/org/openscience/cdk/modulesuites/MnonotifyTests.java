@@ -44,6 +44,7 @@ import org.openscience.cdk.nonotify.NNChemSequenceTest;
 import org.openscience.cdk.nonotify.NNCrystalTest;
 import org.openscience.cdk.nonotify.NNElectronContainerTest;
 import org.openscience.cdk.nonotify.NNElementTest;
+import org.openscience.cdk.nonotify.NNFragmentAtomTest;
 import org.openscience.cdk.nonotify.NNIsotopeTest;
 import org.openscience.cdk.nonotify.NNLonePairTest;
 import org.openscience.cdk.nonotify.NNMoleculeSetTest;
@@ -90,6 +91,7 @@ public class MnonotifyTests {
         suite.addTest(new JUnit4TestAdapter(NNCrystalTest.class));
         suite.addTest(new JUnit4TestAdapter(NNElectronContainerTest.class));
         suite.addTest(new JUnit4TestAdapter(NNElementTest.class));
+        suite.addTest(new JUnit4TestAdapter(NNFragmentAtomTest.class));
         suite.addTest(new JUnit4TestAdapter(NNIsotopeTest.class));
         suite.addTest(new JUnit4TestAdapter(NNLonePairTest.class));
         suite.addTest(new JUnit4TestAdapter(NNMoleculeTest.class));

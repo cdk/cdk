@@ -44,6 +44,7 @@ import org.openscience.cdk.debug.DebugChemSequenceTest;
 import org.openscience.cdk.debug.DebugCrystalTest;
 import org.openscience.cdk.debug.DebugElectronContainerTest;
 import org.openscience.cdk.debug.DebugElementTest;
+import org.openscience.cdk.debug.DebugFragmentAtomTest;
 import org.openscience.cdk.debug.DebugIsotopeTest;
 import org.openscience.cdk.debug.DebugLonePairTest;
 import org.openscience.cdk.debug.DebugMoleculeSetTest;
@@ -90,6 +91,7 @@ public class MdatadebugTests {
         suite.addTest(new JUnit4TestAdapter(DebugCrystalTest.class));
         suite.addTest(new JUnit4TestAdapter(DebugElectronContainerTest.class));
         suite.addTest(new JUnit4TestAdapter(DebugElementTest.class));
+        suite.addTest(new JUnit4TestAdapter(DebugFragmentAtomTest.class));
         suite.addTest(new JUnit4TestAdapter(DebugIsotopeTest.class));
         suite.addTest(new JUnit4TestAdapter(DebugLonePairTest.class));
         suite.addTest(new JUnit4TestAdapter(DebugMoleculeTest.class));
