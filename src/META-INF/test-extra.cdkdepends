@@ -10,7 +10,6 @@ cdk-sdg.jar
 cdk-experimental.jar
 cdk-extra.jar
 cdk-libiocml.jar
-cdk-libio-openbabel.jar
 cdk-pdb.jar
 cdk-render.jar
 cdk-builder3d.jar

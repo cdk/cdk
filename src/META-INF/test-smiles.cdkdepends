@@ -11,5 +11,4 @@ cdk-extra.jar
 cdk-test.jar
 cdk-test-core.jar
 cdk-sdg.jar
-cdk-libio.jar
 cdk-libiocml.jar
