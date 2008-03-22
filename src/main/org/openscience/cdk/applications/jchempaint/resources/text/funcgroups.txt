@@ -1,3 +1,0 @@
-cooh C(=O)-O
-co C=O
-cocl C(=O)-[Cl]
