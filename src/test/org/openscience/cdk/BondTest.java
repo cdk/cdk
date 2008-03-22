@@ -54,8 +54,8 @@ public class BondTest extends NewCDKTestCase {
     @Test public void testBond() {
         IBond bond = builder.newBond();
         Assert.assertEquals(2, bond.getAtomCount());
-        Assert.assertTrue(bond.getAtom(0) == null);
-        Assert.assertTrue(bond.getAtom(1) == null);
+        Assert.assertNull(bond.getAtom(0));
+        Assert.assertNull(bond.getAtom(1));
         Assert.assertNull(bond.getOrder());
         Assert.assertEquals(CDKConstants.STEREO_BOND_NONE, bond.getStereo());
     }
