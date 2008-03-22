@@ -7,6 +7,14 @@ import org._3pq.jgrapht.traverse.*;
 import java.io.*;
 import java.util.*;
 
+boolean cdkLibsOnly = false;
+
+if (bsh.args.length == 1) {
+  if ("--cdkLibsOnly".equals(bsh.args[0])) {
+    cdkLibsOnly = true;
+  }
+}
+
 // get the dependency files
 File depDir = new File("src/META-INF");
 File[] depFiles = depDir.listFiles(
@@ -21,7 +29,7 @@ File[] depFiles = depDir.listFiles(
 
 // read the dependency files
 DefaultDirectedGraph graph = new DefaultDirectedGraph();
-Vector libModules = new Vector();
+List libModules = new ArrayList();
 for (int i=0; i<depFiles.length; i++) {
   String filename = depFiles[i].getName();
   String module = filename;
@@ -105,25 +113,36 @@ Iterator iter = output.vertexSet().iterator();
 while (iter.hasNext()) {
   Object vertex = iter.next();
   if (libModules.contains(vertex)) {
-    System.out.println("    " + Sanatizer.clean(vertex) + " [shape=box];");
+    if (!cdkLibsOnly) {
+      System.out.println("    " + Sanatizer.clean(vertex) + " [shape=box];");
+    }
   } else { // a CDK module
     if (vertex.startsWith("test")) {
-      System.out.println("    " + Sanatizer.clean(vertex) + 
-        " [style=filled,color=lightblue];");
-    } else if (vertex.startsWith("jchempaint")) {
-      System.out.println("    " + Sanatizer.clean(vertex) + 
-        " [style=filled,color=darkseagreen3];");
+      if (!cdkLibsOnly) {
+        System.out.println("    " + Sanatizer.clean(vertex) + 
+          " [style=filled,color=lightblue];");
+      }
     } else {
       System.out.println("    " + Sanatizer.clean(vertex) + 
         " [style=filled,color=gray];");
     }
   }
-  
+
   Iterator deps = output.outgoingEdgesOf(vertex).iterator();
   while (deps.hasNext()) {
     Object target = ((Edge)deps.next()).getTarget();
-    System.out.println("    " + Sanatizer.clean(target) + 
-                       " -> " + Sanatizer.clean(vertex) + ";");
+    if (!cdkLibsOnly) {
+      System.out.println("    " + Sanatizer.clean(target) + 
+                         " -> " + Sanatizer.clean(vertex) + ";");
+    } else {
+      if (target.startsWith("test") || vertex.startsWith("test") ||
+          libModules.contains(vertex) || libModules.contains(target)) {
+        // don't output these now
+      } else {
+        System.out.println("    " + Sanatizer.clean(target) + 
+                           " -> " + Sanatizer.clean(vertex) + ";");
+      }
+    }
   }
 }
 System.out.println("}");
