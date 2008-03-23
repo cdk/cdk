@@ -21,12 +21,14 @@
 package org.openscience.cdk.inchi;
 
 import net.sf.jniinchi.*;
-import org.openscience.cdk.*;
+
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -78,13 +80,13 @@ protected JniInchiInputInchi input;
      * @param inchi
      * @throws CDKException
      */
-    protected InChIToStructure(String inchi) throws CDKException {
+    protected InChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
         try {
             input = new JniInchiInputInchi(inchi, "");
         } catch (JniInchiException jie) {
             throw new CDKException("Failed to convert InChI to molecule: " + jie.getMessage());
         }
-        generateAtomContainerFromInchi();
+        generateAtomContainerFromInchi(builder);
     }
     
     /**
@@ -93,13 +95,13 @@ protected JniInchiInputInchi input;
      * @param options
      * @throws CDKException
      */
-    protected InChIToStructure(String inchi, String options) throws CDKException {
+    protected InChIToStructure(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
         try {
             input = new JniInchiInputInchi(inchi, options);
         } catch (JniInchiException jie) {
             throw new CDKException("Failed to convert InChI to molecule: " + jie.getMessage());
         }
-        generateAtomContainerFromInchi();
+        generateAtomContainerFromInchi(builder);
     }
     
     /**
@@ -108,13 +110,13 @@ protected JniInchiInputInchi input;
      * @param options
      * @throws CDKException
      */
-    protected InChIToStructure(String inchi, List options) throws CDKException {
+    protected InChIToStructure(String inchi, IChemObjectBuilder builder, List options) throws CDKException {
         try {
             input = new JniInchiInputInchi(inchi, options);
         } catch (JniInchiException jie) {
             throw new CDKException("Failed to convert InChI to molecule: " + jie.getMessage());
         }
-        generateAtomContainerFromInchi();
+        generateAtomContainerFromInchi(builder);
     }
     
     /**
@@ -123,7 +125,7 @@ protected JniInchiInputInchi input;
      * 
      * @throws CDKException
      */
-    protected void generateAtomContainerFromInchi() throws CDKException {
+    protected void generateAtomContainerFromInchi(IChemObjectBuilder builder) throws CDKException {
         try {
             output = JniInchiWrapper.getStructureFromInchi(input);
         } catch (JniInchiException jie) {
@@ -131,13 +133,13 @@ protected JniInchiInputInchi input;
         }
         
         //molecule = new AtomContainer();
-        molecule = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        molecule = builder.newAtomContainer();
         
-        Map inchiCdkAtomMap = new HashMap();
+        Map<JniInchiAtom, IAtom> inchiCdkAtomMap = new HashMap<JniInchiAtom, IAtom>();
         
         for (int i = 0; i < output.getNumAtoms(); i ++) {
             JniInchiAtom iAt = output.getAtom(i);
-            IAtom cAt = new Atom();
+            IAtom cAt = builder.newAtom();
             
             inchiCdkAtomMap.put(iAt, cAt);
             
@@ -164,10 +166,10 @@ protected JniInchiInputInchi input;
         
         for (int i = 0; i < output.getNumBonds(); i ++) {
             JniInchiBond iBo = output.getBond(i);
-            IBond cBo = new Bond();
+            IBond cBo = builder.newBond();
             
-            IAtom atO = (IAtom) inchiCdkAtomMap.get(iBo.getOriginAtom());
-            IAtom atT = (IAtom) inchiCdkAtomMap.get(iBo.getTargetAtom());
+            IAtom atO = inchiCdkAtomMap.get(iBo.getOriginAtom());
+            IAtom atT = inchiCdkAtomMap.get(iBo.getTargetAtom());
             IAtom[] atoms = new IAtom[2];
             atoms[0] = atO;
             atoms[1] = atT;
@@ -239,7 +241,7 @@ protected JniInchiInputInchi input;
                     continue;
                 }
                 
-                IAtomParity parity = new AtomParity(atC, at0, at1, at2, at3, sign);
+                IAtomParity parity = builder.newAtomParity(atC, at0, at1, at2, at3, sign);
                 molecule.addAtomParity(parity);
             } else {
                 // TODO - other types of atom parity - double bond, etc

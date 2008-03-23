@@ -27,6 +27,7 @@ import net.sf.jniinchi.LoadNativeLibraryException;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * <p>Factory providing access to InChIGenerator and InChIToStructure. See those
@@ -110,8 +111,8 @@ public class InChIGeneratorFactory {
      * @return
      * @throws CDKException
      */
-    public InChIToStructure getInChIToStructure(String inchi) throws CDKException {
-        return(new InChIToStructure(inchi));
+    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
+        return(new InChIToStructure(inchi, builder));
     }
     
     /**
@@ -122,8 +123,8 @@ public class InChIGeneratorFactory {
      * @return
      * @throws CDKException
      */
-    public InChIToStructure getInChIToStructure(String inchi, String options) throws CDKException {
-        return(new InChIToStructure(inchi, options));
+    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
+        return(new InChIToStructure(inchi, builder, options));
     }
     
     /**
@@ -134,7 +135,7 @@ public class InChIGeneratorFactory {
      * @return
      * @throws CDKException
      */
-    public InChIToStructure getInChIToStructure(String inchi, List options) throws CDKException {
-        return(new InChIToStructure(inchi, options));
+    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, List options) throws CDKException {
+        return(new InChIToStructure(inchi, builder, options));
     }
 }

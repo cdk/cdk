@@ -21,9 +21,7 @@
 package org.openscience.cdk.inchi;
 
 import net.sf.jniinchi.*;
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Isotope;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -159,7 +157,7 @@ public class InChIGenerator {
     protected void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer) throws CDKException {
         this.atomContainer = atomContainer;
         
-        java.util.Iterator atoms = atomContainer.atoms();
+        Iterator<IAtom> atoms = atomContainer.atoms();
         
         // Check for 3d coordinates
         boolean all3d = true;
@@ -177,15 +175,15 @@ public class InChIGenerator {
         // Process atoms
         IsotopeFactory ifact = null;
         try {
-            ifact = IsotopeFactory.getInstance(new Isotope("C").getBuilder());
+            ifact = IsotopeFactory.getInstance(atomContainer.getBuilder());
         } catch (Exception e) {
             // Do nothing
         }
         
-        Map atomMap = new HashMap();
+        Map<IAtom, JniInchiAtom> atomMap = new HashMap<IAtom, JniInchiAtom>();
         atoms = atomContainer.atoms();
         while (atoms.hasNext()) {
-        	IAtom atom = (IAtom)atoms.next();
+        	IAtom atom = atoms.next();
             
             // Get coordinates
             // Use 3d if possible, otherwise 2d or none
@@ -222,7 +220,7 @@ public class InChIGenerator {
             // Check whether isotopic
             int isotopeNumber = atom.getMassNumber();
             if (isotopeNumber > 0 && ifact != null) {
-                IAtom isotope = new Atom(el);
+                IAtom isotope = atomContainer.getBuilder().newAtom(el);
                 ifact.configure(isotope);
                 if (isotope.getMassNumber() == isotopeNumber) {
                     isotopeNumber = 0;
@@ -258,9 +256,9 @@ public class InChIGenerator {
         
         
         // Process bonds
-        Iterator bonds =  atomContainer.bonds();
+        Iterator<IBond> bonds =  atomContainer.bonds();
         while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+            IBond bond = bonds.next();
 
             // Assumes 2 centre bond
             JniInchiAtom at0 = (JniInchiAtom) atomMap.get(bond.getAtom(0));
@@ -320,7 +318,7 @@ public class InChIGenerator {
         // Process atom parities (tetrahedral InChI Stereo0D Parities)
         atoms = atomContainer.atoms();
         while (atoms.hasNext()) {
-        	IAtom atom = (IAtom)atoms.next();
+        	IAtom atom = atoms.next();
             IAtomParity parity = atomContainer.getAtomParity(atom);
             if (parity != null) {
                 IAtom[] surroundingAtoms = parity.getSurroundingAtoms();
