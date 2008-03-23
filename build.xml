@@ -459,13 +459,11 @@
           <antcall target="compile-module"><param name="module" value="io"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="render"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="formula"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="valencycheck"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
         <parallel>
           <antcall target="compile-module"><param name="module" value="pdb"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="valencycheck"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="svg"/><param name="source" value="${src}/main"/></antcall>
-        </parallel>
-        <parallel>
           <antcall target="compile-module"><param name="module" value="structgen"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="extra"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="sdg"/><param name="source" value="${src}/main"/></antcall>
