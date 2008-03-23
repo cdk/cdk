@@ -27,7 +27,14 @@
  */
 package org.openscience.cdk.dict;
 
-import org.openscience.cdk.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
 
 /**
  * This class transforms implicit references to dictionary of CDK
@@ -43,47 +50,48 @@ import org.openscience.cdk.*;
  * @cdk.svnrev  $Revision$
  * @cdk.created    2003-08-06
  * @cdk.keyword    dictionary, implicit CDK references
+ * @cdk.module     dict
  */
 public class CDKDictionaryReferences {
 
     private static String prefix = DictionaryDatabase.DICTREFPROPERTYNAME;
     
-    public static void makeReferencesExplicit(org.openscience.cdk.interfaces.IChemObject object) {
-        if (object instanceof Atom) {
-            makeReferencesExplicitForAtom((Atom)object);
-        } else if (object instanceof org.openscience.cdk.interfaces.IBond) {
-            makeReferencesExplicitForBond((Bond)object);
-        } else if (object instanceof ChemModel) {
-            makeReferencesExplicitForChemModel((ChemModel)object);
-        } else if (object instanceof Isotope) {
-            makeReferencesExplicitForIsotope((Isotope)object);
-        } else if (object instanceof Element) {
-            makeReferencesExplicitForElement((Element)object);
-        }  else if (object instanceof Molecule) {
-            makeReferencesExplicitForMolecule((Molecule)object);
-        } else if (object instanceof Reaction) {
-            makeReferencesExplicitForReaction((Reaction)object);
+    public static void makeReferencesExplicit(IChemObject object) {
+        if (object instanceof IAtom) {
+            makeReferencesExplicitForAtom((IAtom)object);
+        } else if (object instanceof IBond) {
+            makeReferencesExplicitForBond((IBond)object);
+        } else if (object instanceof IChemModel) {
+            makeReferencesExplicitForChemModel((IChemModel)object);
+        } else if (object instanceof IIsotope) {
+            makeReferencesExplicitForIsotope((IIsotope)object);
+        } else if (object instanceof IElement) {
+            makeReferencesExplicitForElement((IElement)object);
+        }  else if (object instanceof IMolecule) {
+            makeReferencesExplicitForMolecule((IMolecule)object);
+        } else if (object instanceof IReaction) {
+            makeReferencesExplicitForReaction((IReaction)object);
         }
     }
     
-    private static void makeReferencesExplicitForAtom(org.openscience.cdk.interfaces.IAtom atom) {
+    private static void makeReferencesExplicitForAtom(IAtom atom) {
         int selfCounter = 0;
         atom.setProperty(prefix + ":self:" + selfCounter++, "chemical:atom");
         
         makeReferencesExplicitForElement(atom);
     }
     
-    private static void makeReferencesExplicitForBond(org.openscience.cdk.interfaces.IBond bond) {
+    private static void makeReferencesExplicitForBond(IBond bond) {
         int selfCounter = 0;
         bond.setProperty(prefix + ":self:" + selfCounter++, "chemical:covalentBond");
         bond.setProperty(prefix + ":field:order", "chemical:bondOrder");
     }
 
-    private static void makeReferencesExplicitForChemModel(org.openscience.cdk.interfaces.IChemModel model) { // NOPMD
+    private static void makeReferencesExplicitForChemModel(IChemModel model) { // NOPMD
         // nothing to do
     }
 
-    private static void makeReferencesExplicitForElement(org.openscience.cdk.interfaces.IElement element) {
+    private static void makeReferencesExplicitForElement(IElement element) {
         int selfCounter = 0;
         element.setProperty(prefix + ":field:symbol", "chemical:atomSymbol");
         element.setProperty(prefix + ":field:atomicNumber", "chemical:atomicNumber");
@@ -103,19 +111,19 @@ public class CDKDictionaryReferences {
         }
     }
 
-    private static void makeReferencesExplicitForIsotope(org.openscience.cdk.interfaces.IIsotope isotope) {
+    private static void makeReferencesExplicitForIsotope(IIsotope isotope) {
         int selfCounter = 0;
         isotope.setProperty(prefix + ":self:" + selfCounter++, "chemical:isotope");
     }
 
-    private static void makeReferencesExplicitForMolecule(org.openscience.cdk.interfaces.IMolecule molecule) {
+    private static void makeReferencesExplicitForMolecule(IMolecule molecule) {
         int selfCounter = 0;
         molecule.setProperty(prefix + ":self:" + selfCounter++, "chemical:molecularEntity");
         /* remark: this is not strictly true... the Compendium includes the
                    ion pair, which normally would not considered a CDK molecule */
     }
 
-    private static void makeReferencesExplicitForReaction(org.openscience.cdk.interfaces.IReaction reaction) {
+    private static void makeReferencesExplicitForReaction(IReaction reaction) {
         int selfCounter = 0;
         reaction.setProperty(prefix + ":self:" + selfCounter++, "reaction:reactionStep");
     }

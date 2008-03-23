@@ -37,6 +37,7 @@ import java.util.Vector;
  * @cdk.svnrev  $Revision$
  * @cdk.created  2003-08-23
  * @cdk.keyword  dictionary
+ * @cdk.module   dict
  *
  * @see          Dictionary
  */

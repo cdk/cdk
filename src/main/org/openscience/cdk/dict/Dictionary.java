@@ -49,6 +49,7 @@ import java.util.Hashtable;
  * @cdk.svnrev  $Revision$
  * @cdk.created    2003-08-23
  * @cdk.keyword    dictionary
+ * @cdk.module     dict
  */
 public class Dictionary {
 

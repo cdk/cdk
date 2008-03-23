@@ -46,6 +46,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author       Miguel Rojas <miguelrojasch@users.sf.net>
  * @cdk.created  2008-01-01
  * @cdk.keyword  dictionary
+ * @cdk.module   dict
  *
  * @cdk.depends  xom-1.0.jar
  */

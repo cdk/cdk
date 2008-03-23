@@ -47,6 +47,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.svnrev  $Revision$
  * @cdk.created  2005-11-18
  * @cdk.keyword  dictionary
+ * @cdk.module   dict
  *
  * @cdk.depends  xom-1.0.jar
  */

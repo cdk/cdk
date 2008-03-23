@@ -44,6 +44,7 @@ import java.util.Hashtable;
  * @cdk.created    2003-04-06
  * @cdk.keyword    dictionary
  * @cdk.depends    xom.jar
+ * @cdk.module     dict
  */
 public class DictionaryDatabase {
 

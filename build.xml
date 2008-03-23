@@ -448,6 +448,7 @@
         <parallel>
           <antcall target="compile-module"><param name="module" value="data"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="atomtype"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="dict"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
         <parallel>
           <antcall target="compile-module"><param name="module" value="datadebug"/><param name="source" value="${src}/main"/></antcall>
@@ -468,21 +469,19 @@
           <antcall target="compile-module"><param name="module" value="extra"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="sdg"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="inchi"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="libiocml"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
         <parallel>
           <antcall target="compile-module"><param name="module" value="control"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="smiles"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="smarts"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="libiocml"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="reaction"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="pdb-cml"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="libiomd"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
         <parallel>
           <antcall target="compile-module"><param name="module" value="pcore"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="libiomd"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="pdb-cml"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="reaction"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="progzjcp"/><param name="source" value="${src}/main"/></antcall>
-        </parallel>
-        <parallel>
           <antcall target="compile-module"><param name="module" value="charges"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
         <parallel>
@@ -513,6 +512,7 @@
             <antcall target="compile-module"><param name="module" value="core"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="atomtype"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="standard"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="dict"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="data"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="render"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="io"/><param name="source" value="${src}/main"/></antcall>
@@ -557,6 +557,7 @@
             <parallel threadCount="${threadCount}">
               <antcall target="compile-module"><param name="module" value="test-core"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-data"/><param name="source" value="${src}/test"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-dict"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-qsar"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-libiocml"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-valencycheck"/><param name="source" value="${src}/test"/></antcall>
@@ -597,6 +598,7 @@
         <antcall target="compile-module"><param name="module" value="test-atomtype"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-standard"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-data"/><param name="source" value="${src}/test"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-dict"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-datadebug"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-nonotify"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-io"/><param name="source" value="${src}/test"/></antcall>

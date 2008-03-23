@@ -38,6 +38,7 @@ import java.util.List;
  * @author       Miguel Rojas <miguelrojasch@users.sf.net>
  * @cdk.created  2008-01-01
  * @cdk.keyword  dictionary
+ * @cdk.module   dict
  *
  * @see          Dictionary
  */

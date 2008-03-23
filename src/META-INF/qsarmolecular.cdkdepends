@@ -13,3 +13,4 @@ cdk-atomtype.jar
 cdk-smiles.jar
 cdk-formula.jar
 cdk-isomorphism.jar
+cdk-dict.jar

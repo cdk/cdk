@@ -11,3 +11,4 @@ cdk-valencycheck.jar
 cdk-smiles.jar
 cdk-test.jar
 cdk-isomorphism.jar
+cdk-dict.jar

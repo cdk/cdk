@@ -36,7 +36,6 @@ import java.util.Map;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
-import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
@@ -535,7 +534,7 @@ public class Convertor {
         		Iterator atoms = ((IBond)bonds.next()).atoms();
         		while (atoms.hasNext()) {
         			IAtom atom=(IAtom)atoms.next();
-        			if (Elements.HYDROGEN.getSymbol().equals(atom.getSymbol()) && atom!=cdkAtom) totalHydrogen++;
+        			if ("H".equals(atom.getSymbol()) && atom!=cdkAtom) totalHydrogen++;
         		}
         	}
         } // else: it is the implicit hydrogen count

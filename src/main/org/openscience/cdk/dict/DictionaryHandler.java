@@ -28,6 +28,8 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Class for unmarshalling a dictionary shema file.
+ * 
+ * @cdk.module     dict
  */
 public class DictionaryHandler extends DefaultHandler {
 

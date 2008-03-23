@@ -39,7 +39,6 @@ import org.openscience.cdk.applications.undoredo.ConvertToPseudoAtomEditTest;
 import org.openscience.cdk.applications.undoredo.ConvertToRadicalEditTest;
 import org.openscience.cdk.applications.undoredo.FlipEditTest;
 import org.openscience.cdk.applications.undoredo.RemoveAtomsAndBondsEditTest;
-import org.openscience.cdk.dict.DictDBTest;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinterTest;
 import org.openscience.cdk.fingerprint.StandardSubstructureSetsTest;
 import org.openscience.cdk.fingerprint.SubstructureFingerprinterTest;
@@ -77,8 +76,6 @@ public class MextraTests {
         // from cdk.test.applications
         suite.addTest(new JUnit4TestAdapter(APIVersionTesterTest.class));
         // from cdk.test.aromaticity
-        // from cdk.test.dict
-        suite.addTest(new JUnit4TestAdapter(DictDBTest.class));
         // from cdk.test.geometry
         suite.addTest(RDFCalculatorTest.suite());
         // from cdk.test.geometry.align

@@ -15,3 +15,4 @@ cdk-standard.jar
 cdk-svg.jar
 cdk-smiles.jar
 cdk-atomtype.jar
+cdk-dict.jar

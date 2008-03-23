@@ -31,7 +31,7 @@ import org.openscience.cdk.NewCDKTestCase;
 /**
  * Checks the functionality of the DictionaryDatabase class.
  *
- * @cdk.module test-extra
+ * @cdk.module test-dict
  *
  * @see org.openscience.cdk.dict.DictionaryDatabase
  */
