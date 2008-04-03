@@ -44,9 +44,8 @@
 
             <doclet name="net.sf.cdk.tools.MakeKeywordIndexDoclet" path="."/>
 
-            <packageset dir="../../src/">
+            <packageset dir="../../src/main">
               <include name="org/openscience/cdk/**"/>
-              <exclude name="org/openscience/cdk/test/**"/>
             </packageset>
         </javadoc>
     </target>
