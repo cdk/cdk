@@ -952,7 +952,7 @@ if __name__ == '__main__':
     successPMDUnused = True
     successPMDMigrate = True
     successSVN = True
-    successJCP = True
+    successJCP = False
 
     currentRevision = None
     oldRevision = None
@@ -1540,7 +1540,7 @@ if __name__ == '__main__':
     sys.path.append( os.path.join(nightly_repo, 'tools') )
     import analyzeBugs
     try:
-        analyzeBugs.analyzeBugs( os.path.join(nightly_web, 'bugs.html'), os.path.join(nightly_repo, 'src') )
+        analyzeBugs.analyzeBugs( os.path.join(nightly_web, 'bugs.html'), os.path.join(nightly_repo, 'src/main') )
         resultTable.addRow()
         resultTable.addCell("Bug Analysis")
         resultTable.addCell("<a href=\"bugs.html\">Results</a>")
