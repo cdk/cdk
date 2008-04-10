@@ -657,5 +657,4 @@ public class CML2Test extends CDKTestCase {
 	    String conte2 = cmlContent2.substring(0, 1000);
 	    assertEquals(conte1,conte2);
     }
-    
 }
