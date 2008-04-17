@@ -28,13 +28,16 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -138,6 +141,30 @@ public class AtomContainerManipulator {
         return mass;
     }
     
+    /**
+     * Returns the molecular mass of the IAtomContainer. For the calculation it uses the
+     * masses of the isotope mixture using natural abundances.
+     * 
+     * @param       atomContainer
+     * @cdk.keyword mass, molecular
+     */
+    @TestMethod("testGetNaturalExactMass_IAtomContainer")
+    public static double getNaturalExactMass(IAtomContainer atomContainer) {
+		 double mass = 0.0;
+		 IsotopeFactory factory;
+		 try {
+			 factory = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
+		 } catch (IOException e) {
+			 throw new RuntimeException("Could not instantiate the IsotopeFactory.");
+		 }
+		 Iterator<IAtom> atoms = atomContainer.atoms();
+		 while(atoms.hasNext()) {
+			 IAtom atom = atoms.next();
+			 IElement isotopesElement = atom.getBuilder().newElement(atom.getSymbol());
+			 mass += factory.getNaturalMass(isotopesElement);
+		 }
+		 return mass;
+    }
     /** 
      * Get the summed natural abundance of all atoms in an AtomContainer
      * 

@@ -36,6 +36,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -372,6 +373,21 @@ public class AtomContainerManipulatorTest extends NewCDKTestCase {
         double totalExactMass = AtomContainerManipulator.getTotalExactMass(mol);
 
         Assert.assertEquals(46.96885268,totalExactMass,0.000001);
+    }
+    
+    @Test public void testGetNaturalExactMass_IAtomContainer() throws Exception {
+    	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance(); 
+        IMolecule mol = builder.newMolecule();
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("Cl"));
+    	
+        double expectedMass = 0.0;
+        expectedMass += IsotopeFactory.getInstance(builder).getNaturalMass(builder.newElement("C"));
+        expectedMass += IsotopeFactory.getInstance(builder).getNaturalMass(builder.newElement("Cl"));
+        
+    	double totalExactMass = AtomContainerManipulator.getNaturalExactMass(mol);
+
+        Assert.assertEquals(expectedMass, totalExactMass, 0.000001);
     }
     
     /**
