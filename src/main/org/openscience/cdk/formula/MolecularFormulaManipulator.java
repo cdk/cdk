@@ -27,6 +27,7 @@
  *  */
 package org.openscience.cdk.formula;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,11 +35,13 @@ import java.util.List;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -276,10 +279,28 @@ public class MolecularFormulaManipulator {
 	 */
 	@TestMethod("testGetMolecularFormula_String")
 	public static IMolecularFormula getMolecularFormula(String stringMF) {
-		
+		return getMolecularFormula(stringMF, false);
+	}
+
+	/**
+	 * Construct an instance of IMolecularFormula, initialized with a molecular
+	 * formula string. The string is immediately analyzed and a set of Nodes
+	 * is built based on this analysis. The hydrogens must be implicit. Major
+	 * isotopes are being used.
+	 *
+	 * @param  stringMF   The molecularFormula string 
+	 * @return            The filled IMolecularFormula
+	 * @see               #getMolecularFormula(String,IMolecularFormula)
+	 */
+	@TestMethod("testGetMajorIsotopeMolecularFormula_String")
+	public static IMolecularFormula getMajorIsotopeMolecularFormula(String stringMF) {
+		return getMolecularFormula(stringMF, true);
+	}
+
+	private static IMolecularFormula getMolecularFormula(String stringMF, boolean assumeMajorIsotope) {
 		IMolecularFormula formula = new MolecularFormula();
 		
-		return getMolecularFormula(stringMF, formula);
+		return getMolecularFormula(stringMF, formula, assumeMajorIsotope);
 	}
 	
 	/**
@@ -294,7 +315,22 @@ public class MolecularFormulaManipulator {
 	 */
 	@TestMethod("testGetMolecularFormula_String_IMolecularFormula")
 	public static IMolecularFormula getMolecularFormula(String stringMF, IMolecularFormula formula) {
-		
+		return getMolecularFormula(stringMF, formula, false);
+	}
+	
+	/**
+	 * Add to an instance of IMolecularFormula the elements extracts form
+	 * molecular formula string. The string is immediately analyzed and a set of Nodes
+	 * is built based on this analysis. The hydrogens are assumed to be implicit.
+	 * The boolean indicates if the major isotope is to be assumed, or if no
+	 * assumption is to be made.
+	 *
+	 * @param  stringMF           The molecularFormula string
+	 * @param  assumeMajorIsotope If true, it will take the major isotope for each element 
+	 * @return                    The filled IMolecularFormula
+	 * @see                       #getMolecularFormula(String)
+	 */
+	private static IMolecularFormula getMolecularFormula(String stringMF, IMolecularFormula formula, boolean assumeMajorIsotope) {
 		// FIXME: MF: variables with lower case first char
 		char ThisChar;
 		/*
@@ -344,7 +380,15 @@ public class MolecularFormulaManipulator {
 					RecentElementCount = 1;
 				}
 				
-				formula.addIsotope(new Isotope(RecentElementSymbol), RecentElementCount);
+				IIsotope isotope = new Isotope(RecentElementSymbol);
+				if (assumeMajorIsotope) {
+					try {
+						isotope = IsotopeFactory.getInstance(isotope.getBuilder()).getMajorIsotope(RecentElementSymbol);
+					} catch (IOException e) {
+						throw new RuntimeException("Cannot load the IsotopeFactory");
+					}
+				}
+				formula.addIsotope(isotope, RecentElementCount);
 				
 			}
 		}
@@ -367,6 +411,30 @@ public class MolecularFormulaManipulator {
 	     return mass;
 	 }
 	  
+	/**
+	 * Get the summed natural mass of all elements from an MolecularFormula.
+	 * 
+	 * @param  formula The IMolecularFormula to calculate
+	 * @return         The summed exact mass of all atoms in this MolecularFormula
+	 */
+	 @TestMethod("testGetNaturalExactMass_IMolecularFormula")
+	 public static double getNaturalExactMass(IMolecularFormula formula) {
+		 double mass = 0.0;
+		 IsotopeFactory factory;
+		try {
+			factory = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
+		} catch (IOException e) {
+			throw new RuntimeException("Could not instantiate the IsotopeFactory.");
+		}
+		 Iterator<IIsotope> iterIsot = formula.isotopes();
+		 while(iterIsot.hasNext()) {
+			 IIsotope isotope = iterIsot.next();
+			 IElement isotopesElement = isotope.getBuilder().newElement(isotope);
+			 mass += factory.getNaturalMass(isotopesElement)*formula.getIsotopeCount(isotope);
+		 }
+		 return mass;
+	 }
+		  
 	  /** 
 	   * Get the summed natural abundance of all isotopes from an MolecularFormula.
 	   * 

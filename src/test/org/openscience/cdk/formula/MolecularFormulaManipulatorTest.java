@@ -25,17 +25,15 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.formula.IMolecularFormula;
-import org.openscience.cdk.formula.MolecularFormula;
-import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * Checks the functionality of the MolecularFormulaManipulator.
@@ -243,6 +241,19 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 		Assert.assertEquals(2, mf2.getIsotopeCount());
 	}
 	
+	@Test 
+    public void testGetMajorIsotopeMolecularFormula_String() throws Exception {
+		IMolecularFormula mf2 = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C11H17");
+		
+		Assert.assertEquals(28, MolecularFormulaManipulator.getAtomCount(mf2));
+		Assert.assertEquals(2, mf2.getIsotopeCount());
+		IIsotope carbon = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance()).getMajorIsotope("C");
+		IIsotope hydrogen = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance()).getMajorIsotope("H");
+		double totalMass = carbon.getExactMass()*11;
+		totalMass += hydrogen.getExactMass()*17;
+		Assert.assertEquals(totalMass, MolecularFormulaManipulator.getTotalExactMass(mf2), 0.0000001);
+	}
+	
     /**
 	 * A unit test suite for JUnit.
 	 *
@@ -296,6 +307,20 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
     	double totalExactMass = MolecularFormulaManipulator.getTotalExactMass(formula);
 
         Assert.assertEquals(46.96885268,totalExactMass,0.000001);
+    }
+    
+    @Test 
+    public void testGetNaturalExactMass_IMolecularFormula() throws Exception {
+		IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(builder.newIsotope("C"));
+        formula.addIsotope(builder.newIsotope("Cl"));
+    	
+        double expectedMass = 0.0;
+        expectedMass += IsotopeFactory.getInstance(builder).getNaturalMass(builder.newElement("C"));
+        expectedMass += IsotopeFactory.getInstance(builder).getNaturalMass(builder.newElement("Cl"));
+        
+    	double totalExactMass = MolecularFormulaManipulator.getNaturalExactMass(formula);
+        Assert.assertEquals(expectedMass, totalExactMass, 0.000001);
     }
     
     /**
