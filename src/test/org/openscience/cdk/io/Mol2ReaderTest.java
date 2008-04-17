@@ -39,17 +39,18 @@ import java.util.zip.GZIPInputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.io.Mol2Reader;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
@@ -77,6 +78,7 @@ public class Mol2ReaderTest extends CDKTestCase {
     	Mol2Reader reader = new Mol2Reader();
     	assertTrue(reader.accepts(ChemFile.class));
     	assertTrue(reader.accepts(ChemModel.class));
+    	assertTrue(reader.accepts(Molecule.class));
     }
 
     /**
@@ -137,6 +139,16 @@ public class Mol2ReaderTest extends CDKTestCase {
         if (buf.length() > 0) {
             checkMol(buf);
         }
+    }
+    
+    public void testIMolecule() throws Exception {
+        String filename = "data/mol2/fromWebsite.mol2";
+        InputStream in = Mol2ReaderTest.class.getClassLoader().getResourceAsStream(filename);
+        Mol2Reader reader = new Mol2Reader(in);
+        IMolecule mol = (IMolecule)reader.read(new Molecule());
+        assertNotNull(mol);
+        assertEquals(12, mol.getAtomCount());
+        assertEquals(12, mol.getBondCount());
     }
     
     public void testBug1714794() throws Exception {

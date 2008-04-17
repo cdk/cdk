@@ -108,6 +108,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemModel.class.equals(interfaces[i])) return true;
 			if (IChemFile.class.equals(interfaces[i])) return true;
+			if (IMolecule.class.equals(interfaces[i])) return true;
 		}
 		return false;
 	}
@@ -142,6 +143,9 @@ public class Mol2Reader extends DefaultChemObjectReader {
              ));
              model.setMoleculeSet(moleculeSet);
              return model;
+         } else if (object instanceof IMolecule) {
+             IMolecule molecule = (IMolecule)object;
+        	 return readMolecule(molecule);
          } else {
              throw new CDKException("Only supported is ChemModel, and not " +
                  object.getClass().getName() + "."
