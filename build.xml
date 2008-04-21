@@ -862,7 +862,7 @@
             <!-- then zip up things -->
             <jar jarfile="${dist}/jar/cdk-test-${version}.jar">
                 <manifest>
-                    <attribute name="Main-Class" value="org.openscience.cdk.test.CDKTests"/>
+                    <attribute name="Main-Class" value="org.openscience.cdk.CDKTests"/>
                     <section name="org.openscience.cdk">
                         <attribute name="Specification-Title" value="The Chemistry Development Kit"/>
                         <attribute name="Specification-Version" value="1.0"/>
@@ -1117,7 +1117,7 @@
                                 <include name="*.jar" />
                         </fileset>
                     </classpath>
-                        <test name="org.openscience.cdk.test.limitations.AlgorithmLimitations"
+                        <test name="org.openscience.cdk.limitations.AlgorithmLimitations"
                         haltonfailure="no"
                         todir="${reports.tests}"
                         outfile="limitations">
@@ -1127,9 +1127,10 @@
         </target>
 
         <target id="run-test" name="run-test" depends="dist-all,test-dist-all" 
-                description="Runs one specific JUnit test suite (org.openscience.cdk.test.&lt;class>) as a standalone application with -Dtestclass=&lt;class>.">
+                description="Runs one specific JUnit test suite (org.openscience.cdk.&lt;class>) as a standalone application with 
+-Dtestclass=&lt;class>.">
                 <echo message="Running test class: testclass=${testclass}"/>
-                <java classname="org.openscience.cdk.test.${testclass}" fork="yes" maxmemory="512m">
+                <java classname="org.openscience.cdk.${testclass}" fork="yes" maxmemory="512m">
                     <jvmarg value="-Dcdk.debugging=true"/>
                     <classpath>
                         <fileset dir="${dist}/jar/">
@@ -1149,7 +1150,7 @@
         </target>
 
         <target id="junit-test" name="junit-test" depends="dist-all,test-dist-all,noJunit" 
-                description="Runs one specific JUnit test suite (org.openscience.cdk.test.&lt;class>) with -Dtestclass=&lt;class>.">
+                description="Runs one specific JUnit test suite (org.openscience.cdk.&lt;class>) with -Dtestclass=&lt;class>.">
                 <echo message="JUnit tests class: testclass=${testclass}"/>
                 <junit printsummary="yes" haltonfailure="no" fork="yes">
                     <jvmarg value="-Dcdk.debugging=true"/>
@@ -1170,7 +1171,7 @@
                                 <include name="*.jar" />
                         </fileset>
                     </classpath>
-                    <test name="org.openscience.cdk.test.${testclass}"
+                    <test name="org.openscience.cdk.${testclass}"
                         haltonfailure="no"
                         todir="${reports.tests}"
                         outfile="result.${testclass}">
