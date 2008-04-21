@@ -28,7 +28,6 @@
 package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -153,7 +152,7 @@ public class AtomContainerManipulator {
 		 double mass = 0.0;
 		 IsotopeFactory factory;
 		 try {
-			 factory = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
+			 factory = IsotopeFactory.getInstance(atomContainer.getBuilder());
 		 } catch (IOException e) {
 			 throw new RuntimeException("Could not instantiate the IsotopeFactory.");
 		 }
