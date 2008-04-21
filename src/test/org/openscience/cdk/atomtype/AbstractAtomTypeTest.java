@@ -162,10 +162,15 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 	}
 	
     public void countTestedAtomTypes(Map<String, Integer> testedAtomTypes) {
+        Map<String, String> checkedTypes = new HashMap<String, String>();
         IAtomType[] expectedTypes = factory.getAllAtomTypes();
         if (expectedTypes.length != testedAtomTypes.size()) {
             String errorMessage = "Atom types not tested:";
             for (int i=0; i<expectedTypes.length; i++) {
+                if (checkedTypes.containsKey(expectedTypes[i].getAtomTypeName())) {
+                    Assert.fail("Duplicate atom type definition: " + expectedTypes[i].getAtomTypeName());
+                }
+                checkedTypes.put(expectedTypes[i].getAtomTypeName(), expectedTypes[i].getAtomTypeName());
                 if (!testedAtomTypes.containsKey(expectedTypes[i].getAtomTypeName()))
                         errorMessage += " " + expectedTypes[i].getAtomTypeName();
             }
