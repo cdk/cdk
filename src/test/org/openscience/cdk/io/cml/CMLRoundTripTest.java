@@ -552,5 +552,75 @@ public class CMLRoundTripTest extends CDKTestCase {
     	}
         assertEquals(9.0, orderSum, 0.001);
     }
+    
+    /**
+     * Tests whether the custom atom properties survive the CML round-trip
+     * @throws Exception
+     */
+    public void testAtomProperty() throws Exception {
+ 	   String key = "customAtomProperty";
+ 	   String value = "true";
+ 	   
+        Molecule mol = MoleculeFactory.makeBenzene();
+        for (Iterator<IAtom> it = mol.atoms(); it.hasNext();) {
+           IAtom a = it.next();
+           a.setProperty(key, value);
+        }       
+        
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
+        assertEquals(convertor.cdkMoleculeToCMLMolecule(mol).toXML(), 
+     		   convertor.cdkMoleculeToCMLMolecule(roundTrippedMol).toXML());
+        
+        for (Iterator<IAtom> it = roundTrippedMol.atoms(); it.hasNext();) {
+            IAtom a = it.next();
+            String actual = (String)a.getProperty(key);
+            assertNotNull(actual);
+            assertEquals(value, actual);
+         }       
+    }
+    
+    /**
+     * Tests whether the custom bond properties survive the CML round-trip
+     * @throws Exception
+     */
+    public void testBondProperty() throws Exception {
+ 	   String key = "customBondProperty";
+ 	   String value = "true";
+        Molecule mol = MoleculeFactory.makeBenzene();
+        for (Iterator<IBond> it = mol.bonds(); it.hasNext();) {
+           IBond b = it.next();
+           b.setProperty(key, value);
+        }       
+        
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
+        assertEquals(convertor.cdkMoleculeToCMLMolecule(mol).toXML(), 
+        	   convertor.cdkMoleculeToCMLMolecule(roundTrippedMol).toXML());
+        
+        for (Iterator<IBond> it = roundTrippedMol.bonds(); it.hasNext();) {
+            IBond b = it.next();
+            String actual = (String)b.getProperty(key); 
+            assertNotNull(actual);
+            assertEquals(value, actual);
+         }       
+    }
+    
+    /**
+     * Tests whether the custom molecule properties survive the CML round-trip
+     * @throws Exception
+     */
+    public void testMoleculeProperty() throws Exception {
+ 	   String key = "customMoleculeProperty";
+ 	   String value = "true";      
+
+ 	   IMolecule mol = MoleculeFactory.makeAdenine();
+        mol.setProperty(key, value);	   
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
+        assertEquals(convertor.cdkMoleculeToCMLMolecule(mol).toXML(), 
+     		   convertor.cdkMoleculeToCMLMolecule(roundTrippedMol).toXML());
+        String actual = (String)roundTrippedMol.getProperty(key);
+        assertNotNull(actual);
+        assertEquals(value, actual);
+    }
+
 }
 
