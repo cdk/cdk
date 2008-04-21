@@ -177,7 +177,7 @@ public class MakeJavafilesFiles {
 				int index = line.indexOf("/**");
 				if (index != -1) {
 					inComment = true;
-					if (line.substring(index).indexOf("**/") != -1) inComment = false;
+					if (line.substring(index).indexOf("*/") != -1) inComment = false;
 				} else {
 					if (line.indexOf("*/") != -1) inComment = false;
 				}
