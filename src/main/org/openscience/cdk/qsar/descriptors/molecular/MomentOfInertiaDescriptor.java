@@ -19,8 +19,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import javax.vecmath.Point3d;
-
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.IMolecularFormula;
@@ -35,8 +35,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
+import javax.vecmath.Point3d;
 
 /**
  * A descriptor that calculates the moment of inertia and radius of gyration.
@@ -168,6 +167,8 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
         double ccf = 1.000138;
         double eps = 1e-5;
 
+        if (!GeometryTools.has3DCoordinates(container)) throw new CDKException("Molecule must have 3D coordinates");
+        
         double[][] imat = new double[3][3];
         Point3d centerOfMass = GeometryTools.get3DCentreOfMass(container);
 
