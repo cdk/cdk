@@ -20,15 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -38,13 +31,20 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.DoubleResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.tools.LonePairElectronChecker;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *  This class returns the ionization potential of a molecule. It is
- *  based on a decision tree which is extracted from Weka(J48) from 
+ *  based on a decision tree which is extracted from Weka(J48) from
  *  experimental values. Up to now is
  *  only possible for atomContainers which contain; see IPAtomicDescriptor and
  *  IPBondDescriptor.
+ *
+ * The descriptor assumes that explicit hydrogens have been added to the molecule
+ *
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -54,9 +54,9 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  *     <td>Description</td>
  *   </tr>
  *   <tr>
- *     <td></td>
- *     <td></td>
- *     <td>no parameters</td>
+ *     <td>addlp</td>
+ *     <td>true</td>
+ *     <td>If true lone pairs are added to the molecule</td>
  *   </tr>
  * </table>
  *
@@ -70,13 +70,14 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.bug          1651264
  * @cdk.bug          1856148
  * @cdk.keyword      ionization potential
- * 
+ *
  * @see IPAtomicDescriptor
  * @see IPBondDescriptor
  */
 public class IPMolecularDescriptor implements IMolecularDescriptor {
 
 	private IReactionSet reactionSet;
+    private boolean addlp = true;
     /**
      *  Constructor for the IPMolecularDescriptor object
      */
@@ -104,37 +105,49 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Description of the Exception
      */
     public void setParameters(Object[] params) throws CDKException {
-        // no parameters for this descriptor
+        if (params.length != 1) throw new CDKException("One parameter expected");
+        if (!(params[0] instanceof Boolean)) throw new CDKException("Boolean parameter expected");
+        addlp = (Boolean) params[0];
     }
 
 
     /**
-     *  Gets the parameters attribute of the IPMolecularDescriptor object
+     * Gets the parameters attribute of the IPMolecularDescriptor object
      *
-     *@return    The parameters value
+     * @return The parameters value
      */
     public Object[] getParameters() {
-        return (null);
-        // no parameters to return
+        return new Object[]{new Boolean(addlp)};
     }
 
 
     /**
-     *  It calculates the first ionization energy of a molecule. 
+     *  It calculates the first ionization energy of a molecule.
      *
      *@param  atomContainer     AtomContainer
      *@return                   The first ionization energy
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
-    	String[] descriptorNames = {"MolIP"};
-    	
-    	DoubleResult value = new DoubleResult(((DoubleArrayResult)calculatePlus(atomContainer).getValue()).get(0));
+        IAtomContainer local;
+        if (addlp) {
+            try {
+                local = (IAtomContainer) atomContainer.clone();
+                LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+                lpcheck.saturate(local);
+            } catch (CloneNotSupportedException e) {
+                throw new CDKException("Error during clone");
+            }
+
+        } else local = atomContainer;
+        String[] descriptorNames = {"MolIP"};
+
+    	DoubleResult value = new DoubleResult(((DoubleArrayResult)calculatePlus(local).getValue()).get(0));
     	return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), value, descriptorNames );
     }
-    
+
     /**
-     *  It calculates the 1,2,.. ionization energies of a molecule. 
+     *  It calculates the 1,2,.. ionization energies of a molecule.
      *
      *@param  atomContainer     AtomContainer
      *@return                   The 1, 2, .. ionization energies
@@ -142,17 +155,17 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
      */
     public DescriptorValue calculatePlus(IAtomContainer atomContainer) throws CDKException {
     	String[] descriptorNames = {"MolIP"};
-    	
+
     	reactionSet = atomContainer.getBuilder().newReactionSet();
         ArrayList<Double> dar = new ArrayList<Double>();
         IPAtomicDescriptor descriptorA = new IPAtomicDescriptor();
         Iterator itA = atomContainer.atoms();
         while(itA.hasNext()){
             IAtom atom = (IAtom) itA.next();
-            
+
             if(atomContainer.getConnectedLonePairsCount(atom) == 0)
             	continue;
-            
+
             double result = ((DoubleResult)descriptorA.calculate(atom,atomContainer).getValue()).doubleValue();
             if(result == -1)
             	continue;
@@ -175,14 +188,14 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
 
         	if(bond.getOrder() == IBond.Order.SINGLE)
         		continue;
-        	
+
         	double result = ((DoubleResult)descriptorB.calculate(bond,atomContainer).getValue()).doubleValue();
-            
+
         	if(result == -1)
             	continue;
-            
+
         	IReactionSet irs = descriptorB.getReactionSet();
-            
+
             if(irs.getReactionCount() > 0){
             	Iterator iter = irs.reactions();
             	while(iter.hasNext()){
@@ -192,26 +205,26 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
 
             dar.add(result);
         }
-        
+
         if(dar.size() == 0)
         	dar.add(-1.0);
-        
+
         DoubleArrayResult results = arrangingEnergy(dar);
-        
+
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results, descriptorNames);
     }
-    
+
     /**
      * put in increasing order the ArrayList
-     * 
+     *
      * @param array The ArrayList to order
      * @return      The DoubleArrayResult ordered
      */
     private DoubleArrayResult arrangingEnergy(ArrayList array){
-        
+
     	DoubleArrayResult results = new DoubleArrayResult();
     	int count = array.size();
-    	
+
     	for(int i = 0; i < count; i++){
 	    	double min = (Double) array.get(0);
 	    	int pos = 0;
@@ -225,10 +238,10 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
 	    	array.remove(pos);
 	    	results.add(min);
     	}
-    	
+
     	return results;
     }
-    
+
     /**
      * Returns the specific type of the DescriptorResult object.
      * <p/>
@@ -262,8 +275,7 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
      *@return    The parameterNames value
      */
     public String[] getParameterNames() {
-        // no param names to return
-        return (null);
+        return new String[] {"addlp"};
     }
 
 
@@ -275,7 +287,7 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-        return (null);
+        return new Boolean(addlp);
     }
 }
 
