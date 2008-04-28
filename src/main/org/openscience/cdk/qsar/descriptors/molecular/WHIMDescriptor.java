@@ -315,7 +315,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         double[][] cmat = new double[ac.getAtomCount()][3];
         for (int i = 0; i < ac.getAtomCount(); i++) {
             Point3d coords = ac.getAtom(i).getPoint3d();
-            if (coords == null) throw new CDKException("Molecules should have 3D coordinates");
+            if (coords == null) throw new CDKException("Molecule must have 3D coordinates");
             cmat[i][0] = coords.x;
             cmat[i][1] = coords.y;
             cmat[i][2] = coords.z;

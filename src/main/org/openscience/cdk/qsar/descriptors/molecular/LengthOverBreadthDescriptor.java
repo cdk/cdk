@@ -1,7 +1,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import javax.vecmath.Point3d;
-
+import Jama.Matrix;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -17,7 +16,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
-import Jama.Matrix;
+import javax.vecmath.Point3d;
 
 /**
  * Evaluates length over breadth descriptors.
@@ -109,8 +108,8 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
         double[] xyzRanges;
 
         if (atomContainer.getAtom(0).getPoint3d() == null) {
-            logger.debug("No 3D coordinates found");
-            throw new CDKException("No 3D coordinates found");
+            logger.debug("Molecule must have 3D coordinates");
+            throw new CDKException("Molecule must have 3D coordinates");
         }
 
         double[][] coords = new double[atomContainer.getAtomCount()][3];
