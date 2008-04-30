@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author         mfe4
  * @cdk.created    2004-12-02
- * @cdk.module     atomtype
+ * @cdk.module     extra
  * @cdk.svnrev     $Revision$
  * @cdk.bug        1713398
  * @cdk.bug        1749179

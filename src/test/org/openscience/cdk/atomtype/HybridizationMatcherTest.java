@@ -20,14 +20,17 @@
  */
 package org.openscience.cdk.atomtype;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import junit.framework.JUnit4TestAdapter;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.atomtype.HybridizationMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -37,11 +40,8 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * @cdk.module test-atomtype
+ * @cdk.module test-extra
  */
 public class HybridizationMatcherTest extends AbstractAtomTypeTest {
 

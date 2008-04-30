@@ -28,17 +28,16 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.atomtype.HybridizationStateATMatcher;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * Checks the functionality of the AtomType-HybridizationStateATMatcher.
  *
- * @cdk.module test-atomtype
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.atomtype.HybridizationStateATMatcher
  */

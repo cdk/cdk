@@ -39,6 +39,9 @@ import org.openscience.cdk.applications.undoredo.ConvertToPseudoAtomEditTest;
 import org.openscience.cdk.applications.undoredo.ConvertToRadicalEditTest;
 import org.openscience.cdk.applications.undoredo.FlipEditTest;
 import org.openscience.cdk.applications.undoredo.RemoveAtomsAndBondsEditTest;
+import org.openscience.cdk.atomtype.HybridizationMatcherTest;
+import org.openscience.cdk.atomtype.HybridizationStateATMatcherTest;
+import org.openscience.cdk.atomtype.ValencyMatcherTest;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinterTest;
 import org.openscience.cdk.fingerprint.StandardSubstructureSetsTest;
 import org.openscience.cdk.fingerprint.SubstructureFingerprinterTest;
@@ -75,7 +78,10 @@ public class MextraTests {
         suite.addTest(new JUnit4TestAdapter(CloneAtomContainerTest.class));
         // from cdk.test.applications
         suite.addTest(new JUnit4TestAdapter(APIVersionTesterTest.class));
-        // from cdk.test.aromaticity
+        // from cdk.test.atomtype (unstable atom type stuff)
+        suite.addTest(new JUnit4TestAdapter(ValencyMatcherTest.class));
+        suite.addTest(new JUnit4TestAdapter(HybridizationStateATMatcherTest.class));
+        suite.addTest(new JUnit4TestAdapter(HybridizationMatcherTest.class));
         // from cdk.test.geometry
         suite.addTest(RDFCalculatorTest.suite());
         // from cdk.test.geometry.align

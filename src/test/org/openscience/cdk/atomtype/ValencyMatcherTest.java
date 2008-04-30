@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 /**
- * @cdk.module test-atomtype
+ * @cdk.module test-extra
  */
 public class ValencyMatcherTest extends AbstractAtomTypeTest {
 

@@ -19,6 +19,8 @@
  */
 package org.openscience.cdk.atomtype;
 
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -28,8 +30,6 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
-
-import java.util.List;
 
 /**
  * AtomTypeMatcher that finds an AtomType by matching the Atom's element symbol,
@@ -41,7 +41,7 @@ import java.util.List;
  *
  * @author egonw
  * @cdk.created 2005-04-15
- * @cdk.module atomtype
+ * @cdk.module extra
  * @cdk.svnrev  $Revision$
  */
 public class HybridizationMatcher implements IAtomTypeMatcher {

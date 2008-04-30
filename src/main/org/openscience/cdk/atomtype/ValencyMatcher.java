@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *
  * @author         egonw
  * @cdk.created    2006-09-22
- * @cdk.module     atomtype
+ * @cdk.module     extra
  * @cdk.svnrev  $Revision: 9162 $
  */
 public class ValencyMatcher implements IAtomTypeMatcher {

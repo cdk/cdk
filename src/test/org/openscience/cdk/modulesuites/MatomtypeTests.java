@@ -26,9 +26,6 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.AtomtypeCoverageTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest;
-import org.openscience.cdk.atomtype.HybridizationMatcherTest;
-import org.openscience.cdk.atomtype.HybridizationStateATMatcherTest;
-import org.openscience.cdk.atomtype.ValencyMatcherTest;
 import org.openscience.cdk.graph.PathToolsTest;
 import org.openscience.cdk.graph.SpanningTreeTest;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrixTest;
@@ -56,9 +53,6 @@ public class MatomtypeTests {
         
         // cdk.atomtype
         suite.addTest(new JUnit4TestAdapter(CDKAtomTypeMatcherTest.class));
-        suite.addTest(new JUnit4TestAdapter(HybridizationStateATMatcherTest.class));
-        suite.addTest(new JUnit4TestAdapter(HybridizationMatcherTest.class));
-        suite.addTest(new JUnit4TestAdapter(ValencyMatcherTest.class));
 
         return suite;
     }
