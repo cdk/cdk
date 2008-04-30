@@ -123,7 +123,7 @@ abstract public class CoverageTest extends TestCase {
             Method[] methods = coreClass.getDeclaredMethods();
             for (int i=0; i<methods.length; i++) {
                 int modifiers = methods[i].getModifiers();
-                if (!Modifier.isPrivate(modifiers) && !Modifier.isProtected(modifiers) &&
+                if (!Modifier.isPrivate(modifiers) &&
                     !removePackage(methods[i].getName()).startsWith("access")) {
                     String testMethod = "test" + capitalizeName(removePackage(methods[i].getName()));
                     Class[] paramTypes = methods[i].getParameterTypes();
@@ -159,7 +159,7 @@ abstract public class CoverageTest extends TestCase {
             	Constructor[] constructors = coreClass.getDeclaredConstructors();
             	for (int i=0; i<constructors.length; i++) {
             		int modifiers = constructors[i].getModifiers();
-            		if (!Modifier.isPrivate(modifiers) && !Modifier.isProtected(modifiers)) {
+            		if (!Modifier.isPrivate(modifiers)) {
             			String testMethod = "test" + capitalizeName(removePackage(constructors[i].getName()));
             			Class[] paramTypes = constructors[i].getParameterTypes();
             			for (int j=0; j<paramTypes.length; j++) {
