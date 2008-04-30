@@ -20,10 +20,13 @@
  */
 package org.openscience.cdk.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.StructgenCoverageTest;
+import org.openscience.cdk.atomtype.StructGenAtomTypeGuesserTest;
+import org.openscience.cdk.atomtype.StructGenMatcherTest;
 import org.openscience.cdk.structgen.RandomStructureGeneratorTest;
 import org.openscience.cdk.structgen.VicinitySamplerTest;
 import org.openscience.cdk.structgen.deterministic.EquivalentClassesDeterministicGeneratorTest;
@@ -43,7 +46,10 @@ public class MstructgenTests {
         TestSuite suite= new TestSuite("JUnit tests for the structgen module");
 
         suite.addTest(StructgenCoverageTest.suite());
-        
+
+        suite.addTest(new JUnit4TestAdapter(StructGenMatcherTest.class));
+        suite.addTest(new JUnit4TestAdapter(StructGenAtomTypeGuesserTest.class));
+
         suite.addTest(RandomStructureGeneratorTest.suite());
         suite.addTest(VicinitySamplerTest.suite());
         suite.addTest(GENMDeterministicGeneratorTest.suite());

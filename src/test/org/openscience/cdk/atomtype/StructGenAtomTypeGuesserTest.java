@@ -34,7 +34,7 @@ import org.openscience.cdk.NewCDKTestCase;
 import java.util.List;
 
 /**
- * @cdk.module test-atomtype
+ * @cdk.module test-structgen
  */
 public class StructGenAtomTypeGuesserTest extends NewCDKTestCase {
 

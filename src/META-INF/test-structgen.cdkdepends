@@ -9,6 +9,7 @@ cdk-structgen.jar
 cdk-smiles.jar
 cdk-extra.jar
 cdk-test.jar
+cdk-test-atomtype.jar
 cdk-formula.jar
 cdk-applications.jar
 cdk-sdg.jar
