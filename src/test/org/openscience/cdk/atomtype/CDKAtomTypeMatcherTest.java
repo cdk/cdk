@@ -1402,6 +1402,33 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
 
+    /**
+     * SDF version of the PubChem entry for the given InChI uses uncharged Ni.
+     * 
+     * @cdk.inchi InChI=1/C2H6S2.Ni/c3-1-2-4;/h3-4H,1-2H2;/q;+2/p-2/fC2H4S2.Ni/h3-4h;/q-2;m
+     */
+    @Test public void testNiCovalentlyBound() throws Exception {
+		String[] expectedTypes = {
+			"C.sp3",
+			"C.sp3",
+			"S.3",
+			"Ni",
+			"S.3"
+		};
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C"));
+		mol.addAtom(new Atom("C"));
+		mol.addBond(0,1,IBond.Order.SINGLE);
+		mol.addAtom(new Atom("S"));
+		mol.addBond(1,2,IBond.Order.SINGLE);
+		mol.addAtom(new Atom("Ni"));
+		mol.addBond(2,3,IBond.Order.SINGLE);
+		mol.addAtom(new Atom("S"));
+		mol.addBond(3,4,IBond.Order.SINGLE);
+		mol.addBond(0,4,IBond.Order.SINGLE);
+    	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+	}
+
     @Test public void testHaloniumsF() throws Exception {
     	IMolecule mol = new Molecule();
 

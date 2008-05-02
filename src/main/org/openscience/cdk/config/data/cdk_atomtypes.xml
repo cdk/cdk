@@ -789,6 +789,13 @@
     </atom>
   </atomType>
 
+  <atomType id="Ni">
+    <atom elementType="Ni" formalCharge="0">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+  </atomType>
+
   <atomType id="Fe.2plus">
     <atom elementType="Fe" formalCharge="2">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>

@@ -1000,6 +1000,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				atom.getFormalCharge() == +2)) {
     			IAtomType type = getAtomType("Ni.2plus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
+    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() == 0) &&
+    				atomContainer.getConnectedAtomsCount(atom) <= 2) {
+    			IAtomType type = getAtomType("Ni");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
     	} else if ("K".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
