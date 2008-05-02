@@ -3,9 +3,17 @@
 import java.io.*;
 import java.util.regex.*;
 
-File results = new File("ant.log");
+System.out.println("antlogFile: " + bsh.args[0]);
+
+String antlogFile = "ant.log";
+if (bsh.args[0] != null) {
+    antlogFile = bsh.args[0];
+}
+
+File results = new File(antlogFile);
 if (!results.exists()) {
-    System.out.println("Run 'ant -logfile ant.log clean test-all' first.");
+    System.out.println("Cannot find '" + antlogFile + "'. Run 'ant -logfile ant.log clean test-all' first.");
+    System.exit(1);
 }
 
 BufferedReader reader = new BufferedReader(new FileReader(results));
