@@ -651,19 +651,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			}
     		} else if (neighborcount == 2) {
     			if (isRingAtom(atom, atomContainer)) {
-    				boolean bothNeighborsSP2 = true;
-    				Iterator<IAtom> atoms = atomContainer.getConnectedAtomsList(atom).iterator();
-    				while (atoms.hasNext() && bothNeighborsSP2) {
-    					IAtom nextAtom = atoms.next();
-    					if (!nextAtom.getSymbol().equals("H")) {
-    						if (nextAtom.getHybridization() != CDKConstants.UNSET && 
-    								nextAtom.getHybridization() != Hybridization.SP2 && 
-    								countAttachedDoubleBonds(atomContainer, nextAtom) > 0) {
-    							bothNeighborsSP2 = false;
-    						}
-    					}
-    				}
-    				if (bothNeighborsSP2) {
+    				if (bothNeighborsAreSp2(atom, atomContainer)) {
     					IAtomType type = getAtomType("S.planar3");
         				if (isAcceptable(atom, atomContainer, type)) return type;
     				}
