@@ -614,6 +614,23 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testMnF4() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("F");
+        IAtom atom2 = new Atom("Mn");
+        IAtom atom3 = new Atom("F");
+        IAtom atom4 = new Atom("F");
+        IAtom atom5 = new Atom("F");
+        mol.addAtom(atom); atom.setFormalCharge(-1);
+        mol.addAtom(atom2); atom2.setFormalCharge(+2);
+        mol.addAtom(atom3); atom3.setFormalCharge(-1);
+        mol.addAtom(atom4); atom4.setFormalCharge(-1);
+        mol.addAtom(atom5); atom5.setFormalCharge(-1);
+
+        String[] expectedTypes = {"F.minus", "Mn.2plus", "F.minus", "F.minus", "F.minus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testCrF6() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("F");
