@@ -992,6 +992,15 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			IAtomType type = getAtomType("Fe.2plus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
+    	} else if ("Pt".equals(atom.getSymbol())) {
+    		if (hasOneSingleElectron(atomContainer, atom)) {
+    			// no idea how to deal with this yet
+    			return null;
+    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() == +2)) {
+    			IAtomType type = getAtomType("Pt.2plus");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		}
     	} else if ("Ni".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
     			// no idea how to deal with this yet
