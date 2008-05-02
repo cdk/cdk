@@ -1120,6 +1120,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			IAtomType type = getAtomType("Sc.3minus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
+    	} else if ("Cr".equals(atom.getSymbol())) {
+    		if (atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() == 0 &&
+    				atomContainer.getConnectedBondsCount(atom) == 6) {
+    			IAtomType type = getAtomType("Cr");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		}
     	}
     	return null;
     }

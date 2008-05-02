@@ -614,6 +614,33 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testCrF6() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("F");
+        IAtom atom2 = new Atom("Cr");
+        IAtom atom3 = new Atom("F");
+        IAtom atom4 = new Atom("F");
+        IAtom atom5 = new Atom("F");
+        IAtom atom6 = new Atom("F");
+        IAtom atom7 = new Atom("F");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addAtom(atom5);
+        mol.addAtom(atom6);
+        mol.addAtom(atom7);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,4,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,5,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,6,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"F", "Cr", "F", "F", "F", "F", "F"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testPhosphate() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("O");

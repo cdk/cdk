@@ -915,6 +915,15 @@
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">octahedral</scalar>
   </atomType>
 
+  <atomType id="Cr">
+    <atom elementType="Cr" formalCharge="0">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">6</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">octahedral</scalar>
+  </atomType>
+
   <atomType id="Ti.sp3">
     <atom elementType="Ti" formalCharge="0">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
