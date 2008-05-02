@@ -1077,6 +1077,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				atomContainer.getConnectedBondsCount(atom) <= 4)) {
     			IAtomType type = getAtomType("As.plus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
+    		} else if ((atom.getFormalCharge() != CDKConstants.UNSET &&
+    				atom.getFormalCharge() == 0 &&
+    				atomContainer.getConnectedBondsCount(atom) <= 3)) {
+    			IAtomType type = getAtomType("As");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
     	} else if ("Ti".equals(atom.getSymbol())) {
     		if (atom.getFormalCharge() != CDKConstants.UNSET &&
