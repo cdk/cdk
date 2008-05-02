@@ -420,6 +420,29 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.inchi InChI=1/H2Se/h1H2
+     */
+    @Test public void testH2Se() throws CDKException {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom se = DefaultChemObjectBuilder.getInstance().newAtom("Se");
+        IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(se, h1, IBond.Order.SINGLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(se, h2, IBond.Order.SINGLE);
+
+        mol.addAtom(se);
+        mol.addAtom(h1);
+        mol.addAtom(h2);
+
+        mol.addBond(b1);
+        mol.addBond(b2);
+
+        String[] expectedTypes = {"Se.3", "H", "H"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testH2S_Hybridization() throws CDKException {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");

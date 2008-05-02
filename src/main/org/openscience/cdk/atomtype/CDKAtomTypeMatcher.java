@@ -104,10 +104,26 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         if (type == null) type = perceiveNobelGases(atomContainer, atom);
         if (type == null) type = perceiveBorons(atomContainer, atom);
         if (type == null) type = perceiveBeryllium(atomContainer, atom);
+        if (type == null) type = perceiveSelenium(atomContainer, atom);
         return type;
     }
     
-    private IAtomType perceiveBorons(IAtomContainer atomContainer, IAtom atom)
+    private IAtomType perceiveSelenium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+    	if ("Se".equals(atom.getSymbol())) {
+    		IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    		if (atom.getFormalCharge() == CDKConstants.UNSET ||
+    			atom.getFormalCharge() == 0) {
+    			if (maxBondOrder == IBond.Order.SINGLE &&
+    				atomContainer.getConnectedAtomsCount(atom) <= 2) {
+    				IAtomType type = getAtomType("Se.3");
+    				if (isAcceptable(atom, atomContainer, type)) return type;
+    			}
+    		}
+    	}
+		return null;
+	}
+
+	private IAtomType perceiveBorons(IAtomContainer atomContainer, IAtom atom)
 		throws CDKException {
     	if ("B".equals(atom.getSymbol())) {
     		IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
