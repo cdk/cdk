@@ -1144,6 +1144,13 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addAtom(atom);
         expectedTypes = new String[]{"Pt.2plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+
+        mol = new Molecule();
+        atom = new Atom("Co");
+        atom.setFormalCharge(+2);
+        mol.addAtom(atom);
+        expectedTypes = new String[]{"Co.2plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
      }
 
     @Test public void testFerrocene() throws Exception {
