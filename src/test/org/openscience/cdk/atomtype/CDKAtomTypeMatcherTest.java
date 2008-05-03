@@ -1674,7 +1674,13 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	IMolecule mol = new Molecule();
 
     	mol.addAtom(new Atom("He"));
-    	String[] expectedTypes = {"He"}; 
+    	mol.addAtom(new Atom("Ne"));
+    	mol.addAtom(new Atom("Ar"));
+    	mol.addAtom(new Atom("Kr"));
+    	mol.addAtom(new Atom("Xe"));
+    	mol.addAtom(new Atom("Rn"));
+
+    	String[] expectedTypes = {"He", "Ne", "Ar", "Kr", "Xe", "Rn"}; 
     	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
@@ -1876,8 +1882,8 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
                 "org/openscience/cdk/config/data/cdk_atomtypes.xml",
             NoNotificationChemObjectBuilder.getInstance()
         );
-        String errorMessage = "Elements without atom types:";
-        final int testUptoAtomicNumber = 10; // TODO: 92 ?
+        String errorMessage = "Elements without atom type(s) defined in the XML:";
+        final int testUptoAtomicNumber = 18; // TODO: 92 ?
         int elementsMissingTypes = 0;
     	for (int i=1; i<testUptoAtomicNumber; i++) {
     		String symbol = Symbols.byAtomicNumber[i];

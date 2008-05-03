@@ -1171,6 +1171,51 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			IAtomType type = getAtomType("He");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
+    	} else if ("Ne".equals(atom.getSymbol())) {
+    		if (hasOneSingleElectron(atomContainer, atom)) {
+    			// no idea how to deal with this yet
+    			return null;
+    		} else if ((atom.getFormalCharge() == CDKConstants.UNSET ||
+    				atom.getFormalCharge() == 0)) {
+    			IAtomType type = getAtomType("Ne");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		}
+    	} else if ("Ar".equals(atom.getSymbol())) {
+    		if (hasOneSingleElectron(atomContainer, atom)) {
+    			// no idea how to deal with this yet
+    			return null;
+    		} else if ((atom.getFormalCharge() == CDKConstants.UNSET ||
+    				atom.getFormalCharge() == 0)) {
+    			IAtomType type = getAtomType("Ar");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		}
+    	} else if ("Kr".equals(atom.getSymbol())) {
+    		if (hasOneSingleElectron(atomContainer, atom)) {
+    			// no idea how to deal with this yet
+    			return null;
+    		} else if ((atom.getFormalCharge() == CDKConstants.UNSET ||
+    				atom.getFormalCharge() == 0)) {
+    			IAtomType type = getAtomType("Kr");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		}
+    	} else if ("Xe".equals(atom.getSymbol())) {
+    		if (hasOneSingleElectron(atomContainer, atom)) {
+    			// no idea how to deal with this yet
+    			return null;
+    		} else if ((atom.getFormalCharge() == CDKConstants.UNSET ||
+    				atom.getFormalCharge() == 0)) {
+    			IAtomType type = getAtomType("Xe");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		}
+    	} else if ("Rn".equals(atom.getSymbol())) {
+    		if (hasOneSingleElectron(atomContainer, atom)) {
+    			// no idea how to deal with this yet
+    			return null;
+    		} else if ((atom.getFormalCharge() == CDKConstants.UNSET ||
+    				atom.getFormalCharge() == 0)) {
+    			IAtomType type = getAtomType("Rn");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		}
     	}
     	return null;
     }
