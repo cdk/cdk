@@ -1,0 +1,25 @@
+#!/usr/bin/bsh
+
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.CDKSourceCodeWriter;
+
+if (bsh.args.length == 0 || bsh.args[0] == null) {
+  System.out.println("Syntax: pubchem2unittest.bsh [CID]\n");
+  System.exit(0);
+}
+
+String cid = bsh.args[0];
+String urlString = "http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?disopt=SaveSDF&cid=" + cid;
+
+URL url = new URL(urlString);
+
+MDLV2000Reader reader = new MDLV2000Reader(url.openStream());
+Molecule mol = reader.read(new Molecule());
+
+StringWriter stringWriter = new StringWriter();
+CDKSourceCodeWriter writer = new CDKSourceCodeWriter(stringWriter);
+writer.write(mol);
+writer.close();
+
+System.out.print(stringWriter.toString());
