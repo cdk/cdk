@@ -377,7 +377,7 @@
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
   </atomType>
 
-  <atomType id="S.2"> <!-- e.g. DMSO  FIXME: WTF??? -->
+  <atomType id="S.2"> <!-- e.g. thioacetone -->
     <atom elementType="S" formalCharge="0">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">2</scalar>
