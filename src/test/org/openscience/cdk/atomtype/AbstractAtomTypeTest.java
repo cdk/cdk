@@ -21,8 +21,10 @@
 package org.openscience.cdk.atomtype;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.openscience.cdk.CDKConstants;
@@ -161,24 +163,55 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 		}
 	}
 	
-    public void countTestedAtomTypes(Map<String, Integer> testedAtomTypes) {
-        Map<String, String> checkedTypes = new HashMap<String, String>();
-        IAtomType[] expectedTypes = factory.getAllAtomTypes();
-        if (expectedTypes.length != testedAtomTypes.size()) {
-            String errorMessage = "Atom types not tested:";
-            for (int i=0; i<expectedTypes.length; i++) {
-                if (checkedTypes.containsKey(expectedTypes[i].getAtomTypeName())) {
-                    Assert.fail("Duplicate atom type definition: " + expectedTypes[i].getAtomTypeName());
-                }
-                checkedTypes.put(expectedTypes[i].getAtomTypeName(), expectedTypes[i].getAtomTypeName());
-                if (!testedAtomTypes.containsKey(expectedTypes[i].getAtomTypeName()))
-                        errorMessage += " " + expectedTypes[i].getAtomTypeName();
-            }
-                Assert.assertEquals(errorMessage,
-                        factory.getAllAtomTypes().length,
-                        testedAtomTypes.size()
-                );
+	public void testForDuplicateDefinitions() {
+        IAtomType[] expectedTypesArray = factory.getAllAtomTypes();
+        Set<String> alreadyDefinedTypes = new HashSet<String>();
+
+        for (int i=0; i<expectedTypesArray.length; i++) {
+        	String definedType = expectedTypesArray[i].getAtomTypeName(); 
+        	if (alreadyDefinedTypes.contains(definedType)) {
+    			Assert.fail("Duplicate atom type definition in XML: " + definedType);
+    		}
+        	alreadyDefinedTypes.add(definedType);
+        }
+	}
+	
+    public void countTestedAtomTypes(Map<String, Integer> testedAtomTypesMap) {
+        Set<String> testedAtomTypes = new HashSet<String>();
+        testedAtomTypes.addAll(testedAtomTypesMap.keySet());
+        
+        Set<String> definedTypes = new HashSet<String>();
+        IAtomType[] expectedTypesArray = factory.getAllAtomTypes();
+        for (int i=0; i<expectedTypesArray.length; i++) {
+        	definedTypes.add(expectedTypesArray[i].getAtomTypeName());
+        }
+        
+        if (definedTypes.size() == testedAtomTypes.size() &&
+        	definedTypes.containsAll(testedAtomTypes)) {
+        	// all is fine
+        } else if (definedTypes.size() > testedAtomTypes.size()) {
+        	// more atom types defined than tested
+        	int expectedTypeCount = definedTypes.size();
+            definedTypes.removeAll(testedAtomTypes);
+        	String errorMessage = "Atom types defined but not tested:";
+        	for (String notTestedType : definedTypes) {
+        		errorMessage += " " + notTestedType;
+        	}
+        	Assert.assertEquals(errorMessage,
+        		expectedTypeCount, testedAtomTypes.size()
+            );
+        } else { // testedAtomTypes.size() > definedTypes.size()
+        	// more atom types tested than defined
+        	int testedTypeCount = testedAtomTypes.size();
+            definedTypes.removeAll(testedAtomTypes);
+        	String errorMessage = "Atom types tested but not defined:";
+        	for (String notTestedType : definedTypes) {
+        		errorMessage += " " + notTestedType;
+        	}
+        	Assert.assertEquals(errorMessage,
+        		testedTypeCount, testedAtomTypes.size()
+            );
         }
     }
-	
+
 }

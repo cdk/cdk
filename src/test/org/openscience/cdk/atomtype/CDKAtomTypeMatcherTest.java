@@ -2062,4 +2062,8 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	super.countTestedAtomTypes(testedAtomTypes);
     }
     
+    @Test public void testForDuplicateDefinitions() {
+    	super.testForDuplicateDefinitions();
+    }
+    
 }
