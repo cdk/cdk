@@ -182,6 +182,36 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 		System.out.println("count: " + count);
 	}
 
+	/**
+	 * @cdk.bug 1744463
+	 */
+	public void testEthyne() throws Exception {
+		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C2H2","");
+		MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 
+		gdg.addListener(myListener);
+		gdg.generate();
+		List structures = myListener.getStructures();
+		assertEquals(1, structures.size());
+		assertUnique(structures);
+		assertOK(structures);
+	}
+
+	/**
+	 * @cdk.bug 1744463
+	 */
+	public void testMethane() throws Exception {
+		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("CH4","");
+		MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 
+		gdg.addListener(myListener);
+		gdg.generate();
+		List structures = myListener.getStructures();
+		assertEquals(1, structures.size());
+		assertOK(structures);
+		List uniqueSMILES = assertUnique(structures);
+		System.out.println("List: " + uniqueSMILES);
+		assertTrue(uniqueSMILES.contains("C"));
+	}
+
 	public void testTMS() throws Exception {
 		GENMDeterministicGenerator gdg = new GENMDeterministicGenerator("C4H12Si1","");
 		MyStructureGenerationListener myListener = new MyStructureGenerationListener(); 
