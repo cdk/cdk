@@ -1131,6 +1131,18 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			IAtomType type = getAtomType("V.3minus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		}
+    	} else if ("Al".equals(atom.getSymbol())) {
+    		if (atom.getFormalCharge() != CDKConstants.UNSET &&
+    			atom.getFormalCharge() == 3 &&
+    			atomContainer.getConnectedBondsCount(atom) == 0) {
+    			IAtomType type = getAtomType("Al.3plus");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
+        		atom.getFormalCharge() == 0 &&
+        		atomContainer.getConnectedBondsCount(atom) == 3){
+    			IAtomType type = getAtomType("Al");
+    			if (isAcceptable(atom, atomContainer, type)) return type;
+    		}
     	} else if ("Sc".equals(atom.getSymbol())) {
     		if (atom.getFormalCharge() != CDKConstants.UNSET &&
     			atom.getFormalCharge() == -3 &&

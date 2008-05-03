@@ -796,6 +796,20 @@
     </atom>
   </atomType>
 
+  <atomType id="Al.3plus">
+    <atom elementType="Al" formalCharge="3">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+  </atomType>
+
+  <atomType id="Al">
+    <atom elementType="Al" formalCharge="0">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
+    </atom>
+  </atomType>
+
   <atomType id="Fe.2plus">
     <atom elementType="Fe" formalCharge="2">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">0</scalar>

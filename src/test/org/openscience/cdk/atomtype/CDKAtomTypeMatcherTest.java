@@ -1202,6 +1202,13 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addAtom(atom);
         expectedTypes = new String[]{"Cu.2plus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+
+        mol = new Molecule();
+        atom = new Atom("Al");
+        atom.setFormalCharge(+3);
+        mol.addAtom(atom);
+        expectedTypes = new String[]{"Al.3plus"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
      }
 
     @Test public void testFerrocene() throws Exception {
@@ -2056,6 +2063,27 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	  
     	  String[] expectedTypes = {"S.inyl", "N.sp2", "C.sp3", "C.sp3"};
           assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testAluminumChloride() throws Exception {
+    	IMolecule mol = new Molecule();
+    	IAtom a1 = mol.getBuilder().newAtom("Cl");
+    	mol.addAtom(a1);
+    	IAtom a2 = mol.getBuilder().newAtom("Cl");
+    	mol.addAtom(a2);
+    	IAtom a3 = mol.getBuilder().newAtom("Cl");
+    	mol.addAtom(a3);
+    	IAtom a4 = mol.getBuilder().newAtom("Al");
+    	mol.addAtom(a4);
+    	IBond b1 = mol.getBuilder().newBond(a1, a4, IBond.Order.SINGLE);
+    	mol.addBond(b1);
+    	IBond b2 = mol.getBuilder().newBond(a2, a4, IBond.Order.SINGLE);
+    	mol.addBond(b2);
+    	IBond b3 = mol.getBuilder().newBond(a3, a4, IBond.Order.SINGLE);
+    	mol.addBond(b3);
+
+    	String[] expectedTypes = {"Cl", "Cl", "Cl", "Al"};
+    	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
     @Test public void countTestedAtomTypes() {
