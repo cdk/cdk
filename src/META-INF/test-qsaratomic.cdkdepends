@@ -20,3 +20,5 @@ cdk-builder3d.jar
 cdk-forcefield.jar
 cdk-sdg.jar
 cdk-test-qsar.jar
+cdk-dict.jar
+cdk-isomorphism.jar
