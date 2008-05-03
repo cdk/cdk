@@ -3,10 +3,9 @@
 import java.io.*;
 import java.util.regex.*;
 
-System.out.println("antlogFile: " + bsh.args[0]);
-
 String antlogFile = "ant.log";
-if (bsh.args[0] != null) {
+if (bsh.args.length > 0 && bsh.args[0] != null) {
+    System.out.println("antlogFile: " + bsh.args[0]);
     antlogFile = bsh.args[0];
 }
 
