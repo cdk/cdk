@@ -203,7 +203,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     public void writeBond(IBond bond) throws Exception {
         writer.write("  IBond " + bond.getID() + " = mol.getBuilder().newBond(" + 
                      bond.getAtom(0).getID() + ", " +
-                     bond.getAtom(1).getID() + ", " +
+                     bond.getAtom(1).getID() + ", IBond.Order." +
                      bond.getOrder() + ");\n");
     }
     
