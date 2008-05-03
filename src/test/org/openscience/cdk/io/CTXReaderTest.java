@@ -1,7 +1,7 @@
 /* $RCSfile: $
- * $Author: egonw $
- * $Date: 2006-07-30 16:38:18 -0400 (Sun, 30 Jul 2006) $
- * $Revision: 6707 $
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  * 

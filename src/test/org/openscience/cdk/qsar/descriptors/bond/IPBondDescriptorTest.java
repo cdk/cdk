@@ -1,4 +1,4 @@
-/* $Revision: 1.0 $ $Author: miguelrojasch $ $Date: 2006-05-12 10:58:22 +0200 (Fr, 12 Mai 2006) $
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  * 

@@ -1,4 +1,4 @@
-/* $Revision: 6718 $ $Author: egonw $ $Date: 2006-08-01 21:13:42 +0200 (Tue, 01 Aug 2006) $    
+/* $Revision$ $Author$ $Date$    
  * 
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  * 

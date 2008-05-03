@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: rajarshi $    
- * $Date: 2006-09-20 15:05:25 +0000 (Wed, 20 Sep 2006) $    
- * $Revision: 6982 $
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  * 

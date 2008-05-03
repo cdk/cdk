@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-04-21 10:59:31 +0200 (Fr, 21 Apr 2006) $
- * $Revision: 6067 $
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *

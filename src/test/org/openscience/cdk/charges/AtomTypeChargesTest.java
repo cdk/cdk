@@ -1,4 +1,4 @@
-/* $RCSfile: $ $Author: rajarshi $ $Date: 2007-12-30 17:05:50 +0100 (Sun, 30 Dec 2007) $
+/* $RCSfile: $ $Author$ $Date$
  *
  * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
  *

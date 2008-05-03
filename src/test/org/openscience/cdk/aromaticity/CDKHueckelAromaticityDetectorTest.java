@@ -1,6 +1,6 @@
-/* $Revision: 8225 $
- * $Author: egonw $
- * $Date: 2007-04-21 02:23:13 +0200 (Sat, 21 Apr 2007) $
+/* $Revision$
+ * $Author$
+ * $Date$
  *
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *

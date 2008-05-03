@@ -1,4 +1,4 @@
-/* $Revision: 7636 $ $Author: ospjuth $ $Date: 2007-01-04 17:46:10 +0000 (Thu, 04 Jan 2007) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2007  Ola Spjuth <ospjuth@users.sf.net>
  * 

@@ -1,4 +1,4 @@
-/* $Revision: 7001 $ $Author: kaihartmann $ $Date: 2006-09-20 21:12:37 +0200 (Wed, 20 Sep 2006) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  * 

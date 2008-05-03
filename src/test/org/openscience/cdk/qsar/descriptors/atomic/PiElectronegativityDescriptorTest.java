@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: miguelrojasch $
- * $Date: 2006-05-11 14:25:07 +0200 (Do, 11 Mai 2006) $
- * $Revision: 6221 $
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
  *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  * 

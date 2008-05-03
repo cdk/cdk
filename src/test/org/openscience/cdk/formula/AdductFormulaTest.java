@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $    
- * $Date: 2007-02-09 00:35:55 +0100 (Fri, 09 Feb 2007) $    
- * $Revision: 7921 $
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  *  Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
  * 

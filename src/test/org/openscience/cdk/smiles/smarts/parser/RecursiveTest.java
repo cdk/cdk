@@ -1,4 +1,4 @@
-/* $Revision: 8245 $ $Author: djiao $ $Date: 2007-04-22 17:20:57 -0400 (Sun, 22 Apr 2007) $
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  *

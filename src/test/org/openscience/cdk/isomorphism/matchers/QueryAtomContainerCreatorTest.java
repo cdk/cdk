@@ -1,6 +1,6 @@
-/* $Revision: $
- * $Author: $    
- * $Date: $    
+/* $Revision$
+ * $Author$    
+ * $Date$    
  * 
  * Copyright (C) 2008 Egon Willighagen <egonw@users.sf.net>
  * 

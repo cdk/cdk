@@ -1,4 +1,4 @@
-/* $Revision: 8431 $ $Author: rajarshi $ $Date: 2007-06-27 00:49:22 +0200 (Wed, 27 Jun 2007) $
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
  * 

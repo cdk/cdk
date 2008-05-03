@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $    
- * $Date: 2006-09-20 10:48:23 +0000 (Wed, 20 Sep 2006) $    
- * $Revision: 6963 $
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  * 

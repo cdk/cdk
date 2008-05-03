@@ -1,4 +1,4 @@
-/* $Revision: 7635 $ $Author: egonw $ $Date: 2007-01-04 18:32:54 +0100 (Thu, 04 Jan 2007) $
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  * 

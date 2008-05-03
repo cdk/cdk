@@ -1,4 +1,4 @@
-/* $Revision: 8658 $ $Author: egonw $ $Date: 2007-08-03 15:20:28 +0200 (Fri, 03 Aug 2007) $
+/* $Revision$ $Author$ $Date$
  * 
  *  Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
  * 
