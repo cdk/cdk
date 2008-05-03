@@ -46,6 +46,7 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.isomorphism.AtomMappingTools;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomContainer;
 
@@ -121,7 +122,7 @@ public class GeometryToolsTest extends NewCDKTestCase {
 	    reader = new MDLV2000Reader(ins, Mode.STRICT);
 	    molTwo = (Molecule)reader.read(new Molecule());
 	   
-	    mappedAtoms=GeometryTools.mapAtomsOfAlignedStructures(molOne, molTwo, mappedAtoms);
+	    mappedAtoms=AtomMappingTools.mapAtomsOfAlignedStructures(molOne, molTwo, mappedAtoms);
 	    //logger.debug("mappedAtoms:"+mappedAtoms.toString());
 	    //logger.debug("***** ANGLE VARIATIONS *****");
 	    double AngleRMSD=GeometryTools.getAngleRMSD(molOne,molTwo,mappedAtoms);

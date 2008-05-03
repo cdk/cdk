@@ -1,8 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *
@@ -25,7 +21,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.geometry;
 
@@ -1113,50 +1108,6 @@ public class GeometryTools {
         }
 		return mappedAtoms;
 	}
-
-    /**
-     * Returns a Map with the AtomNumbers, the first number corresponds to the first (or the largest
-     * AtomContainer) atomContainer.
-     * <p/>
-     * Only for similar and aligned molecules with coordinates!
-     *
-     * @param firstAtomContainer  the (largest) first aligned AtomContainer which is the reference
-     * @param secondAtomContainer the second aligned AtomContainer
-     * @return a Map of the mapped atoms
-     * @throws CDKException if there is an error in the UniversalIsomorphismTester
-     * @cdk.bug 1956606
-     */
-    public static Map mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms) throws CDKException {
-        //logger.debug("**** GT MAP ATOMS ****");
-        //Map atoms onto each other
-        if (firstAtomContainer.getAtomCount() < 1 & secondAtomContainer.getAtomCount() < 1) {
-            return mappedAtoms;
-        }
-        RMap map;
-        org.openscience.cdk.interfaces.IAtom atom1;
-        org.openscience.cdk.interfaces.IAtom atom2;
-        List list;
-        try {
-            list = UniversalIsomorphismTester.getSubgraphAtomsMap(firstAtomContainer, secondAtomContainer);
-            //logger.debug("ListSize:"+list.size());
-            for (int i = 0; i < list.size(); i++) {
-                map = (RMap) list.get(i);
-                atom1 = firstAtomContainer.getAtom(map.getId1());
-                atom2 = secondAtomContainer.getAtom(map.getId2());
-                if (checkAtomMapping(firstAtomContainer, secondAtomContainer, firstAtomContainer.getAtomNumber(atom1), secondAtomContainer.getAtomNumber(atom2)))
-                {
-                    mappedAtoms.put(new Integer(firstAtomContainer.getAtomNumber(atom1)), new Integer(secondAtomContainer.getAtomNumber(atom2)));
-                    //logger.debug("#:"+countMappedAtoms+" Atom:"+firstAtomContainer.getAtomNumber(atom1)+" is mapped to Atom:"+secondAtomContainer.getAtomNumber(atom2));
-                } else {
-                    logger.error("Error: Atoms are not similar !!");
-                }
-            }
-        } catch (CDKException e) {
-            throw new CDKException("Error in UniversalIsomorphismTester due to:" + e.toString());
-        }
-        return mappedAtoms;
-    }
-
 
     private static void getLargestAtomContainer(IAtomContainer firstAC, IAtomContainer secondAC) {
         if (firstAC.getAtomCount() < secondAC.getAtomCount()){
