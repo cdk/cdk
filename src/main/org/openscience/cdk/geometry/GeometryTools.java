@@ -1124,6 +1124,7 @@ public class GeometryTools {
      * @param secondAtomContainer the second aligned AtomContainer
      * @return a Map of the mapped atoms
      * @throws CDKException if there is an error in the UniversalIsomorphismTester
+     * @cdk.bug 1956606
      */
     public static Map mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms) throws CDKException {
         //logger.debug("**** GT MAP ATOMS ****");

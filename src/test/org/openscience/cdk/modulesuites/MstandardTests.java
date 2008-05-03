@@ -41,7 +41,6 @@ import org.openscience.cdk.fingerprint.FingerprinterToolTest;
 import org.openscience.cdk.fingerprint.GraphOnlyFingerprinterTest;
 import org.openscience.cdk.geometry.BondToolsTest;
 import org.openscience.cdk.geometry.CrystalGeometryToolsTest;
-import org.openscience.cdk.geometry.GeometryToolsInternalCoordinatesTest;
 import org.openscience.cdk.graph.BFSShortestPathTest;
 import org.openscience.cdk.graph.BiconnectivityInspectorTest;
 import org.openscience.cdk.graph.ConnectivityCheckerTest;
@@ -151,7 +150,6 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(FingerprinterToolTest.class));
         suite.addTest(new JUnit4TestAdapter(ProblemMarkerTest.class));
         suite.addTest(new JUnit4TestAdapter(SymbolsTest.class));
-        suite.addTest(GeometryToolsInternalCoordinatesTest.suite());
         suite.addTest(new JUnit4TestAdapter(BondToolsTest.class));
         suite.addTest(new JUnit4TestAdapter(UnsupportedChemObjectExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(InvalidSmilesExceptionTest.class));
