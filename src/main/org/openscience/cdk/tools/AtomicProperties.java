@@ -1,7 +1,7 @@
 /* $RCSfile: $
- * $Author: egonw $
- * $Date: 2006-05-04 19:29:58 +0000 (Thu, 04 May 2006) $
- * $Revision: 6171 $
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 2006-2007  Todd Martin (Environmental Protection Agency)
  *
@@ -37,7 +37,7 @@ import java.util.Hashtable;
  *
  * @cdk.author Todd Martin
  * @cdk.module qsar
- * @cdk.svnrev  $Revision: 9416 $
+ * @cdk.svnrev  $Revision$
  */
 public class AtomicProperties {
 

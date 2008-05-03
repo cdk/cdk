@@ -1,6 +1,6 @@
 /* CDKChangeListener.java
  * 
- * $RCSfile$    $Author: egonw $    $Date: 2007-01-04 17:46:10 +0000 (Do, 04 Jan 2007) $    $Revision: 7636 $
+ * $RCSfile$    $Author$    $Date$    $Revision$
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -34,7 +34,7 @@ import java.util.EventObject;
  * A ChangeListener for the CDK, to be independent from the Swing package.
  *
  * @cdk.module standard
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */ 
 public interface ICDKSelectionChangeListener extends EventListener
 {

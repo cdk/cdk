@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-04-19 15:01:24 +0200 (Wed, 19 Apr 2006) $
- * $Revision: 6009 $
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
  * Copyright (C) 2001-2007  Egon Willighagen <egonw@users.sf.net>
  * 
@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IMonomer;
  * and other species.
  *
  * @cdk.module  pdb
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  *
  * @author      Egon Willighagen
  * @cdk.created 2006-04-19

@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-04-11 20:37:50 +0200 (Tue, 11 Apr 2006) $
- * $Revision: 5915 $
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
  * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  * 
@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  * @cdk.module nonotify
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */
 public class NNCrystal extends Crystal {
 

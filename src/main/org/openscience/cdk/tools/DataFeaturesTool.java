@@ -1,7 +1,7 @@
 /* $RCSfile: $
- * $Author: egonw $
- * $Date: 2006-05-09 21:32:32 +0200 (Tue, 09 May 2006) $  
- * $Revision: 6204 $
+ * $Author$
+ * $Date$  
+ * $Revision$
  *
  * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.features.MoleculeFeaturesTool;
  * Utility that helps determine which data features are present.
  * 
  * @author egonw
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * 
  * @see    org.openscience.cdk.tools.DataFeatures
  */

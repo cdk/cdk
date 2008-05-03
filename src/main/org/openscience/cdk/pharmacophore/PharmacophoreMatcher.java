@@ -87,7 +87,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author Rajarshi Guha
  * @cdk.module pcore
- * @cdk.svnrev $Revision: 9162 $
+ * @cdk.svnrev $Revision$
  * @cdk.keyword pharmacophore
  * @cdk.keyword 3D isomorphism
  * @see org.openscience.cdk.pharmacophore.PharmacophoreAtom

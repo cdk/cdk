@@ -71,7 +71,7 @@ import java.util.Set;
  * @cdk.require r-project
  * @cdk.require JRI.jar
  * @cdk.module qsar
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword R
  * @cdk.keyword JRI
  */

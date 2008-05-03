@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $
- * $Date: 2007-03-21 12:30:22 +0100 (Mi, 21 Mrz 2007) $
- * $Revision: 8150 $
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
  *
@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
  * This MDL RXN reader uses the MDLV2000 reader to read each mol file
  * @cdk.module io
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  *
  * @author     Egon Willighagen
  * @author 	   Thomas Kuhn

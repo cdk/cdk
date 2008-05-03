@@ -1,4 +1,4 @@
-/* $Revision: $ $Author: $ $Date: $ 
+/* $Revision$ $Author$ $Date$ 
  *
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
@@ -25,7 +25,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
  * @cdk.module smarts
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */
 public class ASTAtomicMass extends SimpleNode {

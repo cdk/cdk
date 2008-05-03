@@ -1,4 +1,4 @@
-/* $Revision: 6672 $ $Author: egonw $ $Date: 2006-07-14 14:09:39 +0200 (Fri, 14 Jul 2006) $
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  * 
@@ -31,7 +31,7 @@ package org.openscience.cdk.config;
  * 
  * @author     egonw
  * @cdk.module standard 
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */
 public class Symbols {
 

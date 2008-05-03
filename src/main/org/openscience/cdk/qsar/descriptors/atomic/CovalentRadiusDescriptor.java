@@ -1,8 +1,8 @@
 /*
  *  $RCSfile$
- *  $Author: egonw $
- *  $Date: 2006-05-04 21:29:58 +0200 (Do, 04 Mai 2006) $
- *  $Revision: 6171 $
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *
@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author         Miguel Rojas
  * @cdk.created    2006-05-17
  * @cdk.module     qsaratomic
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:covalentradius
  */
@@ -101,7 +101,7 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#covalentradius",
                 this.getClass().getName(),
-                "$Id: CovalentRadiusDescriptor.java 6171 2006-05-04 19:29:58Z egonw $",
+                "$Id$",
                 "The Chemistry Development Kit");
     }
 

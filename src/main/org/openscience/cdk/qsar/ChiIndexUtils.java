@@ -27,7 +27,7 @@ import org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptor;
  *
  * @author     Rajarshi Guha
  * @cdk.module qsarmolecular
- * @cdk.svnrev $Revision: 9162 $
+ * @cdk.svnrev $Revision$
  */
 public class ChiIndexUtils {
 

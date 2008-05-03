@@ -1,8 +1,8 @@
 /*
  *  $RCSfile$
- *  $Author: rajarshi $
- *  $Date: 2006-11-12 10:58:42 -0400 (Mon, 18 Sep 2006) $
- *  $Revision: 6906 $
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
@@ -78,7 +78,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @author Rajarshi Guha
  * @cdk.created 2006-11-13
  * @cdk.module qsarmolecular
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:chiCluster
  * @cdk.keyword chi cluster index
@@ -97,7 +97,7 @@ public class ChiClusterDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiCluster",
                 this.getClass().getName(),
-                "$Id: ChiClusterDescriptor.java 6906 2006-11-12 14:58:42Z rajarshi $",
+                "$Id$",
                 "The Chemistry Development Kit");
     }
 

@@ -1,4 +1,4 @@
-/* $Revision: 9170 $ $Author: rajarshi $ $Date: 2007-10-22 02:11:09 +0200 (Mon, 22 Oct 2007) $
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.ne>
  * 
@@ -27,7 +27,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * IDescriptorResult type for booleans. 
  *
  * @cdk.module standard
- * @cdk.svnrev $Revision: 9170 $
+ * @cdk.svnrev $Revision$
  */
 @TestClass("org.openscience.cdk.qsar.result.BooleanResultTypeTest")
 public class BooleanResultType implements IDescriptorResult {

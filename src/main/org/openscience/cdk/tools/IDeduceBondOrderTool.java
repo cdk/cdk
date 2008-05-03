@@ -1,4 +1,4 @@
-/* $Revision: 5940 $ $Author: egonw $ $Date: 2006-04-15 21:58:22 +0200 (Sat, 15 Apr 2006) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @author      Egon Willighagen
  * @cdk.created 2006-08-16
  * @cdk.module  valencycheck
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */
 public interface IDeduceBondOrderTool {
 

@@ -1,4 +1,4 @@
-/* $Revision: 6221 $ $Author: miguelrojasch $ $Date: 2006-05-11 14:25:07 +0200 (Do, 11 Mai 2006) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  * 
@@ -68,7 +68,7 @@ import org.openscience.cdk.reaction.type.SharingLonePairReaction;
  * @author       Miguel Rojas
  * @cdk.created  2006-5-05
  * @cdk.module   reaction
- * @cdk.svnrev   $Revision: 9162 $
+ * @cdk.svnrev   $Revision$
  * @cdk.bug      1728830
  * 
  * @see org.openscience.cdk.reaction.IReactionProcess

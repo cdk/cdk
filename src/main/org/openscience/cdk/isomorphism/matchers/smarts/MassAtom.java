@@ -1,9 +1,9 @@
 
 /*
  *  $RCSfile$
- *  $Author: Sushil Ronghe $
- *  $Date: 2007-04-12  $
- *  $Revision: 6631 $
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
  *
@@ -35,7 +35,7 @@
  * This class matches an atom based on the atomic mass
  *
  * @cdk.module extra
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */
 public class MassAtom extends SMARTSAtom{

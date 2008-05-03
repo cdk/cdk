@@ -1,4 +1,4 @@
-/* $Revision: 8399 $ $Author: rajarshi $ $Date: 2007-06-24 06:34:35 +0200 (Sun, 24 Jun 2007) $
+/* $Revision$ $Author$ $Date$
  *  
  * Copyright (C) 2007  Egon Willighagen
  *
@@ -73,7 +73,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * 
  * @author     egonw
  * @cdk.module valencycheck
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */
 public class CDKHydrogenAdder {
 

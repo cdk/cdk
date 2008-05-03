@@ -1,7 +1,7 @@
 /*  $RCSfile$
- *  $Author: rajarshi $
- *  $Date: 2006-08-14 15:51:36 -0400 (Mon, 14 Aug 2006) $
- *  $Revision: 6785 $
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
@@ -107,7 +107,7 @@ import java.util.*;
  * @author      Rajarshi Guha
  * @cdk.created 2006-08-23
  * @cdk.module  qsarprotein
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:taeAminoAcid
  * @see         IBioPolymer
@@ -205,7 +205,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid",
                 this.getClass().getName(),
-                "$Id: TaeAminoAcidDescriptor.java 6707 2006-08-23 20:38:18Z rajarshi $",
+                "$Id$",
                 "The Chemistry Development Kit");
     }
 

@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: kaihartmann $ 
- * $Date: 2006-09-20 20:57:51 +0200 (Wed, 20 Sep 2006) $
- * $Revision: 6997 $
+ * $Author$ 
+ * $Date$
+ * $Revision$
  * 
  * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -36,7 +36,7 @@ import java.util.List;
 
 /**
  * @cdk.module standard
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  *
  * @see ChemModelManipulator
  */

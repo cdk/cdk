@@ -1,4 +1,4 @@
-/* $Revision: 6013 $ $Author: egonw $$Date: 2006-04-19 15:22:09 +0200 (Wed, 19 Apr 2006) $
+/* $Revision$ $Author$$Date$
  *
  * Copyright (C) 2005-2007  Egon Willighagen <egonw@users.sf.net>
  * 
@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IPDBMonomer;
  * normally associated with atoms in such files.
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  *
  * @see  PDBAtom
  */

@@ -1,7 +1,7 @@
 /* $RCSfile: $
- * $Author: egonw $
- * $Date: 2006-05-04 19:29:58 +0000 (Thu, 04 May 2006) $
- * $Revision: 6171 $
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 2007  Todd Martin (Environmental Protection Agency)
  * Copyright (C) 2007  Nikolay Kochev <nick@argon.acad.bg>
@@ -84,7 +84,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * 
  * @author     Todd Martin
  * @cdk.module qsarmolecular
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set    qsar-descriptors
  * @cdk.keyword logP
  * @cdk.keyword lipophilicity
@@ -2035,7 +2035,7 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP",
                 this.getClass().getName(),
-                "$Id: ALOGP-MR descriptor  $",
+                "$Id$",
                 "The Chemistry Development Kit");
     }
 

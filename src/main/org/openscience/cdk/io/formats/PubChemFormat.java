@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-03-29 10:27:08 +0200 (Mi, 29 Mrz 2006) $
- * $Revision: 5855 $
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
@@ -29,7 +29,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * See <a href="http://ftp.ncbi.nlm.nih.gov/pubchem/data_spec/pubchem.xsd">here</a>.
  * 
  * @cdk.module io
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class PubChemFormat implements IChemFormat {

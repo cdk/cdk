@@ -1,4 +1,4 @@
-/* $Revision: 7895 $ $Author: egonw $ $Date: 2007-02-07 23:20:44 +0100 (Wed, 07 Feb 2007) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2004-2007  Matteo Floris <mfe4@users.sf.net>
  * Copyright (C) 2006-2007  Federico
@@ -72,7 +72,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author      Federico
  * @cdk.created 2006-12-11
  * @cdk.module  qsaratomic
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
  * @cdk.bug     1632419
@@ -108,7 +108,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		return new DescriptorSpecification(
 				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues",
 				this.getClass().getName(),
-				"$Id: RDFProtonDescriptor.java 7032 2006-09-22 15:26:48 +0000 (ven, 22 set 2006) kaihartmann $",
+				"$Id$",
 				"The Chemistry Development Kit");
 	}
 

@@ -1,4 +1,4 @@
-/* $Revision: 7636 $ $Author: egonw $ $Date: 2007-01-04 18:46:10 +0100 (Thu, 04 Jan 2007) $
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * 
  * @author      egonw
  * @cdk.module  interfaces
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @see         UniversalIsomorphismTester
  */
 public interface IQueryAtomContainer extends IAtomContainer {

@@ -1,4 +1,4 @@
-/* $Revision: 8973 $ $Author: egonw $ $Date: 2007-09-26 13:47:29 +0200 (Wed, 26 Sep 2007) $
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
  * 
@@ -35,7 +35,7 @@ import java.util.Iterator;
 
 /**
  * @cdk.module standard
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */
 @TestClass("org.openscience.cdk.tools.manipulator.RingManipulatorTest")
 public class RingManipulator {

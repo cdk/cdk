@@ -1,4 +1,4 @@
-/* $Revision: 6913 $ $Author: egonw $ $Date: 2006-09-18 18:13:21 +0000 (Mon, 18 Sep 2006) $
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *
@@ -29,7 +29,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author     Miguel Rojas
  * @cdk.module datadebug
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */
 public class DebugPDBMonomer extends PDBMonomer  implements IPDBMonomer {
 

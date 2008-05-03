@@ -1,4 +1,4 @@
-/* $Revision: 6228 $ $Author: egonw $ $Date: 2006-05-11 18:34:42 +0200 (Thu, 11 May 2006) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  * 
@@ -63,7 +63,7 @@ import java.util.Iterator;
  * @author           Miguel Rojas
  * @cdk.created      2006-05-26
  * @cdk.module       qsarmolecular
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set          qsar-descriptors
  * @cdk.dictref      qsar-descriptors:ionizationPotential
  * @cdk.bug          1628465
@@ -93,7 +93,7 @@ public class IPMolecularDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ip",
             this.getClass().getName(),
-            "$Id: IPMolecularDescriptor.java 7032 2006-09-22 15:26:48Z kaihartmann $",
+            "$Id$",
             "The Chemistry Development Kit");
     }
 

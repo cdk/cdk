@@ -1,4 +1,4 @@
-/* $Revision: 7844 $ $Author: rajarshi $ $Date: 2007-04-08 14:46:29 -0500 (Thu, 01 Feb 2007) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
@@ -76,7 +76,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author Rajarshi Guha
  * @cdk.created 2007-04-08
  * @cdk.module smarts
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  * @cdk.keyword substructure search
  * @cdk.bug     1760973

@@ -1,8 +1,8 @@
 /*
  *  $RCSfile$
- *  $Author: egonw $
- *  $Date: 2006-04-10 16:22:39 +0200 (Mon, 10 Apr 2006) $
- *  $Revision: 5907 $
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
  * @cdk.module    nonotify
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */
 public class NNChemObject extends ChemObject {
 

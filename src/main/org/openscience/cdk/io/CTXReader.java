@@ -1,7 +1,7 @@
 /* $RCSfile: $
- * $Author: egonw $
- * $Date: 2006-08-03 07:41:59 -0400 (Thu, 03 Aug 2006) $
- * $Revision: 6733 $
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * blocks in CTX files.
  * 
  * @cdk.module io
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */
 public class CTXReader extends DefaultChemObjectReader {
 

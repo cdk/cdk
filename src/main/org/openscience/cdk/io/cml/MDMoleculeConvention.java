@@ -1,4 +1,4 @@
-/* $Revision: 7981 $ $Author: egonw $ $Date: 2007-02-20 17:05:37 +0000 (Tue, 20 Feb 2007) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2007  Ola Spjuth <ola.spjuth@farmbio.uu.se>
  *
@@ -40,7 +40,7 @@ import org.xml.sax.Attributes;
  * Implements a Convention for parsing an MDMolecule from CML.
  * 
  * @cdk.module libiomd
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * 
  * @author Ola Spjuth <ola.spjuth@farmbio.uu.se>
  *

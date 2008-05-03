@@ -1,7 +1,7 @@
 /* $RCSfile: $
- * $Author: egonw $
- * $Date: 2006-07-14 14:09:39 +0200 (Fri, 14 Jul 2006) $
- * $Revision: 6672 $
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  * 
@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IElement;
  * 
  * @author     egonw
  * @cdk.module extra 
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */
 public class Elements {
 	

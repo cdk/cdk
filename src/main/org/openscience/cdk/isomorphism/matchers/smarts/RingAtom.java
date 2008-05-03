@@ -1,8 +1,8 @@
 /*
  *  $RCSfile$
- *  $Author: Sushil Ronghe $
- *  $Date: 2007-04-12 $
- *  $Revision: 6631 $
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
  *
@@ -38,7 +38,7 @@ import java.util.ArrayList;
  * This matches an atom in a specific size ring
  * 
  * @cdk.module extra
- * @cdk.svnrev $Revision: 9162 $
+ * @cdk.svnrev $Revision$
  * @cdk.keyword SMARTS
  */
 public class RingAtom extends SMARTSAtom {

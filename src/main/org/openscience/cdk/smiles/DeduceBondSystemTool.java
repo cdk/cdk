@@ -1,7 +1,7 @@
 /*  $RCSfile: $
- *  $Author: egonw $
- *  $Date: 2006-04-20 17:59:04 -0400 (Thu, 20 Apr 2006) $
- *  $Revision: 6064 $
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
  *
@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @author Todd Martin
  * @cdk.module smiles
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword bond order
  * 
  * @cdk.bug 1895805

@@ -1,4 +1,4 @@
-/* $Revision: 7964 $ $Author: egonw $ $Date: 2007-02-16 16:11:33 +0100 (Fri, 16 Feb 2007) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 1997-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -40,7 +40,7 @@ import java.util.List;
  * @author         egonw
  * @cdk.created    2007-03-08
  * @cdk.module     extra
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */
 public class HOSECodeAnalyser {
 

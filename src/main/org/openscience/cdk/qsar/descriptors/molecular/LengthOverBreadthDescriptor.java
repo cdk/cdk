@@ -36,7 +36,7 @@ import javax.vecmath.Point3d;
  * @author      Rajarshi Guha
  * @cdk.created 2006-09-26
  * @cdk.module  qsarmolecular
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:lengthOverBreadth
  * @cdk.bug     1862142
@@ -61,7 +61,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth",
                 this.getClass().getName(),
-                "$Id: LengthOverBreadthDescriptor.java 6695 2006-07-21 08:05:08Z rajarshi $",
+                "$Id$",
                 "The Chemistry Development Kit");
     }
 

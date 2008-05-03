@@ -1,4 +1,4 @@
-/* $Revision: 6963 $ $Author: egonw $$Date: 2006-09-20 12:48:23 +0200 (Wed, 20 Sep 2006) $
+/* $Revision$ $Author$$Date$
  *
  * Copyright (C) 2007  Egon Willighagen <ewilligh@users.sf.net>
  * 
@@ -29,7 +29,7 @@ package org.openscience.cdk.interfaces;
  * like the MDL molfile <code>Group</code> concept.
  * 
  * @cdk.module interfaces
- * @cdk.svnrev $Revision: 9162 $
+ * @cdk.svnrev $Revision$
  * @cdk.bug    1872765
  * 
  * @author egonw

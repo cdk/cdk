@@ -1,7 +1,7 @@
 /* $RCSfile$    
- * $Author: egonw $    
- * $Date: 2006-07-30 22:02:25 +0200 (Sun, 30 Jul 2006) $    
- * $Revision: 6705 $
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
  * 
@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  * </pre>
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword reaction
  */

@@ -1,8 +1,8 @@
 /*
  *  $RCSfile$
- *  $Author: egonw $
- *  $Date: 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) $
- *  $Revision: 5855 $
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 2008 Miguel Rojas <miguelrojasch@users.sf.net>
  *
@@ -71,7 +71,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @cdk.created    2006-05-05
  * @cdk.module     reaction
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set        reaction-types
  * 
  * @see RadicalSiteIonizationMechanism
@@ -97,7 +97,7 @@ public class RadicalSiteInitiationReaction extends ReactionEngine implements IRe
 		return new ReactionSpecification(
 				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#RadicalSiteInitiation",
 				this.getClass().getName(),
-				"$Id: RadicalSiteInitiationReaction.java,v 1.6 2006/04/01 08:26:47 mrc Exp $",
+				"$Id$",
 				"The Chemistry Development Kit");
 	}
 	

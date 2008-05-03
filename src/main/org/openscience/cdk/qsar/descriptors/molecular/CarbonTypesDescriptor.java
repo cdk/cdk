@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @author Rajarshi Guha
  * @cdk.created 2007-09-28
  * @cdk.module qsarmolecular
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:carbonTypes
  * @cdk.keyword topological bond order ctypes
@@ -67,7 +67,7 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes",
                 this.getClass().getName(),
-                "$Id: CarbonTypesDescriptor.java 8804 2007-09-01 18:56:24Z rajarshi $",
+                "$Id$",
                 "The Chemistry Development Kit");
     }
 

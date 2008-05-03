@@ -1,4 +1,4 @@
-/* $Revision: 7636 $ $Author: egonw $ $Date: 2007-01-04 18:46:10 +0100 (Thu, 04 Jan 2007) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2002-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -42,7 +42,7 @@ import org.xml.sax.Attributes;
  * This is an implementation for the CDK convention.
  *
  * @cdk.module io
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * 
  * @author egonw
  */
@@ -70,7 +70,7 @@ public class QSARConvention extends CMLCoreModule {
 //            <metadataList>
 //              <metadata dictRef="qsar:specificationReference" content="qsar:weight"/>
 //              <metadata dictRef="qsar:implementationTitle" content="org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor"/>
-//              <metadata dictRef="qsar:implementationIdentifier" content="$Id: cml23TestFramework.xml 6845 2006-09-07 21:21:26Z egonw $"/>
+//              <metadata dictRef="qsar:implementationIdentifier" content="$Id$"/>
 //              <metadata dictRef="qsar:implementationVendor" content="The Chemistry Development Kit"/>
 //              <metadataList title="qsar:descriptorParameters">
 //                <metadata title="elementSymbol" content="*"/>

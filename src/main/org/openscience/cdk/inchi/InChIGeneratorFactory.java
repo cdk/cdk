@@ -1,4 +1,4 @@
-/* $Revision: 6714 $ $Author: egonw $ $Date: 2006-07-31 21:58:20 +0200 (Mon, 31 Jul 2006) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2006-2007  Sam Adams <sea36@users.sf.net>
  *
@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @author Sam Adams
  *
  * @cdk.module inchi
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */
 public class InChIGeneratorFactory {
     

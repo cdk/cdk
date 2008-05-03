@@ -1,4 +1,4 @@
-/* $Revision: 8397 $ $Author: rajarshi $ $Date: 2007-06-24 05:24:27 +0200 (Sun, 24 Jun 2007) $
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
  *
@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-03-01
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */
 @TestClass("org.openscience.cdk.formula.MassToFormulaToolTest")
 public class MassToFormulaTool {

@@ -1,4 +1,4 @@
-/* $Revision: 7673 $ $Author: egonw $ $Date: 2007-01-09 10:39:35 +0100 (Tue, 09 Jan 2007) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2002-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -41,7 +41,7 @@ import java.util.Random;
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity
  * @cdk.module     standard
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * 
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */

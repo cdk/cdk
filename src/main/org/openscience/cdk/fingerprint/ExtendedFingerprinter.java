@@ -1,4 +1,4 @@
-/* $Revision: 7672 $ $Author: egonw $ $Date: 2007-01-09 09:29:55 +0000 (Tue, 09 Jan 2007) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2002-2007  Stefan Kuhn <shk3@users.sf.net>
  *
@@ -44,7 +44,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity
  * @cdk.module     extra
- * @cdk.svnrev     $Revision: 9162 $
+ * @cdk.svnrev     $Revision$
  * 
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */

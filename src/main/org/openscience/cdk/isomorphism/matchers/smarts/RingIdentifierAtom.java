@@ -1,4 +1,4 @@
-/* $Revision: $ $Author: $ $Date: $ 
+/* $Revision$ $Author$ $Date$ 
  *
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
@@ -28,7 +28,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * bond specified. For example, C=1CCCCC1
  *
  * @cdk.module extra
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS 
  */
 public class RingIdentifierAtom extends SMARTSAtom {

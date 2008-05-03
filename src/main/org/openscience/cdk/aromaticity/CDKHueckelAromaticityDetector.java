@@ -1,4 +1,4 @@
-/* $Revision: 8373 $ $Author: rajarshi $ $Date: 2007-06-22 21:29:09 +0200 (Fri, 22 Jun 2007) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -45,7 +45,7 @@ import java.util.Iterator;
  *
  * @author         egonw
  * @cdk.module     standard
- * @cdk.svnrev     $Revision: 9162 $
+ * @cdk.svnrev     $Revision$
  * @cdk.created    2007-10-05
  * 
  * @see org.openscience.cdk.CDKConstants

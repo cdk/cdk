@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-05-09 21:32:32 +0200 (Tue, 09 May 2006) $  
- * $Revision: 6204 $
+ * $Author$
+ * $Date$  
+ * $Revision$
  *
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *
@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @author Egon Willighagen <ewilligh@uni-koeln.de>
  * @cdk.module io
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  **/
 public class WriterFactory {
 

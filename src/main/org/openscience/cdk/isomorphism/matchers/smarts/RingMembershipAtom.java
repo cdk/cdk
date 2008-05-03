@@ -1,4 +1,4 @@
-/* $Revision: $ $Author: $ $Date: $ 
+/* $Revision$ $Author$ $Date$ 
  *
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
@@ -27,7 +27,7 @@ import org.openscience.cdk.interfaces.IRingSet;
  * This query atom matches any atom with a certain number of SSSR. 
  *
  * @cdk.module extra
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS 
  */
 public class RingMembershipAtom extends SMARTSAtom {

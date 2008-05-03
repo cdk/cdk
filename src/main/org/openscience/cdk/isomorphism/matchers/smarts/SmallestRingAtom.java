@@ -1,4 +1,4 @@
-/* $Revision: $ $Author: $ $Date: $ 
+/* $Revision$ $Author$ $Date$ 
  *
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * certain value
  *
  * @cdk.module extra
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS 
  */
 public class SmallestRingAtom extends SMARTSAtom {

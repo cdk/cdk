@@ -1,4 +1,4 @@
-/* $Revision: 6714 $ $Author: egonw $ $Date: 2006-07-31 21:58:20 +0200 (Mon, 31 Jul 2006) $
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IBond;
  * it participates too.
  *
  * @cdk.module  atomtype
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  *
  * @author  Egon Willighagen
  * @cdk.created 2003-08-07

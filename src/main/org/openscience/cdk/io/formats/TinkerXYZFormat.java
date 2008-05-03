@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-04-20 19:35:08 +0200 (Do, 20 Apr 2006) $
- * $Revision: 6056 $
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
  *
@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @author Miguel Rojas
  * 
  * @cdk.module io
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class TinkerXYZFormat implements IChemFormat {

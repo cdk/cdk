@@ -1,8 +1,8 @@
 /*
  *  $RCSfile$
- *  $Author: $
- *  $Date: $
- *  $Revision: $
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
  *
@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * This matches an atom using the atomic number
  *
  * @cdk.module extra
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */
 public class AtomicNumberAtom extends SMARTSAtom {

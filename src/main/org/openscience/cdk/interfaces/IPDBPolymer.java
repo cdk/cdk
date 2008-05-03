@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $    
- * $Date: 2006-07-31 22:06:39 +0200 (Mon, 31 Jul 2006) $    
- * $Revision: 6715 $
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  *  Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  * 
@@ -35,7 +35,7 @@ import java.util.Collection;
  * additional informations about the BioPolymer which are connected to BioPolymers.
  *
  * @cdk.module  interfaces
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  *
  * @author      Miguel Rojas <miguel.rojas@uni-koeln.de>
  * @cdk.created 2006-11-20 

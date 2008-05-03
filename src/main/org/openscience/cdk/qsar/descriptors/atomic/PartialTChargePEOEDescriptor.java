@@ -1,8 +1,8 @@
 /*
  *  $RCSfile$
- *  $Author: egonw $
- *  $Date: 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) $
- *  $Revision: 5855 $
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *
@@ -59,7 +59,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @author      Miguel Rojas
  * @cdk.created 2006-04-11
  * @cdk.module  qsarmolecular
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:PartialTChargePEOE
  * @cdk.bug     1701065
@@ -93,7 +93,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#PartialTChargePEOE",
             this.getClass().getName(),
-            "$Id: PartialTChargePEOEDescriptor.java 5855 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) egonw $",
+            "$Id$",
             "The Chemistry Development Kit");
     }
 

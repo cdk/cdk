@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: djiao $
- * $Date: 2007-05-11 10:02:02 -0400 (Fri, 11 May 2007) $
- * $Revision: 8317 $
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * It'll match any atom right now.  
  *
  * @cdk.module extra
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */
 public class ChiralityAtom extends SMARTSAtom {

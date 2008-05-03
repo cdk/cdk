@@ -1,4 +1,4 @@
-/* $Revision: 7636 $ $Author: egonw $ $Date: 2007-01-04 18:46:10 +0100 (gio, 04 gen 2007)$
+/* $Revision$ $Author$ $Date: 2007-01-04 18:46:10 +0100 (gio, 04 gen 2007)$
  *  
  * Copyright (C) 2007  Federico
  * 
@@ -50,7 +50,7 @@ import java.util.Iterator;
  * @author Federico
  * @cdk.created 2007-03-01
  * @cdk.module qsarmolecular
- * @cdk.svnrev $Revision: 9162 $
+ * @cdk.svnrev $Revision$
  * @cdk.set qsar-descriptors
  */
 
@@ -156,7 +156,7 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationPolarizability",
                 this.getClass().getName(),
-                "$Id: AutoCorrelationDescriptorPolarizability.java $",
+                "$Id$",
                 "The Chemistry Development Kit");
     }
 

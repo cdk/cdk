@@ -1,7 +1,7 @@
 /* $RCSfile: $
- * $Author: egonw $
- * $Date: 2006-05-04 19:29:58 +0000 (Thu, 04 May 2006) $
- * $Revision: 6171 $
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 2006-2007  Todd Martin (Environmental Protection Agency)
  *
@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * 
  * @author     Todd Martin
  * @cdk.module extra
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * 
  * @see        org.openscience.cdk.tools.Normalizer
  */

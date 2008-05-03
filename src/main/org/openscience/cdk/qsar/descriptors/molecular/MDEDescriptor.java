@@ -77,7 +77,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author Rajarshi Guha
  * @cdk.created 2006-09-18
  * @cdk.module qsarmolecular
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:mde
  */
@@ -141,7 +141,7 @@ public class MDEDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde",
                 this.getClass().getName(),
-                "$Id: MDEDescriptor.java 6707 2006-07-30 20:38:18Z egonw $",
+                "$Id$",
                 "The Chemistry Development Kit");
     }
 

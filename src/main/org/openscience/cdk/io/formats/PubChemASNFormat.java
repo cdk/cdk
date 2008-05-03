@@ -1,4 +1,4 @@
-/* $Revision: 5855 $ $Author: egonw $$Date: 2006-03-29 10:27:08 +0200 (Mi, 29 Mrz 2006) $
+/* $Revision$ $Author$$Date$
  *
  * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -24,7 +24,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * @cdk.module io
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class PubChemASNFormat implements IChemFormatMatcher {

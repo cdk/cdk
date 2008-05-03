@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-08-14 21:51:36 +0200 (Mon, 14 Aug 2006) $
- * $Revision: 6785 $
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  *  Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *
@@ -27,7 +27,7 @@ package org.openscience.cdk.interfaces;
  * Represents the idea of an chemical structure.
  *
  * @cdk.module  interfaces
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  *
  * @author      Miguel Rojas <miguel.rojas@uni-koeln.de>
  * @cdk.created 2006-11-20 

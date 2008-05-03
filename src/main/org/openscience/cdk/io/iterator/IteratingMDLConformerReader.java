@@ -40,7 +40,7 @@ import java.util.NoSuchElementException;
  * </pre>
  *
  * @cdk.module extra
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @author Rajarshi Guha
  * @see org.openscience.cdk.ConformerContainer
  * @cdk.keyword file format SDF

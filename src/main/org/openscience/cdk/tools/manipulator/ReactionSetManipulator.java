@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $ 
- * $Date: 2006-07-31 11:23:24 +0200 (Mon, 31 Jul 2006) $
- * $Revision: 6710 $
+ * $Author$ 
+ * $Date$
+ * $Revision$
  * 
  * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
  * @cdk.module standard
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  *
  * @see ChemModelManipulator
  */

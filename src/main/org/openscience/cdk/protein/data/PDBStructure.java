@@ -1,7 +1,7 @@
 /* $RCSfile: $
- * $Author: egonw $
- * $Date: 2005-11-10 16:52:44 +0100 (Thu, 10 Nov 2005) $
- * $Revision: 4255 $
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IPDBStructure;
  * @author     egonw
  * 
  * @cdk.module data
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */
 public class PDBStructure extends ChemObject implements IPDBStructure {
 	

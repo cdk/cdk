@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: miguelrojasch $
- * $Date: 2006-05-11 14:25:07 +0200 (Do, 11 Mai 2006) $
- * $Revision: 6221 $
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  *  Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
  * 
@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword    isotope
  * 

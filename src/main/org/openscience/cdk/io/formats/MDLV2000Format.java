@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-08-03 13:41:59 +0200 (Thu, 03 Aug 2006) $
- * $Revision: 6733 $
+ * $Author$
+ * $Date$
+ * $Revision$
  *
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
@@ -27,7 +27,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * @cdk.module io
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
 public class MDLV2000Format implements IChemFormatMatcher {

@@ -1,7 +1,7 @@
 /* $RCSfile$    
- * $Author: kaihartmann $    
- * $Date: 2006-09-20 20:57:51 +0200 (Wed, 20 Sep 2006) $    
- * $Revision: 6997 $
+ * $Author$    
+ * $Date$    
+ * $Revision$
  * 
  * Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  * 
@@ -51,7 +51,7 @@ import java.util.Iterator;
  * </pre>
  *
  * @cdk.module data
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword reaction
  * @cdk.keyword molecule

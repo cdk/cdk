@@ -1,7 +1,7 @@
 /* $RCSfile$
- * $Author: egonw $
- * $Date: 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) $
- * $Revision: 5855 $
+ * $Author$
+ * $Date$
+ * $Revision$
  * 
  * Copyright (C) 2006-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IBond;
  * retrieved one by one.
  *
  * @cdk.module qsar
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  */
 public abstract class AbstractBondDescriptor implements IBondDescriptor {
     

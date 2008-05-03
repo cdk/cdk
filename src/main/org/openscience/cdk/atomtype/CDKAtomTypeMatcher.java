@@ -1,4 +1,4 @@
-/* $Revision: 5855 $ $Author: egonw $ $Date: 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -48,7 +48,7 @@ import org.openscience.cdk.interfaces.IAtomType.Hybridization;
  * @author         egonw
  * @cdk.created    2007-07-20
  * @cdk.module     atomtype
- * @cdk.svnrev     $Revision: 9162 $
+ * @cdk.svnrev     $Revision$
  * @cdk.bug        1802998
  * @cdk.bug        1851197
  */

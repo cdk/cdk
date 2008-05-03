@@ -1,4 +1,4 @@
-/* $Revision: 7636 $ $Author: egonw $ $Date: 2007-01-04 18:46:10 +0100 (gio, 04 gen 2007)$
+/* $Revision$ $Author$ $Date: 2007-01-04 18:46:10 +0100 (gio, 04 gen 2007)$
  *  
  * Copyright (C) 2007  Federico
  * 
@@ -42,7 +42,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @author      Federico
  * @cdk.created 2007-02-27
  * @cdk.module  qsarmolecular
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.bug     1728862
  */
@@ -119,7 +119,7 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge",
                 this.getClass().getName(),
-                "$Id: AutoCorrelationDescriptorCharge.java $",
+                "$Id$",
                 "The Chemistry Development Kit");
     }
 

@@ -1,7 +1,7 @@
 /*  $RCSfile$
- *  $Author: miguelrojasch $
- *  $Date: 2006-05-11 10:17:36 +0200 (Do, 11 Mai 2006) $
- *  $Revision: 6217 $
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *
@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author      Miguel Rojas
  * 
  * @cdk.module  charges
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.created 2006-05-14
  * @cdk.keyword partial atomic charges
  * @cdk.keyword charge distribution

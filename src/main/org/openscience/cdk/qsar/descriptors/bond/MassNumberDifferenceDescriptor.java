@@ -1,4 +1,4 @@
-/* $Revision: 5855 $ $Author: egonw $ $Date: 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) $
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2007-2008  Egon Willighagen <egonw@users.sf.net>
  *
@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @author      Egon Willighagen
  * @cdk.created 2007-12-29
  * @cdk.module  qsarbond
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondMassNumberInbalance
  */
@@ -69,7 +69,7 @@ public class MassNumberDifferenceDescriptor implements IBondDescriptor {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondMassNumberInbalance",
             this.getClass().getName(),
-            "$Id: BondPartialTChargeDescriptor.java 5855 2006-03-29 10:27:08 +0200 (Wed, 29 Mar 2006) egonw $",
+            "$Id$",
             "The Chemistry Development Kit");
     }
 

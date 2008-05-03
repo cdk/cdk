@@ -1,4 +1,4 @@
-/* $Revision: 9165 $ $Author: rajarshi $ $Date: 2007-10-22 01:11:04 +0200 (Mon, 22 Oct 2007) $
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
  *
