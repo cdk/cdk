@@ -2033,6 +2033,30 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         String[] expectedTypes = {"N.plus.sp2.radical", "C.sp2", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
+    
+    /**
+     * @cdk.inchi InChI=1/C2H7NS/c1-4(2)3/h3H,1-2H3
+     */
+    @Test public void testSulphurCompound() throws Exception {
+    	  IMolecule mol = new Molecule();
+    	  IAtom a1 = mol.getBuilder().newAtom("S");
+    	  mol.addAtom(a1);
+    	  IAtom a2 = mol.getBuilder().newAtom("N");
+    	  mol.addAtom(a2);
+    	  IAtom a3 = mol.getBuilder().newAtom("C");
+    	  mol.addAtom(a3);
+    	  IAtom a4 = mol.getBuilder().newAtom("C");
+    	  mol.addAtom(a4);
+    	  IBond b1 = mol.getBuilder().newBond(a1, a2, IBond.Order.DOUBLE);
+    	  mol.addBond(b1);
+    	  IBond b2 = mol.getBuilder().newBond(a1, a3, IBond.Order.SINGLE);
+    	  mol.addBond(b2);
+    	  IBond b3 = mol.getBuilder().newBond(a1, a4, IBond.Order.SINGLE);
+    	  mol.addBond(b3);
+    	  
+    	  String[] expectedTypes = {"S.inyl", "N.sp2", "C.sp3", "C.sp3"};
+          assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
 
     @Test public void countTestedAtomTypes() {
     	super.countTestedAtomTypes(testedAtomTypes);
