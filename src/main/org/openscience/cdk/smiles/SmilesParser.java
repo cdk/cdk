@@ -708,9 +708,9 @@ public class SmilesParser {
 				} else if (mychar == '+' || mychar == '-')
 				{
 					charge = getCharge(s, position);
-					position++;
-					if (charge < -1 || charge > 1)
-					{
+					position++; // skip the +
+					// skip all digits following the +
+					while (position < s.length() && Character.isDigit(s.charAt(position))) {
 						position++;
 					}
 					atom.setFormalCharge(charge);
