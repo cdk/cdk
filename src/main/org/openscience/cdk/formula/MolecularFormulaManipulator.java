@@ -395,7 +395,8 @@ public class MolecularFormulaManipulator {
 		return formula;
 	}
 	/**
-	 * Get the summed exact mass of all isotopes from an MolecularFormula.
+	 * Get the summed exact mass of all isotopes from an MolecularFormula. It
+	 * assumes isotope masses to be preset.
 	 * 
 	 * @param  formula The IMolecularFormula to calculate
 	 * @return         The summed exact mass of all atoms in this MolecularFormula
