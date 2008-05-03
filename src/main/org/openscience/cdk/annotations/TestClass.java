@@ -1,4 +1,4 @@
-/* $Revision: 6707 $ $Author: egonw $ $Date: 2006-07-30 16:38:18 -0400 (Sun, 30 Jul 2006) $
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2007  Egon Willighagen
  * 
@@ -33,7 +33,7 @@ import java.lang.annotation.RetentionPolicy;
  * class tests the functionality.
  *
  * @cdk.author Egon Willighagen
- * @cdk.svnrev $Revision: 9162 $
+ * @cdk.svnrev $Revision$
  * @cdk.module core
  */
 @Documented

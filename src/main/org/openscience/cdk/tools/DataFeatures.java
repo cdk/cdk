@@ -1,7 +1,7 @@
 /* $RCSfile: $
- * $Author: egonw $
- * $Date: 2006-05-09 21:32:32 +0200 (Tue, 09 May 2006) $  
- * $Revision: 6204 $
+ * $Author$
+ * $Date$  
+ * $Revision$
  *
  * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -47,7 +47,7 @@ import org.openscience.cdk.annotations.TestClass;
  * 
  * @author     Egon Willighagen <ewilligh@uni-koeln.de>
  * @cdk.module core
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  **/
 public class DataFeatures {
 
