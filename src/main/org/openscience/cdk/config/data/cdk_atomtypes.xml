@@ -12,9 +12,9 @@
   <!-- DRAFT atom type list to replace all all current lists -->
 
   <metadataList>
-    <metadata name="cvs:last-change-by" content="$Author: egonw $"/>
-    <metadata name="cvs:date" content="$Date: 2007-07-17 08:28:56 +0200 (Tue, 17 Jul 2007) $"/>
-    <metadata name="cvs:revision" content="$Revision: 8549 $"/>
+    <metadata name="cvs:last-change-by" content="$Author$"/>
+    <metadata name="cvs:date" content="$Date$"/>
+    <metadata name="cvs:revision" content="$Revision$"/>
   </metadataList>
   
   <atomType id="X">
