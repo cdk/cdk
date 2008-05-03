@@ -1652,7 +1652,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@see    #growArraySize
 	 */
-	protected void growAtomArray()
+	private void growAtomArray()
 	{
 		growArraySize = (atoms.length < growArraySize) ? growArraySize : atoms.length;
 		IAtom[] newatoms = new IAtom[atoms.length + growArraySize];
@@ -1665,7 +1665,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@see    #growArraySize
 	 */
-	protected void growBondArray()
+	private void growBondArray()
 	{
 		growArraySize = (bonds.length < growArraySize) ? growArraySize : bonds.length;
 		IBond[] newBonds = new IBond[bonds.length + growArraySize];
@@ -1678,7 +1678,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@see    #growArraySize
 	 */
-	protected void growLonePairArray()
+	private void growLonePairArray()
 	{
 		growArraySize = (lonePairs.length < growArraySize) ? growArraySize : lonePairs.length;
 		ILonePair[] newLonePairs = new ILonePair[lonePairs.length + growArraySize];
@@ -1691,7 +1691,7 @@ public class AtomContainer extends ChemObject
 	 *
 	 *@see    #growArraySize
 	 */
-	protected void growSingleElectronArray()
+	private void growSingleElectronArray()
 	{
 		growArraySize = (singleElectrons.length < growArraySize) ? growArraySize : singleElectrons.length;
 		ISingleElectron[] newSingleElectrons = new ISingleElectron[singleElectrons.length + growArraySize];

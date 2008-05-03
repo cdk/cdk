@@ -420,7 +420,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     	return mappingCount;
     }
     
-    protected void growMappingArray() {
+    private void growMappingArray() {
         Mapping[] newMap = new Mapping[map.length + growArraySize];
         System.arraycopy(map, 0, newMap, 0, map.length);
         map = newMap;
