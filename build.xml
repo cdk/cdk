@@ -227,10 +227,10 @@
                     <fileset dir="${src}" includes="*.entitylist" />
                     <!-- remove java files generated with JavaCC -->
                     <fileset dir="${src}/main/org/openscience/cdk/smiles/smarts" includes="*.java">
-			<exclude name="SMARTSQueryTool.java" />
-		    </fileset>
-					<fileset dir="${src}/main/org/openscience/cdk/smiles/smarts/parser" 
-                      includes="SMARTSParser.java,SMARTSParserConstants.java,ParseException.java,SimpleCharStream.java,Token.java,TokenMgrError.java"/>
+                        <exclude name="SMARTSQueryTool.java" />
+                    </fileset>
+                    <fileset dir="${src}/main/org/openscience/cdk/smiles/smarts/parser" 
+                             includes="SMARTSParser.java,SMARTSParserConstants.java,ParseException.java,SimpleCharStream.java,Token.java,TokenMgrError.java,SMARTSParserTokenManager.java"/>
                     <fileset dir="${src}/main/org/openscience/cdk/iupac/parser" includes="*.java">
                         <!-- the next are from CVS -->
                         <exclude name="AttachedGroup.java" />
