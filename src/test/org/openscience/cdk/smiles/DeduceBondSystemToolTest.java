@@ -241,6 +241,7 @@ public class DeduceBondSystemToolTest extends NewCDKTestCase {
 
 	/**
 	 * @cdk.inchi InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H 
+	 * @cdk.bug   1931262
 	 */
 	@Test public void xtestBenzene() throws Exception {
 		IMolecule enol = new NNMolecule();

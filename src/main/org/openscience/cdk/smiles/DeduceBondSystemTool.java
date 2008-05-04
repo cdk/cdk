@@ -62,6 +62,7 @@ import org.openscience.cdk.tools.manipulator.RingManipulator;
  * 
  * @cdk.bug 1895805
  * @cdk.bug 1895807
+ * @cdk.bug 1931262
  */
 public class DeduceBondSystemTool {
 
