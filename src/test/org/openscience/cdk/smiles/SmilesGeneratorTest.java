@@ -459,6 +459,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		String smiles = "";
 		Molecule molecule = new Molecule();
         SmilesGenerator sg = new SmilesGenerator();
+        sg.setUseAromaticityFlag(true);
 		Atom sp2CarbonWithOneHydrogen = new Atom("C");
 		sp2CarbonWithOneHydrogen.setHybridization(IAtomType.Hybridization.SP2);
 		sp2CarbonWithOneHydrogen.setHydrogenCount(1);
