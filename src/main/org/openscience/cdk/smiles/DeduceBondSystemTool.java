@@ -28,6 +28,7 @@
 package org.openscience.cdk.smiles;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.Atom;
@@ -36,21 +37,20 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.tools.CDKValencyChecker;
-import org.openscience.cdk.tools.IValencyChecker;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.RingManipulator;
 /**
  * Tool that tries to deduce bond orders based on connectivity and hybridization
  * for a number of common ring systems.
@@ -67,7 +67,6 @@ public class DeduceBondSystemTool {
 
 	private AllRingsFinder allRingsFinder;
     private LoggingTool logger;
-    private IValencyChecker valencyChecker;
 	
     private List listOfRings = null;
     
@@ -80,7 +79,6 @@ public class DeduceBondSystemTool {
     public DeduceBondSystemTool() {
     	allRingsFinder = new AllRingsFinder();
         logger = new LoggingTool(this);
-        valencyChecker = CDKValencyChecker.getInstance(NoNotificationChemObjectBuilder.getInstance());
     }
 
     public boolean isOK(IMolecule m) throws CDKException {
@@ -614,43 +612,31 @@ public class DeduceBondSystemTool {
     }
 
     private boolean isStructureOK(IMolecule molecule) {
-        for (int i = 0; i <= molecule.getAtomCount() - 1; i++) {
-            //logger.debug(mj.getBondOrderSum(mj.getAtomAt(i)));
-            try {
-                // Note: valencyHybridChecker.couldMatchAtomType shouldnt check Hybridization to get it to work for non carbon atoms
-                valencyChecker.isSaturated(molecule.getAtom(i), molecule);
-                                
-                //valencyChecker.allSaturated didnt seem to work so did it this way
-            } catch (Exception e) {
-                logger.debug(i + "\t" + "atom " + (i + 1) + " is not saturated");
-                logger.debug(e.toString());
-                return false;
-            }
-        }
-
         try {
-            IRingSet ringSet = recoverRingSystem(molecule);
+        	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+            Iterator<IAtom> atoms = molecule.atoms();
+            while (atoms.hasNext()) {
+            	IAtom atom = atoms.next();
+            	IAtomType matched = matcher.findMatchingAtomType(molecule, atom);
+            	if (matched == null) return false;
+            }
 
+        	IRingSet ringSet = recoverRingSystem(molecule);
+            //logger.debug("Rs size= "+rs.size());
+
+        	// clear aromaticity flags
             for (int i = 0; i <= molecule.getAtomCount() - 1; i++) {
                 molecule.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
             }
-
             for (int i = 0; i <= ringSet.getAtomContainerCount() - 1; i++) {
                 Ring r = (Ring) ringSet.getAtomContainer(i);
                 r.setFlag(CDKConstants.ISAROMATIC, false);
             }
-
-            //logger.debug("Rs size= "+rs.size());
-
-            // do it multiple times to catch all the aromatic rings
-            // this problem is that the aromaticity detector relies on
-            // the aromaticity of the individual atoms in the ring
-            // these wont be picked up until you do it multiple times
-            // for example pyrene 129-00-0
-
+            // now, detect aromaticity from cratch, and mark rings as aromatic too (if ...)
+            CDKHueckelAromaticityDetector.detectAromaticity(molecule);
             for (int i = 0; i <= ringSet.getAtomContainerCount() - 1; i++) {
-            	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-                CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+            	Ring ring = (Ring) ringSet.getAtomContainer(i);
+            	RingManipulator.markAromaticRings(ring);
             }
 
 //			Figure out which rings we want to make sure are aromatic:
