@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 import java.util.Iterator;
@@ -1233,12 +1234,14 @@ public class SmilesParserTest extends NewCDKTestCase {
 
 
     /**
-     * @cdk.bug 1957958     
+     * @cdk.bug 1957958
      */
-    @Test public void test3amino4methylpyridine() throws Exception {
+    @Test
+    public void test3amino4methylpyridine() throws Exception {
         IMolecule mol = sp.parseSmiles("c1c(C)c(N)cnc1");
         assertAtomTypesPerceived(mol);
-        
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         boolean isaromatic = CDKHueckelAromaticityDetector.detectAromaticity(mol);
         Assert.assertTrue(isaromatic);
     }
