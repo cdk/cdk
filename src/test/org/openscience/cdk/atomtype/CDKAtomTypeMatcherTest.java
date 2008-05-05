@@ -21,32 +21,21 @@
  */
 package org.openscience.cdk.atomtype;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.*;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -1410,8 +1399,53 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 		mol.addBond(0,5,IBond.Order.DOUBLE);
     	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
-    
-	/**
+
+
+    /**
+     * @cdk.bug 1957958
+     */
+    @Test
+    public void testPyridineWithSP2() throws Exception {
+        String[] expectedTypes = {
+                "N.sp2",
+                "C.sp2",
+                "C.sp2",
+                "C.sp2",
+                "C.sp2",
+                "C.sp2"
+        };
+        IMolecule mol = new Molecule();
+        IAtom a1 = mol.getBuilder().newAtom("N");
+        IAtom a2 = mol.getBuilder().newAtom("C");
+        IAtom a3 = mol.getBuilder().newAtom("C");
+        IAtom a4 = mol.getBuilder().newAtom("C");
+        IAtom a5 = mol.getBuilder().newAtom("C");
+        IAtom a6 = mol.getBuilder().newAtom("C");
+
+        a1.setHybridization(Hybridization.SP2);
+        a2.setHybridization(Hybridization.SP2);
+        a3.setHybridization(Hybridization.SP2);
+        a4.setHybridization(Hybridization.SP2);
+        a5.setHybridization(Hybridization.SP2);
+        a6.setHybridization(Hybridization.SP2);
+
+        mol.addAtom(a1);
+        mol.addAtom(a2);
+        mol.addAtom(a3);
+        mol.addAtom(a4);
+        mol.addAtom(a5);
+        mol.addAtom(a6);
+
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+        mol.addBond(1, 2, IBond.Order.SINGLE);
+        mol.addBond(2, 3, IBond.Order.SINGLE);
+        mol.addBond(3, 4, IBond.Order.SINGLE);
+        mol.addBond(4, 5, IBond.Order.SINGLE);
+        mol.addBond(0, 5, IBond.Order.SINGLE);
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
 	 * @cdk.bug 1879589
 	 */
     @Test public void testChargedSulphurSpecies() throws Exception {
