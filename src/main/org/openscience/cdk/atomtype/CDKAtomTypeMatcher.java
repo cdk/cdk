@@ -35,6 +35,8 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 
@@ -458,17 +460,27 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				if (isAcceptable(atom, atomContainer, type)) return type;
     			} else if (atom.getHybridization() == Hybridization.SP2) {
     				// but an sp2 hyb N might N.sp2 or N.planar3 (pyrrole), so check for the latter
-    				int hcount = atom.getHydrogenCount() == null ? 0 : atom.getHydrogenCount();
-    				boolean isRingAtom = isRingAtom(atom, atomContainer);
-    				if (isRingAtom &&
-    					bothNeighborsAreSp2(atom, atomContainer)) {
-    					if (atomContainer.getConnectedAtomsCount(atom) + hcount == 3) {
+    				IRing ring = getRing(atom, atomContainer);
+    				int ringSize = ring == null ? 0 : ring.getAtomCount();
+    				boolean isRingAtom = (ringSize > 0);
+    				if (isRingAtom && bothNeighborsAreSp2(atom, atomContainer)) {
+    					if (atomContainer.getConnectedAtomsCount(atom) == 3) {
     						IAtomType type = getAtomType("N.planar3");
     						if (isAcceptable(atom, atomContainer, type)) return type;
-    					} else if (atomContainer.getConnectedAtomsCount(atom) + hcount == 2 &&
-    							   atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
-    						IAtomType type = getAtomType("N.planar3");
-    						if (isAcceptable(atom, atomContainer, type)) return type;
+    					} else if (atomContainer.getConnectedAtomsCount(atom) == 2) {
+    						if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
+    							
+    							if (ringSize == 6 && countElements(ring, "C") == 5) {
+    								IAtomType type = getAtomType("N.sp2");
+    								if (isAcceptable(atom, atomContainer, type)) return type;
+    							} else {
+    								IAtomType type = getAtomType("N.planar3");
+    								if (isAcceptable(atom, atomContainer, type)) return type;
+    							}
+    						} else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
+    							IAtomType type = getAtomType("N.sp2");
+    							if (isAcceptable(atom, atomContainer, type)) return type;
+    						}
     					}
     				} else if (!isRingAtom && isAmide(atom, atomContainer)) {
 						IAtomType type = getAtomType("N.amide");
@@ -583,13 +595,40 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return null;
     }
 
-    private boolean isRingAtom(IAtom atom, IAtomContainer atomContainer) {
+    private int countElements(IRing ring, String element) {
+		Iterator<IAtom> atoms = ring.atoms();
+		int count = 0;
+		while (atoms.hasNext()) {
+			if (atoms.next().getSymbol().equals(element)) count++;
+		}
+		return count;
+	}
+
+	private boolean isRingAtom(IAtom atom, IAtomContainer atomContainer) {
     	SpanningTree st = new SpanningTree(atomContainer);
     	try {
     		return st.getCyclicFragmentsContainer().contains(atom);
     	} catch (NoSuchAtomException exception) {
     		return false;
     	}
+    }
+
+    private IRing getRing(IAtom atom, IAtomContainer atomContainer) {
+    	SpanningTree st = new SpanningTree(atomContainer);
+    	try {
+    		if (st.getCyclicFragmentsContainer().contains(atom)) {
+    			IRingSet set = st.getAllRings();
+    			for (int i=0; i<set.getAtomContainerCount(); i++) {
+    				IRing ring = (IRing)set.getAtomContainer(i);
+    				if (ring.contains(atom)) {
+    					return ring;
+    				}
+    			}
+    		}
+    	} catch (NoSuchAtomException exception) {
+    		return null;
+    	}
+    	return null;
     }
 
     private boolean isAmide(IAtom atom, IAtomContainer atomContainer) {
