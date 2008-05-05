@@ -26,11 +26,12 @@ import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.graph.SpanningTree;
+import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 import java.io.InputStream;
 
@@ -160,5 +161,14 @@ public class SpanningTreeTest extends NewCDKTestCase {
 		Assert.assertEquals(9, azulene.getSpanningTreeSize());
 		Assert.assertEquals(1, ethane.getSpanningTreeSize());
 	}
+
+    @Test
+    public void testGetSpanningTreeForPyridine() throws NoSuchAtomException {
+        IAtomContainer mol = MoleculeFactory.makePyridine();
+        SpanningTree spanningTree = new SpanningTree(mol);
+        Assert.assertEquals(6, spanningTree.getBondsCyclicCount());
+        Assert.assertEquals(6, spanningTree.getCyclicFragmentsContainer().getAtomCount());
+        Assert.assertEquals(0, spanningTree.getBondsAcyclicCount());
+    }
 	
 }
