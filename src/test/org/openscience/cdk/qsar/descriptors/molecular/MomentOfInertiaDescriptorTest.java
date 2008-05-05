@@ -56,7 +56,7 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
     }
 
     /**
-     * cdk.bug 1956139
+     * @cdk.bug 1956139
      * @throws InvalidSmilesException
      */
     public void testMOIFromSmiles() throws InvalidSmilesException {

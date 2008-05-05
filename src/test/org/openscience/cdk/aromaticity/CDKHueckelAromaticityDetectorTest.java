@@ -606,7 +606,7 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
 	}
 
     /**
-     * cdk.bug 1957684     
+     * @cdk.bug 1957684
      */
     @Test
     public void test3Amino2MethylPyridine() throws CDKException {

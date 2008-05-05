@@ -1233,7 +1233,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 
 
     /**
-     * cdk.bug 1957958     
+     * @cdk.bug 1957958     
      */
     @Test public void test3amino4methylpyridine() throws Exception {
         IMolecule mol = sp.parseSmiles("c1c(C)c(N)cnc1");
