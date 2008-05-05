@@ -56,6 +56,8 @@ import org.openscience.cdk.io.XYZWriterTest;
 import org.openscience.cdk.io.cml.CMLIOTests;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReaderTest;
 import org.openscience.cdk.io.iterator.IteratingMDLReaderTest;
+import org.openscience.cdk.io.iterator.IteratingPCCompoundASNReaderTest;
+import org.openscience.cdk.io.iterator.IteratingSMILESReaderTest;
 
 /**
  * TestSuite that runs all the sample tests for the cdk.io package.
@@ -103,6 +105,8 @@ public class MioTests {
         // cdk.io.iterator package
         suite.addTest(IteratingMDLReaderTest.suite());
         suite.addTest(IteratingMDLConformerReaderTest.suite());
+        suite.addTest(IteratingSMILESReaderTest.suite());
+        suite.addTest(IteratingPCCompoundASNReaderTest.suite());
         return suite;
     }
 
