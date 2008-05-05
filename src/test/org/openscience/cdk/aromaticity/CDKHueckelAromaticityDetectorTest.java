@@ -605,9 +605,95 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
 		  return mol;
 	}
 
-    @Test public void test3Amino2MethylPyridine() throws CDKException {
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("c1c(C)c(N)cnc1");
+    /**
+     * cdk.bug 1957684     
+     */
+    @Test
+    public void test3Amino2MethylPyridine() throws CDKException {
+
+        IMolecule mol = new Molecule();
+        IAtom a1 = mol.getBuilder().newAtom("N");
+        a1.setPoint2d(new Point2d(3.7321, 1.345));
+        mol.addAtom(a1);
+        IAtom a2 = mol.getBuilder().newAtom("N");
+        a2.setPoint2d(new Point2d(4.5981, -1.155));
+        mol.addAtom(a2);
+        IAtom a3 = mol.getBuilder().newAtom("C");
+        a3.setPoint2d(new Point2d(2.866, -0.155));
+        mol.addAtom(a3);
+        IAtom a4 = mol.getBuilder().newAtom("C");
+        a4.setPoint2d(new Point2d(3.7321, 0.345));
+        mol.addAtom(a4);
+        IAtom a5 = mol.getBuilder().newAtom("C");
+        a5.setPoint2d(new Point2d(2.866, -1.155));
+        mol.addAtom(a5);
+        IAtom a6 = mol.getBuilder().newAtom("C");
+        a6.setPoint2d(new Point2d(2.0, 0.345));
+        mol.addAtom(a6);
+        IAtom a7 = mol.getBuilder().newAtom("C");
+        a7.setPoint2d(new Point2d(4.5981, -0.155));
+        mol.addAtom(a7);
+        IAtom a8 = mol.getBuilder().newAtom("C");
+        a8.setPoint2d(new Point2d(3.7321, -1.655));
+        mol.addAtom(a8);
+        IAtom a9 = mol.getBuilder().newAtom("H");
+        a9.setPoint2d(new Point2d(2.3291, -1.465));
+        mol.addAtom(a9);
+        IAtom a10 = mol.getBuilder().newAtom("H");
+        a10.setPoint2d(new Point2d(2.31, 0.8819));
+        mol.addAtom(a10);
+        IAtom a11 = mol.getBuilder().newAtom("H");
+        a11.setPoint2d(new Point2d(1.4631, 0.655));
+        mol.addAtom(a11);
+        IAtom a12 = mol.getBuilder().newAtom("H");
+        a12.setPoint2d(new Point2d(1.69, -0.1919));
+        mol.addAtom(a12);
+        IAtom a13 = mol.getBuilder().newAtom("H");
+        a13.setPoint2d(new Point2d(5.135, 0.155));
+        mol.addAtom(a13);
+        IAtom a14 = mol.getBuilder().newAtom("H");
+        a14.setPoint2d(new Point2d(3.7321, -2.275));
+        mol.addAtom(a14);
+        IAtom a15 = mol.getBuilder().newAtom("H");
+        a15.setPoint2d(new Point2d(4.269, 1.655));
+        mol.addAtom(a15);
+        IAtom a16 = mol.getBuilder().newAtom("H");
+        a16.setPoint2d(new Point2d(3.1951, 1.655));
+        mol.addAtom(a16);
+        IBond b1 = mol.getBuilder().newBond(a1, a4, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = mol.getBuilder().newBond(a1, a15, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = mol.getBuilder().newBond(a1, a16, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = mol.getBuilder().newBond(a2, a7, IBond.Order.DOUBLE);
+        mol.addBond(b4);
+        IBond b5 = mol.getBuilder().newBond(a2, a8, IBond.Order.SINGLE);
+        mol.addBond(b5);
+        IBond b6 = mol.getBuilder().newBond(a3, a4, IBond.Order.DOUBLE);
+        mol.addBond(b6);
+        IBond b7 = mol.getBuilder().newBond(a3, a5, IBond.Order.SINGLE);
+        mol.addBond(b7);
+        IBond b8 = mol.getBuilder().newBond(a3, a6, IBond.Order.SINGLE);
+        mol.addBond(b8);
+        IBond b9 = mol.getBuilder().newBond(a4, a7, IBond.Order.SINGLE);
+        mol.addBond(b9);
+        IBond b10 = mol.getBuilder().newBond(a5, a8, IBond.Order.DOUBLE);
+        mol.addBond(b10);
+        IBond b11 = mol.getBuilder().newBond(a5, a9, IBond.Order.SINGLE);
+        mol.addBond(b11);
+        IBond b12 = mol.getBuilder().newBond(a6, a10, IBond.Order.SINGLE);
+        mol.addBond(b12);
+        IBond b13 = mol.getBuilder().newBond(a6, a11, IBond.Order.SINGLE);
+        mol.addBond(b13);
+        IBond b14 = mol.getBuilder().newBond(a6, a12, IBond.Order.SINGLE);
+        mol.addBond(b14);
+        IBond b15 = mol.getBuilder().newBond(a7, a13, IBond.Order.SINGLE);
+        mol.addBond(b15);
+        IBond b16 = mol.getBuilder().newBond(a8, a14, IBond.Order.SINGLE);
+        mol.addBond(b16);
+
+
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(mol);
         Assert.assertTrue(isAromatic);

@@ -55,6 +55,10 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(MomentOfInertiaDescriptor.class);
     }
 
+    /**
+     * cdk.bug 1956139
+     * @throws InvalidSmilesException
+     */
     public void testMOIFromSmiles() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC");
