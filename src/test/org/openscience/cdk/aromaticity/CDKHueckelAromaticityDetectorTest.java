@@ -697,6 +697,27 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(mol);
         Assert.assertTrue(isAromatic);
+
+        Iterator<IAtom> atoms = mol.atoms();
+        int nCarom = 0;
+        int nCalip = 0;
+        int nNarom = 0;
+        int nNaliph = 0;
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            if (atom.getSymbol().equals("C")) {
+                if (atom.getFlag(CDKConstants.ISAROMATIC)) nCarom++;
+                else nCalip++;
+            } else if (atom.getSymbol().equals("N")) {
+                if (atom.getFlag(CDKConstants.ISAROMATIC)) nNarom++;
+                else nNaliph++;
+            }
+
+        }
+        Assert.assertEquals(5, nCarom);
+        Assert.assertEquals(1, nCalip);
+        Assert.assertEquals(1, nNarom);
+        Assert.assertEquals(1, nNaliph);
     }
 
 }
