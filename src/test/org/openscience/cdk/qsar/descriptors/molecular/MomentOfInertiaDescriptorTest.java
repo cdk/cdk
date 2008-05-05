@@ -19,21 +19,22 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.InputStream;
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.qsar.descriptors.molecular.MomentOfInertiaDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -54,6 +55,17 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(MomentOfInertiaDescriptor.class);
     }
 
+    public void testMOIFromSmiles() throws InvalidSmilesException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCCC");
+        try {
+            DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol).getValue();
+            fail("Should throw a CDKException since we don't have 3D coords");
+        } catch (CDKException e) {
+            // should be here
+        }
+
+    }
     public void testMomentOfInertia1() throws ClassNotFoundException, CDKException, java.lang.Exception {
         String filename = "data/hin/gravindex.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
