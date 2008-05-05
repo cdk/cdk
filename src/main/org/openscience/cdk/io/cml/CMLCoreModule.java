@@ -88,39 +88,41 @@ public class CMLCoreModule implements ICMLModule {
     protected IBond currentBond;
     protected IStrand currentStrand;
     protected IMonomer currentMonomer;
-    protected Map atomEnumeration;
+    protected Map<String, IAtom> atomEnumeration;
     
     // helper fields    
+    protected int formulaCounter;
     protected int atomCounter;
-    protected List elsym;
-    protected List eltitles;
-    protected List elid;
-    protected List formalCharges;
-    protected List partialCharges;
-    protected List isotope;
-    protected List x3;
-    protected List y3;
-    protected List z3;
-    protected List x2;
-    protected List y2;
-    protected List xfract;
-    protected List yfract;
-    protected List zfract;
-    protected List hCounts;
+    protected List<String> elsym;
+    protected List<String> eltitles;
+    protected List<String> elid;
+    protected List<String> formula;
+    protected List<String> formalCharges;
+    protected List<String> partialCharges;
+    protected List<String> isotope;
+    protected List<String> x3;
+    protected List<String> y3;
+    protected List<String> z3;
+    protected List<String> x2;
+    protected List<String> y2;
+    protected List<String> xfract;
+    protected List<String> yfract;
+    protected List<String> zfract;
+    protected List<String> hCounts;
     protected List atomParities;
     protected List atomDictRefs;
     protected List spinMultiplicities;
     protected List occupancies;
 
     protected int bondCounter;
-    protected List bondid;
-    protected List bondARef1;
-    protected List bondARef2;
-    protected List order;
-    protected List bondStereo;
-    protected List bondDictRefs;
-    protected List bondElid;
-    protected List bondAromaticity;
+    protected List<String> bondid;
+    protected List<String> bondARef1;
+    protected List<String> bondARef2;
+    protected List<String> order;
+    protected List<String> bondStereo;
+    protected List<String> bondDictRefs;
+    protected List<String> bondElid;
+    protected List<Boolean> bondAromaticity;
     protected boolean stereoGiven;
     protected String inchi;
     protected int curRef;
@@ -169,6 +171,7 @@ public class CMLCoreModule implements ICMLModule {
             this.logger = conv.logger;
             this.BUILTIN = conv.BUILTIN;
             this.atomCounter = conv.atomCounter;
+            this.formulaCounter = conv.formulaCounter;
             this.elsym = conv.elsym;
             this.eltitles = conv.eltitles;
             this.elid = conv.elid;
@@ -216,6 +219,7 @@ public class CMLCoreModule implements ICMLModule {
         newAtomData();
         newBondData();
         newCrystalData();
+        newFormulaData();
     }
     
     /**
@@ -226,25 +230,32 @@ public class CMLCoreModule implements ICMLModule {
     }
 
     /**
+     * Clean all data about read formulas.
+     */
+    protected void newFormulaData() {
+    	formulaCounter = 0;
+        formula = new ArrayList<String>();
+    }
+    /**
      * Clean all data about read atoms.
      */
     protected void newAtomData() {
         atomCounter = 0;
-        elsym = new ArrayList();
-        elid = new ArrayList();
-        eltitles = new ArrayList();
-        formalCharges = new ArrayList();
-        partialCharges = new ArrayList();
-        isotope = new ArrayList();
-        x3 = new ArrayList();
-        y3 = new ArrayList();
-        z3 = new ArrayList();
-        x2 = new ArrayList();
-        y2 = new ArrayList();
-        xfract = new ArrayList();
-        yfract = new ArrayList();
-        zfract = new ArrayList();
-        hCounts = new ArrayList();
+        elsym = new ArrayList<String>();
+        elid = new ArrayList<String>();
+        eltitles = new ArrayList<String>();
+        formalCharges = new ArrayList<String>();
+        partialCharges = new ArrayList<String>();
+        isotope = new ArrayList<String>();
+        x3 = new ArrayList<String>();
+        y3 = new ArrayList<String>();
+        z3 = new ArrayList<String>();
+        x2 = new ArrayList<String>();
+        y2 = new ArrayList<String>();
+        xfract = new ArrayList<String>();
+        yfract = new ArrayList<String>();
+        zfract = new ArrayList<String>();
+        hCounts = new ArrayList<String>();
         atomParities = new ArrayList();
         atomDictRefs = new ArrayList();
         spinMultiplicities = new ArrayList();
@@ -256,14 +267,14 @@ public class CMLCoreModule implements ICMLModule {
      */
     protected void newBondData() {
         bondCounter = 0;
-        bondid = new ArrayList();
-        bondARef1 = new ArrayList();
-        bondARef2 = new ArrayList();
-        order = new ArrayList();
-        bondStereo = new ArrayList();
-        bondDictRefs = new ArrayList();
-        bondElid = new ArrayList();
-        bondAromaticity = new ArrayList();
+        bondid = new ArrayList<String>();
+        bondARef1 = new ArrayList<String>();
+        bondARef2 = new ArrayList<String>();
+        order = new ArrayList<String>();
+        bondStereo = new ArrayList<String>();
+        bondDictRefs = new ArrayList<String>();
+        bondElid = new ArrayList<String>();
+        bondAromaticity = new ArrayList<Boolean>();
     }
 
     /**
@@ -285,7 +296,7 @@ public class CMLCoreModule implements ICMLModule {
         currentChemModel = currentChemFile.getBuilder().newChemModel();
         currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
         currentMolecule = currentChemFile.getBuilder().newMolecule();
-        atomEnumeration = new HashMap();
+        atomEnumeration = new HashMap<String, IAtom>();
         
         newMolecule();
         BUILTIN = "";
@@ -328,7 +339,7 @@ public class CMLCoreModule implements ICMLModule {
         
         BUILTIN = "";
         DICTREF = "";
-
+        
         for (int i=0; i<atts.getLength(); i++) {
             String qname = atts.getQName(i);
             if (qname.equals("builtin")) {
@@ -595,6 +606,15 @@ public class CMLCoreModule implements ICMLModule {
         		currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
         		currentMolecule = currentChemFile.getBuilder().newMolecule();
         	}
+        }else if ("formula".equals(name)){
+        	formulaCounter++;
+            for (int i = 0; i < atts.getLength(); i++) {
+                String att = atts.getQName(i);
+                String value = atts.getValue(i);
+                if (att.equals("concise")) {
+                	formula.add(value);
+                }
+            }
         }
     }
 
@@ -1021,7 +1041,10 @@ public class CMLCoreModule implements ICMLModule {
             		currentMolecule.setProperty(CDKConstants.TITLE, cData);
             	}
             }
-        } else {
+        }else if ("formula".equals(name)) {
+        	currentMolecule.setProperty(CDKConstants.FORMULA, cData);
+        }else {
+        
             logger.warn("Skipping element: " + name);
         }
 
@@ -1047,6 +1070,9 @@ public class CMLCoreModule implements ICMLModule {
         if (inchi != null) {
 //            cdo.setObjectProperty("Molecule", "inchi", inchi);
         	currentMolecule.setProperty(CDKConstants.INCHI, inchi);
+        }
+        if (formula != null){
+        	currentMolecule.setProperty(CDKConstants.FORMULA, formula);
         }
         storeAtomData();
         storeBondData();
@@ -1414,7 +1440,7 @@ public class CMLCoreModule implements ICMLModule {
         newBondData();
     }
 
-    protected int addArrayElementsTo(List toAddto, String array) {
+    protected int addArrayElementsTo(List<String> toAddto, String array) {
         StringTokenizer tokenizer = new StringTokenizer(array);
         int i = 0;
         while (tokenizer.hasMoreElements()) {

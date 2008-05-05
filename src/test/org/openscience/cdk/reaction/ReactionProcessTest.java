@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.NewCDKTestCase;
@@ -31,6 +33,13 @@ import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.EntryReact;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 /**
  * Tests for IReactionProcess implementations.
@@ -39,9 +48,10 @@ import org.openscience.cdk.exception.CDKException;
  */
 public abstract class ReactionProcessTest extends NewCDKTestCase {
 	
-	protected static IReactionProcess reaction;
+	private static IReactionProcess reaction;
 	private static Dictionary dictionary;
 	private static String entryString;
+	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	
 	/**
 	 * Set the IReactionProcess to analyzed
@@ -116,7 +126,11 @@ public abstract class ReactionProcessTest extends NewCDKTestCase {
 	 */
 	@Test public void testGetParameters() throws Exception {
         HashMap<String,Object> paramObj = reaction.getParameters();
-        EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
+        
+        ReactionProcessTest.entryString = reaction.getSpecification().getSpecificationReference();
+		ReactionProcessTest.entryString = ReactionProcessTest.entryString.substring(ReactionProcessTest.entryString.indexOf("#")+1, ReactionProcessTest.entryString.length());
+    	
+		EntryReact entry = (EntryReact) dictionary.getEntry(ReactionProcessTest.entryString.toLowerCase());
         HashMap<String, String> paramDic = entry.getParameters();
         
         Assert.assertSame(
@@ -277,4 +291,5 @@ public abstract class ReactionProcessTest extends NewCDKTestCase {
     			"The representation entry for ["+entryString+"]  must contain at least one representation.",
     			0,entry.getRepresentations().size());
     }  
+	
 }

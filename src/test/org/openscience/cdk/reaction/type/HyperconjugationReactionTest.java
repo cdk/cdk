@@ -61,6 +61,14 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 	 @BeforeClass public static void setUp() throws Exception {
 	 	setReaction(HyperconjugationReaction.class);
 	 }
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testHyperconjugationReaction() throws Exception {
+			IReactionProcess type = new HyperconjugationReaction();
+			Assert.assertNotNull(type);
+	 }
 
 	/**
 	 * A unit test suite for JUnit. Reaction: [C+]-CC => C=CC + [H+]
@@ -68,7 +76,7 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testBB_AutomaticSearchCentreActiveFormaldehyde() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new HyperconjugationReaction();
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		

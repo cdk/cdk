@@ -66,6 +66,14 @@ public class AdductionSodiumLPReactionTest extends ReactionProcessTest {
 	 	setReaction(AdductionSodiumLPReaction.class);
 	 }
 	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testAdductionSodiumLPReaction() throws Exception {
+			IReactionProcess type = new AdductionSodiumLPReaction();
+			Assert.assertNotNull(type);
+	 }
+	 
 	/**
 	 * A unit test suite for JUnit for acetaldehyde. 
 	 * Reaction: O=C-C-H => O(H)-C=C. 
@@ -75,7 +83,7 @@ public class AdductionSodiumLPReactionTest extends ReactionProcessTest {
 	 * 
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticCentreActive() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 
 		IReactionProcess type = new AdductionSodiumLPReaction();
 

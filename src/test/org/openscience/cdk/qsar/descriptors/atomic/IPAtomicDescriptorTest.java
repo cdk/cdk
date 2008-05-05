@@ -27,10 +27,8 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
 /**
@@ -38,7 +36,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  *
  * @cdk.module test-qsarmolecular
  */
-public class IPAtomicDescriptorTest extends CDKTestCase {
+public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
 	IPAtomicDescriptor descriptor;
 	private SmilesParser sp;
 	/**

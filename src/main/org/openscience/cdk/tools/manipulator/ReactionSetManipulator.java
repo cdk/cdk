@@ -70,13 +70,15 @@ public class ReactionSetManipulator {
         return count;
     }
 
+    @TestMethod("testRemoveAtomAndConnectedElectronContainers_IReactionSet_IAtom")
     public static void removeAtomAndConnectedElectronContainers(IReactionSet set, IAtom atom) {
     	for (Iterator<IReaction> iter = set.reactions(); iter.hasNext();) {
             IReaction reaction = iter.next();
             ReactionManipulator.removeAtomAndConnectedElectronContainers(reaction, atom);
         }
     }
-    
+
+    @TestMethod("testRemoveElectronContainer_IReactionSet_IElectronContainer")
     public static void removeElectronContainer(IReactionSet set, IElectronContainer electrons) {
     	for (Iterator<IReaction> iter = set.reactions(); iter.hasNext();) {
             IReaction reaction = iter.next();
@@ -92,26 +94,28 @@ public class ReactionSetManipulator {
      */
     @TestMethod("testGetAllMolecules_IReactionSet")
     public static IMoleculeSet getAllMolecules(IReactionSet set) {
-        IMoleculeSet moleculeSet = set.getBuilder().newMoleculeSet();
+    	IMoleculeSet moleculeSet = set.getBuilder().newMoleculeSet();
         for (Iterator<IReaction> iter = set.reactions(); iter.hasNext();) {
             IReaction reaction = iter.next();
-            IMoleculeSet newMoleculeSet = ReactionManipulator.getAllMolecules(reaction);
-            for(Iterator<IAtomContainer> it = newMoleculeSet.molecules(); it.hasNext(); ){
-            	IAtomContainer ac = it.next();
-            	boolean contain = false;
-            	for(Iterator<IAtomContainer> it2 = moleculeSet.molecules(); it2.hasNext(); )
-                	if(it2.next().equals(ac)){
-                		contain = true;
-                		break;
-                	}
-            	
-            	if(!contain)
-            		moleculeSet.addMolecule((IMolecule)(ac));
-            }
+            IMoleculeSet molecules = ReactionManipulator.getAllMolecules(reaction);
+            for(Iterator<IAtomContainer> it = molecules.molecules(); it.hasNext(); ){
+	        	IAtomContainer ac = it.next();
+	        	boolean contain = false;
+	        	for(Iterator<IAtomContainer> it2 = moleculeSet.molecules();it2.hasNext();){
+	         		if(it2.next().equals(ac)){
+	             		contain = true;
+	             		break;
+	             	}
+	         	}
+	         	if(!contain)
+	         		moleculeSet.addMolecule((IMolecule)(ac));
+	         	
+	        }
         }
         return moleculeSet;
     }
 
+    @TestMethod("testGetAllIDs_IReactionSet")
 	public static List<String> getAllIDs(IReactionSet set) {
         List<String> IDlist = new ArrayList<String>();
         if (set.getID() != null) IDlist.add(set.getID());

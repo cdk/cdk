@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -78,6 +79,8 @@ public class StructureResonanceGenerator {
 	
 	private LoggingTool logger = new LoggingTool(StructureResonanceGenerator.class);
 	private List<IReactionProcess> reactionsList = new ArrayList<IReactionProcess>();
+	/**Generate resonance structure without looking at the symmetry*/
+	private boolean lookingSymmetry;
 	
 	/**
 	 * Construct an instance of StructureResonanceGenerator. Default restrictions 
@@ -86,7 +89,18 @@ public class StructureResonanceGenerator {
 	 * @see #setDefaultReactionss()
 	 */
 	public StructureResonanceGenerator(){
+		this(false);	
+	}
+	/**
+	 * Construct an instance of StructureResonanceGenerator. Default restrictions 
+	 * are initiated.
+	 * 
+	 * @param lookingSymmetry  Specify if the resonance generation is based looking at the symmetry     
+	 * @see #setDefaultReactionss()
+	 */
+	public StructureResonanceGenerator(boolean lookingSymmetry){
         logger.info("Initiate StructureResonanceGenerator");
+        this.lookingSymmetry = lookingSymmetry;
 		setDefaultReactions();
 		
 	}
@@ -147,8 +161,10 @@ public class StructureResonanceGenerator {
 		reactionsList.add(type);
 		
 		type  = new PiBondingMovementReaction();
+		HashMap<String,Object> params2 = new HashMap<String,Object>();
+		params2.put("hasActiveCenter",Boolean.FALSE);
 		try {
-			type.setParameters(params);
+			type.setParameters(params2);
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
@@ -224,26 +240,44 @@ public class StructureResonanceGenerator {
 	/**
 	 * Search if the setOfAtomContainer contains the atomContainer
 	 *  
-	 * FIXME: REACT: The isomorph method is not accurate. The resonance in benzene e.g. will always fail.
 	 * 
 	 * @param set            ISetOfAtomContainer object where to search
 	 * @param atomContainer  IAtomContainer to search
 	 * @return   			 True, if the atomContainer is contained
 	 */
 	private boolean existAC(IAtomContainerSet set, IAtomContainer atomContainer) {
+
 		for(int i = 0 ; i < atomContainer.getAtomCount(); i++)
 			atomContainer.getAtom(i).setID(""+atomContainer.getAtomNumber(atomContainer.getAtom(i)));
+		if(lookingSymmetry ){
+			try {
+				CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
+			} catch (CDKException e) {
+				e.printStackTrace();
+			}
+			
+		}
 		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(atomContainer);
 		for(int i = 0 ; i < set.getAtomContainerCount(); i++){
 			IAtomContainer ss = set.getAtomContainer(i);
 			for(int j = 0 ; j < ss.getAtomCount(); j++)
 				ss.getAtom(j).setID(""+ss.getAtomNumber(ss.getAtom(j)));
 			try {
-				if(UniversalIsomorphismTester.isIsomorph(ss,qAC)){
-					QueryAtomContainer qAC2 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(atomContainer);
-					if(UniversalIsomorphismTester.isIsomorph(ss,qAC2))
+				
+				if(!lookingSymmetry ){
+					if(UniversalIsomorphismTester.isIsomorph(ss,qAC)){
+						QueryAtomContainer qAC2 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(atomContainer);
+						if(UniversalIsomorphismTester.isIsomorph(ss,qAC2)){
+							return true;
+						}
+					}
+				}else{
+					CDKHueckelAromaticityDetector.detectAromaticity(ss);
+					if(UniversalIsomorphismTester.isIsomorph(ss,qAC))
 						return true;
+					
 				}
+				
 			} catch (CDKException e1) {
 				System.err.println(e1);
 				logger.error(e1.getMessage());

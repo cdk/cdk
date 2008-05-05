@@ -65,6 +65,14 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 	@BeforeClass public static void setUp() throws Exception {
 	 	setReaction(SharingChargeDBReaction.class);
 	}
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testSharingChargeDBReaction() throws Exception {
+			IReactionProcess type = new SharingChargeDBReaction();
+			Assert.assertNotNull(type);
+	 }
 	
 	/**
 	 * A unit test suite for JUnit. Reaction: C-C=[O+] => C-[C+]O|
@@ -72,7 +80,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticCentreActive() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new SharingChargeDBReaction();
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		/*C-C=[O+]*/

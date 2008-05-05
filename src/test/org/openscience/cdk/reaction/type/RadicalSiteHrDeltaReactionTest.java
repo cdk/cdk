@@ -67,6 +67,14 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
 	 @BeforeClass public static void setUp() throws Exception {
 	 	setReaction(RadicalSiteHrDeltaReaction.class);
 	 }
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testRadicalSiteHrDeltaReaction() throws Exception {
+			IReactionProcess type = new RadicalSiteHrDeltaReaction();
+			Assert.assertNotNull(type);
+	 }
 	/**
 	 * A unit test suite for JUnit. Reaction: C([H])([H])([H])C([H])([H])C(=O)C([H])([H])C([H])C([H])[H]
 	 * Automatic search of the center active. hexan-3-one
@@ -75,7 +83,7 @@ public class RadicalSiteHrDeltaReactionTest extends ReactionProcessTest {
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticSearchCentreActive() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new RadicalSiteHrDeltaReaction();
 	
 		IMolecule molecule = getHexan3one();

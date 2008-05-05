@@ -30,10 +30,14 @@ package org.openscience.cdk.io.cml;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.Iterator;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -49,7 +53,6 @@ import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.protein.data.PDBPolymer;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * TestCase for the reading CML 2 files using a few test files
@@ -96,9 +99,9 @@ public class CML2Test extends CDKTestCase {
         assertTrue(GeometryTools.has3DCoordinates(mol));
         assertTrue(!GeometryTools.has2DCoordinates(mol));
 
-        java.util.Iterator atoms = mol.atoms();
+        Iterator<IAtom> atoms = mol.atoms();
         while (atoms.hasNext()) {
-        	org.openscience.cdk.interfaces.IAtom atom = (IAtom)atoms.next();
+        	org.openscience.cdk.interfaces.IAtom atom = atoms.next();
         	if (atom.getSymbol().equals("Na")) 
         		assertEquals(+1, atom.getFormalCharge().intValue()); 
         }
@@ -129,9 +132,9 @@ public class CML2Test extends CDKTestCase {
         assertTrue(GeometryTools.has3DCoordinates(mol));
         assertTrue(!GeometryTools.has2DCoordinates(mol));
 
-        java.util.Iterator atoms = mol.atoms();
+        Iterator<IAtom> atoms = mol.atoms();
         while (atoms.hasNext()) {
-        	org.openscience.cdk.interfaces.IAtom atom = (IAtom)atoms.next();
+        	org.openscience.cdk.interfaces.IAtom atom = atoms.next();
         	if (atom.getSymbol().equals("N")) 
         		assertEquals(+1, atom.getFormalCharge().intValue()); 
         }
@@ -580,15 +583,15 @@ public class CML2Test extends CDKTestCase {
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
 
         // test the resulting ChemFile content
         assertNotNull(chemFile);
         assertEquals(chemFile.getChemSequenceCount(), 1);
-        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        IChemSequence seq = chemFile.getChemSequence(0);
         assertNotNull(seq);
         assertEquals(seq.getChemModelCount(), 1);
-        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        IChemModel model = seq.getChemModel(0);
         assertNotNull(model);
 
         IMolecule mol = model.getMoleculeSet().getMolecule(0);
@@ -598,7 +601,56 @@ public class CML2Test extends CDKTestCase {
         assertEquals(27, mol.getAtomCount());
         assertEquals(32, mol.getBondCount());
     }
+    /**
+     * Only Molecule with concise MolecularFormula
+     */
+    public void testCMLConciseFormula() throws Exception {
+        String filename = "data/cml/cmlConciseFormula.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
 
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+
+        IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        
+        // FIXME: REACT: It should return two different formulas
+        assertEquals("[C 18 H 21 Cl 2 Mn 1 N 5 O 1]", mol.getProperty(CDKConstants.FORMULA).toString());
+    }
+    /**
+     * Only Molecule with concise MolecularFormula
+     */
+    public void testCMLConciseFormula2() throws Exception {
+        String filename = "data/cml/cmlConciseFormula2.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
+
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(seq.getChemModelCount(), 1);
+        IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+
+        IMolecule mol = model.getMoleculeSet().getMolecule(0);
+        assertNotNull(mol);
+        
+        // FIXME: REACT: It should return two different formulas
+        assertEquals("[C 18 H 21 Cl 2 Mn 1 N 5 O 1, C 4 H 10]", mol.getProperty(CDKConstants.FORMULA).toString());
+    }
     /**
 	 * @cdk.bug 1085912
 	 */
@@ -606,9 +658,9 @@ public class CML2Test extends CDKTestCase {
 		if (!runSlowTests()) { fail("Not running this slow test"); }
 		
 		String filename_pdb = "data/pdb/1CKV.pdb";
-		String filename_cml = "data/cml/1CKV_1.cml";
+//		String filename_cml = "data/cml/1CKV_1.cml";
 	    InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_pdb);
-	    InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename_cml);
+//	    InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename_cml);
 	    
 	    /*1*/
 	    IChemObjectReader reader = new PDBReader(ins1);
@@ -618,7 +670,7 @@ public class CML2Test extends CDKTestCase {
 	    IAtomContainer container = model1.getMoleculeSet().getMolecule(0);
 	    IBioPolymer polymer1 = (IBioPolymer)container;
 	    int countchemFile1 = chemFile1.getChemSequenceCount();
-	    int countseq1 = seq1.getChemModelCount();
+//	    int countseq1 = seq1.getChemModelCount();
 	    int countmodel1 = model1.getMoleculeSet().getAtomContainerCount();
 	    int countpolymer1 = polymer1.getAtomCount();
 
@@ -638,7 +690,7 @@ public class CML2Test extends CDKTestCase {
 
 
 	    int countchemFile2 = chemFil2.getChemSequenceCount();
-	    int countseq2 = seq2.getChemModelCount();
+//	    int countseq2 = seq2.getChemModelCount();
 	    int countmodel2 = model2.getMoleculeSet().getAtomContainerCount();
 	    int countpolymer2 = polymer2.getAtomCount();
 
@@ -656,5 +708,154 @@ public class CML2Test extends CDKTestCase {
 	    String conte1 = cmlContent1.substring(0, 1000);
 	    String conte2 = cmlContent2.substring(0, 1000);
 	    assertEquals(conte1,conte2);
+    }
+    /**
+     * This test tests whether the CMLReader is able to ignore the CMLReaction part
+     * of a CML file, while extracting the reaction.
+     */
+    public void testCMLScheme1() throws Exception {
+        String filename = "data/cml/reactionScheme.1.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(1,seq.getChemModelCount());
+        IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        
+        // test reaction
+        assertEquals(4,model.getReactionSet().getReactionCount());
+        String[] idReaction = {"r1","r2","r3","r4"};
+//        String[] idReactants = {"A","B","A","F"};
+//        String[] idProducts = {"B","C","F","G"};
+        for(int i = 0 ; i < idReaction.length; i++){
+        	IReaction reaction = model.getReactionSet().getReaction(i);
+        	assertEquals(idReaction[i],reaction.getID());
+        	// test molecule
+        	assertEquals(1, reaction.getProducts().getMoleculeCount());
+//        	assertEquals(idProducts[i],reaction.getProducts().getMolecule(0).getID());
+//        	
+//            assertEquals(1, reaction.getReactants().getMoleculeCount());
+//            assertEquals(idReactants[i],reaction.getReactants().getMolecule(0).getID());
+        }
+    }
+
+    /**
+     * This test tests whether the CMLReader is able to ignore the CMLReaction part
+     * of a CML file, while extracting the reaction.
+     */
+    public void testCMLScheme2() throws Exception {
+        String filename = "data/cml/reactionScheme.2.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(1,seq.getChemModelCount());
+        IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        
+        // test reaction
+        assertEquals(2,model.getReactionSet().getReactionCount());
+        String[] idReaction = {"r1","r2"};
+        String[] idReactants = {"A","B"};
+        String[] idProducts = {"B","C"};
+        for(int i = 0 ; i < idReaction.length; i++){
+        	IReaction reaction = model.getReactionSet().getReaction(i);
+        	assertEquals(idReaction[i],reaction.getID());
+        	// test molecule
+        	assertEquals(1, reaction.getProducts().getMoleculeCount());
+        	assertEquals(idProducts[i],reaction.getProducts().getMolecule(0).getID());
+        	
+            assertEquals(1, reaction.getReactants().getMoleculeCount());
+            assertEquals(idReactants[i],reaction.getReactants().getMolecule(0).getID());
+        }
+    }
+
+    /**
+     * This test tests whether the CMLReader is able to ignore the CMLReaction part
+     * of a CML file, while extracting the reaction.
+     */
+    public void testCMLSchemeStepList1() throws Exception {
+        String filename = "data/cml/reactionSchemeStepList.1.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(1,seq.getChemModelCount());
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        
+        // test reaction
+        assertEquals(4,model.getReactionSet().getReactionCount());
+        String[] idReaction = {"r1.1","r1.2","r2.1","r2.2"};
+        String[] idReactants = {"A","B","A","D"};
+        String[] idProducts = {"B","C","D","E"};
+        for(int i = 0 ; i < idReaction.length; i++){
+        	IReaction reaction = model.getReactionSet().getReaction(i);
+        	assertEquals(idReaction[i],reaction.getID());
+        	// test molecule
+        	assertEquals(1, reaction.getProducts().getMoleculeCount());
+        	assertEquals(idProducts[i],reaction.getProducts().getMolecule(0).getID());
+        	
+        	assertEquals(1, reaction.getReactants().getMoleculeCount());
+        	assertEquals(idReactants[i],reaction.getReactants().getMolecule(0).getID());
+        }
+        
+    }
+
+    /**
+     * This test tests whether the CMLReader is able to ignore the CMLReaction part
+     * of a CML file, while extracting the reaction.
+     */
+    public void testCMLStepList() throws Exception {
+        String filename = "data/cml/reactionStepList.1.cml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+
+        // test the resulting ChemFile content
+        assertNotNull(chemFile);
+        assertEquals(chemFile.getChemSequenceCount(), 1);
+        org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
+        assertNotNull(seq);
+        assertEquals(1,seq.getChemModelCount());
+        org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
+        assertNotNull(model);
+        
+        // test reaction
+        assertEquals(3,model.getReactionSet().getReactionCount());
+        String[] idReaction = {"r1","r2","r3"};
+        String[] idReactants = {"A","B","C"};
+        String[] idProducts = {"B","C","D"};
+        for(int i = 0 ; i < idReaction.length; i++){
+        	IReaction reaction = model.getReactionSet().getReaction(i);
+        	assertEquals(idReaction[i],reaction.getID());
+        	// test molecule
+        	assertEquals(1, reaction.getProducts().getMoleculeCount());
+        	assertEquals(idProducts[i],reaction.getProducts().getMolecule(0).getID());
+        	
+        	assertEquals(1, reaction.getReactants().getMoleculeCount());
+        	assertEquals(idReactants[i],reaction.getReactants().getMolecule(0).getID());
+        }
+        
     }
 }

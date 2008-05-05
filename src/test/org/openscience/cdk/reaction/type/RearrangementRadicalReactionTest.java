@@ -68,6 +68,14 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 	 	setReaction(RearrangementRadicalReaction.class);
 	 }
 	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testRearrangementRadicalReaction() throws Exception {
+			IReactionProcess type = new RearrangementRadicalReaction();
+			Assert.assertNotNull(type);
+	 }
+	 
     
 	/**
 	 * A unit test suite for JUnit. Reaction: [C*]-C=C-C => C=C-[C*]-C
@@ -75,7 +83,7 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticCentreActive() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 
 		IReactionProcess type = new RearrangementRadicalReaction();
 		

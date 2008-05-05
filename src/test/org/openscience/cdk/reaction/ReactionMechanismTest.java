@@ -28,7 +28,11 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.NewCDKTestCase;
@@ -49,7 +53,7 @@ public abstract class ReactionMechanismTest extends NewCDKTestCase {
 	  * @param descriptorClass
 	  * @throws Exception
 	  */
-	public static void setReaction(Class<?> descriptorClass) throws Exception {
+	public static void setMechanism(Class<?> descriptorClass) throws Exception {
 		if (ReactionMechanismTest.reactionMechanism == null) {
 			Object descriptor = (Object)descriptorClass.newInstance();
 			if (!(descriptor instanceof IReactionMechanism)) {
@@ -58,15 +62,23 @@ public abstract class ReactionMechanismTest extends NewCDKTestCase {
 			ReactionMechanismTest.reactionMechanism = (IReactionMechanism)descriptor;
 		}
 	}
+	
 	/**
-	 * Checks if the initiate method is consistent.
+	 * Makes sure that the extending class has set the super.descriptor.
+	 * Each extending class should have this bit of code (JUnit3 formalism):
+	 * <pre>
+	 * public void setUp() {
+	 *   // Pass a Class, not an Object!
+	 *   setDescriptor(SomeDescriptor.class);
+	 * }
 	 * 
-	 * @throws Exception 
+	 * <p>The unit tests in the extending class may use this instance, but
+	 * are not required.
+	 * 
+	 * </pre>
 	 */
-	@Test public void testInitiate_IMolecule_ArrayList_ArrayList() throws Exception {
-		ArrayList<IAtom> atomList = new ArrayList<IAtom>(); 
-		ArrayList<IBond> bondList = new ArrayList<IBond>(); 
-		IReaction reaction = reactionMechanism.initiate(builder.newMoleculeSet(), atomList, bondList);
-        Assert.assertNotNull(reaction);
+	@Test public void testHasSetSuperDotDescriptor() {
+		Assert.assertNotNull("The extending class must set the super.descriptor in its seUp() method.", reactionMechanism);    	
 	}
+
 }

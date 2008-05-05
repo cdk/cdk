@@ -67,6 +67,14 @@ public class RearrangementCationReactionTest extends ReactionProcessTest {
 	@BeforeClass public static void setUp() throws Exception {
 	 	setReaction(RearrangementCationReaction.class);
 	}
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testRearrangementCationReaction() throws Exception {
+			IReactionProcess type = new RearrangementCationReaction();
+			Assert.assertNotNull(type);
+	 }
 	
 	/**
 	 * A unit test suite for JUnit. Reaction: [C+]-C=C-C => C=C-[C+]-C
@@ -74,7 +82,7 @@ public class RearrangementCationReactionTest extends ReactionProcessTest {
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticCentreActive() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new RearrangementCationReaction();
 		
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();

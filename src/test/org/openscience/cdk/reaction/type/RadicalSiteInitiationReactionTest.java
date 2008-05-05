@@ -66,13 +66,21 @@ public class RadicalSiteInitiationReactionTest extends ReactionProcessTest {
 	 @BeforeClass public static void setUp() throws Exception {
 	 	setReaction(RadicalSiteInitiationReaction.class);
 	 }
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testRadicalSiteInitiationReaction() throws Exception {
+			IReactionProcess type = new RadicalSiteInitiationReaction();
+			Assert.assertNotNull(type);
+	 }
 	/**
 	 * A unit test suite for JUnit. Reaction: [C*]-C-C => C=C +[C*]
 	 * Automatic search of the center active.
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticCentreActive() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
         IReactionProcess type = new RadicalSiteInitiationReaction();
 		/*[C*]-C-C*/
         IMolecule molecule = getMolecule();

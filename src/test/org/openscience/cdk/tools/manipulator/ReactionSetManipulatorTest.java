@@ -20,19 +20,28 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.ReactionSet;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.io.MDLRXNReader;
-import org.openscience.cdk.NewCDKTestCase;
-import org.openscience.cdk.tools.manipulator.ReactionSetManipulator;
-
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.ReactionSet;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.io.MDLRXNReader;
 
 /**
  * @cdk.module test-standard
@@ -165,6 +174,71 @@ public class ReactionSetManipulatorTest extends NewCDKTestCase {
 		// set, reaction, 2xreactant, 1xproduct
 		Assert.assertEquals(5, allObjects.size());
 	}
+
+	@Test public void testRemoveElectronContainer_IReactionSet_IElectronContainer() {
+		IReactionSet set = builder.newReactionSet();
+		IReaction reaction = builder.newReaction();
+		set.addReaction(reaction);
+		IMolecule mol = builder.newMolecule();
+		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newAtom("C"));
+		mol.addBond(0, 1, Order.SINGLE);
+		Assert.assertEquals(2,mol.getAtomCount());
+		Assert.assertEquals(1,mol.getBondCount());
+		reaction.addReactant(mol);
+		reaction.addReactant(builder.newMolecule());
+		reaction.addReactant(builder.newMolecule());
+		reaction.addProduct(builder.newMolecule());
+		reaction.addProduct(builder.newMolecule());
+		ReactionSetManipulator.removeElectronContainer(set, mol.getBond(0));
+
+		Assert.assertEquals(2,mol.getAtomCount());
+		Assert.assertEquals(0,mol.getBondCount());
+		
+	}
+	
+	@Test public void testRemoveAtomAndConnectedElectronContainers_IReactionSet_IAtom() {
+		IReactionSet set = builder.newReactionSet();
+		IReaction reaction = builder.newReaction();
+		set.addReaction(reaction);
+		IMolecule mol = builder.newMolecule();
+		mol.addAtom(builder.newAtom("C"));
+		mol.addAtom(builder.newAtom("C"));
+		mol.addBond(0, 1, Order.SINGLE);
+		Assert.assertEquals(2,mol.getAtomCount());
+		Assert.assertEquals(1,mol.getBondCount());
+		reaction.addReactant(mol);
+		reaction.addReactant(builder.newMolecule());
+		reaction.addReactant(builder.newMolecule());
+		reaction.addProduct(builder.newMolecule());
+		reaction.addProduct(builder.newMolecule());
+		ReactionSetManipulator.removeAtomAndConnectedElectronContainers(set,mol.getAtom(0));
+
+		Assert.assertEquals(1,mol.getAtomCount());
+		Assert.assertEquals(0,mol.getBondCount());
+	}
+
+    
+    @Test public void testGetAllIDs_IReactionSet() {
+    	IReactionSet set = builder.newReactionSet();
+		IReaction reaction1 = builder.newReaction();
+		set.addReaction(reaction1);
+		reaction1.setID("r1");
+        Molecule water = new Molecule();
+        water.setID("m1");
+        Atom oxygen = new Atom("O");
+        oxygen.setID("a1");
+        water.addAtom(oxygen);
+        reaction1.addReactant(water);
+        reaction1.addProduct(water);
+        IReaction reaction2 = builder.newReaction();
+		reaction2.setID("r2");
+		set.addReaction(reaction2);
+		
+        List<String> ids = ReactionSetManipulator.getAllIDs(set);
+        Assert.assertNotNull(ids);
+        Assert.assertEquals(6, ids.size());
+    }
 }
 
 

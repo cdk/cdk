@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<molecule id="a" xmlns="http://www.xml-cml.org/schema">
+	<formula concise="C 18 H 21 Cl 2 Mn 1 N 5 O 1"/>
+</molecule>

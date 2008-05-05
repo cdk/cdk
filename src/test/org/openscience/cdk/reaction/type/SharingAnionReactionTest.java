@@ -67,6 +67,14 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
 	@BeforeClass public static void setUp() throws Exception {
 	 	setReaction(SharingAnionReaction.class);
 	}
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testSharingAnionReaction() throws Exception {
+			IReactionProcess type = new SharingAnionReaction();
+			Assert.assertNotNull(type);
+	 }
 	
 	/**
 	 * A unit test suite for JUnit. Reaction: [C+]-[O-] => C=O
@@ -74,7 +82,7 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticCentreActive() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new SharingAnionReaction();
 		/*[C+]-[O-]*/
 		IMolecule molecule = getMolecule1();

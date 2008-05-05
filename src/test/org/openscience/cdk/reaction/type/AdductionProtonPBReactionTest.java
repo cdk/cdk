@@ -66,6 +66,14 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
 	 	setReaction(AdductionProtonPBReaction.class);
 	 }
 	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testAdductionProtonPBReaction() throws Exception {
+			IReactionProcess type = new AdductionProtonPBReaction();
+			Assert.assertNotNull(type);
+	 }
+	 
 	/**
 	 * A unit test suite for JUnit for Ethene. 
 	 * Reaction: O=C-C-H => O(H)-C=C. 
@@ -75,7 +83,7 @@ public class AdductionProtonPBReactionTest extends ReactionProcessTest {
 	 * 
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticCentreActive() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 
 		IReactionProcess type = new AdductionProtonPBReaction();
 

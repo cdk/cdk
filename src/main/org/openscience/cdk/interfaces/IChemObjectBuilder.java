@@ -516,6 +516,13 @@ public interface IChemObjectBuilder {
 	 */
 	public IReactionSet newReactionSet();
 	
+	/**
+	 * Constructs an empty IReactionScheme.
+	 * 
+     * @return IReactionScheme implementation defined for this IChemObjectBuilder
+	 */
+	public IReactionScheme newReactionScheme();
+	
     /**
      * Constructs an single electron orbital with an associated IAtom.
      * 

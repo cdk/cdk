@@ -43,6 +43,15 @@ public abstract class ReactionEngineTest extends NewCDKTestCase {
 	 * 
 	 * @throws Exception 
 	 */
+	@Test public void testReactionEngine() throws Exception {
+		ReactionEngine engine = new AdductionProtonLPReaction();
+		Assert.assertNotNull(engine);
+	}
+	/**
+	 * Junit test.
+	 * 
+	 * @throws Exception 
+	 */
 	@Test public void testGetParameters() throws Exception {
 		ReactionEngine engine = new AdductionProtonLPReaction();
 		Assert.assertNotNull(engine.getParameters());

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cml xmlns="http://www.xml-cml.org/schema">
+  <reactionScheme id="rs0">
+    <reactionScheme id="rs1">
+      <reaction id="react0">
+        <reactantList>
+          <reactant>
+            <molecule ref="1_"/>
+          </reactant>
+        </reactantList>
+        <productList>
+          <product>
+            <molecule ref="1_1_"/>
+          </product>
+          <product>
+            <molecule ref="1_1_Loss"/>
+          </product>
+        </productList>
+        <substanceList/>
+      </reaction>
+      <reactionScheme id="rs2">
+        <reaction id="react1">
+          <reactantList>
+            <reactant>
+              <molecule ref="1_1_"/>
+            </reactant>
+          </reactantList>
+          <productList>
+            <product>
+              <molecule ref="1_1_1_"/>
+            </product>
+            <product>
+              <molecule ref="1_1_1_Loss"/>
+            </product>
+          </productList>
+          <substanceList/>
+        </reaction>
+        <reaction id="react2">
+          <reactantList>
+            <reactant>
+              <molecule ref="1_1_1_"/>
+            </reactant>
+          </reactantList>
+          <productList>
+            <product>
+              <molecule ref="1_1_1_1_"/>
+            </product>
+            <product>
+              <molecule ref="1_1_1_1_Loss"/>
+            </product>
+          </productList>
+          <substanceList/>
+        </reaction>
+      </reactionScheme>
+    </reactionScheme>
+  </reactionScheme>
+  <list dictRef="cdk:moleculeSet">
+    <molecule id="1_1_">
+      <formula concise="C 8 H 13 O 1 S 2">
+        <atomArray elementType="C H O S" count="8.0 13.0 1.0 2.0"/>
+      </formula>
+    </molecule>
+    <molecule id="1_1_1_">
+      <formula concise="C 7 H 13 S 2">
+        <atomArray elementType="C H S" count="7.0 13.0 2.0"/>
+      </formula>
+    </molecule>
+    <molecule id="1_1_1_Loss">
+      <formula concise="C 1 O 1">
+        <atomArray elementType="C O" count="1.0 1.0"/>
+      </formula>
+    </molecule>
+    <molecule id="1_1_1_1_">
+      <formula concise="C 5 H 9 S 1">
+        <atomArray elementType="C H S" count="5.0 9.0 1.0"/>
+      </formula>
+    </molecule>
+    <molecule id="1_1_1_1_Loss">
+      <formula concise="C 2 H 4 S 1">
+        <atomArray elementType="C H S" count="2.0 4.0 1.0"/>
+      </formula>
+    </molecule>
+    <molecule id="1_">
+      <formula concise="C 8 H 16 O 1 N 1 S 2">
+        <atomArray elementType="C H O N S" count="8.0 16.0 1.0 1.0 2.0"/>
+      </formula>
+    </molecule>
+    <molecule id="1_1_Loss">
+      <formula concise="H 3 N 1">
+        <atomArray elementType="H N" count="3.0 1.0"/>
+      </formula>
+    </molecule>
+  </list>
+</cml>

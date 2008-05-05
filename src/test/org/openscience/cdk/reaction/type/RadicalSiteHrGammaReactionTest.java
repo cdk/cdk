@@ -66,13 +66,21 @@ public class RadicalSiteHrGammaReactionTest extends ReactionProcessTest {
 	 @BeforeClass public static void setUp() throws Exception {
 	 	setReaction(RadicalSiteHrGammaReaction.class);
 	 }
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testRadicalSiteHrGammaReaction() throws Exception {
+			IReactionProcess type = new RadicalSiteHrGammaReaction();
+			Assert.assertNotNull(type);
+	 }
 	/**
 	 * A unit test suite for JUnit. Reaction: [A*]-C1-C2-C3[H] => A([H])-C1-C2-[C3*]
 	 * Automatic search of the center active.
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticSearchCentreActiveExample1() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new RadicalSiteHrGammaReaction();
 		
 		IMolecule molecule = getMolecule();

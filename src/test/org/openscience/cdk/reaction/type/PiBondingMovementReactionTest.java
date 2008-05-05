@@ -45,8 +45,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
-import org.openscience.cdk.reaction.type.PiBondingMovementReaction;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -58,7 +56,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * 
  * @cdk.module test-reaction
  */
-public class PiBondingMovemetReactionTest extends ReactionProcessTest {
+public class PiBondingMovementReactionTest extends ReactionProcessTest {
 
 	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
@@ -66,6 +64,14 @@ public class PiBondingMovemetReactionTest extends ReactionProcessTest {
 	 */
 	 @BeforeClass public static void setUp() throws Exception {
 	 	setReaction(PiBondingMovementReaction.class);
+	 }
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testPiBondingMovementReaction() throws Exception {
+			IReactionProcess type = new PiBondingMovementReaction();
+			Assert.assertNotNull(type);
 	 }
 	 /**
 		 * A unit test suite for JUnit with benzene. 
@@ -76,7 +82,7 @@ public class PiBondingMovemetReactionTest extends ReactionProcessTest {
 		 *
 		 * @return    The test suite
 		 */
-		@Test public void testAutomaticSearchCentreActiveExample0() throws Exception {
+		@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 	        IReactionProcess type = new PiBondingMovementReaction();
 			// C1=C(C)-C(C)=C-C=C1
 			IMolecule molecule = builder.newMolecule();
@@ -102,13 +108,12 @@ public class PiBondingMovemetReactionTest extends ReactionProcessTest {
 
 			/* initiate */
 			HashMap<String,Object> params = new HashMap<String,Object>();
-			params.put("hasActiveCenter",Boolean.FALSE);;
-	        type.setParameters(params);
+			params.put("hasActiveCenter",Boolean.FALSE);
+			type.setParameters(params);
 	        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 	        
 	        Assert.assertEquals(1, setOfReactions.getReactionCount());
 	        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
-
 	        
 	        IMolecule product2 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
 	        
@@ -155,7 +160,8 @@ public class PiBondingMovemetReactionTest extends ReactionProcessTest {
 
 		/* initiate */
 		HashMap<String,Object> params = new HashMap<String,Object>();
-        params.put("hasActiveCenter",Boolean.FALSE);;
+        params.put("hasActiveCenter",Boolean.FALSE);
+		
         type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
@@ -188,9 +194,6 @@ public class PiBondingMovemetReactionTest extends ReactionProcessTest {
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
 		makeSureAtomTypesAreRecognized(molecule2);
 		
-		SmilesGenerator sg = new SmilesGenerator();
-		System.out.println(sg.createSMILES(molecule2));
-		System.out.println(sg.createSMILES(product2));
 		IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
        
@@ -215,8 +218,8 @@ public class PiBondingMovemetReactionTest extends ReactionProcessTest {
 
 		/* initiate */
 		HashMap<String,Object> params = new HashMap<String,Object>();
-        params.put("hasActiveCenter",Boolean.FALSE);;
-        type.setParameters(params);
+        params.put("hasActiveCenter",Boolean.FALSE);
+		type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         Assert.assertEquals(2, setOfReactions.getReactionCount());
@@ -225,11 +228,7 @@ public class PiBondingMovemetReactionTest extends ReactionProcessTest {
         IMolecule product1 = setOfReactions.getReaction(0).getProducts().getMolecule(0);
         IMolecule molecule1 = getmethyilnaphthalene2();
 
-
-		SmilesGenerator sg = new SmilesGenerator();
-		System.out.println(sg.createSMILES(molecule1));
-		System.out.println(sg.createSMILES(product1));
-        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
+		IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product1);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule1,queryAtom));
 
         Assert.assertEquals(1, setOfReactions.getReaction(1).getProductCount());
@@ -247,26 +246,24 @@ public class PiBondingMovemetReactionTest extends ReactionProcessTest {
 		molecule2.addAtom(builder.newAtom("C"));
 		molecule2.addBond(3, 4, IBond.Order.SINGLE);
 		molecule2.addAtom(builder.newAtom("C"));
-		molecule2.addBond(4, 5, IBond.Order.SINGLE);
+		molecule2.addBond(4, 5, IBond.Order.DOUBLE);
 		molecule2.addAtom(builder.newAtom("C"));
-		molecule2.addBond(5, 6, IBond.Order.DOUBLE);
+		molecule2.addBond(5, 6, IBond.Order.SINGLE);
 		molecule2.addAtom(builder.newAtom("C"));
-		molecule2.addBond(6, 7, IBond.Order.SINGLE);
+		molecule2.addBond(6, 7, IBond.Order.DOUBLE);
 		molecule2.addAtom(builder.newAtom("C"));
-		molecule2.addBond(7, 8, IBond.Order.DOUBLE);
+		molecule2.addBond(7, 8, IBond.Order.SINGLE);
 		molecule2.addAtom(builder.newAtom("C"));
-		molecule2.addBond(8, 9, IBond.Order.SINGLE);
+		molecule2.addBond(8, 9, IBond.Order.DOUBLE);
 		molecule2.addAtom(builder.newAtom("C"));
 		molecule2.addBond(9, 10, IBond.Order.SINGLE);
 		molecule2.addBond(10, 1, IBond.Order.DOUBLE);
-		molecule2.addBond(9, 4, IBond.Order.DOUBLE);
+		molecule2.addBond(9, 4, IBond.Order.SINGLE);
 		
 		addExplicitHydrogens(molecule2);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
 		makeSureAtomTypesAreRecognized(molecule2);
 		
-		System.out.println(sg.createSMILES(molecule2));
-		System.out.println(sg.createSMILES(product2));
 		queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
        
@@ -299,8 +296,8 @@ public class PiBondingMovemetReactionTest extends ReactionProcessTest {
 
 		/* initiate */
         HashMap<String,Object> params = new HashMap<String,Object>();
-        params.put("hasActiveCenter",Boolean.TRUE);;
-        type.setParameters(params);
+        params.put("hasActiveCenter",Boolean.TRUE);
+		type.setParameters(params);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         Assert.assertEquals(1, setOfReactions.getReactionCount());
@@ -310,9 +307,6 @@ public class PiBondingMovemetReactionTest extends ReactionProcessTest {
         
         IMolecule molecule2 = getmethyilnaphthalene2();
         
-        SmilesGenerator sg = new SmilesGenerator();
-		System.out.println(sg.createSMILES(molecule2));
-		System.out.println(sg.createSMILES(product2));
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
 

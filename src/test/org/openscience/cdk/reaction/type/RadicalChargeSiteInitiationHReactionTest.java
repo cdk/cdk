@@ -64,13 +64,21 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 	 @BeforeClass public static void setUp() throws Exception {
 	 	setReaction(RadicalChargeSiteInitiationHReaction.class);
 	 }
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testRadicalChargeSiteInitiationHReaction() throws Exception {
+			IReactionProcess type = new RadicalChargeSiteInitiationHReaction();
+			Assert.assertNotNull(type);
+	 }
 	/**
 	 * A unit test suite for JUnit. Reaction: [O+*]C([H])([H])C([H])([H])([H]) => [O+]=C([H])C([H])([H])([H]) +[H*]
 	 * Automatic search of the center active.
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticCentreActive() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new RadicalChargeSiteInitiationHReaction();
 		
 		/*[O*+]-C-C*/

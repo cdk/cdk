@@ -30,17 +30,28 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.ReactionCoverageTest;
 import org.openscience.cdk.atomtype.ResonanceStructuresTest;
+import org.openscience.cdk.reaction.mechanism.AdductionLPMechanismTest;
+import org.openscience.cdk.reaction.mechanism.AdductionPBMechanismTest;
+import org.openscience.cdk.reaction.mechanism.HeterolyticCleavageMechanismTest;
+import org.openscience.cdk.reaction.mechanism.HomolyticCleavageMechanismTest;
+import org.openscience.cdk.reaction.mechanism.RadicalSiteIonizationMechanismTest;
+import org.openscience.cdk.reaction.mechanism.RadicalSiteRearrangementMechanismTest;
+import org.openscience.cdk.reaction.mechanism.RemovingSEofBMechanismTest;
+import org.openscience.cdk.reaction.mechanism.RemovingSEofNBMechanismTest;
+import org.openscience.cdk.reaction.mechanism.SharingElectronMechanismTest;
+import org.openscience.cdk.reaction.mechanism.TautomerizationMechanismTest;
 import org.openscience.cdk.reaction.type.AdductionProtonLPReactionTest;
 import org.openscience.cdk.reaction.type.AdductionProtonPBReactionTest;
 import org.openscience.cdk.reaction.type.AdductionSodiumLPReactionTest;
 import org.openscience.cdk.reaction.type.CarbonylEliminationReactionTest;
 import org.openscience.cdk.reaction.type.ElectronImpactNBEReactionTest;
 import org.openscience.cdk.reaction.type.ElectronImpactPDBReactionTest;
+import org.openscience.cdk.reaction.type.ElectronImpactSDBReactionTest;
 import org.openscience.cdk.reaction.type.HeterolyticCleavagePBReactionTest;
 import org.openscience.cdk.reaction.type.HeterolyticCleavageSBReactionTest;
 import org.openscience.cdk.reaction.type.HomolyticCleavageReactionTest;
 import org.openscience.cdk.reaction.type.HyperconjugationReactionTest;
-import org.openscience.cdk.reaction.type.PiBondingMovemetReactionTest;
+import org.openscience.cdk.reaction.type.PiBondingMovementReactionTest;
 import org.openscience.cdk.reaction.type.RadicalChargeSiteInitiationHReactionTest;
 import org.openscience.cdk.reaction.type.RadicalChargeSiteInitiationReactionTest;
 import org.openscience.cdk.reaction.type.RadicalSiteHrAlphaReactionTest;
@@ -79,10 +90,21 @@ public class MreactionTests {
         suite.addTest(new JUnit4TestAdapter(ReactionCoverageTest.class));	
         
         // Individual Tests
-//        suite.addTest(new JUnit4TestAdapter(ReactionEngine.class));
+//        suite.addTest(new JUnit4TestAdapter(ReactionEngineTest.class));
+//        suite.addTest(new JUnit4TestAdapter(ReactionChainTest.class));
 
         // from cdk.test.reaction.mechanism
-        
+        suite.addTest(new JUnit4TestAdapter(AdductionLPMechanismTest.class));
+        suite.addTest(new JUnit4TestAdapter(AdductionPBMechanismTest.class));
+        suite.addTest(new JUnit4TestAdapter(HeterolyticCleavageMechanismTest.class));
+        suite.addTest(new JUnit4TestAdapter(HomolyticCleavageMechanismTest.class));
+        suite.addTest(new JUnit4TestAdapter(RadicalSiteIonizationMechanismTest.class));
+        suite.addTest(new JUnit4TestAdapter(RadicalSiteRearrangementMechanismTest.class));
+        suite.addTest(new JUnit4TestAdapter(RemovingSEofBMechanismTest.class));
+        suite.addTest(new JUnit4TestAdapter(RemovingSEofNBMechanismTest.class));
+        suite.addTest(new JUnit4TestAdapter(SharingElectronMechanismTest.class));
+        suite.addTest(new JUnit4TestAdapter(TautomerizationMechanismTest.class));
+              
         // from cdk.test.reaction.type
         suite.addTest(new JUnit4TestAdapter(ResonanceStructuresTest.class));
         
@@ -92,11 +114,12 @@ public class MreactionTests {
         suite.addTest(new JUnit4TestAdapter(CarbonylEliminationReactionTest.class));
         suite.addTest(new JUnit4TestAdapter(ElectronImpactPDBReactionTest.class));
         suite.addTest(new JUnit4TestAdapter(ElectronImpactNBEReactionTest.class));
+        suite.addTest(new JUnit4TestAdapter(ElectronImpactSDBReactionTest.class));
         suite.addTest(new JUnit4TestAdapter(HeterolyticCleavagePBReactionTest.class));
         suite.addTest(new JUnit4TestAdapter(HeterolyticCleavageSBReactionTest.class));
         suite.addTest(new JUnit4TestAdapter(HomolyticCleavageReactionTest.class));
         suite.addTest(new JUnit4TestAdapter(HyperconjugationReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(PiBondingMovemetReactionTest.class));
+        suite.addTest(new JUnit4TestAdapter(PiBondingMovementReactionTest.class));
         suite.addTest(new JUnit4TestAdapter(RadicalChargeSiteInitiationHReactionTest.class));
         suite.addTest(new JUnit4TestAdapter(RadicalChargeSiteInitiationReactionTest.class));
         suite.addTest(new JUnit4TestAdapter(RadicalSiteHrAlphaReactionTest.class));

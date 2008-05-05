@@ -158,7 +158,7 @@ public class OWLReact extends Dictionary {
 	        	typeParam = typeParam.substring(typeParam.indexOf(":")+1, typeParam.length());
 	        	String nameParam = params.get(i).getAttributeValue("resource");
 	        	String value = params.get(i).getValue();
-		        dbEntry.setParameters(nameParam,typeParam,value);
+	        	dbEntry.setParameters(nameParam,typeParam,value);
 	        }
         
         return dbEntry;

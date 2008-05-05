@@ -42,6 +42,7 @@ import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Serializer;
 
+import org.openscience.cdk.ReactionScheme;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -54,6 +55,7 @@ import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -246,6 +248,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
         	root = convertor.cdkBondToCMLBond((IBond)object);
         } else if (object instanceof IReaction) {
         	root = convertor.cdkReactionToCMLReaction((IReaction)object);
+        } else if (object instanceof IReactionScheme){
+    		root = convertor.cdkReactionSchemeToCMLReactionSchemeAndMoleculeList((ReactionScheme)object);
         } else if (object instanceof IReactionSet) {
         	root = convertor.cdkReactionSetToCMLReactionList((IReactionSet)object);
         } else if (object instanceof IMoleculeSet) {

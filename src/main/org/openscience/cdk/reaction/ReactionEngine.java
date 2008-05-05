@@ -132,8 +132,8 @@ public class ReactionEngine{
 	public void setParameters(HashMap<String,Object> params) throws CDKException {
 		
 		if (params.size() != paramsMap.size()) {
-			throw new CDKException("This IReactionProcess doesn't expect this number" +
-					"of parameters");
+			
+			throw new CDKException("This IReactionProcess doesn't expect this number "+paramsMap.size()+" of parameters");
 		}
 		Set<String> set= params.keySet(); 
 	    Iterator<String> iter = set.iterator(); 

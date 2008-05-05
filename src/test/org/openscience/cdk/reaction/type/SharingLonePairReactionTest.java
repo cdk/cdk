@@ -67,6 +67,14 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 	@BeforeClass public static void setUp() throws Exception {
 	 	setReaction(SharingLonePairReaction.class);
 	}
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testSharingLonePairReaction() throws Exception {
+			IReactionProcess type = new SharingLonePairReaction();
+			Assert.assertNotNull(type);
+	 }
 	
 	/**
 	 * A unit test suite for JUnit. Reaction: [C+]-O => C=[O+]
@@ -74,7 +82,7 @@ public class SharingLonePairReactionTest extends ReactionProcessTest {
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticCentreActive() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new SharingLonePairReaction();
 		/*[C+]-O*/
 		IMolecule molecule = getMolecule1();

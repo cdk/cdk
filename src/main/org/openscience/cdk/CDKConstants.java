@@ -235,6 +235,9 @@ public class CDKConstants {
     /** The IUPAC International Chemical Identifier. */
 	public static final String INCHI = "cdk:InChI";
     
+	/** The Molecular Formula Identifier. */
+	public static final String FORMULA = "cdk:Formula";
+    
     /** The IUPAC compatible name generated with AutoNom. */
     public static final String AUTONOMNAME = "cdk:AutonomName";
 

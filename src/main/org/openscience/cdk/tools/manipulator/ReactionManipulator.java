@@ -81,6 +81,7 @@ public class ReactionManipulator {
     }
 
 
+    @TestMethod("testRemoveAtomAndConnectedElectronContainers_IReaction_IAtom")
     public static void removeAtomAndConnectedElectronContainers(IReaction reaction, IAtom atom) {
     	IMoleculeSet reactants = reaction.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
@@ -98,6 +99,7 @@ public class ReactionManipulator {
         }
     }
 
+    @TestMethod("testRemoveElectronContainer_IReaction_IElectronContainer")
     public static void removeElectronContainer(IReaction reaction, IElectronContainer electrons) {
     	IMoleculeSet reactants = reaction.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {
@@ -121,6 +123,7 @@ public class ReactionManipulator {
      * @param reaction  The IReaction
      * @return The IMoleculeSet
      */
+    @TestMethod("testGetAllMolecules_IReaction")
     public static IMoleculeSet getAllMolecules(IReaction reaction) {
         IMoleculeSet moleculeSet = reaction.getBuilder().newMoleculeSet();
 
@@ -135,6 +138,7 @@ public class ReactionManipulator {
      * @param reaction  The IReaction
      * @return The IMoleculeSet
      */
+    @TestMethod("testGetAllProducts_IReaction")
     public static IMoleculeSet getAllProducts(IReaction reaction) {
         IMoleculeSet moleculeSet = reaction.getBuilder().newMoleculeSet();
         IMoleculeSet products = reaction.getProducts();
@@ -150,6 +154,7 @@ public class ReactionManipulator {
      * @param reaction  The IReaction
      * @return The IMoleculeSet
      */
+    @TestMethod("testGetAllReactants_IReaction")
     public static IMoleculeSet getAllReactants(IReaction reaction) {
         IMoleculeSet moleculeSet = reaction.getBuilder().newMoleculeSet();
         IMoleculeSet reactants = reaction.getReactants();

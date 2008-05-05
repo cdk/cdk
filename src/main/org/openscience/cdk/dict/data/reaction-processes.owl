@@ -274,6 +274,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#AdductionLPMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -284,6 +286,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#AdductionPBMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -294,6 +298,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#AdductionLPMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -304,6 +310,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#HomolyticCleavageMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
     
@@ -321,7 +329,7 @@
       	   meaning that it contains a radical and is deficiency of charge. 
         </description>
         <representation id="a1" content="[&#196;] => [A+&#183;]" />
-   		<isClassifiedAs rdf:resource="#electronImpact"/>
+        <mechanismDependence rdf:resource="#RemovingSEofNBMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -332,7 +340,9 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
    		<isClassifiedAs rdf:resource="#electronImpact"/>
+        <mechanismDependence rdf:resource="#RemovingSEofBMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -343,7 +353,9 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
    		<isClassifiedAs rdf:resource="#electronImpact"/>
+        <mechanismDependence rdf:resource="#RemovingSEofBMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -354,6 +366,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#HeterolyticCleavageMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -364,6 +378,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#HeterolyticCleavageMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -374,6 +390,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#HomolyticCleavageMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -384,6 +402,7 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -394,6 +413,7 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -404,6 +424,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RadicalSiteIonizationMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -414,6 +436,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RadicalSiteIonizationMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -424,6 +448,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -434,6 +460,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -444,6 +472,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -454,6 +484,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -464,6 +496,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RadicalSiteIonizationMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -474,6 +508,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RadicalSiteIonizationMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -484,6 +520,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -494,6 +532,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -504,6 +544,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -514,6 +556,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -524,6 +568,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RearrangementChargeMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -534,6 +580,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RearrangementChargeMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -544,6 +592,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RearrangementChargeMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -554,6 +604,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#RadicalSiteIonizationMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -564,6 +616,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#SharingElectronMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -574,6 +628,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#HomolyticCleavageMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -584,6 +640,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#HomolyticCleavageMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -594,6 +652,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#SharingElectronMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 
@@ -604,6 +664,8 @@
     	<definition>	</definition>
     	<description>   </description>
         <representation id="a1" content="" />
+        <isAs rdf:resource="#process"/>
+        <mechanismDependence rdf:resource="#TautomerizationMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
     </Reaction>
 

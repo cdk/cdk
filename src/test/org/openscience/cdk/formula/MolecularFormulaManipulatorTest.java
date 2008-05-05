@@ -160,6 +160,53 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 		Assert.assertNotNull(stringMF);
 		Assert.assertEquals("",stringMF);
 	}
+	/**
+	 * A unit test suite for JUnit. Not null.
+	 *
+	 * @return    The test suite
+	 */
+	@Test 
+    public void testGetString_IMolecularFormula_arrayString() {
+		IMolecularFormula formula = new MolecularFormula();
+		formula.addIsotope(builder.newIsotope("C"), 2);
+		formula.addIsotope(builder.newIsotope("H"), 2);
+		Assert.assertEquals("C2H2",MolecularFormulaManipulator.getString(formula));
+		
+		String[] newOrder = new String[2];
+		newOrder[0] = "H";
+		newOrder[1] = "C";
+		
+		Assert.assertEquals("H2C2",MolecularFormulaManipulator.getString(formula,newOrder));
+		
+	}
+	/**
+	 * A unit test suite for JUnit. Not null.
+	 *
+	 * @return    The test suite
+	 */
+	@Test 
+    public void testPutInOrder_arrayString_IMolecularFormula() {
+		IMolecularFormula formula = new MolecularFormula();
+		formula.addIsotope(builder.newIsotope("C"), 2);
+		formula.addIsotope(builder.newIsotope("H"), 2);
+		
+		String[] newOrder = new String[2];
+		newOrder[0] = "H";
+		newOrder[1] = "C";
+		
+		List<IIsotope> list = MolecularFormulaManipulator.putInOrder(newOrder, formula);
+		Assert.assertEquals("H",list.get(0).getSymbol());
+		Assert.assertEquals("C",list.get(1).getSymbol());
+		
+		newOrder = new String[2];
+		newOrder[0] = "C";
+		newOrder[1] = "H";
+		
+		list = MolecularFormulaManipulator.putInOrder(newOrder, formula);
+		Assert.assertEquals("C",list.get(0).getSymbol());
+		Assert.assertEquals("H",list.get(1).getSymbol());
+		
+	}
     /**
 	 * A unit test suite for JUnit. Not null.
 	 *
@@ -308,7 +355,6 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 
         Assert.assertEquals(46.96885268,totalExactMass,0.000001);
     }
-    
     @Test 
     public void testGetNaturalExactMass_IMolecularFormula() throws Exception {
 		IMolecularFormula formula = new MolecularFormula();
@@ -323,6 +369,29 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
         Assert.assertEquals(expectedMass, totalExactMass, 0.000001);
     }
     
+    /**
+     * A unit test suite for JUnit. Test total Exact Mass. It is 
+     * necessary to added the corresponding isotope before to calculate
+     * the exact mass.
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws CDKException
+     */
+    @Test 
+    public void testBug_1944604() throws IOException, ClassNotFoundException, CDKException{
+
+		IMolecularFormula formula = new MolecularFormula();
+		IIsotope carb = builder.newIsotope("C");
+    	
+        formula.addIsotope(carb);
+    	
+        Assert.assertEquals("C1",MolecularFormulaManipulator.getString(formula));
+        
+    	double totalExactMass = MolecularFormulaManipulator.getTotalExactMass(formula);
+    	
+        Assert.assertEquals(-1.0,totalExactMass,0.000001);
+    }
     /**
      * A unit test suite for JUnit. Test total natural abundance.
      *
@@ -767,5 +836,45 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
     	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("CH3OH");
         Assert.assertEquals(2, MolecularFormulaManipulator.getHeavyElements(formula).size());
     }
-}
 
+	/**
+	 * A unit test suite for JUnit. Not null.
+	 *
+	 * @return    The test suite
+	 */
+	@Test 
+    public void testGenerateOrderEle() {
+		String[] listElements = new String[]{
+			    "C", "H", "O", "N", "Si", "P", "S", "F", "Cl",
+			    "Br", "I", "Sn", "B", "Pb", "Tl", "Ba", "In", "Pd",
+			    "Pt", "Os", "Ag", "Zr", "Se", "Zn", "Cu", "Ni", "Co", 
+			    "Fe", "Cr", "Ti", "Ca", "K", "Al", "Mg", "Na", "Ce",
+			    "Hg", "Au", "Ir", "Re", "W", "Ta", "Hf", "Lu", "Yb", 
+			    "Tm", "Er", "Ho", "Dy", "Tb", "Gd", "Eu", "Sm", "Pm",
+			    "Nd", "Pr", "La", "Cs", "Xe", "Te", "Sb", "Cd", "Rh", 
+			    "Ru", "Tc", "Mo", "Nb", "Y", "Sr", "Rb", "Kr", "As", 
+			    "Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "Be", "Li", 
+			    "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", 
+			    "Th", "Pa", "U", "Np", "Pu"};
+		
+		String[] listGenerated = MolecularFormulaManipulator.generateOrderEle();
+		Assert.assertEquals(listElements.length,listGenerated.length);
+		
+		for(int i = 0 ; i < listElements.length; i++)
+			Assert.assertEquals(listElements[i],listGenerated[i]);
+		
+	}
+	/**
+	 * A unit test suite for JUnit. Not null.
+	 * TODO: REACT: Introduce method
+	 * 
+	 * @return    The test suite
+	 */
+	@Test 
+    public void testGetHillString_IMolecularFormula() {
+    	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("CH3OH");
+		String listGenerated = MolecularFormulaManipulator.getHillString(formula);
+		Assert.assertEquals(null,listGenerated);
+		
+	}
+}

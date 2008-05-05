@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk;
 
+import java.util.Iterator;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -85,7 +87,7 @@ public class ReactionSetTest extends NewCDKTestCase {
 		reactionSet.addReaction(builder.newReaction()); // 3
 		reactionSet.addReaction(builder.newReaction()); // 4
         
-		java.util.Iterator reactionIter = reactionSet.reactions();
+		Iterator<IReaction> reactionIter = reactionSet.reactions();
         Assert.assertNotNull(reactionIter);
         int count = 0;
         

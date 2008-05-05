@@ -56,6 +56,7 @@ import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IPolymer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -309,6 +310,10 @@ public class NoNotificationChemObjectBuilder implements IChemObjectBuilder {
 
 	public IReactionSet newReactionSet() {
         return new NNReactionSet();
+	}
+	
+	public IReactionScheme newReactionScheme() {
+        return new NNReactionScheme();
 	}
 	
     public ISingleElectron newSingleElectron() {

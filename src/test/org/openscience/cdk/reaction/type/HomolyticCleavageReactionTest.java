@@ -69,6 +69,14 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 	 @BeforeClass public static void setUp() throws Exception {
 	 	setReaction(HomolyticCleavageReaction.class);
 	 }
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testHomolyticCleavageReaction() throws Exception {
+			IReactionProcess type = new HomolyticCleavageReaction();
+			Assert.assertNotNull(type);
+	 }
 	 /**
 		 * A unit test suite for JUnit. Reaction: propane.
 		 * CC!-!C => C[C*] + [C*]
@@ -77,7 +85,7 @@ public class HomolyticCleavageReactionTest extends ReactionProcessTest {
 		 * 
 		 * @return    The test suite
 		 */
-		@Test public void testCsp3SingleB() throws Exception {
+		@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 			//Smiles("CCC")
 			IMolecule molecule = builder.newMolecule();
 			molecule.addAtom(builder.newAtom("C"));

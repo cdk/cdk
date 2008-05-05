@@ -68,6 +68,14 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 	 @BeforeClass public static void setUp() throws Exception {
 	 	setReaction(HeterolyticCleavagePBReaction.class);
 	 }
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testHeterolyticCleavagePBReaction() throws Exception {
+			IReactionProcess type = new HeterolyticCleavagePBReaction();
+			Assert.assertNotNull(type);
+	 }
 	/**
 	 * A unit test suite for JUnit. Reaction: Propene.
 	 * CC!=!C => C[C+][C-]
@@ -77,7 +85,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
 	 * 
 	 * @return    The test suite
 	 */
-	@Test public void testCsp2DoubleB() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		//Smiles("CC=C")
 		IMolecule molecule = builder.newMolecule();
 		molecule.addAtom(builder.newAtom("C"));

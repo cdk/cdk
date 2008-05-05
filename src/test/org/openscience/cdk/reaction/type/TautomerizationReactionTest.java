@@ -65,6 +65,14 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 	 	setReaction(TautomerizationReaction.class);
 	 }
 	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testTautomerizationReaction() throws Exception {
+			IReactionProcess type = new TautomerizationReaction();
+			Assert.assertNotNull(type);
+	 }
+	 
 	/**
 	 * A unit test suite for JUnit for acetaldehyde. 
 	 * Reaction: O=C-C-H => O(H)-C=C. 
@@ -74,7 +82,7 @@ public class TautomerizationReactionTest extends ReactionProcessTest {
 	 * 
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticCentreActive() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 
 		IReactionProcess type = new TautomerizationReaction();
 

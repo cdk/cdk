@@ -30,8 +30,6 @@ import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -40,7 +38,6 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionEngine;
 import org.openscience.cdk.reaction.ReactionSpecification;
@@ -82,7 +79,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  **/
 public class PiBondingMovementReaction extends ReactionEngine implements IReactionProcess{
 	private LoggingTool logger;
-	private CDKAtomTypeMatcher atMatcher;
 	
 	/**
 	 * Constructor of the PiBondingMovementReaction object
@@ -90,10 +86,6 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 	 */
 	public PiBondingMovementReaction(){
 		logger = new LoggingTool(this);
-		atMatcher = CDKAtomTypeMatcher.getInstance(
-			NoNotificationChemObjectBuilder.getInstance(),
-			CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS
-		);
 	}
 
 	/**
@@ -134,13 +126,15 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
 		IMolecule reactant = reactants.getMolecule(0);
 		
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
 		if(!(Boolean)paramsMap.get("hasActiveCenter")){
 			setActiveCenters(reactant);
 		}
+//		if((Boolean)paramsMap.get("lookingSymmetry")){
+//			CDKHueckelAromaticityDetector.detectAromaticity(reactant);
+//		}
 		
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
-		CDKHueckelAromaticityDetector.detectAromaticity(reactant);
 		AllRingsFinder arf = new AllRingsFinder();
 		IRingSet ringSet = arf.findAllRings((Molecule) reactant);
 		for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {
@@ -212,8 +206,6 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 	 * @throws CDKException 
 	 */
     private void setActiveCenters(IMolecule reactant) throws CDKException {
-    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
-		CDKHueckelAromaticityDetector.detectAromaticity(reactant);
 		AllRingsFinder arf = new AllRingsFinder();
 		IRingSet ringSet = arf.findAllRings((Molecule) reactant);
 		for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {

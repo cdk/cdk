@@ -99,6 +99,14 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 	@BeforeClass public static void setUp() throws Exception {
 	 	setReaction(RearrangementLonePairReaction.class);
 	}
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testRearrangementLonePairReaction() throws Exception {
+			IReactionProcess type = new RearrangementLonePairReaction();
+			Assert.assertNotNull(type);
+	 }
 	/**
 	 * A unit test suite for JUnit. Reaction: O-C=C-C => [O+]=C-[C-]-C
 	 * Automatic search of the center active.
@@ -107,7 +115,7 @@ public class RearrangementLonePairReactionTest extends ReactionProcessTest {
 	 * 
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticCentreActive() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new RearrangementLonePairReaction();
 		
 		IMolecule molecule = getMolecule1();

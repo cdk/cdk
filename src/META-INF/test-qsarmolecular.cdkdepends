@@ -17,6 +17,8 @@ cdk-smiles.jar
 cdk-test.jar
 cdk-test-qsar.jar
 cdk-test-qsarbond.jar
+cdk-test-qsaratomic.jar
 cdk-formula.jar
+cdk-dict.jar
 cdk-isomorphism.jar
 cdk-dict.jar

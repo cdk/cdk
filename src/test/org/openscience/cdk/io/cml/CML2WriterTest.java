@@ -35,25 +35,32 @@ import javax.vecmath.Vector3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Crystal;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.Reaction;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.ReactionScheme;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.formula.IMolecularFormula;
+import org.openscience.cdk.formula.MolecularFormula;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.libio.cml.PDBAtomCustomizer;
 import org.openscience.cdk.libio.cml.QSARCustomizer;
+import org.openscience.cdk.nonotify.NNAtom;
+import org.openscience.cdk.nonotify.NNCrystal;
 import org.openscience.cdk.nonotify.NNMolecule;
-import org.openscience.cdk.protein.data.PDBAtom;
+import org.openscience.cdk.nonotify.NNPDBAtom;
+import org.openscience.cdk.nonotify.NNReaction;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -78,7 +85,7 @@ public class CML2WriterTest extends CDKTestCase {
 
 	public void testCMLWriterBenzene() throws Exception {
 		StringWriter writer = new StringWriter();
-        Molecule molecule = MoleculeFactory.makeBenzene();
+        IMolecule molecule = MoleculeFactory.makeBenzene();
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
         CMLWriter cmlWriter = new CMLWriter(writer);
         
@@ -131,8 +138,8 @@ public class CML2WriterTest extends CDKTestCase {
 	
 	public void testCMLCrystal() throws Exception {
 		StringWriter writer = new StringWriter();
-        Crystal crystal = new Crystal();
-        Atom silicon = new Atom("Si");
+        ICrystal crystal = new NNCrystal();
+        IAtom silicon = new NNAtom("Si");
         silicon.setFractionalPoint3d(
         	new Point3d(0.0, 0.0, 0.0)
         );
@@ -153,7 +160,7 @@ public class CML2WriterTest extends CDKTestCase {
 	
     public void testQSARCustomization() throws Exception {
         StringWriter writer = new StringWriter();
-        Molecule molecule = MoleculeFactory.makeBenzene();
+        IMolecule molecule = MoleculeFactory.makeBenzene();
         IMolecularDescriptor descriptor = new WeightDescriptor();
 
         CMLWriter cmlWriter = new CMLWriter(writer);
@@ -173,7 +180,7 @@ public class CML2WriterTest extends CDKTestCase {
     
     public void testReactionCustomization() throws Exception {
     	StringWriter writer = new StringWriter();
-        IReaction reaction = new Reaction();
+        IReaction reaction = new NNReaction();
         reaction.setID("reaction1");
         IMolecule reactant = reaction.getBuilder().newMolecule();
         reactant.setID("react");
@@ -200,8 +207,8 @@ public class CML2WriterTest extends CDKTestCase {
     
     public void testPDBAtomCustomization() throws Exception {
         StringWriter writer = new StringWriter();
-        Molecule molecule = new Molecule();
-        PDBAtom atom = new PDBAtom("C");
+        IMolecule molecule = new NNMolecule();
+        IPDBAtom atom = new NNPDBAtom("C");
         atom.setName("CA");
         atom.setResName("PHE");
         molecule.addAtom(atom);
@@ -216,4 +223,287 @@ public class CML2WriterTest extends CDKTestCase {
         assertTrue(cmlContent.indexOf("<scalar dictRef=\"pdb:resName") != -1);
     }
     
+    public void testReactionScheme1() throws Exception {
+    	StringWriter writer = new StringWriter();
+    	IReactionScheme scheme1 = DefaultChemObjectBuilder.getInstance().newReactionScheme();
+        scheme1.setID("rs0");
+        IReactionScheme scheme2 = scheme1.getBuilder().newReactionScheme();
+        scheme2.setID("rs1");
+        scheme1.add(scheme2);
+        
+        IReaction reaction = scheme1.getBuilder().newReaction();
+        reaction.setID("r1");
+        IMolecule moleculeA = reaction.getBuilder().newMolecule();
+        moleculeA.setID("A");
+        IMolecule moleculeB = reaction.getBuilder().newMolecule();
+        moleculeB.setID("B");
+        reaction.addReactant(moleculeA);
+        reaction.addProduct(moleculeB);
+        
+        scheme2.addReaction(reaction);
+        
+        IReaction reaction2 = reaction.getBuilder().newReaction();
+        reaction2.setID("r2");
+        IMolecule moleculeC = reaction.getBuilder().newMolecule();
+        moleculeC.setID("C");
+        reaction2.addReactant(moleculeB);
+        reaction2.addProduct(moleculeC);
+        
+        scheme1.addReaction(reaction2);
+                
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        cmlWriter.write(scheme1);
+        String cmlContent = writer.toString();
+        logger.debug("****************************** testReactionCustomization()");
+        logger.debug(cmlContent);
+        logger.debug("******************************");
+        assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
+        assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs1") != -1);
+        assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
+        assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+    }
+    
+    public void testReactionScheme2() throws Exception {
+    	StringWriter writer = new StringWriter();
+    	ReactionScheme scheme1 = new ReactionScheme();
+        scheme1.setID("rs0");
+        
+        
+        IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+        reaction.setID("r1");
+        IMolecule moleculeA = reaction.getBuilder().newMolecule();
+        moleculeA.setID("A");
+        IMolecule moleculeB = reaction.getBuilder().newMolecule();
+        moleculeB.setID("B");
+        reaction.addReactant(moleculeA);
+        reaction.addProduct(moleculeB);
+        
+        scheme1.addReaction(reaction);
+        
+        IReaction reaction2 = reaction.getBuilder().newReaction();
+        reaction2.setID("r2");
+        IMolecule moleculeC = reaction.getBuilder().newMolecule();
+        moleculeC.setID("C");
+        reaction2.addReactant(moleculeB);
+        reaction2.addProduct(moleculeC);
+        
+        scheme1.addReaction(reaction2);
+        
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        cmlWriter.write(scheme1);
+        String cmlContent = writer.toString();
+        logger.debug("****************************** testReactionCustomization()");
+        logger.debug(cmlContent);
+        logger.debug("******************************");
+        assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
+        assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
+        assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+    }
+    public void testReactionSchemeWithFormula() throws Exception {
+    	StringWriter writer = new StringWriter();
+    	ReactionScheme scheme1 = new ReactionScheme();
+        scheme1.setID("rs0");
+        
+        
+        IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+        reaction.setID("r1");
+        IMolecule moleculeA = reaction.getBuilder().newMolecule();
+        moleculeA.setID("A");
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(reaction.getBuilder().newIsotope("C"), 10);
+        formula.addIsotope(reaction.getBuilder().newIsotope("H"), 15);
+        formula.addIsotope(reaction.getBuilder().newIsotope("N"), 2);
+        formula.addIsotope(reaction.getBuilder().newIsotope("O"), 1);
+        moleculeA.setProperty(CDKConstants.FORMULA,formula);
+        IMolecule moleculeB = reaction.getBuilder().newMolecule();
+        moleculeB.setID("B");
+        reaction.addReactant(moleculeA);
+        reaction.addProduct(moleculeB);
+        
+        scheme1.addReaction(reaction);
+        
+        IReaction reaction2 = reaction.getBuilder().newReaction();
+        reaction2.setID("r2");
+        IMolecule moleculeC = reaction.getBuilder().newMolecule();
+        moleculeC.setID("C");
+        reaction2.addReactant(moleculeB);
+        reaction2.addProduct(moleculeC);
+        
+        scheme1.addReaction(reaction2);
+        
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        cmlWriter.write(scheme1);
+        String cmlContent = writer.toString();
+        
+        logger.debug("****************************** testReactionCustomization()");
+        logger.debug(cmlContent);
+        logger.debug("******************************");
+        assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
+        assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
+        assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
+        assertTrue(cmlContent.indexOf("<formula concise=") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+    }
+
+    public void testReactionSchemeWithFormula2() throws Exception {
+    	StringWriter writer = new StringWriter();
+    	ReactionScheme scheme1 = new ReactionScheme();
+        scheme1.setID("rs0");
+        
+        
+        IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+        reaction.setID("r1");
+        IMolecule moleculeA = reaction.getBuilder().newMolecule();
+        moleculeA.setID("A");
+        moleculeA.setProperty(CDKConstants.FORMULA,"C 10 H 15 N 2 O 1");
+        IMolecule moleculeB = reaction.getBuilder().newMolecule();
+        moleculeB.setID("B");
+        reaction.addReactant(moleculeA);
+        reaction.addProduct(moleculeB);
+        
+        scheme1.addReaction(reaction);
+        
+        IReaction reaction2 = reaction.getBuilder().newReaction();
+        reaction2.setID("r2");
+        IMolecule moleculeC = reaction.getBuilder().newMolecule();
+        moleculeC.setID("C");
+        reaction2.addReactant(moleculeB);
+        reaction2.addProduct(moleculeC);
+        
+        scheme1.addReaction(reaction2);
+        
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        cmlWriter.write(scheme1);
+        String cmlContent = writer.toString();
+        logger.debug("****************************** testReactionCustomization()");
+        logger.debug(cmlContent);
+        logger.debug("******************************");
+        assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
+        assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
+        assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
+        assertTrue(cmlContent.indexOf("<scalar dictRef=\"cdk:molecularProperty") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
+        assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+    }
+    /**
+     * TODO: introduce concept for ReactionStepList and ReactionStep.
+     */
+//    public void testReactionStepList() throws Exception {
+//    	StringWriter writer = new StringWriter();
+//    	ReactionChain chain = new ReactionChain();
+//    	chain.setID("rsl1");
+//        
+//        
+//        IReaction reaction = DefaultChemObjectBuilder.getInstance().newReaction();
+//        reaction.setID("r1");
+//        IMolecule moleculeA = reaction.getBuilder().newMolecule();
+//        moleculeA.setID("A");
+//        IMolecule moleculeB = reaction.getBuilder().newMolecule();
+//        moleculeB.setID("B");
+//        reaction.addReactant(moleculeA);
+//        reaction.addProduct(moleculeB);
+//        
+//        chain.addReaction(reaction);
+//        
+//        IReaction reaction2 = reaction.getBuilder().newReaction();
+//        reaction2.setID("r2");
+//        IMolecule moleculeC = reaction.getBuilder().newMolecule();
+//        moleculeC.setID("C");
+//        reaction2.addReactant(moleculeB);
+//        reaction2.addProduct(moleculeC);
+//        
+//        chain.addReaction(reaction2);
+//        
+//        CMLWriter cmlWriter = new CMLWriter(writer);
+//        cmlWriter.write(chain);
+//        String cmlContent = writer.toString();
+//        logger.debug("****************************** testReactionCustomization()");
+//        logger.debug(cmlContent);
+//        logger.debug("******************************");
+//        assertTrue(cmlContent.indexOf("<reactionStepList id=\"rsl1") != -1);
+//        assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
+//        assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
+//        assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
+//        assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
+//        assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+//    }
+//
+//    public void testReactionSchemeStepList1() throws Exception {
+//    	StringWriter writer = new StringWriter();
+//    	ReactionScheme scheme1 = new ReactionScheme();
+//        scheme1.setID("rs0");
+//        ReactionScheme scheme2 = new ReactionScheme();
+//        scheme2.setID("rs1");
+//        scheme1.add(scheme2);
+//        
+//        
+//        IReaction reaction1 = DefaultChemObjectBuilder.getInstance().newReaction();
+//        reaction1.setID("r1.1");
+//        IMolecule moleculeA = reaction1.getBuilder().newMolecule();
+//        moleculeA.setID("A");
+//        IMolecule moleculeB = reaction1.getBuilder().newMolecule();
+//        moleculeB.setID("B");
+//        reaction1.addReactant(moleculeA);
+//        reaction1.addProduct(moleculeB);
+//        
+//        scheme2.addReaction(reaction1);
+//        
+//        IReaction reaction2 = reaction1.getBuilder().newReaction();
+//        reaction2.setID("r1.2");
+//        IMolecule moleculeC = reaction1.getBuilder().newMolecule();
+//        moleculeC.setID("C");
+//        reaction2.addReactant(moleculeB);
+//        reaction2.addProduct(moleculeC);
+//        
+//        scheme2.addReaction(reaction2);
+//        
+//        ReactionChain chain = new ReactionChain();
+//    	chain.setID("rsl1");
+//        
+//        IReaction reaction3 = reaction1.getBuilder().newReaction();
+//        reaction3.setID("r2.1");
+//        IMolecule moleculeD = reaction1.getBuilder().newMolecule();
+//        moleculeD.setID("D");
+//        reaction3.addReactant(moleculeA);
+//        reaction3.addProduct(moleculeD);
+//        
+//        chain.addReaction(reaction3,0);
+//        
+//        IReaction reaction4 = reaction1.getBuilder().newReaction();
+//        reaction4.setID("r2.2");
+//        IMolecule moleculeE = reaction1.getBuilder().newMolecule();
+//        moleculeE.setID("E");
+//        reaction4.addReactant(moleculeD);
+//        reaction4.addProduct(moleculeE);
+//        
+//        chain.addReaction(reaction4,1);
+//        
+////        scheme1.add((IReactionSet)chain);
+//        
+//        CMLWriter cmlWriter = new CMLWriter(writer);
+//        cmlWriter.write(scheme1);
+//        String cmlContent = writer.toString();
+//        logger.debug("****************************** testReactionCustomization()");
+//        logger.debug(cmlContent);
+//        logger.debug("******************************");
+//        assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
+//        assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs1") != -1);
+//        assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
+//        assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
+//        assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
+//        assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
+//        assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+//        assertTrue(cmlContent.indexOf("<reactionStepList id=\"rsl1") != -1);
+//        assertTrue(cmlContent.indexOf("<molecule id=\"D") != -1);
+//        assertTrue(cmlContent.indexOf("<molecule id=\"E") != -1);
+//    }
 }

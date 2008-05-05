@@ -46,12 +46,12 @@ import org.openscience.cdk.reaction.type.ElectronImpactSDBReaction;
 import org.openscience.cdk.reaction.ReactionProcessTest;
 
 /**
- * TestSuite that runs a test for the ElectronImpactSBEReactionTest.
+ * TestSuite that runs a test for the ElectronImpactSDBReactionTest.
  *
  * @cdk.module test-reaction
  */
  
-public class ElectronImpactSBEReactionTest extends ReactionProcessTest {
+public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 
 	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
@@ -60,6 +60,14 @@ public class ElectronImpactSBEReactionTest extends ReactionProcessTest {
 	 @BeforeClass public static void setUp() throws Exception {
 	 	setReaction(ElectronImpactSDBReaction.class);
 	 }
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testElectronImpactSDBReaction() throws Exception {
+			IReactionProcess type = new ElectronImpactSDBReaction();
+			Assert.assertNotNull(type);
+	 }
 	/**
 	 *  A unit test for JUnit.
 	 *  
@@ -67,7 +75,7 @@ public class ElectronImpactSBEReactionTest extends ReactionProcessTest {
 	 *
 	 * @return    Description of the Return Value
 	 */
-	@Test public void testManual_Set_Active_Atom() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		/* ionize(>C-C<): C=CCC -> C=C* + C+ , set the reactive center*/
 		
 		IMolecule reactant = builder.newMolecule();//Smiles("C=CC")

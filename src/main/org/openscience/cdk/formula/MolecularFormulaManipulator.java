@@ -186,6 +186,36 @@ public class MolecularFormulaManipulator {
 	
 	/**
 	 * Returns the string representation of the molecule formula.
+	 * 
+	 * @param  formula      The IMolecularFormula Object 
+	 * @param orderElements The order of Elements
+	 * @return              A String containing the molecular formula
+	 * 
+	 * @see #getHTML(IMolecularFormula)
+	 * @see #generateOrderEle()
+	 * @see #generateOrderEle_Hill_NoCarbons()
+	 * @see #generateOrderEle_Hill_WithCarbons()
+	 * 
+	 */
+	@TestMethod("testGetString_IMolecularFormula_String")
+	public static String getString(IMolecularFormula formula, String[] orderElements ){
+		String stringMF = "";
+		List<IIsotope> isotopesList = putInOrder(orderElements, formula);
+		for(Iterator<IIsotope> it = isotopesList.iterator(); it.hasNext(); ){
+			IIsotope isotope = it.next();
+			stringMF = stringMF + isotope.getSymbol() +  getElementCount(formula, isotope);
+		}
+		return stringMF;
+	}
+	
+	/**
+	 * Returns the string representation of the molecule formula. 
+	 * Based on Hill System. The Hill system is a system of writing 
+	 * chemical formulas such that the number of carbon atoms in a 
+	 * molecule is indicated first, the number of hydrogen atoms next, 
+	 * and then the number of all other chemical elements subsequently, 
+	 * in alphabetical order. When the formula contains no carbon, all 
+	 * the elements, including hydrogen, are listed alphabetically.
 	 *
 	 * @param  formula  The IMolecularFormula Object 
 	 * @return          A String containing the molecular formula
@@ -194,15 +224,36 @@ public class MolecularFormulaManipulator {
 	 */
 	@TestMethod("testGetString_IMolecularFormula")
 	public static String getString(IMolecularFormula formula) {
-		String stringMF = "";
-		String[] orderElements = generateOrderEle();
+		
+		if(containsElement(formula, new Element("C")))
+			return getString(formula, generateOrderEle_Hill_WithCarbons());
+		else 
+			return getString(formula, generateOrderEle_Hill_NoCarbons());
+	}
+	
+	/**
+	 * 
+	 * @param orderElements
+	 * @param formula
+	 * @return
+	 */
+	public static List<IIsotope> putInOrder(String[] orderElements, IMolecularFormula formula) {
+		List<IIsotope> isotopesList = new ArrayList<IIsotope>();
 		for(int i = 0 ; i < orderElements.length; i++){
 			IElement element = new Element(orderElements[i]);
 			if(containsElement(formula,element)){
-				stringMF = stringMF + element.getSymbol() +  getElementCount(formula, element);
+				List<IIsotope> isotopes = getIsotopes(formula, element);
+				for(int j = 0; j < isotopes.size(); j++){
+					isotopesList.add(isotopes.get(j));
+				}
 			}
 		}
-		return stringMF;
+		return isotopesList;
+	}
+
+	
+	public static String getHillString(IMolecularFormula formula){
+		return null;
 	}
 	/**
 	 * Returns the string representation of the molecule formula with
@@ -557,7 +608,7 @@ public class MolecularFormulaManipulator {
 	
 	
 	/**
-	 * generate the order of the Elements according probability occurrence.,
+	 * Generate the order of the Elements according probability occurrence.,
 	 * beginning the C, H, O, N, Si, P, S, F, Cl, Br, I, Sn, B, Pb, Tl, Ba, In, Pd,
 	 * Pt, Os, Ag, Zr, Se, Zn, Cu, Ni, Co, Fe, Cr, Ti, Ca, K, Al, Mg, Na, Ce,
 	 * Hg, Au, Ir, Re, W, Ta, Hf, Lu, Yb, Tm, Er, Ho, Dy, Tb, Gd, Eu, Sm, Pm,
@@ -565,10 +616,10 @@ public class MolecularFormulaManipulator {
 	 * Ge, Ga, Mn, V, Sc, Ar, Ne, Be, Li, Tl, Pb, Bi, Po, At, Rn, Fr, Ra, Ac, 
 	 * Th, Pa, U, Np, Pu. 
 	 * 
-	 * @return  Array with the elements ordered.
+	 * @return  Array with the elements ordered
 	 * 
 	 */
-	private static String[] generateOrderEle(){
+	public static String[] generateOrderEle(){
 		String[] listElements = new String[]{
 			    "C", "H", "O", "N", "Si", "P", "S", "F", "Cl",
 			    "Br", "I", "Sn", "B", "Pb", "Tl", "Ba", "In", "Pd",
@@ -584,7 +635,49 @@ public class MolecularFormulaManipulator {
 		return listElements;
 		
 	}
-	
+	/**
+	 * Generate the order of the Elements according Hill system 
+	 * when contains carbons.
+	 *
+	 * @return  Array with the elements ordered
+	 */
+	private static String[] generateOrderEle_Hill_NoCarbons(){
+		String[] listElements = new String[]{
+				"Ac", "Ag", "Al", "Ar", "As", "At", "Au", 
+				"B", "Ba", "Be", "Bi", "Br", "Ca", "Cd", "Ce", "Cl", "Co", "Cr", "Cs", "Cu", 
+				"Dy", "Er", "Eu", "F", "Fe", "Fr", 
+				"Ga", "Gd", "Ge", "H", "Hf", "Hg", "Ho", "I", "In", "Ir",  
+				"K", "Kr", "La", "Li", "Lu", "Mg", "Mn", "Mo",    
+				"N", "Na", "Nb", "Nd", "Ne", "Ni", "Np", "O", "Os",
+				"P", "Pa", "Pb", "Pd", "Pm", "Po", "Pr", "Pt", "Pu",
+				"Ra", "Rb", "Re", "Rh", "Rn", "Ru",
+				"S", "Sb", "Sc", "Se", "Si", "Sr", "Sm", "Sn",  
+				"Ta", "Tb", "Tc", "Te", "Th", "Ti", "Tl", "Tm",  
+				"U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr"};
+		return listElements;
+	}
+	/**
+	 * Generate the order of the Elements according Hill system 
+	 * when contains carbons.
+	 *
+	 * @return  Array with the elements ordered
+	 */
+	private static String[] generateOrderEle_Hill_WithCarbons(){
+		String[] listElements = new String[]{
+			    "C", "H", "Ac", "Ag", "Al", "Ar", "As", "At", "Au", 
+			    "B", "Ba", "Be", "Bi", "Br", "Ca", "Cd", "Ce", "Cl", "Co", "Cr", "Cs", "Cu", 
+			    "Dy", "Er", "Eu", "F", "Fe", "Fr", 
+			    "Ga", "Gd", "Ge", "Hf", "Hg", "Ho", "I", "In", "Ir",  
+			    "K", "Kr", "La", "Li", "Lu", "Mg", "Mn", "Mo",    
+			    "N", "Na", "Nb", "Nd", "Ne", "Ni", "Np", "O", "Os",
+			    "P", "Pa", "Pb", "Pd", "Pm", "Po", "Pr", "Pt", "Pu",
+			    "Ra", "Rb", "Re", "Rh", "Rn", "Ru",
+			    "S", "Sb", "Sc", "Se", "Si", "Sr", "Sm", "Sn",  
+			    "Ta", "Tb", "Tc", "Te", "Th", "Ti", "Tl", "Tm",  
+			    "U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr"};
+		return listElements;
+	}
+
 	/**
 	 * Compare two IMolecularFormula looking at type and number of IIsotope and
 	 * charge of the formula.

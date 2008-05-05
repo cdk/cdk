@@ -51,6 +51,7 @@ import org.openscience.cdk.reaction.type.RearrangementCationReaction;
 import org.openscience.cdk.reaction.type.RearrangementLonePairReaction;
 import org.openscience.cdk.reaction.type.RearrangementRadicalReaction;
 import org.openscience.cdk.reaction.type.SharingLonePairReaction;
+import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -76,6 +77,15 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
     @Test public void testStructureResonanceGenerator()	{
     	
 		Assert.assertNotNull(new StructureResonanceGenerator());
+	}
+    /**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+    @Test public void testStructureResonanceGenerator_boolean()	{
+    	
+		Assert.assertNotNull(new StructureResonanceGenerator(true));
 	}
     /**
 	 * A unit test suite for JUnit
@@ -320,7 +330,7 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testGetStructures1() throws Exception {
+	@Test public void testGetStructures_IMolecule() throws Exception {
 		IMolecule molecule = builder.newMolecule();
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
@@ -567,6 +577,90 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
 		IMoleculeSet setOfMolecules = gRI.getStructures(molecule);
 		
+		Assert.assertEquals(5,setOfMolecules.getMoleculeCount());
+		
+		IMolecule molecule1 = builder.newMolecule();
+	 	molecule1.addAtom(builder.newAtom("F"));
+	 	molecule1.getAtom(0).setFormalCharge(1);
+		molecule1.addAtom(builder.newAtom("C"));
+		molecule1.addBond(0, 1, IBond.Order.DOUBLE);
+		molecule1.addAtom(builder.newAtom("C"));
+	 	molecule1.getAtom(2).setFormalCharge(-1);
+		molecule1.addBond(1, 2, IBond.Order.SINGLE);
+		molecule1.addAtom(builder.newAtom("C"));
+		molecule1.addBond(2, 3, IBond.Order.SINGLE);
+		molecule1.addAtom(builder.newAtom("C"));
+		molecule1.addBond(3, 4, IBond.Order.DOUBLE);
+		molecule1.addAtom(builder.newAtom("C"));
+		molecule1.addBond(4, 5, IBond.Order.SINGLE);
+		molecule1.addAtom(builder.newAtom("C"));
+		molecule1.addBond(5, 6, IBond.Order.DOUBLE);
+		molecule1.addBond(6, 1, IBond.Order.SINGLE);
+		addExplicitHydrogens(molecule1);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule1);
+		lpcheck.saturate(molecule1);
+
+		QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
+	    Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(setOfMolecules.getMolecule(2),qAC));
+        
+	    IMolecule molecule2 = builder.newMolecule();
+	 	molecule2.addAtom(builder.newAtom("F"));
+	 	molecule2.getAtom(0).setFormalCharge(1);
+		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addBond(0, 1, IBond.Order.DOUBLE);
+		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addBond(1, 2, IBond.Order.SINGLE);
+		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addBond(2, 3, IBond.Order.DOUBLE);
+		molecule2.addAtom(builder.newAtom("C"));
+	 	molecule2.addBond(3, 4, IBond.Order.SINGLE);
+		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.getAtom(4).setFormalCharge(-1);
+		molecule2.addBond(4, 5, IBond.Order.SINGLE);
+		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addBond(5, 6, IBond.Order.DOUBLE);
+		molecule2.addBond(6, 1, IBond.Order.SINGLE);
+		addExplicitHydrogens(molecule2);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
+        lpcheck.saturate(molecule2);
+        
+        IMolecule product2 = setOfMolecules.getMolecule(4);
+        qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule2);
+	    Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(product2,qAC));
+       
+	}
+	/**
+	 * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
+	 *
+	 * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testFluorobenzene_symm() throws Exception {
+
+		 IMolecule molecule = builder.newMolecule();
+		 molecule.addAtom(builder.newAtom("F"));
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(0, 1, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(1, 2, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(2, 3, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(3, 4, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(4, 5, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(5, 6, IBond.Order.DOUBLE);
+		 molecule.addBond(6, 1, IBond.Order.SINGLE);
+		
+		addExplicitHydrogens(molecule);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
+		
+        StructureResonanceGenerator gRI = new StructureResonanceGenerator(true);
+		IMoleculeSet setOfMolecules = gRI.getStructures(molecule);
+		
 		Assert.assertEquals(4,setOfMolecules.getMoleculeCount());
 		
 		IMolecule molecule1 = builder.newMolecule();
@@ -647,6 +741,38 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
         lpcheck.saturate(molecule);
         
         StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+		IMoleculeSet setOfMolecules = gRI.getStructures(molecule);
+        
+		Assert.assertEquals(5,setOfMolecules.getAtomContainerCount());
+	}
+	/**
+	 * A unit test suite for JUnit: Resonance   n1ccccc1 <=> ...
+	 *
+	 * @cdk.inchi InChI=1/C6H7N/c7-6-4-2-1-3-5-6/h1-5H,7H2
+	 *  
+	 * @return    The test suite
+	 */
+	@Test public void testAniline_Symm() throws Exception {
+		IMolecule molecule = builder.newMolecule();
+		 molecule.addAtom(builder.newAtom("N"));
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(0, 1, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(1, 2, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(2, 3, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(3, 4, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(4, 5, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(5, 6, IBond.Order.DOUBLE);
+		 molecule.addBond(6, 1, IBond.Order.SINGLE);
+		addExplicitHydrogens(molecule);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
+        
+        StructureResonanceGenerator gRI = new StructureResonanceGenerator(true);
 		IMoleculeSet setOfMolecules = gRI.getStructures(molecule);
         
 		Assert.assertEquals(4,setOfMolecules.getAtomContainerCount());
@@ -768,10 +894,10 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 		
 		Assert.assertEquals(17, molecule.getAtomCount());
 
-		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true);
 		IMoleculeSet resonanceStructures = gRI.getStructures(molecule);
 		
-		Assert.assertEquals(5,resonanceStructures.getAtomContainerCount());
+		Assert.assertEquals(4,resonanceStructures.getAtomContainerCount());
 	}
 	/**
 	 * 
@@ -891,4 +1017,33 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 		
 		
 	}
+	@Test public void testCyclobutadiene() throws Exception {
+        // anti-aromatic
+        IMolecule molecule = MoleculeFactory.makeCyclobutadiene();
+        addExplicitHydrogens(molecule);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
+		
+        StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+		IMoleculeSet setOfMolecules = gRI.getStructures(molecule);
+		
+		Assert.assertEquals(2,setOfMolecules.getMoleculeCount());
+		
+    }
+	
+	/**
+     * A unit test for JUnit
+     */
+    @Test public void testBenzene() throws Exception {
+        IMolecule molecule = MoleculeFactory.makeBenzene();
+        addExplicitHydrogens(molecule);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
+		
+        StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+		IMoleculeSet setOfMolecules = gRI.getStructures(molecule);
+		
+		Assert.assertEquals(2,setOfMolecules.getMoleculeCount());
+    }
+
 }

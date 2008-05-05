@@ -65,13 +65,21 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 	 @BeforeClass public static void setUp() throws Exception {
 	 	setReaction(CarbonylEliminationReaction.class);
 	 }
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testCarbonylEliminationReaction() throws Exception {
+			IReactionProcess type = new CarbonylEliminationReaction();
+			Assert.assertNotNull(type);
+	 }
 	/**
 	 * A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
 	 * Automatic looking for active center.
 	 *
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticSearchCentreActiveExample1() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
         
 		IReactionProcess type  = new CarbonylEliminationReaction();
 		/*[C*]-C-C*/

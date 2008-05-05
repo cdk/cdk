@@ -64,6 +64,14 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 	 	setReaction(ElectronImpactPDBReaction.class);
 	 }
 	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testElectronImpactPDBReaction() throws Exception {
+			IReactionProcess type = new ElectronImpactPDBReaction();
+			Assert.assertNotNull(type);
+	 }
+	 
 	/**
 	 *  A unit test for JUnit with the compound 2_5_Hexen_3_one.
 	 *
@@ -71,7 +79,7 @@ public class ElectronImpactPDBReactionTest extends ReactionProcessTest {
 	 *
 	 *@return    Description of the Return Value
 	 */
-	@Test public void testManual_Set_Active_Bond() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		/* ionize >C=C< , set the reactive center*/
 		IMolecule reactant = builder.newMolecule();//Smiles("C=CCC(=O)CC")
 		reactant.addAtom(builder.newAtom("C"));

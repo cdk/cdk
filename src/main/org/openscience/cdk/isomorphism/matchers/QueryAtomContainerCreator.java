@@ -1,6 +1,6 @@
-/*  $Revision: $
- *  $Author: $
- *  $Date: $
+/*  $Revision$
+ *  $Author$
+ *  $Date$
  *
  *  Copyright (C) 2004-2008  The Chemistry Development Kit (CDK) project
  *
@@ -53,9 +53,9 @@ public class QueryAtomContainerCreator {
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolQueryAtom(container.getAtom(i)));
         }
-        Iterator bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds();
         while (bonds.hasNext()) {
-        	IBond bond = (IBond)bonds.next();
+        	IBond bond = bonds.next();
             int index1 = container.getAtomNumber(bond.getAtom(0));
             int index2 = container.getAtomNumber(bond.getAtom(1));
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
@@ -113,9 +113,9 @@ public class QueryAtomContainerCreator {
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolAndChargeQueryAtom(container.getAtom(i)));
         }
-        Iterator bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds();
         while (bonds.hasNext()) {
-        	IBond bond = (IBond)bonds.next();
+        	IBond bond = bonds.next();
             int index1 = container.getAtomNumber(bond.getAtom(0));
             int index2 = container.getAtomNumber(bond.getAtom(1));
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
@@ -136,9 +136,9 @@ public class QueryAtomContainerCreator {
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolChargeIDQueryAtom(container.getAtom(i)));
         }
-        Iterator bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds();
         while (bonds.hasNext()) {
-        	IBond bond = (IBond)bonds.next();
+        	IBond bond = bonds.next();
             int index1 = container.getAtomNumber(bond.getAtom(0));
             int index2 = container.getAtomNumber(bond.getAtom(1));
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
@@ -173,9 +173,9 @@ public class QueryAtomContainerCreator {
             }
         }
 
-        Iterator bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds();
         while (bonds.hasNext()) {
-        	IBond bond = (IBond)bonds.next();
+        	IBond bond = bonds.next();
             int index1 = container.getAtomNumber(bond.getAtom(0));
             int index2 = container.getAtomNumber(bond.getAtom(1));
             if (aromaticity && bond.getFlag(CDKConstants.ISAROMATIC)) {
@@ -212,9 +212,9 @@ public class QueryAtomContainerCreator {
             }
         }
 
-        Iterator bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds();
         while (bonds.hasNext()) {
-        	IBond bond = (IBond)bonds.next();
+        	IBond bond = bonds.next();
             int index1 = container.getAtomNumber(bond.getAtom(0));
             int index2 = container.getAtomNumber(bond.getAtom(1));
             queryContainer.addBond(new AnyOrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
@@ -243,9 +243,9 @@ public class QueryAtomContainerCreator {
 			}
             
         }
-        Iterator bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds();
         while (bonds.hasNext()) {
-        	IBond bond = (IBond)bonds.next();
+        	IBond bond = bonds.next();
             int index1 = container.getAtomNumber(bond.getAtom(0));
             int index2 = container.getAtomNumber(bond.getAtom(1));
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {

@@ -68,6 +68,14 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 	@BeforeClass public static void setUp() throws Exception {
 	 	setReaction(SharingChargeSBReaction.class);
 	}
+	 
+	 /**
+	  *  The JUnit setup method
+	  */
+	 @Test public void testSharingChargeSBReaction() throws Exception {
+			IReactionProcess type = new SharingChargeSBReaction();
+			Assert.assertNotNull(type);
+	 }
 	
 	/**
 	 * A unit test suite for JUnit. Reaction:  methoxymethane.
@@ -76,7 +84,7 @@ public class SharingChargeSBReactionTest extends ReactionProcessTest {
 	 * 
 	 * @return    The test suite
 	 */
-	@Test public void testAutomaticCentreActive() throws Exception {
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
 		IReactionProcess type = new SharingChargeSBReaction();
 		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
 		

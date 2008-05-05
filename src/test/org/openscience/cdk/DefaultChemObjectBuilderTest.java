@@ -26,7 +26,6 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -56,6 +55,7 @@ import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IPolymer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -638,6 +638,14 @@ public class DefaultChemObjectBuilderTest extends NewCDKTestCase {
 		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
 
 		Assert.assertTrue(object instanceof IReactionSet);
+	}
+
+	@Test public void testNewReactionScheme() {
+		Object object = rootObject.getBuilder().newReactionScheme();
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.ChemObject);
+
+		Assert.assertTrue(object instanceof IReactionScheme);
 	}
 
 	@Test public void testNewSingleElectron() {
