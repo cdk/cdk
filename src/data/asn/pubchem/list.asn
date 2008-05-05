@@ -544,7 +544,7 @@ PC-Substances ::= {
       tautomers 1
     }
   },
-  PC-Compound {
+  compound {
     id {
       id cid 1
     },
