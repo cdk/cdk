@@ -112,7 +112,7 @@ public class CDKSVNTaglet implements Taglet {
     	String path = correctSlashes(file.file().getAbsolutePath());
     	matcher = pathPattern.matcher(path);
     	if (matcher.matches()) {
-        	String url = "http://cdk.svn.sourceforge.net/viewvc/cdk/trunk/cdk/" +
+        	String url = "http://cdk.svn.sourceforge.net/viewvc/cdk/cdk/trunk/" +
             			 matcher.group(1) + "?revision=" + 
             			 revision + "&amp;view=markup";
         	return "<a href=\"" + url + "\">revision " + revision + "</a>";
