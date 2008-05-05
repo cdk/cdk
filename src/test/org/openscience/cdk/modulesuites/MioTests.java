@@ -44,6 +44,7 @@ import org.openscience.cdk.io.MDLV2000ReaderTest;
 import org.openscience.cdk.io.MDLV3000ReaderTest;
 import org.openscience.cdk.io.MDLWriterTest;
 import org.openscience.cdk.io.Mol2ReaderTest;
+import org.openscience.cdk.io.PCCompoundASNReaderTest;
 import org.openscience.cdk.io.PDBWriterTest;
 import org.openscience.cdk.io.PMPReaderTest;
 import org.openscience.cdk.io.ReaderFactoryTest;
@@ -86,6 +87,7 @@ public class MioTests {
         suite.addTest(MDLRXNV3000ReaderTest.suite());
         suite.addTest(MDLRXNWriterTest.suite());
         suite.addTest(Mol2ReaderTest.suite());
+        suite.addTest(PCCompoundASNReaderTest.suite());
         suite.addTest(PDBWriterTest.suite());
         suite.addTest(PMPReaderTest.suite());
         suite.addTest(ShelXReaderTest.suite());
