@@ -61,7 +61,7 @@ public class PCCompoundASNReaderTest extends CDKTestCase {
     }
 
     public void testReading() throws Exception {
-        String filename = "data/pc-asn/cid1.asn";
+        String filename = "data/asn/pubchem/cid1.asn";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         PCCompoundASNReader reader = new PCCompoundASNReader(ins);
