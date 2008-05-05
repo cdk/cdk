@@ -48,7 +48,7 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 		ringSet = rs;
 	}
 
-    @TestMethod("testSP3Atoms,testNaCl,testNaphthalene,testSP2Atoms,testSPAtoms")
+    @TestMethod("testSP3Atoms,testNaCl,testNaphthalene,testSP2Atoms,testSPAtoms,testBenzeneFromSmiles")
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
 	{
 

@@ -24,14 +24,20 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.atomtype.EStateAtomTypeMatcher;
+import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.Iterator;
 
 /**
  * @cdk.module test-standard
@@ -328,8 +334,24 @@ public class EStateAtomTypeMatcherTest extends NewCDKTestCase {
 		Assert.assertTrue(testAtom("SsaaC",a6));
 		Assert.assertTrue(testAtom("SsCH3",a7));
 	}
-	
-	@Test public void testNaphthalene(){
+
+    @Test public void testBenzeneFromSmiles() throws CDKException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        mol = sp.parseSmiles("C1=CC=CC=C1");
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+
+        matcher.setRingSet(getRings());
+        Iterator<IAtom> atoms = mol.atoms();        
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            if (atom.getSymbol().equals("C")){
+                Assert.assertTrue(testAtom("SaaCH", atom));
+            }
+        }
+    }
+
+    @Test public void testNaphthalene(){
 		//Testing with C1=CC2C=CC=CC=2C=C1		
 		mol = new Molecule();
 		IAtom a1 = mol.getBuilder().newAtom("C");
@@ -496,7 +518,9 @@ public class EStateAtomTypeMatcherTest extends NewCDKTestCase {
 		matcher.setRingSet(getRings());
 		Assert.assertTrue(testAtom("SsNa",a1));
 		Assert.assertTrue(testAtom("SsCl",a2));
-	}	
+	}
+
+
 }
 
 
