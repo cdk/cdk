@@ -22,33 +22,22 @@
  */
 package org.openscience.cdk.aromaticity;
 
-import java.io.InputStream;
-import java.util.Iterator;
-
-import javax.vecmath.Point2d;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.*;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import javax.vecmath.Point2d;
+import java.io.InputStream;
+import java.util.Iterator;
 
 /**
  * @author steinbeck
@@ -165,7 +154,7 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(molecule));
 	}
-    
+
     @Test public void testPyridineOxide_SP2() throws Exception {
 		Molecule molecule = MoleculeFactory.makePyridineOxide();
 		Iterator<IBond> bonds = molecule.bonds();
@@ -615,6 +604,14 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
 		  mol.addBond(b11);
 		  return mol;
 	}
-	
+
+    @Test public void test3Amino2MethylPyridine() throws CDKException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("c1c(C)c(N)cnc1");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        System.out.println("isAromatic = " + isAromatic);
+    }
+
 }
 
