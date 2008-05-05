@@ -20,27 +20,21 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Please see the test.gui package for visual feedback on tests.
@@ -49,7 +43,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.module     test-smiles
  * @cdk.created    2003-09-19
  * 
- * @see org.openscience.cdk.gui.SmilesParserTest
+ * @see org.openscience.cdk.gui.smiles.SmilesParserTest
  */
 public class SmilesParserTest extends NewCDKTestCase {
 	
@@ -1236,6 +1230,17 @@ public class SmilesParserTest extends NewCDKTestCase {
 		IMolecule mol = sp.parseSmiles("C=CCS");
 		assertAtomTypesPerceived(mol);
 	}
-	
+
+
+    /**
+     * cdk.bug 1957958     
+     */
+    @Test public void test3amino4methylpyridine() throws Exception {
+        IMolecule mol = sp.parseSmiles("c1c(C)c(N)cnc1");
+        assertAtomTypesPerceived(mol);
+        
+        boolean isaromatic = CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Assert.assertTrue(isaromatic);
+    }
 }
 
