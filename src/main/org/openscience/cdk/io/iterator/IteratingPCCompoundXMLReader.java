@@ -35,7 +35,6 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 
 /**
  * Iterating PubChem PCCompound ASN.1 XML reader.
@@ -102,10 +101,8 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
                 
             	while (parser.next() != XmlPullParser.END_DOCUMENT) {
             		if (parser.getEventType() == XmlPullParser.START_TAG) {
-                		System.out.println("start: '" + parser.getName() + "'");
+//                		System.out.println("start: '" + parser.getName() + "'");
             			if (parser.getName().equals("PC-Compound")) {
-            				
-            				System.out.println("xml: ");
             				hasNext = true;
             				break;
             			}
@@ -153,17 +150,17 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
 
     	while (parser.next() != XmlPullParser.END_DOCUMENT) {
     		if (parser.getEventType() == XmlPullParser.END_TAG) {
-    			System.out.println("end: '" + parser.getName() + "'");
+//    			System.out.println("end: '" + parser.getName() + "'");
     			if (EL_PCCOMPOUND.equals(parser.getName())) {
     				// done parsing the molecule
     				break;
     			} else if (EL_ATOMBLOCK.equals(parser.getName())) {
-    				System.out.println("end atom clock");
+//    				System.out.println("end atom clock");
     			}
     		} else if (parser.getEventType() == XmlPullParser.START_TAG) {
-    			System.out.println("start: '" + parser.getName() + "'");
+//    			System.out.println("start: '" + parser.getName() + "'");
     			if (EL_ATOMBLOCK.equals(parser.getName())) {
-    				System.out.println("XX");
+//    				System.out.println("XX");
     			}
     		}
     	}
