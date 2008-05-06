@@ -24,23 +24,22 @@
  */
 package org.openscience.cdk.io.iterator;
 
+import org.kxml2.io.KXmlParser;
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.io.formats.PubChemCompoundsXMLFormat;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import org.kxml2.io.KXmlParser;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.io.formats.PubChemCompoundsXMLFormat;
-import org.xmlpull.v1.XmlPullParser;
 
 /**
  * Iterating PubChem PCCompound ASN.1 XML reader.
@@ -82,12 +81,14 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
     private IMolecule nextMolecule;
     
     /**
-     * Constructs a new IteratingPCCompoundXMLReader that can read Molecule from a given InputStream and IChemObjectBuilder.
+     * Constructs a new IteratingPCCompoundXMLReader that can read Molecule from a given Reader and IChemObjectBuilder.
      *
      * @param in      The input stream
      * @param builder The builder
+     * @throws java.io.IOException if there is error in getting the {@link IsotopeFactory}
+     * @throws org.xmlpull.v1.XmlPullParserException if there is an error isn setting up the XML parser
      */
-    public IteratingPCCompoundXMLReader(Reader in, IChemObjectBuilder builder) throws Exception {
+    public IteratingPCCompoundXMLReader(Reader in, IChemObjectBuilder builder) throws IOException, XmlPullParserException {
         this.builder = builder;
         factory = IsotopeFactory.getInstance(builder);
         
@@ -99,6 +100,17 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
         nextMolecule = null;
         nextAvailableIsKnown = false;
         hasNext = false;
+    }
+
+    /**
+     * Constructs a new IteratingPCCompoundXLReader that can read Molecule from a given InputStream and IChemObjectBuilder.
+     *
+     * @param in The input stream
+     * @param builder The builder. In general, use {@link org.openscience.cdk.DefaultChemObjectBuilder}
+     * @throws Exception if there is a problem creating an InputStreamReader
+     */
+    public IteratingPCCompoundXMLReader(InputStream in, IChemObjectBuilder builder) throws Exception {
+        this(new InputStreamReader(in), builder);
     }
 
 
