@@ -662,9 +662,239 @@ public class MoleculeFactory {
 	}
 
 	/**
+	 * Returns imidazole without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C3H4N2/c1-2-5-3-4-1/h1-3H,(H,4,5)/f/h4H
+	 */
+	public static Molecule makeImidazole()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("N")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("N")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
+		
+		return mol;
+	}
+
+	/**
+	 * Returns pyrazole without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C3H4N2/c1-2-4-5-3-1/h1-3H,(H,4,5)/f/h4H
+	 */
+	public static Molecule makePyrazole()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("N")); // 1
+		mol.addAtom(new Atom("N")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
+		
+		return mol;
+	}
+
+	/**
+	 * Returns 1,2,4-triazole without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C3H4N2/c1-2-4-5-3-1/h1-3H,(H,4,5)/f/h4H
+	 */
+	public static Molecule make124Triazole()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("N")); // 1
+		mol.addAtom(new Atom("N")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("N")); // 4
+		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
+		
+		return mol;
+	}
+	
+	/**
+	 * Returns 1,2,3-triazole without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C2H3N3/c1-2-4-5-3-1/h1-2H,(H,3,4,5)/f/h5H
+	 */
+	public static Molecule make123Triazole()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("N")); // 1
+		mol.addAtom(new Atom("N")); // 2
+		mol.addAtom(new Atom("N")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
+		
+		return mol;
+	}
+	
+	/**
+	 * Returns tetrazole without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/CH2N4/c1-2-4-5-3-1/h1H,(H,2,3,4,5)/f/h4H
+	 */
+	public static Molecule makeTetrazole()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("N")); // 0
+		mol.addAtom(new Atom("N")); // 1
+		mol.addAtom(new Atom("N")); // 2
+		mol.addAtom(new Atom("N")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
+		
+		return mol;
+	}
+	
+	/**
+	 * Returns Oxazole without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C3H3NO/c1-2-5-3-4-1/h1-3H
+	 */
+	public static Molecule makeOxazole()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("O")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("N")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
+		
+		return mol;
+	}
+	
+	/**
+	 * Returns Isoxazole without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C3H3NO/c1-2-4-5-3-1/h1-3H
+	 */
+	public static Molecule makeIsoxazole()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("O")); // 1
+		mol.addAtom(new Atom("N")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
+		
+		return mol;
+	}
+	
+	/**
+	 * Returns isothiazole without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C3H3NS/c1-2-4-5-3-1/h1-3H
+	 */
+	public static Molecule makeIsothiazole()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("S")); // 1
+		mol.addAtom(new Atom("N")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
+		
+		return mol;
+	}
+	
+	/**
+	 * Returns thiadiazole without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C2H2N2S/c1-3-4-2-5-1/h1-2H
+	 */
+	public static Molecule makeThiadiazole()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("S")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("N")); // 3
+		mol.addAtom(new Atom("N")); // 4
+		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
+		
+		return mol;
+	}
+	
+	/**
+	 * Returns oxadiazole without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C2H2N2O/c1-3-4-2-5-1/h1-2H
+	 */
+	public static Molecule makeOxadiazole()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("O")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("N")); // 3
+		mol.addAtom(new Atom("N")); // 4
+		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
+		
+		return mol;
+	}
+				
+	/**
 	 * Returns pyridine without explicit hydrogens.
 	 * 
-	 * @cdk.inchi InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H
+	 * @cdk.inchi InChI=1/C3H3NO/c1-2-4-5-3-1/h1-3H
 	 */
 	public static Molecule makePyridine()
 	{
@@ -714,7 +944,81 @@ public class MoleculeFactory {
 		
 		return mol;
 	}
-	
+
+	/**
+	 * Returns pyrimidine without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C4H4N2/c1-2-5-4-6-3-1/h1-4H
+	 */
+	public static Molecule makePyrimidine()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("N")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("N")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		
+		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+		
+		return mol;
+	}
+
+	/**
+	 * Returns pyridazine without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C4H4N2/c1-2-4-6-5-3-1/h1-4H
+	 */
+	public static Molecule makePyridazine()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("N")); // 1
+		mol.addAtom(new Atom("N")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("C")); // 5
+		
+		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+		
+		return mol;
+	}
+
+	/**
+	 * Returns triazine without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C4H4N2/c1-2-4-6-5-3-1/h1-4H
+	 */
+	public static Molecule makeTriazine()
+	{
+		Molecule mol = new Molecule();
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(new Atom("N")); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("N")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		mol.addAtom(new Atom("N")); // 5
+		
+		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
+		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+		
+		return mol;
+	}
 
 	/**
 	 * Returns thiazole without explicit hydrogens.

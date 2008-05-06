@@ -1362,6 +1362,128 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
+    @Test public void testImidazole() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.planar3",
+			"C.sp2",
+			"N.sp2",
+			"C.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makeImidazole();
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+    
+    @Test public void testPyrazole() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.planar3",
+			"N.sp2",
+			"C.sp2",
+			"C.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makePyrazole();
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+    
+    @Test public void test124Triazole() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.planar3",
+			"N.sp2",
+			"C.sp2",
+			"N.sp2"
+		};
+		Molecule molecule = MoleculeFactory.make124Triazole();
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+    
+    @Test public void test123Triazole() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.planar3",
+			"N.sp2",
+			"N.sp2",
+			"C.sp2"
+		};
+		Molecule molecule = MoleculeFactory.make123Triazole();
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+    
+    @Test public void testTetrazole() throws Exception {
+		String[] expectedTypes = {
+			"N.sp2",
+			"N.planar3",
+			"N.sp2",
+			"N.sp2",
+			"C.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makeTetrazole();
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+    
+    @Test public void testOxazole() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"O.planar3",
+			"C.sp2",
+			"N.sp2",
+			"C.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makeOxazole();
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+    
+    @Test public void testIsoxazole() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"O.planar3",
+			"N.sp2",
+			"C.sp2",
+			"C.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makeIsoxazole();
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+    
+    // testThiazole can be found below...
+    
+    @Test public void testIsothiazole() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"S.planar3",
+			"N.sp2",
+			"C.sp2",
+			"C.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makeIsothiazole();
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+    
+    @Test public void testThiadiazole() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"S.planar3",
+			"C.sp2",
+			"N.sp2",
+			"N.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makeThiadiazole();
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+    
+    @Test public void testOxadiazole() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"O.planar3",
+			"C.sp2",
+			"N.sp2",
+			"N.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makeOxadiazole();
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+   
     @Test public void testPyridine() throws Exception {
 		String[] expectedTypes = {
 			"C.sp2",
@@ -1493,6 +1615,45 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 		for (int i=0; i<6; i++) {
 			molecule.getAtom(i).setHybridization(IAtomType.Hybridization.SP2);
 		}
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+   
+    @Test public void testPyrimidine() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.sp2",
+			"C.sp2",
+			"N.sp2",
+			"C.sp2",
+			"C.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makePyrimidine();
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+   
+    @Test public void testPyridazine() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.sp2",
+			"N.sp2",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makePyridazine();
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+   
+    @Test public void testTriazine() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.sp2",
+			"C.sp2",
+			"N.sp2",
+			"C.sp2",
+			"N.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makeTriazine();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
 
