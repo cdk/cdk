@@ -37,9 +37,11 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemSubstancesXMLFormat;
 import org.xmlpull.v1.XmlPullParser;
@@ -61,6 +63,8 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
 
 	// general elements
 	private final static String EL_PCCOMPOUND = "PC-Compound";
+	private final static String EL_PCCOMPOUNDS = "PC-Compounds";
+	private final static String EL_PCSUBSTANCE = "PC-Substance";
 	
 	// atom block elements
 	private final static String EL_ATOMBLOCK = "PC-Atoms";
@@ -80,7 +84,7 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
     
     private boolean nextAvailableIsKnown;
     private boolean hasNext;
-    private IMolecule nextMolecule;
+    private IChemModel nextSubstance;
     
     /**
      * Constructs a new IteratingPCSubstancesXMLReader that can read Molecule from a given Reader and IChemObjectBuilder.
@@ -99,7 +103,7 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
         primarySource = in;
         parser.setInput(primarySource);
 
-        nextMolecule = null;
+        nextSubstance = null;
         nextAvailableIsKnown = false;
         hasNext = false;
     }
@@ -129,22 +133,21 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
                 
             	while (parser.next() != XmlPullParser.END_DOCUMENT) {
             		if (parser.getEventType() == XmlPullParser.START_TAG) {
-//                		System.out.println("start: '" + parser.getName() + "'");
-            			if (parser.getName().equals("PC-Compound")) {
+            			if (EL_PCSUBSTANCE.equals(parser.getName())) {
             				hasNext = true;
             				break;
             			}
             		}
             	}
             	if (hasNext) {
-            		nextMolecule = parseMolecule(parser, builder);            		
+            		nextSubstance = parseSubstance(parser, builder); 
             	}
             	
 			} catch (Exception e) {
 				hasNext = false;
 			}
             
-            if (!hasNext) nextMolecule = null;
+            if (!hasNext) nextSubstance = null;
             nextAvailableIsKnown = true;
         }
         return hasNext;
@@ -158,7 +161,7 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
         if (!hasNext) {
             throw new NoSuchElementException();
         }
-        return nextMolecule;
+        return nextSubstance;
     }
     
     public void close() throws IOException {
@@ -192,6 +195,52 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
 		return molecule;
     }
 
+    public IMoleculeSet parseCompoundsBlock(XmlPullParser parser, IChemObjectBuilder builder) throws Exception {
+    	IMoleculeSet set = builder.newMoleculeSet();
+    	// assume the current element is PC-Compounds
+    	if (!parser.getName().equals(EL_PCCOMPOUNDS)) {
+    		return null;
+    	}
+
+    	while (parser.next() != XmlPullParser.END_DOCUMENT) {
+    		if (parser.getEventType() == XmlPullParser.END_TAG) {
+    			if (EL_PCCOMPOUNDS.equals(parser.getName())) {
+    				break; // done parsing compounds block
+    			}
+    		} else if (parser.getEventType() == XmlPullParser.START_TAG) {
+    			if (EL_PCCOMPOUND.equals(parser.getName())) {
+    				IMolecule molecule = parseMolecule(parser, builder);
+    				if (molecule.getAtomCount() > 0) {
+    					// skip empty PC-Compound's
+    					set.addMolecule(molecule);
+    				}
+    			}
+    		}
+    	}
+		return set;
+    }
+
+    public IChemModel parseSubstance(XmlPullParser parser, IChemObjectBuilder builder) throws Exception {
+    	IChemModel model = builder.newChemModel();
+    	// assume the current element is PC-Compound
+    	if (!parser.getName().equals("PC-Substance")) {
+    		return null;
+    	}
+
+    	while (parser.next() != XmlPullParser.END_DOCUMENT) {
+    		if (parser.getEventType() == XmlPullParser.END_TAG) {
+    			if (EL_PCSUBSTANCE.equals(parser.getName())) {
+    				break; // done parsing the molecule
+    			}
+    		} else if (parser.getEventType() == XmlPullParser.START_TAG) {
+    			if (EL_PCCOMPOUNDS.equals(parser.getName())) {
+    				IMoleculeSet set = parseCompoundsBlock(parser, builder);
+    				model.setMoleculeSet(set);
+    			}
+    		}
+    	}
+		return model;
+    }
 
 	private void parserBondBlock(XmlPullParser parser2, IMolecule molecule) throws Exception {
 		List<String> id1s = new ArrayList<String>();

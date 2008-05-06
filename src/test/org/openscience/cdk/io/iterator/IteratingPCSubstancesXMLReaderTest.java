@@ -32,9 +32,12 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
  * @cdk.module test-io
@@ -61,20 +64,20 @@ public class IteratingPCSubstancesXMLReaderTest extends CDKTestCase {
                 DefaultChemObjectBuilder.getInstance()
         );
 
-        int molCount = 0;
-        IMoleculeSet set = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+        int modelCount = 0;
+        IChemSequence set = DefaultChemObjectBuilder.getInstance().newChemSequence();
         while (reader.hasNext()) {
-//        	System.out.println("next molecule found");
             Object object = reader.next();
             assertNotNull(object);
-            assertTrue(object instanceof IMolecule);
-            set.addMolecule((IMolecule) object);
-            molCount++;
+            assertTrue(object instanceof IChemModel);
+            set.addChemModel((IChemModel) object);
+            modelCount++;
         }
 
-        assertEquals(77, molCount);
-        IMolecule first = set.getMolecule(0);
-        assertEquals(114, first.getAtomCount());
+        assertEquals(25, modelCount);
+        IChemModel first = set.getChemModel(0);
+        assertEquals(63, ChemModelManipulator.getAtomCount(first));
+        assertEquals(69, ChemModelManipulator.getBondCount(first));
     }
 
 }
