@@ -49,7 +49,7 @@ public class PubChemCompoundsXMLFormat implements IChemFormatMatcher {
         return getNameExtensions()[0];
     }
     public String[] getNameExtensions() {
-        return new String[]{"asn"};
+        return new String[]{"xml"};
     }
 
     public String getReaderClassName() { 
@@ -60,7 +60,7 @@ public class PubChemCompoundsXMLFormat implements IChemFormatMatcher {
     }
 
 	public boolean isXMLBased() {
-		return false;
+		return true;
 	}
 
 	public int getSupportedDataFeatures() {
