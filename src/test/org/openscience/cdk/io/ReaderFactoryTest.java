@@ -62,6 +62,7 @@ import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.io.formats.PubChemASNFormat;
 import org.openscience.cdk.io.formats.PubChemCompoundsXMLFormat;
 import org.openscience.cdk.io.formats.PubChemSubstancesASNFormat;
+import org.openscience.cdk.io.formats.PubChemSubstancesXMLFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.io.formats.VASPFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
@@ -192,6 +193,10 @@ public class ReaderFactoryTest extends CDKTestCase {
 
     public void testPubChemCompoundsXML() throws Exception {
         expectFormat("data/asn/pubchem/aceticAcids38.xml", PubChemCompoundsXMLFormat.getInstance());
+    }
+    
+    public void testPubChemSubstancesXML() throws Exception {
+        expectFormat("data/asn/pubchem/taxols.xml", PubChemSubstancesXMLFormat.getInstance());
     }
     
     private void expectFormat(String filename, IResourceFormat expectedFormat) throws Exception {

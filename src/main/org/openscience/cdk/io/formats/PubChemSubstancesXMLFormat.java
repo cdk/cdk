@@ -53,7 +53,7 @@ public class PubChemSubstancesXMLFormat implements IChemFormatMatcher {
     }
 
     public String getReaderClassName() { 
-    	return "";
+    	return null;
     }
     public String getWriterClassName() { 
     	return null;
@@ -72,7 +72,7 @@ public class PubChemSubstancesXMLFormat implements IChemFormatMatcher {
 	}
 
 	public boolean matches(int lineNumber, String line) {
-		if (lineNumber == 2 && line.startsWith("<PC-Compounds")) return true;
+		if (lineNumber == 2 && line.startsWith("<PC-Substances")) return true;
 		return false;
 	}
 }
