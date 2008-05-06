@@ -60,6 +60,8 @@ import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.io.formats.PubChemASNFormat;
+import org.openscience.cdk.io.formats.PubChemCompoundsXMLFormat;
+import org.openscience.cdk.io.formats.PubChemSubstancesASNFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.io.formats.VASPFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
@@ -184,6 +186,14 @@ public class ReaderFactoryTest extends CDKTestCase {
         expectReader("data/asn/pubchem/cid1.asn", PubChemASNFormat.getInstance());
     }
 
+    public void testPubChemSubstancesASN() throws Exception {
+        expectFormat("data/asn/pubchem/list.asn", PubChemSubstancesASNFormat.getInstance());
+    }
+
+    public void testPubChemCompoundsXML() throws Exception {
+        expectFormat("data/asn/pubchem/aceticAcids38.xml", PubChemCompoundsXMLFormat.getInstance());
+    }
+    
     private void expectFormat(String filename, IResourceFormat expectedFormat) throws Exception {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         if (ins == null) {

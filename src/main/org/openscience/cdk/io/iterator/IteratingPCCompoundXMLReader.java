@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.io.formats.SMILESFormat;
+import org.openscience.cdk.io.formats.PubChemCompoundsXMLFormat;
 import org.xmlpull.v1.XmlPullParser;
 
 /**
@@ -103,7 +103,7 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
 
 
     public IResourceFormat getFormat() {
-        return SMILESFormat.getInstance();
+        return PubChemCompoundsXMLFormat.getInstance();
     }
 
     public boolean hasNext() {
