@@ -62,6 +62,7 @@ public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
 
         int molCount = 0;
         while (reader.hasNext()) {
+        	System.out.println("next molecule found");
             Object object = reader.next();
             assertNotNull(object);
             assertTrue(object instanceof Molecule);

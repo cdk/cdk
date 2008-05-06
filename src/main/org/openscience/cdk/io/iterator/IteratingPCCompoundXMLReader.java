@@ -34,6 +34,8 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.tools.LoggingTool;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
  * Iterating PubChem PCCompound ASN.1 XML reader.
@@ -51,6 +53,12 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectReader {
 
+	private final static String NS_PUBCHEM = "http://www.ncbi.nlm.nih.gov";
+	
+	private final static String EL_PCCOMPOUND = "PC-Compound";		
+	private final static String EL_ATOMBLOCK = "PC-Atoms";
+	private final static String EL_BONDBLOCK = "PC-Bonds";
+	
 	private Reader primarySource;
     private KXmlParser parser;
     private LoggingTool logger;
@@ -89,7 +97,27 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
         if (!nextAvailableIsKnown) {
             hasNext = false;
             
-            // do the parsing here
+            try {
+                if (parser.next() == XmlPullParser.END_DOCUMENT) return false;
+                
+            	while (parser.next() != XmlPullParser.END_DOCUMENT) {
+            		if (parser.getEventType() == XmlPullParser.START_TAG) {
+                		System.out.println("start: '" + parser.getName() + "'");
+            			if (parser.getName().equals("PC-Compound")) {
+            				
+            				System.out.println("xml: ");
+            				hasNext = true;
+            				break;
+            			}
+            		}
+            	}
+            	if (hasNext) {
+            		nextMolecule = parseMolecule(parser, builder);            		
+            	}
+            	
+			} catch (Exception e) {
+				hasNext = false;
+			}
             
             if (!hasNext) nextMolecule = null;
             nextAvailableIsKnown = true;
@@ -115,6 +143,32 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
     public void remove() {
         throw new UnsupportedOperationException();
     }
-    
+
+    public IMolecule parseMolecule(XmlPullParser parser, IChemObjectBuilder builder) throws Exception {
+    	IMolecule molecule = builder.newMolecule();
+    	// assume the current element is PC-Compound
+    	if (!parser.getName().equals("PC-Compound")) {
+    		return null;
+    	}
+
+    	while (parser.next() != XmlPullParser.END_DOCUMENT) {
+    		if (parser.getEventType() == XmlPullParser.END_TAG) {
+    			System.out.println("end: '" + parser.getName() + "'");
+    			if (EL_PCCOMPOUND.equals(parser.getName())) {
+    				// done parsing the molecule
+    				break;
+    			} else if (EL_ATOMBLOCK.equals(parser.getName())) {
+    				System.out.println("end atom clock");
+    			}
+    		} else if (parser.getEventType() == XmlPullParser.START_TAG) {
+    			System.out.println("start: '" + parser.getName() + "'");
+    			if (EL_ATOMBLOCK.equals(parser.getName())) {
+    				System.out.println("XX");
+    			}
+    		}
+    	}
+		return molecule;
+    }
+
 }
 
