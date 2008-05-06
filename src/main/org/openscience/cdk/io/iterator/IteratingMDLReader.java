@@ -82,6 +82,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
      * Contructs a new IteratingMDLReader that can read Molecule from a given Reader.
      *
      * @param  in  The Reader to read from
+     * @param builder The builder
      */
     public IteratingMDLReader(Reader in, IChemObjectBuilder builder) {
         logger = new LoggingTool(this);
@@ -97,6 +98,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
      * Contructs a new IteratingMDLReader that can read Molecule from a given InputStream.
      *
      * @param  in  The InputStream to read from
+     * @param builder The builder
      */
     public IteratingMDLReader(InputStream in, IChemObjectBuilder builder) {
         this(new InputStreamReader(in), builder);
