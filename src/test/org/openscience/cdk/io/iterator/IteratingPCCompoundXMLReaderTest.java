@@ -24,17 +24,16 @@
  *  */
 package org.openscience.cdk.io.iterator;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * @cdk.module test-io
@@ -76,6 +75,31 @@ public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
         IMolecule first = set.getMolecule(0);
         assertEquals(8, first.getAtomCount());
         assertEquals(7, first.getBondCount());
+    }
+
+    public void testTaxols() throws Exception {
+        String filename = "data/asn/pubchem/taxols.xml";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        IteratingPCCompoundXMLReader reader = new IteratingPCCompoundXMLReader(
+                new InputStreamReader(ins),
+                DefaultChemObjectBuilder.getInstance()
+        );
+
+        int molCount = 0;
+        IMoleculeSet set = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+        while (reader.hasNext()) {
+//        	System.out.println("next molecule found");
+            Object object = reader.next();
+            assertNotNull(object);
+            assertTrue(object instanceof IMolecule);
+            set.addMolecule((IMolecule) object);
+            molCount++;
+        }
+
+        assertEquals(77, molCount);
+        IMolecule first = set.getMolecule(0);
+        assertEquals(114, first.getAtomCount());
     }
 
 }
