@@ -53,7 +53,7 @@ public class PubChemCompoundsXMLFormat implements IChemFormatMatcher {
     }
 
     public String getReaderClassName() { 
-    	return "";
+    	return null;
     }
     public String getWriterClassName() { 
     	return null;
