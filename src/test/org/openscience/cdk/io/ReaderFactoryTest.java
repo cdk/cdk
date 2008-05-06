@@ -32,14 +32,12 @@ import java.io.InputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.IChemObjectReader;
-import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.ABINITFormat;
 import org.openscience.cdk.io.formats.ADFFormat;
 import org.openscience.cdk.io.formats.Aces2Format;
@@ -51,6 +49,7 @@ import org.openscience.cdk.io.formats.Gaussian94Format;
 import org.openscience.cdk.io.formats.Gaussian98Format;
 import org.openscience.cdk.io.formats.GhemicalSPMFormat;
 import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IChemFormatMatcher;
 import org.openscience.cdk.io.formats.INChIFormat;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -64,7 +63,6 @@ import org.openscience.cdk.io.formats.PubChemASNFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.io.formats.VASPFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -191,6 +189,9 @@ public class ReaderFactoryTest extends CDKTestCase {
         if (ins == null) {
             fail("Cannot find file: " + filename);
         }
+        if (expectedFormat instanceof IChemFormatMatcher) {
+        	factory.registerFormat((IChemFormatMatcher)expectedFormat);
+        }
         IChemFormat format = factory.guessFormat(ins);
         assertNotNull(format);
         assertEquals(expectedFormat.getFormatName(), format.getFormatName());
@@ -199,6 +200,9 @@ public class ReaderFactoryTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         if (ins == null) {
             fail("Cannot find file: " + filename);
+        }
+        if (expectedFormat instanceof IChemFormatMatcher) {
+        	factory.registerFormat((IChemFormatMatcher)expectedFormat);
         }
         IChemFormat format = factory.guessFormat(ins);
         assertNotNull(format);
