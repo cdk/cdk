@@ -34,6 +34,7 @@
 	<classpathentry kind="lib" path="jar/xmldb.jar"/>
 	<classpathentry kind="lib" path="jar/xom-1.1.jar"/>
 	<classpathentry kind="lib" path="jar/jama-1.0.2.jar"/>
+	<classpathentry kind="lib" path="jar/kxml2-2.3.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="develjar/com-sun-javadoc.jar"/>
 	<classpathentry kind="lib" path="develjar/com-sun-tools-doclets-Taglet.jar"/>
