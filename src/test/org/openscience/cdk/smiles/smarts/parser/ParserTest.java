@@ -23,6 +23,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -34,8 +35,6 @@ import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
-import org.openscience.cdk.CDKTestCase;
 
 import java.io.StringReader;
 import java.util.Iterator;
@@ -1608,7 +1607,7 @@ public class ParserTest extends CDKTestCase {
     }
 
     public void testLogicalNot5() throws Exception {
-        int m = match("[!c]", "O=n1ccccc1", false);
+        int m = match("[!C]", "ON1CCCCC1", false);
         assertEquals(2, m);
     }
 
@@ -1653,8 +1652,8 @@ public class ParserTest extends CDKTestCase {
     }
 
     public void testLogicalOr5() throws Exception {
-        int m = match("[N,O,o]", "O=n1ccccc1", false);
-        assertEquals(1, m);
+        int m = match("[N,O,o]", "NCc1ccccc1CO", false);
+        assertEquals(2, m);
     }
 
     public void testLogicalOr6() throws Exception {
