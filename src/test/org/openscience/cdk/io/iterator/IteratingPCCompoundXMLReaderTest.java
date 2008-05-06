@@ -32,7 +32,8 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -61,15 +62,20 @@ public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
         );
 
         int molCount = 0;
+        IMoleculeSet set = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
         while (reader.hasNext()) {
 //        	System.out.println("next molecule found");
             Object object = reader.next();
             assertNotNull(object);
-            assertTrue(object instanceof Molecule);
+            assertTrue(object instanceof IMolecule);
+            set.addMolecule((IMolecule)object);
             molCount++;
         }
 
         assertEquals(3, molCount);
+        IMolecule first = set.getMolecule(0);
+        assertEquals(8, first.getAtomCount());
+        assertEquals(7, first.getBondCount());
     }
 
 }
