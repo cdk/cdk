@@ -23,11 +23,10 @@
  */
 package org.openscience.cdk.io.iterator;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.openscience.cdk.io.ReaderEvent;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
-import org.openscience.cdk.io.listener.IReaderListener;
 import org.openscience.cdk.io.setting.IOSetting;
 
 /**
@@ -40,21 +39,16 @@ import org.openscience.cdk.io.setting.IOSetting;
 public abstract class DefaultIteratingChemObjectReader implements IIteratingChemObjectReader {
 
     /**
-     * An event to be sent to listeners when a frame is read.
-     */
-    private ReaderEvent frameReadEvent = null;
-
-    /**
      * Holder of reader event listeners.
      */
-    private Vector listenerList = new Vector();
+    private List<IChemObjectIOListener> listenerList = new ArrayList<IChemObjectIOListener>();
 
     public void addChemObjectIOListener(IChemObjectIOListener listener) {
-        listenerList.addElement(listener);
+        listenerList.add(listener);
     }
 
     public void removeChemObjectIOListener(IChemObjectIOListener listener) {
-        listenerList.removeElement(listener);
+        listenerList.remove(listener);
     }
 
     public boolean accepts(Class objectClass) {
@@ -70,24 +64,9 @@ public abstract class DefaultIteratingChemObjectReader implements IIteratingChem
         throw new UnsupportedOperationException();
     }
     
-    /**
-     * Sends a frame read event to the registered ReaderListeners.
-     */
-    protected void fireFrameRead() {
-        for (int i = 0; i < listenerList.size(); ++i) {
-            IReaderListener listener = (IReaderListener) listenerList.elementAt(i);
-            
-            // Lazily create the event:
-            if (frameReadEvent == null) {
-                frameReadEvent = new ReaderEvent(this);
-            }
-            listener.frameRead(frameReadEvent);
-        }
-    }
-
     protected void fireIOSettingQuestion(IOSetting setting) {
         for (int i = 0; i < listenerList.size(); ++i) {
-            IChemObjectIOListener listener = (IChemObjectIOListener) listenerList.elementAt(i);
+            IChemObjectIOListener listener = listenerList.get(i);
             listener.processIOSettingQuestion(setting);
         }
     }
