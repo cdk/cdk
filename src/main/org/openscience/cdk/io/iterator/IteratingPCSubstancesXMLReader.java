@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -65,6 +66,8 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
 	private final static String EL_PCCOMPOUND = "PC-Compound";
 	private final static String EL_PCCOMPOUNDS = "PC-Compounds";
 	private final static String EL_PCSUBSTANCE = "PC-Substance";
+	private final static String EL_PCSUBSTANCE_SID = "PC-Substance_sid";
+	private final static String EL_PCID_ID = "PC-ID_id";
 	
 	// atom block elements
 	private final static String EL_ATOMBLOCK = "PC-Atoms";
@@ -230,6 +233,7 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
     	if (!parser.getName().equals("PC-Substance")) {
     		return null;
     	}
+    	System.out.println("Substance found at line " + parser.getLineNumber());
 
     	while (parser.next() != XmlPullParser.END_DOCUMENT) {
     		if (parser.getEventType() == XmlPullParser.END_TAG) {
@@ -240,10 +244,30 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
     			if (EL_PCCOMPOUNDS.equals(parser.getName())) {
     				IMoleculeSet set = parseCompoundsBlock(parser, builder);
     				model.setMoleculeSet(set);
+    			} else if (EL_PCSUBSTANCE_SID.equals(parser.getName())) {
+    				String sid = getSID(parser);
+    				model.setProperty(CDKConstants.TITLE, sid);
+    				System.out.println("SID: " + sid);
     			}
     		}
     	}
 		return model;
+    }
+
+	private String getSID(XmlPullParser parser) throws Exception {
+		String sid = "unknown";
+		while (parser.next() != XmlPullParser.END_DOCUMENT) {
+			if (parser.getEventType() == XmlPullParser.END_TAG) {
+    			if (EL_PCSUBSTANCE_SID.equals(parser.getName())) {
+    				break; // done parsing the atom block
+    			}
+    		} else if (parser.getEventType() == XmlPullParser.START_TAG) {
+    			if (EL_PCID_ID.equals(parser.getName())) {
+    				sid = parser.nextText();
+    			}
+    		}
+		}
+	    return sid;
     }
 
 	private void parserBondBlock(XmlPullParser parser2, IMolecule molecule) throws Exception {
