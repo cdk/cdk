@@ -42,7 +42,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemSubstancesXMLFormat;
 import org.xmlpull.v1.XmlPullParser;
@@ -371,5 +370,20 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
 		}
 	}
 
+	public void setReader(Reader reader) throws CDKException {
+		primarySource = reader;
+        try {
+	        parser.setInput(primarySource);
+        } catch (XmlPullParserException e) {
+	        throw new CDKException("Error while opening the input:" + e.getMessage(), e);
+        }
+        nextSubstance = null;
+        nextAvailableIsKnown = false;
+        hasNext = false;
+    }
+
+	public void setReader(InputStream reader) throws CDKException {
+	    setReader(new InputStreamReader(reader));
+    }
 }
 

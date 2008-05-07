@@ -24,15 +24,24 @@
  */
 package org.openscience.cdk.io.iterator;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.NoSuchElementException;
+
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
-import org.openscience.cdk.io.formats.*;
+import org.openscience.cdk.io.formats.IChemFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.io.formats.MDLFormat;
+import org.openscience.cdk.io.formats.MDLV2000Format;
+import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.*;
-import java.util.NoSuchElementException;
 
 /**
  * Iterating MDL SDF reader. It allows to iterate over all molecules
@@ -85,13 +94,9 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
      * @param builder The builder
      */
     public IteratingMDLReader(Reader in, IChemObjectBuilder builder) {
-        logger = new LoggingTool(this);
-        input = new BufferedReader(in);
+    	logger = new LoggingTool(this);
         this.builder = builder;
-        nextMolecule = null;
-        nextAvailableIsKnown = false;
-        hasNext = false;
-        currentFormat = (IChemFormat)MDLV2000Format.getInstance();
+    	setReader(in);
     }
 
     /**
@@ -226,6 +231,21 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
     
     public void remove() {
         throw new UnsupportedOperationException();
+    }
+
+	public void setReader(Reader reader) {
+		if (reader instanceof BufferedReader) {
+			input = (BufferedReader)reader;
+		} else {
+			input = new BufferedReader(reader);
+		}
+        nextMolecule = null;
+        nextAvailableIsKnown = false;
+        hasNext = false;
+    }
+
+	public void setReader(InputStream reader) {
+	    setReader(new InputStreamReader(reader));
     }
 }
 

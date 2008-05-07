@@ -26,6 +26,8 @@ package org.openscience.cdk.io.iterator;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
 
@@ -38,6 +40,8 @@ import org.openscience.cdk.io.setting.IOSetting;
  */
 public abstract class DefaultIteratingChemObjectReader implements IIteratingChemObjectReader {
 
+    protected IChemObjectReader.Mode mode = IChemObjectReader.Mode.RELAXED;
+	
     /**
      * Holder of reader event listeners.
      */
@@ -75,4 +79,8 @@ public abstract class DefaultIteratingChemObjectReader implements IIteratingChem
         return new IOSetting[0];
     }
    
+    public void setReaderMode(ISimpleChemObjectReader.Mode mode) {
+    	this.mode = mode;
+    }
+
 }

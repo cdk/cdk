@@ -40,7 +40,6 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.PCCompoundASNReader;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemSubstancesASNFormat;
-import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -78,11 +77,8 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
      */
     public IteratingPCCompoundASNReader(Reader in, IChemObjectBuilder builder) {
         logger = new LoggingTool(this);
-        input = new BufferedReader(in);
         this.builder = builder;
-        nextMolecule = null;
-        nextAvailableIsKnown = false;
-        hasNext = false;
+        setReader(in);
     }
 
     /**
@@ -218,6 +214,21 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
     		i++;
     	}
     	return foundBracket ? buffer.toString().trim() : null;
+    }
+
+	public void setReader(Reader reader) {
+		if (reader instanceof BufferedReader) {
+			input = (BufferedReader)reader;
+		} else {
+			input = new BufferedReader(reader);
+		}
+        nextMolecule = null;
+        nextAvailableIsKnown = false;
+        hasNext = false;
+    }
+
+	public void setReader(InputStream reader) {
+	    setReader(new InputStreamReader(reader));
     }
 
 }

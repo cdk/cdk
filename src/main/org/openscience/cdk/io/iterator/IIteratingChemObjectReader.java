@@ -29,7 +29,7 @@ package org.openscience.cdk.io.iterator;
 
 import java.util.Iterator;
 
-import org.openscience.cdk.io.IChemObjectIO;
+import org.openscience.cdk.io.IChemObjectReader;
 
 /**
  * Interface for an iterating molecule reader. It allows to iterate over all molecules
@@ -44,7 +44,7 @@ import org.openscience.cdk.io.IChemObjectIO;
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2003-10-19
  */
-public interface IIteratingChemObjectReader extends IChemObjectIO, Iterator {
+public interface IIteratingChemObjectReader extends IChemObjectReader, Iterator {
 
 }
 

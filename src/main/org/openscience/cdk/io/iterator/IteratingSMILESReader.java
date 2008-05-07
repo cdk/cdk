@@ -75,11 +75,8 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
      */
     public IteratingSMILESReader(Reader in, IChemObjectBuilder builder) {
         logger = new LoggingTool(this);
-        input = new BufferedReader(in);
         sp = new SmilesParser(builder);
-        nextMolecule = null;
-        nextAvailableIsKnown = false;
-        hasNext = false;
+        setReader(in);
     }
 
     /**
@@ -174,5 +171,21 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
     public void remove() {
         throw new UnsupportedOperationException();
     }
+
+	public void setReader(Reader reader) {
+		if (reader instanceof BufferedReader) {
+			input = (BufferedReader)reader;
+		} else {
+			input = new BufferedReader(reader);
+		}
+        nextMolecule = null;
+        nextAvailableIsKnown = false;
+        hasNext = false;
+    }
+
+	public void setReader(InputStream reader) {
+	    setReader(new InputStreamReader(reader));
+    }
+
 }
 

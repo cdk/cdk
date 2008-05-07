@@ -24,15 +24,6 @@
  */
 package org.openscience.cdk.io.iterator;
 
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.io.formats.PubChemCompoundsXMLFormat;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -40,6 +31,19 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.io.formats.PubChemCompoundsXMLFormat;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 /**
  * Iterating PubChem PCCompound ASN.1 XML reader.
@@ -292,5 +296,20 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
 		}
 	}
 
+	public void setReader(Reader reader) throws CDKException {
+		primarySource = reader;
+        try {
+	        parser.setInput(primarySource);
+        } catch (XmlPullParserException e) {
+	        throw new CDKException("Error while opening the input:" + e.getMessage(), e);
+        }
+        nextMolecule = null;
+        nextAvailableIsKnown = false;
+        hasNext = false;
+    }
+
+	public void setReader(InputStream reader) throws CDKException {
+	    setReader(new InputStreamReader(reader));
+    }
 }
 
