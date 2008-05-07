@@ -35,6 +35,7 @@ import java.util.NoSuchElementException;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.PCCompoundASNReader;
@@ -181,7 +182,7 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
 		return bracketsOpen - bracketsClose;
 	}
 
-	public Object next() {
+	public IChemObject next() {
         if (!nextAvailableIsKnown) {
             hasNext();
         }

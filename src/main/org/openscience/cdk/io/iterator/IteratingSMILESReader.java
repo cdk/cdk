@@ -27,17 +27,22 @@
  */
 package org.openscience.cdk.io.iterator;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.NoSuchElementException;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.*;
-import java.util.NoSuchElementException;
 
 /**
  * Iterating SMILES file reader. It allows to iterate over all molecules
@@ -153,7 +158,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
         return hasNext;
     }
     
-    public Object next() {
+    public IChemObject next() {
         if (!nextAvailableIsKnown) {
             hasNext();
         }

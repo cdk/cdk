@@ -32,6 +32,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.NoSuchElementException;
 
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -214,7 +215,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
     /**
      * Returns the next IMolecule.
      */
-    public Object next() {
+    public IChemObject next() {
         if (!nextAvailableIsKnown) {
             hasNext();
         }

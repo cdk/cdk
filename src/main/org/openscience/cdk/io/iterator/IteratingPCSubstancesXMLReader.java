@@ -38,6 +38,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -161,7 +162,7 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
         return hasNext;
     }
     
-	public Object next() {
+	public IChemObject next() {
         if (!nextAvailableIsKnown) {
             hasNext();
         }
