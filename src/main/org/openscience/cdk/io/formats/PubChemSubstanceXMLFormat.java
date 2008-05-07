@@ -53,7 +53,7 @@ public class PubChemSubstanceXMLFormat implements IChemFormatMatcher {
     }
 
     public String getReaderClassName() { 
-    	return null;
+    	return "org.openscience.cdk.io.PCSubstanceXMLReader";
     }
     public String getWriterClassName() { 
     	return null;
