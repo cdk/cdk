@@ -50,7 +50,7 @@ import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.Mol2Reader;
-import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;

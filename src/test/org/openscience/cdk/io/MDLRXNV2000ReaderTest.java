@@ -35,7 +35,7 @@ import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
-import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 

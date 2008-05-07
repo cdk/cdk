@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.templates.MoleculeFactory;

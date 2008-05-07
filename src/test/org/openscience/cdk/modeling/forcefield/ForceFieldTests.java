@@ -27,7 +27,7 @@ import org.openscience.cdk.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;

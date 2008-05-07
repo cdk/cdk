@@ -29,7 +29,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.templates.MoleculeFactory;
 

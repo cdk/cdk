@@ -12,7 +12,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.similarity.DistanceMoment;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;

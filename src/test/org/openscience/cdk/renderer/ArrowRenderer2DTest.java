@@ -38,7 +38,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.renderer.Arrow;
 import org.openscience.cdk.renderer.ArrowRenderer2D;
 import org.openscience.cdk.renderer.Renderer2D;
