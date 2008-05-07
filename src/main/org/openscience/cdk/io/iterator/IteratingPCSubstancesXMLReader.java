@@ -153,7 +153,6 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
             	
 			} catch (Exception e) {
 				e.printStackTrace();
-				if (mode == Mode.STRICT)
 				hasNext = false;
 			}
             
