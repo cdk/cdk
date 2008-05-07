@@ -156,9 +156,14 @@ public class PubChemXMLHelper {
     			if (EL_ELEMENT.equals(parser.getName())) {
     				int atomicNumber = Integer.parseInt(parser.nextText());
     				IElement element = factory.getElement(atomicNumber);
-    				IAtom atom = molecule.getBuilder().newAtom(element.getSymbol());
-    				atom.setAtomicNumber(element.getAtomicNumber());
-    				molecule.addAtom(atom);
+    				if (element == null) {
+    					IAtom atom = molecule.getBuilder().newPseudoAtom();
+    					molecule.addAtom(atom);
+    				} else {
+    					IAtom atom = molecule.getBuilder().newAtom(element.getSymbol());
+    					atom.setAtomicNumber(element.getAtomicNumber());
+    					molecule.addAtom(atom);
+    				}
     			}
     		}
 		}
