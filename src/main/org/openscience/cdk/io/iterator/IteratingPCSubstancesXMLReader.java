@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemSubstancesXMLFormat;
 import org.xmlpull.v1.XmlPullParser;
@@ -151,6 +152,8 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
             	}
             	
 			} catch (Exception e) {
+				e.printStackTrace();
+				if (mode == Mode.STRICT)
 				hasNext = false;
 			}
             
@@ -233,7 +236,6 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
     	if (!parser.getName().equals("PC-Substance")) {
     		return null;
     	}
-    	System.out.println("Substance found at line " + parser.getLineNumber());
 
     	while (parser.next() != XmlPullParser.END_DOCUMENT) {
     		if (parser.getEventType() == XmlPullParser.END_TAG) {
@@ -247,7 +249,6 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
     			} else if (EL_PCSUBSTANCE_SID.equals(parser.getName())) {
     				String sid = getSID(parser);
     				model.setProperty(CDKConstants.TITLE, sid);
-    				System.out.println("SID: " + sid);
     			}
     		}
     	}
@@ -359,9 +360,13 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
     			if (EL_ELEMENT.equals(parser.getName())) {
     				int atomicNumber = Integer.parseInt(parser.nextText());
     				IElement element = factory.getElement(atomicNumber);
-    				IAtom atom = molecule.getBuilder().newAtom(element.getSymbol());
-    				atom.setAtomicNumber(element.getAtomicNumber());
-    				molecule.addAtom(atom);
+    				if (element != null) {
+    					IAtom atom = molecule.getBuilder().newAtom(element.getSymbol());
+    					atom.setAtomicNumber(element.getAtomicNumber());
+    					molecule.addAtom(atom);
+    				} else {
+    					molecule.addAtom(builder.newAtom());
+    				}
     			}
     		}
 		}
