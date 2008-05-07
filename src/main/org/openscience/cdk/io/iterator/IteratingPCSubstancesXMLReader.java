@@ -132,7 +132,7 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
         return PubChemSubstancesXMLFormat.getInstance();
     }
 
-    public boolean hasNext() {
+    public boolean hasNext() throws CDKException {
         if (!nextAvailableIsKnown) {
             hasNext = false;
             
@@ -152,7 +152,9 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
             	}
             	
 			} catch (Exception e) {
-				e.printStackTrace();
+				if (mode == Mode.STRICT) {
+					throw new CDKException("Error while parsing the XML: " + e.getMessage(), e);
+				}
 				hasNext = false;
 			}
             
@@ -162,7 +164,7 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
         return hasNext;
     }
     
-	public IChemObject next() {
+	public IChemObject next() throws CDKException {
         if (!nextAvailableIsKnown) {
             hasNext();
         }
