@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
 import org.openscience.cdk.isomorphism.AtomMappingTools;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNAtomContainer;

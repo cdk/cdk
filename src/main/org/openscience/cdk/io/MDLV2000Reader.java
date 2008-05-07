@@ -385,7 +385,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                     atom = molecule.getBuilder().newPseudoAtom(element);
                 } else {
-                	if (mode == IChemObjectReader.Mode.STRICT) {
+                	if (mode == ISimpleChemObjectReader.Mode.STRICT) {
                 		throw new CDKException("Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");
                 	}
                 	atom = molecule.getBuilder().newPseudoAtom(element);

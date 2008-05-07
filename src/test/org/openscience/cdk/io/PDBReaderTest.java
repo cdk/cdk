@@ -28,7 +28,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.protein.data.PDBAtom;
@@ -62,7 +62,7 @@ public class PDBReaderTest extends NewCDKTestCase {
         String filename = "data/pdb/coffeine.pdb";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-        IChemObjectReader oReader = new PDBReader(ins);
+        ISimpleChemObjectReader oReader = new PDBReader(ins);
         Assert.assertNotNull(oReader);
 
         IChemFile oChemFile = (IChemFile)oReader.read(new NNChemFile());
@@ -128,7 +128,7 @@ public class PDBReaderTest extends NewCDKTestCase {
 		String filename = "data/pdb/Test-1crn.pdb";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-		IChemObjectReader reader = new PDBReader(ins);
+		ISimpleChemObjectReader reader = new PDBReader(ins);
 		Assert.assertNotNull(reader);
 
 		ChemFile chemFile = (ChemFile) reader.read(new NNChemFile());
@@ -172,7 +172,7 @@ public class PDBReaderTest extends NewCDKTestCase {
 	    String filename = "data/pdb/114D.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    IChemObjectReader reader = new PDBReader(ins);
+	    ISimpleChemObjectReader reader = new PDBReader(ins);
 	    Assert.assertNotNull(reader);
 
 	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
@@ -240,7 +240,7 @@ public class PDBReaderTest extends NewCDKTestCase {
 	    String filename = "data/pdb/1SPX.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    IChemObjectReader reader = new PDBReader(ins);
+	    ISimpleChemObjectReader reader = new PDBReader(ins);
 	    Assert.assertNotNull(reader);
 
 	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
@@ -276,7 +276,7 @@ public class PDBReaderTest extends NewCDKTestCase {
 	    String filename = "data/pdb/1XKQ.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    IChemObjectReader reader = new PDBReader(ins);
+	    ISimpleChemObjectReader reader = new PDBReader(ins);
 	    Assert.assertNotNull(reader);
 
 	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
@@ -312,7 +312,7 @@ public class PDBReaderTest extends NewCDKTestCase {
 	    String filename = "data/pdb/1A00.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    IChemObjectReader reader = new PDBReader(ins);
+	    ISimpleChemObjectReader reader = new PDBReader(ins);
 	    Assert.assertNotNull(reader);
 
 	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
@@ -349,7 +349,7 @@ public class PDBReaderTest extends NewCDKTestCase {
 	    String filename = "data/pdb/1BOQ.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    IChemObjectReader reader = new PDBReader(ins);
+	    ISimpleChemObjectReader reader = new PDBReader(ins);
 	    Assert.assertNotNull(reader);
 
 	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
@@ -385,7 +385,7 @@ public class PDBReaderTest extends NewCDKTestCase {
 	    String filename = "data/pdb/1TOH.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    IChemObjectReader reader = new PDBReader(ins);
+	    ISimpleChemObjectReader reader = new PDBReader(ins);
 	    Assert.assertNotNull(reader);
 
 	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
@@ -420,7 +420,7 @@ public class PDBReaderTest extends NewCDKTestCase {
 	    String filename = "data/pdb/1CKV.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    IChemObjectReader reader = new PDBReader(ins);
+	    ISimpleChemObjectReader reader = new PDBReader(ins);
 	    Assert.assertNotNull(reader);
 
 	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());
@@ -456,7 +456,7 @@ public class PDBReaderTest extends NewCDKTestCase {
 	    String filename = "data/pdb/1D66.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 
-	    IChemObjectReader reader = new PDBReader(ins);
+	    ISimpleChemObjectReader reader = new PDBReader(ins);
 	    Assert.assertNotNull(reader);
 
 	    IChemFile chemFile = (IChemFile) reader.read(new NNChemFile());

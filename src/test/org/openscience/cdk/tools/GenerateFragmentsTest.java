@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -55,7 +55,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
 	    	String filename = "data/mdl/murckoTest1.mol";
 	    	//logger.debug("\nMurckoTesting: " + filename);
 	    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-	    	IChemObjectReader reader = new MDLV2000Reader(ins);
+	    	ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
 	    	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
 	    	gf.generateMurckoFragments(mol,true,true,4);
 	    	//logger.debug("Murcko Fragments generated");
@@ -71,7 +71,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	String filename = "data/mdl/murckoTest2.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	IChemObjectReader reader = new MDLV2000Reader(ins);
+    	ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
     	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
     	gf.generateMurckoFragments(mol,true,true,4);
     	//logger.debug("Murcko Fragments generated");
@@ -87,7 +87,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	String filename = "data/mdl/murckoTest3.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	IChemObjectReader reader = new MDLV2000Reader(ins);
+    	ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
     	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
     	gf.generateMurckoFragments(mol,true,true,4);
     	//logger.debug("Murcko Fragments generated");
@@ -100,7 +100,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	String filename = "data/mdl/murckoTest4.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	IChemObjectReader reader = new MDLV2000Reader(ins);
+    	ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
     	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
     	gf.generateMurckoFragments(mol,true,true,4);
     	//logger.debug("Murcko Fragments generated");
@@ -130,7 +130,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	String filename = "data/mdl/murckoTest5.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	IChemObjectReader reader = new MDLV2000Reader(ins);
+    	ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
     	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
     	gf.generateMurckoFragments(mol,true,true,4);
     	//logger.debug("Murcko Fragments generated");
@@ -145,7 +145,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	String filename = "data/mdl/murckoTest6.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	IChemObjectReader reader = new MDLV2000Reader(ins);
+    	ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
     	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
     	gf.generateMurckoFragments(mol,true,true,4);
     	//logger.debug("Murcko Fragments generated");
@@ -231,7 +231,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	String filename = "data/mdl/murckoTest7.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	IChemObjectReader reader = new MDLV2000Reader(ins);
+    	ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
     	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
     	gf.generateMurckoFragments(mol,true,true,4);
     	//logger.debug("Murcko Fragments generated");
@@ -251,7 +251,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	String filename = "data/mdl/murckoTest8.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	IChemObjectReader reader = new MDLV2000Reader(ins);
+    	ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
     	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
     	gf.generateMurckoFragments(mol,true,true,4);
     	//logger.debug("Murcko Fragments generated");
@@ -323,7 +323,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	String filename = "data/mdl/murckoTest9.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	IChemObjectReader reader = new MDLV2000Reader(ins);
+    	ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
     	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
     	gf.generateMurckoFragments(mol,true,true,4);
     	//logger.debug("Murcko Fragments generated");
@@ -339,7 +339,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	String filename = "data/mdl/murckoTest10.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	IChemObjectReader reader = new MDLV2000Reader(new InputStreamReader(ins));
+    	ISimpleChemObjectReader reader = new MDLV2000Reader(new InputStreamReader(ins));
     	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
     	gf.generateMurckoFragments(mol,true,true,4);
     	//logger.debug("Murcko Fragments generated");
@@ -355,7 +355,7 @@ public class GenerateFragmentsTest extends CDKTestCase{
     	String filename = "data/mdl/murckoTest11.mol";
     	//logger.debug("\nMurckoTesting: " + filename);
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	IChemObjectReader reader = new MDLV2000Reader(new InputStreamReader(ins));
+    	ISimpleChemObjectReader reader = new MDLV2000Reader(new InputStreamReader(ins));
     	IMolecule mol = (IMolecule)reader.read(new NNMolecule());
     	//System.out.println(mol.toString());
     	//This strange, when the next line is comment out the test will fail

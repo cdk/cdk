@@ -38,7 +38,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;

@@ -249,7 +249,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     }
                     atom = readData.getBuilder().newPseudoAtom(element);
                 } else {
-                	if (mode == IChemObjectReader.Mode.STRICT) {
+                	if (mode == ISimpleChemObjectReader.Mode.STRICT) {
                 		throw new CDKException("Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");
                 	}
                 	atom = readData.getBuilder().newPseudoAtom(element);

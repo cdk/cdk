@@ -27,7 +27,7 @@ import java.io.File;
 import java.io.FileReader;
 
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -82,7 +82,7 @@ public class SubstructureFinder {
                 try {
                     File input = new File(ifilename);
                     if (!input.isDirectory()) {
-                        IChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
+                        ISimpleChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
                         if (reader.accepts(Molecule.class)) {
                             Molecule molecule = (Molecule)reader.read(new Molecule());
                             if (molecule != null) {

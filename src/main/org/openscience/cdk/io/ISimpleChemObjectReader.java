@@ -49,7 +49,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @author Egon Willighagen <egonw@users.sf.net>
  **/
-public interface IChemObjectReader extends IChemObjectIO {
+public interface ISimpleChemObjectReader extends IChemObjectIO {
 
 	public enum Mode {
 		/** Only fail on serious format problems */

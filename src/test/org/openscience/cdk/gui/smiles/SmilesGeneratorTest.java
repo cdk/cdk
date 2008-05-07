@@ -42,7 +42,7 @@ import org.openscience.cdk.graph.AtomContainerBondPermutor;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.Renderer2DModel;

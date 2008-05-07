@@ -33,7 +33,7 @@ import org.openscience.cdk.atomtype.MM2AtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -68,7 +68,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     		MM2AtomTypeMatcher atm= new MM2AtomTypeMatcher();
     		logger.debug("**** reading MOL file ******");
     		InputStream ins = MM2AtomTypeMatcher.class.getClassLoader().getResourceAsStream("data/mdl/mmff94AtomTypeTest_molecule.mol");
-    		IChemObjectReader mdl = new MDLV2000Reader(ins);
+    		ISimpleChemObjectReader mdl = new MDLV2000Reader(ins);
     		testMolecule=(IMolecule)mdl.read(new NNMolecule());
     		logger.debug("Molecule load:"+testMolecule.getAtomCount());
     		att.assignAtomTypePropertiesToAtom(testMolecule);

@@ -26,7 +26,7 @@ package org.openscience.cdk.io.iterator;
 
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.*;
 import org.openscience.cdk.tools.LoggingTool;
@@ -140,7 +140,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
                     buffer.append(currentLine);
                     buffer.append("\n");
                     logger.debug("MDL file part read: ", buffer);
-                    IChemObjectReader reader = factory.createReader(currentFormat);
+                    ISimpleChemObjectReader reader = factory.createReader(currentFormat);
                     reader.setReader(new StringReader(buffer.toString()));
                     nextMolecule = (IMolecule)reader.read(builder.newMolecule());
 

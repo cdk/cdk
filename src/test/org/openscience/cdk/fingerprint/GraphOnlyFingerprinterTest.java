@@ -32,7 +32,7 @@ import org.openscience.cdk.fingerprint.FingerprinterTool;
 import org.openscience.cdk.fingerprint.GraphOnlyFingerprinter;
 import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -108,7 +108,7 @@ public class GraphOnlyFingerprinterTest extends NewCDKTestCase {
     private static Molecule createMolecule(String molecule) throws IOException, CDKException {
     	Molecule structure = null;
     	if (molecule != null) {
-    		IChemObjectReader reader = new MDLV2000Reader(new StringReader(molecule));
+    		ISimpleChemObjectReader reader = new MDLV2000Reader(new StringReader(molecule));
     		Assert.assertNotNull("Could not create reader", reader);
     		if (reader.accepts(Molecule.class)) {
     			structure = (Molecule) reader.read(new Molecule());

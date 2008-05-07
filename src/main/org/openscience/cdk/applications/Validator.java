@@ -33,7 +33,7 @@ import java.util.Enumeration;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.validate.BasicValidator;
@@ -71,7 +71,7 @@ public class Validator {
     
     public ValidationReport validate(File input) throws IOException {
         Reader fileReader = new FileReader(input);
-        IChemObjectReader reader = new ReaderFactory().createReader(fileReader);
+        ISimpleChemObjectReader reader = new ReaderFactory().createReader(fileReader);
         if (reader == null) {
             System.out.println("Cannot parse file with unknown file type: " + input.toString());
             return new ValidationReport();

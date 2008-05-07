@@ -33,7 +33,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -77,7 +77,7 @@ public class TanimotoCoefficient {
             try {
                 File input = new File(ifilename);
                 if (!input.isDirectory()) {
-                    IChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
+                    ISimpleChemObjectReader reader = new ReaderFactory().createReader(new FileReader(input));
                     if (reader.accepts(Molecule.class)) {
                         ChemFile content = (ChemFile)reader.read((ChemObject)new ChemFile());
                         List containersList = ChemFileManipulator.getAllAtomContainers(content);

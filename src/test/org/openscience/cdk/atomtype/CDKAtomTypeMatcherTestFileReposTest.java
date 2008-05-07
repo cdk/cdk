@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.nonotify.NNChemFile;
@@ -73,7 +73,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     	};
     	int tested = 0;
     	int failed = 0;
-    	IChemObjectReader reader = new PDBReader();
+    	ISimpleChemObjectReader reader = new PDBReader();
     	for (int i=0;i<testFiles.length; i++) {
     		TestResults results = testFile(DIRNAME, testFiles[i], reader);
     		tested += results.tested;
@@ -89,7 +89,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     	};
     	int tested = 0;
     	int failed = 0;
-    	IChemObjectReader reader = new PDBReader();
+    	ISimpleChemObjectReader reader = new PDBReader();
     	for (int i=0;i<testFiles.length; i++) {
     		TestResults results = testFile(DIRNAME, testFiles[i], reader);
     		tested += results.tested;
@@ -105,7 +105,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     	};
     	int tested = 0;
     	int failed = 0;
-    	IChemObjectReader reader = new PDBReader();
+    	ISimpleChemObjectReader reader = new PDBReader();
     	for (int i=0;i<testFiles.length; i++) {
     		TestResults results = testFile(DIRNAME, testFiles[i], reader);
     		tested += results.tested;
@@ -220,7 +220,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     	};
     	int tested = 0;
     	int failed = 0;
-    	IChemObjectReader reader = new MDLV2000Reader();
+    	ISimpleChemObjectReader reader = new MDLV2000Reader();
     	for (int i=0;i<testFiles.length; i++) {
     		TestResults results = testFile(DIRNAME, testFiles[i], reader);
     		tested += results.tested;
@@ -229,7 +229,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     	Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
     }
     
-    private TestResults testFile(String dir, String filename, IChemObjectReader reader) throws Exception {    	
+    private TestResults testFile(String dir, String filename, ISimpleChemObjectReader reader) throws Exception {    	
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(dir+filename);
         reader.setReader(ins);

@@ -32,7 +32,7 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.SMILESReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -76,7 +76,7 @@ public class SDFSubstructureFinder {
         try {
         	File input = new File(ifilename);
         	if (!input.isDirectory()) {
-        		IChemObjectReader reader = new SMILESReader(new FileReader(input));
+        		ISimpleChemObjectReader reader = new SMILESReader(new FileReader(input));
         		if (reader.accepts(MoleculeSet.class)) {
         			substructure = ((IMoleculeSet)reader.read(new MoleculeSet())).getMolecule(0);
         		}

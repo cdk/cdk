@@ -39,10 +39,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.XYZReader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
 import org.openscience.cdk.math.qm.ClosedShellJob;
 import org.openscience.cdk.math.qm.GaussiansBasis;
 import org.openscience.cdk.math.qm.Orbitals;
@@ -67,7 +67,7 @@ public class GaussiansCalculationTest
 	public GaussiansCalculationTest(String inFile)
   { 
     try {
-      IChemObjectReader reader;
+      ISimpleChemObjectReader reader;
       System.out.println("Loading: " + inFile);
       if (inFile.endsWith(".xyz"))
       { 

@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.descriptors.molecular.LengthOverBreadthDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
@@ -38,7 +38,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
     public void testLOBDescriptorCholesterol() throws ClassNotFoundException, CDKException, Exception {
         String filename = "data/mdl/lobtest.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IChemObjectReader reader = new MDLV2000Reader(ins);
+        ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
@@ -52,7 +52,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
     public void testLOBDescriptorCyclohexane() throws ClassNotFoundException, CDKException, Exception {
         String filename = "data/mdl/lobtest.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IChemObjectReader reader = new MDLV2000Reader(ins);
+        ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(1);
@@ -66,7 +66,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
     public void testLOBDescriptorNaphthalene() throws ClassNotFoundException, CDKException, Exception {
         String filename = "data/mdl/lobtest.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IChemObjectReader reader = new MDLV2000Reader(ins);
+        ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(2);
@@ -80,7 +80,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
     public void testLOBDescriptorNButane() throws ClassNotFoundException, CDKException, Exception {
         String filename = "data/mdl/lobtest.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IChemObjectReader reader = new MDLV2000Reader(ins);
+        ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(3);

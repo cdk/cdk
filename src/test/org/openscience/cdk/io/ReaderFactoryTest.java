@@ -92,7 +92,7 @@ public class ReaderFactoryTest extends CDKTestCase {
 
     public void testCreateReader_IChemFormat() {
     	IChemFormat format = (IChemFormat)XYZFormat.getInstance();
-        IChemObjectReader reader = factory.createReader(format);
+        ISimpleChemObjectReader reader = factory.createReader(format);
         assertNotNull(reader);
         assertEquals(format.getFormatName(), reader.getFormat().getFormatName());
     }
@@ -224,7 +224,7 @@ public class ReaderFactoryTest extends CDKTestCase {
         assertEquals(expectedFormat.getFormatName(), format.getFormatName());
         // ok, if format ok, try instantiating a reader
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IChemObjectReader reader = factory.createReader(ins);
+        ISimpleChemObjectReader reader = factory.createReader(ins);
         assertNotNull(reader);
         assertEquals(format.getReaderClassName(), reader.getClass().getName());
         // now try reading something from it

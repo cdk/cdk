@@ -25,7 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.IDCreator;

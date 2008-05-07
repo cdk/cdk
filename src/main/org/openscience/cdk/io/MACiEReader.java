@@ -375,7 +375,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                     if (file.exists()) {
                         logger.info("Reading overall reaction from: ", filename);
                         FileReader reader = new FileReader(file);
-                        IChemObjectReader rxnReader = new ReaderFactory().createReader(reader);
+                        ISimpleChemObjectReader rxnReader = new ReaderFactory().createReader(reader);
                         currentReaction = (Reaction)rxnReader.read(new Reaction());
                         currentReaction.setID(datum);
                         currentReaction.setProperty(CDKConstants.TITLE, "Overall Reaction");
@@ -412,7 +412,7 @@ public class MACiEReader extends DefaultChemObjectReader {
                     if (file.exists()) {
                         logger.info("Reading reaction step from: ", filename);
                         FileReader reader = new FileReader(file);
-                        IChemObjectReader rxnReader = new ReaderFactory().createReader(reader);
+                        ISimpleChemObjectReader rxnReader = new ReaderFactory().createReader(reader);
                         currentReaction = (Reaction)rxnReader.read(new Reaction());
                         currentReaction.setID(datum);
                         currentReaction.setProperty(CDKConstants.TITLE, "Step " + fieldNumber);

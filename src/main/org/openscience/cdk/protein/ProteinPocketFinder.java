@@ -22,7 +22,7 @@ package org.openscience.cdk.protein;
 
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.tools.GridGenerator;
@@ -116,7 +116,7 @@ public class ProteinPocketFinder {
 		try {
 			// Read PDB file
 			FileReader fileReader = new FileReader(biopolymerFile);
-			IChemObjectReader reader = new ReaderFactory()
+			ISimpleChemObjectReader reader = new ReaderFactory()
 					.createReader(fileReader);
 			IChemFile chemFile = (IChemFile) reader
 					.read((IChemObject) new org.openscience.cdk.ChemFile());

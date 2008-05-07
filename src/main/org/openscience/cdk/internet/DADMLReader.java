@@ -46,7 +46,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.tools.DataFeatures;
@@ -281,7 +281,7 @@ public class DADMLReader {
             BufferedReader bufReader = new BufferedReader(
                 new InputStreamReader(connection.getInputStream())
             );
-            IChemObjectReader reader = new ReaderFactory().createReader(bufReader);
+            ISimpleChemObjectReader reader = new ReaderFactory().createReader(bufReader);
             ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
             logger.debug("#sequences: ", chemFile.getChemSequenceCount());
             org.openscience.cdk.interfaces.IChemSequence chemSequence = chemFile.getChemSequence(0);

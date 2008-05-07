@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.validate.Geometry3DValidator;
 import org.openscience.cdk.validate.ValidationReport;

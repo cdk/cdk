@@ -30,10 +30,10 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.applications.swing.MoleculesTable;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.XYZReader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
 
 /**
  * @cdk.module test-extra
@@ -42,7 +42,7 @@ public class TableTest {
 
     public TableTest(String inFile) {
       try {        
-        IChemObjectReader reader;
+        ISimpleChemObjectReader reader;
         System.out.println("Loading: " + inFile);
         if (inFile.endsWith(".xyz")) {
   	      reader = new XYZReader(new FileInputStream(inFile));

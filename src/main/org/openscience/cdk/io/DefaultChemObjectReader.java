@@ -34,14 +34,14 @@ import org.openscience.cdk.io.setting.IOSetting;
  * @cdk.module io
  * @cdk.svnrev $Revision$
  */
-public abstract class DefaultChemObjectReader implements IChemObjectReader {
+public abstract class DefaultChemObjectReader implements ISimpleChemObjectReader {
 
     /**
      * An event to be sent to listeners when a frame is read.
      */
     private ReaderEvent frameReadEvent = null;
     
-    protected IChemObjectReader.Mode mode = IChemObjectReader.Mode.RELAXED;
+    protected ISimpleChemObjectReader.Mode mode = ISimpleChemObjectReader.Mode.RELAXED;
 
     /**
      * Holder of reader event listeners.
@@ -85,7 +85,7 @@ public abstract class DefaultChemObjectReader implements IChemObjectReader {
         return new IOSetting[0];
     }
     
-    public void setReaderMode(IChemObjectReader.Mode mode) {
+    public void setReaderMode(ISimpleChemObjectReader.Mode mode) {
     	
     }
     

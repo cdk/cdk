@@ -64,7 +64,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.CDKSourceCodeWriter;
 import org.openscience.cdk.io.HINWriter;
 import org.openscience.cdk.io.IChemObjectIO;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.IChemObjectWriter;
 import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.PDBWriter;
@@ -113,7 +113,7 @@ public class FileConvertor {
     private LoggingTool logger;
 
     private IChemObjectBuilder builder;
-    private IChemObjectReader cor;
+    private ISimpleChemObjectReader cor;
     private String oformat;
     private IChemObjectWriter cow;
 
@@ -287,9 +287,9 @@ public class FileConvertor {
 
     // PRIVATE INTERNAL STUFF
 
-    private IChemObjectReader getChemObjectReader(File file) throws IOException {
+    private ISimpleChemObjectReader getChemObjectReader(File file) throws IOException {
         InputStream fileReader = new FileInputStream(file);
-        IChemObjectReader reader = new ReaderFactory().createReader(fileReader);
+        ISimpleChemObjectReader reader = new ReaderFactory().createReader(fileReader);
         if (reader != null) {
             if (settingListener != null) {
                 reader.addChemObjectIOListener(settingListener);

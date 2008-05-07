@@ -49,7 +49,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.protein.data.PDBPolymer;
@@ -663,7 +663,7 @@ public class CML2Test extends CDKTestCase {
 //	    InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename_cml);
 	    
 	    /*1*/
-	    IChemObjectReader reader = new PDBReader(ins1);
+	    ISimpleChemObjectReader reader = new PDBReader(ins1);
 	    IChemFile chemFile1 = (IChemFile) reader.read(new NNChemFile());
 	    IChemSequence seq1 = chemFile1.getChemSequence(0);
 	    IChemModel model1 = seq1.getChemModel(0);

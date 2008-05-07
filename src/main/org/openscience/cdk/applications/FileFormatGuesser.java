@@ -26,7 +26,7 @@ package org.openscience.cdk.applications;
 import java.io.File;
 import java.io.FileReader;
 
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
@@ -68,7 +68,7 @@ public class FileFormatGuesser {
                 ReaderFactory factory = new ReaderFactory();
                 File input = new File(ifilename);
                 if (!input.isDirectory()) {
-                    IChemObjectReader reader = factory.createReader(new FileReader(input));
+                    ISimpleChemObjectReader reader = factory.createReader(new FileReader(input));
                     if (reader != null) {
                         System.out.println(ifilename + ": " + reader.getFormat().getFormatName());
                     } else {

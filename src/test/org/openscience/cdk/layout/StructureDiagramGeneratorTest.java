@@ -46,11 +46,11 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.io.IChemObjectReader;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.Mol2Reader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.ISimpleChemObjectReader.Mode;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -374,7 +374,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 
 //		set up molecule reader
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		IChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
+		ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
 
 //		read molecule
 		IMolecule molecule = (IMolecule) molReader.read(new
@@ -809,7 +809,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 
 //		set up molecule reader
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		IChemObjectReader molReader = new MDLReader(ins, Mode.STRICT);
+		ISimpleChemObjectReader molReader = new MDLReader(ins, Mode.STRICT);
 
 //		read molecule
 		return ((IMolecule) molReader.read(new	Molecule()));
@@ -839,7 +839,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		// set up molecule reader
 		String filename = "data/mdl/bug1772609.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		IChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
+		ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
 		
 		// read molecule
 		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newMolecule());
@@ -871,7 +871,7 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		// set up molecule reader
 		String filename = "data/mdl/bug1784850.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		IChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
+		ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
 		
 		// read molecule
 		IMolecule molecule = (IMolecule) molReader.read(DefaultChemObjectBuilder.getInstance().newMolecule());

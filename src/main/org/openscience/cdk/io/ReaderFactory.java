@@ -235,7 +235,7 @@ public class ReaderFactory {
      *
      * @see #createReader(Reader)
      */
-    public IChemObjectReader createReader(InputStream input) throws IOException {
+    public ISimpleChemObjectReader createReader(InputStream input) throws IOException {
         BufferedInputStream bistream = new BufferedInputStream(input, 8192);
         InputStream istreamToRead = bistream; // if gzip test fails, then take default
         bistream.mark(5);
@@ -261,13 +261,13 @@ public class ReaderFactory {
      *
      * @see #createReader(InputStream)
      */
-    public IChemObjectReader createReader(IChemFormat format) {
+    public ISimpleChemObjectReader createReader(IChemFormat format) {
         if (format != null) {
             String readerClassName = format.getReaderClassName();
             if (readerClassName != null) {
                 try {
                     // make a new instance of this class
-                	return (IChemObjectReader)this.getClass().getClassLoader().
+                	return (ISimpleChemObjectReader)this.getClass().getClassLoader().
                         loadClass(readerClassName).newInstance();
                 } catch (ClassNotFoundException exception) {
                     logger.error("Could not find this ChemObjectReader: ", readerClassName);
@@ -293,12 +293,12 @@ public class ReaderFactory {
      *
      * @see #createReader(InputStream)
      */
-    public IChemObjectReader createReader(Reader input) throws IOException {
+    public ISimpleChemObjectReader createReader(Reader input) throws IOException {
         if (!(input instanceof BufferedReader)) {
             input = new BufferedReader(input);
         }
         IChemFormat chemFormat = guessFormat((BufferedReader)input);
-        IChemObjectReader coReader = createReader(chemFormat);
+        ISimpleChemObjectReader coReader = createReader(chemFormat);
         try {        	
         	coReader.setReader(input);
         } catch (Exception exception) {
