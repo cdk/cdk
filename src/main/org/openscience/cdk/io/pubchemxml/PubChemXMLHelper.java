@@ -72,6 +72,10 @@ public class PubChemXMLHelper {
 	// atom block elements
 	public final static String EL_ATOMBLOCK = "PC-Atoms";
 	public final static String EL_ATOMSELEMENT = "PC-Atoms_element";
+	public final static String EL_ATOMSCHARGE = "PC-Atoms_charge";
+	public final static String EL_ATOMINT = "PC-AtomInt";
+	public final static String EL_ATOMINT_AID = "PC-AtomInt_aid";
+	public final static String EL_ATOMINT_VALUE = "PC-AtomInt_value";
 	public final static String EL_ELEMENT = "PC-Element";
 	
 	// bond block elements
@@ -178,12 +182,43 @@ public class PubChemXMLHelper {
     		} else if (parser.getEventType() == XmlPullParser.START_TAG) {
     			if (EL_ATOMSELEMENT.equals(parser.getName())) {
     				parseAtomElements(parser, molecule);
+    			} else if (EL_ATOMSCHARGE.equals(parser.getName())) {
+    				parseAtomCharges(parser, molecule);
     			}
     		}
 		}
 	}
 	
-    public IMolecule parseMolecule(XmlPullParser parser, IChemObjectBuilder builder) throws Exception {
+    public void parseAtomCharges(XmlPullParser parser, IMolecule molecule) throws Exception {
+    	while (parser.next() != XmlPullParser.END_DOCUMENT) {
+    		if (parser.getEventType() == XmlPullParser.END_TAG) {
+    			if (EL_ATOMSCHARGE.equals(parser.getName())) {
+    				break; // done parsing the molecule
+    			}
+    		} else if (parser.getEventType() == XmlPullParser.START_TAG) {
+    			if (EL_ATOMINT.equals(parser.getName())) {
+    				int aid = 0;
+    				int charge = 0;
+    				while (parser.next() != XmlPullParser.END_DOCUMENT) {
+    		    		if (parser.getEventType() == XmlPullParser.END_TAG) {
+    		    			if (EL_ATOMINT.equals(parser.getName())) {
+    		    				molecule.getAtom(aid-1).setFormalCharge(charge);
+    		    				break; // done parsing an atoms charge
+    		    			}
+    		    		} else if (parser.getEventType() == XmlPullParser.START_TAG) {
+    		    			if (EL_ATOMINT_AID.equals(parser.getName())) {
+    		    				aid = Integer.parseInt(parser.nextText());
+    		    			} else if (EL_ATOMINT_VALUE.equals(parser.getName())) {
+    		    				charge = Integer.parseInt(parser.nextText());
+    		    			}
+    		    		}
+    		    	}
+    			}
+    		}
+    	}
+    }
+
+	public IMolecule parseMolecule(XmlPullParser parser, IChemObjectBuilder builder) throws Exception {
     	IMolecule molecule = builder.newMolecule();
     	// assume the current element is PC-Compound
     	if (!parser.getName().equals("PC-Compound")) {
