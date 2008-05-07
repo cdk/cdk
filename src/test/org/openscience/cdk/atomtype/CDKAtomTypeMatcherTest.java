@@ -2287,6 +2287,73 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.inchi InChI=1/C3H9NO/c1-4(2,3)5/h1-3H3
+     */
+    @Test public void cid1145() throws Exception {
+    	IMolecule mol = new Molecule();
+    	IAtom a1 = mol.getBuilder().newAtom("O");
+    	mol.addAtom(a1); a1.setFormalCharge(-1);
+    	IAtom a2 = mol.getBuilder().newAtom("N");
+    	mol.addAtom(a2); a2.setFormalCharge(+1);
+    	IAtom a3 = mol.getBuilder().newAtom("C");
+    	mol.addAtom(a3);
+    	IAtom a4 = mol.getBuilder().newAtom("C");
+    	mol.addAtom(a4);
+    	IAtom a5 = mol.getBuilder().newAtom("C");
+    	mol.addAtom(a5);
+    	IAtom a6 = mol.getBuilder().newAtom("H");
+    	mol.addAtom(a6);
+    	IAtom a7 = mol.getBuilder().newAtom("H");
+    	mol.addAtom(a7);
+    	IAtom a8 = mol.getBuilder().newAtom("H");
+    	mol.addAtom(a8);
+    	IAtom a9 = mol.getBuilder().newAtom("H");
+    	mol.addAtom(a9);
+    	IAtom a10 = mol.getBuilder().newAtom("H");
+    	mol.addAtom(a10);
+    	IAtom a11 = mol.getBuilder().newAtom("H");
+    	mol.addAtom(a11);
+    	IAtom a12 = mol.getBuilder().newAtom("H");
+    	mol.addAtom(a12);
+    	IAtom a13 = mol.getBuilder().newAtom("H");
+    	mol.addAtom(a13);
+    	IAtom a14 = mol.getBuilder().newAtom("H");
+    	mol.addAtom(a14);
+    	IBond b1 = mol.getBuilder().newBond(a1, a2, IBond.Order.SINGLE);
+    	mol.addBond(b1);
+    	IBond b2 = mol.getBuilder().newBond(a2, a3, IBond.Order.SINGLE);
+    	mol.addBond(b2);
+    	IBond b3 = mol.getBuilder().newBond(a2, a4, IBond.Order.SINGLE);
+    	mol.addBond(b3);
+    	IBond b4 = mol.getBuilder().newBond(a2, a5, IBond.Order.SINGLE);
+    	mol.addBond(b4);
+    	IBond b5 = mol.getBuilder().newBond(a3, a6, IBond.Order.SINGLE);
+    	mol.addBond(b5);
+    	IBond b6 = mol.getBuilder().newBond(a3, a7, IBond.Order.SINGLE);
+    	mol.addBond(b6);
+    	IBond b7 = mol.getBuilder().newBond(a3, a8, IBond.Order.SINGLE);
+    	mol.addBond(b7);
+    	IBond b8 = mol.getBuilder().newBond(a4, a9, IBond.Order.SINGLE);
+    	mol.addBond(b8);
+    	IBond b9 = mol.getBuilder().newBond(a4, a10, IBond.Order.SINGLE);
+    	mol.addBond(b9);
+    	IBond b10 = mol.getBuilder().newBond(a4, a11, IBond.Order.SINGLE);
+    	mol.addBond(b10);
+    	IBond b11 = mol.getBuilder().newBond(a5, a12, IBond.Order.SINGLE);
+    	mol.addBond(b11);
+    	IBond b12 = mol.getBuilder().newBond(a5, a13, IBond.Order.SINGLE);
+    	mol.addBond(b12);
+    	IBond b13 = mol.getBuilder().newBond(a5, a14, IBond.Order.SINGLE);
+    	mol.addBond(b13);
+    	
+    	String[] expectedTypes = {
+    		"O.minus", "N.plus", "C.sp3", "C.sp3", "C.sp3", 
+    		"H", "H", "H", "H", "H", "H", "H", "H", "H"
+    	};
+    	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
     @Test public void countTestedAtomTypes() {
     	super.countTestedAtomTypes(testedAtomTypes);
     }
