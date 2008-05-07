@@ -41,7 +41,7 @@ public abstract class DefaultChemObjectReader implements ISimpleChemObjectReader
      */
     private ReaderEvent frameReadEvent = null;
     
-    protected ISimpleChemObjectReader.Mode mode = ISimpleChemObjectReader.Mode.RELAXED;
+    protected IChemObjectReader.Mode mode = IChemObjectReader.Mode.RELAXED;
 
     /**
      * Holder of reader event listeners.
@@ -86,7 +86,7 @@ public abstract class DefaultChemObjectReader implements ISimpleChemObjectReader
     }
     
     public void setReaderMode(ISimpleChemObjectReader.Mode mode) {
-    	
+    	this.mode = mode;
     }
     
 }
