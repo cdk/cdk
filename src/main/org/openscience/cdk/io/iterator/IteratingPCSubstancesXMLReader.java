@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.kxml2.io.KXmlParser;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -46,6 +45,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.PubChemSubstancesXMLFormat;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 /**
  * Iterating PubChem PC-Substances ASN.1 XML reader.
@@ -78,7 +78,7 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
 	private final static String EL_BONDORDER = "PC-Bonds_order";
 	
 	private Reader primarySource;
-    private KXmlParser parser;
+    private XmlPullParser parser;
     private IChemObjectBuilder builder;
     private IsotopeFactory factory;
     
@@ -99,7 +99,11 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
         factory = IsotopeFactory.getInstance(builder);
         
         // initiate the pull parser
-        parser = new KXmlParser();
+        XmlPullParserFactory factory = XmlPullParserFactory.newInstance(
+                System.getProperty(XmlPullParserFactory.PROPERTY_NAME), null
+        );
+        factory.setNamespaceAware(true);
+        parser = factory.newPullParser();
         primarySource = in;
         parser.setInput(primarySource);
 
