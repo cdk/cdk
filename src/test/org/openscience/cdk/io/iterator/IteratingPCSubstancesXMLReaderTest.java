@@ -72,7 +72,7 @@ public class IteratingPCSubstancesXMLReaderTest extends CDKTestCase {
             modelCount++;
         }
 
-        assertEquals(25, modelCount);
+        assertEquals(77, modelCount);
         IChemModel first = set.getChemModel(0);
         assertEquals(63, ChemModelManipulator.getAtomCount(first));
         assertEquals(69, ChemModelManipulator.getBondCount(first));
