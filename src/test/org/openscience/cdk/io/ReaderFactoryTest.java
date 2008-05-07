@@ -60,7 +60,9 @@ import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.io.formats.PDBFormat;
 import org.openscience.cdk.io.formats.PubChemASNFormat;
+import org.openscience.cdk.io.formats.PubChemCompoundXMLFormat;
 import org.openscience.cdk.io.formats.PubChemCompoundsXMLFormat;
+import org.openscience.cdk.io.formats.PubChemSubstanceXMLFormat;
 import org.openscience.cdk.io.formats.PubChemSubstancesASNFormat;
 import org.openscience.cdk.io.formats.PubChemSubstancesXMLFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
@@ -199,6 +201,14 @@ public class ReaderFactoryTest extends CDKTestCase {
         expectFormat("data/asn/pubchem/taxols.xml", PubChemSubstancesXMLFormat.getInstance());
     }
     
+    public void testPubChemSubstanceXML() throws Exception {
+        expectReader("data/asn/pubchem/sid577309.xml", PubChemSubstanceXMLFormat.getInstance());
+    }
+    
+    public void testPubChemCompoundXML() throws Exception {
+        expectReader("data/asn/pubchem/cid1145.xml", PubChemCompoundXMLFormat.getInstance());
+    }
+    
     private void expectFormat(String filename, IResourceFormat expectedFormat) throws Exception {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         if (ins == null) {
@@ -234,8 +244,10 @@ public class ReaderFactoryTest extends CDKTestCase {
         };
         boolean read = false;
         for (int i=0; (i<objects.length && !read); i++) {
-        	reader.read(objects[i]);
-        	read = true;
+        	if (reader.accepts(objects[i].getClass())) {
+        		reader.read(objects[i]);
+        		read = true;
+        	}
         }
         if (read) {
         	// ok, reseting worked
