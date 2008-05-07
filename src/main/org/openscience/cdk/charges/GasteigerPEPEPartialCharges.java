@@ -25,6 +25,7 @@ package org.openscience.cdk.charges;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
@@ -40,8 +41,11 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
+import org.openscience.cdk.reaction.type.HeterolyticCleavagePBReaction;
 import org.openscience.cdk.reaction.type.HeterolyticCleavageSBReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
+import org.openscience.cdk.reaction.type.SharingAnionReaction;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -78,13 +82,11 @@ public class GasteigerPEPEPartialCharges {
 	/** Corresponds an empirical influence between the electrostatic potential and
 	 * the neighbours.*/
 	private double fE = 1.1;/*1.1*/
-	/** Scalle factor which makes same heavay for all structures*/
+	/** Scale factor which makes same heavy for all structures*/
 	private double fS = 0.37;
 	
 	
-	
 	private LoggingTool logger = new LoggingTool(GasteigerPEPEPartialCharges.class);
-
 	
 	/**
 	 *  Constructor for the GasteigerPEPEPartialCharges object
@@ -118,7 +120,8 @@ public class GasteigerPEPEPartialCharges {
 	 *@exception  Exception  Possible Exceptions
 	 */
 	public IAtomContainer assignGasteigerPiPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
-//		logger.debug("smiles1: "+(new SmilesGenerator()).createSMILES((IMolecule) ac));
+		logger.debug("smiles_Start: "+(new SmilesGenerator()).createSMILES((IMolecule) ac));
+		
 		IAtomContainerSet setHI = null;
 		
 		/*0: remove charge, and possible flag ac*/
@@ -131,11 +134,72 @@ public class GasteigerPEPEPartialCharges {
 		}
 		
 		/*1: detect resonance structure*/
-		StructureResonanceGenerator gR = new StructureResonanceGenerator();/*according G. should be integrated the breaking bonding*/
-		List<IReactionProcess> reactionList = gR.getReactions();
-                IMoleculeSet iSet = gR.getStructures((IMolecule) ac);
+		StructureResonanceGenerator gR1 = new StructureResonanceGenerator();/*according G. should be integrated the breaking bonding*/
+		List<IReactionProcess> reactionList1 = gR1.getReactions();
+		HashMap<String,Object> params1 = new HashMap<String,Object>();
+		params1.put("hasActiveCenter",Boolean.TRUE);;
+		HeterolyticCleavagePBReaction reactionHCPB = new HeterolyticCleavagePBReaction();
+		reactionHCPB.setParameters(params1);
+		reactionList1.add(new SharingAnionReaction());
+		Iterator<IReactionProcess> itReaction = reactionList1.iterator();
+		while(itReaction.hasNext()){
+	        IReactionProcess reaction = itReaction.next();
+	        reaction.setParameters(params1);
+		}
+		gR1.setReactions(reactionList1);
+		
+		StructureResonanceGenerator gR2 = new StructureResonanceGenerator();/*according G. should be integrated the breaking bonding*/
+		gR2.setMaximalStructures(MX_RESON);
+		List<IReactionProcess> reactionList2 = gR2.getReactions();
+		HashMap<String,Object> params2 = new HashMap<String,Object>();
+		params2.put("hasActiveCenter",Boolean.TRUE);
+		reactionList2.add(new HeterolyticCleavagePBReaction());
+		reactionList2.add(new SharingAnionReaction());
+		itReaction = reactionList2.iterator();
+		while(itReaction.hasNext()){
+	        IReactionProcess reaction = itReaction.next();
+	        reaction.setParameters(params2);
+		}
+		gR2.setReactions(reactionList2);
+		
+		/*find resonance containers, which eliminates the repetitions*/
+		StructureResonanceGenerator gRN = new StructureResonanceGenerator();/*according G. should be integrated the breaking bonding*/
+		IAtomContainerSet acSet = gRN.getContainers((IMolecule) removingFlagsAromaticity(ac));
+//		IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(removingFlagsAromaticity(ac));
+		
+		IMoleculeSet iSet = acSet.getBuilder().newMoleculeSet();
+		iSet.addAtomContainer(ac);
+		for(Iterator<IAtomContainer> it = acSet.atomContainers(); it.hasNext();){
+			IAtomContainer container = it.next();
+			ac = setFlags(container, ac, true);
+			
+			// Aromatic don't brake its double bond homolitically 
+			if(CDKHueckelAromaticityDetector.detectAromaticity(ac))
+				reactionList1.remove(reactionHCPB);
+			else
+				reactionList1.add(reactionHCPB);
+			
+			IMoleculeSet a = gR1.getStructures((IMolecule) removingFlagsAromaticity(ac));
+			if(a.getAtomContainerCount() > 1){
+				for(int j = 1; j < a.getAtomContainerCount(); j ++){ // the first is already added
+					iSet.addAtomContainer(a.getMolecule(j));			
+				}
+			}
+			ac = setFlags(container, ac, false);
 
-//		logger.debug("iset: "+iSet.getAtomContainerCount());
+			/*processing for which bonds which are not in resonance*/
+			for(int number = 0; number < ac.getBondCount() ; number++){
+				IAtomContainer aa = setAntiFlags(container,ac, number,true);
+				if(aa != null){
+					IMoleculeSet ab = gR2.getStructures((IMolecule) aa);
+					if(ab.getAtomContainerCount() > 1)
+						for(int j = 1; j < ab.getAtomContainerCount(); j ++){ // the first is already added
+							iSet.addAtomContainer(ab.getMolecule(j));			
+						}
+					ac = setAntiFlags(container, aa, number, false);
+				}
+			}
+		}
 		
 		/* detect hyperconjugation interactions */
 		setHI = getHyperconjugationInteractions(ac, iSet);
@@ -143,7 +207,7 @@ public class GasteigerPEPEPartialCharges {
 		if(setHI != null) {
 			if(	setHI.getAtomContainerCount() != 0)
 				iSet.add(setHI);
-//		logger.debug("isetTT: "+iSet.getAtomContainerCount());
+			logger.debug("setHI: "+iSet.getAtomContainerCount());
 		}
 		if(iSet.getAtomContainerCount() < 2)
 			return ac;
@@ -156,6 +220,7 @@ public class GasteigerPEPEPartialCharges {
 				sumCharges[i][j] = iac.getAtom(j).getFormalCharge();
 			
 		}
+		
 		for(int i = 1; i < iSet.getAtomContainerCount() ; i++){
 			IAtomContainer iac = iSet.getAtomContainer(i);
 			int count = 0;
@@ -180,10 +245,11 @@ public class GasteigerPEPEPartialCharges {
 		double[] Wt = new double[iSet.getAtomContainerCount()-1];
 		for(int i = 1; i < iSet.getAtomContainerCount() ; i++){
 			Wt[i-1]= getTopologicalFactors(iSet.getAtomContainer(i),ac);
-//			logger.debug(", W:"+Wt[i-1]);
+			logger.debug(", W:"+Wt[i-1]);
 			try {
 				acCloned = (IAtomContainer)iSet.getAtomContainer(i).clone();
-//				logger.debug("smilesClo: "+(new SmilesGenerator(ac.getBuilder())).createSMILES((IMolecule) acCloned));
+				logger.debug("smilesCloned: "+(new SmilesGenerator()).createSMILES((IMolecule) acCloned));
+				
 				acCloned = peoe.assignGasteigerMarsiliSigmaPartialCharges(acCloned, true);
 				for(int j = 0 ; j<acCloned.getAtomCount(); j++)
 					if(iSet.getAtomContainer(i).getAtom(j).getFlag(ISCHANGEDFC)){
@@ -197,18 +263,19 @@ public class GasteigerPEPEPartialCharges {
 		/*calculate electronegativity for changed atoms and make the difference between whose
 		 * atoms which change their formal charge*/
 		for (int iter = 0; iter < MX_ITERATIONS; iter++) {
+//		for (int iter = 0; iter < 1; iter++) {
 			for(int k = 1 ; k < iSet.getAtomContainerCount() ; k++){
 				IAtomContainer iac = iSet.getAtomContainer(k);
-//				logger.debug("smilesITERa: "+(new SmilesGenerator(ac.getBuilder())).createSMILES((IMolecule) iac));
+				logger.debug("smilesITERa: "+(new SmilesGenerator()).createSMILES((IMolecule) iac));
 				double[] electronegativity = new double[2];
 				int count = 0;
 				int atom1 = 0;
 				int atom2 = 0;
 				for (int j = 0; j < iac.getAtomCount(); j++) {
-					if(count == 2)/* TODO- not limited*/
+					if(count == 2)/*The change of sign is product of only two atoms, is not true*/
 						break;
 					if(iac.getAtom(j).getFlag(ISCHANGEDFC)){
-//						logger.debug("Atom: "+j+", S:"+iac.getAtom(j).getSymbol()+", C:"+iac.getAtom(j).getFormalCharge());
+						logger.debug("Atom: "+j+", S:"+iac.getAtom(j).getSymbol()+", C:"+iac.getAtom(j).getFormalCharge());
 						if(count == 0)
 							atom1 = j;
 						else 
@@ -216,12 +283,11 @@ public class GasteigerPEPEPartialCharges {
 						
 						double q1 = gasteigerFactors[k][STEP_SIZE * j + j + 5];
 						electronegativity[count] = gasteigerFactors[k][STEP_SIZE * j + j + 2] * q1 * q1 + gasteigerFactors[k][STEP_SIZE * j + j + 1] * q1 + gasteigerFactors[k][STEP_SIZE * j + j];
-//						logger.debug("e:"+electronegativity[count] +",q1: "+q1+", c:"+gasteigerFactors[k][STEP_SIZE * j + j + 2] +", b:"+gasteigerFactors[k][STEP_SIZE * j + j + 1]  + ", a:"+gasteigerFactors[k][STEP_SIZE * j + j]);
+						logger.debug("e:"+electronegativity[count] +",q1: "+q1+", c:"+gasteigerFactors[k][STEP_SIZE * j + j + 2] +", b:"+gasteigerFactors[k][STEP_SIZE * j + j + 1]  + ", a:"+gasteigerFactors[k][STEP_SIZE * j + j]);
 						count++;
 					}
-					
 				}
-//				logger.debug("Atom1:"+atom1+",Atom2:"+atom2);
+				logger.debug("Atom1:"+atom1+",Atom2:"+atom2);
 				/*diferency of electronegativity 1 lower*/
 				double max1 = Math.max(electronegativity[0], electronegativity[1]);
 				double min1 = Math.min(electronegativity[0], electronegativity[1]);
@@ -232,27 +298,28 @@ public class GasteigerPEPEPartialCharges {
 					DX = gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 3];
 					
 				double Dq = (max1-min1)/DX;
-//					logger.debug("Dq : "+Dq+ " = ("+ max1+"-"+min1+")/"+DX);
+				logger.debug("Dq : "+Dq+ " = ("+ max1+"-"+min1+")/"+DX);
 				double epN1 = getElectrostaticPotentialN(iac,atom1,gasteigerFactors[k]);
 				double epN2 = getElectrostaticPotentialN(iac,atom2,gasteigerFactors[k]);
 				double SumQN = Math.abs(epN1 - epN2);
-//					logger.debug("sum("+SumQN+") = ("+epN1+") - ("+epN2+")");
+				logger.debug("sum("+SumQN+") = ("+epN1+") - ("+epN2+")");
 				
 				/* electronic weight*/
 				double WE = Dq + fE*SumQN;
-//					logger.debug("WE : "+WE+" = Dq("+Dq+")+fE("+fE+")*SumQN("+SumQN);
+				logger.debug("WE : "+WE+" = Dq("+Dq+")+fE("+fE+")*SumQN("+SumQN);
 				int iTE = iter+1;
 				
 				/* total topological*/
 				double W = WE*Wt[k-1]*fS/(iTE);
-//					logger.debug("W : "+W+" = WE("+WE+")*Wt("+Wt[k-1]+")*fS("+fS+")/iter("+iTE+"), atoms: "+atom1+", "+atom2);
+				logger.debug("W : "+W+" = WE("+WE+")*Wt("+Wt[k-1]+")*fS("+fS+")/iter("+iTE+"), atoms: "+atom1+", "+atom2);
 				
+				/*iac == new structure, ac == old structure*/
 				/* atom1 */
 				if(iac.getAtom(atom1).getFormalCharge() == 0){
 					if(ac.getAtom(atom1).getFormalCharge() < 0){
-						gasteigerFactors[k][STEP_SIZE * atom1 + atom1 + 5] = W;
-					}else{
 						gasteigerFactors[k][STEP_SIZE * atom1 + atom1 + 5] = -1*W;
+					}else{
+						gasteigerFactors[k][STEP_SIZE * atom1 + atom1 + 5] = W;
 					}
 				}else if(iac.getAtom(atom1).getFormalCharge() > 0){
 					gasteigerFactors[k][STEP_SIZE * atom1 + atom1 + 5] = W;
@@ -262,9 +329,9 @@ public class GasteigerPEPEPartialCharges {
 				/* atom2*/
 				if(iac.getAtom(atom2).getFormalCharge() == 0){
 					if(ac.getAtom(atom2).getFormalCharge() < 0){
-						gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 5] = W;
-					}else{
 						gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 5] = -1*W;
+					}else{
+						gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 5] = W;
 					}
 				}else if(iac.getAtom(atom2).getFormalCharge() > 0){
 					gasteigerFactors[k][STEP_SIZE * atom2 + atom2 + 5] = W;
@@ -274,21 +341,79 @@ public class GasteigerPEPEPartialCharges {
 				
 			}
 			for(int k = 1 ; k < iSet.getAtomContainerCount() ; k++){
+				logger.debug("smilesFN: "+(new SmilesGenerator()).createSMILES((IMolecule) iSet.getAtomContainer(k)));
+				
 				for (int i = 0; i < ac.getAtomCount(); i++) 
 					if(iSet.getAtomContainer(k).getAtom(i).getFlag(ISCHANGEDFC)){
 						double charge = ac.getAtom(i).getCharge();
 						double chargeT = 0.0;
 						chargeT = charge + gasteigerFactors[k][STEP_SIZE * i + i + 5];
-//						logger.debug("i<|"+chargeT+"=c:" +charge + "+g: "+gasteigerFactors[k][STEP_SIZE * i + i + 5]);
+						logger.debug("i<|"+ac.getAtom(i).getSymbol()+", "+chargeT+"=c:" +charge + "+g: "+gasteigerFactors[k][STEP_SIZE * i + i + 5]);
 						ac.getAtom(i).setCharge(chargeT);
 					}
 			}
 			
 		}// iterations
-		
+		logger.debug("final");
 		return ac;
 		
 	}
+	/**
+	 * remove the aromaticity flags.
+	 * 
+	 * @param ac The IAtomContainer to remove flags
+	 * @return   The IATomContainer with the flags removed
+	 */
+	private IAtomContainer removingFlagsAromaticity(IAtomContainer ac) {
+		Iterator<IAtom> atoms = ac.atoms();
+		while (atoms.hasNext()) atoms.next().setFlag(CDKConstants.ISAROMATIC, false);
+		Iterator<IBond> bonds = ac.bonds();
+		while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISAROMATIC, false);
+		return ac;
+	}
+	/**
+	 * Set the Flags to atoms and bonds from an atomContainer.
+	 * 
+	 * @param container Container with the flags
+	 * @param ac        Container to put the flags   
+	 * @param b         True, if the the flag is true
+	 * @return          Container with added flags
+	 */
+	private IAtomContainer setFlags(IAtomContainer container,
+			IAtomContainer ac, boolean b) {
+		for(Iterator<IAtom> it = container.atoms(); it.hasNext();){
+			int positionA = ac.getAtomNumber(it.next());
+			ac.getAtom(positionA).setFlag(CDKConstants.REACTIVE_CENTER,b);
+		}
+		for(Iterator<IBond> it = container.bonds(); it.hasNext();){
+			int positionB = ac.getBondNumber(it.next());
+			ac.getBond(positionB).setFlag(CDKConstants.REACTIVE_CENTER,b);
+		
+		}
+		return ac;
+	}
+
+	/**
+	 * Set the Flags to atoms and bonds which are not contained
+	 * in an atomContainer.
+	 * 
+	 * @param container Container with the flags
+	 * @param ac        Container to put the flags   
+	 * @param b         True, if the the flag is true
+	 * @return          Container with added flags
+	 */
+	private IAtomContainer setAntiFlags(IAtomContainer container,
+			IAtomContainer ac, int number, boolean b) {
+		IBond bond = ac.getBond(number);
+		if(!container.contains(bond)){
+			bond.setFlag(CDKConstants.REACTIVE_CENTER,b);
+			bond.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,b);
+			bond.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,b);
+		}else
+			return null;
+		return ac;
+	}
+	
 	/**
 	 * get the possibles structures after a hyperconjugation interactions for bonds wich
 	 * not belong any resonance structure.
@@ -393,7 +518,7 @@ public class GasteigerPEPEPartialCharges {
                 covalentradius = type.getCovalentRadius();
 
                 double charge = ds[STEP_SIZE * atom1 + atom1 + 5];
-                //				logger.debug("sum_("+sumI+") = CFC("+CoulombForceConstant+")*charge("+charge+"/ret("+covalentradius);
+                logger.debug("sum_("+sum+") = CFC("+CoulombForceConstant+")*charge("+charge+"/ret("+covalentradius);
                 sum += CoulombForceConstant * charge / (covalentradius * covalentradius);
             }
         } catch (CDKException e) {
@@ -456,7 +581,7 @@ public class GasteigerPEPEPartialCharges {
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
-//		logger.debug("return "+fQ*fB*fPlus*fA+"= sp:"+fQ+", dc:"+fB+", fPlus:"+fPlus+", fA:"+fA);
+		logger.debug("return "+fQ*fB*fPlus*fA+"= sp:"+fQ+", dc:"+fB+", fPlus:"+fPlus+", fA:"+fA);
 		
 		return fQ*fB*fPlus*fA;
 	}

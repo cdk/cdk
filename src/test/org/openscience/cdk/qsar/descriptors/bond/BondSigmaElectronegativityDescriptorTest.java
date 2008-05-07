@@ -27,8 +27,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.descriptors.bond.BondSigmaElectronegativityDescriptor;
-import org.openscience.cdk.qsar.descriptors.bond.MassNumberDifferenceDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
@@ -36,27 +34,29 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsarmolecular
+ * @cdk.module test-qsarbond
  */
 public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest {
-	
-	public void setUp() throws Exception {
-		super.setDescriptor(MassNumberDifferenceDescriptor.class);
-	}
-	
+
 	public  BondSigmaElectronegativityDescriptorTest() {
 		descriptor  = new BondSigmaElectronegativityDescriptor() ;
 	}
+	
+    public void setUp() throws Exception {
+    	setDescriptor(BondSigmaElectronegativityDescriptor.class);
+    }
     
-	public static Test suite() {
-		return new TestSuite(BondSigmaElectronegativityDescriptorTest.class);
-	}
+    public static Test suite() {
+        return new TestSuite(BondSigmaElectronegativityDescriptorTest.class);
+    }
+	
 	/**
 	 *  A unit test for JUnit
 	 */
 	public void testBondSigmaElectronegativityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={2.5882,1.1894};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		 
+		Integer[] params = new Integer[1];
+        
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("CF"); 
         addExplicitHydrogens(mol);
@@ -64,6 +64,8 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 		lpcheck.saturate(mol);
 		
         for (int i = 0 ; i < 2 ; i++){
+    		params[0] = 6;
+    		descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.01);
 		}

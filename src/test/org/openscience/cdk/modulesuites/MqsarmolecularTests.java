@@ -31,14 +31,7 @@ import org.openscience.cdk.QsarmolecularCoverageTest;
 import org.openscience.cdk.qsar.ChiIndexUtilsTest;
 import org.openscience.cdk.qsar.DescriptorEngineTest;
 import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargePEOEDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.atomic.SigmaElectronegativityDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.bond.BondPartialPiChargeDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.bond.BondPartialTChargeDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.bond.BondSigmaElectronegativityDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.bond.IPBondDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.bond.ResonancePositiveChargeDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.APolDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.AromaticAtomsCountDescriptorTest;
@@ -106,17 +99,10 @@ public class MqsarmolecularTests {
 //      from cdk.test.qsar.atomic
 //      FIXME: see bug #1860497
         suite.addTest(IPAtomicDescriptorTest.suite());
-        suite.addTest(PartialTChargePEOEDescriptorTest.suite());
-        suite.addTest(SigmaElectronegativityDescriptorTest.suite());
         
 //      from cdk.test.qsar.bond
 //      FIXME: see bug #1860497
         suite.addTest(IPBondDescriptorTest.suite());
-        suite.addTest(BondPartialPiChargeDescriptorTest.suite());
-        suite.addTest(BondPartialTChargeDescriptorTest.suite());
-        suite.addTest(BondSigmaElectronegativityDescriptorTest.suite());
-        suite.addTest(ResonancePositiveChargeDescriptorTest.suite());
-        suite.addTest(BondPartialSigmaChargeDescriptorTest.suite());
         
 //      from cdk.test.qsar.molecular
         suite.addTest(ALOGPDescriptorTest.suite());

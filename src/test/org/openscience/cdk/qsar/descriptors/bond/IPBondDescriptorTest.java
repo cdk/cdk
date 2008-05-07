@@ -38,6 +38,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
  */
 public class IPBondDescriptorTest extends BondDescriptorTest {
 	private IPBondDescriptor descriptor;
+	
 	/**
 	 *  Constructor for the IPBondDescriptorTest object
 	 *
@@ -45,15 +46,15 @@ public class IPBondDescriptorTest extends BondDescriptorTest {
     public  IPBondDescriptorTest() {
     	descriptor = new IPBondDescriptor();
     }
-    /**
-	 *  A unit test suite for JUnit
-	 *
-	 *@return    The test suite
-	 */
+	
+    public void setUp() throws Exception {
+    	setDescriptor(IPBondDescriptor.class);
+    }
+    
     public static Test suite() {
         return new TestSuite(IPBondDescriptorTest.class);
     }
-
+	
     /**
 	 *  A unit test for JUnit with CCCC=CCCCC
 	 */

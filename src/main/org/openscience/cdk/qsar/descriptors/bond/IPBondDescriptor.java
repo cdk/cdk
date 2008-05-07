@@ -25,6 +25,7 @@ import java.util.Iterator;
 
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
@@ -41,7 +42,7 @@ import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.SigmaElectronegativityDescriptor;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.descriptors.atomic.StabilizationPlusChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.ElectronImpactPDBReaction;
@@ -78,6 +79,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.bug     1860497
  * @cdk.bug     1861626
  */
+@TestClass(value="org.openscience.cdk.qsar.descriptors.bond.IPBondDescriptorTest")
 public class IPBondDescriptor implements IBondDescriptor {
 	
 	private IReactionSet reactionSet;
@@ -656,10 +658,11 @@ public class IPBondDescriptor implements IBondDescriptor {
 		results[3]= ((DoubleResult)descriptor4.calculate(positionX, atomContainer).getValue()).doubleValue();
 		
 		/*  */
-		ResonancePositiveChargeDescriptor descriptor5 = new ResonancePositiveChargeDescriptor();
-		DoubleArrayResult dar = ((DoubleArrayResult)descriptor5.calculate(bond, atomContainer).getValue());
-		results[4] = dar.get(0);
-		results[5] = dar.get(1);
+		StabilizationPlusChargeDescriptor descriptor5 = new StabilizationPlusChargeDescriptor();
+		DoubleResult dar = ((DoubleResult)descriptor5.calculate(positionC, atomContainer).getValue());
+		results[4] = dar.doubleValue();
+		dar = ((DoubleResult)descriptor5.calculate(positionX, atomContainer).getValue());
+		results[5] = dar.doubleValue();
     		
     		
 		return results;
@@ -697,16 +700,15 @@ public class IPBondDescriptor implements IBondDescriptor {
 			
 		}
 		
-		Iterator bondIt = conjugatedSys.bonds();
+		Iterator<IBond> bondIt = conjugatedSys.bonds();
 		while(bondIt.hasNext()){
-			IBond bondsss = (IBond) bondIt.next();
+			IBond bondsss = bondIt.next();
 			try{
-			ResonancePositiveChargeDescriptor descriptor5 = new ResonancePositiveChargeDescriptor();
-			DoubleArrayResult dar = ((DoubleArrayResult)descriptor5.calculate(bondsss,atomContainer).getValue());
-			
-			
-			double result1 = dar.get(0);
-			double resutt2 = dar.get(1);
+			StabilizationPlusChargeDescriptor descriptor5 = new StabilizationPlusChargeDescriptor();
+			DoubleResult dar = ((DoubleResult)descriptor5.calculate(bondsss.getAtom(0),atomContainer).getValue());
+			double result1 = dar.doubleValue();
+			dar = ((DoubleResult)descriptor5.calculate(bondsss.getAtom(1),atomContainer).getValue());
+			double resutt2 = dar.doubleValue();
 			double result12 = (result1+resutt2);
 			
 			double resultT = 0;

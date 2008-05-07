@@ -35,11 +35,12 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *  <p>The calculation of pi partial charges in pi-bonded systems of an heavy 
  *  atom was made by Saller-Gasteiger. It is based on the qualitative concept of resonance and
- *  implemented with the Partal Equalization of Pi-Electronegativity (PEPE).</p>
+ *  implemented with the Partial Equalization of Pi-Electronegativity (PEPE).</p>
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -159,11 +160,14 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      */
     @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
-    	if(lpeChecker){
-    		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    		lpcheck.saturate(ac);
-    	}
     	if (!isCachedAtomContainer(ac)) {
+    		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+    		
+    		if(lpeChecker){
+    			LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+            	lpcheck.saturate(ac);
+           	}
+        	
     		if(maxIterations != -1)
     			pepe.setMaxGasteigerIters(maxIterations);
     		if(maxResonStruc != -1)
@@ -181,7 +185,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
 	        }
     	}
     	return getCachedDescriptorValue(atom) != null 
-        	? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(atom)) 
+        	? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(atom),new String[]{"pepe"}) 
             : null;
     }
 

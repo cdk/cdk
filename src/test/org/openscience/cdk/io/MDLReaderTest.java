@@ -31,6 +31,7 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
@@ -39,10 +40,8 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.nonotify.NNMolecule;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -128,10 +127,10 @@ public class MDLReaderTest extends CDKTestCase {
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
         assertNotNull(chemFile);
-        List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         assertEquals(1, containersList.size());
-        assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
-        assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
+        assertTrue((containersList.get(0)).getAtomCount() > 0);
+        assertTrue((containersList.get(0)).getBondCount() > 0);
     }
     
     public void testReadProton() throws Exception {
@@ -160,12 +159,12 @@ public class MDLReaderTest extends CDKTestCase {
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
         assertNotNull(chemFile);
-        List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         assertEquals(2, containersList.size());
-        assertEquals(39, ((IAtomContainer)containersList.get(0)).getAtomCount());
-        assertEquals(41, ((IAtomContainer)containersList.get(0)).getBondCount());
-        assertEquals(29, ((IAtomContainer)containersList.get(1)).getAtomCount());
-        assertEquals(28, ((IAtomContainer)containersList.get(1)).getBondCount());
+        assertEquals(39, (containersList.get(0)).getAtomCount());
+        assertEquals(41, (containersList.get(0)).getBondCount());
+        assertEquals(29, (containersList.get(1)).getAtomCount());
+        assertEquals(28, (containersList.get(1)).getBondCount());
     }
     
     public void testEmptyString() throws Exception {
@@ -182,11 +181,11 @@ public class MDLReaderTest extends CDKTestCase {
         String filename = "data/mdl/hisotopes.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        MDLReader reader = new MDLReader(ins);
+        MDLReader reader = new MDLReader(ins,Mode.STRICT);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
         assertNotNull(chemFile);
-        List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        assertFalse(((IAtomContainer)containersList.get(0)).getAtom(1) instanceof PseudoAtom);
-        assertFalse(((IAtomContainer)containersList.get(0)).getAtom(1) instanceof PseudoAtom);
+        List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        assertFalse((containersList.get(0)).getAtom(1) instanceof PseudoAtom);
+        assertFalse((containersList.get(0)).getAtom(1) instanceof PseudoAtom);
     }        
 }

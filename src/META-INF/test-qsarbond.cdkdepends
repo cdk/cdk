@@ -9,6 +9,7 @@ cdk-pdb.jar
 cdk-valencycheck.jar
 cdk-extra.jar
 cdk-reaction.jar
+cdk-isomorphism.jar
 cdk-charges.jar
 cdk-qsar.jar
 cdk-qsarbond.jar
@@ -20,3 +21,4 @@ cdk-builder3d.jar
 cdk-forcefield.jar
 cdk-sdg.jar
 cdk-test-qsar.jar
+cdk-dict.jar

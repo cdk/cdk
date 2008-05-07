@@ -81,7 +81,8 @@ public class MassNumberDifferenceDescriptor implements IBondDescriptor {
     public Object[] getParameters() {
         return null;
     }
-    
+
+    @TestMethod(value="testCalculate_IBond_IAtomContainer")
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) throws CDKException {
     	if (bond.getAtomCount() != 2) {
     		return new DescriptorValue(
@@ -104,11 +105,13 @@ public class MassNumberDifferenceDescriptor implements IBondDescriptor {
     		new String[] {DESCRIPTOR_VALUE_NAME}
         );
     }
-    
+
+    @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
 
+    @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }

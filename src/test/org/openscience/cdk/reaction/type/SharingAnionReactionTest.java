@@ -170,6 +170,56 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
         type.setParameters(params);
 		Assert.assertTrue((Boolean)params.get("hasActiveCenter"));
 	}
+	
+	/**
+	 * A unit test suite for JUnit. Reaction: [C+]-[C-] => C=C
+	 * Automatic search of the center active.
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testCarbons() throws Exception {
+		IReactionProcess type = new SharingAnionReaction();
+		IMolecule molecule = builder.newMolecule();
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.getAtom(0).setFormalCharge(1);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.getAtom(1).setFormalCharge(-1);
+		molecule.addBond(0, 1, IBond.Order.SINGLE);
+		
+		addExplicitHydrogens(molecule);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+        lpcheck.saturate(molecule);
+     	
+		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		setOfReactants.addMolecule(molecule);
+		
+
+		/* initiate */
+		
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("hasActiveCenter",Boolean.FALSE);;
+        type.setParameters(params);
+        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+        
+        Assert.assertEquals(1, setOfReactions.getReactionCount());
+        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
+
+        IMolecule product = setOfReactions.getReaction(0).getProducts().getMolecule(0);
+        IMolecule molecule2 = builder.newMolecule();
+		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addAtom(builder.newAtom("C"));
+		molecule2.addBond(0, 1, IBond.Order.DOUBLE);
+		
+		addExplicitHydrogens(molecule2);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
+        lpcheck.saturate(molecule2);
+        
+        IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
+        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
+        		
+	}
+
 	/**
 	 * A unit test suite for JUnit.
 	 * 

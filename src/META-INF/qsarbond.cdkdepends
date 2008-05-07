@@ -6,6 +6,8 @@ cdk-standard.jar
 cdk-valencycheck.jar
 cdk-extra.jar
 cdk-reaction.jar
+cdk-isomorphism.jar
 cdk-charges.jar
 cdk-qsar.jar
 cdk-atomtype.jar
+cdk-dict.jar

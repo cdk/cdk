@@ -26,16 +26,16 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
+import org.openscience.cdk.charges.Electronegativity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *  Pi electronegativity is given by X = a + bq + c(q*q)
@@ -63,26 +63,27 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:piElectronegativity
  * @cdk.bug     1558660
  * @cdk.bug     1701065
+ * @see Electronegativity
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.PiElectronegativityDescriptorTest")
 public class PiElectronegativityDescriptor implements IAtomicDescriptor {
-
+    
 	/**Number of maximum iterations*/
-    private int maxIterations = -1;
-	/**Number of maximum of resonance Structures*/
-    private int maxResonStruc = -1;
-    private GasteigerPEPEPartialCharges pepe = null;
-	private IAtomicDescriptor  descriptor;
-
+	private int maxIterations = -1;
+    /**Number of maximum resonance structures*/
+	private int maxResonStruc = -1;
+	/** make a lone pair electron checker. Default true*/
+	private boolean lpeChecker = true;
+	
+    String[] descriptorNames = {"elecPiA"};
+	private Electronegativity electronegativity;
 
     /**
      *  Constructor for the PiElectronegativityDescriptor object
      */
     public PiElectronegativityDescriptor() {
-    	pepe = new GasteigerPEPEPartialCharges();
-    	descriptor = new PartialSigmaChargeDescriptor();
+    	electronegativity = new Electronegativity();
     }
-
 
     /**
      *  Gets the specification attribute of the PiElectronegativityDescriptor
@@ -109,17 +110,23 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
      */
     @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 2) {
-            throw new CDKException("PiElectronegativityDescriptor only expects two parameter");
-        }
-        if (!(params[0] instanceof Integer))
-            throw new CDKException("The parameter 1 must be of type Integer");
-        maxIterations = (Integer) params[0];
+    	if (params.length > 3) 
+            throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
         
-        if(params.length > 1 && params[1] != null){
-	        if (!(params[1] instanceof Integer)) 
-	            throw new CDKException("The parameter 2 must be of type Integer");
-	        maxResonStruc = (Integer) params[1];
+        if (!(params[0] instanceof Integer) )
+                throw new CDKException("The parameter must be of type Integer");
+	        maxIterations = (Integer) params[0];
+	        
+	    if(params.length > 1 && params[1] != null){
+        	if (!(params[1] instanceof Boolean) )
+                throw new CDKException("The parameter must be of type Boolean");
+        	lpeChecker = (Boolean) params[1];
+        }
+	    
+	    if(params.length > 2 && params[2] != null){
+        	if (!(params[2] instanceof Integer) )
+                throw new CDKException("The parameter must be of type Integer");
+        	maxResonStruc = (Integer) params[2];
         }
     }
 
@@ -132,9 +139,11 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
      */
     @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
-        // return the parameters as used for the descriptor calculation
-        Object[] params = new Object[1];
+    	 // return the parameters as used for the descriptor calculation
+        Object[] params = new Object[3];
         params[0] = maxIterations;
+        params[1] = lpeChecker;
+        params[2] = maxResonStruc;
         return params;
     }
 
@@ -150,40 +159,20 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
      */
     @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
-        double piElectronegativity = 0.0;
-        try {
-        	double q = 0.0;
-        	if(maxIterations != -1 && maxResonStruc == -1){
-        		Object[] params = {maxIterations};
-        		descriptor.setParameters(params);
-        	}
-//        	else if(maxIterations == -1 && maxResonStruc != -1){
-//        		Object[] params = {null, null, new Integer(maxResonStruc)};
-//        		descriptor.setParameters(params);
-//        	}else if(maxIterations != -1 && maxResonStruc != -1){
-//        		Object[] params = {new Integer(maxIterations),null, new Integer(maxResonStruc)};
-//        		descriptor.setParameters(params);
-//        	}
-        	q = ((DoubleResult)descriptor.calculate(atom,ac).getValue()).doubleValue();
-    	  IAtomContainerSet iSet = ac.getBuilder().newAtomContainerSet();
-    	  iSet.addAtomContainer(ac);/*2 times*/
-    	  iSet.addAtomContainer(ac);
-    	  double[][] gasteigerFactors = pepe.assignrPiMarsilliFactors(iSet);
-    	  
-    	  int stepSize = pepe.getStepSize();
-	      int atomPosition = ac.getAtomNumber(atom);
-	      int start = (stepSize * (atomPosition) + atomPosition);
-	      if(ac.getConnectedLonePairsCount(ac.getAtom(atomPosition)) > 0 ||
-					ac.getMaximumBondOrder(ac.getAtom(atomPosition)) != IBond.Order.SINGLE ||
-					ac.getAtom(atomPosition).getFormalCharge() != 0)
-	    	  piElectronegativity = ((gasteigerFactors[1][start]) + (q * gasteigerFactors[1][start + 1]) + (gasteigerFactors[1][start + 2] * (q * q)));
-//	      logger.debug(ac.getAtomAt(atomPosition).getSymbol()+" - "+piElectronegativity+"="+q+" a("+gasteigerFactors[1][start]+")+b("+gasteigerFactors[1][start+1]+")+c"+gasteigerFactors[1][start+2]+")");
-	      return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(piElectronegativity));
-        } catch (Exception ex1) {
-        	ex1.printStackTrace();
-            throw new CDKException("Problems with GasteigerPEPEPartialCharges due to " + ex1.toString(), ex1);
-        }
-    }
+	      AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+	      
+	      if(lpeChecker){
+    		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+            lpcheck.saturate(ac);
+          }
+    		
+	      if(maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
+	      if(maxResonStruc != -1 && maxResonStruc != 0)	electronegativity.setMaxResonStruc(maxResonStruc);
+        	
+	      double result = electronegativity.calculatePiElectronegativity(ac, atom);
+	       
+	      return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(result),descriptorNames);
+	}
 
 
     /**
@@ -194,8 +183,10 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
      */
     @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
-        String[] params = new String[1];
+    	String[] params = new String[3];
         params[0] = "maxIterations";
+        params[1] = "lpeChecker";
+        params[2] = "maxResonStruc";
         return params;
     }
 
@@ -209,7 +200,10 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
      */
     @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
-        return 0; 
+    	if ("maxIterations".equals(name)) return Integer.MAX_VALUE;
+    	if ("lpeChecker".equals(name)) return Boolean.TRUE;
+    	if ("maxResonStruc".equals(name)) return Integer.MAX_VALUE;
+        return null;
     }
 }
 

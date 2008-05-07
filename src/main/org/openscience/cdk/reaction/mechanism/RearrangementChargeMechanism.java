@@ -29,6 +29,7 @@ import org.openscience.cdk.LonePair;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
@@ -113,7 +114,10 @@ public class RearrangementChargeMechanism implements IReactionMechanism{
 		int posBond2 = molecule.getBondNumber(bond2);
 		
     	BondManipulator.increaseBondOrder(reactantCloned.getBond(posBond1));
-    	BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond2));		
+    	if(bond2.getOrder() == IBond.Order.SINGLE)
+			reactantCloned.removeBond(reactantCloned.getBond(posBond2));    
+		else
+        	BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond2));
 		
     	//Depending of the charge moving (radical, + or -) there is a different situation
     	if(reactantCloned.getConnectedSingleElectronsCount(atom1C) > 0){
@@ -165,10 +169,16 @@ public class RearrangementChargeMechanism implements IReactionMechanism{
         reaction.addMapping(mapping);
         mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond1, reactantCloned.getBond(posBond1));
     	reaction.addMapping(mapping);
-        mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond2, reactantCloned.getBond(posBond2));
-    	reaction.addMapping(mapping);
-    	
-    	reaction.addProduct(reactantCloned);
+    	if(bond2.getOrder() != IBond.Order.SINGLE) {
+        	mapping = DefaultChemObjectBuilder.getInstance().newMapping(bond2, reactantCloned.getBond(posBond2));
+        	reaction.addMapping(mapping);
+        	reaction.addProduct(reactantCloned);
+        } else{
+	        IMoleculeSet moleculeSetP = ConnectivityChecker.partitionIntoMolecules(reactantCloned);
+			for(int z = 0; z < moleculeSetP.getAtomContainerCount() ; z++){
+				reaction.addProduct(moleculeSetP.getMolecule(z));
+			}
+        }
     	
 		return reaction;
 	}

@@ -27,21 +27,15 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.descriptors.bond.BondPartialPiChargeDescriptor;
-import org.openscience.cdk.qsar.descriptors.bond.MassNumberDifferenceDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsarmolecular
+ * @cdk.module test-qsarbond
  */
 public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
-	
-	public void setUp() throws Exception {
-		super.setDescriptor(MassNumberDifferenceDescriptor.class);
-	}
 	
 	/**
 	 *  Constructor for the BondPartialPiChargeDescriptorTest object
@@ -50,14 +44,15 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
 	public  BondPartialPiChargeDescriptorTest() {
 		
 	}
-	/**
-	 *  A unit test suite for JUnit
-	 *
-	 *@return    The test suite
-	 */
-	public static Test suite() {
-		return new TestSuite(BondPartialPiChargeDescriptorTest.class);
-	}
+	
+    public void setUp() throws Exception {
+    	setDescriptor(BondPartialPiChargeDescriptor.class);
+    }
+    
+    public static Test suite() {
+        return new TestSuite(BondPartialPiChargeDescriptorTest.class);
+    }
+	
 	/**
 	 *  A unit test for JUnit
 	 */

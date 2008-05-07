@@ -48,17 +48,15 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
     	sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     	
     }
-    /**
-	 *  A unit test suite for JUnit
-	 *
-	 *@return    The test suite
-	 */
+    
     public static Test suite() {
         return new TestSuite(IPAtomicDescriptorTest.class);
     }
 
     /**
 	 *  A unit test for JUnit with C-Cl
+	 *  
+	 *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
 	 */
     public void testIPDescriptor_1() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
@@ -76,6 +74,7 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
     }
     /**
 	 *  A unit test for JUnit with C-C-Br
+	 *  
 	 */
     public void testIPDescriptor_2() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
@@ -93,6 +92,7 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
     }
     /**
 	 *  A unit test for JUnit with C-C-C-I
+	 *  
 	 */
     public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
@@ -110,6 +110,8 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
     }
     /**
 	 *  A unit test for JUnit with C-C-O
+	 *  
+	 *  @cdk.inchi InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3
 	 */
     public void testIPDescriptor_4() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
@@ -124,8 +126,11 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
         double resultAccordingNIST = 10.48;
 
         assertEquals(resultAccordingNIST, result, 1.24);
-    }/**
+    }
+    
+    /**
 	 *  A unit test for JUnit with N1(C)CCC(C)(C)CC1
+	 *  
 	 */
     public void testIPDescriptor_5() throws ClassNotFoundException, CDKException, java.lang.Exception{
 
@@ -143,6 +148,8 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
     }
     /**
 	 *  A unit test for JUnit with C-N-C
+	 *  
+	 *  @cdk.inchi InChI=1/C2H7N/c1-3-2/h3H,1-2H3
 	 */
     public void testIPDescriptor_6() throws ClassNotFoundException, CDKException, java.lang.Exception{
 
@@ -160,6 +167,8 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
     }
     /**
 	 *  A unit test for JUnit with C-C-N
+	 *  
+	 *  @cdk.inchi InChI=1/C2H7N/c1-2-3/h2-3H2,1H3
 	 */
     public void testIPDescriptor_7() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
@@ -177,6 +186,8 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
     }
     /**
 	 *  A unit test for JUnit with C-C-P-C-C
+	 *  
+	 *  @cdk.inchi InChI=1/C4H11P/c1-3-5-4-2/h5H,3-4H2,1-2H3
 	 */
     public void testIPDescriptor_8() throws ClassNotFoundException, CDKException, java.lang.Exception{
 
@@ -195,6 +206,8 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
 
     /**
 	 *  A unit test for JUnit with O=C(C)CC(C)C
+	 *  
+	 *  @cdk.inchi InChI=1/C6H12O/c1-5(2)4-6(3)7/h5H,4H2,1-3H3
 	 */
     public void testIPDescriptor_9() throws ClassNotFoundException, CDKException, java.lang.Exception{
 
@@ -212,6 +225,8 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
     }
     /**
 	 *  A unit test for JUnit with O=C1C2CCC1CC2
+	 *  
+	 *  @cdk.inchi InChI=1/C7H10O/c8-7-5-1-2-6(7)4-3-5/h5-6H,1-4H2
 	 */
     public void testIPDescriptor_10() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
@@ -230,6 +245,8 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
 
     /**
 	 *  A unit test for JUnit with CCOCCCO
+	 *  
+	 *  @cdk.inchi InChI=1/C5H12O2/c1-2-7-5-3-4-6/h6H,2-5H2,1H3
 	 */
     public void testIPDescriptor_14() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
@@ -249,6 +266,8 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
     }
     /**
      * A unit test for JUnit with C-C-N
+     * 
+	 *  @cdk.inchi  InChI=1/C2H7N/c1-2-3/h2-3H2,1H3
      * 
      * @throws ClassNotFoundException
      * @throws CDKException
@@ -280,6 +299,8 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
     /**
      * A unit test for JUnit with CCCCCC
      * 
+	 *  @cdk.inchi InChI=1/C6H14/c1-3-5-6-4-2/h3-6H2,1-2H3
+	 *  
      * @throws ClassNotFoundException
      * @throws CDKException
      * @throws java.lang.Exception
@@ -303,6 +324,8 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
     /**
      * A unit test for JUnit with O(C=CC=C)C
      * 
+	 *  @cdk.inchi InChI=1/C5H8O/c1-3-4-5-6-2/h3-5H,1H2,2H3
+	 *  
      * @throws ClassNotFoundException
      * @throws CDKException
      * @throws java.lang.Exception
@@ -328,6 +351,8 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
     /**
      * A unit test for JUnit with OC=CC
      * 
+	 *  @cdk.inchi InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
+	 *  
      * @throws ClassNotFoundException
      * @throws CDKException
      * @throws java.lang.Exception
@@ -353,6 +378,8 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
     /**
      * A unit test for JUnit with C1=C(C)CCS1
      * 
+	 *  @cdk.inchi  InChI=1/C5H8S/c1-5-2-3-6-4-5/h4H,2-3H2,1H3
+	 *  
      * @throws ClassNotFoundException
      * @throws CDKException
      * @throws java.lang.Exception
@@ -379,6 +406,8 @@ public class IPAtomicDescriptorTest extends AtomicDescriptorTest {
     /**
      * A unit test for JUnit with OC(C#CC)(C)C
      * 
+	 *  @cdk.inchi InChI=1/C6H10O/c1-4-5-6(2,3)7/h7H,1-3H3
+	 *  
      * @throws ClassNotFoundException
      * @throws CDKException
      * @throws java.lang.Exception

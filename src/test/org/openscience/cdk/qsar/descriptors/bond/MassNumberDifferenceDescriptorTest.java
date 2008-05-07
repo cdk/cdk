@@ -20,6 +20,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.openscience.cdk.qsar.descriptors.bond.MassNumberDifferenceDescriptor;
 
 /**
@@ -27,8 +30,20 @@ import org.openscience.cdk.qsar.descriptors.bond.MassNumberDifferenceDescriptor;
  */
 public class MassNumberDifferenceDescriptorTest extends BondDescriptorTest {
 	
-	public void setUp() throws Exception {
-		super.setDescriptor(MassNumberDifferenceDescriptor.class);
+	/**
+	 *  Constructor for the MassNumberDifferenceDescriptorTest object
+	 *
+	 */
+	public  MassNumberDifferenceDescriptorTest() {
+		
 	}
+	
+    public void setUp() throws Exception {
+    	setDescriptor(MassNumberDifferenceDescriptor.class);
+    }
+    
+    public static Test suite() {
+        return new TestSuite(MassNumberDifferenceDescriptorTest.class);
+    }
 	
 }

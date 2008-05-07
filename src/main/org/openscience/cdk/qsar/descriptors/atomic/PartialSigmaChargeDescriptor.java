@@ -78,8 +78,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
     public PartialSigmaChargeDescriptor() { 
         peoe = new GasteigerMarsiliPartialCharges();
     }
-
-
+    
     /**
      *  Gets the specification attribute of the PartialSigmaChargeDescriptor
      *  object

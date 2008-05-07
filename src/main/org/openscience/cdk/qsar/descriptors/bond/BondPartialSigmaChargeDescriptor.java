@@ -24,17 +24,20 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import org.openscience.cdk.Molecule;
+import java.util.Iterator;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.qsar.AbstractBondDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IBondDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
  *  The calculation of bond-sigma Partial charge is calculated 
@@ -57,23 +60,26 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *
  * @author      Miguel Rojas
  * @cdk.created 2006-05-08
- * @cdk.module  qsarmolecular
+ * @cdk.module  qsarbond
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondPartialSigmaCharge
  * @cdk.bug     1860497
  * @see PartialSigmaChargeDescriptor
  */
-public class BondPartialSigmaChargeDescriptor implements IBondDescriptor {
+@TestClass(value="org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptorTest")
+public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
 
-	private PartialSigmaChargeDescriptor  descriptor;
+	private GasteigerMarsiliPartialCharges peoe = null;
+    /**Number of maximum iterations*/
+	private int maxIterations;
 
-
-    /**
+    String[] descriptorNames = {"peoeB"};
+	 /**
      *  Constructor for the BondPartialSigmaChargeDescriptor object
      */
     public BondPartialSigmaChargeDescriptor() {  
-    	descriptor  = new PartialSigmaChargeDescriptor() ;
+        peoe = new GasteigerMarsiliPartialCharges();
     }
 
 
@@ -83,6 +89,7 @@ public class BondPartialSigmaChargeDescriptor implements IBondDescriptor {
      *
      *@return    The specification value
      */
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialSigmaCharge",
@@ -94,7 +101,15 @@ public class BondPartialSigmaChargeDescriptor implements IBondDescriptor {
     /**
      * This descriptor does have any parameter.
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
+        if (params.length > 1) {
+            throw new CDKException("PartialSigmaChargeDescriptor only expects one parameter");
+        }
+        if (!(params[0] instanceof Integer)) {
+            throw new CDKException("The parameter 1 must be of type Integer");
+        }
+        maxIterations = (Integer) params[0];
     }
 
 
@@ -104,8 +119,12 @@ public class BondPartialSigmaChargeDescriptor implements IBondDescriptor {
      *@return    The parameters value
      * @see #setParameters
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
-        return null;
+        // return the parameters as used for the descriptor calculation
+        Object[] params = new Object[1];
+        params[0] = (Integer)maxIterations;
+        return params;
     }
 
 
@@ -117,31 +136,37 @@ public class BondPartialSigmaChargeDescriptor implements IBondDescriptor {
      *@return                   return the sigma electronegativity
      *@exception  CDKException  Possible Exceptions
      */
+    @TestMethod(value="testCalculate_IBond_IAtomContainer")
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) throws CDKException {
-        Molecule mol = new Molecule(ac);
-        IAtom[] atoms = BondManipulator.getAtomArray(bond);
-        double[] results = new double[2];
-        
-    	Integer[] params = new Integer[1];
-    	for(int i = 0 ; i < 2 ; i++){
-    		params[0] = 6;
-	        descriptor.setParameters(params);
-	        results[i] = ((DoubleResult)descriptor.calculate(atoms[i],mol).getValue()).doubleValue();
+    	if (!isCachedAtomContainer(ac)) {
+    		IMolecule mol = new NNMolecule(ac);
+        	if(maxIterations != 0) peoe.setMaxGasteigerIters(maxIterations);
+	        try {
+				peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
+				for(Iterator<IBond> it = ac.bonds() ; it.hasNext(); ) {
+					IBond bondi = it.next();
+					double result = Math.abs(bondi.getAtom(0).getCharge()-bondi.getAtom(1).getCharge());
+					cacheDescriptorValue(bondi, ac, new DoubleResult(result));
+				}
+	        } catch (Exception ex1) {
+	            throw new CDKException("Problems with assignGasteigerPiPartialCharges due to " + ex1.toString(), ex1);
+	        }
     	}
-    	
-        double result = Math.abs(results[0] - results[1]);
-        
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(result));
+    	return getCachedDescriptorValue(bond) != null 
+        	? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(bond),descriptorNames) 
+            : null;
     }
-
 	 /**
     * Gets the parameterNames attribute of the BondPartialSigmaChargeDescriptor object.
     *
     * @return    The parameterNames value
     */
-   public String[] getParameterNames() {
-       return new String[0];
-   }
+    @TestMethod(value="testGetParameterNames")
+    public String[] getParameterNames() {
+        String[] params = new String[1];
+        params[0] = "maxIterations";
+        return params;
+    }
 
 
    /**
@@ -150,8 +175,10 @@ public class BondPartialSigmaChargeDescriptor implements IBondDescriptor {
     * @param  name  Description of the Parameter
     * @return       An Object of class equal to that of the parameter being requested
     */
-   public Object getParameterType(String name) {
-       return null;
-   }
+    @TestMethod(value="testGetParameterType_String")
+    public Object getParameterType(String name) {
+    	if ("maxIterations".equals(name)) return Integer.MAX_VALUE;
+        return null;
+    }
 }
 

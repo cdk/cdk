@@ -42,7 +42,6 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptor;
-import org.openscience.cdk.qsar.descriptors.bond.ResonancePositiveChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.reaction.IReactionProcess;
@@ -1036,12 +1035,11 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 		while(bondIt.hasNext()){
 			IBond bondsss = (IBond) bondIt.next();
 			
-			ResonancePositiveChargeDescriptor descriptor5 = new ResonancePositiveChargeDescriptor();
-			DoubleArrayResult dar;
-			
-			dar = ((DoubleArrayResult)descriptor5.calculate(bondsss,atomContainer).getValue());
-			double result1 = dar.get(0);
-			double resutt2 = dar.get(1);
+			StabilizationPlusChargeDescriptor descriptor5 = new StabilizationPlusChargeDescriptor();
+			DoubleResult dar = ((DoubleResult)descriptor5.calculate(bondsss.getAtom(0),atomContainer).getValue());
+			double result1 = dar.doubleValue();
+			dar = ((DoubleResult)descriptor5.calculate(bondsss.getAtom(1),atomContainer).getValue());
+			double resutt2 = dar.doubleValue();
 			double result12 = (result1+resutt2);
 			
 			double resultT = 0;
@@ -1167,8 +1165,8 @@ public class IPAtomicDescriptor implements IAtomicDescriptor {
 			}
 			/* 6 */
 			try{
-			ResonancePositiveChargeDescriptor descriptor6 = new ResonancePositiveChargeDescriptor();
-			DoubleArrayResult dar = ((DoubleArrayResult)descriptor6.calculate(bond,atomContainer).getValue());
+				StabilizationPlusChargeDescriptor descriptor6 = new StabilizationPlusChargeDescriptor();
+			DoubleArrayResult dar = ((DoubleArrayResult)descriptor6.calculate(bond.getAtom(0),atomContainer).getValue());
 			double datT =0.0;
 			if((new Double(dar.get(0))).toString().equals("Infinity")||
 					(new Double(dar.get(1))).toString().equals("Infinity")){}

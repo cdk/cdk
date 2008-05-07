@@ -51,6 +51,7 @@ import java.util.Vector;
  * @author         chhoppe
  * @cdk.svnrev  $Revision$
  * @cdk.created    2004-11-03
+ * @cdk.keyword polarizability
  */
 public class Polarizability {
     private LoggingTool logger;

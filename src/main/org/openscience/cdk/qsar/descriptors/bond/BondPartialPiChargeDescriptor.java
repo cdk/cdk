@@ -24,16 +24,20 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
+import java.util.Iterator;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.qsar.AbstractBondDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IBondDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.tools.manipulator.BondManipulator;
+import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *  The calculation of bond-pi Partial charge is calculated 
@@ -56,23 +60,30 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *
  * @author      Miguel Rojas
  * @cdk.created 2006-05-18
- * @cdk.module  qsarmolecular
+ * @cdk.module  qsarbond
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondPartialPiCharge
  * @cdk.bug     1860497
  * @see PartialPiChargeDescriptor
  */
-public class BondPartialPiChargeDescriptor implements IBondDescriptor {
+@TestClass(value="org.openscience.cdk.qsar.descriptors.bond.BondPartialPiChargeDescriptorTest")
+public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
 
-	private PartialPiChargeDescriptor  descriptor;
+    private GasteigerPEPEPartialCharges pepe = null;
+    /**Number of maximum iterations*/
+	private int maxIterations = -1;
+    /**Number of maximum resonance structures*/
+	private int maxResonStruc = -1;
+	/** make a lone pair electron checker. Default true*/
+	private boolean lpeChecker = true;
 
-
+    String[] descriptorNames = {"pepeB"};
     /**
      *  Constructor for the BondPartialPiChargeDescriptor object
      */
     public BondPartialPiChargeDescriptor() {  
-    	descriptor  = new PartialPiChargeDescriptor() ;
+    	pepe = new GasteigerPEPEPartialCharges();
     }
 
 
@@ -82,6 +93,7 @@ public class BondPartialPiChargeDescriptor implements IBondDescriptor {
      *
      *@return    The specification value
      */
+    @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialPiCharge",
@@ -93,7 +105,26 @@ public class BondPartialPiChargeDescriptor implements IBondDescriptor {
     /**
      * This descriptor does have any parameter.
      */
+    @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
+        if (params.length > 3) 
+            throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
+        
+        if (!(params[0] instanceof Integer) )
+                throw new CDKException("The parameter must be of type Integer");
+	        maxIterations = (Integer) params[0];
+	        
+	    if(params.length > 1 && params[1] != null){
+        	if (!(params[1] instanceof Boolean) )
+                throw new CDKException("The parameter must be of type Boolean");
+        	lpeChecker = (Boolean) params[1];
+        }
+	    
+	    if(params.length > 2 && params[2] != null){
+        	if (!(params[2] instanceof Integer) )
+                throw new CDKException("The parameter must be of type Integer");
+        	maxResonStruc = (Integer) params[2];
+        }
     }
 
 
@@ -103,8 +134,14 @@ public class BondPartialPiChargeDescriptor implements IBondDescriptor {
      *@return    The parameters value
      * @see #setParameters
      */
+    @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
-        return null;
+        // return the parameters as used for the descriptor calculation
+        Object[] params = new Object[3];
+        params[0] = maxIterations;
+        params[1] = lpeChecker;
+        params[2] = maxResonStruc;
+        return params;
     }
 
 
@@ -116,20 +153,38 @@ public class BondPartialPiChargeDescriptor implements IBondDescriptor {
      *@return                   return the sigma electronegativity
      *@exception  CDKException  Possible Exceptions
      */
+    @TestMethod(value="testCalculate_IBond_IAtomContainer")
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) throws CDKException {
-        IAtom[] atoms = BondManipulator.getAtomArray(bond);
-        double[] results = new double[2];
-        
-        Integer[] params = new Integer[1];
-    	for(int i = 0 ; i < 2 ; i++){
-    		params[0] = 6;
-	        descriptor.setParameters(params);
-	        results[i] = ((DoubleResult)descriptor.calculate(atoms[i],ac).getValue()).doubleValue();
+
+    	if (!isCachedAtomContainer(ac)) {
+    		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+    		
+    		if(lpeChecker){
+    			LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+            	lpcheck.saturate(ac);
+           	}
+        	
+    		if(maxIterations != -1)
+    			pepe.setMaxGasteigerIters(maxIterations);
+    		if(maxResonStruc != -1)
+    			pepe.setMaxResoStruc(maxResonStruc);
+	    	try {
+	    		for (int i=0; i<ac.getAtomCount(); i++)
+	    			ac.getAtom(i).setCharge(0.0);
+	    		
+	        	pepe.assignGasteigerPiPartialCharges(ac, true);
+				for(Iterator<IBond> it = ac.bonds() ; it.hasNext(); ) {
+					IBond bondi = it.next();
+					double result = Math.abs(bondi.getAtom(0).getCharge()-bondi.getAtom(1).getCharge());
+					cacheDescriptorValue(bondi, ac, new DoubleResult(result));
+				}
+	        } catch (Exception ex1) {
+	            throw new CDKException("Problems with assignGasteigerPiPartialCharges due to " + ex1.toString(), ex1);
+	        }
     	}
-    	
-        double result = Math.abs(results[0] - results[1]);
-        
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(result));
+    	return getCachedDescriptorValue(bond) != null 
+        	? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(bond),descriptorNames) 
+            : null;
     }
 
 	 /**
@@ -137,9 +192,14 @@ public class BondPartialPiChargeDescriptor implements IBondDescriptor {
    *
    * @return    The parameterNames value
    */
-  public String[] getParameterNames() {
-      return new String[0];
-  }
+    @TestMethod(value="testGetParameterNames")
+    public String[] getParameterNames() {
+    	String[] params = new String[3];
+        params[0] = "maxIterations";
+        params[1] = "lpeChecker";
+        params[2] = "maxResonStruc";
+        return params;
+    }
 
 
   /**
@@ -148,8 +208,12 @@ public class BondPartialPiChargeDescriptor implements IBondDescriptor {
    * @param  name  Description of the Parameter
    * @return       An Object of class equal to that of the parameter being requested
    */
-  public Object getParameterType(String name) {
-      return null;
-  }
+    @TestMethod(value="testGetParameterType_String")
+    public Object getParameterType(String name) {
+    	if ("maxIterations".equals(name)) return Integer.MAX_VALUE;
+    	if ("lpeChecker".equals(name)) return Boolean.TRUE;
+    	if ("maxResonStruc".equals(name)) return Integer.MAX_VALUE;
+        return null;
+    }
 }
 

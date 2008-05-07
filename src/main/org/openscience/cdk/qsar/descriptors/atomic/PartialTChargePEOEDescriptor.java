@@ -24,6 +24,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
@@ -35,6 +39,8 @@ import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *  <p>The calculation of total partial charges of an heavy atom is based on 
@@ -58,28 +64,34 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *
  * @author      Miguel Rojas
  * @cdk.created 2006-04-11
- * @cdk.module  qsarmolecular
+ * @cdk.module  qsaratomic
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:PartialTChargePEOE
  * @cdk.bug     1701065
- * @cdk.bug     1860497
  * @see         GasteigerMarsiliPartialCharges
  * @see         GasteigerPEPEPartialCharges
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.PartialTChargePEOEDescriptorTest")
 public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 
-	private AbstractAtomicDescriptor sigmaCharge;
-	private AbstractAtomicDescriptor piCharge;
+    private GasteigerMarsiliPartialCharges peoe = null;
+    private GasteigerPEPEPartialCharges pepe = null;
+    
+	/**Number of maximum iterations*/
+	private int maxIterations = -1;
+    /**Number of maximum resonance structures*/
+	private int maxResonStruc = -1;
+	/** make a lone pair electron checker. Default true*/
+	private boolean lpeChecker = true;
 
-
+    String[] descriptorNames = {"pepeT"};
     /**
      *  Constructor for the PartialTChargePEOEDescriptor object
      */
     public PartialTChargePEOEDescriptor() {
-        sigmaCharge = new PartialSigmaChargeDescriptor();
-        piCharge = new PartialPiChargeDescriptor();
+        peoe = new GasteigerMarsiliPartialCharges();
+    	pepe = new GasteigerPEPEPartialCharges();
     }
 
 
@@ -103,7 +115,24 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      */
     @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
-    	// no parameters
+    	if (params.length > 3) 
+            throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
+        
+        if (!(params[0] instanceof Integer) )
+                throw new CDKException("The parameter must be of type Integer");
+	        maxIterations = (Integer) params[0];
+	        
+	    if(params.length > 1 && params[1] != null){
+        	if (!(params[1] instanceof Boolean) )
+                throw new CDKException("The parameter must be of type Boolean");
+        	lpeChecker = (Boolean) params[1];
+        }
+	    
+	    if(params.length > 2 && params[2] != null){
+        	if (!(params[2] instanceof Integer) )
+                throw new CDKException("The parameter must be of type Integer");
+        	maxResonStruc = (Integer) params[2];
+        }
     }
 
 
@@ -116,7 +145,12 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      */
     @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
-        return null;
+    	 // return the parameters as used for the descriptor calculation
+        Object[] params = new Object[3];
+        params[0] = maxIterations;
+        params[1] = lpeChecker;
+        params[2] = maxResonStruc;
+        return params;
     }
 
 
@@ -131,16 +165,39 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      */
     @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
+    	if (!isCachedAtomContainer(ac)) {
+    		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+        	
+    		if(lpeChecker){
+    			LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+            	lpcheck.saturate(ac);
+           	}
     		
+        	if(maxIterations != -1) peoe.setMaxGasteigerIters(maxIterations);
+        	if(maxIterations != -1)	pepe.setMaxGasteigerIters(maxIterations);
+    		if(maxResonStruc != -1)	pepe.setMaxResoStruc(maxResonStruc);
+    		
+	        try {
+				peoe.assignGasteigerMarsiliSigmaPartialCharges(ac, true);
+				List<Double> peoeAtom = new ArrayList<Double>();
+				for(Iterator<IAtom> it = ac.atoms(); it.hasNext();)
+					peoeAtom.add(it.next().getCharge());
+				
+				for(Iterator<IAtom> it = ac.atoms(); it.hasNext();)
+					it.next().setCharge(0.0);
 
-        double piRC= ((DoubleResult)piCharge.calculate(atom, ac).getValue()).doubleValue();
-    	double sigmaRC= ((DoubleResult)sigmaCharge.calculate(atom, ac).getValue()).doubleValue();
-	
-	
-    	double sum = sigmaRC + piRC;
-    	DoubleResult result = new DoubleResult(sum);
-    
-    	return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result);
+				pepe.assignGasteigerPiPartialCharges(ac, true);
+				for(int i = 0; i < ac.getAtomCount() ; i++) 
+					cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(peoeAtom.get(i) + ac.getAtom(i).getCharge()));
+				
+			} catch (Exception e) {
+				throw new CDKException("An error occured while calculating Gasteiger partial charges: " + e.getMessage(), e);
+			}
+        }
+        
+        return getCachedDescriptorValue(atom) != null 
+            ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(atom),descriptorNames) 
+            : null;
     }
 
 
@@ -152,7 +209,11 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      */
     @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
-        return new String[0];
+    	String[] params = new String[3];
+        params[0] = "maxIterations";
+        params[1] = "lpeChecker";
+        params[2] = "maxResonStruc";
+        return params;
     }
 
 
@@ -165,6 +226,9 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      */
     @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
+    	if ("maxIterations".equals(name)) return Integer.MAX_VALUE;
+    	if ("lpeChecker".equals(name)) return Boolean.TRUE;
+    	if ("maxResonStruc".equals(name)) return Integer.MAX_VALUE;
         return null;
     }
 }

@@ -30,23 +30,25 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.SigmaElectronegativityDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsarmolecular
+ * @cdk.module test-qsaratomic
  */ 
-public class SigmaElectronegativityDescriptorTest extends CDKTestCase {
+public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	
 	public  SigmaElectronegativityDescriptorTest() {}
     
-	public static Test suite() {
-		return new TestSuite(SigmaElectronegativityDescriptorTest.class);
-	}
+    public void setUp() throws Exception {
+    	setDescriptor(SigmaElectronegativityDescriptor.class);
+    }
+    
+    public static Test suite() {
+        return new TestSuite(SigmaElectronegativityDescriptorTest.class);
+    }
     
 	public void testSigmaElectronegativityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={8.7177,11.306};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/

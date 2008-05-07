@@ -27,8 +27,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.descriptors.bond.BondPartialTChargeDescriptor;
-import org.openscience.cdk.qsar.descriptors.bond.MassNumberDifferenceDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
@@ -36,14 +34,10 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsarmolecular
+ * @cdk.module test-qsarbond
  */
 public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
-	
-	public void setUp() throws Exception {
-		super.setDescriptor(MassNumberDifferenceDescriptor.class);
-	}
-	
+
 	/**
 	 *  Constructor for the BondPartialTChargeDescriptorTest object
 	 *
@@ -51,14 +45,15 @@ public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
 	public  BondPartialTChargeDescriptorTest() {
 		descriptor  = new BondPartialTChargeDescriptor() ;
 	}
-	/**
-	 *  A unit test suite for JUnit
-	 *
-	 *@return    The test suite
-	 */
-	public static Test suite() {
-		return new TestSuite(BondPartialTChargeDescriptorTest.class);
-	}
+	
+    public void setUp() throws Exception {
+    	setDescriptor(BondPartialTChargeDescriptor.class);
+    }
+    
+    public static Test suite() {
+        return new TestSuite(BondPartialTChargeDescriptorTest.class);
+    }
+	
 	/**
 	 *  A unit test for JUnit
 	 */

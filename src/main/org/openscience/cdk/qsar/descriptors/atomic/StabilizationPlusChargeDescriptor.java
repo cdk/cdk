@@ -1,10 +1,10 @@
 /*
  *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+ *  $Author: miguelrojasch $
+ *  $Date: 2008-05-01 12:46:02 +0200 (Thu, 01 May 2008) $
+ *  $Revision: 10745 $
  *
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.charges.Electronegativity;
+import org.openscience.cdk.charges.StabilizationCharge;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -37,9 +37,12 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- *  Sigma electronegativity is given by X = a + bq + c(q*q)
+ *  The stabilization of the positive charge 
+ *  (e.g.) obtained in the polar breaking of a bond is calculated from the sigma- and 
+ *  lone pair-electronegativity values of the atoms that are in conjugation to the atoms 
+ *  obtaining the charges. The method is based following H. Saller, Dissertation, TU München, 1985.
+ *  The value is calculated looking for resonance structures which can stabilize the charge.
  *
-  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -54,33 +57,29 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *   </tr>
  * </table>
  *
- * @author      mfe4
- * @cdk.created 2004-11-03
- * @cdk.module  qsaratomic
- * @cdk.svnrev  $Revision$
- * @cdk.set     qsar-descriptors
- * @cdk.dictref qsar-descriptors:sigmaElectronegativity
- * @see Electronegativity
+ * @author         Miguel Rojas Cherto
+ * @cdk.created    2008-104-31
+ * @cdk.module     qsaratomic
+ * @cdk.set        qsar-descriptors
+ * @see StabilizationCharge
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.SigmaElectronegativityDescriptorTest")
-public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
-	/**Number of maximum iterations*/
-    private int maxIterations = 0;
-
-    String[] descriptorNames = {"elecSigmA"};
+@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.StabilizationPlusChargeDescriptorTest")
+public class StabilizationPlusChargeDescriptor implements IAtomicDescriptor {
+	
+    String[] descriptorNames = {"stabilPlusC"};
     
-	private Electronegativity electronegativity;
+	private StabilizationCharge stabil;
 
     /**
-     *  Constructor for the SigmaElectronegativityDescriptor object
+     *  Constructor for the StabilizationPlusChargeDescriptor object
      */
-    public SigmaElectronegativityDescriptor() {
-    	electronegativity = new Electronegativity();
+    public StabilizationPlusChargeDescriptor() {
+    	stabil = new StabilizationCharge();
   }
 
 
     /**
-     *  Gets the specification attribute of the SigmaElectronegativityDescriptor
+     *  Gets the specification attribute of the StabilizationPlusChargeDescriptor
      *  object
      *
      *@return    The specification value
@@ -88,15 +87,15 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
     @TestMethod(value="testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#sigmaElectronegativity",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#stabilizationPlusCharge",
             this.getClass().getName(),
-            "$Id$",
+            "$Id: StabilizationPlusChargeDescriptor.java 10745 2008-05-01 10:46:02Z miguelrojasch $",
             "The Chemistry Development Kit");
     }
 
 
     /**
-     *  Sets the parameters attribute of the SigmaElectronegativityDescriptor
+     *  Sets the parameters attribute of the StabilizationPlusChargeDescriptor
      *  object
      *
      *@param  params            1: max iterations (optional, defaults to 20)
@@ -104,71 +103,56 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
      */
     @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 1) {
-            throw new CDKException("SigmaElectronegativityDescriptor only expects one parameter");
-        }
-        if (!(params[0] instanceof Integer) ){
-            throw new CDKException("The parameter must be of type Integer");
-        }
-        if(params.length==0)
-        	return;
-        maxIterations = (Integer) params[0];
+        
     }
 
 
     /**
-     *  Gets the parameters attribute of the SigmaElectronegativityDescriptor
+     *  Gets the parameters attribute of the StabilizationPlusChargeDescriptor
      *  object
      *
      *@return    The parameters value
      */
     @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
-        // return the parameters as used for the descriptor calculation
-        Object[] params = new Object[1];
-        params[0] = maxIterations;
-        return params;
+        return null;
     }
 
 
     /**
-     *  The method calculates the sigma electronegativity of a given atom
+     *  The method calculates the stabilization of charge of a given atom
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
      *@param  atom              The IAtom for which the DescriptorValue is requested
-     *@param  ac                AtomContainer
-     *@return                   return the sigma electronegativity
+     *@param  container         AtomContainer
+     *@return                   return the stabilization value
      *@exception  CDKException  Possible Exceptions
      */
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
     	
-    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
 
-  		if(maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
-	    
-	    double result = electronegativity.calculateSigmaElectronegativity(ac, atom);
+  		double result = stabil.calculatePositive(container, atom);
 	    
 	    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(result),descriptorNames);
     }
 
 
     /**
-     *  Gets the parameterNames attribute of the SigmaElectronegativityDescriptor
+     *  Gets the parameterNames attribute of the StabilizationPlusChargeDescriptor
      *  object
      *
      *@return    The parameterNames value
      */
     @TestMethod(value="testGetParameterNames")
     public String[] getParameterNames() {
-        String[] params = new String[1];
-        params[0] = "maxIterations";
-        return params;
+        return null;
     }
 
 
     /**
-     *  Gets the parameterType attribute of the SigmaElectronegativityDescriptor
+     *  Gets the parameterType attribute of the StabilizationPlusChargeDescriptor
      *  object
      *
      * @param  name  Description of the Parameter
@@ -176,7 +160,7 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
      */
     @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
-        return 0; 
+        return null; 
     }
 }
 

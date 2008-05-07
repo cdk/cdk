@@ -26,12 +26,16 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.LonePairElectronChecker;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -39,6 +43,9 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @cdk.module test-qsaratomic
  */
 public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
+	
+	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 	
 	/**
 	 *  Constructor for the PartialSigmaChargeDescriptorTest object
@@ -64,91 +71,145 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	
 	/**
 	 *  A unit test for JUnit with Fluoroethylene
+	 *  
+	 *  @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
 	 */
 	public void testPartialSigmaChargeDescriptor_Fluoroethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.2138,0.079,0.0942,-0.072,0.0563,0.0563};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("F-C([H])=C([H])[H]");
-
-		addExplicitHydrogens(mol);
-		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+		IMolecule molecule = builder.newMolecule();
+		molecule.addAtom(builder.newAtom("F"));
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(0, 1, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addBond(1, 2, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(1, 3, IBond.Order.DOUBLE);
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addBond(3, 4, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addBond(3, 5, IBond.Order.SINGLE);
+		 
+		addExplicitHydrogens(molecule);
+		lpcheck.saturate(molecule);
+		
+		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
+			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.003);
 		}
 	}
 	/**
-	 *  A unit test for JUnit with Ethyl chloride
+	 *  A unit test for JUnit with Ethyl Fluoride
+	 *  
+	 *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
 	 */
 	public void testPartialSigmaChargeDescriptor_Methyl_Floride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.07915,-0.25264,0.05783,0.05783,0.05783};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CF");
-
-		addExplicitHydrogens(mol);
-		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+		IMolecule molecule = builder.newMolecule();
+        molecule.addAtom(new Atom("C"));
+        molecule.addAtom(new Atom("F"));
+        molecule.addBond(0, 1, IBond.Order.SINGLE);
+        
+		addExplicitHydrogens(molecule);
+		lpcheck.saturate(molecule);
+		
+		addExplicitHydrogens(molecule);
+		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
+			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.001);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Methyl chloride
+	 *  
+	 *  @cdk.inchi  InChI=1/CH3Cl/c1-2/h1H3
 	 */
 	public void testPartialSigmaChargeDescriptor_Methyl_chloride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0382,-0.1755,0.0457,0.0457,0.0457};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+
+		IMolecule molecule = builder.newMolecule();
+        molecule.addAtom(new Atom("C"));
+        molecule.addAtom(new Atom("Cl"));
+        molecule.addBond(0, 1, IBond.Order.SINGLE);
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CCl");
-		addExplicitHydrogens(mol);
-		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+		addExplicitHydrogens(molecule);
+		lpcheck.saturate(molecule);
+		
+		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
+			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.001);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Methyl chloride
+	 *  
+	 *  @cdk.inchi  InChI=1/CH3Br/c1-2/h1H3
 	 */
 	public void testPartialSigmaChargeDescriptor_Methyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.021,-0.1448,0.0413,0.0413,0.0413};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CBr");
-		addExplicitHydrogens(mol);
-		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+		IMolecule molecule = builder.newMolecule();
+        molecule.addAtom(new Atom("C"));
+        molecule.addAtom(new Atom("Br"));
+        molecule.addBond(0, 1, IBond.Order.SINGLE);
+        
+		addExplicitHydrogens(molecule);
+		lpcheck.saturate(molecule);
+
+		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
+			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.01);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Methyl iodide
+	 *  
+	 *  @cdk.inchi 
 	 */
 	public void testPartialSigmaChargeDescriptor_Methyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.0116,-0.0892,0.0336,0.0336,0.0336};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		
+		IMolecule molecule = builder.newMolecule();
+        molecule.addAtom(new Atom("C"));
+        molecule.addAtom(new Atom("I"));
+        molecule.addBond(0, 1, IBond.Order.SINGLE);
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CI");
-		addExplicitHydrogens(mol);
-		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+		addExplicitHydrogens(molecule);
+		lpcheck.saturate(molecule);
+
+		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
+			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.001);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Allyl bromide
+	 *  
+	 *  @cdk.inchi  InChI=1/C3H5Br/c1-2-3-4/h2H,1,3H2
 	 */
 	public void testPartialSigmaChargeDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double testResult = -0.1366;/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C=CCBr");
-		addExplicitHydrogens(mol);
+		IMolecule molecule = builder.newMolecule();
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(0, 1, IBond.Order.DOUBLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(1, 2, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("Br"));
+		molecule.addBond(2, 3, IBond.Order.SINGLE);
+
+		addExplicitHydrogens(molecule);
+		lpcheck.saturate(molecule);
 		
-		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(3), mol).getValue()).doubleValue();
+		double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(3), molecule).getValue()).doubleValue();
 		assertEquals(testResult,result,0.01);
 	}
 	/**
 	 *  A unit test for JUnit with Isopentyl iodide
+	 *  
+	 *  @cdk.inchi  InChI=1/C5H11I/c1-5(2)3-4-6/h5H,3-4H2,1-2H3 
 	 */
 	public void testPartialSigmaChargeDescriptor_Isopentyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.0458,-0.0623,-0.0623,-0.0415,0.0003,-0.0855}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
@@ -164,45 +225,77 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	}
 	/**
 	 *  A unit test for JUnit with Ethoxy ethane
+	 *  
+	 *  @cdk.inchi  InChI=1/C4H10O/c1-3-5-4-2/h3-4H2,1-2H3
 	 */
 	public void testPartialSigmaChargeDescriptor_Ethoxy_ethane() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double testResult = -0.3809; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("CCOCC");
-		addExplicitHydrogens(mol);
+		IMolecule molecule = builder.newMolecule();
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(0, 1, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("O"));
+		molecule.addBond(1, 2, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(2, 3, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(3, 4, IBond.Order.SINGLE);
 		
-		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
+		addExplicitHydrogens(molecule);
+		lpcheck.saturate(molecule);
+		
+		double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(2), molecule).getValue()).doubleValue();
 		assertEquals(testResult,result,0.01);
 	}
 	/**
 	 *  A unit test for JUnit with Ethanolamine
+	 *  
+	 *  @cdk.inchi  InChI=1/C2H7NO/c3-1-2-4/h4H,1-3H2 
 	 */
 	public void testPartialSigmaChargeDescriptor_Ethanolamine() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.3293,0.017,0.057,-0.3943}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("NCCO");
-		addExplicitHydrogens(mol);
-        
+		IMolecule molecule = builder.newMolecule();
+		molecule.addAtom(builder.newAtom("N"));
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(0, 1, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(1, 2, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("O"));
+		molecule.addBond(2, 3, IBond.Order.SINGLE);
+		
+		addExplicitHydrogens(molecule);
+		lpcheck.saturate(molecule);
+		
 		for (int i = 0 ; i < 4 ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
+			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.01);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Allyl mercaptan
+	 *  
+	 *  @cdk.inchi  InChI=1/C3H6S/c1-2-3-4/h2,4H,1,3H2
 	 */
 	public void testPartialSigmaChargeDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.1031,-0.0828,0.0093,-0.1742}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("C=CCS");
-		addExplicitHydrogens(mol);
+		IMolecule molecule = builder.newMolecule();
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(0, 1, IBond.Order.DOUBLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(1, 2, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("S"));
+		molecule.addBond(2, 3, IBond.Order.SINGLE);
+		
+		addExplicitHydrogens(molecule);
+		lpcheck.saturate(molecule);
 		
 		for (int i = 0 ; i < 4 ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.015);
+			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
+			assertEquals(testResult[i],result,0.01);
 		}
 	}
 	/**
@@ -215,7 +308,6 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 			assertEquals(testResult[i],result,0.003);
 		}
 	}
@@ -230,7 +322,6 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		descriptor.setParameters(object);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 			assertEquals(testResult[i],result,0.2);
 		}
 	}
@@ -244,37 +335,63 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
 			assertEquals(testResult[i],result,0.2);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with
+	 *  
+	 *  @cdk.inchi  InChI=1/CH2O/c1-2/h1H2 
 	 */
 	public void testPartialSigmaChargeDescriptor4() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.3041,0.1055,0.0993,0.0993}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("O=C([H])([H])");
-		Integer[] object = {new Integer(6)};
-		descriptor.setParameters(object);
-		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
+		
+		IMolecule molecule = builder.newMolecule();
+		molecule.addAtom(builder.newAtom("O"));
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(0, 1, IBond.Order.DOUBLE);
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addBond(1, 2, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addBond(1, 3, IBond.Order.SINGLE);
+		
+		addExplicitHydrogens(molecule);
+		lpcheck.saturate(molecule);
+		
+		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
+			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.003);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with
+	 *  
+	 *  @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
 	 */
 	public void testPartialSigmaChargeDescriptor5() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.3291,0.144,0.1028,-0.0084,0.0303,0.0303,0.0303}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("O=C([H])C([H])([H])[H]");
+		
+		IMolecule molecule = builder.newMolecule();
+		molecule.addAtom(builder.newAtom("O"));
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(0, 1, IBond.Order.DOUBLE);
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addBond(1, 2, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(1, 3, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addBond(3, 4, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("H"));
+		molecule.addBond(3, 5, IBond.Order.SINGLE);
+		
+		addExplicitHydrogens(molecule);
+		lpcheck.saturate(molecule);
+		
 		Integer[] object = {new Integer(6)};
 		descriptor.setParameters(object);
-		for (int i = 0 ; i < mol.getAtomCount() ; i++){
-			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-//			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
+		
+		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
+			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
 			assertEquals(testResult[i],result,0.03);
 		}
 	}

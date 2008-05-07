@@ -58,7 +58,7 @@ public abstract class BondDescriptorTest extends DescriptorTest {
 		super.setDescriptor(descriptorClass);
 	}
 
-    public void testCalculate_IBond() throws Exception {
+    public void testCalculate_IBond_IAtomContainer() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         
         DescriptorValue v = descriptor.calculate(mol.getBond(0), mol);

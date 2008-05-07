@@ -27,29 +27,28 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptor;
-import org.openscience.cdk.qsar.descriptors.bond.MassNumberDifferenceDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsarmolecular
+ * @cdk.module test-qsarbond
  */
 public class BondPartialSigmaChargeDescriptorTest extends BondDescriptorTest {
-	
-	public void setUp() throws Exception {
-		super.setDescriptor(MassNumberDifferenceDescriptor.class);
-	}
 	
 	public  BondPartialSigmaChargeDescriptorTest() {
 		descriptor  = new BondPartialSigmaChargeDescriptor() ;
 	}
+	
+    public void setUp() throws Exception {
+    	setDescriptor(BondPartialSigmaChargeDescriptor.class);
+    }
     
-	public static Test suite() {
-		return new TestSuite(BondPartialSigmaChargeDescriptorTest.class);
-	}
+    public static Test suite() {
+        return new TestSuite(BondPartialSigmaChargeDescriptorTest.class);
+    }
+	
 	/**
 	 *  A unit test for JUnit
 	 */

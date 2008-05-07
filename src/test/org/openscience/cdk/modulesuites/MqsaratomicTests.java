@@ -44,6 +44,7 @@ import org.openscience.cdk.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemD
 import org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargePEOEDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.PiElectronegativityDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptorTest;
@@ -52,6 +53,8 @@ import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GDRTest;
 import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GHRTest;
 import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GHR_topolTest;
 import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GSRTest;
+import org.openscience.cdk.qsar.descriptors.atomic.SigmaElectronegativityDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.StabilizationPlusChargeDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptorTest;
 
 /**
@@ -85,6 +88,7 @@ public class MqsaratomicTests {
         suite.addTest(PartialPiChargeDescriptorTest.suite());
         suite.addTest(PartialSigmaChargeDescriptorTest.suite());
         suite.addTest(PartialTChargeMMFF94DescriptorTest.suite());
+        suite.addTest(PartialTChargePEOEDescriptorTest.suite());
         suite.addTest(PeriodicTablePositionDescriptorTest.suite());
         suite.addTest(PiElectronegativityDescriptorTest.suite());
         suite.addTest(ProtonTotalPartialChargeDescriptorTest.suite());
@@ -93,6 +97,8 @@ public class MqsaratomicTests {
         suite.addTest(RDFProtonDescriptor_GHRTest.suite());
         suite.addTest(RDFProtonDescriptor_GHR_topolTest.suite());
         suite.addTest(RDFProtonDescriptor_GSRTest.suite());
+        suite.addTest(SigmaElectronegativityDescriptorTest.suite());
+        suite.addTest(StabilizationPlusChargeDescriptorTest.suite());
         suite.addTest(VdWRadiusDescriptorTest.suite());
         
         return suite;

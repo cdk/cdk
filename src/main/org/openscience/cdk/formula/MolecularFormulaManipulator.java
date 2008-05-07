@@ -250,8 +250,13 @@ public class MolecularFormulaManipulator {
 		}
 		return isotopesList;
 	}
-
 	
+	/**
+	 * 
+	 * @param formula
+	 * @return
+	 */
+	@TestMethod("testGetHillString_IMolecularFormula")
 	public static String getHillString(IMolecularFormula formula){
 		return null;
 	}
