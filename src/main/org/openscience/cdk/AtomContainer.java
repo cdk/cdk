@@ -23,23 +23,11 @@
  */
 package org.openscience.cdk;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IBond.Order;
+
+import java.io.Serializable;
+import java.util.*;
 
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and
@@ -216,7 +204,7 @@ public class AtomContainer extends ChemObject
      * @see    #addAtomParity
      */
     public IAtomParity getAtomParity(IAtom atom) {
-        return (AtomParity)atomParities.get(atom);
+        return atomParities.get(atom);
     }
     
 	/**
@@ -228,10 +216,9 @@ public class AtomContainer extends ChemObject
 	public void setAtoms(IAtom[] atoms)
 	{
 		this.atoms = atoms;
-		for (int f = 0; f < atoms.length; f++)
-		{
-			atoms[f].addListener(this);	
-		}
+        for (IAtom atom : atoms) {
+            atom.addListener(this);
+        }
 		this.atomCount = atoms.length;
 		notifyChanged();
 	}
@@ -246,9 +233,9 @@ public class AtomContainer extends ChemObject
 	public void setBonds(IBond[] bonds)
 	{
 		this.bonds = bonds;
-		for (int i = 0; i < bonds.length; ++i) {
-			bonds[i].addListener(this);
-		}
+        for (IBond bond : bonds) {
+            bond.addListener(this);
+        }
 		this.bondCount = bonds.length;
 	}
 
@@ -548,7 +535,7 @@ public class AtomContainer extends ChemObject
 	 */
 	public IAtom getFirstAtom()
 	{
-		return (Atom)atoms[0];
+		return atoms[0];
 	}
 
 
@@ -631,7 +618,7 @@ public class AtomContainer extends ChemObject
 	 *  Returns the position of a given single electron in the single electron array. 
 	 *  It returns -1 if the single electron does not exist.
 	 *
-	 *@param  atom  The single electron to be sought
+	 *@param  singleElectron  The single electron to be sought
 	 *@return       The Position of the single electron in the array.
 	 */
 	public int getSingleElectronNumber(ISingleElectron singleElectron)
@@ -1550,10 +1537,9 @@ public class AtomContainer extends ChemObject
 		}
 		if (atomParities.size() > 0) {
 			stringContent.append(", AP:[#").append(atomParities.size());
-			Iterator<IAtomParity> parities = atomParities.values().iterator();
-			while (parities.hasNext()) {
-				stringContent.append(", ").append(parities.next().toString());
-			}
+            for (IAtomParity iAtomParity : atomParities.values()) {
+                stringContent.append(", ").append(iAtomParity.toString());
+            }
 			stringContent.append(']');
 		}
 		stringContent.append(')');
