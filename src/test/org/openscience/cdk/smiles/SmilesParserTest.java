@@ -673,7 +673,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 		smiles = "[nH]1cc[n]c1";
 		mol = sp.parseSmiles(smiles);
 		Assert.assertEquals(1, mol.getAtom(0).getHydrogenCount());
-		Assert.assertEquals(0, mol.getAtom(4).getHydrogenCount());
+		Assert.assertEquals(0, mol.getAtom(3).getHydrogenCount());
 	}
 
 	/**
