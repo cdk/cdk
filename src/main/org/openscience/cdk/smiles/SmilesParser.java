@@ -80,6 +80,8 @@ import java.util.StringTokenizer;
  */
 public class SmilesParser {
 
+	private final static String HAS_HARDCODED_HYDROGEN_COUNT = "SmilesParser.HasHardcodedHydrogenCount";
+	
 	private LoggingTool logger;
 	private CDKHydrogenAdder hAdder;
 		
@@ -376,6 +378,11 @@ public class SmilesParser {
 					nodeCounter++;
 					position = position + currentSymbol.length() + 2;
 					// plus two for [ and ]
+					atom.setProperty(HAS_HARDCODED_HYDROGEN_COUNT, "yes");
+					if (atom.getHydrogenCount() == null) {
+						// zero implicit hydrogens is implied when the Hx syntax is not used
+						atom.setHydrogenCount(0);
+					}
 					bondExists = true;
 				} else if (mychar == '.')
 				{
@@ -780,11 +787,17 @@ public class SmilesParser {
 		bondStatusForRingClosure = IBond.Order.SINGLE;
 	}
 
-	private void addImplicitHydrogens(IMolecule m) {
+	private void addImplicitHydrogens(IMolecule container) {
 		try {
-			logger.debug("before H-adding: ", m);
-			hAdder.addImplicitHydrogens(m);
-			logger.debug("after H-adding: ", m);
+			logger.debug("before H-adding: ", container);
+			Iterator<IAtom> atoms = container.atoms();
+			while (atoms.hasNext()) {
+				IAtom nextAtom = atoms.next();
+				if (nextAtom.getProperty(HAS_HARDCODED_HYDROGEN_COUNT) == null) {
+					hAdder.addImplicitHydrogens(container, nextAtom);
+				}
+			}
+			logger.debug("after H-adding: ", container);
 		} catch (Exception exception) {
 			logger.error("Error while calculation Hcount for SMILES atom: ", exception.getMessage());
 		}
