@@ -35,16 +35,16 @@ import java.util.regex.Pattern;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV3000Format;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -72,6 +72,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     private Pattern keyValueTuple;
     private Pattern keyValueTuple2;
     
+    private int lineNumber;
+
     public MDLV3000Reader(Reader in) {
     	this(in, Mode.RELAXED);
     }
@@ -83,6 +85,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         /* compile patterns */
         keyValueTuple = Pattern.compile("\\s*(\\w+)=([^\\s]*)(.*)"); // e.g. CHG=-1
         keyValueTuple2 = Pattern.compile("\\s*(\\w+)=\\(([^\\)]*)\\)(.*)"); // e.g. ATOMS=(1 31)
+        lineNumber = 0;
     }
 
     public MDLV3000Reader(InputStream input) {
@@ -106,6 +109,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         } else {
             this.input = new BufferedReader(input);
         }
+        lineNumber = 0;
     }
 
     public void setReader(InputStream input) throws CDKException {
@@ -179,6 +183,10 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     	readLine();
     	String line3 = readLine();
     	if (line3.length() > 0) readData.setProperty(CDKConstants.COMMENT, line3);
+        String line4 = readLine();
+        if (!line4.contains("3000")) {
+            throw new CDKException("This file is not a MDL V3000 molfile.");
+        }
     	return readLine();
 	}
 
@@ -544,7 +552,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         String line = null;
         try {
             line = input.readLine();
-            logger.debug("read line: " + line);
+            lineNumber++;
+            logger.debug("read line " + lineNumber + ":", line);
         } catch (Exception exception) {
             String error = "Unexpected error while reading file: " + exception.getMessage();
             logger.error(error);
