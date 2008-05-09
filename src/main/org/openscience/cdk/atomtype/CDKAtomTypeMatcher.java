@@ -491,6 +491,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			} else if (atom.getHybridization() == Hybridization.SP3) {
     				IAtomType type = getAtomType("N.sp3");
     				if (isAcceptable(atom, atomContainer, type)) return type;
+    			} else if (atom.getHybridization() == Hybridization.PLANAR3) {
+    				IAtomType type = getAtomType("N.planar3");
+    				if (isAcceptable(atom, atomContainer, type)) return type;
     			}
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() != 0) {

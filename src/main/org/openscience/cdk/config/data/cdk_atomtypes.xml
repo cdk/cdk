@@ -291,7 +291,7 @@
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">1</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
     </atom>
-    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">planar</scalar>
   </atomType>
 
   <atomType id="N.amide">
@@ -410,7 +410,7 @@
       <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">2</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">0</scalar>
     </atom>
-    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">planar</scalar>
   </atomType>
 
   <atomType id="S.minus"> <!-- e.g. H[S-] -->

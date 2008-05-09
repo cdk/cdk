@@ -30,6 +30,7 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -166,6 +167,65 @@ public class NewCDKTestCase {
     	}
     	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
     	hAdder.addImplicitHydrogens(container);
-    }    
-    
+    }
+
+	/**
+	 * Convenience method to check that all bond orders are single
+	 * and all heavy atoms are aromatic (and that all explicit
+	 * hydrogens are not aromatic).
+	 *
+	 * @param container the atom container to check
+	 */
+	protected void assertAllSingleAndAromatic(IAtomContainer container) throws Exception {
+		for (Iterator<IBond> bonds = container.bonds(); bonds.hasNext();)
+			Assert.assertEquals(IBond.Order.SINGLE, bonds.next().getOrder());
+		
+		for (Iterator<IAtom> atoms = container.atoms(); atoms.hasNext();) {
+			IAtom atom = atoms.next();
+			if (atom.getSymbol().equals("H"))
+				Assert.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
+			else
+				Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+		}
+	}
+
+	/**
+	 * Convenience method to check the atom symbols
+	 * of a molecule.
+	 *
+	 * @param symbols an array of the expected atom symbols
+	 * @param container the atom container to check
+	 */
+	protected void assertAtomSymbols(String[] symbols, IAtomContainer container) throws Exception {
+		int i = 0;
+		for (Iterator<IAtom> atoms = container.atoms(); atoms.hasNext(); i++)
+			Assert.assertEquals(symbols[i], atoms.next().getSymbol());
+	}
+
+	/**
+	 * Convenience method to check the hybridization states
+	 * of a molecule.
+	 *
+	 * @param hybridizations an array of the expected hybridization states
+	 * @param container the atom container to check
+	 */
+	protected void assertHybridizations(IAtomType.Hybridization[] hybridizations, IAtomContainer container) throws Exception {
+		int i = 0;
+		for (Iterator<IAtom> atoms = container.atoms(); atoms.hasNext(); i++)
+			Assert.assertEquals(hybridizations[i], atoms.next().getHybridization());
+	}
+
+	/**
+	 * Convenience method to check the hydrogen counts
+	 * of a molecule.
+	 *
+	 * @param hydrogenCounts an array of the expected hydrogenCounts
+	 * @param container the atom container to check
+	 */
+	protected void assertHydrogenCounts(int[] hydrogenCounts, IAtomContainer container) throws Exception {
+		int i = 0;
+		for (Iterator<IAtom> atoms = container.atoms(); atoms.hasNext(); i++)
+			Assert.assertEquals(hydrogenCounts[i], atoms.next().getHydrogenCount());
+	}
+
 }

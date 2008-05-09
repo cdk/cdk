@@ -1245,5 +1245,83 @@ public class SmilesParserTest extends NewCDKTestCase {
         boolean isaromatic = CDKHueckelAromaticityDetector.detectAromaticity(mol);
         Assert.assertTrue(isaromatic);
     }
+    
+	/*
+	 * Tests for various aromatic hetero cycles follow:
+	 */
+		 
+	/**
+	 * @cdk.bug 1959516
+	 */
+	@org.junit.Test public void testPyrrole1() throws Exception {
+		String smiles = "[nH]1cccc1";
+		IMolecule mol = sp.parseSmiles(smiles);
+
+		assertAtomTypesPerceived(mol);
+
+		Assert.assertEquals(5, mol.getAtomCount());
+		
+		assertAllSingleAndAromatic(mol);
+		
+		assertAtomSymbols(new String[] {"N", "C", "C", "C", "C"}, mol);
+		
+		assertHybridizations(new IAtomType.Hybridization[] {
+			IAtomType.Hybridization.PLANAR3,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2
+		}, mol);
+		
+		assertHydrogenCounts(new int[] {1, 1, 1, 1, 1}, mol);
+	}
+		 
+	@org.junit.Test public void testPyrrole2() throws Exception {
+		String smiles = "n1([H])cccc1";
+		IMolecule mol = sp.parseSmiles(smiles);
+
+		assertAtomTypesPerceived(mol);
+
+		Assert.assertEquals(6, mol.getAtomCount());
+		
+		assertAllSingleAndAromatic(mol);
+		
+		assertAtomSymbols(new String[] {"N", "H", "C", "C", "C", "C"}, mol);
+		
+		assertHybridizations(new IAtomType.Hybridization[] {
+			IAtomType.Hybridization.PLANAR3,
+			null,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2
+		}, mol);
+		
+		assertHydrogenCounts(new int[] {0, 0, 1, 1, 1, 1}, mol);
+	}
+		 
+	@org.junit.Test public void testPyrrole3() throws Exception {
+		String smiles = "n1cccc1";
+		IMolecule mol = sp.parseSmiles(smiles);
+
+		assertAtomTypesPerceived(mol);
+
+		Assert.assertEquals(5, mol.getAtomCount());
+		
+		assertAllSingleAndAromatic(mol);
+		
+		assertAtomSymbols(new String[] {"N", "C", "C", "C", "C"}, mol);
+		
+		assertHybridizations(new IAtomType.Hybridization[] {
+			IAtomType.Hybridization.PLANAR3,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2
+		}, mol);
+		
+		assertHydrogenCounts(new int[] {1, 1, 1, 1, 1}, mol);
+	}
+
 }
 
