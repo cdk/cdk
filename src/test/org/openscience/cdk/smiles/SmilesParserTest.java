@@ -1075,15 +1075,9 @@ public class SmilesParserTest extends NewCDKTestCase {
 		//                             0  1 23 45
 		IMolecule mol = sp.parseSmiles("OC(=O)[C@@H](N)CC[S+1](C)C[C@@H](O1)[C@@H](O)[C@@H](O)[C@@H]1n(c3)c(n2)c(n3)c(N)nc2");
 		Assert.assertNotNull(mol);
-		Assert.assertEquals(6, mol.getAtomCount());
-		Assert.assertEquals(6, mol.getBondCount());
-		// test only option for delocalized bond system
-		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(0)), 0.001);
-		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(1)), 0.001);
-		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(2)), 0.001);
-		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(3)), 0.001);
-		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(4)), 0.001);
-		Assert.assertEquals(3.0, mol.getBondOrderSum(mol.getAtom(5)), 0.001);			
+		Assert.assertEquals(27, mol.getAtomCount());
+		Assert.assertEquals(29, mol.getBondCount());
+		Assert.assertEquals(1, mol.getAtom(7).getFormalCharge());
 	}
 	
 	/**
