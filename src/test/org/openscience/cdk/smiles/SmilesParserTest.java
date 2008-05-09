@@ -20,6 +20,9 @@
  */
 package org.openscience.cdk.smiles;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -27,15 +30,18 @@ import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Please see the test.gui package for visual feedback on tests.
@@ -651,6 +657,23 @@ public class SmilesParserTest extends NewCDKTestCase {
 				Assert.assertEquals(IBond.Order.SINGLE,((IBond)mol.getConnectedBondsList(mol.getAtom(i)).get(1)).getOrder());
 			}
 		}
+	}
+
+	@org.junit.Test (timeout=1000)
+	public void testHardCodedHydrogenCount() throws Exception {
+		String smiles = "c1ccc[NH]1";
+		IMolecule mol = sp.parseSmiles(smiles);
+		Assert.assertEquals(1, mol.getAtom(4).getHydrogenCount());
+
+		smiles = "[n]1cc[nH]c1";
+		mol = sp.parseSmiles(smiles);
+		Assert.assertEquals(1, mol.getAtom(4).getHydrogenCount());
+		Assert.assertEquals(0, mol.getAtom(0).getHydrogenCount());
+
+		smiles = "[nH]1cc[n]c1";
+		mol = sp.parseSmiles(smiles);
+		Assert.assertEquals(1, mol.getAtom(0).getHydrogenCount());
+		Assert.assertEquals(0, mol.getAtom(4).getHydrogenCount());
 	}
 
 	/**
