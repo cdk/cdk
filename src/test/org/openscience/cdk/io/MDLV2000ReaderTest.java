@@ -26,16 +26,17 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
@@ -50,11 +51,9 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.nonotify.NNMolecule;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -423,17 +422,11 @@ public class MDLV2000ReaderTest extends CDKTestCase {
 
 
         Map<Object,Object> props = container.getProperties();
-        Iterator<Object> keys = props.keySet().iterator();
-        ArrayList<String> obsKeys = new ArrayList<String>();
-        while (keys.hasNext()) {
-            String s = (String) keys.next();
-            obsKeys.add(s);
-        }
+        Set<Object> keys = props.keySet();
 
-        assertEquals("SubstanceType", obsKeys.get(0));
-        assertEquals("TD50 Rat", obsKeys.get(5));
-        assertEquals("ChemCount", obsKeys.get(11));
-
+        assertTrue(keys.contains("SubstanceType"));
+        assertTrue(keys.contains("TD50 Rat"));
+        assertTrue(keys.contains("ChemCount"));
     }
 
     /**
