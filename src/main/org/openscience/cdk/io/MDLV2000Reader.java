@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import javax.vecmath.Point2d;
@@ -93,6 +94,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     private LoggingTool logger = null;
 
     private BooleanIOSetting forceReadAs3DCoords;
+    private BooleanIOSetting interpretHydrogenIsotopes;
     
     public MDLV2000Reader() {
         this(new StringReader(""));
@@ -680,10 +682,32 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             logger.debug(exception);
             throw new CDKException(error, exception);
 		}
+		if (interpretHydrogenIsotopes.isSet()) {
+			fixHydrogenIsotopes(molecule);
+		}
 		return molecule;
 	}
     
-    public void close() throws IOException {
+    private void fixHydrogenIsotopes(IMolecule molecule) {
+		Iterator<IAtom> atoms = molecule.atoms();
+		while (atoms.hasNext()) {
+			IAtom atom = atoms.next();
+			if (atom instanceof IPseudoAtom) {
+				IPseudoAtom pseudo = (IPseudoAtom)atom;
+				if ("D".equals(pseudo.getLabel()) && atom.getMassNumber() == 2) {
+					IAtom newAtom = molecule.getBuilder().newAtom(atom);
+					newAtom.setSymbol("H");
+					AtomContainerManipulator.replaceAtomByAtom(molecule, atom, newAtom);
+				} else if ("T".equals(pseudo.getLabel()) && atom.getMassNumber() == 3) {
+					IAtom newAtom = molecule.getBuilder().newAtom(atom);
+					newAtom.setSymbol("H");
+					AtomContainerManipulator.replaceAtomByAtom(molecule, atom, newAtom);
+				}
+			}
+		}
+	}
+
+	public void close() throws IOException {
         input.close();
     }
     
@@ -691,6 +715,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.LOW,
           "Should coordinates always be read as 3D?", 
           "false");
+        interpretHydrogenIsotopes = new BooleanIOSetting("InterpretHydrogenIsotopes", IOSetting.LOW,
+          "Should D and T be interpreted as hydrogen isotopes?",
+          "true");
     }
     
     public void customizeJob() {
@@ -698,8 +725,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     public IOSetting[] getIOSettings() {
-        IOSetting[] settings = new IOSetting[1];
+        IOSetting[] settings = new IOSetting[2];
         settings[0] = forceReadAs3DCoords;
+        settings[1] = interpretHydrogenIsotopes;
         return settings;
     }
 }
