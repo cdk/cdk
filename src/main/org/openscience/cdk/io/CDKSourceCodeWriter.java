@@ -24,6 +24,17 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Iterator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -32,14 +43,11 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.CDKSourceCodeFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.DataFeatures;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import java.io.*;
-import java.util.Iterator;
 
 /**
  * Converts a Molecule into CDK source code that would build the same
@@ -64,14 +72,18 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
     private LoggingTool logger;
+    
+    private BooleanIOSetting write2DCoordinates;
+    private BooleanIOSetting write3DCoordinates;
 
     /**
-     * Contructs a new CDKSourceCodeWriter.
+     * Constructs a new CDKSourceCodeWriter.
      *
      * @param   out  The Writer to write to
      */
     public CDKSourceCodeWriter(Writer out) {
     	logger = new LoggingTool(this);
+    	initIOSettings();
     	try {
     		if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter)out;
@@ -122,6 +134,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 	}
 
     public void write(IChemObject object) throws CDKException {
+    	customizeJob();
         if (object instanceof IMolecule) {
             try {
                 writeMolecule((IMolecule)object);
@@ -145,23 +158,30 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         }
     }
     
-    public void writeMolecule(IMolecule molecule) throws Exception {
-        writer.write("{\n");
-        writer.write("  IMolecule mol = new Molecule();\n");
-        IDCreator.createIDs(molecule);
-        java.util.Iterator atoms = molecule.atoms();
+    private void writeAtoms(IAtomContainer molecule) throws Exception {
+        Iterator<IAtom> atoms = molecule.atoms();
         while (atoms.hasNext()) {
         	IAtom atom = (IAtom)atoms.next();
             writeAtom(atom);
             writer.write("  mol.addAtom(" + atom.getID() + ");\n");
         }
-
-        Iterator bonds = molecule.bonds();
+    }
+    
+    private void writeBonds(IAtomContainer molecule) throws Exception {
+        Iterator<IBond> bonds = molecule.bonds();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
             writeBond(bond);
             writer.write("  mol.addBond(" + bond.getID() + ");\n");
         }
+    }
+
+    public void writeMolecule(IMolecule molecule) throws Exception {
+        writer.write("{\n");
+        writer.write("  IMolecule mol = new Molecule();\n");
+        IDCreator.createIDs(molecule);
+        writeAtoms(molecule);
+        writeBonds(molecule);
         writer.write("}\n");
     }
 
@@ -169,34 +189,25 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         writer.write("{\n");
         writer.write("  IAtomContainer mol = new AtomContainer();\n");
         IDCreator.createIDs(molecule);
-        java.util.Iterator atoms = molecule.atoms();
-        while (atoms.hasNext()) {
-        	IAtom atom = (IAtom)atoms.next();
-            writeAtom(atom);
-            writer.write("  mol.addAtom(" + atom.getID() + ");\n");
-        }
-
-        Iterator bonds = molecule.bonds();
-        while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
-            writeBond(bond);
-            writer.write("  mol.addBond(" + bond.getID() + ");\n");
-        }
+        writeAtoms(molecule);
+        writeBonds(molecule);
         writer.write("}\n");
     }
 
     public void writeAtom(IAtom atom) throws Exception {
         writer.write("  IAtom " + atom.getID() + " = mol.getBuilder().newAtom(\"" + atom.getSymbol() +
                      "\");\n");
-        if (atom.getPoint2d() != null) {
+        if (write2DCoordinates.isSet() && 
+        	atom.getPoint2d() != null) {
         	Point2d p2d = atom.getPoint2d();
         	writer.write("  " + atom.getID() + ".setPoint2d(new Point2d(" +
-        		p2d.x + ", " + p2d.y + "));");
+        		p2d.x + ", " + p2d.y + "));\n");
         }
-        if (atom.getPoint3d() != null) {
+        if (write3DCoordinates.isSet() && 
+            atom.getPoint3d() != null) {
         	Point3d p3d = atom.getPoint3d();
         	writer.write("  " + atom.getID() + ".setPoint3d(new Point3d(" +
-        		p3d.x + ", " + p3d.y + ", " + p3d.z + "));");
+        		p3d.x + ", " + p3d.y + ", " + p3d.z + "));\n");
         }
     }
     
@@ -218,6 +229,29 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 		return DataFeatures.HAS_GRAPH_REPRESENTATION |
         	   DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
 	}
+	
+	private void initIOSettings() {
+		write2DCoordinates = new BooleanIOSetting("write2DCoordinates", IOSetting.LOW,
+            "Should 2D coordinates be added?", 
+            "true");
+
+		write2DCoordinates = new BooleanIOSetting("write2DCoordinates", IOSetting.LOW,
+	        "Should 2D coordinates be added?", 
+		    "true");
+	}
+    
+    private void customizeJob() {
+        fireIOSettingQuestion(write2DCoordinates);
+        fireIOSettingQuestion(write3DCoordinates);
+    }
+
+    public IOSetting[] getIOSettings() {
+        IOSetting[] settings = new IOSetting[2];
+        settings[0] = write2DCoordinates;
+        settings[1] = write3DCoordinates;
+        return settings;
+    }
+
 }
 
 
