@@ -20,10 +20,10 @@
  */
 package org.openscience.cdk.qsar.descriptors;
 
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.IDescriptor;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * Tests for molecular descriptors.
@@ -75,12 +75,6 @@ public abstract class DescriptorTest extends CDKTestCase {
 	 */
     public void testGetParameterNames() throws Exception {
         String[] paramNames = descriptor.getParameterNames();
-//        FIXME: the next would be nice, but not currently agreed-upon policy
-//        assertNotNull(
-//        	"The method getParameterNames() must return a non-null value, possible a zero length String[] array",
-//        	paramNames
-//        );
-//        FIXME: so instead:
         if (paramNames == null) paramNames = new String[0];
         for (int i=0; i<paramNames.length; i++) {
         	assertNotNull(
@@ -96,13 +90,13 @@ public abstract class DescriptorTest extends CDKTestCase {
     
     public void testGetParameters() {
         Object[] params = descriptor.getParameters();
-//      FIXME: the next would be nice, but not currently agreed-upon policy
-//      assertNotNull(
-//      	"The method getParameters() must return a non-null value, possible a zero length Object[] array",
-//      	paramNames
-//      );
-//      FIXME: so instead:
-        if (params == null) params = new Object[0];
+        if (params == null) {
+        	assertEquals(
+        	    "For all parameters a default or actual value must be returned.",  
+        		0, descriptor.getParameterNames() == null ? 0 : descriptor.getParameterNames().length
+        	);
+        	params = new Object[0];
+        }
         for (int i=0; i<params.length; i++) {
         	assertNotNull(
         		"A parameter default must not be null.",
@@ -113,10 +107,8 @@ public abstract class DescriptorTest extends CDKTestCase {
     
     public void testGetParameterType_String() {
         String[] paramNames = descriptor.getParameterNames();
-//      FIXME: see testGetParameterNames() comment on the same line 
         if (paramNames == null) paramNames = new String[0];
         Object[] params = descriptor.getParameters();
-//      FIXME: see testGetParameters() comment on the same line
         if (params == null) params = new Object[0];
 
         for (int i=0; i<paramNames.length; i++) {

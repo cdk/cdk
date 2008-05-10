@@ -105,14 +105,18 @@ public interface IDescriptor {
     
     /** 
      * Returns the names of the parameters for this descriptor. The method
-     * returns null if the descriptor does not have any parameters.
+     * returns null or a zero-length Object[] array if the descriptor
+     *  does not have any parameters.
      *
-     * @return An array of String containing the names of the paraneters 
-     * that this descriptor can accept.
+     * @return An array of String containing the names of the parameters 
+     *         that this descriptor can accept.
      */
     public String[] getParameterNames();
+    
     /** 
-     * Returns a class matching that of the parameter with the given name.
+     * Returns a class matching that of the parameter with the given name. May
+     * only return null for when 'name' does not match any parameters returned
+     * by the getParameters() method.
      *
      * @param name The name of the parameter whose type is requested
      * @return An Object of the class corresponding to the parameter with the supplied name
@@ -133,8 +137,9 @@ public interface IDescriptor {
     
     /** 
      * Returns the current parameter values. If not parameters have been set,
-     * it must return the default parameters. The method returns null
-     * if the descriptor does not have any parameters.
+     * it must return the default parameters. The method returns null or a
+     * zero-length Object[] array if the descriptor does not have any
+     * parameters.
      *
      * @return An array of Object containing the parameter default values
      * @see #setParameters
