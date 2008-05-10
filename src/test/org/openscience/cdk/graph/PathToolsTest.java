@@ -25,21 +25,27 @@ package org.openscience.cdk.graph;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.graph.PathTools;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * @cdk.module test-atomtype
@@ -63,6 +69,31 @@ public class PathToolsTest extends NewCDKTestCase {
         Assert.assertEquals(3, length);
     }
 
+    @Test
+    public void testResetFlags_IAtomContainer() throws Exception {
+    	IAtomContainer atomContainer = new AtomContainer();
+    	IAtom atom1 = new Atom("C");
+    	atom1.setFlag(CDKConstants.VISITED, true);
+    	IAtom atom2 = new Atom("C");
+    	atom2.setFlag(CDKConstants.VISITED, true);
+    	IBond bond1 = new Bond(atom1, atom2, Order.SINGLE);
+    	atomContainer.addAtom(atom1);
+    	atomContainer.addAtom(atom2);
+    	atomContainer.addBond(bond1);
+    	
+    	PathTools.resetFlags(atomContainer);
+    	
+    	// now assume that no VISITED is set
+    	Iterator<IAtom> atoms = atomContainer.atoms();
+    	while (atoms.hasNext()) {
+    		Assert.assertNull(atoms.next().getProperty(CDKConstants.VISITED));
+    	}
+    	Iterator<IBond> bonds = atomContainer.bonds();
+    	while (bonds.hasNext()) {
+    		Assert.assertNull(bonds.next().getProperty(CDKConstants.VISITED));
+    	}
+    }
+    
     @Test
     public void testGetShortestPath_IAtomContainer_IAtom_IAtom() throws Exception {
         IAtomContainer atomContainer = null;
