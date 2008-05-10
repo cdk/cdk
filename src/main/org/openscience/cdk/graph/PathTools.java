@@ -24,12 +24,17 @@
  */
 package org.openscience.cdk.graph;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
-import org.openscience.cdk.interfaces.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ISingleElectron;
 
 /**
  * Tools class with methods for handling molecular graphs.
@@ -235,6 +240,9 @@ public class PathTools {
      * atoms that have been visited are put into a molecule container. This
      * breadthFirstSearch does thus find the connected graph for a given start
      * atom.
+     * 
+     * <p>IMPORTANT: this method does not reset the VISITED flags, which must be
+     * done if calling this method twice!
      *
      * @param atomContainer The AtomContainer to be searched
      * @param sphere        A sphere of atoms to start the search with
