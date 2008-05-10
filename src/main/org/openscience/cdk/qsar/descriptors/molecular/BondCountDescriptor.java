@@ -20,17 +20,17 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.CDKConstants;
+import java.util.Iterator;
+
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
-
-import java.util.Iterator;
 
 /**
  *  IDescriptor based on the number of bonds of a certain bond order.
@@ -68,12 +68,12 @@ import java.util.Iterator;
 public class BondCountDescriptor implements IMolecularDescriptor {
 
 	/** defaults to UNSET, which means: count all bonds **/
-    private IBond.Order order = (IBond.Order) CDKConstants.UNSET;
+    private String order = "";
 
     /**
      *  Constructor for the BondCountDescriptor object
      */
-    public BondCountDescriptor() { }
+    public BondCountDescriptor() {}
 
 
     /**
@@ -100,11 +100,15 @@ public class BondCountDescriptor implements IMolecularDescriptor {
         if (params.length > 1) {
             throw new CDKException("BondCount only expects one parameter");
         }
-        if (!(params[0] instanceof IBond.Order)) {
+        if (!(params[0] instanceof String)) {
             throw new CDKException("The parameter must be of type IBond.Order");
         }
+        String bondType = (String)params[0];
+        if (bondType.length() > 1 || !"sdtq".contains(bondType)) {
+        	throw new CDKException("The only allowed values for this parameter are 's', 'd', 't', 'q' and ''.");
+        }
         // ok, all should be fine
-        order = (IBond.Order)params[0];
+        order = bondType;
     }
 
 
@@ -128,32 +132,38 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      *@return            The number of bonds of a certain type.
      */
     public DescriptorValue calculate(IAtomContainer container) {
-    	if (order == null) {
+    	if (order == "") {
     		// the special case: just count them all
     		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new IntegerResult(container.getBondCount()), new String[]{"nB"});
     	}
     	
         int bondCount = 0;
-        Iterator bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
-            if (bond.getOrder() == order) {
+            if (bondMatch(bond.getOrder(), order)) {
                 bondCount += 1;
             }
         }
 
-        String name = "nB";
-        if (order == IBond.Order.SINGLE) name += "s";
-        else if (order == IBond.Order.DOUBLE) name += "d";
-        else if (order == IBond.Order.TRIPLE) name += "t";
-        else if (order == IBond.Order.QUADRUPLE) name += "q";
+        String name = "nB" + order;
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new IntegerResult(bondCount), new String[]{name});
+            new IntegerResult(bondCount), new String[]{name}
+        );
     }
 
-    /**
+    private boolean bondMatch(Order order, String orderString) {
+	    if (order == Order.SINGLE && "s".equals(orderString)) return true;
+	    if (order == Order.DOUBLE && "d".equals(orderString)) return true;
+	    if (order == Order.TRIPLE && "t".equals(orderString)) return true;
+	    if (order == Order.QUADRUPLE && "q".equals(orderString)) return true;
+	    return false;
+    }
+
+
+	/**
      * Returns the specific type of the DescriptorResult object.
      * <p/>
      * The return value from this method really indicates what type of result will
@@ -188,7 +198,7 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-    	if ("order".equals(name)) return IBond.Order.DOUBLE;
+    	if ("order".equals(name)) return "";
     	return null;
     }
 }
