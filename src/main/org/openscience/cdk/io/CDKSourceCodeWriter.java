@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.io.formats.CDKSourceCodeFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -154,7 +155,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
                 throw new CDKException("Exception while writing to CDK source code: " + ex.getMessage(), ex);
             } 
         } else {
-            throw new CDKException("Only supported is writing of Molecule objects.");
+            throw new CDKException("Only supported is writing of IMolecule and IAtomContainer objects.");
         }
     }
     
@@ -195,8 +196,16 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     }
 
     public void writeAtom(IAtom atom) throws Exception {
-        writer.write("  IAtom " + atom.getID() + " = mol.getBuilder().newAtom(\"" + atom.getSymbol() +
-                     "\");\n");
+    	if (atom instanceof IPseudoAtom) {
+    		writer.write("  IPseudoAtom " + atom.getID() + " = mol.getBuilder().newPseudoAtom();\n");
+    		writer.write("  atom.setLabel(\"" + ((IPseudoAtom)atom).getLabel() + "\");\n");
+    	} else {
+    		writer.write("  IAtom " + atom.getID() + " = mol.getBuilder().newAtom(\"" + atom.getSymbol() +
+    		"\");\n");
+    	}
+        if (atom.getFormalCharge() != null) {
+        	writer.write("  " + atom.getID() + ".setFormalCharge(" + atom.getFormalCharge() + ");\n");
+        }
         if (write2DCoordinates.isSet() && 
         	atom.getPoint2d() != null) {
         	Point2d p2d = atom.getPoint2d();
