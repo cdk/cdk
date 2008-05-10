@@ -86,11 +86,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     	logger = new LoggingTool(this);
     	initIOSettings();
     	try {
-    		if (out instanceof BufferedWriter) {
-                writer = (BufferedWriter)out;
-            } else {
-                writer = new BufferedWriter(out);
-            }
+    		setWriter(out);
         } catch (Exception exc) {
         }
     }
@@ -244,8 +240,8 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
             "Should 2D coordinates be added?", 
             "true");
 
-		write2DCoordinates = new BooleanIOSetting("write2DCoordinates", IOSetting.LOW,
-	        "Should 2D coordinates be added?", 
+		write3DCoordinates = new BooleanIOSetting("write3DCoordinates", IOSetting.LOW,
+	        "Should 3D coordinates be added?", 
 		    "true");
 	}
     
