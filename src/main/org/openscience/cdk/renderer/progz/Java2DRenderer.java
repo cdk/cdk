@@ -46,6 +46,7 @@ import javax.vecmath.Point2d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -275,7 +276,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 			drawSymbol = true;
 
 		if (drawSymbol == true) {
-			int alignment = GeometryToolsInternalCoordinates.getBestAlignmentForLabelXY(container, atom);
+			int alignment = GeometryTools.getBestAlignmentForLabelXY(container, atom);
 			//System.out.println("alignment: " + alignment);
 			paintAtomSymbol(atom, graphics, alignment, isRadical);
 		}
@@ -617,7 +618,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 	 */
 	public void paintInnerBond(org.openscience.cdk.interfaces.IBond bond, IRing ring, Color bondColor, Graphics2D graphics)
 	{
-		Point2d center = GeometryToolsInternalCoordinates.get2DCenter(ring);
+		Point2d center = GeometryTools.get2DCenter(ring);
 		System.out.println("  paintInnerBond (=working) now at " + center);
 		//next few lines draw a green and pink line just for debugging, to be removed later
 	/*	graphics.setColor(Color.green);
@@ -746,7 +747,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 	 */
 	public void paintRingBond(org.openscience.cdk.interfaces.IBond bond, IRing ring, Color bondColor, Graphics2D graphics)
 	{
-		Point2d center = GeometryToolsInternalCoordinates.get2DCenter(ring);
+		Point2d center = GeometryTools.get2DCenter(ring);
 		System.out.println(" painting paintRingBond now at " + center + " getOrder: " + bond.getOrder() + " bond: " + bond);
 
 
@@ -900,10 +901,10 @@ public class Java2DRenderer implements IJava2DRenderer {
 	 */
 	public void paintRingRing(IRing ring, Color bondColor, Graphics2D graphics)
 	{
-		Point2d center = GeometryToolsInternalCoordinates.get2DCenter(ring);
+		Point2d center = GeometryTools.get2DCenter(ring);
 		System.out.println(" painting a Ringring now at " + center);
 		
-		double[] minmax = GeometryToolsInternalCoordinates.getMinMax(ring);
+		double[] minmax = GeometryTools.getMinMax(ring);
 		double width = (minmax[2] - minmax[0]) * 0.7;
 		double height = (minmax[3] - minmax[1]) * 0.7;
 		
@@ -942,7 +943,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		System.out.println("      paintBond, getstereo: " + bond.getStereo() + " getorder: " + bond.getOrder() + " x,y: " + bond.getAtom(0).getPoint2d().x + "," +
 				bond.getAtom(0).getPoint2d().y);
 		
-		if (!GeometryToolsInternalCoordinates.has2DCoordinates(bond)) {
+		if (!GeometryTools.has2DCoordinates(bond)) {
 			return;
 		}
 		
@@ -994,7 +995,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 	{
 		//TODO: rewrite this old code:
 		
-		/*if (GeometryToolsInternalCoordinates.has2DCoordinates(bond))
+		/*if (GeometryTools.has2DCoordinates(bond))
 		{
 			int[] screencoords=getScreenCoordinates(GeometryTools.getBondCoordinates(bond, r2dm.getRenderingCoordinates()));
 			int dashlength=4;
@@ -1028,12 +1029,12 @@ public class Java2DRenderer implements IJava2DRenderer {
 	 */
 	public void paintDoubleBond(IBond bond, Color bondColor, Graphics2D graphics)
 	{
-		if (GeometryToolsInternalCoordinates.has2DCoordinates(bond))
+		if (GeometryTools.has2DCoordinates(bond))
 		{
 			double[] tempc = new double[] { bond.getAtom(0).getPoint2d().x, bond.getAtom(0).getPoint2d().y,
 					bond.getAtom(1).getPoint2d().x, bond.getAtom(1).getPoint2d().y};
 			
-			double[] coords = GeometryToolsInternalCoordinates.distanceCalculator(tempc, 0.1);
+			double[] coords = GeometryTools.distanceCalculator(tempc, 0.1);
 
 			Line2D line = new Line2D.Double(
 					coords[0], coords[1], coords[6], coords[7]
@@ -1060,7 +1061,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		double[] tempc = new double[] { bond.getAtom(0).getPoint2d().x, bond.getAtom(0).getPoint2d().y,
 				bond.getAtom(1).getPoint2d().x, bond.getAtom(1).getPoint2d().y};
 		
-		double[] coords = GeometryToolsInternalCoordinates.distanceCalculator(tempc, 0.2);
+		double[] coords = GeometryTools.distanceCalculator(tempc, 0.2);
 
 		Line2D line = new Line2D.Double(
 				coords[0], coords[1], coords[6], coords[7]
@@ -1086,7 +1087,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 	public void paintSingleBond(IBond bond, Color bondColor, Graphics2D graphics)
 	{
 		System.out.println("  painting paintSingleBond " + bond.getAtom(0).getPoint2d() + " // " + bond.getAtom(1).getPoint2d());
-		if (GeometryToolsInternalCoordinates.has2DCoordinates(bond))
+		if (GeometryTools.has2DCoordinates(bond))
 		{
 			Line2D line = new Line2D.Double(
 					bond.getAtom(0).getPoint2d().x,
@@ -1168,12 +1169,12 @@ public class Java2DRenderer implements IJava2DRenderer {
 	 * @param ptSrc in real world coordinates (ie not screencoordinates)
 	 */
 	public static void showClosestAtomOrBond(IAtomContainer container, Point2d ptSrc) {
-		IAtom atom = GeometryToolsInternalCoordinates.getClosestAtom( ptSrc.x, ptSrc.y, container);
+		IAtom atom = GeometryTools.getClosestAtom( ptSrc.x, ptSrc.y, container);
 		double Atomdist = atom.getPoint2d().distance(ptSrc);
 		System.out.println("closest Atom distance: " + Atomdist + " Atom:" + atom);
 		
-		IBond bond = GeometryToolsInternalCoordinates.getClosestBond( ptSrc.x, ptSrc.y, container);
-		Point2d bondCenter = GeometryToolsInternalCoordinates.get2DCenter(bond.atoms());
+		IBond bond = GeometryTools.getClosestBond( ptSrc.x, ptSrc.y, container);
+		Point2d bondCenter = GeometryTools.get2DCenter(bond.atoms());
 		double Bonddist = bondCenter.distance(ptSrc);
 		System.out.println("closest Bond distance: " + Bonddist + " Bond: " + bond);
 	}

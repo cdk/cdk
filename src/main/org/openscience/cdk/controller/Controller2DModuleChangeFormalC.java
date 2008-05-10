@@ -24,24 +24,11 @@
  */
 package org.openscience.cdk.controller;
 
-import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.vecmath.Point2d;
 
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.renderer.progz.GeometryToolsInternalCoordinates;
-import org.openscience.cdk.renderer.progz.IJava2DRenderer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IAtomContainer;
-
 
 /**
  * Changes (Increases or Decreases) Formal Charge of an atom
@@ -75,7 +62,7 @@ public class Controller2DModuleChangeFormalC implements IController2DModule {
 		
 		IBond bond = chemObjectRelay.getClosestBond(worldCoord);
 		
-		Point2d bondCenter = GeometryToolsInternalCoordinates.get2DCenter(bond.atoms());
+		Point2d bondCenter = GeometryTools.get2DCenter(bond.atoms());
 		double Bonddist = bondCenter.distance(worldCoord);
 		
 		if (atom != null) {
