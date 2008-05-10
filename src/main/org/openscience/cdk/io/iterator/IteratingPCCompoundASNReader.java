@@ -32,7 +32,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.NoSuchElementException;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -80,17 +79,6 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
         logger = new LoggingTool(this);
         this.builder = builder;
         setReader(in);
-    }
-
-    /**
-     * Constructs a new IteratingPCCompoundASNReader that can read Molecule from a given InputStream.
-     *
-     * This method will use @link{DefaultChemObjectBuilder} to build the actual molecules
-     *
-     * @param  in  The InputStream to read from
-     */
-    public IteratingPCCompoundASNReader(InputStream in) {
-        this(new InputStreamReader(in), DefaultChemObjectBuilder.getInstance());
     }
 
     /**
