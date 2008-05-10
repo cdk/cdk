@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SVGFormat;
-import org.openscience.cdk.renderer.Renderer2D;
+import org.openscience.cdk.renderer.old.Renderer2D;
 import org.openscience.cdk.tools.LoggingTool;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;

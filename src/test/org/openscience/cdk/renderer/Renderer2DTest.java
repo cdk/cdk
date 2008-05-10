@@ -40,8 +40,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.renderer.Renderer2D;
-import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.renderer.old.Renderer2D;
 
 /**
  * @cdk.module test-extra

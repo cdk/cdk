@@ -22,18 +22,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.renderer;
+package org.openscience.cdk.renderer.old;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
 
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.renderer.IRenderer2D;
+import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.awt.*;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
 
 /**
  * A subclass of Renderer2D that uses masks (Area Class) to make an area

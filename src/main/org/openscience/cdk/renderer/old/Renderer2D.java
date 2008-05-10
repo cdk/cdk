@@ -22,7 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.renderer;
+package org.openscience.cdk.renderer.old;
 
 import java.awt.Graphics2D;
 import java.util.Iterator;
@@ -38,6 +38,8 @@ import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.renderer.IRenderer2D;
+import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
  *  A Renderer class which draws 2D representations of molecules onto a given

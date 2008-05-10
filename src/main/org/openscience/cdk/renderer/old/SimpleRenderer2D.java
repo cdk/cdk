@@ -27,7 +27,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-package org.openscience.cdk.renderer;
+package org.openscience.cdk.renderer.old;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -40,6 +40,8 @@ import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.renderer.ISimpleRenderer2D;
+import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 
