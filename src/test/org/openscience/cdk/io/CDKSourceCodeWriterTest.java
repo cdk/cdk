@@ -68,7 +68,6 @@ public class CDKSourceCodeWriterTest extends CDKTestCase {
         CDKSourceCodeWriter sourceWriter = new CDKSourceCodeWriter(writer);
         sourceWriter.write(molecule);
         String output = writer.toString();
-        System.out.println(output);
         assertTrue(output.indexOf("IAtom a1 = mol.getBuilder().newAtom(\"C\")") != -1);
     }
 }
