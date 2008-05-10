@@ -289,12 +289,43 @@ public class PathToolsTest extends NewCDKTestCase {
     	Assert.fail("Missing JUnit test");
     }
     @Test
-    public void testBreadthFirstSearch_IAtomContainer_List_IMolecule() {
-    	Assert.fail("Missing JUnit test");
+    public void testBreadthFirstSearch_IAtomContainer_List_IMolecule() throws Exception {
+        IAtomContainer atomContainer = null;
+        IAtom start = null;
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        atomContainer = sp.parseSmiles("CCCC");
+        PathTools.resetFlags(atomContainer);
+        start = atomContainer.getAtom(0);
+        List<IAtom> sphere = new ArrayList<IAtom>();
+        sphere.add(start);
+        IMolecule result = atomContainer.getBuilder().newMolecule();
+        PathTools.breadthFirstSearch(atomContainer, sphere, result);
+        Assert.assertEquals(4, result.getAtomCount());
     }
+    
     @Test
-    public void testBreadthFirstSearch_IAtomContainer_List_IMolecule_int() {
-    	Assert.fail("Missing JUnit test");
+    public void testBreadthFirstSearch_IAtomContainer_List_IMolecule_int() throws Exception {
+        IAtomContainer atomContainer = null;
+        IAtom start = null;
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        atomContainer = sp.parseSmiles("CCCC");
+        PathTools.resetFlags(atomContainer);
+        start = atomContainer.getAtom(0);
+        List<IAtom> sphere = new ArrayList<IAtom>();
+        sphere.add(start);
+        IMolecule result = atomContainer.getBuilder().newMolecule();
+        PathTools.breadthFirstSearch(atomContainer, sphere, result, 1);
+        Assert.assertEquals(2, result.getAtomCount());
+
+        result = atomContainer.getBuilder().newMolecule();
+        PathTools.resetFlags(atomContainer);
+        PathTools.breadthFirstSearch(atomContainer, sphere, result, 2);
+        Assert.assertEquals(3, result.getAtomCount());
+
+        result = atomContainer.getBuilder().newMolecule();
+        PathTools.resetFlags(atomContainer);
+        PathTools.breadthFirstSearch(atomContainer, sphere, result, 3);
+        Assert.assertEquals(4, result.getAtomCount());
     }
 }
 
