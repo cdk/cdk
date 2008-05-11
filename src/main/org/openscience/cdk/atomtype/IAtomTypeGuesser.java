@@ -24,6 +24,7 @@ import java.util.List;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 
 /**
  * Classes that implement this interface are atom type guessers. As compared
@@ -49,5 +50,5 @@ public interface IAtomTypeGuesser {
       * @throws           CDKException when something went wrong with going through
       *                   the AtomType's
       */
-    public List possbibleAtomTypes(IAtomContainer container, IAtom atom) throws CDKException;
+    public List<IAtomType> possibleAtomTypes(IAtomContainer container, IAtom atom) throws CDKException;
 }

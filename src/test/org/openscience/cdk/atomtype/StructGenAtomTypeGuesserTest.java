@@ -20,18 +20,17 @@
  */
 package org.openscience.cdk.atomtype;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.atomtype.StructGenAtomTypeGuesser;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.NewCDKTestCase;
-
-import java.util.List;
 
 /**
  * @cdk.module test-structgen
@@ -39,7 +38,7 @@ import java.util.List;
 public class StructGenAtomTypeGuesserTest extends NewCDKTestCase {
 
     @Test
-    public void testPossbibleAtomTypes_IAtomContainer_IAtom() throws java.lang.Exception {
+    public void testPossibleAtomTypes_IAtomContainer_IAtom() throws java.lang.Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         atom.setHydrogenCount(3);
@@ -50,7 +49,7 @@ public class StructGenAtomTypeGuesserTest extends NewCDKTestCase {
         mol.addBond(new Bond(atom, atom2, IBond.Order.SINGLE));
 
         StructGenAtomTypeGuesser atm = new StructGenAtomTypeGuesser();
-        List matched = atm.possbibleAtomTypes(mol, atom);
+        List<IAtomType> matched = atm.possibleAtomTypes(mol, atom);
         Assert.assertNotNull(matched);
         Assert.assertTrue(matched.size() > 0);
         Assert.assertTrue(matched.get(0) instanceof IAtomType);

@@ -67,7 +67,7 @@ public class StructGenAtomTypeGuesser implements IAtomTypeGuesser {
 	 * @exception CDKException Exception thrown if something goed wrong
 	 * @return                 the matching AtomType
 	 */
-	public List possbibleAtomTypes(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+	public List<IAtomType> possibleAtomTypes(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if (factory == null) {
             try {
                 factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/structgen_atomtypes.xml",
