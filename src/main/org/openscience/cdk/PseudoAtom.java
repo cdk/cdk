@@ -145,34 +145,34 @@ public class PseudoAtom extends Atom
     /**
      * Dummy method: the exact mass is 0, final. 
      */
-    public void setExactMass(double mass) {
+    public void setExactMass(Double mass) {
         // exact mass = 0, always
     }
 
     /**
      * Dummy method: the hydrogen count is 0, final. 
      */
-    public void setHydrogenCount(int hydrogenCount) {
+    public void setHydrogenCount(Integer hydrogenCount) {
         // hydrogen count = 0, always
     }
 
     /**
      * Dummy method: the formal charge is 0, final. 
      */
-    public void setFormalCharge(int charge) {
+    public void setFormalCharge(Integer charge) {
         // formal charge = 0, always
     }
 
     /**
      * Dummy method: the partial charge is 0, final. 
      */
-    public void setCharge(double charge) {
+    public void setCharge(Double charge) {
         // partial charge = 0, always
     }
     /**
      * Dummy method: the stereo parity is undefined, final.
      */
-    public void setStereoParity(int stereoParity) {
+    public void setStereoParity(Integer stereoParity) {
         // this is undefined, always
     }
 
