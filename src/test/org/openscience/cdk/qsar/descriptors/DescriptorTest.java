@@ -65,7 +65,7 @@ public abstract class DescriptorTest extends CDKTestCase {
 	 * </pre>
 	 */
 	public void testHasSetSuperDotDescriptor() {
-    	assertNotNull("The extending class must set the super.descriptor in its seUp() method.", descriptor);    	
+    	assertNotNull("The extending class must set the super.descriptor in its setUp() method.", descriptor);    	
 	}
 	
 	/**

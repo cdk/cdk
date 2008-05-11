@@ -78,7 +78,7 @@ public abstract class ReactionMechanismTest extends NewCDKTestCase {
 	 * </pre>
 	 */
 	@Test public void testHasSetSuperDotDescriptor() {
-		Assert.assertNotNull("The extending class must set the super.descriptor in its seUp() method.", reactionMechanism);    	
+		Assert.assertNotNull("The extending class must set the super.descriptor in its setUp() method.", reactionMechanism);    	
 	}
 
 }

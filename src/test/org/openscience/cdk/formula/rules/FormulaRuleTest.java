@@ -62,7 +62,7 @@ public abstract class FormulaRuleTest extends NewCDKTestCase {
 	 * </pre>
 	 */
 	@Test public void testHasSetSuperDotRule() {
-    	Assert.assertNotNull("The extending class must set the super.rule in its seUp() method.", rule);    	
+    	Assert.assertNotNull("The extending class must set the super.rule in its setUp() method.", rule);    	
 	}
 	
 	@Test public void testGetParameters() {

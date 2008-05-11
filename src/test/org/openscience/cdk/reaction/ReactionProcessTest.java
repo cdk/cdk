@@ -99,7 +99,7 @@ public abstract class ReactionProcessTest extends NewCDKTestCase {
 	 * </pre>
 	 */
 	@Test public void testHasSetSuperDotDescriptor() {
-		Assert.assertNotNull("The extending class must set the super.descriptor in its seUp() method.", reaction);    	
+		Assert.assertNotNull("The extending class must set the super.descriptor in its setUp() method.", reaction);    	
 	}
 	
 	/**
