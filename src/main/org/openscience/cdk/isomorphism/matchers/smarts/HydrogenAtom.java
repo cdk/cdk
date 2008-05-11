@@ -72,7 +72,7 @@ public class HydrogenAtom extends SMARTSAtom {
 		}
 		
 		//isotopic hydrogen specifications, e.g. deuterium [2H] 
-		if (atom.getMassNumber() > 1) { 
+		if (atom.getMassNumber() != null && atom.getMassNumber() > 1) { 
 			return true;
 		}
 		
