@@ -391,7 +391,7 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
         
     	double totalExactMass = MolecularFormulaManipulator.getTotalExactMass(formula);
     	
-        Assert.assertEquals(-1.0,totalExactMass,0.000001);
+        Assert.assertEquals(0.0,totalExactMass,0.000001);
     }
     /**
      * A unit test suite for JUnit. Test total natural abundance.
@@ -424,7 +424,7 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
      * @throws CDKException
      */
     @Test 
-    public void testGetTotalNaturalAbundance_IMolecularFormula2() throws IOException, ClassNotFoundException, CDKException{
+    public void testGetTotalNaturalAbundance_IMolecularFormula2() throws Exception{
 
 		IMolecularFormula formula1 = new MolecularFormula();
 		IIsotope br1 = builder.newIsotope("Br");
@@ -434,22 +434,23 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
         formula1.addIsotope(br1);
         formula1.addIsotope(br2);
     	
-
         Assert.assertEquals(2,formula1.getIsotopeCount(),0.000001);
         double totalAbudance = MolecularFormulaManipulator.getTotalNaturalAbundance(formula1);
-
         Assert.assertEquals(0.24995235,totalAbudance,0.000001);
+    }
         
+    @Test 
+    public void testGetTotalNaturalAbundance_IMolecularFormula3() throws Exception{
         IMolecularFormula formula2 = new MolecularFormula();
-		br1 = builder.newIsotope("Br");
+		IIsotope br1 = builder.newIsotope("Br");
     	br1.setNaturalAbundance(50.69);
-    	br2 = builder.newIsotope("Br");
+    	IIsotope br2 = builder.newIsotope("Br");
         br2.setNaturalAbundance(50.69);
         formula2.addIsotope(br1);
         formula2.addIsotope(br2);
 
-        Assert.assertEquals(1,formula2.getIsotopeCount(),0.000001);
-        totalAbudance = MolecularFormulaManipulator.getTotalNaturalAbundance(formula2);
+        Assert.assertEquals(1,formula2.getIsotopeCount());
+        double totalAbudance = MolecularFormulaManipulator.getTotalNaturalAbundance(formula2);
 
         Assert.assertEquals(0.25694761,totalAbudance,0.000001);
     }
