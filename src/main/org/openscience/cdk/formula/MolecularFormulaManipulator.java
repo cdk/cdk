@@ -453,20 +453,21 @@ public class MolecularFormulaManipulator {
 	}
 	/**
 	 * Get the summed exact mass of all isotopes from an MolecularFormula. It
-	 * assumes isotope masses to be preset.
+	 * assumes isotope masses to be preset, and returns 0.0 if not.
 	 * 
 	 * @param  formula The IMolecularFormula to calculate
 	 * @return         The summed exact mass of all atoms in this MolecularFormula
 	 */
 	 @TestMethod("testGetTotalExactMass_IMolecularFormula")
 	public static double getTotalExactMass(IMolecularFormula formula) {
-	     double mass = 0.0;
-	     Iterator<IIsotope> iterIsot = formula.isotopes();
-	     while(iterIsot.hasNext()) {
-	    	 IIsotope isotope = iterIsot.next();
-	   	  	 mass += isotope.getExactMass()*formula.getIsotopeCount(isotope);
-	     }
-	     return mass;
+		double mass = 0.0;
+		Iterator<IIsotope> iterIsot = formula.isotopes();
+		while(iterIsot.hasNext()) {
+			IIsotope isotope = iterIsot.next();
+			if (isotope.getExactMass() == null) return 0.0;
+			mass += isotope.getExactMass()*formula.getIsotopeCount(isotope);
+		}
+		return mass;
 	 }
 	  
 	/**
