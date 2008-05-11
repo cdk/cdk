@@ -38,13 +38,6 @@ package org.openscience.cdk.interfaces;
 public interface ILonePair extends IElectronContainer {
 
     /**
-     * Returns the number of electrons in a LonePair.
-     *
-     * @return The number of electrons in a LonePair.
-     */
-    public Integer getElectronCount();
-
-    /**
      * Returns the associated Atom.
      *
      * @return the associated Atom.
