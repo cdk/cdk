@@ -627,14 +627,14 @@ public class Convertor {
         } // else: it is the implicit hydrogen count
         cmlAtom.setHydrogenCount(totalHydrogen);
 
-        int massNumber = cdkAtom.getMassNumber();
+        Integer massNumber = cdkAtom.getMassNumber();
         if (!(cdkAtom instanceof IPseudoAtom)) {
             try {
                 IIsotope majorIsotope = IsotopeFactory.getInstance(cdkAtom.getBuilder()).getMajorIsotope(cdkAtom.getSymbol());
 
                 if (majorIsotope != null) {
                     int majorMassNumber = majorIsotope.getMassNumber();
-                    if (massNumber != 0 && massNumber != majorMassNumber) {
+                    if (massNumber != null && massNumber != majorMassNumber) {
                         cmlAtom.setIsotope(massNumber);
                     }
                 }

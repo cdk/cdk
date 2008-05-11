@@ -1749,7 +1749,7 @@ public class SmilesGenerator
 		if (majorIsotope.getMassNumber() == a.getMassNumber())
 		{
 			return "";
-		} else if (a.getMassNumber() == 0)
+		} else if (a.getMassNumber() == null)
 		{
 			return "";
 		} else
