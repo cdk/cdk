@@ -376,14 +376,16 @@ public class MDLWriter extends DefaultChemObjectWriter {
         for (int i = 0; i < container.getAtomCount(); i++) {
         	IAtom atom = container.getAtom(i);
             if (!(atom instanceof IPseudoAtom)) {
-                int atomicMass = atom.getMassNumber();
-                int majorMass = IsotopeFactory.getInstance(atom.getBuilder()).getMajorIsotope(atom.getSymbol()).getMassNumber();
-                if (atomicMass != 0 && atomicMass != majorMass) {
-                    writer.write("M  ISO  1 ");
-                    writer.write(formatMDLInt(i+1,3));
-                    writer.write(" ");
-                    writer.write(formatMDLInt(atomicMass,3));
-                    writer.newLine();
+                Integer atomicMass = atom.getMassNumber();
+                if (atomicMass != null) {
+                	int majorMass = IsotopeFactory.getInstance(atom.getBuilder()).getMajorIsotope(atom.getSymbol()).getMassNumber();
+                	if (atomicMass != majorMass) {
+                		writer.write("M  ISO  1 ");
+                		writer.write(formatMDLInt(i+1,3));
+                		writer.write(" ");
+                		writer.write(formatMDLInt(atomicMass,3));
+                		writer.newLine();
+                	}
                 }
             }
         }

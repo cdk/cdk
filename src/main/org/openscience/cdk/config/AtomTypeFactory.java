@@ -390,21 +390,13 @@ public class AtomTypeFactory {
             if (color != null) {
                 atom.setProperty("org.openscience.cdk.renderer.color", color);
             }
-            if (atomType.getAtomicNumber() != 0) {
-                atom.setAtomicNumber(atomType.getAtomicNumber());
-            } else {
-                logger.debug("Did not configure atomic number: AT.an=", atomType.getAtomicNumber());
-            }
-            if (atomType.getExactMass() > 0.0) {
-                atom.setExactMass(atomType.getExactMass());
-            } else {
-                logger.debug("Did not configure mass: AT.mass=", atomType.getAtomicNumber());
-            }
+            atom.setAtomicNumber(atomType.getAtomicNumber());
+            atom.setExactMass(atomType.getExactMass());
         } catch (Exception exception) {
             logger.warn("Could not configure atom with unknown ID: ", atom,
                         " + (id=", atom.getAtomTypeName(), ")");
             logger.debug(exception);
-            throw new CDKException(exception.toString());
+            throw new CDKException(exception.toString(), exception);
         }
         logger.debug("Configured: ", atom);
         return atom;

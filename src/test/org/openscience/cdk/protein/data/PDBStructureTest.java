@@ -55,8 +55,7 @@ public class PDBStructureTest extends NewCDKTestCase {
 	
 	@Test public void testGetEndChainID() {
 		IPDBStructure structure = builder.newPDBStructure();
-		Assert.assertNotNull(structure.getEndChainID());
-		// FIXME: test the default value
+		Assert.assertNull(structure.getEndChainID());
     }
 
     @Test public void testSetEndChainID_char() {
@@ -68,8 +67,7 @@ public class PDBStructureTest extends NewCDKTestCase {
 
     @Test public void testGetEndInsertionCode() {
 		IPDBStructure structure = builder.newPDBStructure();
-		Assert.assertNotNull(structure.getEndInsertionCode());
-		// FIXME: test the default value
+		Assert.assertNull(structure.getEndInsertionCode());
     }
 
     @Test public void testSetEndInsertionCode_char() {
@@ -81,8 +79,7 @@ public class PDBStructureTest extends NewCDKTestCase {
 
     @Test public void testGetEndSequenceNumber() {
 		IPDBStructure structure = builder.newPDBStructure();
-		Assert.assertNotNull(structure.getEndSequenceNumber());
-		Assert.assertEquals(0, structure.getEndSequenceNumber());
+		Assert.assertNull(structure.getEndSequenceNumber());
     }
 
     @Test public void testSetEndSequenceNumber_int() {
@@ -94,8 +91,7 @@ public class PDBStructureTest extends NewCDKTestCase {
 
     @Test public void testGetStartChainID() {
 		IPDBStructure structure = builder.newPDBStructure();
-		Assert.assertNotNull(structure.getStartChainID());
-		// FIXME: test the default value
+		Assert.assertNull(structure.getStartChainID());
     }
 
     @Test public void testSetStartChainID_char() {
@@ -107,8 +103,7 @@ public class PDBStructureTest extends NewCDKTestCase {
 
     @Test public void testGetStartInsertionCode() {
 		IPDBStructure structure = builder.newPDBStructure();
-		Assert.assertNotNull(structure.getStartInsertionCode());
-		// FIXME: test the default value
+		Assert.assertNull(structure.getStartInsertionCode());
     }
 
     @Test public void testSetStartInsertionCode_char() {
@@ -120,8 +115,7 @@ public class PDBStructureTest extends NewCDKTestCase {
 
     @Test public void testGetStartSequenceNumber() {
 		IPDBStructure structure = builder.newPDBStructure();
-		Assert.assertNotNull(structure.getStartSequenceNumber());
-		Assert.assertEquals(0, structure.getStartSequenceNumber());
+		Assert.assertNull(structure.getStartSequenceNumber());
     }
 
     @Test public void testSetStartSequenceNumber_int() {

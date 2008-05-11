@@ -83,14 +83,8 @@ public class AtomTypeManipulator {
         if (color != null) {
             atom.setProperty("org.openscience.cdk.renderer.color", color);
         }
-        if (atomType.getAtomicNumber() != 0) {
-            atom.setAtomicNumber(atomType.getAtomicNumber());
-        }
-        if (atomType.getExactMass() > 0.0) {
-            atom.setExactMass(atomType.getExactMass());
-       }
-        
-        
+        atom.setAtomicNumber(atomType.getAtomicNumber());
+        atom.setExactMass(atomType.getExactMass());        
 	}
 }
 

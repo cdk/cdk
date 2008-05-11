@@ -56,7 +56,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 * Defines the number of instances of a certain molecule
 	 * in the set. It is 1 by default.
 	 */
-	protected double[] multipliers;
+	protected Double[] multipliers;
 
 	/**
 	 *  Amount by which the AtomContainers array grows when elements are added and
@@ -69,7 +69,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	public AtomContainerSet() {
 		atomContainerCount = 0;
 		atomContainers = new AtomContainer[growArraySize];
-		multipliers = new double[growArraySize];
+		multipliers = new Double[growArraySize];
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 		for (int pos = atomContainerCount - 1; pos >= 0; pos--)
 		{
 			atomContainers[pos].removeListener(this);
-			multipliers[pos] = 0;
+			multipliers[pos] = 0.0;
 			atomContainers[pos] = null;
 		}
 		atomContainerCount = 0;
@@ -197,6 +197,9 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 */
 	public boolean setMultipliers(Double[] newMultipliers) {
 		if (newMultipliers.length == atomContainerCount) {
+			if (multipliers == null) {
+				multipliers = new Double[atomContainerCount];
+			}
 			System.arraycopy(newMultipliers, 0, multipliers, 0, atomContainerCount);
 			notifyChanged();
 			return true;
@@ -316,7 +319,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 		AtomContainer[] newatomContainers = new AtomContainer[atomContainers.length + growArraySize];
 		System.arraycopy(atomContainers, 0, newatomContainers, 0, atomContainers.length);
 		atomContainers = newatomContainers;
-		double[] newMultipliers = new double[multipliers.length + growArraySize];
+		Double[] newMultipliers = new Double[multipliers.length + growArraySize];
 		System.arraycopy(multipliers, 0, newMultipliers, 0, multipliers.length);
 		multipliers = newMultipliers;
 	}
