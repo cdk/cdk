@@ -66,12 +66,12 @@ public class DebugPDBAtom extends PDBAtom implements IPDBAtom {
 		super.setRecord(newRecord);
     }
 
-	public double getTempFactor() {
+	public Double getTempFactor() {
 		logger.debug("Getting Temp Factor: ", super.getTempFactor());
 		return super.getTempFactor();
     }
 
-	public void setTempFactor(double newTempFactor) {
+	public void setTempFactor(Double newTempFactor) {
 		logger.debug("Setting Temp Factor: ", newTempFactor);
 		super.setTempFactor(newTempFactor);
     }
@@ -136,12 +136,12 @@ public class DebugPDBAtom extends PDBAtom implements IPDBAtom {
 		return super.getSegID();
     }
 
-	public void setSerial(int newSerial) {
+	public void setSerial(Integer newSerial) {
 		logger.debug("Setting Serial: ", newSerial);
 		super.setSerial(newSerial);
     }
 
-	public int getSerial() {
+	public Integer getSerial() {
 		logger.debug("Getting Serial: ", super.getSerial());
 		return super.getSerial();
     }
@@ -156,32 +156,32 @@ public class DebugPDBAtom extends PDBAtom implements IPDBAtom {
 		return super.getResSeq();
     }
     
-    public void setOxt(boolean newOxt) {
+    public void setOxt(Boolean newOxt) {
 		logger.debug("Setting Oxt: ", newOxt);
 		super.setOxt(newOxt);
     }
     
-    public boolean getOxt() {
+    public Boolean getOxt() {
 		logger.debug("Getting Oxt: ", super.getOxt());
 		return super.getOxt();
     }
     
-    public void setHetAtom(boolean newHetAtom) {
+    public void setHetAtom(Boolean newHetAtom) {
 		logger.debug("Setting Het Atom: ", newHetAtom);
 		super.setHetAtom(newHetAtom);
     }
     
-    public boolean getHetAtom() {
+    public Boolean getHetAtom() {
 		logger.debug("Getting Het Atom: ", super.getHetAtom());
 		return super.getHetAtom();
     }
 
-    public void setOccupancy(double newOccupancy) {
+    public void setOccupancy(Double newOccupancy) {
 		logger.debug("Setting Occupancy: ", newOccupancy);
 		super.setOccupancy(newOccupancy);
     }
 
-    public double getOccupancy() {
+    public Double getOccupancy() {
 		logger.debug("Getting Occupancy: ", super.getOccupancy());
 		return super.getOccupancy();
     }

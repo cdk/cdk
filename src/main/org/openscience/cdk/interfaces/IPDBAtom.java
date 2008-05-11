@@ -56,13 +56,13 @@ public interface IPDBAtom extends IAtom {
      * 
      * @return the Temperature factor of this atom
      */
-    public double getTempFactor();
+    public Double getTempFactor();
     /**
      * set the Temperature factor of this atom.
      * 
      * @param newTempFactor  the Temperature factor of this atom
      */
-    public void setTempFactor(double newTempFactor);
+    public void setTempFactor(Double newTempFactor);
     /**
      * get the Residue name of this atom.
      * 
@@ -147,13 +147,13 @@ public interface IPDBAtom extends IAtom {
      * 
      * @return the Atom serial number of this atom
      */
-    public int getSerial();
+    public Integer getSerial();
     /**
      * set the Atom serial number of this atom.
      * 
      * @param newSerial  the Atom serial number of this atom
      */
-    public void setSerial(int newSerial);
+    public void setSerial(Integer newSerial);
     
     /**
      * get the Residue sequence number of this atom.
@@ -169,25 +169,25 @@ public interface IPDBAtom extends IAtom {
     public void setResSeq(String newResSeq);
     
     
-    public boolean getOxt();
-    public void setOxt(boolean newOxt);
+    public Boolean getOxt();
+    public void setOxt(Boolean newOxt);
     
 
-    public boolean getHetAtom();
-    public void setHetAtom(boolean newHetAtom);
+    public Boolean getHetAtom();
+    public void setHetAtom(Boolean newHetAtom);
     
     /**
      * get the Occupancy of this atom.
      * 
      * @return the Occupancy of this atom
      */
-    public double getOccupancy();
+    public Double getOccupancy();
     /**
      * set the Occupancy of this atom.
      * 
      * @param newOccupancy  the Occupancy of this atom
      */
-    public void setOccupancy(double newOccupancy);
+    public void setOccupancy(Double newOccupancy);
     
 	
 }

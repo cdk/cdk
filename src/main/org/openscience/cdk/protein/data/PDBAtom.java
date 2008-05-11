@@ -138,7 +138,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
      * 
      * @return the Temperature factor of this atom
      */
-    public double getTempFactor() {
+    public Double getTempFactor() {
         return tempFactor;
     }
     /**
@@ -146,7 +146,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
      * 
      * @param newTempFactor  the Temperature factor of this atom
      */
-    public void setTempFactor(double newTempFactor) {
+    public void setTempFactor(Double newTempFactor) {
         tempFactor = newTempFactor;
     }
     /**
@@ -251,7 +251,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
      * 
      * @param newSerial  the Atom serial number of this atom
      */
-    public void setSerial(int newSerial) {
+    public void setSerial(Integer newSerial) {
         serial = newSerial;
     }
     /**
@@ -259,7 +259,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
      * 
      * @return the Atom serial number of this atom
      */
-    public int getSerial() {
+    public Integer getSerial() {
         return serial;
     }
     /**
@@ -279,19 +279,19 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
         return resSeq;
     }
     
-    public void setOxt(boolean newOxt) {
+    public void setOxt(Boolean newOxt) {
         oxt = newOxt;
     }
     
-    public boolean getOxt() {
+    public Boolean getOxt() {
         return oxt;
     }
     
-    public void setHetAtom(boolean newHetAtom) {
+    public void setHetAtom(Boolean newHetAtom) {
         hetAtom = newHetAtom;
     }
     
-    public boolean getHetAtom() {
+    public Boolean getHetAtom() {
         return hetAtom;
     }
     /**
@@ -299,7 +299,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
      * 
      * @param newOccupancy  the Occupancy of this atom
      */
-    public void setOccupancy(double newOccupancy) {
+    public void setOccupancy(Double newOccupancy) {
         occupancy = newOccupancy;
     }
     /**
@@ -307,7 +307,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
      * 
      * @return the Occupancy of this atom
      */
-    public double getOccupancy() {
+    public Double getOccupancy() {
         return occupancy;
     }
     
