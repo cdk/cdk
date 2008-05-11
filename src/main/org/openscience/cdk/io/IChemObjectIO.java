@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$  
- * $Revision$
+/* $Revision$ $Author$ $Date$  
  *
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2008  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,12 +21,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.io;
 
 import java.io.IOException;
 
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -42,7 +39,7 @@ import org.openscience.cdk.io.setting.IOSetting;
  * <p>The easiest way to implement a new ChemObjectReader is to
  * subclass the DefaultChemObjectReader.
  *
- * @cdk.module io
+ * @cdk.module  io
  * @cdk.svnrev  $Revision$
  *
  * @see DefaultChemObjectReader
@@ -59,7 +56,7 @@ public interface IChemObjectIO {
     /**
      * Returns whether the given IChemObject can be read or not.
      */
-    public boolean accepts(Class classObject);
+    public boolean accepts(Class<? extends IChemObject> classObject);
     
     /**
      * Closes the Reader's resources.
