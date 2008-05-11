@@ -42,7 +42,7 @@ public class DebugElectronContainer extends org.openscience.cdk.ElectronContaine
     
     LoggingTool logger = new LoggingTool(DebugElectronContainer.class);
 	
-	public int getElectronCount() {
+	public Integer getElectronCount() {
 		logger.debug("Getting electron count: ", super.getElectronCount());
 		return super.getElectronCount();
 	}

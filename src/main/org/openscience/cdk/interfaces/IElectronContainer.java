@@ -39,15 +39,15 @@ public interface IElectronContainer extends IChemObject {
 	 * @return The number of electrons in this electron container.
      * @see     #setElectronCount
 	 */
-	public int getElectronCount();
+	public Integer getElectronCount();
 
 	/**
-	 * Sets the number of electorn in this electron container.
+	 * Sets the number of electrons in this electron container.
 	 *
 	 * @param   electronCount The number of electrons in this electron container.
      * @see     #getElectronCount
 	 */
-	public void setElectronCount(int electronCount);
+	public void setElectronCount(Integer electronCount);
 
 }
 

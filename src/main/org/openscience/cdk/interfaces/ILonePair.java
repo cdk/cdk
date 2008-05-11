@@ -42,7 +42,7 @@ public interface ILonePair extends IElectronContainer {
      *
      * @return The number of electrons in a LonePair.
      */
-    public int getElectronCount();
+    public Integer getElectronCount();
 
     /**
      * Returns the associated Atom.

@@ -68,7 +68,7 @@ public class DebugLonePair extends org.openscience.cdk.LonePair
 		return super.contains(atom);
 	}
 
-	public int getElectronCount() {
+	public Integer getElectronCount() {
 		logger.debug("Getting electron count: ", super.getElectronCount());
 		return super.getElectronCount();
 	}

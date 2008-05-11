@@ -52,7 +52,7 @@ public class ElectronContainer extends ChemObject implements Serializable, IElec
 	private static final long serialVersionUID = -2207894536767670743L;
 
 	/** Number of electrons in the ElectronContainer. */
-	protected int electronCount;
+	protected Integer electronCount;
 
     /**
      * Constructs an empty ElectronContainer.
@@ -68,7 +68,7 @@ public class ElectronContainer extends ChemObject implements Serializable, IElec
      *
      * @see     #setElectronCount
 	 */
-	public int getElectronCount()
+	public Integer getElectronCount()
 	{
 		return this.electronCount;
 	}
@@ -81,7 +81,7 @@ public class ElectronContainer extends ChemObject implements Serializable, IElec
      *
      * @see     #getElectronCount
 	 */
-	public void setElectronCount(int electronCount)
+	public void setElectronCount(Integer electronCount)
 	{
 		this.electronCount = electronCount;
 		notifyChanged();

@@ -62,7 +62,7 @@ public class DebugBond extends org.openscience.cdk.Bond
 		super(atom1, atom2, order, stereo);
 	}
 
-	public int getElectronCount() {
+	public Integer getElectronCount() {
 		logger.debug("Getting electron count: ", super.getElectronCount());
 		return super.getElectronCount();
 	}

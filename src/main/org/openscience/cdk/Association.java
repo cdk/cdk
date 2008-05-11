@@ -114,7 +114,7 @@ public class Association extends ElectronContainer implements java.io.Serializab
      *
      * @return The number of electrons in a Association.
      */
-    public int getElectronCount() {
+    public Integer getElectronCount() {
         return 0;
     }
 

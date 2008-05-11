@@ -81,7 +81,7 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      *
      * @return The number of electrons in a LonePair.
      */
-    public int getElectronCount() {
+    public Integer getElectronCount() {
         return this.electronCount;
     }
 

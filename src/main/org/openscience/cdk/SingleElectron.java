@@ -85,7 +85,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      *
      * @return The number of electrons in this SingleElectron.
      */
-    public int getElectronCount() {
+    public Integer getElectronCount() {
         return this.electronCount;
     }
 

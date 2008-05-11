@@ -51,7 +51,7 @@ public class DebugSingleElectron extends org.openscience.cdk.SingleElectron
     	super(atom);   
     }
 
-    public int getElectronCount() {
+    public Integer getElectronCount() {
 		logger.debug("Getting electron count: ", super.getElectronCount());
 		return super.getElectronCount();
 	}
