@@ -71,7 +71,7 @@ public class FragmentAtom extends PseudoAtom implements IFragmentAtom {
 	 * The exact mass of an FragmentAtom is defined as the sum of exact masses
 	 * of the IAtom's in the fragment.
 	 */
-	public double getExactMass() {
+	public Double getExactMass() {
 		double totalMass = 0.0;
 		Iterator<IAtom> atoms = fragment.atoms();
 		while (atoms.hasNext()) {

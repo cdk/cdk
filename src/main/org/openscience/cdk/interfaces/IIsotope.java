@@ -42,7 +42,7 @@ public interface IIsotope extends IElement {
      *
      * @see    #getNaturalAbundance
 	 */
-	public void setNaturalAbundance(double naturalAbundance);
+	public void setNaturalAbundance(Double naturalAbundance);
 
 	/**
 	 * Sets the ExactMass attribute of the Isotope object.
@@ -51,7 +51,7 @@ public interface IIsotope extends IElement {
      *
      * @see    #getExactMass
 	 */
-	public void setExactMass(double exactMass);
+	public void setExactMass(Double exactMass);
 
 	/**
 	 * Gets the NaturalAbundance attribute of the Isotope object.
@@ -61,7 +61,7 @@ public interface IIsotope extends IElement {
      *
      * @see       #setNaturalAbundance
 	 */
-	public double getNaturalAbundance();
+	public Double getNaturalAbundance();
 
 	/**
 	 * Gets the ExactMass attribute of the Isotope object.
@@ -71,7 +71,7 @@ public interface IIsotope extends IElement {
      *
      * @see       #setExactMass
 	 */
-	public double getExactMass();
+	public Double getExactMass();
 
     /**
      * Returns the atomic mass of this element.
@@ -81,7 +81,7 @@ public interface IIsotope extends IElement {
      *
      * @see    #setMassNumber(int)
      */
-    public int getMassNumber();
+    public Integer getMassNumber();
     
     /**
      * Sets the atomic mass of this element.
@@ -90,7 +90,7 @@ public interface IIsotope extends IElement {
      *
      * @see    #getMassNumber
      */
-    public void setMassNumber(int massNumber);
+    public void setMassNumber(Integer massNumber);
     
 }
 

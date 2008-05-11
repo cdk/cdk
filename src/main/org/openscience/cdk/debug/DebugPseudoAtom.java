@@ -244,28 +244,28 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		return super.getValency();
 	}
 
-	public void setNaturalAbundance(double naturalAbundance) {
+	public void setNaturalAbundance(Double naturalAbundance) {
 		logger.debug("Setting natural abundance: ", naturalAbundance);
 		super.setNaturalAbundance(naturalAbundance);
 	}
 
-	public void setExactMass(double exactMass) {
+	public void setExactMass(Double exactMass) {
 		logger.debug("Setting exact mass: ", exactMass);
 		super.setExactMass(exactMass);
 		
 	}
 
-	public double getNaturalAbundance() {
+	public Double getNaturalAbundance() {
 		logger.debug("Getting natural abundance: ", super.getNaturalAbundance());
 		return super.getNaturalAbundance();
 	}
 
-	public double getExactMass() {
+	public Double getExactMass() {
 		logger.debug("Getting exact mass: ", super.getExactMass());
 		return super.getExactMass();
 	}
 
-	public int getMassNumber() {
+	public Integer getMassNumber() {
 		logger.debug("Getting mass number: ", super.getMassNumber());
 		return super.getMassNumber();
 	}

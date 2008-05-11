@@ -77,11 +77,11 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 	private static final long serialVersionUID = 6389365978927575858L;
 
 	/** Exact mass of this isotope. */
-    public double exactMass = (double) -1;
+    public Double exactMass;
     /** Natural abundance of this isotope. */
-    public double naturalAbundance = (double) -1;
+    public Double naturalAbundance;
     /** The mass number for this isotope. */
-    private int massNumber = 0;
+    private Integer massNumber;
 
 
 	/**
@@ -158,7 +158,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * @see       #getNaturalAbundance
 	 */
-	public void setNaturalAbundance(double naturalAbundance) {
+	public void setNaturalAbundance(Double naturalAbundance) {
 		this.naturalAbundance = naturalAbundance;
 		notifyChanged();
 	}
@@ -171,7 +171,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * @see       #getExactMass
 	 */
-	public void setExactMass(double exactMass) {
+	public void setExactMass(Double exactMass) {
 		this.exactMass = exactMass;
 		notifyChanged();
 	}
@@ -194,7 +194,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * @see       #setNaturalAbundance
 	 */
-	public double getNaturalAbundance() {
+	public Double getNaturalAbundance() {
 		return this.naturalAbundance;
 	}
 
@@ -215,7 +215,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * @see       #setExactMass
 	 */
-	public double getExactMass() {
+	public Double getExactMass() {
 		return this.exactMass;
 	}
 
@@ -236,8 +236,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * @see    #setMassNumber(int)
      */
-    public int getMassNumber() {
-
+    public Integer getMassNumber() {
         return this.massNumber;
     }
 
@@ -248,7 +247,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * @see    #getMassNumber
      */
-    public void setMassNumber(int massNumber) {
+    public void setMassNumber(Integer massNumber) {
         this.massNumber = massNumber;
 	notifyChanged();
     }
@@ -261,13 +260,13 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 	public String toString() {
         StringBuffer resultString = new StringBuffer(32);
 		resultString.append("Isotope(").append(hashCode());
-		if (massNumber > 0) {
+		if (massNumber != null) {
 			resultString.append(", MN:").append(massNumber);
 		}
-		if (exactMass > 0) {
+		if (exactMass != null) {
 			resultString.append(", EM:"); resultString.append(exactMass);
 		}
-		if (naturalAbundance > 0) {
+		if (naturalAbundance != null) {
 			resultString.append(", AB:"); resultString.append(naturalAbundance);
 		}
         resultString.append(", ").append(super.toString());
