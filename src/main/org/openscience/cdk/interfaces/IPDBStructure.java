@@ -41,73 +41,73 @@ public interface IPDBStructure{
      * 
      * @return the ending Chain identifier of this structure
      */
-    public char getEndChainID();
+    public Character getEndChainID();
     /**
      * set the ending Chain identifier of this structure.
      * 
      * @param endChainID  the ending Chain identifier of this structure
      */
-    public void setEndChainID(char endChainID);
+    public void setEndChainID(Character endChainID);
     /**
      * get the ending Code for insertion of residues of this structure.
      * 
      * @return the ending Code for insertion of residues of this structure
      */
-    public char getEndInsertionCode();
+    public Character getEndInsertionCode();
     /**
      * set the ending Code for insertion of residues of this structure.
      * 
      * @param endInsertionCode  the ending Code for insertion of residues of this structure
      */
-    public void setEndInsertionCode(char endInsertionCode);
+    public void setEndInsertionCode(Character endInsertionCode);
     /**
      * get the ending sequence number of this structure.
      * 
      * @return the ending sequence number of this structure
      */
-    public int getEndSequenceNumber();
+    public Integer getEndSequenceNumber();
     /**
      * set the ending sequence number of this structure.
      * 
      * @param endSequenceNumber  the ending sequence number of this structure
      */
-    public void setEndSequenceNumber(int endSequenceNumber);
+    public void setEndSequenceNumber(Integer endSequenceNumber);
     /**
      * get start Chain identifier of this structure.
      * 
      * @return the start Chain identifier of this structure
      */
-    public char getStartChainID();
+    public Character getStartChainID();
     /**
      * set the start Chain identifier of this structure.
      * 
      * @param startChainID  the start Chain identifier of this structure
      */
-    public void setStartChainID(char startChainID);
+    public void setStartChainID(Character startChainID);
     /**
      * get start Code for insertion of residues of this structure.
      * 
      * @return the start Code for insertion of residues of this structure
      */
-    public char getStartInsertionCode();
+    public Character getStartInsertionCode();
     /**
      * set the start Chain identifier of this structure.
      * 
      * @param startInsertionCode  the start Chain identifier of this structure
      */
-    public void setStartInsertionCode(char startInsertionCode);
+    public void setStartInsertionCode(Character startInsertionCode);
     /**
      * get the start sequence number of this structure.
      * 
      * @return the start sequence number of this structure
      */
-    public int getStartSequenceNumber();
+    public Integer getStartSequenceNumber();
     /**
      * set the start sequence number of this structure.
      * 
      * @param endSequenceNumber  the start sequence number of this structure
      */
-    public void setStartSequenceNumber(int startSequenceNumber);
+    public void setStartSequenceNumber(Integer startSequenceNumber);
     /**
      * get Structure Type of this structure.
      * 

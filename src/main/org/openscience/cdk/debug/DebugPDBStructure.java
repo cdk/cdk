@@ -37,62 +37,62 @@ public class DebugPDBStructure extends PDBStructure {
 
 	LoggingTool logger = new LoggingTool(DebugAtomContainer.class);
 
-    public char getEndChainID() {
+    public Character getEndChainID() {
     	logger.debug("Getting End Chain ID: ", super.getEndChainID());
 		return super.getEndChainID();
     }
 
-    public void setEndChainID(char endChainID) {
+    public void setEndChainID(Character endChainID) {
     	logger.debug("Setting End Chain ID: ", endChainID);
 		super.setEndChainID(endChainID);
     }
 
-    public char getEndInsertionCode() {
+    public Character getEndInsertionCode() {
     	logger.debug("Getting End Insertion Code: ", super.getEndInsertionCode());
 		return super.getEndInsertionCode();
     }
 
-    public void setEndInsertionCode(char endInsertionCode) {
+    public void setEndInsertionCode(Character endInsertionCode) {
     	logger.debug("Setting End Insertion Code: ", endInsertionCode);
 		super.setEndInsertionCode(endInsertionCode);
     }
 
-    public int getEndSequenceNumber() {
+    public Integer getEndSequenceNumber() {
     	logger.debug("Getting End Sequence Number: ", super.getEndSequenceNumber());
 		return super.getEndSequenceNumber();
     }
 
-    public void setEndSequenceNumber(int endSequenceNumber) {
+    public void setEndSequenceNumber(Integer endSequenceNumber) {
     	logger.debug("Setting End Sequence Number: ", endSequenceNumber);
 		super.setEndSequenceNumber(endSequenceNumber);
     }
 
-    public char getStartChainID() {
+    public Character getStartChainID() {
     	logger.debug("Getting Start Chain ID: ", super.getStartChainID());
 		return super.getStartChainID();
     }
 
-    public void setStartChainID(char startChainID) {
+    public void setStartChainID(Character startChainID) {
     	logger.debug("Setting Start Chain ID: ", startChainID);
 		super.setStartChainID(startChainID);
     }
 
-    public char getStartInsertionCode() {
+    public Character getStartInsertionCode() {
     	logger.debug("Getting Start Insertion Code: ", super.getStartInsertionCode());
 		return super.getStartInsertionCode();
     }
 
-    public void setStartInsertionCode(char startInsertionCode) {
+    public void setStartInsertionCode(Character startInsertionCode) {
     	logger.debug("Setting Star tInsertion Code: ", startInsertionCode);
 		super.setStartInsertionCode(startInsertionCode);
     }
 
-    public int getStartSequenceNumber() {
+    public Integer getStartSequenceNumber() {
     	logger.debug("Getting Start Sequence Number: ", super.getStartSequenceNumber());
 		return super.getStartSequenceNumber();
     }
 
-    public void setStartSequenceNumber(int startSequenceNumber) {
+    public void setStartSequenceNumber(Integer startSequenceNumber) {
     	logger.debug("Setting Start Sequence Number: ", startSequenceNumber);
 		super.setStartSequenceNumber(startSequenceNumber);
     }

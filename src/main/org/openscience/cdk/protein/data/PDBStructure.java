@@ -42,19 +42,19 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
 	public final static String TURN = "turn";
 	
     private String structureType;
-    private char startChainID;
-    private int startSequenceNumber;
-    private char startInsertionCode;
-    private char endChainID;
-    private int endSequenceNumber;
-    private char endInsertionCode;
+    private Character startChainID;
+    private Integer startSequenceNumber;
+    private Character startInsertionCode;
+    private Character endChainID;
+    private Integer endSequenceNumber;
+    private Character endInsertionCode;
     
     /**
      * get the ending Chain identifier of this structure.
      * 
      * @return the ending Chain identifier of this structure
      */
-    public char getEndChainID() {
+    public Character getEndChainID() {
     	return endChainID;
     }
     /**
@@ -62,7 +62,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      * 
      * @param endChainID  the ending Chain identifier of this structure
      */
-    public void setEndChainID(char endChainID) {
+    public void setEndChainID(Character endChainID) {
     	this.endChainID = endChainID;
     }
     /**
@@ -70,7 +70,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      * 
      * @return the ending Code for insertion of residues of this structure
      */
-    public char getEndInsertionCode() {
+    public Character getEndInsertionCode() {
     	return endInsertionCode;
     }
     /**
@@ -78,7 +78,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      * 
      * @param endInsertionCode  the ending Code for insertion of residues of this structure
      */
-    public void setEndInsertionCode(char endInsertionCode) {
+    public void setEndInsertionCode(Character endInsertionCode) {
     	this.endInsertionCode = endInsertionCode;
     }
     /**
@@ -86,7 +86,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      * 
      * @return the ending sequence number of this structure
      */
-    public int getEndSequenceNumber() {
+    public Integer getEndSequenceNumber() {
     	return endSequenceNumber;
     }
     /**
@@ -94,7 +94,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      * 
      * @param endSequenceNumber  the ending sequence number of this structure
      */
-    public void setEndSequenceNumber(int endSequenceNumber) {
+    public void setEndSequenceNumber(Integer endSequenceNumber) {
     	this.endSequenceNumber = endSequenceNumber;
     }
     /**
@@ -102,7 +102,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      * 
      * @return the start Chain identifier of this structure
      */
-    public char getStartChainID() {
+    public Character getStartChainID() {
     	return startChainID;
     }
     /**
@@ -110,7 +110,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      * 
      * @param startChainID  the start Chain identifier of this structure
      */
-    public void setStartChainID(char startChainID) {
+    public void setStartChainID(Character startChainID) {
     	this.startChainID = startChainID;
     }
     /**
@@ -118,7 +118,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      * 
      * @return the start Code for insertion of residues of this structure
      */
-    public char getStartInsertionCode() {
+    public Character getStartInsertionCode() {
     	return startInsertionCode;
     }
     /**
@@ -126,7 +126,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      * 
      * @param startInsertionCode  the start Chain identifier of this structure
      */
-    public void setStartInsertionCode(char startInsertionCode) {
+    public void setStartInsertionCode(Character startInsertionCode) {
     	this.startInsertionCode = startInsertionCode;
     }
     /**
@@ -134,7 +134,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      * 
      * @return the start sequence number of this structure
      */
-    public int getStartSequenceNumber() {
+    public Integer getStartSequenceNumber() {
     	return startSequenceNumber;
     }
     /**
@@ -142,7 +142,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      * 
      * @param endSequenceNumber  the start sequence number of this structure
      */
-    public void setStartSequenceNumber(int startSequenceNumber) {
+    public void setStartSequenceNumber(Integer startSequenceNumber) {
     	this.startSequenceNumber = startSequenceNumber;
     }
     /**
