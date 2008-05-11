@@ -26,6 +26,7 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.IoCoverageTest;
 import org.openscience.cdk.io.CDKSourceCodeWriterTest;
 import org.openscience.cdk.io.ChemObjectIOInstantionTests;
 import org.openscience.cdk.io.CrystClustReaderTest;
@@ -70,6 +71,8 @@ public class MioTests {
     public static Test suite() {
         TestSuite suite = new TestSuite("The cdk.io Tests");
 
+        suite.addTest(IoCoverageTest.suite());
+        
         suite.addTest(CMLIOTests.suite());
         suite.addTest(CrystClustReaderTest.suite());
         suite.addTest(CDKSourceCodeWriterTest.suite());
