@@ -80,7 +80,7 @@ public class ElementTest extends NewCDKTestCase {
         Assert.assertEquals("X", e.getSymbol());
     }
         
-    @Test public void testSetAtomicNumber_int() {
+    @Test public void testSetAtomicNumber_Integer() {
         IElement e = builder.newElement("H");
         e.setAtomicNumber(1);
         Assert.assertEquals(1, e.getAtomicNumber());

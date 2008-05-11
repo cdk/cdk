@@ -105,7 +105,7 @@ public class ReactionTest extends NewCDKTestCase {
         Assert.assertEquals(1.0, reaction.getReactantCoefficient(aceticAcid), 0.00001);
     }
 
-    @Test public void testAddReactant_IMolecule_double() {
+    @Test public void testAddReactant_IMolecule_Double() {
         IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
         IMolecule sulfate = builder.newMolecule();
@@ -148,7 +148,7 @@ public class ReactionTest extends NewCDKTestCase {
         Assert.assertEquals(1.0, reaction.getProductCoefficient(aceticAcid), 0.00001);
     }
 
-    @Test public void testAddProduct_IMolecule_double() {
+    @Test public void testAddProduct_IMolecule_Double() {
         IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
         IMolecule sulfate = builder.newMolecule();
@@ -183,7 +183,7 @@ public class ReactionTest extends NewCDKTestCase {
         Assert.assertEquals(-1.0, reaction.getProductCoefficient(builder.newMolecule()), 0.00001);
     }
     
-	@Test public void testSetReactantCoefficient_IMolecule_double() {
+	@Test public void testSetReactantCoefficient_IMolecule_Double() {
 		IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
 		reaction.addReactant(proton, 2.0);
@@ -191,7 +191,7 @@ public class ReactionTest extends NewCDKTestCase {
 		Assert.assertEquals(3.0, reaction.getReactantCoefficient(proton), 0.00001);
 	}
 	
-	@Test public void testSetProductCoefficient_IMolecule_double() {
+	@Test public void testSetProductCoefficient_IMolecule_Double() {
 		IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
 		reaction.addProduct(proton, 2.0);
@@ -223,7 +223,7 @@ public class ReactionTest extends NewCDKTestCase {
 		Assert.assertEquals(2.0, pc[1], 0.00001);
     }
 	
-	@Test public void testSetReactantCoefficients_arraydouble() {
+	@Test public void testSetReactantCoefficients_arrayDouble() {
         IReaction reaction = builder.newReaction();
 		IMolecule ed1 = builder.newMolecule();
 		IMolecule ed2 = builder.newMolecule();
@@ -238,7 +238,7 @@ public class ReactionTest extends NewCDKTestCase {
 		Assert.assertFalse(reaction.setReactantCoefficients(ecFalse));
     }
 	
-	@Test public void testSetProductCoefficients_arraydouble() {
+	@Test public void testSetProductCoefficients_arrayDouble() {
         IReaction reaction = builder.newReaction();
 		IMolecule pr1 = builder.newMolecule();
 		reaction.addProduct(pr1, 1d);
@@ -279,7 +279,7 @@ public class ReactionTest extends NewCDKTestCase {
         Assert.assertEquals(1, reaction.getAgents().getMoleculeCount());
     }
     
-    @Test public void testSetDirection_int() {
+    @Test public void testSetDirection_IReaction_Direction() {
         IReaction reaction = builder.newReaction();
         IReaction.Direction direction = IReaction.Direction.BIDIRECTIONAL;
         reaction.setDirection(direction);

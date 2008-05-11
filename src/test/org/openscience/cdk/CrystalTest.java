@@ -178,14 +178,14 @@ public class CrystalTest extends NewCDKTestCase {
         Assert.assertEquals(spacegroup, crystal.getSpaceGroup());
     }
 
-    @Test public void testSetZ_int() {
+    @Test public void testSetZ_Integer() {
         ICrystal crystal = builder.newCrystal();
         int z = 2;
         crystal.setZ(z);
         Assert.assertEquals(z, crystal.getZ());
     }
     @Test public void testGetZ() {
-        testSetZ_int();
+        testSetZ_Integer();
     }
 
     /**

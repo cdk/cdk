@@ -53,13 +53,13 @@ public class ElectronContainerTest extends NewCDKTestCase {
         Assert.assertEquals(0, ec.getElectronCount());
     }
     
-    @Test public void testSetElectronCount_int() {
+    @Test public void testSetElectronCount_Integer() {
         IElectronContainer ec = builder.newElectronContainer();
         ec.setElectronCount(3);
         Assert.assertEquals(3, ec.getElectronCount());
     }
     @Test public void testGetElectronCount() {
-        testSetElectronCount_int();
+        testSetElectronCount_Integer();
     }
 
     @Test public void testClone() throws Exception {

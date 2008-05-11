@@ -108,7 +108,7 @@ public class AtomContainerSetTest extends NewCDKTestCase {
         Assert.assertEquals(1.0, som.getMultiplier(0), 0.00001);
     }
     
-    @Test public void testSetMultiplier_int_double() {
+    @Test public void testSetMultiplier_int_Double() {
         IAtomContainerSet som = builder.newAtomContainerSet();
         som.addAtomContainer(builder.newAtomContainer());
 
@@ -117,7 +117,7 @@ public class AtomContainerSetTest extends NewCDKTestCase {
         Assert.assertEquals(2.0, som.getMultiplier(0), 0.00001);
     }
 
-    @Test public void testSetMultipliers_arraydouble() {
+    @Test public void testSetMultipliers_arrayDouble() {
         IAtomContainerSet som = builder.newAtomContainerSet();
         IAtomContainer container = builder.newAtomContainer();
         som.addAtomContainer(container);
@@ -134,7 +134,7 @@ public class AtomContainerSetTest extends NewCDKTestCase {
         Assert.assertEquals(3.0, som.getMultiplier(1), 0.00001);
     }
 
-    @Test public void testSetMultiplier_IAtomContainer_double() {
+    @Test public void testSetMultiplier_IAtomContainer_Double() {
         IAtomContainerSet som = builder.newAtomContainerSet();
         IAtomContainer container = builder.newAtomContainer();
         som.addAtomContainer(container);

@@ -77,31 +77,31 @@ public class IsotopeTest extends NewCDKTestCase {
         Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
     }
     
-    @Test public void testSetNaturalAbundance_double() {
+    @Test public void testSetNaturalAbundance_Double() {
         IIsotope i = builder.newIsotope("C");
         i.setNaturalAbundance(80.0);
         Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
     }
     @Test public void testGetNaturalAbundance() {
-        testSetNaturalAbundance_double();
+        testSetNaturalAbundance_Double();
     }
     
-    @Test public void testSetExactMass_double() {
+    @Test public void testSetExactMass_Double() {
         IIsotope i = builder.newIsotope("C");
         i.setExactMass(12.03);
         Assert.assertEquals(12.03, i.getExactMass(), 0.001);
     }
     @Test public void testGetExactMass() {
-        testSetExactMass_double();
+        testSetExactMass_Double();
     }
 
-    @Test public void testSetMassNumber_int() {
+    @Test public void testSetMassNumber_Integer() {
         IIsotope i = builder.newIsotope("D");
         i.setMassNumber(2);
         Assert.assertEquals(2, i.getMassNumber());
     }
     @Test public void testGetMassNumber() {
-        testSetMassNumber_int();
+        testSetMassNumber_Integer();
     }
 
     /**

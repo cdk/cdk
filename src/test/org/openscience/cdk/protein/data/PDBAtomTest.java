@@ -193,7 +193,7 @@ public class PDBAtomTest extends NewCDKTestCase {
         Assert.assertEquals(atom.getTempFactor(),0.0, 001);
     }
     
-    @Test public void testSetTempFactor_double(){
+    @Test public void testSetTempFactor_Double(){
     	testGetTempFactor();
     }
     
@@ -247,7 +247,7 @@ public class PDBAtomTest extends NewCDKTestCase {
         Assert.assertEquals("123", atom.getSegID());
     }
     
-    @Test public void testSetSerial_int(){
+    @Test public void testSetSerial_Integer(){
     	testGetSerial();
     }
     
@@ -267,7 +267,7 @@ public class PDBAtomTest extends NewCDKTestCase {
         Assert.assertEquals("123", atom.getResSeq());
     }
     
-    @Test public void testSetOxt_boolean(){
+    @Test public void testSetOxt_Boolean(){
     	testGetOxt();
     }
     
@@ -277,7 +277,7 @@ public class PDBAtomTest extends NewCDKTestCase {
         Assert.assertTrue(atom.getOxt());
     }
     
-    @Test public void testSetHetAtom_boolean(){
+    @Test public void testSetHetAtom_Boolean(){
     	testGetHetAtom();
     }
     
@@ -287,7 +287,7 @@ public class PDBAtomTest extends NewCDKTestCase {
         Assert.assertTrue(atom.getHetAtom());
     }
     
-    @Test public void testSetOccupancy_double(){
+    @Test public void testSetOccupancy_Double(){
     	testGetOccupancy();
     }
     

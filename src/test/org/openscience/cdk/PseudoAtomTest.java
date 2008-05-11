@@ -117,31 +117,31 @@ public class PseudoAtomTest extends NewCDKTestCase {
         Assert.assertEquals(0, atom.getFormalCharge().intValue());
     }
 
-    @Test public void testSetFormalCharge_int() {
+    @Test public void testSetFormalCharge_Integer() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setFormalCharge(+5);
         Assert.assertEquals(0, atom.getFormalCharge().intValue());
     }
 
-    @Test public void testSetHydrogenCount_int() {
+    @Test public void testSetHydrogenCount_Integer() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setHydrogenCount(+5);
         Assert.assertEquals(0, atom.getHydrogenCount().intValue());
     }
 
-    @Test public void testSetCharge_double() {
+    @Test public void testSetCharge_Double() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setCharge(0.78);
         Assert.assertEquals(0.0, atom.getCharge(), 0.001);
     }
 
-    @Test public void testSetExactMass_double() {
+    @Test public void testSetExactMass_Double() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setExactMass(12.001);
         Assert.assertEquals(0.0, atom.getExactMass(), 0.001);
     }
 
-    @Test public void testSetStereoParity_int() {
+    @Test public void testSetStereoParity_Integer() {
         IPseudoAtom atom = builder.newPseudoAtom("Whatever");
         atom.setStereoParity(-1);
         Assert.assertEquals(0, atom.getStereoParity().intValue());
