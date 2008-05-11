@@ -27,6 +27,8 @@
  */
 package org.openscience.cdk.geometry;
 
+import org.openscience.cdk.interfaces.IAtom;
+
 /**
  * Weight function used in the <code>RDFCalculator</code>.
  *
@@ -41,12 +43,12 @@ package org.openscience.cdk.geometry;
 public interface IRDFWeightFunction {
 
     /**
-     * Calculates the wieght for the interaction between the two atoms.
+     * Calculates the weight for the interaction between the two atoms.
      *
      * @param atom  First atom.
      * @param atom2 Second atom.
      */
-    public double calculate(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom atom2);
+    public double calculate(IAtom atom, IAtom atom2);
     
 }
 
