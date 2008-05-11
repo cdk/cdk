@@ -243,12 +243,12 @@ public class DebugReaction extends org.openscience.cdk.Reaction
 		return super.setProductCoefficients(coefficients);
 	}
 
-	public void setDirection(int direction) {
+	public void setDirection(IReaction.Direction direction) {
 		logger.debug("Setting direction: ", direction);
 		super.setDirection(direction);
 	}
 
-	public int getDirection() {
+	public IReaction.Direction getDirection() {
 		logger.debug("Getting direction: ", super.getDirection());
 		return super.getDirection();
 	}

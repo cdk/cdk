@@ -74,14 +74,14 @@ public class ReactionManipulatorTest extends NewCDKTestCase {
 
     @Test public void testReverse_IReaction() {
         Reaction reaction = new Reaction();
-        reaction.setDirection(Reaction.BACKWARD);
+        reaction.setDirection(IReaction.Direction.BACKWARD);
         Molecule water = new Molecule();
         reaction.addReactant(water, 3.0);
         reaction.addReactant(new Molecule());
         reaction.addProduct(new Molecule());
         
         Reaction reversedReaction = (Reaction)ReactionManipulator.reverse(reaction);
-        Assert.assertEquals(Reaction.FORWARD, reversedReaction.getDirection());
+        Assert.assertEquals(IReaction.Direction.FORWARD, reversedReaction.getDirection());
         Assert.assertEquals(2, reversedReaction.getProductCount());
         Assert.assertEquals(1, reversedReaction.getReactantCount());
         Assert.assertEquals(3.0, reversedReaction.getProductCoefficient(water), 0.00001);

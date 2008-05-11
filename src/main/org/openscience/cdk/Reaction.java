@@ -74,7 +74,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     protected IMapping[] map;
     protected int mappingCount;
     
-    private int reactionDirection;
+    private IReaction.Direction reactionDirection;
     
     /**
      * Constructs an empty, forward reaction.
@@ -85,7 +85,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         this.agents = new MoleculeSet();
         this.map = new Mapping[growArraySize];
         mappingCount = 0;
-        reactionDirection = FORWARD;
+        reactionDirection = IReaction.Direction.FORWARD;
     }
     
     /**
@@ -355,7 +355,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @param direction The new reaction direction
      * @see   #getDirection
      */
-    public void setDirection(int direction) {
+    public void setDirection(IReaction.Direction direction) {
 	reactionDirection = direction;
 	notifyChanged();
     }
@@ -367,7 +367,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @see    #BIDIRECTIONAL
      * @see    #setDirection
      */
-    public int getDirection() {
+    public IReaction.Direction getDirection() {
         return reactionDirection;
     }
     

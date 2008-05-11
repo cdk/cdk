@@ -57,6 +57,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MACiEFormat;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
@@ -512,7 +513,7 @@ public class MACiEReader extends DefaultChemObjectReader {
             reaction.setProperty(new DictRef("macie:" + field, value), value);
         } else if (field.equals("Reversible")) {
             if (value.equalsIgnoreCase("yes")) {
-                reaction.setDirection(Reaction.BIDIRECTIONAL);
+                reaction.setDirection(IReaction.Direction.BIDIRECTIONAL);
                 addDictRefedAnnotation(reaction, "ReactionType", "ReversibleReaction");
             }
         } else if (field.equals("OverallReactionType")) {

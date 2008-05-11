@@ -173,12 +173,12 @@ public class ReactionManipulator {
     @TestMethod("testReverse_IReaction")
     public static IReaction reverse(IReaction reaction) {
         IReaction reversedReaction = reaction.getBuilder().newReaction();
-        if (reaction.getDirection() == IReaction.BIDIRECTIONAL) {
-            reversedReaction.setDirection(IReaction.BIDIRECTIONAL);
-        } else if (reaction.getDirection() == IReaction.FORWARD) {
-            reversedReaction.setDirection(IReaction.BACKWARD);
-        } else if (reaction.getDirection() == IReaction.BACKWARD) {
-            reversedReaction.setDirection(IReaction.FORWARD);
+        if (reaction.getDirection() == IReaction.Direction.BIDIRECTIONAL) {
+            reversedReaction.setDirection(IReaction.Direction.BIDIRECTIONAL);
+        } else if (reaction.getDirection() == IReaction.Direction.FORWARD) {
+            reversedReaction.setDirection(IReaction.Direction.BACKWARD);
+        } else if (reaction.getDirection() == IReaction.Direction.BACKWARD) {
+            reversedReaction.setDirection(IReaction.Direction.FORWARD);
         }
         IMoleculeSet reactants = reaction.getReactants();
         for (int i=0; i<reactants.getAtomContainerCount(); i++) {

@@ -47,17 +47,15 @@ import java.util.Iterator;
  */
 public interface IReaction extends IChemObject {
 
-	/** Reaction of which the equilibrium is not set. */
-    public static final int UNKNOWN_DIRECTION = 0;
-    /** Reaction equalibrium which is (almost) fully on the product side. 
-        Often denoted with a forward arrow. */
-    public static final int FORWARD           = 1;
-    /** Reaction equalibrium which is (almost) fully on the reactant side. 
-        Often denoted with a backward arrow. */
-    public static final int BACKWARD          = 2;
-    /** Reaction equalibrium state. Often denoted by a double arrow. */
-    public static final int BIDIRECTIONAL     = 3;
-
+	public enum Direction {
+		/** Reaction equilibrium which is (almost) fully on the product side. Often denoted with a forward arrow. */
+		FORWARD,
+		/** Reaction equilibrium which is (almost) fully on the reactant side. Often denoted with a backward arrow. */
+		BACKWARD,
+		/** Reaction equilibrium state. Often denoted by a double arrow. */
+		BIDIRECTIONAL
+	}
+	
     /**
      * Returns the number of reactants in this reaction.
      *
@@ -242,7 +240,7 @@ public interface IReaction extends IChemObject {
      * @param direction The new reaction direction
      * @see   #getDirection
      */
-    public void setDirection(int direction);
+    public void setDirection(IReaction.Direction direction);
     
     /**
      * Returns the direction of the reaction.
@@ -251,7 +249,7 @@ public interface IReaction extends IChemObject {
      * @see    #BIDIRECTIONAL
      * @see    #setDirection
      */
-    public int getDirection();
+    public IReaction.Direction getDirection();
     
     /**
      * Adds a mapping between the reactant and product side to this
@@ -260,7 +258,7 @@ public interface IReaction extends IChemObject {
      * @param mapping Mapping to add.
      * @see   #mappings
      */
-    public void addMapping(org.openscience.cdk.interfaces.IMapping mapping);
+    public void addMapping(IMapping mapping);
     
     /**
      * Removes a mapping between the reactant and product side to this

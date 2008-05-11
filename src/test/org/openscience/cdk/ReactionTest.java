@@ -55,7 +55,7 @@ public class ReactionTest extends NewCDKTestCase {
         Assert.assertNotNull(reaction);
         Assert.assertEquals(0, reaction.getReactantCount());
         Assert.assertEquals(0, reaction.getProductCount());
-        Assert.assertEquals(IReaction.FORWARD, reaction.getDirection());
+        Assert.assertEquals(IReaction.Direction.FORWARD, reaction.getDirection());
     }
     
     @Test public void testGetReactantCount() {
@@ -281,14 +281,14 @@ public class ReactionTest extends NewCDKTestCase {
     
     @Test public void testSetDirection_int() {
         IReaction reaction = builder.newReaction();
-        int direction = IReaction.BIDIRECTIONAL;
+        IReaction.Direction direction = IReaction.Direction.BIDIRECTIONAL;
         reaction.setDirection(direction);
         Assert.assertEquals(direction, reaction.getDirection());
     }
 
     @Test public void testGetDirection() {
         IReaction reaction = builder.newReaction();
-        Assert.assertEquals(IReaction.FORWARD, reaction.getDirection());
+        Assert.assertEquals(IReaction.Direction.FORWARD, reaction.getDirection());
     }
 
     /**

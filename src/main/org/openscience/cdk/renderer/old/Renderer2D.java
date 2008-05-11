@@ -315,8 +315,8 @@ public class Renderer2D extends SimpleRenderer2D implements IRenderer2D
 			ints[2] = (int) (minmaxProducts[0]) - (width + 5);
 			ints[3] = ints[1];
 			int[] screenCoords = getScreenCoordinates(ints);
-			int direction = reaction.getDirection();
-			if (direction == IReaction.FORWARD)
+			IReaction.Direction direction = reaction.getDirection();
+			if (direction == IReaction.Direction.FORWARD)
 			{
 				graphics.drawLine(screenCoords[0], screenCoords[1],
 						screenCoords[2], screenCoords[3]);
@@ -324,7 +324,7 @@ public class Renderer2D extends SimpleRenderer2D implements IRenderer2D
 						screenCoords[2] - 7, screenCoords[3] - 7);
 				graphics.drawLine(screenCoords[2], screenCoords[3],
 						screenCoords[2] - 7, screenCoords[3] + 7);
-			} else if (direction == IReaction.BACKWARD)
+			} else if (direction == IReaction.Direction.BACKWARD)
 			{
 				graphics.drawLine(screenCoords[0], screenCoords[1],
 						screenCoords[2], screenCoords[3]);
@@ -332,7 +332,7 @@ public class Renderer2D extends SimpleRenderer2D implements IRenderer2D
 						screenCoords[0] + 7, screenCoords[1] - 7);
 				graphics.drawLine(screenCoords[0], screenCoords[1],
 						screenCoords[0] + 7, screenCoords[1] + 7);
-			} else if (direction == IReaction.BIDIRECTIONAL)
+			} else if (direction == IReaction.Direction.BIDIRECTIONAL)
 			{
 				graphics.drawLine(screenCoords[0], screenCoords[1] - 3,
 						screenCoords[2], screenCoords[3] - 3);

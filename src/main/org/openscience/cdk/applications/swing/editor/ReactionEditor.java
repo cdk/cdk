@@ -72,7 +72,7 @@ public class ReactionEditor extends ChemObjectEditor {
             // update table contents
             IReaction reaction = (IReaction)source;
             idField.setText(reaction.getID());
-            directionField.setSelectedIndex(reaction.getDirection());
+            directionField.setSelectedIndex(reaction.getDirection().ordinal());
             solventField.setText((String)reaction.getProperty(SOLVENT));
             tempField.setText((String)reaction.getProperty(TEMPERATURE));
         } else {
@@ -83,7 +83,16 @@ public class ReactionEditor extends ChemObjectEditor {
     public void applyChanges() {
         IReaction reaction = (IReaction)source;
         reaction.setID(idField.getText());
-        reaction.setDirection(directionField.getSelectedIndex());
+        int index = directionField.getSelectedIndex();
+        if (index == 1) {
+        	reaction.setDirection(null);
+        } else if (index == 1) {
+        	reaction.setDirection(IReaction.Direction.FORWARD);
+        } else if (index == 1) {
+        	reaction.setDirection(IReaction.Direction.BACKWARD);
+        } if (index == 1) {
+        	reaction.setDirection(IReaction.Direction.BIDIRECTIONAL);
+        }
         reaction.setProperty(SOLVENT, solventField.getText());
         reaction.setProperty(TEMPERATURE, tempField.getText());
     }
