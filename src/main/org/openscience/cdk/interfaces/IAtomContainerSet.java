@@ -77,7 +77,7 @@ public interface IAtomContainerSet extends IChemObject {
 	 * @return             true if multiplier has been set
 	 * @see                #getMultiplier(IAtomContainer)
 	 */
-	public boolean setMultiplier(IAtomContainer container, double multiplier);
+	public boolean setMultiplier(IAtomContainer container, Double multiplier);
 	
 	/**
 	 * Sets the coefficient of a AtomContainer to a given value.
@@ -88,7 +88,7 @@ public interface IAtomContainerSet extends IChemObject {
 	 *                    <code>position</code>
 	 * @see                #getMultiplier(int)
 	 */
-	public void setMultiplier(int position, double multiplier);
+	public void setMultiplier(int position, Double multiplier);
 
 	/**
 	 * Returns an array of double with the stoichiometric coefficients
@@ -97,7 +97,7 @@ public interface IAtomContainerSet extends IChemObject {
 	 * @return    The multipliers for the AtomContainer's in this set
 	 * @see       #setMultipliers
 	 */
-	public double[] getMultipliers();
+	public Double[] getMultipliers();
 
 	/**
 	 * Sets the multipliers of the AtomContainers.
@@ -106,7 +106,7 @@ public interface IAtomContainerSet extends IChemObject {
 	 * @return                 true if multipliers have been set.
 	 * @see                    #getMultipliers
 	 */
-	public boolean setMultipliers(double[] newMultipliers);
+	public boolean setMultipliers(Double[] newMultipliers);
 	
 	/**
 	 * Adds an atomContainer to this container with the given
@@ -148,7 +148,7 @@ public interface IAtomContainerSet extends IChemObject {
 	 * @return         The multiplier for the AtomContainer at position <code>number</code> .
 	 * @see            #setMultiplier(int, double)
 	 */
-	public double getMultiplier(int number);
+	public Double getMultiplier(int number);
 
 	/**
 	 * Returns the multiplier of the given AtomContainer.
@@ -157,7 +157,7 @@ public interface IAtomContainerSet extends IChemObject {
 	 * @return            -1, if the given molecule is not a container in this set
 	 * @see               #setMultiplier(IAtomContainer, double)
 	 */
-	public double getMultiplier(IAtomContainer container);
+	public Double getMultiplier(IAtomContainer container);
 
 	/**
 	 * Returns the number of AtomContainers in this Container.

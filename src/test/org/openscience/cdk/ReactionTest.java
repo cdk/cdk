@@ -109,8 +109,8 @@ public class ReactionTest extends NewCDKTestCase {
         IReaction reaction = builder.newReaction();
         IMolecule proton = builder.newMolecule();
         IMolecule sulfate = builder.newMolecule();
-        reaction.addReactant(proton, 2);
-        reaction.addReactant(sulfate, 1);
+        reaction.addReactant(proton, 2d);
+        reaction.addReactant(sulfate, 1d);
         Assert.assertEquals(2.0, reaction.getReactantCoefficient(proton), 0.00001);
         Assert.assertEquals(1.0, reaction.getReactantCoefficient(sulfate), 0.00001);
     }
@@ -203,9 +203,9 @@ public class ReactionTest extends NewCDKTestCase {
         IReaction reaction = builder.newReaction();
 		IMolecule ed1 = builder.newMolecule();
 		IMolecule ed2 = builder.newMolecule();
-		reaction.addReactant(ed1, 2);
-		reaction.addReactant(ed2, 3);
-		double[] ec = reaction.getReactantCoefficients();
+		reaction.addReactant(ed1, 2d);
+		reaction.addReactant(ed2, 3d);
+		Double[] ec = reaction.getReactantCoefficients();
 		Assert.assertEquals(2.0, ec.length, 0.00001);
 		Assert.assertEquals(reaction.getReactantCoefficient(ed1), ec[0], 0.00001);
 		Assert.assertEquals(3.0, ec[1], 0.00001);
@@ -215,9 +215,9 @@ public class ReactionTest extends NewCDKTestCase {
         IReaction reaction = builder.newReaction();
 		IMolecule pr1 = builder.newMolecule();
 		IMolecule pr2 = builder.newMolecule();
-		reaction.addProduct(pr1, 1);
-		reaction.addProduct(pr2, 2);
-		double[] pc = reaction.getProductCoefficients();
+		reaction.addProduct(pr1, 1d);
+		reaction.addProduct(pr2, 2d);
+		Double[] pc = reaction.getProductCoefficients();
 		Assert.assertEquals(2.0, pc.length, 0.00001);
 		Assert.assertEquals(reaction.getProductCoefficient(pr1), pc[0], 0.00001);
 		Assert.assertEquals(2.0, pc[1], 0.00001);
@@ -227,26 +227,26 @@ public class ReactionTest extends NewCDKTestCase {
         IReaction reaction = builder.newReaction();
 		IMolecule ed1 = builder.newMolecule();
 		IMolecule ed2 = builder.newMolecule();
-		reaction.addReactant(ed1, 2);
-		reaction.addReactant(ed2, 3);
-		double[] ec = { 1.0, 2.0 };
+		reaction.addReactant(ed1, 2d);
+		reaction.addReactant(ed2, 3d);
+		Double[] ec = { 1.0, 2.0 };
 		boolean coeffSet = reaction.setReactantCoefficients(ec);
 		Assert.assertTrue(coeffSet);
 		Assert.assertEquals(1.0, reaction.getReactantCoefficient(ed1), 0.00001);
 		Assert.assertEquals(2.0, reaction.getReactantCoefficient(ed2), 0.00001);
-		double[] ecFalse = { 1.0 };
+		Double[] ecFalse = { 1.0 };
 		Assert.assertFalse(reaction.setReactantCoefficients(ecFalse));
     }
 	
 	@Test public void testSetProductCoefficients_arraydouble() {
         IReaction reaction = builder.newReaction();
 		IMolecule pr1 = builder.newMolecule();
-		reaction.addProduct(pr1, 1);
-		double[] pc = { 2.0 };
+		reaction.addProduct(pr1, 1d);
+		Double[] pc = { 2.0 };
 		boolean coeffSet = reaction.setProductCoefficients(pc);
 		Assert.assertTrue(coeffSet);
 		Assert.assertEquals(2.0, reaction.getProductCoefficient(pr1), 0.00001);
-		double[] pcFalse = { 1.0 , 2.0 };
+		Double[] pcFalse = { 1.0 , 2.0 };
 		Assert.assertFalse(reaction.setProductCoefficients(pcFalse));
     }
 	

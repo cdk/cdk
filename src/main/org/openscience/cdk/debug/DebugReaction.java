@@ -188,7 +188,7 @@ public class DebugReaction extends org.openscience.cdk.Reaction
 		super.addAgent(agent);
 	}
 
-	public void addReactant(IMolecule reactant, double coefficient) {
+	public void addReactant(IMolecule reactant, Double coefficient) {
 		logger.debug("Adding reactant with coefficient: ", reactant, ""+coefficient);
 		super.addReactant(reactant, coefficient);
 	}
@@ -198,47 +198,47 @@ public class DebugReaction extends org.openscience.cdk.Reaction
 		super.addProduct(product);
 	}
 
-	public void addProduct(IMolecule product, double coefficient) {
+	public void addProduct(IMolecule product, Double coefficient) {
 		logger.debug("Adding product with coefficient: ", product, ""+coefficient);
 		super.addProduct(product, coefficient);
 	}
 
-	public double getReactantCoefficient(IMolecule reactant) {
+	public Double getReactantCoefficient(IMolecule reactant) {
 		logger.debug("Setting reactant coefficient: ", reactant, ""+ super.getReactantCoefficient(reactant));
 		return super.getReactantCoefficient(reactant);
 	}
 
-	public double getProductCoefficient(IMolecule product) {
+	public Double getProductCoefficient(IMolecule product) {
 		logger.debug("Setting product coefficient: ", product, ""+ super.getProductCoefficient(product));
 		return super.getProductCoefficient(product);
 	}
 
-	public boolean setReactantCoefficient(IMolecule reactant, double coefficient) {
+	public boolean setReactantCoefficient(IMolecule reactant, Double coefficient) {
 		logger.debug("Setting reactant coefficient: ", reactant, ""+coefficient);
 		return super.setReactantCoefficient(reactant, coefficient);
 	}
 
-	public boolean setProductCoefficient(IMolecule product, double coefficient) {
+	public boolean setProductCoefficient(IMolecule product, Double coefficient) {
 		logger.debug("Setting product coefficient: ", product, ""+coefficient);
 		return super.setProductCoefficient(product, coefficient);
 	}
 
-	public double[] getReactantCoefficients() {
+	public Double[] getReactantCoefficients() {
 		logger.debug("Getting reactant coefficients: ", super.getReactantCoefficients().length);
 		return super.getReactantCoefficients();
 	}
 
-	public double[] getProductCoefficients() {
+	public Double[] getProductCoefficients() {
 		logger.debug("Getting product coefficients: ", super.getProductCoefficients().length);
 		return super.getProductCoefficients();
 	}
 
-	public boolean setReactantCoefficients(double[] coefficients) {
+	public boolean setReactantCoefficients(Double[] coefficients) {
 		logger.debug("Setting reactant coefficients: ", coefficients.length);
 		return super.setReactantCoefficients(coefficients);
 	}
 
-	public boolean setProductCoefficients(double[] coefficients) {
+	public boolean setProductCoefficients(Double[] coefficients) {
 		logger.debug("Setting product coefficients: ", coefficients.length);
 		return super.setProductCoefficients(coefficients);
 	}

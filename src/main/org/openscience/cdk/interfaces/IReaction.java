@@ -143,7 +143,7 @@ public interface IReaction extends IChemObject {
      * @param coefficient Stoichiometry coefficient for this molecule
      * @see   #getReactants
      */
-    public void addReactant(IMolecule reactant, double coefficient);
+    public void addReactant(IMolecule reactant, Double coefficient);
     
     /**
      * Adds a product to this reaction.
@@ -160,7 +160,7 @@ public interface IReaction extends IChemObject {
      * @param coefficient Stoichiometry coefficient for this molecule
      * @see   #getProducts
      */
-    public void addProduct(IMolecule product, double coefficient);
+    public void addProduct(IMolecule product, Double coefficient);
     
     /**
      * Returns the stoichiometry coefficient of the given reactant.
@@ -169,7 +169,7 @@ public interface IReaction extends IChemObject {
      * @return -1, if the given molecule is not a product in this Reaction
      * @see    #setReactantCoefficient
      */
-    public double getReactantCoefficient(IMolecule reactant);
+    public Double getReactantCoefficient(IMolecule reactant);
     
     /**
      * Returns the stoichiometry coefficient of the given product.
@@ -178,7 +178,7 @@ public interface IReaction extends IChemObject {
      * @return -1, if the given molecule is not a product in this Reaction
      * @see    #setProductCoefficient
      */
-    public double getProductCoefficient(IMolecule product);
+    public Double getProductCoefficient(IMolecule product);
 	
 	/**
      * Sets the coefficient of a a reactant to a given value.
@@ -188,7 +188,7 @@ public interface IReaction extends IChemObject {
      * @return  true if Molecule has been found and stoichiometry has been set.
      * @see     #getReactantCoefficient
      */
-    public boolean setReactantCoefficient(IMolecule reactant, double coefficient);	
+    public boolean setReactantCoefficient(IMolecule reactant, Double coefficient);	
 	    
 	/**
      * Sets the coefficient of a a product to a given value.
@@ -198,7 +198,7 @@ public interface IReaction extends IChemObject {
      * @return  true if Molecule has been found and stoichiometry has been set.
      * @see     #getProductCoefficient
      */
-    public boolean setProductCoefficient(IMolecule product, double coefficient);
+    public boolean setProductCoefficient(IMolecule product, Double coefficient);
     
 	/**
      * Returns an array of double with the stoichiometric coefficients
@@ -207,7 +207,7 @@ public interface IReaction extends IChemObject {
      * @return An array of double's containing the coefficients of the reactants
      * @see    #setReactantCoefficients
      */
-    public double[] getReactantCoefficients();
+    public Double[] getReactantCoefficients();
 	
 	/**
      * Returns an array of double with the stoichiometric coefficients
@@ -216,7 +216,7 @@ public interface IReaction extends IChemObject {
      * @return An array of double's containing the coefficients of the products
      * @see    #setProductCoefficients
      */
-    public double[] getProductCoefficients();
+    public Double[] getProductCoefficients();
 	
 	/**
      * Sets the coefficients of the reactants.
@@ -225,7 +225,7 @@ public interface IReaction extends IChemObject {
      * @return  true if coefficients have been set.
      * @see     #getReactantCoefficients
      */
-    public boolean setReactantCoefficients(double[] coefficients);
+    public boolean setReactantCoefficients(Double[] coefficients);
 	
 	/**
      * Sets the coefficient of the products.
@@ -234,7 +234,7 @@ public interface IReaction extends IChemObject {
      * @return  true if coefficients have been set.
      * @see     #getProductCoefficients
      */
-    public boolean setProductCoefficients(double[] coefficients);
+    public boolean setProductCoefficients(Double[] coefficients);
     
     /**
      * Sets the direction of the reaction.

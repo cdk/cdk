@@ -32,6 +32,7 @@ import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 
@@ -222,7 +223,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @param coefficient Stoichiometry coefficient for this molecule
      * @see   #getReactants
      */
-    public void addReactant(org.openscience.cdk.interfaces.IMolecule reactant, double coefficient) {
+    public void addReactant(IMolecule reactant, Double coefficient) {
         reactants.addAtomContainer(reactant, coefficient);
 	notifyChanged();
     }
@@ -246,7 +247,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @param coefficient Stoichiometry coefficient for this molecule
      * @see   #getProducts
      */
-    public void addProduct(org.openscience.cdk.interfaces.IMolecule product, double coefficient) {
+    public void addProduct(IMolecule product, Double coefficient) {
         products.addAtomContainer(product, coefficient);
 	/* notifyChanged() is called by 
 	   addReactant(Molecule reactant, double coefficient) */
@@ -259,7 +260,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return -1, if the given molecule is not a product in this Reaction
      * @see    #setReactantCoefficient
      */
-    public double getReactantCoefficient(org.openscience.cdk.interfaces.IMolecule reactant) {
+    public Double getReactantCoefficient(IMolecule reactant) {
         return reactants.getMultiplier(reactant);
     }
     
@@ -270,7 +271,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return -1, if the given molecule is not a product in this Reaction
      * @see    #setProductCoefficient
      */
-    public double getProductCoefficient(org.openscience.cdk.interfaces.IMolecule product) {
+    public Double getProductCoefficient(IMolecule product) {
         return products.getMultiplier(product);
     }
 	
@@ -282,7 +283,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return  true if Molecule has been found and stoichiometry has been set.
      * @see     #getReactantCoefficient
      */
-    public boolean setReactantCoefficient(org.openscience.cdk.interfaces.IMolecule reactant, double coefficient) {
+    public boolean setReactantCoefficient(IMolecule reactant, Double coefficient) {
 	notifyChanged();
         return reactants.setMultiplier(reactant, coefficient);
     }
@@ -296,7 +297,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return  true if Molecule has been found and stoichiometry has been set.
      * @see     #getProductCoefficient
      */
-    public boolean setProductCoefficient(org.openscience.cdk.interfaces.IMolecule product, double coefficient) {
+    public boolean setProductCoefficient(IMolecule product, Double coefficient) {
 	notifyChanged();
         return products.setMultiplier(product, coefficient);
     }
@@ -308,7 +309,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return An array of double's containing the coefficients of the reactants
      * @see    #setReactantCoefficients
      */
-    public double[] getReactantCoefficients() {
+    public Double[] getReactantCoefficients() {
         return reactants.getMultipliers();
     }
 	
@@ -319,7 +320,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return An array of double's containing the coefficients of the products
      * @see    #setProductCoefficients
      */
-    public double[] getProductCoefficients() {
+    public Double[] getProductCoefficients() {
         return products.getMultipliers();
     }
 	
@@ -331,7 +332,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return  true if coefficients have been set.
      * @see     #getReactantCoefficients
      */
-    public boolean setReactantCoefficients(double[] coefficients) {
+    public boolean setReactantCoefficients(Double[] coefficients) {
 	notifyChanged();
         return reactants.setMultipliers(coefficients);
     }
@@ -343,7 +344,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return  true if coefficients have been set.
      * @see     #getProductCoefficients
      */
-    public boolean setProductCoefficients(double[] coefficients) {
+    public boolean setProductCoefficients(Double[] coefficients) {
 	notifyChanged();
         return products.setMultipliers(coefficients);
     }

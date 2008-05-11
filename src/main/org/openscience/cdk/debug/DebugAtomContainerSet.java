@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.debug;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -173,17 +174,17 @@ public class DebugAtomContainerSet extends org.openscience.cdk.AtomContainerSet
 		super.setMultiplier(position, multiplier);
 	}
 
-	public double[] getMultipliers() {
+	public Double[] getMultipliers() {
 		logger.debug("Getting multipliers array: ", super.getMultipliers().length);
 		return super.getMultipliers();
 	}
 
-	public boolean setMultipliers(double[] newMultipliers) {
-		logger.debug("Setting mulipliers array: ", newMultipliers.length);
+	public boolean setMultipliers(Double[] newMultipliers) {
+		logger.debug("Setting multipliers array: ", newMultipliers.length);
 		return super.setMultipliers(newMultipliers);
 	}
 
-	public void addAtomContainer(IAtomContainer atomContainer, double multiplier) {
+	public void addAtomContainer(IAtomContainer atomContainer, Double multiplier) {
 		logger.debug("Adding atom container with multiplier: ", ""+multiplier, atomContainer);
 		super.addAtomContainer(atomContainer, multiplier);
 	}
@@ -193,7 +194,7 @@ public class DebugAtomContainerSet extends org.openscience.cdk.AtomContainerSet
 		super.add(atomContainerSet);
 	}
 
-	public java.util.Iterator atomContainers() {
+	public Iterator<IAtomContainer> atomContainers() {
 		logger.debug("Getting AtomContainer iterator");
 		return super.atomContainers();
 	}
@@ -203,12 +204,12 @@ public class DebugAtomContainerSet extends org.openscience.cdk.AtomContainerSet
 		return super.getAtomContainer(number);
 	}
 
-	public double getMultiplier(int number) {
+	public Double getMultiplier(int number) {
 		logger.debug("Getting multiplier at: ", number);
 		return super.getMultiplier(number);
 	}
 
-	public double getMultiplier(IAtomContainer container) {
+	public Double getMultiplier(IAtomContainer container) {
 		logger.debug("Getting multiplier for atom container: ", container);
 		return super.getMultiplier(container);
 	}

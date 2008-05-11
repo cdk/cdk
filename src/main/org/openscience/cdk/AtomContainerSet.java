@@ -150,7 +150,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 * @return             true if multiplier has been set
 	 * @see                #getMultiplier(IAtomContainer)
 	 */
-	public boolean setMultiplier(org.openscience.cdk.interfaces.IAtomContainer container, double multiplier) {
+	public boolean setMultiplier(IAtomContainer container, Double multiplier) {
 		for (int i = 0; i < atomContainers.length; i++) {
 			if (atomContainers[i] == container) {
 				multipliers[i] = multiplier;
@@ -170,7 +170,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 *                    <code>position</code>
 	 * @see                #getMultiplier(int)
 	 */
-	public void setMultiplier(int position, double multiplier) {
+	public void setMultiplier(int position, Double multiplier) {
 		multipliers[position] = multiplier;
 		notifyChanged();
 	}
@@ -182,8 +182,8 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 * @return    The multipliers for the AtomContainer's in this set
 	 * @see       #setMultipliers
 	 */
-	public double[] getMultipliers() {
-		double[] returnArray = new double[this.atomContainerCount];
+	public Double[] getMultipliers() {
+		Double[] returnArray = new Double[this.atomContainerCount];
 		System.arraycopy(this.multipliers, 0, returnArray, 0, this.atomContainerCount);
 		return returnArray;
 	}
@@ -195,7 +195,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 * @return                 true if multipliers have been set.
 	 * @see                    #getMultipliers
 	 */
-	public boolean setMultipliers(double[] newMultipliers) {
+	public boolean setMultipliers(Double[] newMultipliers) {
 		if (newMultipliers.length == atomContainerCount) {
 			System.arraycopy(newMultipliers, 0, multipliers, 0, atomContainerCount);
 			notifyChanged();
@@ -286,7 +286,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 * @return         The multiplier for the AtomContainer at position <code>number</code> .
 	 * @see            #setMultiplier(int, double)
 	 */
-	public double getMultiplier(int number) {
+	public Double getMultiplier(int number) {
 		return multipliers[number];
 	}
 
@@ -297,7 +297,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 * @return            -1, if the given molecule is not a container in this set
 	 * @see               #setMultiplier(IAtomContainer, double)
 	 */
-	public double getMultiplier(org.openscience.cdk.interfaces.IAtomContainer container) {
+	public Double getMultiplier(org.openscience.cdk.interfaces.IAtomContainer container) {
 		for (int i = 0; i < atomContainerCount; i++) {
 			if (atomContainers[i].equals(container)) {
 				return multipliers[i];

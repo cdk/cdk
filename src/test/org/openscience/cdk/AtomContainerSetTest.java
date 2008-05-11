@@ -126,7 +126,7 @@ public class AtomContainerSetTest extends NewCDKTestCase {
 
         Assert.assertEquals(1.0, som.getMultiplier(0), 0.00001);
         Assert.assertEquals(1.0, som.getMultiplier(1), 0.00001);
-        double[] multipliers = new double[2];
+        Double[] multipliers = new Double[2];
         multipliers[0] = 2.0;
         multipliers[1] = 3.0;
         som.setMultipliers(multipliers);
@@ -148,7 +148,7 @@ public class AtomContainerSetTest extends NewCDKTestCase {
         IAtomContainerSet som = builder.newAtomContainerSet();
         som.addAtomContainer(builder.newAtomContainer(), 1.0);
         
-        double[] multipliers = som.getMultipliers();
+        Double[] multipliers = som.getMultipliers();
         Assert.assertNotNull(multipliers);
         Assert.assertEquals(1, multipliers.length);
     }
