@@ -584,12 +584,12 @@ public class DebugCrystal extends org.openscience.cdk.Crystal
 		super.setSpaceGroup(group);
 	}
 
-	public int getZ() {
+	public Integer getZ() {
 		logger.debug("Getting Z: ", super.getZ());
 		return super.getZ();
 	}
 
-	public void setZ(int value) {
+	public void setZ(Integer value) {
 		logger.debug("Settting Z to: ", value);
 		super.setZ(value);
 	}

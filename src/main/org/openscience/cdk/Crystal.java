@@ -64,7 +64,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
     /**
      * Number of symmetry related atoms.
      */
-    private int zValue = 1;
+    private Integer zValue = 1;
 
     /**
      * Number of symmetry related atoms.
@@ -192,7 +192,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      * @return the number of asymmetric parts in the unit cell
      * @see    #setZ
      */
-    public int getZ() {
+    public Integer getZ() {
         return zValue;
     }
 
@@ -202,7 +202,7 @@ public class Crystal extends AtomContainer implements Serializable, ICrystal, Cl
      * @param   value the number of asymmetric parts in the unit cell
      * @see           #getZ
      */
-    public void setZ(int value) {
+    public void setZ(Integer value) {
         this.zValue = value;
 	notifyChanged();
     }

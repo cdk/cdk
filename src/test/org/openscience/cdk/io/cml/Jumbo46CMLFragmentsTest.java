@@ -269,7 +269,7 @@ public class Jumbo46CMLFragmentsTest extends CDKTestCase {
         
         IChemFile chemFile = parseCMLString(cmlStringB.toString());
         org.openscience.cdk.interfaces.ICrystal crystal = checkForCrystalFile(chemFile);
-        assertEquals(4, crystal.getZ());
+        assertEquals(4, crystal.getZ().intValue());
         assertEquals("Fm3m", crystal.getSpaceGroup());
         assertEquals(2, crystal.getAtomCount());
         Vector3d aaxis = crystal.getA();

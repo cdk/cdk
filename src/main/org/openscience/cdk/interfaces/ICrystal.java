@@ -126,7 +126,7 @@ public interface ICrystal extends IAtomContainer {
      * @return the number of assymetric parts in the unit cell
      * @see    #setZ
      */
-    public int getZ();
+    public Integer getZ();
 
     /**
      * Sets the number of assymmetric parts in the unit cell.
@@ -134,6 +134,6 @@ public interface ICrystal extends IAtomContainer {
      * @param   value the number of assymetric parts in the unit cell
      * @see           #getZ
      */
-    public void setZ(int value);
+    public void setZ(Integer value);
 
 }
