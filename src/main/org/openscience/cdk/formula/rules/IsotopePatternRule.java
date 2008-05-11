@@ -24,14 +24,13 @@
 package org.openscience.cdk.formula.rules;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.formula.IMolecularFormula;
-import org.openscience.cdk.formula.IMolecularFormulaSet;
 import org.openscience.cdk.formula.IsotopePatternGenerator;
 import org.openscience.cdk.formula.MolecularFormulaManipulator;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.tools.LoggingTool;
 /**
  * This class validate if the Isotope Pattern from a given IMolecularFormula

@@ -28,9 +28,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.formula.IMolecularFormula;
 import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.LoggingTool;
 /**
  * This class validate if the occurrence of the IElements in the IMolecularFormula, for

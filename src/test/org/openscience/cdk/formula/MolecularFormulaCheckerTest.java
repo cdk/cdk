@@ -26,16 +26,14 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.formula.IMolecularFormula;
-import org.openscience.cdk.formula.MolecularFormula;
-import org.openscience.cdk.formula.MolecularFormulaChecker;
 import org.openscience.cdk.formula.rules.ChargeRule;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.MMElementRule;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * Checks the functionality of the MolecularFormulaChecker.

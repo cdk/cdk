@@ -24,7 +24,7 @@
 package org.openscience.cdk.formula.rules;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.formula.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 /**
  * Interface which groups all method that validate a IMolecularFormula.
  * 

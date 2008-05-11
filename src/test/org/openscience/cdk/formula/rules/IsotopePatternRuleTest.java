@@ -31,10 +31,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.formula.IMolecularFormula;
 import org.openscience.cdk.formula.MolecularFormula;
-import org.openscience.cdk.formula.rules.IRule;
-import org.openscience.cdk.formula.rules.IsotopePatternRule;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
  * @cdk.module test-formula

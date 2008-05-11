@@ -29,8 +29,10 @@ import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.formula.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 
 /**
  *  Class defining an adduct object in a MolecularFormula. It maintains

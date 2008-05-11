@@ -22,17 +22,12 @@ package org.openscience.cdk.formula;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.formula.IMolecularFormula;
-import org.openscience.cdk.formula.IMolecularFormulaSet;
-import org.openscience.cdk.formula.MolecularFormula;
-import org.openscience.cdk.formula.MolecularFormulaManipulator;
-import org.openscience.cdk.formula.MolecularFormulaRange;
-import org.openscience.cdk.formula.MolecularFormulaSet;
-import org.openscience.cdk.formula.MolecularFormulaSetManipulator;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * Checks the functionality of the MolecularFormulaSetManipulator.

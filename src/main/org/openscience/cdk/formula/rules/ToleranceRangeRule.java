@@ -26,8 +26,8 @@ package org.openscience.cdk.formula.rules;
 import java.io.IOException;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.formula.IMolecularFormula;
 import org.openscience.cdk.formula.MolecularFormulaManipulator;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.LoggingTool;
 /**
  * This class validate if the mass from an IMolecularFormula is

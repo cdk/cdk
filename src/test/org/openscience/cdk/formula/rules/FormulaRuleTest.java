@@ -23,11 +23,10 @@ package org.openscience.cdk.formula.rules;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Isotope;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.formula.IMolecularFormula;
-import org.openscience.cdk.formula.MolecularFormula;
-import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.formula.MolecularFormula;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
  * Tests for formula restriction rules.

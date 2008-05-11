@@ -21,7 +21,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.formula;
+package org.openscience.cdk.interfaces;
 
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IIsotope;
  *   <li><code><sup>12</sup>C5</sup><sup>13</sup>CH6</code></li>
  * </ul>
  * 
- * @cdk.module  formula
+ * @cdk.module  interfaces
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula
