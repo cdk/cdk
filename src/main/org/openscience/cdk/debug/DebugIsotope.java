@@ -70,12 +70,12 @@ public class DebugIsotope extends org.openscience.cdk.Isotope
 		logger.debug("Instantiated a DebugIsotope from element: ", element);
 	}
 
-	public int getAtomicNumber() {
+	public Integer getAtomicNumber() {
 		logger.debug("Getting atomic number: ", super.getAtomicNumber());
 		return super.getAtomicNumber();
 	}
 
-	public void setAtomicNumber(int atomicNumber) {
+	public void setAtomicNumber(Integer atomicNumber) {
 		logger.debug("Setting atomic number: ", atomicNumber);
 		super.setAtomicNumber(atomicNumber);
 	}

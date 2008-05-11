@@ -63,7 +63,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
     protected String symbol;
 
     /** The atomic number for this element giving their position in the periodic table. */
-    protected int atomicNumber = 0;
+    protected Integer atomicNumber = 0;
 
     /**
      * Constructs an empty Element.
@@ -126,7 +126,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      *
      * @see    #setAtomicNumber
      */
-    public int getAtomicNumber() {
+    public Integer getAtomicNumber() {
         return this.atomicNumber;
     }
 
@@ -137,7 +137,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      *
      * @see    #getAtomicNumber
      */
-    public void setAtomicNumber(int atomicNumber) {
+    public void setAtomicNumber(Integer atomicNumber) {
         this.atomicNumber = atomicNumber;
 	notifyChanged();
     }

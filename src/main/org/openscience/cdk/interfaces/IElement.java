@@ -49,7 +49,7 @@ public interface IElement extends IChemObject {
      *
      * @see    #setAtomicNumber
      */
-    public int getAtomicNumber();
+    public Integer getAtomicNumber();
 
     /**
      * Sets the atomic number of this element.
@@ -58,7 +58,7 @@ public interface IElement extends IChemObject {
      *
      * @see    #getAtomicNumber
      */
-    public void setAtomicNumber(int atomicNumber);
+    public void setAtomicNumber(Integer atomicNumber);
 
     /**
      * Returns the element symbol of this element.
