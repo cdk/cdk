@@ -1321,10 +1321,23 @@ public class SmilesParserTest extends NewCDKTestCase {
 	}
 		 
 	/**
-	 * @cdk.bug 1959516
+	 * @cdk.bug 1962419
 	 */
 	@org.junit.Test public void testPyrrole3() throws Exception {
 		String smiles = "n1cccc1";
+		try {
+			sp.parseSmiles(smiles);
+			Assert.fail("The SMILES string 'n1cccc1' is invalid but no exception was thrown.");
+		} catch (Exception e) {
+			// yes! it should fail
+		}
+	}
+
+	/**
+	 * @cdk.bug 1962398
+	 */
+	@org.junit.Test public void testPyrroleAnion1() throws Exception {
+		String smiles = "[n-]1cccc1";
 		IMolecule mol = sp.parseSmiles(smiles);
 
 		assertAtomTypesPerceived(mol);
@@ -1343,9 +1356,9 @@ public class SmilesParserTest extends NewCDKTestCase {
 			IAtomType.Hybridization.SP2
 		}, mol);
 		
-		assertHydrogenCounts(new int[] {1, 1, 1, 1, 1}, mol);
+		assertHydrogenCounts(new int[] {0, 1, 1, 1, 1}, mol);
 	}
-		 
+
 	/**
 	 * @cdk.bug 1960990
 	 */
@@ -1400,29 +1413,16 @@ public class SmilesParserTest extends NewCDKTestCase {
 	}
 	
 	/**
-	 * @cdk.bug 1960990
+	 * @cdk.bug 1962419
 	 */
 	@org.junit.Test public void testImidazole3() throws Exception {
 		String smiles = "n1cncc1";
-		IMolecule mol = sp.parseSmiles(smiles);
-
-		assertAtomTypesPerceived(mol);
-
-		Assert.assertEquals(5, mol.getAtomCount());
-		
-		assertAllSingleAndAromatic(mol);
-		
-		assertAtomSymbols(new String[] {"N", "C", "N", "C", "C"}, mol);
-		
-		assertHybridizations(new IAtomType.Hybridization[] {
-			IAtomType.Hybridization.PLANAR3,
-			IAtomType.Hybridization.SP2,
-			IAtomType.Hybridization.SP2,
-			IAtomType.Hybridization.SP2,
-			IAtomType.Hybridization.SP2
-		}, mol);
-		
-		assertHydrogenCounts(new int[] {1, 1, 0, 1, 1}, mol);
+		try {
+			sp.parseSmiles(smiles);
+			Assert.fail("The SMILES string 'n1cncc1' is invalid but no exception was thrown.");
+		} catch (Exception e) {
+			// yes! it should fail
+		}
 	}
 		 
 	/**
@@ -1450,6 +1450,61 @@ public class SmilesParserTest extends NewCDKTestCase {
 		
 		assertHydrogenCounts(new int[] {0, 1, 1, 1, 1}, mol);
 	}
+		 
+	/**
+	 * @cdk.bug 1959516
+	 */
+	@org.junit.Test public void testPyridine1() throws Exception {
+		String smiles = "n1ccccc1";
+		IMolecule mol = sp.parseSmiles(smiles);
+
+		assertAtomTypesPerceived(mol);
+
+		Assert.assertEquals(6, mol.getAtomCount());
+		
+		assertAllSingleAndAromatic(mol);
+		
+		assertAtomSymbols(new String[] {"N", "C", "C", "C", "C", "C"}, mol);
+		
+		assertHybridizations(new IAtomType.Hybridization[] {
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2
+		}, mol);
+		
+		assertHydrogenCounts(new int[] {0, 1, 1, 1, 1, 1}, mol);
+	}
+		 
+	/**
+	 * @cdk.bug 1959516
+	 */
+	@org.junit.Test public void testPyrimidine1() throws Exception {
+		String smiles = "n1cnccc1";
+		IMolecule mol = sp.parseSmiles(smiles);
+
+		assertAtomTypesPerceived(mol);
+
+		Assert.assertEquals(6, mol.getAtomCount());
+		
+		assertAllSingleAndAromatic(mol);
+		
+		assertAtomSymbols(new String[] {"N", "C", "N", "C", "C", "C"}, mol);
+		
+		assertHybridizations(new IAtomType.Hybridization[] {
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2,
+			IAtomType.Hybridization.SP2
+		}, mol);
+		
+		assertHydrogenCounts(new int[] {0, 1, 0, 1, 1, 1}, mol);
+	}
+
 
 }
 
