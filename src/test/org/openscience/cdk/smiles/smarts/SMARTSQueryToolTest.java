@@ -20,15 +20,14 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
-import org.openscience.cdk.CDKTestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,26 +41,19 @@ import java.util.List;
  * @cdk.module test-smarts
  * @cdk.require ant1.6
  */
-public class SMARTSQueryToolTest extends CDKTestCase {
+public class SMARTSQueryToolTest extends NewCDKTestCase {
 
-    public SMARTSQueryToolTest(String testName) {
-        super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(SMARTSQueryToolTest.class);
-    }
-
+    @Test
     public void testQueryTool() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C");
         SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO");
 
         boolean status = querytool.matches(atomContainer);
-        assertTrue(status);
+        Assert.assertTrue(status);
 
         int nmatch = querytool.countMatches();
-        assertEquals(2, nmatch);
+        Assert.assertEquals(2, nmatch);
 
         List<Integer> map1 = new ArrayList<Integer>();
         map1.add(1);
@@ -73,55 +65,57 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         map2.add(4);
         map2.add(5);
 
-        List mappings = querytool.getMatchingAtoms();
-        List ret1 = (List) mappings.get(0);
+        List<List<Integer>> mappings = querytool.getMatchingAtoms();
+        List<Integer> ret1 = mappings.get(0);
         sort(ret1);
         for (int i = 0; i < 3; i++) {
-            assertEquals(map1.get(i), ret1.get(i));
+            Assert.assertEquals(map1.get(i), ret1.get(i));
         }
 
-        List ret2 = (List) mappings.get(1);
+        List<Integer> ret2 = mappings.get(1);
         sort(ret2);
         for (int i = 0; i < 3; i++) {
-            assertEquals(map2.get(i), ret2.get(i));
+            Assert.assertEquals(map2.get(i), ret2.get(i));
         }
     }
 
-
+    @Test
     public void testQueryToolSingleAtomCase() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("C1CCC12CCCC2");
         SMARTSQueryTool querytool = new SMARTSQueryTool("C");
 
         boolean status = querytool.matches(atomContainer);
-        assertTrue(status);
+        Assert.assertTrue(status);
 
         int nmatch = querytool.countMatches();
-        assertEquals(8, nmatch);
+        Assert.assertEquals(8, nmatch);
     }
 
+    @Test
     public void testQueryToolResetSmarts() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("C1CCC12CCCC2");
         SMARTSQueryTool querytool = new SMARTSQueryTool("C");
 
         boolean status = querytool.matches(atomContainer);
-        assertTrue(status);
+        Assert.assertTrue(status);
 
         int nmatch = querytool.countMatches();
-        assertEquals(8, nmatch);
+        Assert.assertEquals(8, nmatch);
 
         querytool.setSmarts("CC");
         status = querytool.matches(atomContainer);
-        assertTrue(status);
+        Assert.assertTrue(status);
 
         nmatch = querytool.countMatches();
-        assertEquals(18, nmatch);
+        Assert.assertEquals(18, nmatch);
 
         List<List<Integer>> umatch = querytool.getUniqueMatchingAtoms();
-        assertEquals(9, umatch.size());
+        Assert.assertEquals(9, umatch.size());
     }
 
+    @Test
     public void testUniqueQueries() throws CDKException, IOException, ClassNotFoundException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c1ccccc1CCCNCCCc1ccccc1");
@@ -129,15 +123,16 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         SMARTSQueryTool querytool = new SMARTSQueryTool("c1ccccc1", true);
 
         boolean status = querytool.matches(atomContainer);
-        assertTrue(status);
+        Assert.assertTrue(status);
 
         int nmatch = querytool.countMatches();
-        assertEquals(24, nmatch);
+        Assert.assertEquals(24, nmatch);
 
         List<List<Integer>> umatch = querytool.getUniqueMatchingAtoms();
-        assertEquals(2, umatch.size());
+        Assert.assertEquals(2, umatch.size());
     }
 
+    @Test
     public void testQuery() throws CDKException, IOException, ClassNotFoundException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c12cc(CCN)ccc1c(COC)ccc2");
@@ -145,13 +140,13 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         SMARTSQueryTool querytool = new SMARTSQueryTool("c12ccccc1cccc2", true);
 
         boolean status = querytool.matches(atomContainer);
-        assertTrue(status);
+        Assert.assertTrue(status);
 
         int nmatch = querytool.countMatches();
-        assertEquals(4, nmatch);
+        Assert.assertEquals(4, nmatch);
 
         List<List<Integer>> umatch = querytool.getUniqueMatchingAtoms();
-        assertEquals(1, umatch.size());
+        Assert.assertEquals(1, umatch.size());
     }
 
 
