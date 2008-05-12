@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.isomorphism.SMARTSTest;
@@ -47,7 +48,7 @@ public class MsmartsTests {
             testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitorTest");
             suite.addTest(new TestSuite(testClass));
             testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.SMARTSQueryToolTest");
-            suite.addTest(new TestSuite(testClass));
+            suite.addTest(new JUnit4TestAdapter(testClass));
         } catch (Exception exception) {
             // ok, does not exist, just skip
             System.out.println("Could not load the SMARTS Parser test: " + exception.getMessage());
