@@ -22,19 +22,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.renderer.progz;
+package org.openscience.cdk.renderer;
 
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.renderer.ISimpleRenderer2D;
 
 /**
- * @cdk.module progzjcp
+ * @cdk.module render
  */
 public interface IJava2DRenderer extends ISimpleRenderer2D {
 	
 	/**
-	 * Returns model coordinates from screencoordinates provided by the graphics translation.
+	 * Returns model coordinates from screen coordinates provided by the graphics translation.
 	 *   
 	 * @return Point2D in real world coordinates
 	 */

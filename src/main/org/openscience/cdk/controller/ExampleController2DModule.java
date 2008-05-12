@@ -25,7 +25,6 @@
 package org.openscience.cdk.controller;
 
 import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -35,10 +34,9 @@ import javax.imageio.ImageIO;
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.renderer.progz.IJava2DRenderer;
-import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.renderer.IJava2DRenderer;
 
 
 /**
@@ -48,7 +46,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * 
  * @author Niels Out
  * @cdk.svnrev  $Revision: 9162 $
- * @cdk.module  progzjcp
+ * @cdk.module  control
  */
 public class ExampleController2DModule implements IController2DModule {
 

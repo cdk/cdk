@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * methods for undoing and redoing the regarding changes
  * 
  * @author tohel
- * @cdk.module control
+ * @cdk.module controlold
  * @cdk.svnrev  $Revision$
  */
 public class ConvertToPseudoAtomEdit extends AbstractUndoableEdit {

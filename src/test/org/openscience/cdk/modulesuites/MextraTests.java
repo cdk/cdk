@@ -28,17 +28,6 @@ import org.openscience.cdk.CloneAtomContainerTest;
 import org.openscience.cdk.VariousTests;
 import org.openscience.cdk.applications.APIVersionTesterTest;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
-import org.openscience.cdk.applications.undoredo.AddAtomsAndBondsEditTest;
-import org.openscience.cdk.applications.undoredo.AddHydrogenEditTest;
-import org.openscience.cdk.applications.undoredo.AdjustBondOrdersEditTest;
-import org.openscience.cdk.applications.undoredo.ChangeAtomSymbolEditTest;
-import org.openscience.cdk.applications.undoredo.ChangeChargeEditTest;
-import org.openscience.cdk.applications.undoredo.ChangeIsotopeEditTest;
-import org.openscience.cdk.applications.undoredo.CleanUpEditTest;
-import org.openscience.cdk.applications.undoredo.ConvertToPseudoAtomEditTest;
-import org.openscience.cdk.applications.undoredo.ConvertToRadicalEditTest;
-import org.openscience.cdk.applications.undoredo.FlipEditTest;
-import org.openscience.cdk.applications.undoredo.RemoveAtomsAndBondsEditTest;
 import org.openscience.cdk.atomtype.HybridizationMatcherTest;
 import org.openscience.cdk.atomtype.HybridizationStateATMatcherTest;
 import org.openscience.cdk.atomtype.ValencyMatcherTest;
@@ -119,19 +108,6 @@ public class MextraTests {
             System.out.println("Could not load the IUPAC Parser test: " + exception.getMessage());
         }
 
-        //from cdk.test.applications.jchempaint.undoredo
-        suite.addTest(ConvertToPseudoAtomEditTest.suite());
-        suite.addTest(ConvertToRadicalEditTest.suite());
-        suite.addTest(ChangeIsotopeEditTest.suite());
-        suite.addTest(ChangeAtomSymbolEditTest.suite());
-        suite.addTest(CleanUpEditTest.suite());
-        suite.addTest(AddHydrogenEditTest.suite());
-        suite.addTest(AdjustBondOrdersEditTest.suite());
-        suite.addTest(FlipEditTest.suite());
-        suite.addTest(AddAtomsAndBondsEditTest.suite());
-        suite.addTest(RemoveAtomsAndBondsEditTest.suite());
-        suite.addTest(ChangeChargeEditTest.suite());
-        
         // other
         suite.addTest(VariousTests.suite());        
         

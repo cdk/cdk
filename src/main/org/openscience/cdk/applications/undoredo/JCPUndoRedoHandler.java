@@ -31,17 +31,17 @@ package org.openscience.cdk.applications.undoredo;
 
 import javax.swing.undo.UndoableEdit;
 
-import org.openscience.cdk.controller.Controller2DModel;
+import org.openscience.cdk.controller.IController2DModel;
 
 /**
  * This is an implementation of IUndoRedoHandler, which is used in JCP. It forwards the postEdit to the postEdit in UndoSupport from Controller2dModel
  * 
  * @author shk3
- * @cdk.module control
+ * @cdk.module controlold
  * @cdk.svnrev  $Revision$
  */
 public class JCPUndoRedoHandler implements IUndoRedoHandler {
-	Controller2DModel c2dm=null;
+	IController2DModel c2dm=null;
 
 
 	/**
@@ -49,7 +49,7 @@ public class JCPUndoRedoHandler implements IUndoRedoHandler {
 	 * 
 	 * @param c2dm The Controller2dModel of the current application
 	 */
-	public JCPUndoRedoHandler(Controller2DModel c2dm) {
+	public JCPUndoRedoHandler(IController2DModel c2dm) {
 		this.setC2dm(c2dm);
 	}
 	
@@ -65,7 +65,7 @@ public class JCPUndoRedoHandler implements IUndoRedoHandler {
 	 * 
 	 * @param c2dm The Controller2dModel of the current application
 	 */
-	public void setC2dm(Controller2DModel c2dm) {
+	public void setC2dm(IController2DModel c2dm) {
 		this.c2dm = c2dm;
 	}
 

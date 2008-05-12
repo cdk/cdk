@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IBond;
  * 
  * @author      Niels Out
  * @cdk.svnrev  $Revision: 9162 $
- * @cdk.module  progzjcp
+ * @cdk.module  control
  */
 public class Controller2DModuleChangeFormalC implements IController2DModule {
 

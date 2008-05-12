@@ -24,7 +24,7 @@
 package org.openscience.cdk.applications.swing.editor;
 
 import org.openscience.cdk.applications.swing.FieldTablePanel;
-import org.openscience.cdk.controller.Controller2DModel;
+import org.openscience.cdk.controller.IController2DModel;
 
 /**
  * @cdk.module applications
@@ -35,7 +35,7 @@ public class Controller2DModelEditor extends FieldTablePanel {
     
     private static final long serialVersionUID = 7978080354056029617L;
     
-    private Controller2DModel model;
+    private IController2DModel model;
     
 	public Controller2DModelEditor() {
         super();
@@ -45,14 +45,14 @@ public class Controller2DModelEditor extends FieldTablePanel {
     private void constructPanel() {
     }
     
-    public void setModel(Controller2DModel model) {
+    public void setModel(IController2DModel model) {
         this.model = model;
     }
 	
     public void applyChanges() {
     }
 
-	public Controller2DModel getModel() {
+	public IController2DModel getModel() {
 		return model;
 	}
 }

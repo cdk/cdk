@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  * @author      Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2003-07-36
  * @cdk.require swing
- * @cdk.module  control
+ * @cdk.module  controlold
  * @cdk.svnrev  $Revision$
  */
 public class CDKPopupMenu extends JPopupMenu {

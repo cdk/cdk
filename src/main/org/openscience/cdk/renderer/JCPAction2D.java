@@ -26,7 +26,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.renderer.progz;
+package org.openscience.cdk.renderer;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -46,9 +46,9 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * Superclass of all JChemPaint GUI actions
  *
- * @cdk.module jchempaint
+ * @cdk.module  jchempaint
  * @cdk.svnrev  $Revision: 9162 $
- * @author     steinbeck
+ * @author      steinbeck
  */
 public class JCPAction2D extends AbstractAction
 {

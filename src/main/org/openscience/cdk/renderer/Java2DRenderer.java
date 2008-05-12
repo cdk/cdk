@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk.renderer.progz;
+package org.openscience.cdk.renderer;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -60,7 +60,6 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
@@ -71,7 +70,7 @@ import org.openscience.cdk.validate.ProblemMarker;
  * 
  * @author      nielsout
  * @cdk.svnrev  $Revision: 9162 $
- * @cdk.module  progzjcp
+ * @cdk.module  render
  */
 public class Java2DRenderer implements IJava2DRenderer {
 

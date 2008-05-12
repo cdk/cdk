@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.controller;
 
-import java.awt.event.MouseEvent;
-
 import javax.vecmath.Point2d;
 
 /**
@@ -35,7 +33,7 @@ import javax.vecmath.Point2d;
  * 
  * @author egonw
  * @cdk.svnrev  $Revision: 9162 $
- * @cdk.module  progzjcp
+ * @cdk.module  control
  *
  * @see    Controller2DModel
  */

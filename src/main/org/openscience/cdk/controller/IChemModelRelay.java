@@ -28,11 +28,11 @@ import javax.vecmath.Point2d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.renderer.progz.IJava2DRenderer;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.renderer.IJava2DRenderer;
 
 /**
- * @cdk.module progzjcp
+ * @cdk.module render
  */
 public interface IChemModelRelay {
 
@@ -44,7 +44,7 @@ public interface IChemModelRelay {
 
 	public abstract void updateView();
 	
-	public abstract Controller2DModel getController2DModel();
+	public abstract IController2DModel getController2DModel();
 
 	public abstract IJava2DRenderer getIJava2DRenderer();
 	public abstract IChemModel getIChemModel();

@@ -26,7 +26,7 @@ import java.util.Map;
  * Junit test for the ddHydrogenEditTest class
  * 
  * @author tohel
- * @cdk.module test-extra
+ * @cdk.module test-controlold
  * 
  */
 public class AddHydrogenEditTest extends CDKTestCase {

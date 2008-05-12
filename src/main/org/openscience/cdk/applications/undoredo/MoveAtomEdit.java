@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * @cdk.module control
+ * @cdk.module controlold
  * @cdk.svnrev  $Revision$
  */
 public class MoveAtomEdit extends AbstractUndoableEdit {

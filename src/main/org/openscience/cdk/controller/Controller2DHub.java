@@ -32,13 +32,11 @@ import java.util.Map;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.renderer.progz.IJava2DRenderer;
+import org.openscience.cdk.renderer.IJava2DRenderer;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -48,7 +46,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * <p>FIXME: will replace the old Controller2D class.
  * 
  * @cdk.svnrev  $Revision: 9162 $
- * @cdk.module  progzjcp
+ * @cdk.module  control
  * @author      Niels Out
  * @author      egonw
  */
@@ -56,14 +54,14 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 	
 	private IChemModel chemModel;
 	
-	private Controller2DModel controllerModel; 
+	private IController2DModel controllerModel; 
 	private IJava2DRenderer renderer;
 	private IViewEventRelay eventRelay;
 	
 	private List<IController2DModule> generalModules;
 	private Map<Controller2DModel.DrawMode,IController2DModule> drawModeModules;
 	
-	public Controller2DHub(Controller2DModel controllerModel,
+	public Controller2DHub(IController2DModel controllerModel,
 		                   IJava2DRenderer renderer,
 		                   IChemModel chemModel,
 		                   IViewEventRelay eventRelay) {
@@ -77,19 +75,19 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 		
 		//register all 'known' controllers
 		registerDrawModeControllerModule( 
-				Controller2DModel.DrawMode.MOVE, new Controller2DModuleMove());
+				IController2DModel.DrawMode.MOVE, new Controller2DModuleMove());
 		registerDrawModeControllerModule( 
-				Controller2DModel.DrawMode.ERASER, new Controller2DModuleRemove());
+				IController2DModel.DrawMode.ERASER, new Controller2DModuleRemove());
 		registerDrawModeControllerModule( 
-				Controller2DModel.DrawMode.INCCHARGE, new Controller2DModuleChangeFormalC(1));
+				IController2DModel.DrawMode.INCCHARGE, new Controller2DModuleChangeFormalC(1));
 		registerDrawModeControllerModule( 
-				Controller2DModel.DrawMode.DECCHARGE, new Controller2DModuleChangeFormalC(-1));
+				IController2DModel.DrawMode.DECCHARGE, new Controller2DModuleChangeFormalC(-1));
 		registerDrawModeControllerModule( 
-				Controller2DModel.DrawMode.ENTERELEMENT, new Controller2DModuleAddAtom());
+				IController2DModel.DrawMode.ENTERELEMENT, new Controller2DModuleAddAtom());
 		
 		registerGeneralControllerModule( new Controller2DModuleHighlight());
 	}
-	public Controller2DModel getController2DModel() {
+	public IController2DModel getController2DModel() {
 		return controllerModel;
 	}
 	public IJava2DRenderer getIJava2DRenderer() {

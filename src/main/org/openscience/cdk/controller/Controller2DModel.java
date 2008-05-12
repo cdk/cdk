@@ -34,48 +34,13 @@ import javax.swing.undo.UndoableEditSupport;
 import org.openscience.cdk.applications.undoredo.UndoAdapter;
 
 /**
- * @cdk.module     control
+ * @cdk.module  control
  * @cdk.svnrev  $Revision$
  */
-public class Controller2DModel implements java.io.Serializable, Cloneable
+public class Controller2DModel implements java.io.Serializable, Cloneable, IController2DModel
 {
 	
     private static final long serialVersionUID = 9007159812273128989L;
-    
-    public enum DrawMode {
-    	DRAWBOND("Draw"), 
-    	MOVE("Move"), 
-    	SELECT("Select"), 
-    	ERASER("Delete"), 
-    	ELEMENT("Element"), 
-    	SYMBOL("Symbol"),
-    	RING("Ring"), 
-    	CLEANUP("Clean"), 
-    	FLIP_H, 
-    	FLIP_V, 
-    	ROTATION, 
-    	UP_BOND("Wedge Up"),
-    	DOWN_BOND("Wedge Down"), 
-    	NORMALIZE("Normalize"), 
-    	LASSO("Select"), 
-    	INCCHARGE("Increase Charge"), 
-    	DECCHARGE("Decrease Charge"),
-    	BENZENERING, 
-    	MAPATOMATOM("Map Atom-Atom"),
-    	ENTERELEMENT;
-    	
-    	private final String name;
-    	DrawMode() {
-    		this("");
-    	}
-    	DrawMode(String name) {
-    		this.name = name;
-    	}
-    	
-    	public String getName() {
-    		return this.name;
-    	}
-    }
     
 	private DrawMode drawMode = DrawMode.DRAWBOND;
 	private int ringSize = 6;
@@ -105,68 +70,56 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
         undoSupport = new UndoableEditSupport();
         undoSupport.addUndoableEditListener(new UndoAdapter(undoManager));
     }
- 	/**
-	 * Returns the draw mode.
-	 *
-	 * @return   The draw mode
-	 */
+ 	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getDrawMode()
+     */
 	public DrawMode getDrawMode()
 	{
 		return this.drawMode;
 	}
 
-	/**
-	 * Returns the String representation of the draw mode.
-	 *
-	 * @return   A String
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getDrawModeString()
+     */
 	public String getDrawModeString() {
 		return this.drawMode.getName();
 	}
 
-	/**
-	 * Sets the draw mode 
-	 *
-	 * @param   drawMode  
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setDrawMode(org.openscience.cdk.controller.Controller2DModel.DrawMode)
+     */
 	public void setDrawMode(DrawMode drawMode)
 	{
 		this.drawMode = drawMode;
 	}
 
 
-	/**
-	 * Returns the snapToGridAngle mode
-         *
-	 * @return the snapToGridAngle mode
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getSnapToGridAngle()
+     */
 	public boolean getSnapToGridAngle()
 	{
 		return this.snapToGridAngle;
 	}
 
-    /**
-     * Returns true if the number of implicit hydrogens is updated
-     * when an Atom is edited.
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getAutoUpdateImplicitHydrogens()
      */
     public boolean getAutoUpdateImplicitHydrogens() {
         return this.autoUpdateImplicitHydrogens;
     }
     
-    /**
-     * Sets whether the number of implicit hydrogens is update when an
-     * Atom is edited.
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setAutoUpdateImplicitHydrogens(boolean)
      */
     public void setAutoUpdateImplicitHydrogens(boolean update) {
         this.autoUpdateImplicitHydrogens = update;
     }
 
 
-	/**
-	 * Sets the snapToGridAngle mode
-	 *
-	 * @param   snapToGridAngle
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setSnapToGridAngle(boolean)
+     */
 	public void setSnapToGridAngle(boolean snapToGridAngle)
 	{
 		this.snapToGridAngle = snapToGridAngle;
@@ -174,22 +127,18 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 
 	
 
-	/**
-	 * Returns the snapAngle mode
-	 *
-	 * @return the snapAngle mode
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getSnapAngle()
+     */
 	public int getSnapAngle()
 	{
 		return this.snapAngle;
 	}
 
 
-	/**
-	 * Sets the snapAngle mode
-	 *
-	 * @param   snapAngle  
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setSnapAngle(int)
+     */
 	public void setSnapAngle(int snapAngle)
 	{
 		this.snapAngle = snapAngle;
@@ -197,22 +146,18 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 
 	
 
-	/**
-	 * Returns the snapToGridCartesian mode
-	 *
-	 * @return the snapToGridCartesian mode
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getSnapToGridCartesian()
+     */
 	public boolean getSnapToGridCartesian()
 	{
 		return this.snapToGridCartesian;
 	}
 
 
-	/**
-	 * Sets the snapToGridCartesian mode
-	 *
-	 * @param   snapToGridCartesian  
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setSnapToGridCartesian(boolean)
+     */
 	public void setSnapToGridCartesian(boolean snapToGridCartesian)
 	{
 		this.snapToGridCartesian = snapToGridCartesian;
@@ -220,149 +165,153 @@ public class Controller2DModel implements java.io.Serializable, Cloneable
 
 	
 
-	/**
-	 *  Returns the snapCartesian value
-	 *
-	 * @return the snapCartesian value
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getSnapCartesian()
+     */
 	public int getSnapCartesian()
 	{
 		return this.snapCartesian;
 	}
 
 
-	/**
-	 * Sets the snapCartesian value
-	 *
-	 * @param   snapCartesian  
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setSnapCartesian(int)
+     */
 	public void setSnapCartesian(int snapCartesian)
 	{
 		this.snapCartesian = snapCartesian;
 	}
 
     
-	/**
-	 * Returns the ring size
-	 *
-	 * @return the ring size
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getRingSize()
+     */
 	public int getRingSize()
 	{
 		return this.ringSize;
 	}
 
 
-	/**
-	 * Sets the ring size
-	 *
-	 * @param   ringSize  
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setRingSize(int)
+     */
 	public void setRingSize(int ringSize)
 	{
 		this.ringSize = ringSize;
 	}
 
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getDefaultElementSymbol()
+     */
 	public String getDefaultElementSymbol() {
 		return this.defaultElementSymbol;
 	}
 
 
-	/**
-	 * Sets the default element symbol
-	 *
-	 * @param   defaultElementSymbol  
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setDefaultElementSymbol(java.lang.String)
+     */
 	public void setDefaultElementSymbol(String defaultElementSymbol)
 	{
 		this.defaultElementSymbol = defaultElementSymbol;
 	}
 
-	/**
-	 * Returns the bond pointer length
-	 *
-	 * @return the length
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getBondPointerLength()
+     */
 	public double getBondPointerLength()
 	{
 		return this.bondPointerLength;
 	}
 
 
-	/**
-	 * Sets the pointer length
-	 *
-	 * @param   bondPointerLength  
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setBondPointerLength(double)
+     */
 	public void setBondPointerLength(double bondPointerLength)
 	{
 		this.bondPointerLength = bondPointerLength;
 	}
 
 
-	/**
-	 * Returns the ring pointer length
-	 *
-	 * @return the length
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getRingPointerLength()
+     */
 	public double getRingPointerLength()
 	{
 		return this.ringPointerLength;
 	}
 
-	/**
-	 * Sets the pointer length
-	 *
-	 * @param   ringPointerLength  
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setRingPointerLength(double)
+     */
 	public void setRingPointerLength(double ringPointerLength)
 	{
 		this.ringPointerLength = ringPointerLength;
 	}
 
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setCommonElements(java.lang.String[])
+     */
     public void setCommonElements(String[] elements) {
         this.commonElements = elements;
     }
 
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getCommonElements()
+     */
     public String[] getCommonElements() {
         return this.commonElements;
     }
     
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setDrawElement(java.lang.String)
+     */
     public void setDrawElement(String element) {
         this.drawElement = element;
     }
 
-    /**
-     * Element symbol that <b>new</b> atoms get by default.
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getDrawElement()
      */
     public String getDrawElement() {
         return this.drawElement;
     }
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getUndoSupport()
+     */
 	public UndoableEditSupport getUndoSupport() {
 		return undoSupport;
 	}
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setUndoSupport(javax.swing.undo.UndoableEditSupport)
+     */
 	public void setUndoSupport(UndoableEditSupport undoSupport) {
 		this.undoSupport = undoSupport;
 	}
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#getUndoManager()
+     */
 	public UndoManager getUndoManager() {
 		return undoManager;
 	}
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setUndoManager(javax.swing.undo.UndoManager)
+     */
 	public void setUndoManager(UndoManager undoManager) {
 		this.undoManager = undoManager;
 	}
 
-	/**
-	 * To retrieve the value of the isMovingAllowed flag
-	 * @return boolean isMovingAllowed
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#isMovingAllowed()
+     */
 	public boolean isMovingAllowed() {
 		return isMovingAllowed;
 	}
 
-	/**
-	 * Lets you set the siMovingAllowed flag
-	 * @param isMovingAllowed
-	 */
+	/* (non-Javadoc)
+     * @see org.openscience.cdk.controller.IController2DModel#setMovingAllowed(boolean)
+     */
 	public void setMovingAllowed(boolean isMovingAllowed) {
 		this.isMovingAllowed = isMovingAllowed;
 	}

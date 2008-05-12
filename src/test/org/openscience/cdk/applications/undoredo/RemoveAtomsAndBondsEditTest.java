@@ -21,7 +21,7 @@ import org.openscience.cdk.CDKTestCase;
  * Junit test for the RemoveAtomsAndBondsEdit class
  * 
  * @author tohel
- * @cdk.module test-extra
+ * @cdk.module test-controlold
  * 
  */
 public class RemoveAtomsAndBondsEditTest extends CDKTestCase {

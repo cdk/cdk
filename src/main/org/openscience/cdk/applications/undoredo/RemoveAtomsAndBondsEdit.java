@@ -39,7 +39,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
- * @cdk.module control
+ * @cdk.module controlold
  * @cdk.svnrev  $Revision$
  */
 public class RemoveAtomsAndBondsEdit extends AbstractUndoableEdit {

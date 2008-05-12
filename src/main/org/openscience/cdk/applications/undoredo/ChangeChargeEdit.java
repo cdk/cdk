@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * containing the methods for undoing and redoing the regarding changes
  * 
  * @author tohel
- * @cdk.module control
+ * @cdk.module controlold
  * @cdk.svnrev  $Revision$
  */
 public class ChangeChargeEdit extends AbstractUndoableEdit {

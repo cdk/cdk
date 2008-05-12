@@ -23,7 +23,7 @@ import org.openscience.cdk.CDKTestCase;
  * Junit test for the ChangeIsotopeEdit class
  * 
  * @author tohel
- * @cdk.module test-extra
+ * @cdk.module test-controlold
  */
 public class ChangeIsotopeEditTest extends CDKTestCase {
 

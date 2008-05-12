@@ -12,7 +12,7 @@ import org.openscience.cdk.CDKTestCase;
  * Junit test for the ChangeCoordsEdit class
  * 
  * @author tohel
- * @cdk.module test-extra
+ * @cdk.module test-controlold
  * 
  */
 public class ChangeCoordsEditTest extends CDKTestCase {

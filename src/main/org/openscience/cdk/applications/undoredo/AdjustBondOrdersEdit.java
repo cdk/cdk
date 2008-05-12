@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * for undoing and redoing the regarding changes
  * 
  * @author tohel
- * @cdk.module control
+ * @cdk.module controlold
  * @cdk.svnrev  $Revision$
  */
 public class AdjustBondOrdersEdit extends AbstractUndoableEdit {

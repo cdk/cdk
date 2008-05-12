@@ -33,8 +33,8 @@ import javax.swing.undo.UndoableEdit;
  * the new state of the undo history list Is registered as a listener to the
  * undoSupport which is recieving the undo/redo events.
  * 
- * @author tohel
- * @cdk.module control
+ * @author      tohel
+ * @cdk.module  control
  * @cdk.svnrev  $Revision$
  */
 public class UndoAdapter implements UndoableEditListener {

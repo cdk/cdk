@@ -15,7 +15,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * Junit test for the ConvertToPseudoAtomEdit class
  * 
  * @author tohel
- * @cdk.module test-extra
+ * @cdk.module test-controlold
  */
 public class ConvertToPseudoAtomEditTest extends CDKTestCase {
 

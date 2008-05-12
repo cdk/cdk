@@ -24,8 +24,10 @@
  */
 package org.openscience.cdk.controller;
 
-import java.awt.event.MouseEvent;
-
+/**
+ * 
+ * @cdk.module control
+ */
 public interface IMouseEventRelay {
 	/**
 	 * 
