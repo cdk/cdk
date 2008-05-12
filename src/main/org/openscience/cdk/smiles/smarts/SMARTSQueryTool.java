@@ -20,14 +20,9 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -46,6 +41,8 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.*;
 
 /**
  * This class provides a easy to use wrapper around SMARTS matching
@@ -76,12 +73,13 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author Rajarshi Guha
  * @cdk.created 2007-04-08
  * @cdk.module smarts
- * @cdk.svnrev  $Revision$
+ * @cdk.svnrev $Revision$
  * @cdk.keyword SMARTS
  * @cdk.keyword substructure search
- * @cdk.bug     1760973
- * @cdk.bug     1761027
+ * @cdk.bug 1760973
+ * @cdk.bug 1761027
  */
+@TestClass("org.openscience.cdk.smiles.smarts.SMARTSQueryToolTest")
 public class SMARTSQueryTool {
     private LoggingTool logger;
     private String smarts;
@@ -110,6 +108,7 @@ public class SMARTSQueryTool {
      *
      * @return The SMARTS pattern
      */
+    @TestMethod("testQueryTool")
     public String getSmarts() {
         return smarts;
     }
@@ -120,6 +119,7 @@ public class SMARTSQueryTool {
      * @param smarts The new SMARTS pattern
      * @throws CDKException if there is an error in parsing the pattern
      */
+    @TestMethod("testQueryTool, testQueryToolResetSmart")
     public void setSmarts(String smarts) throws CDKException {
         this.smarts = smarts;
         initializeQuery();
@@ -139,13 +139,14 @@ public class SMARTSQueryTool {
      * @see #getMatchingAtoms()
      * @see #countMatches()
      */
+    @TestMethod("testQueryTool, testQueryToolSingleAtomCase, testQuery")
     public boolean matches(IAtomContainer atomContainer) throws CDKException {
         // TODO: we should consider some sort of caching?
         this.atomContainer = atomContainer;
         initializeMolecule();
-        
-    	// First calculate the recursive smarts
-    	initializeRecursiveSmarts(this.atomContainer);        
+
+        // First calculate the recursive smarts
+        initializeRecursiveSmarts(this.atomContainer);
 
         // lets see if we have a single atom query
         if (query.getAtomCount() == 1) {
@@ -178,6 +179,7 @@ public class SMARTSQueryTool {
      *
      * @return The number of times the pattern was found in the target molecule
      */
+    @TestMethod("testQueryTool")
     public int countMatches() {
         return matchingAtoms.size();
     }
@@ -190,6 +192,7 @@ public class SMARTSQueryTool {
      *
      * @return A List of List of atom indices in the target molecule
      */
+    @TestMethod("testQueryTool")
     public List<List<Integer>> getMatchingAtoms() {
         return matchingAtoms;
     }
@@ -202,7 +205,7 @@ public class SMARTSQueryTool {
      *
      * @return A List of List of atom indices in the target molecule
      */
-
+    @TestMethod("testUniqueQueries")
     public List<List<Integer>> getUniqueMatchingAtoms() {
         List<List<Integer>> ret = new ArrayList<List<Integer>>();
         for (List<Integer> atomMapping : matchingAtoms) {
@@ -333,7 +336,7 @@ public class SMARTSQueryTool {
             List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
             int total = hCount + connectedAtoms.size();
             for (IAtom connectedAtom : connectedAtoms) {
-                if (connectedAtom.getSymbol().equals("H")) {                    
+                if (connectedAtom.getSymbol().equals("H")) {
                     hCount++;
                 }
             }
@@ -372,7 +375,7 @@ public class SMARTSQueryTool {
 
         // check for atomaticity
         try {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
             CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
         } catch (CDKException e) {
             logger.debug(e.toString());
@@ -380,39 +383,39 @@ public class SMARTSQueryTool {
         }
 
     }
-    
+
     /**
      * Initializes recursive smarts atoms in the query
-     * 
+     *
      * @param atomContainer
      * @throws CDKException
      */
     private void initializeRecursiveSmarts(IAtomContainer atomContainer) throws CDKException {
-    	for (Iterator<IAtom> it = this.query.atoms(); it.hasNext(); ) {
-			IAtom atom = it.next();
-			initializeRecursiveSmartsAtom(atom, atomContainer);
-		}
+        for (Iterator<IAtom> it = this.query.atoms(); it.hasNext();) {
+            IAtom atom = it.next();
+            initializeRecursiveSmartsAtom(atom, atomContainer);
+        }
     }
-    
+
     /**
      * Recursively initializes recursive smarts atoms
-     * 
+     *
      * @param atom
      * @param atomContainer
      * @throws CDKException
      */
     private void initializeRecursiveSmartsAtom(IAtom atom, IAtomContainer atomContainer) throws CDKException {
-    	if (atom instanceof LogicalOperatorAtom) {
-    		initializeRecursiveSmartsAtom(((LogicalOperatorAtom)atom).getLeft(), atomContainer);
-    		if (((LogicalOperatorAtom)atom).getRight() != null) {
-    			initializeRecursiveSmartsAtom(((LogicalOperatorAtom)atom).getRight(), atomContainer);	
-    		}
-    	} else if (atom instanceof RecursiveSmartsAtom) {
-            ((RecursiveSmartsAtom)atom).setAtomContainer(atomContainer);
-    	} else if (atom instanceof HydrogenAtom) {
-    		((HydrogenAtom)atom).setAtomContainer(atomContainer);
-    	}
-    }    
+        if (atom instanceof LogicalOperatorAtom) {
+            initializeRecursiveSmartsAtom(((LogicalOperatorAtom) atom).getLeft(), atomContainer);
+            if (((LogicalOperatorAtom) atom).getRight() != null) {
+                initializeRecursiveSmartsAtom(((LogicalOperatorAtom) atom).getRight(), atomContainer);
+            }
+        } else if (atom instanceof RecursiveSmartsAtom) {
+            ((RecursiveSmartsAtom) atom).setAtomContainer(atomContainer);
+        } else if (atom instanceof HydrogenAtom) {
+            ((HydrogenAtom) atom).setAtomContainer(atomContainer);
+        }
+    }
 
     private void initializeQuery() throws CDKException {
         matchingAtoms = null;
@@ -451,17 +454,17 @@ public class SMARTSQueryTool {
                 if (!tmp.contains(idx2)) tmp.add(idx2);
             }
             if (tmp.size() > 0) atomMapping.add(tmp);
-            
+
             // If there is only one bond, check if it matches both ways.
             if (list.size() == 1 && atom1.getAtomicNumber() == atom2.getAtomicNumber()) {
-            	List<Integer> tmp2 = new ArrayList<Integer>();
-            	tmp2.add(tmp.get(0));
-            	tmp2.add(tmp.get(1));
-            	atomMapping.add(tmp2);
+                List<Integer> tmp2 = new ArrayList<Integer>();
+                tmp2.add(tmp.get(0));
+                tmp2.add(tmp.get(1));
+                atomMapping.add(tmp2);
             }
         }
-        
-        
+
+
         return atomMapping;
     }
 }

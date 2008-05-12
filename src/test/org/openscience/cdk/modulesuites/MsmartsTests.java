@@ -23,6 +23,7 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.openscience.cdk.SMARTSCoverageTest;
 import org.openscience.cdk.isomorphism.SMARTSTest;
 
 /**
@@ -34,6 +35,9 @@ public class MsmartsTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.smarts Tests");
+
+        suite.addTest(new JUnit4TestAdapter(SMARTSCoverageTest.class));
+        
         suite.addTest(SMARTSTest.suite());
         
         try {
