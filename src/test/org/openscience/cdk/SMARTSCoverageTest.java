@@ -45,7 +45,7 @@ public class SMARTSCoverageTest extends CoverageAnnotationTest {
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
-        suite.addTestSuite(CoreCoverageTest.class);
+        suite.addTestSuite(SMARTSCoverageTest.class);
         return suite;
     }
 
