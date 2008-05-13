@@ -495,7 +495,8 @@ public class MolecularFormulaManipulator {
 	 }
 		  
 	  /** 
-	   * Get the summed natural abundance of all isotopes from an MolecularFormula.
+	   * Get the summed natural abundance of all isotopes from an MolecularFormula. Assumes
+	   * abundances to be preset, and will return 0.0 if not.
 	   * 
 	   * @param  formula The IMolecularFormula to calculate
 	   * @return         The summed natural abundance of all isotopes in this MolecularFormula
@@ -506,6 +507,7 @@ public class MolecularFormulaManipulator {
 	      Iterator<IIsotope> iterIsot = formula.isotopes();
 	      while(iterIsot.hasNext()) {
 	    	  IIsotope isotope = iterIsot.next();
+	    	  if (isotope.getNaturalAbundance() == null) return 0.0; 
 	    	  abundance = abundance*Math.pow( isotope.getNaturalAbundance(),formula.getIsotopeCount(isotope));
 	      }
 	      return abundance/Math.pow(100,getAtomCount(formula));
