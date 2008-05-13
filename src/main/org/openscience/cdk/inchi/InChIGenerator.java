@@ -218,15 +218,15 @@ public class InChIGenerator {
             }
             
             // Check whether isotopic
-            int isotopeNumber = atom.getMassNumber();
-            if (isotopeNumber > 0 && ifact != null) {
+            Integer isotopeNumber = atom.getMassNumber();
+            if (isotopeNumber != CDKConstants.UNSET && ifact != null) {
                 IAtom isotope = atomContainer.getBuilder().newAtom(el);
                 ifact.configure(isotope);
-                if (isotope.getMassNumber() == isotopeNumber) {
+                if (isotope.getMassNumber().intValue() == isotopeNumber.intValue()) {
                     isotopeNumber = 0;
                 }
             }
-            if (isotopeNumber != 0) {
+            if (isotopeNumber != CDKConstants.UNSET) {
                 iatom.setIsotopicMass(isotopeNumber);
             }
             
