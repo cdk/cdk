@@ -195,7 +195,8 @@ public class DeduceBondSystemTool {
     	for (int i=0;i<molecule.getAtomCount();i++) {
     		IAtom ai=molecule.getAtom(i);
     		
-    		if (ai.getSymbol().equals("N") && ai.getFormalCharge()==0) {
+    		if (ai.getSymbol().equals("N") && 
+    			(ai.getFormalCharge() == null || ai.getFormalCharge() == 0)) {
     			if (inRingSet(ai,ringSet)) {
     				List ca=molecule.getConnectedAtomsList(ai);
     				for (int j=0;j<ca.size();j++){
