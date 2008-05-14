@@ -1204,6 +1204,32 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 		
 	}
 	/**
+	 * A unit test suite for JUnit: Resonance Formic acid  C-C(C)=C <=> [Cl+]=C(C)-[C-]
+	 *  
+	 *  @cdk.inchi InChI=1/C3H5Cl/c1-3(2)4/h1H2,2H3
+	 *  
+	 * @return    The test suite
+	 */
+	@Test public void test1Propene2chloro() throws Exception {
+		IMolecule molecule = builder.newMolecule();
+		molecule.addAtom(builder.newAtom("Cl"));
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(0, 1, IBond.Order.SINGLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(1, 2, IBond.Order.DOUBLE);
+		molecule.addAtom(builder.newAtom("C"));
+		molecule.addBond(1, 3, IBond.Order.SINGLE);
+		addExplicitHydrogens(molecule);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
+		
+		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+		IAtomContainerSet setOfContainers = gRI.getContainers(molecule);
+        
+		Assert.assertEquals(1,setOfContainers.getAtomContainerCount());
+		Assert.assertEquals(3,setOfContainers.getAtomContainer(0).getAtomCount());
+	}
+	/**
 	 * A unit test suite for JUnit 
 	 * @return    The test suite
 	 */
