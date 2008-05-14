@@ -98,7 +98,7 @@ public class PharmacophoreMatcher {
     private List<List<PharmacophoreBond>> matchingPBonds = null;
 
     private List<List<RMap>> bondMapping;
-    private IAtomContainer pharmacophoreMolecule;
+    private IAtomContainer pharmacophoreMolecule = null;
 
     /**
      * An empty constructor.
@@ -225,22 +225,20 @@ public class PharmacophoreMatcher {
      * target molecule that matched the query.
      *
      * @return a List of a List of pharmacophore constraints in the target molecule that match the query
-     * @see org.openscience.cdk.pharmacophore.PharmacophoreBond     
+     * @see org.openscience.cdk.pharmacophore.PharmacophoreBond
      */
     public List<List<PharmacophoreBond>> getMatchingPharmacophoreBonds() {
-        if (matchingPBonds != null) return matchingPBonds;
-        else {
-            matchingPBonds = new ArrayList<List<PharmacophoreBond>>();
-            for (Object aBondMapping : bondMapping) {
-                List list = (List) aBondMapping;
-                List<PharmacophoreBond> bondList = new ArrayList<PharmacophoreBond>();
-                for (Object aList : list) {
-                    RMap map = (RMap) aList;
-                    int bondID = map.getId1();
-                    bondList.add((PharmacophoreBond) pharmacophoreMolecule.getBond(bondID));
-                }
-                matchingPBonds.add(bondList);
+        if (bondMapping == null) return null;
+        matchingPBonds = new ArrayList<List<PharmacophoreBond>>();
+        for (Object aBondMapping : bondMapping) {
+            List list = (List) aBondMapping;
+            List<PharmacophoreBond> bondList = new ArrayList<PharmacophoreBond>();
+            for (Object aList : list) {
+                RMap map = (RMap) aList;
+                int bondID = map.getId1();
+                bondList.add((PharmacophoreBond) pharmacophoreMolecule.getBond(bondID));
             }
+            matchingPBonds.add(bondList);
         }
         return matchingPBonds;
     }
@@ -258,11 +256,9 @@ public class PharmacophoreMatcher {
      */
     @TestMethod("testMatchedAtoms")
     public List<List<PharmacophoreAtom>> getMatchingPharmacophoreAtoms() {
-        if (matchingPAtoms != null) return matchingPAtoms;
-        else {
-            matchingPAtoms = getAtomMappings(bondMapping, pharmacophoreMolecule);
-            return matchingPAtoms;
-        }
+        if (pharmacophoreMolecule == null || bondMapping == null) return null;
+        matchingPAtoms = getAtomMappings(bondMapping, pharmacophoreMolecule);
+        return matchingPAtoms;
     }
 
     /**
