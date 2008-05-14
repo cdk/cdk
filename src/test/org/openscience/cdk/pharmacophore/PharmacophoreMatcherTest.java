@@ -1,14 +1,6 @@
 package org.openscience.cdk.pharmacophore;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.List;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -18,10 +10,10 @@ import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.pharmacophore.PharmacophoreAtom;
-import org.openscience.cdk.pharmacophore.PharmacophoreMatcher;
-import org.openscience.cdk.pharmacophore.PharmacophoreQueryAtom;
-import org.openscience.cdk.pharmacophore.PharmacophoreQueryBond;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * @cdk.module test-pcore
@@ -176,7 +168,43 @@ public class PharmacophoreMatcherTest {
 
         List<List<PharmacophoreAtom>> upmatches = matcher.getUniqueMatchingPharmacophoreAtoms();
         Assert.assertEquals(1, upmatches.size());
+    }
 
+    @Test
+    public void testMatchingBonds() throws FileNotFoundException, CDKException {
+        String filename = "data/mdl/cnssmarts.sdf";
+        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        IteratingMDLReader reader = new IteratingMDLReader(ins,
+                DefaultChemObjectBuilder.getInstance());
+
+        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQueryAtom arom = new PharmacophoreQueryAtom("A", "c1ccccc1");
+        PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(arom, n1, 5.0, 7.0);
+        query.addAtom(arom);
+        query.addAtom(n1);
+        query.addBond(b1);
+
+        reader.hasNext();
+        IAtomContainer mol = (IAtomContainer) reader.next();
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+        PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
+        boolean status = matcher.matches(mol);
+        Assert.assertTrue(status);
+
+        List<List<PharmacophoreAtom>> pmatches = matcher.getMatchingPharmacophoreAtoms();
+        Assert.assertEquals(1, pmatches.size());
+
+        List<List<PharmacophoreAtom>> upmatches = matcher.getUniqueMatchingPharmacophoreAtoms();
+        Assert.assertEquals(1, upmatches.size());
+
+        List<List<PharmacophoreBond>> bmatches = matcher.getMatchingPharmacophoreBonds();
+        Assert.assertEquals(1, bmatches.size());
+        List<PharmacophoreBond> bmatch = bmatches.get(0);
+        Assert.assertEquals(1, bmatch.size());
+        PharmacophoreBond pbond = bmatch.get(0);
+        Assert.assertEquals(5.63, pbond.getBondLength(), 0.01);
     }
 
     @Test

@@ -1,13 +1,5 @@
 package org.openscience.cdk.pharmacophore;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -24,6 +16,9 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.tools.LoggingTool;
+
+import javax.vecmath.Point3d;
+import java.util.*;
 
 /**
  * Identifies atoms whose 3D arrangement matches a specified pharmacophore query.
@@ -100,6 +95,10 @@ public class PharmacophoreMatcher {
     private LoggingTool logger = new LoggingTool(PharmacophoreMatcher.class);
     private IQueryAtomContainer pharmacophoreQuery = null;
     private List<List<PharmacophoreAtom>> matchingPAtoms = null;
+    private List<List<PharmacophoreBond>> matchingPBonds = null;
+
+    private List<List<RMap>> bondMapping;
+    private IAtomContainer pharmacophoreMolecule;
 
     /**
      * An empty constructor.
@@ -120,6 +119,7 @@ public class PharmacophoreMatcher {
         this.pharmacophoreQuery = pharmacophoreQuery;
     }
 
+
     /**
      * Performs the pharmacophore matching.
      *
@@ -138,17 +138,14 @@ public class PharmacophoreMatcher {
             throw new CDKException("A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
         String title = (String) atomContainer.getProperty(CDKConstants.TITLE);
 
-        IAtomContainer pharmacophoreMolecule = getPharmacophoreMolecule(atomContainer);
+        pharmacophoreMolecule = getPharmacophoreMolecule(atomContainer);
         if (pharmacophoreMolecule.getAtomCount() < pharmacophoreQuery.getAtomCount()) {
             logger.debug("Target [" + title + "] did not match the query SMARTS. Skipping constraints");
             return false;
         }
-
-        List bondMapping = UniversalIsomorphismTester.getSubgraphMaps(pharmacophoreMolecule, pharmacophoreQuery);
-        matchingPAtoms = getAtomMappings(bondMapping, pharmacophoreMolecule);
-        logger.debug("  Got " + matchingPAtoms.size() + " hits");
-
-        return matchingPAtoms.size() > 0;
+        bondMapping = UniversalIsomorphismTester.getSubgraphMaps(pharmacophoreMolecule, pharmacophoreQuery);
+        logger.debug("  Got " + bondMapping.size() + " hits");
+        return bondMapping.size() > 0;
     }
 
 
@@ -221,6 +218,34 @@ public class PharmacophoreMatcher {
     }
 
     /**
+     * Get the matching pharmacophore constraints.
+     * <p/>
+     * The method should be called after performing the match, otherwise the return value is null.
+     * The method returns a List of List's. Each List represents the pharmacophore constraints in the
+     * target molecule that matched the query.
+     *
+     * @return a List of a List of pharmacophore constraints in the target molecule that match the query
+     * @see org.openscience.cdk.pharmacophore.PharmacophoreBond     
+     */
+    public List<List<PharmacophoreBond>> getMatchingPharmacophoreBonds() {
+        if (matchingPBonds != null) return matchingPBonds;
+        else {
+            matchingPBonds = new ArrayList<List<PharmacophoreBond>>();
+            for (Object aBondMapping : bondMapping) {
+                List list = (List) aBondMapping;
+                List<PharmacophoreBond> bondList = new ArrayList<PharmacophoreBond>();
+                for (Object aList : list) {
+                    RMap map = (RMap) aList;
+                    int bondID = map.getId1();
+                    bondList.add((PharmacophoreBond) pharmacophoreMolecule.getBond(bondID));
+                }
+                matchingPBonds.add(bondList);
+            }
+        }
+        return matchingPBonds;
+    }
+
+    /**
      * Get the matching pharmacophore groups.
      * <p/>
      * The method should be called after performing the match, otherwise the return value is null.
@@ -233,7 +258,11 @@ public class PharmacophoreMatcher {
      */
     @TestMethod("testMatchedAtoms")
     public List<List<PharmacophoreAtom>> getMatchingPharmacophoreAtoms() {
-        return matchingPAtoms;
+        if (matchingPAtoms != null) return matchingPAtoms;
+        else {
+            matchingPAtoms = getAtomMappings(bondMapping, pharmacophoreMolecule);
+            return matchingPAtoms;
+        }
     }
 
     /**
