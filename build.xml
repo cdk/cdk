@@ -75,7 +75,6 @@
             <echo message="    Batik found: ${batik.present}" />
             <echo message="   CMLDOM found: ${cmllibs.present}" />
             <echo message="    DADML found: ${dadml.present}" />
-            <echo message="      JAI found: ${jai.present}" />
             <echo message="  XIndice found: ${xindice.present}"/>
             <echo message=" --- optional libraries ---" />
             <echo message="" />
@@ -132,12 +131,6 @@
             </condition>
             <available property="dadml.present"
                        file="${lib}/dadml.jar"/>
-            <condition property="jai.present">
-              <and>
-                <available file="${lib}/jai_codec.jar"/>
-                <available file="${lib}/jai_core.jar"/>
-              </and>
-            </condition>
             <available property="junit.present"
                        classname="junit.framework.TestCase"
                        classpath="${ant.home}/lib/junit.jar"/>
@@ -303,7 +296,6 @@
                     <!-- excludesfile name="${build}/java1.5.javafiles" unless="isJava15"/ -->
                     <excludesfile name="${build}/java1.5+.javafiles" if="isNotJava15"/>
                     <excludesfile name="${build}/ant1.6.javafiles" unless="hasAnt17"/>
-                    <excludesfile name="${build}/jai.javafiles" unless="jai.present"/>
                     <excludesfile name="${build}/dadml.javafiles" unless="dadml.present"/>
                     <excludesfile name="${build}/xindice.javafiles" unless="xindice.present"/>
 
@@ -335,7 +327,6 @@
                 <!-- excludesfile name="${build}/java1.5.javafiles" unless="isJava15"/ -->
                 <excludesfile name="${build}/java1.5+.javafiles" if="isNotJava15"/>
                 <excludesfile name="${build}/ant1.6.javafiles" unless="hasAnt17"/>
-            	<excludesfile name="${build}/jai.javafiles" unless="jai.present"/>
             	<excludesfile name="${build}/dadml.javafiles" unless="dadml.present"/>
             	<excludesfile name="${build}/xindice.javafiles" unless="xindice.present"/>
 
@@ -366,7 +357,6 @@
                     <!-- excludesfile name="${build}/java1.5.javafiles" unless="isJava15"/ -->
                     <excludesfile name="${build}/java1.5+.javafiles" if="isNotJava15"/>
                     <excludesfile name="${build}/ant1.6.classes" unless="hasAnt17"/>
-	                <excludesfile name="${build}/jai.javafiles" unless="jai.present"/>
                 	<excludesfile name="${build}/dadml.javafiles" unless="dadml.present"/>
                 	<excludesfile name="${build}/xindice.javafiles" unless="xindice.present"/>
                </fileset>
