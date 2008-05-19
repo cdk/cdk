@@ -125,15 +125,6 @@
                        file="${lib}/jgrapht-0.6.0.jar"/>
 
             <!-- test for optional jars -->
-            <condition property="batik.present">
-              <and>
-                <available file="${lib}/batik-awt-util.jar"/>
-                <available file="${lib}/batik-dom.jar"/>
-                <available file="${lib}/batik-svggen.jar"/>
-                <available file="${lib}/batik-util.jar"/>
-                <available file="${lib}/batik-xml.jar"/>
-              </and>
-            </condition>
             <condition property="cmllibs.present">
               <or>
                 <available file="${lib}/jumbo52.jar"/>
@@ -464,7 +455,6 @@
         </parallel>
         <parallel>
           <antcall target="compile-module"><param name="module" value="pdb"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="svg"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="structgen"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="extra"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="sdg"/><param name="source" value="${src}/main"/></antcall>
@@ -540,7 +530,6 @@
             <antcall target="compile-module"><param name="module" value="forcefield"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3d"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3dtools"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="svg"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="smarts"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="experimental"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="pcore"/><param name="source" value="${src}/main"/></antcall>
@@ -656,7 +645,6 @@
                     <includesfile name="${metainf}/reaction.libdepends"/>
                     <includesfile name="${metainf}/render.libdepends"/>
                     <includesfile name="${metainf}/standard.libdepends"/>
-                    <includesfile name="${metainf}/svg.libdepends"/>
                     <includesfile name="${metainf}/valencycheck.libdepends"/>
                     <includesfile name="${metainf}/sdg.libdepends"/>
                     <includesfile name="${metainf}/forcefield.libdepends"/>
@@ -696,7 +684,6 @@
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>
                     <include name="cdk-structgen.jar"/>
-                    <include name="cdk-svg.jar"/>
                     <include name="cdk-valencycheck.jar"/>
                     <include name="cdk-forcefield.jar"/>
                     <include name="cdk-smiles.jar"/>
@@ -762,7 +749,6 @@
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>
                     <include name="cdk-structgen.jar"/>
-                    <include name="cdk-svg.jar"/>
                     <include name="cdk-valencycheck.jar"/>
                     <include name="cdk-forcefield.jar"/>
                     <include name="cdk-smarts.jar"/>

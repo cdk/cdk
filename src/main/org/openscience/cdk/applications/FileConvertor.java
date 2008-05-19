@@ -70,7 +70,6 @@ import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.io.PDBWriter;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.SMILESWriter;
-import org.openscience.cdk.io.SVGWriter;
 import org.openscience.cdk.io.ShelXWriter;
 import org.openscience.cdk.io.XYZWriter;
 import org.openscience.cdk.io.listener.PropertiesListener;
@@ -310,8 +309,6 @@ public class FileConvertor {
                 writer = new SMILESWriter(fileWriter);
             } else if (format.equalsIgnoreCase("SHELX")) {
                 writer = new ShelXWriter(fileWriter);
-            } else if (format.equalsIgnoreCase("SVG")) {
-                writer = new SVGWriter(fileWriter);
             } else if (format.equalsIgnoreCase("XYZ")) {
                 writer = new XYZWriter(fileWriter);
             } else if (format.equalsIgnoreCase("PDB")) {
