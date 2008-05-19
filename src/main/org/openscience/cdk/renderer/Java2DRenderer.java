@@ -258,7 +258,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		{
 			// ... unless carbon is unbonded
 			drawSymbol = true;
-		} else if (atom.getMassNumber() != 0)
+		} else if (atom.getMassNumber() != null)
 		{
 			try
 			{
@@ -359,7 +359,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		double hydroGenCountH = 0;
 		double hydroGenH = 0;;
 		
-		if (atom.getMassNumber() != 0 && isotopeFactory != null) {
+		if (atom.getMassNumber() != null && isotopeFactory != null) {
 			IIsotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
 			if (majorIsotope != null && atom.getMassNumber() != majorIsotope.getMassNumber())
 			{
