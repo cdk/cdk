@@ -108,7 +108,7 @@ public class InvPairTest extends NewCDKTestCase {
     	InvPair pair = new InvPair(5l, atom);
     	pair.commit();
     	Assert.assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
-    	Assert.assertEquals(5l, (Long)atom.getProperty(InvPair.CANONICAL_LABEL));
+    	Assert.assertEquals(5l, ((Long)atom.getProperty(InvPair.CANONICAL_LABEL)).longValue());
     }
     
     @Test public void testSetCurr_long() {

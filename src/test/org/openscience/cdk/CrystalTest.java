@@ -182,7 +182,7 @@ public class CrystalTest extends NewCDKTestCase {
         ICrystal crystal = builder.newCrystal();
         int z = 2;
         crystal.setZ(z);
-        Assert.assertEquals(z, crystal.getZ());
+        Assert.assertEquals(z, crystal.getZ().intValue());
     }
     @Test public void testGetZ() {
         testSetZ_Integer();

@@ -225,7 +225,7 @@ public class NewCDKTestCase {
 	protected void assertHydrogenCounts(int[] hydrogenCounts, IAtomContainer container) throws Exception {
 		int i = 0;
 		for (Iterator<IAtom> atoms = container.atoms(); atoms.hasNext(); i++)
-			Assert.assertEquals(hydrogenCounts[i], atoms.next().getHydrogenCount());
+			Assert.assertEquals(hydrogenCounts[i], atoms.next().getHydrogenCount().intValue());
 	}
 
 }

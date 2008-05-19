@@ -100,7 +100,7 @@ public class MolecularFormulaCheckerTest extends NewCDKTestCase {
 		 
 		 MolecularFormulaChecker MFChecker =new MolecularFormulaChecker(rules);
 		 
-		 Assert.assertEquals(0.0,MFChecker.isValidSum(formula));
+		 Assert.assertEquals(0.0,MFChecker.isValidSum(formula), 0.001);
 
 	}
 	/**
@@ -146,7 +146,7 @@ public class MolecularFormulaCheckerTest extends NewCDKTestCase {
 		MolecularFormulaChecker MFChecker =new MolecularFormulaChecker(rules);
     	
 		
-        Assert.assertEquals(0.0,MFChecker.isValidSum(formula));
+        Assert.assertEquals(0.0,MFChecker.isValidSum(formula), 0.001);
 
 	}
 	/**
@@ -194,7 +194,7 @@ public class MolecularFormulaCheckerTest extends NewCDKTestCase {
 		MolecularFormulaChecker MFChecker =new MolecularFormulaChecker(rules);
     	
 		
-        Assert.assertEquals(1.0,MFChecker.isValidSum(formula));
+        Assert.assertEquals(1.0,MFChecker.isValidSum(formula), 0.001);
 
 	}
 	/**

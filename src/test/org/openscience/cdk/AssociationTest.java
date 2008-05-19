@@ -38,13 +38,13 @@ public class AssociationTest extends NewCDKTestCase {
 
     @Test public void testAssociation() {
         Association association = new Association();
-        Assert.assertEquals(0, association.getElectronCount());
+        Assert.assertEquals(0, association.getElectronCount().intValue());
         Assert.assertEquals(0, association.getAtomCount());
     }
     
     @Test public void testAssociation_IAtom_IAtom() {
         Association association = new Association(new Atom("C"), new Atom("C"));
-        Assert.assertEquals(0, association.getElectronCount());
+        Assert.assertEquals(0, association.getElectronCount().intValue());
         Assert.assertEquals(2, association.getAtomCount());
     }
     

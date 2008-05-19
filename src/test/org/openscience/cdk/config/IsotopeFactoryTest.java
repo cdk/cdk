@@ -99,7 +99,7 @@ public class IsotopeFactoryTest extends NewCDKTestCase
 		IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
 		Atom atom = new Atom("H");
         isofac.configure(atom);
-        Assert.assertEquals(1, atom.getAtomicNumber());
+        Assert.assertEquals(1, atom.getAtomicNumber().intValue());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class IsotopeFactoryTest extends NewCDKTestCase
 		Atom atom = new Atom("H");
         IIsotope isotope = new org.openscience.cdk.Isotope("H", 2);
         isofac.configure(atom, isotope);
-        Assert.assertEquals(2, atom.getMassNumber());
+        Assert.assertEquals(2, atom.getMassNumber().intValue());
     }
 
     @Test
@@ -130,7 +130,7 @@ public class IsotopeFactoryTest extends NewCDKTestCase
     public void testGetElement_String() throws Exception {
 		IsotopeFactory elfac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
         IElement element = elfac.getElement("Br");
-		Assert.assertEquals(35, element.getAtomicNumber());
+		Assert.assertEquals(35, element.getAtomicNumber().intValue());
 	}    
 
     @Test

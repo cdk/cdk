@@ -50,20 +50,20 @@ public class SingleElectronTest extends NewCDKTestCase {
     @Test public void testSingleElectron() {
         ISingleElectron radical = builder.newSingleElectron();
         Assert.assertTrue(radical.getAtom() == null);
-        Assert.assertEquals(1, radical.getElectronCount());
+        Assert.assertEquals(1, radical.getElectronCount().intValue());
     }
     
     @Test public void testSingleElectron_IAtom() {
         IAtom atom = builder.newAtom("N");
         ISingleElectron radical = builder.newSingleElectron(atom);
-        Assert.assertEquals(1, radical.getElectronCount());
+        Assert.assertEquals(1, radical.getElectronCount().intValue());
         Assert.assertEquals(atom, radical.getAtom());
         Assert.assertTrue(radical.contains(atom));
     }
 
     @Test public void testGetElectronCount() {
         ISingleElectron radical = builder.newSingleElectron();
-        Assert.assertEquals(1, radical.getElectronCount());
+        Assert.assertEquals(1, radical.getElectronCount().intValue());
     }
 
     @Test public void testContains_IAtom() {

@@ -76,9 +76,9 @@ public class SmilesParserTest extends NewCDKTestCase {
 		IMolecule mol = sp.parseSmiles(smiles);
 		Assert.assertEquals(38, mol.getAtomCount());
 		Assert.assertEquals("P", mol.getAtom(5).getSymbol());
-		Assert.assertEquals(+1, mol.getAtom(5).getFormalCharge());
+		Assert.assertEquals(+1, mol.getAtom(5).getFormalCharge().intValue());
 		Assert.assertEquals("Cl", mol.getAtom(0).getSymbol());
-		Assert.assertEquals(+3, mol.getAtom(0).getFormalCharge());
+		Assert.assertEquals(+3, mol.getAtom(0).getFormalCharge().intValue());
 	}
 	
 	/*
@@ -429,7 +429,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 		IMolecule mol = sp.parseSmiles(smiles);
 		Assert.assertEquals(1, mol.getAtomCount());
 		Assert.assertEquals("C", mol.getAtom(0).getSymbol());
-		Assert.assertEquals(13, mol.getAtom(0).getMassNumber());
+		Assert.assertEquals(13, mol.getAtom(0).getMassNumber().intValue());
 	}
 
 
@@ -663,17 +663,17 @@ public class SmilesParserTest extends NewCDKTestCase {
 	public void testHardCodedHydrogenCount() throws Exception {
 		String smiles = "c1ccc[NH]1";
 		IMolecule mol = sp.parseSmiles(smiles);
-		Assert.assertEquals(1, mol.getAtom(4).getHydrogenCount());
+		Assert.assertEquals(1, mol.getAtom(4).getHydrogenCount().intValue());
 
 		smiles = "[n]1cc[nH]c1";
 		mol = sp.parseSmiles(smiles);
-		Assert.assertEquals(1, mol.getAtom(4).getHydrogenCount());
-		Assert.assertEquals(0, mol.getAtom(0).getHydrogenCount());
+		Assert.assertEquals(1, mol.getAtom(4).getHydrogenCount().intValue());
+		Assert.assertEquals(0, mol.getAtom(0).getHydrogenCount().intValue());
 
 		smiles = "[nH]1cc[n]c1";
 		mol = sp.parseSmiles(smiles);
-		Assert.assertEquals(1, mol.getAtom(0).getHydrogenCount());
-		Assert.assertEquals(0, mol.getAtom(3).getHydrogenCount());
+		Assert.assertEquals(1, mol.getAtom(0).getHydrogenCount().intValue());
+		Assert.assertEquals(0, mol.getAtom(3).getHydrogenCount().intValue());
 	}
 
 	/**
@@ -1077,7 +1077,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 		Assert.assertNotNull(mol);
 		Assert.assertEquals(27, mol.getAtomCount());
 		Assert.assertEquals(29, mol.getBondCount());
-		Assert.assertEquals(1, mol.getAtom(7).getFormalCharge());
+		Assert.assertEquals(1, mol.getAtom(7).getFormalCharge().intValue());
 	}
 	
 	/**

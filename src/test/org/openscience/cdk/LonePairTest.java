@@ -50,13 +50,13 @@ public class LonePairTest extends NewCDKTestCase {
     @Test public void testLonePair() {
         ILonePair lp = builder.newLonePair();
         Assert.assertTrue(lp.getAtom() == null);
-        Assert.assertEquals(2, lp.getElectronCount());
+        Assert.assertEquals(2, lp.getElectronCount().intValue());
     }
     
     @Test public void testLonePair_IAtom() {
         IAtom atom = builder.newAtom("N");
         ILonePair lp = builder.newLonePair(atom);
-        Assert.assertEquals(2, lp.getElectronCount());
+        Assert.assertEquals(2, lp.getElectronCount().intValue());
         Assert.assertEquals(atom, lp.getAtom());
         Assert.assertTrue(lp.contains(atom));
     }
@@ -78,10 +78,10 @@ public class LonePairTest extends NewCDKTestCase {
     
     @Test public void testGetElectronCount() {
         ILonePair lp = builder.newLonePair();
-        Assert.assertEquals(2, lp.getElectronCount());
+        Assert.assertEquals(2, lp.getElectronCount().intValue());
         
         lp = builder.newLonePair(builder.newAtom("N"));
-        Assert.assertEquals(2, lp.getElectronCount());
+        Assert.assertEquals(2, lp.getElectronCount().intValue());
     }
     
     @Test public void testContains_IAtom() {

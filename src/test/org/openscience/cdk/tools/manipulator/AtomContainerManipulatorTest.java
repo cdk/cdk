@@ -338,8 +338,8 @@ public class AtomContainerManipulatorTest extends NewCDKTestCase {
         // Should be two disconnected Bs with H-count == 4
         Assert.assertEquals("incorrect atom count", 2, ac.getAtomCount());
         Assert.assertEquals("incorrect bond count", 0, ac.getBondCount());
-        Assert.assertEquals("incorrect hydrogen count", 4, ac.getAtom(0).getHydrogenCount());
-        Assert.assertEquals("incorrect hydrogen count", 4, ac.getAtom(1).getHydrogenCount());
+        Assert.assertEquals("incorrect hydrogen count", 4, ac.getAtom(0).getHydrogenCount().intValue());
+        Assert.assertEquals("incorrect hydrogen count", 4, ac.getAtom(1).getHydrogenCount().intValue());
     }
     /**
      * Test total formal charge.
@@ -635,7 +635,7 @@ public class AtomContainerManipulatorTest extends NewCDKTestCase {
             {
                 // Each B has two explicit and two implicit H.
                 b++;
-                Assert.assertEquals("incorrect hydrogen count", 2, atom.getHydrogenCount());
+                Assert.assertEquals("incorrect hydrogen count", 2, atom.getHydrogenCount().intValue());
                 List<IAtom> nbs = ac.getConnectedAtomsList(atom);
                 Assert.assertEquals("incorrect connected count", 2, nbs.size());
                 Assert.assertEquals("incorrect bond", "H", ((IAtom)nbs.get(0)).getSymbol());

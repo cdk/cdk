@@ -300,7 +300,7 @@ public class AdductFormulaTest extends NewCDKTestCase {
     	mf1.setCharge(1.0);
         add.addMolecularFormula(mf1);
         
-        Assert.assertEquals(1.0,add.getCharge());
+        Assert.assertEquals(1.0,add.getCharge(), 0.01);
         
     }
     /**

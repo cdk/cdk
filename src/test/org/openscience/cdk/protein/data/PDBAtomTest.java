@@ -254,7 +254,7 @@ public class PDBAtomTest extends NewCDKTestCase {
     @Test public void testGetSerial(){
     	IPDBAtom atom = builder.newPDBAtom("C");
     	atom.setSerial(123);
-        Assert.assertEquals(atom.getSerial(),123);
+        Assert.assertEquals(123, atom.getSerial().intValue());
     }
     
     @Test public void testSetResSeq_String(){

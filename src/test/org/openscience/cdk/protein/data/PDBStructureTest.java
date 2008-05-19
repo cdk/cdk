@@ -62,7 +62,7 @@ public class PDBStructureTest extends NewCDKTestCase {
     	IPDBStructure structure = builder.newPDBStructure();
     	char endChainID = 'x';
 		structure.setEndChainID(endChainID);
-		Assert.assertEquals(endChainID, structure.getEndChainID());
+		Assert.assertEquals(endChainID, structure.getEndChainID().charValue());
     }
 
     @Test public void testGetEndInsertionCode() {
@@ -74,7 +74,7 @@ public class PDBStructureTest extends NewCDKTestCase {
     	IPDBStructure structure = builder.newPDBStructure();
     	char endInsertionCode = 'x';
 		structure.setEndInsertionCode(endInsertionCode);
-		Assert.assertEquals(endInsertionCode, structure.getEndInsertionCode());
+		Assert.assertEquals(endInsertionCode, structure.getEndInsertionCode().charValue());
     }
 
     @Test public void testGetEndSequenceNumber() {
@@ -86,7 +86,7 @@ public class PDBStructureTest extends NewCDKTestCase {
     	IPDBStructure structure = builder.newPDBStructure();
     	int endSequenceNumber = 5;
 		structure.setEndSequenceNumber(endSequenceNumber);
-		Assert.assertEquals(endSequenceNumber, structure.getEndSequenceNumber());
+		Assert.assertEquals(endSequenceNumber, structure.getEndSequenceNumber().intValue());
     }
 
     @Test public void testGetStartChainID() {
@@ -98,7 +98,7 @@ public class PDBStructureTest extends NewCDKTestCase {
     	IPDBStructure structure = builder.newPDBStructure();
     	char startChainID = 'x';
 		structure.setStartChainID(startChainID);
-		Assert.assertEquals(startChainID, structure.getStartChainID());
+		Assert.assertEquals(startChainID, structure.getStartChainID().charValue());
     }
 
     @Test public void testGetStartInsertionCode() {
@@ -110,7 +110,7 @@ public class PDBStructureTest extends NewCDKTestCase {
     	IPDBStructure structure = builder.newPDBStructure();
     	char startInsertionCode = 'x';
 		structure.setStartInsertionCode(startInsertionCode);
-		Assert.assertEquals(startInsertionCode, structure.getStartInsertionCode());
+		Assert.assertEquals(startInsertionCode, structure.getStartInsertionCode().charValue());
     }
 
     @Test public void testGetStartSequenceNumber() {
@@ -122,7 +122,7 @@ public class PDBStructureTest extends NewCDKTestCase {
     	IPDBStructure structure = builder.newPDBStructure();
     	int startSequenceNumber = 5;
 		structure.setStartSequenceNumber(startSequenceNumber);
-		Assert.assertEquals(startSequenceNumber, structure.getStartSequenceNumber());
+		Assert.assertEquals(startSequenceNumber, structure.getStartSequenceNumber().intValue());
     }
 
     @Test public void testGetStructureType() {

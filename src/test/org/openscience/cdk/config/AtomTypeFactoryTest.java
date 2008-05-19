@@ -144,7 +144,7 @@ public class AtomTypeFactoryTest extends NewCDKTestCase {
         Assert.assertNotNull(atomType);
         Assert.assertEquals("O", atomType.getSymbol());
         Assert.assertEquals("Oplus", atomType.getAtomTypeName());
-		Assert.assertEquals(1, atomType.getFormalCharge());
+		Assert.assertEquals(1, atomType.getFormalCharge().intValue());
 		Assert.assertEquals(3.0, atomType.getBondOrderSum(), 0.0001);
 		Assert.assertEquals(IBond.Order.TRIPLE, atomType.getMaxBondOrder());
 	}
@@ -157,10 +157,10 @@ public class AtomTypeFactoryTest extends NewCDKTestCase {
         Assert.assertNotNull(atomType);
         Assert.assertEquals("C", atomType.getSymbol());
         Assert.assertEquals("C.sp2", atomType.getAtomTypeName());
-		Assert.assertEquals(0, atomType.getFormalCharge());
+		Assert.assertEquals(0, atomType.getFormalCharge().intValue());
 		Assert.assertEquals(4.0, atomType.getBondOrderSum(), 0.0001);
 		Assert.assertEquals(IBond.Order.DOUBLE, atomType.getMaxBondOrder());
-		Assert.assertEquals(3, atomType.getFormalNeighbourCount());
+		Assert.assertEquals(3, atomType.getFormalNeighbourCount().intValue());
 		Assert.assertEquals(Hybridization.SP2, atomType.getHybridization());
 	}
 

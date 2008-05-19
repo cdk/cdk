@@ -56,23 +56,23 @@ public class IsotopeTest extends NewCDKTestCase {
     
     @Test public void testIsotope_int_String_int_double_double() {
         IIsotope i = builder.newIsotope(6, "C", 12, 12.001, 80.0);
-        Assert.assertEquals(12, i.getMassNumber());
+        Assert.assertEquals(12, i.getMassNumber().intValue());
         Assert.assertEquals("C", i.getSymbol());
-        Assert.assertEquals(6, i.getAtomicNumber());
+        Assert.assertEquals(6, i.getAtomicNumber().intValue());
         Assert.assertEquals(12.001, i.getExactMass(), 0.001);
         Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
     }
     
     @Test public void testIsotope_String_int() {
         IIsotope i = builder.newIsotope("C", 12);
-        Assert.assertEquals(12, i.getMassNumber());
+        Assert.assertEquals(12, i.getMassNumber().intValue());
         Assert.assertEquals("C", i.getSymbol());
     }
     
     @Test public void testIsotope_int_String_double_double() {
         IIsotope i = builder.newIsotope(6, "C", 12.001, 80.0);
         Assert.assertEquals("C", i.getSymbol());
-        Assert.assertEquals(6, i.getAtomicNumber());
+        Assert.assertEquals(6, i.getAtomicNumber().intValue());
         Assert.assertEquals(12.001, i.getExactMass(), 0.001);
         Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
     }
@@ -98,7 +98,7 @@ public class IsotopeTest extends NewCDKTestCase {
     @Test public void testSetMassNumber_Integer() {
         IIsotope i = builder.newIsotope("D");
         i.setMassNumber(2);
-        Assert.assertEquals(2, i.getMassNumber());
+        Assert.assertEquals(2, i.getMassNumber().intValue());
     }
     @Test public void testGetMassNumber() {
         testSetMassNumber_Integer();
@@ -149,7 +149,7 @@ public class IsotopeTest extends NewCDKTestCase {
         
         // test cloning of exact mass
         iso.setMassNumber(13);
-        Assert.assertEquals(12, clone.getMassNumber());
+        Assert.assertEquals(12, clone.getMassNumber().intValue());
     }
     
     /**

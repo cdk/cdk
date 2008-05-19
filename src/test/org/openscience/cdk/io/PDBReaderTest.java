@@ -89,7 +89,7 @@ public class PDBReaderTest extends NewCDKTestCase {
         Assert.assertTrue(nAtom instanceof PDBAtom);
         PDBAtom oAtom = (PDBAtom)nAtom;
         Assert.assertEquals(new String("C"), oAtom.getSymbol());
-        Assert.assertEquals(1, oAtom.getSerial());
+        Assert.assertEquals(1, oAtom.getSerial().intValue());
         Assert.assertEquals("C1", oAtom.getName());
         Assert.assertEquals("MOL", oAtom.getResName());
         Assert.assertEquals("1", oAtom.getResSeq());
@@ -101,7 +101,7 @@ public class PDBReaderTest extends NewCDKTestCase {
         Assert.assertTrue(nAtom instanceof PDBAtom);
         oAtom = (PDBAtom)nAtom;
         Assert.assertEquals("O", oAtom.getSymbol());
-        Assert.assertEquals(4, oAtom.getSerial());
+        Assert.assertEquals(4, oAtom.getSerial().intValue());
         Assert.assertEquals("O4", oAtom.getName());
         Assert.assertEquals("MOL", oAtom.getResName());
         Assert.assertEquals("1", oAtom.getResSeq());
@@ -113,7 +113,7 @@ public class PDBReaderTest extends NewCDKTestCase {
         Assert.assertTrue(nAtom instanceof PDBAtom);
         oAtom = (PDBAtom)nAtom;
         Assert.assertEquals("N", oAtom.getSymbol());
-        Assert.assertEquals(14, oAtom.getSerial());
+        Assert.assertEquals(14, oAtom.getSerial().intValue());
         Assert.assertEquals("N14", oAtom.getName());
         Assert.assertEquals("MOL", oAtom.getResName());
         Assert.assertEquals("1", oAtom.getResSeq());
@@ -159,7 +159,7 @@ public class PDBReaderTest extends NewCDKTestCase {
 		Assert.assertTrue(nAtom instanceof PDBAtom);
 		PDBAtom atom = (PDBAtom)nAtom;
 		Assert.assertEquals("C", atom.getSymbol());
-		Assert.assertEquals(95, atom.getSerial());
+		Assert.assertEquals(95, atom.getSerial().intValue());
 		Assert.assertEquals("CZ", atom.getName());
 		Assert.assertEquals("PHE", atom.getResName());
 		Assert.assertEquals("13", atom.getResSeq());

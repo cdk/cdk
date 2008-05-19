@@ -363,7 +363,7 @@ public class MolecularFormulaTest extends NewCDKTestCase {
         mf.addIsotope( builder.newAtom("H"),3 );
         
         Assert.assertEquals(3, mf.getIsotopeCount());
-        Assert.assertEquals(1.0,mf.getCharge());
+        Assert.assertEquals(1.0,mf.getCharge(), 0.001);
         
     }
     /**
@@ -380,10 +380,10 @@ public class MolecularFormulaTest extends NewCDKTestCase {
 
     	
     	mf.setCharge(1.0);
-        Assert.assertEquals(1.0, mf.getCharge());
+        Assert.assertEquals(1.0, mf.getCharge(), 0.001);
 
         mf.add(mf);
-        Assert.assertEquals(2.0, mf.getCharge());
+        Assert.assertEquals(2.0, mf.getCharge(), 0.001);
     }
     
     /**
@@ -398,12 +398,12 @@ public class MolecularFormulaTest extends NewCDKTestCase {
     	Assert.assertEquals(CDKConstants.UNSET, mf.getCharge());
  	
     	mf.setCharge(1.0);
-        Assert.assertEquals(1.0, mf.getCharge());
+        Assert.assertEquals(1.0, mf.getCharge(), 0.001);
 
         IMolecularFormula mf2 = new MolecularFormula();
         mf2.setCharge(-1.0);
         mf.add(mf2);
-        Assert.assertEquals(0.0, mf.getCharge());
+        Assert.assertEquals(0.0, mf.getCharge(), 0.001);
     }
     /**
 	 * A unit test suite for JUnit.

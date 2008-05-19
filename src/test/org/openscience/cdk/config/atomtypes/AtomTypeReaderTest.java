@@ -151,7 +151,7 @@ public class AtomTypeReaderTest extends NewCDKTestCase {
       Assert.assertTrue(object instanceof IAtomType);
       IAtomType atomType = (IAtomType)object;
       
-      Assert.assertEquals(0, atomType.getFormalCharge());
+      Assert.assertEquals(0, atomType.getFormalCharge().intValue());
       Assert.assertEquals(IAtomType.Hybridization.SP1, atomType.getHybridization());
       Assert.assertEquals(0, atomType.getProperty(CDKConstants.LONE_PAIR_COUNT));
       Assert.assertEquals(2, atomType.getProperty(CDKConstants.PI_BOND_COUNT));

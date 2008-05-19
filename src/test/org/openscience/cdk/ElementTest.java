@@ -64,7 +64,7 @@ public class ElementTest extends NewCDKTestCase {
     @Test public void testElement_String_int() {
         IElement e = builder.newElement("H", 1);
         Assert.assertEquals("H", e.getSymbol());
-        Assert.assertEquals(1, e.getAtomicNumber());
+        Assert.assertEquals(1, e.getAtomicNumber().intValue());
     }
     
     // test methods
@@ -83,12 +83,12 @@ public class ElementTest extends NewCDKTestCase {
     @Test public void testSetAtomicNumber_Integer() {
         IElement e = builder.newElement("H");
         e.setAtomicNumber(1);
-        Assert.assertEquals(1, e.getAtomicNumber());
+        Assert.assertEquals(1, e.getAtomicNumber().intValue());
     }
 
     @Test public void testGetAtomicNumber() {
         IElement e = builder.newElement("D", 1);
-        Assert.assertEquals(1, e.getAtomicNumber());
+        Assert.assertEquals(1, e.getAtomicNumber().intValue());
     }
 
     @Test public void testClone() throws Exception {
@@ -112,7 +112,7 @@ public class ElementTest extends NewCDKTestCase {
         
         // test cloning of atomic number
         elem.setAtomicNumber(5); // don't care about symbol
-        Assert.assertEquals(6, clone.getAtomicNumber());
+        Assert.assertEquals(6, clone.getAtomicNumber().intValue());
     }
     
     /** Test for RFC #9 */
