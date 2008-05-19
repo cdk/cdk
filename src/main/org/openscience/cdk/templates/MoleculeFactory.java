@@ -662,6 +662,31 @@ public class MoleculeFactory {
 	}
 
 	/**
+	 * Returns pyrrole anion without explicit hydrogens.
+	 * 
+	 * @cdk.inchi InChI=1/C4H4N/c1-2-4-5-3-1/h1-4H/q-1
+	 */
+	public static Molecule makePyrroleAnion()
+	{
+		Molecule mol = new Molecule();
+		IAtom nitrogenAnion = new Atom("N");
+		nitrogenAnion.setFormalCharge(-1);
+		mol.addAtom(new Atom("C")); // 0
+		mol.addAtom(nitrogenAnion); // 1
+		mol.addAtom(new Atom("C")); // 2
+		mol.addAtom(new Atom("C")); // 3
+		mol.addAtom(new Atom("C")); // 4
+		
+		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
+		
+		return mol;
+	}
+
+	/**
 	 * Returns imidazole without explicit hydrogens.
 	 * 
 	 * @cdk.inchi InChI=1/C3H4N2/c1-2-5-3-4-1/h1-3H,(H,4,5)/f/h4H

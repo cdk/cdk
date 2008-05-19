@@ -1362,6 +1362,18 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
+    @Test public void testPyrroleAnion() throws Exception {
+		String[] expectedTypes = {
+			"C.sp2",
+			"N.minus.planar3",
+			"C.sp2",
+			"C.sp2",
+			"C.sp2"
+		};
+		Molecule molecule = MoleculeFactory.makePyrroleAnion();
+    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+	}
+    
     @Test public void testImidazole() throws Exception {
 		String[] expectedTypes = {
 			"C.sp2",
