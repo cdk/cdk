@@ -357,14 +357,14 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 
     @Test
     public void testPiperidine() throws Exception {
-        Molecule molecule = MoleculeFactory.makePiperidine();
+        IMolecule molecule = MoleculeFactory.makePiperidine();
         String[] expectedTypes = {"N.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "H"};
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
 
     @Test
     public void testTetrahydropyran() throws Exception {
-        Molecule molecule = MoleculeFactory.makeTetrahydropyran();
+        IMolecule molecule = MoleculeFactory.makeTetrahydropyran();
         String[] expectedTypes = {"O.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
     }
@@ -1326,7 +1326,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     }
 
     @Test public void testAzulene() throws Exception {
-		Molecule molecule = MoleculeFactory.makeAzulene();
+		IMolecule molecule = MoleculeFactory.makeAzulene();
     	String[] expectedTypes = new String[]{
     		"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2",
     		"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2"
@@ -1346,7 +1346,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"N.planar3"
 		};
-		Molecule molecule = MoleculeFactory.makeIndole();
+		IMolecule molecule = MoleculeFactory.makeIndole();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
@@ -1358,7 +1358,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"C.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makePyrrole();
+		IMolecule molecule = MoleculeFactory.makePyrrole();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
@@ -1370,7 +1370,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"C.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makePyrroleAnion();
+		IMolecule molecule = MoleculeFactory.makePyrroleAnion();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
@@ -1382,7 +1382,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"N.sp2",
 			"C.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makeImidazole();
+		IMolecule molecule = MoleculeFactory.makeImidazole();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
@@ -1394,7 +1394,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"C.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makePyrazole();
+		IMolecule molecule = MoleculeFactory.makePyrazole();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
@@ -1406,7 +1406,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"N.sp2"
 		};
-		Molecule molecule = MoleculeFactory.make124Triazole();
+		IMolecule molecule = MoleculeFactory.make124Triazole();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
@@ -1418,7 +1418,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"N.sp2",
 			"C.sp2"
 		};
-		Molecule molecule = MoleculeFactory.make123Triazole();
+		IMolecule molecule = MoleculeFactory.make123Triazole();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
@@ -1430,7 +1430,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"N.sp2",
 			"C.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makeTetrazole();
+		IMolecule molecule = MoleculeFactory.makeTetrazole();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
@@ -1442,7 +1442,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"N.sp2",
 			"C.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makeOxazole();
+		IMolecule molecule = MoleculeFactory.makeOxazole();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
@@ -1454,7 +1454,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"C.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makeIsoxazole();
+		IMolecule molecule = MoleculeFactory.makeIsoxazole();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
@@ -1468,7 +1468,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"C.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makeIsothiazole();
+		IMolecule molecule = MoleculeFactory.makeIsothiazole();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
@@ -1480,7 +1480,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"N.sp2",
 			"N.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makeThiadiazole();
+		IMolecule molecule = MoleculeFactory.makeThiadiazole();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
@@ -1492,7 +1492,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"N.sp2",
 			"N.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makeOxadiazole();
+		IMolecule molecule = MoleculeFactory.makeOxadiazole();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
    
@@ -1505,7 +1505,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"C.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makePyridine();
+		IMolecule molecule = MoleculeFactory.makePyridine();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
@@ -1591,7 +1591,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"S.plus",
 			"C.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makePyridine();
+		IMolecule molecule = MoleculeFactory.makePyridine();
 		molecule.getAtom(4).setSymbol("S");
 		molecule.getAtom(4).setFormalCharge(+1);
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
@@ -1607,7 +1607,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"O.minus"
 		};
-		Molecule molecule = MoleculeFactory.makePyridineOxide();
+		IMolecule molecule = MoleculeFactory.makePyridineOxide();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
@@ -1621,7 +1621,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"O.minus"
 		};
-		Molecule molecule = MoleculeFactory.makePyridineOxide();
+		IMolecule molecule = MoleculeFactory.makePyridineOxide();
 		Iterator<IBond> bonds = molecule.bonds();
 		while (bonds.hasNext()) bonds.next().setOrder(CDKConstants.BONDORDER_SINGLE);
 		for (int i=0; i<6; i++) {
@@ -1639,7 +1639,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"C.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makePyrimidine();
+		IMolecule molecule = MoleculeFactory.makePyrimidine();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
    
@@ -1652,7 +1652,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"C.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makePyridazine();
+		IMolecule molecule = MoleculeFactory.makePyridazine();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
    
@@ -1665,7 +1665,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"C.sp2",
 			"N.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makeTriazine();
+		IMolecule molecule = MoleculeFactory.makeTriazine();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
 
@@ -1677,7 +1677,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"S.planar3",
 			"C.sp2"
 		};
-		Molecule molecule = MoleculeFactory.makeThiazole();
+		IMolecule molecule = MoleculeFactory.makeThiazole();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
 
@@ -1694,7 +1694,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"Ni",
 			"S.3"
 		};
-		Molecule mol = new Molecule();
+		IMolecule mol = new Molecule();
 		mol.addAtom(new Atom("C"));
 		mol.addAtom(new Atom("C"));
 		mol.addBond(0,1,IBond.Order.SINGLE);
