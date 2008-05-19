@@ -469,12 +469,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     						if (isAcceptable(atom, atomContainer, type)) return type;
     					} else if (atomContainer.getConnectedAtomsCount(atom) == 2) {
     						if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
-    							
-    							if (ringSize == 6 && countElements(ring, "C") == 5) {
-    								IAtomType type = getAtomType("N.sp2");
+
+    							if (isHueckelNumber(ringSize + 1) && atom.getHydrogenCount() != CDKConstants.UNSET && atom.getHydrogenCount() == 1) {
+    								IAtomType type = getAtomType("N.planar3");
     								if (isAcceptable(atom, atomContainer, type)) return type;
     							} else {
-    								IAtomType type = getAtomType("N.planar3");
+    								IAtomType type = getAtomType("N.sp2");
     								if (isAcceptable(atom, atomContainer, type)) return type;
     							}
     						} else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
@@ -1327,6 +1327,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			return false;
     	}
     	return true;
+    }
+    
+    private boolean isHueckelNumber(int electronCount) {
+        return (electronCount % 4 == 2) && (electronCount >= 2);
     }
     
 }
