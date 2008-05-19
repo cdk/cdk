@@ -22,6 +22,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -33,8 +34,6 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
@@ -1191,6 +1190,22 @@ public class SMARTSSearchTest extends CDKTestCase {
         int[] results = match("[NX3,NX4+][CX4H]([*])[CX3](=[OX1])[O,N]", "NC(C(C)C)C(O)=O");
         assertEquals(1, results[0]);
         assertEquals(1, results[1]);
+    }
+
+    public void testCyclicUreas() throws Exception {
+        int[] results = match("[$(C1CNC(=O)N1)]", "N1C(=O)NCC1");
+        assertEquals(2, results[0]);
+        assertEquals(2, results[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 1967468
+     */
+    public void testAcyclicUreas() throws Exception {
+        int[] results = match("[$(C1CNC(=O)N1)]", "C1CC1NC(=O)Nc2ccccc2");
+        assertEquals(0, results[0]);
+        assertEquals(0, results[1]);
     }
 
 }
