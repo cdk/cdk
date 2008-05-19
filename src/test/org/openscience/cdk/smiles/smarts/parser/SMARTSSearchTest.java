@@ -28,7 +28,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.ISimpleChemObjectReader;
+import org.openscience.cdk.io.DefaultChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
@@ -79,7 +79,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     public void testMoleculeFromSDF() throws CDKException {
         String filename = "data/mdl/cnssmarts.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
+        DefaultChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content;
         content = (ChemFile) reader.read((ChemObject) new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
@@ -1203,7 +1203,8 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 1967468
      */
     public void testAcyclicUreas() throws Exception {
-        int[] results = match("[$(C1CNC(=O)N1)]", "C1CC1NC(=O)Nc2ccccc2");
+        int[] results = match("[$(CC);$(C1CNC(=O)N1)]", "C1CC1NC(=O)Nc2ccccc2");
+//        int[] results = match("[$(C[NR][CR](=O)[NR])]", "C1CC1NC(=O)Nc2ccccc2");
         assertEquals(0, results[0]);
         assertEquals(0, results[1]);
     }
