@@ -1204,7 +1204,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      */
     public void testAcyclicUreas() throws Exception {
         int[] results = match("[$(CC);$(C1CNC(=O)N1)]", "C1CC1NC(=O)Nc2ccccc2");
-//        int[] results = match("[$(C[NR][CR](=O)[NR])]", "C1CC1NC(=O)Nc2ccccc2");
+//        int[] results = match("[$([CR][NR][CR](=O)[NR])]", "C1CC1NC(=O)Nc2ccccc2");
         assertEquals(0, results[0]);
         assertEquals(0, results[1]);
     }
