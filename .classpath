@@ -6,32 +6,16 @@
 	<classpathentry kind="lib" path="develjar/ant_doxygen.jar"/>
 	<classpathentry kind="lib" path="develjar/dbdoclet.jar"/>
 	<classpathentry kind="lib" path="jar/antlr.jar"/>
-	<classpathentry kind="lib" path="jar/batik-awt-util.jar"/>
-	<classpathentry kind="lib" path="jar/batik-dom.jar"/>
-	<classpathentry kind="lib" path="jar/batik-svggen.jar"/>
-	<classpathentry kind="lib" path="jar/batik-util.jar"/>
-	<classpathentry kind="lib" path="jar/batik-xml.jar"/>
-	<classpathentry kind="lib" path="jar/baysmith-io.jar"/>
-	<classpathentry kind="lib" path="jar/bcel-5.1.jar"/>
-	<classpathentry kind="lib" path="jar/biojava-1.4.jar"/>
 	<classpathentry kind="lib" path="jar/commons-cli-1.0.jar"/>
-	<classpathentry kind="lib" path="jar/dadml.jar"/>
-	<classpathentry kind="lib" path="jar/jai_codec.jar"/>
-	<classpathentry kind="lib" path="jar/jai_core.jar"/>
 	<classpathentry kind="lib" path="jar/javacc.jar"/>
-	<classpathentry kind="lib" path="jar/jfontchooser.jar"/>
 	<classpathentry kind="lib" path="jar/jgrapht-0.6.0.jar"/>
 	<classpathentry kind="lib" path="jar/jniinchi-0.4.jar"/>
 	<classpathentry kind="lib" path="jar/JRI.jar"/>
 	<classpathentry kind="lib" path="jar/jumbo52.jar"/>
 	<classpathentry kind="lib" path="jar/log4j.jar"/>
-	<classpathentry kind="lib" path="jar/mysql-2.0.4.jar"/>
-	<classpathentry kind="lib" path="jar/postgresql7.0-1.2.jar"/>
 	<classpathentry kind="lib" path="jar/sjava-0.68.jar"/>
 	<classpathentry kind="lib" path="jar/vecmath1.2-1.14.jar"/>
-	<classpathentry kind="lib" path="jar/xindice.jar"/>
 	<classpathentry kind="lib" path="jar/xml-apis.jar"/>
-	<classpathentry kind="lib" path="jar/xmldb.jar"/>
 	<classpathentry kind="lib" path="jar/xom-1.1.jar"/>
 	<classpathentry kind="lib" path="jar/jama-1.0.2.jar"/>
 	<classpathentry kind="lib" path="jar/xpp3-1.1.4c.jar"/>
