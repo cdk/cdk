@@ -52,7 +52,6 @@
       <antcall target="test-module"><param name="module" value="qsarmolecular"/></antcall>
       <antcall target="test-module"><param name="module" value="qsarprotein"/></antcall>
       <antcall target="test-module"><param name="module" value="experimental"/></antcall>
-      <antcall target="test-module"><param name="module" value="svg"/></antcall>
       <antcall target="test-module"><param name="module" value="structgen"/></antcall>
       <antcall target="test-module"><param name="module" value="valencycheck"/></antcall>
       <antcall target="test-module"><param name="module" value="charges"/></antcall>
