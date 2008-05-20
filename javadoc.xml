@@ -127,7 +127,6 @@
       <antcall target="doccheck-module"><param name="module" value="reaction"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="libiocml"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="libiomd"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="libio-biojava"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="builder3d"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="smiles"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="smarts"/></antcall>

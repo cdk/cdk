@@ -41,7 +41,6 @@
       <antcall target="test-module"><param name="module" value="render"/></antcall>
       <antcall target="test-module"><param name="module" value="reaction"/></antcall>
       <antcall target="test-module"><param name="module" value="libiocml"/></antcall>
-      <antcall target="test-module"><param name="module" value="libio-biojava"/></antcall>
       <antcall target="test-module"><param name="module" value="builder3d"/></antcall>
       <antcall target="test-module"><param name="module" value="smiles"/></antcall>
       <antcall target="test-module"><param name="module" value="smarts"/></antcall>
