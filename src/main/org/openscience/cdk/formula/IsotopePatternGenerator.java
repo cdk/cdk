@@ -99,6 +99,8 @@ public class IsotopePatternGenerator{
 	 */
     @TestMethod("testGetIsotopes_IMolecularFormula")
 	public IMolecularFormulaSet getIsotopes(IMolecularFormula molFor){
+    	ensureIsotopeFactory(molFor.getBuilder());
+    	
 		/** FormulaSet to return*/
 		IMolecularFormulaSet molForSet = molFor.getBuilder().newMolecularFormulaSet();
         /** all isotopes found*/
