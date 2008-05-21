@@ -95,4 +95,11 @@ public interface IAdductFormula extends IMolecularFormulaSet{
      * @see    #getCharge
      */
     public void setCharge(Double charge) ;
+    
+    /**
+	 * Clones this IAdductFormula object and its content.
+	 *
+	 * @return    The cloned object
+	 */
+	public Object clone() throws CloneNotSupportedException ;
 }

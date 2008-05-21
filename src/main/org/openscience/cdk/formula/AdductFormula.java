@@ -306,6 +306,30 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
     public void removeMolecularFormula(int position) {
 	    components.remove(position);
     }
+    /**
+	 * Clones this AdductFormula object and its content.
+	 *
+	 * @return    The cloned object
+	 */
+    @TestMethod("testClone")
+	public Object clone() throws CloneNotSupportedException {
+		
+//		/* it is not a super class of chemObject */
+//		AdductFormula clone = (AdductFormula) super.clone();
+//        // start from scratch
+//		clone.removeAllMolecularFormulas();
+//        // clone all molecularFormulas
+//		Iterator<IMolecularFormula> iterForm = this.molecularFormulas();
+//		while(iterForm.hasNext()){
+//			clone.addMolecularFormula((IMolecularFormula) iterForm.next().clone());
+//		}
+		
+		AdductFormula clone = new AdductFormula();
+		for(IMolecularFormula form: this.molecularFormulas()){
+			clone.addMolecularFormula((IMolecularFormula) form.clone());
+		}
+		return clone;
+	}
 	
 	/**
 	 * Compare to IIsotope. The method doesn't compare instance but if they

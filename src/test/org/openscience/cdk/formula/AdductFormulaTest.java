@@ -319,6 +319,18 @@ public class AdductFormulaTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test
+    public void testClone() throws Exception {
+        IAdductFormula mfS = new AdductFormula();
+        Object clone = mfS.clone();
+        Assert.assertTrue(clone instanceof IAdductFormula);
+        Assert.assertNotSame(mfS, clone);
+    } 
+    /**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+    @Test
     public void testRemoveMolecularFormula_IMolecularFormula() {
         IAdductFormula mfS = new AdductFormula();
         IMolecularFormula mf1 = new MolecularFormula();

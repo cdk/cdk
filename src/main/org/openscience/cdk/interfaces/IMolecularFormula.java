@@ -23,7 +23,10 @@
  */
 package org.openscience.cdk.interfaces;
 
+import java.util.Hashtable;
 import java.util.Iterator;
+
+import org.openscience.cdk.interfaces.IIsotope;
 
 /**
  *  Class defining a molecular formula object. It maintains
@@ -133,4 +136,67 @@ public interface IMolecularFormula{
      * @see    #setCharge
      */
     public Double getCharge();
+    /**
+	 * Clones this MolecularFormula object and its content.
+	 *
+	 * @return    The cloned object
+	 */
+	public Object clone() throws CloneNotSupportedException ;
+	
+	
+	/**
+	 *  Sets a property for a IChemObject. I should
+	 * integrate into ChemObject.
+	 *
+	 *@param  description  An object description of the property (most likely a
+	 *      unique string)
+	 *@param  property     An object with the property itself
+	 *@see                 #getProperty
+	 *@see                 #removeProperty
+	 */
+	public void setProperty(Object description, Object property);
+
+
+	/**
+	 *  Removes a property for a IChemObject. I should
+	 * integrate into ChemObject.
+	 *
+	 *@param  description  The object description of the property (most likely a
+	 *      unique string)
+	 *@see                 #setProperty
+	 *@see                 #getProperty
+	 */
+	public void removeProperty(Object description);
+
+
+	/**
+	 *  Returns a property for the IChemObject. I should
+	 * integrate into ChemObject.
+	 *
+	 *@param  description  An object description of the property (most likely a
+	 *      unique string)
+	 *@return              The object containing the property. Returns null if
+	 *      propert is not set.
+	 *@see                 #setProperty
+	 *@see                 #removeProperty
+	 */
+	public Object getProperty(Object description);
+
+
+	/**
+	 *  Returns a Map with the IChemObject's properties.I should
+	 * integrate into ChemObject.
+	 *
+	 *@return    The object's properties as an Hashtable
+	 *@see       #setProperties
+	 */
+	public Hashtable<Object, Object> getProperties();
+	/**
+	 *  Sets the properties of this object.I should
+	 * integrate into ChemObject.
+	 *
+	 *@param  properties  a Hashtable specifying the property values
+	 *@see                #getProperties
+	 */
+	public void setProperties(Hashtable<Object, Object> properties);
 }

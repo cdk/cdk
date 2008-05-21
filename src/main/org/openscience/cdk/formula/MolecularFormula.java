@@ -23,7 +23,9 @@
  */
 package org.openscience.cdk.formula;
 
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
@@ -65,6 +67,11 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
      *  The partial charge of the molecularFormula. The default value is Double.NaN.
      */
 	private Double charge = (Double) CDKConstants.UNSET;
+
+	/**
+	 *  A hashtable for the storage of any kind of properties of this IChemObject.
+	 */
+	private Hashtable<Object, Object> properties;
 	
 	/**
 	 *  Constructs an empty MolecularFormula.
@@ -241,6 +248,132 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
     public void removeIsotope(IIsotope isotope) {
 	    isotopes.remove(getIsotope(isotope));
     }
+
+    /**
+	 * Clones this MolecularFormula object and its content. I should
+	 * integrate into ChemObject.
+	 *
+	 * @return    The cloned object
+	 */
+    @TestMethod("testClone")
+	public Object clone() throws CloneNotSupportedException {
+		
+//		/* it is not a super class of chemObject */
+//		MolecularFormula clone = (MolecularFormula) super.clone();
+//        // start from scratch
+//		clone.removeAllIsotopes();
+//        // clone all isotopes
+//		Iterator<IIsotope> iterIso = this.isotopes();
+//		while(iterIso.hasNext()){
+//			IIsotope isotope = iterIso.next();
+//			clone.addIsotope((IIsotope) isotope.clone(),getIsotopeCount(isotope));
+//		}
+		
+		MolecularFormula clone = new MolecularFormula();
+		Iterator<IIsotope> iterIso = this.isotopes();
+		while(iterIso.hasNext()){
+			IIsotope isotope = iterIso.next();
+			clone.addIsotope((IIsotope) isotope.clone(),getIsotopeCount(isotope));
+		}
+		clone.setCharge(getCharge());
+		return clone;
+	}
+	/**
+	 * Lazy creation of properties hash. I should
+	 * integrate into ChemObject.
+	 *
+	 * @return    Returns in instance of the properties
+	 */
+	private Hashtable<Object, Object> lazyProperties(){
+		if (properties == null)
+		{
+			properties = new Hashtable<Object, Object>();
+		}
+		return properties;
+	}
+
+
+	/**
+	 *  Sets a property for a IChemObject. I should
+	 * integrate into ChemObject.
+	 *
+	 *@param  description  An object description of the property (most likely a
+	 *      unique string)
+	 *@param  property     An object with the property itself
+	 *@see                 #getProperty
+	 *@see                 #removeProperty
+	 */
+    @TestMethod("testSetProperty_Object_Object")
+	public void setProperty(Object description, Object property){
+		lazyProperties().put(description, property);
+	}
+
+
+	/**
+	 *  Removes a property for a IChemObject. I should
+	 * integrate into ChemObject.
+	 *
+	 *@param  description  The object description of the property (most likely a
+	 *      unique string)
+	 *@see                 #setProperty
+	 *@see                 #getProperty
+	 */
+    @TestMethod("testRemoveProperty_Object")
+	public void removeProperty(Object description){
+		if (properties == null) {
+            return;
+        }
+        lazyProperties().remove(description);
+	}
+
+
+	/**
+	 *  Returns a property for the IChemObject. I should
+	 * integrate into ChemObject.
+	 *
+	 *@param  description  An object description of the property (most likely a
+	 *      unique string)
+	 *@return              The object containing the property. Returns null if
+	 *      propert is not set.
+	 *@see                 #setProperty
+	 *@see                 #removeProperty
+	 */
+    @TestMethod("testGetProperty_Object")
+	public Object getProperty(Object description){
+        if (properties != null) {
+            return lazyProperties().get(description);
+        }
+        return null;
+	}
+
+
+	/**
+	 *  Returns a Map with the IChemObject's properties.I should
+	 * integrate into ChemObject.
+	 *
+	 *@return    The object's properties as an Hashtable
+	 *@see       #setProperties
+	 */
+    @TestMethod("testGetProperties")
+	public Hashtable<Object, Object> getProperties(){
+		return lazyProperties();
+	}
+	/**
+	 *  Sets the properties of this object.
+	 *
+	 *@param  properties  a Hashtable specifying the property values
+	 *@see                #getProperties
+	 */
+    @TestMethod("testSetProperties_Hashtable")
+	public void setProperties(Hashtable<Object, Object> properties){
+		
+		Enumeration<Object> keys = properties.keys();
+		while (keys.hasMoreElements())
+		{
+			Object key = keys.nextElement();
+			lazyProperties().put(key, properties.get(key));
+		}
+	}
 	/**
 	 * Compare to IIsotope. The method doesn't compare instance but if they
 	 * have the same symbol, natural abundance and exact mass.
