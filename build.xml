@@ -855,11 +855,6 @@
                         <fileset dir="." includes="README" />
                         <fileset dir="." includes="changelog*" />
                 </copy>
-                <copy todir="${sourcedist.dir}/jar">
-                        <fileset dir="jar">
-                            <exclude name="libio/*.jar"/>
-                        </fileset>
-                </copy>
             <copy todir="${sourcedist.dir}/develjar">
                     <fileset dir="develjar">
                         <exclude name="pmd-1.8.jar"/>
@@ -1070,9 +1065,6 @@
                         <fileset dir="${devellib}">
                                 <include name="*.jar" />
                         </fileset>
-                        <fileset dir="${lib}/libio">
-                                <include name="*.jar" />
-                        </fileset>
                     </classpath>
                         <test name="org.openscience.cdk.limitations.AlgorithmLimitations"
                         haltonfailure="no"
@@ -1099,9 +1091,6 @@
                         <fileset dir="${devellib}">
                                 <include name="*.jar" />
                         </fileset>
-                        <fileset dir="${lib}/libio">
-                                <include name="*.jar" />
-                        </fileset>
                     </classpath>
                 </java>
         </target>
@@ -1122,9 +1111,6 @@
                                 <include name="*.jar" />
                         </fileset>
                         <fileset dir="${devellib}">
-                                <include name="*.jar" />
-                        </fileset>
-                        <fileset dir="${lib}/libio">
                                 <include name="*.jar" />
                         </fileset>
                     </classpath>
@@ -1152,9 +1138,6 @@
                                 <include name="*.jar" />
                         </fileset>
                         <fileset dir="${lib}">
-                                <include name="*.jar" />
-                        </fileset>
-                        <fileset dir="${lib}/libio">
                                 <include name="*.jar" />
                         </fileset>
                     </classpath>
