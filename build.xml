@@ -439,7 +439,7 @@
           <antcall target="compile-module"><param name="module" value="smiles"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="smarts"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="reaction"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="pdb-cml"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="pdbcml"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="libiomd"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
         <parallel>
@@ -453,7 +453,7 @@
           <antcall target="compile-module"><param name="module" value="qsaratomic"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="qsarbond"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="qsarprotein"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="qsar-cml"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="qsarcml"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="experimental"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
         <parallel>
@@ -491,7 +491,7 @@
             <antcall target="compile-module"><param name="module" value="smiles"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="libiocml"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="libiomd"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="pdb-cml"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="pdbcml"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="reaction"/><param name="source" value="${src}/main"/></antcall>
     	    <antcall target="compile-module"><param name="module" value="charges"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar"/><param name="source" value="${src}/main"/></antcall>
@@ -499,7 +499,7 @@
             <antcall target="compile-module"><param name="module" value="qsarbond"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsarmolecular"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsarprotein"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsar-cml"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qsarcml"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="forcefield"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3d"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3dtools"/><param name="source" value="${src}/main"/></antcall>
@@ -607,14 +607,14 @@
                     <includesfile name="${metainf}/io.libdepends"/>
                     <includesfile name="${metainf}/libiocml.libdepends"/>
                     <includesfile name="${metainf}/nonotify.libdepends"/>
-                    <includesfile name="${metainf}/pdb-cml.libdepends"/>
+                    <includesfile name="${metainf}/pdbcml.libdepends"/>
                     <includesfile name="${metainf}/pdb.libdepends"/>
                     <includesfile name="${metainf}/qsar.libdepends"/>
                     <includesfile name="${metainf}/qsaratomic.libdepends"/>
                     <includesfile name="${metainf}/qsarbond.libdepends"/>
                     <includesfile name="${metainf}/qsarmolecular.libdepends"/>
                     <includesfile name="${metainf}/qsarprotein.libdepends"/>
-                    <includesfile name="${metainf}/qsar-cml.libdepends"/>
+                    <includesfile name="${metainf}/qsarcml.libdepends"/>
                     <includesfile name="${metainf}/reaction.libdepends"/>
                     <includesfile name="${metainf}/render.libdepends"/>
                     <includesfile name="${metainf}/standard.libdepends"/>
@@ -645,14 +645,14 @@
                     <include name="cdk-libiocml.jar"/>
                     <include name="cdk-libiomd.jar"/>
                     <include name="cdk-nonotify.jar"/>
-                    <include name="cdk-pdb-cml.jar"/>
+                    <include name="cdk-pdbcml.jar"/>
                     <include name="cdk-pdb.jar"/>
                     <include name="cdk-qsar.jar"/>
                     <include name="cdk-qsaratomic.jar"/>
                     <include name="cdk-qsarbond.jar"/>
                     <include name="cdk-qsarmolecular.jar"/>
                     <include name="cdk-qsarprotein.jar"/>
-                    <include name="cdk-qsar-cml.jar"/>
+                    <include name="cdk-qsarcml.jar"/>
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>
@@ -710,14 +710,14 @@
                     <include name="cdk-libiocml.jar"/>
                     <include name="cdk-libiomd.jar"/>
                     <include name="cdk-nonotify.jar"/>
-                    <include name="cdk-pdb-cml.jar"/>
+                    <include name="cdk-pdbcml.jar"/>
                     <include name="cdk-pdb.jar"/>
                     <include name="cdk-qsar.jar"/>
                     <include name="cdk-qsaratomic.jar"/>
                     <include name="cdk-qsarbond.jar"/>
                     <include name="cdk-qsarmolecular.jar"/>
                     <include name="cdk-qsarprotein.jar"/>
-                    <include name="cdk-qsar-cml.jar"/>
+                    <include name="cdk-qsarcml.jar"/>
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-standard.jar"/>

@@ -45,8 +45,8 @@ import org.openscience.cdk.protein.data.PDBAtom;
  *
  * @author        egonw
  * @cdk.created   2005-05-04
- * @cdk.module    pdb-cml
- * @cdk.svnrev  $Revision$
+ * @cdk.module    pdbcml
+ * @cdk.svnrev    $Revision$
  * @cdk.set       libio-cml-customizers
  * @cdk.require   java1.5+
  */

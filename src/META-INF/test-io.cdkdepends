@@ -11,9 +11,8 @@ cdk-libiocml.jar
 cdk-pdb.jar
 cdk-qsar.jar
 cdk-qsarmolecular.jar
-cdk-qsar-cml.jar
-cdk-qsar-pdb.jar
-cdk-pdb-cml.jar
+cdk-qsarcml.jar
+cdk-pdbcml.jar
 cdk-smiles.jar
 cdk-nonotify.jar
 cdk-test.jar
