@@ -729,6 +729,18 @@ public class Convertor {
         }
         if (cdkBond.getProperties().size() > 0) writeProperties(cdkBond, cmlBond);
 
+        Iterator<String> elements = customizers.keySet().iterator();
+        while (elements.hasNext()) {
+        	ICMLCustomizer customizer = customizers.get(elements.next());
+        	try {
+        		customizer.customize(cdkBond, cmlBond);
+        	} catch (Exception exception) {
+        		logger.error("Error while customizing CML output with customizer: ",
+        				customizer.getClass().getName());
+        		logger.debug(exception);
+        	}
+        }
+        
         return cmlBond;
     }
 
