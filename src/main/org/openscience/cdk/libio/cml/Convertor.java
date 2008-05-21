@@ -1,6 +1,7 @@
 /* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2005-2007  Stefan Kuhn <shk3@users.sf.net>
+ *                    2008  Aleksey Tarkhov <bayern7105@yahoo.de>
  *
  * Contact: jchempaint-devel@lists.sourceforge.net
  *
@@ -712,6 +713,7 @@ public class Convertor {
         if (cdkBond.getFlag(CDKConstants.ISAROMATIC)) {
         	CMLBondType bType = new CMLBondType();
         	bType.setDictRef("cdk:aromaticBond");
+        	cmlBond.addBondType(bType);
         }
 
         if (cdkBond.getStereo() == CDKConstants.STEREO_BOND_UP ||

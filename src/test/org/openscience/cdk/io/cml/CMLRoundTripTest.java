@@ -321,6 +321,25 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(bond.getStereo(), roundTrippedBond.getStereo());
     }
     
+    public void testBondAromatic() throws Exception {
+        Molecule mol = new Molecule();
+        // surely, this bond is not aromatic... but fortunately, file formats do not care about chemistry
+        Atom atom = new Atom("C");
+        Atom atom2 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        Bond bond = new Bond(atom, atom2, IBond.Order.SINGLE);
+        bond.setFlag(CDKConstants.ISAROMATIC, true);
+        mol.addBond(bond);
+        
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
+        
+        assertEquals(2, roundTrippedMol.getAtomCount());
+        assertEquals(1, roundTrippedMol.getBondCount());
+        IBond roundTrippedBond = roundTrippedMol.getBond(0);
+        assertEquals(bond.getFlag(CDKConstants.ISAROMATIC), roundTrippedBond.getFlag(CDKConstants.ISAROMATIC));
+    }
+
     /**
      * Convert a Molecule to CML and back to a Molecule again.
      * Given that CML reading is working, the problem is with the
