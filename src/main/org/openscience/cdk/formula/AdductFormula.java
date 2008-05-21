@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
  *   <li><code>[C2H4O2+Na]+</code></li>
  * </ul>
  * 
- * @cdk.module  formula
+ * @cdk.module  data
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula

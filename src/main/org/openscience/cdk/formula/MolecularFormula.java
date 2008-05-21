@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  *   <li><code><sup>12</sup>C5</sup><sup>13</sup>CH6</code></li>
  * </ul>
  * 
- * @cdk.module  formula
+ * @cdk.module  data
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.keyword molecular formula

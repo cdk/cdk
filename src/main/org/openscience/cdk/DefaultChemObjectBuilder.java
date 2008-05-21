@@ -26,6 +26,10 @@ package org.openscience.cdk;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.formula.AdductFormula;
+import org.openscience.cdk.formula.MolecularFormula;
+import org.openscience.cdk.formula.MolecularFormulaSet;
+import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -46,6 +50,8 @@ import org.openscience.cdk.interfaces.IFragmentAtom;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
@@ -365,6 +371,26 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 	public IFragmentAtom newFragmentAtom() {
 		return new FragmentAtom();
 	}
+
+	public IAdductFormula newAdductFormula() {
+	    return new AdductFormula();
+    }
+
+	public IMolecularFormula newMolecularFormula() {
+	    return new MolecularFormula();
+    }
+
+	public IMolecularFormulaSet newMolecularFormulaSet() {
+	    return new MolecularFormulaSet();
+    }
+
+	public IAdductFormula newAdductFormula(IMolecularFormula formula) {
+	    return new AdductFormula(formula);
+    }
+
+	public IMolecularFormulaSet newMolecularFormulaSet(IMolecularFormula formula) {
+	    return new MolecularFormulaSet(formula);
+    }
 }
 
 

@@ -592,6 +592,16 @@ public interface IChemObjectBuilder {
      */
     public IFragmentAtom newFragmentAtom();
     
+    public IMolecularFormula newMolecularFormula();
+    
+    public IMolecularFormulaSet newMolecularFormulaSet();
+    
+    public IMolecularFormulaSet newMolecularFormulaSet(IMolecularFormula formula);
+    
+    public IAdductFormula newAdductFormula();
+    
+    public IAdductFormula newAdductFormula(IMolecularFormula formula);
+    
 }
 
 
