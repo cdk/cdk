@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -465,13 +464,13 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
     	formula.addIsotope(builder.newIsotope("C"),10);
     	formula.addIsotope(builder.newIsotope("H"),22);
 		
-    	Assert.assertEquals(0.0,MolecularFormulaManipulator.getDBE(formula));
+    	Assert.assertEquals(0.0,MolecularFormulaManipulator.getDBE(formula), 0.01);
     	
     	formula = new MolecularFormula();
     	formula.addIsotope(builder.newIsotope("C"),10);
     	formula.addIsotope(builder.newIsotope("H"),16);
 		
-    	Assert.assertEquals(3.0,MolecularFormulaManipulator.getDBE(formula));
+    	Assert.assertEquals(3.0,MolecularFormulaManipulator.getDBE(formula), 0.01);
     	
 
     	formula = new MolecularFormula();
@@ -479,7 +478,7 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
     	formula.addIsotope(builder.newIsotope("H"),16);
     	formula.addIsotope(builder.newIsotope("O"));
 		
-    	Assert.assertEquals(3.0,MolecularFormulaManipulator.getDBE(formula));
+    	Assert.assertEquals(3.0,MolecularFormulaManipulator.getDBE(formula), 0.01);
     	
 
     	formula = new MolecularFormula();
@@ -487,7 +486,7 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
     	formula.addIsotope(builder.newIsotope("H"),19);
     	formula.addIsotope(builder.newIsotope("N"));
 
-    	Assert.assertEquals(2.0,MolecularFormulaManipulator.getDBE(formula));
+    	Assert.assertEquals(2.0,MolecularFormulaManipulator.getDBE(formula), 0.01);
 
     }
     /**
