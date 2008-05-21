@@ -24,6 +24,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import org.openscience.cdk.formula.MolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.LoggingTool;
@@ -113,6 +114,10 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
 	public void setProperty(Object description, Object property) {
 	    // TODO Auto-generated method stub
 	    
+    }
+
+	public IChemObjectBuilder getBuilder() {
+	    return DebugChemObjectBuilder.getInstance();
     }
 
 }

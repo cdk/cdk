@@ -27,9 +27,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAdductFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
@@ -350,4 +352,8 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
 		
 		return true;
 	}
+
+	public IChemObjectBuilder getBuilder() {
+	    return DefaultChemObjectBuilder.getInstance();
+    }
 }

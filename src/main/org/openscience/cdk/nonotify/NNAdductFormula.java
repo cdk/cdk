@@ -25,6 +25,7 @@
 package org.openscience.cdk.nonotify;
 
 import org.openscience.cdk.formula.AdductFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
@@ -40,6 +41,10 @@ public class NNAdductFormula extends AdductFormula {
 	public NNAdductFormula(IMolecularFormula formula) {
 		super(formula);
 	}
+
+	public IChemObjectBuilder getBuilder() {
+	    return NoNotificationChemObjectBuilder.getInstance();
+    }
 
 }
 

@@ -199,4 +199,13 @@ public interface IMolecularFormula{
 	 *@see                #getProperties
 	 */
 	public void setProperties(Hashtable<Object, Object> properties);
+	
+    /**
+     * Returns a ChemObjectBuilder for the data classes that extend
+     * this class.
+     * 
+     * @return The IChemObjectBuilder matching this IChemObject
+     */
+    public IChemObjectBuilder getBuilder();
+    
 }

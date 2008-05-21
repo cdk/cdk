@@ -29,8 +29,10 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 /**
@@ -393,5 +395,9 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 		
 		return true;
 	}
+
+	public IChemObjectBuilder getBuilder() {
+	    return DefaultChemObjectBuilder.getInstance();
+    }
 
 }

@@ -25,6 +25,7 @@
 package org.openscience.cdk.nonotify;
 
 import org.openscience.cdk.formula.MolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @cdk.module  nonotify
@@ -36,4 +37,8 @@ public class NNMolecularFormula extends MolecularFormula {
 		super();
 	}
 	
+	public IChemObjectBuilder getBuilder() {
+	    return NoNotificationChemObjectBuilder.getInstance();
+    }
+
 }
