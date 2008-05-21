@@ -247,18 +247,6 @@ public class MolecularFormulaSetTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-    public void testClone() throws Exception {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        Object clone = mfS.clone();
-        Assert.assertTrue(clone instanceof IMolecularFormulaSet);
-        Assert.assertNotSame(mfS, clone);
-    } 
-    /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-    @Test 
     public void testRemoveMolecularFormula_IMolecularFormula() {
         IMolecularFormulaSet mfS = new MolecularFormulaSet();
         IMolecularFormula mf1 = new MolecularFormula();

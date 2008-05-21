@@ -118,11 +118,5 @@ public interface IMolecularFormulaSet {
 	 * Removes all IMolecularFormula of this IMolecularFormulaSet.
 	 */
 	public void removeAllMolecularFormulas();
-	/**
-	 * Clones this IMolecularFormulaSet object and its content.
-	 *
-	 * @return    The cloned object
-	 */
-	public Object clone() throws CloneNotSupportedException ;
 	
 }

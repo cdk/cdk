@@ -187,29 +187,4 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     public void removeMolecularFormula(int position) {
 	    components.remove(position);
     }
-    
-    /**
-	 * Clones this MolecularFormulaSet object and its content.
-	 *
-	 * @return    The cloned object
-	 */
-    @TestMethod("testClone")
-	public Object clone() throws CloneNotSupportedException {
-		
-//		/* it is not a super class of chemObject */
-//		MolecularFormulaSet clone = (MolecularFormulaSet) super.clone();
-//        // start from scratch
-//		clone.removeAllMolecularFormulas();
-//        // clone all molecularFormulas
-//		Iterator<IMolecularFormula> iterForm = this.molecularFormulas();
-//		while(iterForm.hasNext()){
-//			clone.addMolecularFormula((IMolecularFormula) iterForm.next().clone());
-//		}
-		
-		MolecularFormulaSet clone = new MolecularFormulaSet();
-		for (IMolecularFormula mf : this.molecularFormulas()){
-			clone.addMolecularFormula((IMolecularFormula) mf.clone());
-		}
-		return clone;
-	}
 }
