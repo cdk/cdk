@@ -10,7 +10,6 @@ cdk-extra.jar
 cdk-reaction.jar
 cdk-charges.jar
 cdk-qsar.jar
-cdk-qsar-pdb.jar
 cdk-smiles.jar
 cdk-test.jar
 cdk-applications.jar

@@ -13,7 +13,6 @@ cdk-isomorphism.jar
 cdk-charges.jar
 cdk-qsar.jar
 cdk-qsaratomic.jar
-cdk-qsar-pdb.jar
 cdk-smiles.jar
 cdk-test.jar
 cdk-applications.jar
