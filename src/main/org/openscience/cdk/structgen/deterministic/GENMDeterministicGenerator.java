@@ -129,7 +129,7 @@ public class GENMDeterministicGenerator {
         else structureout = null;
 
         initializeParameters();
-		analyseMolecularFormula(MolecularFormulaManipulator.getMolecularFormula(mf));
+		analyseMolecularFormula(MolecularFormulaManipulator.getMolecularFormula(mf, builder));
 
 	}
 

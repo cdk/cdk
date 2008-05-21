@@ -29,8 +29,6 @@ package org.openscience.cdk.formula;
 
 import java.util.Iterator;
 
-import org.openscience.cdk.Element;
-import org.openscience.cdk.Isotope;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IElement;
@@ -66,19 +64,19 @@ public class MolecularFormulaSetManipulator {
     @TestMethod("testGetMaxOccurrenceElements_IMolecularFormulaSet")
 	public static IMolecularFormula getMaxOccurrenceElements(IMolecularFormulaSet mfSet){
 		
-		IMolecularFormula molecularFormula = new MolecularFormula();
+		IMolecularFormula molecularFormula = mfSet.getBuilder().newMolecularFormula();
 		for(IMolecularFormula mf: mfSet.molecularFormulas()){
 			Iterator<IIsotope> iterIsot = mf.isotopes();
 			while(iterIsot.hasNext()){
-				IElement element = new Element(iterIsot.next());
+				IElement element = mfSet.getBuilder().newElement(iterIsot.next());
 				int occur_new = MolecularFormulaManipulator.getElementCount(mf,element);
 				if(!MolecularFormulaManipulator.containsElement(molecularFormula,element)){
-						molecularFormula.addIsotope(new Isotope(element),occur_new);
+						molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element),occur_new);
 				}else{
 					int occur_old = MolecularFormulaManipulator.getElementCount(molecularFormula,element);
 					if(occur_new > occur_old){
 						MolecularFormulaManipulator.removeElement(molecularFormula,element);
-							molecularFormula.addIsotope(new Isotope(element),occur_new);
+							molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element),occur_new);
 					}
 				}
 			}
@@ -97,19 +95,19 @@ public class MolecularFormulaSetManipulator {
     @TestMethod("testGetMinOccurrenceElements_IMolecularFormulaSet")
 	public static IMolecularFormula getMinOccurrenceElements(IMolecularFormulaSet mfSet){
 		
-		IMolecularFormula molecularFormula = new MolecularFormula();
+		IMolecularFormula molecularFormula = mfSet.getBuilder().newMolecularFormula();
 		for(IMolecularFormula mf: mfSet.molecularFormulas()){
 			Iterator<IIsotope> iterIsot = mf.isotopes();
 			while(iterIsot.hasNext()){
-				IElement element = new Element(iterIsot.next());
+				IElement element = mfSet.getBuilder().newElement(iterIsot.next());
 				int occur_new = MolecularFormulaManipulator.getElementCount(mf,element);
 				if(!MolecularFormulaManipulator.containsElement(molecularFormula,element)){
-						molecularFormula.addIsotope(new Isotope(element),occur_new);
+						molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element),occur_new);
 				}else{
 					int occur_old = MolecularFormulaManipulator.getElementCount(molecularFormula,element);
 					if(occur_new < occur_old){
 						MolecularFormulaManipulator.removeElement(molecularFormula,element);
-							molecularFormula.addIsotope(new Isotope(element),occur_new);
+							molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element),occur_new);
 					}
 				}
 			}
@@ -138,7 +136,7 @@ public class MolecularFormulaSetManipulator {
 			return null;
 		
 		
-		IMolecularFormulaSet newFormulaSet = new MolecularFormulaSet();
+		IMolecularFormulaSet newFormulaSet = formulaSet.getBuilder().newMolecularFormulaSet();
 		
 		for(IMolecularFormula formula: formulaSet.molecularFormulas()){
 			boolean flagPass = true;
@@ -219,7 +217,7 @@ public class MolecularFormulaSetManipulator {
 			MolecularFormulaRange formulaRange){
 		
 		
-		IMolecularFormulaSet newFormulaSet = new MolecularFormulaSet();
+		IMolecularFormulaSet newFormulaSet = formulaSet.getBuilder().newMolecularFormulaSet();
 		
 		for(IMolecularFormula formula: formulaSet.molecularFormulas()){
 			

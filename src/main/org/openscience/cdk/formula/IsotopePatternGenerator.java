@@ -30,13 +30,11 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Isotope;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
@@ -79,15 +77,20 @@ public class IsotopePatternGenerator{
 	public IsotopePatternGenerator(double minAb){
 		minAbundance = minAb;
         logger.info("Generating all Isotope structures with IsotopeGenerator");
-
-		try {
-			isotopeFactory = IsotopeFactory.getInstance(new ChemObject().getBuilder());
-		} catch (OptionalDataException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+	}
+	
+	private void ensureIsotopeFactory(IChemObjectBuilder builder) {
+		if (isotopeFactory == null) {
+			try {
+				isotopeFactory = IsotopeFactory.getInstance(builder);
+			} catch (OptionalDataException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
+	
 	/**
 	 * Get all combinatorial chemical isotopes given a structure. 
 	 * 
@@ -97,7 +100,7 @@ public class IsotopePatternGenerator{
     @TestMethod("testGetIsotopes_IMolecularFormula")
 	public IMolecularFormulaSet getIsotopes(IMolecularFormula molFor){
 		/** FormulaSet to return*/
-		IMolecularFormulaSet molForSet = new MolecularFormulaSet();
+		IMolecularFormulaSet molForSet = molFor.getBuilder().newMolecularFormulaSet();
         /** all isotopes found*/
 		List<IIsotope> isotopicAtoms = new ArrayList<IIsotope>();
 		/** Atoms with isotopes*/
@@ -114,7 +117,7 @@ public class IsotopePatternGenerator{
 		while(itI2.hasNext()){
 			IIsotope isotope = itI2.next();
         	for(int z = 0 ; z < molFor.getIsotopeCount(isotope); z++){
-	        	IAtom atom = new Atom(isotope.getSymbol());
+	        	IAtom atom = molFor.getBuilder().newAtom(isotope.getSymbol());
 	    		List<IIsotope> isotopicAtoms2 = new ArrayList<IIsotope>();
 	        	
 	        	IIsotope[] isotopes = isotopeFactory.getIsotopes(atom.getSymbol());
@@ -151,7 +154,7 @@ public class IsotopePatternGenerator{
 	 * @return          The IMolecularFormulaSet ordered
 	 */
 	private IMolecularFormulaSet orderAccordingMass(IMolecularFormulaSet molForSet) {
-		IMolecularFormulaSet newMolForSet = new MolecularFormulaSet();
+		IMolecularFormulaSet newMolForSet = molForSet.getBuilder().newMolecularFormulaSet();
 		int countMFSet = molForSet.size();
 		for(int i = 0 ; i < countMFSet; i++){
 			double massMin = 10000;
@@ -180,7 +183,7 @@ public class IsotopePatternGenerator{
 	 * @return The IMolecularFormulaSet
 	 */
 	private IMolecularFormulaSet mixer(IMolecularFormula molFor, List<List>isotopicAtomsV, List<IIsotope> isotopicAtoms, int nC){
-		IMolecularFormulaSet molForSet = new MolecularFormulaSet();
+		IMolecularFormulaSet molForSet = molFor.getBuilder().newMolecularFormulaSet();
 	    
 
 		int[][] ordreComb = new int[100][isotopicAtomsV.size()];
@@ -256,15 +259,15 @@ public class IsotopePatternGenerator{
 		for (int i = 0; i < ordreCombList.size(); i++){
 			
 			/*Create the IMolecularFormula*/
-			IMolecularFormula molForClon  = new MolecularFormula();
+			IMolecularFormula molForClon  = molFor.getBuilder().newMolecularFormula();
 			int[] ordreTmp = ordreCombList.get(i);
 			String[] atomsStringTmp = atomsCombList.get(i);
 			for (int j = 0; j < ordreTmp.length; j++){
 					
-				IIsotope isotope = new Isotope(atomsStringTmp[j]);
+				IIsotope isotope = molFor.getBuilder().newIsotope(atomsStringTmp[j]);
 				
-				isotope.setExactMass(((Isotope)isotopicAtomsV.get(j).get(ordreTmp[j]-1)).getExactMass());
-				isotope.setNaturalAbundance(((Isotope)isotopicAtomsV.get(j).get(ordreTmp[j]-1)).getNaturalAbundance());
+				isotope.setExactMass(((IIsotope)isotopicAtomsV.get(j).get(ordreTmp[j]-1)).getExactMass());
+				isotope.setNaturalAbundance(((IIsotope)isotopicAtomsV.get(j).get(ordreTmp[j]-1)).getNaturalAbundance());
 				
 				molForClon.addIsotope(isotope);
 			}
@@ -315,7 +318,7 @@ public class IsotopePatternGenerator{
 	private double calculateMass(int[] ordreTmp,List<List>isotopicAtomsV,List<IIsotope> isotopicAtoms) {
 		double massTotal = 0;
 		for (int j = 0; j < ordreTmp.length; j++){
-			double mass = ((Isotope)isotopicAtomsV.get(j).get(ordreTmp[j]-1)).getExactMass();
+			double mass = ((IIsotope)isotopicAtomsV.get(j).get(ordreTmp[j]-1)).getExactMass();
 			massTotal += mass;
 		}
 		return massTotal;
@@ -331,7 +334,7 @@ public class IsotopePatternGenerator{
 	private double calculateAbund(int[] ordreTmp,List<List>isotopicAtomsV,List<IIsotope> isotopicAtoms) {
 		double abundanceTotal = 1.0;
 		for (int j = 0; j < ordreTmp.length; j++){
-			double abund = ((Isotope)isotopicAtomsV.get(j).get(ordreTmp[j]-1)).getNaturalAbundance();
+			double abund = ((IIsotope)isotopicAtomsV.get(j).get(ordreTmp[j]-1)).getNaturalAbundance();
 			abundanceTotal = abundanceTotal* abund;
 			
 		}

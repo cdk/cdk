@@ -29,9 +29,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Element;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -72,7 +69,7 @@ public class MassToFormulaTool {
 
 	private LoggingTool logger = new LoggingTool(MassToFormulaTool.class);
 	
-	private IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+	private IChemObjectBuilder builder;
 	
 	/** */
 	AtomTypeFactory factory;
@@ -96,10 +93,10 @@ public class MassToFormulaTool {
 	 * 
 	 * @see #setDefaultRestrictions()
 	 */
-	public MassToFormulaTool() {
-
+	public MassToFormulaTool(IChemObjectBuilder builder) {
+		this.builder = builder;
         logger.info("Initiate MassToForumlaTool");
-		factory = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
+		factory = AtomTypeFactory.getInstance(builder);
     	this.orderElements = generateOrderE();
 		
 		setDefaultRestrictions();
@@ -262,7 +259,7 @@ public class MassToFormulaTool {
 			return null;
 		}
 		
-		IMolecularFormulaSet molecularFormulaSet = new MolecularFormulaSet();
+		IMolecularFormulaSet molecularFormulaSet = builder.newMolecularFormulaSet();
 		
 		int[][] matrix = this.matrix_Base;
 		int numberElements = mfRange.getIsotopeCount();
@@ -496,7 +493,7 @@ public class MassToFormulaTool {
 	 * @return                 The IMolecularFormula
 	 */
 	private IMolecularFormula getFormula(List<IIsotope> isoToCond_new, int[] value_In) {
-		IMolecularFormula mf = new MolecularFormula();;
+		IMolecularFormula mf = builder.newMolecularFormula();;
 		for(int i = 0; i < isoToCond_new.size() ; i++){
 			if(value_In[i] != 0){
 				for(int j = 0 ; j < value_In[i] ; j ++)
@@ -515,9 +512,9 @@ public class MassToFormulaTool {
 	 * @return        IMolecularFormula object
 	 */
 	private IMolecularFormula putInOrder(IMolecularFormula formula) {
-		IMolecularFormula new_formula = new MolecularFormula();
+		IMolecularFormula new_formula = formula.getBuilder().newMolecularFormula();
 		for(int i = 0 ; i < orderElements.length; i++){
-			IElement element = new Element(orderElements[i]);
+			IElement element = builder.newElement(orderElements[i]);
 			if(MolecularFormulaManipulator.containsElement(formula,element)){
 				Iterator<IIsotope> isotopes = MolecularFormulaManipulator.getIsotopes(formula, element).iterator();
 				while(isotopes.hasNext()){
@@ -561,13 +558,13 @@ public class MassToFormulaTool {
 		if(formulaSet.size() != 0){
 			
 			IMolecularFormulaSet solutions_pro = formulaSet;
-			solutions_new = new MolecularFormulaSet();
+			solutions_new = formulaSet.getBuilder().newMolecularFormulaSet();
 			for (int i = 0; i < formulaSet.size() ; i++){
 				
 				double valueMin = 100;
 				int j_final = 0;
 				for (int j = 0 ; j < solutions_pro.size() ; j++){
-					IMolecularFormula newMF = new MolecularFormula();
+					IMolecularFormula newMF = formulaSet.getBuilder().newMolecularFormula();
 					Iterator<IIsotope> iterator = solutions_pro.getMolecularFormula(j).isotopes();
 					while(iterator.hasNext()){
 						IIsotope isotope = iterator.next();

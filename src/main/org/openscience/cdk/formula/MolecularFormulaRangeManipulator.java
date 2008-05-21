@@ -31,6 +31,7 @@ import java.util.Iterator;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
@@ -101,8 +102,8 @@ public class MolecularFormulaRangeManipulator {
 	 * @return  A IMolecularFormula containing the maximal occurrence of each isotope 
 	 */
     @TestMethod("testGetMaximalFormula_MolecularFormulaRange")
-	public static IMolecularFormula getMaximalFormula(MolecularFormulaRange mfRange){
-		IMolecularFormula formula = new MolecularFormula();
+	public static IMolecularFormula getMaximalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder){
+		IMolecularFormula formula = builder.newMolecularFormula();
 		
 		Iterator<IIsotope> iterIsot = mfRange.isotopes();
 		while(iterIsot.hasNext()){
@@ -121,8 +122,8 @@ public class MolecularFormulaRangeManipulator {
 	 * @return  A IMolecularFormula containing the minimal occurrence of each isotope 
 	 */
     @TestMethod("testGetMinimalFormula_MolecularFormulaRange")
-	public static IMolecularFormula getMinimalFormula(MolecularFormulaRange mfRange){
-		IMolecularFormula formula = new MolecularFormula();
+	public static IMolecularFormula getMinimalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder){
+		IMolecularFormula formula = builder.newMolecularFormula();
 		
 		Iterator<IIsotope> iterIsot = mfRange.isotopes();
 		while(iterIsot.hasNext()){

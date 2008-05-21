@@ -125,7 +125,7 @@ public class MolecularFormulaRangeManipulatorTest extends NewCDKTestCase {
 		mfSet.addMolecularFormula(mf3);
 
 		MolecularFormulaRange mfRange = MolecularFormulaRangeManipulator.getRange(mfSet);
-		IMolecularFormula formula = MolecularFormulaRangeManipulator.getMaximalFormula(mfRange);
+		IMolecularFormula formula = MolecularFormulaRangeManipulator.getMaximalFormula(mfRange, builder);
 		
 		/* Result: C4-9H5-20N0-4O2-7 */
 
@@ -168,7 +168,7 @@ public class MolecularFormulaRangeManipulatorTest extends NewCDKTestCase {
 		mfSet.addMolecularFormula(mf3);
 		
 		MolecularFormulaRange mfRange = MolecularFormulaRangeManipulator.getRange(mfSet);
-		IMolecularFormula formula = MolecularFormulaRangeManipulator.getMinimalFormula(mfRange);
+		IMolecularFormula formula = MolecularFormulaRangeManipulator.getMinimalFormula(mfRange, builder);
 		
 		/* Result: C4-9H5-20N0-4O2-7 */
 

@@ -26,14 +26,15 @@ package org.openscience.cdk.formula.rules;
 import java.io.IOException;
 import java.util.Iterator;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Isotope;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.formula.MolecularFormulaRange;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.LoggingTool;
+
 /**
  * This class validate if the occurrence of the IElements in the IMolecularFormula
  * are into a limits. As default defines all elements of the periodic table with
@@ -73,7 +74,6 @@ public class ElementRule implements IRule{
      */
     public ElementRule(){
         logger = new LoggingTool(this);
-        initiateDefaultOccurElements();
     }
 
     /**
@@ -117,12 +117,17 @@ public class ElementRule implements IRule{
 
     public double validate(IMolecularFormula formula) throws CDKException {
     	logger.info("Start validation of ",formula);
+    	ensureDefaultOccurElements(formula.getBuilder());
+    	
     	double isValid = 1.0;
     	Iterator<IElement> itElem = MolecularFormulaManipulator.elements(formula).iterator();
     	while(itElem.hasNext()){
     		IElement element = itElem.next();
     		int occur = MolecularFormulaManipulator.getElementCount(formula, element);
-    		if((occur < mfRange.getIsotopeCountMin(new Isotope(element.getSymbol()))) || ( occur > mfRange.getIsotopeCountMax(new Isotope(element.getSymbol())))){
+    		IIsotope elemIsotope = formula.getBuilder().newIsotope(element.getSymbol());
+    		if((occur < mfRange.getIsotopeCountMin(elemIsotope)) 
+    			|| ( occur > mfRange.getIsotopeCountMax(elemIsotope)))
+    		{
     			isValid = 0.0;
     			break;
     		}
@@ -135,25 +140,24 @@ public class ElementRule implements IRule{
      * Initiate the MolecularFormulaExpand with the maximum and minimum occurrence of the Elements.
      * In this case all elements of the periodic table are loaded.
      */
-    private void initiateDefaultOccurElements(){
-    	String[] elements = new String[]{
-			    "C", "H", "O", "N", "Si", "P", "S", "F", "Cl",
-			    "Br", "I", "Sn", "B", "Pb", "Tl", "Ba", "In", "Pd",
-			    "Pt", "Os", "Ag", "Zr", "Se", "Zn", "Cu", "Ni", "Co", 
-			    "Fe", "Cr", "Ti", "Ca", "K", "Al", "Mg", "Na", "Ce",
-			    "Hg", "Au", "Ir", "Re", "W", "Ta", "Hf", "Lu", "Yb", 
-			    "Tm", "Er", "Ho", "Dy", "Tb", "Gd", "Eu", "Sm", "Pm",
-			    "Nd", "Pr", "La", "Cs", "Xe", "Te", "Sb", "Cd", "Rh", 
-			    "Ru", "Tc", "Mo", "Nb", "Y", "Sr", "Rb", "Kr", "As", 
-			    "Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "Be", "Li", 
-			    "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", 
-			    "Th", "Pa", "U", "Np", "Pu"};
-    	
-    	mfRange = new MolecularFormulaRange();
-    	DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-    	for(int i = 0; i < elements.length ; i++)
-    		mfRange.addIsotope( builder.newIsotope(elements[i]), 0, 50);
-    	
-    	
+    private void ensureDefaultOccurElements(IChemObjectBuilder builder){
+    	if (mfRange == null) {
+    		String[] elements = new String[]{
+    				"C", "H", "O", "N", "Si", "P", "S", "F", "Cl",
+    				"Br", "I", "Sn", "B", "Pb", "Tl", "Ba", "In", "Pd",
+    				"Pt", "Os", "Ag", "Zr", "Se", "Zn", "Cu", "Ni", "Co", 
+    				"Fe", "Cr", "Ti", "Ca", "K", "Al", "Mg", "Na", "Ce",
+    				"Hg", "Au", "Ir", "Re", "W", "Ta", "Hf", "Lu", "Yb", 
+    				"Tm", "Er", "Ho", "Dy", "Tb", "Gd", "Eu", "Sm", "Pm",
+    				"Nd", "Pr", "La", "Cs", "Xe", "Te", "Sb", "Cd", "Rh", 
+    				"Ru", "Tc", "Mo", "Nb", "Y", "Sr", "Rb", "Kr", "As", 
+    				"Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "Be", "Li", 
+    				"Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", 
+    				"Th", "Pa", "U", "Np", "Pu"};
+
+    		mfRange = new MolecularFormulaRange();
+    		for(int i = 0; i < elements.length ; i++)
+    			mfRange.addIsotope( builder.newIsotope(elements[i]), 0, 50);
+    	}
     }
 }

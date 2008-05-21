@@ -216,7 +216,7 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 	@Test 
     public void testGetString__String_IMolecularFormula() 	{
 		Assert.assertNotNull(MolecularFormulaManipulator.getMolecularFormula("C10H16", new MolecularFormula()));
-		Assert.assertNotNull(MolecularFormulaManipulator.getMolecularFormula("C10H16"));
+		Assert.assertNotNull(MolecularFormulaManipulator.getMolecularFormula("C10H16", builder));
 	}
 	
 	/**
@@ -259,7 +259,7 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 	 */
 	@Test 
     public void testGetMolecularFormula_String()	{
-		IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMolecularFormula("C10H16");
+		IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMolecularFormula("C10H16", builder);
 		
 		Assert.assertEquals(26, MolecularFormulaManipulator.getAtomCount(molecularFormula));
 		Assert.assertEquals(2,  molecularFormula.getIsotopeCount());
@@ -291,12 +291,12 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 	
 	@Test 
     public void testGetMajorIsotopeMolecularFormula_String() throws Exception {
-		IMolecularFormula mf2 = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C11H17");
+		IMolecularFormula mf2 = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C11H17", builder);
 		
 		Assert.assertEquals(28, MolecularFormulaManipulator.getAtomCount(mf2));
 		Assert.assertEquals(2, mf2.getIsotopeCount());
-		IIsotope carbon = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance()).getMajorIsotope("C");
-		IIsotope hydrogen = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance()).getMajorIsotope("H");
+		IIsotope carbon = IsotopeFactory.getInstance(builder).getMajorIsotope("C");
+		IIsotope hydrogen = IsotopeFactory.getInstance(builder).getMajorIsotope("H");
 		double totalMass = carbon.getExactMass()*11;
 		totalMass += hydrogen.getExactMass()*17;
 		Assert.assertEquals(totalMass, MolecularFormulaManipulator.getTotalExactMass(mf2), 0.0000001);
@@ -835,7 +835,7 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test public void testGetHeavyElements_IMolecularFormula_2() {
-    	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("CH3OH");
+    	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("CH3OH", builder);
         Assert.assertEquals(2, MolecularFormulaManipulator.getHeavyElements(formula).size());
     }
 
@@ -874,7 +874,7 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 	 */
 	@Test 
     public void testGetHillString_IMolecularFormula() {
-    	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("CH3OH");
+    	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("CH3OH", builder);
 		String listGenerated = MolecularFormulaManipulator.getHillString(formula);
 		Assert.assertEquals(null,listGenerated);
 		
