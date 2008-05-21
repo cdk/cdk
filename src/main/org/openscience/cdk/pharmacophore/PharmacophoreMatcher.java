@@ -276,6 +276,7 @@ public class PharmacophoreMatcher {
      */
     @TestMethod("testMatchedAtoms")
     public List<List<PharmacophoreAtom>> getUniqueMatchingPharmacophoreAtoms() {
+        getMatchingPharmacophoreAtoms();
         List<List<PharmacophoreAtom>> ret = new ArrayList<List<PharmacophoreAtom>>();
 
         List<String> tmp = new ArrayList<String>();
