@@ -655,7 +655,7 @@ public class DeduceBondSystemTool {
                 if (Check[i]) {
                 	
                     for (int j = 0; j <= ring.getAtomCount() - 1; j++) {
-                        if (ring.getAtom(j).getHydrogenCount()<0) {
+                        if (ring.getAtom(j).getHydrogenCount() != CDKConstants.UNSET && ring.getAtom(j).getHydrogenCount() < 0) {
                         	return false;
                         }
                     }
@@ -677,7 +677,7 @@ public class DeduceBondSystemTool {
     /**
      * Remove rings.
      * <p/>
-     * Removes rings which do not have all sp2 aromatic atoms and also gets rid of rings that have more than
+     * Removes rings which do not have all sp2/planar3 aromatic atoms and also gets rid of rings that have more than
      * 7 or less than 5 atoms in them.
      *
      * @param m The molecule from which we want to remove rings
@@ -714,7 +714,8 @@ public class DeduceBondSystemTool {
                     //logger.debug(j+"\t"+r.getAtomAt(j).getSymbol()+"\t"+r.getAtomAt(j).getHybridization());
 
                     if (r.getAtom(j).getHybridization() == CDKConstants.UNSET || 
-                    	r.getAtom(j).getHybridization() != Hybridization.SP2) {
+                    	!(r.getAtom(j).getHybridization() == Hybridization.SP2 ||
+                    	r.getAtom(j).getHybridization() == Hybridization.PLANAR3)) {
                     	rs.removeAtomContainer(i);
                         i--; // go back
                         continue iloop;
