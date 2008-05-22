@@ -272,7 +272,7 @@ public class AtomTypeFactory {
 	 * @return                              The AtomType for this id
 	 * @exception  NoSuchAtomTypeException  Thrown if the atom type does not exist.
 	 */
-    @TestMethod("testGetAtomType_String,testGetAtomTypeFromHybrid,testGetAtomTypeFromJmol,testGetAtomTypeFromMM2,testGetAtomTypeFromPDB,testGetAtomTypeFromValency")
+    @TestMethod("testGetAtomType_String,testGetAtomTypeFromJmol,testGetAtomTypeFromMM2,testGetAtomTypeFromPDB")
     public IAtomType getAtomType(String identifier) throws NoSuchAtomTypeException
 	{
         for (IAtomType atomType : atomTypes) {
