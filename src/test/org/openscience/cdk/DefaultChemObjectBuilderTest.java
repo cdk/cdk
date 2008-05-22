@@ -681,5 +681,40 @@ public class DefaultChemObjectBuilderTest extends NewCDKTestCase {
 
 		Assert.assertTrue(object instanceof IFragmentAtom);
 	}
-	 
+
+	@Test public void testNewMolecularFormula() {
+		Object object = rootObject.getBuilder().newMolecularFormula();
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.formula.MolecularFormula);
+	}
+
+	@Test public void testNewMolecularFormulaSet() {
+		Object object = rootObject.getBuilder().newMolecularFormulaSet();
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.formula.MolecularFormulaSet);
+	}
+
+	@Test public void testNewMolecularFormulaSet_IMolecularFormula() {
+		Object object = rootObject.getBuilder().newMolecularFormulaSet(
+			rootObject.getBuilder().newMolecularFormula()
+		);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.formula.MolecularFormulaSet);
+	}
+
+	@Test public void testNewAdductFormula() {
+		Object object = rootObject.getBuilder().newAdductFormula();
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.formula.AdductFormula);
+	}
+
+	@Test public void testNewAdductFormula_IMolecularFormula() {
+		Object object = rootObject.getBuilder().newAdductFormula(
+			rootObject.getBuilder().newMolecularFormula()
+		);
+		Assert.assertNotNull(object);
+		Assert.assertTrue(object instanceof org.openscience.cdk.formula.AdductFormula);
+		
+	}
+	
 }
