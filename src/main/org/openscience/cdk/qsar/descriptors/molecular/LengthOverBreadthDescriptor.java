@@ -107,11 +107,6 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
         double lob, bol, area;
         double[] xyzRanges;
 
-        if (atomContainer.getAtom(0).getPoint3d() == null) {
-            logger.debug("Molecule must have 3D coordinates");
-            throw new CDKException("Molecule must have 3D coordinates");
-        }
-
         double[][] coords = new double[atomContainer.getAtomCount()][3];
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             coords[i][0] = atomContainer.getAtom(i).getPoint3d().x;
@@ -121,6 +116,18 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
 
         // get the com
         Point3d com = GeometryTools.get3DCentreOfMass(atomContainer);
+
+        // did the molecule have 3D coordinates? If not, null was returned.
+        if (com == null) {
+            logger.debug("Molecule must have 3D coordinates");
+            DoubleArrayResult result = new DoubleArrayResult(2);
+            result.add(Double.NaN);
+            result.add(Double.NaN);
+            return new DescriptorValue(getSpecification(),
+                getParameterNames(), getParameters(),
+                result, new String[] {"LOBMAX", "LOBMIN"}
+            );
+        }
 
         // translate everything to COM
         for (int i = 0; i < coords.length; i++) {
