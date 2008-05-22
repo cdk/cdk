@@ -29,7 +29,6 @@ import org.openscience.cdk.VariousTests;
 import org.openscience.cdk.applications.APIVersionTesterTest;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.atomtype.HybridizationStateATMatcherTest;
-import org.openscience.cdk.atomtype.ValencyMatcherTest;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinterTest;
 import org.openscience.cdk.fingerprint.StandardSubstructureSetsTest;
 import org.openscience.cdk.fingerprint.SubstructureFingerprinterTest;
@@ -67,7 +66,6 @@ public class MextraTests {
         // from cdk.test.applications
         suite.addTest(new JUnit4TestAdapter(APIVersionTesterTest.class));
         // from cdk.test.atomtype (unstable atom type stuff)
-        suite.addTest(new JUnit4TestAdapter(ValencyMatcherTest.class));
         suite.addTest(new JUnit4TestAdapter(HybridizationStateATMatcherTest.class));
         // from cdk.test.geometry
         suite.addTest(RDFCalculatorTest.suite());
