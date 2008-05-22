@@ -25,6 +25,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -153,10 +154,12 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
      */
 
     public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+        IAtomContainer clone;
         IsotopeFactory factory = null;
         try {
+            clone = (IAtomContainer)container.clone();
             factory = IsotopeFactory.getInstance(container.getBuilder());
-            factory.configureAtoms(container);
+            factory.configureAtoms(clone);
         } catch (Exception e) {
             logger.debug(e);
             throw new CDKException("Error getting an IsotopeFactory");
@@ -168,10 +171,10 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
         double ccf = 1.000138;
         double eps = 1e-5;
 
-        if (!GeometryTools.has3DCoordinates(container)) throw new CDKException("Molecule must have 3D coordinates");
+        if (!GeometryTools.has3DCoordinates(clone)) throw new CDKException("Molecule must have 3D coordinates");
         
         double[][] imat = new double[3][3];
-        Point3d centerOfMass = GeometryTools.get3DCentreOfMass(container);
+        Point3d centerOfMass = GeometryTools.get3DCentreOfMass(clone);
 
         double xdif;
         double ydif;
@@ -179,8 +182,8 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
         double xsq;
         double ysq;
         double zsq;
-        for (int i = 0; i < container.getAtomCount(); i++) {
-            org.openscience.cdk.interfaces.IAtom currentAtom = container.getAtom(i);
+        for (int i = 0; i < clone.getAtomCount(); i++) {
+            IAtom currentAtom = clone.getAtom(i);
             if (currentAtom.getPoint3d() == null) {
                 throw new CDKException("Atom " + i + " did not have any 3D coordinates. These are required");
             }
@@ -234,7 +237,7 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
 
         // finally get the radius of gyration
         double pri = 0.0;
-        IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(container);
+        IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(clone);
         if (Math.abs(eval[2]) > eps) pri = Math.pow(eval[0] * eval[1] * eval[2], 1.0 / 3.0);
         else pri = Math.sqrt(eval[0] * ccf / MolecularFormulaManipulator.getTotalExactMass(formula));
         retval.add(Math.sqrt(Math.PI * 2 * pri * ccf / MolecularFormulaManipulator.getTotalExactMass(formula)));
