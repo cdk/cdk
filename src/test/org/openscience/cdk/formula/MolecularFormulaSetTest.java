@@ -28,6 +28,7 @@ import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -319,5 +320,12 @@ public class MolecularFormulaSetTest extends NewCDKTestCase {
         mfS.removeMolecularFormula(1);
         mfS.addMolecularFormula(mf3);
         Assert.assertEquals(mf3, mfS.getMolecularFormula(1));
+    }
+
+    @Test public void testGetBuilder() {
+    	MolecularFormulaSet add = new MolecularFormulaSet();
+    	IChemObjectBuilder builder = add.getBuilder();
+    	Assert.assertNotNull(builder);
+    	Assert.assertTrue(builder instanceof DefaultChemObjectBuilder);
     }
 }

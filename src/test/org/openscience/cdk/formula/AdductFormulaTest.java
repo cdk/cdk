@@ -28,6 +28,7 @@ import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -514,5 +515,12 @@ public class AdductFormulaTest extends NewCDKTestCase {
 	    
         Assert.assertEquals(1, add.getIsotopeCount(C));
         Assert.assertEquals(5, add.getIsotopeCount(h));
+    }
+    
+    @Test public void testGetBuilder() {
+    	IAdductFormula add = new AdductFormula();
+    	IChemObjectBuilder builder = add.getBuilder();
+    	Assert.assertNotNull(builder);
+    	Assert.assertTrue(builder instanceof DefaultChemObjectBuilder);
     }
 }
