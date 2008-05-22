@@ -509,10 +509,11 @@ public class GeometryTools {
 
 		double totalmass = 0.0;
 
-		java.util.Iterator atoms = ac.atoms();
+		Iterator<IAtom> atoms = ac.atoms();
 		while (atoms.hasNext()) {
 			IAtom a = (IAtom)atoms.next();
-			double mass = a.getExactMass();
+			Double mass = a.getExactMass();
+			if (mass == null) return null;
 			totalmass += mass;
 			x += mass * a.getPoint3d().x;
 			y += mass * a.getPoint3d().y;
