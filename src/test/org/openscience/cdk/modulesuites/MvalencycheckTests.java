@@ -27,10 +27,8 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.tools.CDKHydrogenAdderTest;
 import org.openscience.cdk.tools.CDKValencyCheckerTest;
 import org.openscience.cdk.tools.DeduceBondOrderTestFromExplicitHydrogens;
-import org.openscience.cdk.tools.DeduceBondOrderTestFromExplicitHydrogensAndCharges;
 import org.openscience.cdk.tools.DeduceBondOrderTestFromHybridization;
 import org.openscience.cdk.tools.SaturationCheckerTest;
-import org.openscience.cdk.tools.ValencyCheckerTest;
 import org.openscience.cdk.tools.ValencyHybridCheckerTest;
 
 /**
@@ -46,11 +44,9 @@ public class MvalencycheckTests {
         TestSuite suite= new TestSuite("All valencycheck Tests");
 
         suite.addTest(SaturationCheckerTest.suite());
-        suite.addTest(ValencyCheckerTest.suite());
         suite.addTest(ValencyHybridCheckerTest.suite());
         suite.addTest(new JUnit4TestAdapter(DeduceBondOrderTestFromHybridization.class));
         suite.addTest(DeduceBondOrderTestFromExplicitHydrogens.suite());
-        suite.addTest(DeduceBondOrderTestFromExplicitHydrogensAndCharges.suite());
         
         // the next generation valency tools that rely on CDKAtomTypeMatcher
         suite.addTest(CDKHydrogenAdderTest.suite());

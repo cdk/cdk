@@ -57,7 +57,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
 	protected LoggingTool logger;
 
 	public SmilesValencyChecker() {
-        this("org/openscience/cdk/config/data/hybridization_atomtypes.xml");
+        this("org/openscience/cdk/config/data/cdk_atomtypes.xml");
     }
 
 	public SmilesValencyChecker(String atomTypeList) {
