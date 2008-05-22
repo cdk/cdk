@@ -513,7 +513,10 @@ public class GeometryTools {
 		while (atoms.hasNext()) {
 			IAtom a = (IAtom)atoms.next();
 			Double mass = a.getExactMass();
+			// some sanity checking
+			if (a.getPoint3d() == null) return null;
 			if (mass == null) return null;
+
 			totalmass += mass;
 			x += mass * a.getPoint3d().x;
 			y += mass * a.getPoint3d().y;
