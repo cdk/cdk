@@ -39,7 +39,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 /**
  * Checks the functionality of the AdductFormula.
  *
- * @cdk.module test-formula
+ * @cdk.module test-data
  * 
  * @see AdductFormula
  */

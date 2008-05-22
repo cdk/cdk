@@ -63,6 +63,9 @@ import org.openscience.cdk.RingTest;
 import org.openscience.cdk.SingleElectronTest;
 import org.openscience.cdk.StrandTest;
 import org.openscience.cdk.event.ChemObjectChangeEventTest;
+import org.openscience.cdk.formula.AdductFormulaTest;
+import org.openscience.cdk.formula.MolecularFormulaSetTest;
+import org.openscience.cdk.formula.MolecularFormulaTest;
 import org.openscience.cdk.protein.data.PDBAtomTest;
 import org.openscience.cdk.protein.data.PDBMonomerTest;
 import org.openscience.cdk.protein.data.PDBPolymerTest;
@@ -115,7 +118,11 @@ TestSuite suite= new TestSuite("The CDK data module Tests");
         suite.addTest(new JUnit4TestAdapter(ChangeEventPropagationTest.class));
 
         suite.addTest(new JUnit4TestAdapter(FragmentAtomTest.class));
-        
+
+        suite.addTest(new JUnit4TestAdapter(AdductFormulaTest.class));
+        suite.addTest(new JUnit4TestAdapter(MolecularFormulaSetTest.class));
+        suite.addTest(new JUnit4TestAdapter(MolecularFormulaTest.class));
+
         // test from test.event
         suite.addTest(new JUnit4TestAdapter(ChemObjectChangeEventTest.class));
         

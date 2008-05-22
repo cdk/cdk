@@ -26,15 +26,12 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.FormulaCoverageTest;
-import org.openscience.cdk.formula.AdductFormulaTest;
 import org.openscience.cdk.formula.IsotopePatternGeneratorTest;
 import org.openscience.cdk.formula.MassToFormulaToolTest;
 import org.openscience.cdk.formula.MolecularFormulaManipulatorTest;
 import org.openscience.cdk.formula.MolecularFormulaRangeManipulatorTest;
 import org.openscience.cdk.formula.MolecularFormulaRangeTest;
 import org.openscience.cdk.formula.MolecularFormulaSetManipulatorTest;
-import org.openscience.cdk.formula.MolecularFormulaSetTest;
-import org.openscience.cdk.formula.MolecularFormulaTest;
 
 /**
  * TestSuite that runs all the JUnit tests for the formula module.
@@ -48,15 +45,12 @@ public class MformulaTests {
         
         suite.addTest(new JUnit4TestAdapter(FormulaCoverageTest.class));	
         
-        suite.addTest(new JUnit4TestAdapter(AdductFormulaTest.class));
         suite.addTest(new JUnit4TestAdapter(IsotopePatternGeneratorTest.class));
         suite.addTest(new JUnit4TestAdapter(MassToFormulaToolTest.class));
         suite.addTest(new JUnit4TestAdapter(MolecularFormulaManipulatorTest.class));
         suite.addTest(new JUnit4TestAdapter(MolecularFormulaRangeManipulatorTest.class));
         suite.addTest(new JUnit4TestAdapter(MolecularFormulaRangeTest.class));
         suite.addTest(new JUnit4TestAdapter(MolecularFormulaSetManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(MolecularFormulaSetTest.class));
-        suite.addTest(new JUnit4TestAdapter(MolecularFormulaTest.class));
 
         return suite;
     }

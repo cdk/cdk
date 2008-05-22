@@ -38,7 +38,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 /**
  * Checks the functionality of the MolecularFormula.
  *
- * @cdk.module test-formula
+ * @cdk.module test-data
  * 
  * @see MolecularFormula
  */
