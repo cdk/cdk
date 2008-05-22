@@ -137,34 +137,6 @@ public class AtomTypeFactoryTest extends NewCDKTestCase {
 	}
 
     @Test
-	public void testGetAtomTypeFromValency() throws Exception {
-        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/valency_atomtypes.xml", new ChemObject().getBuilder());
-		IAtomType atomType = factory.getAtomType("Oplus");
-		
-        Assert.assertNotNull(atomType);
-        Assert.assertEquals("O", atomType.getSymbol());
-        Assert.assertEquals("Oplus", atomType.getAtomTypeName());
-		Assert.assertEquals(1, atomType.getFormalCharge().intValue());
-		Assert.assertEquals(3.0, atomType.getBondOrderSum(), 0.0001);
-		Assert.assertEquals(IBond.Order.TRIPLE, atomType.getMaxBondOrder());
-	}
-
-    @Test
-	public void testGetAtomTypeFromHybrid() throws Exception {
-        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/hybridization_atomtypes.xml", new ChemObject().getBuilder());
-		IAtomType atomType = factory.getAtomType("C.sp2");
-		
-        Assert.assertNotNull(atomType);
-        Assert.assertEquals("C", atomType.getSymbol());
-        Assert.assertEquals("C.sp2", atomType.getAtomTypeName());
-		Assert.assertEquals(0, atomType.getFormalCharge().intValue());
-		Assert.assertEquals(4.0, atomType.getBondOrderSum(), 0.0001);
-		Assert.assertEquals(IBond.Order.DOUBLE, atomType.getMaxBondOrder());
-		Assert.assertEquals(3, atomType.getFormalNeighbourCount().intValue());
-		Assert.assertEquals(Hybridization.SP2, atomType.getHybridization());
-	}
-
-    @Test
 	public void testGetAtomTypeFromPDB() throws Exception {
         AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/pdb_atomtypes.xml", 
                 new ChemObject().getBuilder());
@@ -260,11 +232,6 @@ public class AtomTypeFactoryTest extends NewCDKTestCase {
     }
         
     @Test
-	public void testXMLValidityHybrid() throws Exception {
-    	assertValidCML("org/openscience/cdk/config/data/hybridization_atomtypes.xml", "Hybrid");
-    }
-        
-    @Test
 	public void testXMLValidityMM2() throws Exception {
     	assertValidCML("org/openscience/cdk/config/data/mm2_atomtypes.xml", "MM2");
     }
@@ -287,16 +254,6 @@ public class AtomTypeFactoryTest extends NewCDKTestCase {
     @Test
 	public void testXMLValidityStructGen() throws Exception {
     	assertValidCML("org/openscience/cdk/config/data/structgen_atomtypes.xml", "StructGen");
-    }
-        
-    @Test
-	public void testXMLValidityValency() throws Exception {
-    	assertValidCML("org/openscience/cdk/config/data/valency_atomtypes.xml", "Valency");
-    }
-        
-    @Test
-	public void testXMLValidityValency2() throws Exception {
-    	assertValidCML("org/openscience/cdk/config/data/valency2_atomtypes.xml", "Valency2");
     }
         
     private void assertValidCML(String atomTypeList, String shortcut) throws Exception {
