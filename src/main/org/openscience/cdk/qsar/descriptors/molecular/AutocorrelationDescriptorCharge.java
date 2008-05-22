@@ -50,23 +50,20 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
 
     private static double[] listcharges (IAtomContainer container)throws CDKException{
-        int natom = container.getAtomCount();
-        Molecule mol = new Molecule(container);
-        IAtom atom;
-
+    	int natom = container.getAtomCount();
+        double[] charges = new double[natom];
         try{
-        GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
-        peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
-        }catch(Exception ex1) {
+            Molecule mol = new Molecule((IAtomContainer)container.clone());
+            GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+            peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
+            for(int i = 0; i < natom; i++){
+                IAtom atom = mol.getAtom(i);
+                charges[i] = atom.getCharge();
+            }
+        } catch(Exception ex1) {
             throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
         }
 
-        double[] charges = new double[natom];
-
-        for(int i = 0; i < natom; i++){
-            atom = mol.getAtom(i);
-            charges[i] = atom.getCharge();
-        }
         return charges;
     }
 
