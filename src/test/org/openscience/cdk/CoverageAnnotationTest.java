@@ -165,7 +165,9 @@ abstract public class CoverageAnnotationTest extends TestCase {
             String[] tokens = annotation.value().split(",");
             for (String token : tokens) {
                 if (!testMethodNames.contains(token.trim())) {
-                    System.out.println(className + "#" + key + " has a test method annotation which is not found in test class: " + testClass.getName());
+                    System.out.println(
+                    	className + "#" + key + " has a test method annotation '" +
+                    	token + "' which is not found in test class: " + testClass.getName());
                     missingTestCount++;
                 }
             }
