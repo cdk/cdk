@@ -20,27 +20,34 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import java.io.InputStream;
+import java.util.Iterator;
+
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.Ring;
 import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNChemFile;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.io.InputStream;
-import java.util.Iterator;
 
 /**
  * @cdk.module test-standard
@@ -146,7 +153,7 @@ public class AllRingsFinderTest extends NewCDKTestCase
 		Assert.assertEquals(20, ringSet.getAtomContainerCount());
 	}
 	
-	@Test public void testBigRingSystem() throws Exception {
+	@Ignore public void testBigRingSystem() throws Exception {
 		if (!runSlowTests()) Assert.fail("Not running slow tests: this should find 1976 rings");
 		
 		IRingSet ringSet = null;
