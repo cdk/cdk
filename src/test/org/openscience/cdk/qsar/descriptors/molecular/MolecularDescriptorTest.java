@@ -71,6 +71,17 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         );
     }
 
+    public void testCalculate_NoModifications() throws Exception {
+        IAtomContainer mol = someoneBringMeSomeWater();
+        String priorString = mol.toString();
+        descriptor.calculate(mol);
+        String afterString = mol.toString();
+        assertEquals(
+        	"The descriptor must not change the passed molecule in any respect.",
+        	priorString, afterString
+        );
+    }
+
     /**
 	 * Checks if the given labels are consistent.
 	 * 
