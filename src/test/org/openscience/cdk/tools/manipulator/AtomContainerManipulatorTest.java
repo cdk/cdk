@@ -508,7 +508,7 @@ public class AtomContainerManipulatorTest extends NewCDKTestCase {
 
         double totalCharge = AtomContainerManipulator.getTotalCharge(container);
 
-        Assert.assertEquals(1.0, totalCharge);
+        Assert.assertEquals(1.0, totalCharge, 0.01);
     }
 
     @Test
