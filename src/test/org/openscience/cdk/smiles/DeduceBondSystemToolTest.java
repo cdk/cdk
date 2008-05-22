@@ -82,15 +82,15 @@ public class DeduceBondSystemToolTest extends NewCDKTestCase {
 		IAtom atom3 = new NNAtom(Elements.CARBON);
 		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom4 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(Hybridization.SP2);
+		atom4.setHybridization(Hybridization.SP2);
 		IAtom atom5 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(Hybridization.SP2);
+		atom5.setHybridization(Hybridization.SP2);
 		IAtom atom6 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(Hybridization.SP2);
+		atom6.setHybridization(Hybridization.SP2);
 		IAtom atom7 = new NNAtom(Elements.OXYGEN);
-		atom3.setHybridization(Hybridization.SP2);
+		atom7.setHybridization(Hybridization.SP2);
 		IAtom atom8 = new NNAtom(Elements.OXYGEN);
-		atom3.setHybridization(Hybridization.SP2);
+		atom8.setHybridization(Hybridization.SP2);
 		
 		// bond block
 		IBond bond1 = new NNBond(atom1, atom2);
@@ -119,19 +119,22 @@ public class DeduceBondSystemToolTest extends NewCDKTestCase {
 		enol.addBond(bond7);
 		enol.addBond(bond8);
 		
+		// perceive atom types
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(enol);
+		
 		// now have the algorithm have a go at it
 		enol = dbst.fixAromaticBondOrders(enol);
         Assert.assertNotNull(enol);
         
 		// now check whether it did the right thing
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond1.getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond2.getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond3.getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond4.getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond5.getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond6.getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond7.getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond8.getOrder());
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, enol.getBond(0).getOrder());
+		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, enol.getBond(1).getOrder());
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, enol.getBond(2).getOrder());
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, enol.getBond(3).getOrder());
+		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, enol.getBond(4).getOrder());
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, enol.getBond(5).getOrder());
+		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, enol.getBond(6).getOrder());
+		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, enol.getBond(7).getOrder());
 	}
 
 	/**
@@ -148,9 +151,10 @@ public class DeduceBondSystemToolTest extends NewCDKTestCase {
 		IAtom atom3 = new NNAtom(Elements.CARBON);
 		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom4 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(Hybridization.SP2);
+		atom4.setHybridization(Hybridization.SP2);
 		IAtom atom5 = new NNAtom(Elements.NITROGEN);
-		atom3.setHybridization(Hybridization.SP2);
+		atom5.setHybridization(Hybridization.SP2);
+		atom5.setHydrogenCount(1);
 		
 		// bond block
 		IBond bond1 = new NNBond(atom1, atom2);
@@ -170,16 +174,19 @@ public class DeduceBondSystemToolTest extends NewCDKTestCase {
 		enol.addBond(bond4);
 		enol.addBond(bond5);
 		
+		// perceive atom types
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(enol);
+		
 		// now have the algorithm have a go at it
 		enol = dbst.fixAromaticBondOrders(enol);
         Assert.assertNotNull(enol);
 		
 		// now check whether it did the right thing
-		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder());;
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder());;
-		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond3.getOrder());;
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond4.getOrder());;
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond5.getOrder());;
+		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, enol.getBond(0).getOrder());;
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, enol.getBond(1).getOrder());;
+		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, enol.getBond(2).getOrder());;
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, enol.getBond(3).getOrder());;
+		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, enol.getBond(4).getOrder());;
 	}
 
 	@Test public void xtestPyridine() throws Exception {
@@ -193,11 +200,11 @@ public class DeduceBondSystemToolTest extends NewCDKTestCase {
 		IAtom atom3 = new NNAtom(Elements.CARBON);
 		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom4 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(Hybridization.SP2);
+		atom4.setHybridization(Hybridization.SP2);
 		IAtom atom5 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(Hybridization.SP2);
+		atom5.setHybridization(Hybridization.SP2);
 		IAtom atom6 = new NNAtom(Elements.NITROGEN);
-		atom3.setHybridization(Hybridization.SP2);
+		atom6.setHybridization(Hybridization.SP2);
 		
 		// bond block
 		IBond bond1 = new NNBond(atom1, atom2);
@@ -220,23 +227,26 @@ public class DeduceBondSystemToolTest extends NewCDKTestCase {
 		enol.addBond(bond5);
 		enol.addBond(bond6);
 		
+		// perceive atom types
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(enol);
+		
 		// now have the algorithm have a go at it
 		enol = dbst.fixAromaticBondOrders(enol);
         Assert.assertNotNull(enol);
 		
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				bond1.getOrder().ordinal() + bond6.getOrder().ordinal()); // around atom1
+				enol.getBond(0).getOrder().ordinal() + enol.getBond(5).getOrder().ordinal()); // around atom1
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				bond1.getOrder().ordinal() + bond2.getOrder().ordinal()); // around atom2
+				enol.getBond(0).getOrder().ordinal() + enol.getBond(1).getOrder().ordinal()); // around atom2
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				bond2.getOrder().ordinal() + bond3.getOrder().ordinal()); // around atom3
+				enol.getBond(1).getOrder().ordinal() + enol.getBond(2).getOrder().ordinal()); // around atom3
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				bond3.getOrder().ordinal() + bond4.getOrder().ordinal()); // around atom4
+				enol.getBond(2).getOrder().ordinal() + enol.getBond(3).getOrder().ordinal()); // around atom4
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				bond4.getOrder().ordinal() + bond5.getOrder().ordinal()); // around atom5
+				enol.getBond(3).getOrder().ordinal() + enol.getBond(4).getOrder().ordinal()); // around atom5
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				bond5.getOrder().ordinal() + bond6.getOrder().ordinal()); // around atom6
+				enol.getBond(4).getOrder().ordinal() + enol.getBond(5).getOrder().ordinal()); // around atom6
 	}
 
 	/**
@@ -254,11 +264,11 @@ public class DeduceBondSystemToolTest extends NewCDKTestCase {
 		IAtom atom3 = new NNAtom(Elements.CARBON);
 		atom3.setHybridization(Hybridization.SP2);
 		IAtom atom4 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(Hybridization.SP2);
+		atom4.setHybridization(Hybridization.SP2);
 		IAtom atom5 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(Hybridization.SP2);
+		atom5.setHybridization(Hybridization.SP2);
 		IAtom atom6 = new NNAtom(Elements.CARBON);
-		atom3.setHybridization(Hybridization.SP2);
+		atom6.setHybridization(Hybridization.SP2);
 		
 		// bond block
 		IBond bond1 = new NNBond(atom1, atom2);
@@ -281,22 +291,25 @@ public class DeduceBondSystemToolTest extends NewCDKTestCase {
 		enol.addBond(bond5);
 		enol.addBond(bond6);
 		
+		// perceive atom types
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(enol);
+		
 		// now have the algorithm have a go at it
 		enol = dbst.fixAromaticBondOrders(enol);
         Assert.assertNotNull(enol);
 		
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				bond1.getOrder().ordinal() + bond6.getOrder().ordinal()); // around atom1
+				enol.getBond(0).getOrder().ordinal() + enol.getBond(5).getOrder().ordinal()); // around atom1
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				bond1.getOrder().ordinal() + bond2.getOrder().ordinal()); // around atom2
+				enol.getBond(0).getOrder().ordinal() + enol.getBond(1).getOrder().ordinal()); // around atom2
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				bond2.getOrder().ordinal() + bond3.getOrder().ordinal()); // around atom3
+				enol.getBond(1).getOrder().ordinal() + enol.getBond(2).getOrder().ordinal()); // around atom3
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				bond3.getOrder().ordinal() + bond4.getOrder().ordinal()); // around atom4
+				enol.getBond(2).getOrder().ordinal() + enol.getBond(3).getOrder().ordinal()); // around atom4
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				bond4.getOrder().ordinal() + bond5.getOrder().ordinal()); // around atom5
+				enol.getBond(3).getOrder().ordinal() + enol.getBond(4).getOrder().ordinal()); // around atom5
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.ordinal() + CDKConstants.BONDORDER_DOUBLE.ordinal(), 
-				bond5.getOrder().ordinal() + bond6.getOrder().ordinal()); // around atom6
+				enol.getBond(4).getOrder().ordinal() + enol.getBond(5).getOrder().ordinal()); // around atom6
 	}
 }
