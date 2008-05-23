@@ -318,11 +318,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				(atom.getFormalCharge() == CDKConstants.UNSET ||
     						atom.getFormalCharge() == 0)) {
     			if (atom.getHybridization() == Hybridization.SP2) {
-    				IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-    				if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
+    				int connectedAtomsCount = atomContainer.getConnectedAtomsCount(atom);
+    				if (connectedAtomsCount == 1) {
     					IAtomType type = getAtomType("O.sp2");
     					if (isAcceptable(atom, atomContainer, type)) return type;
-    				} else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
+    				} else if (connectedAtomsCount == 2) {
     					IAtomType type = getAtomType("O.planar3");
     					if (isAcceptable(atom, atomContainer, type)) return type;
     				}    				
