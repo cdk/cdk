@@ -5,7 +5,8 @@ Bundle-SymbolicName: org.openscience.cdk;singleton:=true
 Bundle-Version: 1.1.0
 Bundle-Vendor: The Chemistry Development Kit Project
 Bundle-ActivationPolicy: lazy
-Export-Package: org.openscience.cdk,
+Export-Package: javax.vecmath,
+ org.openscience.cdk,
  org.openscience.cdk.annotations,
  org.openscience.cdk.applications,
  org.openscience.cdk.applications.swing,
@@ -80,6 +81,7 @@ Export-Package: org.openscience.cdk,
  org.openscience.cdk.reaction.type,
  org.openscience.cdk.renderer,
  org.openscience.cdk.renderer.color,
+ org.openscience.cdk.renderer.old,
  org.openscience.cdk.ringsearch,
  org.openscience.cdk.ringsearch.cyclebasis,
  org.openscience.cdk.similarity,
@@ -94,8 +96,7 @@ Export-Package: org.openscience.cdk,
  org.openscience.cdk.tools,
  org.openscience.cdk.tools.features,
  org.openscience.cdk.tools.manipulator,
- org.openscience.cdk.validate,
- javax.vecmath
+ org.openscience.cdk.validate
 Bundle-ClassPath: .,
  jar/jgrapht-0.6.0.jar,
  jar/jniinchi-0.4.jar,
