@@ -1325,7 +1325,22 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		int requiredContainerCount = type.getFormalNeighbourCount();
     		if (actualContainerCount != requiredContainerCount)
     			return false;
+    	} else if (atom.getHydrogenCount() != CDKConstants.UNSET) {
+    		// confirm correct neighbour count
+    		int actualNeighbourCount = container.getConnectedAtomsCount(atom) + atom.getHydrogenCount();
+    		int requiredNeighbourCount = type.getFormalNeighbourCount();
+    		if (actualNeighbourCount != requiredNeighbourCount)
+    			return false;
     	}
+
+    	// confirm correct bond orders
+    	if (type.getProperty(CDKConstants.PI_BOND_COUNT) != null && container.getMaximumBondOrder(atom).ordinal() + 1 > (Integer) type.getProperty(CDKConstants.PI_BOND_COUNT) + 1)
+    		return false;
+
+    	// confirm correct formal charge
+    	if (atom.getFormalCharge() != CDKConstants.UNSET && atom.getFormalCharge() != type.getFormalCharge())
+    		return false;
+
     	return true;
     }
     
