@@ -24,9 +24,9 @@
  */
 package org.openscience.cdk.formula;
 
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -88,7 +88,7 @@ public class MolecularFormulaChecker {
 		double result = 1.0;
 		
 		IMolecularFormula formulaWith = isValid(formula);
-		Hashtable<Object, Object> properties = formulaWith.getProperties();
+		Map<Object, Object> properties = formulaWith.getProperties();
 		
 		Iterator<IRule> iterRules = rules.iterator();
 		while(iterRules.hasNext()){

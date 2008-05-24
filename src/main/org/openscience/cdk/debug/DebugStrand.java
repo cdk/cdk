@@ -21,7 +21,6 @@
 package org.openscience.cdk.debug;
 
 import java.util.Collection;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -580,7 +579,7 @@ public class DebugStrand extends org.openscience.cdk.Strand
 		super.removeMonomer(name);
 	}
 
-	public Hashtable getMonomers() {
+	public Map<String, IMonomer> getMonomers() {
 		logger.debug("Getting monomers as hashtable");
 		return super.getMonomers();
 	}

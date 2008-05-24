@@ -127,7 +127,7 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
         for (Iterator iterator = strandKeys.iterator(); iterator.hasNext();) {
             Object key = iterator.next();
             Strand aStrand = (Strand) strands.get(key);
-            Hashtable tmp = aStrand.getMonomers();
+            Map tmp = aStrand.getMonomers();
             Set keys = tmp.keySet();
             for (Iterator iterator1 = keys.iterator(); iterator1.hasNext();) {
                 Object o1 = iterator1.next();

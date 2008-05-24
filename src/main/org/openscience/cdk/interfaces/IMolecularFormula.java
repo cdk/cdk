@@ -23,10 +23,8 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Hashtable;
 import java.util.Iterator;
-
-import org.openscience.cdk.interfaces.IIsotope;
+import java.util.Map;
 
 /**
  *  Class defining a molecular formula object. It maintains
@@ -190,7 +188,7 @@ public interface IMolecularFormula{
 	 *@return    The object's properties as an Hashtable
 	 *@see       #setProperties
 	 */
-	public Hashtable<Object, Object> getProperties();
+	public Map<Object, Object> getProperties();
 	/**
 	 *  Sets the properties of this object.I should
 	 * integrate into ChemObject.
@@ -198,7 +196,7 @@ public interface IMolecularFormula{
 	 *@param  properties  a Hashtable specifying the property values
 	 *@see                #getProperties
 	 */
-	public void setProperties(Hashtable<Object, Object> properties);
+	public void setProperties(Map<Object, Object> properties);
 	
     /**
      * Returns a ChemObjectBuilder for the data classes that extend

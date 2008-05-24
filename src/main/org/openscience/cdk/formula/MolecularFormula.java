@@ -23,10 +23,10 @@
  */
 package org.openscience.cdk.formula;
 
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -64,7 +64,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 */
 	private static final long serialVersionUID = -2011407700837295287L;
 	
-	private HashMap<IIsotope, Integer> isotopes;
+	private Map<IIsotope, Integer> isotopes;
 	/**
      *  The partial charge of the molecularFormula. The default value is Double.NaN.
      */
@@ -73,7 +73,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	/**
 	 *  A hashtable for the storage of any kind of properties of this IChemObject.
 	 */
-	private Hashtable<Object, Object> properties;
+	private Map<Object, Object> properties;
 	
 	/**
 	 *  Constructs an empty MolecularFormula.
@@ -286,7 +286,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 *
 	 * @return    Returns in instance of the properties
 	 */
-	private Hashtable<Object, Object> lazyProperties(){
+	private Map<Object, Object> lazyProperties(){
 		if (properties == null)
 		{
 			properties = new Hashtable<Object, Object>();
@@ -357,7 +357,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 *@see       #setProperties
 	 */
     @TestMethod("testGetProperties")
-	public Hashtable<Object, Object> getProperties(){
+	public Map<Object, Object> getProperties(){
 		return lazyProperties();
 	}
 	/**
@@ -367,12 +367,11 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 *@see                #getProperties
 	 */
     @TestMethod("testSetProperties_Hashtable")
-	public void setProperties(Hashtable<Object, Object> properties){
+	public void setProperties(Map<Object, Object> properties){
 		
-		Enumeration<Object> keys = properties.keys();
-		while (keys.hasMoreElements())
-		{
-			Object key = keys.nextElement();
+		Iterator<Object> keys = properties.keySet().iterator();
+		while (keys.hasNext()) {
+			Object key = keys.next();
 			lazyProperties().put(key, properties.get(key));
 		}
 	}
