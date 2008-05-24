@@ -23,7 +23,7 @@
  */
 package org.openscience.cdk.io.setting;
 
-import java.util.Vector;
+import java.util.List;
 
 import org.openscience.cdk.exception.CDKException;
 
@@ -38,14 +38,14 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class OptionIOSetting extends IOSetting {
 
-    private Vector settings;
+    private List<String> settings;
     
     /**
      * OptionIOSetting is IOSetting for which the value must be
      * in the list of possible options.
      */
     public OptionIOSetting(String name, int level, 
-                           String question, Vector settings, 
+                           String question, List<String> settings, 
                            String defaultSetting) {
         super(name, level, question, defaultSetting);
         this.settings = settings;
@@ -75,7 +75,7 @@ public class OptionIOSetting extends IOSetting {
      */
     public void setSetting(int setting) throws CDKException {
         if (setting < settings.size() + 1 && setting > 0) {
-            this.setting = (String)settings.elementAt(setting-1);
+            this.setting = (String)settings.get(setting-1);
         } else {
             throw new CDKException("Setting " + setting + " does not exist.");
         }
@@ -84,7 +84,7 @@ public class OptionIOSetting extends IOSetting {
     /**
      * Returns a Vector of Strings containing all possible options.
      */
-    public Vector getOptions() {
+    public List<String> getOptions() {
         return settings;
     }
     

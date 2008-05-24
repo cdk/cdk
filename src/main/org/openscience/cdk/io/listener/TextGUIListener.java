@@ -30,7 +30,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.Vector;
+import java.util.List;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ReaderEvent;
@@ -123,10 +123,10 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
                 }
             } else if (setting instanceof OptionIOSetting) {
                 OptionIOSetting optionSet = (OptionIOSetting)setting;
-                Vector settings = optionSet.getOptions();
+                List<String> settings = optionSet.getOptions();
                 for (int i=0; i<settings.size(); i++) {
                     this.out.println();
-                    String option = (String)settings.elementAt(i);
+                    String option = (String)settings.get(i);
                     this.out.print((i+1) + ". " + option);
                     if (option.equals(setting.getSetting())) {
                         this.out.print(" (Default)");

@@ -23,7 +23,8 @@
  */
 package org.openscience.cdk.io.iterator.event;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.ReaderEvent;
@@ -48,14 +49,14 @@ public abstract class DefaultEventChemObjectReader implements IEventChemObjectRe
     /**
      * Holder of reader event listeners.
      */
-    private Vector listenerList = new Vector();
+    private List<IChemObjectIOListener> listenerList = new ArrayList<IChemObjectIOListener>();
 
     public void addChemObjectIOListener(IChemObjectIOListener listener) {
-        listenerList.addElement(listener);
+        listenerList.add(listener);
     }
 
     public void removeChemObjectIOListener(IChemObjectIOListener listener) {
-        listenerList.removeElement(listener);
+        listenerList.remove(listener);
     }
 
     public boolean accepts(IChemObject object) {
@@ -80,7 +81,7 @@ public abstract class DefaultEventChemObjectReader implements IEventChemObjectRe
      */
     protected void fireFrameRead() {
         for (int i = 0; i < listenerList.size(); ++i) {
-            IReaderListener listener = (IReaderListener) listenerList.elementAt(i);
+            IReaderListener listener = (IReaderListener) listenerList.get(i);
             
             // Lazily create the event:
             if (frameReadEvent == null) {
@@ -92,7 +93,7 @@ public abstract class DefaultEventChemObjectReader implements IEventChemObjectRe
 
     protected void fireIOSettingQuestion(IOSetting setting) {
         for (int i = 0; i < listenerList.size(); ++i) {
-            IChemObjectIOListener listener = (IChemObjectIOListener) listenerList.elementAt(i);
+            IChemObjectIOListener listener = listenerList.get(i);
             listener.processIOSettingQuestion(setting);
         }
     }

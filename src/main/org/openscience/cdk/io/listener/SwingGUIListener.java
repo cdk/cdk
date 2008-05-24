@@ -24,8 +24,8 @@
 package org.openscience.cdk.io.listener;
 
 import java.awt.Component;
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -94,11 +94,11 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
                 }
             } else if (setting instanceof OptionIOSetting) {
                 OptionIOSetting optionSetting = (OptionIOSetting)setting;
-                Vector settings = optionSetting.getOptions();
-                Enumeration elements = settings.elements();
+                List<String> settings = optionSetting.getOptions();
+                Iterator<String> elements = settings.iterator();
                 Object[] options = new Object[settings.size()];
                 for (int i=0; i<options.length; i++) {
-                    options[i] = elements.nextElement();
+                    options[i] = elements.next();
                 }
                 int n = JOptionPane.showOptionDialog(frame, setting.getQuestion(), setting.getName(),
                     JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
