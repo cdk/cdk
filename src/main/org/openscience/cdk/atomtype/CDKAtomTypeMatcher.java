@@ -692,14 +692,16 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				if (isAcceptable(atom, atomContainer, type)) return type;
     			}
     		} else if (neighborcount == 2) {
-    			if (isRingAtom(atom, atomContainer)) {
-    				if (bothNeighborsAreSp2(atom, atomContainer)) {
-    					IAtomType type = getAtomType("S.planar3");
-        				if (isAcceptable(atom, atomContainer, type)) return type;
-    				}
+    			if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom, atomContainer)) {
+    			    IAtomType type = getAtomType("S.planar3");
+    			    if (isAcceptable(atom, atomContainer, type)) return type;
+    			} else if (countAttachedDoubleBonds(atomContainer, atom, "O") == 2) {
+              IAtomType type = getAtomType("S.oxide");
+              if (isAcceptable(atom, atomContainer, type)) return type;
+    			} else {
+    			    IAtomType type = getAtomType("S.3");
+              if (isAcceptable(atom, atomContainer, type)) return type;
     			}
-    			IAtomType type = getAtomType("S.3");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
     		} else if (neighborcount == 1) {
     			if (atomContainer.getConnectedBondsList(atom).get(0).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
     				IAtomType type = getAtomType("S.2");

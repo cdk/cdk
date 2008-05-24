@@ -385,7 +385,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addBond(b1);
         mol.addBond(b2);
 
-        String[] expectedTypes = {"S.3", "O.sp2", "O.sp2"}; // FIXME: compare with H2S... something not correct
+        String[] expectedTypes = {"S.oxide", "O.sp2", "O.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
