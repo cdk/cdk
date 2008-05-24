@@ -170,7 +170,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 			return;
 		}
         
-        List listeners = lazyChemObjectListeners();
+        List<IChemObjectListener> listeners = lazyChemObjectListeners();
 		if (listeners.contains(col)) {
 			listeners.remove(col);
 		}
@@ -183,7 +183,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 */
 	public void notifyChanged() {
         if (getNotification() && getListenerCount() > 0) {
-        	List listeners = lazyChemObjectListeners();
+            List<IChemObjectListener> listeners = lazyChemObjectListeners();
             for (Object listener : listeners) {
                 ((IChemObjectListener) listener).stateChanged(
                         new ChemObjectChangeEvent(this)
@@ -204,7 +204,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 */
 	public void notifyChanged(IChemObjectChangeEvent evt) {
         if (getNotification() && getListenerCount() > 0) {
-        	List listeners = lazyChemObjectListeners();
+            List<IChemObjectListener> listeners = lazyChemObjectListeners();
             for (Object listener : listeners) {
                 ((IChemObjectListener) listener).stateChanged(evt);
             }
@@ -305,7 +305,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
         System.arraycopy(flags, 0, clone.flags, 0, flags.length);
         // clone the properties
 		if (properties != null) {
-			Hashtable<Object, Object> clonedHashtable = new Hashtable<Object, Object>();
+			Map<Object, Object> clonedHashtable = new Hashtable<Object, Object>();
 			Iterator<Object> keys = properties.keySet().iterator();
 			while (keys.hasNext()) {
 				Object key = keys.next();
@@ -328,7 +328,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 */
 	public boolean compare(Object object)
 	{
-		if (!(object instanceof org.openscience.cdk.interfaces.IChemObject))
+		if (!(object instanceof IChemObject))
 		{
 			return false;
 		}
