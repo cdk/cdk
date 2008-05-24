@@ -107,6 +107,18 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
         );
     }
 
+    public void testCalculate_NoModifications() throws Exception {
+        IAtomContainer mol = someoneBringMeSomeWater();
+        IAtom atom = mol.getAtom(0);
+        String priorString = atom.toString();
+        descriptor.calculate(atom, mol);
+        String afterString = atom.toString();
+        assertEquals(
+          "The descriptor must not change the passed bond in any respect.",
+          priorString, afterString
+        );
+    }
+
     private IMolecule someoneBringMeSomeWater() {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
