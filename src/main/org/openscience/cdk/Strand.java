@@ -30,6 +30,7 @@ package org.openscience.cdk;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
@@ -58,7 +59,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	private static final long serialVersionUID = 4200943086350928356L;
 
 	/** The list of all Monomers in the Strand.*/
-	private Hashtable<String, IMonomer> monomers;
+	private Map<String, IMonomer> monomers;
 	/** The name of this strand (e.g. A, B). */
 	private String strandName;
 	/** The type of this strand (e.g. PEPTIDE, DNA, RNA). */
@@ -223,7 +224,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
 	 *
 	 * @return hashtable containing the monomers in the strand.
 	 */
-	public Hashtable<String, IMonomer> getMonomers()	{
+	public Map<String, IMonomer> getMonomers()	{
 		return monomers;
 	}
     
