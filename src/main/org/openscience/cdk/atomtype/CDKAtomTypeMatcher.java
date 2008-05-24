@@ -526,10 +526,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			} else if (atom.getFormalCharge() == -1) {
     				IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     				if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
-    					if (atomContainer.getConnectedBondsCount(atom) <= 2) {
-    						IAtomType type = getAtomType("N.minus.sp3");
-    						if (isAcceptable(atom, atomContainer, type)) return type;
-    					}
+                if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom,atomContainer)) {
+                    IAtomType type = getAtomType("N.minus.planar3");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                } else if (atomContainer.getConnectedBondsCount(atom) <= 2) {
+                    IAtomType type = getAtomType("N.minus.sp3");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                }
     				} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
     					if (atomContainer.getConnectedBondsCount(atom) <= 1) {
     						IAtomType type = getAtomType("N.minus.sp2");
