@@ -801,6 +801,9 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+    /**
+     * @cdk.inchi InChI=1/C2H5P/c1-3-2/h1H2,2H3
+     */
     @Test public void testPhosphorCompound() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("C");
@@ -812,7 +815,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
         mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
 
-        String[] expectedTypes = {"C.sp2", "P.ine", "C.sp3"}; // FIXME: compare with previous test... can't both be P.ine...
+        String[] expectedTypes = {"C.sp2", "P.irane", "C.sp3"}; // FIXME: compare with previous test... can't both be P.ine...
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 

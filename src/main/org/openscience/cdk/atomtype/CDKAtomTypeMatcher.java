@@ -744,7 +744,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			if (isAcceptable(atom, atomContainer, type)) return type;
     		} else if (neighborcount == 2) {
     			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
-    				IAtomType type = getAtomType("P.ine");
+    				IAtomType type = getAtomType("P.irane");
     				if (isAcceptable(atom, atomContainer, type)) return type;
     			} else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
     				IAtomType type = getAtomType("P.ine");
