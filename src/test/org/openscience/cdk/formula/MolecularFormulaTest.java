@@ -540,7 +540,7 @@ public class MolecularFormulaTest extends NewCDKTestCase {
 	 * A unit test suite for JUnit.
    	*/
     @Test 
-	public void testSetProperties_Hashtable() throws Exception {
+	public void testSetProperties_Map() throws Exception {
     	testGetProperties();
         
 	} 
