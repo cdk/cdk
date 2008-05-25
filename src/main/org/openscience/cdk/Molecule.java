@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  * 
@@ -33,13 +30,13 @@ import java.io.Serializable;
  * Represents the concept of a chemical molecule, an object composed of 
  * atoms connected by bonds.
  *
- * @cdk.module data
+ * @cdk.module  data
  * @cdk.svnrev  $Revision$
  *
- * @author     steinbeck
- * @cdk.created    2000-10-02
+ * @author      steinbeck
+ * @cdk.created 2000-10-02
  *
- * @cdk.keyword    molecule
+ * @cdk.keyword molecule
  */
 public class Molecule extends AtomContainer implements Serializable, IMolecule, Cloneable
 {
@@ -99,7 +96,7 @@ public class Molecule extends AtomContainer implements Serializable, IMolecule, 
         if (getID() != null) {
         	description.append(", ID=").append(getID());
         }
-        description.append(super.toString());
+        description.append(", ").append(super.toString());
         description.append(')');
         return description.toString();
     }
