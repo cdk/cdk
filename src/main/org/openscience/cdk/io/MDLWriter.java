@@ -260,7 +260,8 @@ public class MDLWriter extends DefaultChemObjectWriter {
         if (title == null) title = "";
         if(title.length()>80)
           title=title.substring(0,80);
-        writer.write(title + "\n");
+        writer.write(title);
+        writer.newLine();
         
         /* From CTX spec
          * This line has the format:
@@ -276,19 +277,21 @@ public class MDLWriter extends DefaultChemObjectWriter {
         writer.write(new SimpleDateFormat("M/d/y,H:m",Locale.US).format(
         		     Calendar.getInstance(TimeZone.getDefault()).getTime())
         );
-        writer.write('\n');
+        writer.newLine();
         
         String comment = (String)container.getProperty(CDKConstants.REMARK);
         if (comment == null) comment = "";
         if(comment.length()>80)
           comment=comment.substring(0,80);
-        writer.write(comment + "\n");
+        writer.write(comment);
+        writer.newLine();
         
         // write Counts line
         line += formatMDLInt(container.getAtomCount(), 3);
         line += formatMDLInt(container.getBondCount(), 3);
-        line += "  0  0  0  0  0  0  0  0999 V2000\n";
+        line += "  0  0  0  0  0  0  0  0999 V2000";
         writer.write(line);
+        writer.newLine();
 
         // write Atom block
         for (int f = 0; f < container.getAtomCount(); f++) {
