@@ -21,21 +21,31 @@
  */
 package org.openscience.cdk.atomtype;
 
-import junit.framework.JUnit4TestAdapter;
-import org.junit.Assert;
-import org.junit.Test;
-import org.openscience.cdk.*;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.Symbols;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.interfaces.IAtomType.Hybridization;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.templates.MoleculeFactory;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import junit.framework.JUnit4TestAdapter;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.Symbols;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -2408,6 +2418,31 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+    @Test public void testChiPathFail() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom a1 = mol.getBuilder().newAtom("C");
+        mol.addAtom(a1);
+        IAtom a2 = mol.getBuilder().newAtom("C");
+        mol.addAtom(a2);
+        IAtom a3 = mol.getBuilder().newAtom("C");
+        mol.addAtom(a3);
+        IAtom a4 = mol.getBuilder().newAtom("O");
+        mol.addAtom(a4);
+        IBond b1 = mol.getBuilder().newBond(a2, a1, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = mol.getBuilder().newBond(a3, a2, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = mol.getBuilder().newBond(a4, a3, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = mol.getBuilder().newBond(a4, a2, IBond.Order.SINGLE);
+        mol.addBond(b4);
+
+        String[] expectedTypes = {
+            "C.sp3", "C.sp3", "C.sp3", "O.sp3"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void countTestedAtomTypes() {
     	super.countTestedAtomTypes(testedAtomTypes);
     }
