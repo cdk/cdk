@@ -32,7 +32,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.StringReader;
-import java.security.AccessController;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -45,8 +44,6 @@ import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.listener.IReaderListener;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.LoggingTool;
-
-import sun.security.action.GetPropertyAction;
 
 /**
  * Random access to text files of compounds. 
@@ -324,8 +321,7 @@ public abstract class RandomAccessReader extends DefaultIteratingChemObjectReade
      * @throws Exception
      */
 	public static File getIndexFile(String filename) throws Exception {
-		GetPropertyAction a = new GetPropertyAction("java.io.tmpdir");
-		String tmpDir = ((String) AccessController.doPrivileged(a));
+		String tmpDir = System.getProperty("java.io.tmpdir");
         File f = new File(filename);
         File indexFile = new File(tmpDir,f.getName()+"_cdk.index");
         f = null;
