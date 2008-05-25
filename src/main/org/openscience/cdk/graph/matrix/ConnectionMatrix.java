@@ -59,7 +59,7 @@ public class ConnectionMatrix implements IGraphMatrix {
 		int indexAtom1;
 		int indexAtom2;
 		double[][] conMat = new double[container.getAtomCount()][container.getAtomCount()];
-		for (int f = 0; f < container.getElectronContainerCount(); f++)
+		for (int f = 0; f < container.getBondCount(); f++)
 		{
 			bond = container.getBond(f);
 			indexAtom1 = container.getAtomNumber(bond.getAtom(0));

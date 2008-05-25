@@ -30,6 +30,7 @@ import org.openscience.cdk.qsar.descriptors.bond.BondPartialPiChargeDescriptorTe
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialTChargeDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.bond.BondSigmaElectronegativityDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.bond.MassNumberDifferenceDescriptorTest;
 
 /**
@@ -52,6 +53,7 @@ public class MqsarbondTests {
         suite.addTest(new JUnit4TestAdapter(BondPartialSigmaChargeDescriptorTest.class));
         suite.addTest(new JUnit4TestAdapter(BondPartialTChargeDescriptorTest.class));
         suite.addTest(new JUnit4TestAdapter(BondSigmaElectronegativityDescriptorTest.class));
+        suite.addTest(new JUnit4TestAdapter(IPBondLearningDescriptorTest.class));
         suite.addTest(new JUnit4TestAdapter(MassNumberDifferenceDescriptorTest.class));
         
         return suite;

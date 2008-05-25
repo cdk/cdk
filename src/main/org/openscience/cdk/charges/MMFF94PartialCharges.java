@@ -1,9 +1,7 @@
 /*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+ *  $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2008  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -23,13 +21,14 @@
  */
 package org.openscience.cdk.charges;
 
+import java.util.Hashtable;
+import java.util.Vector;
+
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
-
-import java.util.Hashtable;
-import java.util.Vector;
 
 /**
  *  The calculation of the MMFF94 partial charges.
@@ -49,12 +48,12 @@ import java.util.Vector;
  *  </pre>
  *
  * @author      mfe4
- * @author chhoppe
+ * @author      chhoppe
  * @cdk.created 2004-11-03
  * @cdk.module  forcefield
  * @cdk.svnrev  $Revision$
  */
-public class MMFF94PartialCharges {
+public class MMFF94PartialCharges implements IChargeCalculator {
 
 	
 	/**
@@ -127,5 +126,16 @@ public class MMFF94PartialCharges {
 			//logger.debug( "CHARGE :"+thisAtom.getProperty("MMFF94charge") );
 		}
 		return ac;
+	}
+	
+	public void calculateCharges(IAtomContainer container) throws CDKException {
+		try {
+	        assignMMFF94PartialCharges(container);
+        } catch (Exception exception) {
+        	throw new CDKException(
+    	        "Could not calculate MMFF94 partial charges: " +
+    	        exception.getMessage(), exception
+        	);
+        }
 	}
 }

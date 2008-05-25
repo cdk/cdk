@@ -26,7 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.charges.StabilizationCharge;
+import org.openscience.cdk.charges.StabilizationCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -61,20 +61,20 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.created    2008-104-31
  * @cdk.module     qsaratomic
  * @cdk.set        qsar-descriptors
- * @see StabilizationCharge
+ * @see StabilizationCharges
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.StabilizationPlusChargeDescriptorTest")
 public class StabilizationPlusChargeDescriptor implements IAtomicDescriptor {
 	
     String[] descriptorNames = {"stabilPlusC"};
     
-	private StabilizationCharge stabil;
+	private StabilizationCharges stabil;
 
     /**
      *  Constructor for the StabilizationPlusChargeDescriptor object
      */
     public StabilizationPlusChargeDescriptor() {
-    	stabil = new StabilizationCharge();
+    	stabil = new StabilizationCharges();
   }
 
 

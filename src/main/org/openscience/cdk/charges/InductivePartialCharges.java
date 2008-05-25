@@ -49,7 +49,7 @@ import java.io.IOException;
  * @cdk.keyword electronegativity
  */
 @TestClass("org.openscience.cdk.charges.InductivePartialChargesTest")
-public class InductivePartialCharges {
+public class InductivePartialCharges implements IChargeCalculator {
 
 	private static double[] pauling;
 	private IsotopeFactory ifac = null;
@@ -120,6 +120,17 @@ public class InductivePartialCharges {
 		return ac;
 	}
 
+    @TestMethod("testCalculateCharges_IAtomContainer")
+    public void calculateCharges(IAtomContainer container) throws CDKException {
+    	try {
+	        this.assignInductivePartialCharges(container);
+        } catch (Exception exception) {
+	        throw new CDKException(
+	        	"Could not calculate inductive partial charges: " +
+	        	exception.getMessage(), exception
+	        );
+        }
+    }
 
 	/**
 	 *  Gets the paulingElectronegativities attribute of the

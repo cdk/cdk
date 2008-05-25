@@ -24,13 +24,14 @@
 package org.openscience.cdk.charges;
 
 
+import java.util.Iterator;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-
-import java.util.Iterator;
 
 /**
  * <p>The calculation of the Gasteiger Marsili (PEOE) partial charges is based on 
@@ -50,13 +51,12 @@ import java.util.Iterator;
  * @cdk.keyword PEOE
  */
 @TestClass("org.openscience.cdk.charges.GasteigerMarsiliPartialChargesTest")
-public class GasteigerMarsiliPartialCharges {
+public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
 
     private double DEOC_HYDROGEN = 20.02;
     private double MX_DAMP = 0.5;
     private double MX_ITERATIONS = 20;
     private int STEP_SIZE = 5;
-    private AtomTypeCharges atomTypeCharges = new AtomTypeCharges();
     /** Flag is set if the formal charge of a chemobject is changed due to resonance.*/
 
 
@@ -71,6 +71,7 @@ public class GasteigerMarsiliPartialCharges {
      *
      *@param  chiCat  The new DEOC_HYDROGEN value
      */
+    @TestMethod("testSetChiCatHydrogen_Double")
     public void setChiCatHydrogen(double chiCat) {
         DEOC_HYDROGEN = chiCat;
     }
@@ -82,6 +83,7 @@ public class GasteigerMarsiliPartialCharges {
      *
      *@param  damp  The new maxGasteigerDamp value
      */
+    @TestMethod("testSetMaxGasteigerDamp_Double")
     public void setMaxGasteigerDamp(double damp) {
         MX_DAMP = damp;
     }
@@ -93,20 +95,54 @@ public class GasteigerMarsiliPartialCharges {
      *
      *@param  iters  The new maxGasteigerIters value
      */
+    @TestMethod("testSetMaxGasteigerIters_Double")
     public void setMaxGasteigerIters(double iters) {
         MX_ITERATIONS = iters;
     }
 
+    /**
+     *  Gets chi_cat value for hydrogen, because H poses a special problem due to lack of possible second ionisation
+      *
+      * @return  The new DEOC_HYDROGEN value
+      */
+    @TestMethod("testGetChiCatHydrogen")
+     public double getChiCatHydrogen() {
+         return DEOC_HYDROGEN;
+     }
+
+
+     /**
+      *  Gets the maxGasteigerDamp attribute of the GasteigerMarsiliPartialCharges
+      *  object
+      *
+      * @return  The new maxGasteigerDamp value
+      */
+     @TestMethod("testGetMaxGasteigerDamp")
+     public double getMaxGasteigerDamp() {
+         return MX_DAMP;
+     }
+
+
+     /**
+      *  Gets the maxGasteigerIters attribute of the GasteigerMarsiliPartialCharges
+      *  object
+      *
+      * @return  The new maxGasteigerIters value
+      */
+     @TestMethod("testGetMaxGasteigerIters")
+     public double getMaxGasteigerIters() {
+         return MX_ITERATIONS;
+     }
 
     /**
      *  Main method which assigns Gasteiger Marisili partial sigma charges
      *
      *@param  ac             AtomContainer
-     * @param setCharge XXX
+     *@param setCharge   	 The Charge
      *@return                AtomContainer with partial charges
      *@exception  Exception  Possible Exceptions
      */
-    @TestMethod("testAssignGasteigerMarsiliPartialCharges")
+    @TestMethod("testAssignGasteigerMarsiliSigmaPartialCharges_IAtomContainer_Boolean")
     public IAtomContainer assignGasteigerMarsiliSigmaPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
 
 //		if (setCharge) {
@@ -179,14 +215,38 @@ public class GasteigerMarsiliPartialCharges {
         }
         return ac;
     }
+
+    @TestMethod("testCalculateCharges_IAtomContainer")
+    public void calculateCharges(IAtomContainer container) throws CDKException {
+    	try {
+	        this.assignGasteigerMarsiliSigmaPartialCharges(container, true);
+        } catch (Exception exception) {
+	        throw new CDKException(
+	        	"Could not calculate Gasteiger-Marsili sigma charges: " +
+	        	exception.getMessage(), exception
+	        );
+        }
+    }
+
     /**
      *  Get the StepSize attribute of the GasteigerMarsiliPartialCharges
      *  object
      *
      *@return STEP_SIZE
      */
+    @TestMethod("testGetStepSize")
     public int getStepSize(){
         return STEP_SIZE;
+    }
+    /**
+     *  Set the StepSize attribute of the GasteigerMarsiliPartialCharges
+     *  object
+     *
+     *@param step
+     */
+    @TestMethod("testSetStepSize")
+    public void setStepSize(int step){
+        STEP_SIZE = step;
     }
 
 
@@ -196,6 +256,7 @@ public class GasteigerMarsiliPartialCharges {
      *@param  ac  AtomContainer
      *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
      */
+    @TestMethod("testAssignGasteigerSigmaMarsiliFactors_IAtomContainer")
     public double[] assignGasteigerSigmaMarsiliFactors(IAtomContainer ac) {
         //a,b,c,denom,chi,q
         double[] gasteigerFactors = new double[(ac.getAtomCount() * (STEP_SIZE+1))];

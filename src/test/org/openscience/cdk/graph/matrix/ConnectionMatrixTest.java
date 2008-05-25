@@ -23,11 +23,12 @@ package org.openscience.cdk.graph.matrix;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.graph.matrix.ConnectionMatrix;
+import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
@@ -46,6 +47,19 @@ public class ConnectionMatrixTest extends NewCDKTestCase {
 		double[][] matrix = ConnectionMatrix.getMatrix(container);
 		Assert.assertEquals(3,matrix.length);
 		Assert.assertEquals(3,matrix[0].length);
+	}
+
+    @Test
+	public void testLonePairs() throws Exception {
+		IMolecule container = new NNMolecule();
+		container.addAtom(container.getBuilder().newAtom("I"));
+		container.addLonePair(container.getBuilder().newLonePair(container.getAtom(0)));
+		container.addAtom(container.getBuilder().newAtom("H"));
+		container.getBuilder().newBond(container.getAtom(0), container.getAtom(1), IBond.Order.SINGLE);
+		
+		double[][] matrix = ConnectionMatrix.getMatrix(container);
+		Assert.assertEquals(2,matrix.length);
+		Assert.assertEquals(2,matrix[0].length);
 	}
 
 }

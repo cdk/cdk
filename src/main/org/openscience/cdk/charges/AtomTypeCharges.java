@@ -1,9 +1,7 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
+ *                     2008  Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -21,7 +19,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
- 
 package org.openscience.cdk.charges;
 
 import java.util.regex.Matcher;
@@ -42,7 +39,8 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
  * @cdk.svnrev  $Revision$
  */
 @TestClass("org.openscience.cdk.charges.AtomTypeChargesTest")
-public class AtomTypeCharges {
+public class AtomTypeCharges implements IChargeCalculator {
+	
 	HOSECodeGenerator hcg = new HOSECodeGenerator();
 	Pattern pOC = Pattern.compile("O-[1][-];=?+C[(]=?+O.*+");
 	Pattern pOP = Pattern.compile("O-[1][-];=?+P.*+");
@@ -136,5 +134,16 @@ public class AtomTypeCharges {
 		}
 		return ac;
 	}
+	
+    public void calculateCharges(IAtomContainer container) throws CDKException {
+    	try {
+	        this.setInitialCharges(container);
+        } catch (Exception exception) {
+	        throw new CDKException(
+	        	"Could not calculate Gasteiger-Marsili PEPE charges: " +
+	        	exception.getMessage(), exception
+	        );
+        }
+    }
 }
 

@@ -26,12 +26,16 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -40,6 +44,9 @@ import org.openscience.cdk.smiles.SmilesParser;
  */ 
 public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	
+	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+    private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    
 	public  SigmaElectronegativityDescriptorTest() {}
     
     public void setUp() throws Exception {
@@ -55,7 +62,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		IAtomicDescriptor descriptor  = new SigmaElectronegativityDescriptor() ;
 		Integer[] params = new Integer[1];
         
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser sp = new SmilesParser(builder);
         IMolecule mol = sp.parseSmiles("CF"); 
         addExplicitHydrogens(mol);
         
@@ -76,7 +83,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		SmilesParser sp = new SmilesParser( builder);
 		IMolecule mol = sp.parseSmiles("CCl");
 		addExplicitHydrogens(mol);
 		for (int i = 0 ; i < 2 ; i++){
@@ -95,7 +102,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		Integer[] params = new Integer[1];
         
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		SmilesParser sp = new SmilesParser( builder);
 		IMolecule mol = sp.parseSmiles("C=CCBr");
 		addExplicitHydrogens(mol);
 		
@@ -113,7 +120,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		double testResult = 9.2264; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		SmilesParser sp = new SmilesParser( builder);
 		IMolecule mol = sp.parseSmiles("C(C)(C)CCI");
 		addExplicitHydrogens(mol);
 		
@@ -128,7 +135,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		SmilesParser sp = new SmilesParser( builder);
 		IMolecule mol = sp.parseSmiles("CCOCC");
 		addExplicitHydrogens(mol);
 		
@@ -147,7 +154,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		SmilesParser sp = new SmilesParser( builder);
 		IMolecule mol = sp.parseSmiles("NCCO");
 		addExplicitHydrogens(mol);
 		
@@ -165,7 +172,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		double [] testResult={7.8634,8.0467,8.061,8.5917}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
         
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		SmilesParser sp = new SmilesParser( builder);
 		IMolecule mol = sp.parseSmiles("C=CCS");
 		addExplicitHydrogens(mol);
 		
@@ -174,5 +181,52 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 			assertEquals(testResult[i],result,0.01);
 		}
 	}
+	/**
+	 *  A unit test for JUnit with CCCCl # CCC[Cl+*]
+	 *  
+	 *  @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
+	 */
+    public void testCompareIonized() throws ClassNotFoundException, CDKException, java.lang.Exception{
+        
+		IMolecule molA = builder.newMolecule();
+		molA.addAtom(builder.newAtom("C"));
+		molA.addAtom(builder.newAtom("C"));
+		molA.addBond(0, 1, IBond.Order.SINGLE);
+		molA.addAtom(builder.newAtom("C"));
+		molA.addBond(1, 2, IBond.Order.SINGLE);
+		molA.addAtom(builder.newAtom("Cl"));
+		molA.addBond(2, 3, IBond.Order.SINGLE);
+		
+		addExplicitHydrogens(molA);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molA);
+		lpcheck.saturate(molA);
+		
+        double resultA= ((DoubleResult)descriptor.calculate(molA.getAtom(3),molA).getValue()).doubleValue();
+        
+        IMolecule molB = builder.newMolecule();
+		molB.addAtom(builder.newAtom("C"));
+		molB.addAtom(builder.newAtom("C"));
+		molB.addBond(0, 1, IBond.Order.SINGLE);
+		molB.addAtom(builder.newAtom("C"));
+		molB.addBond(1, 2, IBond.Order.SINGLE);
+		molB.addAtom(builder.newAtom("Cl"));
+		molB.getAtom(3).setFormalCharge(1);
+		molB.addSingleElectron(3);
+		molB.addLonePair(3);
+		molB.addLonePair(3);
+		molB.addBond(2, 3, IBond.Order.SINGLE);
+		
+		addExplicitHydrogens(molB);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molB);
+		lpcheck.saturate(molB);
+		
+		assertEquals(1, molB.getAtom(3).getFormalCharge(), 0.00001);
+		assertEquals(1, molB.getSingleElectronCount(), 0.00001);
+		assertEquals(2, molB.getLonePairCount(), 0.00001);
+		
+        double resultB= ((DoubleResult)descriptor.calculate(molB.getAtom(3),molB).getValue()).doubleValue();
+        
+        assertEquals(resultA, resultB, 0.00001);
+    }
 }
 

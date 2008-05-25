@@ -34,6 +34,7 @@ import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
@@ -638,6 +639,41 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 	 *
 	 * @return    The test suite
 	 */
+	@Test public void testFluorobenzeneContainer() throws Exception {
+
+		 IMolecule molecule = builder.newMolecule();
+		 molecule.addAtom(builder.newAtom("F"));
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(0, 1, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(1, 2, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(2, 3, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(3, 4, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(4, 5, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(5, 6, IBond.Order.DOUBLE);
+		 molecule.addBond(6, 1, IBond.Order.SINGLE);
+		
+		addExplicitHydrogens(molecule);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
+		
+        StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+		IAtomContainer container = gRI.getContainer(molecule, molecule.getAtom(0));
+		
+		Assert.assertEquals(7,container.getAtomCount());
+		
+	}
+	/**
+	 * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
+	 *
+	 * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
+	 *
+	 * @return    The test suite
+	 */
 	@Test public void testFluorobenzene_symm() throws Exception {
 
 		 IMolecule molecule = builder.newMolecule();
@@ -1088,22 +1124,30 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
+        molecule.getBond(0).setID("bond_0");
         molecule.addAtom(new Atom("C"));
         molecule.addBond(1, 2, IBond.Order.DOUBLE);
+        molecule.getBond(1).setID("bond_1");
         molecule.addAtom(new Atom("C"));
         molecule.getAtom(3).setFormalCharge(+1);
         molecule.addBond(2, 3, IBond.Order.SINGLE);
+        molecule.getBond(2).setID("bond_2");
         molecule.addAtom(new Atom("C"));
         molecule.addBond(3, 4, IBond.Order.SINGLE);
+        molecule.getBond(3).setID("bond_3");
         molecule.addAtom(new Atom("C"));
         molecule.addBond(4, 5, IBond.Order.SINGLE);
+        molecule.getBond(4).setID("bond_4");
         molecule.addAtom(new Atom("C"));
         molecule.addBond(5, 6, IBond.Order.DOUBLE);
+        molecule.getBond(5).setID("bond_5");
         molecule.addAtom(new Atom("C"));
         molecule.addBond(6, 7, IBond.Order.SINGLE);
+        molecule.getBond(6).setID("bond_6");
         molecule.getAtom(7).setFormalCharge(+1);
 		addExplicitHydrogens(molecule);
-
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
 				
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
 		IAtomContainerSet setOfContainers = sRG.getContainers(molecule);
@@ -1114,6 +1158,153 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 			Assert.assertEquals(2, setOfContainers.getAtomContainer(i).getBondCount());
 
 		}
+	}
+	/**
+	 * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testGetContainer_IMolecule_IAtom() throws Exception {
+        IMolecule molecule = builder.newMolecule();
+        IAtom atom1 = builder.newAtom("C");
+        atom1.setID("atom1");
+        molecule.addAtom(atom1);
+        IAtom atom2 = builder.newAtom("C");
+        atom2.setID("atom2");
+        molecule.addAtom(atom2);
+        molecule.addBond(0, 1, IBond.Order.SINGLE);
+        IAtom atom3 = builder.newAtom("C");
+        atom3.setID("atom3");
+        molecule.addAtom(atom3);
+        molecule.addBond(1, 2, IBond.Order.DOUBLE);
+        IAtom atom4 = builder.newAtom("C");
+        atom4.setID("atom4");
+        molecule.addAtom(atom4);
+        atom4.setFormalCharge(+1);
+        molecule.addBond(2, 3, IBond.Order.SINGLE);
+        molecule.addAtom(new Atom("C"));
+        molecule.addBond(3, 4, IBond.Order.SINGLE);
+        molecule.addAtom(new Atom("C"));
+        molecule.addBond(4, 5, IBond.Order.SINGLE);
+        molecule.addAtom(new Atom("C"));
+        molecule.addBond(5, 6, IBond.Order.DOUBLE);
+        molecule.addAtom(new Atom("C"));
+        molecule.getAtom(7).setFormalCharge(+1);
+        molecule.addBond(6, 7, IBond.Order.SINGLE);
+		addExplicitHydrogens(molecule);
+
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
+		
+        StructureResonanceGenerator sRG = new StructureResonanceGenerator();
+		IAtomContainer container = sRG.getContainer(molecule,atom4);
+
+		Assert.assertEquals(3, container.getAtomCount());
+		Assert.assertEquals(2, container.getBondCount());
+		Assert.assertTrue(container.contains(atom4));
+
+	}
+
+	/**
+	 * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testGetContainer_IMolecule_IBond() throws Exception {
+        IMolecule molecule = builder.newMolecule();
+        IAtom atom1 = builder.newAtom("C");
+        atom1.setID("atom1");
+        molecule.addAtom(atom1);
+        IAtom atom2 = builder.newAtom("C");
+        atom2.setID("atom2");
+        molecule.addAtom(atom2);
+        molecule.addBond(0, 1, IBond.Order.SINGLE);
+        IAtom atom3 = builder.newAtom("C");
+        atom3.setID("atom3");
+        molecule.addAtom(atom3);
+        molecule.addBond(1, 2, IBond.Order.DOUBLE);
+        IAtom atom4 = builder.newAtom("C");
+        atom4.setID("atom4");
+        molecule.addAtom(atom4);
+        atom4.setFormalCharge(+1);
+        molecule.addBond(2, 3, IBond.Order.SINGLE);
+        molecule.addAtom(new Atom("C"));
+        molecule.addBond(3, 4, IBond.Order.SINGLE);
+        molecule.addAtom(new Atom("C"));
+        molecule.addBond(4, 5, IBond.Order.SINGLE);
+        molecule.addAtom(new Atom("C"));
+        molecule.addBond(5, 6, IBond.Order.DOUBLE);
+        molecule.addAtom(new Atom("C"));
+        molecule.getAtom(7).setFormalCharge(+1);
+        molecule.addBond(6, 7, IBond.Order.SINGLE);
+		addExplicitHydrogens(molecule);
+
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
+		
+        StructureResonanceGenerator sRG = new StructureResonanceGenerator();
+		IAtomContainer container = sRG.getContainer(molecule,molecule.getBond(1));
+
+		Assert.assertEquals(3, container.getAtomCount());
+		Assert.assertEquals(2, container.getBondCount());
+		Assert.assertTrue(container.contains(molecule.getBond(1)));
+
+	}
+
+	/**
+	 * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testGetID() throws Exception {
+        IMolecule molecule = builder.newMolecule();
+        IAtom atom1 = builder.newAtom("C");
+        atom1.setID("atom1");
+        molecule.addAtom(atom1);
+        IAtom atom2 = builder.newAtom("C");
+        atom2.setID("atom2");
+        molecule.addAtom(atom2);
+        molecule.addBond(0, 1, IBond.Order.SINGLE);
+        IAtom atom3 = builder.newAtom("C");
+        atom3.setID("atom3");
+        molecule.addAtom(atom3);
+        molecule.addBond(1, 2, IBond.Order.DOUBLE);
+        IAtom atom4 = builder.newAtom("C");
+        atom4.setID("atom4");
+        molecule.addAtom(atom4);
+        atom4.setFormalCharge(+1);
+        molecule.addBond(2, 3, IBond.Order.SINGLE);
+        IAtom atom5 = builder.newAtom("C");
+        atom5.setID("atom5");
+        molecule.addAtom(atom5);
+        molecule.addBond(3, 4, IBond.Order.SINGLE);
+        IAtom atom6 = builder.newAtom("C");
+        atom6.setID("atom6");
+        molecule.addAtom(atom6);
+        molecule.addBond(4, 5, IBond.Order.SINGLE);
+        IAtom atom7 = builder.newAtom("C");
+        atom7.setID("atom7");
+        molecule.addAtom(atom7);
+        molecule.addBond(5, 6, IBond.Order.DOUBLE);
+        IAtom atom8 = builder.newAtom("C");
+        atom8.setID("atom8");
+        molecule.addAtom(atom8);
+        atom8.setFormalCharge(+1);
+        molecule.addBond(6, 7, IBond.Order.SINGLE);
+		addExplicitHydrogens(molecule);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
+		
+        StructureResonanceGenerator sRG = new StructureResonanceGenerator();
+    	IAtomContainer container = sRG.getContainer(molecule,atom4);
+
+    	Assert.assertNotNull(atom2.getID());
+    	Assert.assertNotNull(atom3.getID());
+    	Assert.assertNotNull(atom4.getID());
+		Assert.assertEquals(atom2.getID(), container.getAtom(0).getID());
+		Assert.assertEquals(atom3.getID(), container.getAtom(1).getID());
+		Assert.assertEquals(atom4.getID(), container.getAtom(2).getID());
+
 	}
 	/**
 	 * A unit test suite for JUnit: Resonance 1-fluoro-2-methylbenzene  Fc1ccccc1C <=> Fc1ccccc1 
@@ -1228,6 +1419,81 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
         
 		Assert.assertEquals(1,setOfContainers.getAtomContainerCount());
 		Assert.assertEquals(3,setOfContainers.getAtomContainer(0).getAtomCount());
+	}
+	/**
+	 * A unit test suite for JUnit: COC1=CC=C(C=C1)Br
+	 *  
+	 *  @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
+	 *  
+	 * @return    The test suite
+	 */
+	@Test public void testBenzene1bromo4methoxy() throws Exception {
+		IMolecule molecule = builder.newMolecule();
+		 molecule.addAtom(builder.newAtom("F"));
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(0, 1, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(1, 2, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(2, 3, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(3, 4, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(4, 5, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(5, 6, IBond.Order.DOUBLE);
+		 molecule.addBond(6, 1, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("O"));
+		 molecule.addBond(6, 7, IBond.Order.SINGLE);
+		 
+		 addExplicitHydrogens(molecule);
+		 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+         lpcheck.saturate(molecule);
+		
+		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+		IAtomContainerSet setOfContainers = gRI.getContainers(molecule);
+        
+		Assert.assertEquals(1,setOfContainers.getAtomContainerCount());
+		Assert.assertEquals(8,setOfContainers.getAtomContainer(0).getAtomCount());
+	}
+
+	/**
+	 * A unit test suite for JUnit: COC1=CC=C(C=C1)Br
+	 *  
+	 *  @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
+	 *  
+	 * @return    The test suite
+	 */
+	@Test public void testBenzene1bromo4methoxy_with() throws Exception {
+		IMolecule molecule = builder.newMolecule();
+		 molecule.addAtom(builder.newAtom("Br"));
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(0, 1, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(1, 2, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(2, 3, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(3, 4, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(4, 5, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(5, 6, IBond.Order.SINGLE);
+		 molecule.addBond(6, 1, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("O"));
+		 molecule.addBond(6, 7, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(7, 8, IBond.Order.SINGLE);
+		 
+		 addExplicitHydrogens(molecule);
+		 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+         lpcheck.saturate(molecule);
+		
+		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+		IAtomContainerSet setOfContainers = gRI.getContainers(molecule);
+        
+		Assert.assertEquals(1,setOfContainers.getAtomContainerCount());
+		Assert.assertEquals(8,setOfContainers.getAtomContainer(0).getAtomCount());
 	}
 	/**
 	 * A unit test suite for JUnit 

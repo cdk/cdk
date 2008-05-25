@@ -485,4 +485,21 @@ public class MDLV2000ReaderTest extends CDKTestCase {
     	assertFalse((containersList.get(0)).getAtom(2) instanceof IPseudoAtom);
     }        
 
+    /**
+     * 
+     * @throws Exception
+     */
+    public void testReadRadical() throws Exception {
+    	String filename = "data/mdl/332727182.radical.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        assertNotNull(chemFile);
+        List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        assertEquals(1, containersList.size());
+        assertTrue((containersList.get(0)).getAtomCount() > 0);
+        assertTrue((containersList.get(0)).getBondCount() > 0);
+        assertTrue((containersList.get(0)).getSingleElectronCount() > 0);
+    }
 }

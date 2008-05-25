@@ -27,6 +27,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.Electronegativity;
+import org.openscience.cdk.charges.PiElectronegativity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -76,13 +77,13 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
 	private boolean lpeChecker = true;
 	
     String[] descriptorNames = {"elecPiA"};
-	private Electronegativity electronegativity;
+	private PiElectronegativity electronegativity;
 
     /**
      *  Constructor for the PiElectronegativityDescriptor object
      */
     public PiElectronegativityDescriptor() {
-    	electronegativity = new Electronegativity();
+    	electronegativity = new PiElectronegativity();
     }
 
     /**

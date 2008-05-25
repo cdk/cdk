@@ -1,7 +1,4 @@
-/*  $RCSfile$
- *  $Author: rajarshi $
- *  $Date: 2008-02-21 19:19:31 +0100 (Thu, 21 Feb 2008) $
- *  $Revision: 10199 $
+/*  $Revision: 10199 $ $Author: rajarshi $ $Date: 2008-02-21 19:19:31 +0100 (Thu, 21 Feb 2008) $
  *
  *  Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
  *
@@ -29,6 +26,8 @@ import java.util.List;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.graph.SimpleGraph;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.BFSShortestPath;
 import org.openscience.cdk.graph.MoleculeGraphs;
@@ -43,36 +42,38 @@ import org.openscience.cdk.tools.StructureResonanceGenerator;
  * The stabilization of the positive and the negative charge 
  * obtained (e.g in the polar breaking of a bond) is calculated from the sigma- and
  *  lone pair-electronegativity values of the atoms that are in conjugation to the atoms 
- *  obtaining the charges. Based on H. Saller, Dissertation, TU München, 1985.
- *
- * @author         Miguel Rojas Cherto
- * @cdk.created    2008-104-31
- * @cdk.module  charges
- * @cdk.keyword stabilitzatio charge
+ *  obtaining the charges. Based on H. Saller Dissertation @cdk.cite{SallerH1895}.
+ *  
+ * @author       Miguel Rojas Cherto
+ * @cdk.created  2008-104-31
+ * @cdk.module   charges
+ * @cdk.keyword  stabilization charge
  */
-public class StabilizationCharge {
-	
-    /**
-     * Constructor for the StabilizationCharge object.
+@TestClass("org.openscience.cdk.charges.StabilizationChargesTest")
+public class StabilizationCharges {
+	/**
+     * Constructor for the StabilizationCharges object.
      */
-    public StabilizationCharge() {
+    public StabilizationCharges() {
     }
 
     /**
-     * calculate the electronegativity of orbitals sigma.
+     * calculate the stabilization of orbitals when they contain deficiency of charge.
      *
      * @param container  IAtomContainer
-     * @param atom       IAtom for which effective atom StabilizationCharge 
+     * @param atom       IAtom for which effective atom StabilizationCharges 
      *                   factor should be calculated     
      * 
-     * @return stabilitzationValue
+     * @return stabilizationValue
      */
+	@TestMethod("testCalculatePositive_IAtomContainer_IAtom")
     public double calculatePositive(IAtomContainer atomContainer, IAtom atom){
     	/*restrictions*/
-    	if(atomContainer.getConnectedSingleElectronsCount(atom) > 0 || atom.getFormalCharge() != 1){
-    		return 0.0;
+//    	if(atomContainer.getConnectedSingleElectronsCount(atom) > 0 || atom.getFormalCharge() != 1){
+    	if(atom.getFormalCharge() != 1){
+        	return 0.0;
     	}
-    			 
+
     	// only must be generated all structures which stabilize the atom in question.
     	StructureResonanceGenerator gRI = new StructureResonanceGenerator();
     	try {
@@ -101,7 +102,7 @@ public class StabilizationCharge {
 			
 		    /*search positive charge*/
 			
-            Electronegativity electronegativity = new Electronegativity();
+            PiElectronegativity electronegativity = new PiElectronegativity();
 	    	
             for(Iterator<IAtom> itAtoms = resonance.atoms(); itAtoms.hasNext();){
 				 IAtom atomP = itAtoms.next();

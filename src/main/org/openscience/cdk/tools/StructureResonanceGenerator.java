@@ -276,10 +276,11 @@ public class StructureResonanceGenerator {
 	public IAtomContainerSet getContainers(IMolecule molecule) {
     	IAtomContainerSet setOfCont = molecule.getBuilder().newAtomContainerSet();
 		IMoleculeSet setOfMol = getStructures(molecule);
+		
 		if(setOfMol.getMoleculeCount() == 0)
 			return setOfCont;
-		
-    	/*extraction of all bonds which has been produced a changes of order*/
+
+		/*extraction of all bonds which has been produced a changes of order*/
 		List<IBond> bondList = new ArrayList<IBond>();
     	for(int i = 1 ; i < setOfMol.getMoleculeCount() ; i++){
     		IMolecule mol = setOfMol.getMolecule(i);
@@ -291,37 +292,64 @@ public class StructureResonanceGenerator {
 				}
 			}
 		}
+    	
+    	if(bondList.size() == 0)
+    		return null;
+    	
     	int[] flagBelonging = new int[bondList.size()];
     	for(int i = 0; i < flagBelonging.length; i++)
     		flagBelonging[i] = 0;
+    	int[] position = new int[bondList.size()];
     	int maxGroup = 1;
+    	
     	/*Analysis if the bond are linked together*/
-    	for(int i = 0 ; i < bondList.size(); i ++){
+    	List<IBond> newBondList = new ArrayList<IBond>();
+    	newBondList.add(bondList.get(0));
+    	
+    	int pos = 0;
+    	for(int i = 0 ; i < newBondList.size(); i ++){
+    	
     		if(i==0)
     			flagBelonging[i] = maxGroup;
-    		else
-    			if(flagBelonging[i] == 0){
-    				maxGroup++;
-    				flagBelonging[i] = maxGroup;
+    		else{
+    			if(flagBelonging[position[i]] == 0){
+        			maxGroup++;
+    				flagBelonging[position[i]] = maxGroup;
     			}
-    		
-    		IBond bondA = bondList.get(i);
-    		IAtom atomA1 = bondA.getAtom(0);
-    		IAtom atomA2 = bondA.getAtom(1);
-    		for(int j = 0 ; j < bondList.size(); j ++){
-        		IBond bondB = bondList.get(j);
-        		if(i != j){
-        			if(bondB.contains(atomA1) || bondB.contains(atomA2)){
-        				flagBelonging[j] = flagBelonging[i];
-        			}
-        		}
     		}
+    		
+    		IBond bondA = newBondList.get(i);
+    		for(int ato = 0; ato < 2; ato++){
+    	    	IAtom atomA1 = bondA.getAtom(ato);
+    			List<IBond> bondA1s = molecule.getConnectedBondsList(atomA1);
+	    		for(int j = 0 ; j < bondA1s.size(); j ++){
+	        		IBond bondB = bondA1s.get(j);
+	        		if(!newBondList.contains(bondB))
+	        		for(int k = 0 ; k < bondList.size(); k ++)
+	        			if(bondList.get(k).equals(bondB))
+	                		if(flagBelonging[k] == 0){
+	                			flagBelonging[k] = maxGroup;
+	                			pos++;
+	                			newBondList.add(bondB);
+	                			position[pos] = k;
+	                				
+	                		}	
+	    		}
+    		}
+    		//if it is final size and not all are added
+    		if(newBondList.size()-1 == i)
+    			for(int k = 0 ; k < bondList.size(); k ++)
+    				if(!newBondList.contains(bondList.get(k))){
+    					newBondList.add(bondList.get(k));
+    					position[i+1] = k;
+    					break;
+    				}
     	}
     	/*creating containers according groups*/
-    	for(int i = 0 ; i < maxGroup ; i ++){
+    	for(int i = 0 ; i < maxGroup; i ++){
     		IAtomContainer container = molecule.getBuilder().newAtomContainer();
     		for(int j = 0 ; j < bondList.size(); j++){
-    			if(flagBelonging[j] != maxGroup)
+    			if(flagBelonging[j] != i+1)
     				continue;
     			IBond bond = bondList.get(j);
     			IAtom atomA1 = bond.getAtom(0);
@@ -336,6 +364,52 @@ public class StructureResonanceGenerator {
     	}
 		return setOfCont;
 	}
+    /**
+	 * <p>Get the container which the atom is found on resonance from a IMolecule. 
+	 * It is based on looking if the order of the bond changes. Return null
+	 * is any is found.</p>
+	 * 
+	 * @param molecule The IMolecule to analyze
+	 * @param atom     The IAtom
+	 * @return         The container with the atom
+	 */
+    @TestMethod("testGetContainer_IMolecule_IAtom")
+	public IAtomContainer getContainer(IMolecule molecule, IAtom atom) {
+    	IAtomContainerSet setOfCont = getContainers(molecule);
+    	if(setOfCont == null)
+    		return null;
+    	
+    	for(Iterator<IAtomContainer> it = setOfCont.atomContainers(); it.hasNext();){
+    		IAtomContainer container = it.next();
+        	if(container.contains(atom))
+    			return container;
+    	}
+    	
+    	return null;
+	}
+    /**
+	 * <p>Get the container which the bond is found on resonance from a IMolecule. 
+	 * It is based on looking if the order of the bond changes. Return null
+	 * is any is found.</p>
+	 * 
+	 * @param molecule The IMolecule to analyze
+	 * @param bond     The IBond
+	 * @return         The container with the bond
+	 */
+    @TestMethod("testGetContainer_IMolecule_IBond")
+	public IAtomContainer getContainer(IMolecule molecule, IBond bond) {
+    	IAtomContainerSet setOfCont = getContainers(molecule);
+    	if(setOfCont == null)
+    		return null;
+    	
+    	for(Iterator<IAtomContainer> it = setOfCont.atomContainers(); it.hasNext();){
+    		IAtomContainer container = it.next();
+        	if(container.contains(bond))
+    			return container;
+    	}
+    	
+    	return null;
+	}
 	/**
 	 * Search if the setOfAtomContainer contains the atomContainer
 	 *  
@@ -345,9 +419,10 @@ public class StructureResonanceGenerator {
 	 * @return   			 True, if the atomContainer is contained
 	 */
 	private boolean existAC(IAtomContainerSet set, IAtomContainer atomContainer) {
-
 		for(int i = 0 ; i < atomContainer.getAtomCount(); i++)
-			atomContainer.getAtom(i).setID(""+atomContainer.getAtomNumber(atomContainer.getAtom(i)));
+//			if(atomContainer.getAtom(i).getID() == null)
+				atomContainer.getAtom(i).setID(""+atomContainer.getAtomNumber(atomContainer.getAtom(i)));
+			
 		if(lookingSymmetry){
 			try {
 				CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
@@ -359,7 +434,9 @@ public class StructureResonanceGenerator {
 		for(int i = 0 ; i < set.getAtomContainerCount(); i++){
 			IAtomContainer ss = set.getAtomContainer(i);
 			for(int j = 0 ; j < ss.getAtomCount(); j++)
-				ss.getAtom(j).setID(""+ss.getAtomNumber(ss.getAtom(j)));
+//				if(ss.getAtom(j).getID() == null)
+					ss.getAtom(j).setID(""+ss.getAtomNumber(ss.getAtom(j)));
+				
 			try {
 				
 				if(!lookingSymmetry ){

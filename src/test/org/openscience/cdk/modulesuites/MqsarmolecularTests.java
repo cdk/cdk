@@ -30,8 +30,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.QsarmolecularCoverageTest;
 import org.openscience.cdk.qsar.ChiIndexUtilsTest;
 import org.openscience.cdk.qsar.DescriptorEngineTest;
-import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.bond.IPBondDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.APolDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.AromaticAtomsCountDescriptorTest;
@@ -53,7 +51,7 @@ import org.openscience.cdk.qsar.descriptors.molecular.EccentricConnectivityIndex
 import org.openscience.cdk.qsar.descriptors.molecular.GravitationalIndexDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.HBondAcceptorCountDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.molecular.IPMolecularDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.KappaShapeIndicesDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.LargestChainDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.LargestPiSystemDescriptorTest;
@@ -95,14 +93,6 @@ public class MqsarmolecularTests {
         // Individual Tests - Please add correlatively	
         suite.addTest(ChiIndexUtilsTest.suite());
         suite.addTest(DescriptorEngineTest.suite());
-
-//      from cdk.test.qsar.atomic
-//      FIXME: see bug #1860497
-        suite.addTest(IPAtomicDescriptorTest.suite());
-        
-//      from cdk.test.qsar.bond
-//      FIXME: see bug #1860497
-        suite.addTest(IPBondDescriptorTest.suite());
         
 //      from cdk.test.qsar.molecular
         suite.addTest(ALOGPDescriptorTest.suite());
@@ -122,7 +112,7 @@ public class MqsarmolecularTests {
         suite.addTest(GravitationalIndexDescriptorTest.suite());
         suite.addTest(HBondAcceptorCountDescriptorTest.suite());
         suite.addTest(HBondDonorCountDescriptorTest.suite());
-        suite.addTest(IPMolecularDescriptorTest.suite());
+        suite.addTest(IPMolecularLearningDescriptorTest.suite());
         suite.addTest(KappaShapeIndicesDescriptorTest.suite());
         suite.addTest(LargestChainDescriptorTest.suite());
         suite.addTest(LargestPiSystemDescriptorTest.suite());

@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -17,7 +16,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
-import org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptor;
 
 /**
  * Utility methods for chi index calculations.
@@ -161,12 +159,8 @@ public class ChiIndexUtils {
         return sum;
     }
 
-    // TODO there should be a neater way to get the valence electron count
     private static int getValenceElectronCount(IAtom atom) {
-        Map<String, Integer> valenceMap;
-        AtomValenceDescriptor avd = new AtomValenceDescriptor();
-        valenceMap = avd.valencesTable;
-        int valency = valenceMap.get(atom.getSymbol());
+        int valency = AtomValenceTool.getValence(atom);
         return valency - atom.getFormalCharge();
     }
 

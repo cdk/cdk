@@ -23,10 +23,10 @@
  */
 package org.openscience.cdk.charges;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.nonotify.NNMolecule;
 
 /**
@@ -38,21 +38,18 @@ import org.openscience.cdk.nonotify.NNMolecule;
  * @cdk.module  charges
  * @cdk.keyword electronegativity
  */
+@TestClass("org.openscience.cdk.charges.ElectronegativityTest")
 public class Electronegativity {
 	
     private GasteigerMarsiliPartialCharges peoe = null;
-    private GasteigerPEPEPartialCharges pepe = null;
     
 	/**Number of maximum iterations*/
 	private int maxI = 6;
     /**Number of maximum resonance structures*/
 	private int maxRS = 50;
-	
-	private NNMolecule molPi;
+
 	private NNMolecule molSigma;
-	private IAtomContainer acOldP;
 	private IAtomContainer acOldS;
-	private double[][] gasteigerFactors;
 	private double[] marsiliFactors;
 	
     /**
@@ -70,7 +67,6 @@ public class Electronegativity {
      */
     public Electronegativity( int maxIterations, int maxResonStruc) {
     	peoe = new GasteigerMarsiliPartialCharges();
-    	pepe = new GasteigerPEPEPartialCharges();
     	maxI = maxIterations;
     	maxRS = maxResonStruc;
     }
@@ -82,6 +78,7 @@ public class Electronegativity {
      * 
      * @return piElectronegativity
      */
+	@TestMethod("testCalculateSigmaElectronegativity_IAtomContainer_IAtom")
     public double calculateSigmaElectronegativity(IAtomContainer ac,
                                                IAtom atom){
 
@@ -97,6 +94,7 @@ public class Electronegativity {
      * 
      * @return piElectronegativity
      */
+	@TestMethod("testCalculateSigmaElectronegativity_IAtomContainer_IAtom_Int_Int")
     public double calculateSigmaElectronegativity(IAtomContainer ac,
                                                IAtom atom,
                                                int maxIterations,
@@ -129,73 +127,11 @@ public class Electronegativity {
 		return electronegativity;        
     }
     /**
-     * calculate the electronegativity of orbitals pi.
-     *
-     * @param ac                    IAtomContainer
-     * @param atom                  atom for which effective atom electronegativity should be calculated     
-     * 
-     * @return piElectronegativity
-     */
-    public double calculatePiElectronegativity(IAtomContainer ac,
-                                               IAtom atom){
-
-    	return calculatePiElectronegativity(ac, atom, maxI, maxRS);
-	}
-    /**
-     * calculate the electronegativity of orbitals pi.
-     *
-     * @param ac                    IAtomContainer
-     * @param atom                  atom for which effective atom electronegativity should be calculated     
-     * @param maxIterations         The maximal number of Iteration  
-     * @param maxResonStruc         The maximal number of Resonance Structures
-     * 
-     * @return piElectronegativity
-     */
-    public double calculatePiElectronegativity(IAtomContainer ac,
-                                               IAtom atom,
-                                               int maxIterations,
-                                               int maxResonStruc) {
-    	maxI = maxIterations;
-    	maxRS = maxResonStruc;
-    	
-    	double electronegativity = 0;
-
-        try {
-        	if(!ac.equals(acOldP)){
-        		molPi = new NNMolecule(ac);
-        		
-                peoe = new GasteigerMarsiliPartialCharges();
-	    		peoe.assignGasteigerMarsiliSigmaPartialCharges(molPi, true);
-				IAtomContainerSet iSet = ac.getBuilder().newAtomContainerSet();
-	        	iSet.addAtomContainer(molPi);
-	        	iSet.addAtomContainer(molPi);
-	
-	        	gasteigerFactors = pepe.assignrPiMarsilliFactors(iSet);
-	        	
-	        	acOldP = ac;
-        	}        	
-        	IAtom atomi = molPi.getAtom(ac.getAtomNumber(atom));
-        	int atomPosition = molPi.getAtomNumber(atomi);
-        	int stepSize = pepe.getStepSize();
-        	int start = (stepSize * (atomPosition) + atomPosition);
-        	double q = atomi.getCharge();
-      	    if(molPi.getConnectedLonePairsCount(molPi.getAtom(atomPosition)) > 0 ||
-      	    		molPi.getMaximumBondOrder(atomi) != IBond.Order.SINGLE ||
-      					atomi.getFormalCharge() != 0){
-      	    	return ((gasteigerFactors[1][start]) + (q * gasteigerFactors[1][start + 1]) + (gasteigerFactors[1][start + 2] * (q * q)));
-      	    }
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return electronegativity;        
-    }
-    
-    /**
      * set the maximal number of Iterations.
      * 
      * @param maxIterations The number maximal of iterations
      */
+	@TestMethod("testSetMaxIterations_Int")
     public void setMaxIterations(int maxIterations){
     	maxI = maxIterations;
     }
@@ -205,6 +141,7 @@ public class Electronegativity {
      * 
      * @param maxResonStruc The number maximal of resonance structures
      */
+	@TestMethod("testSetMaxResonStruc_Int")
     public void setMaxResonStruc(int maxResonStruc){
     	maxRS = maxResonStruc;
     }
@@ -214,6 +151,7 @@ public class Electronegativity {
      * 
      * @return The number maximal of iterations
      */
+	@TestMethod("testGetMaxIterations")
     public int getMaxIterations(){
     	return maxI;
     }
@@ -223,6 +161,7 @@ public class Electronegativity {
      * 
      * @return The number maximal of resonance structures
      */
+	@TestMethod("testGetMaxResonStruc")
     public int getMaxResonStruc(){
     	return maxRS;
     }

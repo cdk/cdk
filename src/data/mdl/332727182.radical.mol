@@ -1,0 +1,11 @@
+Chlorofluoromethyl radical, ID: C33272718
+  NIST    08052110302D 1   1.00000     0.00000      
+Copyright by the U.S. Sec. Commerce on behalf of U.S.A. All rights reserved.
+  3  2  0     0  0              2 V2000
+    0.0000    0.0502    0.0000 Cl  0  0  0  0  0  0           0  0  0
+    0.9034    0.5019    0.0000 C   0  0  0  0  0  0           0  0  0
+    1.7567    0.0000    0.0000 F   0  0  0  0  0  0           0  0  0
+  1  2  1  0     0  0
+  2  3  1  0     0  0
+M  RAD  1   2   2
+M  END

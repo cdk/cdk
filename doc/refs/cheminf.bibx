@@ -893,4 +893,14 @@ Method </bibtex:title>
         </bibtex:article>
     </bibtex:entry>
 
+	<bibtex:entry id="SallerH1995">
+    <bibtex:inbook>
+      <bibtex:author>Saller, H.</bibtex:author>
+      <bibtex:title></bibtex:title>
+      <bibtex:pages></bibtex:pages>
+      <bibtex:year>1985</bibtex:year>
+      <bibtex:publisher>TU München</bibtex:publisher>
+      <bibtex:address>München</bibtex:address>
+    </bibtex:inbook>
+  </bibtex:entry>
 </bibtex:file>

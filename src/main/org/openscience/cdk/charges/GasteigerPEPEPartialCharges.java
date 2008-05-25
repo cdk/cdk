@@ -29,6 +29,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -45,7 +47,6 @@ import org.openscience.cdk.reaction.type.HeterolyticCleavagePBReaction;
 import org.openscience.cdk.reaction.type.HeterolyticCleavageSBReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
 import org.openscience.cdk.reaction.type.SharingAnionReaction;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -69,7 +70,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.keyword PEPE
  * @see GasteigerMarsiliPartialCharges
  */
-public class GasteigerPEPEPartialCharges {
+@TestClass("org.openscience.cdk.charges.GasteigerPEPEPartialChargesTest")
+public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	/** max iterations */
 	private double MX_ITERATIONS = 8;
 	/** max number of resonance structures to be searched*/
@@ -98,6 +100,7 @@ public class GasteigerPEPEPartialCharges {
 	 *
 	 *@param  iters  The new maxGasteigerIters value
 	 */
+    @TestMethod("testSetMaxGasteigerIters_Double")
 	public void setMaxGasteigerIters(double iters) {
 		MX_ITERATIONS = iters;
 	}
@@ -106,10 +109,29 @@ public class GasteigerPEPEPartialCharges {
 	 *
 	 *@param  numbReson  The number of resonance Structures to be searched
 	 */
+    @TestMethod("testSetMaxResoStruc_Int")
 	public void setMaxResoStruc(int numbReson) {
 		MX_RESON = numbReson;
 	}
-	
+    /**
+	 *  Gets the maxGasteigerIters attribute of the GasteigerPEPEPartialCharges
+	 *  object
+	 *
+	 *@return  The new maxGasteigerIters value
+	 */
+    @TestMethod("testGetMaxGasteigerIters")
+	public double getMaxGasteigerIters() {
+		return MX_ITERATIONS;
+	}
+	/**
+	 *  Sets the maximum resonance structures to be searched
+	 *
+	 *@param  numbReson  The number of resonance Structures to be searched
+	 */
+    @TestMethod("testGetMaxResoStruc")
+	public int getMaxResoStruc() {
+		return MX_RESON;
+	}
 	/**
 	 *  Main method which assigns Gasteiger partial pi charges. 
 	 *  
@@ -119,8 +141,8 @@ public class GasteigerPEPEPartialCharges {
 	 *@return                AtomContainer with partial charges
 	 *@exception  Exception  Possible Exceptions
 	 */
+    @TestMethod("testAssignGasteigerPiPartialCharges_IAtomContainer_Boolean")
 	public IAtomContainer assignGasteigerPiPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
-		logger.debug("smiles_Start: "+(new SmilesGenerator()).createSMILES((IMolecule) ac));
 		
 		IAtomContainerSet setHI = null;
 		
@@ -167,8 +189,10 @@ public class GasteigerPEPEPartialCharges {
 		IAtomContainerSet acSet = gRN.getContainers((IMolecule) removingFlagsAromaticity(ac));
 //		IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(removingFlagsAromaticity(ac));
 		
-		IMoleculeSet iSet = acSet.getBuilder().newMoleculeSet();
+		IMoleculeSet iSet = ac.getBuilder().newMoleculeSet();
 		iSet.addAtomContainer(ac);
+		
+		if(acSet != null)
 		for(Iterator<IAtomContainer> it = acSet.atomContainers(); it.hasNext();){
 			IAtomContainer container = it.next();
 			ac = setFlags(container, ac, true);
@@ -248,7 +272,6 @@ public class GasteigerPEPEPartialCharges {
 			logger.debug(", W:"+Wt[i-1]);
 			try {
 				acCloned = (IAtomContainer)iSet.getAtomContainer(i).clone();
-				logger.debug("smilesCloned: "+(new SmilesGenerator()).createSMILES((IMolecule) acCloned));
 				
 				acCloned = peoe.assignGasteigerMarsiliSigmaPartialCharges(acCloned, true);
 				for(int j = 0 ; j<acCloned.getAtomCount(); j++)
@@ -266,7 +289,6 @@ public class GasteigerPEPEPartialCharges {
 //		for (int iter = 0; iter < 1; iter++) {
 			for(int k = 1 ; k < iSet.getAtomContainerCount() ; k++){
 				IAtomContainer iac = iSet.getAtomContainer(k);
-				logger.debug("smilesITERa: "+(new SmilesGenerator()).createSMILES((IMolecule) iac));
 				double[] electronegativity = new double[2];
 				int count = 0;
 				int atom1 = 0;
@@ -341,7 +363,6 @@ public class GasteigerPEPEPartialCharges {
 				
 			}
 			for(int k = 1 ; k < iSet.getAtomContainerCount() ; k++){
-				logger.debug("smilesFN: "+(new SmilesGenerator()).createSMILES((IMolecule) iSet.getAtomContainer(k)));
 				
 				for (int i = 0; i < ac.getAtomCount(); i++) 
 					if(iSet.getAtomContainer(k).getAtom(i).getFlag(ISCHANGEDFC)){
@@ -358,6 +379,19 @@ public class GasteigerPEPEPartialCharges {
 		return ac;
 		
 	}
+
+    @TestMethod("testCalculateCharges_IAtomContainer")
+    public void calculateCharges(IAtomContainer container) throws CDKException {
+    	try {
+	        this.assignGasteigerPiPartialCharges(container, true);
+        } catch (Exception exception) {
+	        throw new CDKException(
+	        	"Could not calculate Gasteiger-Marsili PEPE charges: " +
+	        	exception.getMessage(), exception
+	        );
+        }
+    }
+
 	/**
 	 * remove the aromaticity flags.
 	 * 
@@ -585,19 +619,27 @@ public class GasteigerPEPEPartialCharges {
 		
 		return fQ*fB*fPlus*fA;
 	}
-
-
+	
 	/**
 	 *  Get the StepSize attribute of the GasteigerMarsiliPartialCharges
 	 *  object
 	 *
 	 *@return STEP_SIZE
 	 */
+    @TestMethod("testGetStepSize")
 	public int getStepSize(){
 		return STEP_SIZE;
 	}
-	
-
+    /**
+     *  Set the StepSize attribute of the GasteigerMarsiliPartialCharges
+     *  object
+     *
+     *@param step
+     */
+    @TestMethod("testSetStepSize")
+    public void setStepSize(int step){
+        STEP_SIZE = step;
+    }
 	/**
 	 * Method which stores and assigns the factors a,b,c and CHI+
 	 *
@@ -694,6 +736,7 @@ public class GasteigerPEPEPartialCharges {
 	 *
 	 *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
 	 */
+    @TestMethod("testAssignrPiMarsilliFactors_IAtomContainerSet")
 	public double[][] assignrPiMarsilliFactors(IAtomContainerSet setAc) {
 		//a,b,c,denom,chi,q
 		double[][] gasteigerFactors = new double[setAc.getAtomContainerCount()][(setAc.getAtomContainer(0).getAtomCount() * (STEP_SIZE+1))];
@@ -796,7 +839,7 @@ public class GasteigerPEPEPartialCharges {
      * 
 	 * @param ac
 	 */
-	public void cleanFlagReactiveCenter(IAtomContainer ac){
+	private void cleanFlagReactiveCenter(IAtomContainer ac){
 		for(int j = 0 ; j < ac.getAtomCount(); j++)
 			ac.getAtom(j).setFlag(CDKConstants.REACTIVE_CENTER, false);
 		for(int j = 0 ; j < ac.getBondCount(); j++)

@@ -54,6 +54,10 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
     public void setUp() throws Exception {
     	setDescriptor(BondCountDescriptor.class);
     }
+    
+    public void testBondCountDescriptor() throws Exception {
+    	assertNotNull(descriptor);
+    }
 
     public void testSingleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
         descriptor.setParameters(new String[]{"s"});

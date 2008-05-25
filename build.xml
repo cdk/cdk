@@ -494,6 +494,7 @@
             <antcall target="compile-module"><param name="module" value="pdbcml"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="reaction"/><param name="source" value="${src}/main"/></antcall>
     	    <antcall target="compile-module"><param name="module" value="charges"/><param name="source" value="${src}/main"/></antcall>
+  		    <antcall target="compile-module"><param name="module" value="ionpot"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsaratomic"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsarbond"/><param name="source" value="${src}/main"/></antcall>
@@ -571,6 +572,7 @@
         <antcall target="compile-module"><param name="module" value="test-forcefield"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-valencycheck"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-charges"/><param name="source" value="${src}/test"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-ionpot"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsar"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsaratomic"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarbond"/><param name="source" value="${src}/test"/></antcall>
