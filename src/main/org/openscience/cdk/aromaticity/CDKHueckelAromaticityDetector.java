@@ -130,6 +130,8 @@ public class CDKHueckelAromaticityDetector {
 				// sprouting double bonds
 				if ("N.planar3".equals(ringAtom.getAtomTypeName())) {
 					electronCount += 2;
+				} else if ("N.minus.planar3".equals(ringAtom.getAtomTypeName())) {
+					electronCount += 2;
 				} else if ("S.2".equals(ringAtom.getAtomTypeName())) {
                     electronCount += 2;
 				} else if ("S.planar3".equals(ringAtom.getAtomTypeName())) {
