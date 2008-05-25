@@ -277,6 +277,49 @@
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#AdductionLPMechanism"/>
         <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+    	<reaction>
+	    	<reactionCenter>
+	    		<atomTypeList>
+	    			<atomType />
+	    		</atomTypeList>
+	    		<bondTypeList>
+	    			<bondType />
+	    		</bondTypeList>
+	    	</reactionCenter>
+	    	<mapList>
+	    		<map>
+	    			<link from="" to="" />
+	    		</map>
+	    	</mapList>
+	    </reaction>
+    	<example-Reactions>
+    		<reaction id="r1">
+    			<reactantList id="rl1">
+    				<reactant>
+    					<molecule id="rm1">
+    						<atomArray>
+    							<atom id="rma1" elementType="C"/>
+    						</atomArray>
+    						<bondArray>
+    							<bond id="rmb1" atomRefs="rma1 rma2" order="1"/>
+    						</bondArray>
+    					</molecule>
+    				</reactant>
+    			</reactantList>
+    			<productList id="pl1">
+    				<product>
+    					<molecule id="pm1">
+    						<atomArray>
+    							<atom id="pma1" elementType="C"/>
+    						</atomArray>
+    						<bondArray>
+    							<bond id="pmb1" atomRefs="pma1 pma2" order="1"/>
+    						</bondArray>
+    					</molecule>
+    				</product>
+    			</productList>
+    		</reaction>
+    	</example-Reactions>
     </Reaction>
 
     <Reaction rdf:ID="AdductionProtonPB">
