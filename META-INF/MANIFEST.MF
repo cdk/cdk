@@ -106,5 +106,13 @@ Bundle-ClassPath: .,
  jar/vecmath1.2-1.14.jar,
  jar/xom-1.1.jar,
  jar/jama-1.0.2.jar,
+ jar/commons-cli-1.0.jar,
+ jar/xml-apis.jar,
+ jar/xpp3-1.1.4c.jar,
+ jar/log4j.jar,
+ develjar/junit-4.4.jar,
+ develjar/com-sun-javadoc.jar,
+ develjar/com-sun-tools-doclets-Taglet.jar,
+ develjar/junit-4.3.1.jar,
  cdk.jar
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
