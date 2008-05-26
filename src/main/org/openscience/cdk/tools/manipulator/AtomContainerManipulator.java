@@ -337,9 +337,6 @@ public class AtomContainerManipulator {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-                if (clonedAtom != null) {
-                    clonedAtom.setHydrogenCount(0);
-                }
                 mol.addAtom(clonedAtom);
                 map.put(atom, clonedAtom);
             }
@@ -392,7 +389,10 @@ public class AtomContainerManipulator {
             // Process neighbours.
             for (IAtom iAtom : atomContainer.getConnectedAtomsList(aRemove)) {
                 final IAtom neighb = map.get(iAtom);
-                neighb.setHydrogenCount(neighb.getHydrogenCount() + 1);
+                  neighb.setHydrogenCount(
+                      (neighb.getHydrogenCount() == null ? 0 : neighb.getHydrogenCount())
+                      + 1
+                  );
             }
         }
         mol.setProperties(atomContainer.getProperties());
