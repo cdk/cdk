@@ -1,11 +1,8 @@
-/* RandomAccessTest.java
- * Author: Nina Jeliazkova
- * Date: Jul 12, 2006 
- * Revision: 0.1 
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2005-2006  Nina Jeliazkova
- * 
- * Contact: nina@acad.bg
+ * Copyright (C) 2005-2008  Nina Jeliazkova <nina@acad.bg>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -24,9 +21,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- * 
  */
-
 package org.openscience.cdk.io.random;
 
 import java.io.File;
@@ -39,8 +34,9 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Test for {@link RandomAccessSDFReader}.
- * @author Nina Jeliazkova nina@acad.bg
- * <b>Modified</b> May 25, 2008
+ *
+ * @author     Nina Jeliazkova <nina@acad.bg>
+ * @cdk.module test-extra
  */
 public class RandomAccessTest extends CDKTestCase {
 
