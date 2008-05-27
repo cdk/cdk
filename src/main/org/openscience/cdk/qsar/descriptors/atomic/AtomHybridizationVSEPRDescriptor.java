@@ -27,6 +27,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -157,67 +158,24 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 	@TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException
 	{		
-		IAtomType atomType = findMatchingAtomType(container, atom);
-		
-		double bondOrderSum = container.getBondOrderSum(atom);
-		 Integer charge = atom.getFormalCharge() == CDKConstants.UNSET ? 0 : atom.getFormalCharge();
-		Integer hcount = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
-		int valency = atomType.getValency();
-		double nLonePair = (valency - ( hcount + bondOrderSum ) - charge) / 2;
-		
-		int hybridization = (int)nLonePair + ( hcount + container.getConnectedAtomsList(atom).size() );
-		
-		logger.debug("ATOM : bondOrderSum " + bondOrderSum + ", charge " + charge + ", hcount " + hcount + 
-		             ", valency "  + valency + ", nLonePair " + nLonePair + ", hybridization "  + hybridization);
-		
-		int hybridizationCDK = 0;
-		switch (hybridization) 
-		{
-			case 2:
-				hybridizationCDK = CDKConstants.HYBRIDIZATION_SP1;break;
-			case 3:
-				hybridizationCDK = CDKConstants.HYBRIDIZATION_SP2;break;
-			case 4:
-				hybridizationCDK = CDKConstants.HYBRIDIZATION_SP3;break;
-			case 5:
-				hybridizationCDK = CDKConstants.HYBRIDIZATION_SP3D1;break;
-			case 6:
-				hybridizationCDK = CDKConstants.HYBRIDIZATION_SP3D2;break;
-			case 7:
-				hybridizationCDK = CDKConstants.HYBRIDIZATION_SP3D3;break;
-			case 8:
-				hybridizationCDK = CDKConstants.HYBRIDIZATION_SP3D4;break;
-			case 9:
-				hybridizationCDK = CDKConstants.HYBRIDIZATION_SP3D5;break;
-			default:
-				hybridizationCDK = CDKConstants.HYBRIDIZATION_UNSET;break;
+		IAtomType atomType = CDKAtomTypeMatcher.getInstance(atom.getBuilder()).findMatchingAtomType(container, atom);
+		if (atomType == null) {
+		    return new DescriptorValue(
+		        getSpecification(), getParameterNames(), getParameters(),
+		        new IntegerResult((int)Double.NaN), // does that work??
+		        new String[]{"hybr"}
+		    );
 		}
-
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(hybridizationCDK));
+		int hybridizationCDK =
+		    atomType.getHybridization() == null ? 0 : atomType.getHybridization().ordinal();
+		
+		return new DescriptorValue(
+		    getSpecification(), getParameterNames(), getParameters(),
+		     new IntegerResult(hybridizationCDK),
+		     new String[]{"hybr"}
+		);
 	}
 
-
-	
-	private IAtomType findMatchingAtomType(IAtomContainer container, org.openscience.cdk.interfaces.IAtom atom) throws CDKException 
-	{
-		try {
-			if(atomATF==null)
-				atomATF = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/valency2_atomtypes.xml", 
-            container.getBuilder());
-
-			// take atomtype for the given element...
-            return atomATF.getAtomType(atom.getSymbol());
-			
-		} catch (Exception ex1) 
-		{
-			logger.error(ex1.getMessage());
-			logger.debug(ex1);
-			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString(), ex1);
-		}
-	}
-	
-	
-	
 	/**
 	 *  Gets the parameterNames attribute of the AtomHybridizationVSEPRDescriptor object
 	 *
