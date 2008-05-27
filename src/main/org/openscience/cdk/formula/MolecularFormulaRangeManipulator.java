@@ -101,7 +101,7 @@ public class MolecularFormulaRangeManipulator {
 	 * @param   The MolecularFormulaRange to analyze
 	 * @return  A IMolecularFormula containing the maximal occurrence of each isotope 
 	 */
-    @TestMethod("testGetMaximalFormula_MolecularFormulaRange")
+    @TestMethod("testGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder")
 	public static IMolecularFormula getMaximalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder){
 		IMolecularFormula formula = builder.newMolecularFormula();
 		
@@ -121,7 +121,7 @@ public class MolecularFormulaRangeManipulator {
 	 * @param   The MolecularFormulaRange to analyze
 	 * @return  A IMolecularFormula containing the minimal occurrence of each isotope 
 	 */
-    @TestMethod("testGetMinimalFormula_MolecularFormulaRange")
+    @TestMethod("testGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder")
 	public static IMolecularFormula getMinimalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder){
 		IMolecularFormula formula = builder.newMolecularFormula();
 		

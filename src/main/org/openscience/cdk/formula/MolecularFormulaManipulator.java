@@ -330,7 +330,7 @@ public class MolecularFormulaManipulator {
 	 * @return            The filled IMolecularFormula
 	 * @see               #getMolecularFormula(String,IMolecularFormula)
 	 */
-	@TestMethod("testGetMolecularFormula_String")
+	@TestMethod("testGetMolecularFormula_String_IChemObjectBuilder")
 	public static IMolecularFormula getMolecularFormula(String stringMF, IChemObjectBuilder builder) {
 		return getMolecularFormula(stringMF, false, builder);
 	}
@@ -345,7 +345,7 @@ public class MolecularFormulaManipulator {
 	 * @return            The filled IMolecularFormula
 	 * @see               #getMolecularFormula(String,IMolecularFormula)
 	 */
-	@TestMethod("testGetMajorIsotopeMolecularFormula_String")
+	@TestMethod("testGetMajorIsotopeMolecularFormula_String_IChemObjectBuilder")
 	public static IMolecularFormula getMajorIsotopeMolecularFormula(String stringMF, IChemObjectBuilder builder) {
 		return getMolecularFormula(stringMF, true, builder);
 	}
