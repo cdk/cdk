@@ -60,7 +60,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:ionizationPotential
  * @cdk.bug     1860497
- * @cdk.bug     1861626
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptorTest")
 public class IPBondLearningDescriptor extends AbstractBondDescriptor {
