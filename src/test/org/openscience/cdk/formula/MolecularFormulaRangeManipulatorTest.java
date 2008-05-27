@@ -99,7 +99,7 @@ public class MolecularFormulaRangeManipulatorTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-	public void testGetMaximalFormula_MolecularFormulaRange() {
+	public void testGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder() {
 		IMolecularFormula mf1 = new MolecularFormula(); /*C4H12NO4*/
 		mf1.addIsotope(builder.newIsotope("C"),4);
 		mf1.addIsotope(builder.newIsotope("H"),12);
@@ -142,7 +142,7 @@ public class MolecularFormulaRangeManipulatorTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
     @Test 
-	public void testGetMinimalFormula_MolecularFormulaRange() {
+	public void testGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder() {
 		IMolecularFormula mf1 = new MolecularFormula(); /*C4H12NO4*/
 		mf1.addIsotope(builder.newIsotope("C"),4);
 		mf1.addIsotope(builder.newIsotope("H"),12);

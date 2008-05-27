@@ -257,7 +257,7 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 	 * @return    The test suite
 	 */
 	@Test 
-    public void testGetMolecularFormula_String()	{
+    public void testGetMolecularFormula_String_IChemObjectBuilder()	{
 		IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMolecularFormula("C10H16", builder);
 		
 		Assert.assertEquals(26, MolecularFormulaManipulator.getAtomCount(molecularFormula));
@@ -289,7 +289,7 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 	}
 	
 	@Test 
-    public void testGetMajorIsotopeMolecularFormula_String() throws Exception {
+    public void testGetMajorIsotopeMolecularFormula_String_IChemObjectBuilder() throws Exception {
 		IMolecularFormula mf2 = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C11H17", builder);
 		
 		Assert.assertEquals(28, MolecularFormulaManipulator.getAtomCount(mf2));

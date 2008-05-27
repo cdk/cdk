@@ -63,16 +63,13 @@ public class MassToFormulaToolTest extends NewCDKTestCase {
 			e.printStackTrace();
 		}
 	}
-
-   
-
     /**
 	 * A unit test suite for JUnit.
 	 *
 	 * @return    The test suite
 	 */
     @Test 
-    public void testMassToFormulaTool()	{
+    public void testMassToFormulaTool_IChemObjectBuilder(){
     	
 		Assert.assertNotNull(new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance()));
 	}
