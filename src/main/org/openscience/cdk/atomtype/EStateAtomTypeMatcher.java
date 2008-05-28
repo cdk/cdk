@@ -35,9 +35,8 @@ import org.openscience.cdk.interfaces.*;
  * @author nick
  * @cdk.module standard
  * @cdk.svnrev $Revision$
+ * @cdk.keyword atom type, E-state
  */
-
-	
 @TestClass("org.openscience.cdk.atomtype.EStateAtomTypeMatcherTest")
 public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 
