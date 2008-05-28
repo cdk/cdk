@@ -413,6 +413,7 @@
           <antcall target="compile-module"><param name="module" value="data"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="atomtype"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="dict"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="diff"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
         <parallel>
           <antcall target="compile-module"><param name="module" value="datadebug"/><param name="source" value="${src}/main"/></antcall>
@@ -509,6 +510,7 @@
             <antcall target="compile-module"><param name="module" value="pcore"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="applications"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="inchi"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="diff"/><param name="source" value="${src}/main"/></antcall>
         </target>
 
         <target id="test-parallel-all" name="test-parallel-all" description="test-dist-all in parallel mode">
@@ -516,6 +518,7 @@
             <antcall target="compile-init"/>
             <antcall target="compile-module"><param name="module" value="test"/><param name="source" value="${src}/test"/></antcall>
             <parallel threadCount="${threadCount}">
+              <antcall target="compile-module"><param name="module" value="test-diff"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-core"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-data"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-dict"/><param name="source" value="${src}/test"/></antcall>
@@ -555,6 +558,7 @@
 	<target id="test-dist-all" name="test-dist-all" description="test-dist-all">
         <antcall target="compile-init"/>
         <antcall target="compile-module"><param name="module" value="test"/><param name="source" value="${src}/test"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-diff"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-core"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-atomtype"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-standard"/><param name="source" value="${src}/test"/></antcall>
@@ -628,6 +632,7 @@
                     <includesfile name="${metainf}/pcore.libdepends"/>
                     <includesfile name="${metainf}/formula.libdepends"/>
                 	<includesfile name="${metainf}/isomorphism.libdepends"/>
+                    <includesfile name="${metainf}/diff.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-applications.jar"/>
@@ -637,6 +642,7 @@
                     <include name="cdk-charges.jar"/>
                     <include name="cdk-core.jar"/>
                     <include name="cdk-dict.jar"/>
+                    <include name="cdk-diff.jar"/>
                     <include name="cdk-control.jar"/>
                     <include name="cdk-datadebug.jar"/>
                     <include name="cdk-data.jar"/>
@@ -705,6 +711,7 @@
                     <include name="cdk-control.jar"/>
                     <include name="cdk-datadebug.jar"/>
                     <include name="cdk-data.jar"/>
+                    <include name="cdk-diff.jar"/>
                     <include name="cdk-experimental.jar"/>
                     <include name="cdk-extra.jar"/>
                     <include name="cdk-interfaces.jar"/>
@@ -764,6 +771,7 @@
                     <includesfile name="${metainf}/test-core.libdepends"/>
                     <includesfile name="${metainf}/test-data.libdepends"/>
                     <includesfile name="${metainf}/test-datadebug.libdepends"/>
+                    <includesfile name="${metainf}/test-diff.libdepends"/>
                     <includesfile name="${metainf}/test-experimental.libdepends"/>
                     <includesfile name="${metainf}/test-extra.libdepends"/>
                     <includesfile name="${metainf}/test-builder3d.libdepends"/>
@@ -792,6 +800,7 @@
                     <include name="cdk-test-core.jar"/>
                     <include name="cdk-test-data.jar"/>
                     <include name="cdk-test-datadebug.jar"/>
+                    <include name="cdk-test-diff.jar"/>
                     <include name="cdk-test-experimental.jar"/>
                     <include name="cdk-test-extra.jar"/>
                     <include name="cdk-test-builder3d.jar"/>
@@ -1027,6 +1036,7 @@
         	<antcall target="test-module"><param name="module" value="core"/></antcall>
         	<antcall target="test-module"><param name="module" value="data"/></antcall>
         	<antcall target="test-module"><param name="module" value="datadebug"/></antcall>
+               <antcall target="test-module"><param name="module" value="diff"/></antcall>
         	<antcall target="test-module"><param name="module" value="nonotify"/></antcall>
         	<antcall target="test-module"><param name="module" value="atomtype"/></antcall>
         	<antcall target="test-module"><param name="module" value="standard"/></antcall>
