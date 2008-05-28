@@ -13,9 +13,6 @@
         <fileset dir="${pathtojava3d}">
             <include name="*.jar" />
         </fileset>
-        <fileset dir="../../jar/libio">
-            <include name="*.jar" />
-        </fileset>
     </path>
 
     <target id="info" name="info"> 
