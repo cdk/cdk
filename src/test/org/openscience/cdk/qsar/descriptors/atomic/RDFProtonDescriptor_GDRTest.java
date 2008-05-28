@@ -5,8 +5,11 @@ import java.io.InputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -15,6 +18,7 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GDR;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
@@ -57,4 +61,20 @@ public class RDFProtonDescriptor_GDRTest extends AtomicDescriptorTest {
 
 		}
 	}
+
+    public void testReturnsNaNForNonHydrogen() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        mol.addAtom(atom);
+        DescriptorValue dv = descriptor.calculate(atom,mol );
+        IDescriptorResult result = dv.getValue();
+        assertNotNull(result);
+        assertTrue(result instanceof DoubleArrayResult);
+        DoubleArrayResult dResult = (DoubleArrayResult)result;
+        System.out.println("array: " + result.toString());
+        for (int i=0; i<result.length(); i++) {
+            assertEquals(Double.NaN, dResult.get(i), 0.000001);
+        }
+    }
+
 }
