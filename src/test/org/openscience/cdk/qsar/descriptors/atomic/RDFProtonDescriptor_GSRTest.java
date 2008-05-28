@@ -71,7 +71,6 @@ public class RDFProtonDescriptor_GSRTest extends AtomicDescriptorTest {
         assertNotNull(result);
         assertTrue(result instanceof DoubleArrayResult);
         DoubleArrayResult dResult = (DoubleArrayResult)result;
-        System.out.println("array: " + result.toString());
         for (int i=0; i<result.length(); i++) {
             assertEquals(Double.NaN, dResult.get(i), 0.000001);
         }
