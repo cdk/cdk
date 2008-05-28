@@ -109,7 +109,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
 
     public void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
-        IAtom atom = mol.getAtom(0);
+        IAtom atom = mol.getAtom(1);
         String priorString = atom.toString();
         descriptor.calculate(atom, mol);
         String afterString = atom.toString();
