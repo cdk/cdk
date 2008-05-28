@@ -173,9 +173,15 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(
 				g3r_desc_length);
 		if (!atom.getSymbol().equals("H")) {
-			throw new CDKException("You tried calculation on a "
-					+ atom.getSymbol()
-					+ " atom. This is not allowed! Atom must be a H atom.");
+		    for (int i=0; i<g3r_desc_length; i++) {
+		        rdfProtonCalculatedValues.add(Double.NaN);
+		        descriptorNames[i] = "g3r_" + (i+1);
+		    }
+		    return new DescriptorValue(
+		        getSpecification(), getParameterNames(),
+		        getParameters(), rdfProtonCalculatedValues,
+		        descriptorNames
+		    );
 		}
 
 		// ///////////////////////FIRST SECTION OF MAIN METHOD: DEFINITION OF

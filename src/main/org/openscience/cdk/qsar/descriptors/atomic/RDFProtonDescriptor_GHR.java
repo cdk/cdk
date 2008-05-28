@@ -171,7 +171,15 @@ public class RDFProtonDescriptor_GHR implements IAtomicDescriptor {
         		ghr_desc_length
         );
         if (!atom.getSymbol().equals("H")) {
-            throw new CDKException("You tried calculation on a " + atom.getSymbol() + " atom. This is not allowed! Atom must be a H atom.");
+            for (int i=0; i<ghr_desc_length; i++) {
+                rdfProtonCalculatedValues.add(Double.NaN);
+                descriptorNames[i] = "gHr_" + (i+1);
+            }
+            return new DescriptorValue(
+                getSpecification(), getParameterNames(),
+                getParameters(), rdfProtonCalculatedValues,
+                descriptorNames
+            );
         }
 
 /////////////////////////FIRST SECTION OF MAIN METHOD: DEFINITION OF MAIN VARIABLES
