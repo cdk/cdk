@@ -138,4 +138,23 @@ public class SDFReaderTest extends CDKTestCase {
         	assertNotNull(sequence.getChemModel(i));
         }
     }
+    
+    /**
+     * Test for bug 1974826
+     * @throws Exception
+     */
+    public void testSDFFile6() throws Exception {
+        String filename = "data/mdl/test6.sdf"; // a multi molecule SDF file
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
+        assertEquals(1, fileContents.getChemSequenceCount());
+        org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
+        assertNotNull(sequence);
+        assertEquals(3, sequence.getChemModelCount());
+        for (int i=0; i<sequence.getChemModelCount(); i++) {
+          assertNotNull(sequence.getChemModel(i));
+        }
+    }
+
 }
