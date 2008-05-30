@@ -242,6 +242,17 @@ public class AtomContainerSetTest extends NewCDKTestCase {
          Assert.assertEquals(containerSet.getAtomContainerCount(), clonedSet.getAtomContainerCount());
      }
 
+     @Test public void testCloneMultiplier() throws Exception {
+         IAtomContainerSet containerSet = builder.newAtomContainerSet();
+         containerSet.addAtomContainer(builder.newAtomContainer(),2);
+         Object clone = containerSet.clone();
+         Assert.assertTrue(clone instanceof IAtomContainerSet);
+         IAtomContainerSet clonedSet = (IAtomContainerSet)clone;
+         Assert.assertNotSame(containerSet, clonedSet);
+         Assert.assertEquals(2, containerSet.getMultiplier(0).intValue());
+         Assert.assertEquals(2, clonedSet.getMultiplier(0).intValue());
+     }
+
     @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IAtomContainerSet chemObject = builder.newAtomContainerSet();
