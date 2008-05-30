@@ -22,11 +22,41 @@ package org.openscience.cdk.tools.diff;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * @cdk.module test-diff
  */
 public class AbstractChemObjectDiffTest {
+
+    @Test public void testDiffIBondOrderFields() {
+        String result = LocalChemObjectDiffer.diff("SomeInteger", IBond.Order.DOUBLE, IBond.Order.SINGLE);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+        Assert.assertTrue(result.contains("DOUBLE"));
+        Assert.assertTrue(result.contains("SINGLE"));
+    }
+
+    @Test public void testDiffIOrderFieldsNoDiff() {
+        String result = LocalChemObjectDiffer.diff("SomeInteger", IBond.Order.SINGLE, IBond.Order.SINGLE);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(0, result.length());
+    }
+
+    @Test public void testDiffIAtomTypeHybridizationFields() {
+        String result = LocalChemObjectDiffer.diff("SomeInteger", IAtomType.Hybridization.PLANAR3, IAtomType.Hybridization.SP3);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+        Assert.assertTrue(result.contains("PLANAR3"));
+        Assert.assertTrue(result.contains("SP3"));
+    }
+
+    @Test public void testDiffIAtomTypeTypeHybridizationFieldsNoDiff() {
+        String result = LocalChemObjectDiffer.diff("SomeInteger", IAtomType.Hybridization.PLANAR3, IAtomType.Hybridization.PLANAR3);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(0, result.length());
+    }
 
     @Test public void testDiffDoubleFields() {
         String result = LocalChemObjectDiffer.diff("SomeInteger", new Double(5), new Double(5.1));

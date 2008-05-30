@@ -22,6 +22,8 @@ package org.openscience.cdk.tools.diff;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 
@@ -33,7 +35,41 @@ import org.openscience.cdk.interfaces.IElement;
  */
 @TestClass("org.openscience.cdk.tools.diff.AbstractChemObjectDiffTest")
 public abstract class AbstractChemObjectDiff {
-    
+
+    /**
+     * Shows the differences between two IBond.Order type fields identified by
+     * by a field name.
+     * 
+     * @param field   Name of the field.
+     * @param first   Field value for the first {@link IBond.Order}.
+     * @param second  Field value for the second {@link IBond.Order}.
+     * @return
+     */
+    protected static String diff(String field, IBond.Order first, IBond.Order second) {
+        if ((first == null && second == null) || first.equals(second)) {
+            return "";
+        } else {
+            return ", " + field + ":" + first + "/" + second;
+        }
+    }
+
+    /**
+     * Shows the differences between two IAtomType.Hybridization type fields identified by
+     * by a field name.
+     * 
+     * @param field   Name of the field.
+     * @param first   Field value for the first {@link IAtomType.Hybridization}.
+     * @param second  Field value for the second {@link IAtomType.Hybridization}.
+     * @return
+     */
+    protected static String diff(String field, IAtomType.Hybridization first, IAtomType.Hybridization second) {
+        if ((first == null && second == null) || first.equals(second)) {
+            return "";
+        } else {
+            return ", " + field + ":" + first + "/" + second;
+        }
+    }
+
     /**
      * Shows the differences between two String type fields identified by
      * by a field name.
@@ -50,7 +86,7 @@ public abstract class AbstractChemObjectDiff {
             return ", " + field + ":" + first + "/" + second;
         }
     }
-    
+
     /**
      * Shows the differences between two Integer type fields identified by
      * by a field name.

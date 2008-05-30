@@ -26,6 +26,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DiffCoverageTest;
 import org.openscience.cdk.tools.diff.AbstractChemObjectDiffTest;
+import org.openscience.cdk.tools.diff.AtomTypeDiffTest;
 import org.openscience.cdk.tools.diff.ElementDiffTest;
 import org.openscience.cdk.tools.diff.IsotopeDiffTest;
 
@@ -45,6 +46,7 @@ public class MdiffTests {
 
         suite.addTest(new JUnit4TestAdapter(ElementDiffTest.class));
         suite.addTest(new JUnit4TestAdapter(IsotopeDiffTest.class));
+        suite.addTest(new JUnit4TestAdapter(AtomTypeDiffTest.class));
 
         return suite;
     }
