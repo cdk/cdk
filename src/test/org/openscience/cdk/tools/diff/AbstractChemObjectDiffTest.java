@@ -30,8 +30,22 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class AbstractChemObjectDiffTest {
 
+    @Test public void testDiffPoint2dFields() {
+        String result = LocalChemObjectDiffer.diff("SomePoint2d", IBond.Order.DOUBLE, IBond.Order.SINGLE);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+        Assert.assertTrue(result.contains("DOUBLE"));
+        Assert.assertTrue(result.contains("SINGLE"));
+    }
+
+    @Test public void testDiffPoint2dFieldsNoDiff() {
+        String result = LocalChemObjectDiffer.diff("SomePoint2d", IBond.Order.SINGLE, IBond.Order.SINGLE);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(0, result.length());
+    }
+
     @Test public void testDiffIBondOrderFields() {
-        String result = LocalChemObjectDiffer.diff("SomeInteger", IBond.Order.DOUBLE, IBond.Order.SINGLE);
+        String result = LocalChemObjectDiffer.diff("SomeIBond.Order", IBond.Order.DOUBLE, IBond.Order.SINGLE);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
         Assert.assertTrue(result.contains("DOUBLE"));
@@ -39,13 +53,13 @@ public class AbstractChemObjectDiffTest {
     }
 
     @Test public void testDiffIOrderFieldsNoDiff() {
-        String result = LocalChemObjectDiffer.diff("SomeInteger", IBond.Order.SINGLE, IBond.Order.SINGLE);
+        String result = LocalChemObjectDiffer.diff("SomeIBond.Order", IBond.Order.SINGLE, IBond.Order.SINGLE);
         Assert.assertNotNull(result);
         Assert.assertEquals(0, result.length());
     }
 
     @Test public void testDiffIAtomTypeHybridizationFields() {
-        String result = LocalChemObjectDiffer.diff("SomeInteger", IAtomType.Hybridization.PLANAR3, IAtomType.Hybridization.SP3);
+        String result = LocalChemObjectDiffer.diff("SomeIAtomType.Hybridization", IAtomType.Hybridization.PLANAR3, IAtomType.Hybridization.SP3);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
         Assert.assertTrue(result.contains("PLANAR3"));

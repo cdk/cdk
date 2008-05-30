@@ -20,6 +20,9 @@
  */
 package org.openscience.cdk.tools.diff;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -35,6 +38,46 @@ import org.openscience.cdk.interfaces.IElement;
  */
 @TestClass("org.openscience.cdk.tools.diff.AbstractChemObjectDiffTest")
 public abstract class AbstractChemObjectDiff {
+
+    /**
+     * Shows the differences between two Point2d type fields identified by
+     * by a field name.
+     * 
+     * @param field   Name of the field.
+     * @param first   Field value for the first {@link Point2d}.
+     * @param second  Field value for the second {@link Point2d}.
+     * @return
+     */
+    protected static String diff(String field, Point2d first, Point2d second) {
+        if (first == null && second == null) return "";
+        String totalDiff = "";
+        String xDiff = diff("x", first.x, second.x);
+        if (xDiff.length() > 0) totalDiff += ", " + xDiff;
+        String yDiff = diff("y", first.x, second.x);
+        if (yDiff.length() > 0) totalDiff += ", " + yDiff;
+        return totalDiff;
+    }
+
+    /**
+     * Shows the differences between two Point3d type fields identified by
+     * by a field name.
+     * 
+     * @param field   Name of the field.
+     * @param first   Field value for the first {@link Point3d}.
+     * @param second  Field value for the second {@link Point3d}.
+     * @return
+     */
+    protected static String diff(String field, Point3d first, Point3d second) {
+        if (first == null && second == null) return "";
+        String totalDiff = "";
+        String xDiff = diff("x", first.x, second.x);
+        if (xDiff.length() > 0) totalDiff += ", " + xDiff;
+        String yDiff = diff("y", first.y, second.y);
+        if (yDiff.length() > 0) totalDiff += ", " + yDiff;
+        String zDiff = diff("z", first.z, second.z);
+        if (zDiff.length() > 0) totalDiff += ", " + zDiff;
+        return totalDiff;
+    }
 
     /**
      * Shows the differences between two IBond.Order type fields identified by
