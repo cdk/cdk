@@ -20,10 +20,11 @@
  */
 package org.openscience.cdk;
 
+import java.util.Iterator;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -67,7 +68,7 @@ public class AtomContainerSetTest extends NewCDKTestCase {
         som.addAtomContainer(builder.newAtomContainer());
         
         Assert.assertEquals(3, som.getAtomContainerCount());
-        java.util.Iterator iter = som.atomContainers();
+        Iterator<IAtomContainer> iter = som.atomContainers();
         int count = 0;
         while (iter.hasNext()) {
         	iter.next();
@@ -230,6 +231,16 @@ public class AtomContainerSetTest extends NewCDKTestCase {
         Assert.assertTrue(clone instanceof IAtomContainerSet);
 	Assert.assertNotSame(containerSet, clone);
     } 
+
+     @Test public void testCloneDuplication() throws Exception {
+         IAtomContainerSet containerSet = builder.newAtomContainerSet();
+         containerSet.addAtomContainer(builder.newAtomContainer());
+         Object clone = containerSet.clone();
+         Assert.assertTrue(clone instanceof IAtomContainerSet);
+         IAtomContainerSet clonedSet = (IAtomContainerSet)clone;
+         Assert.assertNotSame(containerSet, clonedSet);
+         Assert.assertEquals(containerSet.getAtomContainerCount(), clonedSet.getAtomContainerCount());
+     }
 
     @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
