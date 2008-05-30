@@ -28,6 +28,20 @@ import org.junit.Test;
  */
 public class AbstractChemObjectDiffTest {
 
+    @Test public void testDiffDoubleFields() {
+        String result = LocalChemObjectDiffer.diff("SomeInteger", new Double(5), new Double(5.1));
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+        Assert.assertTrue(result.contains("SomeInteger"));
+        Assert.assertTrue(result.contains("5.1"));
+    }
+
+    @Test public void testDiffDoubleFieldsNoDiff() {
+        String result = LocalChemObjectDiffer.diff("SomeInteger", new Double(5.00000000000001), new Double(5.00000000000002));
+        Assert.assertNotNull(result);
+        Assert.assertEquals(0, result.length());
+    }
+
     @Test public void testDiffIntegerFields() {
         String result = LocalChemObjectDiffer.diff("SomeInteger", new Integer(5), new Integer(4));
         Assert.assertNotNull(result);
@@ -36,13 +50,13 @@ public class AbstractChemObjectDiffTest {
         Assert.assertTrue(result.contains("5"));
         Assert.assertTrue(result.contains("4"));
     }
-    
+
     @Test public void testDiffIntegerFieldsNoDiff() {
         String result = LocalChemObjectDiffer.diff("SomeInteger", new Integer(5), new Integer(5));
         Assert.assertNotNull(result);
         Assert.assertEquals(0, result.length());
     }
-    
+
     @Test public void testDiffStringFields() {
         String result = LocalChemObjectDiffer.diff("SomeInteger", "Foo", "Bar");
         Assert.assertNotNull(result);

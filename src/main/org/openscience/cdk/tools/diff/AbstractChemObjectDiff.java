@@ -43,7 +43,7 @@ public abstract class AbstractChemObjectDiff {
      * @param second  Field value for the second {@link IChemObject}.
      * @return
      */
-    public static String diff(String field, String first, String second) {
+    protected static String diff(String field, String first, String second) {
         if ((first == null && second == null) || first.equals(second)) {
             return "";
         } else {
@@ -61,12 +61,30 @@ public abstract class AbstractChemObjectDiff {
      * @return
      */
     @TestMethod("testDiffIntegerFields,testDiffIntegerFieldsNoDiff")
-    public static String diff(String field, Integer first, Integer second) {
+    protected static String diff(String field, Integer first, Integer second) {
         if ((first == null && second == null) || first.equals(second)) {
             return "";
         } else {
             return ", " + field + ":" + first + "/" + second;
         }
     }
-    
+
+    /**
+     * Shows the differences between two Double type fields identified by
+     * by a field name.
+     * 
+     * @param field   Name of the field.
+     * @param first   Field value for the first {@link IChemObject}.
+     * @param second  Field value for the second {@link IChemObject}.
+     * @return
+     */
+    @TestMethod("testDiffIntegerFields,testDiffIntegerFieldsNoDiff")
+    protected static String diff(String field, Double first, Double second) {
+        if ((first == null && second == null) || Math.abs(first - second) < 0.000000001) {
+            return "";
+        } else {
+            return ", " + field + ":" + first + "/" + second;
+        }
+    }
+
 }
