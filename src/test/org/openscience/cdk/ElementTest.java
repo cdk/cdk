@@ -27,6 +27,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.tools.diff.ElementDiff;
 
 /**
  * Checks the functionality of the Element class.
@@ -97,6 +98,12 @@ public class ElementTest extends NewCDKTestCase {
         Assert.assertTrue(clone instanceof IElement);
     }
     
+    @Test public void testCloneDiff() throws Exception {
+        IElement elem = builder.newElement();
+        IElement clone = (IElement)elem.clone();
+        Assert.assertEquals("", ElementDiff.diff(elem, clone));
+    }
+
     @Test public void testClone_Symbol() throws Exception {
         IElement elem = builder.newElement("C");
         IElement clone = (IElement)elem.clone();
