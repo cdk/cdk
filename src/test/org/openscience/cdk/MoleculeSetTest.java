@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  * 
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2008  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -19,15 +16,16 @@
  * 
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk;
+
+import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -120,7 +118,7 @@ public class MoleculeSetTest extends NewCDKTestCase {
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         Assert.assertEquals(3, som.getMoleculeCount());
-        java.util.Iterator mols = som.molecules();
+        Iterator<IAtomContainer> mols = som.molecules();
         int count = 0;
         while (mols.hasNext()) {
         	count++;
@@ -186,8 +184,30 @@ public class MoleculeSetTest extends NewCDKTestCase {
         Object clone = som.clone();
         Assert.assertTrue(clone instanceof IMoleculeSet);
 	Assert.assertNotSame(som, clone);
-    }   
+    }
     
+    @Test public void testCloneDuplication() throws Exception {
+        IMoleculeSet moleculeSet = builder.newMoleculeSet();
+        moleculeSet.addMolecule(builder.newMolecule());
+        Object clone = moleculeSet.clone();
+        Assert.assertTrue(clone instanceof IMoleculeSet);
+        IMoleculeSet clonedSet = (IMoleculeSet)clone;
+        Assert.assertNotSame(moleculeSet, clonedSet);
+        Assert.assertEquals(moleculeSet.getMoleculeCount(), clonedSet.getMoleculeCount());
+    } 
+
+    @Test public void testCloneMultiplier() throws Exception {
+        IMoleculeSet moleculeSet = builder.newMoleculeSet();
+        moleculeSet.addMolecule(builder.newMolecule());
+        moleculeSet.setMultiplier(moleculeSet.getMolecule(0), 2.0);
+        Object clone = moleculeSet.clone();
+        Assert.assertTrue(clone instanceof IMoleculeSet);
+        IMoleculeSet clonedSet = (IMoleculeSet)clone;
+        Assert.assertNotSame(moleculeSet, clonedSet);
+        Assert.assertEquals(2, moleculeSet.getMultiplier(0).intValue());
+        Assert.assertEquals(2, clonedSet.getMultiplier(0).intValue());
+    }
+
     @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IMoleculeSet chemObject = builder.newMoleculeSet();

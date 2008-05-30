@@ -362,7 +362,8 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	public Object clone() throws CloneNotSupportedException {
 		AtomContainerSet clone = (AtomContainerSet)super.clone();
 		for (int i = 0; i < atomContainerCount; i++) {
-			clone.addAtomContainer((IAtomContainer)atomContainers[i].clone(), 1.0);
+        clone.replaceAtomContainer(i, (IAtomContainer)atomContainers[i].clone());
+        clone.setMultiplier(i, getMultiplier(i));
 		}
 		return clone;
 	}

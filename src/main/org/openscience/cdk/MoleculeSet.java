@@ -86,14 +86,13 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
      *
      * @param  moleculeSet  The MoleculeSet 
      */
-    public void add(org.openscience.cdk.interfaces.IMoleculeSet moleculeSet) {
-    	java.util.Iterator mols = moleculeSet.molecules();
+    public void add(IMoleculeSet moleculeSet) {
+        Iterator<IAtomContainer> mols = moleculeSet.molecules();
         while (mols.hasNext()) {
             addMolecule((IMolecule)mols.next());
         }
-	/* notifyChanged() called in super.addAtomContainer() */
     }
-    
+
     public void setMolecules(org.openscience.cdk.interfaces.IMolecule[] molecules)
     {
 	    if (atomContainerCount > 0) removeAllAtomContainers();
@@ -144,9 +143,8 @@ public class MoleculeSet extends AtomContainerSet implements IMoleculeSet, Clone
 	 */
 	public Object clone() throws CloneNotSupportedException {
 		MoleculeSet clone = (MoleculeSet)super.clone();
-		java.util.Iterator result = molecules();
-		while (result.hasNext()) {
-			clone.addMolecule((Molecule) ((Molecule)result.next()).clone());
+    for (int i = 0; i < atomContainerCount; i++) {
+        clone.replaceAtomContainer(i, (IAtomContainer)atomContainers[i].clone());
 		}
 		return (Object) clone;
 	}
