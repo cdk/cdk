@@ -672,7 +672,8 @@
                     <include name="cdk-inchi.jar"/>
                     <include name="cdk-pcore.jar"/>
                     <include name="cdk-formula.jar"/>
-                	<include name="cdk-isomorphism.jar"/>
+                    <include name="cdk-isomorphism.jar"/>
+                    <include name="cdk-ionpot.jar"/>
                 </fileset>
             </unjar>
 
