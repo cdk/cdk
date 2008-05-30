@@ -631,8 +631,7 @@
                     <includesfile name="${metainf}/smarts.libdepends"/>
                     <includesfile name="${metainf}/pcore.libdepends"/>
                     <includesfile name="${metainf}/formula.libdepends"/>
-                	<includesfile name="${metainf}/isomorphism.libdepends"/>
-                    <includesfile name="${metainf}/diff.libdepends"/>
+                    <includesfile name="${metainf}/isomorphism.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-applications.jar"/>
