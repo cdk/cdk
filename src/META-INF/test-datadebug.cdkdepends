@@ -5,3 +5,4 @@ cdk-datadebug.jar
 cdk-atomtype.jar
 cdk-test.jar
 cdk-test-data.jar
+cdk-diff.jar
