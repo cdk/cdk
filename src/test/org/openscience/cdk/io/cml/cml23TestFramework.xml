@@ -97,6 +97,11 @@
     </atom>
   </atomArray></molecule>
 
+  <!-- Not tested yet -->
+  <molecule id='m1'><atomArray>
+    <atom id='a1' elementType="C" isotopeNumber="13"/>
+  </atomArray></molecule>
+
   <!-- CML23FragmentsTest.testQSAROutput() -->
   <molecule id="m1" xmlns="http://www.xml-cml.org/schema">
     <atomArray>
