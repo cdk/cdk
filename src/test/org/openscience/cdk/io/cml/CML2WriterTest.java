@@ -35,9 +35,11 @@ import javax.vecmath.Vector3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.ReactionScheme;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.Elements;
@@ -114,7 +116,27 @@ public class CML2WriterTest extends CDKTestCase {
 		logger.debug("******************************");
         assertTrue(writer.toString().indexOf("hydrogenCount=\"4\"") != -1);
 	}
+
 	
+	 /**
+   * Test example with one explicit carbon, writing of MassNumber
+   * 
+   */
+	public void testMassNumber() throws Exception {
+	    StringWriter writer = new StringWriter();
+	    Molecule mol = new Molecule();
+	    Atom atom = new Atom("C");
+	    atom.setMassNumber( new Integer(12) );
+	    mol.addAtom( atom );
+	    CMLWriter cmlWriter = new CMLWriter(writer);
+
+	    cmlWriter.write(mol);
+	    logger.debug("****************************** testMAssNumber()");
+	    System.out.println(writer.toString());
+	    logger.debug("******************************");
+	    assertTrue(writer.toString().indexOf("istopeNumber=\"12\"") != -1);
+	}
+
 	/**
 	 * Test example with one explicit carbon, and one implicit hydrogen, and three implicit hydrogens.
 	 * 
