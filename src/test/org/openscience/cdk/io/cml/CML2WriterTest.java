@@ -134,7 +134,7 @@ public class CML2WriterTest extends CDKTestCase {
 	    logger.debug("****************************** testMAssNumber()");
 	    System.out.println(writer.toString());
 	    logger.debug("******************************");
-	    assertTrue(writer.toString().indexOf("istopeNumber=\"12\"") != -1);
+	    assertTrue(writer.toString().indexOf("isotopeNumber=\"12\"") != -1);
 	}
 
 	/**
