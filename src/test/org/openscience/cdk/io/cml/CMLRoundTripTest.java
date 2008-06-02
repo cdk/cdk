@@ -271,7 +271,7 @@ public class CMLRoundTripTest extends CDKTestCase {
      * Test roundtripping of MassNumber.
      * @throws Exception
      */
-    public void testMAssNumber() throws Exception {
+    public void testMassNumber() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
         atom.setMassNumber( new Integer(12) );
