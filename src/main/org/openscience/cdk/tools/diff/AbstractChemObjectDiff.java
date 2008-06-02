@@ -40,6 +40,48 @@ import org.openscience.cdk.interfaces.IElement;
 public abstract class AbstractChemObjectDiff {
 
     /**
+     * Shows the differences between two boolean[] type fields identified by
+     * by a field name.
+     * 
+     * @param field   Name of the field.
+     * @param first   Field value for the first {@link boolean[]}.
+     * @param second  Field value for the second {@link boolean[]}.
+     * @return
+     */
+    protected static String diff(String field, boolean[] first, boolean[] second) {
+        if (first == null && second == null) return "";
+        String totalDiff = "";
+        int firstLength = first.length;
+        int secondLength = second.length;
+        if (firstLength == secondLength) {
+            for (int i=0; i<firstLength; i++) {
+                if (first[i] != second[i]) {
+                    totalDiff += ", " + field + i + ":" + (first[i] ? "T" : "F") + "/" + (second[i] ? "T" : "F");
+                }
+            }
+        } else if (firstLength < secondLength) {
+            for (int i=0; i<firstLength; i++) {
+                if (first[i] != second[i]) {
+                    totalDiff += ", " + field + i + ":" + (first[i] ? "T" : "F") + "/" + (second[i] ? "T" : "F");
+                }
+            }
+            for (int i=firstLength; i<secondLength; i++) {
+                totalDiff += ", " + field + i + ":NA/" + (second[i] ? "T" : "F");
+            }
+        } else { // secondLength < firstLength
+            for (int i=0; i<secondLength; i++) {
+                if (first[i] != second[i]) {
+                    totalDiff += ", " + field + i + ":" + (first[i] ? "T" : "F") + "/" + (second[i] ? "T" : "F");
+                }
+            }
+            for (int i=secondLength; i<firstLength; i++) {
+                totalDiff += ", " + field + i + ":" + (first[i] ? "T" : "F") + "/NA";
+            }
+        }
+        return totalDiff;
+    }
+
+    /**
      * Shows the differences between two Point2d type fields identified by
      * by a field name.
      * 

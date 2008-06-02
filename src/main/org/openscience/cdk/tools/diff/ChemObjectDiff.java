@@ -23,31 +23,30 @@ package org.openscience.cdk.tools.diff;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IElement;
 
 /**
- * Compares two {@link IElement} classes.
+ * Compares two {@link IChemObject} classes.
  * 
  * @author     egonw
  * @cdk.module diff
  */
-@TestClass("org.openscience.cdk.tools.diff.ElementDiffTest")
-public class ElementDiff extends AbstractChemObjectDiff {
+@TestClass("org.openscience.cdk.tools.diff.ChemObjectDiffTest")
+public class ChemObjectDiff extends AbstractChemObjectDiff {
     
     @TestMethod("testMatchAgainstItself,testDiff")
     public static String diff( IChemObject first, IChemObject second ) {
-        if (!(first instanceof IElement && second instanceof IElement)) {
+        if (!(first instanceof IChemObject && second instanceof IChemObject)) {
             return null;
         }
-        IElement firstElem = (IElement)first;
-        IElement secondElem = (IElement)second;
+        IChemObject firstElem = (IChemObject)first;
+        IChemObject secondElem = (IChemObject)second;
         StringBuffer resultString = new StringBuffer(32);
-        resultString.append(diff("S", firstElem.getSymbol(), secondElem.getSymbol()));
-        resultString.append(diff("ID", firstElem.getID(), secondElem.getID()));
-        resultString.append(diff("AN", firstElem.getAtomicNumber(), secondElem.getAtomicNumber()));
-        resultString.append(ChemObjectDiff.diff(first, second));
+        // Compare flags
+        boolean[] firstFlags = firstElem.getFlags();
+        boolean[] secondFlags = secondElem.getFlags();
+        resultString.append(diff("flag", firstFlags, secondFlags));
         if (resultString.length() > 0) {
-            return "ElementDiff(" + resultString.toString() + ")";
+            return "ChemObjectDiff(" + resultString.toString() + ")";
         } else {
             return "";
         }
