@@ -419,7 +419,7 @@ public class CMLCoreModule implements ICMLModule {
                 else if (att.equals("hydrogenCount")) {
                     hCounts.add(value);
                 }
-                else if (att.equals("isotope")) {
+                else if (att.equals("isotopeNumber")) {
                     isotope.add(value);
                 }
                 else if (att.equals("dictRef")) {                	
