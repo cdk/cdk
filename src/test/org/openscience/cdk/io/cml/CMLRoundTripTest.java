@@ -267,6 +267,25 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(atom.getMassNumber(), roundTrippedAtom.getMassNumber());
     }
     
+    /**
+     * Test roundtripping of MassNumber.
+     * @throws Exception
+     */
+    public void testMAssNumber() throws Exception {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("C");
+        atom.setMassNumber( new Integer(12) );
+        mol.addAtom(atom);
+        assertEquals( 12, atom.getMassNumber().intValue() );
+        
+        IMolecule roundTrippedMol = roundTripMolecule(mol);
+        
+        assertEquals(1, roundTrippedMol.getAtomCount());
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        assertEquals(atom.getMassNumber(), roundTrippedAtom.getMassNumber());
+    }
+
+    
     public void testBond() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
@@ -640,6 +659,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertNotNull(actual);
         assertEquals(value, actual);
     }
+
 
 }
 
