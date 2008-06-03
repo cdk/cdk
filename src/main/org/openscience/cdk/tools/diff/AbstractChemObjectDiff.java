@@ -96,7 +96,7 @@ public abstract class AbstractChemObjectDiff {
         String totalDiff = "";
         String xDiff = diff("x", first.x, second.x);
         if (xDiff.length() > 0) totalDiff += ", " + xDiff;
-        String yDiff = diff("y", first.x, second.x);
+        String yDiff = diff("y", first.y, second.y);
         if (yDiff.length() > 0) totalDiff += ", " + yDiff;
         return totalDiff;
     }
