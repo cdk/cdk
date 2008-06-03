@@ -43,6 +43,7 @@ public class AbstractChemObjectDiffTest {
         String result = LocalChemObjectDiffer.diff("SomePoint2d", p2d1, p2d2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
+        Assert.assertTrue(result.contains("SomePoint2d"));
         Assert.assertTrue(result.contains("0.0"));
         Assert.assertTrue(result.contains("1.0"));
         Assert.assertTrue(result.contains("2.0"));
@@ -81,6 +82,7 @@ public class AbstractChemObjectDiffTest {
         String result = LocalChemObjectDiffer.diff("SomePoint3d", p3d1, p3d2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
+        Assert.assertTrue(result.contains("SomePoint3d"));
         Assert.assertTrue(result.contains("0.0"));
         Assert.assertTrue(result.contains("1.0"));
         Assert.assertTrue(result.contains("2.0"));
@@ -113,6 +115,7 @@ public class AbstractChemObjectDiffTest {
         String result = LocalChemObjectDiffer.diff("SomeIBond.Order", IBond.Order.DOUBLE, IBond.Order.SINGLE);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
+        Assert.assertTrue(result.contains("SomeIBond.Order"));
         Assert.assertTrue(result.contains("DOUBLE"));
         Assert.assertTrue(result.contains("SINGLE"));
     }
@@ -136,6 +139,7 @@ public class AbstractChemObjectDiffTest {
         String result = LocalChemObjectDiffer.diff("SomeIAtomType.Hybridization", IAtomType.Hybridization.PLANAR3, IAtomType.Hybridization.SP3);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
+        Assert.assertTrue(result.contains("SomeIAtomType.Hybridization"));
         Assert.assertTrue(result.contains("PLANAR3"));
         Assert.assertTrue(result.contains("SP3"));
     }
