@@ -21,6 +21,7 @@
 package org.openscience.cdk.tools.diff;
 
 import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -56,6 +57,34 @@ public class AbstractChemObjectDiffTest {
         p2d2.x = 0.0;
         p2d2.y = 1.0;
         String result = LocalChemObjectDiffer.diff("SomePoint2d", p2d1, p2d2);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(0, result.length());
+    }
+
+    @Test public void testDiffPoint3dFields() {
+        Point3d p3d1 = new Point3d();
+        p3d1.x = 0.0;
+        p3d1.y = 1.0;
+        Point3d p3d2 = new Point3d();
+        p3d2.x = 2.0;
+        p3d2.y = 3.0;
+        String result = LocalChemObjectDiffer.diff("SomePoint3d", p3d1, p3d2);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+        Assert.assertTrue(result.contains("0.0"));
+        Assert.assertTrue(result.contains("1.0"));
+        Assert.assertTrue(result.contains("2.0"));
+        Assert.assertTrue(result.contains("3.0"));
+    }
+
+    @Test public void testDiffPoint3dFieldsNoDiff() {
+        Point3d p3d1 = new Point3d();
+        p3d1.x = 0.0;
+        p3d1.y = 1.0;
+        Point3d p3d2 = new Point3d();
+        p3d2.x = 0.0;
+        p3d2.y = 1.0;
+        String result = LocalChemObjectDiffer.diff("SomePoint3d", p3d1, p3d2);
         Assert.assertNotNull(result);
         Assert.assertEquals(0, result.length());
     }
