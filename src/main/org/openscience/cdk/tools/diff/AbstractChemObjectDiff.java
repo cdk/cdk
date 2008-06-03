@@ -95,14 +95,15 @@ public abstract class AbstractChemObjectDiff {
         if (first == null && second == null) return "";
         String totalDiff = "";
         if (first == null) {
-            totalDiff += ", Point2d({" + second.x + "," + second.y + "}/UNSET)";
+            totalDiff += ", " + field + "({" + second.x + "," + second.y + "}/UNSET)";
         } else if (second == null) {
-            totalDiff += ", Point2d(UNSET/{" + first.x + "," + first.y + "})";
+            totalDiff += ", " + field + "(UNSET/{" + first.x + "," + first.y + "})";
         } else {
             String xDiff = diff("x", first.x, second.x);
             if (xDiff.length() > 0) totalDiff += ", " + xDiff;
             String yDiff = diff("y", first.y, second.y);
             if (yDiff.length() > 0) totalDiff += ", " + yDiff;
+            if (totalDiff.length() > 0) totalDiff = ", " + field + "(" + totalDiff + ")";
         }
         return totalDiff;
     }
@@ -121,9 +122,9 @@ public abstract class AbstractChemObjectDiff {
         if (first == null && second == null) return "";
         String totalDiff = "";
         if (first == null) {
-            totalDiff += ", Point3d({" + second.x + "," + second.y + "," + second.z + "}/UNSET)";
+            totalDiff += ", " + field + "({" + second.x + "," + second.y + "," + second.z + "}/UNSET)";
         } else if (second == null) {
-            totalDiff += ", Point3d(UNSET/{" + first.x + "," + first.y + "," + first.z + "})";
+            totalDiff += ", " + field + "(UNSET/{" + first.x + "," + first.y + "," + first.z + "})";
         } else {
             String xDiff = diff("x", first.x, second.x);
             if (xDiff.length() > 0) totalDiff += ", " + xDiff;
@@ -131,6 +132,7 @@ public abstract class AbstractChemObjectDiff {
             if (yDiff.length() > 0) totalDiff += ", " + yDiff;
             String zDiff = diff("z", first.z, second.z);
             if (zDiff.length() > 0) totalDiff += ", " + zDiff;
+            if (totalDiff.length() > 0) totalDiff = ", " + field + "(" + totalDiff + ")";
         }
         return totalDiff;
     }
