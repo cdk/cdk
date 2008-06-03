@@ -23,10 +23,10 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.tools.diff.IsotopeDiff;
 
 /**
  * Checks the functionality of the Isotope class.
@@ -111,6 +111,11 @@ public class IsotopeTest extends NewCDKTestCase {
         IIsotope iso = builder.newIsotope("C");
         Object clone = iso.clone();
         Assert.assertTrue(clone instanceof IIsotope);
+
+        // test that everything has been cloned properly
+        String diff = IsotopeDiff.diff(iso, (IIsotope)clone);
+        Assert.assertNotNull(diff);
+        Assert.assertEquals(0, diff.length());
     }
     
     /**

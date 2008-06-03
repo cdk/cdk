@@ -23,13 +23,12 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.tools.diff.AtomTypeDiff;
 
 /**
  * Checks the functionality of the AtomType class.
@@ -259,6 +258,11 @@ public class AtomTypeTest extends NewCDKTestCase {
         IAtomType at = builder.newAtomType("C");
         Object clone = at.clone();
         Assert.assertTrue(clone instanceof IAtomType);
+
+        // test that everything has been cloned properly
+        String diff = AtomTypeDiff.diff(at, (IAtomType)clone);
+        Assert.assertNotNull(diff);
+        Assert.assertEquals(0, diff.length());
     }
     
     /**

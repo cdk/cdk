@@ -96,6 +96,11 @@ public class ElementTest extends NewCDKTestCase {
         IElement elem = builder.newElement();
         Object clone = elem.clone();
         Assert.assertTrue(clone instanceof IElement);
+
+        // test that everything has been cloned properly
+        String diff = ElementDiff.diff(elem, (IElement)clone);
+        Assert.assertNotNull(diff);
+        Assert.assertEquals(0, diff.length());
     }
     
     @Test public void testCloneDiff() throws Exception {

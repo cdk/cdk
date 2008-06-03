@@ -30,11 +30,10 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.tools.diff.AtomDiff;
 
 /**
  * Checks the functionality of the AtomTypeFactory
@@ -212,6 +211,11 @@ public class AtomTest extends NewCDKTestCase {
         IAtom atom = builder.newAtom("C");
         Object clone = atom.clone();
         Assert.assertTrue(clone instanceof IAtom);
+
+        // test that everything has been cloned properly
+        String diff = AtomDiff.diff(atom, (IAtom)clone);
+        Assert.assertNotNull(diff);
+        Assert.assertEquals(0, diff.length());
     }
     
     /**

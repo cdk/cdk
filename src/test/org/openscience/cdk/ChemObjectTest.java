@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
+import org.openscience.cdk.tools.diff.ChemObjectDiff;
 
 /**
  * TestCase for the IChemObject class.
@@ -155,6 +156,11 @@ public class ChemObjectTest extends NewCDKTestCase {
         // test cloning of itself
         Object clone = chemObject.clone();
         Assert.assertTrue(clone instanceof IChemObject);
+
+        // test that everything has been cloned properly
+        String diff = ChemObjectDiff.diff(chemObject, (IChemObject)clone);
+        Assert.assertNotNull(diff);
+        Assert.assertEquals(0, diff.length());
     }
     
     @Test public void testClone_Flags() throws Exception {
