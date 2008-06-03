@@ -61,6 +61,16 @@ public class AbstractChemObjectDiffTest {
         Assert.assertEquals(0, result.length());
     }
 
+    @Test public void testDiffPoint2dOneNull() {
+        Point2d p2d = new Point2d();
+        String result = LocalChemObjectDiffer.diff("SomePoint2d", p2d, null);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+        result = LocalChemObjectDiffer.diff("SomePoint2d", null, p2d);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+    }
+
     @Test public void testDiffPoint3dFields() {
         Point3d p3d1 = new Point3d();
         p3d1.x = 0.0;
@@ -89,6 +99,16 @@ public class AbstractChemObjectDiffTest {
         Assert.assertEquals(0, result.length());
     }
 
+    @Test public void testDiffPoint3dOneNull() {
+        Point3d p3d = new Point3d();
+        String result = LocalChemObjectDiffer.diff("SomePoint3d", p3d, null);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+        result = LocalChemObjectDiffer.diff("SomePoint3d", null, p3d);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+    }
+
     @Test public void testDiffIBondOrderFields() {
         String result = LocalChemObjectDiffer.diff("SomeIBond.Order", IBond.Order.DOUBLE, IBond.Order.SINGLE);
         Assert.assertNotNull(result);
@@ -103,6 +123,15 @@ public class AbstractChemObjectDiffTest {
         Assert.assertEquals(0, result.length());
     }
 
+    @Test public void testDiffIBondOrderOneNull() {
+        String result = LocalChemObjectDiffer.diff("SomeIBond.Order", IBond.Order.SINGLE, null);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+        result = LocalChemObjectDiffer.diff("SomeIBond.Order", null, IBond.Order.SINGLE);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+    }
+
     @Test public void testDiffIAtomTypeHybridizationFields() {
         String result = LocalChemObjectDiffer.diff("SomeIAtomType.Hybridization", IAtomType.Hybridization.PLANAR3, IAtomType.Hybridization.SP3);
         Assert.assertNotNull(result);
@@ -112,23 +141,41 @@ public class AbstractChemObjectDiffTest {
     }
 
     @Test public void testDiffIAtomTypeTypeHybridizationFieldsNoDiff() {
-        String result = LocalChemObjectDiffer.diff("SomeInteger", IAtomType.Hybridization.PLANAR3, IAtomType.Hybridization.PLANAR3);
+        String result = LocalChemObjectDiffer.diff("SomeIAtomType.Hybridization", IAtomType.Hybridization.PLANAR3, IAtomType.Hybridization.PLANAR3);
         Assert.assertNotNull(result);
         Assert.assertEquals(0, result.length());
     }
 
-    @Test public void testDiffDoubleFields() {
-        String result = LocalChemObjectDiffer.diff("SomeInteger", new Double(5), new Double(5.1));
+    @Test public void testDiffIAtomTypeHybridizationOneNull() {
+        String result = LocalChemObjectDiffer.diff("SomeIAtomType.Hybridization", IAtomType.Hybridization.PLANAR3, null);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        Assert.assertTrue(result.contains("SomeInteger"));
+        result = LocalChemObjectDiffer.diff("SomeIAtomType.Hybridization", null, IAtomType.Hybridization.PLANAR3);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+    }
+
+    @Test public void testDiffDoubleFields() {
+        String result = LocalChemObjectDiffer.diff("SomeDouble", new Double(5), new Double(5.1));
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+        Assert.assertTrue(result.contains("SomeDouble"));
         Assert.assertTrue(result.contains("5.1"));
     }
 
     @Test public void testDiffDoubleFieldsNoDiff() {
-        String result = LocalChemObjectDiffer.diff("SomeInteger", new Double(5.00000000000001), new Double(5.00000000000002));
+        String result = LocalChemObjectDiffer.diff("SomeDouble", new Double(5.00000000000001), new Double(5.00000000000002));
         Assert.assertNotNull(result);
         Assert.assertEquals(0, result.length());
+    }
+
+    @Test public void testDiffDoubleFieldsOneNull() {
+        String result = LocalChemObjectDiffer.diff("SomeDouble", new Double(5), null);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+        result = LocalChemObjectDiffer.diff("SomeDouble", null, new Double(5));
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
     }
 
     @Test public void testDiffIntegerFields() {
@@ -146,6 +193,15 @@ public class AbstractChemObjectDiffTest {
         Assert.assertEquals(0, result.length());
     }
 
+    @Test public void testDiffIntegerFieldsOneNull() {
+        String result = LocalChemObjectDiffer.diff("SomeInteger", new Integer(5), null);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+        result = LocalChemObjectDiffer.diff("SomeInteger", null, new Integer(5));
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+    }
+
     @Test public void testDiffStringFields() {
         String result = LocalChemObjectDiffer.diff("SomeInteger", "Foo", "Bar");
         Assert.assertNotNull(result);
@@ -161,6 +217,15 @@ public class AbstractChemObjectDiffTest {
         Assert.assertEquals(0, result.length());
     }
     
+    @Test public void testDiffStringFieldsOneNull() {
+        String result = LocalChemObjectDiffer.diff("SomeString", "Foo", null);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+        result = LocalChemObjectDiffer.diff("SomeString", null, "Foo");
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+    }
+
     /**
      * Local extension of the abstract {@link AbstractChemObjectDiff} to allow
      * testing of its methods.
