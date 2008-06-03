@@ -90,6 +90,7 @@ public abstract class AbstractChemObjectDiff {
      * @param second  Field value for the second {@link Point2d}.
      * @return
      */
+    @TestMethod("testDiffPoint2dFields,testDiffPoint2dFieldsNoDiff")
     protected static String diff(String field, Point2d first, Point2d second) {
         if (first == null && second == null) return "";
         String totalDiff = "";
@@ -109,6 +110,7 @@ public abstract class AbstractChemObjectDiff {
      * @param second  Field value for the second {@link Point3d}.
      * @return
      */
+    @TestMethod("testDiffPoint3dFields,testDiffPoint3dFieldsNoDiff")
     protected static String diff(String field, Point3d first, Point3d second) {
         if (first == null && second == null) return "";
         String totalDiff = "";
@@ -130,6 +132,7 @@ public abstract class AbstractChemObjectDiff {
      * @param second  Field value for the second {@link IBond.Order}.
      * @return
      */
+    @TestMethod("testDiffIBondOrderFields,testDiffIBondOrderFieldsNoDiff")
     protected static String diff(String field, IBond.Order first, IBond.Order second) {
         if ((first == null && second == null) || first.equals(second)) {
             return "";
@@ -147,6 +150,7 @@ public abstract class AbstractChemObjectDiff {
      * @param second  Field value for the second {@link IAtomType.Hybridization}.
      * @return
      */
+    @TestMethod("testDiffIAtomTypeTypeHybridizationFields,testDiffIAtomTypeTypeHybridizationFieldsNoDiff")
     protected static String diff(String field, IAtomType.Hybridization first, IAtomType.Hybridization second) {
         if ((first == null && second == null) || first.equals(second)) {
             return "";
@@ -164,6 +168,7 @@ public abstract class AbstractChemObjectDiff {
      * @param second  Field value for the second {@link IChemObject}.
      * @return
      */
+    @TestMethod("testDiffStringFields,testDiffStringFieldsNoDiff")
     protected static String diff(String field, String first, String second) {
         if ((first == null && second == null) || first.equals(second)) {
             return "";
