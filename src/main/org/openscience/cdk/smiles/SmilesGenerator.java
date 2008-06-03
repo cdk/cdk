@@ -60,15 +60,18 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * isotope and formal charge information of the atoms. In addition to this it
  * takes stereochemistry in account for both Bond's and Atom's. Via the flag 
  * useAromaticity it can be set if only SP2-hybridized atoms shall be set to 
- * lower case (default) or atoms, which are SP2 or aromatic. IMPORTANT: The
- * aromaticity detection for this SmilesGenerator relies on AllRingsFinder,
- * which is known to take very long for some molecules with many cycles or
- * special cyclic topologies. Thus, the AllRingsFinder has a built-in timeout
- * of 5 seconds after which it aborts and throws an Exception. If you want your
- * SMILES generated at any expense, you need to create your own AllRingsFinder,
- * set the timeout to a higher value, and assign it to this SmilesGenerator. In
- * the vast majority of cases, however, the defaults will be fine.
- * If you have a set off ALL rings before, supply this via setRings to speed up generation.
+ * lower case (default) or atoms, which are SP2 or aromatic.
+ *
+ * <p>Some example code:
+ * <pre>
+ * IMolecule benzene; // single/aromatic bonds between 6 carbons
+ * SmilesGenerator sg = new SmilesGenerator();
+ * String smiles = sg.createSMILES(benzene); // C1CCCCC1
+ * sg.setUseAromaticityFlag(true);
+ * smiles = sg.createSMILES(benzene); // c1ccccc1
+ * IMolecule benzene2; // one of the two kekule structures with explicit double bond orders
+ * String smiles2 = sg.createSMILES(benzene2); // C1=CC=CC=C1
+ * </pre>
  *
  * @author         Oliver Horlacher
  * @author         Stefan Kuhn (chiral smiles)
