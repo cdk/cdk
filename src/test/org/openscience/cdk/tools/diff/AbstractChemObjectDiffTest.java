@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.tools.diff;
 
+import javax.vecmath.Point2d;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -31,15 +33,29 @@ import org.openscience.cdk.interfaces.IBond;
 public class AbstractChemObjectDiffTest {
 
     @Test public void testDiffPoint2dFields() {
-        String result = LocalChemObjectDiffer.diff("SomePoint2d", IBond.Order.DOUBLE, IBond.Order.SINGLE);
+        Point2d p2d1 = new Point2d();
+        p2d1.x = 0.0;
+        p2d1.y = 1.0;
+        Point2d p2d2 = new Point2d();
+        p2d2.x = 2.0;
+        p2d2.y = 3.0;
+        String result = LocalChemObjectDiffer.diff("SomePoint2d", p2d1, p2d2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        Assert.assertTrue(result.contains("DOUBLE"));
-        Assert.assertTrue(result.contains("SINGLE"));
+        Assert.assertTrue(result.contains("0.0"));
+        Assert.assertTrue(result.contains("1.0"));
+        Assert.assertTrue(result.contains("2.0"));
+        Assert.assertTrue(result.contains("3.0"));
     }
 
     @Test public void testDiffPoint2dFieldsNoDiff() {
-        String result = LocalChemObjectDiffer.diff("SomePoint2d", IBond.Order.SINGLE, IBond.Order.SINGLE);
+        Point2d p2d1 = new Point2d();
+        p2d1.x = 0.0;
+        p2d1.y = 1.0;
+        Point2d p2d2 = new Point2d();
+        p2d2.x = 0.0;
+        p2d2.y = 1.0;
+        String result = LocalChemObjectDiffer.diff("SomePoint2d", p2d1, p2d2);
         Assert.assertNotNull(result);
         Assert.assertEquals(0, result.length());
     }
