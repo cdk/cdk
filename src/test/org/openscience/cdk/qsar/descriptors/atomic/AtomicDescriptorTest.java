@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.DescriptorTest;
+import org.openscience.cdk.tools.diff.AtomDiff;
 
 /**
  * Tests for molecular descriptors.
@@ -110,12 +111,12 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
     public void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         IAtom atom = mol.getAtom(1);
-        String priorString = atom.toString();
+        IAtom clone = (IAtom)mol.getAtom(1).clone();
         descriptor.calculate(atom, mol);
-        String afterString = atom.toString();
+        String diff = AtomDiff.diff(clone, atom); 
         assertEquals(
-          "The descriptor must not change the passed bond in any respect.",
-          priorString, afterString
+          "The descriptor must not change the passed bond in any respect, but found this diff: " + diff,
+          0, diff.length()
         );
     }
 
