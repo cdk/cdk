@@ -94,10 +94,16 @@ public abstract class AbstractChemObjectDiff {
     protected static String diff(String field, Point2d first, Point2d second) {
         if (first == null && second == null) return "";
         String totalDiff = "";
-        String xDiff = diff("x", first.x, second.x);
-        if (xDiff.length() > 0) totalDiff += ", " + xDiff;
-        String yDiff = diff("y", first.y, second.y);
-        if (yDiff.length() > 0) totalDiff += ", " + yDiff;
+        if (first == null) {
+            totalDiff += ", Point2d({" + second.x + "," + second.y + "}/UNSET)";
+        } else if (second == null) {
+            totalDiff += ", Point2d(UNSET/{" + first.x + "," + first.y + "})";
+        } else {
+            String xDiff = diff("x", first.x, second.x);
+            if (xDiff.length() > 0) totalDiff += ", " + xDiff;
+            String yDiff = diff("y", first.y, second.y);
+            if (yDiff.length() > 0) totalDiff += ", " + yDiff;
+        }
         return totalDiff;
     }
 
@@ -114,12 +120,18 @@ public abstract class AbstractChemObjectDiff {
     protected static String diff(String field, Point3d first, Point3d second) {
         if (first == null && second == null) return "";
         String totalDiff = "";
-        String xDiff = diff("x", first.x, second.x);
-        if (xDiff.length() > 0) totalDiff += ", " + xDiff;
-        String yDiff = diff("y", first.y, second.y);
-        if (yDiff.length() > 0) totalDiff += ", " + yDiff;
-        String zDiff = diff("z", first.z, second.z);
-        if (zDiff.length() > 0) totalDiff += ", " + zDiff;
+        if (first == null) {
+            totalDiff += ", Point3d({" + second.x + "," + second.y + "," + second.z + "}/UNSET)";
+        } else if (second == null) {
+            totalDiff += ", Point3d(UNSET/{" + first.x + "," + first.y + "," + first.z + "})";
+        } else {
+            String xDiff = diff("x", first.x, second.x);
+            if (xDiff.length() > 0) totalDiff += ", " + xDiff;
+            String yDiff = diff("y", first.y, second.y);
+            if (yDiff.length() > 0) totalDiff += ", " + yDiff;
+            String zDiff = diff("z", first.z, second.z);
+            if (zDiff.length() > 0) totalDiff += ", " + zDiff;
+        }
         return totalDiff;
     }
 
@@ -134,7 +146,13 @@ public abstract class AbstractChemObjectDiff {
      */
     @TestMethod("testDiffIBondOrderFields,testDiffIBondOrderFieldsNoDiff")
     protected static String diff(String field, IBond.Order first, IBond.Order second) {
-        if ((first == null && second == null) || first.equals(second)) {
+        if ((first == null && second == null)) {
+            return "";
+        } else if (first == null) {
+            return ", NULL/" + second;
+        } else if (second == null) {
+            return ", " + first + "/NULL";
+        } else if (first.equals(second)) {
             return "";
         } else {
             return ", " + field + ":" + first + "/" + second;
@@ -152,7 +170,13 @@ public abstract class AbstractChemObjectDiff {
      */
     @TestMethod("testDiffIAtomTypeTypeHybridizationFields,testDiffIAtomTypeTypeHybridizationFieldsNoDiff")
     protected static String diff(String field, IAtomType.Hybridization first, IAtomType.Hybridization second) {
-        if ((first == null && second == null) || first.equals(second)) {
+        if ((first == null && second == null)) {
+            return "";
+        } else if (first == null) {
+            return ", NULL/" + second;
+        } else if (second == null) {
+            return ", " + first + "/NULL";
+        } else if (first.equals(second)) {
             return "";
         } else {
             return ", " + field + ":" + first + "/" + second;
@@ -170,7 +194,13 @@ public abstract class AbstractChemObjectDiff {
      */
     @TestMethod("testDiffStringFields,testDiffStringFieldsNoDiff")
     protected static String diff(String field, String first, String second) {
-        if ((first == null && second == null) || first.equals(second)) {
+        if (first == null && second == null) {
+            return "";
+        } else if (first == null) {
+            return ", NULL/" + second;
+        } else if (second == null) {
+            return ", " + first + "/NULL";
+        } else if (first.equals(second)) {
             return "";
         } else {
             return ", " + field + ":" + first + "/" + second;
@@ -188,7 +218,13 @@ public abstract class AbstractChemObjectDiff {
      */
     @TestMethod("testDiffIntegerFields,testDiffIntegerFieldsNoDiff")
     protected static String diff(String field, Integer first, Integer second) {
-        if ((first == null && second == null) || first.equals(second)) {
+        if ((first == null && second == null)) {
+            return "";
+        } else if (first == null) {
+            return ", NULL/" + second;
+        } else if (second == null) {
+            return ", " + first + "/NULL";
+        } else if (first.equals(second)) {
             return "";
         } else {
             return ", " + field + ":" + first + "/" + second;
@@ -206,7 +242,13 @@ public abstract class AbstractChemObjectDiff {
      */
     @TestMethod("testDiffIntegerFields,testDiffIntegerFieldsNoDiff")
     protected static String diff(String field, Double first, Double second) {
-        if ((first == null && second == null) || Math.abs(first - second) < 0.000000001) {
+        if (first == null && second == null) {
+            return "";
+        } else if (first == null) {
+            return ", NULL/" + second;
+        } else if (second == null) {
+            return ", " + first + "/NULL";
+        } else if (Math.abs(first - second) < 0.000000001) {
             return "";
         } else {
             return ", " + field + ":" + first + "/" + second;
