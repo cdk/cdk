@@ -172,6 +172,12 @@ public class ChemFileManipulatorTest extends NewCDKTestCase {
     	Assert.assertEquals(1, list.size());
     }
     
+    @Test
+    public void testGetAllReactions_IChemFile()
+    {
+    	List list = ChemFileManipulator.getAllReactions(chemFile);
+    	Assert.assertEquals(1, list.size());
+    }
 
 }
 

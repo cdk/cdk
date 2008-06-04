@@ -140,5 +140,24 @@ public class ChemFileManipulator {
 	    }
 	    return modelsList;
     }
+    
+    /**
+     * Get a list of all IReaction inside an IChemFile.
+     * 
+     * @param file  The IChemFile object.
+     * @return      The List of IReaction objects inside.
+     */
+    @TestMethod("testGetAllReactions_IChemFile")
+    public static List<IReaction> getAllReactions(IChemFile file) {
+        List<IReaction> reactonList = new ArrayList<IReaction>();
+        List<IChemModel> chemModel = getAllChemModels(file);
+	    for (int f = 0; f < chemModel.size(); f++){
+		    Iterator<IReaction> iter = chemModel.get(f).getReactionSet().reactions();
+		    while (iter.hasNext()) {
+		    	reactonList.add(iter.next());
+		    }
+	    }
+	    return reactonList;
+    }
 }
 
