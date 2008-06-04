@@ -35,11 +35,15 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Reaction;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.MDLRXNReader;
 import org.openscience.cdk.io.MDLRXNWriter;
+import org.openscience.cdk.nonotify.NNReactionSet;
 import org.openscience.cdk.CDKTestCase;
 
 /**
@@ -100,6 +104,99 @@ public class MDLRXNWriterTest extends CDKTestCase {
         
         assertEquals(2, reaction2.getReactantCount());
         assertEquals(1, reaction2.getProductCount());
+    }
+    
+    public void testReactionSet_1() throws Exception {
+        IReaction reaction11 = builder.newReaction();
+        IMolecule hydroxide = builder.newMolecule();
+        hydroxide.addAtom(builder.newAtom("O"));
+        reaction11.addReactant(hydroxide);
+        IMolecule proton = builder.newMolecule();
+        proton.addAtom(builder.newAtom("H"));
+        reaction11.addReactant(proton);
+        
+        IMolecule water = builder.newMolecule();
+        water.addAtom(builder.newAtom("O"));
+        reaction11.addProduct(water);
+        
+        IReactionSet reactionSet = new NNReactionSet();
+        reactionSet.addReaction(reaction11);
+        
+        // now serialize to MDL RXN
+        StringWriter writer = new StringWriter(10000);
+        String file = "";
+        MDLRXNWriter mdlWriter = new MDLRXNWriter(writer);
+        mdlWriter.write(reactionSet);
+        mdlWriter.close();
+        file = writer.toString();
+        
+        assertTrue(file.length() > 0);
+        
+        // now deserialize the MDL RXN output
+        IReaction reaction2 = builder.newReaction();
+        MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
+        reaction2 = (IReaction)reader.read(reaction2);
+        reader.close();
+        
+        assertEquals(2, reaction2.getReactantCount());
+        assertEquals(1, reaction2.getReactants().getMolecule(0).getAtomCount());
+        assertEquals(1, reaction2.getReactants().getMolecule(1).getAtomCount());
+        assertEquals(1, reaction2.getProductCount());
+        assertEquals(1, reaction2.getProducts().getMolecule(0).getAtomCount());
+    }
+
+    
+    public void testReactionSet_2() throws Exception {
+        IReaction reaction11 = builder.newReaction();
+        IMolecule hydroxide = builder.newMolecule();
+        hydroxide.addAtom(builder.newAtom("O"));
+        reaction11.addReactant(hydroxide);
+        IMolecule proton = builder.newMolecule();
+        proton.addAtom(builder.newAtom("H"));
+        reaction11.addReactant(proton);
+        
+        IMolecule water = builder.newMolecule();
+        water.addAtom(builder.newAtom("O"));
+        reaction11.addProduct(water);
+        
+        IReaction reaction12 = builder.newReaction();
+        IMolecule h = builder.newMolecule();
+        h.addAtom(builder.newAtom("H"));
+        IMolecule n = builder.newMolecule();
+        n.addAtom(builder.newAtom("N"));
+        reaction12.addReactant(h);
+        reaction12.addReactant(n);
+        IMolecule ammonia = builder.newMolecule();
+        ammonia.addAtom(builder.newAtom("N"));
+        ammonia.addAtom(builder.newAtom("H"));
+        ammonia.addBond(0, 1, IBond.Order.SINGLE);
+        reaction12.addProduct(ammonia);
+        
+        IReactionSet reactionSet = builder.newReactionSet();
+        reactionSet.addReaction(reaction11);
+        reactionSet.addReaction(reaction12);
+        
+        // now serialize to MDL RXN
+        StringWriter writer = new StringWriter(10000);
+        String file = "";
+        MDLRXNWriter mdlWriter = new MDLRXNWriter(writer);
+        mdlWriter.write(reactionSet);
+        mdlWriter.close();
+        file = writer.toString();
+        
+        assertTrue(file.length() > 0);
+        
+        // now deserialize the MDL RXN output
+        IReactionSet reactionSetF = builder.newReactionSet();
+        MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
+        reactionSetF = (IReactionSet)reader.read(reactionSetF);
+        reader.close();
+
+        assertEquals(2, reactionSetF.getReactionCount());
+        assertEquals(1, reactionSetF.getReaction(0).getReactants().getMolecule(0).getAtomCount());
+        assertEquals(1, reactionSetF.getReaction(0).getReactants().getMolecule(1).getAtomCount());
+        assertEquals(1, reactionSetF.getReaction(0).getProductCount());
+        assertEquals(1, reactionSetF.getReaction(0).getProducts().getMolecule(0).getAtomCount());
     }
     
 }

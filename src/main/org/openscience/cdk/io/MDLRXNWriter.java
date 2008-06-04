@@ -35,7 +35,10 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.text.NumberFormat;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IReaction;
@@ -43,6 +46,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -70,6 +75,8 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
     private LoggingTool logger;
+    private int reactionNumber;
+    public Map rdFields=null;
 
     
     /**
@@ -78,7 +85,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
      *
      * @param   out  The Writer to write to
      */
-    public MDLRXNWriter(Writer out) throws Exception {
+    public MDLRXNWriter(Writer out){
     	logger = new LoggingTool(this);
     	try {
     		if (out instanceof BufferedWriter) {
@@ -88,6 +95,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             }
         } catch (Exception exc) {
         }
+        this.reactionNumber = 1;
     }
 
     /**
@@ -96,11 +104,11 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
      *
      * @param   output  The OutputStream to write to
      */
-    public MDLRXNWriter(OutputStream output) throws Exception {
-        this(new BufferedWriter(new OutputStreamWriter(output)));
+    public MDLRXNWriter(OutputStream output){
+        this(new OutputStreamWriter(output));
     }
     
-    public MDLRXNWriter() throws Exception{
+    public MDLRXNWriter(){
         this(new StringWriter());
     }
 
@@ -121,6 +129,19 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
     }
     
     /**
+     * Here you can set a map which will be used to build rd fields in the file.
+     * The entries will be translated to rd fields like this:<br>
+     * &gt; &lt;key&gt;<br>
+     * &gt; value<br>
+     * empty line<br>
+     *
+     * @param  map The map to be used, map of String-String pairs
+     */
+    public void setRdFields(Map map){
+      rdFields = map;
+    }
+    
+    /**
      * Flushes the output and closes this object.
      */
     public void close() throws IOException {
@@ -131,6 +152,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IReaction.class.equals(interfaces[i])) return true;
+			if (IReactionSet.class.equals(interfaces[i])) return true;
 		}
 		return false;
 	}
@@ -145,13 +167,25 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
      */
 	public void write(IChemObject object) throws CDKException
 	{
-		if (object instanceof IReaction)
-		{
+		if (object instanceof IReactionSet) {
+			writeReactionSet((IReactionSet)object);
+			return;
+		}else if (object instanceof IReaction){
+			
 		    writeReaction((IReaction)object);
+		}else{
+		    throw new CDKException("Only supported is writing ReactionSet, Reaction objects.");
 		}
-		else
-		{
-		    throw new CDKException("Only supported is writing Reaction objects.");
+	}
+	/**
+	 *  Writes an array of Reaction to an OutputStream in MDL rdf format.
+	 *
+	 * @param   som  Array of Reactions that is written to an OutputStream
+	 */
+	private void writeReactionSet(IReactionSet reactions) throws CDKException{
+		
+		for(Iterator<IReaction> it = reactions.reactions();it.hasNext();){
+			writeReaction(it.next());
 		}
 	}
 	
@@ -169,6 +203,13 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
         }
         
         try {
+        	// taking care of the $$$$ signs:
+            // we do not write such a sign at the end of the first reaction, thus we have to write on BEFORE the second reaction
+            if(reactionNumber == 2) {
+              writer.write("$$$$");
+              writer.newLine();
+            }
+            
             writer.write("$RXN\n");
             // reaction name
             String line = (String)reaction.getProperty(CDKConstants.TITLE);
@@ -190,6 +231,28 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             
             writeMoleculeSet(reaction.getReactants());
             writeMoleculeSet(reaction.getProducts());
+            
+            //write sdfields, if any
+            if(rdFields!=null){
+              Set set = rdFields.keySet();
+              Iterator iterator = set.iterator();
+              while (iterator.hasNext()) {
+                Object element = iterator.next();
+                writer.write("> <"+(String)element+">");
+                writer.newLine();
+                writer.write(rdFields.get(element).toString());
+                writer.newLine();
+                writer.newLine();
+              }
+            }
+            // taking care of the $$$$ signs:
+            // we write such a sign at the end of all except the first molecule
+            if(reactionNumber != 1) {
+              writer.write("$$$$");
+              writer.newLine();
+            }
+            reactionNumber++;
+            
         } catch (IOException ex) {
             logger.error(ex.getMessage());
             logger.debug(ex);
