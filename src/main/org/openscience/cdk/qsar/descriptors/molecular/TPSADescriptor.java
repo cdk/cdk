@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * This descriptor works properly with AtomContainers whose atoms contain either <b>explicit hydrogens</b> or
  * <b>implicit hydrogens</b>.
  * <p/>
- * Returns a single value named <i>TPSA</i>
+ * Returns a single value named <i>TopoPSA</i>
  *
  * @author mfe4
  * @author ulif
@@ -320,7 +320,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
         //logger.debug("tpsa: " + tpsa);
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(tpsa),
-                new String[]{"TPSA"});
+                new String[]{"TopoPSA"});
     }
 
     /**
