@@ -45,9 +45,11 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
@@ -55,8 +57,10 @@ import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.libio.cml.PDBAtomCustomizer;
 import org.openscience.cdk.libio.cml.QSARCustomizer;
 import org.openscience.cdk.nonotify.NNAtom;
+import org.openscience.cdk.nonotify.NNChemModel;
 import org.openscience.cdk.nonotify.NNCrystal;
 import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.nonotify.NNMoleculeSet;
 import org.openscience.cdk.nonotify.NNPDBAtom;
 import org.openscience.cdk.nonotify.NNReaction;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -415,6 +419,32 @@ public class CML2WriterTest extends CDKTestCase {
         assertTrue(cmlContent.indexOf("<scalar dictRef=\"cdk:molecularProperty") != -1);
         assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
         assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+    }
+    public void testChemModeID() throws Exception {
+    	StringWriter writer = new StringWriter();
+    	IChemModel chemModel = new NNChemModel();
+    	chemModel.setID("cm0");
+    	
+    	CMLWriter cmlWriter = new CMLWriter(writer);
+        cmlWriter.write(chemModel);
+        String cmlContent = writer.toString();
+        logger.debug("****************************** testReactionCustomization()");
+        logger.debug(cmlContent);
+        logger.debug("******************************");
+        assertTrue(cmlContent.indexOf("<list dictRef=\"cdk:model\" id=\"cm0") != -1);
+    }
+    public void testMoleculeSetID() throws Exception {
+    	StringWriter writer = new StringWriter();
+    	IMoleculeSet moleculeSet = new NNMoleculeSet();
+    	moleculeSet.setID("ms0");
+    	
+    	CMLWriter cmlWriter = new CMLWriter(writer);
+        cmlWriter.write(moleculeSet);
+        String cmlContent = writer.toString();
+        logger.debug("****************************** testReactionCustomization()");
+        logger.debug(cmlContent);
+        logger.debug("******************************");
+        assertTrue(cmlContent.indexOf("<list dictRef=\"cdk:moleculeSet\" id=\"ms0") != -1);
     }
     /**
      * TODO: introduce concept for ReactionStepList and ReactionStep.
