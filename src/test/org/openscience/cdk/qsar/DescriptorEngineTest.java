@@ -24,58 +24,56 @@
 package org.openscience.cdk.qsar;
 
 import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import org.openscience.cdk.qsar.DescriptorEngine;
-import org.openscience.cdk.qsar.DescriptorSpecification;
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Test;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * TestSuite that runs all tests for the DescriptorEngine.
  *
  * @cdk.module test-qsarmolecular
  */
-public class    DescriptorEngineTest extends CDKTestCase {
+public class    DescriptorEngineTest extends NewCDKTestCase {
 
     public DescriptorEngineTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(DescriptorEngineTest.class);
-    }
-
+    @Test
     public void testConstructor() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
-        assertNotNull(engine);
+        Assert.assertNotNull(engine);
     }
-        
+
+    @Test
     public void testLoadingOfMolecularDescriptors() {
     	DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
-        assertNotNull(engine);
+        Assert.assertNotNull(engine);
         int loadedDescriptors = engine.getDescriptorInstances().size(); 
-        assertNotSame(0, loadedDescriptors);
-        assertEquals(loadedDescriptors, engine.getDescriptorClassNames().size());
-        assertEquals(loadedDescriptors, engine.getDescriptorSpecifications().size());
+        Assert.assertNotSame(0, loadedDescriptors);
+        Assert.assertEquals(loadedDescriptors, engine.getDescriptorClassNames().size());
+        Assert.assertEquals(loadedDescriptors, engine.getDescriptorSpecifications().size());
     }
 
+    @Test
     public void testLoadingOfAtomicDescriptors() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.ATOMIC);
-        assertNotNull(engine);
+        Assert.assertNotNull(engine);
         int loadedDescriptors = engine.getDescriptorInstances().size(); 
-        assertNotSame(0, loadedDescriptors);
-        assertEquals(loadedDescriptors, engine.getDescriptorClassNames().size());
-        assertEquals(loadedDescriptors, engine.getDescriptorSpecifications().size());
+        Assert.assertNotSame(0, loadedDescriptors);
+        Assert.assertEquals(loadedDescriptors, engine.getDescriptorClassNames().size());
+        Assert.assertEquals(loadedDescriptors, engine.getDescriptorSpecifications().size());
     }
 
+    @Test
     public void testLoadingOfBondDescriptors() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.BOND);
-        assertNotNull(engine);
+        Assert.assertNotNull(engine);
         int loadedDescriptors = engine.getDescriptorInstances().size(); 
-        assertNotSame(0, loadedDescriptors);
-        assertEquals(loadedDescriptors, engine.getDescriptorClassNames().size());
-        assertEquals(loadedDescriptors, engine.getDescriptorSpecifications().size());
+        Assert.assertNotSame(0, loadedDescriptors);
+        Assert.assertEquals(loadedDescriptors, engine.getDescriptorClassNames().size());
+        Assert.assertEquals(loadedDescriptors, engine.getDescriptorSpecifications().size());
     }
 
+    @Test
     public void testDictionaryType() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
 
@@ -90,6 +88,7 @@ public class    DescriptorEngineTest extends CDKTestCase {
         Assert.assertEquals("molecularDescriptor", engine.getDictionaryType(specRef));
     }
 
+    @Test
     public void testDictionaryClass() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
 
@@ -112,11 +111,12 @@ public class    DescriptorEngineTest extends CDKTestCase {
         Assert.assertEquals("electronicDescriptor", dictClass[1]);
     }
 
+    @Test
     public void testAvailableClass() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
-        String[] availClasses = engine.getAvailableDictionaryClasses();    
-        for (int i=0; i<availClasses.length; i++) {
-        	System.out.println("avail class: " + availClasses[i]);
+        String[] availClasses = engine.getAvailableDictionaryClasses();
+        for (String availClass : availClasses) {
+            System.out.println("avail class: " + availClass);
         }
         Assert.assertEquals(5, availClasses.length);
     }
