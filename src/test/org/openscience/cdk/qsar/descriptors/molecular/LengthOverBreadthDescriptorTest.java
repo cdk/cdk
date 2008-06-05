@@ -8,6 +8,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.io.InputStream;
@@ -98,8 +99,11 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
+        Assert.assertNotNull(result);
     }
 
 }
