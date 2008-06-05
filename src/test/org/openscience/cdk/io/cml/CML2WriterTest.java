@@ -132,7 +132,7 @@ public class CML2WriterTest extends CDKTestCase {
 
 	    cmlWriter.write(mol);
 	    logger.debug("****************************** testMAssNumber()");
-	    System.out.println(writer.toString());
+	    logger.debug(writer.toString());
 	    logger.debug("******************************");
 	    assertTrue(writer.toString().indexOf("isotopeNumber=\"12\"") != -1);
 	}
