@@ -598,12 +598,33 @@ public class CMLCoreModule implements ICMLModule {
 //            cdo.startObject("MoleculeSet");
         	if (DICTREF.equals("cdk:model")) {
         		currentChemModel = currentChemFile.getBuilder().newChemModel();
+        		// see if there is an ID attribute
+        		for (int i = 0; i < atts.getLength(); i++) {
+        			String att = atts.getQName(i);
+        			if (att.equals("id")) {
+        				currentChemModel.setID(atts.getValue(i));
+        				}
+        			}
         	} else if (DICTREF.equals("cdk:moleculeSet")) {
         		currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
+        		// see if there is an ID attribute
+        		for (int i = 0; i < atts.getLength(); i++) {
+        			String att = atts.getQName(i);
+        			if (att.equals("id")) {
+        				currentMoleculeSet.setID(atts.getValue(i));
+        				}
+        			}
         		currentMolecule = currentChemFile.getBuilder().newMolecule();
         	} else {
         		// the old default
         		currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
+        		// see if there is an ID attribute
+        		for (int i = 0; i < atts.getLength(); i++) {
+        			String att = atts.getQName(i);
+        			if (att.equals("id")) {
+        				currentMoleculeSet.setID(atts.getValue(i));
+        				}
+        			}
         		currentMolecule = currentChemFile.getBuilder().newMolecule();
         	}
         }else if ("formula".equals(name)){
