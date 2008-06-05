@@ -49,7 +49,7 @@ public class DescriptorNamesTest extends NewCDKTestCase {
     }
 
     @Test
-    public void checkUniqueMolecularNames() throws CDKException {
+    public void checkUniqueMolecularDescriptorNames() throws CDKException {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
         List<DescriptorSpecification> specs = engine.getDescriptorSpecifications();
 
@@ -74,10 +74,19 @@ public class DescriptorNamesTest extends NewCDKTestCase {
             descNames.addAll(Arrays.asList(names));
         }
 
-        Set<String> uniqueNames = new HashSet<String>(descNames);
-
+        List<String> dups = new ArrayList<String>();
+        Set<String> uniqueNames = new HashSet<String>();
+        for (String name : descNames) {
+            if (!uniqueNames.add(name)) dups.add(name);
+        }
         Assert.assertEquals(specs.size(), ncalc);
         Assert.assertEquals(descNames.size(), uniqueNames.size());
+        if (dups.size() != 0) {
+            System.out.println("Following names were duplicated");
+            for (String dup : dups) {
+                System.out.println("dup = " + dup);
+            }
+        }
 
     }
 }
