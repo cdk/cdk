@@ -454,7 +454,7 @@ public class DescriptorEngine {
      *         with which the <code>DescriptorValue</code> objects can be obtained from a
      *         molecules property list
      */
-    public List getDescriptorSpecifications() {
+    public List<DescriptorSpecification> getDescriptorSpecifications() {
         return (speclist);
     }
 
@@ -473,7 +473,7 @@ public class DescriptorEngine {
      *
      * @return A list of class names.
      */
-    public List getDescriptorClassNames() {
+    public List<String> getDescriptorClassNames() {
         return classNames;
     }
 
@@ -482,7 +482,7 @@ public class DescriptorEngine {
      *
      * @return A List containing descriptor classes
      */
-    public List getDescriptorInstances() {
+    public List<IDescriptor> getDescriptorInstances() {
         return descriptors;
     }
 
@@ -534,7 +534,7 @@ public class DescriptorEngine {
      * @return A list containing the classes implementing the specified interface, null if an invalid interface
      *         is specified
      */
-    public static List getDescriptorClassNameByInterface(String interfaceName, String[] jarFileNames) {
+    public static List<String> getDescriptorClassNameByInterface(String interfaceName, String[] jarFileNames) {
         if (interfaceName == null || interfaceName.equals(""))
             interfaceName = "IDescriptor";
 
