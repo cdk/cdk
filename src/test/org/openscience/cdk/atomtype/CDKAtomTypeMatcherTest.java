@@ -1352,22 +1352,6 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 		IMolecule molecule = MoleculeFactory.makeIndole();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
-
-    @Test public void testAromaticIndole() throws Exception {
-		String[] expectedTypes = {
-			"C.sp2",
-			"C.sp2",
-			"C.sp2",
-			"C.sp2",
-			"C.sp2",
-			"C.sp2",
-			"C.sp2",
-			"C.sp2",
-			"N.planar3"
-		};
-		IMolecule molecule = MoleculeFactory.makeAromaticIndole();
-    	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
-    }
     
     @Test public void testPyrrole() throws Exception {
 		String[] expectedTypes = {

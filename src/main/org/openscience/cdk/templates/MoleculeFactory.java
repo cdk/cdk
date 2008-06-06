@@ -29,7 +29,6 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
@@ -37,7 +36,6 @@ import org.openscience.cdk.tools.LoggingTool;
 
 import javax.vecmath.Point2d;
 import java.io.FileInputStream;
-import java.util.Iterator;
 
 /**
  * This class contains methods for generating simple organic molecules.
@@ -639,45 +637,6 @@ public class MoleculeFactory {
 		
 		return mol;
 	}
-
-    /**
-     * Returns indole with no explicit hydrogens, bt with the
-     * atoms annotated explicitly as SP2, to simulate the result
-     * of SMILES parsing
-     *
-     * @cdk.inchi InChI=1/C8H7N/c1-2-4-8-7(3-1)5-6-9-8/h1-6,9H
-     */
-    public static Molecule makeAromaticIndole() {
-        Molecule mol = new Molecule();
-        mol.addAtom(new Atom("C")); // 0
-        mol.addAtom(new Atom("C")); // 1
-        mol.addAtom(new Atom("C")); // 2
-        mol.addAtom(new Atom("C")); // 3
-        mol.addAtom(new Atom("C")); // 4
-        mol.addAtom(new Atom("C")); // 5
-        mol.addAtom(new Atom("C")); // 6
-        mol.addAtom(new Atom("C")); // 7
-        mol.addAtom(new Atom("N")); // 8
-
-        Iterator<IAtom> atoms = mol.atoms();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
-            atom.setHybridization(IAtomType.Hybridization.SP2);
-        }
-
-        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
-        mol.addBond(1, 2, IBond.Order.SINGLE); // 2
-        mol.addBond(2, 3, IBond.Order.SINGLE); // 3
-        mol.addBond(3, 4, IBond.Order.SINGLE); // 4
-        mol.addBond(4, 5, IBond.Order.SINGLE); // 5
-        mol.addBond(5, 6, IBond.Order.SINGLE); // 6
-        mol.addBond(6, 7, IBond.Order.SINGLE); // 8
-        mol.addBond(7, 8, IBond.Order.SINGLE); // 9
-        mol.addBond(0, 5, IBond.Order.SINGLE); // 11
-        mol.addBond(8, 0, IBond.Order.SINGLE); // 12
-
-        return mol;
-    }
 
     /**
 	 * Returns pyrrole without explicit hydrogens.
