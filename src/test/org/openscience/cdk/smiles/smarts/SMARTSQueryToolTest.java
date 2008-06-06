@@ -27,7 +27,10 @@ import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.templates.MoleculeFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -149,5 +152,29 @@ public class SMARTSQueryToolTest extends NewCDKTestCase {
         Assert.assertEquals(1, umatch.size());
     }
 
+    /**
+     * Note that we don't test the generated SMILES against the
+     * molecule obtained from the factory since the factory derived
+     * molecule does not have an explicit hydrogen, which it really should
+     * have.
+     *
+     * @cdk.bug 1985811
+     * @throws CDKException
+     */
+    @Test
+    public void testIndoleAgainstItself() throws CDKException {
 
+        IMolecule indole = MoleculeFactory.makeIndole();
+
+        SmilesGenerator generator = new SmilesGenerator();
+        generator.setUseAromaticityFlag(true);
+        String indoleSmiles = generator.createSMILES(indole);
+
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        indole = smilesParser.parseSmiles(indoleSmiles);
+
+        SMARTSQueryTool querytool = new SMARTSQueryTool(indoleSmiles);
+        Assert.assertTrue(querytool.matches(indole));
+
+    }
 }
