@@ -1506,7 +1506,7 @@ public class SmilesParserTest extends NewCDKTestCase {
      */
     @Test
     public void testIndole1() throws Exception {
-        String smiles1 = "c1ccc2ccnc2(c1)";
+        String smiles1 = "c1ccc2cc[nH]c2(c1)";
         IMolecule mol = sp.parseSmiles(smiles1);
         assertAtomTypesPerceived(mol);
         Assert.assertEquals(9, mol.getAtomCount());
