@@ -48,6 +48,7 @@ public abstract class AbstractChemObjectDiff {
      * @param second  Field value for the second {@link boolean[]}.
      * @return
      */
+    @TestMethod("testDiffBooleanArrayFields,testDiffBooleanArrayFieldsNoDiff")
     protected static String diff(String field, boolean[] first, boolean[] second) {
         if (first == null && second == null) return "";
         String totalDiff = "";

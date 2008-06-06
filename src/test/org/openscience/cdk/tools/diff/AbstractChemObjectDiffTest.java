@@ -33,6 +33,25 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class AbstractChemObjectDiffTest {
 
+    @Test public void testDiffBooleanArrayFields() {
+        boolean[] first = new boolean[]{false, false, true};
+        boolean[] second = new boolean[]{false, true, false};
+        String result = LocalChemObjectDiffer.diff("SomeBooleanArray", first, second);
+        Assert.assertNotNull(result);
+        Assert.assertNotSame(0, result.length());
+        Assert.assertTrue(result.contains("SomeBooleanArray"));
+        Assert.assertTrue(result.contains("T/F"));
+        Assert.assertTrue(result.contains("F/T"));
+    }
+
+    @Test public void testDiffBooleanArrayFieldsNoDiff() {
+        boolean[] first = new boolean[]{false, true, true};
+        boolean[] second = new boolean[]{false, true, true};
+        String result = LocalChemObjectDiffer.diff("SomeBooleanArray", first, second);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(0, result.length());
+    }
+
     @Test public void testDiffPoint2dFields() {
         Point2d p2d1 = new Point2d();
         p2d1.x = 0.0;
