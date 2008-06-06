@@ -20,9 +20,6 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -30,18 +27,15 @@ import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Please see the test.gui package for visual feedback on tests.
@@ -1504,6 +1498,44 @@ public class SmilesParserTest extends NewCDKTestCase {
 		
 		assertHydrogenCounts(new int[] {0, 1, 0, 1, 1, 1}, mol);
 	}
+
+
+    /**
+     * @throws Exception
+     * @cdk.bug 1967468
+     */
+    @Test
+    public void testIndole1() throws Exception {
+        String smiles1 = "c1ccc2ccnc2(c1)";
+        IMolecule mol = sp.parseSmiles(smiles1);
+        assertAtomTypesPerceived(mol);
+        Assert.assertEquals(9, mol.getAtomCount());
+
+        Iterator<IAtom> atoms = mol.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+        }
+    }
+
+
+    /**
+     * @throws Exception
+     * @cdk.bug 1967468
+     */
+    @Test
+    public void testIndole2() throws Exception {
+        String smiles1 = "C1(NC=C2)=C2C=CC=C1";
+        IMolecule mol = sp.parseSmiles(smiles1);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        assertAtomTypesPerceived(mol);
+        Assert.assertEquals(9, mol.getAtomCount());
+        Iterator<IAtom> atoms = mol.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+        }
+    }
 
 
 }
