@@ -11,7 +11,7 @@
         <fileset dir="${lib}">
           <include name="asm-3.1.jar"/>
           <include name="junit-4.4.jar"/>
-          <include name="pmd-4.1.jar"/>
+          <include name="pmd-4.2.2.jar"/>
           <include name="jaxen-1.1.1.jar"/>
         </fileset>
     </path>
