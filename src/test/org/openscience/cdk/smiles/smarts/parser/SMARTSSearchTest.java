@@ -1214,12 +1214,12 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @throws Exception
      */
     public void testIndoleAgainstIndole() throws Exception {
-        int[] results = match("c1ccc2ccnc2(c1)", "C1(NC=C2)=C2C=CC=C1");
+        int[] results = match("c1ccc2cc[nH]c2(c1)", "C1(NC=C2)=C2C=CC=C1");
         assertEquals(1, results[0]);
         assertEquals(1, results[1]);
 
 
-        results = match("c1ccc2ccnc2(c1)", "c1ccc2ccnc2(c1)");
+        results = match("c1ccc2cc[nH]c2(c1)", "c1ccc2cc[nH]c2(c1)");
         assertEquals(1, results[0]);
         assertEquals(1, results[1]);
 
