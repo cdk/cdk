@@ -25,7 +25,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
@@ -94,8 +96,22 @@ public class ChemModelManipulatorTest extends NewCDKTestCase {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemModel chemFile = (ChemModel)reader.read((ChemObject)new ChemModel());
         Assert.assertNotNull(chemFile);
-        List containersList = ChemModelManipulator.getAllAtomContainers(chemFile);
+        List<IAtomContainer>  containersList = ChemModelManipulator.getAllAtomContainers(chemFile);
         Assert.assertEquals(1, containersList.size());
+    }
+
+    @Test
+    public void testGetAllAtomContainers_IChemModel_WithReactions() throws Exception {
+        String filename = "data/mdl/0024.stg02.rxn";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+
+        MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins, Mode.STRICT);
+        ChemModel chemFile = (ChemModel)reader.read((ChemObject)new ChemModel());
+        Assert.assertNotNull(chemFile);
+        List<IAtomContainer> containersList = ChemModelManipulator.getAllAtomContainers(chemFile);
+        
+        Assert.assertEquals(2, containersList.size());
     }
     
     @Test public void testNewChemModel_IAtomContainer()
