@@ -200,8 +200,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 *
 	 * @param  isotope The IIsotope for looking for
 	 * @return         The IIsotope instance
-     *
-  �� ��* @see �� ��#isotopes
+   * @see            #isotopes
 	 */
 	private IIsotope getIsotope(IIsotope isotope){
 		for(Iterator<IIsotope> it = isotopes(); it.hasNext(); ) {
