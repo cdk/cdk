@@ -1,0 +1,1411 @@
+04
+                    3D
+ Structure written by MMmdl.
+ 67 71  0  0  1  0            999 V2000
+  -19.5758    1.3747   -3.2828 C   0  0  0  0  0  0
+  -20.2370    0.0976   -3.2613 O   0  0  0  0  0  0
+  -20.1698   -0.5610   -2.0985 C   0  0  0  0  0  0
+  -18.8700   -0.5962   -1.3242 C   0  0  0  0  0  0
+  -18.2096    0.8079   -1.2228 C   0  0  0  0  0  0
+  -18.1519    1.3959   -2.6571 C   0  0  0  0  0  0
+  -18.9157    1.7655   -0.2251 C   0  0  0  0  0  0
+  -18.1925    3.1360   -0.2155 C   0  0  0  0  0  0
+  -18.1734    3.7815   -1.6278 C   0  0  0  0  0  0
+  -17.5091    2.8177   -2.6651 C   0  0  0  0  0  0
+  -17.4967    3.4437   -4.0943 C   0  0  0  0  0  0
+  -17.2482    2.4316   -5.2503 C   0  0  0  0  0  0
+  -18.3255    1.3053   -5.2860 C   0  0  0  0  0  0
+  -19.5317    1.7676   -4.6602 O   0  0  0  0  0  0
+  -17.8727    0.1088   -4.6232 O   0  0  0  0  0  0
+  -17.2162    0.5463   -3.3628 O   0  0  0  0  0  0
+  -16.4586    2.6756   -2.3577 H   0  0  0  0  0  0
+  -17.4466    5.1559   -1.5525 C   0  0  0  0  0  0
+  -21.1530   -1.1677   -1.7087 O   0  0  0  0  0  0
+  -19.0468   -1.3438    0.0339 C   0  0  0  0  0  0
+  -18.6823    0.8964   -6.7353 C   0  0  0  0  0  0
+  -18.2137   -1.2348   -1.9393 H   0  0  0  0  0  0
+  -20.2637    2.0733   -2.7888 H   0  0  0  0  0  0
+  -17.7186   -1.5339    0.8214 C   0  0  0  0  0  0
+  -17.9340   -2.4130    2.0842 C   0  0  0  0  0  0
+  -16.7042   -2.5963    2.9938 C   0  0  0  0  0  0
+  -16.8960   -3.2374    4.2239 C   0  0  0  0  0  0
+  -15.8320   -3.4315    5.1088 C   0  0  0  0  0  0
+  -14.5512   -2.9867    4.7691 C   0  0  0  0  0  0
+  -14.3485   -2.3522    3.5413 C   0  0  0  0  0  0
+  -15.4152   -2.1600    2.6584 C   0  0  0  0  0  0
+  -13.4501   -3.1654    5.6440 N   0  3  0  0  0  0
+  -13.4920   -2.3562    6.8813 C   0  0  0  0  0  0
+  -13.0091   -4.5656    5.8243 C   0  0  0  0  0  0
+  -17.1678    0.6850   -0.8815 H   0  0  0  0  0  0
+  -18.8634    1.3645    0.7992 H   0  0  0  0  0  0
+  -19.9803    1.8899   -0.4730 H   0  0  0  0  0  0
+  -18.7084    3.8026    0.4964 H   0  0  0  0  0  0
+  -17.1564    3.0030    0.1379 H   0  0  0  0  0  0
+  -19.2167    3.9869   -1.9178 H   0  0  0  0  0  0
+  -16.7100    4.2147   -4.1516 H   0  0  0  0  0  0
+  -18.4601    3.9458   -4.2817 H   0  0  0  0  0  0
+  -17.2887    3.0087   -6.1889 H   0  0  0  0  0  0
+  -16.2412    1.9900   -5.1812 H   0  0  0  0  0  0
+  -17.5481    5.7185   -2.4923 H   0  0  0  0  0  0
+  -17.8799    5.7770   -0.7529 H   0  0  0  0  0  0
+  -16.3760    5.0153   -1.3388 H   0  0  0  0  0  0
+  -19.7890   -0.8218    0.6577 H   0  0  0  0  0  0
+  -19.4524   -2.3474   -0.1801 H   0  0  0  0  0  0
+  -17.7815    0.5447   -7.2607 H   0  0  0  0  0  0
+  -19.4222    0.0818   -6.7127 H   0  0  0  0  0  0
+  -19.1148    1.7469   -7.2839 H   0  0  0  0  0  0
+  -16.9819   -2.0157    0.1580 H   0  0  0  0  0  0
+  -17.3284   -0.5580    1.1480 H   0  0  0  0  0  0
+  -18.7292   -1.9544    2.6940 H   0  0  0  0  0  0
+  -18.2693   -3.4167    1.7778 H   0  0  0  0  0  0
+  -17.8842   -3.5918    4.5004 H   0  0  0  0  0  0
+  -16.0049   -3.9280    6.0580 H   0  0  0  0  0  0
+  -13.3548   -2.0070    3.2729 H   0  0  0  0  0  0
+  -15.2132   -1.6678    1.7152 H   0  0  0  0  0  0
+  -13.7439   -1.3124    6.6380 H   0  0  0  0  0  0
+  -12.5083   -2.3659    7.3746 H   0  0  0  0  0  0
+  -14.2453   -2.7508    7.5801 H   0  0  0  0  0  0
+  -12.9275   -5.0620    4.8450 H   0  0  0  0  0  0
+  -12.0202   -4.5927    6.3064 H   0  0  0  0  0  0
+  -13.7249   -5.1230    6.4476 H   0  0  0  0  0  0
+  -12.5955   -3.2032    5.1071 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1  6  1  0  0  0
+  1 14  1  0  0  0
+  1 23  1  0  0  0
+  2  3  1  0  0  0
+  3  4  1  0  0  0
+  3 19  2  0  0  0
+  4  5  1  0  0  0
+  4 20  1  0  0  0
+  4 22  1  0  0  0
+  5  6  1  0  0  0
+  5  7  1  0  0  0
+  5 35  1  0  0  0
+  6 10  1  0  0  0
+  6 16  1  0  0  0
+  7  8  1  0  0  0
+  7 36  1  0  0  0
+  7 37  1  0  0  0
+  8  9  1  0  0  0
+  8 38  1  0  0  0
+  8 39  1  0  0  0
+  9 10  1  0  0  0
+  9 18  1  0  0  0
+  9 40  1  0  0  0
+ 10 11  1  0  0  0
+ 10 17  1  0  0  0
+ 11 12  1  0  0  0
+ 11 41  1  0  0  0
+ 11 42  1  0  0  0
+ 12 13  1  0  0  0
+ 12 43  1  0  0  0
+ 12 44  1  0  0  0
+ 13 14  1  0  0  0
+ 13 15  1  0  0  0
+ 13 21  1  0  0  0
+ 15 16  1  0  0  0
+ 18 45  1  0  0  0
+ 18 46  1  0  0  0
+ 18 47  1  0  0  0
+ 20 24  1  0  0  0
+ 20 48  1  0  0  0
+ 20 49  1  0  0  0
+ 21 50  1  0  0  0
+ 21 51  1  0  0  0
+ 21 52  1  0  0  0
+ 24 25  1  0  0  0
+ 24 53  1  0  0  0
+ 24 54  1  0  0  0
+ 25 26  1  0  0  0
+ 25 55  1  0  0  0
+ 25 56  1  0  0  0
+ 26 27  2  0  0  0
+ 26 31  1  0  0  0
+ 27 28  1  0  0  0
+ 27 57  1  0  0  0
+ 28 29  2  0  0  0
+ 28 58  1  0  0  0
+ 29 30  1  0  0  0
+ 29 32  1  0  0  0
+ 30 31  2  0  0  0
+ 30 59  1  0  0  0
+ 31 60  1  0  0  0
+ 32 33  1  0  0  0
+ 32 34  1  0  0  0
+ 32 67  1  0  0  0
+ 33 61  1  0  0  0
+ 33 62  1  0  0  0
+ 33 63  1  0  0  0
+ 34 64  1  0  0  0
+ 34 65  1  0  0  0
+ 34 66  1  0  0  0
+M  CHG  1  32   1
+M  END
+> <r_user_Wlambda2.unity>
+2.445291
+
+> <r_user_Wlambda3.unity>
+20.302899
+
+> <r_user_Weta1.unity>
+0.466128
+
+> <r_user_Weta2.unity>
+0.349161
+
+> <r_user_WA.unity>
+79.033875
+
+> <r_user_WK.unity>
+0.383409
+
+> <r_user_WD.unity>
+1.330338
+
+> <r_user_BCUTw-1l>
+11.993258
+
+> <r_user_BCUTw-1h>
+15.998949
+
+> <r_user_BCUTc-1l>
+-0.370351
+
+> <r_user_BCUTc-1h>
+0.267512
+
+> <r_user_BCUTp-1l>
+5.096373
+
+> <r_user_XLogP>
+9.160000
+
+> <r_user_nAtomLAC>
+3.000000
+
+> <r_user_LipinksiFailures>
+1.000000
+
+> <r_user_nAtomLC>
+3.000000
+
+> <r_user_ALogP2>
+1.678579
+
+> <r_user_AMR>
+20.940600
+
+> <r_user_MolIP>
+10.050000
+
+> <r_user_nHBAcc>
+5.000000
+
+> <r_user_PPSA-1>
+0.000000
+
+> <r_user_PPSA-3>
+0.000000
+
+> <r_user_PNSA-1>
+0.000000
+
+> <r_user_PNSA-2>
+0.000000
+
+> <r_user_PNSA-3>
+0.000000
+
+> <r_user_DPSA-1>
+0.000000
+
+> <r_user_DPSA-3>
+0.000000
+
+> <r_user_FPSA-3>
+0.000000
+
+> <r_user_FNSA-3>
+0.000000
+
+> <r_user_WNSA-1>
+0.000000
+
+> <r_user_RPCG>
+0.000000
+
+> <r_user_RNCG>
+0.000000
+
+> <r_user_RPCS>
+0.000000
+
+> <r_user_RNCS>
+0.000000
+
+> <r_user_TPSA>
+0.000000
+
+> <r_user_RHSA>
+0.000000
+
+> <r_user_RPSA>
+0.000000
+
+> <r_user_bpol>
+8.686000
+
+> <r_user_apol>
+49.110000
+
+> <r_user_topoShape>
+0.875000
+
+> <r_user_geomShape>
+0.867250
+
+> <r_user_LOBMAX>
+1.547050
+
+> <r_user_WPOL>
+65.000000
+
+> <r_user_WTPT-2>
+2.074169
+
+> <r_user_WTPT-5>
+3.031839
+
+> <r_user_ATSc2>
+-0.346197
+
+> <r_user_ATSc3>
+0.049727
+
+> <r_user_ATSc4>
+-0.088421
+
+> <r_user_ATSc5>
+0.048550
+
+> <r_user_MDEC-11>
+0.667136
+
+> <r_user_MDEC-12>
+6.731434
+
+> <r_user_MDEC-13>
+5.094710
+
+> <r_user_MDEC-14>
+1.361259
+
+> <r_user_MDEC-22>
+12.994881
+
+> <r_user_MDEC-23>
+22.250042
+
+> <r_user_MDEC-24>
+4.511176
+
+> <r_user_MDEC-33>
+7.462414
+
+> <r_user_MDEC-34>
+4.967081
+
+> <r_user_MDEO-12>
+1.016265
+
+> <r_user_SPC-4>
+7.158510
+
+> <r_user_VPC-4>
+3.975192
+
+> <r_user_VPC-6>
+8.467116
+
+> <r_user_VP-0>
+19.134355
+
+> <r_user_VP-6>
+3.918516
+
+> <r_user_SC-5>
+0.831319
+
+> <r_user_VC-3>
+1.832757
+
+> <r_user_VC-4>
+0.098209
+
+> <r_user_VC-5>
+0.447574
+
+> <r_user_VC-6>
+0.038622
+
+> <r_user_VCH-6>
+0.105353
+
+> <r_user_VCH-7>
+0.284684
+
+> <r_user_C1SP2>
+1.000000
+
+> <r_user_C3SP2>
+1.000000
+
+> <r_user_C1SP3>
+3.000000
+
+> <r_user_C2SP3>
+8.000000
+
+> <r_user_percent_uptake>
+51.920000
+
+> <s_user_population>
+test
+
+> <r_strike_Predicted_Activity1>
+64.869600
+
+> <r_strike_Predicted_Activity2>
+64.745700
+
+> <r_strike_Predicted_Activity3>
+65.219800
+
+> <r_strike_Predicted_Activity4>
+63.258200
+
+> <r_strike_Predicted_Activity5>
+62.518300
+
+> <r_strike_Predicted_Activity6>
+62.196800
+
+> <r_strike_Predicted_Activity7>
+62.781900
+
+> <r_strike_Predicted_Activity8>
+62.367800
+
+> <r_strike_Predicted_Activity9>
+62.318800
+
+> <r_strike_Predicted_Activity10>
+65.240200
+
+> <r_strike_Predicted_Activity11>
+65.988000
+
+> <r_strike_Predicted_Activity12>
+63.999200
+
+> <r_strike_Predicted_Activity13>
+61.042800
+
+> <r_strike_Predicted_Activity14>
+53.569000
+
+> <r_strike_Predicted_Activity15>
+63.471300
+
+> <r_strike_Predicted_Activity20.1>
+66.929500
+
+> <r_strike_Predicted_Activity21>
+53.569000
+
+> <r_strike_Predicted_Activity22>
+58.552400
+
+> <r_strike_Predicted_Activity23>
+59.848600
+
+> <r_strike_Predicted_Activity24>
+58.649800
+
+> <r_strike_Predicted_Activity25>
+59.098200
+
+> <r_strike_Predicted_Activity26>
+57.017600
+
+> <r_strike_Predicted_Activity27>
+52.495000
+
+> <r_strike_Predicted_Activity28>
+64.706300
+
+> <r_strike_Predicted_Activity29>
+62.890100
+
+> <r_strike_Predicted_Activity30>
+63.471300
+
+> <r_strike_Predicted_Activity36>
+67.792900
+
+> <r_strike_Predicted_Activity37>
+67.792900
+
+> <r_strike_Predicted_Activity38>
+52.606300
+
+> <r_strike_Predicted_Activity39>
+51.751400
+
+> <r_strike_Predicted_Activity40.1>
+56.320800
+
+> <r_strike_Predicted_Activity39.1>
+51.751400
+
+> <r_strike_Predicted_Activity41>
+53.152900
+
+> <r_strike_Predicted_Activity42>
+54.196600
+
+> <r_strike_Predicted_Activity43>
+54.196600
+
+> <r_strike_Predicted_Activity44.1>
+60.110100
+
+> <r_strike_Predicted_Activity44.2>
+52.125100
+
+> <r_strike_Predicted_Activity44.3>
+54.171200
+
+> <r_strike_Predicted_Activity44.4>
+54.196600
+
+> <r_strike_Predicted_Activity45>
+53.353300
+
+> <r_strike_Predicted_Activity46>
+53.467800
+
+> <r_strike_Predicted_Activity47>
+53.061600
+
+> <r_strike_Predicted_Activity48>
+53.588300
+
+> <r_strike_Predicted_Activity49>
+53.937400
+
+> <r_strike_Predicted_Activity50>
+55.268900
+
+> <r_strike_Predicted_Activity51>
+55.268900
+
+> <r_strike_Predicted_Activity52>
+65.461800
+
+> <r_strike_Predicted_Activity53>
+65.313400
+
+> <r_strike_Predicted_Activity54>
+65.313400
+
+> <r_strike_Predicted_Activity55>
+64.340200
+
+> <r_strike_Predicted_Activity56>
+63.929200
+
+> <r_strike_Predicted_Activity57>
+64.340200
+
+> <r_strike_Predicted_Activity58>
+64.655900
+
+> <r_strike_Predicted_Activity59>
+62.259100
+
+> <r_strike_Predicted_Activity60>
+64.277200
+
+> <r_strike_Predicted_Activity61>
+65.448300
+
+> <r_strike_Predicted_Activity62>
+65.723600
+
+> <r_strike_Predicted_Activity63>
+63.952800
+
+> <r_strike_Predicted_Activity64>
+64.082000
+
+> <r_strike_Predicted_Activity65>
+62.775200
+
+> <r_strike_Predicted_Activity66>
+63.414900
+
+> <r_strike_Predicted_Activity67>
+63.474800
+
+> <r_strike_Predicted_Activity68>
+63.070300
+
+> <r_strike_Predicted_Activity69>
+63.867300
+
+> <r_strike_Predicted_Activity70>
+63.657400
+
+> <r_strike_Predicted_Activity71>
+64.808600
+
+> <r_strike_Predicted_Activity72>
+63.704400
+
+> <r_strike_Predicted_Activity73>
+64.206300
+
+> <r_strike_Predicted_Activity74>
+64.323100
+
+> <r_strike_Predicted_Activity75>
+61.308400
+
+> <r_strike_Predicted_Activity76>
+52.120000
+
+> <r_strike_Predicted_Activity77>
+52.743700
+
+> <r_strike_Predicted_Activity78>
+55.028600
+
+> <r_strike_Predicted_Activity79>
+57.062800
+
+> <r_strike_Predicted_Activity80>
+54.030000
+
+> <r_strike_Predicted_Activity81>
+63.196100
+
+> <r_strike_Predicted_Activity82>
+52.850400
+
+> <r_strike_Predicted_Activity83>
+53.666300
+
+> <r_strike_Predicted_Activity84>
+57.282800
+
+> <r_strike_Predicted_Activity85>
+56.729700
+
+> <r_strike_Predicted_Activity86>
+55.919200
+
+> <r_strike_Predicted_Activity87>
+59.605800
+
+> <r_strike_Predicted_Activity88>
+61.563100
+
+> <r_strike_Predicted_Activity89>
+52.478400
+
+> <r_strike_Predicted_Activity90>
+54.212400
+
+> <r_strike_Predicted_Activity91>
+61.649900
+
+> <r_strike_Predicted_Activity92>
+63.414500
+
+> <r_strike_Predicted_Activity93>
+59.735000
+
+> <r_strike_Predicted_Activity94>
+61.301600
+
+> <r_strike_Predicted_Activity95>
+64.351200
+
+> <r_strike_Predicted_Activity96>
+64.202200
+
+> <r_strike_Predicted_Activity97>
+61.537500
+
+> <r_strike_Predicted_Activity98>
+61.292600
+
+> <r_strike_Predicted_Activity99>
+61.202600
+
+> <r_strike_Predicted_Activity100>
+60.389500
+
+> <r_strike_Predicted_Activity101>
+60.995300
+
+> <r_strike_Predicted_Activity102>
+60.322200
+
+> <r_strike_Predicted_Activity103>
+62.024700
+
+> <r_strike_Predicted_Activity104>
+62.136500
+
+> <r_strike_Predicted_Activity105>
+64.040000
+
+> <r_strike_Predicted_Activity106>
+62.675100
+
+> <r_strike_Predicted_Activity107>
+61.309400
+
+> <r_strike_Predicted_Activity108>
+59.252100
+
+> <r_strike_Predicted_Activity109>
+63.929200
+
+> <r_strike_Predicted_Activity110>
+49.406200
+
+> <r_strike_Predicted_Activity111>
+51.721000
+
+> <r_strike_Predicted_Activity112>
+51.559700
+
+> <r_strike_Predicted_Activity113>
+54.250000
+
+> <r_strike_Predicted_Activity114>
+54.122800
+
+> <r_strike_Predicted_Activity115>
+61.893900
+
+> <r_strike_Predicted_Activity116>
+52.795700
+
+> <r_strike_Predicted_Activity117>
+57.720600
+
+> <r_strike_Predicted_Activity118>
+61.595300
+
+> <r_strike_Predicted_Activity119>
+53.771100
+
+> <r_strike_Predicted_Activity120>
+51.041700
+
+> <r_strike_Predicted_Activity121>
+54.116000
+
+> <r_strike_Predicted_Activity122>
+58.144800
+
+> <r_strike_Predicted_Activity123>
+48.019400
+
+> <r_strike_Predicted_Activity124>
+59.667700
+
+> <r_strike_Predicted_Activity125>
+47.761500
+
+> <r_strike_Predicted_Activity126>
+65.462600
+
+> <r_strike_Predicted_Activity127>
+61.162800
+
+> <r_strike_Predicted_Activity128>
+64.256900
+
+> <r_strike_Predicted_Activity129>
+61.303000
+
+> <r_strike_Predicted_Activity130>
+62.419900
+
+> <r_strike_Predicted_Activity131>
+60.271200
+
+> <r_strike_Predicted_Activity132>
+63.013800
+
+> <r_strike_Predicted_Activity133>
+61.267300
+
+> <r_strike_Predicted_Activity134>
+59.082200
+
+> <r_strike_Predicted_Activity135>
+61.062400
+
+> <r_strike_Predicted_Activity136>
+61.646500
+
+> <r_strike_Predicted_Activity137>
+62.130700
+
+> <r_strike_Predicted_Activity138>
+61.044300
+
+> <r_strike_Predicted_Activity139>
+57.674400
+
+> <r_strike_Predicted_Activity140>
+63.925300
+
+> <r_strike_Predicted_Activity141>
+58.892900
+
+> <r_strike_Predicted_Activity142>
+62.128100
+
+> <r_strike_Predicted_Activity143>
+63.588000
+
+> <r_strike_Predicted_Activity144>
+64.413000
+
+> <r_strike_Predicted_Activity145>
+60.817500
+
+> <r_strike_Predicted_Activity146>
+61.303100
+
+> <r_strike_Predicted_Activity147>
+60.210700
+
+> <r_strike_Predicted_Activity148>
+63.191100
+
+> <r_strike_Predicted_Activity149>
+61.986500
+
+> <r_strike_Predicted_Activity150>
+62.418500
+
+> <r_strike_Predicted_Activity151>
+62.179900
+
+> <r_strike_Predicted_Activity152>
+64.744000
+
+> <r_strike_Predicted_Activity153>
+64.376500
+
+> <r_strike_Predicted_Activity154>
+61.465600
+
+> <r_strike_Predicted_Activity155>
+61.918500
+
+> <r_strike_Predicted_Activity156>
+61.590500
+
+> <r_strike_Predicted_Activity157>
+61.483600
+
+> <r_strike_Predicted_Activity158>
+61.308200
+
+> <r_strike_Predicted_Activity159>
+61.035100
+
+> <r_strike_Predicted_Activity160>
+60.420800
+
+> <r_strike_Predicted_Activity161>
+61.845700
+
+> <r_strike_Predicted_Activity162>
+62.013100
+
+> <r_strike_Predicted_Activity163>
+59.002500
+
+> <r_strike_Predicted_Activity164>
+62.448800
+
+> <r_strike_Predicted_Activity165>
+52.743700
+
+> <r_strike_Predicted_Activity166>
+55.028600
+
+> <r_strike_Predicted_Activity167>
+57.062800
+
+> <r_strike_Predicted_Activity168>
+54.030000
+
+> <r_strike_Predicted_Activity169>
+63.196100
+
+> <r_strike_Predicted_Activity170>
+52.850400
+
+> <r_strike_Predicted_Activity171>
+53.666300
+
+> <r_strike_Predicted_Activity172>
+57.282800
+
+> <r_strike_Predicted_Activity173>
+56.729700
+
+> <r_strike_Predicted_Activity174>
+55.919200
+
+> <r_strike_Predicted_Activity175>
+59.605800
+
+> <r_strike_Predicted_Activity176>
+61.563100
+
+> <r_strike_Predicted_Activity177>
+52.478400
+
+> <r_strike_Predicted_Activity178>
+54.212400
+
+> <r_strike_Predicted_Activity179>
+51.741500
+
+> <r_strike_Predicted_Activity180>
+60.942200
+
+> <r_strike_Predicted_Activity181>
+64.004100
+
+> <r_strike_Predicted_Activity182>
+65.840300
+
+> <r_strike_Predicted_Activity183>
+63.893700
+
+> <r_strike_Predicted_Activity184>
+63.522900
+
+> <r_strike_Predicted_Activity185>
+62.836700
+
+> <r_strike_Predicted_Activity186>
+65.387100
+
+> <r_strike_Predicted_Activity187>
+63.799500
+
+> <r_strike_Predicted_Activity188>
+63.115300
+
+> <r_strike_Predicted_Activity189>
+63.718700
+
+> <r_strike_Predicted_Activity190>
+63.986700
+
+> <r_strike_Predicted_Activity191>
+64.159700
+
+> <r_strike_Predicted_Activity192>
+63.778000
+
+> <r_strike_Predicted_Activity193>
+60.139200
+
+> <r_strike_Predicted_Activity194>
+62.775000
+
+> <r_strike_Predicted_Activity195>
+61.670400
+
+> <r_strike_Predicted_Activity196>
+64.368300
+
+> <r_strike_Predicted_Activity197>
+64.529900
+
+> <r_strike_Predicted_Activity198>
+65.946000
+
+> <r_strike_Predicted_Activity199>
+62.489100
+
+> <r_strike_Predicted_Activity200>
+64.370800
+
+> <r_strike_Predicted_Activity201>
+62.859200
+
+> <r_strike_Predicted_Activity202>
+63.234900
+
+> <r_strike_Predicted_Activity203>
+64.591000
+
+> <r_strike_Predicted_Activity204>
+65.123900
+
+> <r_strike_Predicted_Activity205>
+64.250500
+
+> <r_strike_Predicted_Activity206>
+66.061700
+
+> <r_strike_Predicted_Activity207>
+65.461800
+
+> <r_strike_Predicted_Activity208>
+63.904300
+
+> <r_strike_Predicted_Activity209>
+64.556700
+
+> <r_strike_Predicted_Activity210>
+63.956400
+
+> <r_strike_Predicted_Activity211>
+64.008900
+
+> <r_strike_Predicted_Activity212>
+64.016400
+
+> <r_strike_Predicted_Activity213>
+61.941700
+
+> <r_strike_Predicted_Activity214>
+63.775100
+
+> <r_strike_Predicted_Activity215>
+65.461800
+
+> <r_strike_Predicted_Activity216>
+65.313400
+
+> <r_strike_Predicted_Activity217>
+65.408600
+
+> <r_strike_Predicted_Activity218>
+64.250800
+
+> <r_strike_Predicted_Activity219>
+65.438400
+
+> <r_strike_Predicted_Activity220>
+65.523100
+
+> <r_strike_Predicted_Activity221>
+65.661500
+
+> <r_strike_Predicted_Activity222>
+65.422000
+
+> <r_strike_Predicted_Activity223>
+66.016600
+
+> <r_strike_Predicted_Activity224>
+65.229900
+
+> <r_strike_Predicted_Activity225>
+64.694700
+
+> <r_strike_Predicted_Activity226>
+65.047800
+
+> <r_strike_Predicted_Activity227>
+64.011000
+
+> <r_strike_Predicted_Activity228>
+64.356700
+
+> <r_strike_Predicted_Activity229>
+65.202500
+
+> <r_strike_Predicted_Activity230>
+64.969000
+
+> <r_strike_Predicted_Activity231>
+65.379000
+
+> <r_strike_Predicted_Activity232>
+65.409300
+
+> <r_strike_Predicted_Activity233>
+65.189400
+
+> <r_strike_Predicted_Activity234>
+63.146800
+
+> <r_strike_Predicted_Activity235>
+55.264900
+
+> <r_strike_Predicted_Activity236>
+55.294000
+
+> <r_strike_Predicted_Activity237>
+57.551300
+
+> <r_strike_Predicted_Activity238>
+59.167400
+
+> <r_strike_Predicted_Activity239>
+56.467000
+
+> <r_strike_Predicted_Activity240>
+64.636900
+
+> <r_strike_Predicted_Activity241>
+55.396200
+
+> <r_strike_Predicted_Activity242>
+54.649600
+
+> <r_strike_Predicted_Activity243>
+56.150300
+
+> <r_strike_Predicted_Activity244>
+58.558200
+
+> <r_strike_Predicted_Activity245>
+54.714300
+
+> <r_strike_Predicted_Activity246>
+56.536900
+
+> <r_strike_Predicted_Activity247>
+65.013700
+
+> <r_strike_Predicted_Activity248>
+65.331600
+
+> <r_strike_Predicted_Activity249>
+66.279600
+
+> <r_strike_Predicted_Activity250>
+65.433700
+
+> <r_strike_Predicted_Activity251>
+63.969400
+
+> <r_strike_Predicted_Activity252>
+53.588300
+
+> <r_strike_Predicted_Activity253>
+55.406600
+
+> <r_strike_Predicted_Activity254>
+55.288700
+
+> <r_strike_Predicted_Activity255>
+54.057700
+
+> <r_strike_Predicted_Activity256>
+53.363200
+
+> <r_strike_Predicted_Activity257>
+55.485100
+
+> <r_strike_Predicted_Activity258>
+53.267600
+
+> <r_strike_Predicted_Activity259>
+54.767300
+
+> <r_strike_Predicted_Activity260>
+51.443200
+
+> <r_strike_Predicted_Activity261>
+52.390700
+
+> <r_strike_Predicted_Activity262>
+52.731600
+
+> <r_strike_Predicted_Activity263>
+53.497400
+
+> <r_strike_Predicted_Activity264>
+52.674600
+
+> <r_strike_Predicted_Activity265>
+51.522600
+
+> <r_strike_Predicted_Activity266>
+53.604100
+
+> <r_strike_Predicted_Activity267>
+52.697600
+
+> <r_strike_Predicted_Activity268>
+52.305600
+
+> <r_strike_Predicted_Activity269>
+53.985300
+
+> <r_strike_Predicted_Activity270>
+51.911300
+
+> <r_strike_Predicted_Activity271>
+53.985300
+
+> <r_strike_Predicted_Activity272>
+51.262600
+
+> <r_strike_Predicted_Activity273>
+51.950800
+
+> <r_strike_Predicted_Activity274>
+54.375300
+
+> <r_strike_Predicted_Activity275>
+52.882200
+
+> <r_strike_Predicted_Activity276>
+52.067200
+
+> <r_strike_Predicted_Activity277>
+54.645200
+
+> <r_strike_Predicted_Activity278>
+55.042100
+
+> <r_strike_Predicted_Activity279>
+51.046300
+
+> <r_strike_Predicted_Activity280>
+51.863800
+
+> <r_strike_Predicted_Activity281>
+53.412400
+
+> <r_strike_Predicted_Activity282>
+51.225600
+
+> <r_strike_Predicted_Activity283>
+51.443200
+
+> <r_strike_Predicted_Activity284>
+52.390700
+
+> <r_strike_Predicted_Activity285>
+52.731600
+
+> <r_strike_Predicted_Activity286>
+52.091200
+
+> <r_strike_Predicted_Activity287>
+52.099500
+
+> <r_strike_Predicted_Activity288>
+53.033200
+
+> <r_strike_Predicted_Activity289>
+54.377400
+
+> <r_strike_Predicted_Activity290>
+52.104100
+
+> <r_strike_Predicted_Activity291>
+52.383000
+
+> <r_strike_Predicted_Activity292>
+52.430300
+
+> <r_strike_Predicted_Activity293>
+52.968000
+
+> <r_strike_Predicted_Activity294>
+52.620900
+
+> <r_strike_Predicted_Activity295>
+52.006600
+
+> <r_strike_Predicted_Activity296>
+52.669800
+
+> <r_strike_Predicted_Activity297>
+52.629900
+
+> <r_strike_Predicted_Activity298>
+52.669800
+
+> <r_strike_Predicted_Activity299>
+52.468400
+
+> <r_strike_Predicted_Activity300>
+65.035600
+
+> <r_strike_Predicted_Activity301>
+52.468400
+
+> <r_strike_Predicted_Activity302>
+50.716900
+
+> <r_strike_Predicted_Activity303>
+55.324700
+
+> <r_strike_Predicted_Activity304>
+55.426000
+
+> <r_strike_Predicted_Activity305>
+55.183900
+
+> <r_strike_Predicted_Activity308>
+63.828800
+
+> <r_strike_Predicted_Activity309>
+52.413800
+
+> <r_strike_Predicted_Activity310>
+52.413300
+
+> <r_strike_Predicted_Activity311>
+51.686500
+
+> <r_strike_Predicted_Activity312>
+52.468400
+
+> <r_strike_Predicted_Activity315>
+53.271000
+
+> <r_strike_Predicted_Activity316>
+52.549700
+
+> <r_strike_Predicted_Activity317>
+54.889400
+
+> <r_strike_Predicted_Activity318>
+55.222900
+
+> <r_strike_Predicted_Activity319>
+51.271200
+
+> <r_strike_Predicted_Activity320>
+52.136200
+
+> <r_strike_Predicted_Activity321>
+54.313800
+
+> <r_strike_Predicted_Activity322>
+52.015100
+
+> <r_strike_Predicted_Activity323>
+52.188500
+
+> <r_strike_Predicted_Activity324>
+53.244700
+
+> <r_strike_Predicted_Activity325>
+51.484400
+
+> <r_strike_Predicted_Activity326>
+51.393300
+
+> <r_strike_Predicted_Activity327>
+54.375000
+
+> <r_strike_Predicted_Activity328>
+53.552700
+
+> <r_strike_Predicted_Activity329>
+54.727000
+
+> <r_strike_Predicted_Activity330>
+53.823400
+
+> <r_strike_Predicted_Activity331>
+54.030700
+
+> <r_strike_Predicted_Activity332>
+54.782200
+
+> <r_strike_Predicted_Activity333>
+53.137400
+
+> <r_strike_Predicted_Activity334>
+53.237400
+
+> <r_strike_Predicted_Activity335>
+52.365200
+
+> <r_strike_Predicted_Activity336>
+55.183900
+
+> <r_strike_Predicted_Activity337>
+53.305300
+
+> <r_strike_Predicted_Activity338>
+50.716900
+
+> <r_strike_Predicted_Activity339>
+52.468400
+
+> <r_strike_Predicted_Activity339.1>
+52.468400
+
+> <r_strike_Predicted_Activity340>
+53.198800
+
+> <r_strike_Predicted_Activity341>
+53.198800
+
+> <r_strike_Predicted_Activity342>
+52.468400
+
+> <r_strike_Predicted_Activity343>
+52.799300
+
+> <r_strike_Predicted_Activity344>
+53.422700
+
+> <r_strike_Predicted_Activity345>
+53.388700
+
+> <r_strike_Predicted_Activity346>
+53.265400
+
+> <r_strike_Predicted_Activity347>
+53.095100
+
+> <r_strike_Predicted_Activity348>
+53.265400
+
+> <r_strike_Predicted_Activity349>
+53.095100
+
+> <r_strike_Predicted_Activity351>
+52.734700
+
+> <r_strike_Predicted_Activity352>
+53.369900
+
+> <r_strike_Predicted_Activity353>
+53.095100
+
+> <s_m_entry_name>
+04.mol2-dup1
+
+$$$$
