@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF [
+  <!ENTITY rdf  "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+  <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+  <!ENTITY xsd  "http://www.w3.org/2001/XMLSchema#" >
+  <!ENTITY owl  "http://www.w3.org/2002/07/owl#" >
+  <!ENTITY elem "http://cdk.sf.net/ontologies/elements#" >
+]>
+<rdf:RDF xmlns="&elem;" xml:base="&elem;"
+  xmlns:owl="&owl;"
+  xmlns:elem="&elem;"
+  xmlns:rdf="&rdf;"
+  xmlns:rdfs="&rdfs;"
+  xmlns:dc="http://dublincore.org/"
+>
+
+  <owl:Ontology rdf:about="">
+    <rdfs:label>Chemical Elements Ontology</rdfs:label>
+    <owl:versionInfo>$Id$</owl:versionInfo>
+  </owl:Ontology>
+
+  <!-- classes and properties -->
+
+  <owl:Class rdf:ID="Element">
+    <rdfs:label>Chemical Element</rdfs:label>
+  </owl:Class>
+
+  <owl:DatatypeProperty rdf:ID="symbol">
+    <rdfs:domain rdf:resource="#Element"/>
+    <rdfs:range rdf:resource="&xsd;string"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:ID="atomicNumber">
+    <rdfs:domain rdf:resource="&elem;Element"/>
+    <rdfs:range rdf:resource="&xsd;positiveInteger"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:ID="label">
+    <rdfs:domain rdf:resource="&elem;Element"/>
+    <rdfs:range rdf:resource="&xsd;string"/>
+  </owl:DatatypeProperty>
+
+  <!-- the elements -->
+
+  <elem:Element rdf:ID="H" elem:symbol="H" elem:atomicNumber="1">
+    <elem:label xml:lang="en">hydrogen</elem:label>
+    <elem:label xml:lang="nl">waterstof</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="He" elem:symbol="He" elem:atomicNumber="2">
+    <elem:label xml:lang="en">helium</elem:label>
+    <elem:label xml:lang="nl">helium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Li" elem:symbol="Li" elem:atomicNumber="3">
+    <elem:label xml:lang="en">lithium</elem:label>
+    <elem:label xml:lang="nl">lithium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="C" elem:symbol="C" elem:atomicNumber="6">
+    <elem:label xml:lang="en">carbon</elem:label>
+    <elem:label xml:lang="nl">koolstof</elem:label>
+  </elem:Element>
+
+</rdf:RDF>
