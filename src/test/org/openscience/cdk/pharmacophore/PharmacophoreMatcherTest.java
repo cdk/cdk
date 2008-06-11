@@ -6,6 +6,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
@@ -199,11 +200,11 @@ public class PharmacophoreMatcherTest {
         List<List<PharmacophoreAtom>> upmatches = matcher.getUniqueMatchingPharmacophoreAtoms();
         Assert.assertEquals(1, upmatches.size());
 
-        List<List<PharmacophoreBond>> bmatches = matcher.getMatchingPharmacophoreBonds();
+        List<List<IBond>> bmatches = matcher.getMatchingPharmacophoreBonds();
         Assert.assertEquals(1, bmatches.size());
-        List<PharmacophoreBond> bmatch = bmatches.get(0);
+        List<IBond> bmatch = bmatches.get(0);
         Assert.assertEquals(1, bmatch.size());
-        PharmacophoreBond pbond = bmatch.get(0);
+        PharmacophoreBond pbond = (PharmacophoreBond)bmatch.get(0);
         Assert.assertEquals(5.63, pbond.getBondLength(), 0.01);
     }
 

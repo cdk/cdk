@@ -95,7 +95,7 @@ public class PharmacophoreMatcher {
     private LoggingTool logger = new LoggingTool(PharmacophoreMatcher.class);
     private IQueryAtomContainer pharmacophoreQuery = null;
     private List<List<PharmacophoreAtom>> matchingPAtoms = null;
-    private List<List<PharmacophoreBond>> matchingPBonds = null;
+    private List<List<IBond>> matchingPBonds = null;
 
     private List<List<RMap>> bondMapping;
     private IAtomContainer pharmacophoreMolecule = null;
@@ -222,21 +222,24 @@ public class PharmacophoreMatcher {
      * <p/>
      * The method should be called after performing the match, otherwise the return value is null.
      * The method returns a List of List's. Each List represents the pharmacophore constraints in the
-     * target molecule that matched the query.
+     * target molecule that matched the query. Since constraints are conceptually modeled on bonds
+     * the result is a list of list of IBond. You should coerce these to the appropriate pharmacophore
+     * bond to get at the underlying grops.
      *
      * @return a List of a List of pharmacophore constraints in the target molecule that match the query
      * @see org.openscience.cdk.pharmacophore.PharmacophoreBond
+     * @see org.openscience.cdk.pharmacophore.PharmacophoreAngleBond
      */
-    public List<List<PharmacophoreBond>> getMatchingPharmacophoreBonds() {
+    public List<List<IBond>> getMatchingPharmacophoreBonds() {
         if (bondMapping == null) return null;
-        matchingPBonds = new ArrayList<List<PharmacophoreBond>>();
+        matchingPBonds = new ArrayList<List<IBond>>();
         for (Object aBondMapping : bondMapping) {
             List list = (List) aBondMapping;
-            List<PharmacophoreBond> bondList = new ArrayList<PharmacophoreBond>();
+            List<IBond> bondList = new ArrayList<IBond>();
             for (Object aList : list) {
                 RMap map = (RMap) aList;
                 int bondID = map.getId1();
-                bondList.add((PharmacophoreBond) pharmacophoreMolecule.getBond(bondID));
+                bondList.add(pharmacophoreMolecule.getBond(bondID));
             }
             matchingPBonds.add(bondList);
         }
