@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+
+<pharmacophoreContainer version="1.0">
+
+    <!-- some gobal pharmacphore group definitions, usable by 
+    all pharmacophores defined in this file -->
+
+    <group id="Ha" description="H-bond acceptor">
+	[!$([#6,F,Cl,Br,I,o,s,nX3,#7v5,#15v5,#16v4,#16v6,*+1,*+2,*+3])]
+    </group>
+
+    <group id="Hd" description="H-bond donor">
+	[!$([#6,H0,-,-2,-3])]
+    </group>
+
+    <group id="Aromatic">[*;a]</group>
+
+    <group id="Acid" description="Acidic groups, defined as a proton donor">
+	[!H0;F,Cl,Br,I,N+,$([OH]-*=[!#6]),+]
+    </group>
+
+
+    <pharmacophore description="A modified definition for the D1 receptor">
+	<group id="Hydroxyl">[OX2H]</group>
+	<group id="BasicAmine">[NX3;H2,H1;!$(NC=O)]</group>
+	<distanceConstraint lower="2.7" upper="2.9" units="A">
+	    <groupRef id="Aromatic" />
+	    <groupRef id="Hydroxyl" />
+	</distanceConstraint>
+	<angleConstraint lower="50" upper="60" units="degrees">
+	    <groupRef id="Hydroxyl" />
+	    <groupRef id="Aromatic" />
+	    <groupRef id="BasicAmine" />
+	</distanceConstraint>
+    </pharmacophore>
+
+</pharmacophoreContainer>
