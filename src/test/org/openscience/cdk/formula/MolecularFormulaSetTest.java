@@ -253,7 +253,40 @@ public class MolecularFormulaSetTest extends NewCDKTestCase {
         Object clone = mfS.clone();
         Assert.assertTrue(clone instanceof IMolecularFormulaSet);
         Assert.assertNotSame(mfS, clone);
-    } 
+    }
+    /**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+    @Test 
+    public void testClone_IMolecualrFormula() throws Exception {
+        IMolecularFormulaSet mfS = new MolecularFormulaSet();
+        IMolecularFormula mf1 = new MolecularFormula();
+        IIsotope carb = builder.newIsotope("C");
+        IIsotope flu = builder.newIsotope("F");
+        IIsotope h1 = builder.newIsotope("H");
+        mf1.addIsotope( carb );
+        mf1.addIsotope( flu );
+        mf1.addIsotope( h1 ,3);
+        mfS.addMolecularFormula(mf1);
+        
+        IMolecularFormula mf2 = new MolecularFormula();
+        IIsotope carb2 = builder.newIsotope("C");
+        IIsotope iode = builder.newIsotope("I");
+        IIsotope h2 = builder.newIsotope("H");
+        mf2.addIsotope( carb2 );
+        mf2.addIsotope( iode,2 );
+        mf2.addIsotope( h2 ,2);
+        mfS.addMolecularFormula(mf2);
+        
+        Object clone = mfS.clone();
+        Assert.assertTrue(clone instanceof IMolecularFormulaSet);
+        Assert.assertNotSame(mfS, clone);
+        Assert.assertEquals(mfS.size(), ((IMolecularFormulaSet)clone).size());
+        Assert.assertEquals(mfS.getMolecularFormula(0).getIsotopeCount(), ((IMolecularFormulaSet)clone).getMolecularFormula(0).getIsotopeCount());
+        Assert.assertEquals(mfS.getMolecularFormula(1).getIsotopeCount(), ((IMolecularFormulaSet)clone).getMolecularFormula(1).getIsotopeCount());
+        } 
     /**
 	 * A unit test suite for JUnit.
 	 *
