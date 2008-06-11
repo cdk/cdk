@@ -43,6 +43,8 @@ import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
+import org.openscience.cdk.nonotify.NNMolecularFormulaSet;
+import org.openscience.cdk.nonotify.NNMoleculeSet;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -375,9 +377,11 @@ public class MassToFormulaTool {
 				if(diff_new < tolerance){
 					IMolecularFormula myMF = getFormula(isotopes_TO,value_In);
 					String newMFString = MolecularFormulaManipulator.getString(myMF);
-					if(!newMFString.equals(lastMFString))
+
+					if(!newMFString.equals(lastMFString)){
 						molecularFormulaSet.addMolecularFormula(myMF);
-					lastMFString = newMFString;
+						lastMFString = newMFString;
+					}
 				}
 				
 				if(count_E == 1)/*only valid for the first random 1000*/
@@ -556,36 +560,27 @@ public class MassToFormulaTool {
 		IMolecularFormulaSet solutions_new = null;
 		
 		if(formulaSet.size() != 0){
-			
-			IMolecularFormulaSet solutions_pro = formulaSet;
-			solutions_new = formulaSet.getBuilder().newMolecularFormulaSet();
-			for (int i = 0; i < formulaSet.size() ; i++){
-				
-				double valueMin = 100;
-				int j_final = 0;
-				for (int j = 0 ; j < solutions_pro.size() ; j++){
-					IMolecularFormula newMF = formulaSet.getBuilder().newMolecularFormula();
-					Iterator<IIsotope> iterator = solutions_pro.getMolecularFormula(j).isotopes();
-					while(iterator.hasNext()){
-						IIsotope isotope = iterator.next();
-						int occur = solutions_pro.getMolecularFormula(j).getIsotopeCount(isotope);
-						newMF.addIsotope(isotope, occur);
 
-					}
+			double valueMin = 100;
+			int i_final = 0;
+	        solutions_new = formulaSet.getBuilder().newMolecularFormulaSet();
+			List<Integer> listI = new ArrayList<Integer>();
+			for (int j = 0; j < formulaSet.size() ; j++){
+				for (int i = 0; i < formulaSet.size() ; i++){
+					if(listI.contains(i))
+						continue;
 					
-					double value = MolecularFormulaManipulator.getTotalExactMass(newMF);
-					
+					double value = MolecularFormulaManipulator.getTotalExactMass(formulaSet.getMolecularFormula(i));
 					double diff = Math.abs(mass - Math.abs(value));
 					if (valueMin > diff){
 						valueMin = diff;
-						j_final = j;
+						i_final = i;
 					}
-						
-			    	
+	
 				}
-				solutions_new.addMolecularFormula(solutions_pro.getMolecularFormula(j_final));
-				solutions_pro.removeMolecularFormula(j_final);
-				
+				valueMin = 100;
+				solutions_new.addMolecularFormula(formulaSet.getMolecularFormula(i_final));
+				listI.add(i_final);
 			}
 		}
 		

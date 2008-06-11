@@ -341,7 +341,7 @@ public class MassToFormulaToolTest extends NewCDKTestCase {
 		
 		IMolecularFormulaSet mfSet = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance()).generate(133.0968);
 		
-		Assert.assertEquals(19,mfSet.size());
+		Assert.assertEquals(37,mfSet.size());
 		
 
 		Assert.assertEquals(MolecularFormulaManipulator.getAtomCount(mf1), MolecularFormulaManipulator.getAtomCount(mfSet.getMolecularFormula(0)));
@@ -443,7 +443,7 @@ public class MassToFormulaToolTest extends NewCDKTestCase {
 		
 		IMolecularFormulaSet mfSet = mfTool.generate(133.0968);
 			
-		Assert.assertEquals(21,mfSet.size());
+		Assert.assertEquals(42,mfSet.size());
 		
 		Assert.assertEquals(MolecularFormulaManipulator.getAtomCount(mf1), MolecularFormulaManipulator.getAtomCount(mfSet.getMolecularFormula(13)));
 		Assert.assertEquals(mf1.getIsotopeCount(), mfSet.getMolecularFormula(13).getIsotopeCount());
@@ -488,7 +488,7 @@ public class MassToFormulaToolTest extends NewCDKTestCase {
 		IMolecularFormulaSet mfSet = mfTool.generate(698.2588); //C37H38N4O10
 		
 		Assert.assertNotNull(mfSet);
-		Assert.assertSame(2, mfSet.size());
+		Assert.assertSame(3, mfSet.size());
 		
 		
 		IMolecularFormula mf1 = new MolecularFormula();
@@ -539,7 +539,52 @@ public class MassToFormulaToolTest extends NewCDKTestCase {
 //		Assert.assertNotNull(mfSet);
 //		Assert.assertNotSame(0, mfSet.size());
 	}
-
+	/**
+	 * A unit test suite for JUnit. Test takes approximately 2 min.
+	 *
+	 * @return    The test suite
+	 * 
+	 */
+	@Test 
+	public void testFoundMF() throws CDKException {
+		MassToFormulaTool mfTool = new MassToFormulaTool(NoNotificationChemObjectBuilder.getInstance());
+		
+		List<IRule> myRules = new ArrayList<IRule>();
+		
+		IRule rule1  = new ElementRule();
+		Object[] params = new Object[1];
+		MolecularFormulaRange mfRange = new MolecularFormulaRange();
+    	mfRange.addIsotope( ifac.getMajorIsotope("C"), 1, 50);
+    	mfRange.addIsotope( ifac.getMajorIsotope("H"), 1, 100);
+    	mfRange.addIsotope( ifac.getMajorIsotope("O"), 1, 50);
+    	mfRange.addIsotope( ifac.getMajorIsotope("N"), 1, 50);
+//    	mfRange.addIsotope( ifac.getMajorIsotope("S"), 0, 50);
+//    	mfRange.addIsotope( ifac.getMajorIsotope("P"), 0, 50);
+    	params[0] = mfRange;
+		rule1.setParameters(params);
+    	myRules.add(rule1);
+    	
+    	ToleranceRangeRule ruleToleran = new ToleranceRangeRule();
+        Object[] paramsT = new Object[2];
+        paramsT[0] = 133.0;
+        paramsT[1] = 0.2;
+        ruleToleran.setParameters(paramsT);
+        
+    	
+		mfTool.setRestrictions(myRules);
+		
+		IMolecularFormulaSet mfSet = mfTool.generate(137.03807);
+		Assert.assertEquals(24, mfSet.size());
+		boolean found = false;
+		for(IMolecularFormula formula : mfSet.molecularFormulas()) {
+			String mf = MolecularFormulaManipulator.getString(formula);
+			if(mf.equals("C4H11N1O4")){
+				found = true;
+				break;
+			}
+		}
+		Assert.assertTrue("The molecular formula C4H11N1O4 should be found",found);
+	}
 	/**
 	 * A unit test suite for JUnit. C5H11N2O
 	 * 
