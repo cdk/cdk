@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @author      mfe4
  * @cdk.created 2004-11-13
- * @cdk.module  qsar
+ * @cdk.module  standard
  * @cdk.svnrev  $Revision$
  * @cdk.dictref valence, atom
  */
