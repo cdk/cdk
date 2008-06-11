@@ -100,14 +100,27 @@ public class NitrogenRule implements IRule{
     	logger.info("Start validation of ",formula);
     	
     	Integer mass = (int)Math.round(MolecularFormulaManipulator.getTotalExactMass(formula));
+    	
+    	if(mass == 0)
+    		return 0.0;
+    	
     	int numberN = MolecularFormulaManipulator.getElementCount(formula, formula.getBuilder().newElement("N"));
     	
-    	if(isOdd(mass) && isOdd(numberN)) {
-    		return 1.0;
-    	} else if(!isOdd(mass) && ( numberN == 0 || !isOdd(numberN))){
-    		return 1.0;
-    	} else
-    		return 0.0;
+    	if(formula.getCharge() == null || formula.getCharge() == 0){
+	    	if(isOdd(mass) && isOdd(numberN)) {
+	    		return 1.0;
+	    	} else if(!isOdd(mass) && ( numberN == 0 || !isOdd(numberN))){
+	    		return 1.0;
+	    	} else
+	    		return 0.0;
+	    }else{
+	    	if(!isOdd(mass) && isOdd(numberN)) {
+	    		return 1.0;
+	    	} else if(isOdd(mass) && ( numberN == 0 || !isOdd(numberN))){
+	    		return 1.0;
+	    	} else
+	    		return 0.0;
+	    }
     }
     /**
      * Determine if a integer is odd.
