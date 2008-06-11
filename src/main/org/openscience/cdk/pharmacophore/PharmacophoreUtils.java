@@ -82,15 +82,15 @@ public class PharmacophoreUtils {
      * <p/>
      * Pharmacophore queries can be saved in an XML format which is described XXX. The
      * file can contain multiple definitions. This method will process all the definitions
-     * and return a list fo {@link IQueryAtomContainer} objects which can be used with
+     * and return a list of {@link IQueryAtomContainer} objects which can be used with
      * the {@link PharmacophoreMatcher} class.
      * <p/>
      * The current schema for the document allows one to specify angle and distance
-     * constraints. Currently the CDK does not support angle constraints, so they are
-     * ignored.
+     * constraints.
      * <p/>
      * The schema also specifies a <i>units</i> attribute for a given constraint. The
-     * current reader ignores this and assumes that all distances are in Angstroms.
+     * current reader ignores this and assumes that all distances are in Angstroms and
+     * angles are in degrees.
      * <p/>
      * Finally, if there is a description associated with a pharmacophore definition, it is
      * available as the <i>"description"</i> property of the {@link IQueryAtomContainer} object.
@@ -112,7 +112,7 @@ public class PharmacophoreUtils {
      * @see PharmacophoreQueryBond
      * @see PharmacophoreMatcher
      */
-    @TestMethod("testReadPcoreDef, testInvalidPcoreXML")
+    @TestMethod("testReadPcoreDef, testReadPcoreAngleDef, testInvalidPcoreXML")
     public static List<IQueryAtomContainer> readPharmacophoreDefinitions(InputStream ins) throws IOException, CDKException {
         Builder parser = new Builder();
         Document doc;
@@ -174,61 +174,133 @@ public class PharmacophoreUtils {
         for (int i = 0; i < children.size(); i++) {
             Element child = children.get(i);
             if (child.getQualifiedName().equals("distanceConstraint")) {
-                double lower;
-                String tmp = child.getAttributeValue("lower");
-                if (tmp == null) throw new CDKException("Must have a 'lower' attribute");
-                else lower = Double.parseDouble(tmp);
-
-                // we may not have an upper bound specified
-                double upper;
-                tmp = child.getAttributeValue("upper");
-                if (tmp != null) upper = Double.parseDouble(tmp);
-                else upper = lower;
-
-                // now get the two groups for this distance
-                Elements grouprefs = child.getChildElements();
-                if (grouprefs.size() != 2) throw new CDKException("A distance constraint can only refer to 2 groups.");
-                String id1 = grouprefs.get(0).getAttributeValue("id");
-                String id2 = grouprefs.get(1).getAttributeValue("id");
-
-                // see if it's a local def, else get it from the global list
-                String smarts1, smarts2;
-                if (local.containsKey(id1)) smarts1 = local.get(id1);
-                else if (global.containsKey(id1)) smarts1 = global.get(id1);
-                else throw new CDKException("Referring to a non-existant group definition");
-
-                if (local.containsKey(id2)) smarts2 = local.get(id2);
-                else if (global.containsKey(id2)) smarts2 = global.get(id2);
-                else throw new CDKException("Referring to a non-existant group definition");
-
-                // now see if we already have a correpsondiong pcore atom
-                // else create a new atom
-                if (!containsPatom(ret, id1)) {
-                    PharmacophoreQueryAtom pqa = new PharmacophoreQueryAtom(id1, smarts1);
-                    ret.addAtom(pqa);
-                }
-                if (!containsPatom(ret, id2)) {
-                    PharmacophoreQueryAtom pqa = new PharmacophoreQueryAtom(id2, smarts2);
-                    ret.addAtom(pqa);
-                }
-
-                // now add the constraint as a bond
-                IAtom a1 = null, a2 = null;
-                Iterator<IAtom> atoms = ret.atoms();
-                while (atoms.hasNext()) {
-                    IAtom queryAtom = atoms.next();
-                    if (queryAtom.getSymbol().equals(id1)) a1 = queryAtom;
-                    if (queryAtom.getSymbol().equals(id2)) a2 = queryAtom;
-                }
-                ret.addBond(new PharmacophoreQueryBond((PharmacophoreQueryAtom)a1, (PharmacophoreQueryAtom)a2, lower, upper));
-
+                processDistanceConstraint(child, local, global, ret);
             } else if (child.getQualifiedName().equals("angleConstraint")) {
-                // CDK doesn't handle angle constraints at this point
+                processAngleConstraint(child, local, global, ret);
             }
         }
         return ret;
     }
 
+    private static void processDistanceConstraint(Element child,
+                                                  HashMap<String, String> local,
+                                                  HashMap<String, String> global,
+                                                  QueryAtomContainer ret) throws CDKException {
+        double lower;
+        String tmp = child.getAttributeValue("lower");
+        if (tmp == null) throw new CDKException("Must have a 'lower' attribute");
+        else lower = Double.parseDouble(tmp);
+
+        // we may not have an upper bound specified
+        double upper;
+        tmp = child.getAttributeValue("upper");
+        if (tmp != null) upper = Double.parseDouble(tmp);
+        else upper = lower;
+
+        // now get the two groups for this distance
+        Elements grouprefs = child.getChildElements();
+        if (grouprefs.size() != 2) throw new CDKException("A distance constraint can only refer to 2 groups.");
+        String id1 = grouprefs.get(0).getAttributeValue("id");
+        String id2 = grouprefs.get(1).getAttributeValue("id");
+
+        // see if it's a local def, else get it from the global list
+        String smarts1, smarts2;
+        if (local.containsKey(id1)) smarts1 = local.get(id1);
+        else if (global.containsKey(id1)) smarts1 = global.get(id1);
+        else throw new CDKException("Referring to a non-existant group definition");
+
+        if (local.containsKey(id2)) smarts2 = local.get(id2);
+        else if (global.containsKey(id2)) smarts2 = global.get(id2);
+        else throw new CDKException("Referring to a non-existant group definition");
+
+        // now see if we already have a correpsondiong pcore atom
+        // else create a new atom
+        if (!containsPatom(ret, id1)) {
+            PharmacophoreQueryAtom pqa = new PharmacophoreQueryAtom(id1, smarts1);
+            ret.addAtom(pqa);
+        }
+        if (!containsPatom(ret, id2)) {
+            PharmacophoreQueryAtom pqa = new PharmacophoreQueryAtom(id2, smarts2);
+            ret.addAtom(pqa);
+        }
+
+        // now add the constraint as a bond
+        IAtom a1 = null, a2 = null;
+        Iterator<IAtom> atoms = ret.atoms();
+        while (atoms.hasNext()) {
+            IAtom queryAtom = atoms.next();
+            if (queryAtom.getSymbol().equals(id1)) a1 = queryAtom;
+            if (queryAtom.getSymbol().equals(id2)) a2 = queryAtom;
+        }
+        ret.addBond(new PharmacophoreQueryBond((PharmacophoreQueryAtom) a1, (PharmacophoreQueryAtom) a2, lower, upper));
+    }
+
+    private static void processAngleConstraint(Element child,
+                                               HashMap<String, String> local,
+                                               HashMap<String, String> global,
+                                               QueryAtomContainer ret) throws CDKException {
+        double lower;
+        String tmp = child.getAttributeValue("lower");
+        if (tmp == null) throw new CDKException("Must have a 'lower' attribute");
+        else lower = Double.parseDouble(tmp);
+
+        // we may not have an upper bound specified
+        double upper;
+        tmp = child.getAttributeValue("upper");
+        if (tmp != null) upper = Double.parseDouble(tmp);
+        else upper = lower;
+
+        // now get the three groups for this distance
+        Elements grouprefs = child.getChildElements();
+        if (grouprefs.size() != 3) throw new CDKException("An angle constraint can only refer to 3 groups.");
+        String id1 = grouprefs.get(0).getAttributeValue("id");
+        String id2 = grouprefs.get(1).getAttributeValue("id");
+        String id3 = grouprefs.get(2).getAttributeValue("id");
+
+        // see if it's a local def, else get it from the global list
+        String smarts1, smarts2, smarts3;
+        if (local.containsKey(id1)) smarts1 = local.get(id1);
+        else if (global.containsKey(id1)) smarts1 = global.get(id1);
+        else throw new CDKException("Referring to a non-existant group definition");
+
+        if (local.containsKey(id2)) smarts2 = local.get(id2);
+        else if (global.containsKey(id2)) smarts2 = global.get(id2);
+        else throw new CDKException("Referring to a non-existant group definition");
+
+        if (local.containsKey(id3)) smarts3 = local.get(id3);
+        else if (global.containsKey(id3)) smarts3 = global.get(id3);
+        else throw new CDKException("Referring to a non-existant group definition");
+
+        // now see if we already have a correpsondiong pcore atom
+        // else create a new atom
+        if (!containsPatom(ret, id1)) {
+            PharmacophoreQueryAtom pqa = new PharmacophoreQueryAtom(id1, smarts1);
+            ret.addAtom(pqa);
+        }
+        if (!containsPatom(ret, id2)) {
+            PharmacophoreQueryAtom pqa = new PharmacophoreQueryAtom(id2, smarts2);
+            ret.addAtom(pqa);
+        }
+        if (!containsPatom(ret, id3)) {
+            PharmacophoreQueryAtom pqa = new PharmacophoreQueryAtom(id3, smarts3);
+            ret.addAtom(pqa);
+        }
+
+        // now add the constraint as a bond
+        IAtom a1 = null, a2 = null;
+        IAtom a3 = null;
+        Iterator<IAtom> atoms = ret.atoms();
+        while (atoms.hasNext()) {
+            IAtom queryAtom = atoms.next();
+            if (queryAtom.getSymbol().equals(id1)) a1 = queryAtom;
+            if (queryAtom.getSymbol().equals(id2)) a2 = queryAtom;
+            if (queryAtom.getSymbol().equals(id3)) a3 = queryAtom;
+        }
+        ret.addBond(new PharmacophoreQueryAngleBond(
+                (PharmacophoreQueryAtom) a1,
+                (PharmacophoreQueryAtom) a2,
+                (PharmacophoreQueryAtom) a3, lower, upper));
+    }
 
     private static boolean containsPatom(IQueryAtomContainer q, String id) {
         Iterator<IAtom> atoms = q.atoms();
