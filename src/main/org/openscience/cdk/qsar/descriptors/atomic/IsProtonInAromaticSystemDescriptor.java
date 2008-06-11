@@ -174,7 +174,9 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 		else {
 			isProtonInAromaticSystem = 0;
 		}
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(isProtonInAromaticSystem));	
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new IntegerResult(isProtonInAromaticSystem),
+                new String[] {"protonInAromaticSystem"});	
 	}
 
 

@@ -24,10 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.io.IOException;
-
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -40,6 +36,9 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LoggingTool;
+
+import javax.vecmath.Point3d;
+import java.io.IOException;
 
 /**
  *  Inductive atomic hardness of an atom in a polyatomic system can be defined
@@ -213,7 +212,9 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
 		atomicHardness = 2 * atomicHardness;
 		atomicHardness = atomicHardness * 0.172;
 		atomicHardness = 1 / atomicHardness;
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(atomicHardness));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(atomicHardness),
+                new String[] {"indAtomHardness"});
 	}
 
 	private double calculateSquareDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {

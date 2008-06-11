@@ -141,7 +141,9 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
                 protonPartialCharge.add( neighbour.getCharge() );
             }
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), protonPartialCharge);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                protonPartialCharge,
+                new String[] {"protonTotalPartialCharge"});
     }
 
 

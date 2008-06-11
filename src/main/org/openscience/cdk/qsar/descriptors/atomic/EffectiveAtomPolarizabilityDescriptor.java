@@ -125,7 +125,9 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
         double polarizability;
         try {
             polarizability = pol.calculateGHEffectiveAtomPolarizability(ac,atom,100, true);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(polarizability));
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(polarizability),
+                    new String[] {"effAtomPol"});
         } catch (Exception ex1) {
         	ex1.printStackTrace();
             throw new CDKException("Problems with Polarizability due to " + ex1.toString(), ex1);

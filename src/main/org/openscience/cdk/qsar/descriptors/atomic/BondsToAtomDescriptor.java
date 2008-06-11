@@ -23,13 +23,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import static org.openscience.cdk.graph.BFSShortestPath.findPathBetween;
-
 import org._3pq.jgrapht.Edge;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import static org.openscience.cdk.graph.BFSShortestPath.findPathBetween;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -134,19 +133,22 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
 
     @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
-        mygraph = MoleculeGraphs.getMoleculeGraph((Molecule)container);
+        mygraph = MoleculeGraphs.getMoleculeGraph((Molecule) container);
         int bondsToAtom = 0;
 
         IAtom focus = container.getAtom(focusPosition);
-        
+
         startVertex = atom;
         endVertex = focus;
-        
-        mylist = findPathBetween(mygraph,startVertex,endVertex);
-        
+
+        mylist = findPathBetween(mygraph, startVertex, endVertex);
+
         bondsToAtom = mylist.size();
-        
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(bondsToAtom));
+
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new IntegerResult(bondsToAtom),
+                new String[]{"bondsToAtom"}
+        );
 
     }
 

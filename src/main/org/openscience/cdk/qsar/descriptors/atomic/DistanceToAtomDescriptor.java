@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -35,6 +33,8 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+
+import javax.vecmath.Point3d;
 
 /**
  *  This class returns the 3D distance between two atoms. Only works with 3D coordinates, which must be calculated beforehand.
@@ -138,7 +138,9 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
         
         distanceToAtom = calculateDistanceBetweenTwoAtoms(atom, focus);
         
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(distanceToAtom));
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(distanceToAtom),
+                new String[] {"distanceToAtom"});
 
     }
 

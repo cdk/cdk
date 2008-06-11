@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.io.IOException;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -38,6 +36,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.IOException;
 
 /**
  *  This class return the VdW radius of a given atom.
@@ -150,7 +150,8 @@ public class VdWRadiusDescriptor implements IAtomicDescriptor {
             String symbol = atom.getSymbol();
             IAtomType type = factory.getAtomType(symbol);
             vdwradius = type.getVanderwaalsRadius();
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(vdwradius));
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(vdwradius), new String[] {"vdwRadius"});
         } catch (Exception ex1) {
             logger.debug(ex1);
             throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString(), ex1);

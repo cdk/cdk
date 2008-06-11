@@ -156,7 +156,9 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
         }
         
         return getCachedDescriptorValue(atom) != null 
-            ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(atom)) 
+            ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                getCachedDescriptorValue(atom),
+                new String[] {"partialSigmaCharge"}) 
             : null;
     }
 

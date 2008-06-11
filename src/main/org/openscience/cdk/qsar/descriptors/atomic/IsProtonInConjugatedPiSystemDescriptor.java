@@ -168,7 +168,9 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
                 }
             }
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(isProtonInPiSystem));
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new BooleanResult(isProtonInPiSystem),
+                new String[] {"protonInConjSystem"});
     }
 
 

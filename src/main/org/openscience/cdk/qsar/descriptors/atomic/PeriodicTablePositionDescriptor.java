@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.util.Hashtable;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -35,6 +33,8 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
+
+import java.util.Hashtable;
 
 /**
  *  This class returns the period in the periodic table of an atom belonging to an atom container
@@ -164,7 +164,9 @@ public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 		int period;
 		String symbol = atom.getSymbol();
 		period = (Integer) periodicTable.get(symbol);
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(period));
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new IntegerResult(period),
+                new String[] {"periodicTablePosition"});
 	}
 
 
