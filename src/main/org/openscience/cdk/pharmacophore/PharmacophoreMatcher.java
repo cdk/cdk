@@ -359,8 +359,7 @@ public class PharmacophoreMatcher {
             sqt.setSmarts(smarts);
             if (sqt.matches(atomContainer)) {
                 List<List<Integer>> mappings = sqt.getUniqueMatchingAtoms();
-                for (int i = 0; i < mappings.size(); i++) {
-                    List<Integer> atomIndices = mappings.get(i);
+                for (List<Integer> atomIndices : mappings) {
                     Point3d coords = getEffectiveCoordinates(atomContainer, atomIndices);
                     PharmacophoreAtom patom = new PharmacophoreAtom(smarts, qatom.getSymbol(), coords);
                     patom.setMatchingAtoms(intIndices(atomIndices));
@@ -371,18 +370,109 @@ public class PharmacophoreMatcher {
         }
 
         // now that we have added all the pcore atoms to the container
-        // we need to join all atoms with pcore bonds
-        int npatom = pharmacophoreMolecule.getAtomCount();
-        for (int i = 0; i < npatom - 1; i++) {
-            for (int j = i + 1; j < npatom; j++) {
-                PharmacophoreAtom atom1 = (PharmacophoreAtom) pharmacophoreMolecule.getAtom(i);
-                PharmacophoreAtom atom2 = (PharmacophoreAtom) pharmacophoreMolecule.getAtom(j);
-                PharmacophoreBond bond = new PharmacophoreBond(atom1, atom2);
-                pharmacophoreMolecule.addBond(bond);
+        // we need to join all atoms with pcore bonds   (i.e. distance constraints)
+        if (hasDistanceConstraints(pharmacophoreQuery)) {
+            int npatom = pharmacophoreMolecule.getAtomCount();
+            for (int i = 0; i < npatom - 1; i++) {
+                for (int j = i + 1; j < npatom; j++) {
+                    PharmacophoreAtom atom1 = (PharmacophoreAtom) pharmacophoreMolecule.getAtom(i);
+                    PharmacophoreAtom atom2 = (PharmacophoreAtom) pharmacophoreMolecule.getAtom(j);
+                    PharmacophoreBond bond = new PharmacophoreBond(atom1, atom2);
+                    pharmacophoreMolecule.addBond(bond);
+                }
             }
         }
 
+        // if we have angle constraints, generate only the valid
+        // possible angle relationships, rather than all possible
+        if (hasAngleConstraints(pharmacophoreQuery)) {
+            int nangleDefs = 0;
+
+            Iterator<IBond> qbonds = pharmacophoreQuery.bonds();
+            while (qbonds.hasNext()) {
+                IBond bond = qbonds.next();
+                if (!(bond instanceof PharmacophoreQueryAngleBond)) continue;
+
+                IAtom startQAtom = bond.getAtom(0);
+                IAtom middleQAtom = bond.getAtom(1);
+                IAtom endQAtom = bond.getAtom(2);
+
+                // make a list of the patoms in the target that match
+                // each type of angle atom
+                List<IAtom> startl = new ArrayList<IAtom>();
+                List<IAtom> middlel = new ArrayList<IAtom>();
+                List<IAtom> endl = new ArrayList<IAtom>();
+
+                Iterator<IAtom> tatoms = pharmacophoreMolecule.atoms();
+                while (tatoms.hasNext()) {
+                    IAtom tatom = tatoms.next();
+                    if (tatom.getSymbol().equals(startQAtom.getSymbol())) startl.add(tatom);
+                    if (tatom.getSymbol().equals(middleQAtom.getSymbol())) middlel.add(tatom);
+                    if (tatom.getSymbol().equals(endQAtom.getSymbol())) endl.add(tatom);
+                }
+
+                // now we form the relevant angles, but we will
+                // have reversed repeats
+                List<IAtom[]> tmpl = new ArrayList<IAtom[]>();
+                for (IAtom middle : middlel) {
+                    for (IAtom start : startl) {
+                        if (middle.equals(start)) continue;
+                        for (IAtom end : endl) {
+                            if (start.equals(end) || middle.equals(end)) continue;
+                            tmpl.add(new IAtom[]{start, middle, end});
+                        }
+                    }
+                }
+
+                // now clean up reversed repeats
+                List<IAtom[]> unique = new ArrayList<IAtom[]>();
+                for (int i = 0; i < tmpl.size(); i++) {
+                    IAtom[] seq1 = tmpl.get(i);
+                    boolean isRepeat = false;
+                    for (int j = 0; j < unique.size(); j++) {
+                        if (i == j) continue;
+                        IAtom[] seq2 = unique.get(j);
+                        if (seq1[1] == seq2[1] && seq1[0] == seq2[2] && seq1[2] == seq2[0]) {
+                            isRepeat = true;
+                        }
+                    }
+                    if (!isRepeat) unique.add(seq1);
+                }
+
+                // finally we can add the unique angle to the target
+                for (IAtom[] seq : unique) {
+                    PharmacophoreAngleBond pbond = new PharmacophoreAngleBond(
+                            (PharmacophoreAtom) seq[0],
+                            (PharmacophoreAtom) seq[1],
+                            (PharmacophoreAtom) seq[2]);
+                    pharmacophoreMolecule.addBond(pbond);
+                    nangleDefs++;
+                }
+
+            }
+            logger.debug("Added " + nangleDefs + " defs to the target pcore molecule");
+        }
+
+
         return pharmacophoreMolecule;
+    }
+
+    private boolean hasDistanceConstraints(IQueryAtomContainer query) {
+        Iterator<IBond> bonds = query.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = bonds.next();
+            if (bond instanceof PharmacophoreQueryBond) return true;
+        }
+        return false;
+    }
+
+    private boolean hasAngleConstraints(IQueryAtomContainer query) {
+        Iterator<IBond> bonds = query.bonds();
+        while (bonds.hasNext()) {
+            IBond bond = bonds.next();
+            if (bond instanceof PharmacophoreQueryAngleBond) return true;
+        }
+        return false;
     }
 
     private int[] intIndices(List<Integer> atomIndices) {

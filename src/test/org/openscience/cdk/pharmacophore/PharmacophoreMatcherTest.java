@@ -208,6 +208,92 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
+    public void testAngleMatch1() throws CDKException {
+        String filename = "data/mdl/cnssmarts.sdf";
+        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        IteratingMDLReader reader = new IteratingMDLReader(ins,
+                DefaultChemObjectBuilder.getInstance());
+
+        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n2 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n3 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAngleBond b1 = new PharmacophoreQueryAngleBond(n1, n2, n3, 85, 90);
+        query.addAtom(n1);
+        query.addAtom(n2);
+        query.addAtom(n3);
+        query.addBond(b1);
+
+        reader.hasNext();
+        IAtomContainer mol = (IAtomContainer) reader.next();
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+        PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
+        boolean status = matcher.matches(mol);
+        Assert.assertTrue(status);
+    }
+
+    @Test
+    public void testAngleMatch2() throws CDKException {
+        String filename = "data/mdl/cnssmarts.sdf";
+        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        IteratingMDLReader reader = new IteratingMDLReader(ins,
+                DefaultChemObjectBuilder.getInstance());
+
+        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n2 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAtom n3 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
+        PharmacophoreQueryAngleBond b1 = new PharmacophoreQueryAngleBond(n1, n2, n3, 89.14);
+        query.addAtom(n1);
+        query.addAtom(n2);
+        query.addAtom(n3);
+        query.addBond(b1);
+
+        reader.hasNext();
+        IAtomContainer mol = (IAtomContainer) reader.next();
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+        PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
+        boolean status = matcher.matches(mol);
+        Assert.assertTrue(status);
+    }
+
+    @Test
+    public void testAngleMatch3() throws CDKException {
+        Assert.assertNotNull(conformers);
+
+        // make a query
+        QueryAtomContainer query = new QueryAtomContainer();
+
+        PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
+        PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
+        PharmacophoreQueryAtom n2 = new PharmacophoreQueryAtom("A", "[N]");
+
+        query.addAtom(o);
+        query.addAtom(n1);
+        query.addAtom(n2);
+        PharmacophoreQueryAngleBond b1 = new PharmacophoreQueryAngleBond(o, n1, n2, 43, 47);
+        query.addBond(b1);
+
+        PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
+        boolean[] statuses = matcher.matches(conformers);
+
+        Assert.assertEquals(100, statuses.length);
+
+        int[] hits = new int[9];
+        int idx = 0;
+        for (int i = 0; i < statuses.length; i++) {
+            if (statuses[i]) hits[idx++] = i;
+        }
+
+        int[] expected = {0, 6, 32, 33, 48, 54, 60, 62, 69};
+        for (int i = 0; i < expected.length; i++) {
+            Assert.assertEquals("Hit " + i + " didn't match", expected[i], hits[i]);
+        }
+    }
+
+    @Test
     public void testGetterSetter() {
         QueryAtomContainer query = new QueryAtomContainer();
         PharmacophoreQueryAtom arom = new PharmacophoreQueryAtom("A", "c1ccccc1");
