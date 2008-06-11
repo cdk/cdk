@@ -24,37 +24,22 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.Iterator;
-import java.util.StringTokenizer;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.io.*;
+import java.util.Iterator;
+import java.util.StringTokenizer;
 
 /**
  * Reads a molecule from an MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
@@ -350,6 +335,22 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             logger.info("Reading rest of file");
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
+
+            // if the line is empty we hav a problem - either a malformed
+            // molecule entry or just extra new lines at the end of the file
+            if (line.length() == 0) {
+                // read till the next $$$$ or EOF
+                while (true) {
+                    line = input.readLine(); linecount++;
+                    if (line == null) {
+                        return null;
+                    }
+                    if (line.startsWith("$$$$")) {
+                        return molecule; // an empty molecule
+                    }
+                }
+            }
+            
             if (mode == Mode.STRICT) {
             	if (line.contains("V3000") || line.contains("v3000")) {
             		throw new CDKException("This file must be read with the MDLV3000Reader.");
