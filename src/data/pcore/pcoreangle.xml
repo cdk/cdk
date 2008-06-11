@@ -31,7 +31,7 @@
 	    <groupRef id="Hydroxyl" />
 	    <groupRef id="Aromatic" />
 	    <groupRef id="BasicAmine" />
-	</distanceConstraint>
+	</angleConstraint>
     </pharmacophore>
 
 </pharmacophoreContainer>
