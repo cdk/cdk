@@ -85,6 +85,14 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
         return bondLength >= lower && bondLength <= upper;
     }
 
+    public double getUpper() {
+        return upper;
+    }
+
+    public double getLower() {
+        return lower;
+    }
+
     private double round(double val, int places) {
         long factor = (long) Math.pow(10, places);
         val = val * factor;
