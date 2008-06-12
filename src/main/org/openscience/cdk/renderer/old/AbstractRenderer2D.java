@@ -24,38 +24,24 @@
  */
 package org.openscience.cdk.renderer.old;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.RenderingHints;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.renderer.Renderer2DModel;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+import org.openscience.cdk.validate.ProblemMarker;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.renderer.Renderer2DModel;
-import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-import org.openscience.cdk.validate.ProblemMarker;
 
 /**
  *  A Renderer class which draws 2D representations of molecules onto a given
@@ -270,7 +256,7 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 		{
 			// ... unless carbon is unbonded
 			drawSymbol = true;
-		} else if (atom.getMassNumber() != 0)
+		} else if (atom.getMassNumber() != CDKConstants.UNSET)
 		{
 			try
 			{
@@ -476,25 +462,27 @@ abstract class AbstractRenderer2D implements MouseMotionListener
 
 		// calculate ISOTOPE width, height
 		// font is still subscript, that's fine
-		int atomicMassNumber = atom.getMassNumber();
-		int isotopeW = 0;
-		// unless next condition, this is the default
-		int isotopeH = 0;
-		String isotopeString = "";
-		if (atomicMassNumber != 0 && isotopeFactory != null)
-		{
-			IIsotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
-			if (majorIsotope != null && atomicMassNumber != majorIsotope.getMassNumber())
-			{
-				graphics.setFont(subscriptFont);
-				fontMetrics = graphics.getFontMetrics();
-				isotopeString = Integer.toString(atomicMassNumber);
-				isotopeW = (new Integer(fontMetrics.stringWidth(isotopeString))).intValue();
-				isotopeH = (new Integer(fontMetrics.getAscent())).intValue();
-			}
-		}
 
-		// STEP 2: calculate x's and y's for all parts in the label
+        int isotopeW = 0;
+        // unless next condition, this is the default
+        int isotopeH = 0;
+        String isotopeString = "";
+        if (atom.getMassNumber() != CDKConstants.UNSET) {
+            int atomicMassNumber = atom.getMassNumber();
+
+            if (atomicMassNumber != 0 && isotopeFactory != null) {
+                IIsotope majorIsotope = isotopeFactory.getMajorIsotope(atom.getSymbol());
+                if (majorIsotope != null && atomicMassNumber != majorIsotope.getMassNumber()) {
+                    graphics.setFont(subscriptFont);
+                    fontMetrics = graphics.getFontMetrics();
+                    isotopeString = Integer.toString(atomicMassNumber);
+                    isotopeW = (new Integer(fontMetrics.stringWidth(isotopeString))).intValue();
+                    isotopeH = (new Integer(fontMetrics.getAscent())).intValue();
+                }
+            }
+        }
+
+        // STEP 2: calculate x's and y's for all parts in the label
 
 		int labelX = 0;
 		int labelY = 0;
