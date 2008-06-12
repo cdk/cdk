@@ -1,2 +1,4 @@
 org/openscience/cdk/dict/data/*.xml
 org/openscience/cdk/dict/data/*.owl
+org/openscience/cdk/config/data/radii-vdw.txt
+org/openscience/cdk/config/data/electroneg-pauling.txt
