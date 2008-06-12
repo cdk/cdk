@@ -42,8 +42,7 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
                                        PharmacophoreQueryAtom atom2,
                                        PharmacophoreQueryAtom atom3,
                                        double lower, double upper) {
-        super();
-        setAtoms(new PharmacophoreQueryAtom[]{atom1, atom2, atom3});
+        super(new PharmacophoreQueryAtom[]{atom1, atom2, atom3});
         this.upper = round(upper, 2);
         this.lower = round(lower, 2);
     }
@@ -66,8 +65,7 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
                                        PharmacophoreQueryAtom atom2,
                                        PharmacophoreQueryAtom atom3,
                                        double angle) {
-        super();
-        setAtoms(new PharmacophoreQueryAtom[]{atom1, atom2, atom3});
+        super(new PharmacophoreQueryAtom[]{atom1, atom2, atom3});
         this.upper = round(angle, 2);
         this.lower = round(angle, 2);
     }

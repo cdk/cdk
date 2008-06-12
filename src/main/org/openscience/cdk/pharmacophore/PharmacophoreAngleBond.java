@@ -25,8 +25,7 @@ public class PharmacophoreAngleBond extends Bond {
      * @param patom3 The third pharmacophore group
      */
     public PharmacophoreAngleBond(PharmacophoreAtom patom1, PharmacophoreAtom patom2, PharmacophoreAtom patom3) {
-        super();
-        setAtoms(new PharmacophoreAtom[] {patom1, patom2, patom3});
+        super(new PharmacophoreAtom[] {patom1, patom2, patom3});
     }
 
     /**
