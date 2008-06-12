@@ -20,17 +20,12 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Map;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.tools.LoggingTool;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.tools.LoggingTool;
+import java.util.Map;
 
 /**
  * Debugging data class.
@@ -62,7 +57,15 @@ public class DebugBond extends org.openscience.cdk.Bond
 		super(atom1, atom2, order, stereo);
 	}
 
-	public Integer getElectronCount() {
+    public DebugBond(IAtom[] atoms) {
+        super(atoms);
+    }
+
+    public DebugBond(IAtom[] atoms, IBond.Order order) {
+        super(atoms, order);
+    }
+
+    public Integer getElectronCount() {
 		logger.debug("Getting electron count: ", super.getElectronCount());
 		return super.getElectronCount();
 	}
