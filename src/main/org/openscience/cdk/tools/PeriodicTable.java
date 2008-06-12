@@ -38,11 +38,15 @@ import java.util.Vector;
 
 @TestClass("org.openscience.cdk.tools.PeriodicTableTest")
 public class PeriodicTable {
+    boolean isInitialized = false;
+
     private static PeriodicTable ourInstance = new PeriodicTable();
     private static HashMap<String, PeriodicTableElement> elements;
     private HashMap<Integer, PeriodicTableElement> elementsByNumber;
 
     private PeriodicTable() {
+        if (isInitialized) return;
+
         ElementPTFactory factory;
         try {
             factory = ElementPTFactory.getInstance();
@@ -68,6 +72,8 @@ public class PeriodicTable {
         } catch (IOException e) {
             return;
         }
+
+        isInitialized = true;
     }
 
     private void readVDW() throws IOException {
