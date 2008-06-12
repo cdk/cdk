@@ -24,17 +24,16 @@
  */
 package org.openscience.cdk;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.util.Iterator;
 
 /**
  * Checks the functionality of the Bond class.
@@ -304,5 +303,119 @@ public class BondTest extends NewCDKTestCase {
             Assert.assertTrue(description.charAt(i) != '\n');
             Assert.assertTrue(description.charAt(i) != '\r');
         }
+    }
+
+    @Test
+    public void testMultiCenter1() {
+        IAtom atom1 = builder.newAtom("C");
+        IAtom atom2 = builder.newAtom("O");
+        IAtom atom3 = builder.newAtom("C");
+
+        IBond bond = builder.newBond(new IAtom[]{atom1, atom2, atom3});
+        Assert.assertEquals(3, bond.getAtomCount());
+        Assert.assertEquals(atom1, bond.getAtom(0));
+        Assert.assertEquals(atom2, bond.getAtom(1));
+        Assert.assertEquals(atom3, bond.getAtom(2));
+
+        Assert.assertEquals(bond.getOrder(), CDKConstants.UNSET);
+    }
+
+    @Test
+    public void testMultiCenterCompare() {
+        IAtom atom1 = builder.newAtom("C");
+        IAtom atom2 = builder.newAtom("O");
+        IAtom atom3 = builder.newAtom("C");
+
+        IBond bond1 = builder.newBond(new IAtom[]{atom1, atom2, atom3});
+        IBond bond2 = builder.newBond(new IAtom[]{atom1, atom2, atom3});
+
+        Assert.assertTrue(bond1.compare(bond2));
+
+        IAtom atom4 = builder.newAtom("C");
+        IBond bond3 = builder.newBond(new IAtom[] {atom1, atom2, atom4});
+        Assert.assertFalse(bond1.compare(bond3));
+    }
+
+    @Test
+    public void testMltiCenterContains() {
+        IAtom atom1 = builder.newAtom("C");
+        IAtom atom2 = builder.newAtom("O");
+        IAtom atom3 = builder.newAtom("C");
+        IAtom atom4 = builder.newAtom("C");
+
+        IBond bond1 = builder.newBond(new IAtom[]{atom1, atom2, atom3});
+        Assert.assertTrue(bond1.contains(atom1));
+        Assert.assertTrue(bond1.contains(atom2));
+        Assert.assertTrue(bond1.contains(atom3));
+        Assert.assertFalse(bond1.contains(atom4));
+    }
+
+    @Test
+    public void testMultiCenterIterator() {
+        IAtom atom1 = builder.newAtom("C");
+        IAtom atom2 = builder.newAtom("O");
+        IAtom atom3 = builder.newAtom("C");
+        IAtom atom4 = builder.newAtom("C");
+
+        IBond bond1 = builder.newBond(new IAtom[]{atom1, atom2, atom3, atom4});
+        Iterator<IAtom> atoms = bond1.atoms();
+        int natom = 0;
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            natom++;
+        }
+        Assert.assertEquals(4, natom);
+    }
+
+    @Test
+    public void testMultiCenterConnectedAtoms() {
+        IAtom atom1 = builder.newAtom("C");
+        IAtom atom2 = builder.newAtom("O");
+        IAtom atom3 = builder.newAtom("C");
+        IAtom atom4 = builder.newAtom("C");
+
+        IBond bond1 = builder.newBond(new IAtom[]{atom1, atom2, atom3, atom4});
+        Assert.assertEquals(atom2, bond1.getConnectedAtom(atom1));
+        Assert.assertNull(bond1.getConnectedAtom(builder.newAtom()));
+
+        IAtom[] conAtoms = bond1.getConnectedAtoms(atom1);
+        boolean correct = true;
+        for (IAtom atom : conAtoms) {
+            if (atom == atom1) {
+                correct = false;
+                break;
+            }
+        }
+        Assert.assertTrue(correct);
+
+
+        conAtoms = bond1.getConnectedAtoms(atom3);
+        correct = true;
+        for (IAtom atom : conAtoms) {
+            if (atom == atom3) {
+                correct = false;
+                break;
+            }
+        }
+        Assert.assertTrue(correct);
+    }
+
+    @Test
+    public void testMultiCenterIsConnectedTo() {
+        IAtom atom1 = builder.newAtom("C");
+        IAtom atom2 = builder.newAtom("O");
+        IAtom atom3 = builder.newAtom("C");
+        IAtom atom4 = builder.newAtom("C");
+        IAtom atom5 = builder.newAtom("C");
+
+        IBond bond1 = builder.newBond(new IAtom[]{atom1, atom2, atom3});
+        IBond bond2 = builder.newBond(new IAtom[]{atom2, atom3, atom4});
+        IBond bond3 = builder.newBond(new IAtom[]{atom2, atom4});
+        IBond bond4 = builder.newBond(new IAtom[] {atom5, atom4});
+
+        Assert.assertTrue(bond1.isConnectedTo(bond2));
+        Assert.assertTrue(bond2.isConnectedTo(bond1));
+        Assert.assertTrue(bond1.isConnectedTo(bond3));
+        Assert.assertFalse(bond4.isConnectedTo(bond1));
     }
 }

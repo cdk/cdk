@@ -20,9 +20,9 @@
  */
 package org.openscience.cdk.interfaces;
 
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.interfaces.IBond.Order;
+
+import javax.vecmath.Point3d;
 
 /**
  * A helper class to instantiate a IChemObject for a specific implementation.
@@ -244,7 +244,24 @@ public interface IChemObjectBuilder {
 	 */
 	public IBond newBond(IAtom atom1, IAtom atom2, Order order, int stereo);
 
-	/**
+    /**
+     * Constrcts a IBond with multiple atoms and undefined order and orientation.
+     *
+     * @param atoms The atoms constituting the bond
+     * @return IBond   implementation defined for this IChemObjectBuilder
+     */
+    public IBond newBond(IAtom[] atoms);
+
+    /**
+     * Constrcts a IBond with multiple atoms and defined order and undefined orientation.
+     *
+     * @param atoms The atoms constituting the bond
+     * @param order The order for this bond
+     * @return IBond   implementation defined for this IChemObjectBuilder
+     */
+    public IBond newBond(IAtom[] atoms, Order order);
+
+    /**
 	 * Constructs an empty IChemFile.
 	 * 
      * @return IChemFile implementation defined for this IChemObjectBuilder

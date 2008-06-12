@@ -23,10 +23,9 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Iterator;
-
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+import java.util.Iterator;
 
 /**
  * Implements the concept of a covalent bond between two or more atoms. A bond is
@@ -91,7 +90,15 @@ public interface IBond extends IElectronContainer {
 	 */
 	public IAtom getConnectedAtom(IAtom atom);
 
-	/**
+    /**
+     * Returns all the atoms in the bond connected to the specified atom.
+     *
+     * @param atom The atoms the bond partner is searched of
+     * @return the connected atoms or null
+     */
+    public IAtom[] getConnectedAtoms(IAtom atom);
+
+    /**
 	 * Returns true if the given atom participates in this bond.
 	 *
 	 * @param  atom  The atom to be tested if it participates in this bond

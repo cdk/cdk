@@ -24,18 +24,28 @@
  */
 package org.openscience.cdk;
 
-import java.io.Serializable;
-import java.util.Iterator;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
- *  Implements the concept of a covalent bond between two atoms. A bond is
- *  considered to be a number of electrons connecting a two of atoms.
+ *  Implements the concept of a covalent bond between two or more atoms. A bond is
+ *  considered to be a number of electrons connecting two or more  of atoms.
+ *
+ * It should be noted that the majority of applications will consider 2-center bonds,
+ * especially since the bond orders currently supported are really only valid for
+ * 2-center bonds. However the code does support multi-center bonds, though the
+ * orders may not make sense at this point.
+ *
+ * In general code that assumes bonds are 2-centered can use this class seamlessly, as
+ * the semantics are identical to the older versions. Care shoud be exercised when
+ * using multi-center bonds using this class as the orders may not make sense.
  *
  * @cdk.module data
  * @cdk.svnrev  $Revision$
@@ -61,17 +71,17 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	/**
 	 *  The bond order of this bond.
 	 */
-	protected IBond.Order order;
+	protected IBond.Order order = (Order) CDKConstants.UNSET;
 
 	/**
 	 *  Number of atoms contained by this object.
 	 */
-	protected int atomCount = 2;
+	protected int atomCount = 0;
 
 	/**
 	 *  A list of atoms participating in this bond.
 	 */
-	protected IAtom[] atoms;
+	protected IAtom[] atoms = null;
 
 	/**
 	 *  A descriptor the stereochemical orientation of this bond.
@@ -80,7 +90,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 *      here.
 	 */
 	protected int stereo;
-
 
 	/**
 	 *  Constructs an empty bond.
@@ -114,8 +123,32 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 		this(atom1, atom2, order, CDKConstants.STEREO_BOND_NONE);
 	}
 
+    /**
+     * Constructs a multi-center bond, with undefined order and no stereo information.
+     *
+     * @param atoms An array of IAtom containing the atoms constituting the bond
+     */
+    public Bond(IAtom[] atoms) {
+        this.atoms = new IAtom[atoms.length];
+        System.arraycopy(atoms, 0, this.atoms, 0, atoms.length);
+        atomCount = this.atoms.length;
+    }
 
-	/**
+    /**
+     * Constructs a multi-center bond, with a specified order and no stereo information.
+     *
+     * @param atoms An array of IAtom containing the atoms constituting the bond
+     * @param order The order of the bond
+     */
+    public Bond(IAtom[] atoms, Order order) {
+        this.atoms = new IAtom[atoms.length];
+        System.arraycopy(atoms, 0, this.atoms, 0, atoms.length);
+        atomCount = this.atoms.length;
+        this.order = order;
+    }
+
+
+    /**
 	 *  Constructs a bond with a given order and stereo orientation from an array
 	 *  of atoms.
 	 *
@@ -131,7 +164,8 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 		atoms[1] = atom2;
 		this.order = order;
 		this.stereo = stereo;
-	}
+        this.atomCount = 2;
+    }
 
 
 	/**
@@ -155,7 +189,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         private int pointer = 0;
     	
         public boolean hasNext() {
-            return pointer < 2;
+            return pointer < atomCount;
         }
 
         public IAtom next() {
@@ -176,7 +210,8 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	public void setAtoms(IAtom[] atoms)
 	{
 		this.atoms = atoms;
-		notifyChanged();
+        atomCount = atoms.length;
+        notifyChanged();
 	}
 
 
@@ -195,52 +230,76 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 *  Returns an Atom from this bond.
 	 *
 	 *@param  position  The position in this bond where the atom is
-	 *@return           The atom at the specified position
+	 *@return           The atom at the specified position, null if there are no atoms in the bond
 	 *@see              #setAtom
 	 */
 	public IAtom getAtom(int position)
 	{
-		return atoms[position];
+		if (atoms == null) return null;
+        else return atoms[position];
 	}
 
 
-
-	/**
-	 *  Returns the atom connected to the given atom.
-	 *
-	 *@param  atom  The atom the bond partner is searched of
-	 *@return       the connected atom or null
-	 */
-	public IAtom getConnectedAtom(IAtom atom)
-	{
-		if (atoms[0] == atom)
-		{
-			return atoms[1];
-		} else if (atoms[1] == atom)
-		{
-			return atoms[0];
+    /**
+     * Returns the atom connected to the given atom.
+     * <p/>
+     * This method is only strictly relevant for 2-center bonds
+     * since in multi-center bonds, a given atom will be connected
+     * to multiple atoms.
+     *
+     * If called for a multi-center bond, then the next atom in the
+     * atom list is returned. This is probably not what is expected and
+     * hence the user should instead call
+     * {@link #getConnectedAtoms(org.openscience.cdk.interfaces.IAtom)}
+     *
+     * @param atom The atom the bond partner is searched of
+     * @return the connected atom or null
+     * @see #getConnectedAtoms(org.openscience.cdk.interfaces.IAtom)
+     */
+    public IAtom getConnectedAtom(IAtom atom) {
+        if (atoms[0] == atom) {
+            return atoms[1];
+        } else if (atoms[1] == atom) {
+            return atoms[0];
 		}
 		return null;
 	}
 
+    /**
+     * Returns all the atoms in the bond connected to the specified atom.
+     * <p/>
+     * Though this can be used for traditional 2-center bonds, it is oriented
+     * towards multi-center bonds, where a single atom is connected multiple
+     * atoms.
+     *
+     * @param atom The atom whose partners are to be searched for
+     * @return An array of the connected atoms, null if no atoms are connected to this atom
+     * @see #getConnectedAtom(org.openscience.cdk.interfaces.IAtom)
+     */
+    public IAtom[] getConnectedAtoms(IAtom atom) {
+        List<IAtom> conAtoms = new ArrayList<IAtom>();
+        for (IAtom localAtom : atoms) {
+            if (localAtom == atom) continue;
+            else conAtoms.add(localAtom);
+        }
+        if (conAtoms.size() > 0) return conAtoms.toArray(new IAtom[]{});
+        else return null;
+    }
 
-	/**
+
+    /**
 	 *  Returns true if the given atom participates in this bond.
 	 *
 	 *@param  atom  The atom to be tested if it participates in this bond
 	 *@return       true if the atom participates in this bond
 	 */
-	public boolean contains(IAtom atom)
-	{
-		if (atoms[0] == atom)
-		{
-			return true;
-		} else if (atoms[1] == atom)
-		{
-			return true;
-		}
-		return false;
-	}
+    public boolean contains(IAtom atom) {
+        if (atoms == null) return false;
+        for (IAtom localAtom : atoms) {
+            if (localAtom == atom) return true;
+        }
+        return false;
+    }
 
 
 	/**
@@ -314,45 +373,42 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	}
 
 
-	/**
-	 *  Returns the geometric 2D center of the bond.
-	 *
-	 *@return    The geometric 2D center of the bond
-	 */
-	public Point2d get2DCenter()
-	{
-		double xOfCenter = 0;
-		double yOfCenter = 0;
-		for (int f = 0; f < getAtomCount(); f++)
-		{
-			xOfCenter += getAtom(f).getPoint2d().x;
-			yOfCenter += getAtom(f).getPoint2d().y;
-		}
-		return new Point2d(xOfCenter / ((double) getAtomCount()), 
-                           yOfCenter / ((double) getAtomCount()));
+    /**
+     * Returns the geometric 2D center of the bond.
+     *
+     * @return The geometric 2D center of the bond
+     */
+    public Point2d get2DCenter() {
+        double xOfCenter = 0;
+        double yOfCenter = 0;
+        for (IAtom atom : atoms) {
+            xOfCenter += atom.getPoint2d().x;
+            yOfCenter += atom.getPoint2d().y;
+        }
+
+        return new Point2d(xOfCenter / ((double) getAtomCount()),
+                yOfCenter / ((double) getAtomCount()));
 	}
 
 
+    /**
+     * Returns the geometric 3D center of the bond.
+     *
+     * @return The geometric 3D center of the bond
+     */
+    public Point3d get3DCenter() {
+        double xOfCenter = 0;
+        double yOfCenter = 0;
+        double zOfCenter = 0;
+        for (IAtom atom : atoms) {
+            xOfCenter += atom.getPoint3d().x;
+            yOfCenter += atom.getPoint3d().y;
+            zOfCenter += atom.getPoint3d().z;
+        }
 
-	/**
-	 *  Returns the geometric 3D center of the bond.
-	 *
-	 *@return    The geometric 3D center of the bond
-	 */
-	public Point3d get3DCenter()
-	{
-		double xOfCenter = 0;
-		double yOfCenter = 0;
-		double zOfCenter = 0;
-		for (int f = 0; f < getAtomCount(); f++)
-		{
-			xOfCenter += getAtom(f).getPoint3d().x;
-			yOfCenter += getAtom(f).getPoint3d().y;
-			zOfCenter += getAtom(f).getPoint3d().z;
-		}
-		return new Point3d(xOfCenter / getAtomCount(), 
-                           yOfCenter / getAtomCount(), 
-                           zOfCenter / getAtomCount());
+        return new Point3d(xOfCenter / getAtomCount(),
+                yOfCenter / getAtomCount(),
+                zOfCenter / getAtomCount());
 	}
 
 	/**
@@ -363,7 +419,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 */
 	public boolean compare(Object object)
 	{
-		if (object instanceof IBond)
+        if (object instanceof IBond)
 		{
 			Bond bond = (Bond) object;
             for (IAtom atom : atoms) {
@@ -389,17 +445,12 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
 	 * @param  bond  The bond which is checked to be connect with this one
 	 * @return       true if the bonds share an atom, otherwise false
 	 */
-	public boolean isConnectedTo(IBond bond)
-	{
-		for (int f = 0; f < getAtomCount(); f++)
-		{
-			if (bond.contains(getAtom(f)))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean isConnectedTo(IBond bond) {
+        for (IAtom atom : atoms) {
+            if (bond.contains(atom)) return true;
+        }
+        return false;
+    }
 
 
 	/**

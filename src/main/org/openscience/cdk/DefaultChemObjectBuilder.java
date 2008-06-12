@@ -23,55 +23,17 @@
  */
 package org.openscience.cdk;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.formula.AdductFormula;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.formula.MolecularFormulaSet;
-import org.openscience.cdk.interfaces.IAdductFormula;
-import org.openscience.cdk.interfaces.IAminoAcid;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBioPolymer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IFragmentAtom;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.IPDBAtom;
-import org.openscience.cdk.interfaces.IPDBMonomer;
-import org.openscience.cdk.interfaces.IPDBPolymer;
-import org.openscience.cdk.interfaces.IPDBStructure;
-import org.openscience.cdk.interfaces.IPolymer;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionScheme;
-import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.protein.data.PDBStructure;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
 
 /**
  * A helper class to instantiate a IChemObject for a specific implementation.
@@ -157,8 +119,16 @@ public class DefaultChemObjectBuilder implements IChemObjectBuilder {
 	public IBond newBond(IAtom atom1, IAtom atom2, IBond.Order order, int stereo) {
 		return new Bond(atom1, atom2, order, stereo);
 	}
-	
-	public IChemFile newChemFile() {
+
+    public IBond newBond(IAtom[] atoms) {
+        return new Bond(atoms);
+    }
+
+    public IBond newBond(IAtom[] atoms, IBond.Order order) {
+        return new Bond(atoms, order);
+    }
+
+    public IChemFile newChemFile() {
 		return new ChemFile();
 	}
 
