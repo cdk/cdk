@@ -56,7 +56,17 @@ public class NNBond extends Bond {
 		setNotification(false);
 	}
 
-	public IChemObjectBuilder getBuilder() {
+    public NNBond(IAtom[] atoms) {
+        super(atoms);
+        setNotification(false);
+    }
+
+    public NNBond(IAtom[] atoms, IBond.Order order) {
+        super(atoms, order);
+        setNotification(false);
+    }
+
+    public IChemObjectBuilder getBuilder() {
 		return NoNotificationChemObjectBuilder.getInstance();
 	}
 	
