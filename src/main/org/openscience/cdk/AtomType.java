@@ -28,11 +28,11 @@
  */
 package org.openscience.cdk;
 
-import java.io.Serializable;
-
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IElement;
+
+import java.io.Serializable;
 
 /**
  * The base class for atom types. Atom types are typically used to describe the
@@ -343,6 +343,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @return The van der Waals radius for this AtomType
      * @see    #setVanderwaalsRadius
+     * @deprecated
      */
     public Double getVanderwaalsRadius() {
         return this.vanderwaalsRadius;
