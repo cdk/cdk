@@ -64,8 +64,6 @@ public class NumericalSurface {
     double[] areas;
     double[] volumes;
 
-    private String vdwFile = "org/openscience/cdk/config/data/jmol_atomtypes.txt";
-
     /**
      * Constructor to initialize the surface calculation with default values.
      *
@@ -111,7 +109,6 @@ public class NumericalSurface {
         this.solvent_radius = solvent_radius;
         this.atoms = AtomContainerManipulator.getAtomArray(atomContainer);
         this.tesslevel = tesslevel;
-        this.vdwFile = vdwRadiusFile;
         logger = new LoggingTool(this);
     }
 
@@ -127,7 +124,8 @@ public class NumericalSurface {
         Point3d cp = new Point3d(0,0,0);
         double max_radius = 0;
         for (int i = 0; i < atoms.length; i++) {
-            if (atoms[i].getVanderwaalsRadius()+solvent_radius > max_radius)
+            double vdwr = PeriodicTable.getVdwRadius(atoms[i].getSymbol());
+            if (vdwr+solvent_radius > max_radius)
                 max_radius = PeriodicTable.getVdwRadius(atoms[i].getSymbol())+solvent_radius;
 
             cp.x = cp.x + atoms[i].getPoint3d().x;
@@ -251,7 +249,7 @@ public class NumericalSurface {
 
 
     private void translatePoints(int atmIdx, Point3d[][] points, int point_density, IAtom atom, Point3d cp) {
-        double total_radius = atom.getVanderwaalsRadius() + solvent_radius;
+        double total_radius = PeriodicTable.getVdwRadius(atom.getSymbol()) + solvent_radius;
 
         double area = 4 * Math.PI * (total_radius*total_radius) * points.length / point_density;
 
@@ -281,7 +279,7 @@ public class NumericalSurface {
 
     private Point3d[][] atomicSurfacePoints(NeighborList nbrlist, int currAtomIdx, IAtom atom, int point_density, Tessellate tess) {
 
-        double total_radius = atom.getVanderwaalsRadius() + solvent_radius;
+        double total_radius = PeriodicTable.getVdwRadius(atom.getSymbol()) + solvent_radius;
         double total_radius2 = total_radius*total_radius;
         double twice_total_radius = 2*total_radius;
 
@@ -293,7 +291,7 @@ public class NumericalSurface {
             double z12 = atoms[nlist[i]].getPoint3d().z - atom.getPoint3d().z;
 
             double d2 = x12*x12 + y12*y12 + z12*z12;
-            double tmp = atoms[nlist[i]].getVanderwaalsRadius() + solvent_radius;
+            double tmp = PeriodicTable.getVdwRadius(atoms[nlist[i]].getSymbol()) + solvent_radius;
             tmp = tmp * tmp;
             double thresh = (d2 + total_radius2 - tmp) / twice_total_radius;
 
