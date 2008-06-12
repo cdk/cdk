@@ -82,14 +82,23 @@ public class PeriodicTableElement extends Element
   	*   Most familiar examples of phases are solids, liquids, and gases
   	*/
   	protected String phase;
-   	 
-   	/** 
-	*   The CAS (Chemical Abstracts Service) number which this element has.
-   	*/
-    	protected String casId;
-    
-    
-	/**
+
+    /**
+     * The CAS (Chemical Abstracts Service) number which this element has.
+     */
+    protected String casId;
+
+    /**
+     * The Van der Waals radius of the element.
+     */
+    protected Double vdwRadius = (Double) CDKConstants.UNSET;
+
+    /**
+     * The Pauling electronegativity of the element.
+     */
+    protected Double paulingEneg = (Double) CDKConstants.UNSET;
+
+    /**
 	 *  Constructor for the PeriodicTableElement object.
 	 *
 	 * @param symbol The symbol of the element
@@ -250,7 +259,43 @@ public class PeriodicTableElement extends Element
 		notifyChanged();
 	}
 
-	/**
+    /**
+     * Get the VdW radius for this element.
+     *
+     * @return The VdW radius, or null if it is unavailable
+     */
+    public Double getVdwRadius() {
+        return vdwRadius;
+    }
+
+    /**
+     * Set the VdW radius of this element.
+     *
+     * @param vdwRadius  The VdW radius
+     */
+    public void setVdwRadius(Double vdwRadius) {
+        this.vdwRadius = vdwRadius;
+    }
+
+    /**
+     * Get the Pauling electronegativity of this element.
+     *
+     * @return   The electronegativity, null if not available for the element
+     */
+    public Double getPaulingEneg() {
+        return paulingEneg;
+    }
+
+    /**
+     * Set the Pauling electronegativity for this element.
+     *
+     * @param paulingEneg The electronegativity
+     */
+    public void setPaulingEneg(Double paulingEneg) {
+        this.paulingEneg = paulingEneg;
+    }
+
+    /**
          * Clones this element object.
          *
          * @return  The cloned object   
@@ -303,8 +348,10 @@ public class PeriodicTableElement extends Element
 		resultString.append(", G:"); resultString.append(getGroup());
 		resultString.append(", Ph:"); resultString.append(getPhase());
 		resultString.append(", CAS:"); resultString.append(getCASid());
-		
-		resultString.append(')');
+        resultString.append(", VdW:"); resultString.append(getVdwRadius());
+        resultString.append(", Eneg:"); resultString.append(getPaulingEneg());
+
+        resultString.append(')');
 		return resultString.toString();
 	}
 }
