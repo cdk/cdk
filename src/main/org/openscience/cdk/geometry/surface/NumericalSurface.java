@@ -25,6 +25,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.PeriodicTable;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point3d;
@@ -122,15 +123,12 @@ public class NumericalSurface {
      */
     public void calculateSurface() {
 
-        configVDWRadius(vdwFile);
-        logger.info("Configured atoms");
-
         // get r_f and geometric center
         Point3d cp = new Point3d(0,0,0);
         double max_radius = 0;
         for (int i = 0; i < atoms.length; i++) {
             if (atoms[i].getVanderwaalsRadius()+solvent_radius > max_radius)
-                max_radius = atoms[i].getVanderwaalsRadius()+solvent_radius;
+                max_radius = PeriodicTable.getVdwRadius(atoms[i].getSymbol())+solvent_radius;
 
             cp.x = cp.x + atoms[i].getPoint3d().x;
             cp.y = cp.y + atoms[i].getPoint3d().y;
@@ -339,20 +337,6 @@ public class NumericalSurface {
         }
         return(ret);
     }
-
-    private void configVDWRadius(String fileName) {
-        try {
-            AtomTypeFactory factory =
-                AtomTypeFactory.getInstance(fileName, atoms[0].getBuilder());
-            for (int i=0; i<atoms.length; i++) {
-                factory.configure(atoms[i]);
-            }
-        } catch (Exception e) {
-        	logger.error("Error while instantiating the atom type factory: " + e.getMessage());
-        	logger.debug(e);
-        }
-    }
-
 }
 
 
