@@ -5,12 +5,14 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -122,6 +124,95 @@ public class PharmacophoreUtils {
             throw new CDKException("Invalid pharmacophore definition file");
         }
         return getdefs(doc);
+    }
+
+    /**
+     * Write out one or more pharmacophore queries in the CDK XML format.
+     *
+     * @param query The pharmacophore queries
+     * @param out   The OutputStream to write to
+     * @throws IOException if there is a problem writing the XML document
+     */
+    @TestMethod("testPCoreWrite")
+    public static void writePharmacophoreDefinition(IQueryAtomContainer query, OutputStream out) throws IOException {
+        writePharmacophoreDefinition(new IQueryAtomContainer[]{query}, out);
+    }
+
+    /**
+     * Write out one or more pharmacophore queries in the CDK XML format.
+     *
+     * @param queries The pharmacophore queries
+     * @param out     The OutputStream to write to
+     * @throws IOException if there is a problem writing the XML document
+     */
+    @TestMethod("testPCoreWrite")
+    public static void writePharmacophoreDefinition(List<IQueryAtomContainer> queries, OutputStream out) throws IOException {
+        writePharmacophoreDefinition(queries.toArray(new IQueryAtomContainer[]{}), out);
+    }
+
+    /**
+     * Write out one or more pharmacophore queries in the CDK XML format.
+     *
+     * @param queries The pharmacophore queries
+     * @param out     The OutputStream to write to
+     * @throws IOException if there is a problem writing the XML document
+     */
+    @TestMethod("testPCoreWrite")
+    public static void writePharmacophoreDefinition(IQueryAtomContainer[] queries, OutputStream out) throws IOException {
+        Element root = new Element("pharmacophoreContainer");
+        root.addAttribute(new Attribute("version", "1.0"));
+        for (IQueryAtomContainer query : queries) {
+            Element pcore = new Element("pharmacophore");
+            pcore.addAttribute(new Attribute("description", (String) query.getProperty("description")));
+
+            // we add the pcore groups for this query as local to the group
+            Iterator<IAtom> atoms = query.atoms();
+            while (atoms.hasNext()) {
+                IAtom atom = atoms.next();
+                Element group = new Element("group");
+                group.addAttribute(new Attribute("id", atom.getSymbol()));
+                group.appendChild(((PharmacophoreQueryAtom) atom).getSmarts());
+                pcore.appendChild(group);
+            }
+
+            // now add the constraints
+            Iterator<IBond> bonds = query.bonds();
+            while (bonds.hasNext()) {
+                IBond bond = bonds.next();
+                Element elem = null;
+                if (bond instanceof PharmacophoreQueryBond) {
+                    PharmacophoreQueryBond dbond = (PharmacophoreQueryBond) bond;
+                    elem = new Element("distanceConstraint");
+                    elem.addAttribute(new Attribute("lower", String.valueOf(dbond.getLower())));
+                    elem.addAttribute(new Attribute("upper", String.valueOf(dbond.getUpper())));
+                    elem.addAttribute(new Attribute("units", "A"));
+                } else if (bond instanceof PharmacophoreQueryAngleBond) {
+                    PharmacophoreQueryAngleBond dbond = (PharmacophoreQueryAngleBond) bond;
+                    elem = new Element("angleConstraint");
+                    elem.addAttribute(new Attribute("lower", String.valueOf(dbond.getLower())));
+                    elem.addAttribute(new Attribute("upper", String.valueOf(dbond.getUpper())));
+                    elem.addAttribute(new Attribute("units", "degrees"));
+                }
+
+                // now add the group associated with this constraint
+                Iterator<IAtom> constraintGroups = bond.atoms();
+                while (constraintGroups.hasNext()) {
+                    PharmacophoreQueryAtom atom = (PharmacophoreQueryAtom) constraintGroups.next();
+                    Element gelem = new Element("groupRef");
+                    gelem.addAttribute(new Attribute("id", atom.getSymbol()));
+                    if (elem != null) {
+                        elem.appendChild(gelem);
+                    }
+                }
+                pcore.appendChild(elem);
+            }
+            root.appendChild(pcore);
+        }
+        Document doc = new Document(root);
+        Serializer serializer = new Serializer(out, "ISO-8859-1");
+        serializer.setIndent(4);
+        serializer.setMaxLength(128);
+        serializer.write(doc);
     }
 
     private static List<IQueryAtomContainer> getdefs(Document doc) throws CDKException {

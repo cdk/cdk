@@ -11,6 +11,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -114,6 +115,33 @@ public class PharmacophoreUtilityTest {
         String filename = "data/pcore/invalid1.xml";
         InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
         List<IQueryAtomContainer> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
+    }
+
+    @Test
+    public void testPCoreWrite() throws CDKException, IOException {
+        String filename = "data/pcore/pcore.xml";
+        InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
+        List<IQueryAtomContainer> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
+
+        IQueryAtomContainer[] defarray = defs.toArray(new IQueryAtomContainer[]{});
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PharmacophoreUtils.writePharmacophoreDefinition(defarray, baos);
+        String s = baos.toString();
+        Assert.assertNotNull(s);
+        String[] lines = s.split("\n");
+        Assert.assertEquals("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>", lines[0].trim());
+
+        int ndef = 0;
+        int ndist = 0;
+        int nangle = 0;
+        for (String line : lines) {
+            if (line.indexOf("</pharmacophore>") != -1) ndef++;
+            if (line.indexOf("</distanceConstraint>") != -1) ndist++;
+            if (line.indexOf("</angleConstraint>") != -1) nangle++;
+        }
+        Assert.assertEquals(2, ndef);
+        Assert.assertEquals(5, ndist);
+        Assert.assertEquals(0, nangle);
     }
 
     private IAtom[] getAtoms(IBond bond) {
