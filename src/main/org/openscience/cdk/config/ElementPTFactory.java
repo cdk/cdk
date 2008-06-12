@@ -115,7 +115,17 @@ public class ElementPTFactory
 		return elements.size();
 	}
 
-	/**
+    /**
+     * Get all the elements loaded by the factory.
+     *
+     * @return  A Vector of PeriodicTableElement objects
+     * @see org.openscience.cdk.PeriodicTableElement
+     */
+    public Vector<PeriodicTableElement> getElements() {
+        return elements;
+    }
+
+    /**
 	 * Returns an Element with a given element symbol.
 	 *
 	 *@param  symbol  An element symbol to search for
