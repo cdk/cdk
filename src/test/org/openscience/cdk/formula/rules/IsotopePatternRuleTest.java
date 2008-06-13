@@ -122,7 +122,6 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
         Assert.assertEquals(0.0, rule.validate(formula),0.0001);
 	}
 	
-
 	/**
 	 * A unit test suite for JUnit.
 	 *
@@ -151,7 +150,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
 		params[1] = 0.001;
 		rule.setParameters(params);
 
-		Assert.assertEquals(0.81103, rule.validate(formula),0.0001);
+		Assert.assertEquals(0.80675, rule.validate(formula),0.0001);
 	}
 	
 }

@@ -60,8 +60,6 @@ public class IsotopePatternRule implements IRule{
 
 	private LoggingTool logger;
 
-	/** Accuracy on the abundance measuring isotope pattern*/
-	private double toleranceAbundance = 0.1;
 	/** Accuracy on the mass measuring isotope pattern*/
 	private double toleranceMass = 0.001;
 
@@ -155,16 +153,18 @@ public class IsotopePatternRule implements IRule{
 				ab1 = ab;
 		}
 		boolean foundPeak = false;
-		for(int i = 0; i < pattern.size(); i++){
-			double massS = pattern.get(i)[0];
-			double abundS = pattern.get(i)[1]/100;
-
-			for(IMolecularFormula molecularFormula: formulaSet.molecularFormulas()){
-				double mass = MolecularFormulaManipulator.getTotalExactMass(molecularFormula);
-				double occurrence = ((Double)molecularFormula.getProperties().get("occurrence"));
-				double ab = MolecularFormulaManipulator.getTotalNaturalAbundance(molecularFormula)*occurrence;
-				
-				ab = ab/ab1;
+		int i_initial = 0;
+		for(IMolecularFormula molecularFormula: formulaSet.molecularFormulas()){
+			double mass = MolecularFormulaManipulator.getTotalExactMass(molecularFormula);
+			double occurrence = ((Double)molecularFormula.getProperties().get("occurrence"));
+			double ab = MolecularFormulaManipulator.getTotalNaturalAbundance(molecularFormula)*occurrence;
+			boolean foundMF = false;
+			
+			ab = ab/ab1;
+			
+			for(int i = i_initial; i < pattern.size(); i++){
+				double massS = pattern.get(i)[0];
+				double abundS = pattern.get(i)[1]/100;
 
 				if((mass-toleranceMass < massS)&(massS < mass + toleranceMass )){
 					double maxS = 0.0;
@@ -178,9 +178,14 @@ public class IsotopePatternRule implements IRule{
 					}
 					scoreInt = scoreInt*( minS/ maxS);
 					foundPeak = true;
+					foundMF = true;
+					i_initial = i + 1;
 					break;
 				}
-			}	
+			}
+			if(!foundMF) // those mass that were not find gives negative score
+				scoreInt = scoreInt*(1-ab);
+			
 			
 		}
 		if(foundPeak)
