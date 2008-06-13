@@ -343,7 +343,6 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      *
      * @return The van der Waals radius for this AtomType
      * @see    #setVanderwaalsRadius
-     * @deprecated
      */
     public Double getVanderwaalsRadius() {
         return this.vanderwaalsRadius;

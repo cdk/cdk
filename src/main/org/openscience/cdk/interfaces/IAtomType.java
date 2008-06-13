@@ -149,6 +149,7 @@ public interface IAtomType extends IIsotope {
      *
      * @param radius The Vanderwaals radius for this AtomType
      * @see   #getVanderwaalsRadius
+     * @deprecated
      */
     public void setVanderwaalsRadius(Double radius);
     
@@ -166,6 +167,7 @@ public interface IAtomType extends IIsotope {
      * @return      The Vanderwaals radius for this AtomType
      * @see         #setVanderwaalsRadius
      * @cdk.keyword radius, vanderwaals
+     * @deprecated
      */
     public Double getVanderwaalsRadius();
     
