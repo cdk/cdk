@@ -38,9 +38,9 @@ public class PeriodicTableTest extends NewCDKTestCase {
     @Test
     public void testTable() {
         Assert.assertEquals(CDKConstants.UNSET, PeriodicTable.getVdwRadius("Co"));
-        Assert.assertEquals(1.7, PeriodicTable.getVdwRadius("C"));
-        Assert.assertEquals(39, PeriodicTable.getAtomicNumber("Y"));
-        Assert.assertEquals(2.55, PeriodicTable.getPaulingElectronegativity("C"));
+        Assert.assertEquals(1.7, PeriodicTable.getVdwRadius("C"), 0.001);
+        Assert.assertEquals(39, PeriodicTable.getAtomicNumber("Y"), 0.001);
+        Assert.assertEquals(2.55, PeriodicTable.getPaulingElectronegativity("C"), 0.001);
         Assert.assertEquals(CDKConstants.UNSET, PeriodicTable.getPaulingElectronegativity("He"));
     }
 
