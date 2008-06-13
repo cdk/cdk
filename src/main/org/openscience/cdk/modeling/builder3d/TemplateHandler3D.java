@@ -184,7 +184,7 @@ public class TemplateHandler3D {
                 query = QueryAtomContainerCreator.createAnyAtomContainer(template, true);
                 if (UniversalIsomorphismTester.isSubgraph(ringSystems, query)) {
                     List list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystems, query);
-                    if ((NumberOfRingAtoms) / list.size() == 1) {
+                    if ((NumberOfRingAtoms) / list.size() == 1 && query.getBondCount()==ringSystems.getBondCount()) {
                         flagMaxSubstructure = true;
                     }
 
