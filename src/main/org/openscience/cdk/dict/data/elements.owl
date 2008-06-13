@@ -57,7 +57,7 @@
   <elem:Element rdf:ID="Li" elem:symbol="Li" elem:atomicNumber="3">
     <elem:label xml:lang="en">lithium</elem:label>
     <elem:label xml:lang="nl">lithium</elem:label>
-    <elem:label xml:lang="es">lithium</elem:label>
+    <elem:label xml:lang="es">litio</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="C" elem:symbol="C" elem:atomicNumber="6">
