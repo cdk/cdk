@@ -30,12 +30,12 @@ import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.PeriodicTable;
 
 import java.io.IOException;
 
@@ -148,8 +148,7 @@ public class VdWRadiusDescriptor implements IAtomicDescriptor {
         double vdwradius;
         try {
             String symbol = atom.getSymbol();
-            IAtomType type = factory.getAtomType(symbol);
-            vdwradius = type.getVanderwaalsRadius();
+            vdwradius = PeriodicTable.getVdwRadius(symbol);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new DoubleResult(vdwradius), new String[] {"vdwRadius"});
         } catch (Exception ex1) {
