@@ -27,6 +27,7 @@ import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.tools.GridGenerator;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.PeriodicTable;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point3d;
@@ -207,7 +208,7 @@ public class ProteinPocketFinder {
 			gridPoint = gridGenerator.getGridPointFrom3dCoordinates(atoms[i]
 					.getPoint3d());
 			this.grid[(int) gridPoint.x][(int) gridPoint.y][(int) gridPoint.z] = -1;
-			vdWRadius = atoms[i].getVanderwaalsRadius();
+			vdWRadius = PeriodicTable.getVdwRadius(atoms[i].getSymbol());
 			if (vdWRadius == 0) {
 				vdWRadius = rAtom;
 			}
