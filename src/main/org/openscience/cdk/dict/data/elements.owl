@@ -45,21 +45,25 @@
   <elem:Element rdf:ID="H" elem:symbol="H" elem:atomicNumber="1">
     <elem:label xml:lang="en">hydrogen</elem:label>
     <elem:label xml:lang="nl">waterstof</elem:label>
+    <elem:label xml:lang="es">hidrógeno</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="He" elem:symbol="He" elem:atomicNumber="2">
     <elem:label xml:lang="en">helium</elem:label>
     <elem:label xml:lang="nl">helium</elem:label>
+    <elem:label xml:lang="es">helio</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Li" elem:symbol="Li" elem:atomicNumber="3">
     <elem:label xml:lang="en">lithium</elem:label>
     <elem:label xml:lang="nl">lithium</elem:label>
+    <elem:label xml:lang="es">lithium</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="C" elem:symbol="C" elem:atomicNumber="6">
     <elem:label xml:lang="en">carbon</elem:label>
     <elem:label xml:lang="nl">koolstof</elem:label>
+    <elem:label xml:lang="es">carbono</elem:label>
   </elem:Element>
 
 </rdf:RDF>
