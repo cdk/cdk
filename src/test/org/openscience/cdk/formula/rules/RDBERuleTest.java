@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.formula.rules;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -124,8 +126,15 @@ public class RDBERuleTest extends FormulaRuleTest {
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("CH2F10S2", builder);
 		formula.setCharge(1.0);
 
-		Assert.assertEquals(-4.0, rule.getRDBEValue(formula),0.0001);
-		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
+		List<Double> value = rule.getRDBEValue(formula);
+		Assert.assertEquals(6, value.size(),0.0001);
+		Assert.assertEquals(-4.0, value.get(0),0.0001);
+		Assert.assertEquals(-3.0, value.get(1),0.0001);
+		Assert.assertEquals(-2.0, value.get(2),0.0001);
+		Assert.assertEquals(-2.0, value.get(3),0.0001);
+		Assert.assertEquals(-1.0, value.get(4),0.0001);
+		Assert.assertEquals(0.0, value.get(5),0.0001);
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
 
 	/**
@@ -153,7 +162,7 @@ public class RDBERuleTest extends FormulaRuleTest {
 
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C2H4", builder);
 		
-		Assert.assertEquals(1.0, rule.getRDBEValue(formula),0.0001);
+		Assert.assertEquals(1.0, rule.getRDBEValue(formula).get(0),0.0001);
 	}
 	/**
 	 * A unit test suite for JUnit.C3H8O3S2
@@ -166,8 +175,10 @@ public class RDBERuleTest extends FormulaRuleTest {
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C3H8O3S2", builder);
 		formula.setCharge(1.0);
-
-		Assert.assertEquals(0.0, rule.getRDBEValue(formula),0.0001);
+		
+		List<Double> value = rule.getRDBEValue(formula);
+		Assert.assertEquals(6, value.size(),0.0001);
+		Assert.assertEquals(0.0, value.get(0),0.0001);
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
 	/**
@@ -182,22 +193,6 @@ public class RDBERuleTest extends FormulaRuleTest {
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C4H8O3S1", builder);
 		formula.setCharge(1.0);
 
-		Assert.assertEquals(1.0, rule.getRDBEValue(formula),0.0001);
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
-	}
-	/**
-	 * A unit test suite for JUnit.CH2F10S2
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void test3() throws ClassNotFoundException, CDKException, Exception {
-		
-		RDBERule rule  = new RDBERule();
-		
-		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("CH2F10S2", builder);
-		formula.setCharge(1.0);
-
-		Assert.assertEquals(-4.0, rule.getRDBEValue(formula),0.0001);
-		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
 	}
 }
