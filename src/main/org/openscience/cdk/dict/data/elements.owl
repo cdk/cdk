@@ -80,54 +80,67 @@
 
   <elem:Element rdf:ID="O" elem:symbol="O" elem:atomicNumber="8">
     <elem:label xml:lang="en">oxygen</elem:label>
+    <elem:label xml:lang="nl">zuurstof</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="F" elem:symbol="F" elem:atomicNumber="9">
     <elem:label xml:lang="en">fluorine</elem:label>
+    <elem:label xml:lang="nl">fluoride</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Ne" elem:symbol="Ne" elem:atomicNumber="10">
     <elem:label xml:lang="en">neon</elem:label>
+    <elem:label xml:lang="nl">neon</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Na" elem:symbol="Na" elem:atomicNumber="11">
     <elem:label xml:lang="en">sodium</elem:label>
+    <elem:label xml:lang="nl">natrium</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Mg" elem:symbol="Mg" elem:atomicNumber="12">
     <elem:label xml:lang="en">magnesium</elem:label>
+    <elem:label xml:lang="nl">magnesium</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Al" elem:symbol="Al" elem:atomicNumber="13">
     <elem:label xml:lang="en">aluminum</elem:label>
+    <elem:label xml:lang="nl">aluminium</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Si" elem:symbol="Si" elem:atomicNumber="14">
     <elem:label xml:lang="en">silicon</elem:label>
+    <elem:label xml:lang="nl">silicium</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="P" elem:symbol="P" elem:atomicNumber="15">
     <elem:label xml:lang="en">phosphorus</elem:label>
+    <elem:label xml:lang="nl">fosfor</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="S" elem:symbol="S" elem:atomicNumber="16">
     <elem:label xml:lang="en">sulfur</elem:label>
+    <elem:label xml:lang="nl">zwavel</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Cl" elem:symbol="Cl" elem:atomicNumber="17">
     <elem:label xml:lang="en">chlorine</elem:label>
+    <elem:label xml:lang="nl">chloride</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Ar" elem:symbol="Ar" elem:atomicNumber="18">
     <elem:label xml:lang="en">argon</elem:label>
+    <elem:label xml:lang="nl">argon</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="K" elem:symbol="K" elem:atomicNumber="19">
     <elem:label xml:lang="en">potassium</elem:label>
+    <elem:label xml:lang="nl">kalium</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Ca" elem:symbol="Ca" elem:atomicNumber="20">
     <elem:label xml:lang="en">calcium</elem:label>
+    <elem:label xml:lang="nl">calcium</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Sc" elem:symbol="Sc" elem:atomicNumber="21">
@@ -144,6 +157,7 @@
 
   <elem:Element rdf:ID="Cr" elem:symbol="Cr" elem:atomicNumber="24">
     <elem:label xml:lang="en">chromium</elem:label>
+    <elem:label xml:lang="nl">chroom</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Mn" elem:symbol="Mn" elem:atomicNumber="25">
@@ -152,6 +166,7 @@
 
   <elem:Element rdf:ID="Fe" elem:symbol="Fe" elem:atomicNumber="26">
     <elem:label xml:lang="en">iron</elem:label>
+    <elem:label xml:lang="nl">ijzer</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Co" elem:symbol="Co" elem:atomicNumber="27">
@@ -160,14 +175,17 @@
 
   <elem:Element rdf:ID="Ni" elem:symbol="Ni" elem:atomicNumber="28">
     <elem:label xml:lang="en">nickel</elem:label>
+    <elem:label xml:lang="nl">nikkel</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Cu" elem:symbol="Cu" elem:atomicNumber="29">
     <elem:label xml:lang="en">copper</elem:label>
+    <elem:label xml:lang="nl">koper</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Zn" elem:symbol="Zn" elem:atomicNumber="30">
     <elem:label xml:lang="en">zinc</elem:label>
+    <elem:label xml:lang="nl">zink</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Ga" elem:symbol="Ga" elem:atomicNumber="31">
@@ -180,6 +198,7 @@
 
   <elem:Element rdf:ID="As" elem:symbol="As" elem:atomicNumber="33">
     <elem:label xml:lang="en">arsenic</elem:label>
+    <elem:label xml:lang="nl">arseen</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Se" elem:symbol="Se" elem:atomicNumber="34">
@@ -188,6 +207,7 @@
 
   <elem:Element rdf:ID="Br" elem:symbol="Br" elem:atomicNumber="35">
     <elem:label xml:lang="en">bromine</elem:label>
+    <elem:label xml:lang="nl">bromide</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Kr" elem:symbol="Kr" elem:atomicNumber="36">
@@ -236,6 +256,7 @@
 
   <elem:Element rdf:ID="Ag" elem:symbol="Ag" elem:atomicNumber="47">
     <elem:label xml:lang="en">silver</elem:label>
+    <elem:label xml:lang="nl">zilver</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Cd" elem:symbol="Cd" elem:atomicNumber="48">
@@ -327,7 +348,7 @@
   </elem:Element>
 
   <elem:Element rdf:ID="Yb" elem:symbol="Yb" elem:atomicNumber="70">
-    <elem:label xml:lang="en">Ytterbium</elem:label>
+    <elem:label xml:lang="en">ytterbium</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Lu" elem:symbol="Lu" elem:atomicNumber="71">
@@ -344,6 +365,7 @@
 
   <elem:Element rdf:ID="W" elem:symbol="W" elem:atomicNumber="74">
     <elem:label xml:lang="en">tungsten</elem:label>
+    <elem:label xml:lang="nl">wolfraam</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Re" elem:symbol="Re" elem:atomicNumber="75">
@@ -360,14 +382,17 @@
 
   <elem:Element rdf:ID="Pt" elem:symbol="Pt" elem:atomicNumber="78">
     <elem:label xml:lang="en">platinum</elem:label>
+    <elem:label xml:lang="nl">platina</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Au" elem:symbol="Au" elem:atomicNumber="79">
     <elem:label xml:lang="en">gold</elem:label>
+    <elem:label xml:lang="nl">goud</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Hg" elem:symbol="Hg" elem:atomicNumber="80">
     <elem:label xml:lang="en">mercury</elem:label>
+    <elem:label xml:lang="nl">kwik</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Tl" elem:symbol="Tl" elem:atomicNumber="81">
@@ -376,6 +401,7 @@
 
   <elem:Element rdf:ID="Pb" elem:symbol="Pb" elem:atomicNumber="82">
     <elem:label xml:lang="en">lead</elem:label>
+    <elem:label xml:lang="nl">lood</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Bi" elem:symbol="Bi" elem:atomicNumber="83">
@@ -416,6 +442,7 @@
 
   <elem:Element rdf:ID="U" elem:symbol="U" elem:atomicNumber="92">
     <elem:label xml:lang="en">uranium</elem:label>
+    <elem:label xml:lang="nl">uraan</elem:label>
   </elem:Element>
 
   <elem:Element rdf:ID="Np" elem:symbol="Np" elem:atomicNumber="93">
