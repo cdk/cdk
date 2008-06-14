@@ -60,10 +60,442 @@
     <elem:label xml:lang="es">litio</elem:label>
   </elem:Element>
 
+  <elem:Element rdf:ID="Be" elem:symbol="Be" elem:atomicNumber="4">
+    <elem:label xml:lang="en">beryllium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="B" elem:symbol="B" elem:atomicNumber="5">
+    <elem:label xml:lang="en">boron</elem:label>
+  </elem:Element>
+
   <elem:Element rdf:ID="C" elem:symbol="C" elem:atomicNumber="6">
     <elem:label xml:lang="en">carbon</elem:label>
     <elem:label xml:lang="nl">koolstof</elem:label>
     <elem:label xml:lang="es">carbono</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="N" elem:symbol="N" elem:atomicNumber="7">
+    <elem:label xml:lang="en">nitrogen</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="O" elem:symbol="O" elem:atomicNumber="8">
+    <elem:label xml:lang="en">oxygen</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="F" elem:symbol="F" elem:atomicNumber="9">
+    <elem:label xml:lang="en">fluorine</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ne" elem:symbol="Ne" elem:atomicNumber="10">
+    <elem:label xml:lang="en">neon</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Na" elem:symbol="Na" elem:atomicNumber="11">
+    <elem:label xml:lang="en">sodium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Mg" elem:symbol="Mg" elem:atomicNumber="12">
+    <elem:label xml:lang="en">magnesium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Al" elem:symbol="Al" elem:atomicNumber="13">
+    <elem:label xml:lang="en">aluminum</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Si" elem:symbol="Si" elem:atomicNumber="14">
+    <elem:label xml:lang="en">silicon</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="P" elem:symbol="P" elem:atomicNumber="15">
+    <elem:label xml:lang="en">phosphorus</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="S" elem:symbol="S" elem:atomicNumber="16">
+    <elem:label xml:lang="en">sulfur</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Cl" elem:symbol="Cl" elem:atomicNumber="17">
+    <elem:label xml:lang="en">chlorine</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ar" elem:symbol="Ar" elem:atomicNumber="18">
+    <elem:label xml:lang="en">argon</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="K" elem:symbol="K" elem:atomicNumber="19">
+    <elem:label xml:lang="en">potassium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ca" elem:symbol="Ca" elem:atomicNumber="20">
+    <elem:label xml:lang="en">calcium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Sc" elem:symbol="Sc" elem:atomicNumber="21">
+    <elem:label xml:lang="en">scandium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ti" elem:symbol="Ti" elem:atomicNumber="22">
+    <elem:label xml:lang="en">titanium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="V" elem:symbol="V" elem:atomicNumber="23">
+    <elem:label xml:lang="en">vanadium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Cr" elem:symbol="Cr" elem:atomicNumber="24">
+    <elem:label xml:lang="en">chromium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Mn" elem:symbol="Mn" elem:atomicNumber="25">
+    <elem:label xml:lang="en">manganese</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Fe" elem:symbol="Fe" elem:atomicNumber="26">
+    <elem:label xml:lang="en">iron</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Co" elem:symbol="Co" elem:atomicNumber="27">
+    <elem:label xml:lang="en">cobalt</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ni" elem:symbol="Ni" elem:atomicNumber="28">
+    <elem:label xml:lang="en">nickel</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Cu" elem:symbol="Cu" elem:atomicNumber="29">
+    <elem:label xml:lang="en">copper</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Zn" elem:symbol="Zn" elem:atomicNumber="30">
+    <elem:label xml:lang="en">zinc</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ga" elem:symbol="Ga" elem:atomicNumber="31">
+    <elem:label xml:lang="en">gallium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ge" elem:symbol="Ge" elem:atomicNumber="32">
+    <elem:label xml:lang="en">germanium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="As" elem:symbol="As" elem:atomicNumber="33">
+    <elem:label xml:lang="en">arsenic</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Se" elem:symbol="Se" elem:atomicNumber="34">
+    <elem:label xml:lang="en">selenium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Br" elem:symbol="Br" elem:atomicNumber="35">
+    <elem:label xml:lang="en">bromine</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Kr" elem:symbol="Kr" elem:atomicNumber="36">
+    <elem:label xml:lang="en">krypton</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Rb" elem:symbol="Rb" elem:atomicNumber="37">
+    <elem:label xml:lang="en">rubidium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Sr" elem:symbol="Sr" elem:atomicNumber="38">
+    <elem:label xml:lang="en">strontium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Y" elem:symbol="Y" elem:atomicNumber="39">
+    <elem:label xml:lang="en">yttrium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Zr" elem:symbol="Zr" elem:atomicNumber="40">
+    <elem:label xml:lang="en">zirconium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Nb" elem:symbol="Nb" elem:atomicNumber="41">
+    <elem:label xml:lang="en">niobium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Mo" elem:symbol="Mo" elem:atomicNumber="42">
+    <elem:label xml:lang="en">molybdenum</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Tc" elem:symbol="Tc" elem:atomicNumber="43">
+    <elem:label xml:lang="en">technetium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ru" elem:symbol="Ru" elem:atomicNumber="44">
+    <elem:label xml:lang="en">ruthenium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Rh" elem:symbol="Rh" elem:atomicNumber="45">
+    <elem:label xml:lang="en">rhodium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Pd" elem:symbol="Pd" elem:atomicNumber="46">
+    <elem:label xml:lang="en">palladium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ag" elem:symbol="Ag" elem:atomicNumber="47">
+    <elem:label xml:lang="en">silver</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Cd" elem:symbol="Cd" elem:atomicNumber="48">
+    <elem:label xml:lang="en">cadmium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="In" elem:symbol="In" elem:atomicNumber="49">
+    <elem:label xml:lang="en">indium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Sn" elem:symbol="Sn" elem:atomicNumber="50">
+    <elem:label xml:lang="en">tin</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Sb" elem:symbol="Sb" elem:atomicNumber="51">
+    <elem:label xml:lang="en">antimony</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Te" elem:symbol="Te" elem:atomicNumber="52">
+    <elem:label xml:lang="en">tellurium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="I" elem:symbol="I" elem:atomicNumber="53">
+    <elem:label xml:lang="en">iodine</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Xe" elem:symbol="Xe" elem:atomicNumber="54">
+    <elem:label xml:lang="en">xenon</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Cs" elem:symbol="Cs" elem:atomicNumber="55">
+    <elem:label xml:lang="en">cesium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ba" elem:symbol="Ba" elem:atomicNumber="56">
+    <elem:label xml:lang="en">barium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="La" elem:symbol="La" elem:atomicNumber="57">
+    <elem:label xml:lang="en">lanthanum</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ce" elem:symbol="Ce" elem:atomicNumber="58">
+    <elem:label xml:lang="en">cerium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Pr" elem:symbol="Pr" elem:atomicNumber="59">
+    <elem:label xml:lang="en">praseodymium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Nd" elem:symbol="Nd" elem:atomicNumber="60">
+    <elem:label xml:lang="en">neodymium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Pm" elem:symbol="Pm" elem:atomicNumber="61">
+    <elem:label xml:lang="en">promethium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Sm" elem:symbol="Sm" elem:atomicNumber="62">
+    <elem:label xml:lang="en">samarium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Eu" elem:symbol="Eu" elem:atomicNumber="63">
+    <elem:label xml:lang="en">europium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Gd" elem:symbol="Gd" elem:atomicNumber="64">
+    <elem:label xml:lang="en">gadolinium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Tb" elem:symbol="Tb" elem:atomicNumber="65">
+    <elem:label xml:lang="en">terbium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Dy" elem:symbol="Dy" elem:atomicNumber="66">
+    <elem:label xml:lang="en">dysprosium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ho" elem:symbol="Ho" elem:atomicNumber="67">
+    <elem:label xml:lang="en">holmium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Er" elem:symbol="Er" elem:atomicNumber="68">
+    <elem:label xml:lang="en">erbium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Tm" elem:symbol="Tm" elem:atomicNumber="69">
+    <elem:label xml:lang="en">thulium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Yb" elem:symbol="Yb" elem:atomicNumber="70">
+    <elem:label xml:lang="en">Ytterbium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Lu" elem:symbol="Lu" elem:atomicNumber="71">
+    <elem:label xml:lang="en">lutetium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Hf" elem:symbol="Hf" elem:atomicNumber="72">
+    <elem:label xml:lang="en">hafnium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ta" elem:symbol="Ta" elem:atomicNumber="73">
+    <elem:label xml:lang="en">tantalum</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="W" elem:symbol="W" elem:atomicNumber="74">
+    <elem:label xml:lang="en">tungsten</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Re" elem:symbol="Re" elem:atomicNumber="75">
+    <elem:label xml:lang="en">rhenium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Os" elem:symbol="Os" elem:atomicNumber="76">
+    <elem:label xml:lang="en">osmium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ir" elem:symbol="Ir" elem:atomicNumber="77">
+    <elem:label xml:lang="en">iridium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Pt" elem:symbol="Pt" elem:atomicNumber="78">
+    <elem:label xml:lang="en">platinum</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Au" elem:symbol="Au" elem:atomicNumber="79">
+    <elem:label xml:lang="en">gold</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Hg" elem:symbol="Hg" elem:atomicNumber="80">
+    <elem:label xml:lang="en">mercury</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Tl" elem:symbol="Tl" elem:atomicNumber="81">
+    <elem:label xml:lang="en">thallium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Pb" elem:symbol="Pb" elem:atomicNumber="82">
+    <elem:label xml:lang="en">lead</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Bi" elem:symbol="Bi" elem:atomicNumber="83">
+    <elem:label xml:lang="en">bismuth</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Po" elem:symbol="Po" elem:atomicNumber="84">
+    <elem:label xml:lang="en">polonium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="At" elem:symbol="At" elem:atomicNumber="85">
+    <elem:label xml:lang="en">astatine</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Rn" elem:symbol="Rn" elem:atomicNumber="86">
+    <elem:label xml:lang="en">radon</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Fr" elem:symbol="Fr" elem:atomicNumber="87">
+    <elem:label xml:lang="en">francium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ra" elem:symbol="Ra" elem:atomicNumber="88">
+    <elem:label xml:lang="en">radium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ac" elem:symbol="Ac" elem:atomicNumber="89">
+    <elem:label xml:lang="en">actinium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Th" elem:symbol="Th" elem:atomicNumber="90">
+    <elem:label xml:lang="en">thorium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Pa" elem:symbol="Pa" elem:atomicNumber="91">
+    <elem:label xml:lang="en">protactinium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="U" elem:symbol="U" elem:atomicNumber="92">
+    <elem:label xml:lang="en">uranium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Np" elem:symbol="Np" elem:atomicNumber="93">
+    <elem:label xml:lang="en">neptunium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Pu" elem:symbol="Pu" elem:atomicNumber="94">
+    <elem:label xml:lang="en">plutonium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Am" elem:symbol="Am" elem:atomicNumber="95">
+    <elem:label xml:lang="en">americium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Cm" elem:symbol="Cm" elem:atomicNumber="96">
+    <elem:label xml:lang="en">curium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Bk" elem:symbol="Bk" elem:atomicNumber="97">
+    <elem:label xml:lang="en">berkelium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Cf" elem:symbol="Cf" elem:atomicNumber="98">
+    <elem:label xml:lang="en">californium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Es" elem:symbol="Es" elem:atomicNumber="99">
+    <elem:label xml:lang="en">einsteinium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Fm" elem:symbol="Fm" elem:atomicNumber="100">
+    <elem:label xml:lang="en">fermium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Md" elem:symbol="Md" elem:atomicNumber="101">
+    <elem:label xml:lang="en">mendelevium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="No" elem:symbol="No" elem:atomicNumber="102">
+    <elem:label xml:lang="en">nobelium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Lr" elem:symbol="Lr" elem:atomicNumber="103">
+    <elem:label xml:lang="en">lawrencium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Rf" elem:symbol="Rf" elem:atomicNumber="104">
+    <elem:label xml:lang="en">rutherfordium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Db" elem:symbol="Db" elem:atomicNumber="105">
+    <elem:label xml:lang="en">dubnium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Sg" elem:symbol="Sg" elem:atomicNumber="106">
+    <elem:label xml:lang="en">seaborgium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Bh" elem:symbol="Bh" elem:atomicNumber="107">
+    <elem:label xml:lang="en">bohrium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Hs" elem:symbol="Hs" elem:atomicNumber="108">
+    <elem:label xml:lang="en">hassium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Mt" elem:symbol="Mt" elem:atomicNumber="109">
+    <elem:label xml:lang="en">meitnerium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Ds" elem:symbol="Ds" elem:atomicNumber="110">
+    <elem:label xml:lang="en">darmstadtium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Rg" elem:symbol="Rg" elem:atomicNumber="111">
+    <elem:label xml:lang="en">roentgenium</elem:label>
+  </elem:Element>
+
+  <elem:Element rdf:ID="Uub" elem:symbol="Uub" elem:atomicNumber="112">
+    <elem:label xml:lang="en">ununbium</elem:label>
   </elem:Element>
 
 </rdf:RDF>
