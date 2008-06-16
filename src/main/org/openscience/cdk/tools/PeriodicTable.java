@@ -31,7 +31,7 @@ import java.util.Vector;
  * @author Rajarshi Guha
  * @cdk.created June 12 2008
  * @cdk.keyword element
- * @cdk.keyword periodic table
+ * @cdk.keyword periodic table, vanderwaals, radius, electronegativity
  * @cdk.module extra
  * @cdk.svnrev $Revision: 10123 $
  */
