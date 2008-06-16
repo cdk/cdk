@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IAtom;
@@ -44,7 +45,6 @@ import org.openscience.cdk.tools.LoggingTool;
  *  <p>The equation used is: D = 1 + [0.5 SUM_i(N_i(V_I-2))]</p>
  *  <p>where D is the unsaturation, i is the total number of different elements in the composition, N_i the number
  *  of atoms of element i, and Vi is the common valence of the atom i.</p>
- * 
  * <p>This rule uses these parameters:
  * <table border="1">
  *   <tr>
@@ -132,11 +132,40 @@ public class RDBERule implements IRule{
     	for(Iterator<Double> it = RDBEList.iterator(); it.hasNext();){
     		double RDBE = it.next();
     		if(min <= RDBE && RDBE <= 30)
-    			return 1.0;
+    			if(validate(formula, RDBE))
+    				return 1.0;
     	}
     	
     	return 0.0;
     	
+    }
+    /**
+     * Validate the ion state. It takes into account that neutral, nonradical compounds
+     * always have an even-numbered pair-wiser arrangement of binding electrons signilizaded
+     * by an integer DBE value. Charged compounds due to soft ionzation techniques
+     * will give an odd number of binding electrons and a fractional DBE (X.05).
+     * 
+     * @param formula   Parameter is the IMolecularFormula
+     * @param  value    The RDBE value
+     * @return          True, if corresponds with 
+     */
+    public boolean validate(IMolecularFormula formula, double value) throws CDKException {
+    	
+    	double charge = 0.0;
+    	
+    	if(formula.getCharge() != CDKConstants.UNSET)
+    		charge = formula.getCharge();
+    	
+    	long iPart = (long) value;
+        double fPart = value - iPart;
+        
+        if(fPart == 0.0 && charge == 0)
+        	return true;
+        if(fPart != 0.0 && charge != 0)
+        	return true;
+        else 
+        	return false;
+        	
     }
 
     /**
@@ -171,7 +200,7 @@ public class RDBERule implements IRule{
 			for(Iterator<IIsotope> it = formula.isotopes(); it.hasNext();){
 	    		IIsotope isotope = it.next();
 	    		int[] valence = getOxidationState(formula.getBuilder().newAtom(isotope.getSymbol()));
-	    		double value = (valence[0]-2)*formula.getIsotopeCount(isotope)/2;
+	    		double value = (valence[0]-2)*formula.getIsotopeCount(isotope)/2.0;
 	    		RDBE += value;
 	    	}	
 			RDBE += 1;
@@ -183,7 +212,7 @@ public class RDBERule implements IRule{
 	    		if(eV.contains(isotope.getSymbol()))
 	    			continue;
 	    		int[] valence = getOxidationState(formula.getBuilder().newAtom(isotope.getSymbol()));
-	    		double value = (valence[0]-2)*formula.getIsotopeCount(isotope)/2;
+	    		double value = (valence[0]-2)*formula.getIsotopeCount(isotope)*0.5;
 	    		RDBE_1 += value;
 	    	}
 			String[] valences = new String[nV.size()];
@@ -198,7 +227,6 @@ public class RDBERule implements IRule{
 		    		int value = (Integer.parseInt((String)combo[i])-2)/2;
 		    		RDBE_int += value;
 				}
-		    	System.out.println();
 		    	RDBE = 1 + RDBE_1 + RDBE_int;
 		    	RDBEList.add(RDBE);
 			}

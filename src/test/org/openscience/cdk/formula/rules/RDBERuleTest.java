@@ -124,8 +124,7 @@ public class RDBERuleTest extends FormulaRuleTest {
 		RDBERule rule  = new RDBERule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("CH2F10S2", builder);
-		formula.setCharge(1.0);
-
+		
 		List<Double> value = rule.getRDBEValue(formula);
 		Assert.assertEquals(6, value.size(),0.0001);
 		Assert.assertEquals(-4.0, value.get(0),0.0001);
@@ -134,6 +133,7 @@ public class RDBERuleTest extends FormulaRuleTest {
 		Assert.assertEquals(-2.0, value.get(3),0.0001);
 		Assert.assertEquals(-1.0, value.get(4),0.0001);
 		Assert.assertEquals(0.0, value.get(5),0.0001);
+		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
 
@@ -174,7 +174,6 @@ public class RDBERuleTest extends FormulaRuleTest {
 		RDBERule rule  = new RDBERule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C3H8O3S2", builder);
-		formula.setCharge(1.0);
 		
 		List<Double> value = rule.getRDBEValue(formula);
 		Assert.assertEquals(6, value.size(),0.0001);
@@ -191,8 +190,37 @@ public class RDBERuleTest extends FormulaRuleTest {
 		RDBERule rule  = new RDBERule();
 		
 		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C4H8O3S1", builder);
+		
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
+	}
+
+	/**
+	 * A unit test suite for JUnit.NH4+
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testAnticipatedIonState_1() throws ClassNotFoundException, CDKException, Exception {
+		
+		RDBERule rule  = new RDBERule();
+		
+		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("NH4", builder);
 		formula.setCharge(1.0);
 
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
+
+	/**
+	 * A unit test suite for JUnit.NH4+
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testAnticipatedIonState_2() throws ClassNotFoundException, CDKException, Exception {
+		
+		RDBERule rule  = new RDBERule();
+		
+		IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("NH4", builder);
+		
+		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
+	}
+	
 }
