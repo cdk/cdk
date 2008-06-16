@@ -233,7 +233,7 @@ public class RDBERule implements IRule{
 //            oxidationStateTable.put("Mg", 2);
 //            oxidationStateTable.put("Al", 3);
             oxidationStateTable.put("Si", new int[]{4});
-            oxidationStateTable.put("P", new int[]{3});
+            oxidationStateTable.put("P", new int[]{3,5});
             oxidationStateTable.put("S", new int[]{2,4,6});
             oxidationStateTable.put("Cl", new int[]{1});
 //            oxidationStateTable.put("K", 1);
