@@ -24,6 +24,8 @@
 package org.openscience.cdk.formula.rules;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.exception.CDKException;
@@ -135,61 +137,75 @@ public class IsotopePatternRule implements IRule{
     	return score;
     }
 	/**
-	 * Extract a score function looking for similarities between isotopes patterns
+	 * Extract a score function looking for similarities between isotopes patterns.
+	 * In this algorithm, only the most intensively simulated isotopic peak per nominal
+	 * mass have been considered and used for intensity correlation.
 	 * 
 	 * @param molecularFormulaSet The IMolecularFormulaSet with to compare the isotope pattern
 	 * @return                    The score function value
 	 */
 	private double extractScore(IMolecularFormulaSet formulaSet) {
 		double score = 0.0;
-		double scoreInt = 1.0;
 		
-		double ab1 = -0.1;// looking for the higher natural abundace of the isotope pattern
-		for(int i = 0; i < pattern.size(); i++){
-			double occurrence1 = ((Double)formulaSet.getMolecularFormula(i).getProperties().get("occurrence"));
-			double ab = MolecularFormulaManipulator.getTotalNaturalAbundance(formulaSet.getMolecularFormula(i));
-			ab *= occurrence1;
-			if(ab > ab1)
-				ab1 = ab;
-		}
-		boolean foundPeak = false;
-		int i_initial = 0;
-		for(IMolecularFormula molecularFormula: formulaSet.molecularFormulas()){
-			double mass = MolecularFormulaManipulator.getTotalExactMass(molecularFormula);
-			double occurrence = ((Double)molecularFormula.getProperties().get("occurrence"));
-			double ab = MolecularFormulaManipulator.getTotalNaturalAbundance(molecularFormula)*occurrence;
-			boolean foundMF = false;
+		String stringMF = MolecularFormulaManipulator.getString(formulaSet.getMolecularFormula(0));
+		IMolecularFormula molecularFormulaA = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula(stringMF, formulaSet.getBuilder());
+		double massA = MolecularFormulaManipulator.getTotalExactMass(molecularFormulaA);
+		double windowsAccuracy = 0.4;
+		List<Double> inteExperimUnit = new ArrayList<Double>();
+		List<Double> intePatternUnit = new ArrayList<Double>(); 
+		for(int i = 1 ; i < 5 ; i++){
+			// looking highest intensity per nominal mass
+			double inteH = 0;
+			double massUnit = massA + i;
 			
-			ab = ab/ab1;
-			
-			for(int i = i_initial; i < pattern.size(); i++){
-				double massS = pattern.get(i)[0];
-				double abundS = pattern.get(i)[1]/100;
-
-				if((mass-toleranceMass < massS)&(massS < mass + toleranceMass )){
-					double maxS = 0.0;
-					double minS = 0.0;
-					if(ab > abundS){
-						maxS = ab;
-						minS = abundS;
-					}else{
-						maxS = abundS;
-						minS = ab;
+			// around predicted
+			for(IMolecularFormula molecularFormula: formulaSet.molecularFormulas()){
+				double massS = MolecularFormulaManipulator.getTotalExactMass(molecularFormula);
+				if((massUnit-windowsAccuracy < massS)&(massS < massUnit + windowsAccuracy )){
+					double occurrence = ((Double)molecularFormula.getProperties().get("occurrence"));
+					double intensity = MolecularFormulaManipulator.getTotalNaturalAbundance(molecularFormula)*occurrence;
+					if(intensity > inteH){
+						inteH = intensity;
 					}
-					scoreInt = scoreInt*( minS/ maxS);
-					foundPeak = true;
-					foundMF = true;
-					i_initial = i + 1;
-					break;
 				}
 			}
-			if(!foundMF) // those mass that were not find gives negative score
-				scoreInt = scoreInt*(1-ab);
-			
+			if(inteH != 0){
+				intePatternUnit.add(inteH);
+				inteH = 0;
+				// around experimental
+				for(int j = 0; j < pattern.size(); j++){
+					double intensity = pattern.get(j)[1];
+					double massS = pattern.get(j)[0];
+					if((massUnit-windowsAccuracy < massS)&(massS < massUnit + windowsAccuracy )){
+						if(intensity > inteH){
+							inteH = intensity;
+						}
+					}
+				}
+				inteExperimUnit.add(inteH);
+				
+			}
 			
 		}
-		if(foundPeak)
-			score = scoreInt;
+		
+		double sumN = 0.0;
+		for(int j = 0 ; j < intePatternUnit.size(); j++)
+			sumN += intePatternUnit.get(j)*inteExperimUnit.get(j);
+		
+		double sumD = 0.0;
+		for(Iterator<Double> it = intePatternUnit.iterator(); it.hasNext();)
+			sumD += Math.pow(it.next(), 2);
+		
+		double normalization = sumN/sumD;
+		
+		if(sumN == 0)
+			return 0.0;
+		
+		sumN = 0.0;
+		for(int j = 0 ; j < intePatternUnit.size(); j++)
+			sumN += Math.pow(intePatternUnit.get(j)*inteExperimUnit.get(j)/normalization,2);
+		score = (1-Math.pow(sumN/sumD,0.5));
+		
 		return score;
 	}
     
