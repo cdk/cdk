@@ -150,7 +150,7 @@ public class IsotopePatternRule implements IRule{
 		String stringMF = MolecularFormulaManipulator.getString(formulaSet.getMolecularFormula(0));
 		IMolecularFormula molecularFormulaA = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula(stringMF, formulaSet.getBuilder());
 		double massA = MolecularFormulaManipulator.getTotalExactMass(molecularFormulaA);
-		double windowsAccuracy = 0.4;
+		double windowsAccuracy = toleranceMass;
 		List<Double> inteExperimUnit = new ArrayList<Double>();
 		List<Double> intePatternUnit = new ArrayList<Double>(); 
 		for(int i = 1 ; i < 5 ; i++){
