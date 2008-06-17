@@ -3,6 +3,7 @@ package org.openscience.cdk.pharmacophore;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -46,10 +47,13 @@ public class PharmacophoreUtilityTest {
         Assert.assertEquals(4, def1.getAtomCount());
         Assert.assertEquals(2, def1.getBondCount());
         Assert.assertEquals("An imaginary pharmacophore definition", def1.getProperty("description"));
+        Assert.assertEquals("Imaginary", def1.getProperty(CDKConstants.TITLE));
 
         IQueryAtomContainer def2 = defs.get(1);
         Assert.assertEquals(3, def2.getAtomCount());
         Assert.assertEquals(3, def2.getBondCount());
+        Assert.assertNull(def2.getProperty(CDKConstants.TITLE));
+        
         String[] ids = {"Aromatic", "Hydroxyl", "BasicAmine"};
         Iterator<IAtom> atoms = def2.atoms();
         while (atoms.hasNext()) {
