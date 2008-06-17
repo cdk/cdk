@@ -170,7 +170,7 @@ public class PharmacophoreUtils {
                 pcore.addAttribute(new Attribute("description", (String) description));
 
             Object name = query.getProperty(CDKConstants.TITLE);
-            if (description != null)
+            if (name != null)
                 pcore.addAttribute(new Attribute("name", (String) name));
 
             // we add the pcore groups for this query as local to the group
