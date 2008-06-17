@@ -20,7 +20,7 @@
     </group>
 
 
-    <pharmacophore description="An imaginary pharmacophore definition">
+    <pharmacophore description="An imaginary pharmacophore definition" name="Imaginary">
 	<!-- in this case we only want to consider carboxylic acid groups
 	    so we provide a local definition
 	-->
