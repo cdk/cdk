@@ -3,6 +3,7 @@ package org.openscience.cdk.pharmacophore;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
@@ -42,7 +43,7 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
                                        PharmacophoreQueryAtom atom2,
                                        PharmacophoreQueryAtom atom3,
                                        double lower, double upper) {
-        super(new PharmacophoreQueryAtom[]{atom1, atom2, atom3});
+        super(new IAtom[]{atom1, atom2, atom3});
         this.upper = round(upper, 2);
         this.lower = round(lower, 2);
     }

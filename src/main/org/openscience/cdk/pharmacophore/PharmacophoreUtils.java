@@ -1,6 +1,7 @@
 package org.openscience.cdk.pharmacophore;
 
 import nu.xom.*;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -163,7 +164,14 @@ public class PharmacophoreUtils {
         root.addAttribute(new Attribute("version", "1.0"));
         for (IQueryAtomContainer query : queries) {
             Element pcore = new Element("pharmacophore");
-            pcore.addAttribute(new Attribute("description", (String) query.getProperty("description")));
+
+            Object description = query.getProperty("description");
+            if (description != null)
+                pcore.addAttribute(new Attribute("description", (String) description));
+
+            Object name = query.getProperty(CDKConstants.TITLE);
+            if (description != null)
+                pcore.addAttribute(new Attribute("name", (String) name));
 
             // we add the pcore groups for this query as local to the group
             Iterator<IAtom> atoms = query.atoms();
@@ -256,6 +264,7 @@ public class PharmacophoreUtils {
                                                                    HashMap<String, String> global) throws CDKException {
         QueryAtomContainer ret = new QueryAtomContainer();
         ret.setProperty("description", e.getAttributeValue("description"));
+        ret.setProperty(CDKConstants.TITLE, e.getAttributeValue("name"));
 
         // first get any local group definitions
         HashMap<String, String> local = getGroupDefinitions(e);
