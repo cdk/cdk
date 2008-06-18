@@ -301,7 +301,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 
 		//the graphics objects has a transform which is 'reversed' to go from world coordinates
 		//to screencoordinates, so transform the characters back to show them 'up-side-up'.
-		float fscale = 25; 
+		float fscale = 1f;
 		float[] transmatrix = { 1f / fscale, 0f, 0f, -1f / fscale};
 		AffineTransform trans = new AffineTransform(transmatrix);
 		fontAtom = fontAtom.deriveFont(trans);
