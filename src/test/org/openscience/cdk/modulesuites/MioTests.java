@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -55,6 +56,15 @@ import org.openscience.cdk.io.WriterFactoryTest;
 import org.openscience.cdk.io.XYZReaderTest;
 import org.openscience.cdk.io.XYZWriterTest;
 import org.openscience.cdk.io.cml.CMLIOTests;
+import org.openscience.cdk.io.formats.ABINITFormatTest;
+import org.openscience.cdk.io.formats.ADFFormatTest;
+import org.openscience.cdk.io.formats.Aces2FormatTest;
+import org.openscience.cdk.io.formats.AlchemyFormatTest;
+import org.openscience.cdk.io.formats.BGFFormatTest;
+import org.openscience.cdk.io.formats.BSFormatTest;
+import org.openscience.cdk.io.formats.CACheFormatTest;
+import org.openscience.cdk.io.formats.CacaoCartesianFormatTest;
+import org.openscience.cdk.io.formats.CacaoInternalFormatTest;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReaderTest;
 import org.openscience.cdk.io.iterator.IteratingMDLReaderTest;
 import org.openscience.cdk.io.iterator.IteratingPCCompoundASNReaderTest;
@@ -112,6 +122,18 @@ public class MioTests {
         suite.addTest(IteratingPCCompoundASNReaderTest.suite());
         suite.addTest(IteratingPCCompoundXMLReaderTest.suite());
         suite.addTest(IteratingPCSubstancesXMLReaderTest.suite());
+        
+        // cdk.io.formats package
+        suite.addTest(new JUnit4TestAdapter(ABINITFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(Aces2FormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(ADFFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(AlchemyFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(BGFFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(BSFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(CacaoCartesianFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(CacaoInternalFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(CACheFormatTest.class));
+        
         return suite;
     }
 
