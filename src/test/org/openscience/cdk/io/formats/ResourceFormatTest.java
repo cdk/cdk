@@ -1,9 +1,6 @@
-/* $RCSfile: $
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@slists.sourceforge.net
  * 
@@ -30,17 +27,30 @@ package org.openscience.cdk.io.formats;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * @cdk.module test-io
+ */
 abstract public class ResourceFormatTest {
     
     private IResourceFormat resourceFormat;
     
+    public void setResourceFormat(IChemFormat format) {
+        this.resourceFormat = format;
+    }
+
     @Test public void testResourceFormatSet() {
-        Assert.assertNotNull(resourceFormat);
+        Assert.assertNotNull(
+            "You must use setResourceFormatSet() to set the resourceFormat object.",
+            resourceFormat
+        );
     }
 
     @Test public void testMIMEType() {
-        Assert.assertNotNull(resourceFormat.getMIMEType());
-        Assert.assertNotSame(0, resourceFormat.getMIMEType().length());
+        if (resourceFormat.getMIMEType() == null) {
+            // OK, that's fine
+        } else {
+            Assert.assertNotSame(0, resourceFormat.getMIMEType().length());
+        }
     }
     
     @Test public void testFormatName() {

@@ -24,35 +24,14 @@
  */
 package org.openscience.cdk.io.formats;
 
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * @cdk.module test-io
  */
-abstract public class ChemFormatTest extends ResourceFormatTest {
-    
-    private IChemFormat chemFormat;
-    
-    public void setChemFormat(IChemFormat format) {
-        super.setResourceFormat(format);
-        this.chemFormat = format;
-    }
-    
-    @Test public void testChemFormatSet() {
-        Assert.assertNotNull(
-            "You must use setChemFormat() to set the IChemFormat object.",
-            chemFormat
-        );
-    }
+public class ABINITFormatTest extends ChemFormatTest {
 
-    @Test public void testGetReaderClassName() throws Exception {
-        // two valid output options: NULL and non-zero, existing class
-        if (chemFormat.getReaderClassName() != null) {
-            String readerClass = chemFormat.getReaderClassName();
-            Class<?> reader = Class.forName(readerClass);
-            Assert.assertNotNull(reader);
-        }
+    public ABINITFormatTest() {
+        super.setChemFormat((IChemFormat)ABINITFormat.getInstance());
     }
     
 }
