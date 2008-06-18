@@ -24,6 +24,9 @@
  */
 package org.openscience.cdk.io.cml;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * Low weigth alternative to Sun's Stack class.
  *
@@ -32,6 +35,7 @@ package org.openscience.cdk.io.cml;
  *
  * @cdk.keyword stack
  */
+@TestClass("org.openscience.cdk.io.cml.CMLStackTest")
 public class CMLStack {
 
   String[] stack = new String[64];
@@ -40,6 +44,7 @@ public class CMLStack {
   /**
    * Adds an entry to the stack.
    */
+  @TestMethod("testPush_String")
   public void push(String item) {
     if (sp == stack.length) {
       String[] temp = new String[2 * sp];
@@ -58,6 +63,7 @@ public class CMLStack {
    *
    * @see #current()
    */
+  @TestMethod("testPop")
   public String pop() {
     return stack[--sp];
   }
@@ -67,6 +73,7 @@ public class CMLStack {
    *
    * @see #pop()
    */
+  @TestMethod("testCurrent")
   public String current() {
     if (sp > 0) {
         return stack[sp-1];
@@ -91,6 +98,7 @@ public class CMLStack {
   /**
    * Convenience method to check the last added elements. 
    */
+  @TestMethod("testEndsWith_String")
   public boolean endsWith(String lastElement) {
     return stack[sp-1].equals(lastElement);
   }
@@ -98,6 +106,7 @@ public class CMLStack {
   /**
    * Convenience method to check the last two added elements. 
    */
+  @TestMethod("testEndsWith_String_String")
   public boolean endsWith(String oneButLast, String lastElement) {
 	    return endsWith(lastElement) && stack[sp-2].equals(oneButLast);
   }
@@ -105,6 +114,7 @@ public class CMLStack {
   /**
    * Convenience method to check the last three added elements. 
    */
+  @TestMethod("testEndsWith_String_String_String")
   public boolean endsWith(String twoButLast, String oneButLast, String lastElement) {
 	    return endsWith(oneButLast,lastElement) && stack[sp-3].equals(twoButLast);
   }
