@@ -36,8 +36,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.applications.swing.MoleculeListViewer;
-import org.openscience.cdk.applications.swing.MoleculeViewer2D;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -51,11 +50,9 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.Mol2Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.NewCDKTestCase;
 
 /**
  *  A set of test cases for the StructureDiagramGenerator
@@ -68,7 +65,6 @@ import org.openscience.cdk.NewCDKTestCase;
 public class StructureDiagramGeneratorTest extends NewCDKTestCase
 {
 
-	MoleculeListViewer moleculeListViewer = null;
 	boolean standAlone = false;
 
 	/**
@@ -83,42 +79,6 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 	 */
 	@After
 	public void tearDown() {
-	}
-
-	public void runVisualTests() throws Exception
-	{
-		moleculeListViewer = new MoleculeListViewer();
-		//MoleculeViewer2D.display(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), true);
-		/*showIt(MoleculeFactory.loadMolecule("data/mdl/reserpine.mol"), "Reserpine");
-		showIt(MoleculeFactory.loadMolecule("data/mdl/four-ring-5x10.mol"), "5x10 condensed four membered rings");
-		showIt(MoleculeFactory.loadMolecule("data/mdl/six-ring-4x4.mol"), "4x4 condensed six membered rings");
-		showIt(MoleculeFactory.loadMolecule("data/mdl/polycarpol.mol")
-		, "Polycarpol");*/
-		showIt(makeTetraMethylCycloButane(), "TetraMethylCycloButane");
-		showIt(MoleculeFactory.makeAlphaPinene(), "alpha-Pinene");
-		showIt(MoleculeFactory.makeBiphenyl(), "Biphenyl");
-		showIt(MoleculeFactory.make4x3CondensedRings(), "4x3CondensedRings");
-		showIt(MoleculeFactory.makePhenylEthylBenzene(), "PhenylEthylBenzene");
-		showIt(MoleculeFactory.makeSpiroRings(), "Spiro");
-		showIt(MoleculeFactory.makeMethylDecaline(), "Methyldecaline");
-		showIt(MoleculeFactory.makeBranchedAliphatic(), "Branched aliphatic");
-		showIt(MoleculeFactory.makeDiamantane(), "Diamantane - Was A Problem! - Solved :-)");
-		showIt(MoleculeFactory.makeEthylCyclohexane(), "Ethylcyclohexane");
-		showIt(MoleculeFactory.makeBicycloRings(), "Bicyclo-[2.2.2]-octane");		
-		//showIt(makeBug891021(), "Bug 891021");
-		showIt(makeJhao1(), "Bug jhao1");
-		showIt(makeJhao2(), "Bug jhao2");
-		showIt(makeJhao3(), "Bug jhao3");
-		showIt(makeJhao4(), "Bug jhao4");
-		showIt(makeBug1750968(), "Bug 1750968");
-	}
-
-	private boolean showIt(IMolecule molecule, String name) throws Exception
-	{
-		MoleculeViewer2D mv = new MoleculeViewer2D();
-		mv.setAtomContainer(generateCoordinates(molecule));
-		moleculeListViewer.addStructure(mv, name);
-		return true;
 	}
 
 	public IAtomContainer generateCoordinates(IMolecule m) throws Exception
@@ -223,7 +183,6 @@ public class StructureDiagramGeneratorTest extends NewCDKTestCase
 		Molecule m = MoleculeFactory.makeSpiroRings();
 		IAtomContainer ac = generateCoordinates(m);
 		assertTrue(GeometryTools.has2DCoordinates(ac));
-		if (standAlone)MoleculeViewer2D.display(new Molecule(ac), false);
 	}
 
 

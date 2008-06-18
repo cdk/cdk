@@ -27,7 +27,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.CloneAtomContainerTest;
 import org.openscience.cdk.VariousTests;
 import org.openscience.cdk.applications.APIVersionTesterTest;
-import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinterTest;
 import org.openscience.cdk.fingerprint.StandardSubstructureSetsTest;
 import org.openscience.cdk.fingerprint.SubstructureFingerprinterTest;
@@ -53,8 +52,6 @@ import org.openscience.cdk.tools.HOSECodeGeneratorTest;
  * @cdk.depends junit.jar
  */
 public class MextraTests {
-    
-    static MoleculeListViewer moleculeListViewer = null;
     
     public static Test suite( )
     {

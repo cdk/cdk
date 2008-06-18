@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.structgen;
 
-import java.util.Iterator;
 import java.util.Vector;
 
 import javax.vecmath.Vector2d;
@@ -31,15 +30,12 @@ import javax.vecmath.Vector2d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.structgen.RandomGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-structgen
@@ -48,7 +44,6 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 {
 	public boolean debug = false;
 	boolean standAlone = false;
-	MoleculeListViewer listviewer;
 	
     public RandomStructureGeneratorTest(String name) {
         super(name);
@@ -79,55 +74,6 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 		}
 	}
 
-	/** A complex alkaloid with two separate ring systems to 
-	  * be laid out.
-	  */
-	public void visualTestIt() throws Exception 
-	{
-		String s = null;
-		Vector structures = new Vector();	
-		IMolecule mol = null;
-		Molecule molecule = MoleculeFactory.makeAlphaPinene();
-		listviewer = new MoleculeListViewer();
-		//logger.debug(molecule);
-		RandomGenerator rg = new RandomGenerator(molecule);
-	
-		for (int f = 0; f < 20; f++)
-		{
-			if (debug) System.out.println("Proposing structure no. " + f);
-			if (debug) System.out.println("Entering rg.proposeStructure()");
-			mol = rg.proposeStructure();
-			if ((double)f/(double)50 == f/50)
-			{
-				structures.addElement(mol.clone());
-				if (debug)
-				{
-					s = "BondCounts:    ";
-					for (int g = 0; g < mol.getAtomCount(); g++)
-					{
-						s += mol.getConnectedBondsCount(mol.getAtom(g)) + " ";
-					}
-					//logger.debug(s);
-					s = "BondOrderSums: ";
-					for (int g = 0; g < mol.getAtomCount(); g++)
-					{
-						s += mol.getBondOrderSum(mol.getAtom(g)) + " ";
-					}
-					//logger.debug(s);
-					s = "Bonds: ";
-					Iterator bonds = mol.bonds();
-					while (bonds.hasNext()) {
-						s += ((IBond)bonds.next()).getOrder() + " ";
-					}
-					//logger.debug(s);
-				}
-			}
-			rg.acceptStructure();
-		}
-		everythingOk(structures);
-	}
-
-
 	/**
 	 * @param structures
 	 * @return
@@ -145,9 +91,6 @@ public class RandomStructureGeneratorTest extends CDKTestCase
 			sdg.setMolecule(mol);
 
 			sdg.generateCoordinates(new Vector2d(0,1));
-            if (standAlone) {
-            	 listviewer.addStructure(mol, true, false, "");
-            }
 		}
 		return true;
 	}

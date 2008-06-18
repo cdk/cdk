@@ -24,30 +24,26 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.io.InputStream;
+import java.math.BigInteger;
+import java.util.BitSet;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.applications.swing.MoleculeViewer2D;
-import org.openscience.cdk.fingerprint.Fingerprinter;
-import org.openscience.cdk.fingerprint.FingerprinterTool;
-import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.InputStream;
-import java.math.BigInteger;
-import java.util.BitSet;
 
 /**
  * @cdk.module test-standard
@@ -190,9 +186,6 @@ public class FingerprinterTest extends NewCDKTestCase
 		boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
 		if (standAlone)
 		{
-			MoleculeViewer2D.display(structure1, false);
-			MoleculeViewer2D.display(structure1, false);
-
 			System.out.println("BitString 1: " + superBS);
 			System.out.println("BitString 2: " + subBS);
 			System.out.println("isSubset? " + isSubset);

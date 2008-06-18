@@ -27,13 +27,10 @@ package org.openscience.cdk.structgen;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.applications.swing.MoleculeListViewer;
-import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -44,14 +41,12 @@ import org.openscience.cdk.templates.MoleculeFactory;
  */
 public class SingleStructureRandomGeneratorTest
 {
-	TestViewer testViewer = null;
 	String mf;
 	SingleStructureRandomGenerator ssrg;
 	
 	public SingleStructureRandomGeneratorTest() throws Exception
 	{
 		System.out.println("Instantiating MoleculeListViewer");
-		testViewer = new TestViewer();
 		System.out.println("Instantiating SingleStructureRandomGenerator");
 		ssrg = new SingleStructureRandomGenerator();
 		System.out.println("Assining unbonded set of atoms");
@@ -65,11 +60,8 @@ public class SingleStructureRandomGeneratorTest
 	private boolean showIt(Molecule molecule, String name) throws Exception
 	{
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-		MoleculeViewer2D mv = new MoleculeViewer2D();
 		sdg.setMolecule((Molecule)molecule.clone());
 		sdg.generateCoordinates(new Vector2d(0,1));
-		mv.setAtomContainer(sdg.getMolecule());
-		testViewer.addStructure(mv, name);
 		return true;
 	}
 
@@ -98,25 +90,6 @@ public class SingleStructureRandomGeneratorTest
 				(atom.getCharge()==null ? 0 : atom.getCharge().intValue())
 			);
 		}
-	}
-	
-    /**
-     * @cdk.module test
-     */
-	public class TestViewer extends MoleculeListViewer
-	{
-        private static final long serialVersionUID = 3834424739189272930L;
-        
-        JButton more;
-		public TestViewer()
-		{
-			super();
-			more = new JButton("One more");
-			more.addActionListener(new MoreAction());
-			getContentPane().add("South", more);
-			pack();
-		}
-		
 	}
 	
 	class MoreAction extends AbstractAction

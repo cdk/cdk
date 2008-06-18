@@ -35,15 +35,13 @@ import java.util.BitSet;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.similarity.Tanimoto;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-extra
@@ -103,14 +101,9 @@ public class TanimotoTest extends CDKTestCase
     		String smiles3 = "O=C(O)C(N)C";
     		String smiles4 = "CC(=O)C(=O)O";
     		IMolecule molecule1 = sp.parseSmiles(smiles1);
-    		MoleculeListViewer listviewer = new MoleculeListViewer();
-    		listviewer.addStructure(molecule1, "Smiles-1");
     		IMolecule molecule2 = sp.parseSmiles(smiles2);
-    		listviewer.addStructure(molecule2, "Smiles-2");
     		IMolecule molecule3 = sp.parseSmiles(smiles3);
-    		listviewer.addStructure(molecule3, "Smiles-3");
     		IMolecule molecule4 = sp.parseSmiles(smiles4);
-    		listviewer.addStructure(molecule4, "Smiles-4");
     		Fingerprinter fingerprinter = new Fingerprinter(1024, 6);
     		BitSet bs1 = fingerprinter.getFingerprint(molecule1);
     		BitSet bs2 = fingerprinter.getFingerprint(molecule2);

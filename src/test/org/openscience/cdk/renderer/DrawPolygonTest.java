@@ -27,10 +27,8 @@ import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.renderer.Renderer2DModel;
 
 /**
  * @cdk.module test-extra
@@ -81,11 +79,7 @@ public class DrawPolygonTest
 		}
 		molecule = (Molecule)sdg.getMolecule();
 		Renderer2DModel r2dm = new Renderer2DModel();
-		MoleculeViewer2D mv = new MoleculeViewer2D(molecule, r2dm);
 		r2dm.setDrawNumbers(true);
-		mv.display();
-	
-	
 	}
 	
 	Molecule buildRing()

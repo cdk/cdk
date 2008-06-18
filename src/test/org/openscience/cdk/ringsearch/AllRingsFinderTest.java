@@ -31,7 +31,6 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.applications.swing.MoleculeListViewer;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -188,59 +187,6 @@ public class AllRingsFinderTest extends NewCDKTestCase
 
 		ringSet = arf.findAllRings(molecule);
 		Assert.assertEquals(14, ringSet.getAtomContainerCount());
-	}
-	
-	public void showAzulene() throws Exception {
-		MoleculeListViewer listview = new MoleculeListViewer();
-		IRingSet ringSet = null;
-		AllRingsFinder arf = new AllRingsFinder();
-		if (standAlone) arf.debug = true;
-		
-		String filename = "data/mdl/azulene.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLV2000Reader reader = new MDLV2000Reader(ins);
-		IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
-		IChemSequence seq = chemFile.getChemSequence(0);
-		IChemModel model = seq.getChemModel(0);
-		IMolecule molecule = model.getMoleculeSet().getMolecule(0);
-		listview.addStructure(molecule, "Azulene", false, false);
-
-		ringSet = arf.findAllRings(molecule);
-		for (int i = 0; i < ringSet.getAtomContainerCount(); i++) 
-		{
-			IAtomContainer ac = ringSet.getAtomContainer(i);
-			Molecule newMol = new Molecule(ac);
-			listview.addStructure(newMol, "ring no. " + (i+1), false, false);
-		}
-	}
-	
-	public void showPorphyrin() throws Exception
-	{
-		MoleculeListViewer listview = new MoleculeListViewer();
-		IRingSet ringSet = null;
-		AllRingsFinder arf = new AllRingsFinder();
-		arf.setTimeout(10000);
-		if (standAlone) arf.debug = true;
-		
-		String filename = "data/mdl/porphyrin.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLV2000Reader reader = new MDLV2000Reader(ins);
-		IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
-		IChemSequence seq = chemFile.getChemSequence(0);
-		IChemModel model = seq.getChemModel(0);
-		IMolecule molecule = model.getMoleculeSet().getMolecule(0);
-		listview.addStructure(molecule, "Porphyrin", false, false);
-
-		ringSet = arf.findAllRings(molecule);
-		for (int i = 0; i < ringSet.getAtomContainerCount(); i++) 
-		{
-			IAtomContainer ac = ringSet.getAtomContainer(i);
-			Molecule newMol = new Molecule(ac);
-			String title = "ring no. " + (i + 1);
-			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(newMol);
-			if (CDKHueckelAromaticityDetector.detectAromaticity(newMol)) title += " is aromatic";
-			listview.addStructure(newMol, title , false, false);
-		}
 	}
 	
 	@Test public void testAzulene() throws Exception {

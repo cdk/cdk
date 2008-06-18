@@ -32,15 +32,13 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.layout.HydrogenPlacer;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -109,7 +107,6 @@ public class HydrogenPlacerTest extends CDKTestCase {
         
         // generate new coords
         hydrogenPlacer.placeHydrogens2D(dichloromethane, carbon);
-        if (standAlone) MoleculeViewer2D.display(dichloromethane, false);
         // check that previously set coordinates are kept
         assertEquals(carbonPos, carbon.getPoint2d(), 0.01);
         assertEquals(cl1Pos, cl1.getPoint2d(), 0.01);
@@ -138,9 +135,6 @@ public class HydrogenPlacerTest extends CDKTestCase {
 		addExplicitHydrogens(mol);
 		logger.debug("ended addition of H's");
 		hydrogenPlacer.placeHydrogens2D(mol, bondLength);
-		if (standAlone) {
-			MoleculeViewer2D.display(mol, false);
-		}
 	}
 
 }

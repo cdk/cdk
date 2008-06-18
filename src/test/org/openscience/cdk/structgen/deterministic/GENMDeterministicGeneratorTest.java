@@ -27,22 +27,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.vecmath.Vector2d;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.applications.swing.MoleculeListViewer;
-import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.structgen.IStructureGenerationListener;
-import org.openscience.cdk.structgen.deterministic.GENMDeterministicGenerator;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-structgen
@@ -52,7 +46,6 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 	public boolean debug = false;
 	boolean standAlone = false;
 
-	public MoleculeListViewer moleculeListViewer = null;
 	private SmilesGenerator smilesGenerator = new SmilesGenerator();
     
     public GENMDeterministicGeneratorTest(String name) {
@@ -61,7 +54,6 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
     
     public GENMDeterministicGeneratorTest() {
         this("GENMDeterministicGeneratorTest");
-        moleculeListViewer = new MoleculeListViewer();
     }
 
 	public void setStandAlone(boolean standAlone)
@@ -341,41 +333,6 @@ public class GENMDeterministicGeneratorTest extends CDKTestCase
 //		return true;
 //	}
 	
-	private boolean drawMolecules(List structures) throws Exception {
-		StructureDiagramGenerator sdg = null;
-		MoleculeViewer2D mv = null;
-		Molecule mol = null;
-		for (int f = 0; f<structures.size(); f++)
-		{
-			sdg = new StructureDiagramGenerator();
-
-			mol = (Molecule)structures.get(f);
-			//logger.debug(mol.getAtomCount());
-			//logger.debug(mol.getBondCount());
-			sdg.setMolecule((Molecule)mol.clone());
-			//sdg.setMolecule(mol);
-			try
-			{
-				sdg.generateCoordinates(new Vector2d(0,1));
-			}
-			catch(Exception exc)
-			{
-				exc.printStackTrace();
-				fail("*** Exit due to an unexpected error during coordinate generation ***");
-			}
-            if (standAlone) {
-                
-                mv = new MoleculeViewer2D();
-		mv.setAtomContainer(sdg.getMolecule());
-                //			Renderer2DModel r2dm = new Renderer2DModel();
-                //			r2dm.setDrawNumbers(true);
-                //			mv.setRenderer2DModel(r2dm);
-                moleculeListViewer.addStructure(mv, "Structure no. " + (f + 1));
-            }
-		}
-		return true;
-	}
-		
 	class MyStructureGenerationListener implements IStructureGenerationListener {
 
 		private List structures;

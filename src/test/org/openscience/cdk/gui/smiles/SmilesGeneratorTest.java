@@ -32,10 +32,10 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
-import org.openscience.cdk.applications.swing.MoleculeViewer2D;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.graph.AtomContainerBondPermutor;
@@ -45,10 +45,8 @@ import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.renderer.Renderer2DModel;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -894,16 +892,11 @@ public class SmilesGeneratorTest extends CDKTestCase
 	private void display(Molecule molecule)
 	{
 		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-		MoleculeViewer2D mv = new MoleculeViewer2D();
-		Renderer2DModel r2dm = mv.getRenderer2DModel();
-		r2dm.setDrawNumbers(true);
 
 		try
 		{
 			sdg.setMolecule((Molecule) molecule.clone());
 			sdg.generateCoordinates(new Vector2d(0, 1));
-			mv.setAtomContainer(sdg.getMolecule());
-			mv.display();
 		} catch (Exception exc)
 		{
 			System.out.println("*** Exit due to an unexpected error during coordinate generation ***");
