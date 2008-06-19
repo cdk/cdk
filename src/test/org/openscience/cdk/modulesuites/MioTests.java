@@ -63,13 +63,36 @@ import org.openscience.cdk.io.formats.AlchemyFormatTest;
 import org.openscience.cdk.io.formats.BGFFormatTest;
 import org.openscience.cdk.io.formats.BSFormatTest;
 import org.openscience.cdk.io.formats.CACheFormatTest;
+import org.openscience.cdk.io.formats.CIFFormatTest;
+import org.openscience.cdk.io.formats.CMLFormatTest;
+import org.openscience.cdk.io.formats.CMLRSSFormatTest;
+import org.openscience.cdk.io.formats.CRK2DFormatTest;
+import org.openscience.cdk.io.formats.CRK3DFormatTest;
+import org.openscience.cdk.io.formats.CTXFormatTest;
 import org.openscience.cdk.io.formats.CacaoCartesianFormatTest;
 import org.openscience.cdk.io.formats.CacaoInternalFormatTest;
+import org.openscience.cdk.io.formats.Chem3D_Cartesian_1FormatTest;
+import org.openscience.cdk.io.formats.Chem3D_Cartesian_2FormatTest;
+import org.openscience.cdk.io.formats.ChemDrawFormatTest;
+import org.openscience.cdk.io.formats.ChemtoolFormatTest;
+import org.openscience.cdk.io.formats.CrystClustFormatTest;
+import org.openscience.cdk.io.formats.DMol3FormatTest;
+import org.openscience.cdk.io.formats.DOCK5FormatTest;
+import org.openscience.cdk.io.formats.DaltonFormatTest;
+import org.openscience.cdk.io.formats.FenskeHall_ZMatrixFormatTest;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReaderTest;
 import org.openscience.cdk.io.iterator.IteratingMDLReaderTest;
 import org.openscience.cdk.io.iterator.IteratingPCCompoundASNReaderTest;
 import org.openscience.cdk.io.iterator.IteratingPCCompoundXMLReaderTest;
 import org.openscience.cdk.io.iterator.IteratingPCSubstancesXMLReaderTest;
+
+import org.openscience.cdk.io.formats.GamessFormatTest;
+import org.openscience.cdk.io.formats.Gaussian03FormatTest;
+import org.openscience.cdk.io.formats.Gaussian90FormatTest;
+import org.openscience.cdk.io.formats.Gaussian92FormatTest;
+import org.openscience.cdk.io.formats.Gaussian94FormatTest;
+import org.openscience.cdk.io.formats.Gaussian95FormatTest;
+import org.openscience.cdk.io.formats.Gaussian98FormatTest;
 
 /**
  * TestSuite that runs all the sample tests for the cdk.io package.
@@ -133,6 +156,28 @@ public class MioTests {
         suite.addTest(new JUnit4TestAdapter(CacaoCartesianFormatTest.class));
         suite.addTest(new JUnit4TestAdapter(CacaoInternalFormatTest.class));
         suite.addTest(new JUnit4TestAdapter(CACheFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(Chem3D_Cartesian_1FormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(Chem3D_Cartesian_2FormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(ChemDrawFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(ChemtoolFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(CIFFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(CMLFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(CMLRSSFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(CRK2DFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(CRK3DFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(CrystClustFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(CTXFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(DaltonFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(DMol3FormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(DOCK5FormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(FenskeHall_ZMatrixFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(GamessFormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(Gaussian03FormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(Gaussian90FormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(Gaussian92FormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(Gaussian94FormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(Gaussian95FormatTest.class));
+        suite.addTest(new JUnit4TestAdapter(Gaussian98FormatTest.class));
         
         return suite;
     }
