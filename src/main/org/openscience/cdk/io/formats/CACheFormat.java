@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 
@@ -31,6 +33,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
+@TestClass("org.openscience.cdk.io.formats.CACheFormatTest")
 public class CACheFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
@@ -41,10 +44,12 @@ public class CACheFormat implements IChemFormatMatcher {
     	if (myself == null) myself = new CACheFormat();
     	return myself;
     }
+    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "CAChe MolStruct";
     }
 
+    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return "chemical/x-cache-csf";
     }

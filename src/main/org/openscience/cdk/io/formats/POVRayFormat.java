@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.annotations.TestMethod;
+
 
 /**
  * See <a href="http://www.povray.org/">here</a>.
@@ -44,10 +46,12 @@ public class POVRayFormat implements IResourceFormat {
     	return myself;
     }
     
+    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "POV Ray";
     }
 
+    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }

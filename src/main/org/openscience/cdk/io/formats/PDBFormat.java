@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -32,6 +34,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
+@TestClass("org.openscience.cdk.io.formats.PDBFormatTest")
 public class PDBFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
@@ -43,10 +46,12 @@ public class PDBFormat implements IChemFormatMatcher {
     	return myself;
     }
     
+    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "Protein Brookhave Database (PDB)";
     }
 
+    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return "chemical/x-pdb";
     }

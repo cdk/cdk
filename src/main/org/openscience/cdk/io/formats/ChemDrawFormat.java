@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -33,6 +35,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
+@TestClass("org.openscience.cdk.io.formats.ChemDrawFormatTest")
 public class ChemDrawFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
@@ -44,10 +47,12 @@ public class ChemDrawFormat implements IChemFormat {
     	return myself;
     }
 
+    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "ChemDraw eXchange file";
     }
 
+    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return "chemical/x-cdx";
     }

@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -30,6 +32,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
+@TestClass("org.openscience.cdk.io.formats.CrystalClustFormatTest")
 public class CrystClustFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
@@ -41,10 +44,12 @@ public class CrystClustFormat implements IChemFormatMatcher {
     	return myself;
     }
     
+    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "CrystClust";
     }
 
+    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }

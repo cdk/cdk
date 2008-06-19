@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * @cdk.module io
  * @cdk.svnrev  $Revision$
@@ -39,10 +41,12 @@ public class SVGFormat implements IResourceFormat {
     	return myself;
     }
     
+    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "Scalable Vector Graphics";
     }
 
+    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }

@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -30,6 +32,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
+@TestClass("org.openscience.cdk.io.formats.ZMatrixFormatTest")
 public class ZMatrixFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
@@ -41,23 +44,29 @@ public class ZMatrixFormat implements IChemFormatMatcher {
     	return myself;
     }
     
+    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "ZMatrix";
     }
 
+    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }
+    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return null;
     }
+    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[0];
     }
 
+    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.ZMatrixReader";
     }
+    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
@@ -67,6 +76,7 @@ public class ZMatrixFormat implements IChemFormatMatcher {
         return false;
     }
 
+    @TestMethod("testIsXMLBased")
 	public boolean isXMLBased() {
 		return false;
 	}

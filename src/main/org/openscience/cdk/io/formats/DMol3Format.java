@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -33,6 +35,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
+@TestClass("org.openscience.cdk.io.formats.DMol3FormatTest")
 public class DMol3Format implements IChemFormat {
 
 	private static IResourceFormat myself = null;
@@ -44,10 +47,12 @@ public class DMol3Format implements IChemFormat {
     	return myself;
     }
     
+    @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "DMol3";
     }
 
+    @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }
