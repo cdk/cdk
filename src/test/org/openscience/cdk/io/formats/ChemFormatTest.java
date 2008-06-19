@@ -50,9 +50,26 @@ abstract public class ChemFormatTest extends ResourceFormatTest {
         // two valid output options: NULL and non-zero, existing class
         if (chemFormat.getReaderClassName() != null) {
             String readerClass = chemFormat.getReaderClassName();
+            Assert.assertNotSame(
+                "Reader Class name String must be of non-zero length",
+                0, readerClass.length()
+            );
             Class<?> reader = Class.forName(readerClass);
             Assert.assertNotNull(reader);
         }
     }
     
+    @Test public void testGetWriterClassName() throws Exception {
+        // two valid output options: NULL and non-zero, existing class
+        if (chemFormat.getWriterClassName() != null) {
+            String writerClass = chemFormat.getWriterClassName();
+            Assert.assertNotSame(
+                "Writer Class name String must be of non-zero length",
+                0, writerClass.length()
+            );
+            Class<?> writer = Class.forName(writerClass);
+            Assert.assertNotNull(writer);
+        }
+    }
+
 }
