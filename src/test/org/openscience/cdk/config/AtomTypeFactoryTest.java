@@ -24,12 +24,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.NewCDKTestCase;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -156,7 +155,6 @@ public class AtomTypeFactoryTest extends NewCDKTestCase {
         Assert.assertNotNull(atomType);
         Assert.assertEquals("H", atomType.getSymbol());
         Assert.assertEquals("H", atomType.getAtomTypeName());
-        Assert.assertEquals(1.20, atomType.getVanderwaalsRadius(), 0.01);
 	}
 
     @Test

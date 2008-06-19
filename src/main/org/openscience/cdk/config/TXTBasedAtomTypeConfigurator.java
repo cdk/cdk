@@ -132,7 +132,6 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                         IAtomType atomType = builder.newAtomType(name, rootType);
                         atomType.setAtomicNumber(atomicNumber);
                         atomType.setExactMass(mass);
-                        atomType.setVanderwaalsRadius(vdwaals);
                         atomType.setCovalentRadius(covalent);
                         Color color = new Color(colorR, colorG, colorB);
                         atomType.setProperty("org.openscience.cdk.renderer.color", color);

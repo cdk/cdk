@@ -219,16 +219,6 @@ public class DebugFragmentAtom extends FragmentAtom {
 		return super.getHybridization();
 	}
 
-	public void setVanderwaalsRadius(double radius) {
-		logger.debug("Setting vanderwaals radius: ", radius);
-		super.setVanderwaalsRadius(radius);
-	}
-
-	public Double getVanderwaalsRadius() {
-		logger.debug("Getting vanderwaals radius: ", super.getVanderwaalsRadius());
-		return super.getVanderwaalsRadius();
-	}
-
 	public void setCovalentRadius(double radius) {
 		logger.debug("Setting covalent radius: ", radius);
 		super.setCovalentRadius(radius);

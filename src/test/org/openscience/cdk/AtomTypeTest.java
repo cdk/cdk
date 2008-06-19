@@ -102,17 +102,7 @@ public class AtomTypeTest extends NewCDKTestCase {
 	        Assert.assertFalse(at1.compare(at2));
         }
     }
-    
-    @Test public void testSetVanderwaalsRadius_Double() {
-        IAtomType at = builder.newAtomType("C");
-        at.setVanderwaalsRadius(1.0);
-        Assert.assertEquals(1.0, at.getVanderwaalsRadius(), 0.001);
-    }
-    @Test public void testGetVanderwaalsRadius() {
-        testSetVanderwaalsRadius_Double();
-    }
-    
-    
+
     @Test public void testSetCovalentRadius_Double() {
         IAtomType at = builder.newAtomType("C");
         at.setCovalentRadius(1.0);
@@ -288,18 +278,8 @@ public class AtomTypeTest extends NewCDKTestCase {
         at.setBondOrderSum(2.0);
         Assert.assertEquals(1.0, clone.getBondOrderSum(), 0.001);
     }
-    
-    /**
-     * Method to test the clone() method
-     */
-    @Test public void testClone_VanderwaalsRadius() throws Exception {
-        IAtomType at = builder.newAtomType("C");
-        at.setVanderwaalsRadius(1.0);
-        IAtomType clone = (IAtomType)at.clone();
-        
-        at.setVanderwaalsRadius(2.0);
-        Assert.assertEquals(1.0, clone.getVanderwaalsRadius(), 0.001);
-    }
+
+   
     
     /**
      * Method to test the clone() method

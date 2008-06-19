@@ -69,10 +69,6 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 	Double bondOrderSum = (Double) CDKConstants.UNSET;
 
     /**
-     * The van der Waals radius of this atom type.
-     */
-    Double vanderwaalsRadius = (Double) CDKConstants.UNSET;
-    /**
      * The covalent radius of this atom type.
      */
     Double covalentRadius = (Double) CDKConstants.UNSET;
@@ -149,7 +145,6 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 		if (element instanceof IAtomType) {
 			this.maxBondOrder = ((IAtomType)element).getMaxBondOrder();
 			this.bondOrderSum = ((IAtomType)element).getBondOrderSum();
-			this.vanderwaalsRadius = ((IAtomType)element).getVanderwaalsRadius();
 			this.covalentRadius = ((IAtomType)element).getCovalentRadius();
 			this.formalCharge = ((IAtomType)element).getFormalCharge();
 			this.hybridization = ((IAtomType)element).getHybridization();
@@ -326,28 +321,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
                 (maxBondOrder == type.maxBondOrder) &&
                 (bondOrderSum == type.bondOrderSum);
     }
-    
-    /**
-     * Sets the van der Waals radius for this AtomType.
-     *
-     * @param radius The van der Waals radius for this AtomType
-     * @see   #getVanderwaalsRadius
-     */
-    public void setVanderwaalsRadius(Double radius) {
-        this.vanderwaalsRadius = radius;
-	notifyChanged();
-    }
-    
-    /**
-     * Returns the van der waals radius for this AtomType.
-     *
-     * @return The van der Waals radius for this AtomType
-     * @see    #setVanderwaalsRadius
-     */
-    public Double getVanderwaalsRadius() {
-        return this.vanderwaalsRadius;
-    }
-    
+
     /**
      * Sets the covalent radius for this AtomType.
      *
@@ -421,10 +395,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
         }
         if (getCovalentRadius() != null) {
         	resultString.append(", CR:").append(getCovalentRadius());
-        }
-        if (getVanderwaalsRadius() != null) {
-        	resultString.append(", VDWR:").append(getVanderwaalsRadius());
-        }
+        }        
         if (getValency() != null) {
         	resultString.append(", EV:").append(getValency());
         }

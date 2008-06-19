@@ -65,7 +65,6 @@ public class AtomTypeManipulator {
 		atom.setAtomTypeName(atomType.getAtomTypeName());
         atom.setMaxBondOrder(atomType.getMaxBondOrder());
         atom.setBondOrderSum(atomType.getBondOrderSum());
-        atom.setVanderwaalsRadius(atomType.getVanderwaalsRadius());
         atom.setCovalentRadius(atomType.getCovalentRadius());
         atom.setValency(atomType.getValency());
         atom.setFormalCharge(atomType.getFormalCharge());

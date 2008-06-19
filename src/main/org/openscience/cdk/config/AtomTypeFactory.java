@@ -382,7 +382,6 @@ public class AtomTypeFactory {
             atom.setSymbol(atomType.getSymbol());
             atom.setMaxBondOrder(atomType.getMaxBondOrder());
             atom.setBondOrderSum(atomType.getBondOrderSum());
-            atom.setVanderwaalsRadius(atomType.getVanderwaalsRadius());
             atom.setCovalentRadius(atomType.getCovalentRadius());
             atom.setHybridization(atomType.getHybridization());
             Object color = atomType.getProperty("org.openscience.cdk.renderer.color");

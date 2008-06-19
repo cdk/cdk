@@ -167,8 +167,6 @@ public class AtomTypeHandler extends DefaultHandler {
                     atomType.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, Integer.valueOf(currentChars));
                 } else if (scalarType == SCALAR_ISAROMATIC){
                     atomType.setFlag(CDKConstants.ISAROMATIC, true);
-                } else if (scalarType == SCALAR_VANDERWAALSRADIUS){
-                    atomType.setVanderwaalsRadius(Double.parseDouble(currentChars));
                 } else if (scalarType == SCALAR_PIBONDCOUNT){
                     atomType.setProperty(CDKConstants.PI_BOND_COUNT, Integer.valueOf(currentChars));
                 } else if (scalarType == SCALAR_LONEPAIRCOUNT){

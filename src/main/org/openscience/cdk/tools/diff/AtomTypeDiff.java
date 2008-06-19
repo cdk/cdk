@@ -49,7 +49,6 @@ public class AtomTypeDiff extends AbstractChemObjectDiff {
         resultString.append(diff("H", firstElem.getHybridization(), secondElem.getHybridization()));
         resultString.append(diff("NC", firstElem.getFormalNeighbourCount(), secondElem.getFormalNeighbourCount()));
         resultString.append(diff("CR", firstElem.getCovalentRadius(), secondElem.getCovalentRadius()));
-        resultString.append(diff("VDWR", firstElem.getVanderwaalsRadius(), secondElem.getVanderwaalsRadius()));
         resultString.append(diff("V", firstElem.getValency(), secondElem.getValency()));
         resultString.append(IsotopeDiff.diff(first, second));
         if (resultString.length() > 0) {

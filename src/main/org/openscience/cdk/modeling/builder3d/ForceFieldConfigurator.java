@@ -362,7 +362,6 @@ public class ForceFieldConfigurator {
 		key = "vdw" + ID;
 		data = (Vector) parameterSet.get(key);
 		value = (Double) data.firstElement();
-		atom.setVanderwaalsRadius(value.doubleValue());
 		key = "charge" + ID;
 		if (parameterSet.containsKey(key)) {
 			data = (Vector) parameterSet.get(key);
