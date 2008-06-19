@@ -27,10 +27,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class Gaussian98FormatTest extends ChemFormatTest {
+public class MacroModelFormatTest extends ChemFormatTest {
 
-    public Gaussian98FormatTest() {
-        super.setChemFormat((IChemFormat)Gaussian98Format.getInstance());
+    public MacroModelFormatTest() {
+        super.setChemFormat((IChemFormat)MacroModelFormat.getInstance());
     }
     
 }
