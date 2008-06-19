@@ -45,7 +45,7 @@ abstract public class ResourceFormatTest {
         );
     }
 
-    @Test public void testMIMEType() {
+    @Test public void testGetMIMEType() {
         if (resourceFormat.getMIMEType() == null) {
             // OK, that's fine
         } else {
@@ -53,12 +53,12 @@ abstract public class ResourceFormatTest {
         }
     }
     
-    @Test public void testFormatName() {
+    @Test public void testGetFormatName() {
         Assert.assertNotNull(resourceFormat.getFormatName());
         Assert.assertNotSame(0, resourceFormat.getFormatName().length());
     }
     
-    @Test public void testPrefNameExt() {
+    @Test public void testGetPreferredNameExtension() {
         if (resourceFormat.getPreferredNameExtension() == null) {
             // Seems to be current practice
             // FIXME: needs to be discussed
@@ -67,7 +67,7 @@ abstract public class ResourceFormatTest {
         }
     }
     
-    @Test public void testNameExt() {
+    @Test public void testGetNameExtensions() {
         if (resourceFormat.getNameExtensions() == null) {
             // Seems to be current practice
             // FIXME: needs to be discussed
@@ -83,7 +83,7 @@ abstract public class ResourceFormatTest {
         }
     }
     
-    @Test public void testIsXML() {
+    @Test public void testIsXMLBased() {
         Assert.assertNotNull(resourceFormat.isXMLBased());
     }
     
