@@ -83,9 +83,11 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
      */
     @TestMethod("testMatches")
     public boolean matches(IBond bond) {
-        PharmacophoreAngleBond pbond = (PharmacophoreAngleBond) bond;
-        double bondLength = round(pbond.getBondLength(), 2);
-        return bondLength >= lower && bondLength <= upper;
+        if (bond instanceof PharmacophoreAngleBond) {
+            PharmacophoreAngleBond pbond = (PharmacophoreAngleBond) bond;
+            double bondLength = round(pbond.getBondLength(), 2);
+            return bondLength >= lower && bondLength <= upper;
+        } else return false;
     }
 
     public double getUpper() {

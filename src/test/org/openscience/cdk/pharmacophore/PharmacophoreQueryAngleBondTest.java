@@ -23,10 +23,12 @@ public class PharmacophoreQueryAngleBondTest {
         PharmacophoreQueryAngleBond qbond1 = new PharmacophoreQueryAngleBond(qatom1, qatom2, qatom3, 54.735);
         PharmacophoreQueryAngleBond qbond2 = new PharmacophoreQueryAngleBond(qatom1, qatom2, qatom3, 50,60);
         PharmacophoreQueryAngleBond qbond3 = new PharmacophoreQueryAngleBond(qatom1, qatom2, qatom3, 60,80);
+        PharmacophoreQueryBond qbond4 = new PharmacophoreQueryBond(qatom1, qatom2, 1,2);
 
         Assert.assertTrue(qbond1.matches(pbond));
         Assert.assertTrue(qbond2.matches(pbond));
         Assert.assertFalse(qbond3.matches(pbond));
+        Assert.assertFalse(qbond4.matches(pbond));
 
     }
 }

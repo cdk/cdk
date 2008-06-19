@@ -79,10 +79,12 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
      * @return true if the target distance lies within the range of the query constraint
      */
     @TestMethod("testMatches")
-    public boolean matches(IBond bond) {        
+    public boolean matches(IBond bond) {
+        if (bond instanceof PharmacophoreBond) {
         PharmacophoreBond pbond = (PharmacophoreBond) bond;
         double bondLength = round(pbond.getBondLength(), 2);
         return bondLength >= lower && bondLength <= upper;
+        } else return false;
     }
 
     public double getUpper() {
