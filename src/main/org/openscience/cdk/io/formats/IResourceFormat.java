@@ -48,13 +48,11 @@ public interface IResourceFormat {
     /**
      * Returns the preferred resource name extension.
      */
-    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension();
 
     /**
      * Returns an array of common resource name extensions.
      */
-    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions();
 
     /**
@@ -69,7 +67,6 @@ public interface IResourceFormat {
      * 
      * @return if the format is XML-based.
      */
-    @TestMethod("testIsXMLBased")
     public boolean isXMLBased();
 }
 

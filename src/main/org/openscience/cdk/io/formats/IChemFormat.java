@@ -43,7 +43,6 @@ public interface IChemFormat extends IResourceFormat {
      *
      * @return null if no CDK Reader is available.
      */
-    @TestMethod("testGetReaderClassName")
     public String getReaderClassName();
 
     /**
@@ -51,7 +50,6 @@ public interface IChemFormat extends IResourceFormat {
      *
      * @return null if no CDK Writer is available.
      */
-    @TestMethod("testGetWriterClassName")
     public String getWriterClassName();
     
     /**
