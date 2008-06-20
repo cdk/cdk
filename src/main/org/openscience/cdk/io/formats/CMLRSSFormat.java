@@ -53,17 +53,22 @@ public class CMLRSSFormat implements IChemFormat {
     public String getMIMEType() {
         return null;
     }
+    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return null;
     }
+    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[0];
     }
 
+    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { return null; }
+    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return "org.openscience.cdk.io.RssWriter"; }
 
-	public boolean isXMLBased() {
+	@TestMethod("testIsXMLBased")
+    public boolean isXMLBased() {
 		return true;
 	}
 

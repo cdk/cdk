@@ -55,16 +55,20 @@ public class SDFFormat implements IChemFormatMatcher {
     public String getMIMEType() {
         return "chemical/x-mdl-sdfile";
     }
+    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"sdf", "sd"};
     }
 
+    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.MDLV2000Reader";
     }
+    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.MDLWriter";
     }
@@ -76,7 +80,8 @@ public class SDFFormat implements IChemFormatMatcher {
         return false;
     }
 
-	public boolean isXMLBased() {
+	@TestMethod("testIsXMLBased")
+    public boolean isXMLBased() {
 		return false;
 	}
 

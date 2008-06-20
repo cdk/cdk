@@ -55,19 +55,24 @@ public class GaussianInputFormat implements IChemFormat {
     public String getMIMEType() {
         return "chemical/x-gaussian-input";
     }
+    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"gau","com"};
     }
 
+    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { return null; }
+    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() {
       return "org.openscience.cdk.io.program.GaussianInputWriter";
     }
 
-	public boolean isXMLBased() {
+	@TestMethod("testIsXMLBased")
+    public boolean isXMLBased() {
 		return false;
 	}
 

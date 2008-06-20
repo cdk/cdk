@@ -53,16 +53,20 @@ public class CTXFormat implements IChemFormatMatcher {
     public String getMIMEType() {
         return null;
     }
+    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"ctx"};
     }
 
+    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.CTXReader";
     }
+    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { 
       return null;
     }
@@ -74,7 +78,8 @@ public class CTXFormat implements IChemFormatMatcher {
         return false;
     }
 
-	public boolean isXMLBased() {
+	@TestMethod("testIsXMLBased")
+    public boolean isXMLBased() {
 		return false;
 	}
 

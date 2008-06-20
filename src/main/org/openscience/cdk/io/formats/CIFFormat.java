@@ -53,16 +53,20 @@ public class CIFFormat implements IChemFormatMatcher {
     public String getMIMEType() {
         return "chemical/x-cif";
     }
+    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"cif"};
     }
 
+    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.CIFReader";
     }
+    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
@@ -74,7 +78,8 @@ public class CIFFormat implements IChemFormatMatcher {
         return false;
     }
 
-	public boolean isXMLBased() {
+	@TestMethod("testIsXMLBased")
+    public boolean isXMLBased() {
 		return false;
 	}
 

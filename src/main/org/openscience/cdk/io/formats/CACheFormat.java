@@ -53,14 +53,18 @@ public class CACheFormat implements IChemFormatMatcher {
     public String getMIMEType() {
         return "chemical/x-cache-csf";
     }
+    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"cache"};
     }
 
+    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { return null; }
+    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
     public boolean matches(int lineNumber, String line) {
@@ -70,7 +74,8 @@ public class CACheFormat implements IChemFormatMatcher {
         return false;
     }
 
-	public boolean isXMLBased() {
+	@TestMethod("testIsXMLBased")
+    public boolean isXMLBased() {
 		return false;
 	}
 

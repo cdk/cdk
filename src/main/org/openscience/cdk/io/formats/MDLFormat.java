@@ -55,16 +55,20 @@ public class MDLFormat implements IChemFormatMatcher {
     public String getMIMEType() {
         return "chemical/x-mdl-molfile";
     }
+    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"mol"};
     }
 
+    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.MDLReader";
     }
+    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.MDLWriter";
     }
@@ -101,7 +105,8 @@ public class MDLFormat implements IChemFormatMatcher {
         return false;
     }
 
-	public boolean isXMLBased() {
+	@TestMethod("testIsXMLBased")
+    public boolean isXMLBased() {
 		return false;
 	}
 

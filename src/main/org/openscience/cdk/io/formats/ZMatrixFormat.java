@@ -77,9 +77,9 @@ public class ZMatrixFormat implements IChemFormatMatcher {
     }
 
     @TestMethod("testIsXMLBased")
-	public boolean isXMLBased() {
-		return false;
-	}
+    public boolean isXMLBased() {
+        return false;
+    }
 
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;

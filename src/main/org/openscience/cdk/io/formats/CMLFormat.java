@@ -55,16 +55,20 @@ public class CMLFormat implements IChemFormatMatcher {
     public String getMIMEType() {
         return "chemical/x-cml";
     }
+    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"cml", "xml"};
     }
 
+    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.CMLReader";
     }
+    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.CMLWriter";
     }
@@ -81,7 +85,8 @@ public class CMLFormat implements IChemFormatMatcher {
         return false;
     }
 
-	public boolean isXMLBased() {
+	@TestMethod("testIsXMLBased")
+    public boolean isXMLBased() {
 		return true;
 	}
 

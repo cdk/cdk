@@ -55,16 +55,20 @@ public class Mol2Format implements IChemFormatMatcher {
     public String getMIMEType() {
         return "chemical/x-mol2";
     }
+    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"mol2"};
     }
 
+    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.Mol2Reader";
     }
+    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.Mol2Writer"; 
     }
@@ -76,7 +80,8 @@ public class Mol2Format implements IChemFormatMatcher {
         return false;
     }
 
-	public boolean isXMLBased() {
+	@TestMethod("testIsXMLBased")
+    public boolean isXMLBased() {
 		return false;
 	}
 

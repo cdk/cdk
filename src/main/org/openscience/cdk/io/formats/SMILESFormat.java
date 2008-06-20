@@ -55,21 +55,26 @@ public class SMILESFormat implements IChemFormat {
     public String getMIMEType() {
         return "chemical/x-daylight-smiles";
     }
+    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"smi"};
     }
 
+    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
       return "org.openscience.cdk.io.SMILESReader";
     }
+    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { 
       return "org.openscience.cdk.io.SMILESWriter";
     }
 
-	public boolean isXMLBased() {
+	@TestMethod("testIsXMLBased")
+    public boolean isXMLBased() {
 		return false;
 	}
 

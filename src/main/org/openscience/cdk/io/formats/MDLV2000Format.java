@@ -53,16 +53,20 @@ public class MDLV2000Format implements IChemFormatMatcher {
     public String getMIMEType() {
         return null;
     }
+    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return null;
     }
+    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[0];
     }
 
+    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
     	return "org.openscience.cdk.io.MDLV2000Reader";
     }
+    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { 
     	return "org.openscience.cdk.io.MDLWriter";
     }
@@ -76,7 +80,8 @@ public class MDLV2000Format implements IChemFormatMatcher {
         return false;
     }
 
-	public boolean isXMLBased() {
+	@TestMethod("testIsXMLBased")
+    public boolean isXMLBased() {
 		return false;
 	}
 

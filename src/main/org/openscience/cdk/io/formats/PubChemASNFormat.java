@@ -50,21 +50,26 @@ public class PubChemASNFormat implements IChemFormatMatcher {
     public String getMIMEType() {
         return null;
     }
+    @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+    @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"asn"};
     }
 
+    @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
     	return "org.openscience.cdk.io.PCCompoundASNReader";
     }
+    @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { 
     	return null;
     }
 
-	public boolean isXMLBased() {
+	@TestMethod("testIsXMLBased")
+    public boolean isXMLBased() {
 		return false;
 	}
 
