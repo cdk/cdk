@@ -61,7 +61,7 @@ public class PDBFormat implements IChemFormatMatcher {
     }
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
-        return new String[]{"pdb,ent"};
+        return new String[]{"pdb", "ent"};
     }
 
     @TestMethod("testGetReaderClassName")
