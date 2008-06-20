@@ -23,6 +23,9 @@
  */
 package org.openscience.cdk.formula;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.NewCDKTestCase;
@@ -259,9 +262,99 @@ public class IsotopePatternGeneratorTest extends NewCDKTestCase{
 		double ab3 = MolecularFormulaManipulator.getTotalNaturalAbundance(molFormSet.getMolecularFormula(2));
 		occurrence = ((Double)molFormSet.getMolecularFormula(2).getProperty("occurrence"));
 		ab3 *= occurrence;
-		Assert.assertEquals(7.3819, (0.0690/ab1)*100, 0.01);
+		Assert.assertEquals(5.4078, (ab3/ab1)*100, 0.01);
 		
 	}
-    
+	/**
+	 * A unit test for JUnit.
+	 *
+	 * @return    Description of the Return Value
+	 */
+	@Test 
+	public void testGetIsotopeDistribution_IMolecularFormula() throws CDKException {
+		IMolecularFormula molFor = new MolecularFormula();
+		molFor.addIsotope(builder.newIsotope("C"),5);
+		molFor.addIsotope(builder.newIsotope("H"),13);
+		molFor.addIsotope(builder.newIsotope("N"),2);
+		molFor.addIsotope(builder.newIsotope("O"),2);
+
+		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.10);
+		
+		List<Double> dist = isotopeGe.getIsotopeDistribution(molFor);
+		Assert.assertEquals(5, dist.size());
+		
+		List<Double> distTest = new ArrayList<Double>();
+		distTest.add(100.00);
+		distTest.add(0.7387184);
+		distTest.add(5.4078);
+		
+		for(int i = 0 ; i < 3; i ++)
+			Assert.assertEquals(distTest.get(i), dist.get(i), 0.01);
+		
+		
+	}
+	/**
+	 * A unit test for JUnit.
+	 *
+	 * @return    Description of the Return Value
+	 */
+	@Test 
+	public void testGetIsotopeDistribution_IMolecularFormulaSet() throws CDKException {
+		IMolecularFormula molFor = new MolecularFormula();
+			molFor.addIsotope(builder.newIsotope("C"),5);
+			molFor.addIsotope(builder.newIsotope("H"),13);
+			molFor.addIsotope(builder.newIsotope("N"),2);
+			molFor.addIsotope(builder.newIsotope("O"),2);
+
+		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.10);
+		
+		IMolecularFormulaSet molFormSet = isotopeGe.getIsotopes(molFor);
+		
+		Assert.assertEquals(5, molFormSet.size());
+		
+		List<Double> dist = isotopeGe.getIsotopeDistribution(molFormSet);
+		Assert.assertEquals(5, dist.size());
+		
+		List<Double> distTest = new ArrayList<Double>();
+		distTest.add(100.00);
+		distTest.add(0.7387184);
+		distTest.add(5.4078);
+		
+		for(int i = 0 ; i < 3; i ++)
+			Assert.assertEquals(distTest.get(i), dist.get(i), 0.01);
+		
+	}
+
+	/**
+	 * A unit test for JUnit.
+	 *
+	 * @return    Description of the Return Value
+	 */
+	@Test 
+	public void testGetMassDistribution_IMolecularFormulaSet() throws CDKException {
+		IMolecularFormula molFor = new MolecularFormula();
+			molFor.addIsotope(builder.newIsotope("C"),5);
+			molFor.addIsotope(builder.newIsotope("H"),13);
+			molFor.addIsotope(builder.newIsotope("N"),2);
+			molFor.addIsotope(builder.newIsotope("O"),2);
+
+		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.10);
+		
+		IMolecularFormulaSet molFormSet = isotopeGe.getIsotopes(molFor);
+		
+		Assert.assertEquals(5, molFormSet.size());
+		
+		List<Double> dist = isotopeGe.getMassDistribution(molFormSet);
+		Assert.assertEquals(5, dist.size());
+		
+		List<Double> distTest = new ArrayList<Double>();
+		distTest.add(133.0977);
+		distTest.add(134.0947);
+		distTest.add(134.101079);
+		
+		for(int i = 0 ; i < 3; i ++)
+			Assert.assertEquals(distTest.get(i), dist.get(i), 0.01);
+		
+	}
 }
 

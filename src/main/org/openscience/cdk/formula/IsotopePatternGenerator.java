@@ -90,7 +90,71 @@ public class IsotopePatternGenerator{
 			}
 		}
 	}
-	
+	/**
+	 * Get all the isotope distribution given a IMolecularFormula. 
+	 * 
+	 * @param molFor  The IMolecularFormula to start
+	 * @return           A List containing the different abundance distribution
+	 */
+    @TestMethod("testGetIsotopeDistribution_IMolecularFormula")
+	public List<Double> getIsotopeDistribution(IMolecularFormula molFor){
+    	
+    	List<Double> distribution = getIsotopeDistribution(getIsotopes(molFor));
+    	
+    	return distribution;
+    }
+	/**
+	 * Get all the isotope distribution given the IMolecularFormulaSet containing the
+	 * occurrence of each combination. 
+	 * 
+	 * @param molForSet  The IMolecularFormulaSet to start
+	 * @return           A List containing the different abundance distribution
+	 */
+    @TestMethod("testGetIsotopeDistribution_IMolecularFormulaSet")
+	public List<Double> getIsotopeDistribution(IMolecularFormulaSet molForSet){
+    	List<Double> distribution = new ArrayList<Double>();
+    	double abT = MolecularFormulaManipulator.getTotalNaturalAbundance(molForSet.getMolecularFormula(0));
+    	
+    	for(IMolecularFormula formula : molForSet.molecularFormulas()){
+    		double ab = MolecularFormulaManipulator.getTotalNaturalAbundance(formula);
+    		double occurrence = ((Double)formula.getProperty("occurrence"));
+    		ab *= occurrence;
+        	distribution.add(ab/abT*100.0);
+    	}
+    	return distribution;
+    }
+	/**
+	 * Get all the isotope masses distribution given the IMolecularFormulaSet. 
+	 * 
+	 * @param molForSet  The IMolecularFormulaSet to start
+	 * @return           A List containing the different mass distribution
+	 */
+    @TestMethod("testGetMassDistribution_IMolecularFormulaSet")
+	public List<Double> getMassDistribution(IMolecularFormulaSet molForSet){
+    	List<Double> distribution = new ArrayList<Double>();
+    	
+    	for(IMolecularFormula formula : molForSet.molecularFormulas()){
+    		double mm = MolecularFormulaManipulator.getTotalExactMass(formula);
+        	distribution.add(mm);
+    	}
+    	return distribution;
+    }
+	/**
+	 * Get all the isotope masses distribution given the IMolecularFormulaSet. 
+	 * 
+	 * @param molForSet  The IMolecularFormulaSet to start
+	 * @return           A List containing the different mass distribution
+	 */
+    @TestMethod("testGetDistribution_IMolecularFormulaSet")
+	public List<Double> getDistribution(IMolecularFormulaSet molForSet){
+    	List<Double> distribution = new ArrayList<Double>();
+    	
+    	for(IMolecularFormula formula : molForSet.molecularFormulas()){
+    		double mm = MolecularFormulaManipulator.getTotalExactMass(formula);
+        	distribution.add(mm);
+    	}
+    	return distribution;
+    }
 	/**
 	 * Get all combinatorial chemical isotopes given a structure. 
 	 * 
