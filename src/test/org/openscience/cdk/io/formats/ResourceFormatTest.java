@@ -60,10 +60,28 @@ abstract public class ResourceFormatTest {
     
     @Test public void testGetPreferredNameExtension() {
         if (resourceFormat.getPreferredNameExtension() == null) {
-            // Seems to be current practice
-            // FIXME: needs to be discussed
+            if (resourceFormat.getNameExtensions() == null) {
+                // Seems to be current practice
+                // FIXME: needs to be discussed
+            } else {
+                Assert.fail("This format define file name extensions (getNameExtensions()), but does not provide a prefered extension (getPreferredNameExtension()).");
+            }
         } else {
-            Assert.assertNotSame(0, resourceFormat.getPreferredNameExtension().length());
+            String prefExtension = resourceFormat.getPreferredNameExtension();
+            Assert.assertNotSame(0, prefExtension.length());
+            Assert.assertNotNull(
+                "This format defines a preferred file name extension (getPreferredNameExtension()), but does not provide a full list of extensions (getNameExtensions()).",
+                resourceFormat.getNameExtensions()
+            );
+            String[] allExtensions = resourceFormat.getNameExtensions();
+            boolean prefExtInAllExtList = false;
+            for (int i=0; i<allExtensions.length; i++) {
+                if (allExtensions[i].equals(prefExtension)) prefExtInAllExtList = true;
+            }
+            Assert.assertTrue(
+                "The preferred extension is not found in the list of all extensions",
+                prefExtInAllExtList
+            );
         }
     }
     
@@ -77,8 +95,17 @@ abstract public class ResourceFormatTest {
         } else {
             String[] exts = resourceFormat.getNameExtensions();
             for (int i=0; i<exts.length; i++) {
-                Assert.assertNotNull(exts[i]);
-                Assert.assertNotSame(0, exts[i].length());
+                String extension = exts[i];
+                Assert.assertNotNull(extension);
+                Assert.assertNotSame(0, extension.length());
+                Assert.assertFalse(
+                    "File name extensions should not contain ',' characters",
+                    extension.contains(",")
+                );
+                Assert.assertFalse(
+                    "File name extensions should not contain '.' characters",
+                    extension.contains(".")
+                );
             }
         }
     }
