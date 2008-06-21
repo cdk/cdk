@@ -32,6 +32,9 @@ import org.openscience.cdk.tools.diff.ChemObjectDiffTest;
 import org.openscience.cdk.tools.diff.ElectronContainerDiffTest;
 import org.openscience.cdk.tools.diff.ElementDiffTest;
 import org.openscience.cdk.tools.diff.IsotopeDiffTest;
+import org.openscience.cdk.tools.diff.tree.BooleanDifferenceTest;
+import org.openscience.cdk.tools.diff.tree.IntegerDifferenceTest;
+import org.openscience.cdk.tools.diff.tree.StringDifferenceTest;
 
 /**
  * TestSuite that runs all the JUnit tests for the diff module.
@@ -53,6 +56,11 @@ public class MdiffTests {
         suite.addTest(new JUnit4TestAdapter(ElectronContainerDiffTest.class));
         suite.addTest(new JUnit4TestAdapter(ElementDiffTest.class));
         suite.addTest(new JUnit4TestAdapter(IsotopeDiffTest.class));
+        
+        // cdk.tools.diff.tree
+        suite.addTest(new JUnit4TestAdapter(BooleanDifferenceTest.class));
+        suite.addTest(new JUnit4TestAdapter(IntegerDifferenceTest.class));
+        suite.addTest(new JUnit4TestAdapter(StringDifferenceTest.class));
 
         return suite;
     }
