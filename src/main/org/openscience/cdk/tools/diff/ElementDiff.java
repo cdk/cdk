@@ -25,8 +25,9 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.diff.tree.ChemObjectDifference;
-import org.openscience.cdk.tools.diff.tree.AbstractDifference;
 import org.openscience.cdk.tools.diff.tree.IDifference;
+import org.openscience.cdk.tools.diff.tree.IntegerDifference;
+import org.openscience.cdk.tools.diff.tree.StringDifference;
 
 /**
  * Compares two {@link IElement} classes.
@@ -41,7 +42,7 @@ public class ElementDiff extends AbstractChemObjectDiff {
     public static String diff( IChemObject first, IChemObject second ) {
         IDifference difference = difference(first, second);
         if (difference == null) {
-            return null;
+            return "";
         } else {
             return difference.toString();
         }
@@ -52,11 +53,11 @@ public class ElementDiff extends AbstractChemObjectDiff {
         }
         IElement firstElem = (IElement)first;
         IElement secondElem = (IElement)second;
-        ChemObjectDifference coDiff = new ChemObjectDifference("Element");
-        coDiff.addChild(AbstractDifference.construct("S", firstElem.getSymbol(), secondElem.getSymbol()));
-        coDiff.addChild(AbstractDifference.construct("S", firstElem.getSymbol(), secondElem.getSymbol()));
-        coDiff.addChild(AbstractDifference.construct("ID", firstElem.getID(), secondElem.getID()));
-        coDiff.addChild(AbstractDifference.construct("AN", firstElem.getAtomicNumber(), secondElem.getAtomicNumber()));
+        ChemObjectDifference coDiff = new ChemObjectDifference("ElementDiff");
+        coDiff.addChild(StringDifference.construct("S", firstElem.getSymbol(), secondElem.getSymbol()));
+        coDiff.addChild(StringDifference.construct("S", firstElem.getSymbol(), secondElem.getSymbol()));
+        coDiff.addChild(StringDifference.construct("ID", firstElem.getID(), secondElem.getID()));
+        coDiff.addChild(IntegerDifference.construct("AN", firstElem.getAtomicNumber(), secondElem.getAtomicNumber()));
         coDiff.addChild(ChemObjectDiff.difference(first, second));
         if (coDiff.getChildCount() > 0) {
             return coDiff;
