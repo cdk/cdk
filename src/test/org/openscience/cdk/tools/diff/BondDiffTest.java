@@ -47,10 +47,10 @@ public class BondDiffTest extends NewCDKTestCase {
         String result = BondDiff.diff( bond1, bond2 );
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        Assert.assertTrue(result.contains("BondDiff"));
-        Assert.assertTrue(result.contains("SINGLE/DOUBLE"));
-        Assert.assertTrue(result.contains("AtomDiff"));
-        Assert.assertTrue(result.contains("C/O"));
+        assertContains(result, "BondDiff");
+        assertContains(result, "SINGLE/DOUBLE");
+        assertContains(result, "AtomDiff");
+        assertContains(result, "C/O");
     }
 
 }

@@ -48,14 +48,8 @@ public class ChemObjectDiffTest extends NewCDKTestCase {
         Assert.assertNotSame(
             "Expected non-zero-length result", 0, result.length()
         );
-        Assert.assertTrue(
-            "Expected the substring 'ChemObjectDiff' in '" + result + "'",
-            result.contains("ChemObjectDiff")
-        );
-        Assert.assertTrue(
-            "Expected to find 'F/T' in the result String '" + result + "'",
-            result.contains("F/T")
-        );
+        assertContains(result, "ChemObjectDiff");
+        assertContains(result, "F/T");
     }
 
 }

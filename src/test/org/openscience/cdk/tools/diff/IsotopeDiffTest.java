@@ -47,8 +47,8 @@ public class IsotopeDiffTest extends NewCDKTestCase {
         String result = IsotopeDiff.diff( element1, element2 );
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        Assert.assertTrue(result.contains("IsotopeDiff"));
-        Assert.assertTrue(result.contains("H/C"));
+        assertContains(result, "IsotopeDiff");
+        assertContains(result, "H/C");
     }
 
 }

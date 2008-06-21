@@ -45,9 +45,9 @@ public class ElectronContainerDiffTest extends NewCDKTestCase {
         String result = ElectronContainerDiff.diff( ec1, ec2 );
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        Assert.assertTrue(result.contains("ElectronContainerDiff"));
-        Assert.assertTrue(result.contains("eCount"));
-        Assert.assertTrue(result.contains("2/3"));
+        assertContains(result, "ElectronContainerDiff");
+        assertContains(result, "eCount");
+        assertContains(result, "2/3");
     }
 
 }

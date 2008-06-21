@@ -46,8 +46,8 @@ public class ElementDiffTest extends NewCDKTestCase {
         String result = ElementDiff.diff( element1, element2 );
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        Assert.assertTrue(result.contains("ElementDiff"));
-        Assert.assertTrue(result.contains("H/C"));
+        assertContains(result, "ElementDiff");
+        assertContains(result, "H/C");
     }
 
 }

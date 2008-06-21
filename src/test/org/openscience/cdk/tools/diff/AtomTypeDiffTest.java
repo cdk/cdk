@@ -47,8 +47,8 @@ public class AtomTypeDiffTest extends NewCDKTestCase {
         String result = AtomTypeDiff.diff( element1, element2 );
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        Assert.assertTrue(result.contains("AtomTypeDiff"));
-        Assert.assertTrue(result.contains("PLANAR3/SP3"));
+        assertContains(result, "AtomTypeDiff");
+        assertContains(result, "PLANAR3/SP3");
     }
 
 }
