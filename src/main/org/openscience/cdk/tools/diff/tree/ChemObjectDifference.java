@@ -22,8 +22,10 @@ package org.openscience.cdk.tools.diff.tree;
 
 import java.util.Iterator;
 
+import org.openscience.cdk.interfaces.IChemObject;
+
 /**
- * Diff between two IChemObjects.
+ * {@link IDifference} between two {@link IChemObject}s.
  * 
  * @author egonw
  */

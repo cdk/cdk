@@ -23,7 +23,7 @@ package org.openscience.cdk.tools.diff.tree;
 import org.openscience.cdk.interfaces.IAtomType;
 
 /**
- * Difference between two IChemObjects.
+ * {@link IDifference} between two {@link IAtomType.Hybridization}s.
  * 
  * @author egonw
  */

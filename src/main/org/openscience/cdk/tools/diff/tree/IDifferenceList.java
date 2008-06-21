@@ -24,7 +24,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Diff between two IChemObjects.
+ * {@link IDifference} between two {@link Object}s which contains one or more child
+ * {@link IDifference} objects.
  * 
  * @author egonw
  */
