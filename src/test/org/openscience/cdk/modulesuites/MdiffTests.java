@@ -33,6 +33,7 @@ import org.openscience.cdk.tools.diff.ElectronContainerDiffTest;
 import org.openscience.cdk.tools.diff.ElementDiffTest;
 import org.openscience.cdk.tools.diff.IsotopeDiffTest;
 import org.openscience.cdk.tools.diff.tree.BooleanDifferenceTest;
+import org.openscience.cdk.tools.diff.tree.DoubleDifferenceTest;
 import org.openscience.cdk.tools.diff.tree.IntegerDifferenceTest;
 import org.openscience.cdk.tools.diff.tree.StringDifferenceTest;
 
@@ -59,6 +60,7 @@ public class MdiffTests {
         
         // cdk.tools.diff.tree
         suite.addTest(new JUnit4TestAdapter(BooleanDifferenceTest.class));
+        suite.addTest(new JUnit4TestAdapter(DoubleDifferenceTest.class));
         suite.addTest(new JUnit4TestAdapter(IntegerDifferenceTest.class));
         suite.addTest(new JUnit4TestAdapter(StringDifferenceTest.class));
 

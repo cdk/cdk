@@ -24,6 +24,10 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.tools.diff.tree.ChemObjectDifference;
+import org.openscience.cdk.tools.diff.tree.DoubleDifference;
+import org.openscience.cdk.tools.diff.tree.IDifference;
+import org.openscience.cdk.tools.diff.tree.IntegerDifference;
 
 /**
  * Compares two {@link IIsotope} classes.
@@ -35,21 +39,29 @@ import org.openscience.cdk.interfaces.IIsotope;
 public class IsotopeDiff extends AbstractChemObjectDiff {
     
     @TestMethod("testMatchAgainstItself,testDiff")
-    public static String diff( IChemObject first, IChemObject second ) {
+    public static String diff(IChemObject first, IChemObject second) {
+        IDifference diff = difference(first, second);
+        if (diff == null) {
+            return "";
+        } else {
+            return diff.toString();
+        }
+    }
+    public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof IIsotope && second instanceof IIsotope)) {
             return null;
         }
         IIsotope firstElem = (IIsotope)first;
         IIsotope secondElem = (IIsotope)second;
-        StringBuffer resultString = new StringBuffer(32);
-        resultString.append(diff("MN", firstElem.getMassNumber(), secondElem.getMassNumber()));
-        resultString.append(diff("EM", firstElem.getExactMass(), secondElem.getExactMass()));
-        resultString.append(diff("AB", firstElem.getNaturalAbundance(), secondElem.getNaturalAbundance()));
-        resultString.append(ElementDiff.diff(first, second));
-        if (resultString.length() > 0) {
-            return "IsotopeDiff(" + resultString.toString() + ")";
+        ChemObjectDifference totalDiff = new ChemObjectDifference("IsotopeDiff");
+        totalDiff.addChild(IntegerDifference.construct("MN", firstElem.getMassNumber(), secondElem.getMassNumber()));
+        totalDiff.addChild(DoubleDifference.construct("EM", firstElem.getExactMass(), secondElem.getExactMass()));
+        totalDiff.addChild(DoubleDifference.construct("AB", firstElem.getNaturalAbundance(), secondElem.getNaturalAbundance()));
+        totalDiff.addChild(ElementDiff.difference(first, second));
+        if (totalDiff.getChildCount() > 0) {
+            return totalDiff;
         } else {
-            return "";
+            return null;
         }
     }
 
