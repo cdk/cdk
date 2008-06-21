@@ -241,4 +241,19 @@ public class NewCDKTestCase {
 	    );
 	}
 
+  /**
+   * Asserts that the given subString is present in the fullString.
+   *
+   * @param fullString String which should contain the subString
+   * @param subString String that must be present in the fullString 
+   */
+  public void assertContains(String fullString, String subString) {
+      Assert.assertNotNull("Expected a non-null String to test contains against.", fullString);
+      Assert.assertNotNull("Expected a non-null substring in contains test.", subString);
+      Assert.assertTrue(
+          "Expected the full string '" + fullString + "' to contain '" + subString + "'.",
+          fullString.contains(subString)
+      );
+  }
+
 }
