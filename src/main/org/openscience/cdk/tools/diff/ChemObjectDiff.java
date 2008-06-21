@@ -57,7 +57,7 @@ public class ChemObjectDiff extends AbstractChemObjectDiff {
         boolean[] firstFlags = firstElem.getFlags();
         boolean[] secondFlags = secondElem.getFlags();
         coDiff.addChild(BooleanArrayDifference.construct("flag", firstFlags, secondFlags));
-        if (coDiff.getChildCount() > 0) {
+        if (coDiff.childCount() > 0) {
             return coDiff;
         } else {
             return null;

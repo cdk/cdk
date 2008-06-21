@@ -58,7 +58,7 @@ public class IsotopeDiff extends AbstractChemObjectDiff {
         totalDiff.addChild(DoubleDifference.construct("EM", firstElem.getExactMass(), secondElem.getExactMass()));
         totalDiff.addChild(DoubleDifference.construct("AB", firstElem.getNaturalAbundance(), secondElem.getNaturalAbundance()));
         totalDiff.addChild(ElementDiff.difference(first, second));
-        if (totalDiff.getChildCount() > 0) {
+        if (totalDiff.childCount() > 0) {
             return totalDiff;
         } else {
             return null;

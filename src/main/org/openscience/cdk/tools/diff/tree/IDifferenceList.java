@@ -36,6 +36,6 @@ public interface IDifferenceList extends IDifference {
 
     public Iterator<IDifference> getChildren();
     
-    public int getChildCount();
+    public int childCount();
 
 }

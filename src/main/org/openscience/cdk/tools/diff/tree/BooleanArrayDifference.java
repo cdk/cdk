@@ -60,7 +60,7 @@ public class BooleanArrayDifference extends AbstractDifferenceList implements ID
                 totalDiff.addChild(BooleanDifference.construct("" + i, first[i], null));
             }
         }
-        if (totalDiff.getChildCount() == 0) {
+        if (totalDiff.childCount() == 0) {
             return null;
         }
         return totalDiff;

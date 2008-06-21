@@ -59,7 +59,7 @@ public class ElementDiff extends AbstractChemObjectDiff {
         coDiff.addChild(StringDifference.construct("ID", firstElem.getID(), secondElem.getID()));
         coDiff.addChild(IntegerDifference.construct("AN", firstElem.getAtomicNumber(), secondElem.getAtomicNumber()));
         coDiff.addChild(ChemObjectDiff.difference(first, second));
-        if (coDiff.getChildCount() > 0) {
+        if (coDiff.childCount() > 0) {
             return coDiff;
         } else {
             return null;

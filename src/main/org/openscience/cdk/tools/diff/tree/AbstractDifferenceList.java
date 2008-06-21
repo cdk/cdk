@@ -53,7 +53,7 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
         return differences.iterator();
     }
     
-    public int getChildCount() {
+    public int childCount() {
         return differences.size();
     }
 

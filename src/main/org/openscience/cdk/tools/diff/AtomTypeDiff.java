@@ -66,7 +66,7 @@ public class AtomTypeDiff extends AbstractChemObjectDiff {
         totalDiff.addChild(DoubleDifference.construct("CR", firstElem.getCovalentRadius(), secondElem.getCovalentRadius()));
         totalDiff.addChild(IntegerDifference.construct("V", firstElem.getValency(), secondElem.getValency()));
         totalDiff.addChild(IsotopeDiff.difference(first, second));
-        if (totalDiff.getChildCount() > 0) {
+        if (totalDiff.childCount() > 0) {
             return totalDiff;
         } else {
             return null;
