@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.tools.diff.tree.IDifference;
 
 /**
  * Compares two {@link IElement} classes.
@@ -39,6 +40,20 @@ import org.openscience.cdk.interfaces.IElement;
 @TestClass("org.openscience.cdk.tools.diff.AbstractChemObjectDiffTest")
 public abstract class AbstractChemObjectDiff {
 
+    @TestMethod("testMatchAgainstItself,testDiff")
+    public static String diff( IChemObject first, IChemObject second ) {
+        IDifference difference = difference(first, second);
+        if (difference == null) {
+            return "";
+        } else {
+            return difference.toString();
+        }
+    }
+
+    public static IDifference difference( IChemObject first, IChemObject second ) {
+        return null;
+    }
+    
     /**
      * Shows the differences between two boolean[] type fields identified by
      * by a field name.

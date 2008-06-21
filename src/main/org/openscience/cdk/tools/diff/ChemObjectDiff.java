@@ -23,6 +23,9 @@ package org.openscience.cdk.tools.diff;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.tools.diff.tree.BooleanArrayDifference;
+import org.openscience.cdk.tools.diff.tree.ChemObjectDifference;
+import org.openscience.cdk.tools.diff.tree.IDifference;
 
 /**
  * Compares two {@link IChemObject} classes.
@@ -32,23 +35,32 @@ import org.openscience.cdk.interfaces.IChemObject;
  */
 @TestClass("org.openscience.cdk.tools.diff.ChemObjectDiffTest")
 public class ChemObjectDiff extends AbstractChemObjectDiff {
-    
+
     @TestMethod("testMatchAgainstItself,testDiff")
     public static String diff( IChemObject first, IChemObject second ) {
+        IDifference difference = difference(first, second);
+        if (difference == null) {
+            return "";
+        } else {
+            return difference.toString();
+        }
+    }
+
+    public static IDifference difference( IChemObject first, IChemObject second ) {
         if (!(first instanceof IChemObject && second instanceof IChemObject)) {
             return null;
         }
         IChemObject firstElem = (IChemObject)first;
         IChemObject secondElem = (IChemObject)second;
-        StringBuffer resultString = new StringBuffer(32);
+        ChemObjectDifference coDiff = new ChemObjectDifference("ChemObjectDiff");
         // Compare flags
         boolean[] firstFlags = firstElem.getFlags();
         boolean[] secondFlags = secondElem.getFlags();
-        resultString.append(diff("flag", firstFlags, secondFlags));
-        if (resultString.length() > 0) {
-            return "ChemObjectDiff(" + resultString.toString() + ")";
+        coDiff.addChild(BooleanArrayDifference.construct("flag", firstFlags, secondFlags));
+        if (coDiff.getChildCount() > 0) {
+            return coDiff;
         } else {
-            return "";
+            return null;
         }
     }
 

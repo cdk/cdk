@@ -35,7 +35,10 @@ public class ChemObjectDiffTest {
         IChemObject atom1 = new ChemObject();
         String result = ChemObjectDiff.diff(atom1, atom1);
         Assert.assertNotNull(result);
-        Assert.assertEquals(0, result.length());
+        Assert.assertEquals(
+            "Expected a zero-length result string, but found '" + result + "'",
+            0, result.length()
+        );
     }
     
     @Test public void testDiff() {
@@ -45,9 +48,17 @@ public class ChemObjectDiffTest {
         
         String result = ChemObjectDiff.diff( atom1, atom2 );
         Assert.assertNotNull(result);
-        Assert.assertNotSame(0, result.length());
-        Assert.assertTrue(result.contains("ChemObjectDiff"));
-        Assert.assertTrue(result.contains("F/T"));
+        Assert.assertNotSame(
+            "Expected non-zero-length result", 0, result.length()
+        );
+        Assert.assertTrue(
+            "Expected the substring 'ChemObjectDiff' in '" + result + "'",
+            result.contains("ChemObjectDiff")
+        );
+        Assert.assertTrue(
+            "Expected to find 'F/T' in the result String '" + result + "'",
+            result.contains("F/T")
+        );
     }
 
 }
