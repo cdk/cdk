@@ -21,7 +21,7 @@
 package org.openscience.cdk.tools.diff.tree;
 
 /**
- * Difference between two IChemObjects.
+ * {@link IDifference} between two {@link Double}.
  * 
  * @author egonw
  */
