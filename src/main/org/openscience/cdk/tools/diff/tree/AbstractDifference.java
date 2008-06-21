@@ -29,11 +29,4 @@ public abstract class AbstractDifference implements IDifference {
 
     protected AbstractDifference() {}
     
-    public static AbstractDifference construct(String name, Object first, Object second) {
-        if (first instanceof boolean[] && second instanceof boolean[]) {
-            
-        }
-        return null;
-    }
-    
 }
