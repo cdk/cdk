@@ -24,18 +24,18 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.Isotope;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IIsotope;
 
 /**
  * @cdk.module test-diff
  */
-public class IsotopeDiffTest {
+public class IsotopeDiffTest extends NewCDKTestCase {
 
     @Test public void testMatchAgainstItself() {
         IIsotope element1 = new Isotope(new Element());
         String result = IsotopeDiff.diff(element1, element1);
-        Assert.assertNotNull(result);
-        Assert.assertEquals(0, result.length());
+        assertZeroLength(result);
     }
     
     @Test public void testDiff() {

@@ -24,19 +24,18 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
  * @cdk.module test-diff
  */
-public class BondDiffTest {
+public class BondDiffTest extends NewCDKTestCase {
 
     @Test public void testMatchAgainstItself() {
         IBond bond1 = new Bond();
         String result = BondDiff.diff(bond1, bond1);
-        Assert.assertNotNull(result);
-        Assert.assertEquals(0, result.length());
+        assertZeroLength(result);
     }
     
     @Test public void testDiff() {

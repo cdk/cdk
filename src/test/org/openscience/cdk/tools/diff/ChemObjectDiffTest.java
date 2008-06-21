@@ -24,21 +24,18 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IChemObject;
 
 /**
  * @cdk.module test-diff
  */
-public class ChemObjectDiffTest {
+public class ChemObjectDiffTest extends NewCDKTestCase {
 
     @Test public void testMatchAgainstItself() {
         IChemObject atom1 = new ChemObject();
         String result = ChemObjectDiff.diff(atom1, atom1);
-        Assert.assertNotNull(result);
-        Assert.assertEquals(
-            "Expected a zero-length result string, but found '" + result + "'",
-            0, result.length()
-        );
+        assertZeroLength(result);
     }
     
     @Test public void testDiff() {

@@ -228,4 +228,17 @@ public class NewCDKTestCase {
 			Assert.assertEquals(hydrogenCounts[i], atoms.next().getHydrogenCount().intValue());
 	}
 
+	/**
+	 * Asserts that the given String has zero length.
+	 *
+	 * @param String String to test the length of.
+	 */
+	public void assertZeroLength(String testString) {
+	    Assert.assertNotNull("Expected a non-null String.", testString);
+	    Assert.assertEquals(
+	        "Expected a zero-length String, but found '" + testString + "'",
+	        0, testString.length()
+	    );
+	}
+
 }

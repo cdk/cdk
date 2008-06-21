@@ -23,18 +23,18 @@ package org.openscience.cdk.tools.diff;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Element;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
  * @cdk.module test-diff
  */
-public class ElementDiffTest {
+public class ElementDiffTest extends NewCDKTestCase {
 
     @Test public void testMatchAgainstItself() {
         IElement element1 = new Element();
         String result = ElementDiff.diff(element1, element1);
-        Assert.assertNotNull(result);
-        Assert.assertEquals(0, result.length());
+        assertZeroLength(result);
     }
     
     @Test public void testDiff() {
