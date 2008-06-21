@@ -32,6 +32,8 @@ import org.openscience.cdk.tools.diff.ChemObjectDiffTest;
 import org.openscience.cdk.tools.diff.ElectronContainerDiffTest;
 import org.openscience.cdk.tools.diff.ElementDiffTest;
 import org.openscience.cdk.tools.diff.IsotopeDiffTest;
+import org.openscience.cdk.tools.diff.tree.AtomTypeHybridizationDifferenceTest;
+import org.openscience.cdk.tools.diff.tree.BondOrderDifferenceTest;
 import org.openscience.cdk.tools.diff.tree.BooleanDifferenceTest;
 import org.openscience.cdk.tools.diff.tree.DoubleDifferenceTest;
 import org.openscience.cdk.tools.diff.tree.IntegerDifferenceTest;
@@ -63,6 +65,8 @@ public class MdiffTests {
         suite.addTest(new JUnit4TestAdapter(DoubleDifferenceTest.class));
         suite.addTest(new JUnit4TestAdapter(IntegerDifferenceTest.class));
         suite.addTest(new JUnit4TestAdapter(StringDifferenceTest.class));
+        suite.addTest(new JUnit4TestAdapter(BondOrderDifferenceTest.class));
+        suite.addTest(new JUnit4TestAdapter(AtomTypeHybridizationDifferenceTest.class));
 
         return suite;
     }

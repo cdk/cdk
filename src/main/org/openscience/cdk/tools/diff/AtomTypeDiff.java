@@ -24,6 +24,13 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.tools.diff.tree.AtomTypeHybridizationDifference;
+import org.openscience.cdk.tools.diff.tree.BondOrderDifference;
+import org.openscience.cdk.tools.diff.tree.ChemObjectDifference;
+import org.openscience.cdk.tools.diff.tree.DoubleDifference;
+import org.openscience.cdk.tools.diff.tree.IDifference;
+import org.openscience.cdk.tools.diff.tree.IntegerDifference;
+import org.openscience.cdk.tools.diff.tree.StringDifference;
 
 /**
  * Compares two {@link IAtomType} classes.
@@ -36,25 +43,33 @@ public class AtomTypeDiff extends AbstractChemObjectDiff {
     
     @TestMethod("testMatchAgainstItself,testDiff")
     public static String diff( IChemObject first, IChemObject second ) {
+        IDifference difference = difference(first, second);
+        if (difference == null) {
+            return "";
+        } else {
+            return difference.toString();
+        }
+    }
+    public static IDifference difference( IChemObject first, IChemObject second ) {
         if (!(first instanceof IAtomType && second instanceof IAtomType)) {
             return null;
         }
         IAtomType firstElem = (IAtomType)first;
         IAtomType secondElem = (IAtomType)second;
-        StringBuffer resultString = new StringBuffer(32);
-        resultString.append(diff("N", firstElem.getAtomTypeName(), secondElem.getAtomTypeName()));
-        resultString.append(diff("MBO", firstElem.getMaxBondOrder(), secondElem.getMaxBondOrder()));
-        resultString.append(diff("BOS", firstElem.getBondOrderSum(), secondElem.getBondOrderSum()));
-        resultString.append(diff("FC", firstElem.getFormalCharge(), secondElem.getFormalCharge()));
-        resultString.append(diff("H", firstElem.getHybridization(), secondElem.getHybridization()));
-        resultString.append(diff("NC", firstElem.getFormalNeighbourCount(), secondElem.getFormalNeighbourCount()));
-        resultString.append(diff("CR", firstElem.getCovalentRadius(), secondElem.getCovalentRadius()));
-        resultString.append(diff("V", firstElem.getValency(), secondElem.getValency()));
-        resultString.append(IsotopeDiff.diff(first, second));
-        if (resultString.length() > 0) {
-            return "AtomTypeDiff(" + resultString.toString() + ")";
+        ChemObjectDifference totalDiff = new ChemObjectDifference("AtomTypeDiff");
+        totalDiff.addChild(StringDifference.construct("N", firstElem.getAtomTypeName(), secondElem.getAtomTypeName()));
+        totalDiff.addChild(BondOrderDifference.construct("MBO", firstElem.getMaxBondOrder(), secondElem.getMaxBondOrder()));
+        totalDiff.addChild(DoubleDifference.construct("BOS", firstElem.getBondOrderSum(), secondElem.getBondOrderSum()));
+        totalDiff.addChild(IntegerDifference.construct("FC", firstElem.getFormalCharge(), secondElem.getFormalCharge()));
+        totalDiff.addChild(AtomTypeHybridizationDifference.construct("H", firstElem.getHybridization(), secondElem.getHybridization()));
+        totalDiff.addChild(IntegerDifference.construct("NC", firstElem.getFormalNeighbourCount(), secondElem.getFormalNeighbourCount()));
+        totalDiff.addChild(DoubleDifference.construct("CR", firstElem.getCovalentRadius(), secondElem.getCovalentRadius()));
+        totalDiff.addChild(IntegerDifference.construct("V", firstElem.getValency(), secondElem.getValency()));
+        totalDiff.addChild(IsotopeDiff.difference(first, second));
+        if (totalDiff.getChildCount() > 0) {
+            return totalDiff;
         } else {
-            return "";
+            return null;
         }
     }
 
