@@ -23,7 +23,8 @@ package org.openscience.cdk.tools.diff.tree;
 /**
  * Difference between two IChemObjects.
  * 
- * @author egonw
+ * @author     egonw
+ * @cdk.module diff
  */
 public abstract class AbstractDifference implements IDifference {
 

@@ -27,7 +27,8 @@ import java.util.List;
  * {@link IDifference} between two {@link Object}s which contains one or more child
  * {@link IDifference} objects.
  * 
- * @author egonw
+ * @author     egonw
+ * @cdk.module diff
  */
 public interface IDifferenceList extends IDifference {
 

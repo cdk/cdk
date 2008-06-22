@@ -23,7 +23,8 @@ package org.openscience.cdk.tools.diff.tree;
 /**
  * Object that describes the difference between two {@link Object}s.
  * 
- * @author egonw
+ * @author     egonw
+ * @cdk.module diff
  */
 public interface IDifference {
     

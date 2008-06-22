@@ -23,7 +23,8 @@ package org.openscience.cdk.tools.diff.tree;
 /**
  * {@link IDifference} between two {@link Boolean}s.
  * 
- * @author egonw
+ * @author     egonw
+ * @cdk.module diff
  */
 public class BooleanDifference implements IDifference {
 

@@ -23,7 +23,8 @@ package org.openscience.cdk.tools.diff.tree;
 /**
  * {@link IDifference} between two {@link Integer}.
  * 
- * @author egonw
+ * @author     egonw
+ * @cdk.module diff
  */
 public class IntegerDifference implements IDifference {
 
