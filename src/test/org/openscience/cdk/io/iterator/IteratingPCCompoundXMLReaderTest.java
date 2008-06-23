@@ -75,6 +75,10 @@ public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
         IMolecule first = set.getMolecule(0);
         assertEquals(8, first.getAtomCount());
         assertEquals(7, first.getBondCount());
+        assertNotNull(first.getProperty("IUPAC Name (Traditional)"));
+        assertEquals("acetic acid", first.getProperty("IUPAC Name (Traditional)"));
+        assertNotNull(first.getProperty("InChI"));
+        assertEquals("InChI=1/C2H4O2/c1-2(3)4/h1H3,(H,3,4)/f/h3H", first.getProperty("InChI"));
     }
 
 }

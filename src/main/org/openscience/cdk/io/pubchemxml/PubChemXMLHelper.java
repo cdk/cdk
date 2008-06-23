@@ -84,6 +84,13 @@ public class PubChemXMLHelper {
 	public final static String EL_BONDID2 = "PC-Bonds_aid2";
 	public final static String EL_BONDORDER = "PC-Bonds_order";
 	
+  // bond block elements
+  public final static String EL_PROPSBLOCK = "PC-Compound_props";
+  public final static String EL_PROPS_INFODATA = "PC-InfoData";
+  public final static String EL_PROPS_URNLABEL = "PC-Urn_label";
+  public final static String EL_PROPS_URNNAME = "PC-Urn_name";
+  public final static String EL_PROPS_SVAL = "PC-InfoData_value_sval";
+
     public IMoleculeSet parseCompoundsBlock(XmlPullParser parser) throws Exception {
     	IMoleculeSet set = builder.newMoleculeSet();
     	// assume the current element is PC-Compounds
@@ -189,6 +196,31 @@ public class PubChemXMLHelper {
 		}
 	}
 	
+    public void parserCompoundInfoData(XmlPullParser parser, IMolecule molecule) throws Exception {
+        String urn_label = null;
+        String urn_name = null;
+        String sval = null;
+        while (parser.next() != XmlPullParser.END_DOCUMENT) {
+            if (parser.getEventType() == XmlPullParser.END_TAG) {
+                if (EL_PROPS_INFODATA.equals(parser.getName())) {
+                    break; // done parsing the atom block
+                }
+            } else if (parser.getEventType() == XmlPullParser.START_TAG) {
+                if (EL_PROPS_URNNAME.equals(parser.getName())) {
+                    urn_name = parser.nextText();
+                } else if (EL_PROPS_URNLABEL.equals(parser.getName())) {
+                    urn_label = parser.nextText();
+                } else if (EL_PROPS_SVAL.equals(parser.getName())) {
+                    sval = parser.nextText();
+                }
+            }
+        }
+        if (urn_label != null & sval != null) {
+            String property = urn_label + (urn_name == null ? "" : " (" + urn_name + ")");
+            molecule.setProperty(property, sval);
+        }
+    }
+
     public void parseAtomCharges(XmlPullParser parser, IMolecule molecule) throws Exception {
     	while (parser.next() != XmlPullParser.END_DOCUMENT) {
     		if (parser.getEventType() == XmlPullParser.END_TAG) {
@@ -235,6 +267,8 @@ public class PubChemXMLHelper {
     				parserAtomBlock(parser, molecule);
     			} else if (EL_BONDBLOCK.equals(parser.getName())) {
     				parserBondBlock(parser, molecule);
+          } else if (EL_PROPS_INFODATA.equals(parser.getName())) {
+              parserCompoundInfoData(parser, molecule);
     			}
     		}
     	}
