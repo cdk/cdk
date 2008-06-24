@@ -67,6 +67,8 @@ public class PubChemXMLHelper {
 	public final static String EL_PCCOMPOUNDS = "PC-Compounds";
 	public final static String EL_PCSUBSTANCE = "PC-Substance";
 	public final static String EL_PCSUBSTANCE_SID = "PC-Substance_sid";
+  public final static String EL_PCCOMPOUND_ID = "PC-Compound_id";
+  public final static String EL_PCCOMPOUND_CID = "PC-CompoundType_id_cid";
 	public final static String EL_PCID_ID = "PC-ID_id";
 
 	// atom block elements
@@ -157,7 +159,23 @@ public class PubChemXMLHelper {
 	    return sid;
     }
 
-	public void parseAtomElements(XmlPullParser parser, IMolecule molecule) throws Exception {
+    public String getCID(XmlPullParser parser) throws Exception {
+        String cid = "unknown";
+        while (parser.next() != XmlPullParser.END_DOCUMENT) {
+            if (parser.getEventType() == XmlPullParser.END_TAG) {
+                if (EL_PCCOMPOUND_ID.equals(parser.getName())) {
+                    break; // done parsing the atom block
+                }
+            } else if (parser.getEventType() == XmlPullParser.START_TAG) {
+                if (EL_PCCOMPOUND_CID.equals(parser.getName())) {
+                    cid = parser.nextText();
+                }
+            }
+        }
+        return cid;
+    }
+
+  public void parseAtomElements(XmlPullParser parser, IMolecule molecule) throws Exception {
 		while (parser.next() != XmlPullParser.END_DOCUMENT) {
 			if (parser.getEventType() == XmlPullParser.END_TAG) {
     			if (EL_ATOMSELEMENT.equals(parser.getName())) {
@@ -269,6 +287,9 @@ public class PubChemXMLHelper {
     				parserBondBlock(parser, molecule);
           } else if (EL_PROPS_INFODATA.equals(parser.getName())) {
               parserCompoundInfoData(parser, molecule);
+          } else if (EL_PCCOMPOUND_ID.equals(parser.getName())) {
+              String cid = getCID(parser);
+              molecule.setProperty("PubChem CID", cid);
     			}
     		}
     	}
