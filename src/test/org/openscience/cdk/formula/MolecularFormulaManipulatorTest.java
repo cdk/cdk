@@ -369,6 +369,20 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
         Assert.assertEquals(expectedMass, totalExactMass, 0.000001);
     }
     
+    @Test
+    public void testGetMajorIsotopeMass_IMolecularFormula() throws Exception {
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(builder.newIsotope("C"));
+        formula.addIsotope(builder.newIsotope("H"), 4);
+
+        double expectedMass = 0.0;
+        expectedMass += IsotopeFactory.getInstance(builder).getMajorIsotope("C").getExactMass();
+        expectedMass += 4.0*IsotopeFactory.getInstance(builder).getMajorIsotope("H").getExactMass();
+
+        double totalExactMass = MolecularFormulaManipulator.getMajorIsotopeMass(formula);
+        Assert.assertEquals(expectedMass, totalExactMass, 0.000001);
+    }
+
     /**
      * A unit test suite for JUnit. Test total Exact Mass. It is 
      * necessary to added the corresponding isotope before to calculate

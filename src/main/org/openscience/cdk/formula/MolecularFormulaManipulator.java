@@ -490,6 +490,30 @@ public class MolecularFormulaManipulator {
 		 return mass;
 	 }
 		  
+	  /**
+	   * Get the summed major isotopic mass of all elements from an MolecularFormula.
+	   *
+	   * @param  formula The IMolecularFormula to calculate
+	   * @return         The summed exact major isotope masses of all atoms in this MolecularFormula
+	   */
+	   @TestMethod("testGetMajorIsotopeMass_IMolecularFormula")
+	   public static double getMajorIsotopeMass(IMolecularFormula formula) {
+	       double mass = 0.0;
+	       IsotopeFactory factory;
+	       try {
+	           factory = IsotopeFactory.getInstance(formula.getBuilder());
+	       } catch (IOException e) {
+	           throw new RuntimeException("Could not instantiate the IsotopeFactory.");
+	       }
+	       Iterator<IIsotope> iterIsot = formula.isotopes();
+	       while(iterIsot.hasNext()) {
+	           IIsotope isotope = iterIsot.next();
+	           IIsotope major = factory.getMajorIsotope(isotope.getSymbol());
+	           mass += major.getExactMass()*formula.getIsotopeCount(isotope);
+	       }
+	       return mass;
+	   }
+
 	  /** 
 	   * Get the summed natural abundance of all isotopes from an MolecularFormula. Assumes
 	   * abundances to be preset, and will return 0.0 if not.
