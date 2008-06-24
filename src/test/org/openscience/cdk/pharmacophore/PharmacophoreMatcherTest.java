@@ -64,19 +64,28 @@ public class PharmacophoreMatcherTest {
         query.addBond(b3);
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
-        boolean[] statuses = matcher.matches(conformers);
 
-        Assert.assertEquals(100, statuses.length);
+        boolean firstTime = true;
+        int i = 0;
+        boolean[] statuses = new boolean[100];
+        for (IAtomContainer conf : conformers) {
+            if (firstTime) {
+                statuses[i] = matcher.matches(conf, true);
+                firstTime = false;
+            } else statuses[i] = matcher.matches(conf, false);
+            i++;
+        }
+
 
         int[] hits = new int[18];
         int idx = 0;
-        for (int i = 0; i < statuses.length; i++) {
+        for (i = 0; i < statuses.length; i++) {
             if (statuses[i]) hits[idx++] = i;
         }
 
 
         int[] expected = {0, 1, 2, 5, 6, 7, 8, 9, 10, 20, 23, 48, 62, 64, 66, 70, 76, 87};
-        for (int i = 0; i < expected.length; i++) {
+        for (i = 0; i < expected.length; i++) {
             Assert.assertEquals("Hit " + i + " didn't match", expected[i], hits[i]);
         }
     }
@@ -138,7 +147,7 @@ public class PharmacophoreMatcherTest {
         query.addBond(b3);
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
-        matcher.matches(conformers);
+        matcher.matches(conformers.get(0));
     }
 
     @Test
@@ -204,7 +213,7 @@ public class PharmacophoreMatcherTest {
         Assert.assertEquals(1, bmatches.size());
         List<IBond> bmatch = bmatches.get(0);
         Assert.assertEquals(1, bmatch.size());
-        PharmacophoreBond pbond = (PharmacophoreBond)bmatch.get(0);
+        PharmacophoreBond pbond = (PharmacophoreBond) bmatch.get(0);
         Assert.assertEquals(5.63, pbond.getBondLength(), 0.01);
     }
 
@@ -278,18 +287,27 @@ public class PharmacophoreMatcherTest {
         query.addBond(b1);
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
-        boolean[] statuses = matcher.matches(conformers);
 
+        boolean firstTime = true;
+        int i = 0;
+        boolean[] statuses = new boolean[100];
+        for (IAtomContainer conf : conformers) {
+            if (firstTime) {
+                statuses[i] = matcher.matches(conf, true);
+                firstTime = false;
+            } else statuses[i] = matcher.matches(conf, false);
+            i++;
+        }
         Assert.assertEquals(100, statuses.length);
 
         int[] hits = new int[9];
         int idx = 0;
-        for (int i = 0; i < statuses.length; i++) {
+        for (i = 0; i < statuses.length; i++) {
             if (statuses[i]) hits[idx++] = i;
         }
 
         int[] expected = {0, 6, 32, 33, 48, 54, 60, 62, 69};
-        for (int i = 0; i < expected.length; i++) {
+        for (i = 0; i < expected.length; i++) {
             Assert.assertEquals("Hit " + i + " didn't match", expected[i], hits[i]);
         }
     }

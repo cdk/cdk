@@ -1,7 +1,6 @@
 package org.openscience.cdk.pharmacophore;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -39,10 +38,10 @@ import java.util.*;
  * Given the query pharmacophore one can use this class to check with it occurs in a specified molecule.
  * Note that for full generality pharmacophore searches are performed using conformations of molecules.
  * This can easily be accomplished using this class together with the {@link org.openscience.cdk.ConformerContainer}
- * class. See {@link #matches(org.openscience.cdk.ConformerContainer)}.
+ * class.  See the example below.
  * <p/>
  * Currently this class will allow you to perform pharmacophore searches using triads, quads or any number
- * of pharmacophore groups. However, only distances between pharmacophore groups are considered, so
+ * of pharmacophore groups. However, only distances and angles between pharmacophore groups are considered, so
  * alternative constraints such as torsions and so on cannot be considered at this point.
  * <p/>
  * After a query has been performed one can retrieve the matching groups (as opposed to the matching atoms
@@ -73,11 +72,20 @@ import java.util.*;
  * IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
  *      new FileReader(new File(filename)), DefaultChemObjectBuilder.getInstance());
  * <p/>
- * ConformerContainer cc;
- * if (reader.hasNext()) cc = (ConformerContainer) reader.next();
+ * ConformerContainer conformers;
+ * if (reader.hasNext()) conformers = (ConformerContainer) reader.next();
  * <p/>
- * PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
- * boolean[] statuses = matcher.matches(cc);
+ * boolean firstTime = true;
+ * for (IAtomContainer conf : conformers) {
+ *   boolean status;
+ *   if (firstTime) {
+ *     status = matcher.matches(conf, true);
+ *     firstTime = false;
+ *   } else status = matcher.matches(conf, false);
+ *   if (status) {
+ *     // OK, matched. Do something
+ *   }
+ * }
  * </pre>
  *
  * @author Rajarshi Guha
@@ -122,23 +130,61 @@ public class PharmacophoreMatcher {
 
     /**
      * Performs the pharmacophore matching.
+     * <p/>
+     * This method will analyze the specified target molecule to identify pharmacophore
+     * groups. If dealing with conformer data it is probably more efficient to use
+     * the other form of this method which allows one to skip the pharmacophore group
+     * identification step after the first conformer.
      *
      * @param atomContainer The target molecule. Must have 3D coordinates
      * @return true is the target molecule contains the query pharmacophore
      * @throws org.openscience.cdk.exception.CDKException
      *          if the query pharmacophore was not set or the query is invalid or if the molecule
      *          does not have 3D coordinates
-     * @see #matches(org.openscience.cdk.ConformerContainer)
+     * @see #matches(org.openscience.cdk.interfaces.IAtomContainer, boolean)
      */
     @TestMethod("testCNSPcore")
     public boolean matches(IAtomContainer atomContainer) throws CDKException {
+        return matches(atomContainer, true);
+    }
+
+    /**
+     * Performs the pharmacophore matching.
+     *
+     * @param atomContainer    The target molecule. Must have 3D coordinates
+     * @param initializeTarget If <i>true</i>, the target molecule specified in the
+     *                         first argument will be analyzed to identify matching pharmacophore groups. If <i>false</i>
+     *                         this is not performed. The latter case is only useful when dealing with conformers
+     *                         since for a given molecule, all conformers will have the same pharmacophore groups
+     *                         and only the constraints will change from one conformer to another.
+     * @return true is the target molecule contains the query pharmacophore
+     * @throws org.openscience.cdk.exception.CDKException
+     *          if the query pharmacophore was not set or the query is invalid or if the molecule
+     *          does not have 3D coordinates
+     */
+    @TestMethod("testMatcherQuery1")
+    public boolean matches(IAtomContainer atomContainer, boolean initializeTarget) throws CDKException {
         if (!GeometryTools.has3DCoordinates(atomContainer)) throw new CDKException("Molecule must have 3D coordinates");
         if (pharmacophoreQuery == null) throw new CDKException("Must set the query pharmacophore before matching");
         if (!checkQuery(pharmacophoreQuery))
             throw new CDKException("A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
         String title = (String) atomContainer.getProperty(CDKConstants.TITLE);
 
-        pharmacophoreMolecule = getPharmacophoreMolecule(atomContainer);
+        if (initializeTarget) pharmacophoreMolecule = getPharmacophoreMolecule(atomContainer);
+        else {
+            // even though the atoms comprising the pcore groups are
+            // constant, their coords will differ, so we need to make
+            // sure we get the latest set of effective coordinates
+            Iterator<IAtom> atoms = pharmacophoreMolecule.atoms();
+            while (atoms.hasNext()) {
+                PharmacophoreAtom patom = (PharmacophoreAtom) atoms.next();
+                List<Integer> tmpList = new ArrayList<Integer>();
+                for (int idx : patom.getMatchingAtoms()) tmpList.add(idx);
+                Point3d coords = getEffectiveCoordinates(atomContainer, tmpList);
+                patom.setPoint3d(coords);
+            }
+        }
+
         if (pharmacophoreMolecule.getAtomCount() < pharmacophoreQuery.getAtomCount()) {
             logger.debug("Target [" + title + "] did not match the query SMARTS. Skipping constraints");
             return false;
@@ -148,74 +194,6 @@ public class PharmacophoreMatcher {
         return bondMapping.size() > 0;
     }
 
-
-    /**
-     * Performs pharmacophore matching for a group of conformers.
-     * <p/>
-     * Though you can use the other version of this method, this form is much
-     * more efficient when performing matching against a collection of conformers
-     * for a given molecule.
-     *
-     * @param conformerContainer The conformers to match against
-     * @return An array of boolens. If the i'th element is true it indicates that the i'th conformer
-     *         contained the pharmacophore query
-     * @throws CDKException if the query pharmacophore was not set or the query is invalid
-     * @see #matches(org.openscience.cdk.interfaces.IAtomContainer)
-     * @see org.openscience.cdk.ConformerContainer
-     */
-    @TestMethod("testMatcherQuery1")
-    public boolean[] matches(ConformerContainer conformerContainer) throws CDKException {
-        if (conformerContainer.size() == 0) throw new CDKException("Must supply at least 1 conformer");
-        if (pharmacophoreQuery == null) throw new CDKException("Must set the query pharmacophore before matching");
-        if (!checkQuery(pharmacophoreQuery))
-            throw new CDKException("A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
-
-        String title = conformerContainer.getTitle();
-        boolean[] ret = new boolean[conformerContainer.size()];
-        for (int i = 0; i < conformerContainer.size(); i++) ret[i] = false;
-
-        IAtomContainer pharmacophoreMolecule = getPharmacophoreMolecule(conformerContainer.get(0));
-        if (pharmacophoreMolecule.getAtomCount() < pharmacophoreQuery.getAtomCount()) {
-            logger.debug("Target [" + title + "] did not match the query SMARTS. Skipping constraints");
-            return ret;
-        }
-
-        int i = 0;
-        for (IAtomContainer conf : conformerContainer) {
-
-            // copy the coordinates from this container into the pcore molecule
-            Iterator patoms = pharmacophoreMolecule.atoms();
-            while (patoms.hasNext()) {
-                PharmacophoreAtom patom = (PharmacophoreAtom) patoms.next();
-                int[] indices = patom.getMatchingAtoms();
-                Point3d tmp = new Point3d(0, 0, 0);
-                for (int index : indices) {
-                    Point3d coord = conf.getAtom(index).getPoint3d();
-                    tmp.x += coord.x;
-                    tmp.y += coord.y;
-                    tmp.z += coord.z;
-                }
-                tmp.x /= indices.length;
-                tmp.y /= indices.length;
-                tmp.z /= indices.length;
-                patom.setPoint3d(tmp);
-            }
-
-            // now do a match with these coordinates
-            List bondMapping = UniversalIsomorphismTester.getSubgraphMaps(pharmacophoreMolecule, pharmacophoreQuery);
-            List<List<PharmacophoreAtom>> tmp = getAtomMappings(bondMapping, pharmacophoreMolecule);
-            ret[i++] = tmp.size() > 0;
-
-            logger.debug("  Conformer got " + tmp.size() + " hits");
-
-            if (matchingPAtoms == null && tmp.size() > 0) {
-                matchingPAtoms = new ArrayList<List<PharmacophoreAtom>>(tmp);
-            }
-
-        }
-
-        return ret;
-    }
 
     /**
      * Get the matching pharmacophore constraints.
