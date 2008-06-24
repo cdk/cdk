@@ -13,6 +13,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -327,5 +328,40 @@ public class PharmacophoreMatcherTest {
         IQueryAtomContainer retQuery = matcher.getPharmacophoreQuery();
         Assert.assertEquals(2, retQuery.getAtomCount());
         Assert.assertEquals(1, retQuery.getBondCount());
+    }
+
+    @Test
+    public void multiSmartsQuery() throws IOException, CDKException {
+
+        QueryAtomContainer query = new QueryAtomContainer();
+        PharmacophoreQueryAtom rings = new PharmacophoreQueryAtom("A", "c1ccccc1|C1CCCC1");
+        PharmacophoreQueryAtom o1 = new PharmacophoreQueryAtom("Hd", "[OX1]");
+        PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(rings, o1, 3.5, 5.8);
+        query.addAtom(rings);
+        query.addAtom(o1);
+        query.addBond(b1);
+
+        PharmacophoreMatcher matcher = new PharmacophoreMatcher();
+        matcher.setPharmacophoreQuery(query);
+
+        String filename = "data/pcore/multismartpcore.sdf";
+        InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
+        IteratingMDLReader reader = new IteratingMDLReader(ins,
+                DefaultChemObjectBuilder.getInstance());
+
+        IAtomContainer mol = (IAtomContainer) reader.next();
+        Assert.assertTrue(matcher.matches(mol));
+        Assert.assertEquals(1, matcher.getUniqueMatchingPharmacophoreAtoms().size());
+        Assert.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().get(0).size());
+
+        mol = (IAtomContainer) reader.next();
+        Assert.assertTrue(matcher.matches(mol));
+        Assert.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().size());
+        Assert.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().get(0).size());
+        Assert.assertEquals(2, matcher.getUniqueMatchingPharmacophoreAtoms().get(1).size());
+
+
+        mol = (IAtomContainer) reader.next();
+        Assert.assertFalse(matcher.matches(mol));
     }
 }

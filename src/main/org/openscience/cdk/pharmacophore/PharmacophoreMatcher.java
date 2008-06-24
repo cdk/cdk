@@ -337,14 +337,22 @@ public class PharmacophoreMatcher {
             // in our query molecule. If so, then cllect each set of
             // matching atoms and for each set make a new pcore atom and
             // add it to the pcore atom container object
-            sqt.setSmarts(smarts);
-            if (sqt.matches(atomContainer)) {
-                List<List<Integer>> mappings = sqt.getUniqueMatchingAtoms();
-                for (List<Integer> atomIndices : mappings) {
-                    Point3d coords = getEffectiveCoordinates(atomContainer, atomIndices);
-                    PharmacophoreAtom patom = new PharmacophoreAtom(smarts, qatom.getSymbol(), coords);
-                    patom.setMatchingAtoms(intIndices(atomIndices));
-                    if (!pharmacophoreMolecule.contains(patom)) pharmacophoreMolecule.addAtom(patom);
+
+            // Note that we allow a special form of SMARTS where the | operator
+            // represents logical or of multi-atom groups (as opposed to ','
+            // which is for single atom matches)
+            String[] subSmarts = smarts.split("\\|");          
+
+            for (String subSmart : subSmarts) {
+                sqt.setSmarts(subSmart);
+                if (sqt.matches(atomContainer)) {
+                    List<List<Integer>> mappings = sqt.getUniqueMatchingAtoms();
+                    for (List<Integer> atomIndices : mappings) {
+                        Point3d coords = getEffectiveCoordinates(atomContainer, atomIndices);
+                        PharmacophoreAtom patom = new PharmacophoreAtom(smarts, qatom.getSymbol(), coords);
+                        patom.setMatchingAtoms(intIndices(atomIndices));
+                        if (!pharmacophoreMolecule.contains(patom)) pharmacophoreMolecule.addAtom(patom);
+                    }
                 }
             }
             logger.debug("\tFound " + sqt.getUniqueMatchingAtoms().size() + " unique matches for " + smarts);
