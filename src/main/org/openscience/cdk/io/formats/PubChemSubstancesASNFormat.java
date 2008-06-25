@@ -61,7 +61,7 @@ public class PubChemSubstancesASNFormat implements IChemFormatMatcher {
 
     @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { 
-    	return "";
+    	return null;
     }
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { 
