@@ -60,7 +60,7 @@ abstract public class ResourceFormatTest {
     
     @Test public void testGetPreferredNameExtension() {
         if (resourceFormat.getPreferredNameExtension() == null) {
-            if (resourceFormat.getNameExtensions() == null) {
+            if (resourceFormat.getNameExtensions() == null || resourceFormat.getNameExtensions().length == 0) {
                 // Seems to be current practice
                 // FIXME: needs to be discussed
             } else {
