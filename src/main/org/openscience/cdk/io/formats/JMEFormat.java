@@ -63,9 +63,7 @@ public class JMEFormat implements IChemFormat {
     }
 
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
-      return "org.openscience.cdk.io.JMEReader";
-    }
+    public String getReaderClassName() { return null; }
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 

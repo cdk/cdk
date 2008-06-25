@@ -63,9 +63,7 @@ public class MOPAC97Format implements IChemFormatMatcher {
     }
 
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
-      return "org.openscience.cdk.io.MOPAC97Reader";
-    }
+    public String getReaderClassName() { return null; }
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }
 
