@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.List;
+
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -132,18 +134,21 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
         } catch (Exception ex1) {
             throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
         }
-        java.util.List neighboors = mol.getConnectedAtomsList(atom);
+        List<IAtom> neighboors = mol.getConnectedAtomsList(atom);
         DoubleArrayResult protonPartialCharge = new DoubleArrayResult(neighboors.size() + 1);
         protonPartialCharge.add( atom.getCharge() );
         for (int i = 0; i < neighboors.size(); i++) {
-        	IAtom neighbour = (IAtom)neighboors.get(i);
+            IAtom neighbour = (IAtom)neighboors.get(i);
             if (neighbour.getSymbol().equals("H")) {
                 protonPartialCharge.add( neighbour.getCharge() );
             }
         }
+        String[] labels = new String[protonPartialCharge.length()];
+        for (int i = 0; i < protonPartialCharge.length(); i++) {
+            labels[i] = "protonTotalPartialCharge" + (i+1);
+        }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                protonPartialCharge,
-                new String[] {"protonTotalPartialCharge"});
+                protonPartialCharge, labels);
     }
 
 
