@@ -846,7 +846,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				atom.getFormalCharge() == -1)) {
     			IAtomType type = getAtomType("Cl.minus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
-    		} else if (atom.getFormalCharge() == 1) {
+        } else if (atom.getFormalCharge() != CDKConstants.UNSET && atom.getFormalCharge() == 1) {
     			IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     			if (maxBondOrder == IBond.Order.DOUBLE) {
     				IAtomType type = getAtomType("Cl.plus.sp2");
