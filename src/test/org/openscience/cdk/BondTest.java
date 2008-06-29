@@ -229,6 +229,28 @@ public class BondTest extends NewCDKTestCase {
     }
 
     @Test
+    public void testGetConnectedAtoms_IAtom() {
+    	IAtom[] atoms = new IAtom[3];
+        atoms[0] = builder.newAtom("B");
+        atoms[1] = builder.newAtom("H");
+        atoms[2] = builder.newAtom("B");
+
+        IBond b = builder.newBond();
+        b.setAtoms(atoms);
+        b.setOrder(IBond.Order.SINGLE); // C=O bond
+
+        IAtom[] connectedAtoms = b.getConnectedAtoms(atoms[1]);
+        Assert.assertNotNull(connectedAtoms);
+        Assert.assertEquals(2, connectedAtoms.length);
+        Assert.assertNotNull(connectedAtoms[0]);
+        Assert.assertNotNull(connectedAtoms[1]);
+
+        // test default return value
+        connectedAtoms = b.getConnectedAtoms(builder.newAtom());
+        Assert.assertNull(connectedAtoms);
+    }
+
+    @Test
     public void testIsConnectedTo_IBond() {
         IAtom c1 = builder.newAtom("C");
         IAtom o = builder.newAtom("O");
