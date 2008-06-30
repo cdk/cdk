@@ -24,10 +24,12 @@
 
 package org.openscience.cdk.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.QsarCoverageTest;
+import org.openscience.cdk.qsar.DescriptorExceptionTest;
 import org.openscience.cdk.qsar.model.R2.RJavaEnvironmentTest;
 
 /**
@@ -46,6 +48,7 @@ public class MqsarTests {
         suite.addTest(QsarCoverageTest.suite());
 
         // Individual Tests - Please add correlatively
+        suite.addTest(new JUnit4TestAdapter(DescriptorExceptionTest.class));
         
         // Stuff for R packages
         String rhome = System.getenv("R_HOME");
