@@ -27,6 +27,7 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.QsarCoverageTest;
 import org.openscience.cdk.qsar.model.R2.RJavaEnvironmentTest;
 
 /**
@@ -42,7 +43,11 @@ public class MqsarTests {
 
         TestSuite suite = new TestSuite("All QSAR Tests");
 
-        // Individual Tests - Please add correlatively	
+        suite.addTest(QsarCoverageTest.suite());
+
+        // Individual Tests - Please add correlatively
+        
+        // Stuff for R packages
         String rhome = System.getenv("R_HOME");
         String ldlibrarypath = System.getenv("LD_LIBRARY_PATH");
 
