@@ -312,10 +312,15 @@ public class MDLWriter extends DefaultChemObjectWriter {
         		line += formatMDLFloat((float)0.0);
         		line += formatMDLFloat((float)0.0) + " ";
         	}
-        	if(container.getAtom(f) instanceof IPseudoAtom)
-        		line += formatMDLString(((IPseudoAtom) container.getAtom(f)).getLabel(), 3);
-        	else
-        		line += formatMDLString(container.getAtom(f).getSymbol(), 3); 
+        	if(container.getAtom(f) instanceof IPseudoAtom){
+        		//according to http://www.google.co.uk/url?sa=t&ct=res&cd=2&url=http%3A%2F%2Fwww.mdl.com%2Fdownloads%2Fpublic%2Fctfile%2Fctfile.pdf&ei=MsJjSMbjAoyq1gbmj7zCDQ&usg=AFQjCNGaJSvH4wYy4FTXIaQ5f7hjoTdBAw&sig2=eSfruNOSsdMFdlrn7nhdAw an R group is written as R#
+        		if(((IPseudoAtom) container.getAtom(f)).getLabel().equals("R"))
+        			line += "R#";
+        		else
+        			line += formatMDLString(((IPseudoAtom) container.getAtom(f)).getLabel(), 3);
+        	}else{
+        		line += formatMDLString(container.getAtom(f).getSymbol(), 3);
+        	}
         	line += " 0  0  0  0  0  0  0  0  0  0  0  0";
         	writer.write(line);
         	writer.newLine();

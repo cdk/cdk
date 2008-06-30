@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.xml.sax.Attributes;
 
 /**
- * Core CML 1.x and 2.0 elements are parsed by this class.
+ * Core CML 1.x and 2.0 elements are pcustomsarsed by this class.
  *
  * <p>Please file a bug report if this parser fails to parse
  * a certain element or attribute value in a valid CML document.
@@ -89,6 +89,7 @@ public class CMLCoreModule implements ICMLModule {
     protected IStrand currentStrand;
     protected IMonomer currentMonomer;
     protected Map<String, IAtom> atomEnumeration;
+    protected List<String> moleculeCustomProperty;
     
     // helper fields    
     protected int formulaCounter;
@@ -113,6 +114,9 @@ public class CMLCoreModule implements ICMLModule {
     protected List atomDictRefs;
     protected List spinMultiplicities;
     protected List occupancies;
+    protected List<String> atomCustomProperty;
+    protected boolean atomCustomPropertyGiven;
+
 
     protected int bondCounter;
     protected List<String> bondid;
@@ -123,7 +127,9 @@ public class CMLCoreModule implements ICMLModule {
     protected List<String> bondDictRefs;
     protected List<String> bondElid;
     protected List<Boolean> bondAromaticity;
+    protected List<String> bondCustomProperty;
     protected boolean stereoGiven;
+    protected boolean bondCustomPropertyGiven;
     protected String inchi;
     protected int curRef;
     protected int CurrentElement;
@@ -166,6 +172,7 @@ public class CMLCoreModule implements ICMLModule {
             this.currentStrand = conv.currentStrand;
             this.currentMonomer = conv.currentMonomer;
             this.atomEnumeration = conv.atomEnumeration;
+            this.moleculeCustomProperty = conv.moleculeCustomProperty;
             
             // copy the intermediate fields
             this.logger = conv.logger;
@@ -197,6 +204,8 @@ public class CMLCoreModule implements ICMLModule {
             this.bondARef2 = conv.bondARef2;
             this.order = conv.order;
             this.bondStereo = conv.bondStereo;
+            this.bondCustomProperty = conv.bondCustomProperty;
+            this.atomCustomProperty = conv.atomCustomProperty;
             this.bondDictRefs = conv.bondDictRefs;
             this.bondAromaticity = conv.bondAromaticity;
             this.curRef = conv.curRef;
@@ -260,6 +269,7 @@ public class CMLCoreModule implements ICMLModule {
         atomDictRefs = new ArrayList();
         spinMultiplicities = new ArrayList();
         occupancies = new ArrayList();
+        atomCustomProperty = new ArrayList<String>();
     }
 
     /**
@@ -272,6 +282,7 @@ public class CMLCoreModule implements ICMLModule {
         bondARef2 = new ArrayList<String>();
         order = new ArrayList<String>();
         bondStereo = new ArrayList<String>();
+        bondCustomProperty = new ArrayList<String>();
         bondDictRefs = new ArrayList<String>();
         bondElid = new ArrayList<String>();
         bondAromaticity = new ArrayList<Boolean>();
@@ -297,6 +308,7 @@ public class CMLCoreModule implements ICMLModule {
         currentMoleculeSet = currentChemFile.getBuilder().newMoleculeSet();
         currentMolecule = currentChemFile.getBuilder().newMolecule();
         atomEnumeration = new HashMap<String, IAtom>();
+        moleculeCustomProperty = new ArrayList<String>();
         
         newMolecule();
         BUILTIN = "";
@@ -436,6 +448,7 @@ public class CMLCoreModule implements ICMLModule {
                 else {
                     logger.warn("Unparsed attribute: " + att);
                 }
+                atomCustomPropertyGiven = false;
             }
         } else if ("atomArray".equals(name) &&
         		   !xpath.endsWith("formula", "atomArray")) {
@@ -502,6 +515,7 @@ public class CMLCoreModule implements ICMLModule {
             }
             
             stereoGiven = false;
+            bondCustomPropertyGiven = false;
             curRef = 0;
         } else if ("bondArray".equals(name)) {
             boolean bondsCounted = false;
@@ -589,6 +603,18 @@ public class CMLCoreModule implements ICMLModule {
         } else if ("scalar".equals(name)) {
             if (xpath.endsWith("crystal", "scalar"))
                 crystalScalar++;
+            else if(xpath.endsWith("bond", "scalar")){
+            	bondCustomProperty.add(elementTitle);
+            	bondCustomProperty.add("true");//TODO here the value of the scalar must go in
+            	bondCustomPropertyGiven = true;
+            } else if(xpath.endsWith("atom", "scalar")){
+            	atomCustomProperty.add(elementTitle);
+            	atomCustomProperty.add("true");//TODO here the value of the scalar must go in
+            	atomCustomPropertyGiven = true;
+            } else if(xpath.endsWith("molecule", "scalar")){
+            	moleculeCustomProperty.add(elementTitle);
+            	moleculeCustomProperty.add("true");//TODO here the value of the scalar must go in
+            }
         } else if ("label".equals(name)) {
             if (xpath.endsWith("atomType", "label")) {
 //            	cdo.setObjectProperty("Atom", "atomTypeLabel", atts.getValue("value"));
@@ -646,6 +672,8 @@ public class CMLCoreModule implements ICMLModule {
         if ("bond".equals(name)) {
         	if (!stereoGiven)
                 bondStereo.add("");
+        	if (!bondCustomPropertyGiven)
+        		bondCustomProperty.add("");
             if (bondStereo.size() > bondDictRefs.size())
                 bondDictRefs.add(null);
             if (bondAromaticity.size() > bondDictRefs.size())
@@ -699,6 +727,9 @@ public class CMLCoreModule implements ICMLModule {
                 yfract.add(null);
                 zfract.add(null);
             }
+            
+        	if (!atomCustomPropertyGiven)
+        		atomCustomProperty.add("");
         } else if ("molecule".equals(name)) {
             storeData();
 //            cdo.endObject("Molecule");
@@ -962,6 +993,9 @@ public class CMLCoreModule implements ICMLModule {
                 if (DICTREF.equals("mdl:stereo")) {
                 	bondStereo.add(cData.trim());
                     stereoGiven=true;
+                } else if(elementTitle.equals("customAtomProperty")){
+                	bondCustomProperty.add(cData.trim());
+                	bondCustomPropertyGiven=true;
                 }
             } else if (xpath.endsWith("atom", "scalar")) {
                 if (DICTREF.equals("cdk:partialCharge")) {
@@ -1095,6 +1129,12 @@ public class CMLCoreModule implements ICMLModule {
         if (formula != null){
         	currentMolecule.setProperty(CDKConstants.FORMULA, formula);
         }
+        Iterator customs=moleculeCustomProperty.iterator();
+        while(customs.hasNext()){
+        	String x=(String)customs.next();
+        	String y=(String)customs.next();
+       		currentMolecule.setProperty(x,y);
+        }
         storeAtomData();
         storeBondData();
     }
@@ -1118,6 +1158,7 @@ public class CMLCoreModule implements ICMLModule {
         boolean hasDictRefs = false;
         boolean hasSpinMultiplicities = false;
         boolean hasOccupancies = false;
+        Iterator customs = atomCustomProperty.iterator();
 
         if (elid.size() == atomCounter) {
             hasID = true;
@@ -1364,6 +1405,13 @@ public class CMLCoreModule implements ICMLModule {
             	if (isotope.get(i) != null)
             		currentAtom.setMassNumber((int)Double.parseDouble((String)isotope.get(i)));
             }
+            
+            if(customs.hasNext()){
+            	String nextCustom = (String)customs.next();
+            	if(!nextCustom.equals("")){
+            		currentAtom.setProperty(nextCustom,(String)customs.next());
+            	}
+            }
 
 //            cdo.endObject("Atom");
             currentMolecule.addAtom(currentAtom);
@@ -1391,6 +1439,7 @@ public class CMLCoreModule implements ICMLModule {
             Iterator bar2s = bondARef2.iterator();
             Iterator stereos = bondStereo.iterator();
             Iterator aroms = bondAromaticity.iterator();
+            Iterator customs = bondCustomProperty.iterator();
 
             while (bar1s.hasNext()) {
 //                cdo.startObject("Bond");
@@ -1451,6 +1500,13 @@ public class CMLCoreModule implements ICMLModule {
                 	Object nextArom = aroms.next();
                 	if (nextArom != null && nextArom == Boolean.TRUE) {
                 		currentBond.setFlag(CDKConstants.ISAROMATIC, true);
+                	}
+                }
+                
+                if(customs.hasNext()){
+                	String nextCustom = (String)customs.next();
+                	if(!nextCustom.equals("")){
+                		currentBond.setProperty(nextCustom,(String)customs.next());
                 	}
                 }
 
