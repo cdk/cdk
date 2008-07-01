@@ -29,8 +29,6 @@ import org.openscience.cdk.atomtype.StructGenAtomTypeGuesserTest;
 import org.openscience.cdk.atomtype.StructGenMatcherTest;
 import org.openscience.cdk.structgen.RandomStructureGeneratorTest;
 import org.openscience.cdk.structgen.VicinitySamplerTest;
-import org.openscience.cdk.structgen.deterministic.EquivalentClassesDeterministicGeneratorTest;
-import org.openscience.cdk.structgen.deterministic.GENMDeterministicGeneratorTest;
 import org.openscience.cdk.structgen.stochastic.PartialFilledStructureMergerTest;
 import org.openscience.cdk.structgen.stochastic.operator.ChemGraphTest;
 import org.openscience.cdk.structgen.stochastic.operator.CrossoverMachineTest;
@@ -52,8 +50,6 @@ public class MstructgenTests {
 
         suite.addTest(RandomStructureGeneratorTest.suite());
         suite.addTest(VicinitySamplerTest.suite());
-        suite.addTest(GENMDeterministicGeneratorTest.suite());
-        suite.addTest(EquivalentClassesDeterministicGeneratorTest.suite());
         
         // structgen.stoichastic
         suite.addTest(PartialFilledStructureMergerTest.suite());
