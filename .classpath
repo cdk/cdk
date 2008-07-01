@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src/test"/>
-	<classpathentry excluding="test/|main/" kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src/main"/>
+	<classpathentry kind="src" path="src/data"/>
 	<classpathentry exported="true" kind="lib" path="jar/jgrapht-0.6.0.jar" sourcepath="cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="jar/jniinchi-0.4.jar" sourcepath="cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="jar/JRI.jar" sourcepath="cdksrc.zip"/>
@@ -11,15 +12,14 @@
 	<classpathentry exported="true" kind="lib" path="jar/vecmath1.2-1.14.jar" sourcepath="cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="jar/xom-1.1.jar" sourcepath="cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="jar/jama-1.0.2.jar" sourcepath="cdksrc.zip"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
-	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="lib" path="develjar/junit-4.4.jar"/>
-	<classpathentry kind="lib" path="jar/commons-cli-1.0.jar"/>
-	<classpathentry kind="lib" path="jar/xml-apis.jar"/>
-	<classpathentry kind="lib" path="jar/xpp3-1.1.4c.jar"/>
-	<classpathentry kind="lib" path="jar/log4j.jar"/>
-	<classpathentry kind="lib" path="develjar/com-sun-javadoc.jar"/>
-	<classpathentry kind="lib" path="develjar/com-sun-tools-doclets-Taglet.jar"/>
-	<classpathentry kind="lib" path="develjar/junit-4.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="jar/commons-cli-1.0.jar" sourcepath="org.openscience.cdksrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="jar/xml-apis.jar" sourcepath="org.openscience.cdksrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="jar/xpp3-1.1.4c.jar" sourcepath="org.openscience.cdksrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="jar/log4j.jar" sourcepath="org.openscience.cdksrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="jar/xercesImpl-2.9.0.jar" sourcepath="org.openscience.cdksrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="develjar/junit-4.4.jar" sourcepath="org.openscience.cdksrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="develjar/com-sun-javadoc.jar" sourcepath="org.openscience.cdksrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="develjar/com-sun-tools-doclets-Taglet.jar" sourcepath="org.openscience.cdksrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="develjar/junit-4.3.1.jar" sourcepath="org.openscience.cdksrc.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
