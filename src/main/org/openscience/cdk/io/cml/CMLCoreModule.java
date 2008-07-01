@@ -603,18 +603,6 @@ public class CMLCoreModule implements ICMLModule {
         } else if ("scalar".equals(name)) {
             if (xpath.endsWith("crystal", "scalar"))
                 crystalScalar++;
-            else if(xpath.endsWith("bond", "scalar")){
-            	bondCustomProperty.add(elementTitle);
-            	bondCustomProperty.add("true");//TODO here the value of the scalar must go in
-            	bondCustomPropertyGiven = true;
-            } else if(xpath.endsWith("atom", "scalar")){
-            	atomCustomProperty.add(elementTitle);
-            	atomCustomProperty.add("true");//TODO here the value of the scalar must go in
-            	atomCustomPropertyGiven = true;
-            } else if(xpath.endsWith("molecule", "scalar")){
-            	moleculeCustomProperty.add(elementTitle);
-            	moleculeCustomProperty.add("true");//TODO here the value of the scalar must go in
-            }
         } else if ("label".equals(name)) {
             if (xpath.endsWith("atomType", "label")) {
 //            	cdo.setObjectProperty("Atom", "atomTypeLabel", atts.getValue("value"));
@@ -672,8 +660,10 @@ public class CMLCoreModule implements ICMLModule {
         if ("bond".equals(name)) {
         	if (!stereoGiven)
                 bondStereo.add("");
-        	if (!bondCustomPropertyGiven)
+        	if (!bondCustomPropertyGiven){
         		bondCustomProperty.add("");
+        		bondCustomProperty.add("");
+        	}
             if (bondStereo.size() > bondDictRefs.size())
                 bondDictRefs.add(null);
             if (bondAromaticity.size() > bondDictRefs.size())
@@ -728,8 +718,10 @@ public class CMLCoreModule implements ICMLModule {
                 zfract.add(null);
             }
             
-        	if (!atomCustomPropertyGiven)
+        	if (!atomCustomPropertyGiven){
         		atomCustomProperty.add("");
+        		atomCustomProperty.add("");
+        	}
         } else if ("molecule".equals(name)) {
             storeData();
 //            cdo.endObject("Molecule");
@@ -993,13 +985,18 @@ public class CMLCoreModule implements ICMLModule {
                 if (DICTREF.equals("mdl:stereo")) {
                 	bondStereo.add(cData.trim());
                     stereoGiven=true;
-                } else if(elementTitle.equals("customAtomProperty")){
+                }else{
+                	bondCustomProperty.add(elementTitle);
                 	bondCustomProperty.add(cData.trim());
-                	bondCustomPropertyGiven=true;
+                	bondCustomPropertyGiven = true;
                 }
             } else if (xpath.endsWith("atom", "scalar")) {
                 if (DICTREF.equals("cdk:partialCharge")) {
                     partialCharges.add(cData.trim());
+                }else {
+                	atomCustomProperty.add(elementTitle);
+                	atomCustomProperty.add(cData.trim());
+                	atomCustomPropertyGiven = true;
                 }
             } else if (xpath.endsWith("molecule", "scalar")) {
                 if (DICTREF.equals("pdb:id")) {
@@ -1007,6 +1004,9 @@ public class CMLCoreModule implements ICMLModule {
                 	currentMolecule.setProperty(new DictRef(DICTREF, cData), cData);
                 } else if (DICTREF.equals("cdk:molecularProperty")) {
                 	currentMolecule.setProperty(elementTitle, cData);
+                }else{
+                	moleculeCustomProperty.add(elementTitle);
+                	moleculeCustomProperty.add(cData.trim());
                 }
             } else {
                 logger.warn("Ignoring scalar: " + xpath);
