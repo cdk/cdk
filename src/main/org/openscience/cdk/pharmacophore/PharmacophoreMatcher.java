@@ -245,7 +245,7 @@ public class PharmacophoreMatcher {
      * @return A List of HashMaps, identifying the query constraint corresponding to a matched constraint in the target
      *         molecule.
      */
-    public List<HashMap<IBond, IBond>> getBondMappings() {
+    public List<HashMap<IBond, IBond>> getTargetQueryBondMappings() {
         return bondMapHash;
     }
 
