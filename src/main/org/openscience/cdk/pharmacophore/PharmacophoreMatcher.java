@@ -108,6 +108,8 @@ public class PharmacophoreMatcher {
     private List<List<RMap>> bondMapping;
     private IAtomContainer pharmacophoreMolecule = null;
 
+    private List<HashMap<IBond, IBond>> bondMapHash = null;
+
     /**
      * An empty constructor.
      * <p/>
@@ -211,17 +213,40 @@ public class PharmacophoreMatcher {
     public List<List<IBond>> getMatchingPharmacophoreBonds() {
         if (bondMapping == null) return null;
         matchingPBonds = new ArrayList<List<IBond>>();
+        bondMapHash = new ArrayList<HashMap<IBond, IBond>>();
+
         for (Object aBondMapping : bondMapping) {
             List list = (List) aBondMapping;
             List<IBond> bondList = new ArrayList<IBond>();
+            HashMap<IBond, IBond> tmphash = new HashMap<IBond, IBond>();
             for (Object aList : list) {
                 RMap map = (RMap) aList;
                 int bondID = map.getId1();
                 bondList.add(pharmacophoreMolecule.getBond(bondID));
+
+                tmphash.put(pharmacophoreMolecule.getBond(map.getId1()),
+                        pharmacophoreQuery.getBond(map.getId2()));
             }
+            bondMapHash.add(tmphash);
             matchingPBonds.add(bondList);
         }
         return matchingPBonds;
+    }
+
+    /**
+     * Return a list of HashMap's that allows one to get the query constraint for a given pharmacophore bond.
+     * <p/>
+     * This should be called after calling {@link #getMatchingPharmacophoreBonds()}, otherwise the
+     * return value is null. If the matching is successfull, the return value is a List of HashMaps, each
+     * HashMap corresponding to a seperate match. Each HashMap is keyed on the {@link org.openscience.cdk.pharmacophore.PharmacophoreBond}
+     * in the target molecule that matched a contstraint ({@link org.openscience.cdk.pharmacophore.PharmacophoreQueryBond} or
+     * {@link org.openscience.cdk.pharmacophore.PharmacophoreQueryAngleBond}. The value is the corresponding query bond.
+     *
+     * @return A List of HashMaps, identifying the query constraint corresponding to a matched constraint in the target
+     *         molecule.
+     */
+    public List<HashMap<IBond, IBond>> getBondMappings() {
+        return bondMapHash;
     }
 
     /**
@@ -341,7 +366,7 @@ public class PharmacophoreMatcher {
             // Note that we allow a special form of SMARTS where the | operator
             // represents logical or of multi-atom groups (as opposed to ','
             // which is for single atom matches)
-            String[] subSmarts = smarts.split("\\|");          
+            String[] subSmarts = smarts.split("\\|");
 
             for (String subSmart : subSmarts) {
                 sqt.setSmarts(subSmart);
