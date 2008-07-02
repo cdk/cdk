@@ -86,15 +86,15 @@ public interface IBond extends IElectronContainer {
 	 * Returns the atom connected to the given atom.
 	 *
 	 * @param  atom  The atom the bond partner is searched of
-	 * @return       the connected atom or null
+	 * @return       the connected atom or null if the given atom is not part of the bond
 	 */
 	public IAtom getConnectedAtom(IAtom atom);
 
     /**
-     * Returns all the atoms in the bond connected to the specified atom.
+     * Returns all the atoms in the bond connected to the given atom.
      *
      * @param atom The atoms the bond partner is searched of
-     * @return the connected atoms or null
+     * @return the connected atoms or null  if the given atom is not part of the bond
      */
     public IAtom[] getConnectedAtoms(IAtom atom);
 
