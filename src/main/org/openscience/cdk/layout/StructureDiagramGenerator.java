@@ -323,7 +323,7 @@ public class StructureDiagramGenerator
 
 		/*
 		 *  First we check if we can map any templates with predefined coordinates
-		 *  Those are stored as MDL molfiles in data/templates
+		 *  Those are stored as CML in <i>org/openscience/cdk/layout/templates</i>.
 		 */
 		if (useTemplates && (System.getProperty("java.version").indexOf("1.3.") == -1))
 		{

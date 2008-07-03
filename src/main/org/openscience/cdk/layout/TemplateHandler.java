@@ -84,19 +84,19 @@ public class TemplateHandler
 
 	/**
 	 * Loads all existing templates into memory. To add templates to be used in
-	 * SDG, place a drawing with the new template in data/templates and add the
-	 * template filename to data/templates/template.list
+	 * SDG, place a drawing with the new template in org/openscience/cdk/layout/templates and add the
+	 * template filename to org/openscience/cdk/layout/templates/template.list
 	 */
 	public void loadTemplates(IChemObjectBuilder builder)
 	{
 		String line = null;
 		try
 		{
-			InputStream ins = this.getClass().getClassLoader().getResourceAsStream("data/templates/templates.list");
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/layout/templates.list");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
 			while (reader.ready()) {
 					line = reader.readLine();
-					line = "data/templates/" + line;
+					line = "org/openscience/cdk/layout/templates/" + line;
 					logger.debug("Attempting to read template ", line);
 					CMLReader structureReader = new CMLReader(
 									this.getClass().getClassLoader().getResourceAsStream(line)
