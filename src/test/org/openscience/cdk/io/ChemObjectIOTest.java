@@ -24,39 +24,37 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.StringWriter;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Molecule;
+import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.io.formats.IResourceFormat;
 
 /**
- * TestCase for the writer CDK source code files using one test file.
+ * TestCase for CDK IO classes.
  *
  * @cdk.module test-io
- *
- * @see org.openscience.cdk.io.CDKSourceCodeWriterTest
  */
-public class CDKSourceCodeWriterTest extends ChemObjectIOTest {
+public abstract class ChemObjectIOTest extends NewCDKTestCase {
 
-    @Test public void testAccepts() throws Exception {
-    	CDKSourceCodeWriter reader = new CDKSourceCodeWriter();
-    	Assert.assertTrue(reader.accepts(Molecule.class));
-    	Assert.assertTrue(reader.accepts(AtomContainer.class));
+    private IChemObjectIO chemObjectIO;
+
+    public void setChemFormat(IChemObjectIO chemObjectIO) {
+        this.chemObjectIO = chemObjectIO;
     }
 
-    @Test public void testOutput() throws Exception {
-        StringWriter writer = new StringWriter();
-        Molecule molecule = new Molecule();
-        Atom atom = new Atom("C");
-        atom.setMassNumber(14);
-        molecule.addAtom(atom);
-        
-        CDKSourceCodeWriter sourceWriter = new CDKSourceCodeWriter(writer);
-        sourceWriter.write(molecule);
-        String output = writer.toString();
-        Assert.assertTrue(output.indexOf("IAtom a1 = mol.getBuilder().newAtom(\"C\")") != -1);
+    @Test public void testChemObjectIOSet() {
+        Assert.assertNotNull(
+            "You must use setChemObjectIO() to set the IChemObjectIO object.",
+            chemObjectIO
+        );
     }
+
+    @Test public void testGetFormat() {
+        IResourceFormat format = chemObjectIO.getFormat();
+        Assert.assertNotNull(
+            "The IChemObjectIO.getFormat method returned null.",
+            format
+        );
+    }
+
 }

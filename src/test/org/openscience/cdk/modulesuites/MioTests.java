@@ -162,7 +162,7 @@ public class MioTests {
         
         suite.addTest(CMLIOTests.suite());
         suite.addTest(CrystClustReaderTest.suite());
-        suite.addTest(CDKSourceCodeWriterTest.suite());
+        suite.addTest(new JUnit4TestAdapter(CDKSourceCodeWriterTest.class));
         suite.addTest(GamessReaderTest.suite());
         suite.addTest(Gaussian98ReaderTest.suite());
         suite.addTest(GhemicalReaderTest.suite());
