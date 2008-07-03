@@ -1,3 +1,0 @@
-If you want place a template MDL mol file into this directory and you want
-it to be read by the TemplateHandler, be sure to add the filename to
-templates.list. Otherwise your file will be ignored.
