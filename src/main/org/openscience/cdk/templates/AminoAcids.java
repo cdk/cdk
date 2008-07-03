@@ -114,7 +114,7 @@ public class AminoAcids {
         IChemFile list = new org.openscience.cdk.ChemFile();
         CMLReader reader = new CMLReader(
         	AminoAcids.class.getClassLoader().getResourceAsStream(
-        			"data/templates/list_aminoacids.cml"
+        			"org/openscience/cdk/templates/data/list_aminoacids.cml"
         	)
         );
         try {
