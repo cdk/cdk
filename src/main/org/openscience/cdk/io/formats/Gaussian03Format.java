@@ -41,6 +41,7 @@ public class Gaussian03Format implements IChemFormatMatcher {
 	
     private Gaussian03Format() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new Gaussian03Format();
     	return myself;

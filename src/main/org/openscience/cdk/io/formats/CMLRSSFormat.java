@@ -39,6 +39,7 @@ public class CMLRSSFormat implements IChemFormat {
 	
     private CMLRSSFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new CMLRSSFormat();
     	return myself;

@@ -42,6 +42,7 @@ public class FenskeHall_ZMatrixFormat implements IChemFormat {
 	
     private FenskeHall_ZMatrixFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new FenskeHall_ZMatrixFormat();
     	return myself;

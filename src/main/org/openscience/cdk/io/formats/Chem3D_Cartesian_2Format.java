@@ -42,6 +42,7 @@ public class Chem3D_Cartesian_2Format implements IChemFormat {
 	
     private Chem3D_Cartesian_2Format() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new Chem3D_Cartesian_2Format();
     	return myself;

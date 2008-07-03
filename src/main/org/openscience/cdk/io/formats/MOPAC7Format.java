@@ -40,6 +40,7 @@ public class MOPAC7Format implements IChemFormatMatcher {
 	
     private MOPAC7Format() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new MOPAC7Format();
     	return myself;

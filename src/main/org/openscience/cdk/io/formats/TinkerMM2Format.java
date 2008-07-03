@@ -43,6 +43,7 @@ public class TinkerMM2Format implements IChemFormat {
 	
     private TinkerMM2Format() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new TinkerMM2Format();
     	return myself;

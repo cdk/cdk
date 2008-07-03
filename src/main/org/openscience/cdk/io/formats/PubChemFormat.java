@@ -41,6 +41,7 @@ public class PubChemFormat implements IChemFormat {
 	
     private PubChemFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new PubChemFormat();
     	return myself;

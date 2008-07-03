@@ -41,6 +41,7 @@ public class CMLFormat implements IChemFormatMatcher {
 	
     private CMLFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new CMLFormat();
     	return myself;

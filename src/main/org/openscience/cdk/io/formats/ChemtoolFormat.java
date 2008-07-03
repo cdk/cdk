@@ -43,6 +43,7 @@ public class ChemtoolFormat implements IChemFormat {
 	
     private ChemtoolFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new ChemtoolFormat();
     	return myself;

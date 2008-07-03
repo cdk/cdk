@@ -41,6 +41,7 @@ public class BGFFormat implements IChemFormat {
 	
     private BGFFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new BGFFormat();
     	return myself;

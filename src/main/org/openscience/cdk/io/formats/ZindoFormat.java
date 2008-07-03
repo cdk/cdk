@@ -43,6 +43,7 @@ public class ZindoFormat implements IChemFormat {
 	
     private ZindoFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new ZindoFormat();
     	return myself;

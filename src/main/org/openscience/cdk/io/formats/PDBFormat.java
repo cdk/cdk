@@ -41,6 +41,7 @@ public class PDBFormat implements IChemFormatMatcher {
 	
     private PDBFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new PDBFormat();
     	return myself;

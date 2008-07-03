@@ -41,6 +41,7 @@ public class AlchemyFormat implements IChemFormat {
 	
     private AlchemyFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new AlchemyFormat();
     	return myself;

@@ -39,6 +39,7 @@ public class Aces2Format implements IChemFormatMatcher {
 	
     private Aces2Format() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new Aces2Format();
     	return myself;

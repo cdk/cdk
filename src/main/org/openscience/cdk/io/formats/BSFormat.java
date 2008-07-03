@@ -43,6 +43,7 @@ public class BSFormat implements IChemFormat {
 	
     private BSFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new BSFormat();
     	return myself;

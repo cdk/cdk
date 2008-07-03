@@ -41,6 +41,7 @@ public class GhemicalMMFormat implements IChemFormatMatcher {
 	
     private GhemicalMMFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new GhemicalMMFormat();
     	return myself;

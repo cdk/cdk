@@ -39,6 +39,7 @@ public class INChIPlainTextFormat implements IChemFormatMatcher {
 	
     private INChIPlainTextFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new INChIPlainTextFormat();
     	return myself;

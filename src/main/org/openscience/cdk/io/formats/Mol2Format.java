@@ -41,6 +41,7 @@ public class Mol2Format implements IChemFormatMatcher {
 	
     private Mol2Format() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new Mol2Format();
     	return myself;

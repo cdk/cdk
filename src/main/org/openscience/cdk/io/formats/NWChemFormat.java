@@ -42,6 +42,7 @@ public class NWChemFormat implements IChemFormatMatcher {
 	
     private NWChemFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new NWChemFormat();
     	return myself;

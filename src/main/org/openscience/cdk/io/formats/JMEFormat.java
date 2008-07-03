@@ -39,6 +39,7 @@ public class JMEFormat implements IChemFormat {
 	
     private JMEFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new JMEFormat();
     	return myself;

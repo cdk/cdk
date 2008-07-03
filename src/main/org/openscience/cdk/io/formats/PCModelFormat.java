@@ -43,6 +43,7 @@ public class PCModelFormat implements IChemFormat {
 	
     private PCModelFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new PCModelFormat();
     	return myself;

@@ -43,6 +43,7 @@ public class PQSChemFormat implements IChemFormat {
 	
     private PQSChemFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new PQSChemFormat();
     	return myself;

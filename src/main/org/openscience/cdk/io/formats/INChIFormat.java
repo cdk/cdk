@@ -41,6 +41,7 @@ public class INChIFormat implements IChemFormatMatcher {
 	
     private INChIFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new INChIFormat();
     	return myself;

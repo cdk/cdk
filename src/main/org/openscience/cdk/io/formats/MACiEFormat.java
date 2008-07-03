@@ -39,6 +39,7 @@ public class MACiEFormat implements IChemFormatMatcher {
 	
     private MACiEFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new MACiEFormat();
     	return myself;

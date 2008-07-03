@@ -43,6 +43,7 @@ public class YasaraFormat implements IChemFormat {
 	
     private YasaraFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new YasaraFormat();
     	return myself;

@@ -39,6 +39,7 @@ public class Gaussian98Format implements IChemFormatMatcher {
 	
     private Gaussian98Format() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new Gaussian98Format();
     	return myself;

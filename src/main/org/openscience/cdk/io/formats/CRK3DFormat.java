@@ -43,6 +43,7 @@ public class CRK3DFormat implements IChemFormat {
 	
     private CRK3DFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new CRK3DFormat();
     	return myself;

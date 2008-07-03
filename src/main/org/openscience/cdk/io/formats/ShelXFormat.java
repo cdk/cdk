@@ -41,6 +41,7 @@ public class ShelXFormat implements IChemFormatMatcher {
 	
     private ShelXFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new ShelXFormat();
     	return myself;

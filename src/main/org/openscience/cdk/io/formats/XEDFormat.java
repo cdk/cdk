@@ -42,6 +42,7 @@ public class XEDFormat implements IChemFormat {
 	
     private XEDFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new XEDFormat();
     	return myself;

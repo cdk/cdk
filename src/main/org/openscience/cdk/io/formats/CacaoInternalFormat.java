@@ -43,6 +43,7 @@ public class CacaoInternalFormat implements IChemFormat {
 	
     private CacaoInternalFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new CacaoInternalFormat();
     	return myself;

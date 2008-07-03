@@ -41,6 +41,7 @@ public class SybylDescriptorFormat implements IChemFormat {
 	
     private SybylDescriptorFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new SybylDescriptorFormat();
     	return myself;

@@ -39,6 +39,7 @@ public class MOPAC2002Format implements IChemFormatMatcher {
 	
     private MOPAC2002Format() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new MOPAC2002Format();
     	return myself;

@@ -42,6 +42,7 @@ public class PDBMLFormat implements IChemFormat {
 	
     private PDBMLFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new PDBMLFormat();
     	return myself;

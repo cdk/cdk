@@ -42,6 +42,7 @@ public class SMILESFIXFormat implements IChemFormat {
 	
     private SMILESFIXFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new SMILESFIXFormat();
     	return myself;

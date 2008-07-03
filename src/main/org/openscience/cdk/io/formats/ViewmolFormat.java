@@ -43,6 +43,7 @@ public class ViewmolFormat implements IChemFormat {
 	
     private ViewmolFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new ViewmolFormat();
     	return myself;

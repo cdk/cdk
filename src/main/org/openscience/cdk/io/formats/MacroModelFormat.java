@@ -42,6 +42,7 @@ public class MacroModelFormat implements IChemFormat {
 	
     private MacroModelFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new MacroModelFormat();
     	return myself;

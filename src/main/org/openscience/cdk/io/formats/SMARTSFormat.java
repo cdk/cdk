@@ -43,6 +43,7 @@ public class SMARTSFormat implements IChemFormat {
 	
     private SMARTSFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new SMARTSFormat();
     	return myself;

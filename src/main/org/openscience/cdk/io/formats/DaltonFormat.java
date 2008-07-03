@@ -40,6 +40,7 @@ public class DaltonFormat implements IChemFormatMatcher {
 	
     private DaltonFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new DaltonFormat();
     	return myself;

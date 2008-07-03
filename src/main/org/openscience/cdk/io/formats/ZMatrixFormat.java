@@ -39,6 +39,7 @@ public class ZMatrixFormat implements IChemFormatMatcher {
 	
     private ZMatrixFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new ZMatrixFormat();
     	return myself;

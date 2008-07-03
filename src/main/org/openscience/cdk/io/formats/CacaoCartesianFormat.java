@@ -43,6 +43,7 @@ public class CacaoCartesianFormat implements IChemFormat {
 	
     private CacaoCartesianFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new CacaoCartesianFormat();
     	return myself;

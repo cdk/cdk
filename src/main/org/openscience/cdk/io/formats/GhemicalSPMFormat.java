@@ -39,6 +39,7 @@ public class GhemicalSPMFormat implements IChemFormatMatcher {
 	
     private GhemicalSPMFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new GhemicalSPMFormat();
     	return myself;

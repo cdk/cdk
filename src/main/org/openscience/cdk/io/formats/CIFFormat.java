@@ -39,6 +39,7 @@ public class CIFFormat implements IChemFormatMatcher {
 	
     private CIFFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new CIFFormat();
     	return myself;

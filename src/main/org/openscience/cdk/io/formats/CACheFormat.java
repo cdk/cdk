@@ -40,6 +40,7 @@ public class CACheFormat implements IChemFormatMatcher {
 	
     private CACheFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new CACheFormat();
     	return myself;

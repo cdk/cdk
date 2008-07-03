@@ -41,6 +41,7 @@ public class GamessFormat implements IChemFormatMatcher {
 	
     private GamessFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new GamessFormat();
     	return myself;

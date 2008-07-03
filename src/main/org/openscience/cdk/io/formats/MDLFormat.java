@@ -41,6 +41,7 @@ public class MDLFormat implements IChemFormatMatcher {
 	
     private MDLFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new MDLFormat();
     	return myself;

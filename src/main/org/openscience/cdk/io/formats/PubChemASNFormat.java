@@ -36,6 +36,7 @@ public class PubChemASNFormat implements IChemFormatMatcher {
 	
     private PubChemASNFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new PubChemASNFormat();
     	return myself;

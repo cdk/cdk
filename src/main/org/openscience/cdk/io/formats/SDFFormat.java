@@ -41,6 +41,7 @@ public class SDFFormat implements IChemFormatMatcher {
 	
     private SDFFormat() {}
     
+    @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new SDFFormat();
     	return myself;
