@@ -218,8 +218,8 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 					hoseVSenergy = listGroup.get(name);
 					hoseVSenergyS = listGroupS.get(nameS);
 				}else{
-					String path = "data/db/"+name;
-					String pathS = "data/db/"+nameS;
+					String path = "org/openscience/cdk/qsar/descriptors/atomic/data/"+name;
+					String pathS = "org/openscience/cdk/qsar/descriptors/atomic/data/"+nameS;
 					InputStream ins = this.getClass().getClassLoader().getResourceAsStream(path);
 					BufferedReader insr = new BufferedReader(new InputStreamReader(ins));
 					hoseVSenergy = extractattributes(insr);
