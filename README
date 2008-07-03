@@ -1,12 +1,12 @@
 CDK The Chemical Development Kit
  
-Copyright 1997-2007 The CDK Development Team
+Copyright 1997-2008 The CDK Development Team
 License: LGPL, see doc/lgpl.license
 
 1. Introduction
 
 You are currently reading the README file for the Chemistry Development Project (CDK).
-This project is hosted under http://cdk.sourceforge.net
+This project is hosted under http://cdk.sourceforge.net/
 Please refer to these pages for updated information and the latest version of the CDK.
 
 The CDK is an open-source library of algorithms for structural chemo- and bioinformatics, implemented in 
@@ -20,7 +20,7 @@ from the area of structural chemo- and bioinformatics. As such, it is intended f
 programmers, who wish to save some effort by reusing code. It is not intended for the enduser. 
 If you consider yourself to be more like user, you might not find what you wanted. 
 Please refer to other projects like the JChemPaint project (http://jchempaint.sourceforge.net)
-or the Jmol project (http://jmol.sourceforge.net) for programs that actually take advantage of the 
+or the Jmol project (http://www.jmol.org/) for programs that actually take advantage of the 
 CDK library.
 
 2. Compiling
@@ -30,7 +30,7 @@ Ant (http://jakarta.apache.org/ant/) and requires Java 1.5.0 or better:
 
 cdk/$ ls build.xml
 build.xml
-cdk/$ ant 
+cdk/$ ant
 
 "ant -p" gives a list of possible compilation targets. The default target is 'dist-all', which
 creates a number of .jar files in the 'dist' directory corresponding to subsets of the CDK
@@ -46,7 +46,7 @@ below. This documentation is created by 'ant' from the Java source code for the 
 
 cdk/$ ls javadoc.xml
 javadoc.xml
-cdk/$ ant -buildfile javadoc.xml
+cdk/$ ant -buildfile javadoc.xml html
 
 The documenation is created as a series of .html pages in doc/api. If you use firefox, you can read
 the documentation using the following command:
