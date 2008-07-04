@@ -21,3 +21,4 @@ cdk-test-core.jar
 cdk-test-atomtype.jar
 cdk-test-qsar.jar
 cdk-test-qsarmolecular.jar
+cdk-test-io.jar
