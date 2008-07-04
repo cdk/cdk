@@ -20,11 +20,19 @@
   <owl:Ontology rdf:about="">
     <rdfs:label>CDK Atom Type Ontology</rdfs:label>
     <owl:versionInfo>$Id$</owl:versionInfo>
-    <dc:date>$Date$</dc:date>
   </owl:Ontology>
 
-  <owl:imports rdf:resource="http://cdk.sf.net/ontologies/elements#"/>
-  <owl:imports rdf:resource="http://cdk.sf.net/ontologies/atomtypesdatatypes#"/>
+  <owl:Class rdf:about="&at;AtomType"/>
+  <owl:Class rdf:about="&at;AtomTypeCategory"/>
+  <owl:ObjectProperty rdf:about="&at;categorizedAs"/>
+  <owl:ObjectProperty rdf:about="&at;hasElement"/>
+  <owl:ObjectProperty rdf:about="&at;hybridization"/>
+  
+  <!-- The hybridizations from &at -->
+  <owl:Thing rdf:about="&at;sp3"/>
+  
+  <!-- The Elements from &elem; -->
+  <owl:Thing rdf:about="&elem;C"/>
   
   <!-- the atom types -->
 
@@ -41,10 +49,10 @@
     <at:categorizedAs rdf:resource="&cdkat;C.sp3"/>
     <at:hasElement rdf:resource="&elem;C"/>
     <at:hybridization rdf:resource="&at;sp3"/>
-    <at:formalCharge>0</at:formalCharge>
+    <!-- at:formalCharge>0</at:formalCharge>
     <at:lonePairCount>0</at:lonePairCount>
     <at:formalNeighbourCount>4</at:formalNeighbourCount>
-    <at:piBondCount>0</at:piBondCount>
+    <at:piBondCount>0</at:piBondCount -->
   </at:AtomType>
   
 </rdf:RDF>
