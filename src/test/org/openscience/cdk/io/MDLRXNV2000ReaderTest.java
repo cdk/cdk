@@ -26,17 +26,15 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -46,30 +44,26 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.io.MDLRXNReader
  */
-public class MDLRXNV2000ReaderTest extends CDKTestCase {
+public class MDLRXNV2000ReaderTest extends ChemObjectIOTest {
 
-    private LoggingTool logger;
+    private static LoggingTool logger;
 
-    public MDLRXNV2000ReaderTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
+    @BeforeClass public static void setup() throws Exception {
+        logger = new LoggingTool(MDLRXNV2000ReaderTest.class);
+        setChemObjectIO(new MDLRXNV2000Reader());
     }
 
-    public static Test suite() {
-        return new TestSuite(MDLRXNV2000ReaderTest.class);
-    }
-
-    public void testAccepts() {
+    @Test public void testAccepts() {
     	MDLRXNV2000Reader reader = new MDLRXNV2000Reader();
-    	assertTrue(reader.accepts(ChemFile.class));
-    	assertTrue(reader.accepts(ChemModel.class));
-    	assertTrue(reader.accepts(Reaction.class));
+    	Assert.assertTrue(reader.accepts(ChemFile.class));
+    	Assert.assertTrue(reader.accepts(ChemModel.class));
+    	Assert.assertTrue(reader.accepts(Reaction.class));
     }
 
     /**
      * @cdk.bug 1849923
      */
-    public void testReadReactions1() throws Exception {
+    @Test public void testReadReactions1() throws Exception {
         String filename1 = "data/mdl/0024.stg02.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
@@ -78,24 +72,24 @@ public class MDLRXNV2000ReaderTest extends CDKTestCase {
         reaction1 = (IReaction)reader1.read(reaction1);
         reader1.close();
 
-        assertNotNull(reaction1);
-        assertEquals(1, reaction1.getReactantCount());
-        assertEquals(1, reaction1.getProductCount());
+        Assert.assertNotNull(reaction1);
+        Assert.assertEquals(1, reaction1.getReactantCount());
+        Assert.assertEquals(1, reaction1.getProductCount());
         IAtomContainer reactant = reaction1.getReactants().getAtomContainer(0);
-        assertNotNull(reactant);
-        assertEquals(46, reactant.getAtomCount());
-        assertEquals(44, reactant.getBondCount());
+        Assert.assertNotNull(reactant);
+        Assert.assertEquals(46, reactant.getAtomCount());
+        Assert.assertEquals(44, reactant.getBondCount());
         IAtomContainer product = reaction1.getProducts().getAtomContainer(0);
-        assertNotNull(product);
-        assertEquals(46, product.getAtomCount());
-        assertEquals(43, product.getBondCount());
+        Assert.assertNotNull(product);
+        Assert.assertEquals(46, product.getAtomCount());
+        Assert.assertEquals(43, product.getBondCount());
         
     }
 
     /**
      * @cdk.bug 1851202
      */
-    public void testBug1851202() throws Exception {
+    @Test public void testBug1851202() throws Exception {
         String filename1 = "data/mdl/0002.stg01.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
@@ -104,17 +98,17 @@ public class MDLRXNV2000ReaderTest extends CDKTestCase {
         reaction1 = (IReaction)reader1.read(reaction1);
         reader1.close();
 
-        assertNotNull(reaction1);
-        assertEquals(1, reaction1.getReactantCount());
-        assertEquals(1, reaction1.getProductCount());
+        Assert.assertNotNull(reaction1);
+        Assert.assertEquals(1, reaction1.getReactantCount());
+        Assert.assertEquals(1, reaction1.getProductCount());
         IAtomContainer reactant = reaction1.getReactants().getAtomContainer(0);
-        assertNotNull(reactant);
-        assertEquals(30, reactant.getAtomCount());
-        assertEquals(25, reactant.getBondCount());
+        Assert.assertNotNull(reactant);
+        Assert.assertEquals(30, reactant.getAtomCount());
+        Assert.assertEquals(25, reactant.getBondCount());
         IAtomContainer product = reaction1.getProducts().getAtomContainer(0);
-        assertNotNull(product);
-        assertEquals(30, product.getAtomCount());
-        assertEquals(26, product.getBondCount());
+        Assert.assertNotNull(product);
+        Assert.assertEquals(30, product.getAtomCount());
+        Assert.assertEquals(26, product.getBondCount());
         
     }
 

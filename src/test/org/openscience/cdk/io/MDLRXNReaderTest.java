@@ -30,10 +30,9 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
@@ -58,30 +57,26 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.io.MDLRXNReader
  */
-public class MDLRXNReaderTest extends CDKTestCase {
+public class MDLRXNReaderTest extends ChemObjectIOTest {
 
-    private LoggingTool logger;
+    private static LoggingTool logger;
 
-    public MDLRXNReaderTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
+    @BeforeClass public static void setup() {
+        logger = new LoggingTool(MDLV2000ReaderTest.class);
+        setChemObjectIO(new MDLV2000Reader());
     }
 
-    public static Test suite() {
-        return new TestSuite(MDLRXNReaderTest.class);
-    }
-
-    public void testAccepts() {
+    @Test public void testAccepts() {
     	MDLRXNReader reader = new MDLRXNReader();
-    	assertTrue(reader.accepts(ChemFile.class));
-    	assertTrue(reader.accepts(ChemModel.class));
-    	assertTrue(reader.accepts(Reaction.class));
-		assertTrue(reader.accepts(ReactionSet.class));
-		assertFalse(reader.accepts(MoleculeSet.class));
-		assertFalse(reader.accepts(Molecule.class));
+    	Assert.assertTrue(reader.accepts(ChemFile.class));
+    	Assert.assertTrue(reader.accepts(ChemModel.class));
+    	Assert.assertTrue(reader.accepts(Reaction.class));
+		Assert.assertTrue(reader.accepts(ReactionSet.class));
+		Assert.assertFalse(reader.accepts(MoleculeSet.class));
+		Assert.assertFalse(reader.accepts(Molecule.class));
     }
 
-    public void testReadReactions1() throws Exception {
+    @Test public void testReadReactions1() throws Exception {
         String filename1 = "data/mdl/reaction-1.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
@@ -90,20 +85,20 @@ public class MDLRXNReaderTest extends CDKTestCase {
         reaction1 = (IReaction)reader1.read(reaction1);
         reader1.close();
 
-        assertNotNull(reaction1);
-        assertEquals(2, reaction1.getReactantCount());
-        assertEquals(1, reaction1.getProductCount());
+        Assert.assertNotNull(reaction1);
+        Assert.assertEquals(2, reaction1.getReactantCount());
+        Assert.assertEquals(1, reaction1.getProductCount());
 
         IMoleculeSet educts = reaction1.getReactants();
         // Check Atom symbols of first educt
         String[] atomSymbolsOfEduct1 = { "C", "C", "O", "Cl"};
         for (int i = 0; i < educts.getMolecule(0).getAtomCount(); i++) {
-        	assertEquals(atomSymbolsOfEduct1[i], educts.getMolecule(0).getAtom(i).getSymbol());
+        	Assert.assertEquals(atomSymbolsOfEduct1[i], educts.getMolecule(0).getAtom(i).getSymbol());
         }
 
         // Check Atom symbols of second educt
         for (int i = 0; i < educts.getMolecule(1).getAtomCount(); i++) {
-        	assertEquals("C", educts.getMolecule(1).getAtom(i).getSymbol());
+        	Assert.assertEquals("C", educts.getMolecule(1).getAtom(i).getSymbol());
         }
 
         // Check Atom symbols of first product
@@ -120,11 +115,11 @@ public class MDLRXNReaderTest extends CDKTestCase {
         		"C"
         };
         for (int i = 0; i < products.getMolecule(0).getAtomCount(); i++) {
-        	assertEquals(atomSymbolsOfProduct1[i], products.getMolecule(0).getAtom(i).getSymbol());
+        	Assert.assertEquals(atomSymbolsOfProduct1[i], products.getMolecule(0).getAtom(i).getSymbol());
         }
     }
 
-    public void testReadReactions2() throws Exception {
+    @Test public void testReadReactions2() throws Exception {
 		String filename2 = "data/mdl/reaction-2.rxn";
 		logger.info("Testing: " + filename2);
 		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
@@ -133,12 +128,12 @@ public class MDLRXNReaderTest extends CDKTestCase {
 		reaction2 = (IReaction)reader2.read(reaction2);
 		reader2.close();
 
-		assertNotNull(reaction2);
-		assertEquals(2, reaction2.getReactantCount());
-		assertEquals(2, reaction2.getProductCount());
+		Assert.assertNotNull(reaction2);
+		Assert.assertEquals(2, reaction2.getReactantCount());
+		Assert.assertEquals(2, reaction2.getProductCount());
     }
     
-    public void testReadMapping() throws Exception {
+    @Test public void testReadMapping() throws Exception {
 		String filename2 = "data/mdl/mappingTest.rxn";
 		logger.info("Testing: " + filename2);
 		InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
@@ -147,91 +142,91 @@ public class MDLRXNReaderTest extends CDKTestCase {
 		reaction2 = (IReaction)reader2.read(reaction2);
 		reader2.close();
 
-		assertNotNull(reaction2);
+		Assert.assertNotNull(reaction2);
 		java.util.Iterator maps = reaction2.mappings();
 		maps.next();
-		assertTrue(maps.hasNext());
+		Assert.assertTrue(maps.hasNext());
     }
     /**
      * 
      */
-    public void testRDFChemFile() throws Exception {
+    @Test public void testRDFChemFile() throws Exception {
         String filename = "data/mdl/qsar-reaction-test.rdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
         IChemFile chemFile = (IChemFile)reader.read(new NNChemFile());
-        assertNotNull(chemFile);
+        Assert.assertNotNull(chemFile);
         
         
-		assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReactionCount());
-        assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactantCount());
-        assertEquals(3, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactants().getMolecule(0).getAtomCount());
-        assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactants().getMolecule(1).getAtomCount());
-        assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getProductCount());
-        assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getProducts().getMolecule(0).getAtomCount());
-        assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getProducts().getMolecule(1).getAtomCount());
+		Assert.assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReactionCount());
+        Assert.assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactantCount());
+        Assert.assertEquals(3, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactants().getMolecule(0).getAtomCount());
+        Assert.assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactants().getMolecule(1).getAtomCount());
+        Assert.assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getProductCount());
+        Assert.assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getProducts().getMolecule(0).getAtomCount());
+        Assert.assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getProducts().getMolecule(1).getAtomCount());
         
 
-        assertEquals(1, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(1).getReactantCount());
-        assertEquals(3, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(1).getReactants().getMolecule(0).getAtomCount());
-        assertEquals(1, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(1).getProductCount());
-        assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(1).getProducts().getMolecule(0).getAtomCount());
+        Assert.assertEquals(1, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(1).getReactantCount());
+        Assert.assertEquals(3, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(1).getReactants().getMolecule(0).getAtomCount());
+        Assert.assertEquals(1, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(1).getProductCount());
+        Assert.assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(1).getProducts().getMolecule(0).getAtomCount());
         
     }
 
     /**
      * 
      */
-    public void testRDFModel() throws Exception {
+    @Test public void testRDFModel() throws Exception {
         String filename = "data/mdl/qsar-reaction-test.rdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
         IChemModel chemModel = (IChemModel)reader.read(new NNChemModel());
-        assertNotNull(chemModel);
+        Assert.assertNotNull(chemModel);
         
         
-		assertEquals(2, chemModel.getReactionSet().getReactionCount());
-        assertEquals(2, chemModel.getReactionSet().getReaction(0).getReactantCount());
-        assertEquals(3, chemModel.getReactionSet().getReaction(0).getReactants().getMolecule(0).getAtomCount());
-        assertEquals(2, chemModel.getReactionSet().getReaction(0).getReactants().getMolecule(1).getAtomCount());
-        assertEquals(2, chemModel.getReactionSet().getReaction(0).getProductCount());
-        assertEquals(2, chemModel.getReactionSet().getReaction(0).getProducts().getMolecule(0).getAtomCount());
-        assertEquals(2, chemModel.getReactionSet().getReaction(0).getProducts().getMolecule(1).getAtomCount());
+		Assert.assertEquals(2, chemModel.getReactionSet().getReactionCount());
+        Assert.assertEquals(2, chemModel.getReactionSet().getReaction(0).getReactantCount());
+        Assert.assertEquals(3, chemModel.getReactionSet().getReaction(0).getReactants().getMolecule(0).getAtomCount());
+        Assert.assertEquals(2, chemModel.getReactionSet().getReaction(0).getReactants().getMolecule(1).getAtomCount());
+        Assert.assertEquals(2, chemModel.getReactionSet().getReaction(0).getProductCount());
+        Assert.assertEquals(2, chemModel.getReactionSet().getReaction(0).getProducts().getMolecule(0).getAtomCount());
+        Assert.assertEquals(2, chemModel.getReactionSet().getReaction(0).getProducts().getMolecule(1).getAtomCount());
         
 
-        assertEquals(1, chemModel.getReactionSet().getReaction(1).getReactantCount());
-        assertEquals(3, chemModel.getReactionSet().getReaction(1).getReactants().getMolecule(0).getAtomCount());
-        assertEquals(1, chemModel.getReactionSet().getReaction(1).getProductCount());
-        assertEquals(2, chemModel.getReactionSet().getReaction(1).getProducts().getMolecule(0).getAtomCount());
+        Assert.assertEquals(1, chemModel.getReactionSet().getReaction(1).getReactantCount());
+        Assert.assertEquals(3, chemModel.getReactionSet().getReaction(1).getReactants().getMolecule(0).getAtomCount());
+        Assert.assertEquals(1, chemModel.getReactionSet().getReaction(1).getProductCount());
+        Assert.assertEquals(2, chemModel.getReactionSet().getReaction(1).getProducts().getMolecule(0).getAtomCount());
         
     }
     /**
      * 
      */
-    public void testRDFReactioniSet() throws Exception {
+    @Test public void testRDFReactioniSet() throws Exception {
         String filename = "data/mdl/qsar-reaction-test.rdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
         IReactionSet reactionSet = (IReactionSet)reader.read(new NNReactionSet());
-        assertNotNull(reactionSet);
+        Assert.assertNotNull(reactionSet);
         
         
-		assertEquals(2, reactionSet.getReactionCount());
-        assertEquals(2, reactionSet.getReaction(0).getReactantCount());
-        assertEquals(3, reactionSet.getReaction(0).getReactants().getMolecule(0).getAtomCount());
-        assertEquals(2, reactionSet.getReaction(0).getReactants().getMolecule(1).getAtomCount());
-        assertEquals(2, reactionSet.getReaction(0).getProductCount());
-        assertEquals(2, reactionSet.getReaction(0).getProducts().getMolecule(0).getAtomCount());
-        assertEquals(2, reactionSet.getReaction(0).getProducts().getMolecule(1).getAtomCount());
+		Assert.assertEquals(2, reactionSet.getReactionCount());
+        Assert.assertEquals(2, reactionSet.getReaction(0).getReactantCount());
+        Assert.assertEquals(3, reactionSet.getReaction(0).getReactants().getMolecule(0).getAtomCount());
+        Assert.assertEquals(2, reactionSet.getReaction(0).getReactants().getMolecule(1).getAtomCount());
+        Assert.assertEquals(2, reactionSet.getReaction(0).getProductCount());
+        Assert.assertEquals(2, reactionSet.getReaction(0).getProducts().getMolecule(0).getAtomCount());
+        Assert.assertEquals(2, reactionSet.getReaction(0).getProducts().getMolecule(1).getAtomCount());
         
 
-        assertEquals(1, reactionSet.getReaction(1).getReactantCount());
-        assertEquals(3, reactionSet.getReaction(1).getReactants().getMolecule(0).getAtomCount());
-        assertEquals(1, reactionSet.getReaction(1).getProductCount());
-        assertEquals(2, reactionSet.getReaction(1).getProducts().getMolecule(0).getAtomCount());
+        Assert.assertEquals(1, reactionSet.getReaction(1).getReactantCount());
+        Assert.assertEquals(3, reactionSet.getReaction(1).getReactants().getMolecule(0).getAtomCount());
+        Assert.assertEquals(1, reactionSet.getReaction(1).getProductCount());
+        Assert.assertEquals(2, reactionSet.getReaction(1).getProducts().getMolecule(0).getAtomCount());
         
     }
 }

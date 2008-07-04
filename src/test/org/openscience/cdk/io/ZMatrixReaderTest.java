@@ -24,64 +24,25 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.FileReader;
-import java.util.Iterator;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.graph.rebond.RebondTool;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.io.ZMatrixReader;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module test-io
  */
-public class ZMatrixReaderTest extends CDKTestCase {
-    
-    private String inFile;
-    
-    public ZMatrixReaderTest(String name) {
-        super(name);
-        inFile = "";
-    }
-    
-    public void setInFile(String file) {
-        this.inFile = file;
-    }
-    
-    public static Test suite() {
-        return new TestSuite(ZMatrixReaderTest.class);
+public class ZMatrixReaderTest extends ChemObjectIOTest {
+
+    @BeforeClass public static void setup() throws Exception {
+        setChemObjectIO(new ZMatrixReader());
     }
 
-    public void testAccepts() {
+    @Test public void testAccepts() {
     	ZMatrixReader reader = new ZMatrixReader();
-    	assertTrue(reader.accepts(ChemFile.class));
+    	Assert.assertTrue(reader.accepts(ChemFile.class));
     }
 
-    // Do we have a ZMatrix test file??
-    public void xtestFile() throws Exception {
-    	ISimpleChemObjectReader reader;
-    	System.out.println("Loading: " + inFile);
-    	reader = new ZMatrixReader(new FileReader(inFile));
-    	System.out.println("Expecting ZMatrix format...");
-
-    	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-
-    	org.openscience.cdk.interfaces.IChemSequence chemSequence = chemFile.getChemSequence(0);
-    	org.openscience.cdk.interfaces.IChemModel chemModel = chemSequence.getChemModel(0);
-		RebondTool rebonder = new RebondTool(2.0, 0.5, 0.5);
-    	Iterator containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
-    	while (containers.hasNext()) {
-    		IAtomContainer atomContainer = (IAtomContainer)containers.next();
-    		rebonder.rebond(atomContainer);
-    	}
-	}
-    
 }
 

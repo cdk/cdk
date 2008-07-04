@@ -32,19 +32,18 @@ import java.io.StringWriter;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Crystal;
-import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.io.PDBReader;
-import org.openscience.cdk.io.PDBWriter;
+import org.openscience.cdk.interfaces.ICrystal;
 
 /**
  * TestCase for the PDBWriter class.
@@ -54,26 +53,25 @@ import org.openscience.cdk.io.PDBWriter;
  * @author      Egon Willighagen
  * @cdk.created 2001-08-09
  */
-public class PDBWriterTest extends TestCase {
+public class PDBWriterTest extends ChemObjectIOTest {
 
-	public PDBWriterTest(String name) {
-		super(name);
-	}
+    private static IChemObjectBuilder builder;
 
-	public static Test suite() {
-		return new TestSuite(PDBWriterTest.class);
-	}
+    @BeforeClass public static void setup() {
+        builder = DefaultChemObjectBuilder.getInstance();
+        setChemObjectIO(new MDLRXNWriter());
+    }
 
-    public void testRoundTrip() throws Exception {
+    @Test public void testRoundTrip() throws Exception {
     	StringWriter sWriter = new StringWriter();
     	PDBWriter writer = new PDBWriter(sWriter);
     	
-    	Crystal crystal = new Crystal();
+    	ICrystal crystal = builder.newCrystal();
     	crystal.setA(new Vector3d(0,1,0));
     	crystal.setB(new Vector3d(1,0,0));
     	crystal.setC(new Vector3d(0,0,2));
     	
-    	IAtom atom = new Atom("C");
+    	IAtom atom = builder.newAtom("C");
     	atom.setPoint3d(new Point3d(0.1,0.1,0.3));
     	crystal.addAtom(atom);
 
@@ -82,24 +80,24 @@ public class PDBWriterTest extends TestCase {
     	
 		String output = sWriter.toString();
 		System.out.println(output);
-		assertNotNull(output);
-		assertTrue(output.length() > 0);
+		Assert.assertNotNull(output);
+		Assert.assertTrue(output.length() > 0);
 		
 		PDBReader reader = new PDBReader();
 		ChemFile chemFile = (ChemFile)reader.read(new ChemFile());
 		
-		assertNotNull(chemFile);
-		assertEquals(1, chemFile.getChemSequenceCount());
+		Assert.assertNotNull(chemFile);
+		Assert.assertEquals(1, chemFile.getChemSequenceCount());
 		IChemSequence sequence = chemFile.getChemSequence(0);
-		assertEquals(1, sequence.getChemModelCount());
+		Assert.assertEquals(1, sequence.getChemModelCount());
 		IChemModel chemModel = sequence.getChemModel(0);
-		assertNotNull(chemModel);
+		Assert.assertNotNull(chemModel);
 		
 		// can't do further testing as the PDBReader does not read
 		// Crystal structures :(
     }
 
-    public void testRoundTrip_fractionalCoordinates() throws Exception {
+    @Test public void testRoundTrip_fractionalCoordinates() throws Exception {
     	StringWriter sWriter = new StringWriter();
     	PDBWriter writer = new PDBWriter(sWriter);
     	
@@ -117,18 +115,18 @@ public class PDBWriterTest extends TestCase {
     	
 		String output = sWriter.toString();
 		System.out.println(output);
-		assertNotNull(output);
-		assertTrue(output.length() > 0);
+		Assert.assertNotNull(output);
+		Assert.assertTrue(output.length() > 0);
 		
 		PDBReader reader = new PDBReader();
 		ChemFile chemFile = (ChemFile)reader.read(new ChemFile());
 		
-		assertNotNull(chemFile);
-		assertEquals(1, chemFile.getChemSequenceCount());
+		Assert.assertNotNull(chemFile);
+		Assert.assertEquals(1, chemFile.getChemSequenceCount());
 		IChemSequence sequence = chemFile.getChemSequence(0);
-		assertEquals(1, sequence.getChemModelCount());
+		Assert.assertEquals(1, sequence.getChemModelCount());
 		IChemModel chemModel = sequence.getChemModel(0);
-		assertNotNull(chemModel);
+		Assert.assertNotNull(chemModel);
 		
 		// can't do further testing as the PDBReader does not read
 		// Crystal structures :(

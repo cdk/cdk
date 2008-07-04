@@ -26,9 +26,9 @@ package org.openscience.cdk.io;
 
 import java.io.StringWriter;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
@@ -36,9 +36,6 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.io.MDLWriter;
-import org.openscience.cdk.CDKTestCase;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -51,34 +48,27 @@ import org.openscience.cdk.interfaces.IMolecule;
  *
  * @see org.openscience.cdk.io.MDLWriter
  */
-public class MDLWriterTest extends CDKTestCase {
+public class MDLWriterTest extends ChemObjectIOTest {
 
-    private IChemObjectBuilder builder;
+    private static IChemObjectBuilder builder;
 
-    public MDLWriterTest(String name) {
-        super(name);
-    }
-
-    public static Test suite() {
-        return new TestSuite(MDLWriterTest.class);
-    }
-
-    protected void setUp() throws Exception {
+    @BeforeClass public static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
+        setChemObjectIO(new MDLRXNWriter());
     }
 
-    public void testAccepts() throws Exception {
+    @Test public void testAccepts() throws Exception {
     	MDLWriter reader = new MDLWriter();
-    	assertTrue(reader.accepts(ChemFile.class));
-    	assertTrue(reader.accepts(ChemModel.class));
-    	assertTrue(reader.accepts(Molecule.class));
-    	assertTrue(reader.accepts(MoleculeSet.class));
+    	Assert.assertTrue(reader.accepts(ChemFile.class));
+    	Assert.assertTrue(reader.accepts(ChemModel.class));
+    	Assert.assertTrue(reader.accepts(Molecule.class));
+    	Assert.assertTrue(reader.accepts(MoleculeSet.class));
     }
 
     /**
      * @cdk.bug 890456
      */
-    public void testBug890456() throws Exception {
+    @Test public void testBug890456() throws Exception {
         StringWriter writer = new StringWriter();
         Molecule molecule = new Molecule();
         molecule.addAtom(new PseudoAtom("*"));
@@ -87,13 +77,13 @@ public class MDLWriterTest extends CDKTestCase {
         
         MDLWriter mdlWriter = new MDLWriter(writer);
         mdlWriter.write(molecule);
-        assertTrue(writer.toString().indexOf("M  END") != -1);
+        Assert.assertTrue(writer.toString().indexOf("M  END") != -1);
     }
 
     /**
      * @cdk.bug 1212219
      */
-    public void testBug1212219() throws Exception {
+    @Test public void testBug1212219() throws Exception {
         StringWriter writer = new StringWriter();
         Molecule molecule = new Molecule();
         Atom atom = new Atom("C");
@@ -104,7 +94,7 @@ public class MDLWriterTest extends CDKTestCase {
         mdlWriter.write(molecule);
         String output = writer.toString();
         //logger.debug("MDL output for testBug1212219: " + output);
-        assertTrue(output.indexOf("M  ISO  1   1  14") != -1);
+        Assert.assertTrue(output.indexOf("M  ISO  1   1  14") != -1);
     }
     
     /**
@@ -118,7 +108,7 @@ public class MDLWriterTest extends CDKTestCase {
      * 
      * @cdk.bug 1778479
      */
-    public void testBug1778479() throws Exception {
+    @Test public void testBug1778479() throws Exception {
         StringWriter writer = new StringWriter();
         IMolecule molecule = builder.newMolecule();
         IAtom atom1 = builder.newPseudoAtom();
@@ -131,6 +121,6 @@ public class MDLWriterTest extends CDKTestCase {
         MDLWriter mdlWriter = new MDLWriter(writer);
         mdlWriter.write(molecule);
         String output = writer.toString();
-        assertEquals("Test for zero length pseudo atom label in MDL file", -1, output.indexOf("0.0000    0.0000    0.0000     0  0  0  0  0  0  0  0  0  0  0  0"));
+        Assert.assertEquals("Test for zero length pseudo atom label in MDL file", -1, output.indexOf("0.0000    0.0000    0.0000     0  0  0  0  0  0  0  0  0  0  0  0"));
     }
 }

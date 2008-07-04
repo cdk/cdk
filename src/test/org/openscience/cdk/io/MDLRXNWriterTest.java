@@ -30,21 +30,17 @@ package org.openscience.cdk.io;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.io.MDLRXNReader;
-import org.openscience.cdk.io.MDLRXNWriter;
 import org.openscience.cdk.nonotify.NNReactionSet;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * TestCase for the writer MDL rxn files using one test file.
@@ -53,28 +49,21 @@ import org.openscience.cdk.CDKTestCase;
  *
  * @see org.openscience.cdk.io.MDLRXNWriter
  */
-public class MDLRXNWriterTest extends CDKTestCase {
+public class MDLRXNWriterTest extends ChemObjectIOTest {
 
-    private IChemObjectBuilder builder;
+    private static IChemObjectBuilder builder;
 
-    public MDLRXNWriterTest(String name) {
-        super(name);
+    @BeforeClass public static void setup() {
+        builder = DefaultChemObjectBuilder.getInstance();
+        setChemObjectIO(new MDLRXNWriter());
     }
 
-    public void setUp() {
-    	builder = DefaultChemObjectBuilder.getInstance();
-    }
-    
-    public static Test suite() {
-        return new TestSuite(MDLRXNWriterTest.class);
-    }
-
-    public void testAccepts() throws Exception {
+    @Test public void testAccepts() throws Exception {
     	MDLRXNWriter reader = new MDLRXNWriter();
-    	assertTrue(reader.accepts(Reaction.class));
+    	Assert.assertTrue(reader.accepts(Reaction.class));
     }
 
-    public void testRoundtrip() throws Exception {
+    @Test public void testRoundtrip() throws Exception {
         IReaction reaction = builder.newReaction();
         IMolecule hydroxide = builder.newMolecule();
         hydroxide.addAtom(builder.newAtom("O"));
@@ -94,7 +83,7 @@ public class MDLRXNWriterTest extends CDKTestCase {
         mdlWriter.close();
         file = writer.toString();
         
-        assertTrue(file.length() > 0);
+        Assert.assertTrue(file.length() > 0);
         
         // now deserialize the MDL RXN output
         IReaction reaction2 = builder.newReaction();
@@ -102,11 +91,11 @@ public class MDLRXNWriterTest extends CDKTestCase {
         reaction2 = (IReaction)reader.read(reaction2);
         reader.close();
         
-        assertEquals(2, reaction2.getReactantCount());
-        assertEquals(1, reaction2.getProductCount());
+        Assert.assertEquals(2, reaction2.getReactantCount());
+        Assert.assertEquals(1, reaction2.getProductCount());
     }
     
-    public void testReactionSet_1() throws Exception {
+    @Test public void testReactionSet_1() throws Exception {
         IReaction reaction11 = builder.newReaction();
         IMolecule hydroxide = builder.newMolecule();
         hydroxide.addAtom(builder.newAtom("O"));
@@ -130,7 +119,7 @@ public class MDLRXNWriterTest extends CDKTestCase {
         mdlWriter.close();
         file = writer.toString();
         
-        assertTrue(file.length() > 0);
+        Assert.assertTrue(file.length() > 0);
         
         // now deserialize the MDL RXN output
         IReaction reaction2 = builder.newReaction();
@@ -138,15 +127,15 @@ public class MDLRXNWriterTest extends CDKTestCase {
         reaction2 = (IReaction)reader.read(reaction2);
         reader.close();
         
-        assertEquals(2, reaction2.getReactantCount());
-        assertEquals(1, reaction2.getReactants().getMolecule(0).getAtomCount());
-        assertEquals(1, reaction2.getReactants().getMolecule(1).getAtomCount());
-        assertEquals(1, reaction2.getProductCount());
-        assertEquals(1, reaction2.getProducts().getMolecule(0).getAtomCount());
+        Assert.assertEquals(2, reaction2.getReactantCount());
+        Assert.assertEquals(1, reaction2.getReactants().getMolecule(0).getAtomCount());
+        Assert.assertEquals(1, reaction2.getReactants().getMolecule(1).getAtomCount());
+        Assert.assertEquals(1, reaction2.getProductCount());
+        Assert.assertEquals(1, reaction2.getProducts().getMolecule(0).getAtomCount());
     }
 
     
-    public void testReactionSet_2() throws Exception {
+    @Test public void testReactionSet_2() throws Exception {
         IReaction reaction11 = builder.newReaction();
         IMolecule hydroxide = builder.newMolecule();
         hydroxide.addAtom(builder.newAtom("O"));
@@ -184,7 +173,7 @@ public class MDLRXNWriterTest extends CDKTestCase {
         mdlWriter.close();
         file = writer.toString();
         
-        assertTrue(file.length() > 0);
+        Assert.assertTrue(file.length() > 0);
         
         // now deserialize the MDL RXN output
         IReactionSet reactionSetF = builder.newReactionSet();
@@ -192,11 +181,11 @@ public class MDLRXNWriterTest extends CDKTestCase {
         reactionSetF = (IReactionSet)reader.read(reactionSetF);
         reader.close();
 
-        assertEquals(2, reactionSetF.getReactionCount());
-        assertEquals(1, reactionSetF.getReaction(0).getReactants().getMolecule(0).getAtomCount());
-        assertEquals(1, reactionSetF.getReaction(0).getReactants().getMolecule(1).getAtomCount());
-        assertEquals(1, reactionSetF.getReaction(0).getProductCount());
-        assertEquals(1, reactionSetF.getReaction(0).getProducts().getMolecule(0).getAtomCount());
+        Assert.assertEquals(2, reactionSetF.getReactionCount());
+        Assert.assertEquals(1, reactionSetF.getReaction(0).getReactants().getMolecule(0).getAtomCount());
+        Assert.assertEquals(1, reactionSetF.getReaction(0).getReactants().getMolecule(1).getAtomCount());
+        Assert.assertEquals(1, reactionSetF.getReaction(0).getProductCount());
+        Assert.assertEquals(1, reactionSetF.getReaction(0).getProducts().getMolecule(0).getAtomCount());
     }
     
 }

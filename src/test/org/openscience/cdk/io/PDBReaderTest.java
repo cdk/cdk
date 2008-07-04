@@ -24,22 +24,26 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.InputStream;
+import java.util.List;
+
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.io.PDBReader;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.protein.data.PDBStrand;
-import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.io.InputStream;
-import java.util.List;
 
 /**
  * TestCase for the PDBReader class.
@@ -50,15 +54,18 @@ import java.util.List;
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  * @cdk.created 2001-08-09
  */
-public class PDBReaderTest extends NewCDKTestCase {
+public class PDBReaderTest extends ChemObjectIOTest {
 
+    @BeforeClass public static void setup() throws Exception {
+        setChemObjectIO(new PDBReader());
+    }
 
-    public void testAccepts() {
+    @Test public void testAccepts() {
     	PDBReader reader = new PDBReader();
     	Assert.assertTrue(reader.accepts(ChemFile.class));
     }
 
-	public void testPDBFileCoffein() throws Exception {
+    @Test public void testPDBFileCoffein() throws Exception {
         String filename = "data/pdb/coffeine.pdb";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 

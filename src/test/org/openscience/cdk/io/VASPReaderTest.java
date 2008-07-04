@@ -29,51 +29,46 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.io.VASPReader;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module test-experimental
  */
-public class VASPReaderTest extends CDKTestCase {
+public class VASPReaderTest extends ChemObjectIOTest {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private static LoggingTool logger;
 
-    public VASPReaderTest(String name) {
-        super(name);
-        logger = new org.openscience.cdk.tools.LoggingTool(this);
+    @BeforeClass public static void setup() throws Exception {
+        logger = new LoggingTool(VASPReaderTest.class);
+        setChemObjectIO(new VASPReader());
     }
 
-    public static Test suite() {
-        return new TestSuite(VASPReaderTest.class);
-    }
-
-    public void testAccepts() {
+    @Test public void testAccepts() {
     	VASPReader reader = new VASPReader();
-    	assertTrue(reader.accepts(ChemFile.class));
+    	Assert.assertTrue(reader.accepts(ChemFile.class));
     }
 
-    public void testReading() throws Exception {
+    @Test public void testReading() throws Exception {
         String filename = "data/vasp/LiMoS2_optimisation_ISIF3.vasp";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         VASPReader reader = new VASPReader(ins);
         ChemFile chemFile = (ChemFile)reader.read(new ChemFile());
-        assertNotNull(chemFile);
+        Assert.assertNotNull(chemFile);
         org.openscience.cdk.interfaces.IChemSequence sequence = chemFile.getChemSequence(0);
-        assertNotNull(sequence);
-        assertEquals(6, sequence.getChemModelCount());
+        Assert.assertNotNull(sequence);
+        Assert.assertEquals(6, sequence.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = sequence.getChemModel(0);
-        assertNotNull(model);
+        Assert.assertNotNull(model);
         org.openscience.cdk.interfaces.ICrystal crystal = model.getCrystal();
-        assertNotNull(crystal);
-        assertEquals(16, crystal.getAtomCount());
+        Assert.assertNotNull(crystal);
+        Assert.assertEquals(16, crystal.getAtomCount());
         org.openscience.cdk.interfaces.IAtom atom = crystal.getAtom(0);
-        assertNotNull(atom);
-        assertNotNull(atom.getFractionalPoint3d());
+        Assert.assertNotNull(atom);
+        Assert.assertNotNull(atom.getFractionalPoint3d());
     }
 }

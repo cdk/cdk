@@ -45,7 +45,7 @@ public class MsmilesTests {
         TestSuite suite = new TestSuite("The SMILES Tests");
 
         // IO classes
-        suite.addTest(SMILESReaderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SMILESReaderTest.class));
         suite.addTest(IteratingSMILESReaderTest.suite());
         // from cdk.test.smiles
         suite.addTest(new JUnit4TestAdapter(DeduceBondSystemToolTest.class));

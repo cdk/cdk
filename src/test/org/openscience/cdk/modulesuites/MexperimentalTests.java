@@ -41,7 +41,7 @@ public class MexperimentalTests {
         TestSuite suite= new TestSuite("The cdk.experimental Tests");
 
         suite.addTest(new JUnit4TestAdapter(AssociationTest.class));
-        suite.addTest(VASPReaderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(VASPReaderTest.class));
         suite.addTest(GenerateFragmentsTest.suite());
 
         // from cdk.test.atomtype

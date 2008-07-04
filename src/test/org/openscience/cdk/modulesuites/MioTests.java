@@ -172,23 +172,23 @@ public class MioTests {
         suite.addTest(new JUnit4TestAdapter(INChIReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(INChIPlainTextReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(MDLReaderTest.class));
-        suite.addTest(MDLV2000ReaderTest.suite());
-        suite.addTest(MDLV3000ReaderTest.suite());
-        suite.addTest(SDFReaderTest.suite());
-        suite.addTest(MDLWriterTest.suite());
-        suite.addTest(MDLRXNReaderTest.suite());
-        suite.addTest(MDLRXNV2000ReaderTest.suite());
-        suite.addTest(MDLRXNV3000ReaderTest.suite());
-        suite.addTest(MDLRXNWriterTest.suite());
-        suite.addTest(Mol2ReaderTest.suite());
-        suite.addTest(PCCompoundASNReaderTest.suite());
-        suite.addTest(PDBWriterTest.suite());
-        suite.addTest(PMPReaderTest.suite());
-        suite.addTest(ShelXReaderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(MDLV2000ReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(MDLV3000ReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(SDFReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(MDLWriterTest.class));
+        suite.addTest(new JUnit4TestAdapter(MDLRXNReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(MDLRXNV2000ReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(MDLRXNV3000ReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(MDLRXNWriterTest.class));
+        suite.addTest(new JUnit4TestAdapter(Mol2ReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(PCCompoundASNReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(PDBWriterTest.class));
+        suite.addTest(new JUnit4TestAdapter(PMPReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(ShelXReaderTest.class));
         //suite.addTest(VASPReaderTest.suite()); Class is in experimental
         /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test yet! */
-        suite.addTest(XYZReaderTest.suite());
-        suite.addTest(XYZWriterTest.suite());
+        suite.addTest(new JUnit4TestAdapter(XYZReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(XYZWriterTest.class));
 
         suite.addTest(ReaderFactoryTest.suite());
         suite.addTest(WriterFactoryTest.suite());

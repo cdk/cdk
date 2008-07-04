@@ -29,56 +29,50 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.Crystal;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.io.ShelXReader;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module test-io
  */
-public class ShelXReaderTest extends CDKTestCase {
+public class ShelXReaderTest extends ChemObjectIOTest {
 
-    private LoggingTool logger;
+    private static LoggingTool logger;
 
-    public ShelXReaderTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
+    @BeforeClass public static void setup() throws Exception {
+        logger = new LoggingTool(ShelXReaderTest.class);
+        setChemObjectIO(new ShelXReader());
     }
 
-    public static Test suite() {
-        return new TestSuite(ShelXReaderTest.class);
-    }
-
-    public void testAccepts() {
+    @Test public void testAccepts() {
     	ShelXReader reader = new ShelXReader();
-    	assertTrue(reader.accepts(ChemFile.class));
-    	assertTrue(reader.accepts(Crystal.class));
+    	Assert.assertTrue(reader.accepts(ChemFile.class));
+    	Assert.assertTrue(reader.accepts(Crystal.class));
     }
 
-    public void testReading() throws Exception {
+    @Test public void testReading() throws Exception {
         String filename = "data/shelx/frame_1.res";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ShelXReader reader = new ShelXReader(ins);
         Crystal crystal = (Crystal)reader.read(new Crystal());
-        assertNotNull(crystal);
-        assertEquals(42, crystal.getAtomCount());
+        Assert.assertNotNull(crystal);
+        Assert.assertEquals(42, crystal.getAtomCount());
         double notional[] = CrystalGeometryTools.cartesianToNotional(
         		crystal.getA(),
         		crystal.getB(),
         		crystal.getC()
         );
-        assertEquals(7.97103, notional[0], 0.001);
-        assertEquals(18.77220, notional[1], 0.001);
-        assertEquals(10.26222, notional[2], 0.001);
-        assertEquals(90.0000, notional[3], 0.001);
-        assertEquals(90.0000, notional[4], 0.001);
-        assertEquals(90.0000, notional[5], 0.001);
+        Assert.assertEquals(7.97103, notional[0], 0.001);
+        Assert.assertEquals(18.77220, notional[1], 0.001);
+        Assert.assertEquals(10.26222, notional[2], 0.001);
+        Assert.assertEquals(90.0000, notional[3], 0.001);
+        Assert.assertEquals(90.0000, notional[4], 0.001);
+        Assert.assertEquals(90.0000, notional[5], 0.001);
     }
 }

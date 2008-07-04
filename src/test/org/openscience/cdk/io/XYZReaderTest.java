@@ -26,13 +26,11 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.io.XYZReader;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -42,83 +40,79 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.io.XYZReader
  */
-public class XYZReaderTest extends CDKTestCase {
+public class XYZReaderTest extends ChemObjectIOTest {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private static LoggingTool logger;
 
-    public XYZReaderTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
+    @BeforeClass public static void setup() throws Exception {
+        logger = new LoggingTool(XYZReaderTest.class);
+        setChemObjectIO(new XYZReader());
     }
 
-    public static Test suite() {
-        return new TestSuite(XYZReaderTest.class);
-    }
-
-    public void testAccepts() {
+    @Test public void testAccepts() {
     	XYZReader reader = new XYZReader();
-    	assertTrue(reader.accepts(ChemFile.class));
+    	Assert.assertTrue(reader.accepts(ChemFile.class));
     }
 
-    public void testViagra() throws Exception {
+    @Test public void testViagra() throws Exception {
         String filename = "data/xyz/viagra.xyz";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         XYZReader reader = new XYZReader(ins);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-        assertNotNull(chemFile);
-        assertEquals(1, chemFile.getChemSequenceCount());
+        Assert.assertNotNull(chemFile);
+        Assert.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        assertNotNull(seq);
-        assertEquals(1, seq.getChemModelCount());
+        Assert.assertNotNull(seq);
+        Assert.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        assertNotNull(model);
+        Assert.assertNotNull(model);
 
         org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
-        assertNotNull(som);
-        assertEquals(1, som.getMoleculeCount());
+        Assert.assertNotNull(som);
+        Assert.assertEquals(1, som.getMoleculeCount());
         org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
-        assertNotNull(m);
-        assertEquals(63, m.getAtomCount());
-        assertEquals(0, m.getBondCount());
+        Assert.assertNotNull(m);
+        Assert.assertEquals(63, m.getAtomCount());
+        Assert.assertEquals(0, m.getBondCount());
 
-        assertEquals("N", m.getAtom(0).getSymbol());
-        assertNotNull(m.getAtom(0).getPoint3d());
-        assertEquals(-3.4932, m.getAtom(0).getPoint3d().x, 0.0001);
-        assertEquals(-1.8950, m.getAtom(0).getPoint3d().y, 0.0001);
-        assertEquals(0.1795, m.getAtom(0).getPoint3d().z, 0.0001);
+        Assert.assertEquals("N", m.getAtom(0).getSymbol());
+        Assert.assertNotNull(m.getAtom(0).getPoint3d());
+        Assert.assertEquals(-3.4932, m.getAtom(0).getPoint3d().x, 0.0001);
+        Assert.assertEquals(-1.8950, m.getAtom(0).getPoint3d().y, 0.0001);
+        Assert.assertEquals(0.1795, m.getAtom(0).getPoint3d().z, 0.0001);
     }
 
-    public void testComment() throws Exception {
+    @Test public void testComment() throws Exception {
         String filename = "data/xyz/viagra_withComment.xyz";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         XYZReader reader = new XYZReader(ins);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-        assertNotNull(chemFile);
-        assertEquals(1, chemFile.getChemSequenceCount());
+        Assert.assertNotNull(chemFile);
+        Assert.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        assertNotNull(seq);
-        assertEquals(1, seq.getChemModelCount());
+        Assert.assertNotNull(seq);
+        Assert.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        assertNotNull(model);
+        Assert.assertNotNull(model);
 
         org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
-        assertNotNull(som);
-        assertEquals(1, som.getMoleculeCount());
+        Assert.assertNotNull(som);
+        Assert.assertEquals(1, som.getMoleculeCount());
         org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
-        assertNotNull(m);
-        assertEquals(63, m.getAtomCount());
-        assertEquals(0, m.getBondCount());
+        Assert.assertNotNull(m);
+        Assert.assertEquals(63, m.getAtomCount());
+        Assert.assertEquals(0, m.getBondCount());
 
         // atom 63: H    3.1625    3.1270   -0.9362
-        assertEquals("H", m.getAtom(62).getSymbol());
-        assertNotNull(m.getAtom(62).getPoint3d());
-        assertEquals(3.1625, m.getAtom(62).getPoint3d().x, 0.0001);
-        assertEquals(3.1270, m.getAtom(62).getPoint3d().y, 0.0001);
-        assertEquals(-0.9362, m.getAtom(62).getPoint3d().z, 0.0001);
+        Assert.assertEquals("H", m.getAtom(62).getSymbol());
+        Assert.assertNotNull(m.getAtom(62).getPoint3d());
+        Assert.assertEquals(3.1625, m.getAtom(62).getPoint3d().x, 0.0001);
+        Assert.assertEquals(3.1270, m.getAtom(62).getPoint3d().y, 0.0001);
+        Assert.assertEquals(-0.9362, m.getAtom(62).getPoint3d().z, 0.0001);
     }
 
 }

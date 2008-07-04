@@ -30,15 +30,12 @@ import java.io.StringWriter;
 
 import javax.vecmath.Point3d;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.io.XYZWriter;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * TestCase for the writer XYZ files using one test file.
@@ -47,25 +44,18 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.io.XYZWriter
  */
-public class XYZWriterTest extends CDKTestCase {
+public class XYZWriterTest extends ChemObjectIOTest {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
-
-    public XYZWriterTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
+    @BeforeClass public static void setup() throws Exception {
+        setChemObjectIO(new XYZWriter());
     }
 
-    public static Test suite() {
-        return new TestSuite(XYZWriterTest.class);
-    }
-
-    public void testAccepts() throws Exception {
+    @Test public void testAccepts() throws Exception {
     	XYZWriter reader = new XYZWriter();
-    	assertTrue(reader.accepts(Molecule.class));
+    	Assert.assertTrue(reader.accepts(Molecule.class));
     }
 
-    public void testWriting() throws Exception {
+    @Test public void testWriting() throws Exception {
         StringWriter writer = new StringWriter();
         Molecule molecule = new Molecule();
         IAtom atom1 = new Atom("C");
@@ -88,7 +78,7 @@ public class XYZWriterTest extends CDKTestCase {
         	new StringReader(output)
         );
         while (reader.readLine() != null) lineCount++;
-        assertEquals(4, lineCount);
+        Assert.assertEquals(4, lineCount);
     }
 
 }

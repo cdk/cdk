@@ -26,53 +26,47 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module test-io
  */
-public class PCCompoundXMLReaderTest extends CDKTestCase {
+public class PCCompoundXMLReaderTest extends ChemObjectIOTest {
 
-    private LoggingTool logger;
+    private static LoggingTool logger;
 
-    public PCCompoundXMLReaderTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
+    @BeforeClass public static void setup() throws Exception {
+        logger = new LoggingTool(PCCompoundXMLReaderTest.class);
+        setChemObjectIO(new PCCompoundXMLReader());
     }
 
-    public static Test suite() {
-        return new TestSuite(PCCompoundXMLReaderTest.class);
-    }
-
-    public void testAccepts() throws Exception {
+    @Test public void testAccepts() throws Exception {
     	PCCompoundXMLReader reader = new PCCompoundXMLReader();
-    	assertTrue(reader.accepts(Molecule.class));
+    	Assert.assertTrue(reader.accepts(Molecule.class));
     }
 
-    public void testReading() throws Exception {
+    @Test public void testReading() throws Exception {
         String filename = "data/asn/pubchem/cid1145.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
         IMolecule molecule = (IMolecule)reader.read(new Molecule());
-        assertNotNull(molecule);
+        Assert.assertNotNull(molecule);
 
         // check atom stuff
-        assertEquals(14, molecule.getAtomCount());
-        assertEquals("O", molecule.getAtom(0).getSymbol());
-        assertEquals(Integer.valueOf(-1), molecule.getAtom(0).getFormalCharge());
-        assertEquals("N", molecule.getAtom(1).getSymbol());
-        assertEquals(Integer.valueOf(1), molecule.getAtom(1).getFormalCharge());
+        Assert.assertEquals(14, molecule.getAtomCount());
+        Assert.assertEquals("O", molecule.getAtom(0).getSymbol());
+        Assert.assertEquals(Integer.valueOf(-1), molecule.getAtom(0).getFormalCharge());
+        Assert.assertEquals("N", molecule.getAtom(1).getSymbol());
+        Assert.assertEquals(Integer.valueOf(1), molecule.getAtom(1).getFormalCharge());
 
         // check bond stuff
-        assertEquals(13, molecule.getBondCount());
-        assertNotNull(molecule.getBond(3));
+        Assert.assertEquals(13, molecule.getBondCount());
+        Assert.assertNotNull(molecule.getBond(3));
     }
 }

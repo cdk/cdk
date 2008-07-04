@@ -36,10 +36,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
@@ -61,57 +60,53 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  *
  * @see org.openscience.cdk.io.Mol2Reader
  */
-public class Mol2ReaderTest extends CDKTestCase {
+public class Mol2ReaderTest extends ChemObjectIOTest {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
+    private static LoggingTool logger;
 
-    public Mol2ReaderTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
+    @BeforeClass public static void setup() {
+        logger = new LoggingTool(Mol2ReaderTest.class);
+        setChemObjectIO(new Mol2Reader());
     }
 
-    public static Test suite() {
-        return new TestSuite(Mol2ReaderTest.class);
-    }
-
-    public void testAccepts() {
+    @Test public void testAccepts() {
     	Mol2Reader reader = new Mol2Reader();
-    	assertTrue(reader.accepts(ChemFile.class));
-    	assertTrue(reader.accepts(ChemModel.class));
-    	assertTrue(reader.accepts(Molecule.class));
+    	Assert.assertTrue(reader.accepts(ChemFile.class));
+    	Assert.assertTrue(reader.accepts(ChemModel.class));
+    	Assert.assertTrue(reader.accepts(Molecule.class));
     }
 
     /**
      * Test example from website. See
      * <a href="http://www.tripos.com/custResources/mol2Files/mol2_format3.html">Tripos example</a>.
      */
-    public void testExampleFromWebsite() throws Exception {
+    @Test public void testExampleFromWebsite() throws Exception {
         String filename = "data/mol2/fromWebsite.mol2";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(ins);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-        assertNotNull(chemFile);
-        assertEquals(1, chemFile.getChemSequenceCount());
+        Assert.assertNotNull(chemFile);
+        Assert.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        assertNotNull(seq);
-        assertEquals(1, seq.getChemModelCount());
+        Assert.assertNotNull(seq);
+        Assert.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        assertNotNull(model);
+        Assert.assertNotNull(model);
 
         org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
-        assertNotNull(som);
-        assertEquals(1, som.getMoleculeCount());
+        Assert.assertNotNull(som);
+        Assert.assertEquals(1, som.getMoleculeCount());
         org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
-        assertNotNull(m);
-        assertEquals(12, m.getAtomCount());
-        assertEquals(12, m.getBondCount());
+        Assert.assertNotNull(m);
+        Assert.assertEquals(12, m.getAtomCount());
+        Assert.assertEquals(12, m.getBondCount());
 
-        assertEquals("C.ar", m.getAtom(0).getAtomTypeName());
-        assertEquals("C", m.getAtom(0).getSymbol());
-        assertEquals("H", m.getAtom(6).getAtomTypeName());
-        assertEquals("H", m.getAtom(6).getSymbol());
+        Assert.assertEquals("C.ar", m.getAtom(0).getAtomTypeName());
+        Assert.assertEquals("C", m.getAtom(0).getSymbol());
+        Assert.assertEquals("H", m.getAtom(6).getAtomTypeName());
+        Assert.assertEquals("H", m.getAtom(6).getSymbol());
     }
 
     
@@ -121,8 +116,8 @@ public class Mol2ReaderTest extends CDKTestCase {
      * @throws IOException if an I/O error occurs
      * @throws CDKException if an CDK error occurs
      */
-    public void testNCIfeb03_2D() throws Exception {
-    	if (!runSlowTests()) fail("Not running time consuming test");
+    @Test public void testNCIfeb03_2D() throws Exception {
+    	if (!runSlowTests()) Assert.fail("Not running time consuming test");
     	
         String filename = "data/mol2/NCI_feb03_2D.mol2.gz";
         InputStream in = new GZIPInputStream(Mol2ReaderTest.class.getClassLoader().getResourceAsStream(filename));
@@ -141,17 +136,17 @@ public class Mol2ReaderTest extends CDKTestCase {
         }
     }
     
-    public void testIMolecule() throws Exception {
+    @Test public void testIMolecule() throws Exception {
         String filename = "data/mol2/fromWebsite.mol2";
         InputStream in = Mol2ReaderTest.class.getClassLoader().getResourceAsStream(filename);
         Mol2Reader reader = new Mol2Reader(in);
         IMolecule mol = (IMolecule)reader.read(new Molecule());
-        assertNotNull(mol);
-        assertEquals(12, mol.getAtomCount());
-        assertEquals(12, mol.getBondCount());
+        Assert.assertNotNull(mol);
+        Assert.assertEquals(12, mol.getAtomCount());
+        Assert.assertEquals(12, mol.getBondCount());
     }
     
-    public void testBug1714794() throws Exception {
+    @Test public void testBug1714794() throws Exception {
         String problematicMol2 = "@<TRIPOS>MOLECULE\n"
             + "mol_197219.smi\n"
             + " 129 135 0 0 0\n"
@@ -429,17 +424,17 @@ public class Mol2ReaderTest extends CDKTestCase {
         IChemModel model = (IChemModel)r.read(
         	NoNotificationChemObjectBuilder.getInstance().newChemModel()
         );
-        assertNotNull(model);
+        Assert.assertNotNull(model);
         List containers = ChemModelManipulator.getAllAtomContainers(model);
-        assertEquals(1, containers.size());
+        Assert.assertEquals(1, containers.size());
         IAtomContainer molecule = (IAtomContainer)containers.get(0);
-        assertNotNull(molecule);
-        assertEquals(129, molecule.getAtomCount());
-        assertEquals(135, molecule.getBondCount());
+        Assert.assertNotNull(molecule);
+        Assert.assertEquals(129, molecule.getAtomCount());
+        Assert.assertEquals(135, molecule.getBondCount());
         Iterator atoms = molecule.atoms();
         while (atoms.hasNext()) {
         	IAtom atom = (IAtom)atoms.next();
-        	assertNotNull(atom.getAtomTypeName());
+        	Assert.assertNotNull(atom.getAtomTypeName());
         }
     }
     
@@ -448,9 +443,9 @@ public class Mol2ReaderTest extends CDKTestCase {
         StringReader sr = new StringReader(buf.toString());
         Mol2Reader reader = new Mol2Reader(sr);
         IChemFile mol = (IChemFile)reader.read(NoNotificationChemObjectBuilder.getInstance().newChemFile());
-        assertTrue(mol.getChemSequenceCount() > 0);
-        assertTrue(mol.getChemSequence(0).getChemModelCount() > 0);
-        assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainerCount() > 0);
-        assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0).getAtomCount() > 0);        
+        Assert.assertTrue(mol.getChemSequenceCount() > 0);
+        Assert.assertTrue(mol.getChemSequence(0).getChemModelCount() > 0);
+        Assert.assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainerCount() > 0);
+        Assert.assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0).getAtomCount() > 0);        
     }
 }

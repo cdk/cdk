@@ -26,10 +26,9 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -38,38 +37,34 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * @cdk.module test-io
  */
-public class PCSubstanceXMLReaderTest extends CDKTestCase {
+public class PCSubstanceXMLReaderTest extends ChemObjectIOTest {
 
-    private LoggingTool logger;
+    private static LoggingTool logger;
 
-    public PCSubstanceXMLReaderTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
+    @BeforeClass public static void setup() throws Exception {
+        logger = new LoggingTool(Mol2ReaderTest.class);
+        setChemObjectIO(new Mol2Reader());
     }
 
-    public static Test suite() {
-        return new TestSuite(PCSubstanceXMLReaderTest.class);
-    }
-
-    public void testAccepts() throws Exception {
+    @Test public void testAccepts() throws Exception {
     	PCSubstanceXMLReader reader = new PCSubstanceXMLReader();
-    	assertTrue(reader.accepts(Molecule.class));
+    	Assert.assertTrue(reader.accepts(Molecule.class));
     }
 
-    public void testReading() throws Exception {
+    @Test public void testReading() throws Exception {
         String filename = "data/asn/pubchem/sid577309.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         PCSubstanceXMLReader reader = new PCSubstanceXMLReader(ins);
         IMolecule molecule = (IMolecule)reader.read(new Molecule());
-        assertNotNull(molecule);
+        Assert.assertNotNull(molecule);
 
         // check atom stuff
-        assertEquals(19, molecule.getAtomCount());
-        assertTrue(molecule.getAtom(0) instanceof IPseudoAtom);
+        Assert.assertEquals(19, molecule.getAtomCount());
+        Assert.assertTrue(molecule.getAtom(0) instanceof IPseudoAtom);
 
         // check bond stuff
-        assertEquals(19, molecule.getBondCount());
-        assertNotNull(molecule.getBond(3));
+        Assert.assertEquals(19, molecule.getBondCount());
+        Assert.assertNotNull(molecule.getBond(3));
     }
 }

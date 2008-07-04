@@ -27,16 +27,14 @@ package org.openscience.cdk.io;
 import java.io.InputStream;
 import java.io.StringReader;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.MDLV3000Reader;
 import org.openscience.cdk.nonotify.NNMolecule;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -47,52 +45,48 @@ import org.openscience.cdk.tools.LoggingTool;
  * @see org.openscience.cdk.io.MDLReader
  * @see org.openscience.cdk.io.SDFReaderTest
  */
-public class MDLV3000ReaderTest extends CDKTestCase {
+public class MDLV3000ReaderTest extends ChemObjectIOTest {
 
-    private LoggingTool logger;
+    private static LoggingTool logger;
 
-    public MDLV3000ReaderTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
+    @BeforeClass public static void setup() throws Exception {
+        logger = new LoggingTool(MDLV3000ReaderTest.class);
+        setChemObjectIO(new MDLV3000Reader());
     }
 
-    public static Test suite() {
-        return new TestSuite(MDLV3000ReaderTest.class);
-    }
-
-    public void testAccepts() {
+    @Test public void testAccepts() {
     	MDLV3000Reader reader = new MDLV3000Reader();
-    	assertTrue(reader.accepts(Molecule.class));
+    	Assert.assertTrue(reader.accepts(Molecule.class));
     }
     
     /**
      * @cdk.bug 1571207
      */
-    public void testBug1571207() throws Exception {
+    @Test public void testBug1571207() throws Exception {
         String filename = "data/mdl/molV3000.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV3000Reader reader = new MDLV3000Reader(ins);
         IMolecule m = (IMolecule)reader.read(new NNMolecule());
-        assertNotNull(m);
-        assertEquals(31, m.getAtomCount());
-        assertEquals(34, m.getBondCount());
+        Assert.assertNotNull(m);
+        Assert.assertEquals(31, m.getAtomCount());
+        Assert.assertEquals(34, m.getBondCount());
 
         IAtom atom = m.getAtom(0);
-        assertNotNull(atom);
-        assertNotNull(atom.getPoint2d());
-        assertEquals(10.4341, atom.getPoint2d().x, 0.0001);
-        assertEquals(5.1053, atom.getPoint2d().y, 0.0001);
+        Assert.assertNotNull(atom);
+        Assert.assertNotNull(atom.getPoint2d());
+        Assert.assertEquals(10.4341, atom.getPoint2d().x, 0.0001);
+        Assert.assertEquals(5.1053, atom.getPoint2d().y, 0.0001);
     }
     
-    public void testEmptyString() throws Exception {
+    @Test public void testEmptyString() throws Exception {
     	String emptyString = "";
     	MDLV3000Reader reader = new MDLV3000Reader(new StringReader(emptyString));
     	try {
     		reader.read(new NNMolecule());
-    		fail("Should have received a CDK Exception");
+    		Assert.fail("Should have received a CDK Exception");
     	} catch (CDKException cdkEx) {
-    		assertEquals("Expected a header line, but found nothing.", cdkEx.getMessage());
+    		Assert.assertEquals("Expected a header line, but found nothing.", cdkEx.getMessage());
     	}
     }
 
