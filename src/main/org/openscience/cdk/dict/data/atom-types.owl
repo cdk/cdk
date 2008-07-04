@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rdf:RDF [
+  <!ENTITY rdf  "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+  <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+  <!ENTITY xsd  "http://www.w3.org/2001/XMLSchema#" >
+  <!ENTITY owl  "http://www.w3.org/2002/07/owl#" >
+  <!ENTITY at   "http://cdk.sf.net/ontologies/atomtypes#" >
+  <!ENTITY elem "http://cdk.sf.net/ontologies/elements#" >
+]>
+<rdf:RDF xmlns="&at;" xml:base="&at;"
+  xmlns:owl="&owl;"
+  xmlns:at="&at;"
+  xmlns:rdf="&rdf;"
+  xmlns:rdfs="&rdfs;"
+  xmlns:elem="&elem;"
+  xmlns:dc="http://dublincore.org/"
+>
+
+  <owl:Ontology rdf:about="">
+    <rdfs:label>Atom Type Ontology Data Types</rdfs:label>
+    <owl:versionInfo>$Id$</owl:versionInfo>
+  </owl:Ontology>
+
+  <!--  imported from http://cdk.sf.net/ontologies/elements# -->
+  <owl:Class rdf:about="&elem;Element"/>
+
+  <!-- classes and properties -->
+
+  <owl:Class rdf:ID="AtomTypeCategory"/>
+
+  <owl:Class rdf:ID="AtomType"/>
+
+  <owl:Class rdf:ID="Hybridization"/>
+  
+  <owl:ObjectProperty rdf:ID="categorizedAs">
+    <rdfs:domain rdf:resource="&at;AtomType"/>
+    <rdfs:range rdf:resource="&at;AtomTypeCategory"/>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:ID="hasElement">
+    <rdfs:label>has element</rdfs:label>
+    <rdfs:domain rdf:resource="&at;AtomType"/>
+    <rdfs:range rdf:resource="&elem;Element"/>
+  </owl:ObjectProperty>
+
+  <owl:DatatypeProperty rdf:ID="definition">
+    <rdfs:domain rdf:resource="&at;AtomType"/>
+    <rdfs:range rdf:resource="&xsd;string"/>
+  </owl:DatatypeProperty>
+
+  <!-- the hybridization states -->
+  
+  <Hybridization rdf:ID="sp3"/>
+  
+  <!-- general atom type categories -->
+  
+  <AtomTypeCategory rdf:ID="radical"/>
+  
+</rdf:RDF>
