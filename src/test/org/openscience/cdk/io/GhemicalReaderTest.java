@@ -29,13 +29,11 @@ package org.openscience.cdk.io;
 
 import java.io.StringReader;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.io.GhemicalMMReader;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * TestCase for the reading Ghemical molecular dynamics files using one test file.
@@ -44,22 +42,17 @@ import org.openscience.cdk.CDKTestCase;
  *
  * @see org.openscience.cdk.io.GhemicalReader
  */
-public class GhemicalReaderTest extends CDKTestCase {
+public class GhemicalReaderTest extends ChemObjectIOTest {
 
-    public GhemicalReaderTest(String name) {
-        super(name);
+    @BeforeClass public static void setup() {
+        setChemObjectIO(new GhemicalMMReader());
     }
 
-    public static Test suite() {
-        return new TestSuite(GhemicalReaderTest.class);
+    @Test public void testAccepts() {
+    	Assert.assertTrue(chemObjectIO.accepts(ChemModel.class));
     }
 
-    public void testAccepts() {
-    	GhemicalMMReader reader = new GhemicalMMReader();
-    	assertTrue(reader.accepts(ChemModel.class));
-    }
-
-    public void testExample() throws Exception {
+    @Test public void testExample() throws Exception {
         String testfile =
 "!Header mm1gp 100\n" +
 "!Info 1\n" +
@@ -95,22 +88,22 @@ public class GhemicalReaderTest extends CDKTestCase {
         GhemicalMMReader reader = new GhemicalMMReader(stringReader);
         ChemModel model = (ChemModel)reader.read((ChemObject)new ChemModel());
 
-        assertNotNull(model);
-        assertNotNull(model.getMoleculeSet());
+        Assert.assertNotNull(model);
+        Assert.assertNotNull(model.getMoleculeSet());
         org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
-        assertNotNull(som);
-        assertEquals(1, som.getMoleculeCount());
+        Assert.assertNotNull(som);
+        Assert.assertEquals(1, som.getMoleculeCount());
         org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
-        assertNotNull(m);
-        assertEquals(6, m.getAtomCount());
-        assertEquals(5, m.getBondCount());
+        Assert.assertNotNull(m);
+        Assert.assertEquals(6, m.getAtomCount());
+        Assert.assertEquals(5, m.getBondCount());
 
         // test reading of formal charges
         org.openscience.cdk.interfaces.IAtom a = m.getAtom(0);
-        assertNotNull(a);
-        assertEquals(6, a.getAtomicNumber().intValue());
-        assertEquals(-0.2, a.getCharge(), 0.01);
-        assertEquals(0.06677, a.getPoint3d().x, 0.01);
+        Assert.assertNotNull(a);
+        Assert.assertEquals(6, a.getAtomicNumber().intValue());
+        Assert.assertEquals(-0.2, a.getCharge(), 0.01);
+        Assert.assertEquals(0.06677, a.getPoint3d().x, 0.01);
     }
 
 }

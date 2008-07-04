@@ -29,6 +29,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.IoCoverageTest;
 import org.openscience.cdk.io.CDKSourceCodeWriterTest;
+import org.openscience.cdk.io.CTXReaderTest;
 import org.openscience.cdk.io.ChemObjectIOInstantionTests;
 import org.openscience.cdk.io.CrystClustReaderTest;
 import org.openscience.cdk.io.GamessReaderTest;
@@ -161,16 +162,16 @@ public class MioTests {
         suite.addTest(IoCoverageTest.suite());
         
         suite.addTest(CMLIOTests.suite());
-        suite.addTest(CrystClustReaderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(CrystClustReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(CDKSourceCodeWriterTest.class));
+        suite.addTest(new JUnit4TestAdapter(CTXReaderTest.class));
         suite.addTest(GamessReaderTest.suite());
-        suite.addTest(Gaussian98ReaderTest.suite());
-        suite.addTest(GhemicalReaderTest.suite());
-        suite.addTest(HINReaderTest.suite());
-        //suite.addTest(IChIReaderTest.suite());
-        suite.addTest(INChIReaderTest.suite());
-        suite.addTest(INChIPlainTextReaderTest.suite());
-        suite.addTest(MDLReaderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(Gaussian98ReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(GhemicalReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(HINReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(INChIReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(INChIPlainTextReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(MDLReaderTest.class));
         suite.addTest(MDLV2000ReaderTest.suite());
         suite.addTest(MDLV3000ReaderTest.suite());
         suite.addTest(SDFReaderTest.suite());

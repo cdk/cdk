@@ -29,9 +29,9 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -40,8 +40,6 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.io.CTXReader;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -51,51 +49,47 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.io.CrystClustReader
  */
-public class CTXReaderTest extends CDKTestCase {
+public class CTXReaderTest extends ChemObjectIOTest {
 
-    private LoggingTool logger;
+    private static LoggingTool logger;
 
-    public CTXReaderTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
+    @BeforeClass public static void setup() {
+        logger = new LoggingTool(CTXReaderTest.class);
+        setChemObjectIO(new CTXReader());
     }
 
-    public static Test suite() {
-        return new TestSuite(CTXReaderTest.class);
-    }
-
-    public void testAccepts() {
+    @Test public void testAccepts() {
     	CTXReader reader = new CTXReader();
-    	assertTrue(reader.accepts(ChemFile.class));
+    	Assert.assertTrue(reader.accepts(ChemFile.class));
     }
     
-    public void testMethanol() throws Exception {
+    @Test public void testMethanol() throws Exception {
         String filename = "data/ctx/methanol_with_descriptors.ctx";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CTXReader reader = new CTXReader(ins);
         IChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-        assertNotNull(chemFile);
-        assertEquals(1, chemFile.getChemSequenceCount());
+        Assert.assertNotNull(chemFile);
+        Assert.assertEquals(1, chemFile.getChemSequenceCount());
         IChemSequence seq = chemFile.getChemSequence(0);
-        assertNotNull(seq);
-        assertEquals(1, seq.getChemModelCount());
+        Assert.assertNotNull(seq);
+        Assert.assertEquals(1, seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
-        assertNotNull(model);
+        Assert.assertNotNull(model);
 
         IMoleculeSet moleculeSet = model.getMoleculeSet();
-        assertNotNull(moleculeSet);
-        assertEquals(1, moleculeSet.getAtomContainerCount());
+        Assert.assertNotNull(moleculeSet);
+        Assert.assertEquals(1, moleculeSet.getAtomContainerCount());
 
         IAtomContainer container = moleculeSet.getAtomContainer(0);
-        assertNotNull(container);
-        assertEquals("Incorrect atom count.", 6, container.getAtomCount());
-        assertEquals(5, container.getBondCount());
+        Assert.assertNotNull(container);
+        Assert.assertEquals("Incorrect atom count.", 6, container.getAtomCount());
+        Assert.assertEquals(5, container.getBondCount());
 
-        assertEquals("Petra", container.getID());
+        Assert.assertEquals("Petra", container.getID());
 
-        assertNotNull(container.getProperty(CDKConstants.TITLE));
-        assertEquals("CH4O", container.getProperty(CDKConstants.TITLE));
+        Assert.assertNotNull(container.getProperty(CDKConstants.TITLE));
+        Assert.assertEquals("CH4O", container.getProperty(CDKConstants.TITLE));
     }
 }

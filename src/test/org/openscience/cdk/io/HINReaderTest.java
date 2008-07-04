@@ -29,13 +29,12 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.io.HINReader;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * TestCase for the reading HIN mol files using one test file.
@@ -44,90 +43,85 @@ import org.openscience.cdk.CDKTestCase;
  *
  * @see org.openscience.cdk.io.HINReader
  */
-public class HINReaderTest extends CDKTestCase {
+public class HINReaderTest extends ChemObjectIOTest {
 
-    private org.openscience.cdk.tools.LoggingTool logger;
-
-    public HINReaderTest(String name) {
-        super(name);
-        logger = new org.openscience.cdk.tools.LoggingTool(this);
+    private static LoggingTool logger;
+    
+    @BeforeClass public static void setup() {
+        logger = new LoggingTool(HINReaderTest.class);
+        setChemObjectIO(new HINReader());
     }
 
-    public static Test suite() {
-        return new TestSuite(HINReaderTest.class);
+    @Test public void testAccepts() {
+    	Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
-    public void testAccepts() {
-    	HINReader reader = new HINReader();
-    	assertTrue(reader.accepts(ChemFile.class));
-    }
-
-    public void testBenzene() throws Exception {
+    @Test public void testBenzene() throws Exception {
         String filename = "data/hin/benzene.hin";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         HINReader reader = new HINReader(ins);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-        assertNotNull(chemFile);
-        assertEquals(1, chemFile.getChemSequenceCount());
+        Assert.assertNotNull(chemFile);
+        Assert.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        assertNotNull(seq);
-        assertEquals(1, seq.getChemModelCount());
+        Assert.assertNotNull(seq);
+        Assert.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        assertNotNull(model);
+        Assert.assertNotNull(model);
 
         org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
-        assertNotNull(som);
-        assertEquals(1, som.getMoleculeCount());
+        Assert.assertNotNull(som);
+        Assert.assertEquals(1, som.getMoleculeCount());
         org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
-        assertNotNull(m);
-        assertEquals(12, m.getAtomCount());
+        Assert.assertNotNull(m);
+        Assert.assertEquals(12, m.getAtomCount());
         // assertEquals(?, m.getBondCount());
     }
 
-    public void testMoleculeTwo() throws Exception {
+    @Test public void testMoleculeTwo() throws Exception {
         String filename = "data/hin/molecule2.hin";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         HINReader reader = new HINReader(ins);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-        assertNotNull(chemFile);
-        assertEquals(1, chemFile.getChemSequenceCount());
+        Assert.assertNotNull(chemFile);
+        Assert.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        assertNotNull(seq);
-        assertEquals(1, seq.getChemModelCount());
+        Assert.assertNotNull(seq);
+        Assert.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        assertNotNull(model);
+        Assert.assertNotNull(model);
 
         org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
-        assertNotNull(som);
-        assertEquals(1, som.getMoleculeCount());
+        Assert.assertNotNull(som);
+        Assert.assertEquals(1, som.getMoleculeCount());
         org.openscience.cdk.interfaces.IMolecule m = som.getMolecule(0);
-        assertNotNull(m);
-        assertEquals(37, m.getAtomCount());
+        Assert.assertNotNull(m);
+        Assert.assertEquals(37, m.getAtomCount());
         // assertEquals(?, m.getBondCount());
     }
 
-    public void testMultiple() throws Exception {
+    @Test public void testMultiple() throws Exception {
         String filename = "data/hin/multiple.hin";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         HINReader reader = new HINReader(ins);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-        assertNotNull(chemFile);
-        assertEquals(1, chemFile.getChemSequenceCount());
+        Assert.assertNotNull(chemFile);
+        Assert.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        assertNotNull(seq);
-        assertEquals(1, seq.getChemModelCount());
+        Assert.assertNotNull(seq);
+        Assert.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        assertNotNull(model);
+        Assert.assertNotNull(model);
 
         org.openscience.cdk.interfaces.IMoleculeSet som = model.getMoleculeSet();
-        assertNotNull(som);
-        assertEquals(3, som.getMoleculeCount());
+        Assert.assertNotNull(som);
+        Assert.assertEquals(3, som.getMoleculeCount());
     }
 
 }

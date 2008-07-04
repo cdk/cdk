@@ -36,10 +36,10 @@ import org.openscience.cdk.io.formats.IResourceFormat;
  */
 public abstract class ChemObjectIOTest extends NewCDKTestCase {
 
-    private IChemObjectIO chemObjectIO;
+    protected static IChemObjectIO chemObjectIO;
 
-    public void setChemFormat(IChemObjectIO chemObjectIO) {
-        this.chemObjectIO = chemObjectIO;
+    public static void setChemObjectIO(IChemObjectIO aChemObjectIO) {
+        chemObjectIO = aChemObjectIO;
     }
 
     @Test public void testChemObjectIOSet() {

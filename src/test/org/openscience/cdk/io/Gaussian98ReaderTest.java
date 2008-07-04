@@ -6,14 +6,12 @@ import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.io.Gaussian98Reader;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
@@ -23,40 +21,17 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @author Christoph Steinbeck
  */
+public class Gaussian98ReaderTest extends ChemObjectIOTest {
 
-public class Gaussian98ReaderTest extends CDKTestCase {
-		
-	static boolean standAlone = false;
-	/**
-	 * Test suite.
-	 * 
-	 * <p><b>Performed tests</b>:
-	 * <ul>
-	 * 	<li>Gaussian98Reader general tests.</li>
-	 * </ul>
-	 * 
-	 * @return A test suite for Gaussian98Reader class.
-	 */
-	public static Test suite() {
-		return new TestSuite(Gaussian98ReaderTest.class);
-	}
-	
-	/**
-	 * Constructs a new "Gaussian98ReaderTest" object given the test case's name.
-	 * 
-	 * @param	name	The test case name.
-	 */
-	public Gaussian98ReaderTest(String name) {
-		super(name);
-	}
-	
-	
-    public void testAccepts() {
-    	Gaussian98Reader reader = new Gaussian98Reader();
-    	assertTrue(reader.accepts(ChemFile.class));
+    @BeforeClass public static void setup() {
+        setChemObjectIO(new Gaussian98Reader());
     }
 
-    public void testNMRReading() throws Exception
+    @Test public void testAccepts() {
+    	Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
+    }
+
+    @Test public void testNMRReading() throws Exception
 	{
 		IAtomContainer atomContainer = null;
 		//boolean foundOneShieldingEntry = false;
@@ -69,8 +44,8 @@ public class Gaussian98ReaderTest extends CDKTestCase {
 		Gaussian98Reader g98Reader = new Gaussian98Reader(inputReader);
 		ChemFile chemFile = (ChemFile)g98Reader.read(new ChemFile());
 		List atomContainersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-		assertNotNull(atomContainersList);
-		assertTrue(atomContainersList.size() == 54);
+		Assert.assertNotNull(atomContainersList);
+		Assert.assertTrue(atomContainersList.size() == 54);
 		//logger.debug("Found " + atomContainers.length + " atomContainers");
 		Iterator iterator = atomContainersList.iterator();
 		int counter = 0;
@@ -88,8 +63,8 @@ public class Gaussian98ReaderTest extends CDKTestCase {
 					shieldingCounter ++;
 				}
 			}
-			if (counter < 53) assertTrue(shieldingCounter == 0);
-			else assertTrue(shieldingCounter == ac.getAtomCount());
+			if (counter < 53) Assert.assertTrue(shieldingCounter == 0);
+			else Assert.assertTrue(shieldingCounter == ac.getAtomCount());
 			//logger.debug("AtomContainer " + (f + 1) + " has " + atomContainers[f].getAtomCount() + " atoms and " + shieldingCounter + " shielding entries");
 			counter++;
 		}		

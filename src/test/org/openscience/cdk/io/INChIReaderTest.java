@@ -29,13 +29,11 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.io.INChIReader;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -46,49 +44,44 @@ import org.openscience.cdk.tools.LoggingTool;
  * @see org.openscience.cdk.io.INChIReader
  * @cdk.require java1.4+
  */
-public class INChIReaderTest extends CDKTestCase {
+public class INChIReaderTest extends ChemObjectIOTest {
 
-    private LoggingTool logger;
+    private static LoggingTool logger;
 
-    public INChIReaderTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
+    @BeforeClass public static void setup() {
+        logger = new LoggingTool(INChIReaderTest.class);
+        setChemObjectIO(new INChIReader());
     }
-
-    public static Test suite() {
-        return new TestSuite(INChIReaderTest.class);
-    }
-
-    public void testAccepts() {
-    	INChIReader reader = new INChIReader();
-    	assertTrue(reader.accepts(ChemFile.class));
+    
+    @Test public void testAccepts() {
+        Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
     /**
      * Test a INChI 1.1Beta file containing the two tautomers
      * of guanine.
      */
-    public void testGuanine() throws Exception {
+    @Test public void testGuanine() throws Exception {
         String filename = "data/inchi/guanine.inchi.xml";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         INChIReader reader = new INChIReader(ins);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 
-        assertNotNull(chemFile);
-        assertEquals(1, chemFile.getChemSequenceCount());
+        Assert.assertNotNull(chemFile);
+        Assert.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
-        assertNotNull(seq);
-        assertEquals(1, seq.getChemModelCount());
+        Assert.assertNotNull(seq);
+        Assert.assertEquals(1, seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
-        assertNotNull(model);
+        Assert.assertNotNull(model);
         org.openscience.cdk.interfaces.IMoleculeSet moleculeSet = model.getMoleculeSet();
-        assertNotNull(moleculeSet);
+        Assert.assertNotNull(moleculeSet);
         org.openscience.cdk.interfaces.IMolecule molecule = moleculeSet.getMolecule(0);
-        assertNotNull(molecule);
+        Assert.assertNotNull(molecule);
 
-        assertEquals(11, molecule.getAtomCount());
-        assertEquals(12, molecule.getBondCount());
+        Assert.assertEquals(11, molecule.getAtomCount());
+        Assert.assertEquals(12, molecule.getBondCount());
     }
     
 }

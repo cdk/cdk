@@ -27,6 +27,7 @@ package org.openscience.cdk.io;
 import java.io.StringWriter;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
@@ -41,10 +42,13 @@ import org.openscience.cdk.Molecule;
  */
 public class CDKSourceCodeWriterTest extends ChemObjectIOTest {
 
+    @BeforeClass public static void setup() {
+        setChemObjectIO(new CDKSourceCodeWriter());
+    }
+    
     @Test public void testAccepts() throws Exception {
-    	CDKSourceCodeWriter reader = new CDKSourceCodeWriter();
-    	Assert.assertTrue(reader.accepts(Molecule.class));
-    	Assert.assertTrue(reader.accepts(AtomContainer.class));
+    	Assert.assertTrue(chemObjectIO.accepts(Molecule.class));
+    	Assert.assertTrue(chemObjectIO.accepts(AtomContainer.class));
     }
 
     @Test public void testOutput() throws Exception {
