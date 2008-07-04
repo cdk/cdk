@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF [
+  <!ENTITY rdf  "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+  <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+  <!ENTITY xsd  "http://www.w3.org/2001/XMLSchema#" >
+  <!ENTITY owl  "http://www.w3.org/2002/07/owl#" >
+  <!ENTITY elem "http://cdk.sf.net/ontologies/elements#" >
+  <!ENTITY at   "http://cdk.sf.net/ontologies/atomtypes#" >
+  <!ENTITY cdkat "http://cdk.sf.net/ontologies/atomtypes/cdk#" >
+]>
+<rdf:RDF xmlns="&cdkat;" xml:base="&cdkat;"
+  xmlns:owl="&owl;"
+  xmlns:at="&at;"
+  xmlns:elem="&elem;"
+  xmlns:rdf="&rdf;"
+  xmlns:rdfs="&rdfs;"
+  xmlns:dc="http://dublincore.org/"
+>
+
+  <owl:Ontology rdf:about="">
+    <rdfs:label>CDK Atom Type Ontology</rdfs:label>
+    <owl:versionInfo>$Id$</owl:versionInfo>
+    <dc:date>$Date$</dc:date>
+  </owl:Ontology>
+
+  <owl:imports rdf:resource="http://cdk.sf.net/ontologies/elements#"/>
+  <owl:imports rdf:resource="http://cdk.sf.net/ontologies/atomtypesdatatypes#"/>
+  
+  <!-- the atom types -->
+
+  <at:AtomTypeCategory rdf:ID="C">
+    <rdfs:label xml:lang="en">A carbon atom type.</rdfs:label>
+  </at:AtomTypeCategory>
+
+  <at:AtomTypeCategory rdf:ID="C.sp3">
+    <rdfs:label>A SP3 hybridized carbon.</rdfs:label>
+    <at:categorizedAs rdf:resource="&cdkat;C"/>
+  </at:AtomTypeCategory>
+  
+  <at:AtomType rdf:ID="C.sp3.0">
+    <at:categorizedAs rdf:resource="&cdkat;C.sp3"/>
+    <at:hasElement rdf:resource="&elem;C"/>
+    <at:hybridization rdf:resource="&at;sp3"/>
+    <at:formalCharge>0</at:formalCharge>
+    <at:lonePairCount>0</at:lonePairCount>
+    <at:formalNeighbourCount>4</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+  </at:AtomType>
+  
+</rdf:RDF>

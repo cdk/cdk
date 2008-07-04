@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF [
+  <!ENTITY rdf  "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+  <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+  <!ENTITY xsd  "http://www.w3.org/2001/XMLSchema#" >
+  <!ENTITY owl  "http://www.w3.org/2002/07/owl#" >
+  <!ENTITY at   "http://cdk.sf.net/ontologies/atomtypes#" >
+  <!ENTITY atm  "http://cdk.sf.net/ontologies/atomtypemappings#" >
+]>
+<rdf:RDF xmlns="&atm;" xml:base="&atm;"
+  xmlns:owl="&owl;"
+  xmlns:atm="&atm;"
+  xmlns:at="&at;"
+  xmlns:rdf="&rdf;"
+  xmlns:rdfs="&rdfs;"
+  xmlns:dc="http://dublincore.org/"
+>
+
+  <owl:Ontology rdf:about="">
+    <rdfs:label>Atom Type Mapping Ontology</rdfs:label>
+    <owl:versionInfo>$Id$</owl:versionInfo>
+  </owl:Ontology>
+
+  <owl:Class rdf:about="&at;AtomType"/>
+
+  <!-- support for mapping atom type schemes -->
+
+  <owl:ObjectProperty rdf:ID="mapsToType">
+    <rdfs:label>Maps to Type</rdfs:label>
+    <!-- rdf:Description>
+      Mapping that is used for conversion of atom type schemes. For any mapping,
+      the first atom type is always is also of the second atom type, while an atom
+      of the second atom type does not have to always be of the first atom type.  
+    </rdf:Description -->
+    <rdfs:domain rdf:resource="&at;AtomType"/>
+    <rdfs:range rdf:resource="&at;AtomType"/>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:ID="equivalentAsType">
+    <rdfs:label>Equivalent as Type</rdfs:label>
+    <rdf:type rdf:resource="&owl;SymmetricProperty" />
+    <!-- rdfs:Description>
+      Mapping that is used for conversion of atom type schemes. For any mapping,
+      the first atom type is always is of the second atom type, and an atom of
+      the second type is also always of the first atom type.  
+    </rdfs:Description -->
+    <rdfs:domain rdf:resource="&at;AtomType"/>
+    <rdfs:range rdf:resource="&at;AtomType"/>
+  </owl:ObjectProperty>
+
+</rdf:RDF>
