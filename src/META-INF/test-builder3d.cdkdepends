@@ -14,3 +14,4 @@ cdk-extra.jar
 cdk-forcefield.jar
 cdk-valencycheck.jar
 cdk-test.jar
+cdk-isomorphism.jar
