@@ -25,13 +25,20 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptor;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -47,15 +54,40 @@ public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
     public static Test suite() {
         return new TestSuite(ZagrebIndexDescriptorTest.class);
     }
-    
+
     public void setUp() throws Exception {
-    	setDescriptor(ZagrebIndexDescriptor.class);
+        setDescriptor(ZagrebIndexDescriptor.class);
     }
 
-    public void testZagrebIndexDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    public void testZagrebIndexDescriptor() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
         assertEquals(16, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
+    }
+
+    public void test2Dvs3D() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("O1C2C34C(C(C1O)CCCc1cc(cc(c1)C(F)(F)F)C(F)(F)F)CCC(C3CCC(O2)(OO4)C)C");
+
+        addExplicitHydrogens(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+        double value2D = ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue();
+
+        String filename = "data/mdl/cpsa-uncharged.sdf";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
+        ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
+        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        mol = (IAtomContainer) cList.get(0);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        
+        double value3D = ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue();
+
+        assertEquals(value2D, value3D, 0.001);
+
     }
 }
 
