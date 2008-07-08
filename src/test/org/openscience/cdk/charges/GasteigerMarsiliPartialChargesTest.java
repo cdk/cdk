@@ -27,12 +27,12 @@ package org.openscience.cdk.charges;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.NewCDKTestCase;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -77,44 +77,6 @@ public class GasteigerMarsiliPartialChargesTest extends NewCDKTestCase {
 			Assert.assertEquals(testResult[i],molecule.getAtom(i).getCharge(),0.01);
 		}
 	}
-
-    /**
-     * @cdk.bug 2013689
-     * @throws Exception
-     */
-    @Test
-    public void testAromaticAndNonAromatic() throws Exception {
-        GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
-
-        String smiles1 = "c1ccccc1";
-        String smiles2 = "C1=CC=CC=C1";
-
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol1 = sp.parseSmiles(smiles1);
-        IAtomContainer mol2 = sp.parseSmiles(smiles2);
-
-        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
-        
-        addExplicitHydrogens(mol1);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-		lpcheck.saturate(mol1);
-
-        addExplicitHydrogens(mol2);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
-        lpcheck.saturate(mol2);      
-
-        peoe.assignGasteigerMarsiliSigmaPartialCharges(mol1, true);        
-        peoe.assignGasteigerMarsiliSigmaPartialCharges(mol2, true);
-        for (int i = 0; i < mol1.getAtomCount(); i++) {
-            Assert.assertEquals("charge on atom " + i + " does not match",
-                    mol1.getAtom(i).getCharge(),
-                    mol2.getAtom(i).getCharge(),
-                    0.01);
-        }
-
-    }
-
     
     /**
      * 
