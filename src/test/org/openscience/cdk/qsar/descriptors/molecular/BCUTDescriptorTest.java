@@ -21,17 +21,28 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.io.InputStream;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -102,7 +113,7 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
-                
+
         Object[] params = new Object[3];
         params[0] = 0;
         params[1] = 25;
@@ -112,13 +123,65 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult retval = (DoubleArrayResult) descriptorValue.getValue();
         int nheavy = 20;
-       
-        assertEquals(75, retval.length());        
+
+        assertEquals(75, retval.length());
         for (int i = 0; i < nheavy; i++) assertTrue(retval.get(i) != Double.NaN);
-        for (int i = nheavy; i < nheavy+5; i++) {
+        for (int i = nheavy; i < nheavy + 5; i++) {
             assertTrue("Extra eigenvalue should have been NaN", Double.isNaN(retval.get(i)));
         }
 
+    }
+
+    public void testAromaticity() throws Exception {
+        setDescriptor(BCUTDescriptor.class);
+
+        String smiles1 = "c1ccccc1";
+        String smiles2 = "C1=CC=CC=C1";
+
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol1 = sp.parseSmiles(smiles1);
+        IAtomContainer mol2 = sp.parseSmiles(smiles2);
+
+        try {
+            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(mol1.getBuilder());
+            Iterator<IAtom> atoms = mol1.atoms();
+            while (atoms.hasNext()) {
+                IAtom atom = atoms.next();
+                IAtomType type = matcher.findMatchingAtomType(mol1, atom);
+                AtomTypeManipulator.configure(atom, type);
+            }
+            CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(mol1.getBuilder());
+            hAdder.addImplicitHydrogens(mol1);
+            AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol1);
+        } catch (Exception e) {
+            throw new CDKException("Could not add hydrogens: " + e.getMessage(), e);
+        }
+
+        try {
+            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(mol2.getBuilder());
+            Iterator<IAtom> atoms = mol2.atoms();
+            while (atoms.hasNext()) {
+                IAtom atom = atoms.next();
+                IAtomType type = matcher.findMatchingAtomType(mol2, atom);
+                AtomTypeManipulator.configure(atom, type);
+            }
+            CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(mol2.getBuilder());
+            hAdder.addImplicitHydrogens(mol2);
+            AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol2);
+        } catch (Exception e) {
+            throw new CDKException("Could not add hydrogens: " + e.getMessage(), e);
+        }
+
+        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
+
+        DoubleArrayResult result1 = (DoubleArrayResult) descriptor.calculate(mol1).getValue();
+        DoubleArrayResult result2 = (DoubleArrayResult) descriptor.calculate(mol2).getValue();
+
+        Assert.assertEquals(result1.length(), result2.length());
+        for (int i = 0; i < result1.length(); i++) {
+            Assert.assertEquals("element " + i + " does not match", result1.get(i), result2.get(i), 0.001);
+        }
     }
 }
 
