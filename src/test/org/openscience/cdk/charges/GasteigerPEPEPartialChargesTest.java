@@ -212,7 +212,7 @@ public class GasteigerPEPEPartialChargesTest extends NewCDKTestCase {
     public void testSetMaxGasteigerIters_Double() throws Exception {
 
         GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
-        double MX_ITERATIONS = 10;
+        int MX_ITERATIONS = 10;
         peoe.setMaxGasteigerIters(MX_ITERATIONS);
         Assert.assertEquals(MX_ITERATIONS, peoe.getMaxGasteigerIters());
 

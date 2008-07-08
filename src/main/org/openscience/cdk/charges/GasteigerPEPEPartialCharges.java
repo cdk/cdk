@@ -23,25 +23,13 @@
  */
 package org.openscience.cdk.charges;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.HeterolyticCleavagePBReaction;
 import org.openscience.cdk.reaction.type.HeterolyticCleavageSBReaction;
@@ -50,6 +38,11 @@ import org.openscience.cdk.reaction.type.SharingAnionReaction;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * <p>The calculation of the Gasteiger (PEPE) partial charges is based on 
@@ -73,7 +66,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass("org.openscience.cdk.charges.GasteigerPEPEPartialChargesTest")
 public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	/** max iterations */
-	private double MX_ITERATIONS = 8;
+	private int MX_ITERATIONS = 8;
 	/** max number of resonance structures to be searched*/
 	private int MX_RESON = 50;
 	private int STEP_SIZE = 5;
@@ -101,7 +94,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	 *@param  iters  The new maxGasteigerIters value
 	 */
     @TestMethod("testSetMaxGasteigerIters_Double")
-	public void setMaxGasteigerIters(double iters) {
+	public void setMaxGasteigerIters(int iters) {
 		MX_ITERATIONS = iters;
 	}
 	/**
@@ -120,7 +113,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	 *@return  The new maxGasteigerIters value
 	 */
     @TestMethod("testGetMaxGasteigerIters")
-	public double getMaxGasteigerIters() {
+	public int getMaxGasteigerIters() {
 		return MX_ITERATIONS;
 	}
 	/**
@@ -143,8 +136,15 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	 */
     @TestMethod("testAssignGasteigerPiPartialCharges_IAtomContainer_Boolean")
 	public IAtomContainer assignGasteigerPiPartialCharges(IAtomContainer ac, boolean setCharge) throws Exception {
-		
-		IAtomContainerSet setHI = null;
+
+        // we save the aromaticity flags for the input molecule so that
+        // we can add them back before we return
+        boolean[] oldBondAromaticity = new boolean[ac.getAtomCount()];
+        boolean[] oldAtomAromaticity = new boolean[ac.getAtomCount()];
+        for (int i = 0; i < ac.getAtomCount(); i++) oldAtomAromaticity[i] = ac.getAtom(i).getFlag(CDKConstants.ISAROMATIC);
+        for (int i = 0; i < ac.getBondCount(); i++) oldBondAromaticity[i] = ac.getBond(i).getFlag(CDKConstants.ISAROMATIC);
+
+        IAtomContainerSet setHI = null;
 		
 		/*0: remove charge, and possible flag ac*/
 		for(int j = 0 ; j < ac.getAtomCount(); j++){
@@ -233,8 +233,14 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 				iSet.add(setHI);
 			logger.debug("setHI: "+iSet.getAtomContainerCount());
 		}
-		if(iSet.getAtomContainerCount() < 2)
-			return ac;
+        if (iSet.getAtomContainerCount() < 2) {
+            for (int i = 0; i < ac.getAtomCount(); i++)
+                ac.getAtom(i).setFlag(CDKConstants.ISAROMATIC, oldAtomAromaticity[i]);
+            for (int i = 0; i < ac.getBondCount(); i++)
+                ac.getBond(i).setFlag(CDKConstants.ISAROMATIC, oldBondAromaticity[i]);
+            return ac;
+        }
+
 		
 		/*2: search whose atoms which don't keep their formal charge and set flags*/
 		double[][] sumCharges = new double[iSet.getAtomContainerCount()][ac.getAtomCount( )];
@@ -376,7 +382,12 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 			
 		}// iterations
 		logger.debug("final");
-		return ac;
+
+        // before getting back we should set back the aromatic flags
+        for (int i = 0; i < ac.getAtomCount(); i++) ac.getAtom(i).setFlag(CDKConstants.ISAROMATIC, oldAtomAromaticity[i]);
+        for (int i = 0; i < ac.getBondCount(); i++) ac.getBond(i).setFlag(CDKConstants.ISAROMATIC, oldBondAromaticity[i]);
+
+        return ac;
 		
 	}
 
