@@ -27,6 +27,7 @@ package org.openscience.cdk.charges;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -36,47 +37,79 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
- *  Description of the Class
+ * Description of the Class
  *
+ * @author Miguel Rojas
  * @cdk.module test-charges
- *
- *@author     	  Miguel Rojas
- *@cdk.created    2008-18-05
+ * @cdk.created 2008-18-05
  */
 public class GasteigerPEPEPartialChargesTest extends NewCDKTestCase {
 
-	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+    private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
     private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-    
-	/**
-	 *  A unit test for JUnit with methylenfluoride
-	 *  
-	 *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
-	 */
+
+    /**
+     * A unit test for JUnit with methylenfluoride
+     *
+     * @cdk.inchi InChI=1/CH3F/c1-2/h1H3
+     */
     @Test
     public void testCalculateCharges_IAtomContainer() throws Exception {
-    	double [] testResult={0.0,0.0,0.0,0.0,0.0};
-		
-		GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
-		
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(new Atom("C"));
+        double[] testResult = {0.0, 0.0, 0.0, 0.0, 0.0};
+
+        GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
+
+        IMolecule molecule = builder.newMolecule();
+        molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
-        
-		addExplicitHydrogens(molecule);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
-		
-		peoe.calculateCharges(molecule);
-		for (int i=0;i<molecule.getAtomCount();i++){
-			//logger.debug("Charge for atom:"+i+" S:"+mol.getAtomAt(i).getSymbol()+" Charge:"+mol.getAtomAt(i).getCharge());
-			Assert.assertEquals(testResult[i],molecule.getAtom(i).getCharge(),0.01);
-		}
-	}
+
+        addExplicitHydrogens(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
+
+        peoe.calculateCharges(molecule);
+        for (int i = 0; i < molecule.getAtomCount(); i++) {
+            //logger.debug("Charge for atom:"+i+" S:"+mol.getAtomAt(i).getSymbol()+" Charge:"+mol.getAtomAt(i).getCharge());
+            Assert.assertEquals(testResult[i], molecule.getAtom(i).getCharge(), 0.01);
+        }
+    }
+
+    /**
+     * @cdk.bug 2013689
+     * @throws Exception
+     */
+    @Test
+    public void testAromaticBondOrders() throws Exception {
+        GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
+
+        String smiles1 = "c1ccccc1";
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol1 = sp.parseSmiles(smiles1);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
+        addExplicitHydrogens(mol1);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        lpcheck.saturate(mol1);
+
+
+        List<Boolean> oldBondOrders = new ArrayList<Boolean>();
+        for (int i = 0; i < mol1.getBondCount(); i++) oldBondOrders.add(mol1.getBond(i).getFlag(CDKConstants.ISAROMATIC));
+
+        peoe.calculateCharges(mol1);
+
+        List<Boolean> newBondOrders = new ArrayList<Boolean>();
+        for (int i = 0; i < mol1.getBondCount(); i++) newBondOrders.add(mol1.getBond(i).getFlag(CDKConstants.ISAROMATIC));
+
+        for (int i = 0; i < oldBondOrders.size(); i++) {
+            Assert.assertEquals("bond "+i+" does not match", oldBondOrders.get(i), newBondOrders.get(i));
+        }
+    }
+
 
     @Test
     public void testAromaticAndNonAromatic() throws Exception {
@@ -112,126 +145,133 @@ public class GasteigerPEPEPartialChargesTest extends NewCDKTestCase {
     }
 
     /**
-     * 
-	 */
+     *
+     */
     @Test
     public void testAssignGasteigerPiPartialCharges_IAtomContainer_Boolean() throws Exception {
-    	double [] testResult={0.0,0.0,0.0,0.0,0.0};
-		
-		GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
-		
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(new Atom("C"));
+        double[] testResult = {0.0, 0.0, 0.0, 0.0, 0.0};
+
+        GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
+
+        IMolecule molecule = builder.newMolecule();
+        molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
-        
-		addExplicitHydrogens(molecule);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
-		
-		peoe.assignGasteigerPiPartialCharges(molecule, true);
-		for (int i=0;i<molecule.getAtomCount();i++){
-			//logger.debug("Charge for atom:"+i+" S:"+mol.getAtomAt(i).getSymbol()+" Charge:"+mol.getAtomAt(i).getCharge());
-			Assert.assertEquals(testResult[i],molecule.getAtom(i).getCharge(),0.01);
-		}
-		
-	}
+
+        addExplicitHydrogens(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
+
+        peoe.assignGasteigerPiPartialCharges(molecule, true);
+        for (int i = 0; i < molecule.getAtomCount(); i++) {
+            //logger.debug("Charge for atom:"+i+" S:"+mol.getAtomAt(i).getSymbol()+" Charge:"+mol.getAtomAt(i).getCharge());
+            Assert.assertEquals(testResult[i], molecule.getAtom(i).getCharge(), 0.01);
+        }
+
+    }
+
     /**
-     * 
-	 */
+     *
+     */
     @Test
     public void testGetMaxGasteigerIters() throws Exception {
-		
-		GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
-		
-		Assert.assertEquals(8,peoe.getMaxGasteigerIters());
-		
-	}
+
+        GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
+
+        Assert.assertEquals(8, peoe.getMaxGasteigerIters());
+
+    }
+
     /**
-     * 
-	 */
+     *
+     */
     @Test
     public void testGetMaxResoStruc() throws Exception {
-		
-		GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
-		
-		Assert.assertEquals(50,peoe.getMaxResoStruc());
-		
-	}
+
+        GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
+
+        Assert.assertEquals(50, peoe.getMaxResoStruc());
+
+    }
+
     /**
-     * 
-	 */
+     *
+     */
     @Test
     public void testGetStepSize() throws Exception {
-		
-		GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
-		Assert.assertEquals(5,peoe.getStepSize());
-		
-	}
+
+        GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
+        Assert.assertEquals(5, peoe.getStepSize());
+
+    }
+
     /**
-     * 
-	 */
+     *
+     */
     @Test
     public void testSetMaxGasteigerIters_Double() throws Exception {
-		
-		GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
-		double MX_ITERATIONS = 10;
-		peoe.setMaxGasteigerIters(MX_ITERATIONS);
-		Assert.assertEquals(MX_ITERATIONS,peoe.getMaxGasteigerIters());
-		
-	}
+
+        GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
+        double MX_ITERATIONS = 10;
+        peoe.setMaxGasteigerIters(MX_ITERATIONS);
+        Assert.assertEquals(MX_ITERATIONS, peoe.getMaxGasteigerIters());
+
+    }
+
     /**
-     * 
-	 */
+     *
+     */
     @Test
     public void testSetMaxResoStruc_Int() throws Exception {
-		
-		GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
-		int MX_RESON = 1;
-		peoe.setMaxResoStruc(MX_RESON);
-		Assert.assertEquals(MX_RESON,peoe.getMaxResoStruc());
-		
-	}
+
+        GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
+        int MX_RESON = 1;
+        peoe.setMaxResoStruc(MX_RESON);
+        Assert.assertEquals(MX_RESON, peoe.getMaxResoStruc());
+
+    }
+
     /**
-     * 
-	 */
+     *
+     */
     @Test
     public void testSetStepSize() throws Exception {
-		
-		GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
-		int STEP_SIZE = 22;
-		peoe.setStepSize(STEP_SIZE);
-		Assert.assertEquals(STEP_SIZE,peoe.getStepSize());
-		
-	}
+
+        GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
+        int STEP_SIZE = 22;
+        peoe.setStepSize(STEP_SIZE);
+        Assert.assertEquals(STEP_SIZE, peoe.getStepSize());
+
+    }
+
     /**
-     * 
-	 */
+     *
+     */
     @Test
     public void testAssignrPiMarsilliFactors_IAtomContainerSet() throws Exception {
-    	GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
-		
-		IMolecule molecule = builder.newMolecule();
-		molecule.addAtom(new Atom("C"));
+        GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
+
+        IMolecule molecule = builder.newMolecule();
+        molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("F"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
-        
+
         addExplicitHydrogens(molecule);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
-		for(Iterator<IAtom> it = molecule.atoms();it.hasNext();)
-			it.next().setCharge(0.0);
-		
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
+        for (Iterator<IAtom> it = molecule.atoms(); it.hasNext();)
+            it.next().setCharge(0.0);
+
         IMoleculeSet set = builder.newMoleculeSet();
         set.addAtomContainer(molecule);
         set.addAtomContainer(molecule);
-		
+
         addExplicitHydrogens(molecule);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
-		
-		Assert.assertNotNull(peoe.assignrPiMarsilliFactors(set));
-		
-		
-	}
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
+
+        Assert.assertNotNull(peoe.assignrPiMarsilliFactors(set));
+
+
+    }
 }
