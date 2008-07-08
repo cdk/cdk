@@ -33,6 +33,8 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
+import java.util.List;
+
 /**
  * Zagreb index: the sum of the squares of atom degree over all heavy atoms i.
  *
@@ -100,15 +102,14 @@ public class ZagrebIndexDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
-        double zagreb = 0;
-        //org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
-        IAtom atomi = null;
+        double zagreb = 0;        
+        IAtom atomi;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             atomi = atomContainer.getAtom(i);
             int atomDegree = 0;
-            java.util.List neighbours = atomContainer.getConnectedAtomsList(atomi);
-            for (int a = 0; a < neighbours.size(); a++) {
-                if (!((IAtom)neighbours.get(a)).getSymbol().equals("H")) {
+            List<IAtom> neighbours = atomContainer.getConnectedAtomsList(atomi);
+            for (IAtom neighbour : neighbours) {
+                if (!neighbour.getSymbol().equals("H")) {
                     atomDegree += 1;
                 }
             }
