@@ -1558,6 +1558,7 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 	 * A unit test suite for JUnit: c1ccccc1CN
 	 *  
 	 *  @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
+	 *  @cdk.bug 2014515
 	 *  
 	 * @return    The test suite
 	 */
