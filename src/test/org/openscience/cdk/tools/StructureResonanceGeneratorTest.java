@@ -1516,5 +1516,82 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 		Assert.assertEquals(1,gRI.getMaximalStructures());
 		
 	}
+	
+	/**
+	 * A unit test suite for JUnit: c1ccccc1CN
+	 *  
+	 *  @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
+	 *  
+	 * @return    The test suite
+	 */
+	@Test public void testBenzylamine() throws Exception {
+
+		 IMolecule molecule = builder.newMolecule();
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(0, 1, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(1, 2, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(2, 3, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(3, 4, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(4, 5, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(5, 6, IBond.Order.DOUBLE);
+		 molecule.addBond(6, 1, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("N"));
+		 molecule.addBond(0, 7, IBond.Order.SINGLE);
+	 
+		 addExplicitHydrogens(molecule);
+		 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+         lpcheck.saturate(molecule);
+		
+		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+		IAtomContainerSet setOfContainers = gRI.getContainers(molecule);
+        
+		Assert.assertEquals(1,setOfContainers.getAtomContainerCount());
+		Assert.assertEquals(6,setOfContainers.getAtomContainer(0).getAtomCount());
+	}
+	/**
+	 * A unit test suite for JUnit: c1ccccc1CN
+	 *  
+	 *  @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
+	 *  
+	 * @return    The test suite
+	 */
+	@Test public void testBenzylamine_Aromatic() throws Exception {
+
+		 IMolecule molecule = builder.newMolecule();
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(0, 1, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(1, 2, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(2, 3, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(3, 4, IBond.Order.DOUBLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(4, 5, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("C"));
+		 molecule.addBond(5, 6, IBond.Order.DOUBLE);
+		 molecule.addBond(6, 1, IBond.Order.SINGLE);
+		 molecule.addAtom(builder.newAtom("N"));
+		 molecule.addBond(0, 7, IBond.Order.SINGLE);
+	 
+		 addExplicitHydrogens(molecule);
+		 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+         lpcheck.saturate(molecule);
+
+         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+
+		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+		IAtomContainerSet setOfContainers = gRI.getContainers(molecule);
+        
+		Assert.assertEquals(1,setOfContainers.getAtomContainerCount());
+		Assert.assertEquals(6,setOfContainers.getAtomContainer(0).getAtomCount());
+	}
 
 }
