@@ -20,12 +20,16 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * {@link IDifference} between two {@link Integer}.
  * 
  * @author     egonw
  * @cdk.module diff
  */
+@TestClass("org.openscience.cdk.tools.diff.tree.IntegerDifferenceTest")
 public class IntegerDifference implements IDifference {
 
     private String name;
@@ -38,6 +42,7 @@ public class IntegerDifference implements IDifference {
         this.second = second;
     }
     
+    @TestMethod("testDiff,testSame,testTwoNull,testOneNull")
     public static IDifference construct(String name, Integer first, Integer second) {
         if (first == null && second == null) {
             return null; // no difference
@@ -50,7 +55,8 @@ public class IntegerDifference implements IDifference {
         }
         return new IntegerDifference(name, first, second);
     }
-    
+
+    @TestMethod("testToString")
     public String toString() {
         return name + ":" + 
             (first == null ? "NA" : first) +

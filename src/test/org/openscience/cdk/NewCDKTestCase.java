@@ -241,6 +241,21 @@ public class NewCDKTestCase {
 	    );
 	}
 
+	/**
+	 * Asserts that the given String consists of a single line, and thus
+	 * does not contain any '\r' and/or '\n' characters.
+	 *
+	 * @param String String to test.
+	 */
+	public void assertOneLiner(String testString) {
+	    Assert.assertNotNull("Expected a non-null String.", testString);
+	    for (int i=0; i<testString.length(); i++) {
+	    	char c = testString.charAt(i);
+	    	Assert.assertNotSame("The String must not contain newline characters", '\n', c);
+	    	Assert.assertNotSame("The String must not contain newline characters", '\r', c);
+	    }
+	}
+
   /**
    * Asserts that the given subString is present in the fullString.
    *

@@ -23,20 +23,19 @@ package org.openscience.cdk.tools.diff;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.tools.diff.tree.ChemObjectDifference;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 import org.openscience.cdk.tools.diff.tree.IDifferenceList;
-import org.openscience.cdk.tools.diff.tree.IntegerDifference;
 
 /**
- * Compares two {@link IChemObject} classes.
+ * Compares two {@link ISingleElectron} classes.
  * 
  * @author     egonw
  * @cdk.module diff
  */
-@TestClass("org.openscience.cdk.tools.diff.ElectronContainerDiffTest")
-public class ElectronContainerDiff {
+@TestClass("org.openscience.cdk.tools.diff.SingleElectronDiffTest")
+public class SingleElectronDiff {
     
     @TestMethod("testMatchAgainstItself,testDiff")
     public static String diff( IChemObject first, IChemObject second ) {
@@ -49,14 +48,14 @@ public class ElectronContainerDiff {
     }
     @TestMethod("testDifference")
     public static IDifference difference( IChemObject first, IChemObject second ) {
-        if (!(first instanceof IElectronContainer && second instanceof IElectronContainer)) {
+        if (!(first instanceof ISingleElectron && second instanceof ISingleElectron)) {
             return null;
         }
-        IElectronContainer firstEC = (IElectronContainer)first;
-        IElectronContainer secondEC = (IElectronContainer)second;
-        IDifferenceList totalDiff = new ChemObjectDifference("ElectronContainerDiff");
-        totalDiff.addChild(IntegerDifference.construct("eCount", firstEC.getElectronCount(), secondEC.getElectronCount()));
-        totalDiff.addChild(ChemObjectDiff.difference(first, second));
+        ISingleElectron firstB = (ISingleElectron)first;
+        ISingleElectron secondB = (ISingleElectron)second;
+        IDifferenceList totalDiff = new ChemObjectDifference("SingleElectronDiff");
+        totalDiff.addChild(AtomDiff.difference(firstB.getAtom(), secondB.getAtom()));
+        totalDiff.addChild(ElectronContainerDiff.difference(first, second));
         if (totalDiff.childCount() > 0) {
             return totalDiff;
         } else {

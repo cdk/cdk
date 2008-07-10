@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.tools.diff.tree.IDifference;
 
 /**
  * @cdk.module test-diff
@@ -43,11 +44,20 @@ public class AtomDiffTest extends NewCDKTestCase {
         IAtom atom2 = new Atom();
         atom2.setSymbol("C");
         
-        String result = ElementDiff.diff( atom1, atom2 );
+        String result = AtomDiff.diff( atom1, atom2 );
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        assertContains(result, "ElementDiff");
+        assertContains(result, "AtomDiff");
         assertContains(result, "H/C");
     }
 
+    @Test public void testDifference() {
+        IAtom atom1 = new Atom();
+        atom1.setSymbol("H");
+        IAtom atom2 = new Atom();
+        atom2.setSymbol("C");
+
+        IDifference difference = AtomDiff.difference(atom1, atom2);
+        Assert.assertNotNull(difference);
+    }
 }

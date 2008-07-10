@@ -26,6 +26,7 @@ import org.openscience.cdk.Element;
 import org.openscience.cdk.Isotope;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.tools.diff.tree.IDifference;
 
 /**
  * @cdk.module test-diff
@@ -51,4 +52,13 @@ public class IsotopeDiffTest extends NewCDKTestCase {
         assertContains(result, "H/C");
     }
 
+    @Test public void testDifference() {
+        IIsotope element1 = new Isotope(new Element());
+        element1.setSymbol("H");
+        IIsotope element2 = new Isotope(new Element());
+        element2.setSymbol("C");
+
+        IDifference difference = IsotopeDiff.difference(element1, element2);
+        Assert.assertNotNull(difference);
+    }
 }

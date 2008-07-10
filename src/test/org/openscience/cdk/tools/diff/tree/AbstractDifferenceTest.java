@@ -27,35 +27,15 @@ import org.openscience.cdk.NewCDKTestCase;
 /**
  * @cdk.module test-diff
  */
-public class StringDifferenceTest extends NewCDKTestCase {
+public class AbstractDifferenceTest extends NewCDKTestCase {
 
-    @Test public void testDiff() {
-        IDifference result = StringDifference.construct("Foo", "foo", "bar");
-        Assert.assertNotNull(result);
-    }
-    
-    @Test public void testSame() {
-        IDifference result = StringDifference.construct("Foo", "foo", "foo");
-        Assert.assertNull(result);
-    }
-    
-    @Test public void testTwoNull() {
-        IDifference result = StringDifference.construct("Foo", null, null);
-        Assert.assertNull(result);
-    }
-
-    @Test public void testOneNull() {
-        IDifference result = StringDifference.construct("Foo", null, "bar");
-        Assert.assertNotNull(result);
-        
-        result = StringDifference.construct("Foo", "bar", null);
-        Assert.assertNotNull(result);
-    }
-    
-    @Test public void testToString() {
-    	IDifference result = StringDifference.construct("Foo", null, "bar");
-        String diffString = result.toString();
-        Assert.assertNotNull(diffString);
-        assertOneLiner(diffString);
-    }
+	@Test public void testConstructor() {
+		DifferenceClass diffClass = new DifferenceClass();
+		Assert.assertNotNull(diffClass);
+	}
+	
+	protected class DifferenceClass extends AbstractDifference {
+		
+	}
+	
 }

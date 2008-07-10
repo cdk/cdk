@@ -51,4 +51,11 @@ public class IntegerDifferenceTest extends NewCDKTestCase {
         result = IntegerDifference.construct("Foo", 2, null);
         Assert.assertNotNull(result);
     }
+
+    @Test public void testToString() {
+    	IDifference result = IntegerDifference.construct("Foo", 1, 2);
+        String diffString = result.toString();
+        Assert.assertNotNull(diffString);
+        assertOneLiner(diffString);
+    }
 }

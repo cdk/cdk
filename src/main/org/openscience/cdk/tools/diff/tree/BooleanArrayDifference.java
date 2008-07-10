@@ -22,12 +22,16 @@ package org.openscience.cdk.tools.diff.tree;
 
 import java.util.Iterator;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * Difference between two boolean[]'s.
  * 
  * @author     egonw
  * @cdk.module diff
  */
+@TestClass("org.openscience.cdk.tools.diff.tree.BooleanArrayDifferenceTest")
 public class BooleanArrayDifference extends AbstractDifferenceList implements IDifferenceList {
 
     private String name;
@@ -36,12 +40,13 @@ public class BooleanArrayDifference extends AbstractDifferenceList implements ID
         this.name = name;
     }
     
+    @TestMethod("testDiff,testSame,testTwoNull,testOneNull")
     public static IDifference construct(String name, boolean[] first, boolean[] second) {
         if (first == null && second == null) return null;
         
         BooleanArrayDifference totalDiff = new BooleanArrayDifference(name);
-        int firstLength = first.length;
-        int secondLength = second.length;
+        int firstLength = first == null ? 0 : first.length;
+        int secondLength = second == null ? 0 : second.length;
         if (firstLength == secondLength) {
             for (int i=0; i<firstLength; i++) {
                 totalDiff.addChild(BooleanDifference.construct("" + i, first[i], second[i]));
@@ -66,12 +71,13 @@ public class BooleanArrayDifference extends AbstractDifferenceList implements ID
         }
         return totalDiff;
     }
-    
+
+    @TestMethod("testToString")
     public String toString() {
         if (differences.size() == 0) return "";
         
         StringBuffer diffBuffer = new StringBuffer();
-        diffBuffer.append(this.name).append("{");
+        diffBuffer.append(this.name).append('{');
         Iterator<IDifference> children = getChildren();
         while (children.hasNext()) {
             diffBuffer.append(children.next().toString());
@@ -79,7 +85,7 @@ public class BooleanArrayDifference extends AbstractDifferenceList implements ID
                 diffBuffer.append(", ");
             }
         }
-        diffBuffer.append("}");
+        diffBuffer.append('}');
         
         return diffBuffer.toString();
     }

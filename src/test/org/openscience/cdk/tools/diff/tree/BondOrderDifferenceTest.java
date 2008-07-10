@@ -52,4 +52,11 @@ public class BondOrderDifferenceTest extends NewCDKTestCase {
         result = BondOrderDifference.construct("Foo", IBond.Order.SINGLE, null);
         Assert.assertNotNull(result);
     }
+
+    @Test public void testToString() {
+        IDifference result = BondOrderDifference.construct("Foo", null, IBond.Order.SINGLE);
+        String diffString = result.toString();
+        Assert.assertNotNull(diffString);
+        assertOneLiner(diffString);
+    }
 }

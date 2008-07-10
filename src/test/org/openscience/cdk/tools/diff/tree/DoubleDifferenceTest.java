@@ -51,4 +51,11 @@ public class DoubleDifferenceTest extends NewCDKTestCase {
         result = DoubleDifference.construct("Foo", 3.0, null);
         Assert.assertNotNull(result);
     }
+
+    @Test public void testToString() {
+        IDifference result = DoubleDifference.construct("Foo", 1.0, 2.0);
+        String diffString = result.toString();
+        Assert.assertNotNull(diffString);
+        assertOneLiner(diffString);
+    }
 }

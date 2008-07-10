@@ -24,6 +24,13 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.tools.diff.tree.ChemObjectDifference;
+import org.openscience.cdk.tools.diff.tree.DoubleDifference;
+import org.openscience.cdk.tools.diff.tree.IDifference;
+import org.openscience.cdk.tools.diff.tree.IntegerDifference;
+import org.openscience.cdk.tools.diff.tree.Point2dDifference;
+import org.openscience.cdk.tools.diff.tree.Point3dDifference;
+import org.openscience.cdk.tools.diff.tree.StringDifference;
 
 /**
  * Compares two {@link IAtom} classes.
@@ -32,28 +39,37 @@ import org.openscience.cdk.interfaces.IChemObject;
  * @cdk.module diff
  */
 @TestClass("org.openscience.cdk.tools.diff.AtomDiffTest")
-public class AtomDiff extends AbstractChemObjectDiff {
+public class AtomDiff {
     
     @TestMethod("testMatchAgainstItself,testDiff")
     public static String diff( IChemObject first, IChemObject second ) {
+    	IDifference diff = difference(first, second);
+    	if (diff == null) {
+    		return "";
+    	} else {
+    		return diff.toString();
+    	}
+    }
+    @TestMethod("testDifference")
+    public static IDifference difference( IChemObject first, IChemObject second ) {
         if (!(first instanceof IAtom && second instanceof IAtom)) {
             return null;
         }
         IAtom firstElem = (IAtom)first;
         IAtom secondElem = (IAtom)second;
-        StringBuffer resultString = new StringBuffer(32);
-        resultString.append(diff("S", firstElem.getSymbol(), secondElem.getSymbol()));
-        resultString.append(diff("H", firstElem.getHydrogenCount(), secondElem.getHydrogenCount()));
-        resultString.append(diff("SP", firstElem.getStereoParity(), secondElem.getStereoParity()));
-        resultString.append(diff("2D", firstElem.getPoint2d(), secondElem.getPoint2d()));
-        resultString.append(diff("3D", firstElem.getPoint3d(), secondElem.getPoint3d()));
-        resultString.append(diff("F3D", firstElem.getFractionalPoint3d(), secondElem.getFractionalPoint3d()));
-        resultString.append(diff("C", firstElem.getCharge(), secondElem.getCharge()));
-        resultString.append(AtomTypeDiff.diff(first, second));
-        if (resultString.length() > 0) {
-            return "AtomDiff(" + resultString.toString() + ")";
+        ChemObjectDifference totalDiff = new ChemObjectDifference("AtomDiff");
+        totalDiff.addChild(StringDifference.construct("S", firstElem.getSymbol(), secondElem.getSymbol()));
+        totalDiff.addChild(IntegerDifference.construct("H", firstElem.getHydrogenCount(), secondElem.getHydrogenCount()));
+        totalDiff.addChild(IntegerDifference.construct("SP", firstElem.getStereoParity(), secondElem.getStereoParity()));
+        totalDiff.addChild(Point2dDifference.construct("2D", firstElem.getPoint2d(), secondElem.getPoint2d()));
+        totalDiff.addChild(Point3dDifference.construct("3D", firstElem.getPoint3d(), secondElem.getPoint3d()));
+        totalDiff.addChild(Point3dDifference.construct("F3D", firstElem.getFractionalPoint3d(), secondElem.getFractionalPoint3d()));
+        totalDiff.addChild(DoubleDifference.construct("C", firstElem.getCharge(), secondElem.getCharge()));
+        totalDiff.addChild(AtomTypeDiff.difference(first, second));
+        if (totalDiff.childCount() > 0) {
+            return totalDiff;
         } else {
-            return "";
+            return null;
         }
     }
 

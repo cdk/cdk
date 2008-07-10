@@ -51,4 +51,11 @@ public class BooleanDifferenceTest extends NewCDKTestCase {
         result = BooleanDifference.construct("Foo", false, null);
         Assert.assertNotNull(result);
     }
+
+    @Test public void testToString() {
+        IDifference result = BooleanDifference.construct("Foo", true, false);
+        String diffString = result.toString();
+        Assert.assertNotNull(diffString);
+        assertOneLiner(diffString);
+    }
 }

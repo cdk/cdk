@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.diff.tree.StringDifference;
  * @cdk.module diff
  */
 @TestClass("org.openscience.cdk.tools.diff.AtomTypeDiffTest")
-public class AtomTypeDiff extends AbstractChemObjectDiff {
+public class AtomTypeDiff {
     
     @TestMethod("testMatchAgainstItself,testDiff")
     public static String diff( IChemObject first, IChemObject second ) {
@@ -50,6 +50,7 @@ public class AtomTypeDiff extends AbstractChemObjectDiff {
             return difference.toString();
         }
     }
+    @TestMethod("testDifference")
     public static IDifference difference( IChemObject first, IChemObject second ) {
         if (!(first instanceof IAtomType && second instanceof IAtomType)) {
             return null;

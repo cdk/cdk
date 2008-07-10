@@ -52,4 +52,11 @@ public class AtomTypeHybridizationDifferenceTest extends NewCDKTestCase {
         result = AtomTypeHybridizationDifference.construct("Foo", IAtomType.Hybridization.SP1, null);
         Assert.assertNotNull(result);
     }
+
+    @Test public void testToString() {
+        IDifference result = AtomTypeHybridizationDifference.construct("Foo", null, IAtomType.Hybridization.SP1);
+        String diffString = result.toString();
+        Assert.assertNotNull(diffString);
+        assertOneLiner(diffString);
+    }
 }

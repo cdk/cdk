@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.diff.tree.IntegerDifference;
  * @cdk.module diff
  */
 @TestClass("org.openscience.cdk.tools.diff.IsotopeDiffTest")
-public class IsotopeDiff extends AbstractChemObjectDiff {
+public class IsotopeDiff {
     
     @TestMethod("testMatchAgainstItself,testDiff")
     public static String diff(IChemObject first, IChemObject second) {
@@ -47,6 +47,7 @@ public class IsotopeDiff extends AbstractChemObjectDiff {
             return diff.toString();
         }
     }
+    @TestMethod("testDifference")
     public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof IIsotope && second instanceof IIsotope)) {
             return null;

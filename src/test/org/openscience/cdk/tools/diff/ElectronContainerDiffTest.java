@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.openscience.cdk.ElectronContainer;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.tools.diff.tree.IDifference;
 
 /**
  * @cdk.module test-diff
@@ -50,4 +51,13 @@ public class ElectronContainerDiffTest extends NewCDKTestCase {
         assertContains(result, "2/3");
     }
 
+    @Test public void testDifference() {
+        IElectronContainer ec1 = new ElectronContainer();
+        ec1.setElectronCount(2);
+        IElectronContainer ec2 = new ElectronContainer();
+        ec2.setElectronCount(3);
+
+        IDifference difference = ElectronContainerDiff.difference(ec1, ec2);
+        Assert.assertNotNull(difference);
+    }
 }

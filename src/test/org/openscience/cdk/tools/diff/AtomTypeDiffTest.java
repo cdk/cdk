@@ -26,6 +26,7 @@ import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.tools.diff.tree.IDifference;
 
 /**
  * @cdk.module test-diff
@@ -51,4 +52,13 @@ public class AtomTypeDiffTest extends NewCDKTestCase {
         assertContains(result, "PLANAR3/SP3");
     }
 
+    @Test public void testDifference() {
+        IAtomType element1 = new AtomType(new Element());
+        element1.setHybridization(IAtomType.Hybridization.PLANAR3);
+        IAtomType element2 = new AtomType(new Element());
+        element2.setHybridization(IAtomType.Hybridization.SP3);
+
+        IDifference difference = AtomTypeDiff.difference(element1, element2);
+        Assert.assertNotNull(difference);
+    }
 }

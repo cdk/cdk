@@ -24,12 +24,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * Diff between two IChemObjects.
  * 
  * @author     egonw
  * @cdk.module diff
  */
+@TestClass("org.openscience.cdk.tools.diff.tree.AbstractDifferenceListTest")
 public abstract class AbstractDifferenceList implements IDifferenceList {
 
     protected List<IDifference> differences;
@@ -38,22 +42,26 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
         differences = new ArrayList<IDifference>();
     }
     
+    @TestMethod("testAddChild")
     public void addChild(IDifference childDiff) {
         if (childDiff != null) {
             differences.add(childDiff);
         }
     }
 
+    @TestMethod("testChildDiffs")
     public void addChildren(List<IDifference> children) {
         if (children != null) {
             differences.addAll(children);
         }
     }
 
+    @TestMethod("testChildDiffs")
     public Iterator<IDifference> getChildren() {
         return differences.iterator();
     }
-    
+
+    @TestMethod("testAddChild")
     public int childCount() {
         return differences.size();
     }

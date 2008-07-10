@@ -23,31 +23,40 @@ package org.openscience.cdk.tools.diff;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
 /**
  * @cdk.module test-diff
  */
-public class BondDiffTest extends NewCDKTestCase {
+public class AtomContainerDiffTest extends NewCDKTestCase {
 
     @Test public void testMatchAgainstItself() {
+        IAtomContainer container = new AtomContainer();
         IBond bond1 = new Bond();
-        String result = BondDiff.diff(bond1, bond1);
+        container.addBond(bond1);
+        String result = AtomContainerDiff.diff(container, container);
         assertZeroLength(result);
     }
     
     @Test public void testDiff() {
+        IAtomContainer container1 = new AtomContainer();
         IBond bond1 = new Bond(new Atom("C"), new Atom("C"));
         bond1.setOrder(IBond.Order.SINGLE);
+        container1.addBond(bond1);
+        IAtomContainer container2 = new AtomContainer();
         IBond bond2 = new Bond(new Atom("C"), new Atom("O"));
         bond2.setOrder(IBond.Order.DOUBLE);
-        
-        String result = BondDiff.diff( bond1, bond2 );
+        container2.addBond(bond2);
+
+        String result = AtomContainerDiff.diff(container1, container2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
+        assertContains(result, "AtomContainerDiff");
         assertContains(result, "BondDiff");
         assertContains(result, "SINGLE/DOUBLE");
         assertContains(result, "AtomDiff");
@@ -55,12 +64,16 @@ public class BondDiffTest extends NewCDKTestCase {
     }
 
     @Test public void testDifference() {
+        IAtomContainer container1 = new AtomContainer();
         IBond bond1 = new Bond(new Atom("C"), new Atom("C"));
         bond1.setOrder(IBond.Order.SINGLE);
+        container1.addBond(bond1);
+        IAtomContainer container2 = new AtomContainer();
         IBond bond2 = new Bond(new Atom("C"), new Atom("O"));
         bond2.setOrder(IBond.Order.DOUBLE);
+        container2.addBond(bond2);
 
-        IDifference difference = BondDiff.difference(bond1, bond2);
+        IDifference difference = AtomContainerDiff.difference(container1, container2);
         Assert.assertNotNull(difference);
     }
 }

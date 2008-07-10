@@ -20,12 +20,15 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
+import org.openscience.cdk.annotations.TestClass;
+
 /**
  * Difference between two IChemObjects.
  * 
  * @author     egonw
  * @cdk.module diff
  */
+@TestClass("org.openscience.cdk.tools.diff.tree.AbstractDifferenceTest")
 public abstract class AbstractDifference implements IDifference {
 
     protected AbstractDifference() {}

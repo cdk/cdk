@@ -20,12 +20,16 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * {@link IDifference} between two {@link Double}.
  * 
  * @author     egonw
  * @cdk.module diff
  */
+@TestClass("org.openscience.cdk.tools.diff.tree.DoubleDifferenceTest")
 public class DoubleDifference implements IDifference {
 
     private final static double ERROR = 0.000000001;
@@ -40,6 +44,7 @@ public class DoubleDifference implements IDifference {
         this.second = second;
     }
     
+    @TestMethod("testDiff,testSame,testTwoNull,testOneNull")
     public static IDifference construct(String name, Double first, Double second) {
         if (first == null && second == null) {
             return null; // no difference
@@ -52,7 +57,8 @@ public class DoubleDifference implements IDifference {
         }
         return new DoubleDifference(name, first, second);
     }
-    
+
+    @TestMethod("testToString")
     public String toString() {
         return name + ":" + 
             (first == null ? "NA" : first) +

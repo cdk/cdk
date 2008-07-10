@@ -22,42 +22,40 @@ package org.openscience.cdk.tools.diff;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Element;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.LonePair;
 import org.openscience.cdk.NewCDKTestCase;
-import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
 /**
  * @cdk.module test-diff
  */
-public class ElementDiffTest extends NewCDKTestCase {
+public class LonePairDiffTest extends NewCDKTestCase {
 
     @Test public void testMatchAgainstItself() {
-        IElement element1 = new Element();
-        String result = ElementDiff.diff(element1, element1);
+        ILonePair bond1 = new LonePair();
+        String result = LonePairDiff.diff(bond1, bond1);
         assertZeroLength(result);
     }
     
     @Test public void testDiff() {
-        IElement element1 = new Element();
-        element1.setSymbol("H");
-        IElement element2 = new Element();
-        element2.setSymbol("C");
+        ILonePair bond1 = new LonePair(new Atom("C"));
+        ILonePair bond2 = new LonePair(new Atom("O"));
         
-        String result = ElementDiff.diff( element1, element2 );
+        String result = LonePairDiff.diff( bond1, bond2 );
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
-        assertContains(result, "ElementDiff");
-        assertContains(result, "H/C");
+        assertContains(result, "LonePairDiff");
+        assertContains(result, "AtomDiff");
+        assertContains(result, "C/O");
     }
 
     @Test public void testDifference() {
-        IElement element1 = new Element();
-        element1.setSymbol("H");
-        IElement element2 = new Element();
-        element2.setSymbol("C");
+        ILonePair bond1 = new LonePair(new Atom("C"));
+        ILonePair bond2 = new LonePair(new Atom("O"));
 
-        IDifference difference = ElementDiff.difference(element1, element2);
+        IDifference difference = LonePairDiff.difference(bond1, bond2);
         Assert.assertNotNull(difference);
     }
 }

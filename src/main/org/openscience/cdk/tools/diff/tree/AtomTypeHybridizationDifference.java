@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomType;
 
 /**
@@ -28,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtomType;
  * @author     egonw
  * @cdk.module diff
  */
+@TestClass("org.openscience.cdk.tools.diff.tree.AtomTypeHybridizationDifferenceTest")
 public class AtomTypeHybridizationDifference implements IDifference {
 
     private String name;
@@ -40,13 +43,15 @@ public class AtomTypeHybridizationDifference implements IDifference {
         this.second = second;
     }
     
+    @TestMethod("testDiff,testSame,testTwoNull,testOneNull")
     public static IDifference construct(String name, IAtomType.Hybridization first, IAtomType.Hybridization second) {
         if (first == second) {
             return null;
         }
         return new AtomTypeHybridizationDifference(name, first, second);
     }
-    
+
+    @TestMethod("testToString")
     public String toString() {
         return name + ":" + 
             (first == null ? "NA" : first) +

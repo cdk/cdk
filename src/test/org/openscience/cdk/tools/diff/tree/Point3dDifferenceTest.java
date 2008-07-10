@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.NewCDKTestCase;
@@ -27,33 +29,39 @@ import org.openscience.cdk.NewCDKTestCase;
 /**
  * @cdk.module test-diff
  */
-public class StringDifferenceTest extends NewCDKTestCase {
+public class Point3dDifferenceTest extends NewCDKTestCase {
 
     @Test public void testDiff() {
-        IDifference result = StringDifference.construct("Foo", "foo", "bar");
+    	Point3d foo = new Point3d(1.0, 2.0, 4.5);
+    	Point3d bar = new Point3d(1.0, 5.0, 8.3);
+        IDifference result = Point3dDifference.construct("Foo", foo, bar);
         Assert.assertNotNull(result);
     }
     
     @Test public void testSame() {
-        IDifference result = StringDifference.construct("Foo", "foo", "foo");
+    	Point3d foo = new Point3d(1.0, 2.0, 4.5);
+    	Point3d bar = new Point3d(1.0, 2.0, 4.5);
+        IDifference result = Point3dDifference.construct("Foo", foo, bar);
         Assert.assertNull(result);
     }
     
     @Test public void testTwoNull() {
-        IDifference result = StringDifference.construct("Foo", null, null);
+        IDifference result = Point3dDifference.construct("Foo", null, null);
         Assert.assertNull(result);
     }
 
     @Test public void testOneNull() {
-        IDifference result = StringDifference.construct("Foo", null, "bar");
+    	Point3d bar = new Point3d(1.0, 5.0, 8.3);
+        IDifference result = Point3dDifference.construct("Foo", null, bar);
         Assert.assertNotNull(result);
         
-        result = StringDifference.construct("Foo", "bar", null);
+        result = Point3dDifference.construct("Foo", bar, null);
         Assert.assertNotNull(result);
     }
-    
+
     @Test public void testToString() {
-    	IDifference result = StringDifference.construct("Foo", null, "bar");
+    	Point3d bar = new Point3d(1.0, 5.0, 8.3);
+        IDifference result = Point3dDifference.construct("Foo", null, bar);
         String diffString = result.toString();
         Assert.assertNotNull(diffString);
         assertOneLiner(diffString);

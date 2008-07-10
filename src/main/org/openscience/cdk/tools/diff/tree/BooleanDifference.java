@@ -20,12 +20,16 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 /**
  * {@link IDifference} between two {@link Boolean}s.
  * 
  * @author     egonw
  * @cdk.module diff
  */
+@TestClass("org.openscience.cdk.tools.diff.tree.BooleanDifferenceTest")
 public class BooleanDifference implements IDifference {
 
     private String name;
@@ -38,13 +42,15 @@ public class BooleanDifference implements IDifference {
         this.second = second;
     }
     
+    @TestMethod("testDiff,testSame,testTwoNull,testOneNull")
     public static IDifference construct(String name, Boolean first, Boolean second) {
         if (first == second) {
             return null;
         }
         return new BooleanDifference(name, first, second);
     }
-    
+
+    @TestMethod("testToString")
     public String toString() {
         return name + ":" + 
             (first == null ? "NA" : (first == true ? "T" : "F")) +
