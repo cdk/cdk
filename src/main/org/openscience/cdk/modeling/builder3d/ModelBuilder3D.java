@@ -164,6 +164,10 @@ public class ModelBuilder3D {
 	 */
 	public IMolecule generate3DCoordinates(IMolecule molecule, boolean clone) throws Exception {
 		logger.debug("******** GENERATE COORDINATES ********");
+		for(int i=0;i<molecule.getAtomCount();i++){
+			molecule.getAtom(i).setFlag(CDKConstants.ISPLACED,false);
+			molecule.getAtom(i).setFlag(CDKConstants.VISITED,false);
+		}
 		//CHECK FOR CONNECTIVITY!
 		logger.debug("#atoms>"+molecule.getAtomCount());
 		if (!ConnectivityChecker.isConnected(molecule)) {
