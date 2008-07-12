@@ -20,29 +20,33 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 /**
  *  Description of the Class
  *
@@ -292,11 +296,11 @@ public class ModelBuilder3dTest extends NewCDKTestCase {
 	 *  @cdk.bug 1610997
 	 */
     @Test
-    public void test_LocalWorkerModel3DBuildersWithMM2ForceField() throws Exception{
+    public void testModel3D_bug_1610997() throws Exception{
 		if (!this.runSlowTests()) Assert.fail("Slow tests turned of");
 
 		boolean notCalculatedResults = false;
-        List<IAtomContainer> inputList = new ArrayList<IAtomContainer>();
+		List inputList = new ArrayList();
 
 		////////////////////////////////////////////////////////////////////////////////////////////
 		//generate the input molecules. This are molecules without x, y, z coordinats 
@@ -314,45 +318,70 @@ public class ModelBuilder3dTest extends NewCDKTestCase {
 		// Generate 2D coordinats for the input molecules with the Structure Diagram Generator
 
 		StructureDiagramGenerator str;
-		List<IAtomContainer> resultList = new ArrayList<IAtomContainer>();
-        for (IAtomContainer molecules : inputList) {
-            str = new StructureDiagramGenerator();
-            str.setMolecule((IMolecule) molecules);
-            str.generateCoordinates();
-            resultList.add(str.getMolecule());
-        }
+		List resultList = new ArrayList();
+		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
+			IAtomContainer molecules = (IAtomContainer) iter.next();
+			str = new StructureDiagramGenerator();
+			str.setMolecule((IMolecule)molecules);
+			str.generateCoordinates();
+			resultList.add(str.getMolecule());
+		}
 		inputList = resultList;
 
 		/////////////////////////////////////////////////////////////////////////////////////////////
 		// Delete x and y coordinats
 
-        for (IAtomContainer molecules : inputList) {
-            for (Iterator atom = molecules.atoms(); atom.hasNext();) {
-                Atom last = (Atom) atom.next();
-                last.setPoint2d(null);
-            }
-        }
+		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
+			IAtomContainer molecules = (IAtomContainer) iter.next();
+			for (Iterator atom = molecules.atoms(); atom.hasNext();){
+				Atom last = (Atom) atom.next();
+				last.setPoint2d(null);
+			}
+		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Test for the method Model3DBuildersWithMM2ForceField 
 
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
-        for (IAtomContainer molecules : inputList) {
-            IMolecule mol = molecules.getBuilder().newMolecule(molecules);
-            /*for(int i=0;i<mol.getAtomCount();i++){
-                     mol.getAtom(i).setFlag(CDKConstants.ISPLACED,false);
-                     mol.getAtom(i).setFlag(CDKConstants.VISITED,false);
-                   } */
-            mol = mb3d.generate3DCoordinates(mol, false);
-            System.out.println("Calculation done");
-        }
-
-        for (IAtomContainer molecules : inputList) {            
-            for (Iterator atom = molecules.atoms(); atom.hasNext();) {
-                Atom last = (Atom) atom.next();
-                if (last.getPoint3d() == null) notCalculatedResults = true;
-            }
-        }
+		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
+			IAtomContainer molecules = (IAtomContainer) iter.next();
+			IMolecule mol = molecules.getBuilder().newMolecule(molecules);
+			/*for(int i=0;i<mol.getAtomCount();i++){
+			      mol.getAtom(i).setFlag(CDKConstants.ISPLACED,false);
+				  mol.getAtom(i).setFlag(CDKConstants.VISITED,false);
+				} */
+			mol = mb3d.generate3DCoordinates(mol, false);
+			System.out.println("Calculation done");
+		}
+		
+		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
+			IAtomContainer molecules = (IAtomContainer) iter.next();
+			for (Iterator atom = molecules.atoms(); atom.hasNext();){
+				Atom last = (Atom) atom.next();
+				if (last.getPoint3d() == null) notCalculatedResults = true;
+			}
+		}
 		Assert.assertEquals(false, notCalculatedResults);
+	}
+	
+    /*
+	 *  @cdk.bug 1241421
+	 */
+    @Test
+    public void testModelBuilder3D_bug_1241421() throws Exception{
+    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
+    	String filename = "data/mdl/bug1241421.mol";
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    	MDLV2000Reader reader = new MDLV2000Reader(ins);
+    	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+    	List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+    	IMolecule ac= new NNMolecule((IAtomContainer)containersList.get(0));
+    	ac = mb3d.generate3DCoordinates(ac, false);
+    	double avlength=GeometryTools.getBondLengthAverage3D(ac);
+    	for(int i=0;i<ac.getBondCount();i++){
+    		double distance=ac.getBond(i).getAtom(0).getPoint3d().distance(ac.getBond(i).getAtom(1).getPoint3d());
+    		Assert.assertTrue("Unreasonable bond length (" + distance + ") for bond " + i, 
+    			distance >= avlength/2 && distance <= avlength*2);
+    	}
 	}
 }
