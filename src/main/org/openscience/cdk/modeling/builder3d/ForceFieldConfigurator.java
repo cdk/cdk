@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,6 +45,7 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.HOSECodeGenerator;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -249,6 +251,7 @@ public class ForceFieldConfigurator {
 		IRingSet ringSetMolecule = new SSSRFinder(molecule).findSSSR();
 		boolean isInHeteroRing = false;
 		try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 			CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 		} catch (Exception cdk1) {
 			System.out.println("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
