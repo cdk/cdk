@@ -1,24 +1,38 @@
-/**
- * Created by IntelliJ IDEA.
- * User: rguha
- * Date: Jun 12, 2008
- * Time: 1:51:33 PM
- * To change this template use File | Settings | File Templates.
+/* $Revision: 9167 $ $Author: rajarshi $ $Date: 2007-10-22 01:26:11 +0200 (Mon, 22 Oct 2007) $
+ *
+ * Copyright (C) 2008  Rajarshi Guha <rajarshi@users.sf.net>
+ *
+ * Contact: cdk-devel@lists.sf.net
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
 package org.openscience.cdk.tools;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.PeriodicTableElement;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.ElementPTFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.Vector;
+import java.util.List;
+import java.util.Map;
+
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.PeriodicTableElement;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.config.ElementPTFactory;
 
 /**
  * Represents elements of the Periodic Table.
@@ -28,21 +42,22 @@ import java.util.Vector;
  * class is useful when one wants generic properties of elements such
  * as atomic number, VdW radius etc.
  *
- * @author Rajarshi Guha
- * @cdk.created June 12 2008
+ * @author      Rajarshi Guha
+ * @cdk.created 2008-06-12
  * @cdk.keyword element
- * @cdk.keyword periodic table, vanderwaals, radius, electronegativity
- * @cdk.module extra
- * @cdk.svnrev $Revision: 10123 $
+ * @cdk.keyword periodic table
+ * @cdk.keyword radius, vanderwaals 
+ * @cdk.keyword electronegativity
+ * @cdk.module  extra
+ * @cdk.svnrev  $Revision: 10123 $
  */
-
 @TestClass("org.openscience.cdk.tools.PeriodicTableTest")
 public class PeriodicTable {
     boolean isInitialized = false;
 
     private static PeriodicTable ourInstance = new PeriodicTable();
-    private static HashMap<String, PeriodicTableElement> elements;
-    private HashMap<Integer, PeriodicTableElement> elementsByNumber;
+    private static Map<String, PeriodicTableElement> elements;
+    private Map<Integer, PeriodicTableElement> elementsByNumber;
 
     private PeriodicTable() {
         if (isInitialized) return;
@@ -60,7 +75,7 @@ public class PeriodicTable {
 
         elements = new HashMap<String, PeriodicTableElement>();
         elementsByNumber = new HashMap<Integer, PeriodicTableElement>();
-        Vector<PeriodicTableElement> tmp = factory.getElements();
+        List<PeriodicTableElement> tmp = factory.getElements();
         for (PeriodicTableElement element : tmp) {
             elements.put(element.getSymbol(), element);
             elementsByNumber.put(element.getAtomicNumber(), element);
