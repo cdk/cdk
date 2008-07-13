@@ -101,6 +101,8 @@ public class NewCDKTestCase {
      * @param error maximal allowed error
      */
     public void assertEquals(Point2d p1, Point2d p2, double error) {
+    	Assert.assertNotNull("The expected Point2d is null", p1);
+    	Assert.assertNotNull("The tested Point2d is null", p2);
     	Assert.assertEquals(p1.x, p2.x, error);
     	Assert.assertEquals(p1.y, p2.y, error);
     }
@@ -114,6 +116,8 @@ public class NewCDKTestCase {
      * @param error maximal allowed error
      */
     public void assertEquals(Point3d p1, Point3d p2, double error) {
+    	Assert.assertNotNull("The expected Point3d is null", p1);
+    	Assert.assertNotNull("The tested Point3d is null", p2);
     	Assert.assertEquals(p1.x, p2.x, error);
     	Assert.assertEquals(p1.y, p2.y, error);
     	Assert.assertEquals(p1.z, p2.z, error);
