@@ -237,6 +237,7 @@ public class ModelBuilder3D {
 		} catch (Exception ex3) {
 			logger.error("PlaceSubstitutensERROR: Cannot place substitutents due to:" + ex3.getMessage());
 			logger.debug(ex3);
+			throw new Exception("PlaceSubstitutensERROR: Cannot place substitutents due to:" + ex3.getMessage(), ex3);
 		}
 		return molecule;
 	}
