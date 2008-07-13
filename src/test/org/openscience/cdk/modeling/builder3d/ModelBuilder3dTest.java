@@ -1,6 +1,7 @@
 /*  $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 1997-2007  Christian Hoppe <chhoppe@users.sf.net>
+ *                     2006  Mario Baseda
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -87,30 +88,11 @@ public class ModelBuilder3dTest extends NewCDKTestCase {
 		addExplicitHydrogens(mol);
 		//mb3d.setTemplateHandler();
 		mol = mb3d.generate3DCoordinates(mol, false);
-		for (int i=0;i<mol.getAtomCount();i++){
-			if (i==0){
-				Assert.assertEquals(c_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
-				Assert.assertEquals(c_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
-				Assert.assertEquals(c_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
-			}else if(i==1){
-				Assert.assertEquals(f_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
-				Assert.assertEquals(f_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
-				Assert.assertEquals(f_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
-			}else if(i==2){
-				Assert.assertEquals(h1_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
-				Assert.assertEquals(h1_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
-				Assert.assertEquals(h1_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
-			}else if(i==3){
-				Assert.assertEquals(h2_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
-				Assert.assertEquals(h2_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
-				Assert.assertEquals(h2_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
-			}else if(i==4){
-				Assert.assertEquals(h3_coord.x, mol.getAtom(i).getPoint3d().x, 0.0001);
-				Assert.assertEquals(h3_coord.y, mol.getAtom(i).getPoint3d().y, 0.0001);
-				Assert.assertEquals(h3_coord.z, mol.getAtom(i).getPoint3d().z, 0.0001);
-			}
-		}
-
+		assertEquals(c_coord, mol.getAtom(0).getPoint3d(), 0.0001);
+		assertEquals(f_coord, mol.getAtom(1).getPoint3d(), 0.0001);
+		assertEquals(h1_coord, mol.getAtom(2).getPoint3d(), 0.0001);
+		assertEquals(h2_coord, mol.getAtom(3).getPoint3d(), 0.0001);
+		assertEquals(h3_coord, mol.getAtom(4).getPoint3d(), 0.0001);
     }
 
     @Test
