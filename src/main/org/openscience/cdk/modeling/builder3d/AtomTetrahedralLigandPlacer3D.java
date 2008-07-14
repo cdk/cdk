@@ -143,11 +143,10 @@ public class AtomTetrahedralLigandPlacer3D {
 	 */
 	public Point3d rescaleBondLength(IAtom atom1, IAtom atom2, Point3d point2) throws Exception {
 		Point3d point1 = atom1.getPoint3d();
-		double d1 = atom1.getCovalentRadius();
-		double d2 = atom2.getCovalentRadius();
+		Double d1 = atom1.getCovalentRadius();
+		Double d2 = atom2.getCovalentRadius();
 		// in case we have no covalent radii, set to 1.0
-		double distance = (d1 < 0.1 || d2 < 0.1) ? 1.0 :
-				atom1.getCovalentRadius() + atom2.getCovalentRadius();
+		double distance = (d1 == null || d2 == null) ? 1.0 : d1 + d2;
 		if (pSet != null) {
 			distance = getDistanceValue(atom1.getAtomTypeName(), atom2.getAtomTypeName());
 		}
