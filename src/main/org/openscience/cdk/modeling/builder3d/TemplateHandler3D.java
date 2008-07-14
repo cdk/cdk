@@ -39,6 +39,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -70,16 +71,14 @@ public class TemplateHandler3D {
     IMolecule molecule;
     IRingSet sssr;
     IMoleculeSet templates = null;
-    List fingerprintData = null;
-    List ringTemplates = null;
+    List<BitSet> fingerprintData = null;
     private boolean templatesLoaded = false;
 
     private static TemplateHandler3D self = null;
     
     private TemplateHandler3D() {
         templates = builder.newMoleculeSet();
-        fingerprintData = new ArrayList();
-        ringTemplates = new ArrayList(75);
+        fingerprintData = new ArrayList<BitSet>();
     }
 
     public static TemplateHandler3D getInstance() throws CDKException {
@@ -136,21 +135,20 @@ public class TemplateHandler3D {
             if (s == null) {
                 break;
             }
-            fingerprintData.add((BitSet) getBitSetFromFile(new StringTokenizer(s, "\t ;{, }")));
+            try {
+	            fingerprintData.add((BitSet) getBitSetFromFile(new StringTokenizer(s, "\t ;{, }")));
+            } catch (Exception exception) {
+            	throw new CDKException("Error while reading the fingerprints: " + exception.getMessage(), exception);
+            }
         }
         //logger.debug("Fingerprints are read in:"+fingerprintData.size());
         templatesLoaded = true;
     }
 
-    private BitSet getBitSetFromFile(StringTokenizer st) {
+    private BitSet getBitSetFromFile(StringTokenizer st) throws Exception {
         BitSet bitSet = new BitSet(1024);
         for (int i = 0; i < st.countTokens(); i++) {
-
-            try {
-                bitSet.set(Integer.parseInt(st.nextToken()));
-            } catch (NumberFormatException nfe) {
-                // do nothing
-            }
+        	bitSet.set(Integer.parseInt(st.nextToken()));
         }
         return bitSet;
     }
@@ -172,8 +170,8 @@ public class TemplateHandler3D {
         QueryAtomContainer query;
         BitSet ringSystemFingerprint = new Fingerprinter().getFingerprint(queryRingSystem);
         RMap map;
-        org.openscience.cdk.interfaces.IAtom atom1;
-        org.openscience.cdk.interfaces.IAtom atom2;
+        IAtom atom1;
+        IAtom atom2;
         boolean flagMaxSubstructure = false;
         for (int i = 0; i < fingerprintData.size(); i++) {
             template = templates.getMolecule(i);
