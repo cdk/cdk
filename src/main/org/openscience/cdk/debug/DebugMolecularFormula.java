@@ -73,13 +73,13 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
     }
 
 	public Map<Object, Object> getProperties() {
-	    // TODO Auto-generated method stub
-	    return null;
+	    logger.debug("Getting properties...");
+      return super.getProperties();
     }
 
 	public Object getProperty(Object description) {
-	    // TODO Auto-generated method stub
-	    return null;
+	    logger.debug("Getting property: " + description);
+	    return super.getProperty(description);
     }
 
 	public Iterator<IIsotope> isotopes() {
@@ -97,8 +97,8 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
     }
 
 	public void removeProperty(Object description) {
-	    // TODO Auto-generated method stub
-	    
+	    logger.debug("Removing property: " + description);
+      super.removeProperty(description);
     }
 
 	public void setCharge(Double charge) {
@@ -107,13 +107,13 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
     }
 
 	public void setProperties(Map<Object, Object> properties) {
-	    // TODO Auto-generated method stub
-	    
+	    logger.debug("Setting new properties...");
+	    super.setProperties(properties);
     }
 
 	public void setProperty(Object description, Object property) {
-	    // TODO Auto-generated method stub
-	    
+	    logger.debug("Setting new property: " + description + " -> " + property);
+	    super.setProperty(description, property);
     }
 
 	public IChemObjectBuilder getBuilder() {
