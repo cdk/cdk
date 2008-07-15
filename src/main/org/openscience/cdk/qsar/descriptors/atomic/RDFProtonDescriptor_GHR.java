@@ -246,7 +246,7 @@ public class RDFProtonDescriptor_GHR implements IAtomicDescriptor {
         ArrayList<Integer> singles = new ArrayList<Integer>(); // list of any bond not rotatable
         ArrayList<Integer> doubles = new ArrayList<Integer>(); // list with only double bonds
         ArrayList<Integer> atoms = new ArrayList<Integer>(); // list with all the atoms in spheres
-//atoms.add( new Integer( mol.getAtomNumber(neighboors[0]) ) );
+//atoms.add( Integer.valueOf( mol.getAtomNumber(neighboors[0]) ) );
         ArrayList<Integer> bondsInCycloex = new ArrayList<Integer>(); // list for bonds in cycloexane-like rings
 
 // 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
@@ -472,10 +472,10 @@ public class RDFProtonDescriptor_GHR implements IAtomicDescriptor {
                                ArrayList<Integer> singleVec, ArrayList<Integer> doubleVec,
                                ArrayList<Integer> cycloexVec, int a1,
                                ArrayList<Integer> atomVec, int sphere, boolean isBondInCycloex) {
-        if (!atomVec.contains(new Integer(a1))) {
-            if (sphere < 6) atomVec.add(new Integer(a1));
+        if (!atomVec.contains(Integer.valueOf(a1))) {
+            if (sphere < 6) atomVec.add(Integer.valueOf(a1));
         }
-        if (!cycloexVec.contains(new Integer(bondToStore))) {
+        if (!cycloexVec.contains(Integer.valueOf(bondToStore))) {
             if (isBondInCycloex) {
                 cycloexVec.add(bondToStore);
             }
@@ -484,7 +484,7 @@ public class RDFProtonDescriptor_GHR implements IAtomicDescriptor {
             if (!doubleVec.contains(bondToStore)) doubleVec.add(bondToStore);
         }
         if (bondOrder == IBond.Order.SINGLE) {
-            if (!singleVec.contains(new Integer(bondToStore))) singleVec.add(bondToStore);
+            if (!singleVec.contains(Integer.valueOf(bondToStore))) singleVec.add(bondToStore);
         }
     }
 
