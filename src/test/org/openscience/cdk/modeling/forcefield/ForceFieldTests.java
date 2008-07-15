@@ -20,26 +20,26 @@
  */
 package org.openscience.cdk.modeling.forcefield;
 
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.util.Map;
+
+import javax.vecmath.GVector;
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.MDLWriter;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
-import org.openscience.cdk.modeling.forcefield.*;
-import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
-
-import javax.vecmath.GVector;
-import javax.vecmath.Point3d;
-import java.io.FileWriter;
-import java.io.InputStream;
-import java.util.Hashtable;
 
 
 
@@ -56,7 +56,7 @@ public class ForceFieldTests extends NewCDKTestCase {
 	IAtomContainer ac = null;
 	GVector moleculeCoordinates = null;
 	GeometricMinimizer gm = new GeometricMinimizer();
-	Hashtable mmff94Tables = null;
+	Map mmff94Tables = null;
 	MMFF94EnergyFunction mmff94Energy = null;
 
 	double[] molecule3Coord = {9, 9, 0};
