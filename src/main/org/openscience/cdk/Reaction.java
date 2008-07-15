@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2003-2008  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -284,8 +284,9 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @see     #getReactantCoefficient
      */
     public boolean setReactantCoefficient(IMolecule reactant, Double coefficient) {
-	notifyChanged();
-        return reactants.setMultiplier(reactant, coefficient);
+    	boolean result = reactants.setMultiplier(reactant, coefficient);
+    	notifyChanged();
+    	return result;
     }
 	
 	    
@@ -298,8 +299,9 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @see     #getProductCoefficient
      */
     public boolean setProductCoefficient(IMolecule product, Double coefficient) {
-	notifyChanged();
-        return products.setMultiplier(product, coefficient);
+        boolean result = products.setMultiplier(product, coefficient);
+    	notifyChanged();
+    	return result;
     }
 	
 	/**
@@ -333,8 +335,9 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @see     #getReactantCoefficients
      */
     public boolean setReactantCoefficients(Double[] coefficients) {
-	notifyChanged();
-        return reactants.setMultipliers(coefficients);
+        boolean result = reactants.setMultipliers(coefficients);
+    	notifyChanged();
+    	return result;
     }
 	
 	/**
@@ -345,8 +348,9 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @see     #getProductCoefficients
      */
     public boolean setProductCoefficients(Double[] coefficients) {
-	notifyChanged();
-        return products.setMultipliers(coefficients);
+    	boolean result =  products.setMultipliers(coefficients);
+    	notifyChanged();
+    	return result;
     }
 	
     /**
