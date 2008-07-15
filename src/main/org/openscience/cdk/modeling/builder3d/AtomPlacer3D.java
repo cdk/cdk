@@ -24,7 +24,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -48,7 +47,7 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class AtomPlacer3D {
 
-	private Map pSet = null;
+	private Map<Object,List> pSet = null;
 	private double[] distances;
 	private int[] first_atoms = null;
 	private double[] angles = null;
@@ -322,7 +321,7 @@ public class AtomPlacer3D {
 			System.out.println("KEYError:Unknown distance key in pSet: " + id2 + " ;" + id1+" take default bon length:"+DEFAULT_BOND_LENGTH);
 			return DEFAULT_BOND_LENGTH;
 		}
-		return ((Double) (((Vector) pSet.get(dkey)).get(0))).doubleValue();
+		return ((Double) (((List) pSet.get(dkey)).get(0))).doubleValue();
 	}
 
 	/**
@@ -352,7 +351,7 @@ public class AtomPlacer3D {
 			//logger.debug("KEYErrorAngle:Unknown angle key in pSet: " +id2 + " ; " + id3 + " ; " + id1+" take default angle:"+DEFAULT_ANGLE);
 			return -1;
 		}
-		return ((Double) (((Vector) pSet.get(akey)).get(0))).doubleValue();
+		return ((Double) (((List) pSet.get(akey)).get(0))).doubleValue();
 	}
 
 

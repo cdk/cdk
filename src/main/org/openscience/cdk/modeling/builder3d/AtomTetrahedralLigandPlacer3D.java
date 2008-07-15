@@ -29,9 +29,8 @@
 package org.openscience.cdk.modeling.builder3d;
 
 import java.io.IOException;
-import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.vecmath.AxisAngle4d;
 import javax.vecmath.Matrix3d;
@@ -714,7 +713,7 @@ public class AtomTetrahedralLigandPlacer3D {
 //			logger.debug("DistanceKEYError:pSet has no key:" + id2 + " ; " + id1 + " take default bond length:" + DEFAULT_BOND_LENGTH_H);
 			return DEFAULT_BOND_LENGTH_H;
 		}
-		return ((Double) (((Vector) pSet.get(dkey)).get(0))).doubleValue();
+		return ((Double) (((List) pSet.get(dkey)).get(0))).doubleValue();
 	}
 
 
@@ -745,7 +744,7 @@ public class AtomTetrahedralLigandPlacer3D {
 			System.out.println("AngleKEYError:Unknown angle " + id1 + " " + id2 + " " + id3 + " take default angle:" + TETRAHEDRAL_ANGLE);
 			return TETRAHEDRAL_ANGLE;
 		}
-		return ((Double) (((Vector) pSet.get(akey)).get(0))).doubleValue();
+		return ((Double) (((List) pSet.get(akey)).get(0))).doubleValue();
 	}
 
 
