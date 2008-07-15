@@ -39,11 +39,11 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * TestCase for the reading Cerius2 Polymorph Predictor files using a test file.
+ * TestCase for the reading Cerius<sup>2</sup> Polymorph Predictor files using a test file.
  *
  * @cdk.module test-io
  *
- * @see org.openscience.cdk.io.PMP2Reader
+ * @see org.openscience.cdk.io.PMPReader
  */
 public class PMPReaderTest extends CDKTestCase {
 
