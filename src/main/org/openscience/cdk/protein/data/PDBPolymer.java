@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2001-2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2001-2008  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -54,32 +51,32 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer{
 
 	private static final long serialVersionUID = 4173552834313952358L;
 
-	List sequentialListOfMonomers;
-	List secondaryStructures;
+	List<String> sequentialListOfMonomers;
+	List<IPDBStructure> secondaryStructures;
 	
 	/**
-	 * Contructs a new Polymer to store the Monomers.
+	 * Constructs a new Polymer to store the {@link IMonomer}s.
 	 */	
 	public PDBPolymer() {
 		super();
-		sequentialListOfMonomers = new ArrayList();
-		secondaryStructures = new ArrayList();
+		sequentialListOfMonomers = new ArrayList<String>();
+		secondaryStructures = new ArrayList<IPDBStructure>();
 	}
 	
 	public void addStructure(IPDBStructure structure) {
 		secondaryStructures.add(structure);
 	}
 	
-	public Collection getStructures() {
+	public Collection<IPDBStructure> getStructures() {
 //		don't return the original
-		return new ArrayList(secondaryStructures);
+		return new ArrayList<IPDBStructure>(secondaryStructures);
 	}
 	/**
-	 * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
-	 * atom to this AtomContainer, but not to a certain Strand or Monomer (intended
+	 * Adds the atom oAtom without specifying a {@link IMonomer} or a Strand. Therefore the
+	 * atom to this AtomContainer, but not to a certain Strand or {@link IMonomer} (intended
 	 * e.g. for HETATMs).
 	 *
-	 * @param oAtom  The IPDBAtom to add
+	 * @param oAtom  The {@link IPDBAtom} to add
 	 */
 	public void addAtom(IPDBAtom oAtom){
 		super.addAtom(oAtom);
@@ -116,9 +113,9 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer{
 	 * 
 	 * @see org.openscience.cdk.interfaces.IPolymer#getMonomerNames()
 	 */
-	public Collection getMonomerNamesInSequentialOrder() {
+	public Collection<String> getMonomerNamesInSequentialOrder() {
 		// don't return the original
-		return new ArrayList(sequentialListOfMonomers);
+		return new ArrayList<String>(sequentialListOfMonomers);
 	}
 	
 	public String toString() {
