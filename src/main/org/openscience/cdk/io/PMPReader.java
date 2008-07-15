@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2004-2008  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -33,6 +33,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -80,13 +81,13 @@ public class PMPReader extends DefaultChemObjectReader {
     private IAtomContainer modelStructure;
     private IChemObject chemObject;
     /* Keep an index of PMP id -> AtomCountainer id */
-    private Hashtable atomids = new Hashtable();
-    private Hashtable atomGivenIds = new Hashtable();
-    private Hashtable atomZOrders = new Hashtable();
-    private Hashtable bondids = new Hashtable();
-    private Hashtable bondAtomOnes = new Hashtable();
-    private Hashtable bondAtomTwos = new Hashtable();
-    private Hashtable bondOrders = new Hashtable();
+    private Map<Integer, Integer> atomids = new Hashtable<Integer, Integer>();
+    private Map<Integer, Integer> atomGivenIds = new Hashtable<Integer, Integer>();
+    private Map<Integer, Integer> atomZOrders = new Hashtable<Integer, Integer>();
+    private Map<Integer, Integer> bondids = new Hashtable<Integer, Integer>();
+    private Map<Integer, Integer> bondAtomOnes = new Hashtable<Integer, Integer>();
+    private Map<Integer, Integer> bondAtomTwos = new Hashtable<Integer, Integer>();
+    private Map<Integer, Double> bondOrders = new Hashtable<Integer, Double>();
 
     /* Often used patterns */
     Pattern objHeader;
@@ -139,8 +140,8 @@ public class PMPReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
-		Class[] interfaces = classObject.getInterfaces();
+	public boolean accepts(Class<? extends IChemObject> classObject) {
+		Class<?>[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;
 		}
@@ -233,9 +234,9 @@ public class PMPReader extends DefaultChemObjectReader {
                                 line = readLine();
                             }
                             if (chemObject instanceof IAtom) {
-                                atomids.put(new Integer(id), new Integer(modelStructure.getAtomCount()));
-                                atomZOrders.put(new Integer((String)chemObject.getProperty(PMP_ZORDER)), new Integer(id));
-                                atomGivenIds.put(new Integer((String)chemObject.getProperty(PMP_ID)), new Integer(id));
+                                atomids.put(Integer.valueOf(id), Integer.valueOf(modelStructure.getAtomCount()));
+                                atomZOrders.put(Integer.valueOf((String)chemObject.getProperty(PMP_ZORDER)), Integer.valueOf(id));
+                                atomGivenIds.put(Integer.valueOf((String)chemObject.getProperty(PMP_ID)), Integer.valueOf(id));
                                 modelStructure.addAtom((IAtom)chemObject);
 //                            } else if (chemObject instanceof IBond) {
 //                                bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
@@ -259,9 +260,9 @@ public class PMPReader extends DefaultChemObjectReader {
                     	logger.debug("#atom ones: ", bondAtomOnes.size());
                     	logger.debug("#atom twos: ", bondAtomTwos.size());
                     	logger.debug("#orders: ", bondOrders.size());
-                    	Iterator bonds = bondids.keySet().iterator();
+                    	Iterator<Integer> bonds = bondids.keySet().iterator();
                     	while (bonds.hasNext()) {
-                    		Integer index = (Integer)bonds.next();
+                    		Integer index = bonds.next();
                     		double order = (bondOrders.get(index) != null ? ((Double)bondOrders.get(index)).doubleValue() : 1.0);
                     		logger.debug("index: ", index);
                     		logger.debug("ones: ", bondAtomOnes.get(index));
@@ -322,7 +323,7 @@ public class PMPReader extends DefaultChemObjectReader {
                                     			)
                                     		);
                                     		a.setCovalentRadius(0.6);
-                                    		IAtom modelAtom = modelStructure.getAtom(((Integer)atomids.get(atomGivenIds.get(new Integer(i+1)))).intValue());
+                                    		IAtom modelAtom = modelStructure.getAtom(atomids.get(atomGivenIds.get(Integer.valueOf(i+1))));
                                     		a.setSymbol(modelAtom.getSymbol());
                                     		clone.addAtom(a);
                                     	}
@@ -436,7 +437,7 @@ public class PMPReader extends DefaultChemObjectReader {
                 int atomid = Integer.parseInt(field);
                 // this assumes that the atoms involved in this bond are
                 // already added, which seems the case in the PMP files
-                bondAtomOnes.put(new Integer(bondCounter), new Integer(atomid));
+                bondAtomOnes.put(Integer.valueOf(bondCounter), Integer.valueOf(atomid));
 //                IAtom a = molecule.getAtom(realatomid);
 //                ((IBond)chemObject).setAtomAt(a, 0);
             } else if ("Atom2".equals(command)) {
@@ -445,16 +446,16 @@ public class PMPReader extends DefaultChemObjectReader {
                 // already added, which seems the case in the PMP files
                 logger.debug("atomids: " + atomids);
                 logger.debug("atomid: " + atomid);
-                bondAtomTwos.put(new Integer(bondCounter), new Integer(atomid));
+                bondAtomTwos.put(Integer.valueOf(bondCounter), Integer.valueOf(atomid));
 //                IAtom a = molecule.getAtom(realatomid);
 //                ((IBond)chemObject).setAtomAt(a, 1);
             } else if ("Order".equals(command)) {
                 double order = Double.parseDouble(field);
-                bondOrders.put(new Integer(bondCounter), new Double(order));
+                bondOrders.put(Integer.valueOf(bondCounter), new Double(order));
 //                ((IBond)chemObject).setOrder(order);
             } else if ("Id".equals(command)) {
             	int bondid = Integer.parseInt(field);
-            	bondids.put(new Integer(bondCounter), new Integer(bondid));
+            	bondids.put(Integer.valueOf(bondCounter), new Integer(bondid));
             } else if ("Label".equals(command)) {
             } else if ("3DGridOrigin".equals(command)) {
             } else if ("3DGridMatrix".equals(command)) {

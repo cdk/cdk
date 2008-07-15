@@ -39,11 +39,12 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import java.io.*;
 import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
  * Reads a molecule from an MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
- * is read into a ChemSequence of ChemModel's. Each ChemModel will contain one
+ * is read into a {@link IChemSequence} of {@link IChemModel}'s. Each IChemModel will contain one
  * Molecule.
  *
  * <p>From the Atom block it reads atomic coordinates, element types and
@@ -59,7 +60,7 @@ import java.util.StringTokenizer;
  *   molecule.getProperty(CDKConstants.TITLE);
  * </pre>
  *
- * RGroups which are saved in the mdl file as R#, are renamed according to their appearance,
+ * <p>RGroups which are saved in the MDL molfile as R#, are renamed according to their appearance,
  * e.g. the first R# is named R1. With PseudAtom.getLabel() "R1" is returned (instead of R#).
  * This is introduced due to the SAR table generation procedure of Scitegics PipelinePilot.  
  *
@@ -128,8 +129,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
-		Class[] interfaces = classObject.getInterfaces();
+	public boolean accepts(Class<? extends IChemObject> classObject) {
+		Class<?>[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;
 			if (IChemModel.class.equals(interfaces[i])) return true;
@@ -393,7 +394,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     rGroup=element.split("^R");
                     if (rGroup.length >1){
                     	try{
-                    		Rnumber= new Integer(rGroup[(rGroup.length - 1)]);
+                    		Rnumber= Integer.valueOf(rGroup[(rGroup.length - 1)]);
                     		RGroupCounter=Rnumber;
                     	}catch(Exception ex){
                     		Rnumber=RGroupCounter;
@@ -484,9 +485,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             // convert to 2D, if totalZ == 0
             if (totalZ == 0.0 && !forceReadAs3DCoords.isSet()) {
                 logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
-                java.util.Iterator atomsToUpdate = molecule.atoms();
+                Iterator<IAtom> atomsToUpdate = molecule.atoms();
                 while (atomsToUpdate.hasNext()) {
-                    IAtom atomToUpdate = (IAtom)atomsToUpdate.next();
+                    IAtom atomToUpdate = atomsToUpdate.next();
                     Point3d p3d = atomToUpdate.getPoint3d();
                     atomToUpdate.setPoint2d(new Point2d(p3d.x, p3d.y));
                     atomToUpdate.setPoint3d(null);
@@ -586,10 +587,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 						newPseudoAtom.setPoint3d(aliasAtom.getPoint3d());
 					}
 					molecule.addAtom(newPseudoAtom);
-					java.util.List bondsOfAliasAtom = molecule.getConnectedBondsList(aliasAtom);
+					List<IBond> bondsOfAliasAtom = molecule.getConnectedBondsList(aliasAtom);
 					
 					for (int i = 0; i < bondsOfAliasAtom.size(); i++) {
-						IBond bondOfAliasAtom = (IBond) bondsOfAliasAtom.get(i);
+						IBond bondOfAliasAtom = bondsOfAliasAtom.get(i);
 						IAtom connectedToAliasAtom = bondOfAliasAtom.getConnectedAtom(aliasAtom);
 						IBond newBond = bondOfAliasAtom.getBuilder().newBond(); 
 						newBond.setAtoms(new IAtom[] {connectedToAliasAtom, newPseudoAtom});
