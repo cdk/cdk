@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IAtom;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Colors atoms using CPK color scheme {@cdk.cite BER2001}.
@@ -63,70 +64,71 @@ public class CPKAtomColors implements IAtomColorer, java.io.Serializable
     private static final Color FOREST_GREEN = new Color(0x228B22);
 
     // The atom color look-up table.
-    private static final HashMap ATOM_COLORS = new HashMap();
+    private static final Map<Integer, Color> ATOM_COLORS_MASSNUM = new HashMap<Integer, Color>();
+    private static final Map<String, Color> ATOM_COLORS_SYMBOL = new HashMap<String, Color>();
 
     // Build table.
     static
     {
         // Colors keyed on (uppercase) atomic symbol.
-        ATOM_COLORS.put("H", WHITE);
-        ATOM_COLORS.put("HE", PINK);
-        ATOM_COLORS.put("LI", FIRE_BRICK);
-        ATOM_COLORS.put("B", GREEN);
-        ATOM_COLORS.put("C", LIGHT_GREY);
-        ATOM_COLORS.put("N", SKY_BLUE);
-        ATOM_COLORS.put("O", RED);
-        ATOM_COLORS.put("F", GOLDEN_ROD);
-        ATOM_COLORS.put("NA", BLUE);
-        ATOM_COLORS.put("MG", FOREST_GREEN);
-        ATOM_COLORS.put("AL", DARK_GREY);
-        ATOM_COLORS.put("SI", GOLDEN_ROD);
-        ATOM_COLORS.put("P", ORANGE);
-        ATOM_COLORS.put("S", YELLOW);
-        ATOM_COLORS.put("CL", GREEN);
-        ATOM_COLORS.put("CA", DARK_GREY);
-        ATOM_COLORS.put("TI", DARK_GREY);
-        ATOM_COLORS.put("CR", DARK_GREY);
-        ATOM_COLORS.put("MN", DARK_GREY);
-        ATOM_COLORS.put("FE", ORANGE);
-        ATOM_COLORS.put("NI", BROWN);
-        ATOM_COLORS.put("CU", BROWN);
-        ATOM_COLORS.put("ZN", BROWN);
-        ATOM_COLORS.put("BR", BROWN);
-        ATOM_COLORS.put("AG", DARK_GREY);
-        ATOM_COLORS.put("I", PURPLE);
-        ATOM_COLORS.put("BA", ORANGE);
-        ATOM_COLORS.put("AU", GOLDEN_ROD);
+        ATOM_COLORS_SYMBOL.put("H", WHITE);
+        ATOM_COLORS_SYMBOL.put("HE", PINK);
+        ATOM_COLORS_SYMBOL.put("LI", FIRE_BRICK);
+        ATOM_COLORS_SYMBOL.put("B", GREEN);
+        ATOM_COLORS_SYMBOL.put("C", LIGHT_GREY);
+        ATOM_COLORS_SYMBOL.put("N", SKY_BLUE);
+        ATOM_COLORS_SYMBOL.put("O", RED);
+        ATOM_COLORS_SYMBOL.put("F", GOLDEN_ROD);
+        ATOM_COLORS_SYMBOL.put("NA", BLUE);
+        ATOM_COLORS_SYMBOL.put("MG", FOREST_GREEN);
+        ATOM_COLORS_SYMBOL.put("AL", DARK_GREY);
+        ATOM_COLORS_SYMBOL.put("SI", GOLDEN_ROD);
+        ATOM_COLORS_SYMBOL.put("P", ORANGE);
+        ATOM_COLORS_SYMBOL.put("S", YELLOW);
+        ATOM_COLORS_SYMBOL.put("CL", GREEN);
+        ATOM_COLORS_SYMBOL.put("CA", DARK_GREY);
+        ATOM_COLORS_SYMBOL.put("TI", DARK_GREY);
+        ATOM_COLORS_SYMBOL.put("CR", DARK_GREY);
+        ATOM_COLORS_SYMBOL.put("MN", DARK_GREY);
+        ATOM_COLORS_SYMBOL.put("FE", ORANGE);
+        ATOM_COLORS_SYMBOL.put("NI", BROWN);
+        ATOM_COLORS_SYMBOL.put("CU", BROWN);
+        ATOM_COLORS_SYMBOL.put("ZN", BROWN);
+        ATOM_COLORS_SYMBOL.put("BR", BROWN);
+        ATOM_COLORS_SYMBOL.put("AG", DARK_GREY);
+        ATOM_COLORS_SYMBOL.put("I", PURPLE);
+        ATOM_COLORS_SYMBOL.put("BA", ORANGE);
+        ATOM_COLORS_SYMBOL.put("AU", GOLDEN_ROD);
 
         // Colors keyed on atomic number.
-        ATOM_COLORS.put(new Integer(1), ATOM_COLORS.get("H"));
-        ATOM_COLORS.put(new Integer(2), ATOM_COLORS.get("HE"));
-        ATOM_COLORS.put(new Integer(3), ATOM_COLORS.get("LI"));
-        ATOM_COLORS.put(new Integer(5), ATOM_COLORS.get("B"));
-        ATOM_COLORS.put(new Integer(6), ATOM_COLORS.get("C"));
-        ATOM_COLORS.put(new Integer(7), ATOM_COLORS.get("N"));
-        ATOM_COLORS.put(new Integer(8), ATOM_COLORS.get("O"));
-        ATOM_COLORS.put(new Integer(9), ATOM_COLORS.get("F"));
-        ATOM_COLORS.put(new Integer(11), ATOM_COLORS.get("NA"));
-        ATOM_COLORS.put(new Integer(12), ATOM_COLORS.get("MG"));
-        ATOM_COLORS.put(new Integer(13), ATOM_COLORS.get("AL"));
-        ATOM_COLORS.put(new Integer(14), ATOM_COLORS.get("SI"));
-        ATOM_COLORS.put(new Integer(15), ATOM_COLORS.get("P"));
-        ATOM_COLORS.put(new Integer(16), ATOM_COLORS.get("S"));
-        ATOM_COLORS.put(new Integer(17), ATOM_COLORS.get("CL"));
-        ATOM_COLORS.put(new Integer(20), ATOM_COLORS.get("CA"));
-        ATOM_COLORS.put(new Integer(22), ATOM_COLORS.get("TI"));
-        ATOM_COLORS.put(new Integer(24), ATOM_COLORS.get("CR"));
-        ATOM_COLORS.put(new Integer(25), ATOM_COLORS.get("MN"));
-        ATOM_COLORS.put(new Integer(26), ATOM_COLORS.get("FE"));
-        ATOM_COLORS.put(new Integer(28), ATOM_COLORS.get("NI"));
-        ATOM_COLORS.put(new Integer(29), ATOM_COLORS.get("CU"));
-        ATOM_COLORS.put(new Integer(30), ATOM_COLORS.get("ZN"));
-        ATOM_COLORS.put(new Integer(35), ATOM_COLORS.get("BR"));
-        ATOM_COLORS.put(new Integer(47), ATOM_COLORS.get("AG"));
-        ATOM_COLORS.put(new Integer(53), ATOM_COLORS.get("I"));
-        ATOM_COLORS.put(new Integer(56), ATOM_COLORS.get("BA"));
-        ATOM_COLORS.put(new Integer(79), ATOM_COLORS.get("AU"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(1), ATOM_COLORS_SYMBOL.get("H"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(2), ATOM_COLORS_SYMBOL.get("HE"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(3), ATOM_COLORS_SYMBOL.get("LI"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(5), ATOM_COLORS_SYMBOL.get("B"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(6), ATOM_COLORS_SYMBOL.get("C"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(7), ATOM_COLORS_SYMBOL.get("N"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(8), ATOM_COLORS_SYMBOL.get("O"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(9), ATOM_COLORS_SYMBOL.get("F"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(11), ATOM_COLORS_SYMBOL.get("NA"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(12), ATOM_COLORS_SYMBOL.get("MG"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(13), ATOM_COLORS_SYMBOL.get("AL"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(14), ATOM_COLORS_SYMBOL.get("SI"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(15), ATOM_COLORS_SYMBOL.get("P"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(16), ATOM_COLORS_SYMBOL.get("S"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(17), ATOM_COLORS_SYMBOL.get("CL"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(20), ATOM_COLORS_SYMBOL.get("CA"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(22), ATOM_COLORS_SYMBOL.get("TI"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(24), ATOM_COLORS_SYMBOL.get("CR"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(25), ATOM_COLORS_SYMBOL.get("MN"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(26), ATOM_COLORS_SYMBOL.get("FE"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(28), ATOM_COLORS_SYMBOL.get("NI"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(29), ATOM_COLORS_SYMBOL.get("CU"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(30), ATOM_COLORS_SYMBOL.get("ZN"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(35), ATOM_COLORS_SYMBOL.get("BR"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(47), ATOM_COLORS_SYMBOL.get("AG"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(53), ATOM_COLORS_SYMBOL.get("I"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(56), ATOM_COLORS_SYMBOL.get("BA"));
+        ATOM_COLORS_MASSNUM.put(Integer.valueOf(79), ATOM_COLORS_SYMBOL.get("AU"));
     };
 
     //////////
@@ -155,15 +157,14 @@ public class CPKAtomColors implements IAtomColorer, java.io.Serializable
     public Color getAtomColor(IAtom atom, Color defaultColor)
     {
         Color color = defaultColor;
-        Integer number = new Integer(atom.getAtomicNumber());
         String symbol = atom.getSymbol().toUpperCase();
-        if (ATOM_COLORS.containsKey(number))
+        if (ATOM_COLORS_MASSNUM.containsKey(atom.getAtomicNumber()))
         {
-            color = (Color) ATOM_COLORS.get(number);    // lookup by atomic number.
+            color = ATOM_COLORS_MASSNUM.get(atom.getAtomicNumber());    // lookup by atomic number.
         }
-        else if (ATOM_COLORS.containsKey(symbol))
+        else if (ATOM_COLORS_SYMBOL.containsKey(symbol))
         {
-            color = (Color) ATOM_COLORS.get(symbol);    // lookup by atomic symbol.
+            color = ATOM_COLORS_SYMBOL.get(symbol);    // lookup by atomic symbol.
         }
 
         return new Color(color.getRed(), color.getGreen(), color.getBlue());    // return atom copy.
