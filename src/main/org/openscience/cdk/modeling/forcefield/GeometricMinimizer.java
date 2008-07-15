@@ -8,6 +8,7 @@ import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 import java.util.Hashtable;
 //import org.openscience.cdk.tools.LoggingTool;
+import java.util.Map;
 
 
 /**
@@ -22,7 +23,7 @@ import java.util.Hashtable;
  */
 public class GeometricMinimizer {
 
-	Hashtable PotentialParameterSet = null;
+	Map PotentialParameterSet = null;
 	int SDMaximumIteration = 1000;
 	int CGMaximumIteration = 500;
 	int NRMaximumIteration = 100;
@@ -102,7 +103,7 @@ public class GeometricMinimizer {
 		//logger.debug("PotentialParameterSet = " + PotentialParameterSet);
 	}
 	
-	public Hashtable getPotentialParameterSet() {
+	public Map getPotentialParameterSet() {
 		return PotentialParameterSet;
 	}
 

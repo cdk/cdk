@@ -1,7 +1,4 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
  *
@@ -25,6 +22,8 @@ package org.openscience.cdk.modeling.builder3d;
 
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.vecmath.Point2d;
@@ -49,7 +48,7 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class AtomPlacer3D {
 
-	private Hashtable pSet = null;
+	private Map pSet = null;
 	private double[] distances;
 	private int[] first_atoms = null;
 	private double[] angles = null;
@@ -70,7 +69,7 @@ public class AtomPlacer3D {
 	 * 
 	 * @param  parameterSet  Force Field parameter as Hashtable
 	 */
-	public void initilize( Hashtable parameterSet) {
+	public void initilize(Map parameterSet) {
 		pSet = parameterSet;
 	}
 

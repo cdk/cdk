@@ -27,6 +27,8 @@ package org.openscience.cdk.modeling.builder3d;
 import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,8 +67,8 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 public class ForceFieldConfigurator {
 
 	private String ffName = "mmff94";
-	private Vector atomTypes;
-	private Hashtable parameterSet=null;
+	private List atomTypes;
+	private Map parameterSet=null;
 	private MM2BasedParameterSetReader mm2 = null;
 	private MMFF94BasedParameterSetReader mmff94= null;
 	private InputStream ins = null;
@@ -176,7 +178,7 @@ public class ForceFieldConfigurator {
 	 *
 	 * @param  parameterset  The new parameter values
 	 */
-	public void setParameters(Hashtable parameterset) {
+	public void setParameters(Map parameterset) {
 		parameterSet = parameterset;
 	}
 
@@ -204,7 +206,7 @@ public class ForceFieldConfigurator {
 	 *
 	 * @return    The atomTypes vector
 	 */
-	public Vector getAtomTypes() {
+	public List getAtomTypes() {
 		return atomTypes;
 	}
 
@@ -213,7 +215,7 @@ public class ForceFieldConfigurator {
 	 *
 	 * @return    The parameterSet hashtable
 	 */
-	public Hashtable getParameterSet() {
+	public Map getParameterSet() {
 		return this.parameterSet;
 	}
 

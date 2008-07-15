@@ -1,6 +1,6 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
@@ -9,7 +9,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
-//import org.openscience.cdk.tools.LoggingTool;
 
 
 /**			
@@ -69,7 +68,7 @@ public class ElectrostaticInteractions {
 	 *@param  parameterSet   MMFF94 parameters set
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void setMMFF94ElectrostaticParameters(IAtomContainer molecule, Hashtable parameterSet) throws Exception {
+	public void setMMFF94ElectrostaticParameters(IAtomContainer molecule, Map parameterSet) throws Exception {
 
 		//distances = wnd.getShortestPathLengthBetweenAtoms((AtomContainer) molecule);
 		

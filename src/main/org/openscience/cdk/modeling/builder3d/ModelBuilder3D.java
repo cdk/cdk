@@ -30,7 +30,6 @@ package org.openscience.cdk.modeling.builder3d;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -85,11 +84,11 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class ModelBuilder3D {
 
-	private static Map memyselfandi = new HashMap();
+	private static Map<String,ModelBuilder3D> memyselfandi = new HashMap<String,ModelBuilder3D>();
 	
 	private TemplateHandler3D templateHandler = null;
 		
-	private Hashtable parameterSet = null;
+	private Map parameterSet = null;
 
 	private final ForceFieldConfigurator ffc = new ForceFieldConfigurator();
 
@@ -120,7 +119,7 @@ public class ModelBuilder3D {
 			memyselfandi.put(builderCode, builder);
 			return builder;
 		}
-		return (ModelBuilder3D)memyselfandi.get(builderCode);
+		return memyselfandi.get(builderCode);
 	}
 
 	public static ModelBuilder3D getInstance() throws CDKException {

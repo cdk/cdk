@@ -1,6 +1,6 @@
 package org.openscience.cdk.modeling.builder3d;
 
-import java.util.Hashtable;
+import java.util.Map;
 import java.util.Vector;
 
 
@@ -14,7 +14,7 @@ import java.util.Vector;
  */
 public class MMFF94ParametersCall {
 	
-	private Hashtable pSet = null;
+	private Map pSet = null;
 	//private final static double DEFAULT_BOND_LENGTH = 1.5;
 	//private final static double DEFAULT_ANGLE = 90;			// Only to test
 	//private final static double DEFAULT_TORSION_ANGLE = 90;
@@ -24,11 +24,11 @@ public class MMFF94ParametersCall {
 
 
 	/**
-	 *  Initialize the AtomOrder class
+	 * Initialize the AtomOrder class.
 	 * 
-	 * @param  parameterSet  Force Field parameter as Hashtable
+	 * @param  parameterSet  Force Field parameter as Map
 	 */
-	public void initialize(Hashtable parameterSet) {
+	public void initialize(Map parameterSet) {
 		pSet = parameterSet;
 	}
 

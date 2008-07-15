@@ -1,20 +1,20 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import java.util.Hashtable;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.atomic.PeriodicTablePositionDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *  Stretch-Bend Interaction calculator for the potential energy function.
@@ -78,7 +78,7 @@ public class StretchBendInteractions {
 	 *@param  parameterSet   MMFF94 parameters set
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void setMMFF94StretchBendParameters(IAtomContainer molecule, Hashtable parameterSet, boolean angleBendingFlag) throws Exception {
+	public void setMMFF94StretchBendParameters(IAtomContainer molecule, Map parameterSet, boolean angleBendingFlag) throws Exception {
 
 		//logger.debug("setMMFF94StretchBendParameters");
 		

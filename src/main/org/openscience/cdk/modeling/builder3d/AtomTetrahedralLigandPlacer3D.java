@@ -30,6 +30,7 @@ package org.openscience.cdk.modeling.builder3d;
 
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.vecmath.AxisAngle4d;
@@ -52,7 +53,7 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class AtomTetrahedralLigandPlacer3D {
 
-	private Hashtable pSet = null;
+	private Map pSet = null;
 	private final double DEFAULT_BOND_LENGTH_H = 1.0;
 	//private final double DEFAULT_BOND_LENGTH_HA = 1.3;
 
@@ -77,7 +78,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *
 	 *@param  moleculeParameter  Description of the Parameter
 	 */
-	public void setParameterSet(Hashtable moleculeParameter) {
+	public void setParameterSet(Map moleculeParameter) {
 		pSet = moleculeParameter;
 	}
 

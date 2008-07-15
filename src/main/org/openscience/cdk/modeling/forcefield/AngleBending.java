@@ -1,6 +1,6 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import java.util.Hashtable;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.vecmath.GMatrix;
@@ -8,12 +8,11 @@ import javax.vecmath.GVector;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-//import org.openscience.cdk.tools.LoggingTool;
 
 
 /**
@@ -82,7 +81,7 @@ public class AngleBending {
 	 *@param  parameterSet   MMFF94 parameters set
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void setMMFF94AngleBendingParameters(IAtomContainer molecule, Hashtable parameterSet, boolean angleBendingFlag ) throws Exception {
+	public void setMMFF94AngleBendingParameters(IAtomContainer molecule, Map parameterSet, boolean angleBendingFlag ) throws Exception {
 
 		//logger.debug("setMMFF94AngleBendingParameters");		
 		

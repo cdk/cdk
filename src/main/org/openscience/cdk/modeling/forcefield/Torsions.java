@@ -11,6 +11,7 @@ import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Vector;
 //import org.openscience.cdk.tools.LoggingTool;
 
@@ -79,7 +80,7 @@ public class Torsions {
 	 *@param  parameterSet   MMFF94 parameters set
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void setMMFF94TorsionsParameters(IAtomContainer molecule, Hashtable parameterSet) throws Exception {
+	public void setMMFF94TorsionsParameters(IAtomContainer molecule, Map parameterSet) throws Exception {
 
 		//logger.debug("setMMFF94TorsionsParameters");
 

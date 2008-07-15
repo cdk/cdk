@@ -22,6 +22,7 @@
 package org.openscience.cdk.charges;
 
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Vector;
 
 import org.openscience.cdk.exception.CDKException;
@@ -74,7 +75,7 @@ public class MMFF94PartialCharges implements IChargeCalculator {
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
 		ffc.setForceFieldConfigurator("mmff94");
 		ffc.assignAtomTyps((IMolecule)ac);
-		Hashtable parameterSet = ffc.getParameterSet();
+		Map parameterSet = ffc.getParameterSet();
 		// for this calculation,
 		// we need some values stored in the vector "data" in the
 		// hashtable of these atomTypes:		

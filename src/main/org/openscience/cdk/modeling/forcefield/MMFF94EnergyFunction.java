@@ -1,6 +1,7 @@
 package org.openscience.cdk.modeling.forcefield;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
@@ -43,7 +44,7 @@ public class MMFF94EnergyFunction implements IPotentialFunction {
 	 *  Constructor for the MMFF94EnergyFunction object
 	 *
 	 */
-	public MMFF94EnergyFunction(IAtomContainer molecule, Hashtable mmff94Tables) throws Exception {
+	public MMFF94EnergyFunction(IAtomContainer molecule, Map mmff94Tables) throws Exception {
 		//logger.debug("MMFF94EnergyFunction Constructor");
 		bs.setMMFF94BondStretchingParameters(molecule, mmff94Tables);
 		ab.setMMFF94AngleBendingParameters(molecule, mmff94Tables,true);
