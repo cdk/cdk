@@ -20,8 +20,8 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -72,7 +72,7 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
 	    return super.getIsotopeCount();
     }
 
-	public Hashtable<Object, Object> getProperties() {
+	public Map<Object, Object> getProperties() {
 	    // TODO Auto-generated method stub
 	    return null;
     }
@@ -106,7 +106,7 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
 	    super.setCharge(charge);
     }
 
-	public void setProperties(Hashtable<Object, Object> properties) {
+	public void setProperties(Map<Object, Object> properties) {
 	    // TODO Auto-generated method stub
 	    
     }
