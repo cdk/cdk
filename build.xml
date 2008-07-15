@@ -549,6 +549,7 @@
               <antcall target="compile-module"><param name="module" value="test-smiles"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-qsarbond"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-atomtype"/><param name="source" value="${src}/test"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-render"/><param name="source" value="${src}/test"/></antcall>
             </parallel>
             <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/><param name="source" value="${src}/test"/></antcall>
             <antcall target="compile-module"><param name="module" value="test-experimental"/><param name="source" value="${src}/test"/></antcall>
@@ -590,6 +591,7 @@
         <antcall target="compile-module"><param name="module" value="test-smarts"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-pcore"/><param name="source" value="${src}/test"/></antcall>
     	<antcall target="compile-module"><param name="module" value="test-formula"/><param name="source" value="${src}/test"/></antcall>
+    	<antcall target="compile-module"><param name="module" value="test-render"/><param name="source" value="${src}/test"/></antcall>
 	</target>
 
 	<target id="dist-large" name="dist-large" depends="dist-all"
@@ -795,6 +797,7 @@
                     <includesfile name="${metainf}/test-libiomd.libdepends"/>
                     <includesfile name="${metainf}/test-pcore.libdepends"/>
                     <includesfile name="${metainf}/test-formula.libdepends"/>
+                    <includesfile name="${metainf}/test-render.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-test-core.jar"/>
@@ -824,6 +827,7 @@
                     <include name="cdk-test-libiomd.jar"/>
                     <include name="cdk-test-pcore.jar"/>
                     <include name="cdk-test-formula.jar"/>
+                    <include name="cdk-test-render.jar"/>
                 </fileset>
             </unjar>
 
@@ -1062,6 +1066,7 @@
             <antcall target="test-module"><param name="module" value="libiomd"/></antcall>
             <antcall target="test-module"><param name="module" value="libiocml"/></antcall>
             	<antcall target="test-module"><param name="module" value="formula"/></antcall>
+        	<antcall target="test-module"><param name="module" value="render"/></antcall>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"
