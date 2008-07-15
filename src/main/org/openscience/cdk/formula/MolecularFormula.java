@@ -36,14 +36,14 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 /**
- *  Class defining a molecular formula object. It maintains
- *   a list of list IIsotope.<p>
+ * Class defining a molecular formula object. It maintains
+ * a list of list {@link IIsotope}.
  *   
- *  Examples:
+ * <p>Examples:
  * <ul>
- *   <li><code>[C5H5]-</code></li>
- *   <li><code>C6H6</code></li>
- *   <li><code><sup>12</sup>C5</sup><sup>13</sup>CH6</code></li>
+ *   <li><code>[C<sub>5</sub>H<sub>5</sub>]-</code></li>
+ *   <li><code>C<sub>6</sub>H<sub>6</sub></code></li>
+ *   <li><code><sup>12</sup>C<sub>5</sub><sup>13</sup>CH<sub>6</sub></code></li>
  * </ul>
  * 
  * @cdk.module  data
