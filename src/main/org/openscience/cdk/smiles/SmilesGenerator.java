@@ -25,12 +25,12 @@
 package org.openscience.cdk.smiles;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.Vector;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
@@ -97,7 +97,7 @@ public class SmilesGenerator
 	/**
 	 *  Collection of all the bonds that were broken
 	 */
-	private List brokenBonds = new ArrayList();
+	private List brokenBonds = new Vector();
 
 	/**
 	 *  The isotope factory which is used to write the mass is needed
@@ -648,7 +648,7 @@ public class SmilesGenerator
 	private List getRingOpenings(IAtom a, List vbonds)
 	{
 		Iterator it = brokenBonds.iterator();
-		List v = new ArrayList(10);
+		List v = new Vector(10);
 		while (it.hasNext())
 		{
 			BrokenBond bond = (BrokenBond) it.next();
@@ -723,7 +723,7 @@ public class SmilesGenerator
 	 */
 	private void createSMILES(org.openscience.cdk.interfaces.IAtom a, StringBuffer line, IAtomContainer atomContainer, boolean chiral, boolean[] doubleBondConfiguration, boolean useAromaticity)
 	{
-		List tree = new ArrayList();
+		List tree = new Vector();
 		
 		// set all ISVISITED labels to FALSE
 		Iterator atoms = atomContainer.atoms();
@@ -732,7 +732,7 @@ public class SmilesGenerator
 		createDFSTree(a, tree, null, atomContainer);
 		//logger.debug("Done with tree");
 		
-		parseChain(tree, line, atomContainer, null, chiral, doubleBondConfiguration, new ArrayList(), useAromaticity);
+		parseChain(tree, line, atomContainer, null, chiral, doubleBondConfiguration, new Vector(), useAromaticity);
 	}
 
 
@@ -765,7 +765,7 @@ public class SmilesGenerator
 					createDFSTree(next, tree, a, container);
 				} else
 				{
-					List branch = new ArrayList();
+					List branch = new Vector();
 					tree.add(branch);
 					//logger.debug("adding branch");
 					createDFSTree(next, branch, a, container);
@@ -1443,7 +1443,7 @@ public class SmilesGenerator
 								{
 									if (onew[i] instanceof IAtom)
 									{
-										List vtemp = new ArrayList();
+										List vtemp = new Vector();
 										vtemp.add(onew[i]);
 										for (int k = positionInVector + 1 + numberOfAtoms; k < v.size(); k++)
 										{
@@ -1482,7 +1482,7 @@ public class SmilesGenerator
 				//Have Vector
 				//logger.debug("in parseChain after else");
 				boolean brackets = true;
-				List result = new ArrayList();
+				List result = new Vector();
 				addAtoms((List) o, result);
 				if (isRingOpening(parent, result) && container.getConnectedBondsCount(parent) < 4)
 				{
@@ -1684,7 +1684,7 @@ public class SmilesGenerator
         //If the user wants a double bond configuration, where there is none, we ignore this.
       }
 		}
-		List v = new ArrayList();
+		List v = new Vector();
 		Iterator it = getRingOpenings(a, v).iterator();
 		Iterator it2 = v.iterator();
 		//logger.debug("in parseAtom() after checking for Ring openings");
