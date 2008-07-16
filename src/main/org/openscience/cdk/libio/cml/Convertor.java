@@ -453,7 +453,7 @@ public class Convertor {
             if (monomer.getConnectedSingleElectronsCount(cdkAtom) > 0) {
                 cmlAtom.setSpinMultiplicity(monomer.getConnectedSingleElectronsCount(cdkAtom) + 1);
             }
-            cmlMolecule.addAtom(cmlAtom, false);
+            cmlMolecule.addAtom(cmlAtom);
        	}
         return cmlMolecule;
     }
@@ -513,11 +513,11 @@ public class Convertor {
             if (structure.getConnectedSingleElectronsCount(cdkAtom) > 0) {
                 cmlAtom.setSpinMultiplicity(structure.getConnectedSingleElectronsCount(cdkAtom) + 1);
             }
-            cmlMolecule.addAtom(cmlAtom, false);
+            cmlMolecule.addAtom(cmlAtom);
         }
         for (int i = 0; i < structure.getBondCount(); i++) {
             CMLBond cmlBond = cdkBondToCMLBond(structure.getBond(i));
-            cmlMolecule.addBond(cmlBond, true);
+            cmlMolecule.addBond(cmlBond);
         }
         
         // ok, output molecular properties, but not TITLE, INCHI, or DictRef's
