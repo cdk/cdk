@@ -37,6 +37,7 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
  * Generates all Combinatorial chemical isotopes given a structure.

@@ -24,9 +24,9 @@
 package org.openscience.cdk.formula.rules;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * This class validate if the rule of nitrogen is kept.
  * <p>If a compound has an odd number of nitrogen atoms, 

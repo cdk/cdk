@@ -26,9 +26,9 @@ package org.openscience.cdk.formula.rules;
 import java.io.IOException;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * This class validate if the mass from an IMolecularFormula is
  * between the tolerance range give a experimental mass. As default

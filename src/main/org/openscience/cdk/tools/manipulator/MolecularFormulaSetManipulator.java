@@ -25,12 +25,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
-package org.openscience.cdk.formula;
+package org.openscience.cdk.tools.manipulator;
 
 import java.util.Iterator;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.formula.MolecularFormulaRange;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;

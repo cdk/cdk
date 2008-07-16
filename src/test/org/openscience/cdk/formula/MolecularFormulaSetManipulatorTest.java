@@ -28,6 +28,8 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaSetManipulator;
 
 /**
  * Checks the functionality of the MolecularFormulaSetManipulator.

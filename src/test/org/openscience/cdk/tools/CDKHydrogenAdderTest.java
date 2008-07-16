@@ -39,7 +39,6 @@ import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -54,6 +53,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
  * Tests CDK's hydrogen adding capabilities in terms of

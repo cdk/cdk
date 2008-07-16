@@ -31,11 +31,11 @@ import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * <p>Ring Double Bond Equivalents (RDBE) or 
  * Double Bond Equivalents (DBE) are calculated from valence values of 

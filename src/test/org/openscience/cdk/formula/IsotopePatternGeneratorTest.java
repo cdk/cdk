@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
  * Checks the functionality of the IsotopePatternGenerator.

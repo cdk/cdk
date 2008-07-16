@@ -22,7 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
-package org.openscience.cdk.formula;
+package org.openscience.cdk.tools.manipulator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,8 +51,6 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
- * 
- * TODO: MF: move to package org.openscience.cdk.manipulator (miguelrojasch)
  */
 @TestClass("org.openscience.cdk.formula.MolecularFormulaManipulatorTest")
 public class MolecularFormulaManipulator {

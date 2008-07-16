@@ -28,11 +28,11 @@ import java.util.BitSet;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
  * Generates an extended fingerprint for a given AtomContainer, that

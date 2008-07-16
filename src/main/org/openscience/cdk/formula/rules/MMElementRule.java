@@ -28,10 +28,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * This class validate if the occurrence of the IElements in the IMolecularFormula, for
  * metabolites, are into a maximal limit according paper: . The study is from 2 different mass spectral

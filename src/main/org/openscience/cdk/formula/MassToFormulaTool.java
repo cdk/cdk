@@ -35,6 +35,7 @@ import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.ToleranceRangeRule;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 import java.io.IOException;
 import java.util.ArrayList;

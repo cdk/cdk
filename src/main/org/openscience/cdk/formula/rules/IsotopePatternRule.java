@@ -30,10 +30,10 @@ import java.util.List;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.IsotopePatternGenerator;
-import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * This class validate if the Isotope Pattern from a given IMolecularFormula
  *  correspond with other to compare.
