@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
+ * Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -29,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -40,7 +38,6 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.tools.LoggingTool;
 
-
 /**
  * Generates all Combinatorial chemical isotopes given a structure.
  * 
@@ -49,7 +46,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created 2007-11-20
  * @cdk.svnrev  $Revision$
  *
- * @cdk.keyword    isotope
+ * @cdk.keyword isotope pattern
  * 
  */
 @TestClass("org.openscience.cdk.formula.IsotopePatternGeneratorTest")
@@ -256,7 +253,7 @@ public class IsotopePatternGenerator{
 		List<int[]> ordreCombList = new ArrayList<int[]>();
 		List<String[]> atomsCombList = new ArrayList<String[]>();
 		
-		Hashtable<String, Integer> massV = new Hashtable<String, Integer>();
+		Map<String, Integer> massV = new Hashtable<String, Integer>();
 		int column[] = new int[isotopicAtomsV.size()];
 
 		for (int j = 0; j < isotopicAtomsV.size(); j++){
@@ -343,7 +340,7 @@ public class IsotopePatternGenerator{
 			String massEx_String = reduceDigits(Double.toString(massEx));
 			
 			double prob = massV.get(massEx_String);
-			Hashtable<Object, Object> hash = new Hashtable<Object, Object>();
+			Map<Object, Object> hash = new Hashtable<Object, Object>();
 			hash.put("occurrence", prob);
 			molForClon.setProperties(hash);
 			

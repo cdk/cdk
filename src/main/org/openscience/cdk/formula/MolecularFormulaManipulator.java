@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$ 
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
- *  Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
+ * Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -48,7 +45,7 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
  * Class with convenience methods that provide methods to manipulate
- * MolecularFormula's. For example:
+ * {@link IMolecularFormula}'s. For example:
  * 
  *
  * @cdk.module  formula
@@ -427,7 +424,7 @@ public class MolecularFormulaManipulator {
 				/*
 				 *  Here an element symbol as well as its number should have been read completely
 				 */
-				Integer RecentElementCountInteger = new Integer(RecentElementCountString);
+				Integer RecentElementCountInteger = Integer.valueOf(RecentElementCountString);
 				RecentElementCount = RecentElementCountInteger.intValue();
 				if (RecentElementCount == 0) {
 					RecentElementCount = 1;
