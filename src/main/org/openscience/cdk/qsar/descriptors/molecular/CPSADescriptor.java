@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.geometry.surface.NumericalSurface;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -197,11 +198,12 @@ public class CPSADescriptor implements IMolecularDescriptor {
      *
      * @param atomContainer Parameter is the atom container.
      * @return An ArrayList containing 29 elements in the order described above
-     * @throws CDKException if the charge calculation fails
+     * @throws CDKException if the charge calculation fails or no 3D coordinates are available
      */
 
     public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
-
+        if (!GeometryTools.has3DCoordinates(atomContainer)) throw new CDKException("Molecule must have 3D coordinates");
+        
         IAtomContainer container;
         try {
             container = (IAtomContainer) atomContainer.clone();
