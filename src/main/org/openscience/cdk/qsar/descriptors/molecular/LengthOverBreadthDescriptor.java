@@ -123,6 +123,8 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
      *          if there are no 3D coordinates
      */
     public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+        if (!GeometryTools.has3DCoordinates(atomContainer)) throw new CDKException("Molecule must have 3D coordinates");
+        
         double angle = 10.0;
         double maxLOB = 0;
         double minArea = 1e6;
