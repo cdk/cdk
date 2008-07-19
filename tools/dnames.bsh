@@ -30,7 +30,7 @@ stringBuffer.append("<html>\n" +
 		    "table { border-style: solid; border-width: thin; padding: 5px;}"+
 		    "tr { margin: 5px; }"+
 		    ".oddrow { background-color: #DFDFDF; }"+
-		    ".header { marginL 5px; bottom-border-width : thick; background-color: #AFE456; font-family : sans-serif; font-style:italic; text-align: left;}"+
+		    ".header { marginL 5px; bottom-border-width : thick; background-color: #809FFF; font-family : sans-serif; font-style:italic; text-align: left;}"+
 		    "</style></head>\n" +
 		    "<body>\n " +
 		    "<div class='intro'>" +
