@@ -1,0 +1,150 @@
+/*
+
+Generates a summary of the available descriptors with their names
+and links to the details in the Javadocs
+
+Rajarshi Guha <rguha@indiana.edu>
+
+*/
+
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import org.openscience.cdk.qsar.IDescriptor;
+import org.openscience.cdk.qsar.DescriptorEngine;
+
+
+SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+String date = format.format(new java.util.Date());
+
+StringBuffer stringBuffer = new StringBuffer();
+stringBuffer.append("<html>\n" +
+		    "<head>\n" +
+		    "<title>CDK Descriptor Names</title>\n" +
+		    "</head>\n" +
+		    "<body>\n " +
+		    "<div class='intro'>" +
+		    "<h1>CDK Descriptor Summary (" + date + ")</h1> " +
+		    "A summary of the currently available descriptors listing the descriptor name" +
+		    " and the names of the individual values. Follow the links to get a more detailed" +
+		    " description of the descriptor and any parameters that it may take.</p>" +
+		    "Quick links: <a href='#molecular'>Molecular</a> <a href='#bond'>Bond</a> <a href='#atom'>Atom</a>" +
+		    "</div>\n<p>\n"
+		    );
+
+DescriptorEngine engine = new
+    DescriptorEngine(DescriptorEngine.MOLECULAR);
+List instances = engine.getDescriptorInstances();
+
+stringBuffer.append("<div class='sec'>" +
+		    "<a name='molecule'></a>" +
+		    "<h2>Molecular Descriptors</h2>" +
+
+		    "<table>" +
+		    "<thead>" +
+		    "<tr>" +
+		    "<td>Descriptor</td><td>Values</td>" +
+		    "</tr></thead><tbody>");
+
+for (int i = 0; i < instances.size(); i++) {
+    String dname = instances.get(i).getClass().getName();
+    dname = dname.split("\\.")[6];
+    String[] vnames = instances.get(i).getDescriptorNames();
+    int c = 0;
+    for (int j = 0; j < vnames.length; j++) {
+	if (j == 0) {
+	    stringBuffer.append("<tr><td valign='top'>" +
+				"<a href='http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/api/org/openscience/cdk/qsar/descriptors/molecular/" + dname + ".html'>" + dname + "</a></td>" +
+				"<td>" + vnames[j] + " ");
+	} else {
+	    stringBuffer.append(vnames[j] + " ");
+	}
+	if (c % 3 == 0) stringBuffer.append("<br>\n");
+	c++;
+    }
+    stringBuffer.append("</td></tr>\n");
+
+}
+stringBuffer.append("</tbody></table></div>");
+
+//
+//
+//
+
+engine = new DescriptorEngine(DescriptorEngine.BOND);
+instances = engine.getDescriptorInstances();
+
+stringBuffer.append("<div class='sec'>" +
+		    "<a name='bond'></a>" +
+		    "<h2>Bond Descriptors</h2>" +
+
+		    "<table>" +
+		    "<thead>" +
+		    "<tr>" +
+		    "<td>Descriptor</td><td>Values</td>" +
+		    "</tr></thead><tbody>");
+
+for (int i = 0; i < instances.size(); i++) {
+    String dname = instances.get(i).getClass().getName();
+    dname = dname.split("\\.")[6];
+    String[] vnames = instances.get(i).getDescriptorNames();
+    int c = 0;
+    for (int j = 0; j < vnames.length; j++) {
+	if (j == 0) {
+	    stringBuffer.append("<tr><td valign='top'>" +
+				"<a href='http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/api/org/openscience/cdk/qsar/descriptors/bond/" + dname + ".html'>" + dname + "</a></td>" +
+				"<td>" + vnames[j] + " ");
+	} else {
+	    stringBuffer.append(vnames[j] + " ");
+	}
+	if (c % 3 == 0) stringBuffer.append("<br>\n");
+	c++;
+    }
+    stringBuffer.append("</td></tr>\n");
+
+}
+stringBuffer.append("</tbody></table></div>");
+
+//
+//
+//
+
+engine = new DescriptorEngine(DescriptorEngine.ATOMIC);
+instances = engine.getDescriptorInstances();
+
+stringBuffer.append("<div class='sec'>" +
+		    "<a name='atom'></a>" +
+		    "<h2>Atom Descriptors</h2>" +
+		    "<table>" +
+		    "<thead>" +
+		    "<tr>" +
+		    "<td>Descriptor</td><td>Values</td>" +
+		    "</tr></thead><tbody>");
+
+for (int i = 0; i < instances.size(); i++) {
+    String dname = instances.get(i).getClass().getName();
+    dname = dname.split("\\.")[6];
+    if (dname.indexOf("ProtonTotalPartialCharge") != -1) continue;
+    String[] vnames = instances.get(i).getDescriptorNames();
+    int c = 0;
+    for (int j = 0; j < vnames.length; j++) {
+	if (j == 0) {
+	    stringBuffer.append("<tr><td valign='top'>" +
+				"<a href='http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/api/org/openscience/cdk/qsar/descriptors/atomic/" + dname + ".html'>" + dname + "</a></td>" +
+				"<td>" + vnames[j] + " ");
+	} else {
+	    stringBuffer.append(vnames[j] + " ");
+	}
+	if (c % 3 == 0) stringBuffer.append("<br>\n");
+	c++;
+    }
+    stringBuffer.append("</td></tr>\n");
+
+}
+stringBuffer.append("</tbody></table></div>");
+
+
+stringBuffer.append("</body></html");
+Writer out = new BufferedWriter(new FileWriter(new File("/Users/rguha/dnames.html")));
+out.write(stringBuffer.toString());
+out.close();
