@@ -145,6 +145,11 @@ stringBuffer.append("</tbody></table></div>");
 
 
 stringBuffer.append("</body></html");
+
+/*
 Writer out = new BufferedWriter(new FileWriter(new File("/Users/rguha/dnames.html")));
 out.write(stringBuffer.toString());
 out.close();
+*/
+
+System.out.print(stringBuffer.toString());
