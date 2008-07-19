@@ -70,7 +70,7 @@ for (int i = 0; i < instances.size(); i++) {
     for (int j = 0; j < vnames.length; j++) {
 	if (j == 0) {
 	    stringBuffer.append("<tr class='"+cls+"'><td valign='top'>" +
-				"<a href='http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/api/org/openscience/cdk/qsar/descriptors/molecular/" + dname + ".html'>" + dname + "</a></td>" +
+				"<a href='http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/api/org/openscience/cdk/qsar/descriptors/molecular/" + dname + ".html'>" + dname.replace("Descriptor","") + "</a></td>" +
 				" <td valign='top'>"+engine.getDictionaryDefinition(specs.get(i)) +"</td>\n"+
 				"<td>" + vnames[j] + " "); 
 	} else {
@@ -114,7 +114,7 @@ for (int i = 0; i < instances.size(); i++) {
     for (int j = 0; j < vnames.length; j++) {
 	if (j == 0) {
 	    stringBuffer.append("<tr class='"+cls+"'><td valign='top'>" +
-				"<a href='http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/api/org/openscience/cdk/qsar/descriptors/bond/" + dname + ".html'>" + dname + "</a></td>" +
+				"<a href='http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/api/org/openscience/cdk/qsar/descriptors/bond/" + dname + ".html'>" + dname.replace("Descriptor","") + "</a></td>" +
 				" <td valign='top'>"+engine.getDictionaryDefinition(specs.get(i)) +"</td>\n"+
 				"<td>" + vnames[j] + " ");
 	} else {
@@ -158,7 +158,7 @@ for (int i = 0; i < instances.size(); i++) {
     for (int j = 0; j < vnames.length; j++) {
 	if (j == 0) {
 	    stringBuffer.append("<tr class='"+cls+"'><td valign='top'>" +
-				"<a href='http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/api/org/openscience/cdk/qsar/descriptors/atomic/" + dname + ".html'>" + dname + "</a></td>" +
+				"<a href='http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/api/org/openscience/cdk/qsar/descriptors/atomic/" + dname + ".html'>" + dname.replace("Descriptor","") + "</a></td>" +
 				" <td valign='top'>"+engine.getDictionaryDefinition(specs.get(i)) +"</td>\n"+
 				"<td>" + vnames[j] + " ");
 	} else {
