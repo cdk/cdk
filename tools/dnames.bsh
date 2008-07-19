@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import org.openscience.cdk.qsar.IDescriptor;
 import org.openscience.cdk.qsar.DescriptorEngine;
+import org.openscience.cdk.qsar.DescriptorSpecification;
 
 
 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -21,7 +22,16 @@ StringBuffer stringBuffer = new StringBuffer();
 stringBuffer.append("<html>\n" +
 		    "<head>\n" +
 		    "<title>CDK Descriptor Names</title>\n" +
-		    "</head>\n" +
+		    "<style type='text/css'>\n"+
+		    "body {line-height : 1.2; margin: 1.5em; }"+
+		    "h1 { font-family : sans-serif; text-align:center; }"+
+		    "h2 { font-family : sans-serif; }"+
+		    "td { padding: 5px; }"+
+		    "table { border-style: solid; border-width: thin; padding: 5px;}"+
+		    "tr { margin: 5px; }"+
+		    ".oddrow { background-color: #DFDFDF; }"+
+		    ".header { marginL 5px; bottom-border-width : thick; background-color: #AFE456; font-family : sans-serif; font-style:italic; text-align: left;}"+
+		    "</style></head>\n" +
 		    "<body>\n " +
 		    "<div class='intro'>" +
 		    "<h1>CDK Descriptor Summary (" + date + ")</h1> " +
@@ -35,6 +45,7 @@ stringBuffer.append("<html>\n" +
 DescriptorEngine engine = new
     DescriptorEngine(DescriptorEngine.MOLECULAR);
 List instances = engine.getDescriptorInstances();
+List specs = engine.getDescriptorSpecifications();
 
 stringBuffer.append("<div class='sec'>" +
 		    "<a name='molecule'></a>" +
@@ -42,8 +53,8 @@ stringBuffer.append("<div class='sec'>" +
 
 		    "<table>" +
 		    "<thead>" +
-		    "<tr>" +
-		    "<td>Descriptor</td><td>Values</td>" +
+		    "<tr class='header'>" +
+		    "<th>Descriptor</th><th>Definition</th><th>Values</th>" +
 		    "</tr></thead><tbody>");
 
 for (int i = 0; i < instances.size(); i++) {
@@ -51,11 +62,17 @@ for (int i = 0; i < instances.size(); i++) {
     dname = dname.split("\\.")[6];
     String[] vnames = instances.get(i).getDescriptorNames();
     int c = 0;
+    String cls = "";
+    if (i % 2 == 0) cls = "evenrow";
+    else cls = "oddrow";
+
+
     for (int j = 0; j < vnames.length; j++) {
 	if (j == 0) {
-	    stringBuffer.append("<tr><td valign='top'>" +
+	    stringBuffer.append("<tr class='"+cls+"'><td valign='top'>" +
 				"<a href='http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/api/org/openscience/cdk/qsar/descriptors/molecular/" + dname + ".html'>" + dname + "</a></td>" +
-				"<td>" + vnames[j] + " ");
+				" <td valign='top'>"+engine.getDictionaryDefinition(specs.get(i)) +"</td>\n"+
+				"<td>" + vnames[j] + " "); 
 	} else {
 	    stringBuffer.append(vnames[j] + " ");
 	}
@@ -73,6 +90,7 @@ stringBuffer.append("</tbody></table></div>");
 
 engine = new DescriptorEngine(DescriptorEngine.BOND);
 instances = engine.getDescriptorInstances();
+specs = engine.getDescriptorSpecifications();
 
 stringBuffer.append("<div class='sec'>" +
 		    "<a name='bond'></a>" +
@@ -80,8 +98,8 @@ stringBuffer.append("<div class='sec'>" +
 
 		    "<table>" +
 		    "<thead>" +
-		    "<tr>" +
-		    "<td>Descriptor</td><td>Values</td>" +
+		    "<tr class='header'>" +
+		    "<td>Descriptor</td><td>Definition</td><td>Values</td>" +
 		    "</tr></thead><tbody>");
 
 for (int i = 0; i < instances.size(); i++) {
@@ -89,10 +107,15 @@ for (int i = 0; i < instances.size(); i++) {
     dname = dname.split("\\.")[6];
     String[] vnames = instances.get(i).getDescriptorNames();
     int c = 0;
+    String cls = "";
+    if (i % 2 == 0) cls = "evenrow";
+    else cls = "oddrow";
+
     for (int j = 0; j < vnames.length; j++) {
 	if (j == 0) {
-	    stringBuffer.append("<tr><td valign='top'>" +
+	    stringBuffer.append("<tr class='"+cls+"'><td valign='top'>" +
 				"<a href='http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/api/org/openscience/cdk/qsar/descriptors/bond/" + dname + ".html'>" + dname + "</a></td>" +
+				" <td valign='top'>"+engine.getDictionaryDefinition(specs.get(i)) +"</td>\n"+
 				"<td>" + vnames[j] + " ");
 	} else {
 	    stringBuffer.append(vnames[j] + " ");
@@ -111,14 +134,15 @@ stringBuffer.append("</tbody></table></div>");
 
 engine = new DescriptorEngine(DescriptorEngine.ATOMIC);
 instances = engine.getDescriptorInstances();
+specs = engine.getDescriptorSpecifications();
 
 stringBuffer.append("<div class='sec'>" +
 		    "<a name='atom'></a>" +
 		    "<h2>Atom Descriptors</h2>" +
 		    "<table>" +
 		    "<thead>" +
-		    "<tr>" +
-		    "<td>Descriptor</td><td>Values</td>" +
+		    "<tr class='header'>" +
+		    "<td>Descriptor</td><td>Definition</td><td>Values</td>" +
 		    "</tr></thead><tbody>");
 
 for (int i = 0; i < instances.size(); i++) {
@@ -127,10 +151,15 @@ for (int i = 0; i < instances.size(); i++) {
     if (dname.indexOf("ProtonTotalPartialCharge") != -1) continue;
     String[] vnames = instances.get(i).getDescriptorNames();
     int c = 0;
+    String cls = "";
+    if (i % 2 == 0) cls = "evenrow";
+    else cls = "oddrow";
+
     for (int j = 0; j < vnames.length; j++) {
 	if (j == 0) {
-	    stringBuffer.append("<tr><td valign='top'>" +
+	    stringBuffer.append("<tr class='"+cls+"'><td valign='top'>" +
 				"<a href='http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/api/org/openscience/cdk/qsar/descriptors/atomic/" + dname + ".html'>" + dname + "</a></td>" +
+				" <td valign='top'>"+engine.getDictionaryDefinition(specs.get(i)) +"</td>\n"+
 				"<td>" + vnames[j] + " ");
 	} else {
 	    stringBuffer.append(vnames[j] + " ");
