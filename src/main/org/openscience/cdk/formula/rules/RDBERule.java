@@ -23,19 +23,16 @@
  */
 package org.openscience.cdk.formula.rules;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.formula.MolecularFormulaManipulator;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+
+import java.util.*;
+
 /**
  * <p>Ring Double Bond Equivalents (RDBE) or 
  * Double Bond Equivalents (DBE) are calculated from valence values of 
@@ -302,10 +299,8 @@ public class RDBERule implements IRule{
         * Create a Combination to enumerate through all subsets of the 
         * supplied Object array, selecting m at a time.
         *
-        * @param Object[] inArray the group to choose from
+        * @param inArray the group to choose from
         * @param m int the number to select in each choice
-        * @exception CombinatoricException if m is greater than 
-        * the length of inArray, or less than 0.
         */
         public Combinations(Object[] inArray, int m){
             this.inArray = inArray;
