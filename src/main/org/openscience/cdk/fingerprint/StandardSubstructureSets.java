@@ -18,6 +18,7 @@ public class StandardSubstructureSets {
 	
 	/**
 	 * @return A set of the functional groups.
+     * @throws Exception if there is an error parsing SMILES for the functional groups
 	 */
 	public static IAtomContainerSet getFunctionalGroupSubstructureSet() throws Exception {
 		if (functionalGroupSubstructureSet == null) {
@@ -33,11 +34,11 @@ public class StandardSubstructureSets {
 				"O=S(=O)O", // sulfonate
 				"O=P(=O)O" // phosphate
 		    };
-			for (int i=0; i<groups.length; i++) {
-			    functionalGroupSubstructureSet.addAtomContainer(
-			    	parser.parseSmiles(groups[i])
-			    );
-			}
+            for (String group : groups) {
+                functionalGroupSubstructureSet.addAtomContainer(
+                        parser.parseSmiles(group)
+                );
+            }
 		}
 		
 		return functionalGroupSubstructureSet;

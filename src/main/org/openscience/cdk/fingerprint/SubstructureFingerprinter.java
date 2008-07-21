@@ -27,11 +27,12 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.util.BitSet;
-
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+
+import java.util.BitSet;
 
 /**
  * Fingerprinter that gives a bit set which has a size equal to the number
@@ -51,8 +52,24 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 public class SubstructureFingerprinter implements IFingerprinter {
 
 	private IAtomContainerSet substructureSet;
-	
-	public SubstructureFingerprinter(IAtomContainerSet substructureSet) {
+
+    /**
+     * Set up the fingerprinter to use the fragments from {@link org.openscience.cdk.fingerprint.StandardSubstructureSets}.
+     */
+    public SubstructureFingerprinter() {
+        try {
+            this.substructureSet = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
+        } catch (Exception e) {
+            substructureSet = null;
+        }
+    }
+
+    /**
+     * Set up the fingerprinter to use a user-defined set of fragments.
+     *
+     * @param substructureSet The collection of fragments to look for
+     */
+    public SubstructureFingerprinter(IAtomContainerSet substructureSet) {
 		this.substructureSet = substructureSet;
 	}
 	
@@ -60,10 +77,15 @@ public class SubstructureFingerprinter implements IFingerprinter {
 	 * Calculates the substructure fingerprint for the given AtomContainer.
 	 */
 	public BitSet getFingerprint(IAtomContainer ac) throws Exception {
-		int bitsetLength = substructureSet.getAtomContainerCount();
+
+        if (substructureSet == null) {
+            throw new CDKException("No substructures were defined");
+        }
+        
+        int bitsetLength = substructureSet.getAtomContainerCount();
 		BitSet fingerPrint = new BitSet(bitsetLength);
 		
-		IAtomContainer substructure = null;
+		IAtomContainer substructure;
 		for (int i=0; i<bitsetLength; i++) {
 			substructure = substructureSet.getAtomContainer(i);
 			if (UniversalIsomorphismTester.isSubgraph(ac, substructure)) 
