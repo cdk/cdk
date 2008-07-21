@@ -6,6 +6,7 @@ cdk-sdg.jar
 cdk-control.jar
 cdk-extra.jar
 cdk-io.jar
+cdk-nonotify.jar
 cdk-interfaces.jar
 cdk-libiocml.jar
 cdk-qsar.jar
