@@ -1,0 +1,84 @@
+/* $RCSfile$
+ * $Author: rajarshi $
+ * $Date: 2008-07-20 22:05:08 -0400 (Sun, 20 Jul 2008) $
+ * $Revision: 11674 $
+ *
+ * Copyright (C) 2008 Rajarshi Guha
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ * Contact: rajarshi@users.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+package org.openscience.cdk.fingerprint;
+
+import org.openscience.cdk.config.fragments.EStateFragments;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+
+import java.util.BitSet;
+
+/**
+ * This fingerprinter generates 79 bit fingerprints using the E-State fragments.
+ *
+ * The E-State fragments are those decribed in {@cdk.cite HALL1995} and the SMARTS
+ * patterns were taken from <a href="http://www.rdkit.org">RDKit</a>. Note that this
+ * fingerprint simply indicates the presence or occurence of the fragments. If you need
+ * counts of the fragments take a look at {@link org.openscience.cdk.qsar.descriptors.molecular.KierHallSmartsDescriptor},
+ * which also lists the substructures corresponding to each bit position.
+ *
+ * @author Rajarhi Guha
+ * @cdk.created 2008-07-23
+ *
+ * @cdk.keyword fingerprint
+ * @cdk.keyword similarity
+ * @cdk.keyword estate
+ *
+ * @cdk.module experimental
+ * @cdk.svnrev $Revision: 11674 $
+ */
+public class EStateFingerprinter implements IFingerprinter {
+
+	private static final String[] patterns = EStateFragments.getSmarts();
+
+    public EStateFingerprinter() {
+    }
+
+	/**
+	 * Calculates the substructure fingerprint for the given AtomContainer.
+	 */
+	public BitSet getFingerprint(IAtomContainer atomContainer) throws Exception {
+
+        int bitsetLength = patterns.length;
+		BitSet fingerPrint = new BitSet(bitsetLength);
+
+        SMARTSQueryTool sqt = new SMARTSQueryTool("C");
+        for (int i = 0; i < patterns.length; i++) {
+            sqt.setSmarts(patterns[i]);
+            boolean status = sqt.matches(atomContainer);
+            if (status) fingerPrint.set(i, true);
+        }
+		return fingerPrint;
+	}
+
+	public int getSize() {
+		return patterns.length;
+	}
+
+}
