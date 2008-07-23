@@ -63,7 +63,7 @@ public class FingerprinterTool {
 	 *
 	 *@param  bs1     The reference BitSet
 	 *@param  bs2     The BitSet which is compared with bs1
-	 *@return         True, if bs2 is a subset of bs2
+	 *@return         True, if bs2 is a subset of bs1
 	 *@cdk.keyword    substructure search
 	 */
     @TestMethod("testIsSubset_BitSet_BitSet")
