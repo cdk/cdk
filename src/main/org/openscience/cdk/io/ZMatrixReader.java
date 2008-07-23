@@ -226,7 +226,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
               m.addAtom(file.getBuilder().newAtom(types[i], cartCoords[i]));
         }
 
-//        logger.debug("molecule:\n"+m);
+//        logger.debug("molecule:"+m);
 
         setOfMolecules.addMolecule(m);
         chemModel.setMoleculeSet(setOfMolecules);

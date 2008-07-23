@@ -139,9 +139,9 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         
         Object title = crystal.getProperty(CDKConstants.TITLE);
         if (title != null && title.toString().trim().length() > 0) {
-            write("TITL " + title.toString().trim() + "\n");
+            writeln("TITL " + title.toString().trim());
         } else {
-            write("TITL Produced with CDK (http://cdk.sf.net/)\n");
+            writeln("TITL Produced with CDK (http://cdk.sf.net/)");
         }
         Vector3d a = crystal.getA();
         Vector3d b = crystal.getB();
@@ -159,17 +159,17 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         write(format.reset("%8.5f").format(clength) + " ");
         write(format.reset("%8.4f").format(alpha) + " ");
         write(format.reset("%8.4f").format(beta) + " ");
-        write(format.reset("%8.4f").format(gamma) + "\n");
-        write("ZERR " + format.reset("%1.5f").format((double)crystal.getZ()) +
-              "    0.01000  0.01000   0.01000   0.0100   0.0100   0.0100\n");
+        writeln(format.reset("%8.4f").format(gamma) + "");
+        writeln("ZERR " + format.reset("%1.5f").format((double)crystal.getZ()) +
+              "    0.01000  0.01000   0.01000   0.0100   0.0100   0.0100");
         String spaceGroup = crystal.getSpaceGroup();
         if ("P1".equals(spaceGroup)) {
-            write("LATT  -1\n");
+            writeln("LATT  -1");
         } else if ("P 2_1 2_1 2_1".equals(spaceGroup)) {
-            write("LATT  -1\n");
-            write("SYMM  1/2+X   , 1/2-Y   ,    -Z\n");
-            write("SYMM     -X   , 1/2+Y   , 1/2-Z\n");
-            write("SYMM  1/2-X   ,    -Y   , 1/2+Z\n");
+            writeln("LATT  -1");
+            writeln("SYMM  1/2+X   , 1/2-Y   ,    -Z");
+            writeln("SYMM     -X   , 1/2+Y   , 1/2-Z");
+            writeln("SYMM  1/2-X   ,    -Y   , 1/2+Z");
         }
 //        MFAnalyser mfa = new MFAnalyser(crystal);
         String elemNames = "";
@@ -184,8 +184,8 @@ public class ShelXWriter extends DefaultChemObjectWriter {
             String countS = new Integer(MolecularFormulaManipulator.getElementCount(formula, element)).toString();
             elemCounts += countS + "    ".substring(countS.length());
         }
-        write("SFAC  " + elemNames + "\n");
-        write("UNIT  " + elemCounts + "\n");
+        writeln("SFAC  " + elemNames);
+        writeln("UNIT  " + elemCounts);
         /* write atoms */
         for (int i = 0; i < crystal.getAtomCount(); i++) {
         	IAtom atom = crystal.getAtom(i);
@@ -203,9 +203,9 @@ public class ShelXWriter extends DefaultChemObjectWriter {
             write("    ".substring(elemID.length()));
             write(format.reset("%7.5f").format(fracCoord.x) + "   ");
             write(format.reset("%7.5f").format(fracCoord.y) + "   ");
-            write(format.reset("%7.5f").format(fracCoord.z) + "    11.00000    0.05000\n");
+            writeln(format.reset("%7.5f").format(fracCoord.z) + "    11.00000    0.05000");
         }
-        write("END\n");
+        writeln("END");
     }
 
     private void write(String s) {
@@ -213,7 +213,17 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         	writer.write(s);
         } catch (IOException e) {
             System.err.println("CMLWriter IOException while printing \"" +
-                                s + "\":\n" + e.toString());
+                                s + "\":" + e.toString());
+        }
+    }
+
+    private void writeln(String s) {
+        try {
+        	writer.write(s);
+        	writer.newLine();
+        } catch (IOException e) {
+            System.err.println("CMLWriter IOException while printing \"" +
+                                s + "\":" + e.toString());
         }
     }
 

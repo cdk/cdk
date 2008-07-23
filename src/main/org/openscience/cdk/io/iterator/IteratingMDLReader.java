@@ -130,7 +130,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
                     while (currentLine != null && !currentLine.equals("M  END")) {
                         // still in a molecule
                         buffer.append(currentLine);
-                        buffer.append("\n");
+                        buffer.append(System.getProperty("line.separator"));
                         if (input.ready()) {
                             currentLine = input.readLine();
                         } else {
@@ -144,7 +144,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
                         }
                     }
                     buffer.append(currentLine);
-                    buffer.append("\n");
+                    buffer.append(System.getProperty("line.separator"));
                     logger.debug("MDL file part read: ", buffer);
                     ISimpleChemObjectReader reader = factory.createReader(currentFormat);
                     reader.setReader(new StringReader(buffer.toString()));

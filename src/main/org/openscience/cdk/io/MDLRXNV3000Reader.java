@@ -206,7 +206,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
             while (!molFileLine.endsWith("END REACTANT")) {
                 molFileLine = readLine();
                 molFile.append(molFileLine);
-                molFile.append("\n");
+                molFile.append(System.getProperty("line.separator"));
             };
             
             try {
@@ -241,7 +241,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
             while (!molFileLine.endsWith("END PRODUCT")) {
                 molFileLine = readLine();
                 molFile.append(molFileLine);
-                molFile.append("\n");
+                molFile.append(System.getProperty("line.separator"));
             };
             
             try {

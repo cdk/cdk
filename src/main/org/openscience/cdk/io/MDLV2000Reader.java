@@ -251,7 +251,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 			    data += line;
 			    // preserve newlines, unless the line is exactly 80 chars; in that case it
 			    // is assumed to continue on the next line. See MDL documentation.
-			    if (line.length() < 80) data += "\n";
+			    if (line.length() < 80) data += System.getProperty("line.separator");
 			}
 			if (fieldName != null) {
 			    logger.info("fieldName, data: ", fieldName, ", ", data);

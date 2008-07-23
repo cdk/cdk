@@ -135,7 +135,8 @@ public class Mol2Writer extends DefaultChemObjectWriter {
 
         	logger.debug("Writing header...");
             if (mol.getProperty(CDKConstants.TITLE) != null) {
-                writer.write("#        Name: " + mol.getProperty(CDKConstants.TITLE) + "\n");
+                writer.write("#        Name: " + mol.getProperty(CDKConstants.TITLE));
+                writer.newLine();
             }
             // FIXME: add other types of meta data
             writer.newLine();
@@ -149,13 +150,17 @@ NO_CHARGES
 */
 
             logger.debug("Writing molecule block...");
-            writer.write("@<TRIPOS>MOLECULE\n");
-            writer.write(mol.getID() + "\n");
+            writer.write("@<TRIPOS>MOLECULE");
+            writer.newLine();
+            writer.write(mol.getID());
+            writer.newLine();
             writer.write(mol.getAtomCount() + " " + 
-                        mol.getBondCount() +
-                        "\n"); // that's the minimum amount of info required the format
-            writer.write("SMALL\n"); // no biopolymer
-            writer.write("NO CHARGES\n"); // other options include Gasteiger charges
+                        mol.getBondCount()); // that's the minimum amount of info required the format
+            writer.newLine();
+            writer.write("SMALL"); // no biopolymer
+            writer.newLine();
+            writer.write("NO CHARGES"); // other options include Gasteiger charges
+            writer.newLine();
 
 /*
 @<TRIPOS>ATOM 
@@ -175,7 +180,8 @@ NO_CHARGES
 
             // write atom block
             logger.debug("Writing atom block...");
-            writer.write("@<TRIPOS>ATOM\n");
+            writer.write("@<TRIPOS>ATOM");
+            writer.newLine();
             for (int i = 0; i < mol.getAtomCount(); i++) {
             	IAtom atom = mol.getAtom(i);
                 writer.write(i + " " +
@@ -191,7 +197,8 @@ NO_CHARGES
                 } else {
                     writer.write("0.000 0.000 0.000 ");
                 }
-                writer.write(atom.getSymbol()+ "\n"); // FIXME: should use perceived Mol2 Atom Types!
+                writer.write(atom.getSymbol()); // FIXME: should use perceived Mol2 Atom Types!
+                writer.newLine();
             }
 
 /*
@@ -212,7 +219,8 @@ NO_CHARGES
 
             // write bond block
             logger.debug("Writing bond block...");
-            writer.write("@<TRIPOS>BOND\n");
+            writer.write("@<TRIPOS>BOND");
+            writer.newLine();
 
             int counter = 0;
             Iterator bonds = mol.bonds();
@@ -221,8 +229,8 @@ NO_CHARGES
                 writer.write(counter + " " +
                              mol.getAtomNumber(bond.getAtom(0)) + " " +
                              mol.getAtomNumber(bond.getAtom(1)) + " " +
-                             ((int)bond.getOrder().ordinal()) +
-                             "\n");
+                             ((int)bond.getOrder().ordinal()));
+                writer.newLine();
                 counter++;
             } 
 

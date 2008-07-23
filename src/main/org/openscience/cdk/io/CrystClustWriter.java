@@ -132,7 +132,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     private void writeChemSequence(IChemSequence cs) throws UnsupportedChemObjectException {
         int count = cs.getChemModelCount();
         for (int i=0; i < count; i++) {
-            write("frame: " + (i+1) + "\n");
+            writeln("frame: " + (i+1));
             writeCrystal(cs.getChemModel(i).getCrystal());
         }
     }
@@ -161,9 +161,9 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
 
         String sg = crystal.getSpaceGroup();
         if ("P 2_1 2_1 2_1".equals(sg)) {
-            write("P 21 21 21 (1)\n");
+            writeln("P 21 21 21 (1)");
         } else {
-            write("P 1 (1)\n");
+            writeln("P 1 (1)");
         }
 
         // output unit cell axes
@@ -174,14 +174,14 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         // output number of atoms
         int noatoms = crystal.getAtomCount();
         write(new Integer(noatoms).toString());
-        write("\n");
+        writeln("");
 
         // output number of asym. units (Z)
         if (sg.equals("P1")) {
-            write("1\n");
+            writeln("1");
         } else {
             // duno
-            write("1\n");
+            writeln("1");
         }
 
         // output atoms
@@ -191,11 +191,11 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
             write(atom.getSymbol());
             write(":");
             // output atom charge
-            write(new Double(atom.getCharge()).toString() + "\n");
+            writeln(new Double(atom.getCharge()).toString());
             // output coordinates
-            write(new Double(atom.getPoint3d().x).toString() + "\n");
-            write(new Double(atom.getPoint3d().y).toString() + "\n");
-            write(new Double(atom.getPoint3d().z).toString() + "\n");
+            writeln(new Double(atom.getPoint3d().x).toString());
+            writeln(new Double(atom.getPoint3d().y).toString());
+            writeln(new Double(atom.getPoint3d().z).toString());
         }
     
     }
@@ -205,17 +205,27 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         	writer.write(s);
         } catch (IOException e) {
             System.err.println("CMLWriter IOException while printing \"" +
-                                s + "\":\n" + e.toString());
+                                s + "\":" + e.toString());
+        }
+    }
+    
+    private void writeln(String s) {
+        try {
+        	writer.write(s);
+        	writer.newLine();
+        } catch (IOException e) {
+            System.err.println("CMLWriter IOException while printing \"" +
+                                s + "\":" + e.toString());
         }
     }
     
     private void writeVector3d(Vector3d vector) {
         write(new Double(vector.x).toString());
-        write("\n");
+        writeln("");
         write(new Double(vector.y).toString());
-        write("\n");
+        writeln("");
         write(new Double(vector.z).toString());
-        write("\n");
+        writeln("");
     }
 
 }

@@ -355,7 +355,7 @@ public class PDBReader extends DefaultChemObjectReader {
                         	comment = "";
                         }
                         if (lineLength >12) {
-                        	comment = comment.toString() + cRead.substring(11).trim() + "\n";
+                        	comment = comment.toString() + cRead.substring(11).trim() + System.getProperty("line.separator");
                         	oFile.setProperty(CDKConstants.COMMENT, comment);
                         } else {
                         	logger.warn("REMARK line found without any comment!");
@@ -465,7 +465,7 @@ public class PDBReader extends DefaultChemObjectReader {
 				}
 			} while (_oInput.ready() && (cRead != null));
 		} catch (Exception e) {
-			logger.error("Found a problem at line:\n");
+			logger.error("Found a problem at line:");
 			logger.error(cRead);
 			logger.error("01234567890123456789012345678901234567890123456789012345678901234567890123456789");
 			logger.error("          1         2         3         4         5         6         7         ");

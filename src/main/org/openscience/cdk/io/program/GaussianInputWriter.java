@@ -180,7 +180,8 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         writer.newLine();
         
         // next line is comment
-        writer.write(comment.getSetting() + "\n");
+        writer.write(comment.getSetting());
+        writer.newLine();
         
         // next line is empty
         writer.newLine();

@@ -109,7 +109,7 @@ public class PMPConvention extends CMLCoreModule {
         			);
         		}
         	} else {
-                logger.debug("PMP Convention error: incorrect number of cell axis fractions!\n");
+                logger.debug("PMP Convention error: incorrect number of cell axis fractions!");
             }
 //            cdo.endObject(axis);
         } else {

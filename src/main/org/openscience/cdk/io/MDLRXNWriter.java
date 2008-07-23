@@ -210,24 +210,28 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
               writer.newLine();
             }
             
-            writer.write("$RXN\n");
+            writer.write("$RXN");
+            writer.newLine();
             // reaction name
             String line = (String)reaction.getProperty(CDKConstants.TITLE);
             if(line == null) line = "";
             if(line.length() > 80) line = line.substring(0,80);
-            writer.write(line + "\n");
+            writer.write(line);
+            writer.newLine();
             // user/program/date&time/reaction registry no. line
             writer.newLine();
             // comment line
             line = (String)reaction.getProperty(CDKConstants.REMARK);
             if(line == null) line = "";
             if(line.length() > 80) line = line.substring(0,80);
-            writer.write(line + "\n");
+            writer.write(line);
+            writer.newLine();
             
             line = "";
             line += formatMDLInt(reactantCount, 3);
             line += formatMDLInt(productCount, 3);
-            writer.write(line + "\n");
+            writer.write(line);
+            writer.newLine();
             
             writeMoleculeSet(reaction.getReactants());
             writeMoleculeSet(reaction.getProducts());
@@ -271,7 +275,8 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
         	IMolecule mol = som.getMolecule(i);
             for (int j = 0; j < som.getMultiplier(i); j++) {
                 StringWriter sw = new StringWriter();
-                writer.write("$MOL\n");
+                writer.write("$MOL");
+                writer.newLine();
                 MDLWriter mdlwriter = null;
                 try {
                     mdlwriter = new MDLWriter(sw);

@@ -160,7 +160,8 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         while (atoms.hasNext()) {
         	IAtom atom = (IAtom)atoms.next();
             writeAtom(atom);
-            writer.write("  mol.addAtom(" + atom.getID() + ");\n");
+            writer.write("  mol.addAtom(" + atom.getID() + ");");
+            writer.newLine();
         }
     }
     
@@ -169,50 +170,63 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
             writeBond(bond);
-            writer.write("  mol.addBond(" + bond.getID() + ");\n");
+            writer.write("  mol.addBond(" + bond.getID() + ");");
+            writer.newLine();
         }
     }
 
     public void writeMolecule(IMolecule molecule) throws Exception {
-        writer.write("{\n");
-        writer.write("  IMolecule mol = new Molecule();\n");
+        writer.write("{");
+        writer.newLine();
+        writer.write("  IMolecule mol = new Molecule();");
+        writer.newLine();
         IDCreator.createIDs(molecule);
         writeAtoms(molecule);
         writeBonds(molecule);
-        writer.write("}\n");
+        writer.write("}");
+        writer.newLine();
     }
 
     public void writeAtomContainer(IAtomContainer molecule) throws Exception {
-        writer.write("{\n");
-        writer.write("  IAtomContainer mol = new AtomContainer();\n");
+        writer.write("{");
+        writer.newLine();
+        writer.write("  IAtomContainer mol = new AtomContainer();");
+        writer.newLine();
         IDCreator.createIDs(molecule);
         writeAtoms(molecule);
         writeBonds(molecule);
-        writer.write("}\n");
+        writer.write("}");
+        writer.newLine();
     }
 
     public void writeAtom(IAtom atom) throws Exception {
     	if (atom instanceof IPseudoAtom) {
-    		writer.write("  IPseudoAtom " + atom.getID() + " = mol.getBuilder().newPseudoAtom();\n");
-    		writer.write("  atom.setLabel(\"" + ((IPseudoAtom)atom).getLabel() + "\");\n");
+    		writer.write("  IPseudoAtom " + atom.getID() + " = mol.getBuilder().newPseudoAtom();");
+    		writer.newLine();
+    		writer.write("  atom.setLabel(\"" + ((IPseudoAtom)atom).getLabel() + "\");");
+    		writer.newLine();
     	} else {
     		writer.write("  IAtom " + atom.getID() + " = mol.getBuilder().newAtom(\"" + atom.getSymbol() +
-    		"\");\n");
+    		"\");");
+    		writer.newLine();
     	}
         if (atom.getFormalCharge() != null) {
-        	writer.write("  " + atom.getID() + ".setFormalCharge(" + atom.getFormalCharge() + ");\n");
+        	writer.write("  " + atom.getID() + ".setFormalCharge(" + atom.getFormalCharge() + ");");
+        	writer.newLine();
         }
         if (write2DCoordinates.isSet() && 
         	atom.getPoint2d() != null) {
         	Point2d p2d = atom.getPoint2d();
         	writer.write("  " + atom.getID() + ".setPoint2d(new Point2d(" +
-        		p2d.x + ", " + p2d.y + "));\n");
+        		p2d.x + ", " + p2d.y + "));");
+            writer.newLine();
         }
         if (write3DCoordinates.isSet() && 
             atom.getPoint3d() != null) {
         	Point3d p3d = atom.getPoint3d();
         	writer.write("  " + atom.getID() + ".setPoint3d(new Point3d(" +
-        		p3d.x + ", " + p3d.y + ", " + p3d.z + "));\n");
+        		p3d.x + ", " + p3d.y + ", " + p3d.z + "));");
+            writer.newLine();
         }
     }
     
@@ -220,7 +234,8 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
         writer.write("  IBond " + bond.getID() + " = mol.getBuilder().newBond(" + 
                      bond.getAtom(0).getID() + ", " +
                      bond.getAtom(1).getID() + ", IBond.Order." +
-                     bond.getOrder() + ");\n");
+                     bond.getOrder() + ");");
+        writer.newLine();
     }
     
 	public int getSupportedDataFeatures() {
