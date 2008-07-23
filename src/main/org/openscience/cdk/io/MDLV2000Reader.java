@@ -724,6 +724,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     
     public void customizeJob() {
         fireIOSettingQuestion(forceReadAs3DCoords);
+        fireIOSettingQuestion(interpretHydrogenIsotopes);
     }
 
     public IOSetting[] getIOSettings() {
