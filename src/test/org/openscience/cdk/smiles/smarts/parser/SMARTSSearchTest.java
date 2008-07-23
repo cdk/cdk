@@ -1239,5 +1239,10 @@ public class SMARTSSearchTest extends CDKTestCase {
         assertEquals(1, results[1]);
     }
 
+    public void testGroup5Elements() throws Exception {
+        int[] results = match("[V,Cr,Mn,Nb,Mo,Tc,Ta,W,Re]", "W");
+        assertEquals(1, results[0]);
+        assertEquals(1, results[1]);
+    }
 }
 
