@@ -203,7 +203,7 @@
                         <exclude name="SMARTSQueryTool.java" />
                     </fileset>
                     <fileset dir="${src}/main/org/openscience/cdk/smiles/smarts/parser" 
-                             includes="SMARTSParser.java,SMARTSParserConstants.java,ParseException.java,SimpleCharStream.java,Token.java,TokenMgrError.java,SMARTSParserTokenManager.java"/>
+                             includes="SMARTSParser*.java,SMARTSParser.jj,JJT*,ParseException.java,SimpleCharStream.java,Token*.java" />
                     <fileset dir="${src}/main/org/openscience/cdk/iupac/parser" includes="*.java">
                         <!-- the next are from CVS -->
                         <exclude name="AttachedGroup.java" />
@@ -380,11 +380,30 @@
           <delete>
               <fileset id="javacc-generated"
                 dir="${src}/main/org/openscience/cdk/smiles/smarts/parser/"
-                includes="SMARTSParser.java,SMARTSParserConstants.java,ParseException.java,SimpleCharStream.java,Token.java,TokenMgrError.java"/>
+                includes="SMARTSParser*.java,SMARTSParser.jj,JJT*,ParseException.java,SimpleCharStream.java,Token*.java"/>
           </delete>
-          <javacc target="${src}/main/org/openscience/cdk/smiles/smarts/parser/SMARTSParser.jj"
+          <jjtree target="${src}/main/org/openscience/cdk/smiles/smarts/parser/SMARTSParser.jjt"
                   javacchome="${lib}"
                   outputdirectory="${src}/main/org/openscience/cdk/smiles/smarts/parser/"/>
+	 <javacc target="${src}/main/org/openscience/cdk/smiles/smarts/parser/SMARTSParser.jj"
+                  javacchome="${lib}"
+                  outputdirectory="${src}/main/org/openscience/cdk/smiles/smarts/parser/"/>
+
+	 <!-- OK, we now need to do some replacements such as 
+	      adding cdk.module tags and changing access modes
+	  -->
+	 <replace file="${src}/main/org/openscience/cdk/smiles/smarts/parser/JJTSMARTSParserState.java" 
+	          token="class JJTSMARTSParserState {" value="public class JJTSMARTSParserState {" />
+         <replace dir="${src}/main/org/openscience/cdk/smiles/smarts/parser" 
+	          excludes="AST*.java,SMARTSParser.jjt,SMARTSParser.jj,*Node.java"
+                  token="package org.openscience.cdk.smiles.smarts.parser;" summary="true" >
+                  <replacevalue>package org.openscience.cdk.smiles.smarts.parser;
+
+/** 
+*
+* @cdk.module smarts 
+*/</replacevalue>
+         </replace>
         </target>
 
         <target id="dist.init" name="dist.init">
