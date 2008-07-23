@@ -157,13 +157,10 @@ public class ChiChainDescriptor implements IMolecularDescriptor {
             IAtomType type;
             try {
                 type = matcher.findMatchingAtomType(localAtomContainer, atom);
+                AtomTypeManipulator.configure(atom, type);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(new CDKException("Error in atom typing: " + atom));
-            }
-            if (type == null) {
-                return getDummyDescriptorValue(new CDKException("Cannot find atom type for: " + atom));
-            }
-            AtomTypeManipulator.configure(atom, type);
+            }            
         }
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
         try {

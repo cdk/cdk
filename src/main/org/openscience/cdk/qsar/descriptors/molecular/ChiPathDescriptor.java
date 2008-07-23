@@ -135,10 +135,10 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
             IAtomType type;
             try {
                 type = matcher.findMatchingAtomType(localAtomContainer, atom);
+                AtomTypeManipulator.configure(atom, type);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(new CDKException("Error in atom typing: " + e.getMessage()));
             }
-            AtomTypeManipulator.configure(atom, type);
         }
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
         try {
