@@ -57,7 +57,7 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
 
     private int getIndex(String name) {
         for (int i = 0; i < names.length; i++) {
-            if (names[i].equals(name)) return i;
+            if (names[i].equals(name)) return i;        
         }
         return -1;
     }
@@ -73,7 +73,7 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
         IntegerArrayResult result = (IntegerArrayResult) value.getValue();
 
         Assert.assertEquals(79, result.length());
-        Assert.assertEquals(1, result.get(getIndex("sOH")));
+        Assert.assertEquals(1, result.get(getIndex("khs.sOH")));
     }
 
     public void test2() throws Exception {
@@ -87,11 +87,11 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
         IntegerArrayResult result = (IntegerArrayResult) value.getValue();
 
         Assert.assertEquals(79, result.length());
-        Assert.assertEquals(2, result.get(getIndex("sOH")));
-        Assert.assertEquals(1, result.get(getIndex("dO")));
-        Assert.assertEquals(1, result.get(getIndex("ssO")));
-        Assert.assertEquals(1, result.get(getIndex("sNH2")));
-        Assert.assertEquals(1, result.get(getIndex("ssNH")));
+        Assert.assertEquals(2, result.get(getIndex("khs.sOH")));
+        Assert.assertEquals(1, result.get(getIndex("khs.dO")));
+        Assert.assertEquals(1, result.get(getIndex("khs.ssO")));
+        Assert.assertEquals(1, result.get(getIndex("khs.sNH2")));
+        Assert.assertEquals(1, result.get(getIndex("khs.ssNH")));
     }
 
     public void test3() throws Exception {
@@ -105,7 +105,7 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
         IntegerArrayResult result = (IntegerArrayResult) value.getValue();
 
         Assert.assertEquals(79, result.length());
-        Assert.assertEquals(2, result.get(getIndex("tsC")));
-        Assert.assertEquals(2, result.get(getIndex("ssssC")));
+        Assert.assertEquals(2, result.get(getIndex("khs.tsC")));
+        Assert.assertEquals(2, result.get(getIndex("khs.ssssC")));
     }
 }

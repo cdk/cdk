@@ -313,8 +313,9 @@ public class KierHallSmartsDescriptor implements IMolecularDescriptor {
     private static final String[] smarts = EStateFragments.getSmarts();
 
     public KierHallSmartsDescriptor() {
-        names = EStateFragments.getNames();
-        for (int i = 0; i < names.length; i++) names[i] = "khs." + names[i];
+        String[] tmp = EStateFragments.getNames();
+        names = new String[tmp.length];
+        for (int i = 0; i < tmp.length; i++) names[i] = "khs." + tmp[i];
     }
 
     /**
@@ -349,7 +350,7 @@ public class KierHallSmartsDescriptor implements IMolecularDescriptor {
      * @see #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
-        throw new CDKException("Must not supply any parameters");
+        if (params != null) throw new CDKException("Must not supply any parameters");
     }
 
 
