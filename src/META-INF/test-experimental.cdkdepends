@@ -13,6 +13,8 @@ cdk-render.jar
 cdk-builder3d.jar
 cdk-reaction.jar
 cdk-qsar.jar
+cdk-smarts.jar
+cdk-isomorphism.jar
 cdk-applications.jar
 cdk-valencycheck.jar
 cdk-smiles.jar

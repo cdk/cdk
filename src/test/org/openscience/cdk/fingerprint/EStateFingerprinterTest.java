@@ -39,7 +39,7 @@ import java.util.BitSet;
  */
 public class EStateFingerprinterTest extends NewCDKTestCase {
 
-	private static LoggingTool logger = new LoggingTool(FingerprinterTest.class);
+	private static LoggingTool logger = new LoggingTool(EStateFingerprinterTest.class);
 
 	public EStateFingerprinterTest() {
 		super();
