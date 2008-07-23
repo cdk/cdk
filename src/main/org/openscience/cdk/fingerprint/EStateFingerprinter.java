@@ -43,6 +43,9 @@ import java.util.BitSet;
  * counts of the fragments take a look at {@link org.openscience.cdk.qsar.descriptors.molecular.KierHallSmartsDescriptor},
  * which also lists the substructures corresponding to each bit position.
  *
+ * This class assumes that aromaticity perception and atom typing have been performed
+ * prior to generating the fingerprint
+ * 
  * @author Rajarhi Guha
  * @cdk.created 2008-07-23
  *
@@ -50,7 +53,7 @@ import java.util.BitSet;
  * @cdk.keyword similarity
  * @cdk.keyword estate
  *
- * @cdk.module extra
+ * @cdk.module experimental
  * @cdk.svnrev $Revision: 11674 $
  */
 public class EStateFingerprinter implements IFingerprinter {
