@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -69,15 +70,20 @@ public class AminoAcidCountDescriptor implements IMolecularDescriptor {
 
     private IAtomContainerSet substructureSet;
 
+    private static String[] names;
+
     /**
      *  Constructor for the AromaticAtomsCountDescriptor object.
      */
     public AminoAcidCountDescriptor() {
         IAminoAcid[] aas = AminoAcids.createAAs();
         substructureSet = aas[0].getBuilder().newAtomContainerSet();
-        for (int i=0; i<aas.length; i++) {
-            substructureSet.addAtomContainer(aas[i]);
+        for (IAminoAcid aa : aas) {
+            substructureSet.addAtomContainer(aa);
         }
+
+        names = new String[substructureSet.getAtomContainerCount()];
+        for (int i = 0; i < aas.length; i++) names[i] = "n"+aas[i].getProperty(AminoAcids.RESIDUE_NAME_SHORT);
     }
 
     /**
@@ -126,35 +132,44 @@ public class AminoAcidCountDescriptor implements IMolecularDescriptor {
         return null;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
 
     /**
      * Determine the number of amino acids groups the supplied {@link IAtomContainer}.
      *
      * @param  ac           The {@link IAtomContainer} for which this descriptor is to be calculated
-     * @return              the number of aromatic atoms of this AtomContainer
-     * @throws CDKException if there is a problem in atomaticity detection
+     * @return the number of aromatic atoms of this AtomContainer
      *
      * @see #setParameters
      */
-    public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer ac) {
         int resultLength = substructureSet.getAtomContainerCount();
         IntegerArrayResult results = new IntegerArrayResult(resultLength);
 
         IAtomContainer substructure;
         for (int i=0; i<resultLength; i++) {
             substructure = substructureSet.getAtomContainer(i);
-            List maps = UniversalIsomorphismTester.getSubgraphMaps(ac, substructure);
+            List maps;
+            try {
+                maps = UniversalIsomorphismTester.getSubgraphMaps(ac, substructure);
+            } catch (CDKException e) {
+                // TODO is it OK to cast Double.NaN to int?
+                for (int j = 0; j < resultLength; j++) results.add((int) Double.NaN);
+                return new DescriptorValue(getSpecification(), getParameterNames(),
+                        getParameters(), results, getDescriptorNames(),
+                        new CDKException("Error in substructure search: "+e.getMessage()));
+            }
             if (maps != null) {
                 results.add(maps.size());
             }
         }
 
-        String[] names = new String[substructureSet.getAtomContainerCount()];
-        IAminoAcid[] aas = AminoAcids.createAAs();
-        for (int i = 0; i < aas.length; i++) names[i] = "n"+aas[i].getProperty(AminoAcids.RESIDUE_NAME_SHORT);
-
         return new DescriptorValue(getSpecification(), getParameterNames(),
-            getParameters(), results, names);
+            getParameters(), results, getDescriptorNames());
     }
 
     /**

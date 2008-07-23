@@ -66,7 +66,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.StabilizationPlusChargeDescriptorTest")
 public class StabilizationPlusChargeDescriptor implements IAtomicDescriptor {
 	
-    String[] descriptorNames = {"stabilPlusC"};
+    private static final String[] descriptorNames = {"stabilPlusC"};
     
 	private StabilizationCharges stabil;
 
@@ -118,6 +118,11 @@ public class StabilizationPlusChargeDescriptor implements IAtomicDescriptor {
         return null;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return descriptorNames;
+    }
+
 
     /**
      *  The method calculates the stabilization of charge of a given atom
@@ -126,16 +131,28 @@ public class StabilizationPlusChargeDescriptor implements IAtomicDescriptor {
      *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  container         AtomContainer
      *@return                   return the stabilization value
-     *@exception  CDKException  Possible Exceptions
      */
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
-    	
-    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
 
-  		double result = stabil.calculatePositive(container, atom);
+        IAtomContainer clone;
+        IAtom localAtom;
+        try {
+            clone = (IAtomContainer) container.clone();
+            localAtom = clone.getAtom(container.getAtomNumber(atom));
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
+        } catch (CDKException e) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(Double.NaN), descriptorNames, e);
+        } catch (CloneNotSupportedException e) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(Double.NaN), descriptorNames, e);
+        }
+
+        double result = stabil.calculatePositive(clone, localAtom);
 	    
-	    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(result),descriptorNames);
+	    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(result),descriptorNames);
     }
 
 

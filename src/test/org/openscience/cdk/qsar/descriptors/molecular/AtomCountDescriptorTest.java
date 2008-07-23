@@ -25,11 +25,10 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.qsar.descriptors.molecular.AtomCountDescriptor;
+import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -56,7 +55,11 @@ public class AtomCountDescriptorTest extends MolecularDescriptorTest {
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
-        assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-	}
+        DescriptorValue value = descriptor.calculate(mol);
+        assertEquals(2, ((IntegerResult)value.getValue()).intValue());
+        assertEquals(1, value.getNames().length);
+        assertEquals("nC", value.getNames()[0]);
+        assertEquals(descriptor.getDescriptorNames()[0], value.getNames()[0]);
+    }
 }
 

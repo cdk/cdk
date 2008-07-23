@@ -19,6 +19,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -136,6 +137,18 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class CPSADescriptor implements IMolecularDescriptor {
 
+    private static final String[] names = {
+            "PPSA-1", "PPSA-2", "PPSA-3",
+            "PNSA-1", "PNSA-2", "PNSA-3",
+            "DPSA-1", "DPSA-2", "DPSA-3",
+            "FPSA-1", "FPSA-2", "FPSA-3",
+            "FNSA-1", "FNSA-2", "FNSA-3",
+            "WPSA-1", "WPSA-2", "WPSA-3",
+            "WNSA-1", "WNSA-2", "WNSA-3",
+            "RPCG", "RNCG", "RPCS", "RNCS",
+            "THSA", "TPSA", "RHSA", "RPSA"
+    };
+
     private LoggingTool logger;
 
     public CPSADescriptor() {
@@ -172,6 +185,11 @@ public class CPSADescriptor implements IMolecularDescriptor {
         return (null);
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
     /**
      * Gets the parameterNames attribute of the CPSADescriptor object.
      *
@@ -198,32 +216,26 @@ public class CPSADescriptor implements IMolecularDescriptor {
      *
      * @param atomContainer Parameter is the atom container.
      * @return An ArrayList containing 29 elements in the order described above
-     * @throws CDKException if the charge calculation fails or no 3D coordinates are available
      */
 
-    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
-        if (!GeometryTools.has3DCoordinates(atomContainer)) throw new CDKException("Molecule must have 3D coordinates");
-        
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
+        DoubleArrayResult retval = new DoubleArrayResult();
+
+        if (!GeometryTools.has3DCoordinates(atomContainer)) {
+            for (int i = 0; i < 29; i++) retval.add(Double.NaN);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    retval, getDescriptorNames(), new CDKException("Molecule must have 3D coordinates"));
+        }
+
         IAtomContainer container;
         try {
             container = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             logger.debug("Error during clone");
-            throw new CDKException("Error during clone");
+             for (int i = 0; i < 29; i++) retval.add(Double.NaN);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    retval, getDescriptorNames(), new CDKException("Error during clone"+e.getMessage()));
         }
-
-        DoubleArrayResult retval = new DoubleArrayResult();
-        String[] names = {
-                "PPSA-1", "PPSA-2", "PPSA-3",
-                "PNSA-1", "PNSA-2", "PNSA-3",
-                "DPSA-1", "DPSA-2", "DPSA-3",
-                "FPSA-1", "FPSA-2", "FPSA-3",
-                "FNSA-1", "FNSA-2", "FNSA-3",
-                "WPSA-1", "WPSA-2", "WPSA-3",
-                "WNSA-1", "WNSA-2", "WNSA-3",
-                "RPCG", "RNCG", "RPCS", "RNCS",
-                "THSA", "TPSA", "RHSA", "RPSA"
-        };
 
 //        IsotopeFactory factory = null;
 //        try {
@@ -239,10 +251,9 @@ public class CPSADescriptor implements IMolecularDescriptor {
         } catch (Exception e) {
             logger.debug("Error in assigning Gasteiger-Marsilli charges");
             for (int i = 0; i < 29; i++) retval.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    retval, getDescriptorNames(), new CDKException("Error in getting G-M charges"));
         }
-        //MFAnalyser mfa = new MFAnalyser(container);
-
 
         NumericalSurface surface;
         try {
@@ -251,7 +262,9 @@ public class CPSADescriptor implements IMolecularDescriptor {
         } catch (NullPointerException npe) {
             logger.debug("Error in surface area calculation");
             for (int i = 0; i < 29; i++) retval.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    retval, getDescriptorNames(),
+                    new CDKException("Error in surface area calculation"));
         }
 
         //double molecularWeight = mfa.getMass();
@@ -374,7 +387,8 @@ public class CPSADescriptor implements IMolecularDescriptor {
         retval.add(rpsa);
 
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                retval, getDescriptorNames());
     }
 
     /**

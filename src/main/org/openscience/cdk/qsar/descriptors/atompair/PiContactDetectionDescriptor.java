@@ -22,6 +22,7 @@ package org.openscience.cdk.qsar.descriptors.atompair;
 
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
@@ -70,6 +71,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref    qsar-descriptors:piContact
  */
 public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
+
+    private static final String[] names = {"piContact"};
 
     private boolean checkAromaticity = false;
     AtomContainerSet acSet = null;
@@ -124,28 +127,42 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
+     private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(
+                getSpecification(), getParameterNames(),
+                getParameters(), new BooleanResult(false),
+                names, e);
+    }
 
     /**
      * The method returns if two atoms have pi-contact.
      *
      * @param  atomContainer                AtomContainer
      * @return                   true if the atoms have pi-contact
-     * @exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtom first, IAtom second, IAtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtom first, IAtom second, IAtomContainer atomContainer)  {
         IAtomContainer ac;
         try {
             ac = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Error during clone");
+            return getDummyDescriptorValue(e);
         }
         IAtom clonedFirst = ac.getAtom(atomContainer.getAtomNumber(first));
         IAtom clonedSecond = ac.getAtom(atomContainer.getAtomNumber(first));
 
         Molecule mol = new Molecule(ac);
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-            CDKHueckelAromaticityDetector.detectAromaticity(mol);
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+                CDKHueckelAromaticityDetector.detectAromaticity(mol);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
         }
         boolean piContact = false;
         int counter = 0;
@@ -174,7 +191,8 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
         if (counter > 0) {
             piContact = true;
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(piContact));
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new BooleanResult(piContact), getDescriptorNames());
     }
 
 

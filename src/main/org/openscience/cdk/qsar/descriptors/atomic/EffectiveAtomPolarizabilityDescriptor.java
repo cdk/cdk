@@ -110,6 +110,11 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
         return null;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return new String[]{"effAtomPol"};
+    }
+
 
     /**
      *  The method calculates the Effective Atom Polarizability of a given atom
@@ -118,19 +123,19 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
      *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
      *@return                   return the efective polarizability
-     *@exception  CDKException  Possible Exceptions
      */
-    @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
+    @TestMethod(value = "testCalculate_IAtomContainer")
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         double polarizability;
         try {
-            polarizability = pol.calculateGHEffectiveAtomPolarizability(ac,atom,100, true);
+            polarizability = pol.calculateGHEffectiveAtomPolarizability(ac, atom, 100, true);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new DoubleResult(polarizability),
-                    new String[] {"effAtomPol"});
+                    getDescriptorNames());
         } catch (Exception ex1) {
-        	ex1.printStackTrace();
-            throw new CDKException("Problems with Polarizability due to " + ex1.toString(), ex1);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(Double.NaN),
+                    getDescriptorNames(), ex1);
         }
     }
 

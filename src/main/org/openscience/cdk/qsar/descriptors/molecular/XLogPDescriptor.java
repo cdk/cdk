@@ -22,6 +22,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.BFSShortestPath;
@@ -39,7 +40,6 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
@@ -119,6 +119,8 @@ public class XLogPDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = false;
     private boolean salicylFlag=false;
     private SSSRFinder ssrf=null;
+    private static final String[] names = {"XLogP"};
+
     /**
      *  Constructor for the XLogPDescriptor object.
      */
@@ -175,6 +177,16 @@ public class XLogPDescriptor implements IMolecularDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+         return new DescriptorValue(getSpecification(), getParameterNames(),
+                 getParameters(), new DoubleResult(Double.NaN), getDescriptorNames(), e);
+     }
 
     /**
      *  Calculates the xlogP for an atom container.
@@ -185,22 +197,25 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *
      *@param  atomContainer               AtomContainer
      *@return XLogP is a double
-     *@exception CDKException  Possible Exceptions
      */
 
-    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
         try {
             ac = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Error during clone");
+            return getDummyDescriptorValue(e);
         }
 
         IRingSet rs = (IRingSet) new SSSRFinder(ac).findSSSR();
         IRingSet atomRingSet=null;
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-            CDKHueckelAromaticityDetector.detectAromaticity(ac);
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+                CDKHueckelAromaticityDetector.detectAromaticity(ac);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
         }
         double xlogP = 0;
 //		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -858,39 +873,50 @@ public class XLogPDescriptor implements IMolecularDescriptor {
             }
 
             //AtomContainer aminoacid = sp.parseSmiles("NCC(=O)O");
-            if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, aminoAcid)) {
-                List list = UniversalIsomorphismTester.getSubgraphAtomsMap((org.openscience.cdk.AtomContainer)ac, aminoAcid);
-                RMap map = null;
-                IAtom atom1=null;
-                for (int j = 0; j < list.size(); j++){
-                    map = (RMap) list.get(j);
-                    atom1 = ac.getAtom(map.getId1());
-                    if (atom1.getSymbol().equals("O")&& ac.getMaximumBondOrder(atom1)==IBond.Order.SINGLE){
-                        if (ac.getConnectedBondsCount(atom1)==2 && getHydrogenCount(ac, atom1)==0){
-                        }else{
-                            xlogP -= 2.166;
-                            //logger.debug("XLOGP: alpha amino acid	-2.166");
-                            break;
+            try {
+                if (UniversalIsomorphismTester.isSubgraph(ac, aminoAcid)) {
+                    List list = UniversalIsomorphismTester.getSubgraphAtomsMap(ac, aminoAcid);
+                    RMap map = null;
+                    IAtom atom1=null;
+                    for (int j = 0; j < list.size(); j++){
+                        map = (RMap) list.get(j);
+                        atom1 = ac.getAtom(map.getId1());
+                        if (atom1.getSymbol().equals("O")&& ac.getMaximumBondOrder(atom1)==IBond.Order.SINGLE){
+                            if (ac.getConnectedBondsCount(atom1)==2 && getHydrogenCount(ac, atom1)==0){
+                            }else{
+                                xlogP -= 2.166;
+                                //logger.debug("XLOGP: alpha amino acid	-2.166");
+                                break;
+                            }
                         }
                     }
                 }
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
             }
         }
 
         IAtomContainer paba = createPaba(ac.getBuilder());
         // p-amino sulphonic acid
-        if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, paba)) {
-            xlogP -= 0.501;
-            //logger.debug("XLOGP: p-amino sulphonic acid	-0.501");
+        try {
+            if (UniversalIsomorphismTester.isSubgraph(ac, paba)) {
+                xlogP -= 0.501;
+                //logger.debug("XLOGP: p-amino sulphonic acid	-0.501");
+            }
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(e);
         }
-
 
         // salicylic acid
         if (salicylFlag){
             IAtomContainer salicilic = createSalicylicAcid(ac.getBuilder());
-            if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, salicilic)) {
-                xlogP += 0.554;
-                //logger.debug("XLOGP: salicylic acid	 0.554");
+            try {
+                if (UniversalIsomorphismTester.isSubgraph(ac, salicilic)) {
+                    xlogP += 0.554;
+                    //logger.debug("XLOGP: salicylic acid	 0.554");
+                }
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
             }
         }
 
@@ -910,13 +936,17 @@ public class XLogPDescriptor implements IMolecularDescriptor {
         orthopair.addBond(new OrderQueryBond(atom1,atom3,IBond.Order.SINGLE));
         orthopair.addBond(new OrderQueryBond(atom2,atom4,IBond.Order.SINGLE));
 
-        if (UniversalIsomorphismTester.isSubgraph((org.openscience.cdk.AtomContainer)ac, orthopair)) {
-            xlogP -= 0.268;
-            //logger.debug("XLOGP: Ortho oxygen pair	-0.268");
+        try {
+            if (UniversalIsomorphismTester.isSubgraph(ac, orthopair)) {
+                xlogP -= 0.268;
+                //logger.debug("XLOGP: Ortho oxygen pair	-0.268");
+            }
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(e);
         }
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(xlogP), new String[] {"XLogP"});
+                new DoubleResult(xlogP), getDescriptorNames());
     }
 
     /**
@@ -958,12 +988,11 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@return       The hydrogenCount value
      */
     private boolean checkRingLink(IRingSet ringSet, org.openscience.cdk.interfaces.IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
-        java.util.List neighbours = ac.getConnectedAtomsList(atom);
+        List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         if (ringSet.contains(atom)){
             return true;
         }
-        for (int i = 0; i < neighbours.size(); i++) {
-            IAtom neighbour = (IAtom)neighbours.get(i);
+        for (IAtom neighbour : neighbours) {
             if (ringSet.contains(neighbour)) {
                 return true;
             }
@@ -981,10 +1010,9 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@return       The hydrogenCount value
      */
     private int getHydrogenCount(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom atom) {
-        java.util.List neighbours = ac.getConnectedAtomsList(atom);
+        List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int hcounter = 0;
-        for (int i = 0; i < neighbours.size(); i++) {
-            IAtom neighbour = (IAtom)neighbours.get(i);
+        for (IAtom neighbour : neighbours) {
             if (neighbour.getSymbol().equals("H")) {
                 hcounter += 1;
             }
@@ -1224,7 +1252,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
         int narocounter = 0;
         for (int i = 0; i < neighbours.size(); i++) {
             IAtom neighbour = (IAtom)neighbours.get(i);
-            if (neighbour.getSymbol().equals("N") && ((Boolean)neighbour.getProperty("IS_IN_AROMATIC_RING")).booleanValue()) {
+            if (neighbour.getSymbol().equals("N") && (Boolean) neighbour.getProperty("IS_IN_AROMATIC_RING")) {
                         narocounter += 1;
             }
         }
@@ -1460,7 +1488,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@return       The parameterType value
      */
     public Object getParameterType(String name) {
-            return new Boolean(true);
+            return true;
     }
 
     private IAtomContainer createPaba(IChemObjectBuilder builder) {

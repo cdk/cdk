@@ -24,17 +24,11 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.lang.reflect.Method;
-
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.EStateAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -45,6 +39,8 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.AtomicProperties;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.lang.reflect.Method;
 
 /**
  * This class calculates ALOGP (Ghose-Crippen LogKow) and the 
@@ -89,7 +85,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.keyword logP
  * @cdk.keyword lipophilicity
  * @cdk.keyword refractivity
- * @see org.openscience.cdk.tools.HydrogenAdder
+ * @see org.openscience.cdk.tools.CDKHydrogenAdder
  * @see org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector
  */
 public class ALOGPDescriptor implements IMolecularDescriptor {
@@ -358,6 +354,7 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
     double ALOGP = 0.0;
     double AMR = 0.0;
     double ALOGP2 = 0.0;
+    private static final String[] strings = new String[] {"ALogP", "ALogp2", "AMR"};
 
 
     public ALOGPDescriptor() throws CDKException {
@@ -1982,20 +1979,20 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
     }
 
 
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
         IRingSet rs;
         try {
             AllRingsFinder arf = new AllRingsFinder();
             rs = arf.findAllRings(container);
         } catch (Exception e) {
-            throw new CDKException("Could not find all rings: " + e.getMessage(), e);
+            return getDummyDescriptorValue(new CDKException("Could not find all rings: " + e.getMessage()));
         }
 
         String[] fragment = new String[container.getAtomCount()];
         EStateAtomTypeMatcher eStateMatcher = new EStateAtomTypeMatcher();
         eStateMatcher.setRingSet(rs);
 
-        for (int i=0; i<container.getAtomCount(); i++) {
+        for (int i = 0; i < container.getAtomCount(); i++) {
             IAtomType atomType = eStateMatcher.findMatchingAtomType(container, container.getAtom(i));
             if (atomType == null) {
                 fragment[i] = null;
@@ -2004,7 +2001,12 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
             }
         }
 
-        double[] ret = calculate(container, fragment, rs);
+        double[] ret = new double[0];
+        try {
+            ret = calculate(container, fragment, rs);
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(new CDKException(e.getMessage()));
+        }
 
         DoubleArrayResult results = new DoubleArrayResult();
         results.add(ret[0]);
@@ -2012,7 +2014,16 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
         results.add(ret[2]);
 
         return new DescriptorValue(getSpecification(), getParameterNames(),
-            getParameters(), results, new String[] {"ALogP", "ALogP2", "AMR"} );
+                getParameters(), results, getDescriptorNames());
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        DoubleArrayResult results = new DoubleArrayResult();
+        results.add(Double.NaN);
+        results.add(Double.NaN);
+        results.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), results, getDescriptorNames(), e);
     }
 
     /**
@@ -2058,6 +2069,11 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
         return null;
     }
 
-	
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return strings;
+    }
+
+
 }// end class
 

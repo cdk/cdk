@@ -24,10 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
@@ -42,6 +38,10 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  *  The calculation of bond total Partial charge is calculated 
@@ -85,7 +85,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
 	/** make a lone pair electron checker. Default true*/
 	private boolean lpeChecker = true;
 
-    String[] descriptorNames = {"pCB"};
+    private static final String[] descriptorNames = {"pCB"};
     
     /**
      *  Constructor for the BondPartialTChargeDescriptor object
@@ -151,25 +151,38 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
         params[2] = maxResonStruc;
         return params;
     }
+
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return descriptorNames;
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(Double.NaN), descriptorNames, e);
+    }
+
     /**
      *  The method calculates the bond total Partial charge of a given bond
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
      *@param  ac                AtomContainer
      *@return                   return the sigma electronegativity
-     *@exception  CDKException  Possible Exceptions
      */
     @TestMethod(value="testCalculate_IBond_IAtomContainer")
-    public DescriptorValue calculate(IBond bond, IAtomContainer ac) throws CDKException {
-    	if (!isCachedAtomContainer(ac)) {
-    		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-        	
-    		if(lpeChecker){
-    			LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-            	lpcheck.saturate(ac);
-           	}
-    		
-        	if(maxIterations != -1) peoe.setMaxGasteigerIters(maxIterations);
+    public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
+        if (!isCachedAtomContainer(ac)) {
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+                if (lpeChecker) {
+                    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+                    lpcheck.saturate(ac);
+                }
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
+
+            if(maxIterations != -1) peoe.setMaxGasteigerIters(maxIterations);
         	if(maxIterations != -1)	pepe.setMaxGasteigerIters(maxIterations);
     		if(maxResonStruc != -1)	pepe.setMaxResoStruc(maxResonStruc);
     		
@@ -192,13 +205,14 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
 					cacheDescriptorValue(bondi, ac, new DoubleResult(peoeBond.get(i)+result));
 				}
 			} catch (Exception e) {
-				throw new CDKException("An error occured while calculating Gasteiger partial charges: " + e.getMessage(), e);
+				return getDummyDescriptorValue(e);
 			}
         }
 
-    	return getCachedDescriptorValue(bond) != null 
-        	? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(bond),descriptorNames) 
-            : null;
+        return getCachedDescriptorValue(bond) != null
+                ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                getCachedDescriptorValue(bond), descriptorNames)
+                : null;
     }
     
 	 /**

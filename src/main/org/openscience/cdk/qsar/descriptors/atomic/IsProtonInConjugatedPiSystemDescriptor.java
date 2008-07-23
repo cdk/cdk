@@ -66,6 +66,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemDescriptorTest")
 public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescriptor {
 
+    private static final String[] names = {"protonInConjSystem"};
     private boolean checkAromaticity = false;
     private IAtomContainer acold=null;
     private AtomContainerSet acSet=null;
@@ -126,6 +127,11 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
 
     /**
      *  The method is a proton descriptor that evaluates if a proton is joined to a conjugated system.
@@ -133,23 +139,30 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
      *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  atomContainer              AtomContainer
      *@return                   true if the proton is bonded to a conjugated system
-     *@exception  CDKException  Possible Exceptions
      */
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) {
         IAtomContainer clonedAtomContainer;
         try {
             clonedAtomContainer = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Error during clone");
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new BooleanResult(false),
+                    names, e);
         }
         IAtom clonedAtom = clonedAtomContainer.getAtom(atomContainer.getAtomNumber(atom));
-        
+
         boolean isProtonInPiSystem = false;
         Molecule mol = new Molecule(clonedAtomContainer);
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-            CDKHueckelAromaticityDetector.detectAromaticity(mol);
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+                CDKHueckelAromaticityDetector.detectAromaticity(mol);
+            } catch (CDKException e) {
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new BooleanResult(false),
+                        names, e);
+            }
         }
         if(atom.getSymbol().equals("H")) {
             if(acold!=clonedAtomContainer){
@@ -170,7 +183,7 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new BooleanResult(isProtonInPiSystem),
-                new String[] {"protonInConjSystem"});
+                names);
     }
 
 

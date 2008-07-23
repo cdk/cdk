@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -31,18 +30,17 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.svnrev  $Revision$
  */
 public interface IBondDescriptor extends IDescriptor {
-    
-    /** 
+
+    /**
      * Calculates the descriptor value for the given IBond.
      *
-     * @param  bond         A {@link IBond} for which this descriptor
+     * @param bond          A {@link IBond} for which this descriptor
      *                      should be calculated
-     * @return              An object of {@link DescriptorValue} that contain the 
-     *                      calculated value as well as specification details
-     * @throws CDKException if an error occurs during calculation. See 
-     *                      documentation for individual descriptors
+     * @param atomContainer The molecule containing the bond
+     * @return An object of {@link DescriptorValue} that contain the
+     *         calculated value as well as specification details
      */
-    public DescriptorValue calculate(IBond bond, IAtomContainer container) throws CDKException;
-    
+    public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer);
+
 }
 

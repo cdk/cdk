@@ -21,13 +21,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
@@ -38,11 +31,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -50,6 +39,12 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * This class calculates G3R proton descriptors used in neural networks for H1
@@ -80,7 +75,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_G3RTest")
 public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 
-	private boolean checkAromaticity = false;
+    private static final int g3r_desc_length = 13;    
+
+    private boolean checkAromaticity = false;
 
 	private IAtomContainer acold = null;
 
@@ -90,13 +87,18 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 	
     private final static LoggingTool logger = new LoggingTool(RDFProtonDescriptor_G3R.class);
 
-	private static String[] descriptorNames;
+    private static String[] descriptorNames;
 
-	/**
+    /**
 	 * Constructor for the RDFProtonDescriptor object
 	 */
 	public RDFProtonDescriptor_G3R() {
-	}
+        descriptorNames = new String[g3r_desc_length];
+        for (int i = 0; i < g3r_desc_length; i++) {
+
+            descriptorNames[i] = "g3r_" + (i + 1);
+        }
+    }
 
 	/**
 	 * Gets the specification attribute of the RDFProtonDescriptor_G3R object
@@ -147,71 +149,79 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		return params;
 	}
 
-	@TestMethod(value="testCalculate_IAtomContainer")
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return descriptorNames;
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        DoubleArrayResult result = new DoubleArrayResult(g3r_desc_length);
+        for (int i = 0; i < g3r_desc_length; i++)
+            result.add(Double.NaN);
+        return new DescriptorValue(
+                getSpecification(), getParameterNames(),
+                getParameters(), result,
+                getDescriptorNames(), e);
+    }
+
+    @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom,
-			IAtomContainer varAtomContainerSet) throws CDKException {
+			IAtomContainer varAtomContainerSet) {
 		return (calculate(atom, varAtomContainerSet, null));
 	}
 
 	@TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom,
-			IAtomContainer atomContainer, IRingSet precalculatedringset)
-			throws CDKException {
+			IAtomContainer atomContainer, IRingSet precalculatedringset) {
 
         IAtomContainer varAtomContainer;
         try {
             varAtomContainer = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Error during clone");
+            return getDummyDescriptorValue(e);
         }
 
         int atomPosition = atomContainer.getAtomNumber(atom);
         IAtom clonedAtom = varAtomContainer.getAtom(atomPosition);
+		DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(g3r_desc_length);
+        if (!atom.getSymbol().equals("H")) {
+            return getDummyDescriptorValue(new CDKException("Invalid atom specified"));
+        }
 
-		final int g3r_desc_length = 13;
-
-		DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(
-				g3r_desc_length);
-		if (!atom.getSymbol().equals("H")) {
-		    for (int i=0; i<g3r_desc_length; i++) {
-		        rdfProtonCalculatedValues.add(Double.NaN);
-		        descriptorNames[i] = "g3r_" + (i+1);
-		    }
-		    return new DescriptorValue(
-		        getSpecification(), getParameterNames(),
-		        getParameters(), rdfProtonCalculatedValues,
-		        descriptorNames
-		    );
-		}
-
-		// ///////////////////////FIRST SECTION OF MAIN METHOD: DEFINITION OF
+        // ///////////////////////FIRST SECTION OF MAIN METHOD: DEFINITION OF
 		// MAIN VARIABLES
 		// ///////////////////////AND AROMATICITY AND PI-SYSTEM AND RINGS
 		// DETECTION
 
 		Molecule mol = new Molecule(varAtomContainer);
-		if (varAtomContainer != acold) {
-			acold = varAtomContainer;
-			// DETECTION OF pi SYSTEMS
-			varAtomContainerSet = ConjugatedPiSystemsDetector.detect(mol);
-			if (precalculatedringset == null)
-				varRingSet = (new AllRingsFinder())
-						.findAllRings(varAtomContainer);
-			else
-				varRingSet = precalculatedringset;
-			try {
-				GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
-				peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
-			} catch (Exception ex1) {
-				throw new CDKException(
-						"Problems with assignGasteigerMarsiliPartialCharges due to "
-								+ ex1.toString(), ex1);
-			}
-		}
+        if (varAtomContainer != acold) {
+            acold = varAtomContainer;
+            // DETECTION OF pi SYSTEMS
+            varAtomContainerSet = ConjugatedPiSystemsDetector.detect(mol);
+            if (precalculatedringset == null)
+                try {
+                    varRingSet = (new AllRingsFinder())
+                            .findAllRings(varAtomContainer);
+                } catch (CDKException e) {
+                    return getDummyDescriptorValue(e);
+                }
+            else
+                varRingSet = precalculatedringset;
+            try {
+                GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+                peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
+            } catch (Exception ex1) {
+                return getDummyDescriptorValue(ex1);
+            }
+        }
 		if (checkAromaticity) {
-			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(varAtomContainer);
-			CDKHueckelAromaticityDetector.detectAromaticity(varAtomContainer);
-		}
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(varAtomContainer);
+                CDKHueckelAromaticityDetector.detectAromaticity(varAtomContainer);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
+        }
 		List<IRing> rsAtom;
 		Ring ring;
 		List<IRing> ringsWithThisBond;
@@ -482,7 +492,6 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
 		Vector3d b_b = new Vector3d();
 		double angle = 0;
 
-		descriptorNames = new String[g3r_desc_length];
 		if (bondsInCycloex.size() > 0) {
 			IAtom cycloexBondAtom0;
 			IAtom cycloexBondAtom1;
@@ -547,21 +556,16 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
                 // g3r_function.add(new Double(sum));
 				rdfProtonCalculatedValues.add(sum);
 				logger.debug("RDF g3r prob.: "+sum+ " at distance "+g3r);
-				descriptorNames[counter] = "g3r_" + (counter+1);
 				counter++;
 			}
 		}
 		else {
-			for (int i=0; i<g3r_desc_length; i++) {
-				rdfProtonCalculatedValues.add(Double.NaN);
-				descriptorNames[i] = "g3r_" + (i+1);
-			}
+			return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));
 		}
 		return new DescriptorValue(
 			getSpecification(), getParameterNames(), 
 			getParameters(), rdfProtonCalculatedValues,
-			descriptorNames
-		);
+			getDescriptorNames());
 	}
 
 	// Others definitions

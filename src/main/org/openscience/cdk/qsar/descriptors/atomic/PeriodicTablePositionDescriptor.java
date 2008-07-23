@@ -63,7 +63,8 @@ import java.util.Hashtable;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest")
 public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 
-	public Hashtable<String, Integer> periodicTable;
+    private static final String[] names = {"periodicTablePosition"};
+    public Hashtable<String, Integer> periodicTable;
 	
 	/**
 	 *  Constructor for the PeriodicTablePositionDescriptor object
@@ -149,24 +150,28 @@ public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
         return null;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
 
-	/**
+
+    /**
 	 *  This method calculates the period of an atom.
 	 *
 	 * @param  atom              The IAtom for which the DescriptorValue is requested
      * @param  container         Parameter is the atom container.
 	 * @return                   The period
-	 *@exception  CDKException   Description of the Exception
 	 */
 
 	@TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
 		int period;
 		String symbol = atom.getSymbol();
-		period = (Integer) periodicTable.get(symbol);
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+		period = periodicTable.get(symbol);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new IntegerResult(period),
-                new String[] {"periodicTablePosition"});
+                names);
 	}
 
 

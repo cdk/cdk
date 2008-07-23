@@ -68,6 +68,8 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptorTest")
 public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
 
+    private static final String[] names = {"partialSigmaCharge"};
+
     private GasteigerMarsiliPartialCharges peoe = null;
     /**Number of maximum iterations*/
 	private int maxIterations;
@@ -123,8 +125,13 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = (Integer)maxIterations;
+        params[0] = maxIterations;
         return params;
+    }
+
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
     }
 
 
@@ -136,30 +143,31 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
      *@return                   Value of the alpha partial charge
-     *@exception  CDKException  Possible Exceptions
      */
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
-    	if (!isCachedAtomContainer(ac)) {
-    		IMolecule mol = new NNMolecule(ac);
-        	if(maxIterations != 0) peoe.setMaxGasteigerIters(maxIterations);
-	        try {
-				peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
-	        
-				for (int i=0; i<ac.getAtomCount(); i++) {
-					// assume same order, so mol.getAtom(i) == ac.getAtom(i)
-					cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(mol.getAtom(i).getCharge()));
-				}
-			} catch (Exception e) {
-				throw new CDKException("An error occured while calculating Gasteiger partial charges: " + e.getMessage(), e);
-			}
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
+        if (!isCachedAtomContainer(ac)) {
+            IMolecule mol = new NNMolecule(ac);
+            if (maxIterations != 0) peoe.setMaxGasteigerIters(maxIterations);
+            try {
+                peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
+
+                for (int i = 0; i < ac.getAtomCount(); i++) {
+                    // assume same order, so mol.getAtom(i) == ac.getAtom(i)
+                    cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(mol.getAtom(i).getCharge()));
+                }
+            } catch (Exception e) {
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new DoubleResult(Double.NaN),
+                        names, e);
+            }
         }
-        
-        return getCachedDescriptorValue(atom) != null 
-            ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+
+        return getCachedDescriptorValue(atom) != null
+                ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 getCachedDescriptorValue(atom),
-                new String[] {"partialSigmaCharge"}) 
-            : null;
+                names)
+                : null;
     }
 
 

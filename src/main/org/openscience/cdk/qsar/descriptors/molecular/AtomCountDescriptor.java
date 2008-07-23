@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -96,7 +97,7 @@ public class AtomCountDescriptor implements IMolecularDescriptor {
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");
-    };
+    }
 
     /**
      *  Sets the parameters attribute of the AtomCountDescriptor object.
@@ -113,7 +114,6 @@ public class AtomCountDescriptor implements IMolecularDescriptor {
         if (!(params[0] instanceof String)) {
             throw new CDKException("The parameter must be of type String");
         }
-        // ok, all should be fine
         elementName = (String) params[0];
     }
 
@@ -131,23 +131,38 @@ public class AtomCountDescriptor implements IMolecularDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        String name = "n";
+        if (elementName.equals("*")) name = "nAtom";
+        else name += elementName;
+        return new String[]{name};
+    }
+
 
     /**
      *  This method calculate the number of atoms of a given type in an {@link IAtomContainer}.
      *
      *@param  container  The atom container for which this descriptor is to be calculated
      *@return            Number of atoms of a certain type is returned.
-     *@throws CDKException currently nothing will cause an exception to be thrown
      */
 
     // it could be interesting to accept as elementName a SMARTS atom, to get the frequency of this atom
     // this could be useful for other descriptors like polar surface area...
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
         int atomCount = 0;
 
-        if (container == null) throw new CDKException("The supplied AtomContainer was NULL");
+        if (container == null) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new IntegerResult((int) Double.NaN), getDescriptorNames(),
+                    new CDKException("The supplied AtomContainer was NULL"));
+        }
 
-        if (container.getAtomCount() == 0) throw new CDKException("There were no atoms in the supplied AtomContainer");
+        if (container.getAtomCount() == 0) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new IntegerResult((int) Double.NaN), getDescriptorNames(),
+                    new CDKException("The supplied AtomContainer was NULL"));
+        }
 
         if (elementName.equals("*")) {
             for (int i = 0; i < container.getAtomCount(); i++) {
@@ -175,11 +190,8 @@ public class AtomCountDescriptor implements IMolecularDescriptor {
             }
         }
 
-        String name = "n";
-        if (elementName.equals("*")) name = "nAtom";
-        else name += elementName;
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new IntegerResult(atomCount), new String[] { name });
+                new IntegerResult(atomCount), getDescriptorNames());
     }
 
     /**

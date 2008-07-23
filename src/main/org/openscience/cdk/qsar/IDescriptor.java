@@ -145,6 +145,28 @@ public interface IDescriptor {
      * @see #setParameters
      * */
     public Object[] getParameters();
+
+    /**
+     * Returns an array of names for each descriptor value calculated.
+     * <p/>
+     * Many descriptors return multiple values. In general it is useful for the
+     * descriptor to indicate the names for each value.
+     * <p/>
+     * In many cases, these names can be as simple as X1, X2, ..., XN where X is a prefix
+     * and 1, 2, ..., N are the indices. On the other hand it is also possible to return
+     * other arbitrary names, which should be documented in the Javadocs for the decsriptor
+     * (e.g., the CPSA descriptor).
+     * <p/>
+     * Note that by default if a descriptor returns a single value
+     * (such as {@link org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptor}
+     * the return array will have a single element
+     * <p/>
+     *
+     *
+     * @return An array of descriptor names, equal
+     * in length to the number of descriptor calculated..
+     */
+    public String[] getDescriptorNames();
     
 }
 

@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -63,6 +64,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = false;
+    private static final String[] names = {"naAromAtom"};
 
 
     /**
@@ -112,7 +114,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
             throw new CDKException("The first parameter must be of type Boolean");
         }
         // ok, all should be fine
-        checkAromaticity = ((Boolean) params[0]).booleanValue();
+        checkAromaticity = (Boolean) params[0];
     }
 
 
@@ -125,8 +127,13 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = new Boolean(checkAromaticity);
+        params[0] = checkAromaticity;
         return params;
+    }
+
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
     }
 
 
@@ -140,22 +147,35 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
      *
      *@param  atomContainer  The {@link IAtomContainer} for which this descriptor is to be calculated
      *@return                   the number of aromatic atoms of this AtomContainer
-     *@throws CDKException if there is a problem in atomaticity detection
      *@see #setParameters
      */
-    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
-        IAtomContainer ac ;
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
+        IAtomContainer ac;
         try {
             ac = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Error during clone");
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new IntegerResult((int) Double.NaN), getDescriptorNames(),
+                    new CDKException("Error during clone"));
         }
 
 
         int aromaticAtomsCount = 0;
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-            CDKHueckelAromaticityDetector.detectAromaticity(ac);
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+            } catch (CDKException e) {
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new IntegerResult((int) Double.NaN), getDescriptorNames(),
+                        new CDKException("Error during atom type perception"));
+            }
+            try {
+                CDKHueckelAromaticityDetector.detectAromaticity(ac);
+            } catch (CDKException e) {
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new IntegerResult((int) Double.NaN), getDescriptorNames(),
+                        new CDKException("Error during aromaticity detection: " + e.getMessage()));
+            }
         }
         for (int i = 0; i < ac.getAtomCount(); i++) {
             if (ac.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) {
@@ -163,7 +183,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
             }
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new IntegerResult(aromaticAtomsCount), new String[] {"nAromAtom"});
+                new IntegerResult(aromaticAtomsCount), getDescriptorNames());
     }
 
     /**
@@ -202,7 +222,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
      *@return       An Object of class equal to that of the parameter being requested
      */
     public Object getParameterType(String name) {
-        return new Boolean(true);
+        return true;
     }
 }
 

@@ -42,39 +42,53 @@ public class DescriptorValue {
     private Object[] parameterSettings;
     private IDescriptorResult value;
     private String[] descriptorNames;
+    private Exception exception;
 
     /**
-     * Constructor.
+     * Constrct a descriptor value object, representing the numeric values as well as parameters and provenance.
      *
-     * This constructor should not be used in new descriptor code, since it does
-     * not allow you to specify a set of names.
+     * This constructor should be used when there has been no error during the descriptor calculation
      *
-     * @deprecated 
-     * @param specification
-     * @param parameterNames
-     * @param parameterSettings
-     * @param value
+     * @param specification The specification
+     * @param parameterNames The parameter names for the decriptors
+     * @param parameterSettings  The parameter settings
+     * @param value  The actual values
+     * @param descriptorNames The names of the values
      */
-    public DescriptorValue(DescriptorSpecification specification,
-                           String[] parameterNames,
-                           Object[] parameterSettings,
-                           IDescriptorResult value) {
-        this.specification = specification;
-        this.parameterNames = parameterNames;
-        this.parameterSettings = parameterSettings;
-        this.value = value;
-    }
-
     public DescriptorValue(DescriptorSpecification specification,
                            String[] parameterNames,
                            Object[] parameterSettings,
                            IDescriptorResult value,
                            String[] descriptorNames) {
+        this(specification, parameterNames, parameterSettings, value, descriptorNames, null);
+
+    }
+
+    /**
+     * Constrct a descriptor value object, representing the numeric values as well as parameters and provenance.
+     *
+     * This constructor should be used when there has been an error during the descriptor calculation
+     *
+     * @param specification The specification
+     * @param parameterNames The parameter names for the decriptors
+     * @param parameterSettings  The parameter settings
+     * @param value  The actual values
+     * @param descriptorNames The names of the values
+     * @param exception The exception object that should have been caught if an error occured during decriptor
+     * calculation
+     */
+    public DescriptorValue(DescriptorSpecification specification,
+                           String[] parameterNames,
+                           Object[] parameterSettings,
+                           IDescriptorResult value,
+                           String[] descriptorNames,
+                           Exception exception) {
         this.specification = specification;
         this.parameterNames = parameterNames;
         this.parameterSettings = parameterSettings;
         this.value = value;
         this.descriptorNames = descriptorNames;
+        this.exception = exception;
     }
 
     @TestMethod("testGetSpecification")
@@ -95,6 +109,11 @@ public class DescriptorValue {
     @TestMethod("testGetValue")
     public IDescriptorResult getValue() {
         return this.value;
+    }
+
+    @TestMethod("testGetException")
+    public Exception getException() {
+        return exception;
     }
 
     /**
@@ -131,9 +150,9 @@ public class DescriptorValue {
             } else {
                 int ndesc = 0;
                 if (value instanceof DoubleArrayResult) {
-                    ndesc = ((DoubleArrayResult) value).length();
+                    ndesc = value.length();
                 } else if (value instanceof IntegerArrayResult) {
-                    ndesc = ((IntegerArrayResult)value).length();
+                    ndesc = value.length();
                 }
                 descriptorNames = new String[ndesc];
                 for (int i = 1; i < ndesc+1; i++) descriptorNames[i] = title+i;

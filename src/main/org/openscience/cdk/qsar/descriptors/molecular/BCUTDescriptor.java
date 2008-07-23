@@ -27,9 +27,11 @@ import Jama.EigenvalueDecomposition;
 import Jama.Matrix;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
+import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -46,6 +48,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
@@ -199,6 +202,23 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         return (params);
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        String[] names;
+        String[] suffix = {"w", "c", "p"};
+        names = new String[3 * nhigh + 3 * nlow];
+        int counter = 0;
+        for (String aSuffix : suffix) {
+            for (int i = 0; i < nhigh; i++) {
+                names[counter++] = "BCUT" + aSuffix + "-" + (i + 1) + "l";
+            }
+            for (int i = 0; i < nlow; i++) {
+                names[counter++] = "BCUT" + aSuffix + "-" + (i + 1) + "h";
+            }
+        }
+        return names;
+    }
+
     /**
      * Gets the parameterNames attribute of the BCUTDescriptor object.
      *
@@ -234,9 +254,14 @@ public class BCUTDescriptor implements IMolecularDescriptor {
 
         static double[][] evalMatrix(IAtomContainer atomContainer, double[] vsd) {
             IAtomContainer local = AtomContainerManipulator.removeHydrogens(atomContainer);
-
+            
             int natom = local.getAtomCount();
             double[][] matrix = new double[natom][natom];
+            for (int i = 0; i < natom; i++) {
+                for (int j = 0; j < natom; j++) {
+                    matrix[i][j] = 0.0;
+                }
+            }
 
             /* set the off diagonal entries */
             for (int i = 0; i < natom - 1; i++) {
@@ -277,18 +302,16 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      * @return An ArrayList containing the descriptors. The default is to return
      *         all calculated eigenvalues of the Burden matrices in the order described
      *         above. If a parameter list was supplied, then only the specified number
-     *         of highest and lowest eigenvalues (for each class of BCUT) will be returned.
-     * @throws CDKException if the wrong number of eigenvalues are requested (negative or more than the number
-     *                      of heavy atoms)
+     *         of highest and lowest eigenvalues (for each class of BCUT) will be returned.     
      */
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
         int counter;
         Molecule molecule;
         try {
             molecule = (Molecule) container.clone();
         } catch (CloneNotSupportedException e) {
             logger.debug("Error during clone");
-            throw new CDKException("Error occured during clone " + e);
+            return getDummyDescriptorValue(new CDKException("Error occured during clone " + e));
         }
 
         // add H's in case they're not present
@@ -304,13 +327,21 @@ public class BCUTDescriptor implements IMolecularDescriptor {
             hAdder.addImplicitHydrogens(molecule);
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(molecule);
         } catch (Exception e) {
-            throw new CDKException("Could not add hydrogens: " + e.getMessage(), e);
+            return getDummyDescriptorValue(new CDKException("Could not add hydrogens: " + e.getMessage(), e));
         }
 
         // do aromaticity detecttion for calculating polarizability later on
         if (this.checkAromaticity) {
-            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-            CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(new CDKException("Error in atom typing: " + e.getMessage(), e));
+            }
+            try {
+                CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(new CDKException("Error in aromaticity perception: "+e.getMessage()));
+            }
         }
 
         // find number of heavy atoms
@@ -319,7 +350,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
             if (!molecule.getAtom(i).getSymbol().equals("H")) nheavy++;
         }
 
-        if (nheavy == 0) throw new CDKException("No heavy atoms in the molecule");
+        if (nheavy == 0) return getDummyDescriptorValue(new CDKException("No heavy atoms in the molecule"));
 
         double[] diagvalue = new double[nheavy];
 
@@ -333,31 +364,44 @@ public class BCUTDescriptor implements IMolecularDescriptor {
                 counter++;
             }
         } catch (Exception e) {
-            throw new CDKException("Could not calculate weight: " + e.getMessage(), e);
+            return getDummyDescriptorValue(new CDKException("Could not calculate weight: " + e.getMessage(), e));
         }
+
         double[][] burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
         Matrix matrix = new Matrix(burdenMatrix);
         EigenvalueDecomposition eigenDecomposition = new EigenvalueDecomposition(matrix);
         double[] eval1 = eigenDecomposition.getRealEigenvalues();
-
+        
         // get charge weighted BCUT
+        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+        GasteigerPEPEPartialCharges pepe;
         GasteigerMarsiliPartialCharges peoe;
         try {
+            lpcheck.saturate(molecule);
+            double[] charges = new double[molecule.getAtomCount()];
+            pepe = new GasteigerPEPEPartialCharges();            
+            pepe.calculateCharges(molecule);
+            for (int i = 0; i < molecule.getAtomCount(); i++) charges[i] = molecule.getAtom(i).getCharge();
             peoe = new GasteigerMarsiliPartialCharges();
             peoe.assignGasteigerMarsiliSigmaPartialCharges(molecule, true);
+            for (int i = 0; i < molecule.getAtomCount(); i++) charges[i] += molecule.getAtom(i).getCharge();
+            for (int i = 0; i < molecule.getAtomCount(); i++) {
+                molecule.getAtom(i).setCharge(charges[i]);
+            }
         } catch (Exception e) {
-            throw new CDKException("Could not calculate partial charges: " + e.getMessage(), e);
+            return getDummyDescriptorValue(new CDKException("Could not calculate partial charges: " + e.getMessage(), e));
         }
         counter = 0;
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             if (molecule.getAtom(i).getSymbol().equals("H")) continue;
-            diagvalue[counter] = molecule.getAtom(i).getCharge();
+            diagvalue[counter] = molecule.getAtom(i).getCharge();            
             counter++;
         }
         burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
         matrix = new Matrix(burdenMatrix);
         eigenDecomposition = new EigenvalueDecomposition(matrix);
         double[] eval2 = eigenDecomposition.getRealEigenvalues();
+
 
         int[][] topoDistance = PathTools.computeFloydAPSP(AdjacencyMatrix.getMatrix(molecule));
 
@@ -373,8 +417,6 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         matrix = new Matrix(burdenMatrix);
         eigenDecomposition = new EigenvalueDecomposition(matrix);
         double[] eval3 = eigenDecomposition.getRealEigenvalues();
-
-
 
         String[] names;
         String[] suffix = {"w", "c", "p"};
@@ -429,7 +471,8 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         }
 
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                retval, getDescriptorNames());
     }
 
     /**
@@ -445,6 +488,13 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      */
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(6);
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        DoubleArrayResult results = new DoubleArrayResult(6);
+        for (int i = 0; i < 6; i++) results.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), results, getDescriptorNames(), e);
     }
 }
 

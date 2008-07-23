@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
@@ -40,10 +39,8 @@ public interface IMolecularDescriptor extends IDescriptor {
      *                  should be calculated
      * @return An object of {@link DescriptorValue} that contain the
      *         calculated value as well as specification details
-     * @throws CDKException if an error occurs during calculation. See
-     *                      documentation for individual descriptors
      */
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException;
+    public DescriptorValue calculate(IAtomContainer container);
 
     /**
      * Returns the specific type of the DescriptorResult object.

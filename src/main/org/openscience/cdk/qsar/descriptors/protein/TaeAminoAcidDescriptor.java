@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.protein;
 
 import org.openscience.cdk.Monomer;
 import org.openscience.cdk.Strand;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -114,10 +115,10 @@ import java.util.*;
  */
 public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
-    private HashMap TAEParams = new HashMap();
+    private Map<String, Double[]> TAEParams = new HashMap<String, Double[]>();
     private int ndesc = 147;
 
-    private HashMap nametrans = new HashMap();
+    private Map<String,String> nametrans = new HashMap<String,String>();
 
     private List getMonomers(IBioPolymer iBioPolymer) {
         List monomList = new ArrayList();
@@ -231,6 +232,13 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
         return (null);
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        String[] names = new String[ndesc];
+        for (int i = 0; i < names.length; i++) names[i] = "TAE"+i;
+        return names;
+    }
+
     /**
      * Gets the parameterNames attribute of the TaeAminOAcidDescriptor object.
      *
@@ -252,18 +260,24 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
         return (null);
     }
 
+     private DescriptorValue getDummyDescriptorValue(Exception e) {
+        int ndesc = getDescriptorNames().length;
+        DoubleArrayResult results = new DoubleArrayResult(ndesc);
+        for (int i = 0; i < ndesc; i++) results.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), results, getDescriptorNames(), e);
+    }
+
     /**
      * Calculates the 147 TAE descriptors for amino acids.
      *
      * @param container Parameter is the atom container which should implement {@link IBioPolymer}.
-     * @return A DoubleArrayResult value representing the 147 TAE descriptors
-     * @throws CDKException if the TAE parameters could not be intialized or if the supplied molecule
-     *                      does not implement {@link IBioPolymer}
+     * @return A DoubleArrayResult value representing the 147 TAE descriptors     
      */
 
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
-        if (TAEParams == null) throw new CDKException("TAE parameters were not initialized");
-        if (!(container instanceof IBioPolymer)) throw new CDKException("The molecule should be of type IBioPolymer");
+    public DescriptorValue calculate(IAtomContainer container) {
+        if (TAEParams == null) return getDummyDescriptorValue(new CDKException("TAE parameters were not initialized"));
+        if (!(container instanceof IBioPolymer)) return getDummyDescriptorValue(new CDKException("The molecule should be of type IBioPolymer"));
 
         IBioPolymer peptide = (IBioPolymer) container;
 
@@ -291,13 +305,14 @@ public class TaeAminoAcidDescriptor implements IMolecularDescriptor {
             // get the params for this AA
             Double[] params = (Double[]) TAEParams.get(tlc);
 
-            for (int i = 0; i < ndesc; i++) desc[i] += params[i].doubleValue();
+            for (int i = 0; i < ndesc; i++) desc[i] += params[i];
         }
 
         DoubleArrayResult retval = new DoubleArrayResult(ndesc);
         for (int i = 0; i < ndesc; i++) retval.add(desc[i]);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                retval, getDescriptorNames());
     }
 
     /**

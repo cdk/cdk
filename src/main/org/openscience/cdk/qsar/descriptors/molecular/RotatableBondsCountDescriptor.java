@@ -24,10 +24,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -39,6 +39,8 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.util.Iterator;
 
 /**
  *  The number of rotatable bonds is given by the SMARTS specified by Daylight on
@@ -109,7 +111,7 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 			throw new CDKException("The parameter must be of type Boolean");
 		}
 		// ok, all should be fine
-		includeTerminals = ((Boolean) params[0]).booleanValue();
+		includeTerminals = (Boolean) params[0];
 	}
 
 
@@ -121,26 +123,36 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 	public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
 		Object[] params = new Object[1];
-		params[0] = new Boolean(includeTerminals);
+		params[0] = includeTerminals;
 		return params;
 	}
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return new String[] { includeTerminals ? "nRotBt" : "nRotB"};
+    }
 
-	/**
+
+    /**
 	 *  The method calculates the number of rotatable bonds of an atom container.
 	 *  If the boolean parameter is set to true, terminal bonds are included.
 	 *
 	 *@param  ac                AtomContainer
 	 *@return                   number of rotatable bonds
-	 *@exception  CDKException  Possible Exceptions
 	 */
-	public DescriptorValue calculate(IAtomContainer ac) throws CDKException {
+	public DescriptorValue calculate(IAtomContainer ac) {
 		int rotatableBondsCount = 0;
 		Iterator bonds = ac.bonds();
-		int degree0 = 0;
-		int degree1 = 0;
-		IRingSet ringSet = new SpanningTree(ac).getBasicRings();
-		while (bonds.hasNext()) {
+		int degree0;
+		int degree1;
+        IRingSet ringSet;
+        try {
+            ringSet = new SpanningTree(ac).getBasicRings();
+        } catch (NoSuchAtomException e) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new IntegerResult((int) Double.NaN), getDescriptorNames(), e);
+        }
+        while (bonds.hasNext()) {
 			IBond bond = (IBond)bonds.next();
 			if (ringSet.getRings(bond).size() > 0) {
 				bond.setFlag(CDKConstants.ISINRING, true);
@@ -154,15 +166,12 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 			if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
 				if ((BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom0), IBond.Order.TRIPLE)) && 
 					(BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom1), IBond.Order.TRIPLE))) {
-					if (bond.getFlag(CDKConstants.ISINRING) == false) {
+					if (!bond.getFlag(CDKConstants.ISINRING)) {
 						degree0 = ac.getConnectedBondsCount(atom0);
 						degree1 = ac.getConnectedBondsCount(atom1);
 						if ((degree0 == 1) || (degree1 == 1)) {
-							if (includeTerminals == true) {
+							if (includeTerminals) {
 								rotatableBondsCount += 1;
-							}
-							if (includeTerminals == false) {
-								rotatableBondsCount += 0;
 							}
 						} else {
 							rotatableBondsCount += 1;
@@ -171,8 +180,9 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 				}
 			}
 		}
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(rotatableBondsCount),
-                new String[] { includeTerminals ? "nRotBt" : "nRotB"});
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new IntegerResult(rotatableBondsCount), getDescriptorNames());
+
 	}
 
     /**
@@ -213,7 +223,7 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 	 *@return       The parameterType value
 	 */
 	public Object getParameterType(String name) {
-		return new Boolean(true);
+		return true;
 	}
 }
 

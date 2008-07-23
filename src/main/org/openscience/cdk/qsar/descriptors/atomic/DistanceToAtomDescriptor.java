@@ -116,6 +116,11 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return new String[]{"distanceToAtom"};
+    }
+
 
     /**
      *  This method calculate the 3D distance between two atoms.
@@ -123,24 +128,26 @@ public class DistanceToAtomDescriptor implements IAtomicDescriptor {
      *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  container         Parameter is the atom container.
      *@return                   The number of bonds on the shortest path between two atoms
-     *@exception  CDKException  Description of the Exception
      */
 
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         double distanceToAtom;
 
         IAtom focus = container.getAtom(focusPosition);
 
         if (atom.getPoint3d() == null || focus.getPoint3d() == null) {
-        	throw new CDKException("Target or focus atom must have 3D coordinates.");
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(Double.NaN),
+                    getDescriptorNames(), new CDKException("Target or focus atom must have 3D coordinates."));
+
         }
-        
+
         distanceToAtom = calculateDistanceBetweenTwoAtoms(atom, focus);
         
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(distanceToAtom),
-                new String[] {"distanceToAtom"});
+                getDescriptorNames());
 
     }
 

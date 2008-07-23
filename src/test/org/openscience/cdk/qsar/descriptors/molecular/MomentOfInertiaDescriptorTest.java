@@ -29,6 +29,7 @@ import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
+import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -62,12 +63,8 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
     public void testMOIFromSmiles() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC");
-        try {
-            DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol).getValue();
-            fail("Should throw a CDKException since we don't have 3D coords");
-        } catch (CDKException e) {
-            // should be here
-        }
+        DescriptorValue value = descriptor.calculate(mol);        
+        assertNotNull("The Exception should be non-null since we don't have 3D coords" , value.getException());
 
     }
     public void testMomentOfInertia1() throws ClassNotFoundException, CDKException, java.lang.Exception {

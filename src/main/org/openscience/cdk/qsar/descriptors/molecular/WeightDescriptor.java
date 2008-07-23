@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -97,7 +98,7 @@ public class WeightDescriptor implements IMolecularDescriptor {
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");
-    };
+    }
 
     /**
      *  Sets the parameters attribute of the WeightDescriptor object.
@@ -132,6 +133,19 @@ public class WeightDescriptor implements IMolecularDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        String name = "w";
+        if (elementName.equals("*")) name = "MW";
+        else name += elementName;
+        return new String[]{name};
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+         return new DescriptorValue(getSpecification(), getParameterNames(),
+                 getParameters(), new DoubleResult(Double.NaN), getDescriptorNames(), e);
+     }
+
 
     /**
      * Calculate the weight of specified element type in the supplied {@link IAtomContainer}.
@@ -140,8 +154,7 @@ public class WeightDescriptor implements IMolecularDescriptor {
      * is specified as the element symbol make sure that the AtomContainer has hydrogens.
      *@return The total weight of atoms of the specified element type
      */
-
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
         double weight = 0;
         if (elementName.equals("*")) {
             try {
@@ -153,7 +166,7 @@ public class WeightDescriptor implements IMolecularDescriptor {
                     weight += (hcount * 1.00782504);
                 }
             } catch (Exception e) {
-                throw new CDKException("Could not calculate wright: " + e.getMessage(), e);
+                return getDummyDescriptorValue(e);
             }
         }
         else if (elementName.equals("H")) {
@@ -168,7 +181,7 @@ public class WeightDescriptor implements IMolecularDescriptor {
                     }
                 }
             } catch (Exception e) {
-                throw new CDKException("Could not calculate wright: " + e.getMessage(), e);
+                return getDummyDescriptorValue(e);
             }
         }
         else {
@@ -179,15 +192,13 @@ public class WeightDescriptor implements IMolecularDescriptor {
                     }
                 }
             } catch (Exception e) {
-                throw new CDKException("Could not calculate wright: " + e.getMessage(), e);
+                return getDummyDescriptorValue(e);
             }
         }
 
-        String name = "w";
-        if (elementName.equals("*")) name = "MW";
-        else name += elementName;
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(weight),
-                new String[] {name});
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(weight), getDescriptorNames());
+
     }
 
     /**

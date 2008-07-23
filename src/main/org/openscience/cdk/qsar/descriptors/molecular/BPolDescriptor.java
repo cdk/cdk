@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -69,9 +70,9 @@ import java.util.Iterator;
  */
 public class BPolDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
-    private IsotopeFactory ifac = null;
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
     private static double[] polarizabilities;
+    private static final String[] names = {"bpol"};
 
     /**
      *  Constructor for the APolDescriptor object
@@ -97,7 +98,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
             this.getClass().getName(),
             "$Id$",
             "The Chemistry Development Kit");
-    };
+    }
 
     /**
      *  Sets the parameters attribute of the BPolDescriptor object
@@ -120,6 +121,11 @@ public class BPolDescriptor implements IMolecularDescriptor {
         return (null);
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
 
     /**
      *  This method calculate the sum of the absolute value of
@@ -130,14 +136,14 @@ public class BPolDescriptor implements IMolecularDescriptor {
      */
 
 
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
 
         double bpol = 0;
-        int atomicNumber0 = 0;
-        int atomicNumber1 = 0;
-        double difference = 0;
+        int atomicNumber0;
+        int atomicNumber1;
+        double difference;
         try {
-            ifac = IsotopeFactory.getInstance(container.getBuilder());
+            IsotopeFactory ifac = IsotopeFactory.getInstance(container.getBuilder());
             IElement element0;
             IElement element1;
 
@@ -157,10 +163,12 @@ public class BPolDescriptor implements IMolecularDescriptor {
                 bpol += Math.abs(difference);
             }
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new DoubleResult(bpol), new String[] {"bpol"});
+                    new DoubleResult(bpol), getDescriptorNames());
         } catch (Exception ex1) {
-                    logger.debug(ex1);
-            throw new CDKException("Problems with IsotopeFactory due to " + ex1.toString(), ex1);
+            logger.debug(ex1);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(Double.NaN), getDescriptorNames(),
+                    new CDKException("Problems with IsotopeFactory due to " + ex1.toString(), ex1));
         }
     }
 

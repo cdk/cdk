@@ -76,6 +76,7 @@ public class MqsarmolecularTests {
         suite.addTest(HBondDonorCountDescriptorTest.suite());
         suite.addTest(IPMolecularLearningDescriptorTest.suite());
         suite.addTest(KappaShapeIndicesDescriptorTest.suite());
+        suite.addTest(KierHallSmartsDescriptorTest.suite());
         suite.addTest(LargestChainDescriptorTest.suite());
         suite.addTest(LargestPiSystemDescriptorTest.suite());
         suite.addTest(LengthOverBreadthDescriptorTest.suite());

@@ -19,9 +19,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -33,6 +31,9 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -82,6 +83,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class WeightedPathDescriptor implements IMolecularDescriptor {
 
+    private static final String[] names = {
+            "WTPT-1", "WTPT-2", "WTPT-3", "WTPT-4", "WTPT-5"
+    };
+
     public WeightedPathDescriptor() {
     }
 
@@ -115,6 +120,11 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
         return (null);
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names; 
+    }
+
     /**
      * Gets the parameterNames attribute of the WeightedPathDescriptor object.
      *
@@ -143,7 +153,7 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
      * @return A DoubleArrayResult value representing the weighted path values
      */
 
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
         IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
         int natom = local.getAtomCount();
         DoubleArrayResult retval = new DoubleArrayResult();
@@ -162,8 +172,7 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
         // heteroatoms
         double[] pathWts = getPathWeights(pathList, local);
         double mid = 0.0;
-        for (int i = 0; i < pathWts.length; i++)
-            mid += pathWts[i];
+        for (double pathWt3 : pathWts) mid += pathWt3;
         mid += natom; // since we don't calculate paths of length 0 above
 
         retval.add(mid);
@@ -183,8 +192,7 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
         }
         pathWts = getPathWeights(pathList, local);
         mid = 0.0;
-        for (int i = 0; i < pathWts.length; i++)
-            mid += pathWts[i];
+        for (double pathWt2 : pathWts) mid += pathWt2;
         mid += count;
         retval.add(mid);
 
@@ -203,8 +211,7 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
         }
         pathWts = getPathWeights(pathList, local);
         mid = 0.0;
-        for (int i = 0; i < pathWts.length; i++)
-            mid += pathWts[i];
+        for (double pathWt1 : pathWts) mid += pathWt1;
         mid += count;
         retval.add(mid);
 
@@ -223,15 +230,13 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
         }
         pathWts = getPathWeights(pathList, local);
         mid = 0.0;
-        for (int i = 0; i < pathWts.length; i++)
-            mid += pathWts[i];
+        for (double pathWt : pathWts) mid += pathWt;
         mid += count;
         retval.add(mid);
 
-        String[] names = {
-                "WTPT-1", "WTPT-2", "WTPT-3", "WTPT-4", "WTPT-5"
-        };
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
+
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                retval, getDescriptorNames());
     }
 
     /**

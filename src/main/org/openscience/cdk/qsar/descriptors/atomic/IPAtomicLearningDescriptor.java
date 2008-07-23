@@ -66,7 +66,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.IPAtomicLearningDescriptorTest")
 public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
 	    
-    String[] descriptorNames = {"ipAtomicLearning"};
+    private static final String[] descriptorNames = {"ipAtomicLearning"};
 	
 	/**
 	 *  Constructor for the IPAtomicLearningDescriptor object.
@@ -104,30 +104,46 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
     public Object[] getParameters() {
         return null;
     }
-	/**
+
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return descriptorNames;
+    }
+
+    /**
 	 *  This method calculates the ionization potential of an atom.
 	 *
 	 *@param  atom          The IAtom to ionize.
 	 *@param  container         Parameter is the IAtomContainer.
 	 *@return                   The ionization potential. Not possible the ionization.
-	 *@exception  CDKException  Description of the Exception
 	 */
 	@TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException{
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         double value = 0;
-        
-		if (!isCachedAtomContainer(container)) {
-    		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
 
-    		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-            lpcheck.saturate(container);
-           	
-    	}
-		
-		value = IonizationPotentialTool.predictIP(container,atom);
-		
-		
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(value),descriptorNames);
+        if (!isCachedAtomContainer(container)) {
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+
+                LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+                lpcheck.saturate(container);
+            } catch (CDKException e) {
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new DoubleResult(Double.NaN), getDescriptorNames(), e);
+
+            }
+        }
+
+        try {
+            value = IonizationPotentialTool.predictIP(container,atom);
+        } catch (CDKException e) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new DoubleResult(Double.NaN), getDescriptorNames(), e);
+        }
+
+
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(value), getDescriptorNames());
 		
 	}
 	/**

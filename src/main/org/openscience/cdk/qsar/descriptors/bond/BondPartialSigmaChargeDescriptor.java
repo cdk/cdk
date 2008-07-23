@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
@@ -38,6 +36,8 @@ import org.openscience.cdk.qsar.AbstractBondDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
+
+import java.util.Iterator;
 
 /**
  *  The calculation of bond-sigma Partial charge is calculated 
@@ -65,7 +65,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondPartialSigmaCharge
  * @cdk.bug     1860497
- * @see PartialSigmaChargeDescriptor
+ * @see org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptorTest")
 public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
@@ -74,7 +74,7 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
     /**Number of maximum iterations*/
 	private int maxIterations;
 
-    String[] descriptorNames = {"peoeB"};
+    private static final String[] descriptorNames = {"peoeB"};
 	 /**
      *  Constructor for the BondPartialSigmaChargeDescriptor object
      */
@@ -127,6 +127,16 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return descriptorNames;
+    }
+
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(Double.NaN), descriptorNames,e);
+    }
 
     /**
      *  The method calculates the bond-sigma Partial charge of a given bond
@@ -134,10 +144,9 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
      *
      *@param  ac                AtomContainer
      *@return                   return the sigma electronegativity
-     *@exception  CDKException  Possible Exceptions
      */
     @TestMethod(value="testCalculate_IBond_IAtomContainer")
-    public DescriptorValue calculate(IBond bond, IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
     	if (!isCachedAtomContainer(ac)) {
     		IMolecule mol = new NNMolecule(ac);
         	if(maxIterations != 0) peoe.setMaxGasteigerIters(maxIterations);
@@ -149,12 +158,13 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
 					cacheDescriptorValue(bondi, ac, new DoubleResult(result));
 				}
 	        } catch (Exception ex1) {
-	            throw new CDKException("Problems with assignGasteigerPiPartialCharges due to " + ex1.toString(), ex1);
+	            return getDummyDescriptorValue(ex1);
 	        }
     	}
-    	return getCachedDescriptorValue(bond) != null 
-        	? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(bond),descriptorNames) 
-            : null;
+        return getCachedDescriptorValue(bond) != null
+                ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                getCachedDescriptorValue(bond), descriptorNames)
+                : null;
     }
 	 /**
     * Gets the parameterNames attribute of the BondPartialSigmaChargeDescriptor object.

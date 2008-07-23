@@ -24,12 +24,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Vector;
-
-import javax.vecmath.Point3d;
-
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -38,6 +36,9 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
+
+import javax.vecmath.Point3d;
+import java.util.Vector;
 
 
 /**
@@ -96,6 +97,12 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
         }
     }
 
+    private static final String[] names = {
+            "GRAV-1", "GRAV-2", "GRAV-3",
+            "GRAVH-1", "GRAVH-2", "GRAVH-3",
+            "GRAV-4", "GRAV-5", "GRAV-6"
+    };
+
     public GravitationalIndexDescriptor() {
         logger = new LoggingTool(this);
     }
@@ -106,9 +113,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");
-    }
-
-    ;
+    }    
 
     /**
      * Sets the parameters attribute of the GravitationalIndexDescriptor object.
@@ -132,6 +137,11 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
         return (null);
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
     /**
      * Gets the parameterNames attribute of the GravitationalIndexDescriptor object.
      *
@@ -153,6 +163,14 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
         return (null);
     }
 
+     private DescriptorValue getDummyDescriptorValue(Exception e) {
+        int ndesc = getDescriptorNames().length;
+        DoubleArrayResult results = new DoubleArrayResult(ndesc);
+        for (int i = 0; i < ndesc; i++) results.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), results, getDescriptorNames(), e);
+    }
+
     /**
      * Calculates the 9 gravitational indices.
      *
@@ -160,10 +178,13 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
      * @return An ArrayList containing 9 elements in the order described above
      */
 
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
+        if (!GeometryTools.has3DCoordinates(container))
+            return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
+
         IsotopeFactory factory = null;
-        double mass1 = 0;
-        double mass2 = 0;
+        double mass1;
+        double mass2;
         try {
             factory = IsotopeFactory.getInstance(container.getBuilder());
         } catch (Exception e) {
@@ -175,7 +196,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
             org.openscience.cdk.interfaces.IBond bond = container.getBond(i);
 
             if (bond.getAtomCount() != 2) {
-                throw new CDKException("GravitationalIndex: Only handles 2 center bonds");
+                return getDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
             }
 
             mass1 = factory.getMajorIsotope(bond.getAtom(0).getSymbol()).getMassNumber();
@@ -184,9 +205,6 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
             Point3d p1 = bond.getAtom(0).getPoint3d();
             Point3d p2 = bond.getAtom(1).getPoint3d();
 
-            if (p1 == null || p2 == null) {
-                throw new CDKException("Molecule must have 3D coordinates");
-            }
             double x1 = p1.x;
             double y1 = p1.y;
             double z1 = p1.z;
@@ -204,7 +222,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
             org.openscience.cdk.interfaces.IBond b = container.getBond(i);
 
             if (b.getAtomCount() != 2) {
-                throw new CDKException("GravitationalIndex: Only handles 2 center bonds");
+                return getDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
             }
 
             if (b.getAtom(0).getSymbol().equals("H") ||
@@ -216,10 +234,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
 
             Point3d point0 = b.getAtom(0).getPoint3d();
             Point3d point1 = b.getAtom(1).getPoint3d();
-            if (point0 == null || point1 == null) {
-                throw new CDKException("The molecule must have 3D coordinates");
-            }
-            
+           
             double x1 = point0.x;
             double y1 = point0.y;
             double z1 = point0.z;
@@ -289,12 +304,8 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
         retval.add(Math.sqrt(allheavysum));
         retval.add(Math.pow(allheavysum, 1.0 / 3.0));
 
-        String[] names = {
-                "GRAV-1", "GRAV-2", "GRAV-3",
-                "GRAVH-1", "GRAVH-2", "GRAVH-3",
-                "GRAV-4", "GRAV-5", "GRAV-6"
-        };
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                retval, getDescriptorNames());
     }
 
     /**

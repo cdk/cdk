@@ -24,10 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
@@ -41,6 +37,10 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  *  <p>The calculation of total partial charges of an heavy atom is based on 
@@ -75,6 +75,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.PartialTChargePEOEDescriptorTest")
 public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 
+    private static final String[] names = {"pepeT"};
+
     private GasteigerMarsiliPartialCharges peoe = null;
     private GasteigerPEPEPartialCharges pepe = null;
     
@@ -85,7 +87,6 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 	/** make a lone pair electron checker. Default true*/
 	private boolean lpeChecker = true;
 
-    String[] descriptorNames = {"pepeT"};
     /**
      *  Constructor for the PartialTChargePEOEDescriptor object
      */
@@ -153,6 +154,11 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
 
     /**
      *  The method returns partial total charges assigned to an heavy atom through PEOE method.
@@ -161,17 +167,26 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      * @param  atom              The IAtom for which the DescriptorValue is requested
      * @param  ac                AtomContainer
      * @return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
-     * @exception  CDKException  Possible Exceptions
      */
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
-    	if (!isCachedAtomContainer(ac)) {
-    		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-        	
-    		if(lpeChecker){
-    			LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-            	lpcheck.saturate(ac);
-           	}
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
+        if (!isCachedAtomContainer(ac)) {
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+            } catch (CDKException e) {
+                new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new DoubleResult(Double.NaN), names, e);
+            }
+
+            if (lpeChecker) {
+                LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+                try {
+                    lpcheck.saturate(ac);
+                } catch (CDKException e) {
+                    new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                            new DoubleResult(Double.NaN), names, e);
+                }
+            }
     		
         	if(maxIterations != -1) peoe.setMaxGasteigerIters(maxIterations);
         	if(maxIterations != -1)	pepe.setMaxGasteigerIters(maxIterations);
@@ -187,17 +202,19 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 					it.next().setCharge(0.0);
 
 				pepe.assignGasteigerPiPartialCharges(ac, true);
-				for(int i = 0; i < ac.getAtomCount() ; i++) 
-					cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(peoeAtom.get(i) + ac.getAtom(i).getCharge()));
-				
-			} catch (Exception e) {
-				throw new CDKException("An error occured while calculating Gasteiger partial charges: " + e.getMessage(), e);
-			}
+				for(int i = 0; i < ac.getAtomCount() ; i++)
+                    cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(peoeAtom.get(i) + ac.getAtom(i).getCharge()));
+
+            } catch (Exception e) {
+                new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new DoubleResult(Double.NaN), names, e);
+            }
         }
-        
-        return getCachedDescriptorValue(atom) != null 
-            ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(atom),descriptorNames) 
-            : null;
+
+        return getCachedDescriptorValue(atom) != null
+                ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                getCachedDescriptorValue(atom), names)
+                : null;
     }
 
 

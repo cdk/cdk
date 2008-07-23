@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -67,6 +68,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 public class RuleOfFiveDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = false;
 
+    private static final String[] names = {"LipinskiFailures"};
 
     /**
      *  Constructor for the RuleOfFiveDescriptor object.
@@ -116,7 +118,7 @@ public class RuleOfFiveDescriptor implements IMolecularDescriptor {
             throw new CDKException("The first parameter must be of type Boolean");
         }
         // ok, all should be fine
-        checkAromaticity = ((Boolean) params[0]).booleanValue();
+        checkAromaticity = (Boolean) params[0];
     }
 
 
@@ -129,8 +131,13 @@ public class RuleOfFiveDescriptor implements IMolecularDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = new Boolean(checkAromaticity);
+        params[0] = checkAromaticity;
         return params;
+    }
+
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
     }
 
 
@@ -140,49 +147,64 @@ public class RuleOfFiveDescriptor implements IMolecularDescriptor {
      *
      *@param  mol   AtomContainer for which this descriptor is to be calculated
      *@return    The number of failures of the Lipinski rule
-     *@throws  CDKException  if the following descriptors throw an exception:
-         * {@link org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptor},  {@link HBondAcceptorCountDescriptor}, {@link HBondDonorCountDescriptor},
-         * {@link org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor}, {@link org.openscience.cdk.qsar.descriptors.molecular.RotatableBondsCountDescriptor},
      */
-    public DescriptorValue calculate(IAtomContainer mol) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer mol) {
 
         int lipinskifailures = 0;
 
         IMolecularDescriptor xlogP = new XLogPDescriptor();
         Object[] xlogPparams = {
-            new Boolean(checkAromaticity),
+                checkAromaticity,
             Boolean.TRUE,
         };
-        xlogP.setParameters(xlogPparams);
-        double xlogPvalue = ((DoubleResult)xlogP.calculate(mol).getValue()).doubleValue();
 
-        IMolecularDescriptor acc = new HBondAcceptorCountDescriptor();
-        Object[] hBondparams = { new Boolean(checkAromaticity) };
-        acc.setParameters(hBondparams);
-        int acceptors = ((IntegerResult)acc.calculate(mol).getValue()).intValue();
 
-        IMolecularDescriptor don = new HBondDonorCountDescriptor();
-        don.setParameters(hBondparams);
-        int donors = ((IntegerResult)don.calculate(mol).getValue()).intValue();
+        try {
+            xlogP.setParameters(xlogPparams);
+            double xlogPvalue = ((DoubleResult) xlogP.calculate(mol).getValue()).doubleValue();
 
-        IMolecularDescriptor mw = new WeightDescriptor();
-        Object[] mwparams = {new String("")};
-        mw.setParameters(mwparams);
-        double mwvalue = ((DoubleResult)mw.calculate(mol).getValue()).doubleValue();
+            IMolecularDescriptor acc = new HBondAcceptorCountDescriptor();
+            Object[] hBondparams = {checkAromaticity};
+            acc.setParameters(hBondparams);
+            int acceptors = ((IntegerResult) acc.calculate(mol).getValue()).intValue();
 
-        IMolecularDescriptor rotata = new RotatableBondsCountDescriptor();
-        rotata.setParameters(hBondparams);
-        int rotatablebonds = ((IntegerResult)rotata.calculate(mol).getValue()).intValue();
+            IMolecularDescriptor don = new HBondDonorCountDescriptor();
+            don.setParameters(hBondparams);
+            int donors = ((IntegerResult) don.calculate(mol).getValue()).intValue();
 
-        if(xlogPvalue > 5.0) { lipinskifailures += 1; }
-        if(acceptors > 10) { lipinskifailures += 1; }
-        if(donors > 5) { lipinskifailures += 1; }
-        if(mwvalue > 500.0) { lipinskifailures += 1; }
-        if(rotatablebonds > 10.0) { lipinskifailures += 1; }
+            IMolecularDescriptor mw = new WeightDescriptor();
+            Object[] mwparams = {""};
+            mw.setParameters(mwparams);
+            double mwvalue = ((DoubleResult) mw.calculate(mol).getValue()).doubleValue();
+
+            IMolecularDescriptor rotata = new RotatableBondsCountDescriptor();
+            rotata.setParameters(hBondparams);
+            int rotatablebonds = ((IntegerResult) rotata.calculate(mol).getValue()).intValue();
+
+            if (xlogPvalue > 5.0) {
+                lipinskifailures += 1;
+            }
+            if (acceptors > 10) {
+                lipinskifailures += 1;
+            }
+            if (donors > 5) {
+                lipinskifailures += 1;
+            }
+            if (mwvalue > 500.0) {
+                lipinskifailures += 1;
+            }
+            if (rotatablebonds > 10.0) {
+                lipinskifailures += 1;
+            }
+        } catch (CDKException e) {
+            new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new IntegerResult((int) Double.NaN),
+                    getDescriptorNames(), e);
+        }
 
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(lipinskifailures),
-                new String[] {"LipinksiFailures"});
+                getDescriptorNames());
     }
 
     /**
@@ -221,7 +243,7 @@ public class RuleOfFiveDescriptor implements IMolecularDescriptor {
      *@return       An Object of class equal to that of the parameter being requested
      */
     public Object getParameterType(String name) {
-        return new Boolean(true);
+        return true;
     }
 }
 

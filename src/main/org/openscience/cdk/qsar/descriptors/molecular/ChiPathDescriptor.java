@@ -25,11 +25,8 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -51,6 +48,10 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Evaluates chi path descriptors.
@@ -74,7 +75,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @author Rajarshi Guha
  * @cdk.created 2006-11-12
  * @cdk.module qsarmolecular
- * @cdk.svnrev  $Revision$
+ * @cdk.svnrev $Revision$
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:chiPath
  * @cdk.keyword chi path index
@@ -113,74 +114,100 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
-
-        // removeHydrogens does a deep copy, so no need to clone
-        IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
-        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = localAtomContainer.atoms();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
-            IAtomType type = matcher.findMatchingAtomType(localAtomContainer, atom);
-            AtomTypeManipulator.configure(atom, type);
-        }
-        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
-        hAdder.addImplicitHydrogens(localAtomContainer);
-
-        List subgraph0 = order0(localAtomContainer);
-        List subgraph1 = order1(localAtomContainer);
-        List subgraph2 = order2(localAtomContainer);
-        List subgraph3 = order3(localAtomContainer);
-        List subgraph4 = order4(localAtomContainer);
-        List subgraph5 = order5(localAtomContainer);
-        List subgraph6 = order6(localAtomContainer);
-        List subgraph7 = order7(localAtomContainer);
-
-        double order0s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph0);
-        double order1s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph1);
-        double order2s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph2);
-        double order3s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph3);
-        double order4s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph4);
-        double order5s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph5);
-        double order6s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph6);
-        double order7s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph7);
-
-        double order0v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph0);
-        double order1v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph1);
-        double order2v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph2);
-        double order3v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph3);
-        double order4v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph4);
-        double order5v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph5);
-        double order6v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph6);
-        double order7v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph7);
-
-        DoubleArrayResult retval = new DoubleArrayResult();
-        retval.add(order0s);
-        retval.add(order1s);
-        retval.add(order2s);
-        retval.add(order3s);
-        retval.add(order4s);
-        retval.add(order5s);
-        retval.add(order6s);
-        retval.add(order7s);
-
-        retval.add(order0v);
-        retval.add(order1v);
-        retval.add(order2v);
-        retval.add(order3v);
-        retval.add(order4v);
-        retval.add(order5v);
-        retval.add(order6v);
-        retval.add(order7v);
-
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
         String[] names = new String[16];
         for (int i = 0; i < 8; i++) {
             names[i] = "SP-" + i;
             names[i + 8] = "VP-" + i;
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
+        return names;
+    }
 
+
+    public DescriptorValue calculate(IAtomContainer container) {
+
+        IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+        Iterator<IAtom> atoms = localAtomContainer.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            IAtomType type;
+            try {
+                type = matcher.findMatchingAtomType(localAtomContainer, atom);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(new CDKException("Error in atom typing: " + e.getMessage()));
+            }
+            AtomTypeManipulator.configure(atom, type);
+        }
+        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        try {
+            hAdder.addImplicitHydrogens(localAtomContainer);
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(new CDKException("Error in hydrogen addition: " + e.getMessage()));
+        }
+
+        try {
+            List<Integer> subgraph0 = order0(localAtomContainer);
+            List subgraph1 = order1(localAtomContainer);
+            List subgraph2 = order2(localAtomContainer);
+            List subgraph3 = order3(localAtomContainer);
+            List subgraph4 = order4(localAtomContainer);
+            List subgraph5 = order5(localAtomContainer);
+            List subgraph6 = order6(localAtomContainer);
+            List subgraph7 = order7(localAtomContainer);
+
+            double order0s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph0);
+            double order1s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph1);
+            double order2s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph2);
+            double order3s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph3);
+            double order4s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph4);
+            double order5s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph5);
+            double order6s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph6);
+            double order7s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph7);
+
+            double order0v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph0);
+            double order1v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph1);
+            double order2v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph2);
+            double order3v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph3);
+            double order4v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph4);
+            double order5v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph5);
+            double order6v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph6);
+            double order7v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph7);
+
+            DoubleArrayResult retval = new DoubleArrayResult();
+            retval.add(order0s);
+            retval.add(order1s);
+            retval.add(order2s);
+            retval.add(order3s);
+            retval.add(order4s);
+            retval.add(order5s);
+            retval.add(order6s);
+            retval.add(order7s);
+
+            retval.add(order0v);
+            retval.add(order1v);
+            retval.add(order2v);
+            retval.add(order3v);
+            retval.add(order4v);
+            retval.add(order5v);
+            retval.add(order6v);
+            retval.add(order7v);
+
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    retval, getDescriptorNames());
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(new CDKException(e.getMessage()));
+        }
+
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        int ndesc = getDescriptorNames().length;
+        DoubleArrayResult results = new DoubleArrayResult(ndesc);
+        for (int i = 0; i < ndesc; i++) results.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), results, getDescriptorNames(), e);
     }
 
     /**

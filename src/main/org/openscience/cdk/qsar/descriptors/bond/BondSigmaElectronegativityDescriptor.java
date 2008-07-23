@@ -71,7 +71,7 @@ public class BondSigmaElectronegativityDescriptor implements IBondDescriptor {
     
 	private Electronegativity electronegativity;
 
-    String[] descriptorNames = {"elecSigB"};
+    private static final String[] descriptorNames = {"elecSigB"};
     /**
      *  Constructor for the BondSigmaElectronegativityDescriptor object
      */
@@ -124,26 +124,40 @@ public class BondSigmaElectronegativityDescriptor implements IBondDescriptor {
         params[0] = maxIterations;
         return params;
     }
-    
+
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return descriptorNames;
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(Double.NaN), descriptorNames, e);
+    }
+
     /**
      *  The method calculates the sigma electronegativity of a given bond
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
      *@param  ac                AtomContainer
      *@return                   return the sigma electronegativity
-     *@exception  CDKException  Possible Exceptions
      */
     @TestMethod(value="testCalculate_IBond_IAtomContainer")
-    public DescriptorValue calculate(IBond bond, IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
 
-    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+        try {
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(e);
+        }
 
-  		if(maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
+        if(maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
 	    
 	    double electroAtom1 = electronegativity.calculateSigmaElectronegativity(ac, bond.getAtom(0));
 	    double electroAtom2 = electronegativity.calculateSigmaElectronegativity(ac, bond.getAtom(1));
 	    
-	    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(Math.abs(electroAtom1 - electroAtom2)),descriptorNames);
+	    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(Math.abs(electroAtom1 - electroAtom2)),descriptorNames);
 	    
     }
 	 /**

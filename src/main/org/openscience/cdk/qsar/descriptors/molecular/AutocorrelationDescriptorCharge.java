@@ -23,6 +23,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.matrix.TopologicalMatrix;
@@ -49,6 +50,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
 
+    private static final String[] names = {"ATSc1", "ATSc2", "ATSc3", "ATSc4", "ATSc5"};
     private static double[] listcharges (IAtomContainer container)throws CDKException{
     	int natom = container.getAtomCount();
         double[] charges = new double[natom];
@@ -68,7 +70,7 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
     }
 
 
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
         try {
             double[] w = listcharges(container);
             int natom = container.getAtomCount();
@@ -92,10 +94,14 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
                 result.add(aChargeSum);
             }
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    result, new String[]{"ATSc1", "ATSc2", "ATSc3", "ATSc4", "ATSc5"});
+                    result, names);
 
         } catch (Exception ex) {
-            throw new CDKException("Error while calculating the ATS_charge descriptor: " + ex.getMessage(), ex);
+            DoubleArrayResult result = new DoubleArrayResult(5);
+            for (int i = 0; i < 5; i++) result.add(Double.NaN);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    result, names,
+                    new CDKException("Error while calculating the ATS_charge descriptor: " + ex.getMessage(), ex));
         }
     }
 
@@ -110,6 +116,11 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
 
     public Object[] getParameters() {
         return null;
+    }
+
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
     }
 
     public DescriptorSpecification getSpecification() {

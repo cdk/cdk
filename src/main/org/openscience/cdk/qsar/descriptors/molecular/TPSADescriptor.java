@@ -23,11 +23,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.HashMap;
-import java.util.Vector;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Ring;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -41,6 +39,10 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Calculation of topological polar surface area based on fragment
@@ -79,6 +81,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class TPSADescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = false;
     private static HashMap map;
+    private static final String[] names = {"TopoPSA"};
 
     /**
      * Constructor for the TPSADescriptor object.
@@ -175,7 +178,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
             throw new CDKException("The first parameter must be of type Boolean");
         }
         // ok, all should be fine
-        checkAromaticity = ((Boolean) params[0]).booleanValue();
+        checkAromaticity = (Boolean) params[0];
     }
 
 
@@ -189,11 +192,21 @@ public class TPSADescriptor implements IMolecularDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = new Boolean(checkAromaticity);
+        params[0] = checkAromaticity;
         return params;
 
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), new DoubleResult(Double.NaN), getDescriptorNames(), e);
+    }
 
     /**
      * Calculates the TPSA for an atom container.
@@ -209,23 +222,31 @@ public class TPSADescriptor implements IMolecularDescriptor {
      *
      * @param atomContainer The AtomContainer whose TPSA is to be calculated
      * @return A double containing the topological surface area
-     * @throws CDKException Possible Exceptions
      */
-    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
         try {
             ac = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Error during clone");
+            return getDummyDescriptorValue(e);
         }
-        Vector profiles = new Vector();
+        Vector<String> profiles = new Vector<String>();
 
         // calculate the set of all rings
-        IRingSet rs = (new AllRingsFinder()).findAllRings(ac);
+        IRingSet rs;
+        try {
+            rs = (new AllRingsFinder()).findAllRings(ac);
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(e);
+        }
         // check aromaticity if the descriptor parameter is set to true
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-            CDKHueckelAromaticityDetector.detectAromaticity(ac);
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+                CDKHueckelAromaticityDetector.detectAromaticity(ac);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
         }
 
         // iterate over all atoms of ac
@@ -244,9 +265,8 @@ public class TPSADescriptor implements IMolecularDescriptor {
                 int isIn3MemberRing = 0;
 
                 // counting the number of single/double/triple/aromatic bonds
-                java.util.List connectedBonds = ac.getConnectedBondsList(atom);
-                for (int bondIndex = 0; bondIndex < connectedBonds.size(); bondIndex++) {
-                    IBond connectedBond = (IBond) connectedBonds.get(bondIndex);
+                List<IBond> connectedBonds = ac.getConnectedBondsList(atom);
+                for (IBond connectedBond : connectedBonds) {
                     if (connectedBond.getFlag(CDKConstants.ISAROMATIC))
                         aromaticBondCount++;
                     else if (connectedBond.getOrder() == CDKConstants.BONDORDER_SINGLE)
@@ -312,15 +332,16 @@ public class TPSADescriptor implements IMolecularDescriptor {
         double tpsa = 0;
         for (int profileIndex = 0; profileIndex < profiles.size(); profileIndex++) {
             if (map.containsKey(profiles.elementAt(profileIndex))) {
-                tpsa += ((Double) map.get(profiles.elementAt(profileIndex))).doubleValue();
+                tpsa += (Double) map.get(profiles.elementAt(profileIndex));
                 //logger.debug("tpsa contribs: " + profiles.elementAt(profileIndex) + "\t" + ((Double)map.get(profiles.elementAt(profileIndex))).doubleValue());
             }
         }
         profiles.clear(); // remove all profiles from the profiles-Vector
         //logger.debug("tpsa: " + tpsa);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(tpsa),
-                new String[]{"TopoPSA"});
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(tpsa), getDescriptorNames());
+
     }
 
     /**
@@ -357,6 +378,6 @@ public class TPSADescriptor implements IMolecularDescriptor {
      * @return The parameterType value
      */
     public Object getParameterType(String name) {
-        return new Boolean(true);
+        return true;
     }
 }

@@ -24,9 +24,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -37,6 +36,8 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.Iterator;
 
 /**
  * This Class contains a method that returns the number of aromatic atoms in an AtomContainer.
@@ -66,6 +67,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = false;
+    private static final String[] names = {"nAromBond"};
 
 
     /**
@@ -133,6 +135,11 @@ public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
 
     /**
      * Calculate the count of aromatic atoms in the supplied {@link IAtomContainer}.
@@ -141,23 +148,36 @@ public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
      *  aromaticity has to be checked.
      *
      *@param  atomContainer  The {@link IAtomContainer} for which this descriptor is to be calculated
-     *@return the number of aromatic atoms of this AtomContainer
-     *@throws CDKException if there is a problem in atomaticity detection
+     *@return the number of aromatic atoms of this AtomContainer     
      *@see #setParameters
      */
-    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
         try {
             ac = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Error during clone");
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new IntegerResult((int) Double.NaN), getDescriptorNames(),
+                    new CDKException("Error during clone"));
         }
 
 
         int aromaticBondsCount = 0;
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-            CDKHueckelAromaticityDetector.detectAromaticity(ac);
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+            } catch (CDKException e) {
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new IntegerResult((int) Double.NaN), getDescriptorNames(),
+                        new CDKException("Error during atom type perception"));
+            }
+            try {
+                CDKHueckelAromaticityDetector.detectAromaticity(ac);
+            } catch (CDKException e) {
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new IntegerResult((int) Double.NaN), getDescriptorNames(),
+                        new CDKException("Error during aromaticity detection: " + e.getMessage()));
+            }
         }
         Iterator bonds = ac.bonds();
         while (bonds.hasNext()) {
@@ -167,7 +187,7 @@ public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
             }
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new IntegerResult(aromaticBondsCount), new String[] {"nAromBond"});
+                new IntegerResult(aromaticBondsCount), getDescriptorNames());
     }
 
     /**

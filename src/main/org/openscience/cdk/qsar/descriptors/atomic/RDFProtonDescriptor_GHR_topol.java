@@ -21,13 +21,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-
 import org._3pq.jgrapht.Edge;
 import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKConstants;
@@ -40,11 +33,7 @@ import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -52,6 +41,12 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * This class calculates GHR topological proton descriptors used in neural networks for H1 NMR shift.
@@ -87,8 +82,7 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
     private AtomContainerSet varAtomContainerSet = null;
     
     private final static LoggingTool logger = new LoggingTool(RDFProtonDescriptor_GHR_topol.class);
-
-	private static String[] descriptorNames;
+    private final int ghr_topol_desc_length = 15;
 
     /**
      * Constructor for the RDFProtonDescriptor object
@@ -144,39 +138,46 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
         return params;
     }
 
+    @TestMethod(value = "testNamesConsistency")
+    public String[] getDescriptorNames() {
+        String[] descriptorNames = new String[ghr_topol_desc_length];
+        for (int i = 0; i < ghr_topol_desc_length; i++) {
+            descriptorNames[i] = "gHrTop_" + (i + 1);
+        }
+        return descriptorNames;
+    }
+
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        DoubleArrayResult result = new DoubleArrayResult(ghr_topol_desc_length);
+        for (int i = 0; i < ghr_topol_desc_length; i++) result.add(Double.NaN);
+        return new DescriptorValue(
+                getSpecification(), getParameterNames(),
+                getParameters(), result,
+                getDescriptorNames(), e);
+    }
+
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer varAtomContainerSet) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer varAtomContainerSet)  {
         return (calculate(atom, varAtomContainerSet, null));
     }
 
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer, IRingSet precalculatedringset) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer, IRingSet precalculatedringset)  {
         IAtomContainer varAtomContainer = null;
         try {
             varAtomContainer = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Error during clone");
+            return getDummyDescriptorValue(e);
         }
 
         int atomPosition = atomContainer.getAtomNumber(atom);
         IAtom clonedAtom = varAtomContainer.getAtom(atomPosition);
 
-        final int ghr_topol_desc_length = 15;
 
-
-        DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(
-        		ghr_topol_desc_length
-        );
+        DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(ghr_topol_desc_length);
         if (!atom.getSymbol().equals("H")) {
-            for (int i=0; i<ghr_topol_desc_length; i++) {
-                rdfProtonCalculatedValues.add(Double.NaN);
-                descriptorNames[i] = "gHrTop_" + (i+1);
-            }
-            return new DescriptorValue(
-                getSpecification(), getParameterNames(),
-                getParameters(), rdfProtonCalculatedValues,
-                descriptorNames
-            );
+           return getDummyDescriptorValue(new CDKException("Invalid atom specified"));
         }
 
 /////////////////////////FIRST SECTION OF MAIN METHOD: DEFINITION OF MAIN VARIABLES
@@ -188,19 +189,27 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
 // DETECTION OF pi SYSTEMS
             varAtomContainerSet = ConjugatedPiSystemsDetector.detect(mol);
             if (precalculatedringset == null)
-                varRingSet = (new AllRingsFinder()).findAllRings(varAtomContainer);
+                try {
+                    varRingSet = (new AllRingsFinder()).findAllRings(varAtomContainer);
+                } catch (CDKException e) {
+                    return getDummyDescriptorValue(e);
+                }
             else
                 varRingSet = precalculatedringset;
             try {
                 GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
                 peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);
             } catch (Exception ex1) {
-                throw new CDKException("Problems with assignGasteigerMarsiliPartialCharges due to " + ex1.toString(), ex1);
+                return getDummyDescriptorValue(ex1);
             }
         }
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(varAtomContainer);
-            CDKHueckelAromaticityDetector.detectAromaticity(varAtomContainer);
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(varAtomContainer);
+                CDKHueckelAromaticityDetector.detectAromaticity(varAtomContainer);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
         }
         List<IRing> rsAtom;
         Ring ring;
@@ -389,8 +398,7 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
 	limitInf = 1.4;
 	limitSup = 4;
 	step = (limitSup - limitInf)/15;
-	
-	descriptorNames = new String[ghr_topol_desc_length];
+
 	if(atoms.size() > 0) {
 		//ArrayList gHr_topol_function = new ArrayList(15);
 		int counter = 0;
@@ -416,21 +424,16 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
 			//gHr_topol_function.add(new Double(sum));
 			rdfProtonCalculatedValues.add(sum);
 			logger.debug("RDF gr-topol distance prob.: "+sum+ " at distance "+ghrt);
-			descriptorNames[counter] = "gHrTop_" + (counter+1);
 			counter++;
 		}
 	}
 	else {
-		for (int i=0; i<ghr_topol_desc_length; i++) {
-			rdfProtonCalculatedValues.add(Double.NaN);
-			descriptorNames[i] = "gHrTop_" + (i+1);
-		}
+		return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));
 	}
 	return new DescriptorValue(
 		getSpecification(), getParameterNames(), 
 		getParameters(), rdfProtonCalculatedValues,
-		descriptorNames
-	);
+		getDescriptorNames());
 	}
 	
     

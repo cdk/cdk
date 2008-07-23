@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -51,6 +52,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  */
 
 public class FragmentComplexityDescriptor implements IMolecularDescriptor {
+    private static final String[] names = {"fragC"};
 
 
     /**
@@ -109,6 +111,10 @@ public class FragmentComplexityDescriptor implements IMolecularDescriptor {
         // return the parameters as used for the descriptor calculation
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }    
 
     /**
      * Calculate the complexity in the supplied {@link AtomContainer}.
@@ -117,23 +123,23 @@ public class FragmentComplexityDescriptor implements IMolecularDescriptor {
      *@return                   the complexity
      *@see #setParameters
      */
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
         //System.out.println("FragmentComplexityDescriptor");
-        int A=0;
-        double H=0;
-        for (int i=0; i<container.getAtomCount();i++){
-            if (!container.getAtom(i).getSymbol().equals("H")){
+        int A = 0;
+        double H = 0;
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            if (!container.getAtom(i).getSymbol().equals("H")) {
                 A++;
             }
-            if (!container.getAtom(i).getSymbol().equals("H") & !container.getAtom(i).getSymbol().equals("C")){
+            if (!container.getAtom(i).getSymbol().equals("H") & !container.getAtom(i).getSymbol().equals("C")) {
                 H++;
             }
         }
-        int B=container.getBondCount();
-        double C=Math.abs(B*B-A*A+A)+(H/100);
-        //System.out.println("A:"+A+" B:"+B+" H:"+H+"H/100:"+H/100+" C:"+C);
+        int B = container.getBondCount();
+        double C = Math.abs(B * B - A * A + A) + (H / 100);
         return new DescriptorValue(getSpecification(), getParameterNames(),
-            getParameters(), new DoubleResult(C), new String[] { "fragC" });
+                getParameters(), new DoubleResult(C),
+                getDescriptorNames());
     }
 
     /**

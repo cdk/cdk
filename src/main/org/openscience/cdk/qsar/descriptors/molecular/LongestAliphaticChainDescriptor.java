@@ -24,11 +24,11 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Vector;
-
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
@@ -41,6 +41,10 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 /**
  *  Class that returns the number of atoms in the longest aliphatic chain.
@@ -71,6 +75,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
 	private boolean checkRingSystem = false;
 
+    private static final String[] names = {"nAtomLAC"};
 
     /**
      *  Constructor for the LongestAliphaticChainDescriptor object.
@@ -119,7 +124,7 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
             throw new CDKException("Both parameters must be of type Boolean");
         }
         // ok, all should be fine
-        checkRingSystem = ((Boolean) params[0]).booleanValue();
+        checkRingSystem = (Boolean) params[0];
     }
 
 
@@ -132,10 +137,20 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = new Boolean(checkRingSystem);
+        params[0] = checkRingSystem;
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), new IntegerResult((int) Double.NaN), getDescriptorNames(), e);
+    }
 
     /**
      * Calculate the count of atoms of the longest aliphatic chain in the supplied {@link AtomContainer}.
@@ -145,16 +160,19 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
      *
      *@param  container  The {@link AtomContainer} for which this descriptor is to be calculated
      *@return                   the number of atoms in the longest aliphatic chain of this AtomContainer
-     *@throws CDKException if there is a problem in aromaticity detection
      *@see #setParameters
      */
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
     	
     	//logger.debug("LongestAliphaticChainDescriptor");
-    	IRingSet rs = null;
+    	IRingSet rs;
     	if (checkRingSystem) {
-        	rs = new SpanningTree(container).getBasicRings();
-        	for (int i=0;i<container.getAtomCount();i++){
+            try {
+                rs = new SpanningTree(container).getBasicRings();
+            } catch (NoSuchAtomException e) {
+                return getDummyDescriptorValue(e);
+            }
+            for (int i=0;i<container.getAtomCount();i++){
             	if (rs.contains(container.getAtom(i))){
             		container.getAtom(i).setFlag(CDKConstants.ISINRING,true);
             	}
@@ -162,10 +180,10 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
         }
         	
     	int longestChainAtomsCount=0;
-        int tmpLongestChainAtomCount=0;
+        int tmpLongestChainAtomCount;
     	//IAtom[] atoms = container.getAtoms();
-    	Vector startSphere = null;
-    	Vector path = null;
+    	List<IAtom> startSphere;
+    	List<IAtom> path;
     	//Set all VisitedFlags to False
     	for (int i =0;i<container.getAtomCount();i++){
     		container.getAtom(i).setFlag(CDKConstants.VISITED, false);
@@ -176,11 +194,15 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
     		//logger.debug("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" Ring:"+atoms[i].getFlag(CDKConstants.ISINRING)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
     		if ((!atomi.getFlag(CDKConstants.ISAROMATIC) && !atomi.getFlag(CDKConstants.ISINRING) & atomi.getSymbol().equals("C")) & !atomi.getFlag(CDKConstants.VISITED)){
     			//logger.debug("...... -> Accepted");
-    			startSphere = new Vector();
-    			path = new Vector();
-    			startSphere.addElement(atomi);
-     			breadthFirstSearch(container, startSphere, path);
-     			//create Atomcontainer
+    			startSphere = new ArrayList<IAtom>();
+    			path = new ArrayList<IAtom>();
+    			startSphere.add(atomi);
+                try {
+                    breadthFirstSearch(container, startSphere, path);
+                } catch (CDKException e) {
+                    return getDummyDescriptorValue(e);
+                }
+                //create Atomcontainer
      			//logger.debug("Create new Atom Container");
      			AtomContainer aliphaticChain =createAtomContainerFromPath(container,path);
      			if (aliphaticChain.getAtomCount()>1){
@@ -195,9 +217,10 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
      			}
      		}    		
     	}
-  
+
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new IntegerResult(longestChainAtomsCount), new String[] {"nAtomLAC"});
+                new IntegerResult(longestChainAtomsCount),
+                getDescriptorNames());
     }
 
     /**
@@ -229,18 +252,18 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
     
     
     
-    private AtomContainer createAtomContainerFromPath(IAtomContainer container, Vector path){
+    private AtomContainer createAtomContainerFromPath(IAtomContainer container, List<IAtom> path){
     	AtomContainer aliphaticChain = new org.openscience.cdk.AtomContainer();
     	for (int i=0;i<path.size()-1;i++){
-    		if (!aliphaticChain.contains((IAtom)path.get(i))){
-    			aliphaticChain.addAtom((IAtom)path.get(i));
+    		if (!aliphaticChain.contains(path.get(i))){
+    			aliphaticChain.addAtom(path.get(i));
     		}
     		for (int j=1;j<path.size();j++){
-    			if (container.getBond((IAtom)path.get(i),(IAtom)path.get(j))!=null){
-    				if (!aliphaticChain.contains((IAtom)path.get(j))){
-    	    			aliphaticChain.addAtom((IAtom)path.get(j));
+    			if (container.getBond(path.get(i), path.get(j))!=null){
+    				if (!aliphaticChain.contains(path.get(j))){
+    	    			aliphaticChain.addAtom(path.get(j));
     	    		}
-    				aliphaticChain.addBond(container.getBond((IAtom)path.get(i),(IAtom)path.get(j)));
+    				aliphaticChain.addBond(container.getBond(path.get(i), path.get(j)));
     			}
     		}
     	}
@@ -268,26 +291,24 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
 	 *@exception  org.openscience.cdk.exception.CDKException  Description of the
 	 *      Exception
 	 */
-	public  void breadthFirstSearch(IAtomContainer container, Vector sphere, Vector path) throws org.openscience.cdk.exception.CDKException{
-		IAtom atom = null;
-		IAtom nextAtom = null;
-		Vector newSphere = new Vector();
-		for (int i = 0; i < sphere.size(); i++){
-			atom = (IAtom) sphere.elementAt(i);
-			java.util.List bonds = container.getConnectedBondsList(atom);
-			for (int j = 0; j < bonds.size(); j++){
-				nextAtom = ((IBond)bonds.get(j)).getConnectedAtom(atom);
-				if ((!nextAtom.getFlag(CDKConstants.ISAROMATIC)&& !nextAtom.getFlag(CDKConstants.ISINRING)& nextAtom.getSymbol().equals("C")) & !nextAtom.getFlag(CDKConstants.VISITED)){
-	    			path.addElement(nextAtom);
-		    		nextAtom.setFlag(CDKConstants.VISITED, true);
-		    		if (container.getConnectedBondsCount(nextAtom) > 1){
-						newSphere.addElement(nextAtom);
-					}
-				}else{
-					nextAtom.setFlag(CDKConstants.VISITED, true);
-				}
-			}
-		}
+	public  void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws org.openscience.cdk.exception.CDKException{
+		IAtom nextAtom;
+		Vector<IAtom> newSphere = new Vector<IAtom>();
+        for (IAtom atom : sphere) {
+            List bonds = container.getConnectedBondsList(atom);
+            for (Object bond : bonds) {
+                nextAtom = ((IBond) bond).getConnectedAtom(atom);
+                if ((!nextAtom.getFlag(CDKConstants.ISAROMATIC) && !nextAtom.getFlag(CDKConstants.ISINRING) & nextAtom.getSymbol().equals("C")) & !nextAtom.getFlag(CDKConstants.VISITED)) {
+                    path.add(nextAtom);
+                    nextAtom.setFlag(CDKConstants.VISITED, true);
+                    if (container.getConnectedBondsCount(nextAtom) > 1) {
+                        newSphere.addElement(nextAtom);
+                    }
+                } else {
+                    nextAtom.setFlag(CDKConstants.VISITED, true);
+                }
+            }
+        }
 		if (newSphere.size() > 0){
 			breadthFirstSearch(container, newSphere, path);
 		}

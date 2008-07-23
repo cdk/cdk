@@ -903,4 +903,32 @@ Method </bibtex:title>
       <bibtex:address>München</bibtex:address>
     </bibtex:inbook>
   </bibtex:entry>
+
+    <bibtex:entry id="HALL1995">
+        <bibtex:article>
+            <bibtex:author>Hall, L.H. and Kier, L.B.
+            </bibtex:author>
+            <bibtex:title>Electrotopological State Indices for Atom Types: A Novel Combination of Electronic, Topological, and Valence State Information</bibtex:title>
+            <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
+            <bibtex:year>1995</bibtex:year>
+            <bibtex:volume>35</bibtex:volume>
+            <bibtex:pages>1039-1045</bibtex:pages>
+        </bibtex:article>
+    </bibtex:entry>
+
+    <bibtex:entry id="BUTINA2004">
+        <bibtex:article>
+            <bibtex:author>Butina, D.
+            </bibtex:author>
+            <bibtex:title>Performance of Kier-Hall E-state Descriptors in Quantitative
+	    Structure Activity Relationship (QSAR) Studies of
+	    Multifunctional Molecules
+	    </bibtex:title>
+            <bibtex:journal>Molecules</bibtex:journal>
+            <bibtex:year>2004</bibtex:year>
+            <bibtex:volume>9</bibtex:volume>
+            <bibtex:pages>1004-1009</bibtex:pages>
+        </bibtex:article>
+    </bibtex:entry>    
+
 </bibtex:file>

@@ -92,7 +92,9 @@ import java.io.IOException;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.InductiveAtomicHardnessDescriptorTest")
 public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
 
-	private LoggingTool logger;
+    private static final String[] names = {"indAtomHardnesss"};
+
+    private LoggingTool logger;
 	private AtomTypeFactory factory = null;
 
 
@@ -143,18 +145,27 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
         return null;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
 
-	/**
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(Double.NaN),
+                names, e);
+    }
+
+    /**
 	 *  It is needed to call the addExplicitHydrogensToSatisfyValency method from
 	 *  the class tools.HydrogenAdder, and 3D coordinates.
 	 *
 	 *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
 	 *@return                   a double with polarizability of the heavy atom
-	 *@exception  CDKException  Possible Exceptions
 	 */
 	@TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
 		if (factory == null)
             try {
                 factory = AtomTypeFactory.getInstance(
@@ -162,7 +173,7 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
                     ac.getBuilder()
                 );
             } catch (Exception exception) {
-                throw new CDKException("Could not instantiate AtomTypeFactory!", exception);
+                return getDummyDescriptorValue(exception);
             }
 
         double atomicHardness;
@@ -179,15 +190,15 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
 			symbol = atom.getSymbol();
 			type = factory.getAtomType(symbol);
 			radiusTarget = type.getCovalentRadius();
-		} catch (Exception ex1) {
-			logger.debug(ex1);
-			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString(), ex1);
+		} catch (Exception exception) {
+			logger.debug(exception);
+			return getDummyDescriptorValue(exception);
 		}
 
 		while (allAtoms.hasNext()) {
 			IAtom curAtom = (IAtom)allAtoms.next();
 			if (atom.getPoint3d() == null || curAtom.getPoint3d() == null) {
-				throw new CDKException("The target atom or current atom had no 3D coordinates. These are required");
+				return getDummyDescriptorValue(new CDKException("The target atom or current atom had no 3D coordinates. These are required"));
 			}
 
 
@@ -197,9 +208,9 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
 
 				try {
 					type = factory.getAtomType(symbol);
-				} catch (Exception ex1) {
-					logger.debug(ex1);
-					throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString(), ex1);
+				} catch (Exception exception) {
+					logger.debug(exception);
+					return getDummyDescriptorValue(exception);
 				}
 				radius = type.getCovalentRadius();
 				partial += radius * radius;
@@ -214,7 +225,7 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
 		atomicHardness = 1 / atomicHardness;
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(atomicHardness),
-                new String[] {"indAtomHardness"});
+                names);
 	}
 
 	private double calculateSquareDistanceBetweenTwoAtoms(org.openscience.cdk.interfaces.IAtom atom1, org.openscience.cdk.interfaces.IAtom atom2) {

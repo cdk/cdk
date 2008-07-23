@@ -86,21 +86,24 @@ public class AtomValenceDescriptor implements IAtomicDescriptor {
         return null;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return new String[]{"val"};
+    }
+
     /**
      * This method calculates the valence of an atom.
      *
      * @param atom          The IAtom for which the DescriptorValue is requested
      * @param container      Parameter is the atom container.
-     * @return The valence of an atom
-     * @throws CDKException Description of the Exception
+     * @return The valence of an atom     
      */
 
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         int atomValence = AtomValenceTool.getValence(atom);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-        	new IntegerResult(atomValence), new String[]{"val"} 
-        );
+        	new IntegerResult(atomValence), getDescriptorNames());
     }
 
 

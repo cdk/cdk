@@ -24,12 +24,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Vector;
-
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -41,6 +41,9 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Class that returns the number of atoms in the largest chain.
@@ -77,6 +80,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class LargestChainDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = false;
     private boolean checkRingSystem = false;
+    private static final String[] names = {"nAtomLC"};
 
 
     /**
@@ -146,6 +150,15 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), new IntegerResult((int) Double.NaN), getDescriptorNames(), e);
+    }
 
     /**
      * Calculate the count of atoms of the largest chain in the supplied {@link IAtomContainer}.
@@ -160,14 +173,18 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      *
      * @param container The {@link AtomContainer} for which this descriptor is to be calculated
      * @return the number of atoms in the largest chain of this AtomContainer
-     * @throws CDKException if there is a problem in aromaticity detection
      * @see #setParameters
      */
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
         //logger.debug("LargestChainDescriptor");
     	if (checkRingSystem) {
-    		IRingSet rs = new SpanningTree(container).getBasicRings();
-    		for (int i = 0; i < container.getAtomCount(); i++) {
+            IRingSet rs;
+            try {
+                rs = new SpanningTree(container).getBasicRings();
+            } catch (NoSuchAtomException e) {
+                return getDummyDescriptorValue(e);
+            }
+            for (int i = 0; i < container.getAtomCount(); i++) {
     			if (rs.contains(container.getAtom(i))) {
     				container.getAtom(i).setFlag(CDKConstants.ISINRING, true);
     			}
@@ -175,15 +192,19 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
     	}
         
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-            CDKHueckelAromaticityDetector.detectAromaticity(container);
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+                CDKHueckelAromaticityDetector.detectAromaticity(container);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
         }
 
 
         int largestChainAtomsCount = 0;
         //IAtom[] atoms = container.getAtoms();
         Vector<IAtom> startSphere;
-        Vector path;
+        Vector<IAtom> path;
         //Set all VisitedFlags to False
         for (int i = 0; i < container.getAtomCount(); i++) {
             container.getAtom(i).setFlag(CDKConstants.VISITED, false);
@@ -198,9 +219,13 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
             {
                 //logger.debug("...... -> containercepted");
                 startSphere = new Vector<IAtom>();
-                path = new Vector();
+                path = new Vector<IAtom>();
                 startSphere.addElement(atomi);
-                breadthFirstSearch(container, startSphere, path);
+                try {
+                    breadthFirstSearch(container, startSphere, path);
+                } catch (CDKException e) {
+                    return getDummyDescriptorValue(e);
+                }
                 if (path.size() > largestChainAtomsCount) {
                     largestChainAtomsCount = path.size();
                 }
@@ -210,7 +235,8 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
 
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new IntegerResult(largestChainAtomsCount), new String[]{"nAtomLC"});
+                new IntegerResult(largestChainAtomsCount),
+                getDescriptorNames());
     }
 
     /**
@@ -248,13 +274,12 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
         Vector<IAtom> newSphere = new Vector<IAtom>();
         //logger.debug("Start of breadthFirstSearch");
         for (int i = 0; i < sphere.size(); i++) {
-            atom = (IAtom) sphere.elementAt(i);
+            atom = sphere.elementAt(i);
             //logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
-            java.util.List bonds = container.getConnectedBondsList(atom);
-            for (int j = 0; j < bonds.size(); j++) {
-                nextAtom = ((IBond) bonds.get(j)).getConnectedAtom(atom);
-                if ((!nextAtom.getFlag(CDKConstants.ISAROMATIC) && !nextAtom.getFlag(CDKConstants.ISINRING)) & !nextAtom.getFlag(CDKConstants.VISITED))
-                {
+            List<IBond> bonds = container.getConnectedBondsList(atom);
+            for (IBond bond : bonds) {
+                nextAtom = bond.getConnectedAtom(atom);
+                if ((!nextAtom.getFlag(CDKConstants.ISAROMATIC) && !nextAtom.getFlag(CDKConstants.ISINRING)) & !nextAtom.getFlag(CDKConstants.VISITED)) {
                     //logger.debug("BDS> AtomNr:"+container.getAtomNumber(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));
                     path.addElement(nextAtom);
                     //logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));

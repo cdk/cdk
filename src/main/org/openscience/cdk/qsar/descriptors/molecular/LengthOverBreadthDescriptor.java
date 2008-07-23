@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import Jama.Matrix;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -68,6 +69,7 @@ import javax.vecmath.Point3d;
 public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
 
+    private static final String[] names = {"LOBMAX", "LOBMIN"};
     /**
      * Constructor for the LengthOverBreadthDescriptor object.
      */
@@ -112,19 +114,30 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
         // no parameters to return
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
 
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        DoubleArrayResult result = new DoubleArrayResult(2);
+        result.add(Double.NaN);
+        result.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), result, getDescriptorNames(), e);
+    }
     /**
      * Evaluate the descriptor for the molecule.
      *
      * @param atomContainer AtomContainer
      * @return A {@link org.openscience.cdk.qsar.result.DoubleArrayResult} containing LOBMAX and LOBMIN in that
-     *         order
-     * @throws org.openscience.cdk.exception.CDKException
-     *          if there are no 3D coordinates
+     *         order     
      */
-    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
-        if (!GeometryTools.has3DCoordinates(atomContainer)) throw new CDKException("Molecule must have 3D coordinates");
-        
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
+        if (!GeometryTools.has3DCoordinates(atomContainer))
+            return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
+
         double angle = 10.0;
         double maxLOB = 0;
         double minArea = 1e6;
@@ -142,18 +155,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
 
         // get the com
         Point3d com = GeometryTools.get3DCentreOfMass(atomContainer);
-
-        // did the molecule have 3D coordinates? If not, null was returned.
-        if (com == null) {
-            logger.debug("Molecule must have 3D coordinates");
-            DoubleArrayResult result = new DoubleArrayResult(2);
-            result.add(Double.NaN);
-            result.add(Double.NaN);
-            return new DescriptorValue(getSpecification(),
-                getParameterNames(), getParameters(),
-                result, new String[] {"LOBMAX", "LOBMIN"}
-            );
-        }
+        if (com == null) return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
 
         // translate everything to COM
         for (int i = 0; i < coords.length; i++) {
@@ -166,7 +168,11 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
         int nangle = (int) (90 / angle);
         for (int i = 0; i < nangle; i++) {
             rotateZ(coords, Math.PI / 180.0 * angle);
-            xyzRanges = extents(atomContainer, coords, true);
+            try {
+                xyzRanges = extents(atomContainer, coords, true);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
             lob = xyzRanges[0] / xyzRanges[1];
             bol = 1.0 / lob;
             if (lob < bol) {
@@ -188,7 +194,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
 
         return new DescriptorValue(getSpecification(),
                 getParameterNames(), getParameters(),
-                result, new String[] {"LOBMAX", "LOBMIN"});
+                result, getDescriptorNames());
     }
 
     /**

@@ -26,7 +26,6 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -34,7 +33,6 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.PeriodicTable;
 
 import java.io.IOException;
@@ -66,8 +64,7 @@ import java.io.IOException;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptorTest")
 public class VdWRadiusDescriptor implements IAtomicDescriptor {
 
-    private AtomTypeFactory factory = null;
-    private LoggingTool logger;
+    private static final String[] names = {"vdwRadius"};
 
     /**
      *  Constructor for the VdWRadiusDescriptor object.
@@ -76,7 +73,6 @@ public class VdWRadiusDescriptor implements IAtomicDescriptor {
      *  @throws ClassNotFoundException if an error occurs during tom typing
      */
     public VdWRadiusDescriptor() throws IOException, ClassNotFoundException {
-        logger = new LoggingTool(this);
     }
 
 
@@ -124,37 +120,26 @@ public class VdWRadiusDescriptor implements IAtomicDescriptor {
         return null;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
 
     /**
      *  This method calculate the Van der Waals radius of an atom.
      *
      *@param  container         The {@link IAtomContainer} for which the descriptor is to be calculated
      *@return                   The Van der Waals radius of the atom
-     *@exception  CDKException  if an error occurs during atom typing
      */
 
-    @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
-        if (factory == null) 
-            try {
-                factory = AtomTypeFactory.getInstance(
-                    "org/openscience/cdk/config/data/jmol_atomtypes.txt", 
-                    container.getBuilder()
-                );
-            } catch (Exception exception) {
-                throw new CDKException("Could not instantiate AtomTypeFactory!", exception);
-            }
+    @TestMethod(value = "testCalculate_IAtomContainer")
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
+        String symbol = atom.getSymbol();
+        double vdwradius = PeriodicTable.getVdwRadius(symbol);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(vdwradius), names);
 
-        double vdwradius;
-        try {
-            String symbol = atom.getSymbol();
-            vdwradius = PeriodicTable.getVdwRadius(symbol);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new DoubleResult(vdwradius), new String[] {"vdwRadius"});
-        } catch (Exception ex1) {
-            logger.debug(ex1);
-            throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString(), ex1);
-        }
     }
 
 

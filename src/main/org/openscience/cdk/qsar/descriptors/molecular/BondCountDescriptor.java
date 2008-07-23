@@ -20,8 +20,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Iterator;
-
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -31,6 +30,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
+
+import java.util.Iterator;
 
 /**
  *  IDescriptor based on the number of bonds of a certain bond order.
@@ -124,6 +125,12 @@ public class BondCountDescriptor implements IMolecularDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        if (order.equals("")) return new String[]{"nB"};
+        else  return new String[]{"nB"+order};
+    }
+
 
     /**
      *  This method calculate the number of bonds of a given type in an atomContainer
@@ -132,34 +139,30 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      *@return            The number of bonds of a certain type.
      */
     public DescriptorValue calculate(IAtomContainer container) {
-    	if (order == "") {
-    		// the special case: just count them all
+    	if (order.equals("")) {
     		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new IntegerResult(container.getBondCount()), new String[]{"nB"});
+                    new IntegerResult(container.getBondCount()), getDescriptorNames(), null);
     	}
     	
         int bondCount = 0;
         Iterator<IBond> bonds = container.bonds();
         while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+            IBond bond = bonds.next();
             if (bondMatch(bond.getOrder(), order)) {
                 bondCount += 1;
             }
         }
 
-        String name = "nB" + order;
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-            new IntegerResult(bondCount), new String[]{name}
-        );
+            new IntegerResult(bondCount), getDescriptorNames());
     }
 
     private boolean bondMatch(Order order, String orderString) {
-	    if (order == Order.SINGLE && "s".equals(orderString)) return true;
-	    if (order == Order.DOUBLE && "d".equals(orderString)) return true;
-	    if (order == Order.TRIPLE && "t".equals(orderString)) return true;
-	    if (order == Order.QUADRUPLE && "q".equals(orderString)) return true;
-	    return false;
+        if (order == Order.SINGLE && "s".equals(orderString)) return true;
+        else if (order == Order.DOUBLE && "d".equals(orderString)) return true;
+        else if (order == Order.TRIPLE && "t".equals(orderString)) return true;
+        else return (order == Order.QUADRUPLE && "q".equals(orderString));
     }
 
 

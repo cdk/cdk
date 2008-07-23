@@ -68,6 +68,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptorTest")
 public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
 
+    private static final String[] names = {"pepe"};
+
     private GasteigerPEPEPartialCharges pepe = null;
     /**Number of maximum iterations*/
 	private int maxIterations = -1;
@@ -147,6 +149,17 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(Double.NaN),
+                names, e);
+    }
 
     /**
      *  The method returns apha partial charges assigned to an heavy atom through Gasteiger Marsili
@@ -156,17 +169,24 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
      *@return                   Value of the alpha partial charge
-     *@exception  CDKException  Possible Exceptions
      */
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
     	if (!isCachedAtomContainer(ac)) {
-    		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-    		
-    		if(lpeChecker){
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
+
+            if(lpeChecker){
     			LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-            	lpcheck.saturate(ac);
-           	}
+                try {
+                    lpcheck.saturate(ac);
+                } catch (CDKException e) {
+                    return getDummyDescriptorValue(e);
+                }
+            }
         	
     		if(maxIterations != -1)
     			pepe.setMaxGasteigerIters(maxIterations);
@@ -180,12 +200,13 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
 					// assume same order, so mol.getAtom(i) == ac.getAtom(i)
 					cacheDescriptorValue(ac.getAtom(i), ac, new DoubleResult(ac.getAtom(i).getCharge()));
 				}
-	        } catch (Exception ex1) {
-	            throw new CDKException("Problems with assignGasteigerPiPartialCharges due to " + ex1.toString(), ex1);
+	        } catch (Exception exception) {
+	            return getDummyDescriptorValue(exception);
 	        }
     	}
     	return getCachedDescriptorValue(atom) != null 
-        	? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(atom),new String[]{"pepe"}) 
+        	? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(atom),
+                names)
             : null;
     }
 

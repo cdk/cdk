@@ -24,7 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -145,39 +144,49 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 		return null;
 	}
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return new String[]{"hybr"};
+    }
 
-	/**
+
+    /**
 	 *  This method calculates the hybridization of an atom.
 	 *
 	 *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  container         Parameter is the atom container.
 	 *@return                   The hybridization
-	 *@exception  CDKException  Description of the Exception
 	 */
 
 	@TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException
-	{		
-		IAtomType atomType = CDKAtomTypeMatcher.getInstance(atom.getBuilder()).findMatchingAtomType(container, atom);
-		if (atomType == null) {
-		    return new DescriptorValue(
-		        getSpecification(), getParameterNames(), getParameters(),
-		        new IntegerResult((int)Double.NaN), // does that work??
-		        new String[]{"hybr"}
-		    );
-		}
-		int hybridizationCDK =
-		    atomType.getHybridization() == null ? 0 : atomType.getHybridization().ordinal();
-		
-		return new DescriptorValue(
-		    getSpecification(), getParameterNames(), getParameters(),
-		     new IntegerResult(hybridizationCDK),
-		     new String[]{"hybr"}
-		);
-	}
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
+        IAtomType atomType = null;
+        try {
+            atomType = CDKAtomTypeMatcher.getInstance(atom.getBuilder()).findMatchingAtomType(container, atom);
+        } catch (CDKException e) {
+            return new DescriptorValue(
+                    getSpecification(), getParameterNames(), getParameters(),
+                    new IntegerResult((int) Double.NaN), // does that work??
+                    getDescriptorNames(), new CDKException("Atom type was null"));
+        }
+        if (atomType == null) {
+            return new DescriptorValue(
+                    getSpecification(), getParameterNames(), getParameters(),
+                    new IntegerResult((int) Double.NaN), // does that work??
+                    getDescriptorNames(), new CDKException("Atom type was null"));
 
-	/**
-	 *  Gets the parameterNames attribute of the AtomHybridizationVSEPRDescriptor object
+        }
+        int hybridizationCDK =
+                atomType.getHybridization() == null ? 0 : atomType.getHybridization().ordinal();
+
+        return new DescriptorValue(
+                getSpecification(), getParameterNames(), getParameters(),
+                new IntegerResult(hybridizationCDK),
+                getDescriptorNames());
+    }
+
+    /**
+     *  Gets the parameterNames attribute of the AtomHybridizationVSEPRDescriptor object
 	 *
 	 *@return    The parameterNames value
 	 */

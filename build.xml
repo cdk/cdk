@@ -496,6 +496,7 @@
             <antcall target="compile-module"><param name="module" value="reaction"/><param name="source" value="${src}/main"/></antcall>
     	    <antcall target="compile-module"><param name="module" value="charges"/><param name="source" value="${src}/main"/></antcall>
   		    <antcall target="compile-module"><param name="module" value="ionpot"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="smarts"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsaratomic"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsarbond"/><param name="source" value="${src}/main"/></antcall>
@@ -505,7 +506,6 @@
             <antcall target="compile-module"><param name="module" value="forcefield"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3d"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3dtools"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="smarts"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="experimental"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="pcore"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="applications"/><param name="source" value="${src}/main"/></antcall>

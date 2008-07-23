@@ -20,15 +20,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
-
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -42,6 +33,15 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.HOSECodeGenerator;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  *  This class returns the proton affinity of an atom containing. 
@@ -71,7 +71,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.ProtonAffinityHOSEDescriptorTest")
 public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 
-    String[] descriptorNames = {"protonAffiHOSE"};
+    private static final String[] descriptorNames = {"protonAffiHOSE"};
     
 	/** Maximum spheres to use by the HoseCode model.*/
 	int maxSpheresToUse = 10;
@@ -114,27 +114,37 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
     public Object[] getParameters() {
         return null;
     }
-	/**
+
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return descriptorNames;
+    }
+
+    /**
 	 *  This method calculates the protonation affinity of an atom.
 	 *
 	 *@param  atom              The IAtom to protonate
 	 *@param  container         Parameter is the IAtomContainer.
 	 *@return                   The protonation affinity. Not possible the ionization.
-	 *@exception  CDKException  Description of the Exception
 	 */
 	@TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException{
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         double value = 0;
-        
-		if (!isCachedAtomContainer(container)) {
-    		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
 
-    		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-            lpcheck.saturate(container);
-           	
-    	}
+        if (!isCachedAtomContainer(container)) {
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+                LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+                lpcheck.saturate(container);
+            } catch (CDKException e) {
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new DoubleResult(Double.NaN), descriptorNames, null);
+            }
+
+        }
 		value = db.extractAffinity(container, atom);
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(value),descriptorNames);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(value), descriptorNames);
 		
 	}
 	/**
@@ -145,12 +155,10 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 	 */
 	private boolean familyHalogen(IAtom atom) {
 		String symbol = atom.getSymbol();
-		if(symbol.equals("F") || 
-				symbol.equals("Cl") ||
-				symbol.equals("Br") ||
-				symbol.equals("I") )
-			return true;
-		else return false;
+        return symbol.equals("F") ||
+                symbol.equals("Cl") ||
+                symbol.equals("Br") ||
+                symbol.equals("I");
 	}
 	 /**
      * Gets the parameterNames attribute of the ProtonAffinityDescriptor object.
@@ -324,7 +332,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 		boolean foundDigit = false;
 		for (int i = 0; i < strlen; i++) 
 		{
-			if(foundDigit == false)
+			if(!foundDigit)
 				if(Character.isLetter(str.charAt(i)))
 					foundDigit = true;
 			
@@ -338,7 +346,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 				}
 				else 
 				{
-					if(foundSpace == true){
+					if(foundSpace){
 						valEdited.append(str.charAt(i));
 					}
 					else{

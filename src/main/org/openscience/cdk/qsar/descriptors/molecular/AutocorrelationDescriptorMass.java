@@ -22,6 +22,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Element;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.matrix.TopologicalMatrix;
@@ -46,7 +47,8 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  */
 public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 
-	private final static double CARBON_MASS = 12.010735896788;
+    private final static String[] names = {"ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5"};
+    private final static double CARBON_MASS = 12.010735896788;
 	
 	/**
 	 * This method gets the scaled atomic masses of atoms in a molecule.
@@ -88,7 +90,7 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 	/**
      * This method calculate the ATS Autocorrelation descriptor.
      */
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
         try {
             double[] w = listConvertion(container);
             int natom = container.getAtomCount();
@@ -113,10 +115,14 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
             }
 
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    result, new String[]{"ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5"});
+                    result, getDescriptorNames());
 
         } catch (Exception ex) {
-            throw new CDKException("Error while calculating the ATS_mass descriptor: " + ex.getMessage(), ex);
+            DoubleArrayResult result = new DoubleArrayResult(5);
+            for (int i = 0; i < 5; i++) result.add(Double.NaN);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    result, getDescriptorNames(),
+                    new CDKException("Error while calculating the ATS_mass descriptor: " + ex.getMessage(), ex));
         }
     }
 
@@ -132,7 +138,12 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 		return null;
 	}
 
-	public DescriptorSpecification getSpecification() {
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
+    public DescriptorSpecification getSpecification() {
 		return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass",
                 this.getClass().getName(),

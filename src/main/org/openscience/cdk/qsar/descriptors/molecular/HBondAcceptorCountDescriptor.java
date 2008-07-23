@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -81,8 +82,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
     // only parameter of this descriptor; true if aromaticity has to be checked prior to descriptor calculation, false otherwise
     private boolean checkAromaticity = false;
+    private static final String[] names = {"nHBAcc"};
 
-  /**
+    /**
      *  Constructor for the HBondAcceptorCountDescriptor object
      */
     public HBondAcceptorCountDescriptor() { }
@@ -129,64 +131,71 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), new IntegerResult((int) Double.NaN), getDescriptorNames(), e);
+    }
+
     /**
      *  Calculates the number of H bond acceptors.
      *
      * @param  atomContainer             AtomContainer
-     * @return                   number of H bond acceptors
-     * @exception  CDKException  Possible Exceptions
+     * @return                   number of H bond acceptors     
      */
-    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
         int hBondAcceptors = 0;
 
         IAtomContainer ac;
         try {
             ac = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Error during clone");
+            return getDummyDescriptorValue(e);
         }
 
         // aromaticity is detected prior to descriptor calculation if the respective parameter is set to true
-        if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-            CDKHueckelAromaticityDetector.detectAromaticity(ac);
-        }
 
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-            CDKHueckelAromaticityDetector.detectAromaticity(ac);
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+                CDKHueckelAromaticityDetector.detectAromaticity(ac);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
         }
 
         //org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
     // labelled for loop to allow for labelled continue statements within the loop
     atomloop:
-        for (int atomIndex = 0; atomIndex < ac.getAtomCount(); atomIndex++)
-    {
-      // looking for suitable nitrogen atoms
-      if(ac.getAtom(atomIndex).getSymbol().equals("N") && ac.getAtom(atomIndex).getFormalCharge() <= 0)
-      {
-        // excluding nitrogens that are adjacent to an oxygen
-          java.util.List neighbours = ac.getConnectedAtomsList(ac.getAtom(atomIndex));
-        for(int neighbourIndex = 0; neighbourIndex < neighbours.size(); neighbourIndex++)
-          if(((IAtom)neighbours.get(neighbourIndex)).getSymbol().equals("O"))
-            continue atomloop;
-        hBondAcceptors++;
-      }
-      // looking for suitable oxygen atoms
-      if(ac.getAtom(atomIndex).getSymbol().equals("O") && ac.getAtom(atomIndex).getFormalCharge() <= 0)
-      {
-        //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
-          java.util.List neighbours = ac.getConnectedAtomsList(ac.getAtom(atomIndex));
-        for(int neighbourIndex = 0; neighbourIndex < neighbours.size(); neighbourIndex++)
-          if(((IAtom)neighbours.get(neighbourIndex)).getSymbol().equals("N") ||
-              (((IAtom)neighbours.get(neighbourIndex)).getSymbol().equals("C") && ((IAtom)neighbours.get(neighbourIndex)).getFlag(CDKConstants.ISAROMATIC)))
-            continue atomloop;
-        hBondAcceptors++;
-      }
+    for (int atomIndex = 0; atomIndex < ac.getAtomCount(); atomIndex++) {
+        // looking for suitable nitrogen atoms
+        if (ac.getAtom(atomIndex).getSymbol().equals("N") && ac.getAtom(atomIndex).getFormalCharge() <= 0) {
+            // excluding nitrogens that are adjacent to an oxygen
+            java.util.List neighbours = ac.getConnectedAtomsList(ac.getAtom(atomIndex));
+            for (Object neighbour : neighbours)
+                if (((IAtom) neighbour).getSymbol().equals("O"))
+                    continue atomloop;
+            hBondAcceptors++;
         }
+        // looking for suitable oxygen atoms
+        if (ac.getAtom(atomIndex).getSymbol().equals("O") && ac.getAtom(atomIndex).getFormalCharge() <= 0) {
+            //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
+            java.util.List neighbours = ac.getConnectedAtomsList(ac.getAtom(atomIndex));
+            for (Object neighbour : neighbours)
+                if (((IAtom) neighbour).getSymbol().equals("N") ||
+                        (((IAtom) neighbour).getSymbol().equals("C") && ((IAtom) neighbour).getFlag(CDKConstants.ISAROMATIC)))
+                    continue atomloop;
+            hBondAcceptors++;
+        }
+    }
 
     return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-            new IntegerResult(hBondAcceptors), new String[] {"nHBAcc"});
+            new IntegerResult(hBondAcceptors),
+            getDescriptorNames());
     }
 
     /**

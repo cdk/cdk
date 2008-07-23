@@ -48,7 +48,7 @@ public class    DescriptorEngineTest extends NewCDKTestCase {
     	DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
         Assert.assertNotNull(engine);
         int loadedDescriptors = engine.getDescriptorInstances().size(); 
-        Assert.assertNotSame(0, loadedDescriptors);
+        Assert.assertTrue("Could not load any descriptors", 0 != loadedDescriptors);
         Assert.assertEquals(loadedDescriptors, engine.getDescriptorClassNames().size());
         Assert.assertEquals(loadedDescriptors, engine.getDescriptorSpecifications().size());
     }

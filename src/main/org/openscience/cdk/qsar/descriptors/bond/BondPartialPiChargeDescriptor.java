@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
@@ -38,6 +36,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.Iterator;
 
 /**
  *  The calculation of bond-pi Partial charge is calculated 
@@ -65,7 +65,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondPartialPiCharge
  * @cdk.bug     1860497
- * @see PartialPiChargeDescriptor
+ * @see org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.bond.BondPartialPiChargeDescriptorTest")
 public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
@@ -78,7 +78,7 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
 	/** make a lone pair electron checker. Default true*/
 	private boolean lpeChecker = true;
 
-    String[] descriptorNames = {"pepeB"};
+    private static final String[] descriptorNames = {"pepeB"};
     /**
      *  Constructor for the BondPartialPiChargeDescriptor object
      */
@@ -144,27 +144,38 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return descriptorNames;
+    }
 
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(Double.NaN), descriptorNames,e);
+    }
     /**
      *  The method calculates the bond-pi Partial charge of a given bond
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
      *@param  ac                AtomContainer
      *@return                   return the sigma electronegativity
-     *@exception  CDKException  Possible Exceptions
      */
     @TestMethod(value="testCalculate_IBond_IAtomContainer")
-    public DescriptorValue calculate(IBond bond, IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IBond bond, IAtomContainer ac)  {
 
-    	if (!isCachedAtomContainer(ac)) {
-    		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-    		
-    		if(lpeChecker){
-    			LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-            	lpcheck.saturate(ac);
-           	}
-        	
-    		if(maxIterations != -1)
+        if (!isCachedAtomContainer(ac)) {
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+                if (lpeChecker) {
+                    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+                    lpcheck.saturate(ac);
+                }
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
+
+            if(maxIterations != -1)
     			pepe.setMaxGasteigerIters(maxIterations);
     		if(maxResonStruc != -1)
     			pepe.setMaxResoStruc(maxResonStruc);
@@ -179,12 +190,13 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
 					cacheDescriptorValue(bondi, ac, new DoubleResult(result));
 				}
 	        } catch (Exception ex1) {
-	            throw new CDKException("Problems with assignGasteigerPiPartialCharges due to " + ex1.toString(), ex1);
+	            return getDummyDescriptorValue(ex1);
 	        }
     	}
-    	return getCachedDescriptorValue(bond) != null 
-        	? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(bond),descriptorNames) 
-            : null;
+        return getCachedDescriptorValue(bond) != null
+                ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                getCachedDescriptorValue(bond), descriptorNames)
+                : null;
     }
 
 	 /**

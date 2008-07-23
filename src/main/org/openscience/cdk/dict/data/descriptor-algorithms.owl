@@ -2416,6 +2416,26 @@
     </Descriptor>
 
 
+    <Descriptor rdf:ID="kierHallSmarts">
+        <rdfs:label>Kier &amp; Hall SMARTS</rdfs:label>
+        <dc:contributor rdf:resource="#rguha"/>
+        <dc:date>2006-09-26</dc:date>
+        <definition>
+            Counts the number of occurrences of the E-state fragments
+        </definition>
+        <description>
+            Traditionally, the E-state indices are obtained by identifying a set of
+            fragments and then evaluating the E-state index from them. However it has
+            been shown by Butina (Molecules, 2004, 9, 1004-1009) that the frequency
+            of occurrence of the fragments can lead to QSAR models that perform as well
+            as those based on the original E-state indices. This descriptor generates
+            counts for 35 fragments. Descriptor names are prefixed with "khs."
+        </description>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+
+
     <Descriptor rdf:ID="ip">
         <rdfs:label>Ionization Potential</rdfs:label>
         <dc:contributor rdf:resource="#mr"/>

@@ -127,8 +127,8 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
     public void testAromaticity() throws Exception {
         setDescriptor(BCUTDescriptor.class);
 
-        String smiles1 = "c1ccccc1CCN";
-        String smiles2 = "C1=CC=CC=C1CCN";
+        String smiles1 = "c1ccccc1";
+        String smiles2 = "C1=CC=CC=C1";
 
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles(smiles1);

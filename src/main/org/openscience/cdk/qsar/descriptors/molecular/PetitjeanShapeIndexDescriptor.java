@@ -19,6 +19,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.PathTools;
@@ -72,6 +73,7 @@ import javax.vecmath.Point3d;
  */
 public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
 
+    private static final String[] names = {"topoShape", "geomShape"};
     public PetitjeanShapeIndexDescriptor() {
     }
 
@@ -105,6 +107,11 @@ public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
         return (null);
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
     /**
      * Gets the parameterNames attribute of the PetitjeanShapeIndexDescriptor object.
      *
@@ -133,7 +140,7 @@ public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
      * @return A DoubleArrayResult value representing the Petitjean shape indices
      */
 
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
         IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
 
         int tradius = PathTools.getMolecularGraphRadius(local);
@@ -180,7 +187,7 @@ public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
         }
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
-                new String[] {"topoShape", "geomShape"});
+                getDescriptorNames());
     }
 
     /**

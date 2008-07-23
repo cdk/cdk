@@ -26,7 +26,9 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import Jama.EigenvalueDecomposition;
 import Jama.Matrix;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -266,6 +268,19 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         return (o);
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        String[] names = {
+                "Wlambda1", "Wlambda2", "Wlambda3",
+                "Wnu1", "Wnu2",
+                "Wgamma1", "Wgamma2", "Wgamma3",
+                "Weta1", "Weta2", "Weta3",
+                "WT", "WA", "WV", "WK", "WG", "WD"
+        };
+        for (int i = 0; i < names.length; i++) names[i] += "." + type;
+        return names;
+    }
+
     /**
      * Gets the parameterNames attribute of the WHIMDescriptor object.
      *
@@ -288,6 +303,14 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         return ("");
     }
 
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+         int ndesc = getDescriptorNames().length;
+         DoubleArrayResult results = new DoubleArrayResult(ndesc);
+         for (int i = 0; i < ndesc; i++) results.add(Double.NaN);
+         return new DescriptorValue(getSpecification(), getParameterNames(),
+                 getParameters(), results, getDescriptorNames(), e);
+     }
+    
 
     /**
      * Calculates 11 directional and 6 non-directional WHIM descriptors for.
@@ -295,16 +318,18 @@ public class WHIMDescriptor implements IMolecularDescriptor {
      *
      * @param container Parameter is the atom container.
      * @return An ArrayList containing the descriptors in the order described above.
-     * @throws CDKException if the principal components decomposition fails
      */
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
+        if (!GeometryTools.has3DCoordinates(container))
+            return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
+
         double sum = 0.0;
         Molecule ac;
 
         try {
             ac = (Molecule) container.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Error during clone");
+            return getDummyDescriptorValue(e);
         }
 
         // do aromaticity detecttion for calculating polarizability later on
@@ -314,8 +339,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         // get the coordinate matrix
         double[][] cmat = new double[ac.getAtomCount()][3];
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            Point3d coords = ac.getAtom(i).getPoint3d();
-            if (coords == null) throw new CDKException("Molecule must have 3D coordinates");
+            Point3d coords = ac.getAtom(i).getPoint3d();            
             cmat[i][0] = coords.x;
             cmat[i][1] = coords.y;
             cmat[i][2] = coords.z;
@@ -428,15 +452,9 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         retval.add(g);
         retval.add(d);
 
-        String[] names = {
-                "Wlambda1", "Wlambda2", "Wlambda3",
-                "Wnu1", "Wnu2",
-                "Wgamma1", "Wgamma2", "Wgamma3",
-                "Weta1", "Weta2", "Weta3",
-                "WT", "WA", "WV", "WK", "WG", "WD"
-        };
-        for (int i = 0; i < names.length; i++) names[i] += "." + type;
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
+
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                retval, getDescriptorNames());
     }
 
     /**

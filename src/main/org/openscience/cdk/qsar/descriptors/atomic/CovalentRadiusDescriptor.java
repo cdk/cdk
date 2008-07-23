@@ -125,18 +125,22 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
         return null;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return new String[]{"covalentRadius"};
+    }
+
 
     /**
      *  This method calculate the Covalent radius of an atom.
      *
      *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  container         The {@link IAtomContainer} for which the descriptor is to be calculated
-     *@return                   The Covalent radius of the atom
-     *@exception  CDKException  if an error occurs during atom typing
+     *@return                   The Covalent radius of the atom     
      */
 
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         if (factory == null) 
             try {
                 factory = AtomTypeFactory.getInstance(
@@ -144,7 +148,9 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
                     container.getBuilder()
                 );
             } catch (Exception exception) {
-                throw new CDKException("Could not instantiate AtomTypeFactory!", exception);
+              return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(Double.NaN),
+                    getDescriptorNames(), exception);
             }
 
         double covalentradius;
@@ -154,10 +160,12 @@ public class CovalentRadiusDescriptor implements IAtomicDescriptor {
             covalentradius = type.getCovalentRadius();
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new DoubleResult(covalentradius),
-                    new String[] {"covalentRadius"});
-        } catch (Exception ex1) {
-            logger.debug(ex1);
-            throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString(), ex1);
+                    getDescriptorNames());
+        } catch (Exception exception) {
+            logger.debug(exception);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(Double.NaN),
+                    getDescriptorNames(), exception);
         }
     }
 

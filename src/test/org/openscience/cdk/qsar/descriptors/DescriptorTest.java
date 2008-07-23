@@ -21,7 +21,6 @@
 package org.openscience.cdk.qsar.descriptors;
 
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.IDescriptor;
 
@@ -40,13 +39,9 @@ public abstract class DescriptorTest extends CDKTestCase {
 		super(name);
 	}
 	
-	public void setDescriptor(Class descriptorClass) throws Exception {
+	public void setDescriptor(Class<? extends IDescriptor> descriptorClass) throws Exception {
 		if (descriptor == null) {
-			Object descriptor = (Object)descriptorClass.newInstance();
-			if (!(descriptor instanceof IDescriptor)) {
-				throw new CDKException("The passed descriptor class must be a IDescriptor");
-			}
-			this.descriptor = (IDescriptor)descriptor;
+			this.descriptor = descriptorClass.newInstance();
 		}
 	}
 	
@@ -76,14 +71,14 @@ public abstract class DescriptorTest extends CDKTestCase {
     public void testGetParameterNames() throws Exception {
         String[] paramNames = descriptor.getParameterNames();
         if (paramNames == null) paramNames = new String[0];
-        for (int i=0; i<paramNames.length; i++) {
-        	assertNotNull(
-        		"A parameter name must not be null.",
-        		paramNames[i]
-        	);
-        	assertNotSame(
-            	"A parameter name String must not be empty.",
-            	0, paramNames[i].length()
+        for (String paramName : paramNames) {
+            assertNotNull(
+                    "A parameter name must not be null.",
+                    paramName
+            );
+            assertNotSame(
+                    "A parameter name String must not be empty.",
+                    0, paramName.length()
             );
         }
     }
@@ -97,11 +92,11 @@ public abstract class DescriptorTest extends CDKTestCase {
         	);
         	params = new Object[0];
         }
-        for (int i=0; i<params.length; i++) {
-        	assertNotNull(
-        		"A parameter default must not be null.",
-        		params[i]
-        	);
+        for (Object param : params) {
+            assertNotNull(
+                    "A parameter default must not be null.",
+                    param
+            );
         }
     }
     
@@ -189,5 +184,14 @@ public abstract class DescriptorTest extends CDKTestCase {
     	Object[] defaultParams = descriptor.getParameters();
     	descriptor.setParameters(defaultParams);
     }
-    
+
+    public void testGetDescriptorNames() {
+        String[] descNames = descriptor.getDescriptorNames();
+        assertNotNull(descNames);
+        assertTrue("One or more descriptor names must be provided", descNames.length >= 1);
+        for (String s : descNames) {
+            assertTrue("Descriptor name must be non-zero length", s.length() != 0);
+        }
+    }
+
 }

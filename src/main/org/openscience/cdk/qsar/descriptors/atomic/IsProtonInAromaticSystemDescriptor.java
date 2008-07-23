@@ -69,7 +69,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptorTest")
 public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 
-	private boolean checkAromaticity = false;
+    private static final String[] names = {"protonInArmaticSystem"};
+
+    private boolean checkAromaticity = false;
 
 
 	/**
@@ -127,32 +129,44 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 		return params;
 	}
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
 
-	/**
+
+    /**
 	 *  The method is a proton descriptor that evaluate if a proton is bonded to an aromatic system or if there is distance of 2 bonds.
 	 *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
 	 *
 	 *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  atomContainer               AtomContainer
 	 *@return                   true if the proton is bonded to an aromatic atom.
-	 *@exception  CDKException  Possible Exceptions
 	 */
 	@TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) {
         IAtomContainer clonedAtomContainer;
         try {
             clonedAtomContainer = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Error during clone");
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new IntegerResult((int) Double.NaN),
+                names, e);
         }
         IAtom clonedAtom = clonedAtomContainer.getAtom(atomContainer.getAtomNumber(atom));
 
         int isProtonInAromaticSystem = 0;
-		IMolecule mol = new NNMolecule(clonedAtomContainer);
-		if (checkAromaticity) {
-			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-			CDKHueckelAromaticityDetector.detectAromaticity(mol);
-		}
+        IMolecule mol = new NNMolecule(clonedAtomContainer);
+        if (checkAromaticity) {
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+                CDKHueckelAromaticityDetector.detectAromaticity(mol);
+            } catch (CDKException e) {
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new IntegerResult((int) Double.NaN),
+                        names, e);
+            }
+        }
 		java.util.List neighboor = mol.getConnectedAtomsList(clonedAtom);
         IAtom neighbour0 = (IAtom)neighboor.get(0);
 		if(atom.getSymbol().equals("H")) {
@@ -176,7 +190,7 @@ public class IsProtonInAromaticSystemDescriptor implements IAtomicDescriptor {
 		}
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new IntegerResult(isProtonInAromaticSystem),
-                new String[] {"protonInAromaticSystem"});	
+                names);
 	}
 
 

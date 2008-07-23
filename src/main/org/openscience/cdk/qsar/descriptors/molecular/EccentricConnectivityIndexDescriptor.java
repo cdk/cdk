@@ -19,6 +19,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
@@ -69,7 +70,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref qsar-descriptors:eccentricConnectivityIndex
  */
 public class EccentricConnectivityIndexDescriptor implements IMolecularDescriptor {
-    
+    private static final String[] names = {"ECCEN"};
+
     public EccentricConnectivityIndexDescriptor() {}
 
 	public DescriptorSpecification getSpecification() {
@@ -78,7 +80,7 @@ public class EccentricConnectivityIndexDescriptor implements IMolecularDescripto
 		    this.getClass().getName(),
 		    "$Id$",
             "The Chemistry Development Kit");
-    };
+    }
 
     /**
      *  Sets the parameters attribute of the EccentricConnectivityIndexDescriptor object
@@ -99,6 +101,12 @@ public class EccentricConnectivityIndexDescriptor implements IMolecularDescripto
         // no parameters to return
         return(null);
     }
+
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
     /**
      *  Gets the parameterNames attribute of the EccentricConnectivityIndexDescriptor object
      *
@@ -144,7 +152,8 @@ public class EccentricConnectivityIndexDescriptor implements IMolecularDescripto
             eccenindex += max * degree;
         }
         IntegerResult retval = new IntegerResult(eccenindex);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, new String[] {"ECCEN"});
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                retval, getDescriptorNames(), null);
     }
 
     /**

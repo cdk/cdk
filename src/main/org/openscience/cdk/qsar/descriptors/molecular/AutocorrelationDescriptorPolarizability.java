@@ -22,6 +22,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.charges.Polarizability;
@@ -56,6 +57,7 @@ import java.util.Iterator;
 
 public class AutocorrelationDescriptorPolarizability implements IMolecularDescriptor {
 
+    private static final String[] names = {"ATSp1", "ATSp2", "ATSp3", "ATSp4", "ATSp5"};
     private static double[] listpolarizability(IAtomContainer container, int[][] dmat) throws CDKException {
         int natom = container.getAtomCount();
         double[] polars = new double[natom];
@@ -77,12 +79,12 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
     /**
      * This method calculate the ATS Autocorrelation descriptor.
      */
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
         Molecule molecule;
         try {
             molecule = (Molecule) container.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Error occured during clone " + e);
+            return getDummyDescriptorValue(new CDKException("Error occured during clone " + e));
         }
 
         // add H's in case they're not present
@@ -98,12 +100,20 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
             hAdder.addImplicitHydrogens(molecule);
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(molecule);
         } catch (Exception e) {
-            throw new CDKException("Could not add hydrogens: " + e.getMessage(), e);
+            return getDummyDescriptorValue(new CDKException("Could not add hydrogens: " + e.getMessage(), e));
         }
 
         // do aromaticity detecttion for calculating polarizability later on
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        try {
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(new CDKException("Could not percieve atom types: " + e.getMessage(), e));
+        }
+        try {
+            CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        } catch (CDKException e) {
+           return getDummyDescriptorValue(new CDKException("Could not percieve aromaticity: " + e.getMessage(), e));
+        }
 
         // get the distance matrix for pol calcs as well as for later on
         int[][] distancematrix = PathTools.computeFloydAPSP(AdjacencyMatrix.getMatrix(molecule));
@@ -133,11 +143,18 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
             }
 
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    result, new String[]{"ATSp1", "ATSp2", "ATSp3", "ATSp4", "ATSp5"});
+                    result, getDescriptorNames());
 
         } catch (Exception ex) {
-            throw new CDKException("Error while calculating the ATS_polarizability descriptor: " + ex.getMessage(), ex);
+            return getDummyDescriptorValue(new CDKException("Error while calculating the ATSpolarizabilty descriptor: " + ex.getMessage(), ex));
         }
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        DoubleArrayResult results = new DoubleArrayResult(5);
+        for (int i = 0; i < 5; i++) results.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), results, getDescriptorNames(), e);
     }
 
     public String[] getParameterNames() {
@@ -150,6 +167,11 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
 
     public Object[] getParameters() {
         return null;
+    }
+
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
     }
 
     public DescriptorSpecification getSpecification() {

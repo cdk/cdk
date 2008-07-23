@@ -1,0 +1,111 @@
+/* $RCSfile$
+ * $Author: egonw $
+ * $Date: 2008-02-25 08:11:58 -0500 (Mon, 25 Feb 2008) $
+ * $Revision: 10234 $
+ * 
+ * Copyright (C) 2008 Rajarshi Guha
+ * 
+ * Contact: rajarshi@users.sourceforge.net
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ */
+package org.openscience.cdk.qsar.descriptors.molecular;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+/**
+ * TestSuite that runs all test for the KierHallSmartsDescriptor
+ *
+ * @cdk.module test-qsarmolecular
+ */
+public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
+
+    private String[] names;
+
+    public KierHallSmartsDescriptorTest() {
+    }
+
+    public static Test suite() {
+        return new TestSuite(KierHallSmartsDescriptorTest.class);
+    }
+
+    public void setUp() throws Exception {
+        setDescriptor(KierHallSmartsDescriptor.class);
+        names = descriptor.getDescriptorNames();
+    }
+
+    private int getIndex(String name) {
+        for (int i = 0; i < names.length; i++) {
+            if (names[i].equals(name)) return i;
+        }
+        return -1;
+    }
+
+    public void test1() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCO");
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+        DescriptorValue value = descriptor.calculate(mol);
+        IntegerArrayResult result = (IntegerArrayResult) value.getValue();
+
+        Assert.assertEquals(79, result.length());
+        Assert.assertEquals(1, result.get(getIndex("sOH")));
+    }
+
+    public void test2() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("c1c(CN)cc(CCNC)cc1C(CO)CC(=O)CCOCCCO");
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+        DescriptorValue value = descriptor.calculate(mol);
+        IntegerArrayResult result = (IntegerArrayResult) value.getValue();
+
+        Assert.assertEquals(79, result.length());
+        Assert.assertEquals(2, result.get(getIndex("sOH")));
+        Assert.assertEquals(1, result.get(getIndex("dO")));
+        Assert.assertEquals(1, result.get(getIndex("ssO")));
+        Assert.assertEquals(1, result.get(getIndex("sNH2")));
+        Assert.assertEquals(1, result.get(getIndex("ssNH")));
+    }
+
+    public void test3() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C#CC(C)(C)C(C)(C)C#C");
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+
+        DescriptorValue value = descriptor.calculate(mol);
+        IntegerArrayResult result = (IntegerArrayResult) value.getValue();
+
+        Assert.assertEquals(79, result.length());
+        Assert.assertEquals(2, result.get(getIndex("tsC")));
+        Assert.assertEquals(2, result.get(getIndex("ssssC")));
+    }
+}

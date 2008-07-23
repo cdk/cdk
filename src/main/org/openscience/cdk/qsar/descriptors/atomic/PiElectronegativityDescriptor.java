@@ -76,7 +76,7 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
 	/** make a lone pair electron checker. Default true*/
 	private boolean lpeChecker = true;
 	
-    String[] descriptorNames = {"elecPiA"};
+    private static final String[] descriptorNames = {"elecPiA"};
 	private PiElectronegativity electronegativity;
 
     /**
@@ -148,32 +148,49 @@ public class PiElectronegativityDescriptor implements IAtomicDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return descriptorNames;
+    }
+
 
     /**
      *  The method calculates the pi electronegativity of a given atom
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
      *@param  atom              The IAtom for which the DescriptorValue is requested
-     *@param  ac                AtomContainer
+     *@param  atomContainer                AtomContainer
      *@return                   return the pi electronegativity
-     *@exception  CDKException  Possible Exceptions
      */
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
-	      AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-	      
-	      if(lpeChecker){
-    		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-            lpcheck.saturate(ac);
-          }
-    		
-	      if(maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
-	      if(maxResonStruc != -1 && maxResonStruc != 0)	electronegativity.setMaxResonStruc(maxResonStruc);
-        	
-	      double result = electronegativity.calculatePiElectronegativity(ac, atom);
-	       
-	      return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(result),descriptorNames);
-	}
+    public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) {
+        IAtomContainer clone;
+        IAtom localAtom;
+        try {
+            clone = (IAtomContainer) atomContainer.clone();
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
+            if (lpeChecker) {
+                LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+                lpcheck.saturate(atomContainer);
+            }
+            localAtom = clone.getAtom(atomContainer.getAtomNumber(atom));
+        } catch (CloneNotSupportedException e) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(Double.NaN), descriptorNames, null);
+        } catch (CDKException e) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(Double.NaN), descriptorNames, null);
+        }
+
+
+        if (maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
+        if (maxResonStruc != -1 && maxResonStruc != 0) electronegativity.setMaxResonStruc(maxResonStruc);
+
+        double result = electronegativity.calculatePiElectronegativity(clone, localAtom);
+
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(result), descriptorNames);
+    }
 
 
     /**

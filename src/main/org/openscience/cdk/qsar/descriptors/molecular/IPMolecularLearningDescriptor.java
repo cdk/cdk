@@ -20,9 +20,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -31,8 +28,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-//FIXME: IP: Miguel, you may not depend on atomic descriptors. The functionality
-//must be ported to something in cdk.charges
 import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicHOSEDescriptor;
 import org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
@@ -41,6 +36,9 @@ import org.openscience.cdk.qsar.result.DoubleResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.IonizationPotentialTool;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *  This class returns the ionization potential of a molecule. Up to now is
@@ -82,7 +80,8 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
 
     private boolean addlp = true;
-    private String[] descriptorNames = {"MolIP"};
+    private static final String[] names = {"MolIP"};
+
     /**
      *  Constructor for the IPMolecularLearningDescriptor object
      */
@@ -125,7 +124,12 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
      */
     @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
-        return new Object[]{new Boolean(addlp)};
+        return new Object[]{addlp};
+    }
+
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
     }
 
 
@@ -134,10 +138,9 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
      *
      *@param  atomContainer     AtomContainer
      *@return                   The first ionization energy
-     *@exception  CDKException  Possible Exceptions
      */
-    @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+    @TestMethod(value = "testCalculate_IAtomContainer")
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer local;
         if (addlp) {
             try {
@@ -145,13 +148,24 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
                 LonePairElectronChecker lpcheck = new LonePairElectronChecker();
                 lpcheck.saturate(local);
             } catch (CloneNotSupportedException e) {
-                throw new CDKException("Error during clone");
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new DoubleResult(Double.NaN), getDescriptorNames(), e);
+            } catch (CDKException e) {
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                        new DoubleResult(Double.NaN), getDescriptorNames(), e);
             }
 
         } else local = atomContainer;
 
-    	DoubleResult value = new DoubleResult(((DoubleArrayResult)calculatePlus(local).getValue()).get(0));
-    	return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), value, descriptorNames );
+        DoubleResult value;
+        try {
+            value = new DoubleResult(((DoubleArrayResult) calculatePlus(local).getValue()).get(0));
+        } catch (CDKException e) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(Double.NaN), getDescriptorNames(), e);
+        }
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                value, getDescriptorNames());
     }
 
     /**
@@ -166,7 +180,7 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
 
         ArrayList<Double> dar = new ArrayList<Double>();
         for(Iterator<IAtom> itA = container.atoms(); itA.hasNext();){
-            IAtom atom = (IAtom) itA.next();
+            IAtom atom = itA.next();
     		double value = IonizationPotentialTool.predictIP(container,atom);
     		if(value != 0)
     			dar.add(value);
@@ -174,7 +188,8 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
         
         DoubleArrayResult results = arrangingEnergy(dar);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results, descriptorNames);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,
+                getDescriptorNames(), null);
    
     }
 
@@ -189,10 +204,10 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
     	DoubleArrayResult results = new DoubleArrayResult();
     	int count = array.size();
     	for(int i = 0; i < count; i++){
-	    	double min = (Double) array.get(0);
+	    	double min = array.get(0);
 	    	int pos = 0;
 			for(int j = 0; j < array.size(); j++){
-				double value = (Double) array.get(j);
+				double value = array.get(j);
 				if( value < min){
 					min = value;
 					pos = j;
@@ -239,7 +254,7 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
      */
     @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
-        return new Boolean(addlp);
+        return addlp;
     }
     
     

@@ -19,8 +19,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import javax.vecmath.Point3d;
-
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -36,8 +37,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
+import javax.vecmath.Point3d;
 
 /**
  * A descriptor that calculates the moment of inertia and radius of gyration.
@@ -76,8 +76,8 @@ import Jama.Matrix;
  *
  * @author           Rajarshi Guha
  * @cdk.created      2005-02-07
- * @cdk.builddepends Jama-1.0.1.jar
- * @cdk.depends      Jama-1.0.1.jar
+ * @cdk.builddepends Jama-1.0.2.jar
+ * @cdk.depends      Jama-1.0.2.jar
  * @cdk.module       qsarmolecular
  * @cdk.svnrev  $Revision$
  * @cdk.set          qsar-descriptors
@@ -87,6 +87,11 @@ import Jama.Matrix;
 public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
 
     private LoggingTool logger;
+
+    private static final String[] names = {
+            "MOMI-X", "MOMI-Y", "MOMI-Z",
+            "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R"
+    };
 
     public MomentOfInertiaDescriptor() {
         logger = new LoggingTool(this);
@@ -122,6 +127,11 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
         return (null);
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
     /**
      * Gets the parameterNames attribute of the MomentOfInertiaDescriptor object.
      *
@@ -143,6 +153,14 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
         return (null);
     }
 
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        int ndesc = getDescriptorNames().length;
+        DoubleArrayResult results = new DoubleArrayResult(ndesc);
+        for (int i = 0; i < ndesc; i++) results.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), results, getDescriptorNames(), e);
+    }
+
     /**
      * Calculates the 3 MI's, 3 ration and the R_gyr value.
      *
@@ -150,19 +168,21 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
      *
      * @param container Parameter is the atom container.
      * @return An ArrayList containing 7 elements in the order described above
-     * @throws CDKException if the supplied AtomContainer does not contain 3D coordinates
      */
 
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
+        if (!GeometryTools.has3DCoordinates(container))
+            return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
+
         IAtomContainer clone;
-        IsotopeFactory factory = null;
+        IsotopeFactory factory;
         try {
             clone = (IAtomContainer)container.clone();
             factory = IsotopeFactory.getInstance(container.getBuilder());
             factory.configureAtoms(clone);
         } catch (Exception e) {
             logger.debug(e);
-            throw new CDKException("Error getting an IsotopeFactory");
+            return getDummyDescriptorValue(e);
         }
 
 
@@ -171,7 +191,7 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
         double ccf = 1.000138;
         double eps = 1e-5;
 
-        if (!GeometryTools.has3DCoordinates(clone)) throw new CDKException("Molecule must have 3D coordinates");
+
         
         double[][] imat = new double[3][3];
         Point3d centerOfMass = GeometryTools.get3DCentreOfMass(clone);
@@ -184,9 +204,6 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
         double zsq;
         for (int i = 0; i < clone.getAtomCount(); i++) {
             IAtom currentAtom = clone.getAtom(i);
-            if (currentAtom.getPoint3d() == null) {
-                throw new CDKException("Atom " + i + " did not have any 3D coordinates. These are required");
-            }
 
             double mass = factory.getMajorIsotope(currentAtom.getSymbol()).getExactMass();
 
@@ -236,18 +253,16 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
         }
 
         // finally get the radius of gyration
-        double pri = 0.0;
+        double pri;
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(clone);
         if (Math.abs(eval[2]) > eps) pri = Math.pow(eval[0] * eval[1] * eval[2], 1.0 / 3.0);
         else pri = Math.sqrt(eval[0] * ccf / MolecularFormulaManipulator.getTotalExactMass(formula));
         retval.add(Math.sqrt(Math.PI * 2 * pri * ccf / MolecularFormulaManipulator.getTotalExactMass(formula)));
 
-        String[] names = {
-                "MOMI-X", "MOMI-Y", "MOMI-Z",
-                "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R"
-        };
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
+
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                retval, getDescriptorNames());
     }
 
     /**

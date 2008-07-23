@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -68,6 +69,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.keyword    Petit-Jean, number
  */
 public class PetitjeanNumberDescriptor implements IMolecularDescriptor {
+    private static final String[] names = {"PetitjeanNumber"};
 
     /**
      *  Constructor for the PetitjeanNumberDescriptor object
@@ -110,15 +112,19 @@ public class PetitjeanNumberDescriptor implements IMolecularDescriptor {
         // no parameters to return
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
 
     /**
      *  Evaluate the descriptor for the molecule.
      *
      *@param  atomContainer                AtomContainer
-     *@return                   petitjean number
-     *@exception  CDKException  Possible Exceptions
+     *@return                   petitjean number     
      */
-    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
         double petitjeanNumber; //weinerPath
         int diameter = PathTools.getMolecularGraphDiameter(atomContainer);
         int radius = PathTools.getMolecularGraphRadius(atomContainer);
@@ -126,7 +132,7 @@ public class PetitjeanNumberDescriptor implements IMolecularDescriptor {
         if (diameter == 0) petitjeanNumber = 0;
         else petitjeanNumber = (diameter - radius)/(double)diameter;
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(petitjeanNumber),
-                new String[] {"PetitjeanNumber"});
+                getDescriptorNames());
     }
 
     /**

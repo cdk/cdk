@@ -24,10 +24,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Vector;
-
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -39,6 +38,10 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Class that returns the number of atoms in the largest pi system.
@@ -71,6 +74,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class LargestPiSystemDescriptor implements IMolecularDescriptor {
 
     private boolean checkAromaticity = false;
+    private static final String[] names = {"nAtomP"};
 
 
     /**
@@ -121,7 +125,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
             throw new CDKException("The first parameter must be of type Boolean");
         }
         // ok, all should be fine
-        checkAromaticity = ((Boolean) params[0]).booleanValue();
+        checkAromaticity = (Boolean) params[0];
     }
 
 
@@ -134,8 +138,18 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
-        params[0] = new Boolean(checkAromaticity);
+        params[0] = checkAromaticity;
         return params;
+    }
+
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), new IntegerResult((int) Double.NaN), getDescriptorNames(), e);
     }
 
 
@@ -150,18 +164,20 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
      *
      * @param container The {@link IAtomContainer} for which this descriptor is to be calculated
      * @return the number of atoms in the largest pi system of this AtomContainer
-     * @throws CDKException if there is a problem in atomaticity detection
      * @see #setParameters
      */
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
-        //logger.debug("LargestPiSystemDescriptor");
+    public DescriptorValue calculate(IAtomContainer container) {
         if (checkAromaticity) {
-        	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-            CDKHueckelAromaticityDetector.detectAromaticity(container);
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+                CDKHueckelAromaticityDetector.detectAromaticity(container);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
         }
         int largestPiSystemAtomsCount = 0;
-        Vector startSphere = null;
-        Vector path = null;
+        List<IAtom> startSphere;
+        List<IAtom> path;
         //Set all VisitedFlags to False
         for (int i = 0; i < container.getAtomCount(); i++) {
             container.getAtom(i).setFlag(CDKConstants.VISITED, false);
@@ -178,10 +194,14 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
             	!container.getAtom(i).getFlag(CDKConstants.VISITED))
             {
                 //logger.debug("...... -> Accepted");
-                startSphere = new Vector();
-                path = new Vector();
-                startSphere.addElement(container.getAtom(i));
-                breadthFirstSearch(container, startSphere, path);
+                startSphere = new ArrayList<IAtom>();
+                path = new ArrayList<IAtom>();
+                startSphere.add(container.getAtom(i));
+                try {
+                    breadthFirstSearch(container, startSphere, path);
+                } catch (CDKException e) {
+                    return getDummyDescriptorValue(e);
+                }
                 if (path.size() > largestPiSystemAtomsCount) {
                     largestPiSystemAtomsCount = path.size();
                 }
@@ -191,7 +211,8 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
 
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new IntegerResult(largestPiSystemAtomsCount),  new String[] {"nAtomP"});
+                new IntegerResult(largestPiSystemAtomsCount),
+                getDescriptorNames());
     }
 
     /**
@@ -223,26 +244,23 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
      *          Description of the
      *          Exception
      */
-    public void breadthFirstSearch(IAtomContainer container, Vector sphere, Vector path) throws org.openscience.cdk.exception.CDKException {
-        IAtom atom = null;
-        IAtom nextAtom = null;
-        Vector newSphere = new Vector();
+    public void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws org.openscience.cdk.exception.CDKException {
+        IAtom nextAtom;
+        Vector<IAtom> newSphere = new Vector<IAtom>();
         //logger.debug("Start of breadthFirstSearch");
-        for (int i = 0; i < sphere.size(); i++) {
-            atom = (IAtom) sphere.elementAt(i);
+        for (IAtom atom : sphere) {
             //logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
-            java.util.List bonds = container.getConnectedBondsList(atom);
-            for (int j = 0; j < bonds.size(); j++) {
-                nextAtom = ((IBond) bonds.get(j)).getConnectedAtom(atom);
+            List bonds = container.getConnectedBondsList(atom);
+            for (Object bond : bonds) {
+                nextAtom = ((IBond) bond).getConnectedAtom(atom);
                 if ((container.getMaximumBondOrder(nextAtom) != IBond.Order.SINGLE ||
-                	Math.abs(nextAtom.getFormalCharge()) >= 1 ||
-                	nextAtom.getFlag(CDKConstants.ISAROMATIC) || 
-                	nextAtom.getSymbol().equals("N") || 
-                	nextAtom.getSymbol().equals("O")) & 
-                	!nextAtom.getFlag(CDKConstants.VISITED))
-                {
+                        Math.abs(nextAtom.getFormalCharge()) >= 1 ||
+                        nextAtom.getFlag(CDKConstants.ISAROMATIC) ||
+                        nextAtom.getSymbol().equals("N") ||
+                        nextAtom.getSymbol().equals("O")) &
+                        !nextAtom.getFlag(CDKConstants.VISITED)) {
                     //logger.debug("BDS> AtomNr:"+container.getAtomNumber(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));
-                    path.addElement(nextAtom);
+                    path.add(nextAtom);
                     //logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
                     nextAtom.setFlag(CDKConstants.VISITED, true);
                     if (container.getConnectedBondsCount(nextAtom) > 1) {

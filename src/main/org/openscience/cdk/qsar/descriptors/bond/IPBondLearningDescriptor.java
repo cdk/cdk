@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptorTest")
 public class IPBondLearningDescriptor extends AbstractBondDescriptor {
-	private String[] descriptorNames = {"ipBondLearning"};
+	private static final String[] descriptorNames = {"ipBondLearning"};
 	
 	/**
 	 *  Constructor for the IPBondLearningDescriptor object
@@ -102,28 +102,46 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
     public Object[] getParameters() {
         return null;
     }
-	/**
+
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return descriptorNames;
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(Double.NaN), descriptorNames, e);
+    }
+
+    /**
 	 *  This method calculates the ionization potential of a bond.
 	 *
 	 *@param  atomContainer         Parameter is the IAtomContainer.
 	 *@return                   The ionization potential
-	 *@exception  CDKException  Description of the Exception
 	 */
     @TestMethod(value="testCalculate_IBond_IAtomContainer")
-	public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer) throws CDKException{
+	public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer) {
 		double value = 0;
-        
-		if (!isCachedAtomContainer(atomContainer)) {
-    		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
 
-    		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-            lpcheck.saturate(atomContainer);
-           	
-    	}
-		if(!bond.getOrder().equals(IBond.Order.SINGLE))
-			value = IonizationPotentialTool.predictIP(atomContainer,bond);
-		
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(value),descriptorNames);
+        if (!isCachedAtomContainer(atomContainer)) {
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
+                LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+                lpcheck.saturate(atomContainer);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
+
+        }
+        if (!bond.getOrder().equals(IBond.Order.SINGLE))
+            try {
+                value = IonizationPotentialTool.predictIP(atomContainer, bond);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(e);
+            }
+
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(value),descriptorNames);
 	}
 
 	

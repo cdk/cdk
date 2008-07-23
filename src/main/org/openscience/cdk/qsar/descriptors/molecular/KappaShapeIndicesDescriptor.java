@@ -24,8 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.ArrayList;
-
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -35,6 +34,8 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+
+import java.util.ArrayList;
 
 /**
  * Kier and Hall kappa molecular shape indices compare the molecular graph with minimal and maximal molecular graphs;
@@ -75,6 +76,8 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.keyword descriptor
  */
 public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {   
+
+    private static final String[] names = {"Kier1", "Kier2", "Kier3"};
 
     /**
      * Constructor for the KappaShapeIndicesDescriptor object
@@ -121,6 +124,11 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
         return (null);
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
 
     /**
      * calculates the kier shape indices for an atom container
@@ -129,7 +137,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      * @return kier1, kier2 and kier3 are returned as arrayList of doubles
      * @throws CDKException Possible Exceptions
      */
-    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
 
         //org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
         java.util.List firstAtomNeighboors;
@@ -230,7 +238,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
         kierValues.add(kier2);
         kierValues.add(kier3);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), kierValues,
-                new String[]{"Kier1", "Kier2", "Kier3"});
+                getDescriptorNames());
     }
 
     /**

@@ -20,8 +20,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import java.io.IOException;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -35,6 +33,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.io.IOException;
 
 /**
  * Describes the inbalance in mass number of the IBond. (Sorry, I needed *something* in the qsarbond module :)
@@ -51,7 +51,7 @@ public class MassNumberDifferenceDescriptor implements IBondDescriptor {
 
 	private static IsotopeFactory factory = null;
 	
-	private final static String DESCRIPTOR_VALUE_NAME = "MNDiff";
+	private final static String[] descriptorName = {"MNDiff"};
 	
     public MassNumberDifferenceDescriptor() {
     	if (factory == null) {
@@ -82,14 +82,19 @@ public class MassNumberDifferenceDescriptor implements IBondDescriptor {
         return null;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return descriptorName;
+    }
+
     @TestMethod(value="testCalculate_IBond_IAtomContainer")
-    public DescriptorValue calculate(IBond bond, IAtomContainer ac) throws CDKException {
+    public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
     	if (bond.getAtomCount() != 2) {
     		return new DescriptorValue(
     			getSpecification(), getParameterNames(),
     			getParameters(),
     			new DoubleResult(Double.NaN),
-    			new String[] {DESCRIPTOR_VALUE_NAME}
+    			descriptorName, new CDKException("Only 2-center bonds are considered")
     		);
     	}
     	
@@ -102,8 +107,7 @@ public class MassNumberDifferenceDescriptor implements IBondDescriptor {
     			Math.abs(factory.getElement(atoms[0].getSymbol()).getAtomicNumber() - 
     					 factory.getElement(atoms[0].getSymbol()).getAtomicNumber())
     		),
-    		new String[] {DESCRIPTOR_VALUE_NAME}
-        );
+    		descriptorName);
     }
 
     @TestMethod(value="testGetParameterNames")

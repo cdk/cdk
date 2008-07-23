@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -62,8 +63,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref qsar-descriptors:vAdjMa
  */
 public class VAdjMaDescriptor implements IMolecularDescriptor {
+    private static final String[] names = {"VAdjMat"};
 
-	/**
+    /**
 	 *  Constructor for the VAdjMaDescriptor object
 	 */
 	public VAdjMaDescriptor() { }
@@ -104,22 +106,27 @@ public class VAdjMaDescriptor implements IMolecularDescriptor {
 		return (null);
 	}
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
 
-	/**
+
+    /**
 	 *  calculates the VAdjMa descriptor for an atom container
 	 *
 	 *@param  atomContainer                AtomContainer
 	 *@return                   VAdjMa
-	 *@exception  CDKException  Possible Exceptions
+	 
 	 */
-	public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+	public DescriptorValue calculate(IAtomContainer atomContainer) {
 		int magnitude = AtomContainerManipulator.getHeavyAtoms(atomContainer).size();
 		double vadjMa = 0;
 		if (magnitude > 0) {
 			vadjMa += (Math.log(magnitude) / Math.log(2)) + 1;
 		}
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(vadjMa), new String[] {"vAdjMat"});
+                new DoubleResult(vadjMa), getDescriptorNames());
 	}
 
     /**

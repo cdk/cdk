@@ -25,18 +25,13 @@
  */
 package org.openscience.cdk.io.cml;
 
-import java.util.StringTokenizer;
-
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.result.BooleanResult;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.qsar.result.DoubleResult;
-import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.qsar.result.IntegerArrayResult;
-import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.qsar.result.*;
 import org.xml.sax.Attributes;
+
+import java.util.StringTokenizer;
 
 /**
  * This is an implementation for the CDK convention.
@@ -128,8 +123,7 @@ public class QSARConvention extends CMLCoreModule {
     	    		currentDescriptorDataIsArray ?
     	    		    newDescriptorResultArray(currentDescriptorResult) :
     	    		    newDescriptorResult(currentDescriptorResult),
-    	    		new String[0]
-    	        )
+    	    		new String[0])
     		);
     	} else if (xpath.endsWith("property", "scalar")) {
     		System.out.println("touch1");

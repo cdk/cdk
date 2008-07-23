@@ -24,10 +24,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -48,6 +46,9 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Evaluates chi path cluster descriptors.
@@ -86,6 +87,11 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
     private SmilesParser sp;
 
+    private static final String[] names = {
+            "SPC-4", "SPC-5", "SPC-6",
+            "VPC-4", "VPC-5", "VPC-6"
+    };
+
     public ChiPathClusterDescriptor() {
         logger = new LoggingTool(this);
         sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -115,20 +121,33 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
 
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
 
-        // removeHydrogens does a deep copy, so no need to clone
+    public DescriptorValue calculate(IAtomContainer container) {
+
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
-    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-    	Iterator<IAtom> atoms = localAtomContainer.atoms();
-    	while (atoms.hasNext()) {
-    		IAtom atom = atoms.next();
-    		IAtomType type = matcher.findMatchingAtomType(localAtomContainer, atom);
-    		AtomTypeManipulator.configure(atom, type);
-    	}
-    	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
-    	hAdder.addImplicitHydrogens(localAtomContainer);
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+        Iterator<IAtom> atoms = localAtomContainer.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            IAtomType type;
+            try {
+                type = matcher.findMatchingAtomType(localAtomContainer, atom);
+            } catch (CDKException e) {
+                return getDummyDescriptorValue(new CDKException("Error in atom typing: " + e.getMessage()));
+            }
+            AtomTypeManipulator.configure(atom, type);
+        }
+        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        try {
+            hAdder.addImplicitHydrogens(localAtomContainer);
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(new CDKException("Error in hydrogen addition: " + e.getMessage()));
+        }
 
         List subgraph4 = order4(localAtomContainer);
         List subgraph5 = order5(localAtomContainer);
@@ -138,9 +157,14 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
         double order5s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph5);
         double order6s = ChiIndexUtils.evalSimpleIndex(localAtomContainer, subgraph6);
 
-        double order4v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph4);
-        double order5v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph5);
-        double order6v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph6);
+        double order4v, order5v, order6v;
+        try {
+            order4v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph4);
+            order5v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph5);
+            order6v = ChiIndexUtils.evalValenceIndex(localAtomContainer, subgraph6);
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(new CDKException("Error in substructure search: " + e.getMessage()));
+        }
 
         DoubleArrayResult retval = new DoubleArrayResult();
         retval.add(order4s);
@@ -151,12 +175,18 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
         retval.add(order5v);
         retval.add(order6v);
 
-        String[] names = {
-                "SPC-4", "SPC-5", "SPC-6",
-                "VPC-4", "VPC-5", "VPC-6"
-        };
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
+      
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                retval, getDescriptorNames());
 
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        int ndesc = getDescriptorNames().length;
+        DoubleArrayResult results = new DoubleArrayResult(ndesc);
+        for (int i = 0; i < ndesc; i++) results.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), results, getDescriptorNames(), e);
     }
 
     /**

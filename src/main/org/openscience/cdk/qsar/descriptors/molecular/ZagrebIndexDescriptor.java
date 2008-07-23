@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -49,6 +50,7 @@ import java.util.List;
  * @cdk.keyword descriptor
  */
 public class ZagrebIndexDescriptor implements IMolecularDescriptor {
+    private static final String[] names = {"Zagreb"};
 
     /**
      *  Constructor for the ZagrebIndexDescriptor object.
@@ -93,15 +95,19 @@ public class ZagrebIndexDescriptor implements IMolecularDescriptor {
         // no parameters to return
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
 
     /**
      *  Evaluate the Zagreb Index for a molecule.
      *
      *@param  atomContainer                AtomContainer
-     *@return                   zagreb index
-     *@exception  CDKException  Possible Exceptions
+     *@return                   zagreb index     
      */
-    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
         double zagreb = 0;        
         IAtom atomi;
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
@@ -116,7 +122,7 @@ public class ZagrebIndexDescriptor implements IMolecularDescriptor {
             zagreb += (atomDegree * atomDegree);
         }
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(zagreb), new String[] {"Zagreb"});
+                new DoubleResult(zagreb), getDescriptorNames());
     }
 
     /**

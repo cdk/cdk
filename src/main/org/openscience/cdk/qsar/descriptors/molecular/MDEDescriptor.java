@@ -19,8 +19,7 @@
 */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Vector;
-
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
@@ -32,8 +31,9 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.Vector;
 
 /**
  * Calculates the Molecular Distance Edge descriptor described in {@cdk.cite LIU98}.
@@ -82,7 +82,17 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref qsar-descriptors:mde
  */
 public class MDEDescriptor implements IMolecularDescriptor {
-    private LoggingTool logger;
+
+    private static final String[] names = {
+            "MDEC-11", "MDEC-12", "MDEC-13", "MDEC-14",
+            "MDEC-22", "MDEC-23", "MDEC-24",
+            "MDEC-33", "MDEC-34",
+            "MDEC-44",
+            "MDEO-11", "MDEO-12", "MDEO-22",
+            "MDEN-11", "MDEN-12", "MDEN-13",
+            "MDEN-22", "MDEN-23",
+            "MDEN-33"
+    };
 
     public static final int mdec11 = 0;
     public static final int mdec12 = 1;
@@ -120,7 +130,7 @@ public class MDEDescriptor implements IMolecularDescriptor {
     private static final int N_3 = 3;
 
     public MDEDescriptor() {
-        logger = new LoggingTool(this);
+        
     }
 
     /**
@@ -169,6 +179,11 @@ public class MDEDescriptor implements IMolecularDescriptor {
         return null;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
 
     /**
      * Calculate the weight of specified element type in the supplied {@link org.openscience.cdk.interfaces.IAtomContainer}.
@@ -187,18 +202,8 @@ public class MDEDescriptor implements IMolecularDescriptor {
             retval.add(dedge(local, i));
         }
 
-        String[] names = {
-                "MDEC-11", "MDEC-12", "MDEC-13", "MDEC-14",
-                "MDEC-22", "MDEC-23", "MDEC-24",
-                "MDEC-33", "MDEC-34",
-                "MDEC-44",
-                "MDEO-11", "MDEO-12", "MDEO-22",
-                "MDEN-11", "MDEN-12", "MDEN-13",
-                "MDEN-22", "MDEN-23",
-                "MDEN-33"
-        };
         return new DescriptorValue(getSpecification(),
-                getParameterNames(), getParameters(), retval, names);
+                getParameterNames(), getParameters(), retval, getDescriptorNames());
     }
 
     /**
@@ -343,8 +348,8 @@ public class MDEDescriptor implements IMolecularDescriptor {
 
         for (int i = 0; i < v1.size(); i++) {
             for (int j = 0; j < v2.size(); j++) {
-                int a = (Integer) v1.get(i);
-                int b = (Integer) v2.get(j);
+                int a = v1.get(i);
+                int b = v2.get(j);
                 if (a == b) continue;
                 double distance = distmat[a][b];
                 lambda = lambda * distance;

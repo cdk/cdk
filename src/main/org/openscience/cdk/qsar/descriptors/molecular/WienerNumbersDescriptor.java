@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
@@ -82,6 +83,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.keyword    Wiener number
  */
 public class WienerNumbersDescriptor implements IMolecularDescriptor {
+
+    private static final String[] names = {"WPATH", "WPOL"};
 
     double[][] matr = null;
     DoubleArrayResult wienerNumbers = null;
@@ -146,28 +149,28 @@ public class WienerNumbersDescriptor implements IMolecularDescriptor {
         // no parameters to return
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
 
     /**
      * Calculate the Wiener numbers.
      *
      *@param  atomContainer   The {@link IAtomContainer} for which this descriptor is to be calculated
-     *@return                   wiener numbers as array of 2 doubles
-     *@exception  CDKException  Possible Exceptions
+     *@return wiener numbers as array of 2 doubles
      */
-    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
         wienerNumbers = new DoubleArrayResult(2);
         double wienerPathNumber = 0; //wienerPath
         double wienerPolarityNumber = 0; //wienerPol
 
-        // "matr" is the connection matrix
-        matr = ConnectionMatrix.getMatrix(AtomContainerManipulator.removeHydrogens(atomContainer));
-        // and "distances" is ist matrix of int where 
-        // for example distance[1][2] = length of the shortest path
-        // between atom at position 1 and atom at position 2.
+
+        matr = ConnectionMatrix.getMatrix(AtomContainerManipulator.removeHydrogens(atomContainer));        
         int[][] distances = PathTools.computeFloydAPSP(matr);
 
-        int partial = 0;
-        //wienerPolarityNumber = 0;
+        int partial;
         for (int i = 0; i < distances.length; i++) {
             for (int j = 0; j < distances.length; j++) {
                 partial = distances[i][j];
@@ -183,7 +186,7 @@ public class WienerNumbersDescriptor implements IMolecularDescriptor {
         wienerNumbers.add(wienerPathNumber);
         wienerNumbers.add(wienerPolarityNumber);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                wienerNumbers, new String[] {"WPATH", "WPOL"});
+                wienerNumbers, getDescriptorNames());
     }
 
     /**

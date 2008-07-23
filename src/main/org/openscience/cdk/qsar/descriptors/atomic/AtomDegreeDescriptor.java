@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.util.List;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -34,6 +32,8 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
+
+import java.util.List;
 
 /**
  * This class returns the number of not-Hs substituents of an atom, also defined as "atom degree".
@@ -91,6 +91,11 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
         return null;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return new String[]{"aNeg"};
+    }
+
 
     /**
      * This method calculates the number of not-H substituents of an atom.
@@ -98,10 +103,9 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
      * @param  atom              The IAtom for which the DescriptorValue is requested
      * @param  container         The {@link IAtomContainer} for which this descriptor is to be calculated for
      * @return   The number of bonds on the shortest path between two atoms
-     * @throws  CDKException  NOT CLEAR
      */
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         int atomDegree = 0;
         List<IAtom> neighboors = container.getConnectedAtomsList(atom);
         for (IAtom neighboor : neighboors) {
@@ -110,8 +114,7 @@ public class AtomDegreeDescriptor implements IAtomicDescriptor {
         return new DescriptorValue(
         	getSpecification(), getParameterNames(), getParameters(), 
         	new IntegerResult(atomDegree),
-        	new String[]{"aDeg"}
-        );
+        	getDescriptorNames());
     }
 
 

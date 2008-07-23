@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -72,6 +73,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.dictref qsar-descriptors:hBondDonors
  */
 public class HBondDonorCountDescriptor implements IMolecularDescriptor {
+    private static final String[] names = {"nHBDon"};
 
     /**
      *  Constructor for the HBondDonorCountDescriptor object
@@ -115,56 +117,60 @@ public class HBondDonorCountDescriptor implements IMolecularDescriptor {
         return null;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), new IntegerResult((int) Double.NaN), getDescriptorNames(), e);
+    }
 
     /**
      * Calculates the number of H bond donors.
      *
      * @param  atomContainer               AtomContainer
      * @return                   number of H bond donors
-     * @exception  CDKException  Possible Exceptions
      */
-    public DescriptorValue calculate(IAtomContainer atomContainer) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
         int hBondDonors = 0;
 
         IAtomContainer ac;
         try {
             ac = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
-            throw new CDKException("Error during clone");
+            return getDummyDescriptorValue(e);
         }
 
         //org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
-    // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue
-    atomloop:
-    for(int atomIndex = 0; atomIndex < ac.getAtomCount(); atomIndex++)
-    {
-        IAtom atom = (IAtom)ac.getAtom(atomIndex);
-      // checking for O and N atoms where the formal charge is >= 0
-      if((atom.getSymbol().equals("O") || atom.getSymbol().equals("N")) && atom.getFormalCharge() >= 0)
-      {
-        // implicit hydrogens
-        Integer implicitH = atom.getHydrogenCount();
-        if (implicitH == CDKConstants.UNSET) implicitH = 0;
-        if(implicitH > 0)
-        {
-          hBondDonors++;
-          continue atomloop; // we skip the explicit hydrogens part cause we found implicit hydrogens
+        // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue
+        atomloop:
+        for (int atomIndex = 0; atomIndex < ac.getAtomCount(); atomIndex++) {
+            IAtom atom = (IAtom) ac.getAtom(atomIndex);
+            // checking for O and N atoms where the formal charge is >= 0
+            if ((atom.getSymbol().equals("O") || atom.getSymbol().equals("N")) && atom.getFormalCharge() >= 0) {
+                // implicit hydrogens
+                Integer implicitH = atom.getHydrogenCount();
+                if (implicitH == CDKConstants.UNSET) implicitH = 0;
+                if (implicitH > 0) {
+                    hBondDonors++;
+                    continue atomloop; // we skip the explicit hydrogens part cause we found implicit hydrogens
+                }
+                // explicit hydrogens
+                java.util.List neighbours = ac.getConnectedAtomsList(atom);
+                for (Object neighbour : neighbours) {
+                    if (((IAtom) neighbour).getSymbol().equals("H")) {
+                        hBondDonors++;
+                        continue atomloop;
+                    }
+                }
+            }
         }
-        // explicit hydrogens
-        java.util.List neighbours = ac.getConnectedAtomsList(atom);
-        for(int neighbourIndex = 0; neighbourIndex < neighbours.size(); neighbourIndex++)
-        {
-          if(((IAtom)neighbours.get(neighbourIndex)).getSymbol().equals("H"))
-          {
-            hBondDonors++;
-            continue atomloop;
-          }
-        }
-      }
-    }
 
-    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-            new IntegerResult(hBondDonors),  new String[] {"nHBDon"});
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new IntegerResult(hBondDonors),
+                getDescriptorNames());
     }
 
     /**

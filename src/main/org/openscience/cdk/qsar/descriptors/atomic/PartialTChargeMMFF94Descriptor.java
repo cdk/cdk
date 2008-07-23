@@ -61,7 +61,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest")
 public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
 
-	private MMFF94PartialCharges mmff;
+    private static final String[] names = {"partialTCMMFF94"};
+
+    private MMFF94PartialCharges mmff;
 
 
     /**
@@ -108,6 +110,11 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
         return null;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
 
     /**
      *  The method returns partial charges assigned to an heavy atom through MMFF94 method.
@@ -116,18 +123,19 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@param  atom             The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
      *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
-     *@exception  CDKException  Possible Exceptions
      */
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
-    	DoubleResult aphaPartialCharge;
-    	try {
-	       	mmff.assignMMFF94PartialCharges(ac);
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
+        DoubleResult aphaPartialCharge = null;
+        try {
+            mmff.assignMMFF94PartialCharges(ac);
             aphaPartialCharge = new DoubleResult((Double) atom.getProperty("MMFF94charge"));
-    	} catch (Exception ex1) {
-	            throw new CDKException("Problems with assignMMFF94PartialCharges due to " + ex1.toString(), ex1);
-    	}
-    	return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), aphaPartialCharge);
+        } catch (Exception exception) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(Double.NaN), names, exception);
+        }
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                aphaPartialCharge, names);
     }
 
 

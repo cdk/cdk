@@ -20,8 +20,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import javax.vecmath.Point3d;
-
+import org.junit.Assert;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -32,6 +31,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.descriptors.DescriptorTest;
 import org.openscience.cdk.tools.diff.AtomDiff;
+
+import javax.vecmath.Point3d;
 
 /**
  * Tests for molecular descriptors.
@@ -50,7 +51,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
 	
 	public void setDescriptor(Class descriptorClass) throws Exception {
 		if (descriptor == null) {
-			Object descriptor = (Object)descriptorClass.newInstance();
+			Object descriptor = descriptorClass.newInstance();
 			if (!(descriptor instanceof IAtomicDescriptor)) {
 				throw new CDKException("The passed descriptor class must be a IAtomicDescriptor");
 			}
@@ -61,8 +62,13 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
 
     public void testCalculate_IAtomContainer() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
-        
-        DescriptorValue v = descriptor.calculate(mol.getAtom(1), mol);
+
+        DescriptorValue v = null;
+        try {
+            v = descriptor.calculate(mol.getAtom(1), mol);
+        } catch (Exception e) {
+            fail("A descriptor must not throw an exception");
+        }
         assertNotNull(v);
         assertNotSame(
         	"The descriptor did not calculate any value.",
@@ -108,6 +114,26 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
         );
     }
 
+    /**
+     * Check if the names obtained directly from the descriptor without
+     * calculation match those obtained from the descriptor value object.
+     * Also ensure that the number of actual values matches the length
+     * of the names
+     */
+    public void testNamesConsistency() {
+        IAtomContainer mol = someoneBringMeSomeWater();
+
+        String[] names1 = descriptor.getDescriptorNames();
+        DescriptorValue v = descriptor.calculate(mol.getAtom(1), mol);
+        String[] names2 = v.getNames();
+
+        assertEquals(names1.length, names2.length);
+        Assert.assertArrayEquals(names1, names2);
+
+        int valueCount = v.getValue().length();
+        assertEquals(valueCount, names1.length);        
+    }
+
     public void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         IAtom atom = mol.getAtom(1);
@@ -115,7 +141,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
         descriptor.calculate(atom, mol);
         String diff = AtomDiff.diff(clone, atom); 
         assertEquals(
-          "The descriptor must not change the passed bond in any respect, but found this diff: " + diff,
+          "The descriptor must not change the passed atom in any respect, but found this diff: " + diff,
           0, diff.length()
         );
     }

@@ -67,7 +67,7 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
 	/**Number of maximum iterations*/
     private int maxIterations = 0;
 
-    String[] descriptorNames = {"elecSigmA"};
+    private static final String[] descriptorNames = {"elecSigmA"};
     
 	private Electronegativity electronegativity;
 
@@ -130,6 +130,11 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return descriptorNames;
+    }
+
 
     /**
      *  The method calculates the sigma electronegativity of a given atom
@@ -138,18 +143,30 @@ public class SigmaElectronegativityDescriptor implements IAtomicDescriptor {
      *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  ac                AtomContainer
      *@return                   return the sigma electronegativity
-     *@exception  CDKException  Possible Exceptions
      */
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) throws CDKException {
-    	
-    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+    public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
 
-  		if(maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
-	    
-	    double result = electronegativity.calculateSigmaElectronegativity(ac, atom);
-	    
-	    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(result),descriptorNames);
+        IAtomContainer clone;
+        IAtom localAtom;
+        try {
+            clone = (IAtomContainer) ac.clone();
+            localAtom = clone.getAtom(ac.getAtomNumber(atom));
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clone);
+        } catch (CDKException e) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(Double.NaN), descriptorNames, e);
+        } catch (CloneNotSupportedException e) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(Double.NaN), descriptorNames, e);
+        }
+
+        if (maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
+
+        double result = electronegativity.calculateSigmaElectronegativity(clone, localAtom);
+
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                new DoubleResult(result), descriptorNames);
     }
 
 

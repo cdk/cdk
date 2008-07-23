@@ -1,8 +1,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Iterator;
-import java.util.List;
-
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -15,6 +13,9 @@ import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResultType;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Topological descriptor characterizing the carbon connectivity.
@@ -59,6 +60,12 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
 
 
+    private final static String[] names = {
+            "C1SP1", "C2SP1",
+            "C1SP2", "C2SP2", "C3SP2",
+            "C1SP3", "C2SP3", "C3SP3", "C4SP3"
+    };
+    
     public CarbonTypesDescriptor() {
         logger = new LoggingTool(this);
     }
@@ -95,6 +102,11 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
         return (null);
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
     /**
      * Gets the parameterNames attribute of the GravitationalIndexDescriptor object.
      *
@@ -123,7 +135,7 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
      * @return An ArrayList containing 9 elements in the order described above
      */
 
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
         int c1sp1 = 0;
         int c2sp1 = 0;
         int c1sp2 = 0;
@@ -169,12 +181,9 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
         retval.add(c3sp3);
         retval.add(c4sp3);
 
-        String[] names = {
-                "C1SP1", "C2SP1",
-                "C1SP2", "C2SP2", "C3SP2",
-                "C1SP3", "C2SP3", "C3SP3", "C4SP3"
-        };
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval, names);
+
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                retval, getDescriptorNames());
     }
 
     private IBond.Order getHighestBondOrder(IAtomContainer container, IAtom atom) {

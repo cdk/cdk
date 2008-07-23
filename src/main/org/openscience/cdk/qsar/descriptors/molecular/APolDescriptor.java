@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -75,6 +76,7 @@ public class APolDescriptor implements IMolecularDescriptor {
     private IsotopeFactory ifac = null;
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
     private static double[] polarizabilities;
+    private static final String[] names = {"apol"};
 
     /**
      *  Constructor for the APolDescriptor object.
@@ -143,6 +145,11 @@ public class APolDescriptor implements IMolecularDescriptor {
         return (null);
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return names;
+    }
+
 
     /**
      * Calculate the sum of atomic polarizabilities in an {@link IAtomContainer}.
@@ -152,7 +159,7 @@ public class APolDescriptor implements IMolecularDescriptor {
      *@throws CDKException if there is an error in getting element symbols from the
      * {@link IsotopeFactory}
      */
-    public DescriptorValue calculate(IAtomContainer container) throws CDKException {
+    public DescriptorValue calculate(IAtomContainer container) {
         double apol = 0;
         int atomicNumber = 0;
         try {
@@ -167,10 +174,12 @@ public class APolDescriptor implements IMolecularDescriptor {
                 apol += polarizabilities[atomicNumber];
             }
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new DoubleResult(apol), new String[] {"apol"});
+                    new DoubleResult(apol), getDescriptorNames());
         } catch (Exception ex1) {
             logger.debug(ex1);
-            throw new CDKException("Problems with IsotopeFactory due to " + ex1.toString(), ex1);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new DoubleResult(Double.NaN), getDescriptorNames(),
+                    new CDKException("Problems with IsotopeFactory due to " + ex1.toString(), ex1));            
         }
     }
 

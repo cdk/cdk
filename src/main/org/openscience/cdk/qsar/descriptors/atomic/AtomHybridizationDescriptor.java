@@ -114,25 +114,39 @@ public class AtomHybridizationDescriptor implements IAtomicDescriptor {
         return null;
     }
 
-	/**
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return new String[]{"aHyb"};
+    }
+
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(),
+                getParameters(), new IntegerResult((int) Double.NaN), getDescriptorNames(), e);
+    }
+
+    /**
 	 *  This method calculates the hybridization of an atom.
 	 *
 	 *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  container         Parameter is the atom container.
 	 *@return                   The hybridization
-	 *@exception  CDKException  Description of the Exception
 	 */
 
 	@TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
-		matched = atm.findMatchingAtomType(container, atom);
-		if (matched == null) {
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
+        try {
+            matched = atm.findMatchingAtomType(container, atom);
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(e);
+        }
+        if (matched == null) {
             int atnum = container.getAtomNumber(atom);
-            throw new CDKException("The matched atom type was null (atom number "+atnum+") "+atom.getSymbol());
+            return getDummyDescriptorValue(new CDKException("The matched atom type was null (atom number "+atnum+") "+atom.getSymbol()));
 		}
 		Hybridization atomHybridization = matched.getHybridization();
 		IntegerResult result = new IntegerResult(atomHybridization == null ? 0 : atomHybridization.ordinal());
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result, new String[]{"aHyb"});
+		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                result, getDescriptorNames());
 	}
 
     /**

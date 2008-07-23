@@ -24,7 +24,6 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org._3pq.jgrapht.Edge;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -65,7 +64,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 public class BondsToAtomDescriptor implements IAtomicDescriptor {
 
     private int focusPosition = 0;
-    private org._3pq.jgrapht.Graph mygraph = null;
     java.util.List<Edge> mylist = null;
     Object startVertex = null;
     Object endVertex = null;
@@ -121,6 +119,11 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
         return params;
     }
 
+    @TestMethod(value="testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return new String[]{"bondsToAtom"};
+    }
+
 
     /**
      *  This method calculate the number of bonds on the shortest path between two atoms.
@@ -128,13 +131,12 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
      *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  container         Parameter is the atom container.
      *@return                   The number of bonds on the shortest path between two atoms
-     *@exception  CDKException  Description of the Exception
      */
 
     @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer container) throws CDKException {
-        mygraph = MoleculeGraphs.getMoleculeGraph((Molecule) container);
-        int bondsToAtom = 0;
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
+        org._3pq.jgrapht.Graph mygraph = MoleculeGraphs.getMoleculeGraph(container);
+        int bondsToAtom;
 
         IAtom focus = container.getAtom(focusPosition);
 
@@ -147,8 +149,7 @@ public class BondsToAtomDescriptor implements IAtomicDescriptor {
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new IntegerResult(bondsToAtom),
-                new String[]{"bondsToAtom"}
-        );
+                getDescriptorNames());
 
     }
 

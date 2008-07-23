@@ -23,6 +23,8 @@ package org.openscience.cdk.qsar;
 import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.Entry;
@@ -70,6 +72,7 @@ import java.util.jar.JarFile;
  * @see Dictionary
  * @see org.openscience.cdk.dict.OWLFile
  */
+@TestClass(value="org.openscience.cdk.qsar.descriptors.molecular.DescriptorEngineTest")
 public class DescriptorEngine {
     private static String rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
@@ -126,6 +129,7 @@ public class DescriptorEngine {
      * @param type Indicates whether molecular or atomic descriptors should be calculated. Possible values
      *             are DescriptorEngine.ATOMIC or DescriptorEngine.MOLECULAR
      */
+    @TestMethod(value="testConstructor")
     public DescriptorEngine(int type) {
         this(type, null);
     }
@@ -187,34 +191,40 @@ public class DescriptorEngine {
 
         for (int i = 0; i < descriptors.size(); i++) {
             IDescriptor descriptor = (IDescriptor) descriptors.get(i);
-            try {
-                if (descriptor instanceof IMolecularDescriptor) {
-                    DescriptorValue value = ((IMolecularDescriptor) descriptor).calculate(molecule);
-                    molecule.setProperty(speclist.get(i), value);
-                    logger.debug("Calculated molecular descriptors...");
-                } else if (descriptor instanceof IAtomicDescriptor) {
-                    java.util.Iterator atoms = molecule.atoms();
-                    while (atoms.hasNext()) {
-                        IAtom atom = (IAtom) atoms.next();
-                        DescriptorValue value = ((IAtomicDescriptor) descriptor).calculate(atom, molecule);
-                        atom.setProperty(speclist.get(i), value);
-                    }
-                    logger.debug("Calculated atomic descriptors...");
-                } else if (descriptor instanceof IBondDescriptor) {
-                    Iterator bonds = molecule.bonds();
-                    while (bonds.hasNext()) {
-                        IBond bond = (IBond) bonds.next();
-                        DescriptorValue value = ((IBondDescriptor) descriptor).calculate(bond, molecule);
-                        bond.setProperty(speclist.get(i), value);
-                    }
-                    logger.debug("Calculated bond descriptors...");
-                } else {
-                    logger.debug("Unknown descriptor type for: ", descriptor.getClass().getName());
+            if (descriptor instanceof IMolecularDescriptor) {
+                DescriptorValue value = ((IMolecularDescriptor) descriptor).calculate(molecule);
+                if (value.getException() == null) molecule.setProperty(speclist.get(i), value);
+                else {
+                    logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
+                    logger.debug(value.getException());
                 }
-            } catch (CDKException exception) {
-                logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
-                logger.debug(exception);
-                throw new CDKException("Could not calculate descriptor value for: " + descriptor.getClass().getName(), exception);
+                logger.debug("Calculated molecular descriptors...");
+            } else if (descriptor instanceof IAtomicDescriptor) {
+                Iterator atoms = molecule.atoms();
+                while (atoms.hasNext()) {
+                    IAtom atom = (IAtom) atoms.next();
+                    DescriptorValue value = ((IAtomicDescriptor) descriptor).calculate(atom, molecule);
+                    if (value.getException() == null) atom.setProperty(speclist.get(i), value);
+                    else {
+                        logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
+                        logger.debug(value.getException());
+                    }
+                }
+                logger.debug("Calculated atomic descriptors...");
+            } else if (descriptor instanceof IBondDescriptor) {
+                Iterator bonds = molecule.bonds();
+                while (bonds.hasNext()) {
+                    IBond bond = (IBond) bonds.next();
+                    DescriptorValue value = ((IBondDescriptor) descriptor).calculate(bond, molecule);
+                    if (value.getException() == null) bond.setProperty(speclist.get(i), value);
+                    else {
+                        logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
+                        logger.debug(value.getException());
+                    }
+                }
+                logger.debug("Calculated bond descriptors...");
+            } else {
+                logger.debug("Unknown descriptor type for: ", descriptor.getClass().getName());
             }
         }
     }
@@ -241,6 +251,7 @@ public class DescriptorEngine {
      * @return The type of the descriptor as stored in the dictionary, null if no entry is found matching
      *         the supplied identifier
      */
+    @TestMethod(value="testDictionaryType")
     public String getDictionaryType(String identifier) {
 
         Entry[] dictEntries = dict.getEntries();
@@ -249,10 +260,10 @@ public class DescriptorEngine {
         logger.debug("Got identifier: " + identifier);
         logger.debug("Final spec ref: " + specRef);
 
-        for (int j = 0; j < dictEntries.length; j++) {
-            if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
-            if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
-                Element rawElement = (Element) dictEntries[j].getRawContent();
+        for (Entry dictEntry : dictEntries) {
+            if (!dictEntry.getClassName().equals("Descriptor")) continue;
+            if (dictEntry.getID().equals(specRef.toLowerCase())) {
+                Element rawElement = (Element) dictEntry.getRawContent();
                 // assert(rawElement != null);
                 // We're not fully Java 1.5 yet, so commented it out now. If it is
                 // really important to have it, then add @cdk.require java1.5 in the
@@ -292,6 +303,7 @@ public class DescriptorEngine {
      * @return he type of the descriptor as stored in the dictionary, null if no entry is found matching
      *         the supplied identifier
      */
+    @TestMethod(value="testDictionaryType")
     public String getDictionaryType(DescriptorSpecification descriptorSpecification) {
         return getDictionaryType(descriptorSpecification.getSpecificationReference());
     }
@@ -315,6 +327,7 @@ public class DescriptorEngine {
      * @return A List containing the names of the QSAR descriptor classes that this  descriptor was declared
      *         to belong to. If an entry for the specified identifier was not found, null is returned.
      */
+    @TestMethod(value="testDictionaryClass")
     public String[] getDictionaryClass(String identifier) {
 
         Entry[] dictEntries = dict.getEntries();
@@ -326,10 +339,10 @@ public class DescriptorEngine {
         }
         List<String> dictClasses = new ArrayList<String>();
 
-        for (int j = 0; j < dictEntries.length; j++) {
-            if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
-            if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
-                Element rawElement = (Element) dictEntries[j].getRawContent();
+        for (Entry dictEntry : dictEntries) {
+            if (!dictEntry.getClassName().equals("Descriptor")) continue;
+            if (dictEntry.getID().equals(specRef.toLowerCase())) {
+                Element rawElement = (Element) dictEntry.getRawContent();
                 Elements classifications = rawElement.getChildElements("isClassifiedAs", dict.getNS());
                 for (int i = 0; i < classifications.size(); i++) {
                     Element element = classifications.get(i);
@@ -367,6 +380,7 @@ public class DescriptorEngine {
      *         to belong to. If an entry for the specified identifier was not found, null is returned.
      */
 
+    @TestMethod(value="testDictionaryClass")
     public String[] getDictionaryClass(DescriptorSpecification descriptorSpecification) {
         return getDictionaryClass(descriptorSpecification.getSpecificationReference());
     }
@@ -390,10 +404,10 @@ public class DescriptorEngine {
         String specRef = getSpecRef(identifier);
         String definition = null;
 
-        for (int j = 0; j < dictEntries.length; j++) {
-            if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
-            if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
-                definition = dictEntries[j].getDefinition();
+        for (Entry dictEntry : dictEntries) {
+            if (!dictEntry.getClassName().equals("Descriptor")) continue;
+            if (dictEntry.getID().equals(specRef.toLowerCase())) {
+                definition = dictEntry.getDefinition();
                 break;
             }
         }
@@ -427,10 +441,10 @@ public class DescriptorEngine {
         String specRef = getSpecRef(identifier);
         String title = null;
 
-        for (int j = 0; j < dictEntries.length; j++) {
-            if (!dictEntries[j].getClassName().equals("Descriptor")) continue;
-            if (dictEntries[j].getID().equals(specRef.toLowerCase())) {
-                title = dictEntries[j].getLabel();
+        for (Entry dictEntry : dictEntries) {
+            if (!dictEntry.getClassName().equals("Descriptor")) continue;
+            if (dictEntry.getID().equals(specRef.toLowerCase())) {
+                title = dictEntry.getLabel();
                 break;
             }
         }
@@ -482,6 +496,7 @@ public class DescriptorEngine {
      *
      * @return A List containing descriptor classes
      */
+    @TestMethod(value="testLoadingOfMolecularDescriptors,testLoadingOfAtomicDescriptors,testLoadingOfBondDescriptors")
     public List<IDescriptor> getDescriptorInstances() {
         return descriptors;
     }
@@ -501,6 +516,7 @@ public class DescriptorEngine {
      *
      * @return An array containing the unique dictionary classes.
      */
+    @TestMethod(value="testAvailableClass")
     public String[] getAvailableDictionaryClasses() {
         List<String> classList = new ArrayList<String>();
         for (Iterator iter = speclist.iterator(); iter.hasNext();) {
@@ -630,11 +646,11 @@ public class DescriptorEngine {
 
         ArrayList<String> classlist = new ArrayList<String>();
 
-        for (int i = 0; i < jars.length; i++) {
-            logger.debug("Looking in " + jars[i]);
+        for (String jar : jars) {
+            logger.debug("Looking in " + jar);
             JarFile jarFile;
             try {
-                jarFile = new JarFile(jars[i]);
+                jarFile = new JarFile(jar);
                 Enumeration enumeration = jarFile.entries();
                 while (enumeration.hasMoreElements()) {
                     JarEntry jarEntry = (JarEntry) enumeration.nextElement();
@@ -642,11 +658,12 @@ public class DescriptorEngine {
                         String tmp = jarEntry.toString().replace('/', '.').replaceAll(".class", "");
                         if (!(tmp.indexOf(packageName) != -1)) continue;
                         if (tmp.indexOf('$') != -1) continue;
-                        classlist.add(tmp);
+                        if (tmp.indexOf("Test") != -1) continue;
+                        if (!classlist.contains(tmp)) classlist.add(tmp);
                     }
                 }
             } catch (IOException e) {
-                logger.error("Error opening the jar file: " + jars[i]);
+                logger.error("Error opening the jar file: " + jar);
                 logger.debug(e);
             }
         }
