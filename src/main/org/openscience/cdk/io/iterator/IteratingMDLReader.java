@@ -32,16 +32,21 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.NoSuchElementException;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLFormat;
 import org.openscience.cdk.io.formats.MDLV2000Format;
 import org.openscience.cdk.io.formats.MDLV3000Format;
+import org.openscience.cdk.io.listener.IChemObjectIOListener;
+import org.openscience.cdk.io.setting.BooleanIOSetting;
+import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -75,7 +80,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.keyword    file format, MDL molfile
  * @cdk.keyword    file format, SDF
  */
-public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
+public class IteratingMDLReader extends DefaultIteratingChemObjectReader implements IChemObjectIOListener {
 
     private BufferedReader input;
     private LoggingTool logger;
@@ -88,6 +93,8 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
     private IChemObjectBuilder builder;
     private IMolecule nextMolecule;
     
+    private BooleanIOSetting forceReadAs3DCoords;
+
     /**
      * Contructs a new IteratingMDLReader that can read Molecule from a given Reader.
      *
@@ -98,6 +105,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
     	logger = new LoggingTool(this);
         this.builder = builder;
     	setReader(in);
+    	initIOSettings();
     }
 
     /**
@@ -148,6 +156,10 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
                     logger.debug("MDL file part read: ", buffer);
                     ISimpleChemObjectReader reader = factory.createReader(currentFormat);
                     reader.setReader(new StringReader(buffer.toString()));
+                    if (currentFormat instanceof MDLV2000Format) {
+                        reader.addChemObjectIOListener(this);
+                        ((MDLV2000Reader)reader).customizeJob();
+                    }
                     nextMolecule = (IMolecule)reader.read(builder.newMolecule());
 
                     // note that a molecule may have 0 atoms, but still
@@ -248,5 +260,32 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader {
 	public void setReader(InputStream reader) {
 	    setReader(new InputStreamReader(reader));
     }
+
+    private void initIOSettings() {
+        forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.LOW,
+          "Should coordinates always be read as 3D?", 
+          "false");
+    }
+    
+    public void customizeJob() {
+        fireIOSettingQuestion(forceReadAs3DCoords);
+    }
+
+    public IOSetting[] getIOSettings() {
+        IOSetting[] settings = new IOSetting[1];
+        settings[0] = forceReadAs3DCoords;
+        return settings;
+    }
+
+	public void processIOSettingQuestion(IOSetting setting) {
+	    if (setting.getName().equals(forceReadAs3DCoords.getName())) {
+	    	try {
+	            setting.setSetting(forceReadAs3DCoords.getSetting());
+            } catch (CDKException e) {
+	            logger.debug("Could not propagate forceReadAs3DCoords setting");
+            }
+	    }
+    }
+
 }
 
