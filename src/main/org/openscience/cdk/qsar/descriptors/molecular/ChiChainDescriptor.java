@@ -158,7 +158,7 @@ public class ChiChainDescriptor implements IMolecularDescriptor {
             try {
                 type = matcher.findMatchingAtomType(localAtomContainer, atom);
                 AtomTypeManipulator.configure(atom, type);
-            } catch (CDKException e) {
+            } catch (Exception e) {
                 return getDummyDescriptorValue(new CDKException("Error in atom typing: " + atom));
             }            
         }

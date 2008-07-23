@@ -138,14 +138,14 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
             try {
                 type = matcher.findMatchingAtomType(localAtomContainer, atom);
                 AtomTypeManipulator.configure(atom, type);
-            } catch (CDKException e) {
+            } catch (Exception e) {
                 return getDummyDescriptorValue(new CDKException("Error in atom typing: " + e.getMessage()));
             }            
         }
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
         try {
             hAdder.addImplicitHydrogens(localAtomContainer);
-        } catch (CDKException e) {
+        } catch (Exception e) {
             return getDummyDescriptorValue(new CDKException("Error in hydrogen addition: " + e.getMessage()));
         }
 
