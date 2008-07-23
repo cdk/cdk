@@ -4,3 +4,4 @@ org/openscience/cdk/config/data/radii-vdw.txt
 org/openscience/cdk/config/data/electroneg-pauling.txt
 org/openscience/cdk/layout/templates/*.cml
 org/openscience/cdk/layout/templates/templates.list
+org/openscience/cdk/fingerprint/data/*
