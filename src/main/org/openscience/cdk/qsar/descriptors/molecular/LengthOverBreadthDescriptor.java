@@ -155,7 +155,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
 
         // get the com
         Point3d com = GeometryTools.get3DCentreOfMass(atomContainer);
-        if (com == null) return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
+        if (com == null) return getDummyDescriptorValue(new CDKException("Error in center of mass calculation"));
 
         // translate everything to COM
         for (int i = 0; i < coords.length; i++) {
