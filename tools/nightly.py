@@ -134,7 +134,7 @@ smtpPassword = 'beeb1e'
 # A list of links that will be included on the final build
 # page. Each item of the list should be a tuple of the link
 # text and the actual URL. If empty there will be no links section
-links = [ ('1.0.x Nightly Build', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly-1.0.x/')]
+links = [ ('DTP Atom Type QA', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/dtp-atype-report.txt'), ('1.0.x Nightly Build', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly-1.0.x/')]
 
 #################################################################
 #
@@ -375,8 +375,8 @@ def writeJunitSummaryHTML(stats, stable=True):
     totalError = 0
     
     for entry in stats:
-        if stable and (entry[0] in ['experimental','builder3d','structgen']): continue
-        if not stable and entry[0] not in [ 'experimental', 'builder3d', 'structgen']: continue
+        if stable and (entry[0] in ['experimental','structgen']): continue
+        if not stable and entry[0] not in [ 'experimental', 'structgen']: continue
         
         if int(entry[1]) != -1:
             totalTest = totalTest + int(entry[1])
@@ -1036,7 +1036,7 @@ if __name__ == '__main__':
         print 'Old revision = %s Current Revision = %s' % (oldRevision, currentRevision)
 	if oldRevision == currentRevision:
 	    print '  No commits since last run. Exiting'
-            sys.exit(0)
+            #sys.exit(0)
 
         status = updateVersion()
         if not status:
@@ -1243,6 +1243,17 @@ if __name__ == '__main__':
         resultTable.addCell(copyLogFile('javadoc.log', nightly_dir, nightly_web))
     resultTable.addRule()
     
+    print '  Generating descriptor summary'
+    distjar = glob.glob(os.path.join(nightly_repo, 'dist', 'jar', 'cdk-svn-*'))[0]
+    cmd = 'java -cp %s:%s bsh.Interpreter %s > %s' % \
+	(classpath, distjar, os.path.join(nightly_repo, 'tools', 'dnames.bsh'), os.path.join(nightly_web, 'dnames.html'))
+    os.system(cmd)
+    resultTable.addRow()
+    resultTable.addCell("Descriptors")
+    resultTable.addCell("""<a href='dnames.html'>All</a> &nbsp; <a href='dnames.html#molecule'>Molecular</a>
+&nbsp; <a href="dnames.html#bond">Bond</a> &nbsp; <a href="dnames.html#atom">Atom</a>
+    """)
+
     # generate the dependency graph entry
     print '  Generating dependency graph'
     celltexts = generateCDKDepGraph()
