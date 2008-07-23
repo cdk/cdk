@@ -236,6 +236,21 @@ PARSER_END(SMARTSParser)
     |   < MD: "Md" >
     |   < NO: "No" >
     |   < LR: "Lr" >
+    |   <  NP: "Np" >
+    |   <  CE: "Ce" >
+    |   <  ND: "Nd" >
+    |   <  PM: "Pm" >
+    |   <  SM: "Sm" >
+    |   <  EU: "Eu" >
+    |   <  GD: "Gd" >
+    |   <  TB: "Tb" >
+    |   <  DY: "Dy" >
+    |   <  HO: "Ho" >
+    |   <  ER: "Er" >
+    |   <  TM: "Tm" >
+    |   <  YB: "Yb" >
+    |   <  LU: "Lu" >
+    |   <  PR: "Pr" >        
     // Atomic Primitives
     |   < WILDCARD: "*" >
     |
@@ -685,7 +700,8 @@ void NoHydrogenElement() #Element: {}
     <PO> | <AT> | <RN> | <FR> | <RA> | <AC> | <TH> | <PA> | <CL> |
 	<B> | <C> | <N> | <O> | <F> | <P> | <S> | <K> | <V> | <Y> | <I> | <U> | 
     <c> | <o> | <n> | <s> | <p> | <as> | <se> | <PU> | <AM> | <CM> | <BK> | <CF> |
-    <ES> | <FM> | <MD> | <NO> | <LR>
+    <ES> | <FM> | <MD> | <NO> | <LR>  | <NP>   | <CE>   | <ND>   | <PM>   | <SM>  |
+    <EU>   | <GD>   | <TB>   | <DY>   | <HO>   | <ER>   | <TM>   | <YB>   | <LU>   | <PR>
     )
     {
         jjtThis.setSymbol(token.image);
