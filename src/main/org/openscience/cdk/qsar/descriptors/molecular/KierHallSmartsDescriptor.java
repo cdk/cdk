@@ -47,7 +47,7 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
  * <p/>
  * Atom typing and aromaticity perception should be performed prior to calling this
  * descriptor. The atom type definitions are taken from {@cdk.cite HALL1995}.
- * The SMARTS definitions were obtained from <a href="http://www.ordkit.org">RDKit</a>.
+ * The SMARTS definitions were obtained from <a href="http://www.rdkit.org">RDKit</a>.
  * <p/>
  * The descriptor returns an integer array result of 79 values with the
  * following names (see <a href="http://www.edusoft-lc.com/molconn/manuals/350/appV.html">
