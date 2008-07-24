@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Iterator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -55,8 +56,8 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Reads a molecule from the original MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
- * is read into a ChemSequence of ChemModel's. Each ChemModel will contain one
- * Molecule. If the MDL molfile contains a property block, the MDLV2000Reader should be
+ * is read into a {@link IChemSequence} of {@link IChemModel}'s. Each ChemModel will contain one
+ * Molecule. If the MDL molfile contains a property block, the {@link MDLV2000Reader} should be
  * used.
  *
  * <p>If all z coordinates are 0.0, then the xy coordinates are taken as
@@ -90,7 +91,7 @@ public class MDLReader extends DefaultChemObjectReader {
     }
     
 	/**
-	 *  Contructs a new MDLReader that can read Molecule from a given InputStream.
+	 *  Constructs a new MDLReader that can read Molecule from a given InputStream.
 	 *
 	 *@param  in  The InputStream to read from
 	 */
@@ -104,7 +105,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	}
 
 	/**
-	 * Contructs a new MDLReader that can read Molecule from a given Reader.
+	 * Constructs a new MDLReader that can read Molecule from a given Reader.
 	 *
 	 * @param  in  The Reader to read from
 	 */
@@ -385,7 +386,7 @@ public class MDLReader extends DefaultChemObjectReader {
                     rGroup=element.split("^R");
                     if (rGroup.length >1){
                     	try{
-                    		Rnumber=new Integer(rGroup[(rGroup.length-1)]).intValue();
+                    		Rnumber=Integer.parseInt(rGroup[(rGroup.length-1)]);
                     		RGroupCounter=Rnumber;
                     	}catch(Exception ex){
                     		Rnumber=RGroupCounter;
@@ -476,7 +477,7 @@ public class MDLReader extends DefaultChemObjectReader {
             // convert to 2D, if totalZ == 0
             if (totalZ == 0.0 && !forceReadAs3DCoords.isSet()) {
                 logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
-                java.util.Iterator atomsToUpdate = molecule.atoms();
+                Iterator<IAtom> atomsToUpdate = molecule.atoms();
                 while (atomsToUpdate.hasNext()) {
                     IAtom atomToUpdate = (IAtom)atomsToUpdate.next();
                     Point3d p3d = atomToUpdate.getPoint3d();

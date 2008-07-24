@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2002-2007  The Jmol Development Team
+ * Copyright (C) 2003-2008  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

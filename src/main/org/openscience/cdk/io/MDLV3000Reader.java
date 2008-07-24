@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2006-2007  Egon Willighagen <egonw@sci.kun.nl>
+ * Copyright (C) 2006-2008  Egon Willighagen <egonw@sci.kun.nl>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -26,8 +26,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,7 +62,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @author      Egon Willighagen <egonw@users.sf.net>
  * @cdk.created 2006
  * 
- * @cdk.keyword MDL RXN V3000
+ * @cdk.keyword MDL molfile V3000
  * @cdk.require java1.4+
  */
 public class MDLV3000Reader extends DefaultChemObjectReader {
@@ -287,11 +288,11 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 
                 // the rest are key value things
                 if (command.indexOf("=") != -1) {
-                    Hashtable options = parseOptions(exhaustStringTokenizer(tokenizer));
-                    Enumeration keys = options.keys();
-                    while (keys.hasMoreElements()) {
-                        String key = (String)keys.nextElement();
-                        String value = (String)options.get(key);
+                    Map<String,String> options = parseOptions(exhaustStringTokenizer(tokenizer));
+                    Iterator<String> keys = options.keySet().iterator();
+                    while (keys.hasNext()) {
+                        String key = keys.next();
+                        String value = options.get(key);
                         try {
                             if (key.equals("CHG")) {
                                 int charge = Integer.parseInt(value);
@@ -383,11 +384,11 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 }
                 // the rest are key=value fields
                 if (command.indexOf("=") != -1) {
-                    Hashtable options = parseOptions(exhaustStringTokenizer(tokenizer));
-                    Enumeration keys = options.keys();
-                    while (keys.hasMoreElements()) {
-                        String key = (String)keys.nextElement();
-                        String value = (String)options.get(key);
+                    Map<String,String> options = parseOptions(exhaustStringTokenizer(tokenizer));
+                    Iterator<String> keys = options.keySet().iterator();
+                    while (keys.hasNext()) {
+                        String key = keys.next();
+                        String value = options.get(key);
                         try {
                             if (key.equals("CFG")) {
                                 int configuration = Integer.parseInt(value);
@@ -442,19 +443,19 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 logger.warn("Skipping external index: " + externalIndexString);
                 
                 // the rest are key=value fields
-                Hashtable options = new Hashtable();
+                Map<String,String> options = new Hashtable<String,String>();
                 if (command.indexOf("=") != -1) {
                     options = parseOptions(exhaustStringTokenizer(tokenizer));
                 }
 
                 // now interpret line
                 if (type.startsWith("SUP")) {
-                    Enumeration keys = options.keys();
+                    Iterator<String> keys = options.keySet().iterator();
                     int atomID = -1;
                     String label = "";
-                    while (keys.hasMoreElements()) {
-                        String key = (String)keys.nextElement();
-                        String value = (String)options.get(key);
+                    while (keys.hasNext()) {
+                        String key = keys.next();
+                        String value = options.get(key);
                         try {
                             if (key.equals("ATOMS")) {
                                 StringTokenizer atomsTokenizer = new StringTokenizer(value);
@@ -508,8 +509,8 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
     }
     
-    private Hashtable parseOptions(String string) throws CDKException {
-        Hashtable keyValueTuples = new Hashtable();
+    private Map<String,String> parseOptions(String string) throws CDKException {
+        Map<String,String> keyValueTuples = new Hashtable<String,String>();
         while (string.length() >= 3) {
             logger.debug("Matching remaining option string: " + string);
             Matcher tuple1Matcher = keyValueTuple2.matcher(string);

@@ -188,11 +188,11 @@ public class ReaderFactory {
         try {
             int tokenCount = tokenizer.countTokens();
             if (tokenCount == 1) {
-                new Integer(tokenizer.nextToken());
+                Integer.parseInt(tokenizer.nextToken());
                 // if not failed, then it is a XYZ file
                 return (IChemFormat)XYZFormat.getInstance();
             } else if (tokenCount == 2) {
-                new Integer(tokenizer.nextToken());
+                Integer.parseInt(tokenizer.nextToken());
                 if ("Bohr".equalsIgnoreCase(tokenizer.nextToken())) {
                     return (IChemFormat)XYZFormat.getInstance();
                 }

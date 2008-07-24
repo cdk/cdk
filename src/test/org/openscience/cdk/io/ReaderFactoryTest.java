@@ -71,9 +71,7 @@ import org.openscience.cdk.io.formats.XYZFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * TestCase for the reading CML files using a few test files
- * in data/cmltest as found in the Jmol distribution
- * (http://jmol.sf.org/).
+ * TestCase for the instantiation and functionality of the {@link ReaderFactory}.
  *
  * @cdk.module test-io
  */

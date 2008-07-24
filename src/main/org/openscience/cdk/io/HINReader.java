@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@presidency.com>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -30,8 +27,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 import javax.vecmath.Point3d;
 
@@ -180,11 +177,11 @@ public class HINReader extends DefaultChemObjectReader {
                 IMolecule m = file.getBuilder().newMolecule();
                 m.setProperty(CDKConstants.TITLE ,info);
 
-                // Each elemnt of cons is an ArrayList of length 3 which stores
+                // Each element of cons is an ArrayList of length 3 which stores
                 // the start and end indices and bond order of each bond 
                 // found in the HIN file. Before adding bonds we need to reduce
                 // the number of bonds so as not to count the same bond twice
-                Vector cons = new Vector();
+                List<List<Object>> cons = new ArrayList<List<Object>>();
 
                 // read data for current molecule
                 int atomSerial = 0;
@@ -228,10 +225,10 @@ public class HINReader extends DefaultChemObjectReader {
                                 bo = 1.5;
                                 break;
                         }
-                        ArrayList ar = new ArrayList(3);
-                        ar.add(new Integer(atomSerial));
-                        ar.add(new Integer(s));
-                        ar.add(new Double(bo));
+                        List<Object> ar = new ArrayList<Object>(3);
+                        ar.add(Integer.valueOf(atomSerial));
+                        ar.add(Integer.valueOf(s));
+                        ar.add(Double.valueOf(bo));
                         cons.add( ar );
                     }
                     m.addAtom(atom);
@@ -242,12 +239,12 @@ public class HINReader extends DefaultChemObjectReader {
                 // before storing the molecule lets include the connections
                 // First we reduce the number of bonds stored, since we have
                 // stored both, say, C1-H1 and H1-C1.
-                Vector blist = new Vector();
+                List<List<Object>> blist = new ArrayList<List<Object>>();
                 for (int i = 0; i < cons.size(); i++) {
-                    ArrayList ar = (ArrayList)cons.get(i);
+                    List<Object> ar = cons.get(i);
                     
                     // make a reversed list
-                    ArrayList arev = new ArrayList(3);
+                    List<Object> arev = new ArrayList<Object>(3);
                     arev.add( ar.get(1) );
                     arev.add( ar.get(0) );
                     arev.add( ar.get(2) );
@@ -259,7 +256,7 @@ public class HINReader extends DefaultChemObjectReader {
                 
                 // now just store all the bonds we have
                 for (int i = 0; i < blist.size(); i++) {
-                    ArrayList ar = (ArrayList)blist.get(i);
+                    List<Object> ar = blist.get(i);
                     int s = ((Integer)ar.get(0)).intValue();
                     int e = ((Integer)ar.get(1)).intValue();
                     double bo = ((Double)ar.get(2)).doubleValue();
@@ -284,7 +281,7 @@ public class HINReader extends DefaultChemObjectReader {
             file.addChemSequence(chemSequence);
 
         } catch (IOException e) {
-            // should make some noise now
+            // FIXME: should make some noise now
             file = null;
         }
         return file;
