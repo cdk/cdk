@@ -424,7 +424,7 @@ public class GeometryTools {
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  ac      AtomContainer for which the center of mass is calculated
-	 *@return         Description of the Return Value
+	 *@return         Null, if any of the atomcontainer {@link IAtom}'s masses are null
 	 *@cdk.keyword    center of mass
 	 */
 	public static Point2d get2DCentreOfMass(IAtomContainer ac) {
@@ -437,6 +437,7 @@ public class GeometryTools {
 		while (atoms.hasNext()) {
 			IAtom a = (IAtom) atoms.next();
 			Double mass = a.getExactMass();
+			if (mass == null) return null;
 			totalmass += mass;
 			x += mass * a.getPoint2d().x;
 			y += mass * a.getPoint2d().y;
