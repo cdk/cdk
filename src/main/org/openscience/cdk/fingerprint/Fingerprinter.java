@@ -39,7 +39,7 @@ import java.util.*;
 
 /**
  *  Generates a Fingerprint for a given AtomContainer. Fingerprints are
- *  one-dimensional bit arrays, where bits are set according to a the occurence
+ *  one-dimensional bit arrays, where bits are set according to a the occurrence
  *  of a particular structural feature (See for example the Daylight inc. theory
  *  manual for more information) Fingerprints allow for a fast screening step to
  *  excluded candidates for a substructure search in a database. They are also a
@@ -50,7 +50,7 @@ import java.util.*;
  *   BitSet fingerprint = Fingerprinter.getFingerprint(molecule);
  * </pre> <p>
  *
- *  The FingerPrinter assumes that hydrogens are explicitely given! <p>
+ *  The FingerPrinter assumes that hydrogens are explicitly given! <p>
  *
  *  <font color="#FF0000">Warning: The aromaticity detection for this
  *  FingerPrinter relies on AllRingsFinder, which is known to take very long

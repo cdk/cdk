@@ -24,13 +24,19 @@
  */
 package org.openscience.cdk.graph;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.*;
-
-import java.util.Iterator;
-import java.util.Vector;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 
 /**
  * Tool class for checking whether the (sub)structure in an
@@ -57,10 +63,10 @@ import java.util.Vector;
 public class ConnectivityChecker 
 {
 	/**
-	 * Check whether a set of atoms in an atomcontainer is connected
+	 * Check whether a set of atoms in an {@link IAtomContainer} is connected.
 	 *
-	 * @param   atomContainer  The AtomContainer to be check for connectedness
-	 * @return                 true if the AtomContainer is connected   
+	 * @param   atomContainer  The {@link IAtomContainer} to be check for connectedness
+	 * @return                 true if the {@link IAtomContainer} is connected   
 	 */
     @TestMethod("testIsConnected_IAtomContainer,testPartitionIntoMolecules_IsConnected_Consistency")
     public static boolean isConnected(IAtomContainer atomContainer)
@@ -68,7 +74,7 @@ public class ConnectivityChecker
 		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
 		IAtom atom = null;
 		IMolecule molecule = atomContainer.getBuilder().newMolecule();
-		Vector sphere = new Vector();
+		List<IAtom> sphere = new ArrayList<IAtom>();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
 			atom = atomContainer.getAtom(f);
@@ -76,14 +82,14 @@ public class ConnectivityChecker
 			ac.addAtom(atomContainer.getAtom(f));
 		}
 
-        Iterator bonds = atomContainer.bonds();
+        Iterator<IBond> bonds = atomContainer.bonds();
         while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+            IBond bond = bonds.next();
 			bond.setFlag(CDKConstants.VISITED, false);
 			ac.addBond(bond);
 		}
 		atom = ac.getAtom(0);
-		sphere.addElement(atom);
+		sphere.add(atom);
 		atom.setFlag(CDKConstants.VISITED, true);
 		PathTools.breadthFirstSearch(ac, sphere, molecule);
         return molecule.getAtomCount() == atomContainer.getAtomCount();
@@ -106,14 +112,14 @@ public class ConnectivityChecker
 		IElectronContainer eContainer = null;
 		IMolecule molecule = null;
 		IMoleculeSet molecules = atomContainer.getBuilder().newMoleculeSet();
-		Vector sphere = new Vector();
+		List<IAtom> sphere = new ArrayList<IAtom>();
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
 			atom = atomContainer.getAtom(f);
 			atom.setFlag(CDKConstants.VISITED, false);
 			ac.addAtom(atom);
 		}
-		Iterator eContainers = atomContainer.electronContainers();
+		Iterator<IElectronContainer> eContainers = atomContainer.electronContainers();
 		while (eContainers.hasNext()){
 			eContainer = (IElectronContainer)eContainers.next();
 			eContainer.setFlag(CDKConstants.VISITED, false);
@@ -122,8 +128,8 @@ public class ConnectivityChecker
 		while(ac.getAtomCount() > 0) {
 			atom = ac.getAtom(0);
 			molecule = atomContainer.getBuilder().newMolecule();
-			sphere.removeAllElements();
-			sphere.addElement(atom);
+			sphere.clear();
+			sphere.add(atom);
 			atom.setFlag(CDKConstants.VISITED, true);
 			PathTools.breadthFirstSearch(ac, sphere, molecule);
 			molecules.addMolecule(molecule);

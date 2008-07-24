@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.graph.rebond;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -77,9 +79,9 @@ public class RebondTool {
     maxCovalentRadius = 0.0;
     // construct a new binary space partition tree
     bspt = new Bspt(3);
-    java.util.Iterator atoms = container.atoms();
+    Iterator<IAtom> atoms = container.atoms();
     while (atoms.hasNext()) {
-      IAtom atom = (IAtom)atoms.next();
+      IAtom atom = atoms.next();
       double myCovalentRadius = atom.getCovalentRadius();
       if (myCovalentRadius == 0.0) {
           throw new CDKException("Atom(s) does not have covalentRadius defined.");
