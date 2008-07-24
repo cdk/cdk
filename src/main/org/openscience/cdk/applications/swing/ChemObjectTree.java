@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * <p>For each IChemObject it will add child nodes for each variable
  * it has that is either a IChemObject or a IChemObject[].
  *
- * @cdk.module applications
+ * @cdk.module  extra
  * @cdk.svnrev  $Revision$
  *
  * @author     egonw

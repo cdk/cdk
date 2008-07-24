@@ -33,7 +33,7 @@ import javax.swing.table.TableModel;
  *  A table model wrapper which listens to model changes and fowards them
  *  to other listeners.
  *
- * @cdk.module applications
+ * @cdk.module  extra
  * @cdk.svnrev  $Revision$
  * @cdk.require swing
  *

@@ -36,7 +36,7 @@ import javax.swing.table.AbstractTableModel;
 import org.openscience.cdk.event.ICDKChangeListener;
 
 /**
- * @cdk.module  applications
+ * @cdk.module  extra
  * @cdk.svnrev  $Revision$
  * @cdk.require swing
  */

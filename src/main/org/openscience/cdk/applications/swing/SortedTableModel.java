@@ -43,7 +43,7 @@ import javax.swing.table.TableModel;
  *  A sorted table model. The objects in the model must implement the Comparable
  *  interface.
  *
- * @cdk.module applications
+ * @cdk.module  extra
  * @cdk.svnrev  $Revision$
  * @cdk.require swing
  *

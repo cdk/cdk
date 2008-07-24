@@ -60,8 +60,8 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author        Geert Josten
  * @author        Miguel Rojas
  * @cdk.created   May 9, 2005
- * @cdk.module    applications
- * @cdk.svnrev  $Revision$
+ * @cdk.module    extra
+ * @cdk.svnrev    $Revision$
  * @cdk.require   swing
  */
 public class PeriodicTablePanel extends JPanel

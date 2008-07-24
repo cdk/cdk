@@ -35,7 +35,7 @@ import javax.swing.JScrollPane;
 /**
  * Swing class that allows easy building of edit forms.
  *
- * @cdk.module applications
+ * @cdk.module  extra
  * @cdk.svnrev  $Revision$
  * @cdk.require swing
  */

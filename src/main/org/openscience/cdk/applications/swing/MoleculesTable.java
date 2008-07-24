@@ -37,7 +37,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.event.ICDKChangeListener;
 
 /**
- * @cdk.module applications
+ * @cdk.module  extra
  * @cdk.svnrev  $Revision$
  * @cdk.require swing
  */

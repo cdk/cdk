@@ -39,7 +39,7 @@ import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * @cdk.module applications
+ * @cdk.module  extra
  * @cdk.svnrev  $Revision$
  * @cdk.require swing
  */

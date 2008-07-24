@@ -31,7 +31,7 @@ import java.util.StringTokenizer;
  * version numbers with subsub and subsubsub versions yet, e.g. 1.2.1.1 as
  * used in CVS branches. (Patch welcome).
  *
- * @cdk.module applications
+ * @cdk.module  extra
  * @cdk.svnrev  $Revision$
  */
 public class APIVersionTester {

@@ -28,7 +28,6 @@
  
         <!-- class to run for testing-->
         <property name="testclass" value="CDKTests" />
-        <property name="runclass" value="applications.FileConvertor" />
         <property name="arg1" value="" />
         <property name="arg2" value="" />
         <property name="arg3" value="" />
@@ -483,7 +482,6 @@
         <parallel>
           <antcall target="compile-module"><param name="module" value="builder3d"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="builder3dtools"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="applications"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
       </sequential>
     </target>
@@ -527,7 +525,6 @@
             <antcall target="compile-module"><param name="module" value="builder3dtools"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="experimental"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="pcore"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="applications"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="inchi"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="diff"/><param name="source" value="${src}/main"/></antcall>
         </target>
@@ -620,7 +617,6 @@
             <mkdir dir="${appjars.dir}"/>
             <unjar dest="${appjars.dir}">
                 <fileset dir="${lib}">
-                    <includesfile name="${metainf}/applications.libdepends"/>
                     <includesfile name="${metainf}/atomtype.libdepends"/>
                     <includesfile name="${metainf}/builder3d.libdepends"/>
                     <includesfile name="${metainf}/builder3dtools.libdepends"/>
@@ -655,7 +651,6 @@
                     <includesfile name="${metainf}/isomorphism.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
-                    <include name="cdk-applications.jar"/>
                     <include name="cdk-atomtype.jar"/>
                     <include name="cdk-builder3d.jar"/>
                     <include name="cdk-builder3dtools.jar"/>
@@ -701,10 +696,9 @@
             <!-- then zip up things -->
             <jar jarfile="${dist}/jar/cdk-${version}.jar">
                 <manifest>
-                    <attribute name="Main-Class" value="org.openscience.cdk.applications.DistLargeInfo"/>
                     <section name="org.openscience.cdk">
                         <attribute name="Specification-Title" value="The Chemistry Development Kit"/>
-                        <attribute name="Specification-Version" value="1.0"/>
+                        <attribute name="Specification-Version" value="1.2"/>
                         <attribute name="Specification-Vendor" value="The CDK Project"/>
                         <attribute name="Implementation-Title" value="org.openscience.cdk"/>
                         <attribute name="Implementation-Version" value="${version}"/>
@@ -724,7 +718,6 @@
             <mkdir dir="${appjars.dir}"/>
             <unjar dest="${appjars.dir}">
                 <fileset dir="${dist}/jar">
-                    <include name="cdk-applications.jar"/>
                     <include name="cdk-builder3d.jar"/>
                     <include name="cdk-builder3dtools.jar"/>
                     <include name="cdk-charges.jar"/>
@@ -766,7 +759,6 @@
             <!-- then zip up things -->
             <jar jarfile="${dist}/jar/cdk-pure-${version}.jar">
                 <manifest>
-                    <attribute name="Main-Class" value="org.openscience.cdk.applications.DistLargeInfo"/>
                     <section name="org.openscience.cdk">
                         <attribute name="Specification-Title" value="The Chemistry Development Kit"/>
                         <attribute name="Specification-Version" value="1.0"/>
@@ -856,7 +848,7 @@
                     <attribute name="Main-Class" value="org.openscience.cdk.CDKTests"/>
                     <section name="org.openscience.cdk">
                         <attribute name="Specification-Title" value="The Chemistry Development Kit"/>
-                        <attribute name="Specification-Version" value="1.0"/>
+                        <attribute name="Specification-Version" value="1.2"/>
                         <attribute name="Specification-Vendor" value="The CDK Project"/>
                         <attribute name="Implementation-Title" value="org.openscience.cdk"/>
                         <attribute name="Implementation-Version" value="${version}"/>

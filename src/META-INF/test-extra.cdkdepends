@@ -14,7 +14,6 @@ cdk-pdb.jar
 cdk-render.jar
 cdk-builder3d.jar
 cdk-reaction.jar
-cdk-applications.jar
 cdk-valencycheck.jar
 cdk-forcefield.jar
 cdk-smiles.jar
