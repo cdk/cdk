@@ -29,11 +29,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.Vector;
+import java.util.List;
+import java.util.Map;
 
 import javax.vecmath.Point2d;
 
@@ -41,19 +43,17 @@ import org.openscience.cdk.event.ICDKChangeListener;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
 import org.openscience.cdk.renderer.color.IAtomColorer;
 
 /**
- * Model for Renderer2D that contains settings for drawing objects.
+ * Model for {@link Renderer2DModel} that contains settings for drawing objects.
  *
  * @cdk.module render
  * @cdk.svnrev  $Revision$
  */
-public class Renderer2DModel implements java.io.Serializable, Cloneable
-{
-    
-    // private LoggingTool logger = new LoggingTool("org.openscience.cdk.render.Renderer2DModel");
+public class Renderer2DModel implements java.io.Serializable, Cloneable {
     
     private static final long serialVersionUID = -4420308906715213445L;
 
@@ -104,10 +104,10 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
      * The color hash is used to color substructures.
      * @see #getColorHash()
      */
-	private Hashtable colorHash = new Hashtable();
+	private Map<IChemObject,Color> colorHash = new Hashtable<IChemObject,Color>();
     private IAtomColorer colorer = new CDK2DAtomColors();
 	
-	private transient Vector listeners = new Vector();
+	private transient List<ICDKChangeListener> listeners = new ArrayList<ICDKChangeListener>();
 	
 	private Point pointerVectorStart = null;
 	
@@ -119,10 +119,10 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	private IAtomContainer externalSelectedPart = null;
 	private IAtomContainer clipboardContent = null;
 	
-	private Vector lassoPoints = new Vector();
+	private List<Point> lassoPoints = new ArrayList<Point>();
     
     /** Determines whether structures should be drawn as Kekule structures,
-     *  thus giving each carbon element explicitely, instead of not displaying
+     *  thus giving each carbon element explicitly, instead of not displaying
      *  the element symbol. Example C-C-C instead of /\.
      */
     private boolean kekuleStructure = false;
@@ -149,7 +149,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     
     private boolean showTooltip = false;
     
-    private HashMap toolTipTextMap = new HashMap();
+    private Map<IAtom,String> toolTipTextMap = new HashMap<IAtom,String>();
     
     private Font customFont = null;
     
@@ -160,7 +160,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	private double[] rotateCenter=null;
 	private double rotateRadius=0;
 	
-	private HashMap renderingCoordinates=new HashMap();
+	private Map<IAtom,Point2d> renderingCoordinates = new HashMap<IAtom,Point2d>();
 	
 	private boolean notification = true;
 	
@@ -177,7 +177,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		return (Point2d)this.renderingCoordinates.get(atom);
 	}
 	
-	public HashMap getRenderingCoordinates(){
+	public Map<IAtom,Point2d> getRenderingCoordinates(){
 		return this.renderingCoordinates;
 	}
     
@@ -660,12 +660,11 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	
 
 	/**
-	 * Returns the hashtable used for coloring substructures.
+	 * Returns the {@link Map} used for coloring substructures.
 	 *
-	 * @return the hashtable used for coloring substructures     
+	 * @return the {@link Map} used for coloring substructures     
 	 */
-	public Hashtable getColorHash()
-	{
+	public Map<IChemObject,Color> getColorHash() {
 		return this.colorHash;
 	}
     
@@ -728,11 +727,11 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
     }
 
 	/**
-	 * Sets the hashtable used for coloring substructures 
+	 * Sets the {@link Map} used for coloring substructures 
 	 *
-	 * @param   colorHash  the hashtable used for coloring substructures 
+	 * @param   colorHash  the {@link Map} used for coloring substructures 
 	 */
-	public void setColorHash(Hashtable colorHash)
+	public void setColorHash(Map<IChemObject,Color> colorHash)
 	{
 		this.colorHash = colorHash;
         fireChange();
@@ -856,7 +855,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		{
 			getColorHash().put(selectedPart.getAtom(i), this.getSelectedPartColor());
 		}
-        Iterator bonds = selectedPart.bonds();
+        Iterator<IBond> bonds = selectedPart.bonds();
 		while (bonds.hasNext()) {
 			getColorHash().put(bonds.next(), getSelectedPartColor());
 		}		
@@ -869,7 +868,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 *
 	 * @return a vector with points
 	 */
-	public Vector getLassoPoints()
+	public List<Point> getLassoPoints()
 	{
 		return this.lassoPoints;
 	}
@@ -882,7 +881,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 */
 	public void addLassoPoint(Point point)
 	{
-		this.lassoPoints.addElement(point);
+		this.lassoPoints.add(point);
 		fireChange();
 	}
 
@@ -895,12 +894,10 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 
 	public void addCDKChangeListener(ICDKChangeListener listener)
 	{
-		if (listeners == null)
-		{
-			listeners = new Vector();	
+		if (listeners == null) {
+			listeners = new ArrayList<ICDKChangeListener>();	
 		}
-		if (!listeners.contains(listener))
-		{
+		if (!listeners.contains(listener)) {
 			listeners.add(listener);
 		}
 	}
@@ -911,8 +908,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 *
 	 * @param   listener  The listener removed from the list 
 	 */
-	public void removeCDKChangeListener(ICDKChangeListener listener)
-	{
+	public void removeCDKChangeListener(ICDKChangeListener listener) {
 		listeners.remove(listener);
 	}
 
@@ -922,17 +918,11 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 * that have occurred in this model.
 	 */
 	public void fireChange() {
-		if (getNotification()) {
+		if (getNotification() && listeners != null) {
 			EventObject event = new EventObject(this);
-			if (listeners == null)
-			{
-				listeners = new Vector();	
+			for (int i = 0; i < listeners.size(); i++) {
+				listeners.get(i).stateChanged(event);
 			}
-			
-			for (int i = 0; i < listeners.size(); i++)
-			{
-				((ICDKChangeListener)listeners.get(i)).stateChanged(event);
-		}
 		}
 	}
   
@@ -945,7 +935,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
    */
   public String getToolTipText(IAtom atom) {
       if (toolTipTextMap.get(atom) != null) {
-          return ((String) toolTipTextMap.get(atom));
+          return toolTipTextMap.get(atom);
       } else {
           return null;
       }
@@ -978,9 +968,9 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
    *
    * @param  map  A map containing Atoms of the current molecule as keys and Strings to display as values. A line break will be inserted where a \n is in the string.  
    */
-  public void setToolTipTextMap(HashMap map){
-    toolTipTextMap=map;
-        fireChange();
+  public void setToolTipTextMap(Map<IAtom,String> map){
+	  toolTipTextMap=map;
+	  fireChange();
   }
 
 
@@ -989,7 +979,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
    *
    * @return  The toolTipTextValue.  
    */
-  public HashMap getToolTipTextMap(){
+  public Map<IAtom,String> getToolTipTextMap(){
     return toolTipTextMap;
   }
 	
@@ -999,6 +989,8 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 	 * they get actually merged, meaning one atom is removed and bonds pointing to this atom are made to point to the atom it has been marged with.
 	 * 
 	 * @return Returns the merge.map
+	 * 
+	 * FIXME: this belongs in the controller model... this is not about rendering, it's about editing (aka controlling)
 	 */
 	public HashMap getMerge() {
 		return merge;
@@ -1091,7 +1083,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		{
 			getColorHash().put(externalSelectedPart.getAtom(i), this.getExternalHighlightColor());
 		}
-        Iterator bonds = externalSelectedPart.bonds();
+        Iterator<IBond> bonds = externalSelectedPart.bonds();
 		while (bonds.hasNext()) {
 			getColorHash().put(bonds.next(), getExternalHighlightColor());
 		}		
@@ -1114,7 +1106,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable
 		this.showAtomTypeNames = showAtomTypeNames;
 	}
 
-	public void setRenderingCoordinates(HashMap renderingCoordinates) {
+	public void setRenderingCoordinates(Map<IAtom,Point2d> renderingCoordinates) {
 		this.renderingCoordinates = renderingCoordinates;
 	}
 

@@ -35,6 +35,7 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 /**
  *  This class returns the period in the periodic table of an atom belonging to an atom container
@@ -64,7 +65,7 @@ import java.util.Hashtable;
 public class PeriodicTablePositionDescriptor implements IAtomicDescriptor {
 
     private static final String[] names = {"periodicTablePosition"};
-    public Hashtable<String, Integer> periodicTable;
+    public Map<String, Integer> periodicTable;
 	
 	/**
 	 *  Constructor for the PeriodicTablePositionDescriptor object

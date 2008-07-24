@@ -87,6 +87,7 @@ import org.xmlcml.cml.element.CMLReactionStep;
 import org.xmlcml.cml.element.CMLScalar;
 import org.xmlcml.cml.element.CMLSubstance;
 import org.xmlcml.cml.element.CMLSubstanceList;
+
 /**
  * @cdk.module       libiocml
  * @cdk.svnrev  $Revision$
@@ -604,7 +605,7 @@ public class Convertor {
         if (cdkAtom.getID() != null && !cdkAtom.getID().equals("")) {
             cmlAtom.setId(cdkAtom.getID());
         } else {
-            cmlAtom.setId("a" + new Integer(cdkAtom.hashCode()).toString());
+            cmlAtom.setId("a" + Integer.valueOf(cdkAtom.hashCode()).toString());
         }
         return true;
     }
@@ -687,7 +688,7 @@ public class Convertor {
         for (int i = 0; i < cdkBond.getAtomCount(); i++) {
             String atomID = cdkBond.getAtom(i).getID();
             if (atomID == null || atomID.length() == 0) {
-                atomRefArray[i] = "a" + new Integer(cdkBond.getAtom(i).hashCode()).toString();
+                atomRefArray[i] = "a" + Integer.valueOf(cdkBond.getAtom(i).hashCode()).toString();
             } else {
                 atomRefArray[i] = atomID;
             }
