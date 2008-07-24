@@ -205,12 +205,15 @@ public class GeometryToolsTest extends NewCDKTestCase {
     @Test public void testGet2DCenterOfMass_IAtomContainer(){
     	Atom atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(1,1));
+    	atom1.setExactMass(12.0);
     	Atom atom2=new Atom("C");
     	atom2.setPoint2d(new Point2d(1,0));
+    	atom2.setExactMass(12.0);
     	IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
     	ac.addAtom(atom1);
     	ac.addAtom(atom2);
     	Point2d p=GeometryTools.get2DCentreOfMass(ac);
+    	Assert.assertNotNull(p);
     	Assert.assertEquals(p.x,1.0,.1);
     	Assert.assertEquals(p.y,0.5,.1);
     }
