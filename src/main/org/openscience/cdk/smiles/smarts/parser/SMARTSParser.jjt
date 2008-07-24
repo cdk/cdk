@@ -696,8 +696,8 @@ void NoHydrogenElement() #Element: {}
     <TI> | <CR> | <MN> | <FE> | <CO> | <NI> | <CU> | <ZN> | <GA> | <GE> | <AS> |
     <SE> | <BR> | <KR> | <RB> | <SR> | <ZR> | <NB> | <MO> | <TC> | <RU> | <RH> |
     <PD> | <AG> | <CD> | <IN> | <SN> | <SB> | <TE> | <XE> | <CS> | <BA> | <LA> |
-    <HF> | <TA> | <RE> | <OS> | <IR> | <PT> | <AU> | <HG> | <TL> | <PB> | <BI> |
-    <PO> | <AT> | <RN> | <FR> | <RA> | <AC> | <TH> | <PA> | <CL> |
+    <HF> | <TA> | <W>  | <RE> | <OS> | <IR> | <PT> | <AU> | <HG> | <TL> | <PB> | 
+    <BI> | <PO> | <AT> | <RN> | <FR> | <RA> | <AC> | <TH> | <PA> | <CL> |
 	<B> | <C> | <N> | <O> | <F> | <P> | <S> | <K> | <V> | <Y> | <I> | <U> | 
     <c> | <o> | <n> | <s> | <p> | <as> | <se> | <PU> | <AM> | <CM> | <BK> | <CF> |
     <ES> | <FM> | <MD> | <NO> | <LR>  | <NP>   | <CE>   | <ND>   | <PM>   | <SM>  |
