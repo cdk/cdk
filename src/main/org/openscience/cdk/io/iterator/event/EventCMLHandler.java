@@ -21,6 +21,7 @@
 package org.openscience.cdk.io.iterator.event;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -51,7 +52,7 @@ public class EventCMLHandler extends CMLHandler {
     private IAtomContainer currentMolecule;
     private IAtom currentAtom;
     
-    private Hashtable atomEnumeration;
+    private Map<String,Integer> atomEnumeration;
     
     private int numberOfAtoms = 0;
     
@@ -121,7 +122,7 @@ public class EventCMLHandler extends CMLHandler {
         logger.debug("START:" + objectType);
         if (objectType.equals("Molecule")) {
             currentMolecule = builder.newAtomContainer();
-            atomEnumeration = new Hashtable();
+            atomEnumeration = new Hashtable<String,Integer>();
         } else if (objectType.equals("Atom")) {
             currentAtom = builder.newAtom("H");
             logger.debug("Atom # " + numberOfAtoms);
@@ -207,66 +208,66 @@ public class EventCMLHandler extends CMLHandler {
             } else if (propertyType.equals("x2")) {
             	Point2d coord = currentAtom.getPoint2d();
             	if (coord == null) coord = new Point2d();
-            	coord.x = new Double(propertyValue).doubleValue();
+            	coord.x = Double.parseDouble(propertyValue);
             	currentAtom.setPoint2d(coord);
             } else if (propertyType.equals("y2")) {
             	Point2d coord = currentAtom.getPoint2d();
             	if (coord == null) coord = new Point2d();
-            	coord.y = new Double(propertyValue).doubleValue();
+            	coord.y = Double.parseDouble(propertyValue);
             	currentAtom.setPoint2d(coord);
             } else if (propertyType.equals("x3")) {
             	Point3d coord = currentAtom.getPoint3d();
             	if (coord == null) coord = new Point3d();
-            	coord.x = new Double(propertyValue).doubleValue();
+            	coord.x = Double.parseDouble(propertyValue);
             	currentAtom.setPoint3d(coord);
             } else if (propertyType.equals("y3")) {
             	Point3d coord = currentAtom.getPoint3d();
             	if (coord == null) coord = new Point3d();
-            	coord.y = new Double(propertyValue).doubleValue();
+            	coord.y = Double.parseDouble(propertyValue);
             	currentAtom.setPoint3d(coord);
             } else if (propertyType.equals("z3")) {
             	Point3d coord = currentAtom.getPoint3d();
             	if (coord == null) coord = new Point3d();
-            	coord.z = new Double(propertyValue).doubleValue();
+            	coord.z = Double.parseDouble(propertyValue);
             	currentAtom.setPoint3d(coord);
             } else if (propertyType.equals("xFract")) {
             	Point3d coord = currentAtom.getFractionalPoint3d();
             	if (coord == null) coord = new Point3d();
-            	coord.x = new Double(propertyValue).doubleValue();
+            	coord.x = Double.parseDouble(propertyValue);
             	currentAtom.setFractionalPoint3d(coord);
             } else if (propertyType.equals("yFract")) {
             	Point3d coord = currentAtom.getFractionalPoint3d();
             	if (coord == null) coord = new Point3d();
-            	coord.y = new Double(propertyValue).doubleValue();
+            	coord.y = Double.parseDouble(propertyValue);
             	currentAtom.setFractionalPoint3d(coord);
             } else if (propertyType.equals("zFract")) {
             	Point3d coord = currentAtom.getFractionalPoint3d();
             	if (coord == null) coord = new Point3d();
-            	coord.z = new Double(propertyValue).doubleValue();
+            	coord.z = Double.parseDouble(propertyValue);
             	currentAtom.setFractionalPoint3d(coord);
             } else if (propertyType.equals("formalCharge")) {
-                currentAtom.setFormalCharge(new Integer(propertyValue).intValue());
+                currentAtom.setFormalCharge(Integer.parseInt(propertyValue));
             } else if (propertyType.equals("charge") ||
             propertyType.equals("partialCharge")) {
-                currentAtom.setCharge(new Double(propertyValue).doubleValue());
+                currentAtom.setCharge(Double.parseDouble(propertyValue));
             } else if (propertyType.equals("hydrogenCount")) {
-                currentAtom.setHydrogenCount(new Integer(propertyValue).intValue());
+                currentAtom.setHydrogenCount(Integer.parseInt(propertyValue));
             } else if (propertyType.equals("dictRef")) {
                 currentAtom.setProperty("org.openscience.cdk.dict", propertyValue);
             } else if (propertyType.equals("atomicNumber")) {
                 currentAtom.setAtomicNumber(Integer.parseInt(propertyValue));
             } else if (propertyType.equals("massNumber")) {
-                currentAtom.setMassNumber((new Double(propertyValue)).intValue());
+                currentAtom.setMassNumber((int)Double.parseDouble(propertyValue));
             } else if (propertyType.equals("id")) {
                 logger.debug("id: ", propertyValue);
                 currentAtom.setID(propertyValue);
-                atomEnumeration.put(propertyValue, new Integer(numberOfAtoms));
+                atomEnumeration.put(propertyValue, numberOfAtoms);
             }
         } else if (objectType.equals("Bond")) {
             if (propertyType.equals("atom1")) {
-                bond_a1 = new Integer(propertyValue).intValue();
+                bond_a1 = Integer.parseInt(propertyValue);
             } else if (propertyType.equals("atom2")) {
-                bond_a2 = new Integer(propertyValue).intValue();
+                bond_a2 = Integer.parseInt(propertyValue);
             } else if (propertyType.equals("id")) {
                 logger.debug("id: " + propertyValue);
                 bond_id = propertyValue;

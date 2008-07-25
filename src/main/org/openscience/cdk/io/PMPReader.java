@@ -451,11 +451,11 @@ public class PMPReader extends DefaultChemObjectReader {
 //                ((IBond)chemObject).setAtomAt(a, 1);
             } else if ("Order".equals(command)) {
                 double order = Double.parseDouble(field);
-                bondOrders.put(Integer.valueOf(bondCounter), new Double(order));
+                bondOrders.put(Integer.valueOf(bondCounter), order);
 //                ((IBond)chemObject).setOrder(order);
             } else if ("Id".equals(command)) {
             	int bondid = Integer.parseInt(field);
-            	bondids.put(Integer.valueOf(bondCounter), new Integer(bondid));
+            	bondids.put(Integer.valueOf(bondCounter), Integer.valueOf(bondid));
             } else if ("Label".equals(command)) {
             } else if ("3DGridOrigin".equals(command)) {
             } else if ("3DGridMatrix".equals(command)) {

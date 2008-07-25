@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$ 
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2008  Egon Willighagen <egonw@sci.kun.nl>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -29,7 +26,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.vecmath.Point3d;
 
@@ -202,9 +201,9 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         
         // then come all the atoms. 
         // Loop through the atoms and write them out:
-        java.util.Iterator atoms = mol.atoms();
+        Iterator<IAtom> atoms = mol.atoms();
         while (atoms.hasNext()) {
-        	IAtom a = (IAtom)atoms.next();
+        	IAtom a = atoms.next();
             String st = a.getSymbol();
             
             // export Eucledian coordinates (indicated by the 0)
@@ -227,7 +226,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     }
     
     private void initIOSettings() {
-        Vector basisOptions = new Vector();
+        List<String> basisOptions = new ArrayList<String>();
         basisOptions.add("6-31g");
         basisOptions.add("6-31g*");
         basisOptions.add("6-31g(d)");
@@ -236,14 +235,14 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         basis = new OptionIOSetting("Basis", IOSetting.MEDIUM,
           "Which basis set do you want to use?", basisOptions, "6-31g");
 
-        Vector methodOptions = new Vector();
+        List<String> methodOptions = new ArrayList<String>();
         methodOptions.add("rb3lyp");
         methodOptions.add("b3lyp");
         methodOptions.add("rhf");
         method = new OptionIOSetting("Method", IOSetting.MEDIUM,
           "Which method do you want to use?", methodOptions, "b3lyp");
         
-        Vector commandOptions = new Vector();
+        List<String> commandOptions = new ArrayList<String>();
         commandOptions.add("energy calculation");
         commandOptions.add("geometry optimization");
         commandOptions.add("IR frequency calculation");

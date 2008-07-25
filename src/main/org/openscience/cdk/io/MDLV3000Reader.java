@@ -248,7 +248,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 	rGroup = element.split("^R");
                     if (rGroup.length > 1){
                     	try{
-                    		Rnumber = new Integer(rGroup[(rGroup.length-1)]).intValue();
+                    		Rnumber = Integer.valueOf(rGroup[(rGroup.length-1)]).intValue();
                     		RGroupCounter=Rnumber;
                     	}catch(Exception ex){
                     		Rnumber=RGroupCounter;

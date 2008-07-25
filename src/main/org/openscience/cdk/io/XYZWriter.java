@@ -1,10 +1,8 @@
-/* $RCSfile$
- * $Author$ 
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2002  The Jmol Development Team
- * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2002  Bradley A. Smith <bradley@baysmith.com>
+ *               2002  Miguel Howard
+ *               2003-2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,6 +33,7 @@ import org.openscience.cdk.tools.LoggingTool;
 
 import javax.vecmath.Point3d;
 import java.io.*;
+import java.util.Iterator;
 
 /**
  * @cdk.module io
@@ -128,7 +127,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
         
         try {
             
-            String s1 = new Integer(mol.getAtomCount()).toString();
+            String s1 = "" + mol.getAtomCount();
             writer.write(s1, 0, s1.length());
             writer.newLine();
             
@@ -139,9 +138,9 @@ public class XYZWriter extends DefaultChemObjectWriter {
             writer.newLine();
             
             // Loop through the atoms and write them out:
-            java.util.Iterator atoms = mol.atoms();
+            Iterator<IAtom> atoms = mol.atoms();
             while (atoms.hasNext()) {
-            	IAtom a = (IAtom)atoms.next();
+            	IAtom a = atoms.next();
                 st = a.getSymbol();
                 
                 Point3d p3 = a.getPoint3d();

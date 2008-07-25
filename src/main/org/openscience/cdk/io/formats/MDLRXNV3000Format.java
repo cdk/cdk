@@ -82,27 +82,23 @@ public class MDLRXNV3000Format implements IChemFormatMatcher {
         	try {
                 String atomCountString = line.substring(0, 3).trim();
                 String bondCountString = line.substring(3, 6).trim();
-                new Integer(atomCountString);
-                new Integer(bondCountString);
-                boolean mdlFile = true;
+                Integer.valueOf(atomCountString);
+                Integer.valueOf(bondCountString);
                 if (line.length() > 6) {
                     String remainder = line.substring(6).trim();
                     for (int i = 0; i < remainder.length(); ++i) {
                         char c = remainder.charAt(i);
                         if (!(Character.isDigit(c) || Character.isWhitespace(c))) {
-                            mdlFile = false;
+                            return false;
                         }
                     }
                 }
-                // all tests succeeded, likely to be a MDL file
-                if (mdlFile) {
-                    return true;
-                }
             } catch (NumberFormatException nfe) {
                 // Integers not found on fifth line; therefore not a MDL file
+            	return false;
             }
         }	
-        return false;
+        return true;
     }
 
 	@TestMethod("testIsXMLBased")
