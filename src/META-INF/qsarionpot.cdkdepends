@@ -6,8 +6,15 @@ cdk-standard.jar
 cdk-valencycheck.jar
 cdk-extra.jar
 cdk-reaction.jar
-cdk-isomorphism.jar
 cdk-charges.jar
 cdk-qsar.jar
+cdk-qsaratomic.jar
+cdk-qsarbond.jar
+cdk-qsarmolecular.jar
 cdk-atomtype.jar
+cdk-smiles.jar
+cdk-smarts.jar
+cdk-formula.jar
+cdk-isomorphism.jar
 cdk-dict.jar
+cdk-ionpot.jar

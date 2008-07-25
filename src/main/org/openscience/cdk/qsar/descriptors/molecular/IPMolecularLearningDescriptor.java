@@ -65,7 +65,7 @@ import java.util.Iterator;
  *
  * @author           Miguel Rojas
  * @cdk.created      2006-05-26
- * @cdk.module       qsarmolecular
+ * @cdk.module       qsarionpot
  * @cdk.svnrev  $Revision: 10995 $
  * @cdk.set          qsar-descriptors
  * @cdk.dictref      qsar-descriptors:ionizationPotential

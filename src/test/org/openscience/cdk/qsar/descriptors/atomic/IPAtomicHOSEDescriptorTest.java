@@ -33,7 +33,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-qsaratomic
+ * @cdk.module test-qsarionpot
  */
 public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 	IPAtomicHOSEDescriptor descriptor;

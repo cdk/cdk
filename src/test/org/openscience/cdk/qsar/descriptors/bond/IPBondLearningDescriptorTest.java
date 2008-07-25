@@ -32,9 +32,9 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * TestSuite that runs all QSAR tests.
+ * TestSuite that runs all QSAR bond tests.
  *
- * @cdk.module test-qsarbond
+ * @cdk.module test-qsarionpot
  */
 public class IPBondLearningDescriptorTest extends BondDescriptorTest {
 	private IPBondLearningDescriptor descriptor;

@@ -27,11 +27,52 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.QsarmolecularCoverageTest;
 import org.openscience.cdk.qsar.ChiIndexUtilsTest;
 import org.openscience.cdk.qsar.DescriptorEngineTest;
 import org.openscience.cdk.qsar.DescriptorNamesTest;
-import org.openscience.cdk.qsar.descriptors.molecular.*;
+import org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.APolDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.AromaticAtomsCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.AromaticBondsCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.AtomCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorChargeTest;
+import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorMassTest;
+import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorPolarizabilityTest;
+import org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.BondCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.CPSADescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.CarbonTypesDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.ChiChainDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.ChiClusterDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.ChiPathClusterDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.ChiPathDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.EccentricConnectivityIndexDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.GravitationalIndexDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.HBondAcceptorCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.KappaShapeIndicesDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.KierHallSmartsDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.LargestChainDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.LargestPiSystemDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.LengthOverBreadthDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.LongestAliphaticChainDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.MDEDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.MomentOfInertiaDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanNumberDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanShapeIndexDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.RotatableBondsCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.RuleOfFiveDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.VAdjMaDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.WHIMDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.WeightedPathDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.WienerNumbersDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptorTest;
 
 
 /**
@@ -47,7 +88,7 @@ public class MqsarmolecularTests {
 
     public static Test suite() {
 
-        TestSuite suite = new TestSuite("All QSAR Tests");
+        TestSuite suite = new TestSuite("All QSAR molecular Tests");
 
         suite.addTest(QsarmolecularCoverageTest.suite());
         
@@ -74,7 +115,6 @@ public class MqsarmolecularTests {
         suite.addTest(GravitationalIndexDescriptorTest.suite());
         suite.addTest(HBondAcceptorCountDescriptorTest.suite());
         suite.addTest(HBondDonorCountDescriptorTest.suite());
-        suite.addTest(IPMolecularLearningDescriptorTest.suite());
         suite.addTest(KappaShapeIndicesDescriptorTest.suite());
         suite.addTest(KierHallSmartsDescriptorTest.suite());
         suite.addTest(LargestChainDescriptorTest.suite());

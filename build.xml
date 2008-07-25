@@ -480,6 +480,7 @@
           <antcall target="compile-module"><param name="module" value="forcefield"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
         <parallel>
+          <antcall target="compile-module"><param name="module" value="qsarionpot"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="builder3d"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="builder3dtools"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
@@ -518,6 +519,7 @@
             <antcall target="compile-module"><param name="module" value="qsaratomic"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsarbond"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsarmolecular"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qsarionpot"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsarprotein"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsarcml"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="forcefield"/><param name="source" value="${src}/main"/></antcall>
@@ -568,6 +570,7 @@
               <antcall target="compile-module"><param name="module" value="test-render"/><param name="source" value="${src}/test"/></antcall>
             </parallel>
             <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/><param name="source" value="${src}/test"/></antcall>
+            <antcall target="compile-module"><param name="module" value="test-qsarionpot"/><param name="source" value="${src}/test"/></antcall>
             <antcall target="compile-module"><param name="module" value="test-experimental"/><param name="source" value="${src}/test"/></antcall>
           </sequential>
         </target>
@@ -598,6 +601,7 @@
         <antcall target="compile-module"><param name="module" value="test-qsaratomic"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarbond"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/><param name="source" value="${src}/test"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-qsarionpot"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-experimental"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarprotein"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-pdb"/><param name="source" value="${src}/test"/></antcall>
@@ -636,6 +640,7 @@
                     <includesfile name="${metainf}/qsaratomic.libdepends"/>
                     <includesfile name="${metainf}/qsarbond.libdepends"/>
                     <includesfile name="${metainf}/qsarmolecular.libdepends"/>
+                    <includesfile name="${metainf}/qsarionpot.libdepends"/>
                     <includesfile name="${metainf}/qsarprotein.libdepends"/>
                     <includesfile name="${metainf}/qsarcml.libdepends"/>
                     <includesfile name="${metainf}/reaction.libdepends"/>
@@ -674,6 +679,7 @@
                     <include name="cdk-qsaratomic.jar"/>
                     <include name="cdk-qsarbond.jar"/>
                     <include name="cdk-qsarmolecular.jar"/>
+                    <include name="cdk-qsarionpot.jar"/>
                     <include name="cdk-qsarprotein.jar"/>
                     <include name="cdk-qsarcml.jar"/>
                     <include name="cdk-reaction.jar"/>
@@ -739,6 +745,7 @@
                     <include name="cdk-qsaratomic.jar"/>
                     <include name="cdk-qsarbond.jar"/>
                     <include name="cdk-qsarmolecular.jar"/>
+                    <include name="cdk-qsarionpot.jar"/>
                     <include name="cdk-qsarprotein.jar"/>
                     <include name="cdk-qsarcml.jar"/>
                     <include name="cdk-reaction.jar"/>
@@ -796,6 +803,7 @@
                     <includesfile name="${metainf}/test-qsaratomic.libdepends"/>
                     <includesfile name="${metainf}/test-qsarbond.libdepends"/>
                     <includesfile name="${metainf}/test-qsarmolecular.libdepends"/>
+                    <includesfile name="${metainf}/test-qsarionpot.libdepends"/>
                     <includesfile name="${metainf}/test-qsarprotein.libdepends"/>
                     <includesfile name="${metainf}/test-qsar.libdepends"/>
                     <includesfile name="${metainf}/test-reaction.libdepends"/>
@@ -826,6 +834,7 @@
                     <include name="cdk-test-qsaratomic.jar"/>
                     <include name="cdk-test-qsarbond.jar"/>
                     <include name="cdk-test-qsarmolecular.jar"/>
+                    <include name="cdk-test-qsarionpot.jar"/>
                     <include name="cdk-test-qsarprotein.jar"/>
                     <include name="cdk-test-qsar.jar"/>
                     <include name="cdk-test-reaction.jar"/>
@@ -1069,6 +1078,7 @@
         	<antcall target="test-module"><param name="module" value="qsaratomic"/></antcall>
                 <antcall target="test-module"><param name="module" value="qsarbond"/></antcall>
                 <antcall target="test-module"><param name="module" value="qsarmolecular"/></antcall>
+                <antcall target="test-module"><param name="module" value="qsarionpot"/></antcall>
                 <antcall target="test-module"><param name="module" value="qsarprotein"/></antcall>
         	<antcall target="test-module"><param name="module" value="pdb"/></antcall> 
         	<antcall target="test-module"><param name="module" value="pcore"/></antcall> 
