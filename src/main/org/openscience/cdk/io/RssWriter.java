@@ -1,22 +1,48 @@
 package org.openscience.cdk.io;
 
-import nu.xom.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Vector;
+
+import nu.xom.Attribute;
+import nu.xom.Document;
+import nu.xom.Element;
+import nu.xom.ProcessingInstruction;
+import nu.xom.Text;
+
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.CMLRSSFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.libio.cml.Convertor;
 
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
 /**
- * Generatas an rss feed. It the object is a MoleculeSet, the molecules
- * are put in separtly. All other objects are made cml and put in.
+ * Generates an RSS feed. It the object is a {@link IMoleculeSet}, the molecules
+ * are put in separately. All other objects are made CML and put in.
  *
  * @cdk.module       libiocml
  * @cdk.svnrev  $Revision$
@@ -122,14 +148,14 @@ public class RssWriter extends DefaultChemObjectWriter {
 		    rdfElement.appendChild(channelElement);
 		    List list =new Vector();
 		    if(object instanceof IAtomContainerSet){
-		    	for(int i=0;i<((AtomContainerSet)object).getAtomContainerCount();i++){
-		    		list.add(((AtomContainerSet)object).getAtomContainer(i));
+		    	for(int i=0;i<((IAtomContainerSet)object).getAtomContainerCount();i++){
+		    		list.add(((IAtomContainerSet)object).getAtomContainer(i));
 		    	}
 		    }else{
 		    	list.add(object);
 		    }        	
 		    for(int i=0;i<list.size();i++){
-		      ChemObject chemObject =(ChemObject)list.get(i);
+		      IChemObject chemObject =(IChemObject)list.get(i);
 		      Element itemElement = new Element("item",NS_RSS10);
 		      String easylink=(String)linkmap.get(chemObject);
 		      if(easylink!=null)

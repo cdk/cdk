@@ -1,9 +1,8 @@
-/* $RCSfile$ 
- * $Author$ 
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2001-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2007  Egon Willighagen <egonw@users.sf.net>
+ *                          Stefan Kuhn <shk3@users.sf.net>
+ *                          Miguel Rojas-Cherto <miguelrojasch@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -24,7 +23,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.io;
 
@@ -42,7 +40,6 @@ import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Serializer;
 
-import org.openscience.cdk.ReactionScheme;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -54,6 +51,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -64,11 +62,10 @@ import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.io.setting.StringIOSetting;
 import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.libio.cml.ICMLCustomizer;
-import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * Serializes a MoleculeSet or a Molecule object to CML 2 code.
+ * Serializes a {@link IMoleculeSet} or a {@link IMolecule} object to CML 2 code.
  * Chemical Markup Language is an XML based file format {@cdk.cite PMR99}.
  * Output can be redirected to other Writer objects like StringWriter
  * and FileWriter. An example:
@@ -236,8 +233,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
         
         // now convert the object
         Element root = null;
-        if (object instanceof PDBPolymer) {
-        	root = convertor.cdkPDBPolymerToCMLMolecule((PDBPolymer)object);
+        if (object instanceof IPDBPolymer) {
+        	root = convertor.cdkPDBPolymerToCMLMolecule((IPDBPolymer)object);
     	} else if (object instanceof IMolecule) {
     		root = convertor.cdkMoleculeToCMLMolecule((IMolecule)object);
         } else if (object instanceof ICrystal) {
@@ -249,7 +246,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
         } else if (object instanceof IReaction) {
         	root = convertor.cdkReactionToCMLReaction((IReaction)object);
         } else if (object instanceof IReactionScheme){
-    		root = convertor.cdkReactionSchemeToCMLReactionSchemeAndMoleculeList((ReactionScheme)object);
+    		root = convertor.cdkReactionSchemeToCMLReactionSchemeAndMoleculeList((IReactionScheme)object);
         } else if (object instanceof IReactionSet) {
         	root = convertor.cdkReactionSetToCMLReactionList((IReactionSet)object);
         } else if (object instanceof IMoleculeSet) {

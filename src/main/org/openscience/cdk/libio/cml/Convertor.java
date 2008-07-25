@@ -26,7 +26,6 @@
 package org.openscience.cdk.libio.cml;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,8 +33,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Monomer;
-import org.openscience.cdk.ReactionScheme;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
@@ -53,13 +50,12 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.protein.data.PDBPolymer;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
@@ -246,7 +242,7 @@ public class Convertor {
         return cmlList;
     }
     
-    public CMLCml cdkReactionSchemeToCMLReactionSchemeAndMoleculeList(ReactionScheme cdkScheme){
+    public CMLCml cdkReactionSchemeToCMLReactionSchemeAndMoleculeList(IReactionScheme cdkScheme){
     	CMLCml cml = new CMLCml();
     	isRef = true;
     	cml.appendChild(cdkReactionSchemeToCMLReactionScheme(cdkScheme, true));
@@ -410,11 +406,11 @@ public class Convertor {
         return molecule;
     }
     
-    public CMLMolecule cdkPDBPolymerToCMLMolecule(PDBPolymer pdbPolymer) {
+    public CMLMolecule cdkPDBPolymerToCMLMolecule(IPDBPolymer pdbPolymer) {
         return cdkPDBPolymerToCMLMolecule(pdbPolymer, true);
     }
 
-    private CMLMolecule cdkPDBPolymerToCMLMolecule(PDBPolymer pdbPolymer, boolean setIDs) {
+    private CMLMolecule cdkPDBPolymerToCMLMolecule(IPDBPolymer pdbPolymer, boolean setIDs) {
     	CMLMolecule cmlMolecule = new CMLMolecule();
        	cmlMolecule.setConvention("PDB");
        	cmlMolecule.setDictRef("pdb:model");
@@ -437,7 +433,7 @@ public class Convertor {
         return cmlMolecule;
     }
     
-    public CMLMolecule cdkMonomerToCMLMolecule(Monomer monomer) {
+    public CMLMolecule cdkMonomerToCMLMolecule(IMonomer monomer) {
         return cdkMonomerToCMLMolecule(monomer, true);
     }
 
@@ -457,22 +453,6 @@ public class Convertor {
             cmlMolecule.addAtom(cmlAtom);
        	}
         return cmlMolecule;
-    }
-    public IMolecule cmlMoleculeTocdkAtomContainer(CMLMolecule mol) throws Exception {
-        String cmlString = "<!-- failed -->";
-        cmlString = mol.toXML();
-        
-        IMolecule roundTrippedMol = null;
-        logger.debug("CML string: ", cmlString);
-        CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
-
-        IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
-        IChemSequence sequence = file.getChemSequence(0);
-        IChemModel chemModel = sequence.getChemModel(0);
-        IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
-        roundTrippedMol = moleculeSet.getMolecule(0);
-        
-        return roundTrippedMol;
     }
 
     public CMLMolecule cdkMoleculeToCMLMolecule(IMolecule structure) {
