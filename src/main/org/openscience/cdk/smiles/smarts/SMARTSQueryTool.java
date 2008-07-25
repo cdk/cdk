@@ -125,11 +125,19 @@ public class SMARTSQueryTool {
         initializeQuery();
     }
 
+
     /**
      * Perform a SMARTS match and check whether the query is present in the
      * target molecule. <p/> This function simply checks whether the query
      * pattern matches the specified molecule. However the function will also,
      * internally, save the mapping of query atoms to the target molecule
+     * <p>
+     * <b>Note</b>: This method performs a simple caching scheme, by comparing the current
+     * molecule to the previous molecule by reference. If you repeatedly match
+     * different SMARTS on the same molecule, this method will avoid initializing (
+     * ring perception, aromaticity etc.) the
+     * molecule each time. If however, you modify the molecule between such multiple
+     * matchings you should use the other form of this method to force initialization.
      *
      * @param atomContainer The target moleculoe
      * @return true if the pattern is found in the target molecule, false
@@ -138,13 +146,40 @@ public class SMARTSQueryTool {
      *                      perception
      * @see #getMatchingAtoms()
      * @see #countMatches()
+     * @see #matches(org.openscience.cdk.interfaces.IAtomContainer, boolean)
+     */
+    public boolean matches(IAtomContainer atomContainer) throws CDKException {
+        return matches(atomContainer, false);
+    }
+
+    /**
+     * Perform a SMARTS match and check whether the query is present in the
+     * target molecule. <p/> This function simply checks whether the query
+     * pattern matches the specified molecule. However the function will also,
+     * internally, save the mapping of query atoms to the target molecule
+     *
+     * @param atomContainer The target moleculoe
+     * @param forceInitialization If true, then the molecule is initialized (ring perception, aromaticity etc).
+     * If false, the molecule is only initialized if it is different (in terms of object reference)
+     * than one supplied in a previous call to this method.
+     * @return true if the pattern is found in the target molecule, false
+     *         otherwise
+     * @throws CDKException if there is an error in ring, aromaticity or isomorphism
+     *                      perception
+     * @see #getMatchingAtoms()
+     * @see #countMatches()
+     * @see #matches(org.openscience.cdk.interfaces.IAtomContainer) 
      */
     @TestMethod("testQueryTool, testQueryToolSingleAtomCase, testQuery")
-    public boolean matches(IAtomContainer atomContainer) throws CDKException {
-        // TODO: we should consider some sort of caching?
-        this.atomContainer = atomContainer;
-        initializeMolecule();
+    public boolean matches(IAtomContainer atomContainer, boolean forceInitialization) throws CDKException {
 
+        if (this.atomContainer == atomContainer) {
+            if (forceInitialization) initializeMolecule();
+        } else {
+            this.atomContainer = atomContainer;
+            initializeMolecule();
+        }
+        
         // First calculate the recursive smarts
         initializeRecursiveSmarts(this.atomContainer);
 
