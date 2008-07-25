@@ -5,5 +5,4 @@ cdk-interfaces.jar
 cdk-io.jar
 cdk-standard.jar
 cdk-valencycheck.jar
-cdk-extra.jar
 cdk-atomtype.jar
