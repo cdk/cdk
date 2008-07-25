@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * This matches an atom with chirality property. It is not implemented yet. 
  * It'll match any atom right now.  
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */

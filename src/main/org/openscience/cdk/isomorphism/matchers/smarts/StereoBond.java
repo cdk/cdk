@@ -25,7 +25,7 @@ import org.openscience.cdk.interfaces.IBond;
  * This query bond matches bonds with specific stereo type. It is not 
  * implemented.
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */

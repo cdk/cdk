@@ -27,7 +27,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
 /**
- * Abstract smarts atom
+ * Abstract smarts atom.
  * 
  * @cdk.module  isomorphism
  * @cdk.svnrev  $Revision$

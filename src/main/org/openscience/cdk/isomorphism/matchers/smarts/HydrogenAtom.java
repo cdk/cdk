@@ -26,9 +26,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
- * This matches Hydrogen atoms
+ * This matches Hydrogen atoms.
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS 
  */

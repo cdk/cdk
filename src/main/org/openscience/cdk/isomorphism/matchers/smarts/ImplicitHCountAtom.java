@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * This matcher checks the number of implicit hydrogens of the Atom.
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */

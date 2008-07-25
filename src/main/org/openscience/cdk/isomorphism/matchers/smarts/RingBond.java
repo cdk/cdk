@@ -23,9 +23,9 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * This smarts bond matches any bond that is in a ring
+ * This smarts bond matches any bond that is in a ring.
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS 
  */

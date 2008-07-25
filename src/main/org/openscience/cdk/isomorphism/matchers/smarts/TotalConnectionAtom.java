@@ -34,9 +34,9 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * This mathces an atom using total number of connections
+ * This matches an atom using total number of connections.
  * 
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */

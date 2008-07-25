@@ -26,9 +26,9 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * This matches a bond with a certain bond order
+ * This matches a bond with a certain bond order.
  * 
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */

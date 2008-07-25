@@ -35,10 +35,10 @@ import org.openscience.cdk.interfaces.IAtom;
 import java.util.ArrayList;
 
 /**
- * This matches an atom in a specific size ring
+ * This matches an atom in a specific size ring.
  * 
- * @cdk.module extra
- * @cdk.svnrev $Revision$
+ * @cdk.module  smarts
+ * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */
 public class RingAtom extends SMARTSAtom {

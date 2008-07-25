@@ -23,9 +23,9 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * This smarts atom mathces aliphatic atom with element symbol specified
+ * This smarts atom matches aliphatic atom with element symbol specified
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */

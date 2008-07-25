@@ -28,7 +28,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
 /**
- * Abstarct smarts bond
+ * Abstract smarts bond.
  *
  * @cdk.module  isomorphism
  * @cdk.svnrev  $Revision$

@@ -25,7 +25,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 /**
  * This class matches a logical operator that connects two query atoms
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS 
  */

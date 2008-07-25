@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.IAtom;
 /**
  * This matcher checks the formal charge of the Atom.
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS 
  */

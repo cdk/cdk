@@ -27,9 +27,9 @@ import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * This smarts atom matches any atom with the smallest SSSR size being a 
- * certain value
+ * certain value.
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS 
  */

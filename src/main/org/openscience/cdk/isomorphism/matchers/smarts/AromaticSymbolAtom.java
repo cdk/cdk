@@ -23,9 +23,9 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * This class mathces aromatic atom with element symbol specified
+ * This class matches aromatic atom with element symbol specified.
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */

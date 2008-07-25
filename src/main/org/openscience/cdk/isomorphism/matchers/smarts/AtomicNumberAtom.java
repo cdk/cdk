@@ -32,9 +32,9 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * This matches an atom using the atomic number
+ * This matches an atom using the atomic number.
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */

@@ -26,7 +26,7 @@ import org.openscience.cdk.interfaces.IRingSet;
 /**
  * This query atom matches any atom with a certain number of SSSR. 
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS 
  */

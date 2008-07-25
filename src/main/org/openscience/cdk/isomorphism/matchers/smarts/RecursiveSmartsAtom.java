@@ -39,9 +39,9 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * This matches recursive smarts atoms 
+ * This matches recursive smarts atoms. 
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */

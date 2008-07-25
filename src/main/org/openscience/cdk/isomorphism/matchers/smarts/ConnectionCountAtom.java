@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
  * This matcher checks the total valency of the Atom.
  * This cannot be matched with a unpreprocessed Atom!
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */

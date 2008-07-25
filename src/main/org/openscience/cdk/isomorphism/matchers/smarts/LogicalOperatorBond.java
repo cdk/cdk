@@ -24,9 +24,9 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 
 /**
- * This class matches a logical operator that connects two query bonds
+ * This class matches a logical operator that connects two query bonds.
  *
- * @cdk.module extra
+ * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
  * @cdk.keyword SMARTS
  */
