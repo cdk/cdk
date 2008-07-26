@@ -26,7 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.charges.Electronegativity;
@@ -487,7 +486,7 @@ public class IonizationPotentialTool {
 			IAtom atom) throws CDKException {
 	    IReactionProcess reactionNBE  = new ElectronImpactNBEReaction();
 
-		IMoleculeSet setOfReactants = DefaultChemObjectBuilder.getInstance().newMoleculeSet();
+		IMoleculeSet setOfReactants = container.getBuilder().newMoleculeSet();
         setOfReactants.addMolecule((IMolecule) container);
 
         atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
