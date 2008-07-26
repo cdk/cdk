@@ -27,8 +27,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 /**
  * Provides methods for checking whether an atoms lone pair electrons are saturated 
@@ -44,16 +44,21 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 public class LonePairElectronChecker {
 	
 	private LoggingTool logger;
-	private static AtomTypeFactory factory = AtomTypeFactory.getInstance(
-		"org/openscience/cdk/config/data/cdk_atomtypes.xml",
-		NoNotificationChemObjectBuilder.getInstance()
-	);
+	private static AtomTypeFactory factory;
 
 	/**
 	 * Constructor of the LonePairElectronChecker object.
 	 */
 	public LonePairElectronChecker() {
 		logger = new LoggingTool(LonePairElectronChecker.class);
+	}
+	
+	private void createAtomTypeFactory(IChemObjectBuilder builder) {
+		if (factory == null) {
+			factory = AtomTypeFactory.getInstance(
+				"org/openscience/cdk/config/data/cdk_atomtypes.xml", builder
+			);
+		}
 	}
 	
     /**
@@ -84,7 +89,8 @@ public class LonePairElectronChecker {
 	 * 
 	 * @return       True, if it's right saturated
 	 */
-	public boolean isSaturated(IAtom atom, IAtomContainer ac) throws CDKException {	
+	public boolean isSaturated(IAtom atom, IAtomContainer ac) throws CDKException {
+		createAtomTypeFactory(ac.getBuilder());
 		IAtomType atomType = factory.getAtomType(atom.getAtomTypeName());
 		int lpCount = (Integer)atomType.getProperty(CDKConstants.LONE_PAIR_COUNT);
 		int foundLPCount = ac.getConnectedLonePairsCount(atom);
