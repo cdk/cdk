@@ -639,7 +639,6 @@
                     <includesfile name="${metainf}/qsaratomic.libdepends"/>
                     <includesfile name="${metainf}/qsarbond.libdepends"/>
                     <includesfile name="${metainf}/qsarmolecular.libdepends"/>
-                    <includesfile name="${metainf}/qsarionpot.libdepends"/>
                     <includesfile name="${metainf}/qsarprotein.libdepends"/>
                     <includesfile name="${metainf}/qsarcml.libdepends"/>
                     <includesfile name="${metainf}/reaction.libdepends"/>
