@@ -229,7 +229,7 @@ public class ReaderFactoryTest extends CDKTestCase {
         }
         IChemFormat format = factory.guessFormat(ins);
         assertNotNull(format);
-        assertEquals(expectedFormat.getFormatName(), format.getFormatName());
+        assertEquals("Incorrect format detected: ", expectedFormat.getFormatName(), format.getFormatName());
         // ok, if format ok, try instantiating a reader
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = factory.createReader(ins);
