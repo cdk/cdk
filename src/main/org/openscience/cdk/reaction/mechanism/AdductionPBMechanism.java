@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
@@ -52,19 +51,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class AdductionPBMechanism implements IReactionMechanism{
 
-	private CDKAtomTypeMatcher atMatcher;
-	
-	/**
-	 * Constructor of the AdductionPBMechanism object.
-	 * 
-	 */
-	public AdductionPBMechanism(){
-		atMatcher = CDKAtomTypeMatcher.getInstance(
-				NoNotificationChemObjectBuilder.getInstance(),
-				CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS
-			);
-	}
-
 	/** 
      * Initiates the process for the given mechanism. The atoms and bonds to apply are mapped between
      * reactants and products. 
@@ -77,6 +63,7 @@ public class AdductionPBMechanism implements IReactionMechanism{
      * 
 	 */
 	public IReaction initiate(IMoleculeSet moleculeSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
+		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(moleculeSet.getBuilder());
 		if (moleculeSet.getMoleculeCount() != 2) {
 			throw new CDKException("AdductionPBMechanism expects two IMolecule's");
 		}
