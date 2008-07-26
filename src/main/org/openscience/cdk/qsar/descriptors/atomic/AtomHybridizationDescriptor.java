@@ -1,9 +1,5 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
+/* $Revision$ $Author$ $Date$
+ *  
  *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
@@ -32,7 +28,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -68,18 +63,9 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 public class AtomHybridizationDescriptor implements IAtomicDescriptor {
 
 	AtomTypeManipulator atman = null;
-	CDKAtomTypeMatcher atm = null;
 	IAtom atom = null;
 	IAtomType matched = null;
 	
-	/**
-	 *  Constructor for the AtomHybridizationDescriptor object
-	 */
-	public AtomHybridizationDescriptor() {
-		atm = CDKAtomTypeMatcher.getInstance(NoNotificationChemObjectBuilder.getInstance());
-	}
-
-
 	/**
 	 *  Gets the specification attribute of the AtomHybridizationDescriptor object
 	 *
@@ -135,7 +121,7 @@ public class AtomHybridizationDescriptor implements IAtomicDescriptor {
 	@TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         try {
-            matched = atm.findMatchingAtomType(container, atom);
+            matched = CDKAtomTypeMatcher.getInstance(atom.getBuilder()).findMatchingAtomType(container, atom);
         } catch (CDKException e) {
             return getDummyDescriptorValue(e);
         }
