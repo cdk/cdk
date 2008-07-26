@@ -1,8 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *
@@ -31,7 +27,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.qsar.AbstractBondDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -148,7 +143,7 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
     @TestMethod(value="testCalculate_IBond_IAtomContainer")
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
     	if (!isCachedAtomContainer(ac)) {
-    		IMolecule mol = new NNMolecule(ac);
+    		IMolecule mol = ac.getBuilder().newMolecule(ac);
         	if(maxIterations != 0) peoe.setMaxGasteigerIters(maxIterations);
 	        try {
 				peoe.assignGasteigerMarsiliSigmaPartialCharges(mol, true);

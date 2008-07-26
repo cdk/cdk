@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
+import java.io.IOException;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -27,14 +29,12 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
-
-import java.io.IOException;
 
 /**
  * Describes the inbalance in mass number of the IBond. (Sorry, I needed *something* in the qsarbond module :)
@@ -54,9 +54,12 @@ public class MassNumberDifferenceDescriptor implements IBondDescriptor {
 	private final static String[] descriptorName = {"MNDiff"};
 	
     public MassNumberDifferenceDescriptor() {
+    }	
+    
+    public void ensureIsotopeFactory(IChemObjectBuilder builder) {
     	if (factory == null) {
     		try {
-	            factory = IsotopeFactory.getInstance(NoNotificationChemObjectBuilder.getInstance());
+	            factory = IsotopeFactory.getInstance(builder);
             } catch (IOException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
@@ -89,6 +92,7 @@ public class MassNumberDifferenceDescriptor implements IBondDescriptor {
 
     @TestMethod(value="testCalculate_IBond_IAtomContainer")
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
+    	ensureIsotopeFactory(ac.getBuilder());
     	if (bond.getAtomCount() != 2) {
     		return new DescriptorValue(
     			getSpecification(), getParameterNames(),
