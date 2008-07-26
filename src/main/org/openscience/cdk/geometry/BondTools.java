@@ -40,9 +40,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 import javax.vecmath.Point2d;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
-import java.util.Vector;
 
 /**
  * A set of static utility classes for geometric calculations on Bonds.
@@ -55,6 +56,9 @@ import java.util.Vector;
  */
 @TestClass("org.openscience.cdk.geometry.BondToolsTest")
 public class BondTools {
+	
+	// FIXME: class JavaDoc should use {@cdk.cite BLA} for the CDK News article
+	
   /**
    *  Tells if a certain bond is center of a valid double bond configuration.
    *
@@ -291,7 +295,7 @@ public class BondTools {
   
   
 	/**
-	 *  Says if an atom as a center of a tetrahedral chirality
+	 *  Says if an atom as a center of a tetrahedral chirality.
 	 *
 	 *@param  a          The atom which is the center
 	 *@param  container  The atomContainer the atom is in
@@ -301,7 +305,7 @@ public class BondTools {
     @TestMethod("testIsTetrahedral_IAtomContainer_IAtom_boolean")
     public static int isTetrahedral(IAtomContainer container, IAtom a, boolean strict)
 	{
-		java.util.List atoms = container.getConnectedAtomsList(a);
+		List<IAtom> atoms = container.getConnectedAtomsList(a);
 		if (atoms.size() != 4)
 		{
 			return (0);
@@ -362,7 +366,7 @@ public class BondTools {
     @TestMethod("testIsTrigonalBipyramidalOrOctahedral_IAtomContainer_IAtom")
     public static int isTrigonalBipyramidalOrOctahedral(IAtomContainer container, IAtom a)
 	{
-		java.util.List atoms = container.getConnectedAtomsList(a);
+		List<IAtom> atoms = container.getConnectedAtomsList(a);
 		if (atoms.size() < 5 || atoms.size() > 6)
 		{
 			return (0);
@@ -437,7 +441,7 @@ public class BondTools {
 		if (differentAtoms != atoms.size())
 		{
 			long[] morgannumbers = MorganNumbersTools.getMorganNumbers(container);
-			Vector<String> differentSymbols = new Vector<String>();
+			List<String> differentSymbols = new ArrayList<String>();
             for (IAtom atom : atoms) {
                 if (!differentSymbols.contains(atom.getSymbol())) {
                     differentSymbols.add(atom.getSymbol());
@@ -455,11 +459,11 @@ public class BondTools {
                 }
 			}
 			boolean[] symbolsWithDifferentMorganNumbers = new boolean[differentSymbols.size()];
-			Vector<Long>[] symbolsMorganNumbers = new Vector[symbolsWithDifferentMorganNumbers.length];
+			List<Long>[] symbolsMorganNumbers = new ArrayList[symbolsWithDifferentMorganNumbers.length];
 			for (int i = 0; i < symbolsWithDifferentMorganNumbers.length; i++)
 			{
 				symbolsWithDifferentMorganNumbers[i] = true;
-				symbolsMorganNumbers[i] = new Vector<Long>();
+				symbolsMorganNumbers[i] = new ArrayList<Long>();
 			}
             for (IAtom atom : atoms) {
                 int elementNumber = differentSymbols.indexOf(atom.getSymbol());
@@ -523,7 +527,7 @@ public class BondTools {
 	/**
 	 *  Says if of four atoms connected two one atom the up and down bonds are
 	 *  opposite or not, i. e.if it's tetrehedral or square planar. The method
-	 *  doesnot check if there are four atoms and if two or up and two are down
+	 *  does not check if there are four atoms and if two or up and two are down
 	 *
 	 *@param  a          The atom which is the center
 	 *@param  container  The atomContainer the atom is in
@@ -532,15 +536,15 @@ public class BondTools {
     @TestMethod("testStereosAreOpposite_IAtomContainer_IAtom")
     public static boolean stereosAreOpposite(IAtomContainer container, IAtom a)
 	{
-		List atoms = container.getConnectedAtomsList(a);
+		List<IAtom> atoms = container.getConnectedAtomsList(a);
 		TreeMap<Double, Integer> hm = new TreeMap<Double, Integer>();
 		for (int i = 1; i < atoms.size(); i++)
 		{
-			hm.put(giveAngle(a, (IAtom) atoms.get(0), ((IAtom) atoms.get(i))), i);
+			hm.put(giveAngle(a, atoms.get(0), atoms.get(i)), i);
 		}
 		Object[] ohere = hm.values().toArray();
-		int stereoOne = container.getBond(a, (IAtom) atoms.get(0)).getStereo();
-		int stereoOpposite = container.getBond(a, (IAtom) atoms.get((Integer) ohere[1])).getStereo();
+		int stereoOne = container.getBond(a, atoms.get(0)).getStereo();
+		int stereoOpposite = container.getBond(a, atoms.get((Integer) ohere[1])).getStereo();
         return stereoOpposite == stereoOne;
 	}
 

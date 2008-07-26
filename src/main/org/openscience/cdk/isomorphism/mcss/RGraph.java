@@ -31,12 +31,11 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
   * This class implements the Resolution Graph (RGraph).
   * The RGraph is a graph based representation of the search problem.
-  * An RGraph is constructred from the two compared graphs (G1 and G2).
+  * An RGraph is constructed from the two compared graphs (G1 and G2).
   * Each vertex (node) in the RGraph represents a possible association
   * from an edge in G1 with an edge in G2. Thus two compatible bonds
   * in two molecular graphs are represented by a vertex in the RGraph.
@@ -99,8 +98,8 @@ public class RGraph
 {
     // an RGraph is a list of RGraph nodes
     // each node keeping track of its
-    // neighbours.
-    List graph = null;
+    // neighbors.
+    List<RNode> graph = null;
 
     // maximal number of iterations before
     // search break
@@ -115,7 +114,7 @@ public class RGraph
     BitSet c2 = null;
     
     // current solution list
-    List solutionList = null;
+    List<BitSet> solutionList = null;
 
     // flag to define if we want to get all possible 'mappings'    
     boolean findAllMap = false;
@@ -133,8 +132,8 @@ public class RGraph
      */
     public RGraph()
     {
-        graph = new ArrayList();
-        solutionList = new ArrayList();
+        graph = new ArrayList<RNode>();
+        solutionList = new ArrayList<BitSet>();
         graphBitSet = new BitSet();
     }
 
@@ -192,7 +191,7 @@ public class RGraph
      *  Returns the graph object of this RGraph.
      * @return      The graph object, a list         
      */
-    public List getGraph()
+    public List<RNode> getGraph()
     {
 	    return this.graph;
     }
@@ -211,7 +210,7 @@ public class RGraph
      *  Parsing of the RGraph. This is the main method
      *  to perform a query. Given the constrains c1 and c2
      *  defining mandatory elements in G1 and G2 and given
-     *  the search options, this m?thod builds an initial set
+     *  the search options, this method builds an initial set
      *  of starting nodes (B) and parses recursively the
      *  RGraph to find a list of solution according to 
      *  these parameters.
@@ -245,8 +244,8 @@ public class RGraph
      *  RGraph using allowed adjacency relationship.
      *
      * @param  traversed  node already parsed
-     * @param  extension  possible extension node (allowed neighbours)
-     * @param  forbiden   node forbiden (set of node incompatible with the current solution)
+     * @param  extension  possible extension node (allowed neighbors)
+     * @param  forbiden   node forbidden (set of node incompatible with the current solution)
      */
     private void parseRec(BitSet traversed, BitSet extension, BitSet forbidden)
     {
@@ -265,7 +264,7 @@ public class RGraph
         else
         {
             // calculates the set of nodes that may still
-            // be reached at this stage (not forbiden)
+            // be reached at this stage (not forbidden)
             potentialNode = ((BitSet) graphBitSet.clone());
             potentialNode.andNot(forbidden);
             potentialNode.or(traversed);
@@ -277,9 +276,9 @@ public class RGraph
                 // carry on research and update iteration count
                 nbIteration++;
 
-                // for each node in the set of possible extension (neighbours of 
+                // for each node in the set of possible extension (neighbors of 
                 // the current partial solution, include the node to the solution
-                // and perse recursively the RGraph with the new context.
+                // and parse recursively the RGraph with the new context.
                 for(int x = extension.nextSetBit(0); x >= 0 && !stop; x = extension.nextSetBit(x + 1))
                 {
                     // evaluates the new set of forbidden nodes
@@ -297,7 +296,7 @@ public class RGraph
                         newExtension = (BitSet) (((RNode) graph.get(x)).extension.clone());
                     }
                     // else we simply update the set of solution by
-                    // including the neighbours of the newly accepted node
+                    // including the neighbors of the newly accepted node
                     else
                     {
                         newExtension = (BitSet) extension.clone();
@@ -323,7 +322,7 @@ public class RGraph
     }
 
     /**
-     * Checks if a potantial solution is a real one 
+     * Checks if a potential solution is a real one 
      * (not included in a previous solution)
      *  and add this solution to the solution list
      * in case of success.
@@ -341,12 +340,12 @@ public class RGraph
         if(isContainedIn(c1, projG1) && isContainedIn(c2, projG2))
         {
             // the solution should not be included in a previous solution
-            // at the RGraph level. So we check against all prevous solution
+            // at the RGraph level. So we check against all previous solution
             // On the other hand if a previous solution is included in the
             // new one, the previous solution is removed.
-            for(ListIterator i = solutionList.listIterator(); i.hasNext() && !included; )
+            for(Iterator<BitSet> i = solutionList.listIterator(); i.hasNext() && !included; )
             {
-                BitSet sol = (BitSet) i.next();
+                BitSet sol = i.next();
 
                 if(!sol.equals(traversed))
                 {
@@ -391,7 +390,7 @@ public class RGraph
     }
 
     /**
-     *  Determine if there are potential soltution remaining.
+     *  Determine if there are potential solution remaining.
      * @param       potentialNode  set of remaining potential nodes
      * @return      true if it is worse to continue the search         
      */
@@ -403,13 +402,13 @@ public class RGraph
         BitSet projG2 = projectG2(potentialNode);
 
         // if we reached the maximum number of
-        // serach iterations than do not continue
+        // search iterations than do not continue
         if(maxIteration != -1 && nbIteration >= maxIteration)
         {
             return false;
         }
         
-        // if constrains may no more be fullfilled than stop.
+        // if constrains may no more be fulfilled then stop.
         if(!isContainedIn(c1, projG1) || !isContainedIn(c2, projG2))
         {
             return false;
@@ -417,9 +416,9 @@ public class RGraph
         
         // check if the solution potential is not included in an already
         // existing solution
-        for(Iterator i = solutionList.iterator(); i.hasNext() && !cancel; )
+        for(Iterator<BitSet> i = solutionList.iterator(); i.hasNext() && !cancel; )
         {
-            BitSet sol = (BitSet) i.next();
+            BitSet sol = i.next();
 
             // if we want every 'mappings' do not stop
             if(findAllMap && (projG1.equals(projectG1(sol)) || projG2.equals(projectG2(sol))))
@@ -439,7 +438,7 @@ public class RGraph
 
     /**
      *  Builds the initial extension set. This is the
-     *  set of node tha may be used as seed for the
+     *  set of node that may be used as seed for the
      *  RGraph parsing. This set depends on the constrains
      *  defined by the user.
      * @param  c1  constraint in the graph G1
@@ -455,9 +454,9 @@ public class RGraph
 
         // only nodes that fulfill the initial constrains
         // are allowed in the initial extension set : B
-        for(Iterator i = graph.iterator(); i.hasNext(); )
+        for(Iterator<RNode> i = graph.iterator(); i.hasNext(); )
         {
-            RNode rn = (RNode) i.next();
+            RNode rn = i.next();
 
             if((c1.get(rn.rMap.id1) || c1.isEmpty()) && (c2.get(rn.rMap.id2) || c2.isEmpty()))
             {
@@ -472,7 +471,7 @@ public class RGraph
      *
      * @return    The solution list 
      */
-    public List getSolutions()
+    public List<BitSet> getSolutions()
     {
         return solutionList;
     }
@@ -487,13 +486,13 @@ public class RGraph
      * @param  set  the BitSet
      * @return      the RMap list
      */
-    public List bitSetToRMap(BitSet set)
+    public List<RMap> bitSetToRMap(BitSet set)
     {
-        List rMapList = new ArrayList();
+        List<RMap> rMapList = new ArrayList<RMap>();
 
         for(int x = set.nextSetBit(0); x >= 0; x = set.nextSetBit(x + 1))
         {
-            RNode xNode = (RNode) graph.get(x);
+            RNode xNode = graph.get(x);
             rMapList.add(xNode.rMap);
         }
         return rMapList;
@@ -546,9 +545,9 @@ public class RGraph
         String message = "";
         int j = 0;
 
-        for(Iterator i = graph.iterator(); i.hasNext(); )
+        for(Iterator<RNode> i = graph.iterator(); i.hasNext(); )
         {
-            RNode rn = (RNode) i.next();
+            RNode rn = i.next();
             message += "-------------\n" + "RNode " + j + "\n" + rn.toString() + "\n";
             j++;
         }

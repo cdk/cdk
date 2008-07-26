@@ -86,15 +86,13 @@ public class FingerprinterTool {
 	 * @return An arrayList of Integers
 	 */
     @TestMethod("testListDifferences_BitSet_BitSet")
-    public static List listDifferences(BitSet bs1, BitSet bs2)
+    public static List<Integer> listDifferences(BitSet bs1, BitSet bs2)
 	{
-		List l=new ArrayList();
+		List<Integer> l=new ArrayList<Integer>();
 		logger.debug("Listing bit positions set in bs2 but not in bs1");
-		for (int f = 0; f < bs2.size(); f++)
-		{
-			if (bs2.get(f) && !bs1.get(f))
-			{
-				l.add(new Integer(f));
+		for (int f = 0; f < bs2.size(); f++) {
+			if (bs2.get(f) && !bs1.get(f)) {
+				l.add(f);
 				logger.debug("Bit " + f + " not set in bs1");
 			}
 		}

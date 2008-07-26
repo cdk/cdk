@@ -30,11 +30,12 @@ package org.openscience.cdk.smiles;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.math.Primes;
 
 /**
- * This is used to hold the invariance numbers for the cannonical labeling of
- * AtomContainers.
+ * This is used to hold the invariance numbers for the canonical labeling of
+ * {@link IAtomContainer}s.
  *
  * @cdk.module standard
  * @cdk.svnrev  $Revision$
@@ -44,7 +45,7 @@ public class InvPair implements java.io.Serializable{
 
     private static final long serialVersionUID = -1397634098919863122L;
 
-  /** The description used to set the invatiance numbers in the atom's property*/
+  /** The description used to set the invariance numbers in the atom's property*/
   public final static String INVARIANCE_PAIR = "InvariancePair";
   public final static String CANONICAL_LABEL = "CanonicalLable";
 
@@ -112,7 +113,7 @@ public class InvPair implements java.io.Serializable{
 
     @TestMethod("testCommit")
   public void commit(){
-    atom.setProperty(CANONICAL_LABEL, new Long(curr));
+    atom.setProperty(CANONICAL_LABEL, Long.valueOf(curr));
   }
 
     @TestMethod("testToString")
