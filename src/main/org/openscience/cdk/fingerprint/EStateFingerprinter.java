@@ -53,7 +53,7 @@ import java.util.BitSet;
  * @cdk.keyword similarity
  * @cdk.keyword estate
  *
- * @cdk.module experimental
+ * @cdk.module extra
  * @cdk.svnrev $Revision: 11674 $
  */
 public class EStateFingerprinter implements IFingerprinter {

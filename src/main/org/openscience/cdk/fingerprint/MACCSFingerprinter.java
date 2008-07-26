@@ -65,7 +65,7 @@ import java.util.List;
  * @cdk.created 2008-07-23
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
- * @cdk.module experimental
+ * @cdk.module extra
  * @cdk.svnrev $Revision: 11674 $
  */
 public class MACCSFingerprinter implements IFingerprinter {

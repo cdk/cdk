@@ -505,6 +505,7 @@
             <antcall target="compile-module"><param name="module" value="structgen"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="pdb"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="isomorphism"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="smarts"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="extra"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="smiles"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="libiocml"/><param name="source" value="${src}/main"/></antcall>
@@ -513,7 +514,6 @@
             <antcall target="compile-module"><param name="module" value="reaction"/><param name="source" value="${src}/main"/></antcall>
     	    <antcall target="compile-module"><param name="module" value="charges"/><param name="source" value="${src}/main"/></antcall>
   		    <antcall target="compile-module"><param name="module" value="ionpot"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="smarts"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsar"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsaratomic"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="qsarbond"/><param name="source" value="${src}/main"/></antcall>
