@@ -1,7 +1,4 @@
-/*  $RCSfile$
- *  $Author: rajarshi $
- *  $Date: 2008-02-21 19:19:31 +0100 (Thu, 21 Feb 2008) $
- *  $Revision: 10199 $
+/*  $Revision: 10199 $ $Author: rajarshi $ $Date: 2008-02-21 19:19:31 +0100 (Thu, 21 Feb 2008) $
  *
  *  Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
  *
@@ -27,7 +24,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.interfaces.IMolecule;
 
 /**
  * Calculation of the electronegativity of orbitals of a molecule 
@@ -48,7 +45,7 @@ public class Electronegativity {
     /**Number of maximum resonance structures*/
 	private int maxRS = 50;
 
-	private NNMolecule molSigma;
+	private IMolecule molSigma;
 	private IAtomContainer acOldS;
 	private double[] marsiliFactors;
 	
@@ -106,7 +103,7 @@ public class Electronegativity {
 
         try {
         	if(!ac.equals(acOldS)){
-        		molSigma = new NNMolecule(ac);
+        		molSigma = ac.getBuilder().newMolecule(ac);
         		peoe.setMaxGasteigerIters(maxI);
 	    		peoe.assignGasteigerMarsiliSigmaPartialCharges(molSigma, true);
 	    		marsiliFactors = peoe.assignGasteigerSigmaMarsiliFactors(molSigma);
