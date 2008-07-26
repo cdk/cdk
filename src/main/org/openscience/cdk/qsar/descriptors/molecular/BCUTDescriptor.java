@@ -379,9 +379,9 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         try {
             lpcheck.saturate(molecule);
             double[] charges = new double[molecule.getAtomCount()];
-            pepe = new GasteigerPEPEPartialCharges();            
-            pepe.calculateCharges(molecule);
-            for (int i = 0; i < molecule.getAtomCount(); i++) charges[i] = molecule.getAtom(i).getCharge();
+//            pepe = new GasteigerPEPEPartialCharges();
+//            pepe.calculateCharges(molecule);
+//            for (int i = 0; i < molecule.getAtomCount(); i++) charges[i] = molecule.getAtom(i).getCharge();
             peoe = new GasteigerMarsiliPartialCharges();
             peoe.assignGasteigerMarsiliSigmaPartialCharges(molecule, true);
             for (int i = 0; i < molecule.getAtomCount(); i++) charges[i] += molecule.getAtom(i).getCharge();
@@ -394,7 +394,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         counter = 0;
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             if (molecule.getAtom(i).getSymbol().equals("H")) continue;
-            diagvalue[counter] = molecule.getAtom(i).getCharge();            
+            diagvalue[counter] = 1.0; molecule.getAtom(i).getCharge();
             counter++;
         }
         burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
