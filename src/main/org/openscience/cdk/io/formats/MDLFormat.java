@@ -98,8 +98,9 @@ public class MDLFormat implements IChemFormatMatcher {
                 // Integers not found on fourth line; therefore not a MDL file
             	return false;
             }
+            return true;
         }
-        return true;
+        return false;
     }
 
 	@TestMethod("testIsXMLBased")
