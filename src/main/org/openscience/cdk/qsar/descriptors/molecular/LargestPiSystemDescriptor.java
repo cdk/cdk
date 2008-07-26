@@ -41,7 +41,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Class that returns the number of atoms in the largest pi system.
@@ -239,14 +238,14 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
      *                  be searched
      * @param sphere    A sphere of atoms to
      *                  start the search with
-     * @param path      A vector which stores the atoms belonging to the pi system
+     * @param path      An array list which stores the atoms belonging to the pi system
      * @throws org.openscience.cdk.exception.CDKException
      *          Description of the
      *          Exception
      */
     public void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws org.openscience.cdk.exception.CDKException {
         IAtom nextAtom;
-        Vector<IAtom> newSphere = new Vector<IAtom>();
+       List<IAtom> newSphere = new ArrayList<IAtom>();
         //logger.debug("Start of breadthFirstSearch");
         for (IAtom atom : sphere) {
             //logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
@@ -264,7 +263,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
                     //logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
                     nextAtom.setFlag(CDKConstants.VISITED, true);
                     if (container.getConnectedBondsCount(nextAtom) > 1) {
-                        newSphere.addElement(nextAtom);
+                        newSphere.add(nextAtom);
                     }
                 } else {
                     nextAtom.setFlag(CDKConstants.VISITED, true);

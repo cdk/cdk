@@ -38,7 +38,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
 
 import javax.vecmath.Point3d;
-import java.util.Vector;
+import java.util.ArrayList;
 
 
 /**
@@ -247,10 +247,9 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
         }
 
         // all pairs
-        Vector<Integer> x = new Vector<Integer>();
+        ArrayList<Integer> x = new ArrayList<Integer>();
         for (int i = 0; i < container.getAtomCount(); i++) {
-            if (container.getAtom(i).getSymbol().equals("H")) continue;
-            else x.add(i);
+            if (!container.getAtom(i).getSymbol().equals("H")) x.add(i);
         }
         int npair = x.size() * (x.size() - 1) / 2;
         pair[] p = new pair[npair];

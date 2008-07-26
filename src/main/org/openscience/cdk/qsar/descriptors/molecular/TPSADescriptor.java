@@ -40,9 +40,9 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Calculation of topological polar surface area based on fragment
@@ -230,7 +230,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
-        Vector<String> profiles = new Vector<String>();
+        List<String> profiles = new ArrayList<String>();
 
         // calculate the set of all rings
         IRingSet rs;
@@ -331,8 +331,8 @@ public class TPSADescriptor implements IMolecularDescriptor {
         // calculate the tpsa for the AtomContainer ac
         double tpsa = 0;
         for (int profileIndex = 0; profileIndex < profiles.size(); profileIndex++) {
-            if (map.containsKey(profiles.elementAt(profileIndex))) {
-                tpsa += (Double) map.get(profiles.elementAt(profileIndex));
+            if (map.containsKey(profiles.get(profileIndex))) {
+                tpsa += (Double) map.get(profiles.get(profileIndex));
                 //logger.debug("tpsa contribs: " + profiles.elementAt(profileIndex) + "\t" + ((Double)map.get(profiles.elementAt(profileIndex))).doubleValue());
             }
         }

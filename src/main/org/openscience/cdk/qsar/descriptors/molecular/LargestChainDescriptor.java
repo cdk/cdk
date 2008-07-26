@@ -42,8 +42,8 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Class that returns the number of atoms in the largest chain.
@@ -203,8 +203,8 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
 
         int largestChainAtomsCount = 0;
         //IAtom[] atoms = container.getAtoms();
-        Vector<IAtom> startSphere;
-        Vector<IAtom> path;
+        ArrayList<IAtom> startSphere;
+        ArrayList<IAtom> path;
         //Set all VisitedFlags to False
         for (int i = 0; i < container.getAtomCount(); i++) {
             container.getAtom(i).setFlag(CDKConstants.VISITED, false);
@@ -218,9 +218,9 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
             if ((!atomi.getFlag(CDKConstants.ISAROMATIC) && !atomi.getFlag(CDKConstants.ISINRING)) & !atomi.getFlag(CDKConstants.VISITED))
             {
                 //logger.debug("...... -> containercepted");
-                startSphere = new Vector<IAtom>();
-                path = new Vector<IAtom>();
-                startSphere.addElement(atomi);
+                startSphere = new ArrayList<IAtom>();
+                path = new ArrayList<IAtom>();
+                startSphere.add(atomi);
                 try {
                     breadthFirstSearch(container, startSphere, path);
                 } catch (CDKException e) {
@@ -263,29 +263,29 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      *                  be searched
      * @param sphere    A sphere of atoms to
      *                  start the search with
-     * @param path      A vector which stores the atoms belonging to the pi system
+     * @param path      A ArrayList which stores the atoms belonging to the pi system
      * @throws org.openscience.cdk.exception.CDKException
      *          Description of the
      *          Exception
      */
-    public void breadthFirstSearch(IAtomContainer container, Vector<IAtom> sphere, Vector<IAtom> path) throws org.openscience.cdk.exception.CDKException {
+    public void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws org.openscience.cdk.exception.CDKException {
         IAtom atom;
         IAtom nextAtom;
-        Vector<IAtom> newSphere = new Vector<IAtom>();
+        List<IAtom> newSphere = new ArrayList<IAtom>();
         //logger.debug("Start of breadthFirstSearch");
         for (int i = 0; i < sphere.size(); i++) {
-            atom = sphere.elementAt(i);
+            atom = sphere.get(i);
             //logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
             List<IBond> bonds = container.getConnectedBondsList(atom);
             for (IBond bond : bonds) {
                 nextAtom = bond.getConnectedAtom(atom);
                 if ((!nextAtom.getFlag(CDKConstants.ISAROMATIC) && !nextAtom.getFlag(CDKConstants.ISINRING)) & !nextAtom.getFlag(CDKConstants.VISITED)) {
                     //logger.debug("BDS> AtomNr:"+container.getAtomNumber(nextAtom)+" maxBondOrder:"+container.getMaximumBondOrder(nextAtom)+" Aromatic:"+nextAtom.getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+nextAtom.getFormalCharge()+" Charge:"+nextAtom.getCharge()+" Flag:"+nextAtom.getFlag(CDKConstants.VISITED));
-                    path.addElement(nextAtom);
+                    path.add(nextAtom);
                     //logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
                     nextAtom.setFlag(CDKConstants.VISITED, true);
                     if (container.getConnectedBondsCount(nextAtom) > 1) {
-                        newSphere.addElement(nextAtom);
+                        newSphere.add(nextAtom);
                     }
                 } else {
                     nextAtom.setFlag(CDKConstants.VISITED, true);

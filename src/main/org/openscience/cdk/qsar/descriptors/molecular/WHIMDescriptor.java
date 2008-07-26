@@ -39,7 +39,8 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
 
 import javax.vecmath.Point3d;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -126,7 +127,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
 
     LoggingTool logger;
     String type = "";
-    Hashtable hashatwt, hashvdw, hasheneg, hashpol;
+    Map<String,Double> hashatwt, hashvdw, hasheneg, hashpol;
 
     public WHIMDescriptor() {
         logger = new LoggingTool(this);
@@ -134,10 +135,10 @@ public class WHIMDescriptor implements IMolecularDescriptor {
 
         // set up the values from TOD98
 
-        this.hashatwt = new Hashtable();
-        this.hashvdw = new Hashtable();
-        this.hasheneg = new Hashtable();
-        this.hashpol = new Hashtable();
+        this.hashatwt = new HashMap<String,Double>();
+        this.hashvdw = new HashMap<String, Double>();
+        this.hasheneg = new HashMap<String, Double>();
+        this.hashpol = new HashMap<String, Double>();
 
         this.hashatwt.put("H", new Double(0.084));
         this.hashatwt.put("B", new Double(0.900));
@@ -346,7 +347,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         }
 
         // set up the weight vector
-        Hashtable hash = null;
+        Map<String,Double> hash = null;
         double[] wt = new double[ac.getAtomCount()];
 
         if (this.type.equals("unity")) {

@@ -1,12 +1,5 @@
 package org.openscience.cdk.qsar;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -16,6 +9,9 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Utility methods for chi index calculations.
@@ -85,7 +81,7 @@ public class ChiIndexUtils {
      * @param fragList      A list of fragments
      * @return The simple chi index
      */
-    public static double evalSimpleIndex(IAtomContainer atomContainer, List fragList) {
+    public static double evalSimpleIndex(IAtomContainer atomContainer, List<List<Integer>> fragList) {
         double sum = 0;
         for (int i = 0; i < fragList.size(); i++) {
             ArrayList frag = (ArrayList) fragList.get(i);

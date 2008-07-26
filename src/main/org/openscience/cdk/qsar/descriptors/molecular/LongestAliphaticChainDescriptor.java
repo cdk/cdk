@@ -44,7 +44,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  *  Class that returns the number of atoms in the longest aliphatic chain.
@@ -293,7 +292,7 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
 	 */
 	public  void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws org.openscience.cdk.exception.CDKException{
 		IAtom nextAtom;
-		Vector<IAtom> newSphere = new Vector<IAtom>();
+		List<IAtom> newSphere = new ArrayList<IAtom>();
         for (IAtom atom : sphere) {
             List bonds = container.getConnectedBondsList(atom);
             for (Object bond : bonds) {
@@ -302,7 +301,7 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
                     path.add(nextAtom);
                     nextAtom.setFlag(CDKConstants.VISITED, true);
                     if (container.getConnectedBondsCount(nextAtom) > 1) {
-                        newSphere.addElement(nextAtom);
+                        newSphere.add(nextAtom);
                     }
                 } else {
                     nextAtom.setFlag(CDKConstants.VISITED, true);

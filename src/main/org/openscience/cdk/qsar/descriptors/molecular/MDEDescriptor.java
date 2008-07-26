@@ -33,7 +33,8 @@ import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Calculates the Molecular Distance Edge descriptor described in {@cdk.cite LIU98}.
@@ -339,8 +340,8 @@ public class MDEDescriptor implements IMolecularDescriptor {
         double lambda = 1;
         double n = 0;
 
-        Vector<Integer> v1 = new Vector<Integer>();
-        Vector<Integer> v2 = new Vector<Integer>();
+        List<Integer> v1 = new ArrayList<Integer>();
+        List<Integer> v2 = new ArrayList<Integer>();
         for (int i = 0; i < codemat.length; i++) {
             if (codemat[i][0] == type1) v1.add(codemat[i][1]);
             if (codemat[i][0] == type2) v2.add(codemat[i][1]);
