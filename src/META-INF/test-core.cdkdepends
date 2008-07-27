@@ -4,3 +4,4 @@ cdk-data.jar
 cdk-test.jar
 cdk-io.jar
 cdk-nonotify.jar
+cdk-testdata.jar

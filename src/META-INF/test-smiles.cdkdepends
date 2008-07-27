@@ -13,3 +13,5 @@ cdk-test-core.jar
 cdk-sdg.jar
 cdk-libiocml.jar
 cdk-test-io.jar
+cdk-testdata.jar
+cdk-testdata-cml.jar

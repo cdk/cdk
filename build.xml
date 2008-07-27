@@ -574,6 +574,45 @@
           </sequential>
         </target>
 
+	<target id="jarTestdata" name="jarTestdata" description="Creates jar files with test data.">
+		<mkdir dir="${dist}/jar"/>
+        <jar jarfile="${dist}/jar/cdk-testdata.jar">
+            <fileset dir="${src}">
+                <include name="data/**/*" />
+                <exclude name="data/pdb/**/*" />
+                <exclude name="data/cml/**/*" />
+                <exclude name="data/asn/**/*" />
+                <exclude name="data/gaussian/**/*" />
+                <exclude name="data/mol2/**/*" />
+            </fileset>
+        </jar>
+        <jar jarfile="${dist}/jar/cdk-testdata-asn.jar">
+            <fileset dir="${src}">
+                <include name="data/asn/**/*" />
+            </fileset>
+        </jar>
+        <jar jarfile="${dist}/jar/cdk-testdata-cml.jar">
+            <fileset dir="${src}">
+                <include name="data/cml/**/*" />
+            </fileset>
+        </jar>
+        <jar jarfile="${dist}/jar/cdk-testdata-pdb.jar">
+            <fileset dir="${src}">
+                <include name="data/pdb/**/*" />
+            </fileset>
+        </jar>
+        <jar jarfile="${dist}/jar/cdk-testdata-gaussian.jar">
+            <fileset dir="${src}">
+                <include name="data/gaussian/**/*" />
+            </fileset>
+        </jar>
+        <jar jarfile="${dist}/jar/cdk-testdata-mol2.jar">
+            <fileset dir="${src}">
+                <include name="data/mol2/**/*" />
+            </fileset>
+        </jar>
+	</target>
+	
 	<target id="test-dist-all" name="test-dist-all" description="test-dist-all">
         <antcall target="compile-init"/>
         <antcall target="compile-module"><param name="module" value="test"/><param name="source" value="${src}/test"/></antcall>
@@ -1049,7 +1088,7 @@
 			</junit>
 	    </target>
 			
-        <target id="test-all" name="test-all" depends="noJunit, dist-all, test-dist-all"
+        <target id="test-all" name="test-all" depends="noJunit, dist-all, test-dist-all, jarTestdata"
                 description="Performs a full JUnit test for the CDK." 
                 if="junit.present">
         	<antcall target="test-module"><param name="module" value="core"/></antcall>

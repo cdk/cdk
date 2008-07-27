@@ -9,3 +9,4 @@ cdk-standard.jar
 cdk-valencycheck.jar
 cdk-atomtype.jar
 cdk-extra.jar
+cdk-testdata.jar

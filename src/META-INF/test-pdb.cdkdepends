@@ -7,3 +7,4 @@ cdk-pdb.jar
 cdk-nonotify.jar
 cdk-test.jar
 cdk-test-io.jar
+cdk-testdata-pdb.jar

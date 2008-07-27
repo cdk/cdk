@@ -11,3 +11,4 @@ cdk-test.jar
 cdk-smarts.jar
 cdk-pcore.jar
 cdk-isomorphism.jar
+cdk-testdata.jar

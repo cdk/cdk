@@ -10,3 +10,4 @@ cdk-valencycheck.jar
 cdk-test.jar
 cdk-smarts.jar
 cdk-isomorphism.jar
+cdk-testdata.jar
