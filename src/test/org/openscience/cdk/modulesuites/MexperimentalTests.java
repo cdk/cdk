@@ -23,11 +23,10 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.AssociationTest;
 import org.openscience.cdk.atomtype.MM2AtomTypeMatcherTest;
 import org.openscience.cdk.atomtype.MMFF94AtomTypeMatcherTest;
-import org.openscience.cdk.fingerprint.EStateFingerprinterTest;
-import org.openscience.cdk.fingerprint.MACCSFingerprinterTest;
 import org.openscience.cdk.io.VASPReaderTest;
 import org.openscience.cdk.tools.GenerateFragmentsTest;
 
@@ -49,9 +48,6 @@ public class MexperimentalTests {
         suite.addTest(MMFF94AtomTypeMatcherTest.suite());
         suite.addTest(MM2AtomTypeMatcherTest.suite());
         
-        suite.addTest(new JUnit4TestAdapter(MACCSFingerprinterTest.class));
-        suite.addTest(new JUnit4TestAdapter(EStateFingerprinterTest.class));
-
         return suite;
     }
 
