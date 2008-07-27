@@ -473,7 +473,6 @@
           <antcall target="compile-module"><param name="module" value="qsarbond"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="qsarprotein"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="qsarcml"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="experimental"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="qsarmolecular"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
         <parallel>
@@ -507,9 +506,9 @@
             <antcall target="compile-module"><param name="module" value="pdb"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="isomorphism"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="smarts"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="extra"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="fingerprint"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="smiles"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="extra"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="libiocml"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="libiomd"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="pdbcml"/><param name="source" value="${src}/main"/></antcall>
@@ -526,7 +525,6 @@
             <antcall target="compile-module"><param name="module" value="forcefield"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3d"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="builder3dtools"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="experimental"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="pcore"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="inchi"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="diff"/><param name="source" value="${src}/main"/></antcall>
@@ -563,7 +561,6 @@
               <antcall target="compile-module"><param name="module" value="test-nonotify"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-io"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-standard"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-extra"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-qsarprotein"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-qsaratomic"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-smiles"/><param name="source" value="${src}/test"/></antcall>
@@ -571,9 +568,9 @@
               <antcall target="compile-module"><param name="module" value="test-atomtype"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-render"/><param name="source" value="${src}/test"/></antcall>
             </parallel>
+            <antcall target="compile-module"><param name="module" value="test-extra"/><param name="source" value="${src}/test"/></antcall>
             <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/><param name="source" value="${src}/test"/></antcall>
             <antcall target="compile-module"><param name="module" value="test-qsarionpot"/><param name="source" value="${src}/test"/></antcall>
-            <antcall target="compile-module"><param name="module" value="test-experimental"/><param name="source" value="${src}/test"/></antcall>
           </sequential>
         </target>
 
@@ -604,7 +601,6 @@
         <antcall target="compile-module"><param name="module" value="test-qsarbond"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarionpot"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-experimental"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarprotein"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-pdb"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-inchi"/><param name="source" value="${src}/test"/></antcall>
@@ -618,7 +614,7 @@
 	</target>
 
 	<target id="dist-large" name="dist-large" depends="dist-all"
-            description="Builds one big jar file for the CDK, including experimental classes and third-party libraries.">
+            description="Builds one big jar file for the CDK, including third-party libraries.">
 
             <!-- first unjar the CDK and other jars we need -->
             <mkdir dir="${appjars.dir}"/>
@@ -632,7 +628,6 @@
                     <includesfile name="${metainf}/control.libdepends"/>
                     <includesfile name="${metainf}/datadebug.libdepends"/>
                     <includesfile name="${metainf}/data.libdepends"/>
-                    <includesfile name="${metainf}/experimental.libdepends"/>
                     <includesfile name="${metainf}/extra.libdepends"/>
                     <includesfile name="${metainf}/io.libdepends"/>
                     <includesfile name="${metainf}/libiocml.libdepends"/>
@@ -668,7 +663,6 @@
                     <include name="cdk-control.jar"/>
                     <include name="cdk-datadebug.jar"/>
                     <include name="cdk-data.jar"/>
-                    <include name="cdk-experimental.jar"/>
                     <include name="cdk-extra.jar"/>
                     <include name="cdk-interfaces.jar"/>
                     <include name="cdk-io.jar"/>
@@ -721,7 +715,7 @@
         </target>
 
         <target id="dist-pure" name="dist-pure" depends="dist-all"
-            description="Builds one big jar file for the CDK, including experimental classes, but excluding third party libraries.">
+            description="Builds one big jar file for the CDK, excluding third party libraries.">
 
             <!-- first unjar the CDK and other jars we need -->
             <mkdir dir="${appjars.dir}"/>
@@ -735,7 +729,6 @@
                     <include name="cdk-datadebug.jar"/>
                     <include name="cdk-data.jar"/>
                     <include name="cdk-diff.jar"/>
-                    <include name="cdk-experimental.jar"/>
                     <include name="cdk-extra.jar"/>
                     <include name="cdk-interfaces.jar"/>
                     <include name="cdk-io.jar"/>
@@ -796,7 +789,6 @@
                     <includesfile name="${metainf}/test-data.libdepends"/>
                     <includesfile name="${metainf}/test-datadebug.libdepends"/>
                     <includesfile name="${metainf}/test-diff.libdepends"/>
-                    <includesfile name="${metainf}/test-experimental.libdepends"/>
                     <includesfile name="${metainf}/test-extra.libdepends"/>
                     <includesfile name="${metainf}/test-builder3d.libdepends"/>
                     <includesfile name="${metainf}/test-forcefield.libdepends"/>
@@ -827,7 +819,6 @@
                     <include name="cdk-test-data.jar"/>
                     <include name="cdk-test-datadebug.jar"/>
                     <include name="cdk-test-diff.jar"/>
-                    <include name="cdk-test-experimental.jar"/>
                     <include name="cdk-test-extra.jar"/>
                     <include name="cdk-test-builder3d.jar"/>
                     <include name="cdk-test-forcefield.jar"/>
@@ -1069,7 +1060,6 @@
         	<antcall target="test-module"><param name="module" value="atomtype"/></antcall>
         	<antcall target="test-module"><param name="module" value="standard"/></antcall>
         	<antcall target="test-module"><param name="module" value="io"/></antcall>
-	        <antcall target="test-module"><param name="module" value="extra"/></antcall>
             <antcall target="test-module"><param name="module" value="builder3d"/></antcall> 
             <antcall target="test-module"><param name="module" value="forcefield"/></antcall> 
         	<antcall target="test-module"><param name="module" value="valencycheck"/></antcall> 
@@ -1078,7 +1068,6 @@
         	<antcall target="test-module"><param name="module" value="smarts"/></antcall> 
         	<antcall target="test-module"><param name="module" value="fingerprint"/></antcall> 
                 <antcall target="test-module"><param name="module" value="smiles"/></antcall>
-        	<antcall target="test-module"><param name="module" value="experimental"/></antcall> 
         	<antcall target="test-module"><param name="module" value="qsar"/></antcall> 
         	<antcall target="test-module"><param name="module" value="qsaratomic"/></antcall>
                 <antcall target="test-module"><param name="module" value="qsarbond"/></antcall>
@@ -1093,6 +1082,7 @@
             <antcall target="test-module"><param name="module" value="libiocml"/></antcall>
             	<antcall target="test-module"><param name="module" value="formula"/></antcall>
         	<antcall target="test-module"><param name="module" value="render"/></antcall>
+	        <antcall target="test-module"><param name="module" value="extra"/></antcall>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"

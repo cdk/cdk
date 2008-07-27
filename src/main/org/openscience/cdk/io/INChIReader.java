@@ -53,7 +53,7 @@ import org.xml.sax.XMLReader;
  *
  * <P>The elements that are read are given in the INChIHandler class.
  *
- * @cdk.module experimental
+ * @cdk.module extra
  * @cdk.svnrev  $Revision$
  *
  * @author      Egon Willighagen <egonw@sci.kun.nl>

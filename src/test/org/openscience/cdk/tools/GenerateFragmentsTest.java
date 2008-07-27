@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.GenerateFragments;
 /**
  * TestSuite that runs all QSAR tests.
  *
- * @cdk.module test-experimental
+ * @cdk.module test-extra
  */
 public class GenerateFragmentsTest extends CDKTestCase{
 	

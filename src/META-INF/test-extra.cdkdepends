@@ -7,7 +7,6 @@ cdk-nonotify.jar
 cdk-io.jar
 cdk-control.jar
 cdk-sdg.jar
-cdk-experimental.jar
 cdk-extra.jar
 cdk-libiocml.jar
 cdk-pdb.jar
@@ -22,3 +21,4 @@ cdk-test.jar
 cdk-formula.jar
 cdk-isomorphism.jar
 cdk-test-atomtype.jar
+cdk-test-io.jar

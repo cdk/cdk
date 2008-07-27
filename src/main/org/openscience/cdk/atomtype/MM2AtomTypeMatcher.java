@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author         cho
  * @cdk.created    2005-18-07
- * @cdk.module     experimental
+ * @cdk.module     extra
  * @cdk.svnrev  $Revision$
  */
 public class MM2AtomTypeMatcher implements IAtomTypeMatcher {

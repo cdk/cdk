@@ -30,7 +30,7 @@ import org.junit.Test;
 /**
  * Checks the functionality of the Association class.
  *
- * @cdk.module test-experimental
+ * @cdk.module test-extra
  *
  * @see org.openscience.cdk.Association
  */

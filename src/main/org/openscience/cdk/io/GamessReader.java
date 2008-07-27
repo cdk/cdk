@@ -80,7 +80,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
  * <br><a href="http://www.msg.ameslab.gov/GAMESS/GAMESS.html">GAMESS</a> is a 
  * quantum chemistry program by Gordon research group atIowa State University.
  * 
- * @cdk.module  experimental
+ * @cdk.module  extra
  * @cdk.svnrev  $Revision$
  * @cdk.keyword Gamess
  * @cdk.keyword file format

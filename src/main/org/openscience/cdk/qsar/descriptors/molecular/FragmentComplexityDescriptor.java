@@ -1,10 +1,6 @@
-/*
- *  $RCSfile$
- *  $Author: choppe $
- *  $Date: 2006-06-07 13:53:17 +0200 (Wed, 07 Jun 2006) $
- *  $Revision: 6350 $
+/* $Revision: 6350 $ $Author: choppe $ $Date: 2006-06-07 13:53:17 +0200 (Wed, 07 Jun 2006) $
  *
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2007  Christian Hoppe
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,17 +31,17 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
- *  Class that returns the complexity of a system. The complexity is defined as @cdk.cite{Nilakantan06}:
- *  
+ *  Class that returns the complexity of a system. The complexity is defined as {@cdk.cite Nilakantan06}:
+ *  <pre>
  *  C=abs(B^2-A^2+A)+H/100
- *  
- *  C=complexity, A=number of non-hydrogen atoms, B=number of bonds and H=number of heteroatoms
+ *  </pre>
+ *  where C=complexity, A=number of non-hydrogen atoms, B=number of bonds and H=number of heteroatoms
  *  
  * <p>This descriptor uses no parameters.
  *
  * @author      chhoppe from EUROSCREEN
  * @cdk.created 2006-8-22
- * @cdk.module  experimental
+ * @cdk.module  qsarmolecular
  * @cdk.svnrev  $Revision: 9162 $
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:NilaComplexity

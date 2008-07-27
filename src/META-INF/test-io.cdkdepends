@@ -4,7 +4,6 @@ cdk-atomtype.jar
 cdk-standard.jar
 cdk-data.jar
 cdk-io.jar
-cdk-experimental.jar
 cdk-extra.jar
 cdk-valencycheck.jar
 cdk-libiocml.jar

@@ -36,7 +36,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * @cdk.module test-experimental
+ * @cdk.module test-extra
  */
 public class VASPReaderTest extends ChemObjectIOTest {
 

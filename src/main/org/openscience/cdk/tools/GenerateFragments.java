@@ -66,7 +66,7 @@ import org.openscience.cdk.smiles.SmilesGenerator;
  *
  * @author      chhoppe from EUROSCREEN
  * @cdk.created 2006-3-23
- * @cdk.module  experimental
+ * @cdk.module  extra
  * @cdk.svnrev  $Revision$
  * @cdk.keyword Murcko fragments
  * @cdk.bug     1848591

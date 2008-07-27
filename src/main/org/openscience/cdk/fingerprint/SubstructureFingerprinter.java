@@ -46,7 +46,7 @@ import java.util.BitSet;
  * @cdk.keyword  fingerprint
  * @cdk.keyword  similarity
  * 
- * @cdk.module   experimental
+ * @cdk.module   extra
  * @cdk.svnrev  $Revision$
  */
 public class SubstructureFingerprinter implements IFingerprinter {

@@ -59,7 +59,7 @@ import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
  * AuxInfo=1.12Beta/0/N:1,2,3,4,5,6/E:(1,2,3,4,5,6)/rA:6CCCCCC/rB:s1;d1;d2;s3;s4d5;/rC:5.6378,-4.0013,0;5.6378,-5.3313,0;4.4859,-3.3363,0;4.4859,-5.9963,0;3.3341,-4.0013,0;3.3341,-5.3313,0;
  * </pre>
  *
- * @cdk.module experimental
+ * @cdk.module extra
  * @cdk.svnrev  $Revision$
  *
  * @author      Egon Willighagen <egonw@sci.kun.nl>

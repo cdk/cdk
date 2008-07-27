@@ -9,7 +9,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  * 
  * @author egonw
  * 
- * @cdk.module experimental
+ * @cdk.module extra
  * @cdk.svnrev  $Revision$
  */
 public class StandardSubstructureSets {
