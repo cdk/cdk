@@ -1,4 +1,4 @@
-/* $Revision: 7635 $ $Author: egonw $ $Date: 2007-01-04 18:32:54 +0100 (Thu, 04 Jan 2007) $
+/* $Revision: 7921 $ $Author: egonw $ $Date: 2007-02-09 00:35:55 +0100 (Fri, 09 Feb 2007) $
  * 
  * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  * 
@@ -18,34 +18,40 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk;
+package org.openscience.cdk.coverage;
+
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * TestSuite that performs a simple coverage test of the structgen module.
+ * TestSuite that uses tests whether all public methods in the core
+ * module are tested. Unlike Emma, it does not test that all code is
+ * tested, just all methods.
  *
- * @cdk.module test-structgen
+ * @cdk.module test-isomorphism
  */
-public class StructgenCoverageTest extends CoverageTest {
+public class IsomorphismCoverageTest extends CoverageTest {
 
-    private final static String CLASS_LIST = "structgen.javafiles";
+    private final static String CLASS_LIST = "isomorphism.javafiles";
     
-    public StructgenCoverageTest(String name){
+    public IsomorphismCoverageTest(String name) {
         super(name);
     }
 
-    public void setUp() throws Exception {
-    	super.setUp();
+    protected void setUp() throws Exception {
+        super.setUp();
         super.loadClassList(CLASS_LIST);
     }
 
     public static Test suite() {
-        return new TestSuite(StructgenCoverageTest.class);
+        TestSuite suite = new TestSuite();
+        suite.addTestSuite(IsomorphismCoverageTest.class);
+        return suite;
     }
 
     public void testCoverage() {
-        super.runCoverageTest();
+        assertTrue(super.runCoverageTest());
     }
+
 }

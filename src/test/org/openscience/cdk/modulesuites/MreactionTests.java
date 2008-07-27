@@ -28,8 +28,8 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.ReactionCoverageTest;
 import org.openscience.cdk.atomtype.ResonanceStructuresTest;
+import org.openscience.cdk.coverage.ReactionCoverageTest;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetectorTest;
 import org.openscience.cdk.reaction.mechanism.AdductionLPMechanismTest;
 import org.openscience.cdk.reaction.mechanism.AdductionPBMechanismTest;

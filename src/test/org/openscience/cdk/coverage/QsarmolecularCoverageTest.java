@@ -1,6 +1,6 @@
-/* $Revision: 10775 $ $Author: egonw $ $Date: 2008-05-03 08:57:44 +0200 (Sat, 03 May 2008) $
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -18,19 +18,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk;
+package org.openscience.cdk.coverage;
+
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * @cdk.module test-render
+ * TestSuite that uses tests whether all public methods in the core
+ * module are tested. Unlike Emma, it does not test that all code is
+ * tested, just all methods.
+ *
+ * @cdk.module test-qsarmolecular
  */
-public class RenderCoverageTest extends CoverageAnnotationTest {
+public class QsarmolecularCoverageTest extends CoverageTest {
 
-    private final static String CLASS_LIST = "render.javafiles";
-
-    public RenderCoverageTest(String name) {
+    private final static String CLASS_LIST = "qsarmolecular.javafiles";
+    
+    public QsarmolecularCoverageTest(String name) {
         super(name);
     }
 
@@ -41,7 +46,7 @@ public class RenderCoverageTest extends CoverageAnnotationTest {
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
-        suite.addTestSuite(RenderCoverageTest.class);
+        suite.addTestSuite(QsarmolecularCoverageTest.class);
         return suite;
     }
 

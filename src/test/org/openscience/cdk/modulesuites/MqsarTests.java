@@ -28,7 +28,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.QsarCoverageTest;
+import org.openscience.cdk.coverage.QsarCoverageTest;
 import org.openscience.cdk.qsar.DescriptorExceptionTest;
 import org.openscience.cdk.qsar.model.R2.RJavaEnvironmentTest;
 

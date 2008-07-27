@@ -25,7 +25,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.FormulaCoverageTest;
+import org.openscience.cdk.coverage.FormulaCoverageTest;
 import org.openscience.cdk.formula.IsotopePatternGeneratorTest;
 import org.openscience.cdk.formula.MassToFormulaToolTest;
 import org.openscience.cdk.formula.MolecularFormulaManipulatorTest;

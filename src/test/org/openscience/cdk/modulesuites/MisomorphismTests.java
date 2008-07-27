@@ -23,7 +23,8 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.IsomorphismCoverageTest;
+
+import org.openscience.cdk.coverage.IsomorphismCoverageTest;
 
 /**
  * TestSuite that runs all the tests for the CDK core module.

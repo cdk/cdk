@@ -24,8 +24,8 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.AtomtypeCoverageTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest;
+import org.openscience.cdk.coverage.AtomtypeCoverageTest;
 import org.openscience.cdk.graph.PathToolsTest;
 import org.openscience.cdk.graph.SpanningTreeTest;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrixTest;

@@ -23,7 +23,8 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.SMARTSCoverageTest;
+
+import org.openscience.cdk.coverage.SMARTSCoverageTest;
 import org.openscience.cdk.isomorphism.SMARTSTest;
 
 /**

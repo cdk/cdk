@@ -18,7 +18,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk;
+package org.openscience.cdk.coverage;
+
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,13 +29,13 @@ import junit.framework.TestSuite;
  * module are tested. Unlike Emma, it does not test that all code is
  * tested, just all methods.
  *
- * @cdk.module test-charges
+ * @cdk.module test-qsaratomic
  */
-public class ChargesCoverageTest extends CoverageAnnotationTest {
+public class QsaratomicCoverageTest extends CoverageAnnotationTest {
 
-    private final static String CLASS_LIST = "charges.javafiles";
+    private final static String CLASS_LIST = "qsaratomic.javafiles";
 
-    public ChargesCoverageTest(String name) {
+    public QsaratomicCoverageTest(String name) {
         super(name);
     }
 
@@ -45,7 +46,7 @@ public class ChargesCoverageTest extends CoverageAnnotationTest {
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
-        suite.addTestSuite(ChargesCoverageTest.class);
+        suite.addTestSuite(QsaratomicCoverageTest.class);
         return suite;
     }
 

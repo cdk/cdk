@@ -28,7 +28,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.QsarmolecularCoverageTest;
+import org.openscience.cdk.coverage.QsarmolecularCoverageTest;
 import org.openscience.cdk.qsar.ChiIndexUtilsTest;
 import org.openscience.cdk.qsar.DescriptorEngineTest;
 import org.openscience.cdk.qsar.DescriptorNamesTest;

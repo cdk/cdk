@@ -23,11 +23,11 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.openscience.cdk.ChargesCoverageTest;
 import org.openscience.cdk.charges.AtomTypeChargesTest;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialChargesTest;
 import org.openscience.cdk.charges.InductivePartialChargesTest;
 import org.openscience.cdk.charges.PolarizabilityTest;
+import org.openscience.cdk.coverage.ChargesCoverageTest;
 
 /**
  * TestSuite that runs all the sample tests for the charges module.

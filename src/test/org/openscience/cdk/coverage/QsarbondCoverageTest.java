@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -18,22 +18,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk;
+package org.openscience.cdk.coverage;
+
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * TestSuite that tests if all public methods in the diff
- * module are tested.
+ * TestSuite that uses tests whether all public methods in the standard
+ * module are tested. Unlike Emma, it does not test that all code is
+ * tested, just all methods.
  *
- * @cdk.module test-diff
+ * @cdk.module test-qsarbond
  */
-public class DiffCoverageTest extends CoverageAnnotationTest {
+public class QsarbondCoverageTest extends CoverageAnnotationTest {
 
-    private final static String CLASS_LIST = "diff.javafiles";
-    
-    public DiffCoverageTest(String name) {
+    private final static String CLASS_LIST = "qsarbond.javafiles";
+
+    public QsarbondCoverageTest(String name) {
         super(name);
     }
 
@@ -44,7 +46,7 @@ public class DiffCoverageTest extends CoverageAnnotationTest {
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
-        suite.addTestSuite(DiffCoverageTest.class);
+        suite.addTestSuite(QsarbondCoverageTest.class);
         return suite;
     }
 

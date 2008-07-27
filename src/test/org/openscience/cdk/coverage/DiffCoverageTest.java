@@ -1,4 +1,4 @@
-/* $Revision: 10775 $ $Author: egonw $ $Date: 2008-05-03 08:57:44 +0200 (Sat, 03 May 2008) $
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
  * 
@@ -18,23 +18,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk;
+package org.openscience.cdk.coverage;
+
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * TestSuite that uses tests whether all public methods in the core
- * module are tested. Unlike Emma, it does not test that all code is
- * tested, just all methods.
+ * TestSuite that tests if all public methods in the diff
+ * module are tested.
  *
- * @cdk.module test-ionpot
+ * @cdk.module test-diff
  */
-public class IonpotCoverageTest extends CoverageTest {
+public class DiffCoverageTest extends CoverageAnnotationTest {
 
-    private final static String CLASS_LIST = "ionpot.javafiles";
+    private final static String CLASS_LIST = "diff.javafiles";
     
-    public IonpotCoverageTest(String name) {
+    public DiffCoverageTest(String name) {
         super(name);
     }
 
@@ -45,7 +45,7 @@ public class IonpotCoverageTest extends CoverageTest {
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
-        suite.addTestSuite(IonpotCoverageTest.class);
+        suite.addTestSuite(DiffCoverageTest.class);
         return suite;
     }
 

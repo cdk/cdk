@@ -27,7 +27,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.IoCoverageTest;
+import org.openscience.cdk.coverage.IoCoverageTest;
 import org.openscience.cdk.io.CDKSourceCodeWriterTest;
 import org.openscience.cdk.io.CTXReaderTest;
 import org.openscience.cdk.io.ChemObjectIOInstantionTests;

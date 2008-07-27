@@ -1,9 +1,6 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -21,34 +18,40 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk;
+package org.openscience.cdk.coverage;
+
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * TestSuite that runs all the sample tests.
+ * TestSuite that uses tests whether all public methods in the core
+ * module are tested. Unlike Emma, it does not test that all code is
+ * tested, just all methods.
  *
- * @cdk.module test-data
+ * @cdk.module test-smarts
  */
-public class DataCoverageTest extends CoverageTest {
+public class SMARTSCoverageTest extends CoverageAnnotationTest {
 
-    private final static String CLASS_LIST = "data.javafiles";
-    
-    public DataCoverageTest(String name){
+    private final static String CLASS_LIST = "smarts.javafiles";
+
+    public SMARTSCoverageTest(String name) {
         super(name);
     }
 
-    public void setUp() throws Exception {
+    protected void setUp() throws Exception {
         super.setUp();
         super.loadClassList(CLASS_LIST);
     }
 
     public static Test suite() {
-        return new TestSuite(DataCoverageTest.class);
+        TestSuite suite = new TestSuite();
+        suite.addTestSuite(SMARTSCoverageTest.class);
+        return suite;
     }
 
     public void testCoverage() {
-        super.runCoverageTest();
+        assertTrue(super.runCoverageTest());
     }
+
 }

@@ -1,6 +1,6 @@
-/* $Revision: 10234 $ $Author: egonw $ $Date: 2008-02-25 14:11:58 +0100 (Mon, 25 Feb 2008) $
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -18,23 +18,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk;
+package org.openscience.cdk.coverage;
+
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * TestSuite that uses tests whether all public methods in the core
- * module are tested. Unlike Emma, it does not test that all code is
- * tested, just all methods.
+ * TestSuite that tests if all public methods in the formula
+ * module are tested.
  *
- * @cdk.module test-io
+ * @cdk.module test-formula
  */
-public class IoCoverageTest extends CoverageAnnotationTest {
+public class FormulaCoverageTest extends CoverageTest {
 
-    private final static String CLASS_LIST = "io.javafiles";
+    private final static String CLASS_LIST = "formula.javafiles";
     
-    public IoCoverageTest(String name) {
+    public FormulaCoverageTest(String name) {
         super(name);
     }
 
@@ -45,7 +45,7 @@ public class IoCoverageTest extends CoverageAnnotationTest {
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
-        suite.addTestSuite(IoCoverageTest.class);
+        suite.addTestSuite(FormulaCoverageTest.class);
         return suite;
     }
 

@@ -4,7 +4,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.PcoreCoverageTest;
+import org.openscience.cdk.coverage.PcoreCoverageTest;
 import org.openscience.cdk.pharmacophore.PharmacophoreMatcherTest;
 import org.openscience.cdk.pharmacophore.PharmacophoreUtilityTest;
 

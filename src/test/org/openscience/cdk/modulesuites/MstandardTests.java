@@ -24,11 +24,11 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.StandardCoverageTest;
 import org.openscience.cdk.aromaticity.AromaticityCalculatorTest;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetectorTest;
 import org.openscience.cdk.atomtype.EStateAtomTypeMatcherTest;
 import org.openscience.cdk.config.SymbolsTest;
+import org.openscience.cdk.coverage.StandardCoverageTest;
 import org.openscience.cdk.dict.DictRefTest;
 import org.openscience.cdk.exception.InvalidSmilesExceptionTest;
 import org.openscience.cdk.exception.UnsupportedChemObjectExceptionTest;

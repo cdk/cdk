@@ -24,7 +24,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.QsarionpotCoverageTest;
+import org.openscience.cdk.coverage.QsarionpotCoverageTest;
 import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicHOSEDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicLearningDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptorTest;

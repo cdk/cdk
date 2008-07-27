@@ -1,4 +1,4 @@
-/* $Revision: 7921 $ $Author: egonw $ $Date: 2007-02-09 00:35:55 +0100 (Fri, 09 Feb 2007) $
+/* $Revision: 10234 $ $Author: egonw $ $Date: 2008-02-25 14:11:58 +0100 (Mon, 25 Feb 2008) $
  * 
  * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  * 
@@ -18,7 +18,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk;
+package org.openscience.cdk.coverage;
+
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,13 +29,13 @@ import junit.framework.TestSuite;
  * module are tested. Unlike Emma, it does not test that all code is
  * tested, just all methods.
  *
- * @cdk.module test-isomorphism
+ * @cdk.module test-io
  */
-public class IsomorphismCoverageTest extends CoverageTest {
+public class IoCoverageTest extends CoverageAnnotationTest {
 
-    private final static String CLASS_LIST = "isomorphism.javafiles";
+    private final static String CLASS_LIST = "io.javafiles";
     
-    public IsomorphismCoverageTest(String name) {
+    public IoCoverageTest(String name) {
         super(name);
     }
 
@@ -45,7 +46,7 @@ public class IsomorphismCoverageTest extends CoverageTest {
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
-        suite.addTestSuite(IsomorphismCoverageTest.class);
+        suite.addTestSuite(IoCoverageTest.class);
         return suite;
     }
 

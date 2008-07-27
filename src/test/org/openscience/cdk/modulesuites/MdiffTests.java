@@ -24,7 +24,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.DiffCoverageTest;
+import org.openscience.cdk.coverage.DiffCoverageTest;
 import org.openscience.cdk.tools.diff.AtomContainerDiffTest;
 import org.openscience.cdk.tools.diff.AtomDiffTest;
 import org.openscience.cdk.tools.diff.AtomTypeDiffTest;

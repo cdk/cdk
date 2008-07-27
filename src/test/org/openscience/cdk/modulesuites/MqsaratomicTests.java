@@ -28,7 +28,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.QsaratomicCoverageTest;
+import org.openscience.cdk.coverage.QsaratomicCoverageTest;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomDegreeDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptorTest;

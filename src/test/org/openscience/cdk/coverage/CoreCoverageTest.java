@@ -18,7 +18,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk;
+package org.openscience.cdk.coverage;
+
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,13 +29,13 @@ import junit.framework.TestSuite;
  * module are tested. Unlike Emma, it does not test that all code is
  * tested, just all methods.
  *
- * @cdk.module test-reaction
+ * @cdk.module test-core
  */
-public class ReactionCoverageTest extends CoverageTest {
+public class CoreCoverageTest extends CoverageAnnotationTest {
 
-    private final static String CLASS_LIST = "reaction.javafiles";
+    private final static String CLASS_LIST = "core.javafiles";
     
-    public ReactionCoverageTest(String name) {
+    public CoreCoverageTest(String name) {
         super(name);
     }
 
@@ -45,7 +46,7 @@ public class ReactionCoverageTest extends CoverageTest {
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
-        suite.addTestSuite(ReactionCoverageTest.class);
+        suite.addTestSuite(CoreCoverageTest.class);
         return suite;
     }
 

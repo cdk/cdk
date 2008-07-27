@@ -25,7 +25,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.QsarbondCoverageTest;
+import org.openscience.cdk.coverage.QsarbondCoverageTest;
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialPiChargeDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialSigmaChargeDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.bond.BondPartialTChargeDescriptorTest;

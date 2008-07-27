@@ -28,7 +28,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.IonpotCoverageTest;
+import org.openscience.cdk.coverage.IonpotCoverageTest;
 import org.openscience.cdk.tools.IonizationPotentialToolTest;
 
 /**

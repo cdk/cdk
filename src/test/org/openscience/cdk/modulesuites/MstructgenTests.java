@@ -24,9 +24,9 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.StructgenCoverageTest;
 import org.openscience.cdk.atomtype.StructGenAtomTypeGuesserTest;
 import org.openscience.cdk.atomtype.StructGenMatcherTest;
+import org.openscience.cdk.coverage.StructgenCoverageTest;
 import org.openscience.cdk.structgen.RandomStructureGeneratorTest;
 import org.openscience.cdk.structgen.VicinitySamplerTest;
 import org.openscience.cdk.structgen.stochastic.PartialFilledStructureMergerTest;

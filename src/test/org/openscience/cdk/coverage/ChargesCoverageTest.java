@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -18,23 +18,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk;
+package org.openscience.cdk.coverage;
+
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * TestSuite that uses tests whether all public methods in the core
+ * TestSuite that uses tests whether all public methods in the standard
  * module are tested. Unlike Emma, it does not test that all code is
  * tested, just all methods.
  *
- * @cdk.module test-smarts
+ * @cdk.module test-charges
  */
-public class SMARTSCoverageTest extends CoverageAnnotationTest {
+public class ChargesCoverageTest extends CoverageAnnotationTest {
 
-    private final static String CLASS_LIST = "smarts.javafiles";
+    private final static String CLASS_LIST = "charges.javafiles";
 
-    public SMARTSCoverageTest(String name) {
+    public ChargesCoverageTest(String name) {
         super(name);
     }
 
@@ -45,7 +46,7 @@ public class SMARTSCoverageTest extends CoverageAnnotationTest {
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
-        suite.addTestSuite(SMARTSCoverageTest.class);
+        suite.addTestSuite(ChargesCoverageTest.class);
         return suite;
     }
 

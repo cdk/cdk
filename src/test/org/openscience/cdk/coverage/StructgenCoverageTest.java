@@ -1,6 +1,6 @@
-/* $Revision$ $Author$ $Date$
+/* $Revision: 7635 $ $Author: egonw $ $Date: 2007-01-04 18:32:54 +0100 (Thu, 04 Jan 2007) $
  * 
- * Copyright (C) 2007-2008  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -18,39 +18,35 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk;
+package org.openscience.cdk.coverage;
+
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * TestSuite that uses tests whether all public methods in the core
- * module are tested. Unlike Emma, it does not test that all code is
- * tested, just all methods.
+ * TestSuite that performs a simple coverage test of the structgen module.
  *
- * @cdk.module test-qsarionpot
+ * @cdk.module test-structgen
  */
-public class QsarionpotCoverageTest extends CoverageTest {
+public class StructgenCoverageTest extends CoverageTest {
 
-    private final static String CLASS_LIST = "qsarionpot.javafiles";
+    private final static String CLASS_LIST = "structgen.javafiles";
     
-    public QsarionpotCoverageTest(String name) {
+    public StructgenCoverageTest(String name){
         super(name);
     }
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    public void setUp() throws Exception {
+    	super.setUp();
         super.loadClassList(CLASS_LIST);
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTestSuite(QsarionpotCoverageTest.class);
-        return suite;
+        return new TestSuite(StructgenCoverageTest.class);
     }
 
     public void testCoverage() {
-        assertTrue(super.runCoverageTest());
+        super.runCoverageTest();
     }
-
 }
