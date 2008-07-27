@@ -30,6 +30,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.ReactionCoverageTest;
 import org.openscience.cdk.atomtype.ResonanceStructuresTest;
+import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetectorTest;
 import org.openscience.cdk.reaction.mechanism.AdductionLPMechanismTest;
 import org.openscience.cdk.reaction.mechanism.AdductionPBMechanismTest;
 import org.openscience.cdk.reaction.mechanism.HeterolyticCleavageMechanismTest;
@@ -104,6 +105,7 @@ public class MreactionTests {
         suite.addTest(new JUnit4TestAdapter(RemovingSEofNBMechanismTest.class));
         suite.addTest(new JUnit4TestAdapter(SharingElectronMechanismTest.class));
         suite.addTest(new JUnit4TestAdapter(TautomerizationMechanismTest.class));
+        suite.addTest(ConjugatedPiSystemsDetectorTest.suite());
               
         // from cdk.test.reaction.type
         suite.addTest(new JUnit4TestAdapter(ResonanceStructuresTest.class));

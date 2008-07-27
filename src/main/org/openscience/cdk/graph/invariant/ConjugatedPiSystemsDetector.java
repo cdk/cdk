@@ -1,10 +1,6 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2004-2007  Kai Hartmann <kaihartmann@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -27,22 +23,19 @@ package org.openscience.cdk.graph.invariant;
 import java.util.List;
 import java.util.Stack;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.AtomContainerSet;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- *@author        kaihartmann
- * @cdk.svnrev  $Revision$
- *@cdk.created   2004-09-17
- *@cdk.module    extra
+ * @author       kaihartmann
+ * @cdk.svnrev   $Revision$
+ * @cdk.created  2004-09-17
+ * @cdk.module   reaction
  *
- *@cdk.todo add negatively charged atoms (e.g. O-) to the pi system
+ * @cdk.todo add negatively charged atoms (e.g. O-) to the pi system
  */
 public class ConjugatedPiSystemsDetector {
 
@@ -75,8 +68,8 @@ public class ConjugatedPiSystemsDetector {
      *@param  ac  The AtomContainer for which to detect conjugated pi systems
      *@return     The set of AtomContainers with conjugated pi systems
      */
-	public static AtomContainerSet detect(org.openscience.cdk.interfaces.IAtomContainer ac) {
-        AtomContainerSet piSystemSet = new AtomContainerSet();
+	public static IAtomContainerSet detect(IAtomContainer ac) {
+        IAtomContainerSet piSystemSet = ac.getBuilder().newAtomContainerSet();
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
         	org.openscience.cdk.interfaces.IAtom atom = ac.getAtom(i);
@@ -89,8 +82,8 @@ public class ConjugatedPiSystemsDetector {
             if (firstAtom.getFlag(CDKConstants.VISITED) || checkAtom(ac, firstAtom) == -1) {
                 continue;
             }
-            AtomContainer piSystem = new org.openscience.cdk.AtomContainer();
-            Stack stack = new Stack();
+            IAtomContainer piSystem = ac.getBuilder().newAtomContainer();
+            Stack<IAtom> stack = new Stack<IAtom>();
 
             piSystem.addAtom(firstAtom);
             stack.push(firstAtom);
@@ -98,13 +91,13 @@ public class ConjugatedPiSystemsDetector {
             // Start DFS from firstAtom
             while (!stack.empty()) {
                 //boolean addAtom = false;
-                Atom currentAtom = (Atom) stack.pop();
-                List atoms = ac.getConnectedAtomsList(currentAtom);
-                List bonds = ac.getConnectedBondsList(currentAtom);
+                IAtom currentAtom = (IAtom) stack.pop();
+                List<IAtom> atoms = ac.getConnectedAtomsList(currentAtom);
+                List<IBond> bonds = ac.getConnectedBondsList(currentAtom);
 
                 for (int j = 0; j < atoms.size(); j++) {
-                    Atom atom = (Atom) atoms.get(j);
-                    Bond bond = (Bond) bonds.get(j);
+                    IAtom atom = atoms.get(j);
+                    IBond bond = bonds.get(j);
                     if (!atom.getFlag(CDKConstants.VISITED)) {
                         int check = checkAtom(ac, atom);
                         if (check == 1) {
@@ -144,8 +137,8 @@ public class ConjugatedPiSystemsDetector {
      */
     private static int checkAtom(IAtomContainer ac, IAtom currentAtom) {
         int check = -1;
-        List atoms = ac.getConnectedAtomsList(currentAtom);
-        List bonds = ac.getConnectedBondsList(currentAtom);
+        List<IAtom> atoms = ac.getConnectedAtomsList(currentAtom);
+        List<IBond> bonds = ac.getConnectedBondsList(currentAtom);
         if (currentAtom.getFlag(CDKConstants.ISAROMATIC)) {
             check = 0;
         } else if (currentAtom.getFormalCharge() == 1 /*&& currentAtom.getSymbol().equals("C")*/) {
@@ -154,7 +147,7 @@ public class ConjugatedPiSystemsDetector {
 			//// NEGATIVE CHARGES WITH A NEIGHBOOR PI BOND //////////////
 		    int counterOfPi = 0;
 	            for(int n = 0; n < atoms.size(); n++) {
-					Atom atom = (Atom) atoms.get(n);
+					IAtom atom = atoms.get(n);
 					if(ac.getMaximumBondOrder(atom) != IBond.Order.SINGLE) {
 						counterOfPi ++;
 					}
@@ -171,7 +164,7 @@ public class ConjugatedPiSystemsDetector {
 			    int singleBondCount = 0;
 			    int highOrderBondCount = 0;
 			    for (int j = 0; j < atoms.size(); j++) {
-					Bond bond = (Bond) bonds.get(j);
+					IBond bond = bonds.get(j);
 					if (bond == null || bond.getOrder() != IBond.Order.SINGLE) {
 					    highOrderBondCount++;
 					} else {

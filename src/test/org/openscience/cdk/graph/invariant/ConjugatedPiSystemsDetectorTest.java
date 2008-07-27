@@ -29,13 +29,13 @@ import java.io.InputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Checks the functionality of the ConjugatedPiSystemsCalculator.
  *
- * @cdk.module test-extra
+ * @cdk.module test-reaction
  */
 public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 {
@@ -81,7 +81,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
-        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+        IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac = acSet.getAtomContainer(0);
@@ -110,7 +110,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
-        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+        IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac = acSet.getAtomContainer(0);
@@ -139,7 +139,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
-        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+        IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac = acSet.getAtomContainer(0);
@@ -170,7 +170,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
-        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+        IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(2, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -214,7 +214,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
-        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+        IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(2, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -255,7 +255,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
-        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+        IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(2, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -300,7 +300,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
     	
-        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+    	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -334,7 +334,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
-        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+    	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -356,7 +356,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
     	
-        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+    	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -379,7 +379,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
     	
-        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+    	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -403,7 +403,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
     	
-        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+    	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -459,7 +459,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
-        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+    	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -484,7 +484,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 		lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
-        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+    	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
@@ -508,7 +508,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 		lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
         
-        AtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
+    	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
         assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);

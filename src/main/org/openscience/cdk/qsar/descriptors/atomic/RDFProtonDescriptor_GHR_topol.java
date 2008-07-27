@@ -21,8 +21,14 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+
 import org._3pq.jgrapht.Edge;
-import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
@@ -33,7 +39,12 @@ import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -41,12 +52,6 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * This class calculates GHR topological proton descriptors used in neural networks for H1 NMR shift.
@@ -79,7 +84,7 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
     private boolean checkAromaticity = false;
     private IAtomContainer acold = null;
     private IRingSet varRingSet = null;
-    private AtomContainerSet varAtomContainerSet = null;
+    private IAtomContainerSet varAtomContainerSet = null;
     
     private final static LoggingTool logger = new LoggingTool(RDFProtonDescriptor_GHR_topol.class);
     private final int ghr_topol_desc_length = 15;
