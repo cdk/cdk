@@ -97,8 +97,9 @@ public class MDLRXNV3000Format implements IChemFormatMatcher {
                 // Integers not found on fifth line; therefore not a MDL file
             	return false;
             }
+            return true;
         }	
-        return true;
+        return false;
     }
 
 	@TestMethod("testIsXMLBased")
