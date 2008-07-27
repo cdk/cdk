@@ -41,7 +41,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-experimental
  */
 public class SubstructureFingerprinterTest extends NewCDKTestCase {
 	

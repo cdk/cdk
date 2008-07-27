@@ -1,0 +1,14 @@
+cdk-interfaces.jar
+cdk-core.jar
+cdk-atomtype.jar
+cdk-standard.jar
+cdk-io.jar
+cdk-isomorphism.jar
+cdk-valencycheck.jar
+cdk-smarts.jar
+cdk-test.jar
+cdk-smiles.jar
+cdk-data.jar
+cdk-nonotify.jar
+cdk-fingerprint.jar
+cdk-extra.jar

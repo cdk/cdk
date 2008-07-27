@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.LoggingTool;
 import java.util.BitSet;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-fingerprint
  */
 public class EStateFingerprinterTest extends NewCDKTestCase {
 

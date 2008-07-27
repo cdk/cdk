@@ -35,7 +35,7 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import java.util.BitSet;
 
 /**
- * Fingerprinter that gives a bit set which has a size equal to the number
+ * {@link IFingerprinter} that gives a bit set which has a size equal to the number
  * of substructures it was constructed from. A set bit indicates that that
  * substructure was found at least once in the molecule for which the 
  * fingerprint was calculated.

@@ -27,6 +27,8 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.AssociationTest;
 import org.openscience.cdk.atomtype.MM2AtomTypeMatcherTest;
 import org.openscience.cdk.atomtype.MMFF94AtomTypeMatcherTest;
+import org.openscience.cdk.fingerprint.StandardSubstructureSetsTest;
+import org.openscience.cdk.fingerprint.SubstructureFingerprinterTest;
 import org.openscience.cdk.io.VASPReaderTest;
 import org.openscience.cdk.tools.GenerateFragmentsTest;
 
@@ -43,6 +45,9 @@ public class MexperimentalTests {
         suite.addTest(new JUnit4TestAdapter(AssociationTest.class));
         suite.addTest(new JUnit4TestAdapter(VASPReaderTest.class));
         suite.addTest(GenerateFragmentsTest.suite());
+
+        suite.addTest(new JUnit4TestAdapter(SubstructureFingerprinterTest.class));
+        suite.addTest(new JUnit4TestAdapter(StandardSubstructureSetsTest.class));
 
         // from cdk.test.atomtype
         suite.addTest(MMFF94AtomTypeMatcherTest.suite());

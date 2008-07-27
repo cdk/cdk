@@ -1,12 +1,8 @@
-/* $RCSfile$
- * $Author: rajarshi $
- * $Date: 2008-07-20 22:05:08 -0400 (Sun, 20 Jul 2008) $
- * $Revision: 11674 $
+/* $Revision: 11674 $ $Author: rajarshi $ $Date: 2008-07-20 22:05:08 -0400 (Sun, 20 Jul 2008) $
  *
- * Copyright (C) 2008 Rajarshi Guha
+ * Copyright (C) 2008 Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
- * Contact: rajarshi@users.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -37,13 +33,13 @@ import java.util.BitSet;
 /**
  * This fingerprinter generates 79 bit fingerprints using the E-State fragments.
  *
- * The E-State fragments are those decribed in {@cdk.cite HALL1995} and the SMARTS
+ * <p>The E-State fragments are those described in {@cdk.cite HALL1995} and the SMARTS
  * patterns were taken from <a href="http://www.rdkit.org">RDKit</a>. Note that this
- * fingerprint simply indicates the presence or occurence of the fragments. If you need
+ * fingerprint simply indicates the presence or occurrence of the fragments. If you need
  * counts of the fragments take a look at {@link org.openscience.cdk.qsar.descriptors.molecular.KierHallSmartsDescriptor},
  * which also lists the substructures corresponding to each bit position.
  *
- * This class assumes that aromaticity perception and atom typing have been performed
+ * <p>This class assumes that aromaticity perception and atom typing have been performed
  * prior to generating the fingerprint
  * 
  * @author Rajarhi Guha
@@ -53,7 +49,7 @@ import java.util.BitSet;
  * @cdk.keyword similarity
  * @cdk.keyword estate
  *
- * @cdk.module extra
+ * @cdk.module fingerprint
  * @cdk.svnrev $Revision: 11674 $
  */
 public class EStateFingerprinter implements IFingerprinter {

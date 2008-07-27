@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import java.util.BitSet;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-fingerprint
  */
 public class MACCSFingerprinterTest extends NewCDKTestCase {
 

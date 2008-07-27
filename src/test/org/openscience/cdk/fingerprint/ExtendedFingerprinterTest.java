@@ -37,13 +37,12 @@ import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-fingerprint
  */
 public class ExtendedFingerprinterTest extends NewCDKTestCase {
 	

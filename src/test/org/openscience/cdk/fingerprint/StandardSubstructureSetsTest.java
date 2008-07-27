@@ -33,7 +33,7 @@ import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-experimental
  */
 public class StandardSubstructureSetsTest extends NewCDKTestCase {
 	

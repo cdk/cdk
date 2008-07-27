@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * Specialized version of the Fingerprinter which does not take bond orders
+ * Specialized version of the {@link Fingerprinter} which does not take bond orders
  * into account.
  *
  * @author         egonw

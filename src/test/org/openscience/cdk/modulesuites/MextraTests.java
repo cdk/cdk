@@ -27,11 +27,6 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.CloneAtomContainerTest;
 import org.openscience.cdk.VariousTests;
 import org.openscience.cdk.applications.APIVersionTesterTest;
-import org.openscience.cdk.fingerprint.EStateFingerprinterTest;
-import org.openscience.cdk.fingerprint.ExtendedFingerprinterTest;
-import org.openscience.cdk.fingerprint.MACCSFingerprinterTest;
-import org.openscience.cdk.fingerprint.StandardSubstructureSetsTest;
-import org.openscience.cdk.fingerprint.SubstructureFingerprinterTest;
 import org.openscience.cdk.geometry.RDFCalculatorTest;
 import org.openscience.cdk.geometry.alignment.KabschAlignmentTest;
 import org.openscience.cdk.index.CASNumberTest;
@@ -81,17 +76,11 @@ public class MextraTests {
         suite.addTest(DistanceMomentTest.suite());
         suite.addTest(HOSECodeGeneratorTest.suite());
         suite.addTest(HOSECodeAnalyserTest.suite());
-        suite.addTest(new JUnit4TestAdapter(ExtendedFingerprinterTest.class));
-        suite.addTest(new JUnit4TestAdapter(SubstructureFingerprinterTest.class));
-        suite.addTest(new JUnit4TestAdapter(StandardSubstructureSetsTest.class));
         suite.addTest(new JUnit4TestAdapter(DeAromatizationToolTest.class));
         suite.addTest(ShelXWriterTest.suite());
 
-        suite.addTest(new JUnit4TestAdapter(MACCSFingerprinterTest.class));
-        suite.addTest(new JUnit4TestAdapter(EStateFingerprinterTest.class));
-
         // Below are the tests that are not always possible to execute, because
-        // the class might not be compiled (depeding on Ant and Java VM versions).
+        // the class might not be compiled (depending on Ant and Java VM versions).
 
         // from cdk.test.iupac
         try {

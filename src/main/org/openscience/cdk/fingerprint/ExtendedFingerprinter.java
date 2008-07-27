@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2002-2007  Stefan Kuhn <shk3@users.sf.net>
+ * Copyright (C) 2006-2007  Stefan Kuhn <shk3@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,15 +35,15 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
- * Generates an extended fingerprint for a given AtomContainer, that
- * extends the Fingerprinter with additional bits describing ring
+ * Generates an extended fingerprint for a given {@link IAtomContainer}, that
+ * extends the {@link Fingerprinter} with additional bits describing ring
  * features.
  *  
  * @author         shk3
  * @cdk.created    2006-01-13
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity
- * @cdk.module     extra
+ * @cdk.module     fingerprint
  * @cdk.svnrev     $Revision$
  * 
  * @see            org.openscience.cdk.fingerprint.Fingerprinter

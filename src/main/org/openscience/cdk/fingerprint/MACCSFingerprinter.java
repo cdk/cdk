@@ -1,12 +1,8 @@
-/* $RCSfile$
- * $Author: rajarshi $
- * $Date: 2008-07-20 22:05:08 -0400 (Sun, 20 Jul 2008) $
- * $Revision: 11674 $
+/* $Revision: 11674 $ $Author: rajarshi $ $Date: 2008-07-20 22:05:08 -0400 (Sun, 20 Jul 2008) $
  *
- * Copyright (C) 2008 Rajarshi Guha
+ * Copyright (C) 2008 Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
- * Contact: rajarshi@users.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -59,13 +55,13 @@ import java.util.List;
  * prior to generating the fingerprint
  *
  * <b>Note</b> Currently bits 1 and 44 are completely ignored since the RDKit defs
- * do not provide a definition and I can't find an official decription of them
+ * do not provide a definition and I can't find an official description of them
  *
  * @author Rajarshi Guha
  * @cdk.created 2008-07-23
  * @cdk.keyword fingerprint
  * @cdk.keyword similarity
- * @cdk.module extra
+ * @cdk.module  fingerprint
  * @cdk.svnrev $Revision: 11674 $
  */
 public class MACCSFingerprinter implements IFingerprinter {

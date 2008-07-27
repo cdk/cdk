@@ -461,6 +461,7 @@
           <antcall target="compile-module"><param name="module" value="pdbcml"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="libiomd"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="pcore"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="fingerprint"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
         <antcall target="compile-module"><param name="module" value="charges"/><param name="source" value="${src}/main"/></antcall>
         <parallel>
@@ -507,6 +508,7 @@
             <antcall target="compile-module"><param name="module" value="isomorphism"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="smarts"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="extra"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="fingerprint"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="smiles"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="libiocml"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="libiomd"/><param name="source" value="${src}/main"/></antcall>
@@ -546,6 +548,7 @@
               <antcall target="compile-module"><param name="module" value="test-structgen"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-charges"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-smarts"/><param name="source" value="${src}/test"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-fingerprint"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-builder3d"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-reaction"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-inchi"/><param name="source" value="${src}/test"/></antcall>
@@ -608,6 +611,7 @@
         <antcall target="compile-module"><param name="module" value="test-libiomd"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-libiocml"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-smarts"/><param name="source" value="${src}/test"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-fingerprint"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-pcore"/><param name="source" value="${src}/test"/></antcall>
     	<antcall target="compile-module"><param name="module" value="test-formula"/><param name="source" value="${src}/test"/></antcall>
     	<antcall target="compile-module"><param name="module" value="test-render"/><param name="source" value="${src}/test"/></antcall>
@@ -688,6 +692,7 @@
                     <include name="cdk-forcefield.jar"/>
                     <include name="cdk-smiles.jar"/>
                     <include name="cdk-smarts.jar"/>
+                    <include name="cdk-fingerprint.jar"/>
                     <include name="cdk-sdg.jar"/>
                     <include name="cdk-inchi.jar"/>
                     <include name="cdk-pcore.jar"/>
@@ -753,6 +758,7 @@
                     <include name="cdk-valencycheck.jar"/>
                     <include name="cdk-forcefield.jar"/>
                     <include name="cdk-smarts.jar"/>
+                    <include name="cdk-fingerprint.jar"/>
                     <include name="cdk-smiles.jar"/>
                     <include name="cdk-sdg.jar"/>
                     <include name="cdk-inchi.jar"/>
@@ -1070,6 +1076,7 @@
                 <antcall target="test-module"><param name="module" value="charges"/></antcall>
         	<antcall target="test-module"><param name="module" value="reaction"/></antcall>
         	<antcall target="test-module"><param name="module" value="smarts"/></antcall> 
+        	<antcall target="test-module"><param name="module" value="fingerprint"/></antcall> 
                 <antcall target="test-module"><param name="module" value="smiles"/></antcall>
         	<antcall target="test-module"><param name="module" value="experimental"/></antcall> 
         	<antcall target="test-module"><param name="module" value="qsar"/></antcall> 
