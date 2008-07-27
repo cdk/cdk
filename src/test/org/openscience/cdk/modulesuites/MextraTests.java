@@ -39,7 +39,6 @@ import org.openscience.cdk.similarity.DistanceMomentTest;
 import org.openscience.cdk.similarity.TanimotoTest;
 import org.openscience.cdk.tools.DeAromatizationToolTest;
 import org.openscience.cdk.tools.HOSECodeAnalyserTest;
-import org.openscience.cdk.tools.HOSECodeGeneratorTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -74,7 +73,6 @@ public class MextraTests {
         // from cdk.test.similarity
         suite.addTest(TanimotoTest.suite());
         suite.addTest(DistanceMomentTest.suite());
-        suite.addTest(HOSECodeGeneratorTest.suite());
         suite.addTest(HOSECodeAnalyserTest.suite());
         suite.addTest(new JUnit4TestAdapter(DeAromatizationToolTest.class));
         suite.addTest(ShelXWriterTest.suite());
