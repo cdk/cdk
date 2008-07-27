@@ -1,7 +1,4 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
  *
@@ -52,6 +49,7 @@ import java.util.Vector;
  * @cdk.svnrev  $Revision$
  * @cdk.created    2004-11-03
  * @cdk.keyword polarizability
+ * @cdk.module     charges
  */
 public class Polarizability {
     private LoggingTool logger;

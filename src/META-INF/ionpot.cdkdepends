@@ -1,7 +1,6 @@
 cdk-interfaces.jar
 cdk-core.jar
 cdk-standard.jar
-cdk-extra.jar
 cdk-libiocml.jar
 cdk-valencycheck.jar
 cdk-atomtype.jar
