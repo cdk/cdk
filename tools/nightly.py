@@ -375,8 +375,8 @@ def writeJunitSummaryHTML(stats, stable=True):
     totalError = 0
     
     for entry in stats:
-        if stable and (entry[0] in ['experimental','structgen']): continue
-        if not stable and entry[0] not in [ 'experimental', 'structgen']: continue
+        if stable and (entry[0] in ['structgen']): continue
+        if not stable and entry[0] not in [ 'structgen']: continue
         
         if int(entry[1]) != -1:
             totalTest = totalTest + int(entry[1])
