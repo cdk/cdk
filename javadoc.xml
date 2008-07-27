@@ -133,7 +133,6 @@
       <antcall target="doccheck-module"><param name="module" value="qsarbond"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="qsarmolecular"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="qsarprotein"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="experimental"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="pcore"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="structgen"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="valencycheck"/></antcall>
