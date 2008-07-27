@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *                     2007  Egon Willighagen <egonw@users.sf.net>
@@ -44,7 +41,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * Tests CDK's Lone Pair Electron checking capabilities in terms of
  * example molecules.
  * 
- * @cdk.module test-extra
+ * @cdk.module     test-standard
  *
  * @author         Miguel Rojas
  * @cdk.created    2006-04-01

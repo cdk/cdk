@@ -3,7 +3,6 @@ cdk-data.jar
 cdk-core.jar
 cdk-standard.jar
 cdk-valencycheck.jar
-cdk-extra.jar
 cdk-reaction.jar
 cdk-isomorphism.jar
 cdk-charges.jar

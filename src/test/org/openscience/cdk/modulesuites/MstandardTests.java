@@ -82,6 +82,7 @@ import org.openscience.cdk.tools.ElementComparatorTest;
 import org.openscience.cdk.tools.FormatStringBufferTest;
 import org.openscience.cdk.tools.HOSECodeGeneratorTest;
 import org.openscience.cdk.tools.IDCreatorTest;
+import org.openscience.cdk.tools.LonePairElectronCheckerTest;
 import org.openscience.cdk.tools.manipulator.AminoAcidManipulatorTest;
 import org.openscience.cdk.tools.manipulator.AtomContainerComparatorTest;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulatorTest;
@@ -188,6 +189,7 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(AtomContainerComparatorTest.class));
         suite.addTest(new JUnit4TestAdapter(CDKHueckelAromaticityDetectorTest.class));
         suite.addTest(HOSECodeGeneratorTest.suite());
+        suite.addTest(LonePairElectronCheckerTest.suite());
 
         return suite;
     }
