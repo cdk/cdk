@@ -379,7 +379,7 @@ def writeJunitSummaryHTML(stats, stable=True, verbose=True):
     totalTest = 0
     totalFail = 0
     totalError = 0
-    
+
     for entry in stats:
         if stable and (entry[0] in unstableModules): continue
         if not stable and entry[0] not in unstableModules: continue
@@ -460,6 +460,9 @@ def parseJunitOutput(summaryFile, stable=True):
             stats.append( (moduleName.split()[5], nTest, nFail, nError) )
     f.close()
 
+    # sort the modules alphabetically
+    stats.sort(cmp = lambda x,y: cmp(x[0],y[0]))
+    
     # get an HTML summary
     summary = writeJunitSummaryHTML(stats, stable)
     
