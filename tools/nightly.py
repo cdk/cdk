@@ -340,9 +340,15 @@ def transformXML2HTML(src, dest, xsltFile, pmd=True):
     else: # cannot xform, so just copy the XML file
         shutil.copyfile(src, dest)
     
-def writeJunitSummaryHTML(stats, stable=True):
+def writeJunitSummaryHTML(stats, stable=True, verbose=True):
+    unstableModules = []
+
+    if not stable and len(unstableModules) == 0: return None
+    
     pagetype = 'Stable'
     if not stable: pagetype = 'Unstable'
+
+    if verbose: print '    Processing for %s' % (pagetype)
         
     summary = """
     <html>
@@ -375,8 +381,8 @@ def writeJunitSummaryHTML(stats, stable=True):
     totalError = 0
     
     for entry in stats:
-        if stable and (entry[0] in []): continue
-        if not stable and entry[0] not in []: continue
+        if stable and (entry[0] in unstableModules): continue
+        if not stable and entry[0] not in unstableModules: continue
         
         if int(entry[1]) != -1:
             totalTest = totalTest + int(entry[1])
@@ -458,10 +464,13 @@ def parseJunitOutput(summaryFile, stable=True):
     summary = writeJunitSummaryHTML(stats, stable)
     
     # write out this HTML
-    fileName = os.path.join(nightly_web, summaryFile)
-    f = open(fileName, 'w')
-    f.write(summary)
-    f.close()
+    if summary:
+        fileName = os.path.join(nightly_web, summaryFile)
+        f = open(fileName, 'w')
+        f.write(summary)
+        f.close()
+        return True
+    else: return False
 
 def parsePMDOutput(pmdReportDir, title=""):
 
@@ -1251,7 +1260,7 @@ if __name__ == '__main__':
     resultTable.addRow()
     resultTable.addCell("Descriptors")
     resultTable.addCell("""<a href='dnames.html'>All</a> &nbsp; <a href='dnames.html#molecule'>Molecular</a>
-&nbsp; <a href="dnames.html#bond">Bond</a> &nbsp; <a href="dnames.html#atom">Atom</a>
+&nbsp; <a href='dnames.html#bond'>Bond</a> &nbsp; <a href='dnames.html#atom'>Atom</a>
     """)
 
     # generate the dependency graph entry
@@ -1363,7 +1372,7 @@ if __name__ == '__main__':
 
         # summarize JUnit test results - it will go into nightly_web
         parseJunitOutput('junitsummary.html')
-        parseJunitOutput('junitsummary-unstable.html', stable=False)
+        status = parseJunitOutput('junitsummary-unstable.html', stable=False)
         
         # check whether we can copy the run output and link to the summary
         if os.path.exists( os.path.join(nightly_dir, 'test.log') ):
@@ -1371,7 +1380,7 @@ if __name__ == '__main__':
                             os.path.join(nightly_web, 'test.log'))
             resultTable.addCell("<a href=\"test.log\">test.log</a>")
             resultTable.appendToCell("<a href=\"junitsummary.html\">Stable</a>")
-            resultTable.appendToCell("<a href=\"junitsummary-unstable.html\">Unstable</a>")
+            if status: resultTable.appendToCell("<a href=\"junitsummary-unstable.html\">Unstable</a>")
 
             if not dryRun:
                 resultTable.appendToCell("<br>No. old fails fixed since r%s = %s" % (oldRevision,str(nTestFixed)))
