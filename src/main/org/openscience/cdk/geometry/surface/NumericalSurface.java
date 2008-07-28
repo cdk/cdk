@@ -20,7 +20,6 @@
 
 package org.openscience.cdk.geometry.surface;
 
-import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -94,23 +93,6 @@ public class NumericalSurface {
         this.tesslevel = tesslevel;
         logger = new LoggingTool(this);
     }
-    
-    /**
-     * Constructor to initialize the surface calculation with user specified values.
-     *
-     * @param atomContainer The {@link IAtomContainer} for which the surface is to be calculated
-     * @param solvent_radius The radius of a solvent molecule that is used to extend
-     * the radius of each atom. Setting to 0 gives the Van der Waals surface
-     * @param tesslevel The number of levels that the subdivision algorithm for tessllation
-     * @param vdwRadiusFile The path to a file containing Van der Waals radii which is loaded by
-     * and instance of {@link AtomTypeFactory}. 
-     */
-    public NumericalSurface(IAtomContainer atomContainer, double solvent_radius, int tesslevel, String vdwRadiusFile) {
-        this.solvent_radius = solvent_radius;
-        this.atoms = AtomContainerManipulator.getAtomArray(atomContainer);
-        this.tesslevel = tesslevel;
-        logger = new LoggingTool(this);
-    }
 
     /**
      * Evaluate the surface.
@@ -164,7 +146,7 @@ public class NumericalSurface {
 
         for (int i = 0; i < atoms.length; i++) {
             int point_density = tess.getNumberOfTriangles()*3;
-            Point3d[][] points = atomicSurfacePoints(nbrlist, i, atoms[i], point_density, tess);
+            Point3d[][] points = atomicSurfacePoints(nbrlist, i, atoms[i], tess);
             translatePoints(i, points, point_density, atoms[i], cp);
         }
         logger.info("Obtained points, areas and volumes");
@@ -277,7 +259,7 @@ public class NumericalSurface {
         this.surf_points[atmIdx] =  tmp;
     }
 
-    private Point3d[][] atomicSurfacePoints(NeighborList nbrlist, int currAtomIdx, IAtom atom, int point_density, Tessellate tess) {
+    private Point3d[][] atomicSurfacePoints(NeighborList nbrlist, int currAtomIdx, IAtom atom, Tessellate tess) {
 
         double total_radius = PeriodicTable.getVdwRadius(atom.getSymbol()) + solvent_radius;
         double total_radius2 = total_radius*total_radius;

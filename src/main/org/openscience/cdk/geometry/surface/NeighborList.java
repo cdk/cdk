@@ -20,10 +20,11 @@
 
 package org.openscience.cdk.geometry.surface;
 
+import org.openscience.cdk.interfaces.IAtom;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.openscience.cdk.interfaces.IAtom;
+import java.util.List;
 
 /**
  * Creates a list of atoms neighboring each atom in the molecule.
@@ -39,21 +40,21 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.svnrev  $Revision$
  */
 public class NeighborList {
-    HashMap boxes;
-    double box_size;
+    HashMap<String,List> boxes;
+    double boxSize;
     IAtom[] atoms;
 
 
     public NeighborList(IAtom[] atoms, double radius) {
         this.atoms = atoms;
-        this.boxes = new HashMap();
-        this.box_size = 2 * radius;
+        this.boxes = new HashMap<String,List>();
+        this.boxSize = 2 * radius;
         for (int i = 0; i < atoms.length; i++) {
             String key = getKeyString(atoms[i]);
 
             if (this.boxes.containsKey(key)) {
-                ArrayList arl = (ArrayList)this.boxes.get(key);
-                arl.add( new Integer(i) );
+                List arl = this.boxes.get(key);
+                arl.add(i);
                 this.boxes.put( key, arl );
             } else {
                 this.boxes.put( key, new ArrayList() );
@@ -67,9 +68,9 @@ public class NeighborList {
         double z = atom.getPoint3d().z;
 
         int k1,k2,k3;
-        k1 = (int)(Math.floor(x/box_size));
-        k2 = (int)(Math.floor(y/box_size));
-        k3 = (int)(Math.floor(z/box_size));
+        k1 = (int)(Math.floor(x/ boxSize));
+        k2 = (int)(Math.floor(y/ boxSize));
+        k3 = (int)(Math.floor(z/ boxSize));
 
         String key = 
             Integer.toString(k1) + " " + 
@@ -83,9 +84,9 @@ public class NeighborList {
         double z = atom.getPoint3d().z;
 
         int k1,k2,k3;
-        k1 = (int)(Math.floor(x/box_size));
-        k2 = (int)(Math.floor(y/box_size));
-        k3 = (int)(Math.floor(z/box_size));
+        k1 = (int)(Math.floor(x/ boxSize));
+        k2 = (int)(Math.floor(y/ boxSize));
+        k3 = (int)(Math.floor(z/ boxSize));
 
         int[] ret = { k1, k2, k3 };
         return(ret);
@@ -97,7 +98,7 @@ public class NeighborList {
     }
 
     public int[] getNeighbors(int ii) {
-        double max_dist_2 = this.box_size*this.box_size;
+        double maxDist2 = this.boxSize *this.boxSize;
 
         IAtom ai = this.atoms[ii];
         int[] key = getKeyArray(ai);
@@ -118,14 +119,14 @@ public class NeighborList {
                     if (boxes.containsKey(keyj)) {
                         ArrayList nbrs = (ArrayList)boxes.get(keyj);
                         for (int l = 0; l < nbrs.size(); l++) {
-                            int i2 = ((Integer)nbrs.get(l)).intValue();
+                            int i2 = (Integer) nbrs.get(l);
                             if (i2 != ii) {
                                 IAtom aj = atoms[i2];
                                 double x12 = aj.getPoint3d().x - ai.getPoint3d().x;
                                 double y12 = aj.getPoint3d().y - ai.getPoint3d().y;
                                 double z12 = aj.getPoint3d().z - ai.getPoint3d().z;
                                 double d2 = x12*x12 + y12*y12 + z12*z12;
-                                if (d2 < max_dist_2) nlist.add( new Integer(i2) );
+                                if (d2 < maxDist2) nlist.add(i2);
                             }
                         }
                     }
@@ -134,7 +135,7 @@ public class NeighborList {
         }
         Object[] tmp = nlist.toArray();
         int[] ret = new int[ tmp.length ];
-        for (int j = 0; j < tmp.length; j++) ret[j] = ((Integer)tmp[j]).intValue();
+        for (int j = 0; j < tmp.length; j++) ret[j] = (Integer) tmp[j];
         return(ret);
     }
 }

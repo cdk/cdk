@@ -76,7 +76,7 @@ public class SubstructureFingerprinter implements IFingerprinter {
 	/**
 	 * Calculates the substructure fingerprint for the given AtomContainer.
 	 */
-	public BitSet getFingerprint(IAtomContainer ac) throws Exception {
+	public BitSet getFingerprint(IAtomContainer atomContainer) throws Exception {
 
         if (substructureSet == null) {
             throw new CDKException("No substructures were defined");
@@ -88,7 +88,7 @@ public class SubstructureFingerprinter implements IFingerprinter {
 		IAtomContainer substructure;
 		for (int i=0; i<bitsetLength; i++) {
 			substructure = substructureSet.getAtomContainer(i);
-			if (UniversalIsomorphismTester.isSubgraph(ac, substructure)) 
+			if (UniversalIsomorphismTester.isSubgraph(atomContainer, substructure))
 				fingerPrint.set(i, true);
 		}
 		
