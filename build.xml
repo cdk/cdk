@@ -579,36 +579,6 @@
         <jar jarfile="${dist}/jar/cdk-testdata.jar">
             <fileset dir="${src}">
                 <include name="data/**/*" />
-                <exclude name="data/pdb/**/*" />
-                <exclude name="data/cml/**/*" />
-                <exclude name="data/asn/**/*" />
-                <exclude name="data/gaussian/**/*" />
-                <exclude name="data/mol2/**/*" />
-            </fileset>
-        </jar>
-        <jar jarfile="${dist}/jar/cdk-testdata-asn.jar">
-            <fileset dir="${src}">
-                <include name="data/asn/**/*" />
-            </fileset>
-        </jar>
-        <jar jarfile="${dist}/jar/cdk-testdata-cml.jar">
-            <fileset dir="${src}">
-                <include name="data/cml/**/*" />
-            </fileset>
-        </jar>
-        <jar jarfile="${dist}/jar/cdk-testdata-pdb.jar">
-            <fileset dir="${src}">
-                <include name="data/pdb/**/*" />
-            </fileset>
-        </jar>
-        <jar jarfile="${dist}/jar/cdk-testdata-gaussian.jar">
-            <fileset dir="${src}">
-                <include name="data/gaussian/**/*" />
-            </fileset>
-        </jar>
-        <jar jarfile="${dist}/jar/cdk-testdata-mol2.jar">
-            <fileset dir="${src}">
-                <include name="data/mol2/**/*" />
             </fileset>
         </jar>
 	</target>

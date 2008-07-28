@@ -15,4 +15,4 @@ cdk-nonotify.jar
 cdk-pdb.jar
 cdk-pdbcml.jar
 cdk-formula.jar
-cdk-testdata-cml.jar
+cdk-testdata.jar
