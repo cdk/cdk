@@ -122,7 +122,7 @@
             <!-- test for optional jars -->
             <condition property="cmllibs.present">
               <or>
-                <available file="${lib}/jumbo-5.4.2-b1.jar"/>
+                <available file="${lib}/jumbo-5.4.2-b2.jar"/>
               </or>
             </condition>
             <available property="junit.present"
