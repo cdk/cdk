@@ -31,10 +31,6 @@ import org.openscience.cdk.geometry.RDFCalculatorTest;
 import org.openscience.cdk.geometry.alignment.KabschAlignmentTest;
 import org.openscience.cdk.index.CASNumberTest;
 import org.openscience.cdk.io.ShelXWriterTest;
-import org.openscience.cdk.layout.HydrogenPlacerTest;
-import org.openscience.cdk.layout.OverlapResolverTest;
-import org.openscience.cdk.layout.StructureDiagramGeneratorTest;
-import org.openscience.cdk.layout.TemplateHandlerTest;
 import org.openscience.cdk.similarity.DistanceMomentTest;
 import org.openscience.cdk.similarity.TanimotoTest;
 import org.openscience.cdk.tools.DeAromatizationToolTest;
@@ -64,11 +60,6 @@ public class MextraTests {
         // from cdk.test.index
         suite.addTest(CASNumberTest.suite());
         // from cdk.test.isomorphism
-        // from cdk.test.layout
-        suite.addTest(new JUnit4TestAdapter(StructureDiagramGeneratorTest.class));
-        suite.addTest(HydrogenPlacerTest.suite());
-        suite.addTest(OverlapResolverTest.suite());
-        suite.addTest(TemplateHandlerTest.suite());
         // from cdk.test.math
         // from cdk.test.similarity
         suite.addTest(TanimotoTest.suite());

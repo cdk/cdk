@@ -1092,6 +1092,7 @@
             	<antcall target="test-module"><param name="module" value="formula"/></antcall>
         	<antcall target="test-module"><param name="module" value="render"/></antcall>
 	        <antcall target="test-module"><param name="module" value="extra"/></antcall>
+	        <antcall target="test-module"><param name="module" value="sdg"/></antcall>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"

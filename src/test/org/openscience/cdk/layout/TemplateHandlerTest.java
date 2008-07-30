@@ -1,10 +1,6 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2003-2007  Christoph Steinbeck
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -41,12 +37,9 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- *  Description of the Class
- *
- * @cdk.module test-extra
- *
- *@author     steinbeck
- *@cdk.created    September 4, 2003
+ * @cdk.module  test-sdg
+ * @author      steinbeck
+ * @cdk.created September 4, 2003
  * @cdk.require java1.4+
  */
 public class TemplateHandlerTest extends CDKTestCase
