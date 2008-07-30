@@ -56,7 +56,7 @@ public class MassNumberDifferenceDescriptor implements IBondDescriptor {
     public MassNumberDifferenceDescriptor() {
     }	
     
-    public void ensureIsotopeFactory(IChemObjectBuilder builder) {
+    private void ensureIsotopeFactory(IChemObjectBuilder builder) {
     	if (factory == null) {
     		try {
 	            factory = IsotopeFactory.getInstance(builder);
