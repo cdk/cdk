@@ -27,3 +27,4 @@ cdk-test-qsaratomic.jar
 cdk-test-qsarbond.jar
 cdk-test-qsarmolecular.jar
 cdk-testdata.jar
+cdk-diff.jar
