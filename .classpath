@@ -20,6 +20,6 @@
 	<classpathentry exported="true" kind="lib" path="develjar/com-sun-javadoc.jar" sourcepath="org.openscience.cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="develjar/com-sun-tools-doclets-Taglet.jar" sourcepath="org.openscience.cdksrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="develjar/junit-4.3.1.jar" sourcepath="org.openscience.cdksrc.zip"/>
-	<classpathentry kind="lib" path="jar/jumbo-5.4.2-b2.jar"/>
+	<classpathentry exported="true" kind="lib" path="jar/jumbo-5.4.2-b2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
