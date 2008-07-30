@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -31,9 +33,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.DescriptorTest;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import javax.vecmath.Point3d;
 
 /**
  * Tests for molecular descriptors.
@@ -85,12 +86,12 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
 
     public void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
-        String priorString = mol.toString();
+        IAtomContainer clone = (IAtomContainer)mol.clone();
         descriptor.calculate(mol);
-        String afterString = mol.toString();
+        String diff = AtomContainerDiff.diff(clone, mol); 
         assertEquals(
-        	"The descriptor must not change the passed molecule in any respect.",
-        	priorString, afterString
+          "The descriptor must not change the passed molecule in any respect, but found this diff: " + diff,
+          0, diff.length()
         );
     }
 

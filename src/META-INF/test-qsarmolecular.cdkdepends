@@ -22,6 +22,6 @@ cdk-test-qsaratomic.jar
 cdk-formula.jar
 cdk-dict.jar
 cdk-isomorphism.jar
-cdk-dict.jar
 cdk-ionpot.jar
 cdk-testdata.jar
+cdk-diff.jar

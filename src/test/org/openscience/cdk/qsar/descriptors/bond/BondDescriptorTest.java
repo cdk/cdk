@@ -20,6 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -30,8 +32,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.descriptors.DescriptorTest;
-
-import javax.vecmath.Point3d;
+import org.openscience.cdk.tools.diff.BondDiff;
 
 /**
  * Tests for bond descriptors.
@@ -136,12 +137,12 @@ public abstract class BondDescriptorTest extends DescriptorTest {
     public void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         IBond bond = mol.getBond(0);
-        String priorString = bond.toString();
+        IBond clone = (IBond)mol.getAtom(0).clone();
         descriptor.calculate(bond, mol);
-        String afterString = bond.toString();
+        String diff = BondDiff.diff(clone, bond); 
         assertEquals(
-          "The descriptor must not change the passed bond in any respect.",
-          priorString, afterString
+          "The descriptor must not change the passed bond in any respect, but found this diff: " + diff,
+          0, diff.length()
         );
     }
 
