@@ -1,10 +1,9 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
- *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *  Copyright (C) 2003-2005  Christoph Steinbeck
+ *                2003-2008  Egon Willighagen
+ *                           Stefan Kuhn
+ *                           Rajarshi Guha
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,26 +24,32 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.layout;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.vecmath.Point2d;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import javax.vecmath.Point2d;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
 
 /**
  * Helper class for Structure Diagram Generation. Handles templates. This is
@@ -55,20 +60,17 @@ import java.util.Vector;
  * @cdk.created  2003-09-04
  * @cdk.keyword  layout
  * @cdk.keyword  2D-coordinates
+ * @cdk.keyword  structure diagram generation
  * @cdk.require  java1.4+
  * @cdk.module   sdg
- * @cdk.svnrev  $Revision$
+ * @cdk.svnrev   $Revision$
  */
 public class TemplateHandler
 {
 
 	private LoggingTool logger;
 
-	private IAtomContainer molecule;
-	private IRingSet sssr;
-	private double bondLength = 1.5;
-
-	private Vector templates = null;
+	private List<IAtomContainer> templates = null;
 
 
 	/**
@@ -77,7 +79,7 @@ public class TemplateHandler
 	public TemplateHandler(IChemObjectBuilder builder)
 	{
 		logger = new LoggingTool(this);
-		templates = new Vector();
+		templates = new ArrayList<IAtomContainer>();
 		loadTemplates(builder);
 	}
 
@@ -99,43 +101,39 @@ public class TemplateHandler
 					line = "org/openscience/cdk/layout/templates/" + line;
 					logger.debug("Attempting to read template ", line);
 					CMLReader structureReader = new CMLReader(
-									this.getClass().getClassLoader().getResourceAsStream(line)
+						this.getClass().getClassLoader().getResourceAsStream(line)
 					);
 					IChemFile file = (IChemFile) structureReader.read(builder.newChemFile());
-					List files = ChemFileManipulator.getAllAtomContainers(file);
+					List<IAtomContainer> files = ChemFileManipulator.getAllAtomContainers(file);
 					for (int i = 0; i < files.size(); i++)
-							templates.addElement((IAtomContainer) files.get(i));
+						templates.add(files.get(i));
 					logger.debug("Successfully read template ", line);
 			}
-		} catch (Exception exc)
-		{
+		} catch (Exception exc) {
 			logger.debug("Could not read templates");
 			logger.debug("Reason: " + exc.getMessage());
 		}
-
 	}
 
 	/**
-	 * Adds a Molecule to the list of templates use by this TemplateHandler
+	 * Adds a Molecule to the list of templates use by this TemplateHandler.
 	 *
 	 * @param  molecule  The molecule to be added to the TemplateHandler
 	 */
-	public void addMolecule(IAtomContainer molecule)
-	{
-		templates.addElement(molecule);
+	public void addMolecule(IAtomContainer molecule) {
+		templates.add(molecule);
 	}
 	
-	public IMolecule removeMolecule(IAtomContainer molecule)  throws CDKException
-	{
+	public IAtomContainer removeMolecule(IAtomContainer molecule) throws CDKException {
 		IAtomContainer ac1 = molecule.getBuilder().newAtomContainer(molecule);
 		IAtomContainer ac2 = null;
-		IMolecule mol2 = null;
+		IAtomContainer mol2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
-			mol2 = (IMolecule)templates.elementAt(f);
+			mol2 = templates.get(f);
 			ac2 = molecule.getBuilder().newAtomContainer(mol2);
 			if (UniversalIsomorphismTester.isIsomorph(ac1, ac2)) {
-				templates.removeElementAt(f);
+				templates.remove(f);
 				return mol2;
 			}
 		}
@@ -156,21 +154,21 @@ public class TemplateHandler
 		boolean mapped = false;
 		IMolecule template = null;
 		RMap map = null;
-		org.openscience.cdk.interfaces.IAtom atom1 = null;
-		org.openscience.cdk.interfaces.IAtom atom2 = null;
+		IAtom atom1 = null;
+		IAtom atom2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
-			template = (IMolecule) templates.elementAt(f);
+			template = (IMolecule) templates.get(f);
 			if (UniversalIsomorphismTester.isIsomorph(molecule, template))
 			{
-				List list = UniversalIsomorphismTester.getIsomorphAtomsMap(
-						molecule.getBuilder().newAtomContainer(molecule), 
-						molecule.getBuilder().newAtomContainer(template)
+				List<RMap> list = UniversalIsomorphismTester.getIsomorphAtomsMap(
+					molecule.getBuilder().newAtomContainer(molecule), 
+					molecule.getBuilder().newAtomContainer(template)
 				);
 				logger.debug("Found a subgraph mapping of size " + list.size() + ", template: " + template.getID());
 				for (int i = 0; i < list.size(); i++)
 				{
-					map = (RMap) list.get(i);
+					map = list.get(i);
 					atom1 = molecule.getAtom(map.getId1());
 					atom2 = template.getAtom(map.getId2());
 					atom1.setPoint2d(new Point2d(atom2.getPoint2d()));
@@ -196,13 +194,13 @@ public class TemplateHandler
 	public boolean mapTemplates(IAtomContainer molecule) throws CDKException {
 				logger.debug("Trying to map a molecule...");
 		boolean mapped = false;
-		IMolecule template = null;
+		IAtomContainer template = null;
 		RMap map = null;
 		org.openscience.cdk.interfaces.IAtom atom1 = null;
 		org.openscience.cdk.interfaces.IAtom atom2 = null;
 		for (int f = 0; f < templates.size(); f++)
 		{
-			template = (IMolecule) templates.elementAt(f);
+			template = templates.get(f);
 			if (UniversalIsomorphismTester.isSubgraph(molecule, template))
 			{
 				List listOfLists = UniversalIsomorphismTester.getSubgraphAtomsMaps(
@@ -250,19 +248,9 @@ public class TemplateHandler
 	 */
 	public IAtomContainer getTemplateAt(int position)
 	{
-		return (IAtomContainer) templates.elementAt(position);
+		return templates.get(position);
 	}
 	
-
-	/**
-	 *  Set the bond length used for laying out the molecule
-	 *
-	 *@param  bondLength  The new bondLength value
-	 */
-	public void setBondLength(double bondLength)
-	{
-		this.bondLength = bondLength;
-	}
 
 	/**
 	 * Checks if one of the loaded templates is a substructure in the given
@@ -279,7 +267,7 @@ public class TemplateHandler
 		IAtomContainerSet matchedSubstructures = molecule.getBuilder().newAtomContainerSet();
 		for (int f = 0; f < templates.size(); f++)
 		{
-			IMolecule template = (IMolecule) templates.elementAt(f);
+			IAtomContainer template = templates.get(f);
 			if (UniversalIsomorphismTester.isSubgraph(molecule, template))
 			{
 				List listOfLists = UniversalIsomorphismTester.getSubgraphAtomsMaps(
@@ -297,13 +285,13 @@ public class TemplateHandler
 						IAtom atom = molecule.getAtom(map.getId1());
 						matchedSubstructure.addAtom(atom);
 					}
-					for (Iterator atomIterator = matchedSubstructure.atoms(); atomIterator.hasNext(); ) {
-						IAtom atom = (IAtom) atomIterator.next();
-						for (Iterator connectedBondsIterator = molecule.getConnectedBondsList(atom).iterator(); connectedBondsIterator.hasNext(); ) {
-							IBond bond = (IBond) connectedBondsIterator.next();
+					for (Iterator<IAtom> atomIterator = matchedSubstructure.atoms(); atomIterator.hasNext(); ) {
+						IAtom atom = atomIterator.next();
+						for (Iterator<IBond> connectedBondsIterator = molecule.getConnectedBondsList(atom).iterator(); connectedBondsIterator.hasNext(); ) {
+							IBond bond = connectedBondsIterator.next();
 							boolean addBond = true;
-							for (Iterator bondIterator = bond.atoms(); bondIterator.hasNext(); ) {
-								IAtom connectedAtom = (IAtom) bondIterator.next();
+							for (Iterator<IAtom> bondIterator = bond.atoms(); bondIterator.hasNext(); ) {
+								IAtom connectedAtom = bondIterator.next();
 								if (!matchedSubstructure.contains(connectedAtom) || matchedSubstructure.contains(bond))
 									addBond = false;
 							}
@@ -345,8 +333,8 @@ public class TemplateHandler
 	private boolean haveSameAtoms(IAtomContainer atomContainer1, IAtomContainer atomContainer2) {
 		if (atomContainer1.getAtomCount() != atomContainer2.getAtomCount())
 			return false;
-		for (Iterator iterator = atomContainer1.atoms(); iterator.hasNext(); )
-			if (!atomContainer2.contains((IAtom) iterator.next()))
+		for (Iterator<IAtom> iterator = atomContainer1.atoms(); iterator.hasNext(); )
+			if (!atomContainer2.contains(iterator.next()))
 				return false;
 		return true;
 	}
