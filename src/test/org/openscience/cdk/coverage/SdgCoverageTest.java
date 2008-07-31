@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
  * TestSuite that tests if all public methods in the sdg
  * module are tested.
  *
- * @cdk.module test-sdf
+ * @cdk.module test-sdg
  */
 public class SdgCoverageTest extends CoverageAnnotationTest {
 

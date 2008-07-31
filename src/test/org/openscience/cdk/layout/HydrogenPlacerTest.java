@@ -42,7 +42,7 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-sdg
  */
 public class HydrogenPlacerTest extends CDKTestCase {
     

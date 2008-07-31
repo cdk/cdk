@@ -620,6 +620,7 @@
         <antcall target="compile-module"><param name="module" value="test-pcore"/><param name="source" value="${src}/test"/></antcall>
     	<antcall target="compile-module"><param name="module" value="test-formula"/><param name="source" value="${src}/test"/></antcall>
     	<antcall target="compile-module"><param name="module" value="test-render"/><param name="source" value="${src}/test"/></antcall>
+    	<antcall target="compile-module"><param name="module" value="test-sdg"/><param name="source" value="${src}/test"/></antcall>
 	</target>
 
 	<target id="dist-large" name="dist-large" depends="dist-all"

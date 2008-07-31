@@ -57,7 +57,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  *  A set of test cases for the StructureDiagramGenerator
  *
- * @cdk.module test-extra
+ * @cdk.module test-sdg
  *
  *@author     steinbeck
  *@cdk.created    August 29, 2003
