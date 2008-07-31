@@ -18,7 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.formula;
+package org.openscience.cdk.tools.manipulator;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;

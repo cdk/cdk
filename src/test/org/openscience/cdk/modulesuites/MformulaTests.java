@@ -28,10 +28,10 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.coverage.FormulaCoverageTest;
 import org.openscience.cdk.formula.IsotopePatternGeneratorTest;
 import org.openscience.cdk.formula.MassToFormulaToolTest;
-import org.openscience.cdk.formula.MolecularFormulaManipulatorTest;
-import org.openscience.cdk.formula.MolecularFormulaRangeManipulatorTest;
 import org.openscience.cdk.formula.MolecularFormulaRangeTest;
-import org.openscience.cdk.formula.MolecularFormulaSetManipulatorTest;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulatorTest;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaRangeManipulatorTest;
+import org.openscience.cdk.tools.manipulator.MolecularFormulaSetManipulatorTest;
 
 /**
  * TestSuite that runs all the JUnit tests for the formula module.

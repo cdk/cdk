@@ -18,11 +18,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.formula;
+package org.openscience.cdk.tools.manipulator;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.formula.MolecularFormula;
+import org.openscience.cdk.formula.MolecularFormulaRange;
+import org.openscience.cdk.formula.MolecularFormulaSet;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
