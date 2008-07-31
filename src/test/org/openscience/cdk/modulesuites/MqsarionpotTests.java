@@ -45,7 +45,6 @@ public class MqsarionpotTests {
 
         suite.addTest(new JUnit4TestAdapter(QsarionpotCoverageTest.class));	
 
-        suite.addTest(IPAtomicHOSEDescriptorTest.suite());
         suite.addTest(IPAtomicLearningDescriptorTest.suite());
         suite.addTest(IPBondLearningDescriptorTest.suite());
         suite.addTest(IPMolecularLearningDescriptorTest.suite());
