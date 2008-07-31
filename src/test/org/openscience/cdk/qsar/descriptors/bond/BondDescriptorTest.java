@@ -137,7 +137,7 @@ public abstract class BondDescriptorTest extends DescriptorTest {
     public void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         IBond bond = mol.getBond(0);
-        IBond clone = (IBond)mol.getAtom(0).clone();
+        IBond clone = (IBond)mol.getBond(0).clone();
         descriptor.calculate(bond, mol);
         String diff = BondDiff.diff(clone, bond); 
         assertEquals(
