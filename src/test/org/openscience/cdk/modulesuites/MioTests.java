@@ -96,7 +96,6 @@ import org.openscience.cdk.io.formats.INChIFormatTest;
 import org.openscience.cdk.io.formats.INChIPlainTextFormatTest;
 import org.openscience.cdk.io.formats.JMEFormatTest;
 import org.openscience.cdk.io.formats.JaguarFormatTest;
-import org.openscience.cdk.io.formats.MACiEFormatTest;
 import org.openscience.cdk.io.formats.MDLFormatTest;
 import org.openscience.cdk.io.formats.MDLRXNFormatTest;
 import org.openscience.cdk.io.formats.MDLRXNV3000FormatTest;
@@ -241,7 +240,6 @@ public class MioTests {
         suite.addTest(new JUnit4TestAdapter(INChIPlainTextFormatTest.class));
         suite.addTest(new JUnit4TestAdapter(JaguarFormatTest.class));
         suite.addTest(new JUnit4TestAdapter(JMEFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(MACiEFormatTest.class));
         suite.addTest(new JUnit4TestAdapter(MacroModelFormatTest.class));
         suite.addTest(new JUnit4TestAdapter(MDLFormatTest.class));
         suite.addTest(new JUnit4TestAdapter(MDLRXNFormatTest.class));
