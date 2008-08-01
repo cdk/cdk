@@ -812,6 +812,17 @@ public class SmilesParserTest extends NewCDKTestCase {
 		Assert.assertEquals(4, mol.getAtom(0).getHydrogenCount().intValue());
 	}
 
+	/**
+	 * @cdk.bug 2028780
+	 */
+	@Test(timeout=1000)
+	public void testTungsten() throws Exception {
+		String smiles = "[W]";
+		IMolecule mol = sp.parseSmiles(smiles);
+		Assert.assertEquals(1, mol.getAtomCount());
+		Assert.assertEquals("W", mol.getAtom(0).getSymbol());
+	}
+
 
 	/**
 	 *  A unit test for JUnit
