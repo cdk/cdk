@@ -605,24 +605,25 @@ public class Convertor {
         map3DCoordsToCML(cmlAtom, cdkAtom);
         mapFractionalCoordsToCML(cmlAtom, cdkAtom);
 
-        Integer formalCharge = cdkAtom.getFormalCharge() == CDKConstants.UNSET ? 0 : cdkAtom.getFormalCharge();
-        cmlAtom.setFormalCharge(formalCharge);
+        Integer formalCharge = cdkAtom.getFormalCharge();
+        if (formalCharge != null) cmlAtom.setFormalCharge(formalCharge);
+        
         // CML's hydrogen count consists of the sum of implicit and explicit
         // hydrogens (see bug #1655045).
-
-        Integer totalHydrogen = cdkAtom.getHydrogenCount() == CDKConstants.UNSET ? 0 : cdkAtom.getHydrogenCount();
-
-        if (container != null) {
-        	Iterator<IBond> bonds = container.getConnectedBondsList(cdkAtom).iterator();
-        	while (bonds.hasNext()) {
-        		Iterator<IAtom> atoms = (bonds.next()).atoms();
-        		while (atoms.hasNext()) {
-        			IAtom atom= atoms.next();
-        			if ("H".equals(atom.getSymbol()) && atom!=cdkAtom) totalHydrogen++;
+        Integer totalHydrogen = cdkAtom.getHydrogenCount();
+        if (totalHydrogen != null) {
+        	if (container != null) {
+        		Iterator<IBond> bonds = container.getConnectedBondsList(cdkAtom).iterator();
+        		while (bonds.hasNext()) {
+        			Iterator<IAtom> atoms = (bonds.next()).atoms();
+        			while (atoms.hasNext()) {
+        				IAtom atom= atoms.next();
+        				if ("H".equals(atom.getSymbol()) && atom!=cdkAtom) totalHydrogen++;
+        			}
         		}
-        	}
-        } // else: it is the implicit hydrogen count
-        cmlAtom.setHydrogenCount(totalHydrogen);
+        	} // else: it is the implicit hydrogen count
+        	cmlAtom.setHydrogenCount(totalHydrogen);
+        } // else: don't report it, people can count the explicit Hs themselves
 
         Integer massNumber = cdkAtom.getMassNumber();
         if (!(cdkAtom instanceof IPseudoAtom)) {
@@ -631,7 +632,7 @@ public class Convertor {
             }
         }
 
-        if (cdkAtom.getCharge() != CDKConstants.UNSET && cdkAtom.getCharge() != 0.0) {
+        if (cdkAtom.getCharge() != CDKConstants.UNSET) {
             CMLScalar scalar = new CMLScalar();
             this.checkPrefix(scalar);
 //            scalar.setDataType("xsd:float");
