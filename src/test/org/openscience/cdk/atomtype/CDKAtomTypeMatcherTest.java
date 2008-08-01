@@ -1913,6 +1913,47 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	String[] expectedTypes = {"Zn.2plus"}; 
     	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
+
+    @Test public void testSilicon() throws Exception {
+    	IMolecule mol = new Molecule();
+    	IAtom a1 = mol.getBuilder().newAtom("Si"); mol.addAtom(a1);
+    	IAtom a2 = mol.getBuilder().newAtom("O"); mol.addAtom(a2);
+    	IAtom a3 = mol.getBuilder().newAtom("O"); mol.addAtom(a3);
+    	IAtom a4 = mol.getBuilder().newAtom("O"); mol.addAtom(a4);
+    	IAtom a5 = mol.getBuilder().newAtom("C"); mol.addAtom(a5);
+    	IAtom a6 = mol.getBuilder().newAtom("C"); mol.addAtom(a6);
+    	IAtom a7 = mol.getBuilder().newAtom("C"); mol.addAtom(a7);
+    	IAtom a8 = mol.getBuilder().newAtom("H"); mol.addAtom(a8);
+    	IAtom a9 = mol.getBuilder().newAtom("H"); mol.addAtom(a9);
+    	IAtom a10 = mol.getBuilder().newAtom("H"); mol.addAtom(a10);
+    	IAtom a11 = mol.getBuilder().newAtom("H"); mol.addAtom(a11);
+    	IAtom a12 = mol.getBuilder().newAtom("H"); mol.addAtom(a12);
+    	IAtom a13 = mol.getBuilder().newAtom("H"); mol.addAtom(a13);
+    	IAtom a14 = mol.getBuilder().newAtom("H"); mol.addAtom(a14);
+    	IAtom a15 = mol.getBuilder().newAtom("H"); mol.addAtom(a15);
+    	IAtom a16 = mol.getBuilder().newAtom("H"); mol.addAtom(a16);
+    	IAtom a17 = mol.getBuilder().newAtom("H"); mol.addAtom(a17);
+    	IBond b1 = mol.getBuilder().newBond(a1, a2, IBond.Order.SINGLE); mol.addBond(b1);
+    	IBond b2 = mol.getBuilder().newBond(a1, a3, IBond.Order.SINGLE); mol.addBond(b2);
+    	IBond b3 = mol.getBuilder().newBond(a1, a4, IBond.Order.SINGLE); mol.addBond(b3);
+    	IBond b4 = mol.getBuilder().newBond(a2, a5, IBond.Order.SINGLE); mol.addBond(b4);
+    	IBond b5 = mol.getBuilder().newBond(a3, a6, IBond.Order.SINGLE); mol.addBond(b5);
+    	IBond b6 = mol.getBuilder().newBond(a4, a7, IBond.Order.SINGLE); mol.addBond(b6);
+    	IBond b7 = mol.getBuilder().newBond(a5, a8, IBond.Order.SINGLE); mol.addBond(b7);
+    	IBond b8 = mol.getBuilder().newBond(a5, a9, IBond.Order.SINGLE); mol.addBond(b8);
+    	IBond b9 = mol.getBuilder().newBond(a5, a10, IBond.Order.SINGLE); mol.addBond(b9);
+    	IBond b10 = mol.getBuilder().newBond(a6, a11, IBond.Order.SINGLE); mol.addBond(b10);
+    	IBond b11 = mol.getBuilder().newBond(a6, a12, IBond.Order.SINGLE); mol.addBond(b11);
+    	IBond b12 = mol.getBuilder().newBond(a6, a13, IBond.Order.SINGLE); mol.addBond(b12);
+    	IBond b13 = mol.getBuilder().newBond(a7, a14, IBond.Order.SINGLE); mol.addBond(b13);
+    	IBond b14 = mol.getBuilder().newBond(a7, a15, IBond.Order.SINGLE); mol.addBond(b14);
+    	IBond b15 = mol.getBuilder().newBond(a7, a16, IBond.Order.SINGLE); mol.addBond(b15);
+    	IBond b16 = mol.getBuilder().newBond(a1, a17, IBond.Order.SINGLE); mol.addBond(b16);
+
+    	String[] expectedTypes = {"Si.sp3", "O.sp3", "O.sp3", "O.sp3", "C.sp3", "C.sp3", "C.sp3",
+    			"H", "H", "H", "H", "H", "H", "H", "H", "H", "H"}; 
+    	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
     
     @Test public void testScandium() throws Exception {
     	IMolecule mol = new Molecule();
