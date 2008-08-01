@@ -132,7 +132,7 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 	public void assertAtomType(Map<String, Integer> testedAtomTypes, String error, String expectedID, IAtomType foundAtomType) {
 		addTestedAtomType(testedAtomTypes, expectedID);
 
-		Assert.assertNotNull(error, foundAtomType);
+		Assert.assertNotNull("No atom type was recognized, but expected: " + expectedID, foundAtomType);
 		Assert.assertEquals(error, expectedID, foundAtomType.getAtomTypeName());
 	}
 
