@@ -148,7 +148,8 @@ public class CDKHueckelAromaticityDetector {
 						);
 					}
 					IAtomType type = factory.getAtomType(ringAtom.getAtomTypeName());
-					if ((Integer) type.getProperty(CDKConstants.PI_BOND_COUNT) > 0) {
+					if (type.getProperty(CDKConstants.PI_BOND_COUNT) != null &&
+						(Integer)type.getProperty(CDKConstants.PI_BOND_COUNT) > 0) {
 						electronCount += 1;
 					}
 				}
