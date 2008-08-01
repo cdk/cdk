@@ -492,6 +492,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				IAtomType type = getAtomType("N.sp3");
     				if (isAcceptable(atom, atomContainer, type)) return type;
     			} else if (atom.getHybridization() == Hybridization.PLANAR3) {
+    				IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+    				if (atomContainer.getConnectedAtomsCount(atom) == 3 &&
+    					maxBondOrder == CDKConstants.BONDORDER_DOUBLE &&
+    					countAttachedDoubleBonds(atomContainer, atom, "O") == 2) {
+    					IAtomType type = getAtomType("N.nitro");
+        				if (isAcceptable(atom, atomContainer, type)) return type;
+    				}
     				IAtomType type = getAtomType("N.planar3");
     				if (isAcceptable(atom, atomContainer, type)) return type;
     			}
@@ -590,6 +597,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     					if (isAcceptable(atom, atomContainer, type)) return type;
     				}
     			} else if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
+    				if (atomContainer.getConnectedAtomsCount(atom) == 3 &&
+    					countAttachedDoubleBonds(atomContainer, atom, "O") == 2) {
+    					IAtomType type = getAtomType("N.nitro");
+    					if (isAcceptable(atom, atomContainer, type)) return type;
+    				}
     				IAtomType type = getAtomType("N.sp2");
     				if (isAcceptable(atom, atomContainer, type)) return type;
     			} else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {

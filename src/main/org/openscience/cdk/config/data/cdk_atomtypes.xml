@@ -386,6 +386,15 @@
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">planar</scalar>
   </atomType>
 
+  <atomType id="N.nitro"> <!-- e.g. in nitro: R-N(=O)=O -->
+    <atom elementType="N">
+      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">3</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:lonePairCount">0</scalar>
+      <scalar dataType="xsd:integer" dictRef="cdk:piBondCount">2</scalar>
+    </atom>
+    <scalar dataType="xsd:string" dictRef="cdk:hybridization">planar</scalar>
+  </atomType>
+
   <atomType id="S.2"> <!-- e.g. thioacetone -->
     <atom elementType="S" formalCharge="0">
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">1</scalar>
