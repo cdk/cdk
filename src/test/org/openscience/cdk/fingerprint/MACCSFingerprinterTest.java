@@ -48,6 +48,12 @@ public class MACCSFingerprinterTest extends NewCDKTestCase {
         super();
     }
 
+
+    public void getsize() throws Exception {
+        IFingerprinter printer = new MACCSFingerprinter();
+        Assert.assertEquals(166, printer.getSize());
+    }
+
     @Test
     public void testFingerprint() throws Exception {
         SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());

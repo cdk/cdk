@@ -46,6 +46,12 @@ public class EStateFingerprinterTest extends NewCDKTestCase {
 	}
 
     @Test
+    public void testGetSize() throws Exception {
+        IFingerprinter printer = new EStateFingerprinter();
+        Assert.assertEquals(79, printer.getSize());
+    }
+
+    @Test
     public void testFingerprint() throws Exception {
 		SmilesParser parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 		IFingerprinter printer = new EStateFingerprinter();

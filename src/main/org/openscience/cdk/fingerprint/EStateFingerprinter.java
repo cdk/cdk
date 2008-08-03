@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.fragments.EStateFragments;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
@@ -52,17 +54,20 @@ import java.util.BitSet;
  * @cdk.module fingerprint
  * @cdk.svnrev $Revision: 11674 $
  */
+@TestClass("org.openscience.cdk.fingerprint.EStateFingerprinter")
 public class EStateFingerprinter implements IFingerprinter {
 
 	private static final String[] patterns = EStateFragments.getSmarts();
 
+    @TestMethod("testFingerprint,testGetSize")
     public EStateFingerprinter() {
     }
 
 	/**
 	 * Calculates the substructure fingerprint for the given AtomContainer.
 	 */
-	public BitSet getFingerprint(IAtomContainer atomContainer) throws Exception {
+    @TestMethod("testFingerprint")
+    public BitSet getFingerprint(IAtomContainer atomContainer) throws Exception {
 
         int bitsetLength = patterns.length;
 		BitSet fingerPrint = new BitSet(bitsetLength);
@@ -76,7 +81,8 @@ public class EStateFingerprinter implements IFingerprinter {
 		return fingerPrint;
 	}
 
-	public int getSize() {
+    @TestMethod("testGetSize")
+    public int getSize() {
 		return patterns.length;
 	}
 

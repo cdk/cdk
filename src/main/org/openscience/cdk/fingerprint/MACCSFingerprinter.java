@@ -25,6 +25,8 @@
 package org.openscience.cdk.fingerprint;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -64,10 +66,12 @@ import java.util.List;
  * @cdk.module  fingerprint
  * @cdk.svnrev $Revision: 11674 $
  */
+@TestClass("org.openscience.cdk.fingerprint.MACCSFingprinterTest")
 public class MACCSFingerprinter implements IFingerprinter {
     private static LoggingTool logger = new LoggingTool(MACCSFingerprinter.class);
     private MaccsKey[] keys = null;
 
+    @TestMethod("testFingerprint")
     public MACCSFingerprinter() {
         try {
             keys = readKeyDef();
@@ -81,6 +85,7 @@ public class MACCSFingerprinter implements IFingerprinter {
     /**
      * Calculates the substructure fingerprint for the given AtomContainer.
      */
+    @TestMethod("testFingerprint,testfp2")
     public BitSet getFingerprint(IAtomContainer atomContainer) throws Exception {
         if (keys == null) throw new CDKException("Could not setup key definitions");
 
@@ -136,6 +141,7 @@ public class MACCSFingerprinter implements IFingerprinter {
         return fingerPrint;
     }
 
+    @TestMethod("getsize")
     public int getSize() {
         if (keys != null)
             return keys.length;
