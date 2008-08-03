@@ -1159,7 +1159,7 @@ public class ParserTest extends CDKTestCase {
      * @param dumpAtomTypes TODO
      */
     public int match(String smarts, String smiles, boolean dumpAtomTypes) throws Exception {
-        SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, true);
+        SMARTSQueryTool sqt = new SMARTSQueryTool(smarts);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(smiles);
         if (dumpAtomTypes) {
