@@ -123,7 +123,7 @@ public class SMARTSQueryToolTest extends NewCDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c1ccccc1CCCNCCCc1ccccc1");
         CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
-        SMARTSQueryTool querytool = new SMARTSQueryTool("c1ccccc1", true);
+        SMARTSQueryTool querytool = new SMARTSQueryTool("c1ccccc1");
 
         boolean status = querytool.matches(atomContainer);
         Assert.assertTrue(status);
@@ -140,7 +140,7 @@ public class SMARTSQueryToolTest extends NewCDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c12cc(CCN)ccc1c(COC)ccc2");
         CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
-        SMARTSQueryTool querytool = new SMARTSQueryTool("c12ccccc1cccc2", true);
+        SMARTSQueryTool querytool = new SMARTSQueryTool("c12ccccc1cccc2");
 
         boolean status = querytool.matches(atomContainer);
         Assert.assertTrue(status);

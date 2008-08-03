@@ -62,7 +62,7 @@ public class SMARTSSearchTest extends CDKTestCase {
 
 
     private int[] match(String smarts, String smiles) throws Exception {
-        SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, true);
+        SMARTSQueryTool sqt = new SMARTSQueryTool(smarts);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(smiles);
         boolean status = sqt.matches(atomContainer);
@@ -85,7 +85,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer atomContainer = (IAtomContainer) cList.get(0);
 
-        SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;h1,h2,H1,H2;!$(NC=O)]", true);
+        SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;h1,h2,H1,H2;!$(NC=O)]");
         boolean status = sqt.matches(atomContainer);
         assertEquals(true, status);
 
