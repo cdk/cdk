@@ -543,7 +543,7 @@ public class SmilesParser {
 		// if that fails, the one char elements
 		String possibleSymbol = s.substring(pos, pos + 1);
 		logger.debug("possibleSymbol: ", possibleSymbol);
-		if (("HKUVY".indexOf(possibleSymbol) >= 0))
+		if (("HKUVYW".indexOf(possibleSymbol) >= 0))
 		{
 			return possibleSymbol;
 		}
