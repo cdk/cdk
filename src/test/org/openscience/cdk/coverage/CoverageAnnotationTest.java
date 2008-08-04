@@ -121,8 +121,10 @@ abstract public class CoverageAnnotationTest extends TestCase {
 
             TestMethod testMethodAnnotation = method.getAnnotation(TestMethod.class);
 
-            // if a method does not have the annotation, it's missing a test
-            if (testMethodAnnotation == null) {
+            if (method.getName().startsWith("access$")) {
+            	// skip this test
+            } else if (testMethodAnnotation == null) {
+                // if a method does not have the annotation, it's missing a test
                 System.out.println(className + "#" + method.getName() + " does not have a test method");
                 missingTestCount++;
             } else methodAnnotations.put(method.getName(), testMethodAnnotation);
@@ -131,7 +133,7 @@ abstract public class CoverageAnnotationTest extends TestCase {
         // get the test class for this class, as noted in the class annotation
         // and get a list of methods in the test class. We assume that if a class
         // does not have a TestClass annotation it is not tested, even though individual
-        // methods mighthave TestMethod annotations
+        // methods might have TestMethod annotations
         TestClass testClassAnnotation = (TestClass) coreClass.getAnnotation(TestClass.class);
         if (testClassAnnotation == null) {
         	if (coreClass.getDeclaredMethods().length == 0 && coreClass.getDeclaredConstructors().length <= 1) {
