@@ -144,7 +144,6 @@ public class BondSigmaElectronegativityDescriptor implements IBondDescriptor {
      */
     @TestMethod(value="testCalculate_IBond_IAtomContainer")
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
-
         try {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
         } catch (CDKException e) {
@@ -155,7 +154,7 @@ public class BondSigmaElectronegativityDescriptor implements IBondDescriptor {
 	    
 	    double electroAtom1 = electronegativity.calculateSigmaElectronegativity(ac, bond.getAtom(0));
 	    double electroAtom2 = electronegativity.calculateSigmaElectronegativity(ac, bond.getAtom(1));
-	    
+
 	    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(Math.abs(electroAtom1 - electroAtom2)),descriptorNames);
 	    

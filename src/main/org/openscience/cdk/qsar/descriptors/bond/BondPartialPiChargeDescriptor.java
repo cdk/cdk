@@ -24,11 +24,14 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
+import java.util.Iterator;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.AbstractBondDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -36,8 +39,6 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.Iterator;
 
 /**
  *  The calculation of bond-pi Partial charge is calculated 
@@ -163,7 +164,17 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
      */
     @TestMethod(value="testCalculate_IBond_IAtomContainer")
     public DescriptorValue calculate(IBond bond, IAtomContainer ac)  {
-
+    	// FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+    	Double originalCharge1 = bond.getAtom(0).getCharge();
+    	String originalAtomtypeName1 = bond.getAtom(0).getAtomTypeName();
+    	Integer originalNeighborCount1 = bond.getAtom(0).getFormalNeighbourCount();
+    	IAtomType.Hybridization originalHybridization1 = bond.getAtom(0).getHybridization();
+    	Integer originalValency1 = bond.getAtom(0).getValency();
+    	Double originalCharge2 = bond.getAtom(1).getCharge();
+    	String originalAtomtypeName2 = bond.getAtom(1).getAtomTypeName();
+    	Integer originalNeighborCount2 = bond.getAtom(1).getFormalNeighbourCount();
+    	IAtomType.Hybridization originalHybridization2 = bond.getAtom(1).getHybridization();
+    	Integer originalValency2 = bond.getAtom(1).getValency();
         if (!isCachedAtomContainer(ac)) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
@@ -193,6 +204,17 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
 	            return getDummyDescriptorValue(ex1);
 	        }
     	}
+	    bond.getAtom(0).setCharge(originalCharge1);
+	    bond.getAtom(0).setAtomTypeName(originalAtomtypeName1);
+	    bond.getAtom(0).setHybridization(originalHybridization1);
+	    bond.getAtom(0).setValency(originalValency1);
+	    bond.getAtom(0).setFormalNeighbourCount(originalNeighborCount1);
+	    bond.getAtom(1).setCharge(originalCharge2);
+	    bond.getAtom(1).setAtomTypeName(originalAtomtypeName2);
+	    bond.getAtom(1).setHybridization(originalHybridization2);
+	    bond.getAtom(1).setValency(originalValency2);
+	    bond.getAtom(1).setFormalNeighbourCount(originalNeighborCount2);
+	    
         return getCachedDescriptorValue(bond) != null
                 ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 getCachedDescriptorValue(bond), descriptorNames)

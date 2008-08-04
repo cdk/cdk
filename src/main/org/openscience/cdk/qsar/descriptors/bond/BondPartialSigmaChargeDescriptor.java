@@ -142,6 +142,9 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
      */
     @TestMethod(value="testCalculate_IBond_IAtomContainer")
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
+    	// FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+    	Double originalCharge1 = bond.getAtom(0).getCharge();
+    	Double originalCharge2 = bond.getAtom(1).getCharge();
     	if (!isCachedAtomContainer(ac)) {
     		IMolecule mol = ac.getBuilder().newMolecule(ac);
         	if(maxIterations != 0) peoe.setMaxGasteigerIters(maxIterations);
@@ -156,6 +159,8 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
 	            return getDummyDescriptorValue(ex1);
 	        }
     	}
+    	bond.getAtom(0).setCharge(originalCharge1);
+    	bond.getAtom(1).setCharge(originalCharge2);
         return getCachedDescriptorValue(bond) != null
                 ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 getCachedDescriptorValue(bond), descriptorNames)
