@@ -154,8 +154,6 @@ public class MACCSFingerprinter implements IFingerprinter {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
 
-//        String filename = "/home/rguha/src/java/cdk/trunk/src/main/org/openscience/cdk/fingerprint/data/maccs.txt";
-//        BufferedReader reader = new BufferedReader(new FileReader(new File(filename)));
         for (int i = 0; i < 32; i++) reader.readLine();
 
         // now process the keys
