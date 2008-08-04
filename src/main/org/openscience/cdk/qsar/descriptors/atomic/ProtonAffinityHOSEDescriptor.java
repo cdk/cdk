@@ -226,10 +226,10 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 					String pathS = "org/openscience/cdk/qsar/descriptors/atomic/data/"+nameS;
 					InputStream ins = this.getClass().getClassLoader().getResourceAsStream(path);
 					BufferedReader insr = new BufferedReader(new InputStreamReader(ins));
-					hoseVSenergy = extractattributes(insr);
+					hoseVSenergy = extractAttributes(insr);
 					ins = this.getClass().getClassLoader().getResourceAsStream(pathS);
 					insr = new BufferedReader(new InputStreamReader(ins));
-					hoseVSenergyS = extractattributes(insr);
+					hoseVSenergyS = extractAttributes(insr);
 				}
 			} else return 0;
 			
@@ -295,7 +295,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 		 * @param input  The BufferedReader
 		 * @return       HashMap with the Hose vs energy attributes
 		 */
-		private HashMap<String,Double> extractattributes(BufferedReader input) {
+		private HashMap<String,Double> extractAttributes(BufferedReader input) {
 			HashMap<String,Double> hoseVSenergy = new HashMap<String,Double>();
 			String line;
 
@@ -303,7 +303,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 				while ((line = input.readLine()) != null) {
 					if(line.startsWith("#"))
 						continue;
-					List<String> values = extracInfo(line);
+					List<String> values = extractInfo(line);
 					if(values.get(1).equals(""))
 						continue;
 					hoseVSenergy.put(values.get(0), Double.valueOf(values.get(1)));
@@ -320,7 +320,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 	 * @param str  String with the information
 	 * @return     List with String = HOSECode and String = energy
 	 */
-	public static List<String> extracInfo(String str){
+	private static List<String> extractInfo(String str){
 		
 		StringBuffer idEdited = new StringBuffer();
 		StringBuffer valEdited = new StringBuffer();
