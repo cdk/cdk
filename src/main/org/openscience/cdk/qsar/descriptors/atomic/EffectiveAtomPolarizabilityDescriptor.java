@@ -128,7 +128,19 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         double polarizability;
         try {
+        	// FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+        	String originalAtomtypeName = atom.getAtomTypeName();
+        	Integer originalNeighborCount = atom.getFormalNeighbourCount();
+        	Integer originalHCount = atom.getHydrogenCount();
+        	Integer originalValency = atom.getValency();
+        	boolean originalFlag = atom.getFlag(4);
             polarizability = pol.calculateGHEffectiveAtomPolarizability(ac, atom, 100, true);
+        	// restore original props
+        	atom.setAtomTypeName(originalAtomtypeName);
+        	atom.setFormalNeighbourCount(originalNeighborCount);
+        	atom.setValency(originalValency);
+        	atom.setHydrogenCount(originalHCount);
+        	atom.setFlag(4, originalFlag);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new DoubleResult(polarizability),
                     getDescriptorNames());

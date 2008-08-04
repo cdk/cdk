@@ -170,6 +170,11 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      */
     @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
+    	// FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+    	Double originalCharge = atom.getCharge();
+    	String originalAtomtypeName = atom.getAtomTypeName();
+    	Integer originalNeighborCount = atom.getFormalNeighbourCount();
+    	Integer originalValency = atom.getValency();
         if (!isCachedAtomContainer(ac)) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
@@ -210,6 +215,11 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
                         new DoubleResult(Double.NaN), names, e);
             }
         }
+    	// restore original props
+    	atom.setCharge(originalCharge);
+    	atom.setAtomTypeName(originalAtomtypeName);
+    	atom.setFormalNeighbourCount(originalNeighborCount);
+    	atom.setValency(originalValency);
 
         return getCachedDescriptorValue(atom) != null
                 ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),

@@ -141,6 +141,8 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
      */
     @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
+    	// FIXME: for now I'll cache the original charges, and restore them at the end of this method
+    	Double originalCharge = atom.getCharge();
         if (!isCachedAtomContainer(ac)) {
             IMolecule mol = atom.getBuilder().newMolecule(ac);
             if (maxIterations != 0) peoe.setMaxGasteigerIters(maxIterations);
@@ -157,6 +159,7 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
                         names, e);
             }
         }
+        atom.setCharge(originalCharge);
 
         return getCachedDescriptorValue(atom) != null
                 ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),

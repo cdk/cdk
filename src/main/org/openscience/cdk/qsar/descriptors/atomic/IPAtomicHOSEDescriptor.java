@@ -136,6 +136,10 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 	@TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         double value;
+    	// FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+    	String originalAtomtypeName = atom.getAtomTypeName();
+    	Integer originalNeighborCount = atom.getFormalNeighbourCount();
+    	Integer originalValency = atom.getValency();
 
         if (!isCachedAtomContainer(container)) {
             try {
@@ -149,6 +153,11 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 
         }
 		value = db.extractIP(container, atom);
+    	// restore original props
+    	atom.setAtomTypeName(originalAtomtypeName);
+    	atom.setFormalNeighbourCount(originalNeighborCount);
+    	atom.setValency(originalValency);
+
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(value),descriptorNames);
 		
