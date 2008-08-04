@@ -88,6 +88,19 @@ import java.util.*;
  * }
  * </pre>
  *
+ * <h3>Extensions to SMARTS</h3>
+ *
+ * The pharmacophore supports some extentions to the SMARTS language that lead
+ * to flexible pharmacophore definitions  Note that these extensions are specific to
+ * pharmacophore usage and are not generally provided by the SMARTS parser itself.
+ * <p>
+ * <ul>
+ * <li> | - this allows one to perform a logical OR between two or more SMARTS patterns. An example might
+ * be a pharmacophore group that is meant to match a 5 membered ring or a 6 membered ring. This cannot be
+ * written in a single ordinary SMARTS pattern. However using this one extension one can write
+ * <pre>A1AAAA1|A1AAAAA1</pre>
+ * </ul>
+ *
  * @author Rajarshi Guha
  * @cdk.module pcore
  * @cdk.svnrev $Revision$
