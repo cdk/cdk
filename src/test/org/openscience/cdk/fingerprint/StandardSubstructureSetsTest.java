@@ -30,20 +30,18 @@ package org.openscience.cdk.fingerprint;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.NewCDKTestCase;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-fingerprint
  */
 public class StandardSubstructureSetsTest extends NewCDKTestCase {
 	
 	@Test public void testGetFunctionalGroupSubstructureSet() throws Exception {
-		IAtomContainerSet set = null;
-		set = StandardSubstructureSets.getFunctionalGroupSubstructureSet();
-
-		Assert.assertNotNull(set);
-		Assert.assertEquals(8, set.getAtomContainerCount());
-	}
+		String[] smarts = null;
+		smarts = StandardSubstructureSets.getFunctionalGroupSMARTS();
+		Assert.assertNotNull(smarts);
+		Assert.assertEquals(307, smarts.length);
+    }
 	
 }
 
