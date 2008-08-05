@@ -66,7 +66,7 @@ import java.util.List;
  * @cdk.module  fingerprint
  * @cdk.svnrev $Revision: 11674 $
  */
-@TestClass("org.openscience.cdk.fingerprint.MACCSFingprinterTest")
+@TestClass("org.openscience.cdk.fingerprint.MACCSFingerprinterTest")
 public class MACCSFingerprinter implements IFingerprinter {
     private static LoggingTool logger = new LoggingTool(MACCSFingerprinter.class);
     private MaccsKey[] keys = null;
