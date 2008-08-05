@@ -24,6 +24,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.AbstractBondDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -122,6 +123,15 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
     @TestMethod(value="testCalculate_IBond_IAtomContainer")
 	public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer) {
 		double value = 0;
+    	// FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+    	String originalAtomtypeName1 = bond.getAtom(0).getAtomTypeName();
+    	Integer originalNeighborCount1 = bond.getAtom(0).getFormalNeighbourCount();
+    	IAtomType.Hybridization originalHybridization1 = bond.getAtom(0).getHybridization();
+    	Integer originalValency1 = bond.getAtom(0).getValency();
+    	String originalAtomtypeName2 = bond.getAtom(1).getAtomTypeName();
+    	Integer originalNeighborCount2 = bond.getAtom(1).getFormalNeighbourCount();
+    	IAtomType.Hybridization originalHybridization2 = bond.getAtom(1).getHybridization();
+    	Integer originalValency2 = bond.getAtom(1).getValency();
 
         if (!isCachedAtomContainer(atomContainer)) {
             try {
@@ -133,12 +143,21 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
             }
 
         }
-        if (!bond.getOrder().equals(IBond.Order.SINGLE))
+        if (!bond.getOrder().equals(IBond.Order.SINGLE)) {
             try {
                 value = IonizationPotentialTool.predictIP(atomContainer, bond);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(e);
             }
+        }
+        bond.getAtom(0).setAtomTypeName(originalAtomtypeName1);
+        bond.getAtom(0).setHybridization(originalHybridization1);
+        bond.getAtom(0).setValency(originalValency1);
+        bond.getAtom(0).setFormalNeighbourCount(originalNeighborCount1);
+        bond.getAtom(1).setAtomTypeName(originalAtomtypeName2);
+        bond.getAtom(1).setHybridization(originalHybridization2);
+        bond.getAtom(1).setValency(originalValency2);
+        bond.getAtom(1).setFormalNeighbourCount(originalNeighborCount2);
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(value),descriptorNames);
