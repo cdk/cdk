@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * @cdk.created    2006-01-13
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity
- * @cdk.module     extra
+ * @cdk.module     fingerprint
  * @cdk.svnrev     $Revision$
  * 
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
