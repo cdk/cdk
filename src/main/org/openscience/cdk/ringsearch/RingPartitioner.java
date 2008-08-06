@@ -1,7 +1,4 @@
-/*
- *  RingPartitioner.java
- *
- *  $RCSfile$    $Author$    $Date$    $Revision$
+/* $Revision$ $Author$ $Date$    
  *
  *  Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *
@@ -24,7 +21,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.ringsearch;
 
@@ -63,18 +59,17 @@ public class RingPartitioner {
      *  the RingSet are considered connected. Thus molecules such as azulene and
      * indole will return a List with 1 element.
      *
-     *  Note that an isolated ring is considered to be <i>self-connect</i>. As a result
+     * <p>Note that an isolated ring is considered to be <i>self-connect</i>. As a result
      * a molecule such as biphenyl will result in a 2-element List being returned (each
      * element corresponding to a phenyl ring).
      *
      *@param  ringSet  The RingSet to be partitioned
-     *@return          A List of connected RingSets
+     *@return          A {@link List} of connected RingSets
      */
     @TestMethod("testPartitionIntoRings")
-    public static List partitionRings(IRingSet ringSet) {
-        List ringSets = new ArrayList();
+    public static List<IRingSet> partitionRings(IRingSet ringSet) {
+        List<IRingSet> ringSets = new ArrayList<IRingSet>();
         if (ringSet.getAtomContainerCount() == 0) return ringSets;
-        IRingSet tempRingSet = null;
         IRing ring = (IRing)ringSet.getAtomContainer(0);
         if (ring == null) return ringSets;
         IRingSet rs = ring.getBuilder().newRingSet();
@@ -85,8 +80,6 @@ public class RingPartitioner {
             ring = (IRing) rs.getAtomContainer(0);
             IRingSet newRs = ring.getBuilder().newRingSet();
             newRs.addAtomContainer(ring);
-            //tempRingSet = walkRingSystem(rs, ring, newRs);
-//            logger.debug("found ringset with ringcount: " + tempRingSet.getAtomContainerCount());
             ringSets.add(walkRingSystem(rs, ring, newRs));
 
         } while (rs.getAtomContainerCount() > 0);
@@ -135,10 +128,10 @@ public class RingPartitioner {
      */
     private static IRingSet walkRingSystem(IRingSet rs, IRing ring, IRingSet newRs) {
         IRing tempRing;
-        List tempRings = rs.getConnectedRings(ring);
+        List<IRing> tempRings = rs.getConnectedRings(ring);
 //        logger.debug("walkRingSystem -> tempRings.size(): " + tempRings.size());
         rs.removeAtomContainer(ring);
-        Iterator iter = tempRings.iterator();
+        Iterator<IRing> iter = tempRings.iterator();
         while (iter.hasNext()) {
             tempRing = (IRing)iter.next();
             if (!newRs.contains(tempRing)) {
