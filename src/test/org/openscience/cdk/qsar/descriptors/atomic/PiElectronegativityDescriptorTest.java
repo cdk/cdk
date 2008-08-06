@@ -341,7 +341,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = sp.parseSmiles("F[C+][C-]");
+		IMolecule mol = sp.parseSmiles("F[C+H1][C-H2]");
 
 		addExplicitHydrogens(mol);
 		
