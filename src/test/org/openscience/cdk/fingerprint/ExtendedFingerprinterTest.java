@@ -24,7 +24,9 @@
  */
 package org.openscience.cdk.fingerprint;
 
+import java.io.InputStream;
 import java.util.BitSet;
+import java.util.List;
 
 import javax.vecmath.Point2d;
 
@@ -32,13 +34,16 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
@@ -68,13 +73,14 @@ public class ExtendedFingerprinterTest extends NewCDKTestCase {
 	}
 	
 	@Test
-    public void testGetFingerprint_IAtomContainer_IRingSet() throws java.lang.Exception {
+    public void testGetFingerprint_IAtomContainer_IRingSet_List() throws java.lang.Exception {
 		ExtendedFingerprinter fingerprinter = new ExtendedFingerprinter();
 		Assert.assertNotNull(fingerprinter);
 		
 		Molecule mol = MoleculeFactory.makeIndole();
-		IRingSet ringset=new AllRingsFinder().findAllRings(mol);
-		BitSet bs = fingerprinter.getFingerprint(mol,ringset);
+		IRingSet rs=new SSSRFinder(mol).findSSSR();
+		List rslist=RingPartitioner.partitionRings(rs);
+		BitSet bs = fingerprinter.getFingerprint(mol,rs, rslist);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
@@ -328,5 +334,26 @@ public class ExtendedFingerprinterTest extends NewCDKTestCase {
 		  Assert.assertTrue(FingerprinterTool.isSubset(bs2, bs1));
 
 	}	
+	
+	@Test public void testChebi() throws java.lang.Exception
+	{
+		Molecule searchmol = null;
+		Molecule findmol = null;
+		String filename = "data/mdl/chebisearch.mol";
+		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		MDLV2000Reader reader = new MDLV2000Reader(ins);
+		searchmol = (Molecule) reader.read((ChemObject) new Molecule());
+		filename = "data/mdl/chebifind.mol";
+		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+		reader = new MDLV2000Reader(ins);
+		findmol = (Molecule) reader.read((ChemObject) new Molecule());
+		IFingerprinter fingerprinter = new ExtendedFingerprinter();
+		BitSet superBS = fingerprinter.getFingerprint(findmol);
+		BitSet subBS = fingerprinter.getFingerprint(searchmol);
+		boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
+		boolean isSubset2 = FingerprinterTool.isSubset(subBS, superBS);
+		Assert.assertFalse(isSubset);
+		Assert.assertFalse(isSubset2);
+	}
 }
 
