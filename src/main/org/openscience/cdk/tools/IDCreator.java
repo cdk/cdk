@@ -1,6 +1,7 @@
 /* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
+ *                    2008  Aleksey Tarkhov <bayern7105@yahoo.de>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -21,7 +22,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.tools;
 
@@ -50,6 +50,18 @@ import java.util.List;
 @TestClass("org.openscience.cdk.tools.IDCreatorTest")
 public abstract class IDCreator {
 
+	// counters for generated in current session IDs
+	private static int REACTION_COUNT = 0;
+	private static int ATOM_COUNT = 0;
+	private static int BOND_COUNT = 0;
+	private static int ATOMCONTAINER_COUNT = 0;
+	private static int ATOMCONTAINERSET_COUNT = 0;
+	private static int REACTIONSET_COUNT = 0;
+	private static int CHEMMODEL_COUNT = 0;
+	private static int CHEMSEQUENCE_COUNT = 0;
+	private static int CHEMFILE_COUNT = 0;
+
+	// prefix to prepend every individual IDs
 	private final static String REACTION_PREFIX = "r";
 	private final static String ATOM_PREFIX = "a";
 	private final static String BOND_PREFIX = "b";
@@ -59,6 +71,42 @@ public abstract class IDCreator {
 	private final static String CHEMMODEL_PREFIX = "model";
 	private final static String CHEMSEQUENCE_PREFIX = "seq";
 	private final static String CHEMFILE_PREFIX = "file";
+	
+	/**
+	 * Old ID generation policy - to generate IDs unique over the entire set 
+	 */
+	public static final int SET_UNIQUE_POLICY = 0;
+
+	/**
+	 * New ID generation policy - to generate IDs unique only in a molecule
+	 */
+	public static final int OBJECT_UNIQUE_POLICY = 1;
+
+	/**
+	 * Internal flag identifying the IDs generation policy. The old policy
+	 * is to generate IDs so that in a sequence of several molecules all the 
+	 * atoms and bonds will receive the unique IDs even across molecules, i.e.
+	 * in a set of 2 molecules the first atom of the first molecule will be "a1"
+	 * while the first atom of the second molecule will be "aX" where X equals 
+	 * to the number of atoms in the first molecule plus 1. 
+	 * <br/>
+	 * The new policy is to keep the singularity of IDs only within a single
+	 * molecule, i.e. in a set of two molecules first atoms of each will be "a1".
+	 */ 
+	private static int policy = SET_UNIQUE_POLICY;
+	
+	/**
+	 * Alters the policy of ID generation. The IDCreator should in any case 
+	 * preserve the already existing IDs therefore if one of objects already 
+	 * has an ID set, this ID will be skipped in all the cases when attempting to
+	 * generate a new ID value
+	 * @param policy new policy to be used
+	 * @see #OBJECT_UNIQUE_POLICY
+	 * @see #SET_UNIQUE_POLICY
+	 */
+	public static void setIDPolicy(int policy) {
+		IDCreator.policy = policy;
+	}
 	
 	/**
 	 * Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
@@ -71,6 +119,8 @@ public abstract class IDCreator {
     @TestMethod("testCreateIDs_IChemObject,testKeepingIDs,testNoDuplicateCreation,testCallingTwice")
     public static void createIDs(IChemObject chemObject) {
 		if (chemObject == null) return;
+		
+		resetCounters();
 		
 		if (chemObject instanceof IAtomContainer) {
 			createIDsForAtomContainer((IAtomContainer)chemObject, null);
@@ -90,14 +140,35 @@ public abstract class IDCreator {
 	}
 
 	/**
+	 * Reset the counters so that we keep generating simple IDs within 
+	 * single chem object or a set of them
+	 */
+	private static void resetCounters() {
+		ATOM_COUNT = 0;
+		BOND_COUNT = 0;
+		ATOMCONTAINER_COUNT = 0;
+		ATOMCONTAINERSET_COUNT = 0;
+		REACTION_COUNT = 0;
+		REACTIONSET_COUNT = 0;
+		CHEMMODEL_COUNT = 0;
+		CHEMSEQUENCE_COUNT = 0;
+		CHEMFILE_COUNT = 0;
+	}
+	
+	/**
 	 * Sets the ID on the object and adds it to the tabu list.
 	 * 
 	 * @param object   IChemObject to set the ID for
 	 * @param tabuList Tabu list to add the ID to
 	 */
-    private static void setID(String identifier, IChemObject object, List<String> tabuList) {
-		object.setID(identifier);
-		tabuList.add(identifier);
+	private static int setID(String prefix, int identifier, IChemObject object, List<String> tabuList) {
+		identifier += 1;
+		while (tabuList.contains(prefix + identifier)) {
+			identifier += 1;
+		}
+		object.setID(prefix + identifier);
+		tabuList.add(prefix + identifier);
+		return identifier;
 	}
 
     /**
@@ -109,30 +180,35 @@ public abstract class IDCreator {
     private static void createIDsForAtomContainer(IAtomContainer container, List<String> tabuList) {
     	if (tabuList == null) tabuList = AtomContainerManipulator.getAllIDs(container);
     	
-    	int moleculeCount = 1;
-    	int atomCount = 1;
-    	int bondCount = 1;
+		if (null == container.getID()) {
+			// generate new ID and remember it
+			ATOMCONTAINER_COUNT = setID(ATOMCONTAINER_PREFIX, ATOMCONTAINER_COUNT, container, tabuList);
+		}
     	
-        if (container.getID() == null) {
-            while (tabuList.contains(ATOMCONTAINER_PREFIX + moleculeCount)) moleculeCount++;
-            setID(ATOMCONTAINER_PREFIX + moleculeCount, container, tabuList);
+		// the tabu list for the container should force singularity
+		// within a container only!
+		List internalTabuList = AtomContainerManipulator.getAllIDs(container);
+		if (policy == OBJECT_UNIQUE_POLICY) {
+				// start atom and bond indices within a container set always from 1
+				ATOM_COUNT = 0;
+				BOND_COUNT = 0;
+			} else {
+				internalTabuList = tabuList;
         }
         
         Iterator atoms = container.atoms();
         while(atoms.hasNext()) {
         	IAtom atom = (IAtom)atoms.next();
-            if (atom.getID() == null) {
-                while (tabuList.contains(ATOM_PREFIX + atomCount)) atomCount++;
-                setID(ATOM_PREFIX + atomCount, atom, tabuList);
+			if (null == atom.getID()) {
+				ATOM_COUNT = setID(ATOM_PREFIX, ATOM_COUNT, atom, internalTabuList);
             }
         }
 
         Iterator bonds = container.bonds();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
-            if (bond.getID() == null) {
-                while (tabuList.contains(BOND_PREFIX + bondCount)) bondCount++;
-                setID(BOND_PREFIX + bondCount, bond, tabuList);
+			if (null == bond.getID()) {
+				BOND_COUNT = setID(BOND_PREFIX, BOND_COUNT, bond, internalTabuList);
             }
         }
     }
@@ -146,19 +222,19 @@ public abstract class IDCreator {
     private static void createIDsForAtomContainerSet(IAtomContainerSet containerSet, List<String> tabuList) {
         if (tabuList == null) tabuList = AtomContainerSetManipulator.getAllIDs(containerSet);
 
-        int moleculeCount = 1;
+		if (null == containerSet.getID()) {
+			ATOMCONTAINERSET_COUNT = setID(ATOMCONTAINERSET_PREFIX, ATOMCONTAINERSET_COUNT, containerSet, tabuList);
+		}
         
-        if (containerSet.getID() == null) {
-            while (tabuList.contains(ATOMCONTAINERSET_PREFIX + moleculeCount)) moleculeCount++;
-            setID(ATOMCONTAINERSET_PREFIX + moleculeCount, containerSet, tabuList);
+		if (policy == OBJECT_UNIQUE_POLICY) {
+		// start atom and bond indices within a container set always from 1
+			ATOM_COUNT = 0;
+			BOND_COUNT = 0;
         }
 
         Iterator acs = containerSet.atomContainers();
         while (acs.hasNext()) {
-        	IAtomContainer container = (IAtomContainer)acs.next();
-            if (container.getID() == null) {
-                createIDsForAtomContainer(container, tabuList);
-            }
+			createIDsForAtomContainer((IAtomContainer)acs.next(), tabuList);
         }
     }
     
@@ -169,11 +245,15 @@ public abstract class IDCreator {
     private static void createIDsForReaction(IReaction reaction, List<String> tabuList) {
         if (tabuList == null) tabuList = ReactionManipulator.getAllIDs(reaction);
         
-        int reactionCount = 1;
+		if (null == reaction.getID()) {
+			// generate new ID
+			REACTION_COUNT = setID(REACTION_PREFIX, REACTION_COUNT, reaction, tabuList);
+		}
         
-        if (reaction.getID() == null) {
-            while (tabuList.contains(REACTION_PREFIX + reactionCount)) reactionCount++;
-            setID(REACTION_PREFIX + reactionCount, reaction, tabuList);
+		if (policy == OBJECT_UNIQUE_POLICY) {
+			// start atom and bond indices within a reaction set always from 1
+			ATOM_COUNT = 0;
+			BOND_COUNT = 0;
         }
 
         Iterator reactants = reaction.getReactants().atomContainers();
@@ -184,28 +264,35 @@ public abstract class IDCreator {
         while (products.hasNext()) {
             createIDsForAtomContainer((IAtomContainer)products.next(), tabuList);
         }
+		Iterator agents = reaction.getAgents().atomContainers();
+		while (agents.hasNext()) {
+			createIDsForAtomContainer((IAtomContainer)agents.next(), tabuList);
+		}
     }
     
     private static void createIDsForReactionSet(IReactionSet reactionSet, List<String> tabuList) {
     	if (tabuList == null) tabuList = ReactionSetManipulator.getAllIDs(reactionSet);
         
-    	int rsetCount = 1;
-    	if (reactionSet.getID() == null) {
-            while (tabuList.contains(REACTIONSET_PREFIX + rsetCount)) rsetCount++;
-            setID(REACTIONSET_PREFIX + rsetCount, reactionSet, tabuList);
+		if (null == reactionSet.getID()) {
+			// generate new ID for the set
+			REACTIONSET_COUNT = setID(REACTIONSET_PREFIX, REACTIONSET_COUNT, reactionSet, tabuList);
         }
-    	for (Iterator iter = reactionSet.reactions(); iter.hasNext();) {
-            createIDsForReaction((IReaction)iter.next(), tabuList);
+
+		for (Iterator reaction = reactionSet.reactions(); reaction.hasNext();) {
+			createIDsForReaction((IReaction)reaction.next(), tabuList);
         }
     }
     
     private static void createIDsForChemFile(IChemFile file, List<String> tabuList) {
     	if (tabuList == null) tabuList = ChemFileManipulator.getAllIDs(file);
         
-    	int fileCount = 1;
-    	if (file.getID() == null) {
-            while (tabuList.contains(CHEMFILE_PREFIX + fileCount)) fileCount++;
-            setID(CHEMFILE_PREFIX + fileCount, file, tabuList);
+		if (null == file.getID()) {
+			CHEMFILE_COUNT = setID(CHEMFILE_PREFIX, CHEMFILE_COUNT, file, tabuList);
+		}
+
+		if (policy == OBJECT_UNIQUE_POLICY) {
+			// start indices within a chem file always from 1
+			CHEMSEQUENCE_COUNT = 0;
         }
     	
     	Iterator sequences = file.chemSequences();
@@ -217,10 +304,13 @@ public abstract class IDCreator {
     private static void createIDsForChemSequence(IChemSequence sequence, List<String> tabuList) {
     	if (tabuList == null) tabuList = ChemSequenceManipulator.getAllIDs(sequence);
         
-    	int sequenceCount = 1;
-    	if (sequence.getID() == null) {
-            while (tabuList.contains(CHEMSEQUENCE_PREFIX + sequenceCount)) sequenceCount++;
-            setID(CHEMSEQUENCE_PREFIX + sequenceCount, sequence, tabuList);
+		if (null == sequence.getID()) {
+			CHEMSEQUENCE_COUNT = setID(CHEMSEQUENCE_PREFIX, CHEMSEQUENCE_COUNT, sequence, tabuList);
+		}
+
+		if (policy == OBJECT_UNIQUE_POLICY) {
+			// start indices within a chem file always from 1
+			CHEMSEQUENCE_COUNT = 0;
         }
     	
     	Iterator models = sequence.chemModels();
@@ -232,18 +322,36 @@ public abstract class IDCreator {
     private static void createIDsForChemModel(IChemModel model, List<String> tabuList) {
     	if (tabuList == null) tabuList = ChemModelManipulator.getAllIDs(model);
         
-    	int modelCount = 1;
-    	if (model.getID() == null) {
-            while (tabuList.contains(CHEMMODEL_PREFIX + modelCount)) modelCount++;
-            setID(CHEMMODEL_PREFIX + modelCount, model, tabuList);
+		if (null == model.getID()) {
+			CHEMMODEL_COUNT = setID(CHEMMODEL_PREFIX, CHEMMODEL_COUNT, model, tabuList);
         }
     	
     	ICrystal crystal = model.getCrystal();
-    	if (crystal != null) createIDsForAtomContainer(crystal, tabuList);
+		if (crystal != null) {
+			if (policy == OBJECT_UNIQUE_POLICY) {
+				ATOM_COUNT = 0;
+				BOND_COUNT = 0;
+			}
+			createIDsForAtomContainer(crystal, tabuList);
+		}
+		
     	IMoleculeSet moleculeSet = model.getMoleculeSet();
-    	if (moleculeSet != null) createIDsForAtomContainerSet(moleculeSet, tabuList);
+		if (moleculeSet != null) {
+				if (policy == OBJECT_UNIQUE_POLICY) {  
+					ATOMCONTAINERSET_COUNT = 0;
+					ATOMCONTAINER_COUNT = 0;
+				}
+			createIDsForAtomContainerSet(moleculeSet, tabuList);
+		}
+		
     	IReactionSet reactionSet = model.getReactionSet();
-    	if (reactionSet != null) createIDsForReactionSet(reactionSet, tabuList);
+		if (reactionSet != null) {
+			if (policy == OBJECT_UNIQUE_POLICY) {
+				REACTIONSET_COUNT = 0;
+				REACTION_COUNT = 0;
+			}
+			createIDsForReactionSet(reactionSet, tabuList);
+		}
     }
     
 }
