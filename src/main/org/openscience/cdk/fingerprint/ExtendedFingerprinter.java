@@ -36,8 +36,8 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
- * Generates an extended fingerprint for a given AtomContainer, that
- * extends the Fingerprinter with additional bits describing ring
+ * Generates an extended fingerprint for a given {@link IAtomContainer}, that
+ * extends the {@link Fingerprinter} with additional bits describing ring
  * features.
  *  
  * @author         shk3
@@ -84,7 +84,8 @@ public class ExtendedFingerprinter implements IFingerprinter {
 	/**
 	 * Generates a fingerprint of the default size for the given AtomContainer, using path and ring metrics
 	 * It contains the informations from getFingerprint() and bits which tell if the structure has 0 rings, 1 or less rings,
-	 * 2 or less rings ... 10 or less rings (referring to smallest set of smallest rings) and bits which tell if there is a ring with 3, 4 ... 10 atoms.
+	 * 2 or less rings ... 10 or less rings (referring to smallest set of smallest rings) and bits which tell if 
+	 * there is a fused ring system with 1,2...8 or more rings in it
 	 *
 	 *@param     ac         The AtomContainer for which a Fingerprint is generated
 	 *@exception Exception  Description of the Exception
@@ -97,15 +98,17 @@ public class ExtendedFingerprinter implements IFingerprinter {
 	/**
 	 * Generates a fingerprint of the default size for the given AtomContainer, using path and ring metrics
 	 * It contains the informations from getFingerprint() and bits which tell if the structure has 0 rings, 1 or less rings,
-	 * 2 or less rings ... 10 or less rings and bits which tell if there is a ring with 3, 4 ... 10 atoms.
-	 * The RingSet used is passed via rs parameter. This can be an allRingsSet or a smallesSetOfSmallestRings. If none is given, a sssr is calculated.
+	 * 2 or less rings ... 10 or less rings and bits which tell if there is a fused ring system with 1,2...8 or more rings in it
+	 * The RingSet used is passed via rs parameter. This must be a smallesSetOfSmallestRings.
+	 * The List must be a list of all ring systems in the molecule.
 	 *
 	 *@param     ac         The AtomContainer for which a Fingerprint is generated
-	 *@param     rs         A RingSet of ac (if not available, use  getExtendedFingerprint(AtomContainer ac), which does the calculation)
+	 *@param     rs         An SSSR RingSet of ac (if not available, use  getExtendedFingerprint(AtomContainer ac), which does the calculation)
+	 *@param 	 rslist		A list of all ring systems in ac
 	 *@exception Exception  Description of the Exception
 	 */
     @TestMethod("testGetFingerprint_IAtomContainer_IRingSet")
-    public BitSet getFingerprint(IAtomContainer ac, IRingSet rs, List rslist) throws Exception {
+    public BitSet getFingerprint(IAtomContainer ac, IRingSet rs, List<IRingSet> rslist) throws Exception {
 		BitSet bs = fingerprinter.getFingerprint(ac);
 		int size = this.getSize();
 		double weight = MolecularFormulaManipulator.getTotalNaturalAbundance(MolecularFormulaManipulator.getMolecularFormula(ac));
