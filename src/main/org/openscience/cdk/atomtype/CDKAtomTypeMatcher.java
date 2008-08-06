@@ -1344,7 +1344,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			return false;
     	} else if (atom.getHydrogenCount() != CDKConstants.UNSET) {
     		// confirm correct neighbour count
-    		int actualNeighbourCount = container.getConnectedAtomsCount(atom) + atom.getHydrogenCount();
+    		int connectedAtoms = container.getConnectedAtomsCount(atom);
+    		int hCount = atom.getHydrogenCount();
+    		int actualNeighbourCount =  connectedAtoms + hCount;
     		int requiredNeighbourCount = type.getFormalNeighbourCount();
     		if (actualNeighbourCount != requiredNeighbourCount)
     			return false;
