@@ -2355,6 +2355,21 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+    @Test public void testChargeSeparatedFluoroEthane() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("F");
+        IAtom atom2 = new Atom("C"); atom2.setFormalCharge(+1);
+        IAtom atom3 = new Atom("C"); atom3.setFormalCharge(-1);
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(2,1,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"F", "C.plus.planar", "C.minus.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
     /**
      * @cdk.inchi InChI=1/C2H7NS/c1-4(2)3/h3H,1-2H3
      */
