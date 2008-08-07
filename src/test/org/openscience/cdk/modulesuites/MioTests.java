@@ -29,6 +29,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.coverage.IoCoverageTest;
 import org.openscience.cdk.io.CDKSourceCodeWriterTest;
+import org.openscience.cdk.io.CIFReaderTest;
 import org.openscience.cdk.io.CTXReaderTest;
 import org.openscience.cdk.io.ChemObjectIOInstantionTests;
 import org.openscience.cdk.io.CrystClustReaderTest;
@@ -163,8 +164,9 @@ public class MioTests {
         suite.addTest(CMLIOTests.suite());
         suite.addTest(new JUnit4TestAdapter(CrystClustReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(CDKSourceCodeWriterTest.class));
+        suite.addTest(new JUnit4TestAdapter(CIFReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(CTXReaderTest.class));
-        suite.addTest(GamessReaderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(GamessReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(Gaussian98ReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(GhemicalReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(HINReaderTest.class));
@@ -184,8 +186,6 @@ public class MioTests {
         suite.addTest(new JUnit4TestAdapter(PDBWriterTest.class));
         suite.addTest(new JUnit4TestAdapter(PMPReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(ShelXReaderTest.class));
-        //suite.addTest(VASPReaderTest.suite()); Class is in experimental
-        /* suite.addTest(ZMatrixReaderTest.suite()); This is not a JUnit test yet! */
         suite.addTest(new JUnit4TestAdapter(XYZReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(XYZWriterTest.class));
 

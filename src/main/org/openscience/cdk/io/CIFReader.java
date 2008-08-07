@@ -45,6 +45,8 @@ import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.formats.CIFFormat;
@@ -70,6 +72,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author  E.L. Willighagen
  * @cdk.created 2003-10-12
  */
+@TestClass("org.openscience.cdk.io.CIFReaderTest")
 public class CIFReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
@@ -102,6 +105,7 @@ public class CIFReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CIFFormat.getInstance();
     }
