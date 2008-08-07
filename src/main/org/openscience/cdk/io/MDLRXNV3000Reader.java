@@ -34,6 +34,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLRXNV3000Format;
@@ -55,6 +57,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.keyword MDL V3000
  * @cdk.require java1.4+
  */
+@TestClass("org.openscience.cdk.io.MDLRXNV3000ReaderTest")
 public class MDLRXNV3000Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
@@ -85,6 +88,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return MDLRXNV3000Format.getInstance();
     }
@@ -101,7 +105,8 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
+    @TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemModel.class.equals(interfaces[i])) return true;
@@ -110,6 +115,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
 		return false;
 	}
 
+    @TestMethod("testReadReactions1")
     public IChemObject read(IChemObject object) throws CDKException {
          if (object instanceof IReaction) {
              return readReaction(object.getBuilder());
@@ -132,7 +138,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
      *
      * @return Returns the command on this line.
      */
-    public String readCommand() throws CDKException {
+    private String readCommand() throws CDKException {
         String line = readLine();
         if (line.startsWith("M  V30 ")) {
             String command =  line.substring(7);
@@ -146,7 +152,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         }
     }
     
-    public String readLine() throws CDKException {
+    private String readLine() throws CDKException {
         String line = null;
         try {
             line = input.readLine();
@@ -261,7 +267,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         return reaction;
     }
 
-    public boolean isReady() throws CDKException {
+    private boolean isReady() throws CDKException {
         try {
             return input.ready();
         } catch (Exception exception) {
