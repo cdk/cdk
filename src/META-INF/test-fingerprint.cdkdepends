@@ -13,3 +13,4 @@ cdk-nonotify.jar
 cdk-fingerprint.jar
 cdk-extra.jar
 cdk-formula.jar
+cdk-testdata.jar
