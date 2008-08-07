@@ -70,6 +70,7 @@ public class ExtendedFingerprinterTest extends NewCDKTestCase {
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+		Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
 	}
 	
 	@Test
@@ -84,6 +85,7 @@ public class ExtendedFingerprinterTest extends NewCDKTestCase {
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+		Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
 	}
 	
 	
@@ -102,6 +104,7 @@ public class ExtendedFingerprinterTest extends NewCDKTestCase {
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+		Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
 	}
 	
 	@Test public void testExtendedFingerprinter_int_int() throws java.lang.Exception {
@@ -113,10 +116,12 @@ public class ExtendedFingerprinterTest extends NewCDKTestCase {
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+		Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
 	}
 	
 	/*
 	 * this test only works with allringsfinder in fingerprinter
+	 * shk3 2008-8-7: With the change of the extended fingerprinter in r11932, this works by default 
 	 */
 	@Test public void testDifferentRingFinders()throws Exception{
 		IFingerprinter fingerprinter = new ExtendedFingerprinter();
@@ -163,7 +168,7 @@ public class ExtendedFingerprinterTest extends NewCDKTestCase {
 		BitSet bs = fingerprinter.getFingerprint(ac1);
 		BitSet bs1 = fingerprinter.getFingerprint(ac2);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs1, bs));
-		
+		Assert.assertFalse(FingerprinterTool.isSubset(bs, bs1));
 	}
 	/*
 	 * this tests if a system with three single rings is not found (it should not) if looking
@@ -335,6 +340,9 @@ public class ExtendedFingerprinterTest extends NewCDKTestCase {
 
 	}	
 	
+	/*
+	 * The power of the extended fingerprinter could not distinguish these before the change in r11932
+	 */
 	@Test public void testChebi() throws java.lang.Exception
 	{
 		Molecule searchmol = null;
