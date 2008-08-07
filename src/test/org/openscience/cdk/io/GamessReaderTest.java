@@ -6,15 +6,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.GamessReader;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * A Test case for the "GamessReader" class.
@@ -28,7 +26,7 @@ import org.openscience.cdk.CDKTestCase;
  * @author Nathana&euml;l "M.Le_maudit" Mazuir
  */
 //TODO Update TestCase comments with appropriate information.
-public class GamessReaderTest extends CDKTestCase {
+public class GamessReaderTest extends ChemObjectIOTest  {
 
 	/**
 	 * The "BufferedReader" object used as input parameter for the "GamessReader" object.
@@ -45,29 +43,6 @@ public class GamessReaderTest extends CDKTestCase {
 	private GamessReader gamessReaderUnderTest;
 		
 	/**
-	 * Test suite.
-	 * 
-	 * <p><b>Performed tests</b>:
-	 * <ul>
-	 * 	<li>GamessReader general tests.</li>
-	 * </ul>
-	 * 
-	 * @return A test suite for GamessReaderTest class.
-	 */
-	public static Test suite() {
-		return new TestSuite(GamessReaderTest.class);
-	}
-	
-	/**
-	 * Constructs a new "GamessReaderTest" object given the test case's name.
-	 * 
-	 * @param	name	The test case name.
-	 */
-	public GamessReaderTest(String name) {
-		super(name);
-	}
-	
-	/**
 	 * Sets up the fixture. 
 	 * <p>This method is called before a test is executed and performs the 
 	 * following actions:
@@ -83,20 +58,19 @@ public class GamessReaderTest extends CDKTestCase {
 	 * @see junit.framework.TestCase#setUp()
 	 * @see java.io.FileReader#FileReader(java.lang.String)
 	 */
-	protected void setUp() throws Exception, FileNotFoundException {
-		super.setUp();
-
+	@Before public void setUp() throws Exception {
 		String filename = "data/gamess/Cl2O.log";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		this.inputReader = new BufferedReader(new InputStreamReader(ins));
 		this.gamessReaderUnderTest = new GamessReader(this.inputReader);
+        setChemObjectIO(this.gamessReaderUnderTest);
 	}
 	
 	/*
 	 * @see TestCase#tearDown()
 	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After public void tearDown() throws Exception {
+	    this.inputReader.close();
 		this.gamessReaderUnderTest.close(); // TODO Answer the question : Is it necessary ?
 	}
 
@@ -125,7 +99,7 @@ public class GamessReaderTest extends CDKTestCase {
 	 * @see org.openscience.cdk.io.GamessReader#GamessReader(Reader)
 	 */
 	//TODO Update method comments with appropriate information.
-	public void testGamessReader() {
+	@Test public void testGamessReader() {
 		Assert.assertNotNull("TEST: The inputReader is not null.", this.inputReader);
 		Assert.assertTrue("TEST: The inputReader is a Reader object.", this.inputReader instanceof Reader);
 		Assert.assertNotNull("TEST: The GamessReader object is constructed.", this.gamessReaderUnderTest);
@@ -150,11 +124,9 @@ public class GamessReaderTest extends CDKTestCase {
 	 * </ul>
 	 */
 	//TODO Update method comments with appropriate information.
-	public void testAccepts() {
-		assertNotNull("TEST: The GamessReader object is constructed", this.gamessReaderUnderTest);
-
-		assertFalse("TEST: GamessReader only accepts ChemFile object.", this.gamessReaderUnderTest.accepts(ChemObject.class));
-		assertTrue("TEST: GamessReader only accepts ChemFile object.", gamessReaderUnderTest.accepts(ChemFile.class));
+	@Test public void testAccepts() {
+		Assert.assertNotNull("The GamessReader object is not constructed", this.gamessReaderUnderTest);
+		Assert.assertTrue("GamessReader should accept an IChemFile object.", gamessReaderUnderTest.accepts(ChemFile.class));
 	}
 
 	/**
@@ -179,35 +151,9 @@ public class GamessReaderTest extends CDKTestCase {
 	 * @see org.openscience.cdk.ChemObject
 	 */
 	//TODO Update method comments with appropriate information.
-	public void testRead() throws CDKException {
+	@Test public void testRead() throws CDKException {
 		Assert.assertNotNull("TEST: The GamessReader object is constructed.", this.gamessReaderUnderTest);
 		Assert.assertTrue("TEST: read(IChemObject) returns a IChemObject.", this.gamessReaderUnderTest.read(new ChemFile()) instanceof ChemObject);
 	}
 
-	/**
-	 * Tests the <code>close()</code> method for the "GamessReader" object.
-	 * 
-	 * <p><b>Contract</b>:
-	 * <br><code>Preconditions</code>:
-	 * <ul>
-	 * 	<li>inputReader is opened.</li>
-	 * </ul>
-	 * Invariants:
-	 * <ul>
-	 * 	<li></li>
-	 * </ul>
-	 * <code>Postconditions</code>:
-	 * <ul>
-	 * 	<li>inputReader is closed.</li>
-	 * </ul>
-	 * 
-	 * <p><b>Implementation</b>:
-	 * <br>Both precondition and postcondition are not yet implemented. 
-	 * 
-	 * @see org.openscience.cdk.io.GamessReader
-	 * @see org.openscience.cdk.io.GamessReader#close()
-	 */
-	//TODO Update method comments with appropriate information.
-	public void testClose() {
-	}
 }
