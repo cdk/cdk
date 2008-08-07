@@ -2148,9 +2148,10 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
      */
     @Test public void testAllElementsRepresented() throws Exception {
     	AtomTypeFactory factory = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/data/cdk_atomtypes.xml",
+                "org/openscience/cdk/dict/data/cdk-atom-types.owl",
             NoNotificationChemObjectBuilder.getInstance()
         );
+    	Assert.assertTrue("Could not read the atom types", factory.getSize() != 0);
         String errorMessage = "Elements without atom type(s) defined in the XML:";
         final int testUptoAtomicNumber = 18; // TODO: 92 ?
         int elementsMissingTypes = 0;

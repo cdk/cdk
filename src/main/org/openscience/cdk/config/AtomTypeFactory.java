@@ -92,6 +92,7 @@ public class AtomTypeFactory {
     
     private final static String TXT_EXTENSION = "txt";
     private final static String XML_EXTENSION = "xml";
+    private final static String OWL_EXTENSION = "owl";
     
     private static LoggingTool logger;
     private static Map<String, AtomTypeFactory> tables = null;
@@ -157,6 +158,8 @@ public class AtomTypeFactory {
      *  <li>org/openscience/cdk/config/data/structgen_atomtypes.xml
      *  <li>org/openscience/cdk/config/data/mm2_atomtypes.xml
      *  <li>org/openscience/cdk/config/data/mmff94_atomtypes.xml
+     *  <li>org/openscience/cdk/dict/data/cdk-atom-types.owl
+     *  <li>org/openscience/cdk/dict/data/sybyl-atom-types.owl
      * </ul>
      *
      * @param  configFile             String the name of the data file
@@ -211,6 +214,8 @@ public class AtomTypeFactory {
             format = TXT_EXTENSION;
         } else if (fileName.endsWith(XML_EXTENSION)) {
             format = XML_EXTENSION;
+        } else if (fileName.endsWith(OWL_EXTENSION)) {
+            format = OWL_EXTENSION;
         }
         readConfiguration(ins, format, builder);
     }
@@ -224,6 +229,10 @@ public class AtomTypeFactory {
             } else if (format.equals(XML_EXTENSION)) {
                 return (IAtomTypeConfigurator) this.getClass().getClassLoader().
                  loadClass("org.openscience.cdk.config.CDKBasedAtomTypeConfigurator").
+                 newInstance();
+            } else if (format.equals(OWL_EXTENSION)) {
+                return (IAtomTypeConfigurator) this.getClass().getClassLoader().
+                 loadClass("org.openscience.cdk.config.OWLBasedAtomTypeConfigurator").
                  newInstance();
             }
 		} catch (Exception exc) {

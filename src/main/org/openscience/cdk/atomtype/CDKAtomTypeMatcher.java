@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 /**
  * Atom Type matcher... TO BE WRITTEN.
  *
- * <p>This class uses the <b>cdk/config/data/cdk_atomtypes.xml</b> 
+ * <p>This class uses the <code>org/openscience/cdk/dict/data/cdk-atom-types.owl</code> 
  * list. If there is not an atom type defined for the tested atom, then NULL 
  * is returned.
  *
@@ -68,7 +68,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     
     private CDKAtomTypeMatcher(IChemObjectBuilder builder, int mode) {
     	factory = AtomTypeFactory.getInstance(
-			"org/openscience/cdk/config/data/cdk_atomtypes.xml",
+			"org/openscience/cdk/dict/data/cdk-atom-types.owl",
 			builder
 		);
     	this.mode = mode;

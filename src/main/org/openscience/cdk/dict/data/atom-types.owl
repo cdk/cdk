@@ -48,12 +48,39 @@
     <rdfs:range rdf:resource="&xsd;string"/>
   </owl:DatatypeProperty>
 
+  <owl:DatatypeProperty rdf:ID="formalCharge">
+    <rdfs:domain rdf:resource="&at;AtomType"/>
+    <rdfs:range rdf:resource="&xsd;integer"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:ID="lonePairCount">
+    <rdfs:domain rdf:resource="&at;AtomType"/>
+    <rdfs:range rdf:resource="&xsd;nonNegativeInteger"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:ID="formalNeighbourCount">
+    <rdfs:domain rdf:resource="&at;AtomType"/>
+    <rdfs:range rdf:resource="&xsd;nonNegativeInteger"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:ID="piBondCount">
+    <rdfs:domain rdf:resource="&at;AtomType"/>
+    <rdfs:range rdf:resource="&xsd;nonNegativeInteger"/>
+  </owl:DatatypeProperty>
+
   <!-- the hybridization states -->
-  
+
+  <Hybridization rdf:ID="s"/>
+  <Hybridization rdf:ID="sp1"/>
+  <Hybridization rdf:ID="sp2"/>
   <Hybridization rdf:ID="sp3"/>
-  
+  <Hybridization rdf:ID="octahedral"/>
+  <Hybridization rdf:ID="sp3d2"/>
+  <Hybridization rdf:ID="planar"/>
+  <Hybridization rdf:ID="tetrahedral"/>
+
   <!-- general atom type categories -->
-  
+
   <AtomTypeCategory rdf:ID="radical"/>
-  
+
 </rdf:RDF>

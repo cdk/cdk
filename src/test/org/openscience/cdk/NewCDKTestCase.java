@@ -26,6 +26,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -260,6 +261,20 @@ public class NewCDKTestCase {
 	    }
 	}
 
+	/**
+	 * This test allows people to use the {@link TestMethod} annotation for
+	 * methods that are testing in other classes than identified with {@link TestClass}.
+	 * Bit of a workaround for the current set up, but useful in situations where
+	 * a methods is rather untestable, such as SAXHandler's endElement() methods.
+	 * 
+	 * <p>Should be used only in these rare cases.
+	 */
+    @Test
+    public void testedByOtherClass() {
+    	// several methods, like endElement() are not directly tested
+    	Assert.assertTrue(true);
+    }
+	
   /**
    * Asserts that the given subString is present in the fullString.
    *

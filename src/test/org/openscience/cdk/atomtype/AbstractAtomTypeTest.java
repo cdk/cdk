@@ -49,10 +49,10 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 
-	private final static String ATOMTYPE_LIST = "cdk_atomtypes.xml"; 
+	private final static String ATOMTYPE_LIST = "cdk-atom-types.owl"; 
 	
 	private final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
-		"org/openscience/cdk/config/data/" + ATOMTYPE_LIST, NoNotificationChemObjectBuilder.getInstance()
+		"org/openscience/cdk/dict/data/" + ATOMTYPE_LIST, NoNotificationChemObjectBuilder.getInstance()
     );
 	
 	/**

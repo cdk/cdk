@@ -143,14 +143,14 @@ public class CDKHueckelAromaticityDetector {
                 } else {
                     if (factory == null) {
 						factory = AtomTypeFactory.getInstance(
-							"org/openscience/cdk/config/data/cdk_atomtypes.xml",
+							"org/openscience/cdk/dict/data/cdk-atom-types.owl",
 							ringAtom.getBuilder()
 						);
 					}
 					IAtomType type = factory.getAtomType(ringAtom.getAtomTypeName());
-					if (type.getProperty(CDKConstants.PI_BOND_COUNT) != null &&
-						(Integer)type.getProperty(CDKConstants.PI_BOND_COUNT) > 0) {
-						electronCount += 1;
+					Object property = type.getProperty(CDKConstants.PI_BOND_COUNT);
+					if (property != null && property instanceof Integer) {
+						electronCount += ((Integer)property).intValue();
 					}
 				}
 			} else if (ringAtom.getHybridization() != null &&

@@ -78,7 +78,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 public class CDKHydrogenAdder {
 
     private AtomTypeFactory atomTypeList;
-    private final static String ATOM_TYPE_LIST = "org/openscience/cdk/config/data/cdk_atomtypes.xml";
+    private final static String ATOM_TYPE_LIST = "org/openscience/cdk/dict/data/cdk-atom-types.owl";
 
     private static Map<String,CDKHydrogenAdder> tables = new Hashtable<String,CDKHydrogenAdder>(3);
 

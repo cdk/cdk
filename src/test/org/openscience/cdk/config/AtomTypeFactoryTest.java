@@ -147,6 +147,66 @@ public class AtomTypeFactoryTest extends NewCDKTestCase {
 	}
 
     @Test
+	public void testGetAtomTypeFromOWL() throws Exception {
+        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/cdk-atom-types.owl", 
+            new ChemObject().getBuilder()
+        );
+		IAtomType atomType = factory.getAtomType("C.sp3");
+		Assert.assertNotNull(atomType);
+        Assert.assertEquals("C", atomType.getSymbol());
+        Assert.assertEquals("C.sp3", atomType.getAtomTypeName());
+        Assert.assertEquals(IAtomType.Hybridization.SP3, atomType.getHybridization());
+        Assert.assertEquals(0, atomType.getFormalCharge().intValue());
+        Assert.assertEquals(4, atomType.getFormalNeighbourCount().intValue());
+        Assert.assertNotNull(atomType.getProperty(CDKConstants.LONE_PAIR_COUNT));
+        Assert.assertTrue(atomType.getProperty(CDKConstants.LONE_PAIR_COUNT) instanceof Integer);
+        Assert.assertEquals(0, ((Integer)atomType.getProperty(CDKConstants.LONE_PAIR_COUNT)).intValue());
+        Assert.assertNotNull(atomType.getProperty(CDKConstants.PI_BOND_COUNT));
+        Assert.assertTrue(atomType.getProperty(CDKConstants.PI_BOND_COUNT) instanceof Integer);
+        Assert.assertEquals(0, ((Integer)atomType.getProperty(CDKConstants.PI_BOND_COUNT)).intValue());
+        
+        atomType = factory.getAtomType("N.sp2.radical");
+        Assert.assertNotNull(atomType);
+        Assert.assertEquals("N", atomType.getSymbol());
+        Assert.assertEquals("N.sp2.radical", atomType.getAtomTypeName());
+        Assert.assertEquals(IAtomType.Hybridization.SP2, atomType.getHybridization());
+        Assert.assertEquals(0, atomType.getFormalCharge().intValue());
+        Assert.assertEquals(1, atomType.getFormalNeighbourCount().intValue());
+        Assert.assertNotNull(atomType.getProperty(CDKConstants.LONE_PAIR_COUNT));
+        Assert.assertTrue(atomType.getProperty(CDKConstants.LONE_PAIR_COUNT) instanceof Integer);
+        Assert.assertEquals(1, ((Integer)atomType.getProperty(CDKConstants.LONE_PAIR_COUNT)).intValue());
+        Assert.assertNotNull(atomType.getProperty(CDKConstants.PI_BOND_COUNT));
+        Assert.assertTrue(atomType.getProperty(CDKConstants.PI_BOND_COUNT) instanceof Integer);
+        Assert.assertEquals(1, ((Integer)atomType.getProperty(CDKConstants.PI_BOND_COUNT)).intValue());
+
+        atomType = factory.getAtomType("N.planar3");
+        Assert.assertNotNull(atomType);
+        Assert.assertEquals("N", atomType.getSymbol());
+        Assert.assertEquals("N.planar3", atomType.getAtomTypeName());
+        Assert.assertEquals(IAtomType.Hybridization.PLANAR3, atomType.getHybridization());
+        Assert.assertEquals(0, atomType.getFormalCharge().intValue());
+        Assert.assertEquals(3, atomType.getFormalNeighbourCount().intValue());
+        Assert.assertNotNull(atomType.getProperty(CDKConstants.LONE_PAIR_COUNT));
+        Assert.assertTrue(atomType.getProperty(CDKConstants.LONE_PAIR_COUNT) instanceof Integer);
+        Assert.assertEquals(1, ((Integer)atomType.getProperty(CDKConstants.LONE_PAIR_COUNT)).intValue());
+        Assert.assertNotNull(atomType.getProperty(CDKConstants.PI_BOND_COUNT));
+        Assert.assertTrue(atomType.getProperty(CDKConstants.PI_BOND_COUNT) instanceof Integer);
+        Assert.assertEquals(0, ((Integer)atomType.getProperty(CDKConstants.PI_BOND_COUNT)).intValue());
+    }
+
+    @Test
+	public void testGetAtomTypeFromOWL_Sybyl() throws Exception {
+        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/sybyl-atom-types.owl", 
+            new ChemObject().getBuilder()
+        );
+		IAtomType atomType = factory.getAtomType("C.3");
+		
+        Assert.assertNotNull(atomType);
+        Assert.assertEquals("C", atomType.getSymbol());
+        Assert.assertEquals("C.3", atomType.getAtomTypeName());
+	}
+
+    @Test
 	public void testGetAtomTypeFromJmol() throws Exception {
         AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", 
                 new ChemObject().getBuilder());
@@ -223,12 +283,7 @@ public class AtomTypeFactoryTest extends NewCDKTestCase {
     	Assert.assertNotNull(schemaDoc.getFirstChild());
     	Assert.assertEquals("xsd:schema", schemaDoc.getFirstChild().getNodeName());
     }
-    
-    @Test
-	public void testXMLValidityCDK() throws Exception {
-    	assertValidCML("org/openscience/cdk/config/data/cdk_atomtypes.xml", "Hybrid");
-    }
-        
+
     @Test
 	public void testXMLValidityMM2() throws Exception {
     	assertValidCML("org/openscience/cdk/config/data/mm2_atomtypes.xml", "MM2");

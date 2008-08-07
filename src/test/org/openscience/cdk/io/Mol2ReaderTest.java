@@ -109,6 +109,15 @@ public class Mol2ReaderTest extends ChemObjectIOTest {
         Assert.assertEquals("H", m.getAtom(6).getSymbol());
     }
 
+    @Test public void testReadingIDs() throws Exception {
+        String filename = "data/mol2/fromWebsite.mol2";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        Mol2Reader reader = new Mol2Reader(ins);
+        IMolecule molecule = (IMolecule)reader.read(new Molecule());
+        Assert.assertNotNull(molecule);
+        IMolecule reference = (IMolecule)molecule.clone();
+        Assert.assertEquals("C1", reference.getAtom(0).getID());
+    }
     
     /**
      * Tests the Mol2Reader with about 30% of the NCI molecules.

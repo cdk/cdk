@@ -25,6 +25,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest;
+import org.openscience.cdk.config.atomtypes.OWLAtomTypeMappingHandlerTest;
+import org.openscience.cdk.config.atomtypes.OWLAtomTypeMappingReaderTest;
 import org.openscience.cdk.coverage.AtomtypeCoverageTest;
 import org.openscience.cdk.graph.PathToolsTest;
 import org.openscience.cdk.graph.SpanningTreeTest;
@@ -53,6 +55,10 @@ public class MatomtypeTests {
         
         // cdk.atomtype
         suite.addTest(new JUnit4TestAdapter(CDKAtomTypeMatcherTest.class));
+
+        // cdk.config.atomtype
+        suite.addTest(new JUnit4TestAdapter(OWLAtomTypeMappingHandlerTest.class));
+        suite.addTest(new JUnit4TestAdapter(OWLAtomTypeMappingReaderTest.class));
 
         return suite;
     }

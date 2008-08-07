@@ -57,7 +57,7 @@ public class LonePairElectronChecker {
 	private void createAtomTypeFactory(IChemObjectBuilder builder) {
 		if (factory == null) {
 			factory = AtomTypeFactory.getInstance(
-				"org/openscience/cdk/config/data/cdk_atomtypes.xml", builder
+				"org/openscience/cdk/dict/data/cdk-atom-types.owl", builder
 			);
 		}
 	}

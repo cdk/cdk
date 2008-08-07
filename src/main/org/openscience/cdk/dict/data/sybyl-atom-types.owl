@@ -1,0 +1,391 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF [
+  <!ENTITY rdf  "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+  <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+  <!ENTITY xsd  "http://www.w3.org/2001/XMLSchema#" >
+  <!ENTITY owl  "http://www.w3.org/2002/07/owl#" >
+  <!ENTITY elem "http://cdk.sf.net/ontologies/elements#" >
+  <!ENTITY at   "http://cdk.sf.net/ontologies/atomtypes#" >
+  <!ENTITY sybylat "http://cdk.sf.net/ontologies/atomtype/sybyl#" >
+]>
+<rdf:RDF xmlns="&sybylat;" xml:base="&sybylat;"
+  xmlns:owl="&owl;"
+  xmlns:at="&at;"
+  xmlns:elem="&elem;"
+  xmlns:rdf="&rdf;"
+  xmlns:rdfs="&rdfs;"
+  xmlns:dc="http://dublincore.org/"
+>
+
+  <owl:Ontology rdf:about="">
+    <rdfs:label>Sybyl Atom Type Ontology</rdfs:label>
+    <owl:versionInfo>$Id$</owl:versionInfo>
+  </owl:Ontology>
+
+  <owl:Class rdf:about="&at;AtomType"/>
+  <owl:Class rdf:about="&at;AtomTypeCategory"/>
+  <owl:ObjectProperty rdf:about="&at;categorizedAs"/>
+  <owl:ObjectProperty rdf:about="&at;hasElement"/>
+  <owl:ObjectProperty rdf:about="&at;hybridization"/>
+
+  <owl:DatatypeProperty rdf:about="&at;formalCharge"/>
+  <owl:DatatypeProperty rdf:about="&at;lonePairCount"/>
+  <owl:DatatypeProperty rdf:about="&at;formalNeighbourCount"/>
+  <owl:DatatypeProperty rdf:about="&at;piBondCount"/>
+
+  <!-- The hybridizations from &at; -->
+  <owl:Thing rdf:about="&at;sp1"/>
+  <owl:Thing rdf:about="&at;sp2"/>
+  <owl:Thing rdf:about="&at;sp3"/>
+  <owl:Thing rdf:about="&at;s"/>
+  <owl:Thing rdf:about="&at;planar"/>
+  <owl:Thing rdf:about="&at;planar3"/>
+  <owl:Thing rdf:about="&at;sp3d2"/>
+  <owl:Thing rdf:about="&at;octahedral"/>
+  <owl:Thing rdf:about="&at;tetrahedral"/>
+
+  <!-- The Elements from &elem; -->
+  <owl:Thing rdf:about="&elem;H"/>
+  <owl:Thing rdf:about="&elem;He"/>
+  <owl:Thing rdf:about="&elem;Li"/>
+  <owl:Thing rdf:about="&elem;Be"/>
+  <owl:Thing rdf:about="&elem;B"/>
+  <owl:Thing rdf:about="&elem;C"/>
+  <owl:Thing rdf:about="&elem;N"/>
+  <owl:Thing rdf:about="&elem;O"/>
+  <owl:Thing rdf:about="&elem;F"/>
+  <owl:Thing rdf:about="&elem;Ne"/>
+  <owl:Thing rdf:about="&elem;Na"/>
+  <owl:Thing rdf:about="&elem;Mg"/>
+  <owl:Thing rdf:about="&elem;Al"/>
+  <owl:Thing rdf:about="&elem;Si"/>
+  <owl:Thing rdf:about="&elem;P"/>
+  <owl:Thing rdf:about="&elem;S"/>
+  <owl:Thing rdf:about="&elem;Cl"/>
+  <owl:Thing rdf:about="&elem;Ar"/>
+  <owl:Thing rdf:about="&elem;K"/>
+  <owl:Thing rdf:about="&elem;Ca"/>
+  <owl:Thing rdf:about="&elem;Sc"/>
+  <owl:Thing rdf:about="&elem;Ti"/>
+  <owl:Thing rdf:about="&elem;V"/>
+  <owl:Thing rdf:about="&elem;Cr"/>
+  <owl:Thing rdf:about="&elem;Mn"/>
+  <owl:Thing rdf:about="&elem;Fe"/>
+  <owl:Thing rdf:about="&elem;Co"/>
+  <owl:Thing rdf:about="&elem;Ni"/>
+  <owl:Thing rdf:about="&elem;Cu"/>
+  <owl:Thing rdf:about="&elem;Zn"/>
+  <owl:Thing rdf:about="&elem;Ga"/>
+  <owl:Thing rdf:about="&elem;Ge"/>
+  <owl:Thing rdf:about="&elem;As"/>
+  <owl:Thing rdf:about="&elem;Se"/>
+  <owl:Thing rdf:about="&elem;Br"/>
+  <owl:Thing rdf:about="&elem;Kr"/>
+  <owl:Thing rdf:about="&elem;Rb"/>
+  <owl:Thing rdf:about="&elem;Sr"/>
+  <owl:Thing rdf:about="&elem;Y"/>
+  <owl:Thing rdf:about="&elem;Zr"/>
+  <owl:Thing rdf:about="&elem;Nb"/>
+  <owl:Thing rdf:about="&elem;Mo"/>
+  <owl:Thing rdf:about="&elem;Tc"/>
+  <owl:Thing rdf:about="&elem;Ru"/>
+  <owl:Thing rdf:about="&elem;Rh"/>
+  <owl:Thing rdf:about="&elem;Pd"/>
+  <owl:Thing rdf:about="&elem;Ag"/>
+  <owl:Thing rdf:about="&elem;Cd"/>
+  <owl:Thing rdf:about="&elem;In"/>
+  <owl:Thing rdf:about="&elem;Sn"/>
+  <owl:Thing rdf:about="&elem;Sb"/>
+  <owl:Thing rdf:about="&elem;Te"/>
+  <owl:Thing rdf:about="&elem;I"/>
+  <owl:Thing rdf:about="&elem;Xe"/>
+  <owl:Thing rdf:about="&elem;Cs"/>
+  <owl:Thing rdf:about="&elem;Ba"/>
+  <owl:Thing rdf:about="&elem;La"/>
+  <owl:Thing rdf:about="&elem;Ce"/>
+  <owl:Thing rdf:about="&elem;Pr"/>
+  <owl:Thing rdf:about="&elem;Nd"/>
+  <owl:Thing rdf:about="&elem;Pm"/>
+  <owl:Thing rdf:about="&elem;Sm"/>
+  <owl:Thing rdf:about="&elem;Eu"/>
+  <owl:Thing rdf:about="&elem;Gd"/>
+  <owl:Thing rdf:about="&elem;Tb"/>
+  <owl:Thing rdf:about="&elem;Dy"/>
+  <owl:Thing rdf:about="&elem;Ho"/>
+  <owl:Thing rdf:about="&elem;Er"/>
+  <owl:Thing rdf:about="&elem;Tm"/>
+  <owl:Thing rdf:about="&elem;Yb"/>
+  <owl:Thing rdf:about="&elem;Lu"/>
+  <owl:Thing rdf:about="&elem;Hf"/>
+  <owl:Thing rdf:about="&elem;Ta"/>
+  <owl:Thing rdf:about="&elem;W"/>
+  <owl:Thing rdf:about="&elem;Re"/>
+  <owl:Thing rdf:about="&elem;Os"/>
+  <owl:Thing rdf:about="&elem;Ir"/>
+  <owl:Thing rdf:about="&elem;Pt"/>
+  <owl:Thing rdf:about="&elem;Au"/>
+  <owl:Thing rdf:about="&elem;Hg"/>
+  <owl:Thing rdf:about="&elem;Tl"/>
+  <owl:Thing rdf:about="&elem;Pb"/>
+  <owl:Thing rdf:about="&elem;Bi"/>
+  <owl:Thing rdf:about="&elem;Po"/>
+  <owl:Thing rdf:about="&elem;At"/>
+  <owl:Thing rdf:about="&elem;Rn"/>
+  <owl:Thing rdf:about="&elem;Fr"/>
+  <owl:Thing rdf:about="&elem;Ra"/>
+  <owl:Thing rdf:about="&elem;Ac"/>
+  <owl:Thing rdf:about="&elem;Th"/>
+  <owl:Thing rdf:about="&elem;Pa"/>
+  <owl:Thing rdf:about="&elem;U"/>
+  <owl:Thing rdf:about="&elem;Np"/>
+  <owl:Thing rdf:about="&elem;Pu"/>
+  <owl:Thing rdf:about="&elem;Am"/>
+  <owl:Thing rdf:about="&elem;Cm"/>
+  <owl:Thing rdf:about="&elem;Bk"/>
+  <owl:Thing rdf:about="&elem;Cf"/>
+  <owl:Thing rdf:about="&elem;Es"/>
+  <owl:Thing rdf:about="&elem;Fm"/>
+  <owl:Thing rdf:about="&elem;Md"/>
+  <owl:Thing rdf:about="&elem;No"/>
+  <owl:Thing rdf:about="&elem;Lr"/>
+  <owl:Thing rdf:about="&elem;Rf"/>
+  <owl:Thing rdf:about="&elem;Db"/>
+  <owl:Thing rdf:about="&elem;Sg"/>
+  <owl:Thing rdf:about="&elem;Bh"/>
+  <owl:Thing rdf:about="&elem;Hs"/>
+  <owl:Thing rdf:about="&elem;Mt"/>
+  <owl:Thing rdf:about="&elem;Ds"/>
+  <owl:Thing rdf:about="&elem;Rg"/>
+  <owl:Thing rdf:about="&elem;Uub"/>
+
+  <!-- the atom types -->
+
+  <at:AtomType rdf:ID="C.3">
+    <at:hasElement rdf:resource="&elem;C"/>
+    <at:hybridization rdf:resource="&at;sp3"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="C.2">
+    <at:hasElement rdf:resource="&elem;C"/>
+    <at:hybridization rdf:resource="&at;sp2"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="C.ar">
+    <at:hasElement rdf:resource="&elem;C"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="C.1">
+    <at:hasElement rdf:resource="&elem;C"/>
+    <at:hybridization rdf:resource="&at;sp1"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="N.3">
+    <at:hasElement rdf:resource="&elem;N"/>
+    <at:hybridization rdf:resource="&at;sp3"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="N.2">
+    <at:hasElement rdf:resource="&elem;N"/>
+    <at:hybridization rdf:resource="&at;sp2"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="N.1">
+    <at:hasElement rdf:resource="&elem;N"/>
+    <at:hybridization rdf:resource="&at;sp1"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="O.3">
+    <at:hasElement rdf:resource="&elem;O"/>
+    <at:hybridization rdf:resource="&at;sp3"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="O.2">
+    <at:hasElement rdf:resource="&elem;O"/>
+    <at:hybridization rdf:resource="&at;sp2"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="P.3">
+    <at:hasElement rdf:resource="&elem;P"/>
+    <at:hybridization rdf:resource="&at;sp3"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="H">
+    <at:hasElement rdf:resource="&elem;H"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="N.pl3">
+    <at:hasElement rdf:resource="&elem;N"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="N.4">
+    <at:formalCharge>1</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;N"/>
+    <at:hybridization rdf:resource="&at;sp3"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="N.ar">
+    <at:hasElement rdf:resource="&elem;N"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="N.am">
+    <at:hasElement rdf:resource="&elem;N"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="C.cat">
+    <at:formalCharge>1</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;C"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="H">
+    <at:hasElement rdf:resource="&elem;H"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="H.spc">
+    <at:hasElement rdf:resource="&elem;H"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="H.t3p">
+    <at:hasElement rdf:resource="&elem;H"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="C.cat">
+    <at:formalCharge>+1</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;C"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Du.C">
+    <at:hasElement rdf:resource="&elem;C"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Li">
+    <at:hasElement rdf:resource="&elem;Li"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Na">
+    <at:hasElement rdf:resource="&elem;Na"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Mg">
+    <at:hasElement rdf:resource="&elem;Mg"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Al">
+    <at:hasElement rdf:resource="&elem;Al"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="O.co2">
+    <at:hasElement rdf:resource="&elem;O"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Si">
+    <at:hasElement rdf:resource="&elem;Si"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="O.spc">
+    <at:hasElement rdf:resource="&elem;O"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="K">
+    <at:hasElement rdf:resource="&elem;K"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="O.t3p">
+    <at:hasElement rdf:resource="&elem;O"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Ca">
+    <at:hasElement rdf:resource="&elem;Ca"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="S.3">
+    <at:hasElement rdf:resource="&elem;S"/>
+    <at:hybridization rdf:resource="&at;sp3"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="S.2">
+    <at:hasElement rdf:resource="&elem;S"/>
+    <at:hybridization rdf:resource="&at;sp2"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="S.O">
+    <at:hasElement rdf:resource="&elem;S"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="S.O2">
+    <at:hasElement rdf:resource="&elem;S"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Cr.th">
+    <at:hasElement rdf:resource="&elem;Cr"/>
+    <at:hybridization rdf:resource="&at;tetrahedral"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Cr.oh">
+    <at:hasElement rdf:resource="&elem;Cr"/>
+    <at:hybridization rdf:resource="&at;octahedral"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Mn">
+    <at:hasElement rdf:resource="&elem;Mn"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Fe">
+    <at:hasElement rdf:resource="&elem;Fe"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Co.oh">
+    <at:hasElement rdf:resource="&elem;Co"/>
+    <at:hybridization rdf:resource="&at;octahedral"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="F">
+    <at:hasElement rdf:resource="&elem;F"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Cu">
+    <at:hasElement rdf:resource="&elem;Cu"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Cl">
+    <at:hasElement rdf:resource="&elem;Cl"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Br">
+    <at:hasElement rdf:resource="&elem;Br"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Zn">
+    <at:hasElement rdf:resource="&elem;Zn"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Se">
+    <at:hasElement rdf:resource="&elem;Se"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="I">
+    <at:hasElement rdf:resource="&elem;I"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Mo">
+    <at:hasElement rdf:resource="&elem;Mo"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Sn">
+    <at:hasElement rdf:resource="&elem;Sn"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="LP"/>
+
+  <at:AtomType rdf:ID="Du"/>
+
+  <at:AtomType rdf:ID="Any"/>
+
+  <at:AtomType rdf:ID="Hal"/>
+
+  <at:AtomType rdf:ID="Het"/>
+
+  <at:AtomType rdf:ID="Hev"/>
+
+  <at:AtomType rdf:ID="X"/>
+
+</rdf:RDF>

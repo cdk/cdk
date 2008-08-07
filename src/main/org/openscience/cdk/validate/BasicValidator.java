@@ -229,7 +229,7 @@ public class BasicValidator extends AbstractValidator {
         );
         try {
             AtomTypeFactory structgenATF = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/data/cdk_atomtypes.xml", 
+                "org/openscience/cdk/dict/data/cdk-atom-types.owl", 
                 bond.getBuilder()
             );
             for (int i=0; i<bond.getAtomCount(); i++) {
@@ -312,7 +312,7 @@ public class BasicValidator extends AbstractValidator {
         );
         try {
             AtomTypeFactory structgenATF = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/data/cdk_atomtypes.xml", 
+                "org/openscience/cdk/dict/data/cdk-atom-types.owl", 
                 atom.getBuilder()
             );
             int bos = (int)molecule.getBondOrderSum(atom);

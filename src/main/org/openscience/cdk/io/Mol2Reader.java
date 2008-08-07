@@ -155,7 +155,10 @@ public class Mol2Reader extends DefaultChemObjectReader {
      
      public boolean accepts(IChemObject object) {
          if (object instanceof IChemFile) {
+             return true;
          } else if (object instanceof IChemModel) {
+             return true;
+         } else if (object instanceof IMolecule) {
              return true;
          }
          return false;

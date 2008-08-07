@@ -48,7 +48,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 public class CDKValencyChecker implements IValencyChecker {
 
     private AtomTypeFactory atomTypeList;
-    private final static String ATOM_TYPE_LIST = "org/openscience/cdk/config/data/cdk_atomtypes.xml";
+    private final static String ATOM_TYPE_LIST = "org/openscience/cdk/dict/data/cdk-atom-types.owl";
 
     private static Map<String,CDKValencyChecker> tables = new Hashtable<String,CDKValencyChecker>(3);
 

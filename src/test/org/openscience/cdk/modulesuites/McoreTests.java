@@ -23,13 +23,17 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.CDKConstantsTest;
 import org.openscience.cdk.config.AtomTypeFactoryTest;
 import org.openscience.cdk.config.CDKBasedAtomTypeConfiguratorTest;
 import org.openscience.cdk.config.IsotopeFactoryTest;
+import org.openscience.cdk.config.OWLBasedAtomTypeConfiguratorTest;
 import org.openscience.cdk.config.TXTBasedAtomTypeConfiguratorTest;
 import org.openscience.cdk.config.atomtypes.AtomTypeHandlerTest;
 import org.openscience.cdk.config.atomtypes.AtomTypeReaderTest;
+import org.openscience.cdk.config.atomtypes.OWLAtomTypeHandlerTest;
+import org.openscience.cdk.config.atomtypes.OWLAtomTypeReaderTest;
 import org.openscience.cdk.config.isotopes.IsotopeHandlerTest;
 import org.openscience.cdk.config.isotopes.IsotopeReaderTest;
 import org.openscience.cdk.coverage.CoreCoverageTest;
@@ -63,8 +67,11 @@ public class McoreTests {
         suite.addTest(new JUnit4TestAdapter(AtomTypeFactoryTest.class));
         suite.addTest(new JUnit4TestAdapter(CDKBasedAtomTypeConfiguratorTest.class));
         suite.addTest(new JUnit4TestAdapter(TXTBasedAtomTypeConfiguratorTest.class));
+        suite.addTest(new JUnit4TestAdapter(OWLBasedAtomTypeConfiguratorTest.class));
         suite.addTest(new JUnit4TestAdapter(AtomTypeReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(AtomTypeHandlerTest.class));
+        suite.addTest(new JUnit4TestAdapter(OWLAtomTypeReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(OWLAtomTypeHandlerTest.class));
         suite.addTest(new JUnit4TestAdapter(IsotopeReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(IsotopeHandlerTest.class));
         
