@@ -577,7 +577,7 @@
 	<target id="jarTestdata" name="jarTestdata" description="Creates jar files with test data.">
 		<mkdir dir="${dist}/jar"/>
         <jar jarfile="${dist}/jar/cdk-testdata.jar">
-            <fileset dir="${src}">
+            <fileset dir="${src}/test">
                 <include name="data/**/*" />
             </fileset>
         </jar>
