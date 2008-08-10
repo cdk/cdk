@@ -23,39 +23,36 @@
  */
 package org.openscience.cdk.graph;
 
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.*;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.templates.MoleculeFactory;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.templates.MoleculeFactory;
-
 /**
- * @cdk.module test-atomtype
+ * @cdk.module test-standard
  */
 public class PathToolsTest extends NewCDKTestCase {
     private static Molecule molecule;
+    private static SmilesParser sp;
 
     @BeforeClass
     public static void setUp() {
         molecule = MoleculeFactory.makeAlphaPinene();
+        sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
     @Test
@@ -149,7 +146,6 @@ public class PathToolsTest extends NewCDKTestCase {
         IAtomContainer atomContainer = null;
         IAtom start = null;
         List paths = null;
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         atomContainer = sp.parseSmiles("c1cc2ccccc2cc1");
         start = atomContainer.getAtom(0);
         paths = PathTools.getPathsOfLength(atomContainer, start, 1);
@@ -163,7 +159,6 @@ public class PathToolsTest extends NewCDKTestCase {
 
     @Test
     public void testGetAllPaths_IAtomContainer_IAtom_IAtom() throws Exception {
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
 
         IAtom start = atomContainer.getAtom(0);
@@ -190,7 +185,6 @@ public class PathToolsTest extends NewCDKTestCase {
 
     @Test
     public void testGetVertexCountAtDistance_IAtomContainer_int() throws Exception {
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("c12ccccc1cccc2");
         Assert.assertEquals(11, PathTools.getVertexCountAtDistance(atomContainer, 1));
         Assert.assertEquals(14, PathTools.getVertexCountAtDistance(atomContainer, 2));
@@ -210,7 +204,6 @@ public class PathToolsTest extends NewCDKTestCase {
 
     @Test
     public void testGetMolecularGraphRadius_IAtomContainer() throws Exception {
-    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CCCC");
         Assert.assertEquals(2, PathTools.getMolecularGraphRadius(atomContainer));
         atomContainer = sp.parseSmiles("C1C(N)CC1");
@@ -221,7 +214,6 @@ public class PathToolsTest extends NewCDKTestCase {
 
     @Test
     public void testGetMolecularGraphDiameter_IAtomContainer() throws Exception {
-    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CCCC");
         Assert.assertEquals(3, PathTools.getMolecularGraphDiameter(atomContainer));
         atomContainer = sp.parseSmiles("C1C(N)CC1");
@@ -284,15 +276,39 @@ public class PathToolsTest extends NewCDKTestCase {
     	Assert.assertEquals(2, floydAPSP[2][4]);
     	Assert.assertEquals(1, floydAPSP[3][4]);
     }
+    
     @Test
-    public void testDepthFirstTargetSearch_IAtomContainer_IAtom_IAtom_IAtomContainer() {
-    	Assert.fail("Missing JUnit test");
+    public void testDepthFirstTargetSearch_IAtomContainer_IAtom_IAtom_IAtomContainer() throws CDKException {
+    	IMolecule molecule = sp.parseSmiles("C(COF)(Br)NC");
+        Iterator<IAtom> atoms = molecule.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            atom.setFlag(CDKConstants.VISITED, false);
+        }
+
+        IAtomContainer paths = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom root = molecule.getAtom(0);
+        IAtom target = null;
+
+        atoms = molecule.atoms();
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            if (atom.getSymbol().equals("F")) {
+                target = atom;
+                break;
+            }
+        }
+
+        boolean status = PathTools.depthFirstTargetSearch(molecule, root, target, paths);
+        Assert.assertTrue(status);
+        Assert.assertEquals(3, paths.getAtomCount());
+        Assert.assertEquals(target, paths.getAtom(2));
     }
+    
     @Test
     public void testBreadthFirstSearch_IAtomContainer_List_IMolecule() throws Exception {
-        IAtomContainer atomContainer = null;
-        IAtom start = null;
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer;
+        IAtom start;
         atomContainer = sp.parseSmiles("CCCC");
         PathTools.resetFlags(atomContainer);
         start = atomContainer.getAtom(0);
@@ -305,9 +321,8 @@ public class PathToolsTest extends NewCDKTestCase {
     
     @Test
     public void testBreadthFirstSearch_IAtomContainer_List_IMolecule_int() throws Exception {
-        IAtomContainer atomContainer = null;
-        IAtom start = null;
-        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer;
+        IAtom start;
         atomContainer = sp.parseSmiles("CCCC");
         PathTools.resetFlags(atomContainer);
         start = atomContainer.getAtom(0);
