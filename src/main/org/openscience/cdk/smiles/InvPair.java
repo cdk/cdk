@@ -70,67 +70,110 @@ public class InvPair implements java.io.Serializable{
     public long getLast() {
         return last;
     }
-  
-  /*
-   * Todo make the following robust!
-   */
+
+    /**
+     * Set the value of the seed.
+     * <p/>
+     * Note that use of this method implies that a new prime number is desired.
+     * If so, make sure to call {@link #setPrime()} to ensure that a new prime
+     * number is obtained using the new seed.
+     * <p/>
+     * Todo make the following robust!
+     *
+     * @see #getCurr()
+     * @see #setPrime()
+     */
     @TestMethod("testSetCurr_long")
-  public void setCurr(long newCurr) {
-    curr = newCurr;
-  }
+    public void setCurr(long newCurr) {
+        curr = newCurr;
+    }
 
+    /**
+     * Get the current seed.
+     *
+     * @return The seed
+     * @see #setCurr(long)
+     * @see #setPrime()
+     * @see #getPrime()
+     */
     @TestMethod("testGetCurr")
-  public long getCurr() {
-    return curr;
-  }
+    public long getCurr() {
+        return curr;
+    }
 
+    /**
+     * Check whether this instance equals another instance.
+     *
+     * @param e An instance of InvPair
+     * @return true if they are equal, false otherwise
+     */
     @TestMethod("testEquals_Object")
-  public boolean equals(Object e){
-    if(e instanceof InvPair){
-      InvPair o = (InvPair)e;
+    public boolean equals(Object e) {
+        if (e instanceof InvPair) {
+            InvPair o = (InvPair) e;
 //      logger.debug("Last " + last + "o.last " + o.getLast() + " curr " + curr + " o.curr " + o.getCurr() + " equals " +(last == o.getLast() && curr == o.getCurr()));
-      return (last == o.getLast() && curr == o.getCurr());
+            return (last == o.getLast() && curr == o.getCurr());
+        } else {
+            return false;
+        }
     }
-    else {
-      return false;
-    }
-  }
 
     @TestMethod("testSetLast_long")
-  public void setLast(long newLast) {
-    last = newLast;
-  }
+    public void setLast(long newLast) {
+        last = newLast;
+    }
 
     @TestMethod("testSetAtom_IAtom")
-  public void setAtom(IAtom newAtom) {
-    atom = newAtom;
-  }
+    public void setAtom(IAtom newAtom) {
+        atom = newAtom;
+    }
 
     @TestMethod("testGetAtom")
-  public IAtom getAtom() {
-    return atom;
-  }
+    public IAtom getAtom() {
+        return atom;
+    }
 
     @TestMethod("testCommit")
-  public void commit(){
-    atom.setProperty(CANONICAL_LABEL, Long.valueOf(curr));
-  }
+    public void commit() {
+        atom.setProperty(CANONICAL_LABEL, Long.valueOf(curr));
+    }
 
+    /**
+     * String representation.
+     *
+     * @return The string representation of the class.
+     */
     @TestMethod("testToString")
-  public String toString(){
-    StringBuffer buff = new StringBuffer();
-    buff.append(curr);
-    buff.append("\t");
-    return buff.toString();
-  }
+    public String toString() {
+        StringBuffer buff = new StringBuffer();
+        buff.append(curr);
+        buff.append("\t");
+        return buff.toString();
+    }
 
+    /**
+     * Get the current prime number.
+     *
+     * @return The current prime number
+     * @see #setPrime()
+     */
     @TestMethod("testGetPrime")
-  public int getPrime() {
-    return prime;
-  }
+    public int getPrime() {
+        return prime;
+    }
 
+    /**
+     * Sets the prime number based on the current seed.
+     * <p/>
+     * Note that if you change the seed via {@link #setCurr(long)}, you should make
+     * sure to call this method so that a new prime number is available via
+     * {@link #getPrime()}
+     *
+     * @see #setCurr(long)
+     * @see #getPrime()
+     */
     @TestMethod("testSetPrime")
-  public void setPrime(){
-    prime = Primes.getPrimeAt((int)curr - 1);
-  }
+    public void setPrime() {
+        prime = Primes.getPrimeAt((int) curr - 1);
+    }
 }

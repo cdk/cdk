@@ -23,10 +23,9 @@ package org.openscience.cdk.smiles;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.smiles.InvPair;
-import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * @cdk.module     test-standard
@@ -80,7 +79,10 @@ public class InvPairTest extends NewCDKTestCase {
     	pair.setAtom(new Atom(Elements.CARBON));
     	Assert.assertNotNull(pair.getAtom());
     }
-    
+
+    /**
+     * @cdk.bug 2045574 
+     */
     @Test public void testGetPrime() {
     	IAtom atom = new Atom(Elements.CARBON);
     	InvPair pair = new InvPair(5l, atom);
@@ -90,7 +92,8 @@ public class InvPairTest extends NewCDKTestCase {
     	Assert.assertEquals("The prime should not change when curr is not changed",
     		prime, pair.getPrime());
     	pair.setCurr(6l);
-    	Assert.assertNotSame(prime, pair.getPrime());
+        pair.setPrime();
+        Assert.assertNotSame(prime, pair.getPrime());
     }
     
     @Test public void testSetPrime() {
