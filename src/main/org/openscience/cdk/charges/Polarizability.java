@@ -35,8 +35,9 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Vector;
+import java.util.List;
 
 /**
  * Calculation of the polarizability of a molecule by the method of Kang and
@@ -126,7 +127,7 @@ public class Polarizability {
                                                          boolean addExplicitH) {
         double polarizabilitiy = 0;        
 
-        Molecule acH = null;
+        Molecule acH;
         if (addExplicitH) {
             acH = new Molecule(atomContainer);
             addExplicitHydrogens(acH);
@@ -134,7 +135,7 @@ public class Polarizability {
             acH = (Molecule) atomContainer;
         }
 
-        Vector<IAtom> startAtom = new Vector<IAtom>(1);
+        List<IAtom> startAtom = new ArrayList<IAtom>(1);
         startAtom.add(0, atom);
         double bond;        
 
@@ -171,7 +172,7 @@ public class Polarizability {
                                                          int[][] distanceMatrix) {
         double polarizabilitiy = 0;
 
-        Molecule acH = null;
+        Molecule acH;
         if (addExplicitH) {
             acH = new Molecule(atomContainer);
             addExplicitHydrogens(acH);
@@ -179,7 +180,7 @@ public class Polarizability {
             acH = (Molecule) atomContainer;
         }
 
-        Vector<IAtom> startAtom = new Vector<IAtom>(1);
+        List<IAtom> startAtom = new ArrayList<IAtom>(1);
         startAtom.add(0, atom);
         double bond;
 
