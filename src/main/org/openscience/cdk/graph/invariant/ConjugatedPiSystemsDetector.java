@@ -20,14 +20,14 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import java.util.List;
-import java.util.Stack;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+
+import java.util.List;
+import java.util.Stack;
 
 /**
  * @author       kaihartmann
@@ -91,7 +91,7 @@ public class ConjugatedPiSystemsDetector {
             // Start DFS from firstAtom
             while (!stack.empty()) {
                 //boolean addAtom = false;
-                IAtom currentAtom = (IAtom) stack.pop();
+                IAtom currentAtom = stack.pop();
                 List<IAtom> atoms = ac.getConnectedAtomsList(currentAtom);
                 List<IBond> bonds = ac.getConnectedBondsList(currentAtom);
 
@@ -146,12 +146,11 @@ public class ConjugatedPiSystemsDetector {
         } else if (currentAtom.getFormalCharge() == -1) {
 			//// NEGATIVE CHARGES WITH A NEIGHBOOR PI BOND //////////////
 		    int counterOfPi = 0;
-	            for(int n = 0; n < atoms.size(); n++) {
-					IAtom atom = atoms.get(n);
-					if(ac.getMaximumBondOrder(atom) != IBond.Order.SINGLE) {
-						counterOfPi ++;
-					}
-	            }
+            for (IAtom atom : atoms) {
+                if (ac.getMaximumBondOrder(atom) != IBond.Order.SINGLE) {
+                    counterOfPi++;
+                }
+            }
 		    if(counterOfPi > 0) check = 0;
         }else { 
 			int se = ac.getConnectedSingleElectronsCount(currentAtom);
@@ -161,15 +160,13 @@ public class ConjugatedPiSystemsDetector {
 				/*&& (currentAtom.getSymbol().equals("N")*/) {
 				check = 0;  //// DETECTION of  lone pair
 			}else {
-			    int singleBondCount = 0;
-			    int highOrderBondCount = 0;
+                int highOrderBondCount = 0;
 			    for (int j = 0; j < atoms.size(); j++) {
 					IBond bond = bonds.get(j);
 					if (bond == null || bond.getOrder() != IBond.Order.SINGLE) {
 					    highOrderBondCount++;
 					} else {
-					    singleBondCount++;
-					}
+                    }
 			    }
 			    if (highOrderBondCount == 1) {
 			    	check = 0;
