@@ -98,10 +98,10 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                     break;
                 }
                 if (!string.startsWith("#")) {
-                    String name = "";
-                    String rootType = "";
-                    int atomicNumber = 0, colorR = 0, colorG = 0, colorB = 0;
-                    double mass = 0.0, vdwaals = 0.0, covalent = 0.0;
+                    String name;
+                    String rootType;
+                    int atomicNumber, colorR, colorG, colorB;
+                    double mass, covalent;
                     tokenizer = new StringTokenizer(string, "\t ,;");
                     int tokenCount = tokenizer.countTokens();
                     
@@ -110,7 +110,7 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                         rootType = tokenizer.nextToken();
                         String san = tokenizer.nextToken();
                         String sam = tokenizer.nextToken();
-                        String svdwaals = tokenizer.nextToken();
+                        tokenizer.nextToken(); // skip the vdw radius value
                         String scovalent = tokenizer.nextToken();
                         String sColorR = tokenizer.nextToken();
                         String sColorG = tokenizer.nextToken();
@@ -118,7 +118,6 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                         
                         try {
                             mass = new Double(sam);
-                            vdwaals = new Double(svdwaals);
                             covalent = new Double(scovalent);
                             atomicNumber = Integer.parseInt(san);
                             colorR = Integer.parseInt(sColorR);
