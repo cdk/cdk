@@ -41,9 +41,7 @@ import java.util.Hashtable;
  */
 public class AtomicProperties {
 
-	private LoggingTool logger;
-
-	private static AtomicProperties ap=null;
+    private static AtomicProperties ap=null;
 
 	private Hashtable<String, Double> htMass=new Hashtable<String,Double>();
 	private Hashtable<String, Double> htVdWVolume=new Hashtable<String, Double>();
@@ -53,14 +51,12 @@ public class AtomicProperties {
 
 	private AtomicProperties() throws IOException {
 
-		logger = new LoggingTool(this);
-
-	    String configFile = "org/openscience/cdk/config/data/whim_weights.txt";
+        String configFile = "org/openscience/cdk/config/data/whim_weights.txt";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(ins));
         bufferedReader.readLine(); // header
 
-		String Line="";
+		String Line;
 		while (true) {
 			Line=bufferedReader.readLine();
 			if (Line == null) {
