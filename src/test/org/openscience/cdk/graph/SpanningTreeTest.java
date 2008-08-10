@@ -102,7 +102,7 @@ public class SpanningTreeTest extends NewCDKTestCase {
 		Assert.assertEquals(2, path.getAtomCount());
 		Assert.assertEquals(1, path.getBondCount());
 
-    	IChemObjectBuilder builder = azulene.getSpanningTree().getBuilder();
+    	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
     	IAtomContainer disconnectedStructure = builder.newAtomContainer();
     	disconnectedStructure.addAtom(builder.newAtom("Na"));
     	disconnectedStructure.getAtom(0).setFormalCharge(+1);
@@ -117,6 +117,7 @@ public class SpanningTreeTest extends NewCDKTestCase {
     	Assert.assertEquals(0, path.getAtomCount());
     	Assert.assertEquals(0, path.getBondCount());
     }
+
     @Test
     public void testIsDisconnected() {
     	Assert.assertFalse(azulene.isDisconnected());
