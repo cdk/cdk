@@ -210,14 +210,15 @@ public class PathTools {
 
     /**
      * Returns the atoms which are closest to an atom in an AtomContainer by bonds.
-     * If number of atoms in or below sphere x&lt;max andnumber of atoms in or below sphere x+1&gt;max then atoms in or below sphere x+1 are returned.
+     * If number of atoms in or below sphere x&lt;max and number of atoms in or below sphere x+1&gt;max then
+     * atoms in or below sphere x+1 are returned.
      *
      * @param atomContainer The AtomContainer to examine
      * @param atom          the atom to start from
      * @param max           the number of neighbours to return
      * @return the average bond length
      */
-    private static IAtom[] findClosestByBond(IAtomContainer atomContainer, IAtom atom, int max) {
+    public static IAtom[] findClosestByBond(IAtomContainer atomContainer, IAtom atom, int max) {
         IMolecule mol = atomContainer.getBuilder().newMolecule();
         List<IAtom> v = new ArrayList<IAtom>();
         v.add(atom);
