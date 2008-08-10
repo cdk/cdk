@@ -21,7 +21,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  */
 @TestClass("org.openscience.cdk.pharmacophore.PharmacophoreQueryAngleBondTest")
 public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
-    private PharmacophoreQueryAtom[] atoms;
     private double upper;
     private double lower;
 
