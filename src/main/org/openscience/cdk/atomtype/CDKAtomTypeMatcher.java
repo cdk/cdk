@@ -19,26 +19,18 @@
  */
 package org.openscience.cdk.atomtype;
 
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.SpanningTree;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Atom Type matcher... TO BE WRITTEN.
@@ -88,7 +80,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         throws CDKException {
-        IAtomType type = null;
+        IAtomType type;
         if (atom instanceof IPseudoAtom) {
         	return factory.getAtomType("X");
         }
@@ -613,22 +605,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return null;
     }
 
-    private int countElements(IRing ring, String element) {
-		Iterator<IAtom> atoms = ring.atoms();
-		int count = 0;
-		while (atoms.hasNext()) {
-			if (atoms.next().getSymbol().equals(element)) count++;
-		}
-		return count;
-	}
-
-	private boolean isRingAtom(IAtom atom, IAtomContainer atomContainer) {
+    private boolean isRingAtom(IAtom atom, IAtomContainer atomContainer) {
     	SpanningTree st = new SpanningTree(atomContainer);
-    	try {
-    		return st.getCyclicFragmentsContainer().contains(atom);
-    	} catch (NoSuchAtomException exception) {
-    		return false;
-    	}
+        return st.getCyclicFragmentsContainer().contains(atom);
     }
 
     private IRing getRing(IAtom atom, IAtomContainer atomContainer) {
@@ -650,9 +629,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private boolean isAmide(IAtom atom, IAtomContainer atomContainer) {
-    	Iterator<IAtom> neighbors = atomContainer.getConnectedAtomsList(atom).iterator();
-    	while (neighbors.hasNext()) {
-    		IAtom neighbor = neighbors.next(); 
+    	List<IAtom> neighbors = atomContainer.getConnectedAtomsList(atom);
+    	for (IAtom neighbor : neighbors) {
     		if (neighbor.getSymbol().equals("C")) {
     			if (countAttachedDoubleBonds(atomContainer, neighbor, "O") == 1) return true;
     		}
@@ -662,12 +640,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     private int countExplicitHydrogens(IAtom atom, IAtomContainer atomContainer) {
     	int count = 0;
-    	Iterator<IAtom> neighbors = atomContainer.getConnectedAtomsList(atom).iterator();
-    	while (neighbors.hasNext()) {
-    		if (neighbors.next().getSymbol().equals("H")) {
-    			count++;
-    		}
-    	}
+        for (IAtom aAtom : atomContainer.getConnectedAtomsList(atom)) {
+            if (aAtom.getSymbol().equals("H")) {
+                count++;
+            }
+        }
     	return count;
     }
 
@@ -739,7 +716,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			} else if (doubleBondedOxygens + doubleBondedNitrogens == 1 && neighborcount == 3){
     				IAtomType type = getAtomType("S.inyl");
     				if (isAcceptable(atom, atomContainer, type)) return type;
-    			};
+    			}
     		}
     	}
     	return null;
@@ -776,7 +753,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			if (doubleBonds == 1){
     				IAtomType type = getAtomType("P.ate");
     				if (isAcceptable(atom, atomContainer, type)) return type;
-    			};
+    			}
     		}
     	}
     	return null;
@@ -1300,10 +1277,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     /**
      * Count the number of doubly bonded atoms.
-     * 
+     *
+     * @param container the molecule in which to look
+     * @param atom the atom being looked at
      * @param symbol If not null, then it only counts the double bonded atoms which
      *               match the given symbol.
-     * @return
+     * @return the number of doubly bonded atoms
      */
     private int countAttachedDoubleBonds(IAtomContainer container, IAtom atom, String symbol) {
     	// count the number of double bonded oxygens
