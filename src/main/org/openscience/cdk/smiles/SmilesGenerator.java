@@ -24,14 +24,6 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeMap;
-import java.util.Vector;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -40,21 +32,14 @@ import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.graph.invariant.MorganNumbersTools;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Generates SMILES strings {@cdk.cite WEI88, WEI89}. It takes into account the
@@ -97,7 +82,7 @@ public class SmilesGenerator
 	/**
 	 *  Collection of all the bonds that were broken
 	 */
-	private List brokenBonds = new Vector();
+	private List<BrokenBond> brokenBonds = new ArrayList<BrokenBond>();
 
 	/**
 	 *  The isotope factory which is used to write the mass is needed
@@ -136,15 +121,13 @@ public class SmilesGenerator
 	{
 		IAtom atom0 = bond.getAtom(0);
 		IAtom atom1 = bond.getAtom(1);
-		java.util.List connectedAtoms = container.getConnectedAtomsList(atom0);
+		List<IAtom> connectedAtoms = container.getConnectedAtomsList(atom0);
 		org.openscience.cdk.interfaces.IAtom from = null;
-		for (int i = 0; i < connectedAtoms.size(); i++)
-		{
-			if ((IAtom)connectedAtoms.get(i) != atom1)
-			{
-				from = (IAtom)connectedAtoms.get(i);
-			}
-		}
+        for (IAtom connectedAtom : connectedAtoms) {
+            if (connectedAtom != atom1) {
+                from = connectedAtom;
+            }
+        }
         boolean[] array = new boolean[container.getBondCount()];
 		for (int i = 0; i < array.length; i++)
 		{
@@ -174,19 +157,20 @@ public class SmilesGenerator
 	{
 	  this.rings = rings;
 	  return this;
-	} 
+	}
 
-	/**
-	 *  Generate canonical SMILES from the <code>molecule</code>. This method
-	 *  canonicaly lables the molecule but does not perform any checks on the
-	 *  chemical validity of the molecule.
-	 *  IMPORTANT: A precomputed Set of All Rings (SAR) can be passed to this 
-	 *  SmilesGenerator in order to avoid recomputing it. Use setRings() to 
-	 *  assign the SAR.
-	 *
-	 *@param  molecule  The molecule to evaluate
-	 *@see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
-	 */
+    /**
+     *  Generate canonical SMILES from the <code>molecule</code>. This method
+     *  canonicaly lables the molecule but does not perform any checks on the
+     *  chemical validity of the molecule.
+     *  IMPORTANT: A precomputed Set of All Rings (SAR) can be passed to this
+     *  SmilesGenerator in order to avoid recomputing it. Use setRings() to
+     *  assign the SAR.
+     *
+     * @param  molecule  The molecule to evaluate
+     * @see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
+     * @return the SMILES representation of the molecule
+     */
 	public synchronized String createSMILES(IMolecule molecule)
 	{
 		try
@@ -202,7 +186,10 @@ public class SmilesGenerator
 
 	/**
 	 *  Generate a SMILES for the given <code>Reaction</code>.
-	 */
+     * @param reaction the reaction in question
+     * @return the SMILES representation of the reaction
+     * @throws org.openscience.cdk.exception.CDKException if there is an error during SMILES generation
+     */
 	public synchronized String createSMILES(IReaction reaction) throws CDKException
 	{
 		StringBuffer reactionSMILES = new StringBuffer();
@@ -256,10 +243,11 @@ public class SmilesGenerator
 	 *  SmilesGenerator in order to avoid recomputing it. Use setRings() to 
 	 *  assign the SAR.
 	 *
-	 *@param  molecule                 The molecule to evaluate
-	 *@exception  CDKException         At least one atom has no Point2D;
+	 * @param  molecule                 The molecule to evaluate
+	 * @exception  CDKException         At least one atom has no Point2D;
 	 *      coordinates are needed for creating the chiral smiles.
-	 *@see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
+	 * @see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
+     * @return the SMILES representation of the molecule
 	 */
 	public synchronized String createChiralSMILES(IMolecule molecule, boolean[] doubleBondConfiguration) throws CDKException
 	{
@@ -267,25 +255,26 @@ public class SmilesGenerator
 	}
 
 
-	/**
-	 *  Generate canonical SMILES from the <code>molecule</code>. This method
-	 *  canonicaly lables the molecule but dose not perform any checks on the
-	 *  chemical validity of the molecule. This method also takes care of multiple
-	 *  molecules.
-	 *  IMPORTANT: A precomputed Set of All Rings (SAR) can be passed to this 
-	 *  SmilesGenerator in order to avoid recomputing it. Use setRings() to 
-	 *  assign the SAR.
-	 *
-	 *@param  molecule                 The molecule to evaluate
-	 *@param  chiral                   true=SMILES will be chiral, false=SMILES
-	 *      will not be chiral.
-	 *@exception  CDKException         At least one atom has no Point2D;
-	 *      coordinates are needed for crating the chiral smiles. This excpetion
-	 *      can only be thrown if chiral smiles is created, ignore it if you want a
-	 *      non-chiral smiles (createSMILES(AtomContainer) does not throw an
-	 *      exception).
-	 *@see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
-	 */
+    /**
+     *  Generate canonical SMILES from the <code>molecule</code>. This method
+     *  canonicaly lables the molecule but dose not perform any checks on the
+     *  chemical validity of the molecule. This method also takes care of multiple
+     *  molecules.
+     *  IMPORTANT: A precomputed Set of All Rings (SAR) can be passed to this
+     *  SmilesGenerator in order to avoid recomputing it. Use setRings() to
+     *  assign the SAR.
+     *
+     *@param  molecule                 The molecule to evaluate
+     *@param  chiral                   true=SMILES will be chiral, false=SMILES
+     *      will not be chiral.
+     *@exception CDKException         At least one atom has no Point2D;
+     *      coordinates are needed for crating the chiral smiles. This excpetion
+     *      can only be thrown if chiral smiles is created, ignore it if you want a
+     *      non-chiral smiles (createSMILES(AtomContainer) does not throw an
+     *      exception).
+     *@see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
+     * @return the SMILES representation of the molecule
+     */
 	public synchronized String createSMILES(IMolecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
 	{
 		IMoleculeSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(molecule);
@@ -327,6 +316,7 @@ public class SmilesGenerator
 	 *      non-chiral smiles (createSMILES(AtomContainer) does not throw an
 	 *      exception).
 	 *@see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
+     * @return the SMILES representation of the molecule
 	 */
 	public synchronized String createSMILESWithoutCheckForMultipleMolecules(IMolecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
 	{
@@ -347,7 +337,7 @@ public class SmilesGenerator
 			}
 			//logger.debug("Setting all VISITED flags to false");
 			atom.setFlag(CDKConstants.VISITED, false);
-			if (((Long) atom.getProperty("CanonicalLable")).longValue() == 1)
+			if ((Long) atom.getProperty("CanonicalLable") == 1)
 			{
 				start = atom;
 			}
@@ -424,9 +414,8 @@ public class SmilesGenerator
 
 	private org.openscience.cdk.interfaces.IAtom hasWedges(IAtomContainer ac, org.openscience.cdk.interfaces.IAtom a)
 	{
-		List atoms = ac.getConnectedAtomsList(a);
-		IAtom atomi = null;
-//		for (int i = 0; i < atoms.size(); i++)
+        List<IAtom> atoms = ac.getConnectedAtomsList(a);
+        //		for (int i = 0; i < atoms.size(); i++)
 //		{
 //			atomi = (IAtom)atoms.get(i);
 //			if (ac.getBond(a, atomi).getStereo() != CDKConstants.STEREO_BOND_NONE && !atomi.getSymbol().equals("H"))
@@ -434,15 +423,12 @@ public class SmilesGenerator
 //				return (atomi);
 //			}
 //		}
-		for (int i = 0; i < atoms.size(); i++)
-		{
-			atomi = (IAtom)atoms.get(i);
-			if (ac.getBond(a, atomi).getStereo() != CDKConstants.STEREO_BOND_NONE)
-			{
-				return (atomi);
-			}
-		}
-		return (null);
+        for (IAtom atom : atoms) {
+            if (ac.getBond(a, atom).getStereo() != CDKConstants.STEREO_BOND_NONE) {
+                return (atom);
+            }
+        }
+        return (null);
 	}
 
 
@@ -515,32 +501,26 @@ public class SmilesGenerator
 	{
 		// TO-DO: We make the silent assumption of unset hydrogen count equals zero hydrogen count here.
 		int lengthAtom = container.getConnectedAtomsCount(a) + ((a.getHydrogenCount() == CDKConstants.UNSET) ? 0 : a.getHydrogenCount());
-		if (lengthAtom != 3 && (lengthAtom != 2 && a.getSymbol() != ("N")))
+		if (lengthAtom != 3 && (lengthAtom != 2 && !a.getSymbol().equals("N")))
 		{
 			return (false);
 		}
-		List atoms = container.getConnectedAtomsList(a);
-		org.openscience.cdk.interfaces.IAtom one = null;
-		org.openscience.cdk.interfaces.IAtom two = null;
+		List<IAtom> atoms = container.getConnectedAtomsList(a);
+		IAtom one = null;
+		IAtom two = null;
 		boolean doubleBond = false;
 		org.openscience.cdk.interfaces.IAtom nextAtom = null;
-		IAtom atomi = null;
-		for (int i = 0; i < atoms.size(); i++)
-		{
-			atomi = (IAtom)atoms.get(i);
-			if (atomi != parent && container.getBond(atomi, a).getOrder() == CDKConstants.BONDORDER_DOUBLE && isEndOfDoubleBond(container, atomi, a, doubleBondConfiguration))
-			{
-				doubleBond = true;
-				nextAtom = atomi;
-			}
-			if (atomi != nextAtom && one == null)
-			{
-				one = atomi;
-			} else if (atomi != nextAtom && one != null)
-			{
-				two = atomi;
-			}
-		}
+        for (IAtom atomi : atoms) {
+            if (atomi != parent && container.getBond(atomi, a).getOrder() == CDKConstants.BONDORDER_DOUBLE && isEndOfDoubleBond(container, atomi, a, doubleBondConfiguration)) {
+                doubleBond = true;
+                nextAtom = atomi;
+            }
+            if (atomi != nextAtom && one == null) {
+                one = atomi;
+            } else if (atomi != nextAtom && one != null) {
+                two = atomi;
+            }
+        }
 		String[] morgannumbers = MorganNumbersTools.getMorganNumbersWithElementSymbol(container);
 		if (one != null && ((!a.getSymbol().equals("N") && two != null && !morgannumbers[container.getAtomNumber(one)].equals(morgannumbers[container.getAtomNumber(two)]) && doubleBond && doubleBondConfiguration[container.getBondNumber(a, nextAtom)]) || (doubleBond && a.getSymbol().equals("N") && Math.abs(BondTools.giveAngleBothMethods(nextAtom, a, parent, true)) > Math.PI / 10)))
 		{
@@ -557,15 +537,11 @@ public class SmilesGenerator
 	 */
 	private boolean isBondBroken(IAtom a1, IAtom a2)
 	{
-		Iterator it = brokenBonds.iterator();
-		while (it.hasNext())
-		{
-			BrokenBond bond = ((BrokenBond) it.next());
-			if ((bond.getA1().equals(a1) || bond.getA1().equals(a2)) && (bond.getA2().equals(a1) || bond.getA2().equals(a2)))
-			{
-				return (true);
-			}
-		}
+        for (BrokenBond bond : brokenBonds) {
+            if ((bond.getA1().equals(a1) || bond.getA1().equals(a2)) && (bond.getA2().equals(a1) || bond.getA2().equals(a2))) {
+                return (true);
+            }
+        }
 		return false;
 	}
 
@@ -600,18 +576,13 @@ public class SmilesGenerator
 	 */
 	private boolean isRingOpening(IAtom a1, List v)
 	{
-		Iterator it = brokenBonds.iterator();
-		while (it.hasNext())
-		{
-			BrokenBond bond = (BrokenBond) it.next();
-			for (int i = 0; i < v.size(); i++)
-			{
-				if ((bond.getA1().equals(a1) && bond.getA2().equals((IAtom) v.get(i))) || (bond.getA1().equals((IAtom) v.get(i)) && bond.getA2().equals(a1)))
-				{
-					return true;
-				}
-			}
-		}
+        for (BrokenBond bond : brokenBonds) {
+            for (Object aV : v) {
+                if ((bond.getA1().equals(a1) && bond.getA2().equals((IAtom) aV)) || (bond.getA1().equals((IAtom) aV) && bond.getA2().equals(a1))) {
+                    return true;
+                }
+            }
+        }
 		return false;
 	}
 
@@ -634,7 +605,7 @@ public class SmilesGenerator
 				{
 					public int compare(Object o1, Object o2)
 					{
-						return (int) (((Long) ((IAtom) o1).getProperty("CanonicalLable")).longValue() - ((Long) ((IAtom) o2).getProperty("CanonicalLable")).longValue());
+						return (int) ((Long) ((IAtom) o1).getProperty("CanonicalLable") - (Long) ((IAtom) o2).getProperty("CanonicalLable"));
 					}
 				});
 		}
@@ -654,7 +625,7 @@ public class SmilesGenerator
 			BrokenBond bond = (BrokenBond) it.next();
 			if (bond.getA1().equals(a) || bond.getA2().equals(a))
 			{
-				v.add(new Integer(bond.getMarker()));
+				v.add(bond.getMarker());
 				if (vbonds != null)
 				{
 					vbonds.add(bond.getA1().equals(a) ? bond.getA2() : bond.getA1());
@@ -696,16 +667,13 @@ public class SmilesGenerator
 	 */
 	private void addAtoms(List v, List result)
 	{
-		for (int i = 0; i < v.size(); i++)
-		{
-			if (v.get(i) instanceof IAtom)
-			{
-				result.add((IAtom) v.get(i));
-			} else
-			{
-				addAtoms((List) v.get(i), result);
-			}
-		}
+        for (Object aV : v) {
+            if (aV instanceof IAtom) {
+                result.add((IAtom) aV);
+            } else {
+                addAtoms((List) aV, result);
+            }
+        }
 	}
 	
 	/**
@@ -1883,7 +1851,8 @@ public class SmilesGenerator
 	}
 
 	/**
-	 * @param false=only SP2-hybridized atoms will be lower case (default), true=SP2 or aromaticity trigger lower case 
+	 * @param useAromaticityFlag if false only SP2-hybridized atoms will be lower case (default),
+     * true=SP2 or aromaticity trigger lower case
 	 */
 	public void setUseAromaticityFlag(boolean useAromaticityFlag) {
 		this.useAromaticityFlag = useAromaticityFlag;
