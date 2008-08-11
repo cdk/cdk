@@ -25,6 +25,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstantsTest;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest;
 import org.openscience.cdk.config.AtomTypeFactoryTest;
 import org.openscience.cdk.config.CDKBasedAtomTypeConfiguratorTest;
 import org.openscience.cdk.config.IsotopeFactoryTest;
@@ -40,8 +41,12 @@ import org.openscience.cdk.coverage.CoreCoverageTest;
 import org.openscience.cdk.exception.CDKExceptionTest;
 import org.openscience.cdk.exception.NoSuchAtomExceptionTest;
 import org.openscience.cdk.exception.NoSuchAtomTypeExceptionTest;
+import org.openscience.cdk.graph.PathToolsTest;
+import org.openscience.cdk.graph.SpanningTreeTest;
+import org.openscience.cdk.graph.matrix.AdjacencyMatrixTest;
 import org.openscience.cdk.tools.DataFeaturesTest;
 import org.openscience.cdk.tools.LoggingToolTest;
+import org.openscience.cdk.tools.manipulator.BondManipulatorTest;
 
 /**
  * TestSuite that runs all the tests for the CDK core module.
@@ -73,13 +78,18 @@ public class McoreTests {
         suite.addTest(new JUnit4TestAdapter(OWLAtomTypeReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(OWLAtomTypeHandlerTest.class));
         suite.addTest(new JUnit4TestAdapter(IsotopeReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(IsotopeHandlerTest.class));
-        
+        suite.addTest(new JUnit4TestAdapter(IsotopeHandlerTest.class));        
+       
         // other
         suite.addTest(new JUnit4TestAdapter(CDKExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(NoSuchAtomExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(NoSuchAtomTypeExceptionTest.class));
+        suite.addTest(new JUnit4TestAdapter(CDKAtomTypeMatcherTest.class));
         suite.addTest(new JUnit4TestAdapter(LoggingToolTest.class));
+        suite.addTest(new JUnit4TestAdapter(BondManipulatorTest.class));
+        suite.addTest(new JUnit4TestAdapter(AdjacencyMatrixTest.class));
+        suite.addTest(new JUnit4TestAdapter(PathToolsTest.class));
+        suite.addTest(new JUnit4TestAdapter(SpanningTreeTest.class));
 
         return suite;
     }

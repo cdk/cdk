@@ -41,7 +41,7 @@ import java.util.Map;
  * This class tests the matching of atom types defined in the
  * CDK atom type list.
  *
- * @cdk.module test-atomtype
+ * @cdk.module test-core
  */
 public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 

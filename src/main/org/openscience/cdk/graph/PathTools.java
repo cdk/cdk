@@ -37,7 +37,7 @@ import java.util.List;
  * Tools class with methods for handling molecular graphs.
  *
  * @author      steinbeck
- * @cdk.module  standard
+ * @cdk.module  core
  * @cdk.svnrev  $Revision$
  * @cdk.created 2001-06-17
  * @cdk.bug     1817487

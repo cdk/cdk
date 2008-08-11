@@ -7,7 +7,6 @@ cdk-extra.jar
 cdk-reaction.jar
 cdk-charges.jar
 cdk-qsar.jar
-cdk-atomtype.jar
 cdk-smiles.jar
 cdk-smarts.jar
 cdk-formula.jar

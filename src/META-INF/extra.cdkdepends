@@ -4,7 +4,6 @@ cdk-interfaces.jar
 cdk-io.jar
 cdk-standard.jar
 cdk-valencycheck.jar
-cdk-atomtype.jar
 cdk-formula.jar
 cdk-dict.jar
 cdk-smiles.jar

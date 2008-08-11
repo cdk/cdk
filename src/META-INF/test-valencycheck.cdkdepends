@@ -1,6 +1,5 @@
 cdk-interfaces.jar
 cdk-core.jar
-cdk-atomtype.jar
 cdk-standard.jar
 cdk-data.jar
 cdk-nonotify.jar

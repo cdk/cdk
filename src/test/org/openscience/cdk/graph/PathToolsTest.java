@@ -43,7 +43,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * @cdk.module test-standard
+ * @cdk.module test-core
  */
 public class PathToolsTest extends NewCDKTestCase {
     private static Molecule molecule;

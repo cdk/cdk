@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IBond;
  * will replace the Atom in the AtomContainer, but in all the ElectronContainer's
  * it participates too.
  *
- * @cdk.module  atomtype
+ * @cdk.module  core
  * @cdk.svnrev  $Revision$
  *
  * @author  Egon Willighagen

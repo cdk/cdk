@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @cdk.module test-atomtype
+ * @cdk.module test-core
  */
 public class BondManipulatorTest extends NewCDKTestCase {
     

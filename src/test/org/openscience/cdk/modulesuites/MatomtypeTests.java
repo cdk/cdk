@@ -24,14 +24,10 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest;
+import org.openscience.cdk.atomtype.SybylAtomTypeMatcherTest;
 import org.openscience.cdk.config.atomtypes.OWLAtomTypeMappingHandlerTest;
 import org.openscience.cdk.config.atomtypes.OWLAtomTypeMappingReaderTest;
 import org.openscience.cdk.coverage.AtomtypeCoverageTest;
-import org.openscience.cdk.graph.PathToolsTest;
-import org.openscience.cdk.graph.SpanningTreeTest;
-import org.openscience.cdk.graph.matrix.AdjacencyMatrixTest;
-import org.openscience.cdk.tools.manipulator.BondManipulatorTest;
 
 /**
  * TestSuite that runs all the tests for the CDK core module.
@@ -47,18 +43,10 @@ public class MatomtypeTests {
 
         suite.addTest(new JUnit4TestAdapter(AtomtypeCoverageTest.class));
 
-        // basic helper algorithms
-        suite.addTest(new JUnit4TestAdapter(BondManipulatorTest.class));
-        suite.addTest(new JUnit4TestAdapter(AdjacencyMatrixTest.class));
-        suite.addTest(new JUnit4TestAdapter(PathToolsTest.class));
-        suite.addTest(new JUnit4TestAdapter(SpanningTreeTest.class));
-        
-        // cdk.atomtype
-        suite.addTest(new JUnit4TestAdapter(CDKAtomTypeMatcherTest.class));
-
         // cdk.config.atomtype
         suite.addTest(new JUnit4TestAdapter(OWLAtomTypeMappingHandlerTest.class));
         suite.addTest(new JUnit4TestAdapter(OWLAtomTypeMappingReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(SybylAtomTypeMatcherTest.class));
 
         return suite;
     }

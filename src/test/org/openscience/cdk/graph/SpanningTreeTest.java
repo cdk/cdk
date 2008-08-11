@@ -36,7 +36,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import java.io.InputStream;
 
 /**
- * @cdk.module test-atomtype
+ * @cdk.module test-core
  */
 public class SpanningTreeTest extends NewCDKTestCase {
     

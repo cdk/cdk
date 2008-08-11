@@ -1,7 +1,6 @@
 cdk-interfaces.jar
 cdk-core.jar
 cdk-standard.jar
-cdk-atomtype.jar
 cdk-data.jar
 cdk-nonotify.jar
 cdk-io.jar
@@ -20,6 +19,6 @@ cdk-charges.jar
 cdk-test.jar
 cdk-formula.jar
 cdk-isomorphism.jar
-cdk-test-atomtype.jar
+cdk-test-core.jar
 cdk-test-io.jar
 cdk-testdata.jar

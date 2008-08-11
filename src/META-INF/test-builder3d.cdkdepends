@@ -4,7 +4,6 @@ cdk-nonotify.jar
 cdk-interfaces.jar
 cdk-qsar.jar
 cdk-io.jar
-cdk-atomtype.jar
 cdk-standard.jar
 cdk-charges.jar
 cdk-smiles.jar

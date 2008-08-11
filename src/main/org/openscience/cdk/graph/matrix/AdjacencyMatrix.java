@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IBond;
  * and the j-th atom in the atomcontainer share a bond. Otherwise it is zero.
  * See {@cdk.cite TRI92}.
  *
- * @cdk.module  atomtype
+ * @cdk.module  core
  * @cdk.svnrev  $Revision$
  * @cdk.keyword adjacency matrix
  *

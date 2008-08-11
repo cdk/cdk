@@ -41,7 +41,7 @@ import java.util.Map;
  *
  * @author         egonw
  * @cdk.created    2007-07-20
- * @cdk.module     atomtype
+ * @cdk.module     core
  * @cdk.svnrev     $Revision$
  * @cdk.bug        1802998
  * @cdk.bug        1851197

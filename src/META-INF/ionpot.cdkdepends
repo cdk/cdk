@@ -3,7 +3,6 @@ cdk-core.jar
 cdk-standard.jar
 cdk-libiocml.jar
 cdk-valencycheck.jar
-cdk-atomtype.jar
 cdk-isomorphism.jar
 cdk-dict.jar
 cdk-charges.jar
