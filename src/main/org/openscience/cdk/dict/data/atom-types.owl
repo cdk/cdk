@@ -37,6 +37,11 @@
     <rdfs:range rdf:resource="&at;AtomTypeCategory"/>
   </owl:ObjectProperty>
 
+  <owl:ObjectProperty rdf:ID="broader">
+    <rdfs:domain rdf:resource="&at;AtomType"/>
+    <rdfs:range rdf:resource="&at;AtomType"/>
+  </owl:ObjectProperty>
+
   <owl:ObjectProperty rdf:ID="hasElement">
     <rdfs:label>has element</rdfs:label>
     <rdfs:domain rdf:resource="&at;AtomType"/>
