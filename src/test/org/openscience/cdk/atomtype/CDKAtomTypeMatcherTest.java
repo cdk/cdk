@@ -200,7 +200,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addBond(8,9,CDKConstants.BONDORDER_SINGLE);
 
         String[] expectedTypes = {"C.sp2", "N.planar3", "C.sp2", "N.sp2", "C.sp3",
-        		                  "C.sp2", "N.sp2", "C.sp2", "C.sp2", "N.planar3",
+        		                  "C.sp2", "N.sp2", "C.sp2", "C.sp2", "N.amide",
         		                  "O.sp2", "N.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
@@ -511,6 +511,27 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+    @Test public void testDMSOO() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom1 = new Atom("O");
+        IAtom atom2 = new Atom("S");
+        IAtom atom3 = new Atom("C");
+        IAtom atom4 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom1);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addBond(0,2,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(2,3,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(2,4,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"O.sp2", "O.sp2", "S.onyl", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
     @Test public void testAmide() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("O");
@@ -549,6 +570,31 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         mol.addBond(2,3,CDKConstants.BONDORDER_SINGLE);
 
         String[] expectedTypes = {"O.sp2", "C.sp2", "N.amide", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testLactam() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom1 = new Atom("C");
+        IAtom atom2 = new Atom("N");
+        IAtom atom3 = new Atom("C");
+        IAtom atom4 = new Atom("C");
+        IAtom atom5 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom1);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addAtom(atom5);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(2,3,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(3,4,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(4,5,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(5,1,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"O.sp2", "C.sp2", "N.amide", "C.sp3", "C.sp3", "C.sp3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
