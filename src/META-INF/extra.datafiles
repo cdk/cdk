@@ -1,5 +1,6 @@
 org/openscience/cdk/dict/data/*.xml
-org/openscience/cdk/dict/data/*.owl
+org/openscience/cdk/dict/data/descriptor-algorithms.owl
+org/openscience/cdk/dict/data/reaction-processes.owl
 org/openscience/cdk/config/data/radii-vdw.txt
 org/openscience/cdk/config/data/electroneg-pauling.txt
 org/openscience/cdk/layout/templates/*.cml
