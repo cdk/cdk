@@ -22,6 +22,8 @@ package org.openscience.cdk.atomtype;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.mapper.AtomTypeMapper;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -69,8 +71,12 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         throws CDKException {
         IAtomType type = cdkMatcher.findMatchingAtomType(atomContainer, atom);
+        CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
         if (type == null) return null;
         String mappedType = mapper.mapAtomType(type.getAtomTypeName());
+        if ("C.2".equals(mappedType) && atom.getFlag(CDKConstants.ISAROMATIC)) {
+            mappedType = "C.ar";
+        }
         return factory.getAtomType(mappedType);
     }
     

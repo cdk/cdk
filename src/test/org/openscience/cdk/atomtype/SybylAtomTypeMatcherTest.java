@@ -81,15 +81,6 @@ public class SybylAtomTypeMatcherTest extends NewCDKTestCase {
         }
     }
 
-    private void convertArTo2(IAtom atom) {
-    	String atName = atom.getAtomTypeName();
-	    if (atName.endsWith(".ar")) {
-	    	String newName = atName.substring(0,atName.indexOf('.')) + ".2";
-	    	atom.setAtomTypeName(newName);
-	    }
-	    
-    }
-
 	@Test public void testAtomTyping4() throws Exception {
         String filename = "data/mol2/atomtyping4.mol2";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -105,7 +96,6 @@ public class SybylAtomTypeMatcherTest extends NewCDKTestCase {
         while (atoms.hasNext() && refAtoms.hasNext()) {
         	// work around aromaticity, which we skipped for now
         	IAtom refAtom = refAtoms.next();
-        	convertArTo2(refAtom);
         	Assert.assertEquals(
         		"Perceived atom type does not match atom type in file",
         		refAtom.getAtomTypeName(),
@@ -129,7 +119,6 @@ public class SybylAtomTypeMatcherTest extends NewCDKTestCase {
         while (atoms.hasNext() && refAtoms.hasNext()) {
         	// work around aromaticity, which we skipped for now
         	IAtom refAtom = refAtoms.next();
-        	convertArTo2(refAtom);
         	Assert.assertEquals(
         		"Perceived atom type does not match atom type in file",
         		refAtom.getAtomTypeName(),
@@ -153,7 +142,6 @@ public class SybylAtomTypeMatcherTest extends NewCDKTestCase {
         while (atoms.hasNext() && refAtoms.hasNext()) {
         	// work around aromaticity, which we skipped for now
         	IAtom refAtom = refAtoms.next();
-        	convertArTo2(refAtom);
         	Assert.assertEquals(
         		"Perceived atom type does not match atom type in file",
         		refAtom.getAtomTypeName(),
