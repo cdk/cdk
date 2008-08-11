@@ -492,7 +492,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				IRing ring = getRing(atom, atomContainer);
     				int ringSize = ring == null ? 0 : ring.getAtomCount();
     				boolean isRingAtom = (ringSize > 0);
-    				if (isRingAtom && bothNeighborsAreSp2(atom, atomContainer)) {
+    				if (isAmide(atom, atomContainer)) {
+    				    IAtomType type = getAtomType("N.amide");
+    				    if (isAcceptable(atom, atomContainer, type)) return type;
+    				} else if (isRingAtom && bothNeighborsAreSp2(atom, atomContainer)) {
     					if (atomContainer.getConnectedAtomsCount(atom) == 3) {
     						IAtomType type = getAtomType("N.planar3");
     						if (isAcceptable(atom, atomContainer, type)) return type;
@@ -511,9 +514,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     							if (isAcceptable(atom, atomContainer, type)) return type;
     						}
     					}
-    				} else if (!isRingAtom && isAmide(atom, atomContainer)) {
-						IAtomType type = getAtomType("N.amide");
-						if (isAcceptable(atom, atomContainer, type)) return type;
 					}
     				IAtomType type = getAtomType("N.sp2");
     				if (isAcceptable(atom, atomContainer, type)) return type;
@@ -589,7 +589,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				int explicitHydrogens = countExplicitHydrogens(atom, atomContainer);
     				int connectedHeavyAtoms = atomContainer.getConnectedBondsCount(atom) - explicitHydrogens; 
     				if (connectedHeavyAtoms == 2) {
-    					if (!isRingAtom && isAmide(atom, atomContainer)) {
+    					if (isAmide(atom, atomContainer)) {
     						IAtomType type = getAtomType("N.amide");
     						if (isAcceptable(atom, atomContainer, type)) return type;
     					}
