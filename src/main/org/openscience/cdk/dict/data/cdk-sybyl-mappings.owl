@@ -138,6 +138,9 @@
   <owl:Thing rdf:about="&cdkat;O.sp2">
     <atm:equivalentAsType rdf:resource="&sybylat;O.2"/>
   </owl:Thing>
+  <owl:Thing rdf:about="&cdkat;O.sp2.co2">
+    <atm:equivalentAsType rdf:resource="&sybylat;O.co2"/>
+  </owl:Thing>
   <owl:Thing rdf:about="&cdkat;O.planar3">
     <atm:equivalentAsType rdf:resource="&sybylat;Het"/>
   </owl:Thing>
@@ -158,6 +161,9 @@
   </owl:Thing>
   <owl:Thing rdf:about="&cdkat;O.minus">
     <atm:mapsToType rdf:resource="&sybylat;Any"/>
+  </owl:Thing>
+  <owl:Thing rdf:about="&cdkat;O.minus.co2">
+    <atm:mapsToType rdf:resource="&sybylat;O.co2"/>
   </owl:Thing>
   <owl:Thing rdf:about="&cdkat;O.minus2">
     <atm:mapsToType rdf:resource="&sybylat;Any"/>

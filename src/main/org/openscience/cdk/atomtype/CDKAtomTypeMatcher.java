@@ -312,8 +312,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			if (atom.getHybridization() == Hybridization.SP2) {
     				int connectedAtomsCount = atomContainer.getConnectedAtomsCount(atom);
     				if (connectedAtomsCount == 1) {
-    					IAtomType type = getAtomType("O.sp2");
-    					if (isAcceptable(atom, atomContainer, type)) return type;
+    				    if (isCarboxylate(atom, atomContainer)) {
+    				        IAtomType type = getAtomType("O.sp2.co2");
+                            if (isAcceptable(atom, atomContainer, type)) return type;    				        
+    				    } else {
+    				        IAtomType type = getAtomType("O.sp2");
+    				        if (isAcceptable(atom, atomContainer, type)) return type;
+    				    }
     				} else if (connectedAtomsCount == 2) {
     					IAtomType type = getAtomType("O.planar3");
     					if (isAcceptable(atom, atomContainer, type)) return type;
@@ -328,9 +333,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET &&
     				atom.getFormalCharge() != 0) {
     			if (atom.getFormalCharge() == -1 &&
-    					atomContainer.getConnectedAtomsCount(atom) <= 1) {
-    				IAtomType type = getAtomType("O.minus");
-    				if (isAcceptable(atom, atomContainer, type)) return type;
+    				atomContainer.getConnectedAtomsCount(atom) <= 1) {
+    			    if (isCarboxylate(atom, atomContainer)) {
+    			        IAtomType type = getAtomType("O.minus.co2");
+                        if (isAcceptable(atom, atomContainer, type)) return type;
+    			    } else {
+    			        IAtomType type = getAtomType("O.minus");
+    			        if (isAcceptable(atom, atomContainer, type)) return type;
+    			    }
     			} else if (atom.getFormalCharge() == -2 &&
     					atomContainer.getConnectedAtomsCount(atom) == 0) {
     				IAtomType type = getAtomType("O.minus2");
@@ -362,8 +372,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		} else { // OK, use bond order info
     			IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     			if (maxBondOrder == CDKConstants.BONDORDER_DOUBLE) {
-    				IAtomType type = getAtomType("O.sp2");
-    				if (isAcceptable(atom, atomContainer, type)) return type;
+    			    if (isCarboxylate(atom, atomContainer)) {
+                        IAtomType type = getAtomType("O.sp2.co2");
+                        if (isAcceptable(atom, atomContainer, type)) return type;
+    			    } else {
+    			        IAtomType type = getAtomType("O.sp2");
+    			        if (isAcceptable(atom, atomContainer, type)) return type;
+    			    }
     			} else if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
     				int explicitHydrogens = countExplicitHydrogens(atom, atomContainer);
     				int connectedHeavyAtoms = atomContainer.getConnectedBondsCount(atom) - explicitHydrogens; 
@@ -383,6 +398,28 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		}
     	}
     	return null;
+    }
+
+    private boolean isCarboxylate(IAtom atom, IAtomContainer container) {
+        // assumes that the oxygen only has one neighbor (C=O, or C-[O-])
+        IAtom carbon = container.getConnectedAtomsList(atom).get(0);
+        if (!"C".equals(carbon.getSymbol())) return false;
+        
+        int oxygenCount = 0;
+        int singleBondedNegativeOxygenCount = 0;
+        int doubleBondedOxygenCount = 0;
+        for (IBond cBond : container.getConnectedBondsList(carbon)) {
+            IAtom neighbor = cBond.getConnectedAtom(carbon);
+            if ("O".equals(neighbor.getSymbol())) {
+                oxygenCount++;
+                if (cBond.getOrder() == IBond.Order.SINGLE && neighbor.getFormalCharge() == -1) {
+                    singleBondedNegativeOxygenCount++;
+                } else if (cBond.getOrder() == IBond.Order.DOUBLE) {
+                    doubleBondedOxygenCount++;
+                }
+            }
+        }
+        return (oxygenCount == 2) && (singleBondedNegativeOxygenCount == 1) && (doubleBondedOxygenCount == 1);
     }
 
     private boolean atLeastTwoNeighborsAreSp2(IAtom atom, IAtomContainer atomContainer) {

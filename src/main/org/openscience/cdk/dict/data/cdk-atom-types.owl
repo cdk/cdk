@@ -170,7 +170,7 @@
   <at:AtomType rdf:ID="X"/>
 
   <at:AtomType rdf:ID="C.sp3">
-    <at:categorizedAs rdf:resource="&cdkat;C.sp3"/>
+    <at:categorizedAs rdf:resource="&cdkat;C.tetrahedral"/>
     <at:hasElement rdf:resource="&elem;C"/>
     <at:hybridization rdf:resource="&at;sp3"/>
     <at:formalCharge>0</at:formalCharge>
@@ -314,6 +314,16 @@
     <at:hybridization rdf:resource="&at;sp2"/>
   </at:AtomType>
 
+  <at:AtomType rdf:ID="O.sp2.co2">
+    <at:broader rdf:resource="&cdkat;O.sp2"/>
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;O"/>
+    <at:formalNeighbourCount>1</at:formalNeighbourCount>
+    <at:lonePairCount>2</at:lonePairCount>
+    <at:piBondCount>1</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp2"/>
+  </at:AtomType>
+
   <at:AtomType rdf:ID="O.planar3">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;O"/>
@@ -377,6 +387,16 @@
     <at:hybridization rdf:resource="&at;sp3"/>
   </at:AtomType>
 
+  <at:AtomType rdf:ID="O.minus.co2">
+    <at:broader rdf:resource="&cdkat;O.minus"/>
+    <at:formalCharge>-1</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;O"/>
+    <at:formalNeighbourCount>1</at:formalNeighbourCount>
+    <at:lonePairCount>3</at:lonePairCount>
+    <at:piBondCount>0</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp3"/>
+  </at:AtomType>
+
   <at:AtomType rdf:ID="O.minus2">
     <at:formalCharge>-2</at:formalCharge>
     <at:hasElement rdf:resource="&elem;O"/>
@@ -432,6 +452,7 @@
   </at:AtomType>
 
   <at:AtomType rdf:ID="N.amide">
+    <at:broader rdf:resource="&cdkat;N.sp2"/>
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;N"/>
     <at:formalNeighbourCount>3</at:formalNeighbourCount>

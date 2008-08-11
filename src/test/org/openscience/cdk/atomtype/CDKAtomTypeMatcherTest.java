@@ -231,7 +231,25 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         String[] expectedTypes = {"O.sp2", "C.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
-    
+
+    @Test public void testCarboxylate() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom1 = new Atom("C");
+        IAtom atom2 = new Atom("O"); atom2.setFormalCharge(-1);
+        IAtom atom3 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom1);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"O.sp2.co2", "C.sp2", "O.minus.co2", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testFormaldehydeRadicalKation() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("O"); atom.setFormalCharge(+1);
