@@ -1,6 +1,6 @@
-src/main/org/openscience/cdk/dict/data/atom-type-mappings.owl
-src/main/org/openscience/cdk/dict/data/atom-types.owl
-src/main/org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl
-src/main/org/openscience/cdk/dict/data/elements.owl
-src/main/org/openscience/cdk/dict/data/sybyl-atom-types.owl
+org/openscience/cdk/dict/data/atom-type-mappings.owl
+org/openscience/cdk/dict/data/atom-types.owl
+org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl
+org/openscience/cdk/dict/data/elements.owl
+org/openscience/cdk/dict/data/sybyl-atom-types.owl
 
