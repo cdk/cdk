@@ -429,7 +429,6 @@
         <antcall target="compile-module"><param name="module" value="core"/><param name="source" value="${src}/main"/></antcall>
         <parallel>
           <antcall target="compile-module"><param name="module" value="data"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="atomtype"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="dict"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="diff"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
@@ -440,6 +439,7 @@
           <antcall target="compile-module"><param name="module" value="isomorphism"/><param name="source" value="${src}/main"/></antcall>
         </parallel>
         <parallel>
+          <antcall target="compile-module"><param name="module" value="atomtype"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="io"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="render"/><param name="source" value="${src}/main"/></antcall>
           <antcall target="compile-module"><param name="module" value="valencycheck"/><param name="source" value="${src}/main"/></antcall>
@@ -490,8 +490,8 @@
             <antcall target="compile-init"/>
             <antcall target="compile-module"><param name="module" value="interfaces"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="core"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="atomtype"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="standard"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="atomtype"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="dict"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="data"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="render"/><param name="source" value="${src}/main"/></antcall>
