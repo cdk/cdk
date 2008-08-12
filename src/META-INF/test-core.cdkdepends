@@ -8,3 +8,5 @@ cdk-test.jar
 cdk-io.jar
 cdk-nonotify.jar
 cdk-testdata.jar
+cdk-atomtype.jar
+cdk-valencycheck.jar
