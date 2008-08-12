@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -26,15 +23,15 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * Defines the abililty to be matched against IAtom's. Most prominent application
- * is in isomorphism and substructure matching in the UniversalIsomorphismTester.
+ * Defines the ability to be matched against {@link IAtom}'s. Most prominent application
+ * is in isomorphism and substructure matching in the {@link UniversalIsomorphismTester}.
  * 
  * @cdk.module interfaces
  * @cdk.svnrev  $Revision$
  * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */
 public interface IQueryAtom extends IAtom {
-         public static final int Default=56562;
+	
 	/**
 	 * Returns true of the given <code>atom</code> matches this IQueryAtom.
 	 * 

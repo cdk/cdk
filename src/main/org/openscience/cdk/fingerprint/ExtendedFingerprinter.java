@@ -57,16 +57,16 @@ public class ExtendedFingerprinter implements IFingerprinter {
 	private Fingerprinter fingerprinter = null;
 
 	/**
-	 * Creates a fingerprint generator of length <code>defaultSize</code>
-	 * and with a search depth of <code>defaultSearchDepth</code>.
+	 * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
+	 * and with a search depth of <code>DEFAULT_SEARCH_DEPTH</code>.
 	 */
 	public ExtendedFingerprinter() {
-		this(Fingerprinter.defaultSize, 
-			 Fingerprinter.defaultSearchDepth);
+		this(Fingerprinter.DEFAULT_SIZE, 
+			 Fingerprinter.DEFAULT_SEARCH_DEPTH);
 	}
 	
 	public ExtendedFingerprinter(int size) {
-		this(size, Fingerprinter.defaultSearchDepth);
+		this(size, Fingerprinter.DEFAULT_SEARCH_DEPTH);
 	}
 	
 	/**
@@ -87,12 +87,12 @@ public class ExtendedFingerprinter implements IFingerprinter {
 	 * 2 or less rings ... 10 or less rings (referring to smallest set of smallest rings) and bits which tell if 
 	 * there is a fused ring system with 1,2...8 or more rings in it
 	 *
-	 *@param     ac         The AtomContainer for which a Fingerprint is generated
+	 *@param     container         The AtomContainer for which a Fingerprint is generated
 	 *@exception Exception  Description of the Exception
 	 */
     @TestMethod("testGetFingerprint_IAtomContainer")
-    public BitSet getFingerprint(IAtomContainer ac) throws Exception {
-		return this.getFingerprint(ac,null,null);
+    public BitSet getFingerprint(IAtomContainer container) throws Exception {
+		return this.getFingerprint(container,null,null);
 	}
 		
 	/**
@@ -102,27 +102,27 @@ public class ExtendedFingerprinter implements IFingerprinter {
 	 * The RingSet used is passed via rs parameter. This must be a smallesSetOfSmallestRings.
 	 * The List must be a list of all ring systems in the molecule.
 	 *
-	 *@param     ac         The AtomContainer for which a Fingerprint is generated
-	 *@param     rs         An SSSR RingSet of ac (if not available, use  getExtendedFingerprint(AtomContainer ac), which does the calculation)
+	 *@param     container         The AtomContainer for which a Fingerprint is generated
+	 *@param     ringSet         An SSSR RingSet of ac (if not available, use  getExtendedFingerprint(AtomContainer ac), which does the calculation)
 	 *@param 	 rslist		A list of all ring systems in ac
 	 *@exception Exception  Description of the Exception
 	 */
     @TestMethod("testGetFingerprint_IAtomContainer_IRingSet")
-    public BitSet getFingerprint(IAtomContainer ac, IRingSet rs, List<IRingSet> rslist) throws Exception {
-		BitSet bs = fingerprinter.getFingerprint(ac);
+    public BitSet getFingerprint(IAtomContainer container, IRingSet ringSet, List<IRingSet> rslist) throws Exception {
+		BitSet bitSet = fingerprinter.getFingerprint(container);
 		int size = this.getSize();
-		double weight = MolecularFormulaManipulator.getTotalNaturalAbundance(MolecularFormulaManipulator.getMolecularFormula(ac));
+		double weight = MolecularFormulaManipulator.getTotalNaturalAbundance(MolecularFormulaManipulator.getMolecularFormula(container));
 		for(int i=1;i<11;i++){
 			if(weight>(100*i))
-				bs.set(size-26+i); // 26 := RESERVED_BITS+1
+				bitSet.set(size-26+i); // 26 := RESERVED_BITS+1
 		}
-		if(rs==null){
-			rs=new SSSRFinder(ac).findSSSR();
-			rslist=RingPartitioner.partitionRings(rs);
+		if(ringSet==null){
+			ringSet=new SSSRFinder(container).findSSSR();
+			rslist=RingPartitioner.partitionRings(ringSet);
 		}
 		for(int i=0;i<7;i++){
-			if(rs.getAtomContainerCount()>i)
-				bs.set(size-15+i); // 15 := RESERVED_BITS+1+10 mass bits
+			if(ringSet.getAtomContainerCount()>i)
+				bitSet.set(size-15+i); // 15 := RESERVED_BITS+1+10 mass bits
 		}
 		int maximumringsystemsize=0;
 		for(int i=0;i<rslist.size();i++){
@@ -130,9 +130,9 @@ public class ExtendedFingerprinter implements IFingerprinter {
 				maximumringsystemsize=((IRingSet)rslist.get(i)).getAtomContainerCount();
 		}
 		for(int i=0;i<maximumringsystemsize && i<9;i++){
-			bs.set(size-8+i-3);
+			bitSet.set(size-8+i-3);
 		}
-		return bs;
+		return bitSet;
 	}
 
     @TestMethod("testGetSize")

@@ -1,8 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2002-2003  The Jmol Project
  *  Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
@@ -26,7 +22,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.geometry;
 
@@ -46,7 +41,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 /**
- * A set of static utility classes for geometric calculations on Bonds.
+ * A set of static utility classes for geometric calculations on {@link IBond}s.
  * The methods for detecting stereo configurations are described in CDK news, vol 2, p. 64 - 66.
  *
  * @author      shk3
@@ -208,7 +203,7 @@ public class BondTools {
    *      actually the possibility of a double bond configuration)
    * @return                          false=is not end of configuration, true=is
    */
-  private static boolean isEndOfDoubleBond(IAtomContainer container, org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom parent, boolean[] doubleBondConfiguration) {
+  private static boolean isEndOfDoubleBond(IAtomContainer container, IAtom atom, IAtom parent, boolean[] doubleBondConfiguration) {
     if (container.getBondNumber(atom, parent) == -1 || doubleBondConfiguration.length <= container.getBondNumber(atom, parent) || !doubleBondConfiguration[container.getBondNumber(atom, parent)]) {
       return false;
     }
@@ -259,7 +254,7 @@ public class BondTools {
    *      actually the possibility of a double bond configuration)
    * @return                          false=is not start of configuration, true=is
    */
-  private static boolean isStartOfDoubleBond(IAtomContainer container, org.openscience.cdk.interfaces.IAtom a, org.openscience.cdk.interfaces.IAtom parent, boolean[] doubleBondConfiguration) {
+  private static boolean isStartOfDoubleBond(IAtomContainer container, IAtom a, IAtom parent, boolean[] doubleBondConfiguration) {
       int hcount;
       if (a.getHydrogenCount() == CDKConstants.UNSET) hcount = 0;
       else hcount = a.getHydrogenCount();
@@ -297,20 +292,20 @@ public class BondTools {
 	/**
 	 *  Says if an atom as a center of a tetrahedral chirality.
 	 *
-	 *@param  a          The atom which is the center
+	 *@param  atom          The atom which is the center
 	 *@param  container  The atomContainer the atom is in
 	 *@return            0=is not tetrahedral;>1 is a certain depiction of
 	 *      tetrahedrality (evaluated in parse chain)
 	 */
     @TestMethod("testIsTetrahedral_IAtomContainer_IAtom_boolean")
-    public static int isTetrahedral(IAtomContainer container, IAtom a, boolean strict)
+    public static int isTetrahedral(IAtomContainer container, IAtom atom, boolean strict)
 	{
-		List<IAtom> atoms = container.getConnectedAtomsList(a);
+		List<IAtom> atoms = container.getConnectedAtomsList(atom);
 		if (atoms.size() != 4)
 		{
 			return (0);
 		}
-		java.util.List<IBond> bonds = container.getConnectedBondsList(a);
+		java.util.List<IBond> bonds = container.getConnectedBondsList(atom);
         int up = 0;
 		int down = 0;
         for (IBond bond : bonds) {
@@ -329,7 +324,7 @@ public class BondTools {
 		}
 		if (up == 2 && down == 2)
 		{
-			if (stereosAreOpposite(container, a))
+			if (stereosAreOpposite(container, atom))
 			{
 				return 2;
 			}
@@ -359,19 +354,19 @@ public class BondTools {
 	 *  Says if an atom as a center of a trigonal-bipyramidal or actahedral
 	 *  chirality
 	 *
-	 *@param  a          The atom which is the center
+	 *@param  atom          The atom which is the center
 	 *@param  container  The atomContainer the atom is in
 	 *@return            true=is square planar, false=is not
 	 */
     @TestMethod("testIsTrigonalBipyramidalOrOctahedral_IAtomContainer_IAtom")
-    public static int isTrigonalBipyramidalOrOctahedral(IAtomContainer container, IAtom a)
+    public static int isTrigonalBipyramidalOrOctahedral(IAtomContainer container, IAtom atom)
 	{
-		List<IAtom> atoms = container.getConnectedAtomsList(a);
+		List<IAtom> atoms = container.getConnectedAtomsList(atom);
 		if (atoms.size() < 5 || atoms.size() > 6)
 		{
 			return (0);
 		}
-		java.util.List<IBond> bonds = container.getConnectedBondsList(a);
+		java.util.List<IBond> bonds = container.getConnectedBondsList(atom);
         int up = 0;
 		int down = 0;
         for (IBond bond : bonds) {
@@ -398,19 +393,19 @@ public class BondTools {
 	/**
 	 *  Says if an atom as a center of any valid stereo configuration or not
 	 *
-	 *@param  a          The atom which is the center
+	 *@param  stereoAtom          The atom which is the center
 	 *@param  container  The atomContainer the atom is in
 	 *@return            true=is a stereo atom, false=is not
 	 */
     @TestMethod("testIsStereo_IAtomContainer_IAtom")
-    public static boolean isStereo(IAtomContainer container, IAtom a)
+    public static boolean isStereo(IAtomContainer container, IAtom stereoAtom)
 	{
-		java.util.List<IAtom> atoms = container.getConnectedAtomsList(a);
+		List<IAtom> atoms = container.getConnectedAtomsList(stereoAtom);
 		if (atoms.size() < 4 || atoms.size() > 6)
 		{
 			return (false);
 		}
-		java.util.List<IBond> bonds = container.getConnectedBondsList(a);
+		List<IBond> bonds = container.getConnectedBondsList(stereoAtom);
 		int stereo = 0;
         for (IBond bond : bonds) {
             if (bond.getStereo() != 0) {
@@ -485,7 +480,7 @@ public class BondTools {
 				{
 					return (true);
 				}
-                return isSquarePlanar(container, a) && (numberOfSymbolsWithDifferentMorganNumbers + differentAtoms > 2 || (differentAtoms == 2 && onlyRelevantIfTwo[0] > 1 && onlyRelevantIfTwo[1] > 1));
+                return isSquarePlanar(container, stereoAtom) && (numberOfSymbolsWithDifferentMorganNumbers + differentAtoms > 2 || (differentAtoms == 2 && onlyRelevantIfTwo[0] > 1 && onlyRelevantIfTwo[1] > 1));
             }
 		}
 		return (true);
@@ -495,19 +490,19 @@ public class BondTools {
 	/**
 	 *  Says if an atom as a center of a square planar chirality
 	 *
-	 *@param  a          The atom which is the center
+	 *@param  atom          The atom which is the center
 	 *@param  container  The atomContainer the atom is in
 	 *@return            true=is square planar, false=is not
 	 */
     @TestMethod("testIsSquarePlanar_IAtomContainer_IAtom")
-    public static boolean isSquarePlanar(IAtomContainer container, IAtom a)
+    public static boolean isSquarePlanar(IAtomContainer container, IAtom atom)
 	{
-		java.util.List<IAtom> atoms = container.getConnectedAtomsList(a);
+		List<IAtom> atoms = container.getConnectedAtomsList(atom);
 		if (atoms.size() != 4)
 		{
 			return (false);
 		}
-		java.util.List<IBond> bonds = container.getConnectedBondsList(a);
+		List<IBond> bonds = container.getConnectedBondsList(atom);
         int up = 0;
 		int down = 0;
         for (IBond bond : bonds) {
@@ -520,7 +515,7 @@ public class BondTools {
                 down++;
             }
         }
-        return up == 2 && down == 2 && !stereosAreOpposite(container, a);
+        return up == 2 && down == 2 && !stereosAreOpposite(container, atom);
     }
 
 
@@ -529,22 +524,22 @@ public class BondTools {
 	 *  opposite or not, i. e.if it's tetrehedral or square planar. The method
 	 *  does not check if there are four atoms and if two or up and two are down
 	 *
-	 *@param  a          The atom which is the center
+	 *@param  atom          The atom which is the center
 	 *@param  container  The atomContainer the atom is in
 	 *@return            true=are opposite, false=are not
 	 */
     @TestMethod("testStereosAreOpposite_IAtomContainer_IAtom")
-    public static boolean stereosAreOpposite(IAtomContainer container, IAtom a)
+    public static boolean stereosAreOpposite(IAtomContainer container, IAtom atom)
 	{
-		List<IAtom> atoms = container.getConnectedAtomsList(a);
+		List<IAtom> atoms = container.getConnectedAtomsList(atom);
 		TreeMap<Double, Integer> hm = new TreeMap<Double, Integer>();
 		for (int i = 1; i < atoms.size(); i++)
 		{
-			hm.put(giveAngle(a, atoms.get(0), atoms.get(i)), i);
+			hm.put(giveAngle(atom, atoms.get(0), atoms.get(i)), i);
 		}
 		Object[] ohere = hm.values().toArray();
-		int stereoOne = container.getBond(a, atoms.get(0)).getStereo();
-		int stereoOpposite = container.getBond(a, atoms.get((Integer) ohere[1])).getStereo();
+		int stereoOne = container.getBond(atom, atoms.get(0)).getStereo();
+		int stereoOpposite = container.getBond(atom, atoms.get((Integer) ohere[1])).getStereo();
         return stereoOpposite == stereoOne;
 	}
 

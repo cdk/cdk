@@ -1,7 +1,4 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
  *
@@ -24,8 +21,6 @@
 package org.openscience.cdk.interfaces;
 
 import java.util.Iterator;
-
-import org.openscience.cdk.interfaces.IIsotope;
 
 /**
  *  Class defining an adduct object in a MolecularFormula. It maintains

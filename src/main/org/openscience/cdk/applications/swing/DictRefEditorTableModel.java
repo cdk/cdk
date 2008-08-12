@@ -166,7 +166,7 @@ public class DictRefEditorTableModel extends AbstractTableModel {
                 logger.debug("About to add this ref: ", dictRefObj);
                 String fieldName = dictRefObj.getType();
                 fields.addElement(fieldName);
-                String dictRef = dictRefObj.getDictRef();
+                String dictRef = dictRefObj.getReference();
                 int index = dictRef.indexOf(':');
                 if (index != -1) {
                     dicts.addElement(dictRef.substring(0,index));

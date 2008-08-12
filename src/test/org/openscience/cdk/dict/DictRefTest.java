@@ -60,7 +60,7 @@ public class DictRefTest extends NewCDKTestCase {
     @Test
     public void testGetDictRef() {
     	DictRef dictRef = new DictRef("bar:foo", "bla");
-    	Assert.assertEquals("bla", dictRef.getDictRef());
+    	Assert.assertEquals("bla", dictRef.getReference());
     }
     
     /** Test for RFC #9 */

@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -71,7 +68,7 @@ public class ConnectivityChecker
     @TestMethod("testIsConnected_IAtomContainer,testPartitionIntoMolecules_IsConnected_Consistency")
     public static boolean isConnected(IAtomContainer atomContainer)
 	{
-		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
+		IAtomContainer newContainer = atomContainer.getBuilder().newAtomContainer();
 		IAtom atom = null;
 		IMolecule molecule = atomContainer.getBuilder().newMolecule();
 		List<IAtom> sphere = new ArrayList<IAtom>();
@@ -79,19 +76,19 @@ public class ConnectivityChecker
 		{
 			atom = atomContainer.getAtom(f);
 			atomContainer.getAtom(f).setFlag(CDKConstants.VISITED, false);
-			ac.addAtom(atomContainer.getAtom(f));
+			newContainer.addAtom(atomContainer.getAtom(f));
 		}
 
         Iterator<IBond> bonds = atomContainer.bonds();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
 			bond.setFlag(CDKConstants.VISITED, false);
-			ac.addBond(bond);
+			newContainer.addBond(bond);
 		}
-		atom = ac.getAtom(0);
+		atom = newContainer.getAtom(0);
 		sphere.add(atom);
 		atom.setFlag(CDKConstants.VISITED, true);
-		PathTools.breadthFirstSearch(ac, sphere, molecule);
+		PathTools.breadthFirstSearch(newContainer, sphere, molecule);
         return molecule.getAtomCount() == atomContainer.getAtomCount();
     }
 	
@@ -107,7 +104,7 @@ public class ConnectivityChecker
 	 */
     @TestMethod("testPartitionIntoMolecules_IAtomContainer,testPartitionIntoMoleculesKeepsAtomIDs,testPartitionIntoMolecules_IsConnected_Consistency")
     public static IMoleculeSet partitionIntoMolecules(IAtomContainer atomContainer) {
-		IAtomContainer ac = atomContainer.getBuilder().newAtomContainer();
+		IAtomContainer newContainer = atomContainer.getBuilder().newAtomContainer();
 		IAtom atom = null;
 		IElectronContainer eContainer = null;
 		IMolecule molecule = null;
@@ -117,23 +114,23 @@ public class ConnectivityChecker
 		{
 			atom = atomContainer.getAtom(f);
 			atom.setFlag(CDKConstants.VISITED, false);
-			ac.addAtom(atom);
+			newContainer.addAtom(atom);
 		}
 		Iterator<IElectronContainer> eContainers = atomContainer.electronContainers();
 		while (eContainers.hasNext()){
 			eContainer = (IElectronContainer)eContainers.next();
 			eContainer.setFlag(CDKConstants.VISITED, false);
-			ac.addElectronContainer(eContainer);
+			newContainer.addElectronContainer(eContainer);
 		}
-		while(ac.getAtomCount() > 0) {
-			atom = ac.getAtom(0);
+		while(newContainer.getAtomCount() > 0) {
+			atom = newContainer.getAtom(0);
 			molecule = atomContainer.getBuilder().newMolecule();
 			sphere.clear();
 			sphere.add(atom);
 			atom.setFlag(CDKConstants.VISITED, true);
-			PathTools.breadthFirstSearch(ac, sphere, molecule);
+			PathTools.breadthFirstSearch(newContainer, sphere, molecule);
 			molecules.addMolecule(molecule);
-			ac.remove(molecule);
+			newContainer.remove(molecule);
 		}
 		return molecules;
 	}

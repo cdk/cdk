@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2008  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -46,16 +43,16 @@ public class DictRef implements java.io.Serializable, Cloneable  {
     private static final long serialVersionUID = -3691244168587563625L;
     
     String type;
-    String dictRef;
+    String reference;
         
     public DictRef(String type, String dictRef) {
         this.type = type;
-        this.dictRef = dictRef;
+        this.reference = dictRef;
     }
 
     @TestMethod("testGetDictRef")
-    public String getDictRef() {
-        return dictRef;
+    public String getReference() {
+        return reference;
     }
 
     @TestMethod("testGetType")
@@ -65,7 +62,7 @@ public class DictRef implements java.io.Serializable, Cloneable  {
 
     @TestMethod("testToString")
     public String toString() {
-        return "DictRef{T=" + this.type + ", R=" + dictRef +"}";
+        return "DictRef{T=" + this.type + ", R=" + reference +"}";
     }
     
 }

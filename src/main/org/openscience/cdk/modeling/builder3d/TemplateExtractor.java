@@ -382,7 +382,7 @@ public class TemplateExtractor {
 
 		Map timings = new HashMap();
 		
-		Fingerprinter fingerPrinter = new Fingerprinter(Fingerprinter.defaultSize, Fingerprinter.defaultSearchDepth);
+		Fingerprinter fingerPrinter = new Fingerprinter(Fingerprinter.DEFAULT_SIZE, Fingerprinter.DEFAULT_SEARCH_DEPTH);
 		IMolecule m = null;
 		IteratingMDLReader imdl=null;
 		//QueryAtomContainer query=null;

@@ -38,10 +38,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import java.util.*;
 
 /**
- *  Generates a Fingerprint for a given AtomContainer. Fingerprints are
+ *  Generates a fingerprint for a given AtomContainer. Fingerprints are
  *  one-dimensional bit arrays, where bits are set according to a the occurrence
  *  of a particular structural feature (See for example the Daylight inc. theory
- *  manual for more information) Fingerprints allow for a fast screening step to
+ *  manual for more information). Fingerprints allow for a fast screening step to
  *  excluded candidates for a substructure search in a database. They are also a
  *  means for determining the similarity of chemical structures. <p>
  *
@@ -78,28 +78,28 @@ import java.util.*;
 @TestClass("org.openscience.cdk.fingerprint.FingerprinterTest")
 public class Fingerprinter implements IFingerprinter {
 	
-	public final static int defaultSize = 1024;
-	public final static int defaultSearchDepth = 8;
+	/** The default length of created fingerprints. */
+	public final static int DEFAULT_SIZE = 1024;
+	/** The default search depth used to create the fingerprints. */
+	public final static int DEFAULT_SEARCH_DEPTH = 8;
 	
 	private int size;
 	private int searchDepth;
 
-	final static boolean debug = true;
 	static int debugCounter = 0;
 
 	private static LoggingTool logger = new LoggingTool(Fingerprinter.class);
-    
 
     /**
-	 * Creates a fingerprint generator of length <code>defaultSize</code>
-	 * and with a search depth of <code>defaultSearchDepth</code>.
+	 * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
+	 * and with a search depth of <code>DEFAULT_SEARCH_DEPTH</code>.
 	 */
 	public Fingerprinter() {
-		this(defaultSize, defaultSearchDepth);
+		this(DEFAULT_SIZE, DEFAULT_SEARCH_DEPTH);
 	}
 	
 	public Fingerprinter(int size) {
-		this(size, defaultSearchDepth);
+		this(size, DEFAULT_SEARCH_DEPTH);
 	}
 	
 	/**
@@ -119,66 +119,66 @@ public class Fingerprinter implements IFingerprinter {
 	/**
 	 * Generates a fingerprint of the default size for the given AtomContainer.
 	 *
-	 *@param     ac         The AtomContainer for which a Fingerprint is generated
+	 *@param     container         The AtomContainer for which a Fingerprint is generated
 	 *@exception Exception  Description of the Exception
 	 */
 
     @TestMethod("testGetFingerprint_IAtomContainer")
-    public BitSet getFingerprint(IAtomContainer ac, AllRingsFinder ringFinder) throws Exception {
+    public BitSet getFingerprint(IAtomContainer container, AllRingsFinder ringFinder) throws Exception {
 		String path = null;
 		int position = -1;
 		logger.debug("Entering Fingerprinter");
 		logger.debug("Starting Aromaticity Detection");
 		long before = System.currentTimeMillis();
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-		CDKHueckelAromaticityDetector.detectAromaticity(ac);
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+		CDKHueckelAromaticityDetector.detectAromaticity(container);
 		long after = System.currentTimeMillis();
 		logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
 		logger.debug("Finished Aromaticity Detection");
-		Map paths = findPathes(ac, searchDepth);
-		BitSet bs = new BitSet(size);
+		Map paths = findPathes(container, searchDepth);
+		BitSet bitSet = new BitSet(size);
 		for (Iterator e = paths.values().iterator(); e.hasNext(); )
 		{
 			path = (String)e.next();
 			position = new java.util.Random(path.hashCode()).nextInt(size);
 			logger.debug("Setting bit " + position + " for " + path);
-			bs.set(position);
+			bitSet.set(position);
 		}
-		return bs;
+		return bitSet;
 	}
 
 
 	/**
 	 * Generates a fingerprint of the default size for the given AtomContainer.
 	 *
-	 *@param     ac         The AtomContainer for which a Fingerprint is generated
+	 *@param     container         The AtomContainer for which a Fingerprint is generated
 	 *@exception Exception  Description of the Exception
 	 */
     @TestMethod("testGetFingerprint_IAtomContainer")
-    public BitSet getFingerprint(IAtomContainer ac) throws Exception {
-		return getFingerprint(ac, null);
+    public BitSet getFingerprint(IAtomContainer container) throws Exception {
+		return getFingerprint(container, null);
 	}
 	
 	/**
-	 *  Gets all pathes of length 1 up to the length given by the 'searchDepth"
-	 *  parameter. The pathes are aquired by a number of depth first searches, one
+	 *  Gets all paths of length 1 up to the length given by the 'searchDepth"
+	 *  parameter. The paths are acquired by a number of depth first searches, one
 	 *  for each atom.
 	 *
-	 *@param  ac           The AtomContainer which is to be searched.
+	 *@param  container           The AtomContainer which is to be searched.
 	 *@param  searchDepth  Description of the Parameter
 	 */
-	protected Map findPathes(IAtomContainer ac, int searchDepth)
+	protected Map findPathes(IAtomContainer container, int searchDepth)
 	{
 		Map paths = new HashMap();
 		List currentPath = new ArrayList();
 		debugCounter = 0;
-		for (int f = 0; f < ac.getAtomCount(); f++)
+		for (int f = 0; f < container.getAtomCount(); f++)
 		{
 			currentPath.clear();
-			currentPath.add(ac.getAtom(f));
+			currentPath.add(container.getAtom(f));
 			checkAndStore(currentPath, paths);
-			logger.info("Starting at atom " + (f + 1) + " with symbol " + ac.getAtom(f).getSymbol());
-			depthFirstSearch(ac, ac.getAtom(f), paths, currentPath, 0, searchDepth);
+			logger.info("Starting at atom " + (f + 1) + " with symbol " + container.getAtom(f).getSymbol());
+			depthFirstSearch(container, container.getAtom(f), paths, currentPath, 0, searchDepth);
 		}
 		return paths;
 	}
@@ -187,15 +187,15 @@ public class Fingerprinter implements IFingerprinter {
 	/**
 	 *  Performs a recursive depth first search
 	 *
-	 *@param  ac            The AtomContainer to be searched
+	 *@param  container            The AtomContainer to be searched
 	 *@param  root          The Atom to start the search at
 	 *@param  currentPath   The Path that has been generated so far
 	 *@param  currentDepth  The current depth in this recursive search
 	 *@param  searchDepth   Description of the Parameter
 	 */
-	private void depthFirstSearch(IAtomContainer ac, IAtom root, Map paths, List currentPath, int currentDepth, int searchDepth)
+	private void depthFirstSearch(IAtomContainer container, IAtom root, Map paths, List currentPath, int currentDepth, int searchDepth)
 	{
-		List bonds = ac.getConnectedBondsList(root);
+		List bonds = container.getConnectedBondsList(root);
 
 		/*
 		 *  try
@@ -204,7 +204,7 @@ public class Fingerprinter implements IFingerprinter {
 		 *  }
 		 *  catch(Exception exc){}
 		 */
-		org.openscience.cdk.interfaces.IAtom nextAtom = null;
+		IAtom nextAtom = null;
 
 		/*
 		 *  try
@@ -213,13 +213,11 @@ public class Fingerprinter implements IFingerprinter {
 		 *  }
 		 *  catch(Exception exc){}
 		 */
-		//Atom tempAtom = null;
 		List newPath = null;
-		//String symbol = null;
 		String bondSymbol = null;
 		currentDepth++;
-		//logger.info("New incremented searchDepth " + currentDepth);
-		//logger.info("Current Path is: " + currentPath);
+		logger.info("New incremented searchDepth " + currentDepth);
+		logger.info("Current Path is: " + currentPath);
 		for (int f = 0; f < bonds.size(); f++)
 		{
 			IBond bond = (IBond)bonds.get(f);
@@ -237,18 +235,19 @@ public class Fingerprinter implements IFingerprinter {
 				newPath = new ArrayList(currentPath);
 				bondSymbol = this.getBondSymbol(bond);
 				newPath.add(bondSymbol);
-				//logger.debug("Bond has symbol " + bondSymbol);
+				logger.debug("Bond has symbol " + bondSymbol);
 				newPath.add(nextAtom);
+				// FIXME: this is dirty: adding both Strings and IAtoms... no way to figure what should be happening then
 				checkAndStore(newPath, paths);
 
 				if (currentDepth < searchDepth)
 				{
-					depthFirstSearch(ac, nextAtom, paths, newPath, currentDepth, searchDepth);
-					//logger.debug("DepthFirstSearch Fallback to searchDepth " + currentDepth);
+					depthFirstSearch(container, nextAtom, paths, newPath, currentDepth, searchDepth);
+					logger.debug("DepthFirstSearch Fallback to searchDepth " + currentDepth);
 				}
 			} else
 			{
-				//logger.debug("... already visited!");
+				logger.debug("... already visited!");
 			}
 		}
 	}
@@ -263,7 +262,7 @@ public class Fingerprinter implements IFingerprinter {
                 newPathString.append((String) aNewPath);
             }
         }
-		//logger.debug("Checking for existence of Path " +  newPathString);
+		logger.debug("Checking for existence of Path " +  newPathString);
 		String storePath = newPathString.toString();
 		String reversePath = newPathString.reverse().toString();
 		/*
@@ -282,14 +281,10 @@ public class Fingerprinter implements IFingerprinter {
 		if (!paths.containsKey(storePath))
 		{
 			paths.put(storePath, storePath);
-			if (debug)
-			{
-				debugCounter++;
-				//logger.debug("Storing path no. " + debugCounter + ": " +  storePath + ", Hash: " + storePath.hashCode());
-			}
+			logger.debug("Storing path no. " + debugCounter + ": " +  storePath + ", Hash: " + storePath.hashCode());
 		} else
 		{
-			//logger.debug("Path " + storePath + " already contained");
+			logger.debug("Path " + storePath + " already contained");
 		}
 	}
 
@@ -318,7 +313,7 @@ public class Fingerprinter implements IFingerprinter {
 	 *@param  bond  Description of the Parameter
 	 *@return       The bondSymbol value
 	 */
-	protected String getBondSymbol(org.openscience.cdk.interfaces.IBond bond)
+	protected String getBondSymbol(IBond bond)
 	{
 		String bondSymbol = "";
 		if (bond.getFlag(CDKConstants.ISAROMATIC))
