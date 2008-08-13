@@ -547,6 +547,21 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+    @Test public void testThioAmide() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("S");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("N");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"S.2", "C.sp2", "N.thioamide"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
     @Test public void testAdenine() throws Exception {
     	IMolecule mol = MoleculeFactory.makeAdenine();
         String[] expectedTypes = {"C.sp2", "C.sp2", "C.sp2", "N.sp2", "N.sp2", "N.planar3",

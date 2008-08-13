@@ -501,6 +501,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				if (isAmide(atom, atomContainer)) {
     				    IAtomType type = getAtomType("N.amide");
     				    if (isAcceptable(atom, atomContainer, type)) return type;
+    				} else if (isThioAmide(atom, atomContainer)) {
+    				    IAtomType type = getAtomType("N.thioamide");
+    				    if (isAcceptable(atom, atomContainer, type)) return type;
     				} else if (isRingAtom && bothNeighborsAreSp2(atom, atomContainer)) {
     					if (atomContainer.getConnectedAtomsCount(atom) == 3) {
     						IAtomType type = getAtomType("N.planar3");
@@ -598,6 +601,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     					if (isAmide(atom, atomContainer)) {
     						IAtomType type = getAtomType("N.amide");
     						if (isAcceptable(atom, atomContainer, type)) return type;
+                        } else if (isThioAmide(atom, atomContainer)) {
+                            IAtomType type = getAtomType("N.thioamide");
+                            if (isAcceptable(atom, atomContainer, type)) return type;
     					}
     					List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
     					if (bonds.get(0).getFlag(CDKConstants.ISAROMATIC) &&
@@ -624,7 +630,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     					if (isAmide(atom, atomContainer)) {
     						IAtomType type = getAtomType("N.amide");
     						if (isAcceptable(atom, atomContainer, type)) return type;
-    					}
+                        } else if (isThioAmide(atom, atomContainer)) {
+                            IAtomType type = getAtomType("N.thioamide");
+                            if (isAcceptable(atom, atomContainer, type)) return type;
+                        }
     					IAtomType type = getAtomType("N.sp3");
     					if (isAcceptable(atom, atomContainer, type)) return type;
     				} else if (connectedHeavyAtoms == 0) {
@@ -679,6 +688,16 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		}
     	}
     	return false;
+    }
+
+    private boolean isThioAmide(IAtom atom, IAtomContainer atomContainer) {
+        List<IAtom> neighbors = atomContainer.getConnectedAtomsList(atom);
+        for (IAtom neighbor : neighbors) {
+            if (neighbor.getSymbol().equals("C")) {
+                if (countAttachedDoubleBonds(atomContainer, neighbor, "S") == 1) return true;
+            }
+        }
+        return false;
     }
 
     private int countExplicitHydrogens(IAtom atom, IAtomContainer atomContainer) {

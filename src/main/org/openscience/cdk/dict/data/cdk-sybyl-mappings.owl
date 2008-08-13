@@ -186,6 +186,9 @@
   <owl:Thing rdf:about="&cdkat;N.amide">
     <atm:equivalentAsType rdf:resource="&sybylat;N.am"/>
   </owl:Thing>
+  <owl:Thing rdf:about="&cdkat;N.thioamide">
+    <atm:equivalentAsType rdf:resource="&sybylat;N.am"/>
+  </owl:Thing>
   <owl:Thing rdf:about="&cdkat;N.sp1">
     <atm:equivalentAsType rdf:resource="&sybylat;N.1"/>
   </owl:Thing>
