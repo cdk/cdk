@@ -214,7 +214,8 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     		"testdoublebondconfig.mol",
     		"testisopropylacetate.mol",
     		"thiamin.mol",
-    		"withcharges.mol"
+    		"withcharges.mol",
+    		"zinc_1309609.sdf"
     	};
     	int tested = 0;
     	int failed = 0;
