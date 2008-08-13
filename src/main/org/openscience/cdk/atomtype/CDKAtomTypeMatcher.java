@@ -20,6 +20,8 @@
 package org.openscience.cdk.atomtype;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomException;
@@ -46,6 +48,7 @@ import java.util.Map;
  * @cdk.bug        1802998
  * @cdk.bug        1851197
  */
+@TestClass("org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest")
 public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
 	public final static int REQUIRE_NOTHING = 1;
@@ -66,10 +69,12 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	this.mode = mode;
     }
     
+    @TestMethod("testGetInstance_IChemObjectBuilder")
     public static CDKAtomTypeMatcher getInstance(IChemObjectBuilder builder) {
         return getInstance(builder, REQUIRE_NOTHING);
     }
 
+    @TestMethod("testGetInstance_IChemObjectBuilder_int")
     public static CDKAtomTypeMatcher getInstance(IChemObjectBuilder builder, int mode) {
     	if (!factories.containsKey(mode))
     		factories.put(mode, new Hashtable<IChemObjectBuilder,CDKAtomTypeMatcher>(1));
@@ -78,6 +83,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return factories.get(mode).get(builder);
     }
     
+    @TestMethod("testFindMatchingAtomType_IAtomContainer_IAtom")
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         throws CDKException {
         IAtomType type;
