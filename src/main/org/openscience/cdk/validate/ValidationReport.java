@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2003-2008  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,26 +21,27 @@
  */
 package org.openscience.cdk.validate;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A report on validation of chemical semantics.
  */
 public class ValidationReport {
 
-    private Vector errors;
-    private Vector warnings;
-    private Vector oks;
-    private Vector cdkErrors;
+    private List<ValidationTest> errors;
+    private List<ValidationTest> warnings;
+    private List<ValidationTest> oks;
+    private List<ValidationTest> cdkErrors;
 
     /**
      * Constructs a new empty ValidationReport.
      */
     public ValidationReport() {
-        errors = new Vector();
-        warnings = new Vector();
-        oks = new Vector();
-        cdkErrors = new Vector();
+        errors = new ArrayList<ValidationTest>();
+        warnings = new ArrayList<ValidationTest>();
+        oks = new ArrayList<ValidationTest>();
+        cdkErrors = new ArrayList<ValidationTest>();
     }
 
     /**
@@ -122,28 +120,28 @@ public class ValidationReport {
     /**
      * Returns an array of ValidationTest errors.
      */
-    public Vector getErrors() {
+    public List<ValidationTest> getErrors() {
         return errors;
     }
 
     /**
      * Returns an array of ValidationTest warnings.
      */
-    public Vector getWarnings() {
+    public List<ValidationTest> getWarnings() {
         return warnings;
     }
 
     /**
      * Returns an array of ValidationTest which did not find problems.
      */
-    public Vector getOKs() {
+    public List<ValidationTest> getOKs() {
         return oks;
     }
 
     /**
      * Returns an array of ValidationTest indicating CDK problems.
      */
-    public Vector getCDKErrors() {
+    public List<ValidationTest> getCDKErrors() {
         return cdkErrors;
     }
 
