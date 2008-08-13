@@ -10,3 +10,4 @@ cdk-nonotify.jar
 cdk-testdata.jar
 cdk-atomtype.jar
 cdk-valencycheck.jar
+cdk-pdb.jar

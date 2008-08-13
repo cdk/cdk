@@ -50,9 +50,9 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * This class tests the matching of atom types defined in the
- * structgen atom type list, using the test files in src/data.
+ * cdk atom type list, using the test files in <code>src/test/data</code>.
  *
- * @cdk.module test-extra
+ * @cdk.module test-core
  * 
  * @see org.openscience.cdk.atomtype.CDKAtomTypeMatcher
  */

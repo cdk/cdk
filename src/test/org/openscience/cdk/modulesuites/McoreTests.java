@@ -26,6 +26,7 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.CDKConstantsTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTestFileReposTest;
 import org.openscience.cdk.config.AtomTypeFactoryTest;
 import org.openscience.cdk.config.CDKBasedAtomTypeConfiguratorTest;
 import org.openscience.cdk.config.IsotopeFactoryTest;
@@ -79,12 +80,15 @@ public class McoreTests {
         suite.addTest(new JUnit4TestAdapter(OWLAtomTypeHandlerTest.class));
         suite.addTest(new JUnit4TestAdapter(IsotopeReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(IsotopeHandlerTest.class));        
-       
+
+        // the CDK atom typer
+        suite.addTest(new JUnit4TestAdapter(CDKAtomTypeMatcherTest.class));
+        suite.addTest(new JUnit4TestAdapter(CDKAtomTypeMatcherTestFileReposTest.class));
+
         // other
         suite.addTest(new JUnit4TestAdapter(CDKExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(NoSuchAtomExceptionTest.class));
         suite.addTest(new JUnit4TestAdapter(NoSuchAtomTypeExceptionTest.class));
-        suite.addTest(new JUnit4TestAdapter(CDKAtomTypeMatcherTest.class));
         suite.addTest(new JUnit4TestAdapter(LoggingToolTest.class));
         suite.addTest(new JUnit4TestAdapter(BondManipulatorTest.class));
         suite.addTest(new JUnit4TestAdapter(AdjacencyMatrixTest.class));
