@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -81,6 +82,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.keyword file format, PDB
  * @cdk.bug     1714141
  * @cdk.bug     1794439
+ * @cdk.bug     2046633
  */
 public class PDBReader extends DefaultChemObjectReader {
 	
@@ -90,6 +92,13 @@ public class PDBReader extends DefaultChemObjectReader {
 	private BooleanIOSetting readConnect;
 	
 	private Map atomNumberMap;
+	
+	/*
+	 * This is a temporary store for bonds from CONNECT records.
+	 * As CONNECT is deliberately fully redundant (a->b and b->a)
+	 * we need to use this to weed out the duplicates.
+	 */
+	private ArrayList bondsFromConnectRecords;
 	
 	private static AtomTypeFactory pdbFactory;
 	
@@ -211,6 +220,9 @@ public class PDBReader extends DefaultChemObjectReader {
 		boolean isProteinStructure = false;
 		
 		atomNumberMap = new Hashtable();
+		if (readConnect.isSet()) {
+		    bondsFromConnectRecords = new ArrayList();
+		}
 		
 		// do the reading of the Input		
 		try {
@@ -497,9 +509,23 @@ public class PDBReader extends DefaultChemObjectReader {
 		if (secondAtom == null) {
 			logger.error("Could not find bond target atom in map with serial id: ", bondAtomNo);
 		}
-		obp.addBond(firstAtom.getBuilder().newBond(firstAtom, secondAtom, IBond.Order.SINGLE));
+		IBond bond = firstAtom.getBuilder().newBond(
+		                firstAtom, secondAtom, IBond.Order.SINGLE);
+		for (int i = 0; i < bondsFromConnectRecords.size(); i++) {
+		    IBond existingBond = 
+		        (IBond) bondsFromConnectRecords.get(i);
+		    IAtom a = existingBond.getAtom(0);
+		    IAtom b = existingBond.getAtom(1);
+		    if ((a == firstAtom && b == secondAtom) ||
+		            (b == firstAtom && a == secondAtom)) {
+		        // already stored
+		        return;
+		    }
+		}
+		bondsFromConnectRecords.add(bond);
+		obp.addBond(bond);
 	}
-
+	
 	private boolean createBondsWithRebondTool(IBioPolymer pol){
 		RebondTool tool = new RebondTool(2.0, 0.5, 0.5);
 		try {

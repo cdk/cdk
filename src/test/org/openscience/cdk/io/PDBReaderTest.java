@@ -24,13 +24,19 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.FileWriter;
 import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.List;
+import java.util.Properties;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -38,6 +44,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
@@ -58,6 +65,52 @@ public class PDBReaderTest extends ChemObjectIOTest {
 
     @BeforeClass public static void setup() throws Exception {
         setChemObjectIO(new PDBReader());
+    }
+    
+    /**
+     * Test to see if PDB files with CONECT records are handled properly.
+     *  
+     * @throws Exception
+     * @cdk.bug 2046633
+     */
+    @Test public void testConnectRecords() throws Exception {
+        String data =
+            "SEQRES    111111111111111111111111111111111111111111111111111111111111111     \n" +
+            "ATOM      1  N   SER A 326     103.777  74.304  20.170  1.00 21.58           N\n" + 
+            "ATOM      2  CA  SER A 326     102.613  74.991  20.586  1.00 18.59           C\n" +
+            "ATOM      3  C   SER A 326     101.631  74.211  21.431  1.00 17.75           C\n" +  
+            "ATOM      4  O   SER A 326     101.653  74.549  22.634  1.00 18.51           O\n" +
+            "CONECT    1    4\n" +
+            "CONECT    4    1\n" +
+            "END    \n";
+        
+        StringReader stringReader = new StringReader(data); 
+        PDBReader reader = new PDBReader(stringReader);
+        Properties properties = new Properties();
+        properties.setProperty("ReadConnectSection", "true");
+        properties.setProperty("UseRebondTool", "false");
+        PropertiesListener listener = 
+            new PropertiesListener(properties);
+        reader.addChemObjectIOListener(listener);
+        reader.customizeJob();
+
+        ChemObject object = new ChemFile();
+        reader.read(object);
+        stringReader.close();
+        Assert.assertNotNull(object);
+        int bondCount = ((IChemFile)object)
+                            .getChemSequence(0)
+                                .getChemModel(0)
+                                    .getMoleculeSet()
+                                        .getMolecule(0)
+                                            .getBondCount();
+        /*
+         * if ReadConnectSection=true and UseRebondTool=false
+         * then bondCount == 1 (from just the CONECT)
+         * else if ReadConnectSection=false and UseRebondTool=true
+         * then bondCount == 3 (just atoms within bonding distance)
+         */
+        Assert.assertEquals(bondCount, 1);
     }
 
     @Test public void testAccepts() {

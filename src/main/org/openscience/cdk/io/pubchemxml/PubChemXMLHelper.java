@@ -60,7 +60,7 @@ public class PubChemXMLHelper {
 	public PubChemXMLHelper(IChemObjectBuilder builder) throws IOException {
 		this.builder = builder;
 		factory = IsotopeFactory.getInstance(builder);
-	};
+	}
 
 	// general elements
 	public final static String EL_PCCOMPOUND = "PC-Compound";
