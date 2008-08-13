@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+ * Copyright (C) 2007-2008  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -620,7 +620,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     						if (isAcceptable(atom, atomContainer, type)) return type;
     					}
     				} else if (connectedHeavyAtoms == 3) {
-    					if (isRingAtom && bothNeighborsAreSp2(atom, atomContainer)) {
+    				    if (isAmide(atom, atomContainer)) {
+    				        IAtomType type = getAtomType("N.amide");
+                            if (isAcceptable(atom, atomContainer, type)) return type;
+    				    } else if (isThioAmide(atom, atomContainer)) {
+    				        IAtomType type = getAtomType("N.thioamide");
+                            if (isAcceptable(atom, atomContainer, type)) return type;
+    				    } else if (isRingAtom && bothNeighborsAreSp2(atom, atomContainer)) {
     						IAtomType type = getAtomType("N.planar3");
     						if (isAcceptable(atom, atomContainer, type)) return type;
     					}
