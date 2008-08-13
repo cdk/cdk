@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2004-2007  Ulrich Bauer <baueru@cs.tum.edu>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,9 +21,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
-
 package org.openscience.cdk.ringsearch;
 
 import org._3pq.jgrapht.UndirectedGraph;
@@ -52,7 +47,7 @@ import java.util.List;
  * by Franziska Berger, Peter Gritzmann, and Sven deVries, TU M&uuml;nchen,
  * {@cdk.cite BGdV04a}.
  * 
- * Additional related algorithms from {@cdk.cite BGdV04b}.
+ * <p>Additional related algorithms from {@cdk.cite BGdV04b}.
  *
  * @author Ulrich Bauer <baueru@cs.tum.edu>
  *
@@ -66,7 +61,6 @@ import java.util.List;
  * @cdk.builddepends jgrapht-0.5.3.jar
  * @cdk.depends jgrapht-0.5.3.jar
  */
-
 @TestClass("org.openscience.cdk.ringsearch.SSSRFinderTest")
 public class SSSRFinder {
 
@@ -84,10 +78,10 @@ public class SSSRFinder {
 	/**
 	 * Constructs a SSSRFinder for a specified molecule.
 	 *
-	 * @param   ac the molecule to be searched for rings 
+	 * @param   container the molecule to be searched for rings 
 	 */
-	public SSSRFinder(org.openscience.cdk.interfaces.IAtomContainer ac) {
-		this.atomContainer = ac;
+	public SSSRFinder(IAtomContainer container) {
+		this.atomContainer = container;
 	}
 	
 	/**
@@ -103,7 +97,7 @@ public class SSSRFinder {
 		}
 		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().cycles());
 //		atomContainer.setProperty(CDKConstants.SMALLEST_RINGS, ringSet);
-		return toRingSet(atomContainer, cycleBasis().cycles());	  
+		return ringSet;	  
 
 	}
 	
@@ -120,14 +114,12 @@ public class SSSRFinder {
 		}
 		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().cycles());
 //		atomContainer.setProperty(CDKConstants.ESSENTIAL_RINGS, ringSet);
-		
-		return toRingSet(atomContainer, cycleBasis().essentialCycles());	  
-
+		return ringSet;
 	}
 	
 	/**
 	 * Finds the Set of Relevant Rings.
-	 * These rings are contained in everry possible SSSR.
+	 * These rings are contained in every possible SSSR.
 	 * The returned set is uniquely defined.
 	 *
 	 * @return      a RingSet containing the Relevant Rings
@@ -139,9 +131,7 @@ public class SSSRFinder {
 		
 		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().cycles());
 //		atomContainer.setProperty(CDKConstants.RELEVANT_RINGS, ringSet);
-
-		return toRingSet(atomContainer, cycleBasis().relevantCycles().keySet());	  
-
+		return ringSet;	  
 	}
 	
 	/**
@@ -159,9 +149,7 @@ public class SSSRFinder {
         for (Object o : cycleBasis().equivalenceClasses()) {
             equivalenceClasses.add(toRingSet(atomContainer, (Collection) o));
         }
-		
-		return equivalenceClasses;	  
-
+		return equivalenceClasses;
 	}
 	
 	/**
@@ -196,16 +184,16 @@ public class SSSRFinder {
 	 * The returned set is not uniquely defined.
 	 *
 	 * @deprecated replaced by {@link #findSSSR()}
-	 * @param   ac the molecule to be searched for rings 
+	 * @param   container the molecule to be searched for rings 
 	 * @return      a RingSet containing the SSSR
 	 */
-	static public IRingSet findSSSR(IAtomContainer ac)
+	static public IRingSet findSSSR(IAtomContainer container)
 	{
-		UndirectedGraph molGraph = MoleculeGraphs.getMoleculeGraph(ac);
+		UndirectedGraph molGraph = MoleculeGraphs.getMoleculeGraph(container);
 		
 		CycleBasis cycleBasis = new CycleBasis(molGraph);
 		
-		return toRingSet(ac, cycleBasis.cycles());  
+		return toRingSet(container, cycleBasis.cycles());  
 	}
 	
 	private CycleBasis cycleBasis() {
@@ -217,16 +205,16 @@ public class SSSRFinder {
 		return cycleBasis;
 	}
 	
-	private static IRingSet toRingSet(org.openscience.cdk.interfaces.IAtomContainer ac, Collection cycles) {
+	private static IRingSet toRingSet(IAtomContainer container, Collection cycles) {
 		
-		IRingSet ringSet = ac.getBuilder().newRingSet();
+		IRingSet ringSet = container.getBuilder().newRingSet();
 
 		Iterator cycleIterator = cycles.iterator();
 		
 		while (cycleIterator.hasNext()) {
 			SimpleCycle cycle = (SimpleCycle) cycleIterator.next();
 			
-			IRing ring = ac.getBuilder().newRing();
+			IRing ring = container.getBuilder().newRing();
 			
 			List vertices = cycle.vertexList();
 			
@@ -234,12 +222,12 @@ public class SSSRFinder {
 			atoms[0] = (IAtom) vertices.get(0);
             for (int i = 1; i < vertices.size(); i++) {
 				atoms[i] = (IAtom) vertices.get(i);
-				ring.addElectronContainer(ac.getBond(atoms[i-1], atoms[i]));
+				ring.addElectronContainer(container.getBond(atoms[i-1], atoms[i]));
 			}
 
             for (IAtom atom : atoms) atom.setFlag(CDKConstants.ISINRING, true);
 
-            ring.addElectronContainer(ac.getBond(atoms[vertices.size() - 1], atoms[0]));
+            ring.addElectronContainer(container.getBond(atoms[vertices.size() - 1], atoms[0]));
 			ring.setAtoms(atoms);
 
 			ringSet.addAtomContainer(ring);

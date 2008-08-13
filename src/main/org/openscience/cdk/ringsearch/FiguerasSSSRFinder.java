@@ -29,6 +29,7 @@
 package org.openscience.cdk.ringsearch;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import org.openscience.cdk.Atom;
@@ -85,16 +86,16 @@ public class FiguerasSSSRFinder {
 		//full set of atoms in the structure and on to store the numbers
 		//of the nodes that have been trimmed away.
 		//Furhter there is a Vector nodesN2 to store the number of N2 nodes
-		Vector fullSet = new Vector();
-		Vector trimSet = new Vector();
-		Vector nodesN2 = new Vector();
+		List fullSet = new Vector();
+		List trimSet = new Vector();
+		List nodesN2 = new Vector();
 		
 		initPath(molecule);
 		logger.debug("molecule.getAtomCount(): " + molecule.getAtomCount());				
 		// load fullSet with the numbers of our atoms
 		for (int f = 0; f < molecule.getAtomCount(); f++)
 		{
-			fullSet.addElement(molecule.getAtom(f));
+			fullSet.add(molecule.getAtom(f));
 		}
 		logger.debug("fullSet.size(): " + fullSet.size());						
 		
@@ -105,7 +106,7 @@ public class FiguerasSSSRFinder {
 			//greater than zero.	
 			smallestDegree = 7;
 			smallest = null;
-			nodesN2.removeAllElements();
+			nodesN2.clear();
 			for (int f = 0; f < molecule.getAtomCount(); f++)
 			{
 				org.openscience.cdk.interfaces.IAtom atom = molecule.getAtom(f);
@@ -115,12 +116,12 @@ public class FiguerasSSSRFinder {
 					if (!trimSet.contains(atom))
 					{
 						logger.debug("Atom of degree 0");
-						trimSet.addElement(atom);
+						trimSet.add(atom);
 					}
 				}
 				if (degree == 2)
 				{
-					nodesN2.addElement(atom);
+					nodesN2.add(atom);
 				}
 				if (degree < smallestDegree && degree > 0)
 				{
@@ -135,7 +136,7 @@ public class FiguerasSSSRFinder {
 			{
 				trimCounter ++;
 				trim(smallest, molecule);
-				trimSet.addElement(smallest);
+				trimSet.add(smallest);
 			}
 			
 			// if there are nodes of degree 2, find out of which rings
@@ -146,14 +147,14 @@ public class FiguerasSSSRFinder {
 				nodesToBreakCounter = 0;
 				for (int f = 0; f < nodesN2.size(); f++)
 				{
-					ring = getRing((Atom)nodesN2.elementAt(f), molecule);
+					ring = getRing((Atom)nodesN2.get(f), molecule);
 					if (ring != null)
 					{
 						// check, if this ring already is in SSSR
 						if (!RingSetManipulator.ringAlreadyInSet(ring, sssr))
 						{
 							sssr.addAtomContainer(ring);
-							rememberNodes[nodesToBreakCounter] = (Atom)nodesN2.elementAt(f);
+							rememberNodes[nodesToBreakCounter] = (Atom)nodesN2.get(f);
 							nodesToBreakCounter++;
 						}
 					}
@@ -161,7 +162,7 @@ public class FiguerasSSSRFinder {
 				if (nodesToBreakCounter == 0)
 				{
 					nodesToBreakCounter = 1;
-					rememberNodes[0] = (Atom)nodesN2.elementAt(0);
+					rememberNodes[0] = (Atom)nodesN2.get(0);
 				}
 				for (int f = 0; f < nodesToBreakCounter; f++){
 					breakBond(rememberNodes[f], molecule);
@@ -207,10 +208,10 @@ public class FiguerasSSSRFinder {
 	 * @param   molecule  The molecule that contains the rootNode
 	 * @return     The smallest Ring rootnode is part of
 	 */
-	private Ring getRing(org.openscience.cdk.interfaces.IAtom rootNode, Molecule molecule)
+	private Ring getRing(IAtom rootNode, Molecule molecule)
 	{
-		org.openscience.cdk.interfaces.IAtom node, neighbor, mAtom; 
-		java.util.List neighbors, mAtoms;
+		IAtom node, neighbor, mAtom; 
+		List neighbors, mAtoms;
 		/** OKatoms is Figueras nomenclature, giving the number of 
 		    atoms in the structure */
 		int OKatoms = molecule.getAtomCount();
@@ -218,13 +219,13 @@ public class FiguerasSSSRFinder {
 		Queue queue = new Queue();
 		/* Initialize a path Vector for each node */
 		//Vector pfad1,pfad2;
-		Vector path[] = new Vector[OKatoms];
-		Vector intersection = new Vector();
-		Vector ring = new Vector();
+		List path[] = new Vector[OKatoms];
+		List intersection = new Vector();
+		List ring = new Vector();
 		for (int f = 0; f < OKatoms; f++)
 		{
 			path[f] = new Vector();		
-			((Vector)molecule.getAtom(f).getProperty(PATH)).removeAllElements();
+			((List)molecule.getAtom(f).getProperty(PATH)).clear();
 		}
 		// Initialize the queue with nodes attached to rootNode
 		neighbors = molecule.getConnectedAtomsList(rootNode);
@@ -235,23 +236,23 @@ public class FiguerasSSSRFinder {
 			// push the f-st node onto our FIFO queue	
 			// after assigning rootNode as its source
 			queue.push(neighbor);
-			((Vector)neighbor.getProperty(PATH)).addElement(rootNode);
-			((Vector)neighbor.getProperty(PATH)).addElement(neighbor);
+			((List)neighbor.getProperty(PATH)).add(rootNode);
+			((List)neighbor.getProperty(PATH)).add(neighbor);
 		}
 		while (queue.size() > 0){	
 			node = (Atom)queue.pop();
 			mAtoms = molecule.getConnectedAtomsList(node);
 			for (int f = 0; f < mAtoms.size(); f++){
 				mAtom = (IAtom)mAtoms.get(f);
-				if (mAtom != ((Vector)node.getProperty(PATH)).elementAt(((Vector)node.getProperty(PATH)).size() - 2)){
-					if (((Vector)mAtom.getProperty(PATH)).size() > 0){
-						intersection = getIntersection((Vector)node.getProperty(PATH), (Vector)mAtom.getProperty(PATH));
+				if (mAtom != ((List)node.getProperty(PATH)).get(((Vector)node.getProperty(PATH)).size() - 2)){
+					if (((List)mAtom.getProperty(PATH)).size() > 0){
+						intersection = getIntersection((List)node.getProperty(PATH), (List)mAtom.getProperty(PATH));
 						if (intersection.size() == 1){
 							// we have found a valid ring closure
 							// now let's prepare the path to
 							// return in tempAtomSet
-							logger.debug("path1  ", ((Vector)node.getProperty(PATH)));
-							logger.debug("path2  ", ((Vector)mAtom.getProperty(PATH)));
+							logger.debug("path1  ", ((List)node.getProperty(PATH)));
+							logger.debug("path2  ", ((List)mAtom.getProperty(PATH)));
 							logger.debug("rootNode  ", rootNode);
 							logger.debug("ring   ", ring);
 							ring = getUnion(((Vector)node.getProperty(PATH)), ((Vector)mAtom.getProperty(PATH)));
@@ -264,7 +265,7 @@ public class FiguerasSSSRFinder {
 					    // update the path[mNumber]							
 						//pfad2 = (Vector)node.getProperty(PATH);
 						mAtom.setProperty(PATH, (Vector)((Vector)node.getProperty(PATH)).clone());
-						((Vector)mAtom.getProperty(PATH)).addElement(mAtom);
+						((List)mAtom.getProperty(PATH)).add(mAtom);
 						//pfad1 = (Vector)mAtom.getProperty(PATH);
 						// now push the node m onto the queue
 						queue.push(mAtom);	
@@ -286,13 +287,13 @@ public class FiguerasSSSRFinder {
 	 * @param   mol  The molecule this ring is a substructure of
 	 * @return     The ring formed by the given atoms
 	 */
-	private Ring prepareRing(Vector vec, Molecule mol)
+	private Ring prepareRing(List vec, Molecule mol)
 	{
 		// add the atoms in vec to the new ring
 		int atomCount = vec.size();
 		Ring ring = new Ring(atomCount);
 		Atom[] atoms = new Atom[atomCount];
-		vec.copyInto(atoms);
+		vec.toArray(atoms);
 		ring.setAtoms(atoms);
 		// add the bonds in mol to the new ring
 		try {
@@ -326,8 +327,8 @@ public class FiguerasSSSRFinder {
 	 * @param   atom  The atom to be disconnecred
 	 * @param   molecule  The molecule containing the atom
 	 */
-	 private void trim(org.openscience.cdk.interfaces.IAtom atom, Molecule molecule) {
-        java.util.List bonds = molecule.getConnectedBondsList(atom);
+	 private void trim(IAtom atom, Molecule molecule) {
+        List<IBond> bonds = molecule.getConnectedBondsList(atom);
 	 	for (int i = 0; i < bonds.size(); i++) {
             molecule.removeElectronContainer((IBond)bonds.get(i));
 	 	}
@@ -355,10 +356,10 @@ public class FiguerasSSSRFinder {
 	 * @param   vec2   The second vector
 	 * @return     
 	 */
-	private  Vector getIntersection(Vector vec1, Vector vec2) {
-		Vector is = new Vector();		
+	private  List getIntersection(List vec1, List vec2) {
+		List is = new Vector();		
 		for (int f = 0; f < vec1.size(); f++){
-			if (vec2.contains((Atom)vec1.elementAt(f))) is.addElement((Atom)vec1.elementAt(f));	
+			if (vec2.contains((Atom)vec1.get(f))) is.add((Atom)vec1.get(f));	
 		}	
 		return is;
 	}	
@@ -371,6 +372,7 @@ public class FiguerasSSSRFinder {
 	 * @return     
 	 */
 	private  Vector getUnion(Vector vec1, Vector vec2){
+	    // FIXME: the JavaDoc does not describe what happens: that vec1 gets to be the union! 
 		Vector is = (Vector)vec1.clone();
 		for (int f = vec2.size()- 1; f > -1; f--){
 			if (!vec1.contains((Atom)vec2.elementAt(f))) is.addElement((Atom)vec2.elementAt(f));	
@@ -385,7 +387,7 @@ public class FiguerasSSSRFinder {
 	 * @param   molecule  The molecule that contains the atom
 	 */
     private void breakBond(Atom atom, Molecule molecule) {
-        Iterator bonds = molecule.bonds();
+        Iterator<IBond> bonds = molecule.bonds();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
             if (bond.contains(atom)) {
@@ -413,7 +415,7 @@ public class FiguerasSSSRFinder {
 		int minMaxSize = Integer.MAX_VALUE;
 		int minMax = 0;
 		logger.debug("Molecule: " + molecule);
-		Iterator bonds = ring.bonds();
+		Iterator<IBond> bonds = ring.bonds();
 		while (bonds.hasNext())
 		{
 			bond = (IBond)bonds.next();
