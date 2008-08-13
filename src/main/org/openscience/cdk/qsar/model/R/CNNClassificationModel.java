@@ -121,7 +121,7 @@ public class CNNClassificationModel extends RModel {
     private CNNClassificationModelFit modelfit = null;
     private CNNClassificationModelPredict modelpredict = null;
 
-    private HashMap params = null;
+    private HashMap<String, Object> params = null;
     private int noutput = 0;
     private int nvar = 0;
 
@@ -132,24 +132,24 @@ public class CNNClassificationModel extends RModel {
         // these params are vectors that depend on user defined stuff
         // so as a default we set them to FALSE so R can check if these
         // were not set
-        this.params.put("subset", new Boolean(false));
-        this.params.put("mask", new Boolean(false) );
-        this.params.put("Wts", new Boolean(false));
-        this.params.put("weights", new Boolean(false));
+        this.params.put("subset", false);
+        this.params.put("mask", false );
+        this.params.put("Wts", false);
+        this.params.put("weights", false);
 
-        this.params.put("linout", new Boolean(false)); // we want only classification
-        this.params.put("entropy", new Boolean(true));
-        this.params.put("softmax",new Boolean(false));
-        this.params.put("censored", new Boolean(false));
-        this.params.put("skip", new Boolean(false));
-        this.params.put("rang", new Double(0.7));
-        this.params.put("decay", new Double(0.0));
-        this.params.put("maxit", new Integer(100));
-        this.params.put("Hess", new Boolean(false));
-        this.params.put("trace", new Boolean(false)); // no need to see output
-        this.params.put("MaxNWts", new Integer(1000));
-        this.params.put("abstol", new Double(1.0e-4));
-        this.params.put("reltol", new Double(1.0e-8));
+        this.params.put("linout", false); // we want only classification
+        this.params.put("entropy", true);
+        this.params.put("softmax",false);
+        this.params.put("censored", false);
+        this.params.put("skip", false);
+        this.params.put("rang", Double.valueOf(0.7));
+        this.params.put("decay", Double.valueOf(0.0));
+        this.params.put("maxit", Integer.valueOf(100));
+        this.params.put("Hess", false);
+        this.params.put("trace", false); // no need to see output
+        this.params.put("MaxNWts", Integer.valueOf(1000));
+        this.params.put("abstol", Double.valueOf(1.0e-4));
+        this.params.put("reltol", Double.valueOf(1.0e-8));
     }        
     
     /**
@@ -168,7 +168,7 @@ public class CNNClassificationModel extends RModel {
      */
     public CNNClassificationModel() {
         super();
-        this.params = new HashMap();
+        this.params = new HashMap<String,Object>();
         this.currentID = CNNClassificationModel.globalID;
         CNNClassificationModel.globalID++;
         this.setModelName("cdkCNNCModel"+this.currentID);
@@ -197,7 +197,7 @@ public class CNNClassificationModel extends RModel {
      */
     public CNNClassificationModel(double[][] x, String[] y, int size) throws QSARModelException {
         super();
-        this.params = new HashMap();
+        this.params = new HashMap<String,Object>();
         this.currentID = CNNClassificationModel.globalID;
         CNNClassificationModel.globalID++;
         this.setModelName("cdkCNNCModel"+this.currentID);
@@ -249,7 +249,7 @@ public class CNNClassificationModel extends RModel {
      */
     public CNNClassificationModel(double[][] x, String[][] y, int size) throws QSARModelException{
         super();
-        this.params = new HashMap();
+        this.params = new HashMap<String,Object>();
         this.currentID = CNNClassificationModel.globalID;
         CNNClassificationModel.globalID++;
         this.setModelName("cdkCNNCModel"+this.currentID);

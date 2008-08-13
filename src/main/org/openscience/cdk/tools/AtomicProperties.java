@@ -1,7 +1,4 @@
-/* $RCSfile: $
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2006-2007  Todd Martin (Environmental Protection Agency)
  *
@@ -28,11 +25,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * Provides atomic property values for descriptor calculations.
  *
- * This class currently provides values for mass, Vanm der Waals volume, electronegativity and
+ * This class currently provides values for mass, Vanderwaals volume, electronegativity and
  * polarizability
  *
  * @cdk.author Todd Martin
@@ -43,10 +41,10 @@ public class AtomicProperties {
 
     private static AtomicProperties ap=null;
 
-	private Hashtable<String, Double> htMass=new Hashtable<String,Double>();
-	private Hashtable<String, Double> htVdWVolume=new Hashtable<String, Double>();
-	private Hashtable<String, Double> htElectronegativity=new Hashtable<String, Double>();
-	private Hashtable<String, Double> htPolarizability=new Hashtable<String, Double>();
+	private Map<String, Double> htMass=new Hashtable<String,Double>();
+	private Map<String, Double> htVdWVolume=new Hashtable<String, Double>();
+	private Map<String, Double> htElectronegativity=new Hashtable<String, Double>();
+	private Map<String, Double> htPolarizability=new Hashtable<String, Double>();
 
 
 	private AtomicProperties() throws IOException {
