@@ -22,6 +22,7 @@
 package org.openscience.cdk.io.cml;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.tools.LoggingTool;
@@ -47,13 +48,10 @@ public class CMLHandler extends DefaultHandler {
     private LoggingTool logger;
     private boolean debug = true;
     
-    private Hashtable userConventions;
+    private Map<String,ICMLModule> userConventions;
 
-  // this is a problem under MSFT ie jvm
-  //private Stack xpath;
     private CMLStack xpath;
     private CMLStack conventionStack;
-
 
     /**
      * Constructor for the CMLHandler.
@@ -63,7 +61,7 @@ public class CMLHandler extends DefaultHandler {
     public CMLHandler(IChemFile chemFile) {
         logger = new LoggingTool(this);
         conv = new CMLCoreModule(chemFile);
-        userConventions = new Hashtable();
+        userConventions = new Hashtable<String,ICMLModule>();
         xpath = new CMLStack();
         conventionStack = new CMLStack();
     }

@@ -53,15 +53,16 @@ public class AtomMappingTools {
      * @throws CDKException if there is an error in the UniversalIsomorphismTester
      * @cdk.bug 1956606
      */
-    public static Map mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, Map mappedAtoms) throws CDKException {
+    public static Map<Integer,Integer> mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, 
+            IAtomContainer secondAtomContainer, Map<Integer,Integer> mappedAtoms) throws CDKException {
         //logger.debug("**** GT MAP ATOMS ****");
         //Map atoms onto each other
         if (firstAtomContainer.getAtomCount() < 1 & secondAtomContainer.getAtomCount() < 1) {
             return mappedAtoms;
         }
         RMap map;
-        org.openscience.cdk.interfaces.IAtom atom1;
-        org.openscience.cdk.interfaces.IAtom atom2;
+        IAtom atom1;
+        IAtom atom2;
         List list;
         try {
             list = UniversalIsomorphismTester.getSubgraphAtomsMap(firstAtomContainer, secondAtomContainer);
@@ -72,8 +73,8 @@ public class AtomMappingTools {
                 atom2 = secondAtomContainer.getAtom(map.getId2());
                 if (checkAtomMapping(firstAtomContainer, secondAtomContainer, firstAtomContainer.getAtomNumber(atom1), secondAtomContainer.getAtomNumber(atom2)))
                 {
-                    mappedAtoms.put(new Integer(firstAtomContainer.getAtomNumber(atom1)), new Integer(secondAtomContainer.getAtomNumber(atom2)));
-                    //logger.debug("#:"+countMappedAtoms+" Atom:"+firstAtomContainer.getAtomNumber(atom1)+" is mapped to Atom:"+secondAtomContainer.getAtomNumber(atom2));
+                    mappedAtoms.put(Integer.valueOf(firstAtomContainer.getAtomNumber(atom1)), Integer.valueOf(secondAtomContainer.getAtomNumber(atom2)));
+//                    logger.debug("#:"+countMappedAtoms+" Atom:"+firstAtomContainer.getAtomNumber(atom1)+" is mapped to Atom:"+secondAtomContainer.getAtomNumber(atom2));
                 } else {
                     logger.error("Error: Atoms are not similar !!");
                 }
