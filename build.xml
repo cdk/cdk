@@ -35,7 +35,6 @@
 
          <property environment="env" />
 
-
     <!-- Inlcude the ant-contrib goodies -->
     <taskdef resource="net/sf/antcontrib/antlib.xml">
         <classpath>
@@ -43,9 +42,16 @@
         </classpath>
     </taskdef>
 
+    <shellscript shell="bash" outputproperty="svn.output">
+     svn info
+    </shellscript>
+    <propertyregex property="svn.rev" input="${svn.output}" regexp="Revision: ([0-9]*)" select="\1" />
 
 
     <target id="info" name="info" depends="check">
+
+<echo message="${svn.rev}" />
+
             <!-- Gives information about the building process. -->
             <echo message="Platform:" />
             <echo message="             OS: ${os.name}" />
