@@ -812,5 +812,26 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String smiles = smilesGenerator.createSMILES(mol);
         assertTrue(smiles.indexOf("[nH]") >= 0);
     }
+    
+    /**
+     * @cdk.bug 2051597
+     */
+    public void testSFBug2051597() throws Exception {
+        String smiles = "c1(c2ccc(c8ccccc8)cc2)" +
+        "c(c3ccc(c9ccccc9)cc3)" +
+        "c(c4ccc(c%10ccccc%10)cc4)" +
+        "c(c5ccc(c%11ccccc%11)cc5)" +
+        "c(c6ccc(c%12ccccc%12)cc6)" +
+        "c1(c7ccc(c%13ccccc%13)cc7)";
+        SmilesParser smilesParser = new SmilesParser(
+                DefaultChemObjectBuilder.getInstance());
+        IMolecule cdkMol = smilesParser.parseSmiles(smiles);
+        SmilesGenerator smilesGenerator = new SmilesGenerator();
+        String genSmiles = smilesGenerator.createSMILES(cdkMol);
+        System.out.println(genSmiles);
+        IMolecule cdkRoundTripMol 
+            = smilesParser.parseSmiles(genSmiles);
+        assertTrue(cdkRoundTripMol != null);
+    }
 }
 
