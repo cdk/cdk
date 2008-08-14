@@ -28,6 +28,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -124,7 +125,7 @@ public class Fingerprinter implements IFingerprinter {
 	 */
 
     @TestMethod("testGetFingerprint_IAtomContainer")
-    public BitSet getFingerprint(IAtomContainer container, AllRingsFinder ringFinder) throws Exception {
+    public BitSet getFingerprint(IAtomContainer container, AllRingsFinder ringFinder) throws CDKException {
 		String path = null;
 		int position = -1;
 		logger.debug("Entering Fingerprinter");
@@ -152,10 +153,9 @@ public class Fingerprinter implements IFingerprinter {
 	 * Generates a fingerprint of the default size for the given AtomContainer.
 	 *
 	 *@param     container         The AtomContainer for which a Fingerprint is generated
-	 *@exception Exception  Description of the Exception
 	 */
     @TestMethod("testGetFingerprint_IAtomContainer")
-    public BitSet getFingerprint(IAtomContainer container) throws Exception {
+    public BitSet getFingerprint(IAtomContainer container) throws CDKException {
 		return getFingerprint(container, null);
 	}
 	

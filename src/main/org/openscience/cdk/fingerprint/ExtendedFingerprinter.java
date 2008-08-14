@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
@@ -88,10 +89,9 @@ public class ExtendedFingerprinter implements IFingerprinter {
 	 * there is a fused ring system with 1,2...8 or more rings in it
 	 *
 	 *@param     container         The AtomContainer for which a Fingerprint is generated
-	 *@exception Exception  Description of the Exception
 	 */
     @TestMethod("testGetFingerprint_IAtomContainer")
-    public BitSet getFingerprint(IAtomContainer container) throws Exception {
+    public BitSet getFingerprint(IAtomContainer container) throws CDKException {
 		return this.getFingerprint(container,null,null);
 	}
 		
@@ -108,7 +108,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
 	 *@exception Exception  Description of the Exception
 	 */
     @TestMethod("testGetFingerprint_IAtomContainer_IRingSet")
-    public BitSet getFingerprint(IAtomContainer container, IRingSet ringSet, List<IRingSet> rslist) throws Exception {
+    public BitSet getFingerprint(IAtomContainer container, IRingSet ringSet, List<IRingSet> rslist) throws CDKException {
 		BitSet bitSet = fingerprinter.getFingerprint(container);
 		int size = this.getSize();
 		double weight = MolecularFormulaManipulator.getTotalNaturalAbundance(MolecularFormulaManipulator.getMolecularFormula(container));

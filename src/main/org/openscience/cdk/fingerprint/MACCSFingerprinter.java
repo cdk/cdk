@@ -86,7 +86,7 @@ public class MACCSFingerprinter implements IFingerprinter {
      * Calculates the substructure fingerprint for the given AtomContainer.
      */
     @TestMethod("testFingerprint,testfp2")
-    public BitSet getFingerprint(IAtomContainer atomContainer) throws Exception {
+    public BitSet getFingerprint(IAtomContainer atomContainer) throws CDKException {
         if (keys == null) throw new CDKException("Could not setup key definitions");
 
         int bitsetLength = keys.length;
