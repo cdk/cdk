@@ -495,36 +495,39 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("N.sp1");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             } else if (atom.getHybridization() == Hybridization.SP2) {
-                // but an sp2 hyb N might N.sp2 or N.planar3 (pyrrole), so check for the latter
-                IRing ring = getRing(atom, atomContainer);
-                int ringSize = ring == null ? 0 : ring.getAtomCount();
-                boolean isRingAtom = (ringSize > 0);
-                if (isAmide(atom, atomContainer)) {
+            	if (isAmide(atom, atomContainer)) {
                     IAtomType type = getAtomType("N.amide");
                     if (isAcceptable(atom, atomContainer, type)) return type;
                 } else if (isThioAmide(atom, atomContainer)) {
                     IAtomType type = getAtomType("N.thioamide");
                     if (isAcceptable(atom, atomContainer, type)) return type;
-                } else if (isRingAtom && bothNeighborsAreSp2(atom, atomContainer)) {
-                    if (atomContainer.getConnectedAtomsCount(atom) == 3) {
-                        IAtomType type = getAtomType("N.planar3");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
-                    } else if (atomContainer.getConnectedAtomsCount(atom) == 2) {
-                        if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.SINGLE) {
-
-                            if (isHueckelNumber(ringSize + 1) && atom.getHydrogenCount() != CDKConstants.UNSET && atom.getHydrogenCount() == 1) {
-                                IAtomType type = getAtomType("N.planar3");
-                                if (isAcceptable(atom, atomContainer, type)) return type;
-                            } else {
-                                IAtomType type = getAtomType("N.sp2");
-                                if (isAcceptable(atom, atomContainer, type)) return type;
-                            }
-                        } else if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
-                            IAtomType type = getAtomType("N.sp2");
-                            if (isAcceptable(atom, atomContainer, type)) return type;
-                        }
-                    }
                 }
+                // but an sp2 hyb N might N.sp2 or N.planar3 (pyrrole), so check for the latter
+            	int neighborCount = atomContainer.getConnectedAtomsCount(atom);
+            	if (neighborCount > 1 && bothNeighborsAreSp2(atom, atomContainer)) {
+            		IRing ring = getRing(atom, atomContainer);
+            		int ringSize = ring == null ? 0 : ring.getAtomCount();
+            		if (ring != null && ring.getAtomCount() > 0) {
+            			if (neighborCount == 3) {
+            				IAtomType type = getAtomType("N.planar3");
+            				if (isAcceptable(atom, atomContainer, type)) return type;
+            			} else if (neighborCount == 2) {
+            				IBond.Order maxOrder = atomContainer.getMaximumBondOrder(atom);
+            				if (maxOrder == IBond.Order.SINGLE) {
+            					if (isHueckelNumber(ringSize + 1) && atom.getHydrogenCount() != CDKConstants.UNSET && atom.getHydrogenCount() == 1) {
+            						IAtomType type = getAtomType("N.planar3");
+            						if (isAcceptable(atom, atomContainer, type)) return type;
+            					} else {
+            						IAtomType type = getAtomType("N.sp2");
+            						if (isAcceptable(atom, atomContainer, type)) return type;
+            					}
+            				} else if (maxOrder == IBond.Order.DOUBLE) {
+            					IAtomType type = getAtomType("N.sp2");
+            					if (isAcceptable(atom, atomContainer, type)) return type;
+            				}
+            			}
+            		}
+            	}
                 IAtomType type = getAtomType("N.sp2");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             } else if (atom.getHybridization() == Hybridization.SP3) {
@@ -570,7 +573,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             } else if (atom.getFormalCharge() == -1) {
                 IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
                 if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
-                    if (isRingAtom(atom, atomContainer) && bothNeighborsAreSp2(atom,atomContainer)) {
+                    if (atomContainer.getConnectedAtomsCount(atom) >= 2 &&
+                    		bothNeighborsAreSp2(atom,atomContainer) &&
+                    		isRingAtom(atom, atomContainer)) {
                         IAtomType type = getAtomType("N.minus.planar3");
                         if (isAcceptable(atom, atomContainer, type)) return type;
                     } else if (atomContainer.getConnectedBondsCount(atom) <= 2) {
@@ -593,51 +598,37 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         } else { // OK, use bond order info
             IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
             if (maxBondOrder == CDKConstants.BONDORDER_SINGLE) {
-                boolean isRingAtom = isRingAtom(atom, atomContainer);
-                int explicitHydrogens = countExplicitHydrogens(atom, atomContainer);
-                int connectedHeavyAtoms = atomContainer.getConnectedBondsCount(atom) - explicitHydrogens; 
-                if (connectedHeavyAtoms == 2) {
-                    if (isAmide(atom, atomContainer)) {
-                        IAtomType type = getAtomType("N.amide");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
-                    } else if (isThioAmide(atom, atomContainer)) {
-                        IAtomType type = getAtomType("N.thioamide");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
-                    }
-                    List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
-                    if (bonds.get(0).getFlag(CDKConstants.ISAROMATIC) &&
-                            bonds.get(1).getFlag(CDKConstants.ISAROMATIC)) {
-                        IAtomType type = getAtomType("N.sp2");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
-                    } else if (isRingAtom && bothNeighborsAreSp2(atom, atomContainer)) {
-                        // a N.sp3 which is expected to take part in an aromatic system
-                        IAtomType type = getAtomType("N.planar3");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
-                    } else {
-                        IAtomType type = getAtomType("N.sp3");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
-                    }
-                } else if (connectedHeavyAtoms == 3) {
-                    if (isAmide(atom, atomContainer)) {
-                        IAtomType type = getAtomType("N.amide");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
-                    } else if (isThioAmide(atom, atomContainer)) {
-                        IAtomType type = getAtomType("N.thioamide");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
-                    } else if (isRingAtom && bothNeighborsAreSp2(atom, atomContainer)) {
-                        IAtomType type = getAtomType("N.planar3");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
-                    }
-                    IAtomType type = getAtomType("N.sp3");
+                if (isAmide(atom, atomContainer)) {
+                    IAtomType type = getAtomType("N.amide");
                     if (isAcceptable(atom, atomContainer, type)) return type;
+                } else if (isThioAmide(atom, atomContainer)) {
+                    IAtomType type = getAtomType("N.thioamide");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                }
+                int explicitHydrogens = countExplicitHydrogens(atom, atomContainer);
+                int connectedHeavyAtoms = atomContainer.getConnectedBondsCount(atom) - explicitHydrogens;
+                if (connectedHeavyAtoms == 2) {
+                	List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
+                	if (bonds.get(0).getFlag(CDKConstants.ISAROMATIC) &&
+                			bonds.get(1).getFlag(CDKConstants.ISAROMATIC)) {
+                		IAtomType type = getAtomType("N.sp2");
+                		if (isAcceptable(atom, atomContainer, type)) return type;
+                	} else if (bothNeighborsAreSp2(atom, atomContainer) && isRingAtom(atom, atomContainer)) {
+                		// a N.sp3 which is expected to take part in an aromatic system
+                		IAtomType type = getAtomType("N.planar3");
+                		if (isAcceptable(atom, atomContainer, type)) return type;
+                	} else {
+                		IAtomType type = getAtomType("N.sp3");
+                		if (isAcceptable(atom, atomContainer, type)) return type;
+                	}
+                } else if (connectedHeavyAtoms == 3) {
+                	if (bothNeighborsAreSp2(atom, atomContainer) && isRingAtom(atom, atomContainer)) {
+                		IAtomType type = getAtomType("N.planar3");
+                		if (isAcceptable(atom, atomContainer, type)) return type;
+                	}
+                	IAtomType type = getAtomType("N.sp3");
+                	if (isAcceptable(atom, atomContainer, type)) return type;
                 } else if (connectedHeavyAtoms == 1) {
-                    if (isAmide(atom, atomContainer)) {
-                        IAtomType type = getAtomType("N.amide");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
-                    } else if (isThioAmide(atom, atomContainer)) {
-                        IAtomType type = getAtomType("N.thioamide");
-                        if (isAcceptable(atom, atomContainer, type)) return type;
-                    }
                     IAtomType type = getAtomType("N.sp3");
                     if (isAcceptable(atom, atomContainer, type)) return type;
                 } else if (connectedHeavyAtoms == 0) {
