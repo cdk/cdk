@@ -84,7 +84,28 @@
 		    <tr>
 			<td style="padding: 3px" align="right"><div><xsl:attribute name="class"><xsl:call-template name="priorityDiv"/></xsl:attribute><xsl:value-of disable-output-escaping="yes" select="@priority"/></div></td>
 			<td style="padding: 3px" align="left"><xsl:value-of disable-output-escaping="yes" select="substring-before(translate(../@name,'/','.'),'.java')"/></td>
-			<td style="padding: 3px" align="right"><xsl:value-of disable-output-escaping="yes" select="@line"/></td>
+			<xsl:choose>
+              <xsl:when test="@line">
+  			    <td style="padding: 3px" align="right"><xsl:value-of disable-output-escaping="yes" select="@line"/></td>
+  			  </xsl:when>
+  			  <xsl:when test="@beginline">
+  			    <xsl:choose>
+  			      <xsl:when test="@beginline=@endline">
+                    <td style="padding: 3px" align="right">
+                      <xsl:value-of disable-output-escaping="yes" select="@beginline"/>
+                    </td>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <td style="padding: 3px" align="right">
+                      <xsl:value-of disable-output-escaping="yes" select="@beginline"/>
+                      <xsl:text>-</xsl:text>
+                      <xsl:value-of disable-output-escaping="yes" select="@endline"/>
+                    </td>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </xsl:when>
+              <xsl:otherwise><td style="padding: 3px" align="right"/></xsl:otherwise>
+  			</xsl:choose>
 			<td style="padding: 3px" align="left" width="100%"><xsl:if test="@externalInfoUrl"><a><xsl:attribute name="href"><xsl:value-of select="@externalInfoUrl"/></xsl:attribute><xsl:call-template name="message"/></a></xsl:if><xsl:if test="not(@externalInfoUrl)"><xsl:call-template name="message"/></xsl:if></td>
 		    </tr>
 	    </xsl:for-each>
