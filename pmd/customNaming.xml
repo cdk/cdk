@@ -7,6 +7,7 @@
 
   <rule ref="rulesets/naming.xml">
     <exclude name="LongVariable"/>
+    <exclude name="BooleanGetMethodName"/>
   </rule>
 
   <rule name="CDK_LongVariable"
@@ -15,7 +16,7 @@
     <description>
       Detects when a field, formal or local variable is declared with a long name.
       This rule customized the default LongVariable rule by allowing names of a
-      length upto 20.
+      length upto 30.
     </description>
     <priority>3</priority>
     <properties>

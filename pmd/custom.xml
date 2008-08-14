@@ -16,7 +16,10 @@
   <rule ref="rulesets/unusedcode.xml"/>
   <rule ref="rulesets/imports.xml"/>
   <rule ref="rulesets/strings.xml"/>
-  <rule ref="rulesets/codesize.xml"/>
+  <rule ref="rulesets/codesize.xml">
+    <exclude name="TooManyMethods"/>
+    <exclude name="ExcessivePublicCount"/>
+  </rule>
   <rule ref="rulesets/strictexception.xml"/>
   <rule ref="pmd/migrating.xml"/>
 
