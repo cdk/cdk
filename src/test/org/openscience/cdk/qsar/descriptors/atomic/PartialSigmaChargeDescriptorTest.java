@@ -64,8 +64,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	
 	public void setUp() throws Exception {
 		setDescriptor(PartialSigmaChargeDescriptor.class);
-		Integer[] params = new Integer[1];
-		params[0] = new Integer(6);
+		Integer[] params = {6};
         descriptor.setParameters(params);
 	}
 	
@@ -318,7 +317,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		double[] testResult = {-0.3855,-0.0454,0.0634,-0.0544,-0.0391,-0.0391}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("O=C([H])[C-]([H])[H]");
-		Integer[] object = {new Integer(6)};
+		Integer[] object = {6};
 		descriptor.setParameters(object);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
@@ -387,7 +386,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		addExplicitHydrogens(molecule);
 		lpcheck.saturate(molecule);
 		
-		Integer[] object = {new Integer(6)};
+		Integer[] object = {6};
 		descriptor.setParameters(object);
 		
 		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
@@ -402,7 +401,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		double[] testResult = {-0.4331,-0.1067,0.0133,0.0133,0.0133}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("[O-]C([H])([H])[H]");
-		Integer[] object = {new Integer(6)};
+		Integer[] object = {6};
 		descriptor.setParameters(object);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
@@ -417,7 +416,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		double[] testResult = {0.0835,0.0265,-0.2622,0.0265,0.0835,-0.0444,0.064,-0.0596,0.0626,-0.0444,0.064}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("[H]c1[n-][c+]([H])c([H])c([H])c1([H])");
-		Integer[] object = {new Integer(6)};
+		Integer[] object = {6};
 		descriptor.setParameters(object);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();

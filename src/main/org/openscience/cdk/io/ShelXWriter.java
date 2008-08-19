@@ -181,7 +181,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         	IElement element = elements.next();
             String symbol = element.getSymbol();
             elemNames += symbol + "    ".substring(symbol.length());
-            String countS = new Integer(MolecularFormulaManipulator.getElementCount(formula, element)).toString();
+            String countS = Integer.valueOf(MolecularFormulaManipulator.getElementCount(formula, element)).toString();
             elemCounts += countS + "    ".substring(countS.length());
         }
         writeln("SFAC  " + elemNames);
@@ -198,7 +198,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
                 write(" ");
             }
             write("     ");
-            String elemID = new Integer(asortedElements.indexOf(symbol)+1).toString();
+            String elemID = Integer.valueOf(asortedElements.indexOf(symbol)+1).toString();
             write(elemID);
             write("    ".substring(elemID.length()));
             write(format.reset("%7.5f").format(fracCoord.x) + "   ");

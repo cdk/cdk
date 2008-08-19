@@ -25,6 +25,7 @@
 package org.openscience.cdk;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -80,7 +81,7 @@ public class ChemObjectTest extends NewCDKTestCase {
 
     @Test public void testSetProperties_Map() {
         IChemObject chemObject = builder.newChemObject();
-        Hashtable props = new Hashtable();
+        Map props = new Hashtable();
         String cDescription = new String("description");
         String cProperty = new String("property");
         props.put(cDescription, cProperty);
@@ -185,12 +186,12 @@ public class ChemObjectTest extends NewCDKTestCase {
     
     @Test public void testClone_Properties() throws Exception {
         IChemObject chemObject1 = builder.newChemObject();
-        Hashtable props1 = new Hashtable();
+        Map props1 = new Hashtable();
         chemObject1.setProperties(props1);
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();
 
         // test cloning of properties field
-        Hashtable props2 = new Hashtable();
+        Map props2 = new Hashtable();
         props2.put("key", "value");
         chemObject2.setProperties(props2);
         Assert.assertEquals(props1, chemObject1.getProperties());
@@ -200,14 +201,14 @@ public class ChemObjectTest extends NewCDKTestCase {
     
     @Test public void testClone_Properties2() throws Exception {
         IChemObject chemObject1 = builder.newChemObject();
-        Hashtable props1 = new Hashtable();
+        Map props1 = new Hashtable();
         IAtom atom = builder.newAtom("C");
         props1.put("atom", atom);
         chemObject1.setProperties(props1);
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();
 
         // test cloning of properties field
-        Hashtable props2 = new Hashtable();
+        Map props2 = new Hashtable();
         chemObject2.setProperties(props2);
         Assert.assertEquals(props1, chemObject1.getProperties());
         Assert.assertEquals(1, chemObject2.getProperties().size());

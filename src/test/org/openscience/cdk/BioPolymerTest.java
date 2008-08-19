@@ -26,6 +26,7 @@
 package org.openscience.cdk;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -269,8 +270,7 @@ public class BioPolymerTest extends NewCDKTestCase {
 		Atom oAtom2 = new Atom("C2");
 		oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
 		oBioPolymer.addAtom(oAtom2, oMono2, oStrand2);
-		Hashtable strands = new Hashtable();
-		strands = new Hashtable();
+		Map strands = new Hashtable();
 		strands.put("A", oStrand1);
 		strands.put("B", oStrand2);
 		
@@ -307,8 +307,7 @@ public class BioPolymerTest extends NewCDKTestCase {
 		Atom oAtom2 = new Atom("C2");
 		oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
 		oBioPolymer.addAtom(oAtom2, oMono2, oStrand2);
-		Hashtable strands = new Hashtable();
-		strands = new Hashtable();
+		Map strands = new Hashtable();
 		strands.put("A", oStrand1);
 		strands.put("B", oStrand2);
 		

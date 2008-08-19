@@ -80,7 +80,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
-			params[0] = new Integer(10);
+			params[0] = 10;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //			logger.debug("result: "+result);
@@ -107,7 +107,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
-			params[0] = new Integer(10);
+			params[0] = 10;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //			logger.debug("result: "+result);
@@ -134,7 +134,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
-			params[0] = new Integer(10);
+			params[0] = 10;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //			logger.debug("result: "+result);
@@ -161,7 +161,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
-			params[0] = new Integer(10);
+			params[0] = 10;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //			logger.debug("result: "+result);
@@ -188,7 +188,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < 4; i++){
-			params[0] = new Integer(10);
+			params[0] = 10;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //			logger.debug("result: "+result);
@@ -215,7 +215,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(mol);
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
-			params[0] = new Integer(10);
+			params[0] = 10;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 //			logger.debug("result: "+result);

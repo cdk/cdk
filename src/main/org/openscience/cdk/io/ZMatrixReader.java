@@ -192,14 +192,14 @@ public class ZMatrixReader extends DefaultChemObjectReader {
             else if (i==1)
             {
               types[i] = tokenizer.nextToken();
-              d_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
+              d_atom[i] = (Integer.valueOf(tokenizer.nextToken())).intValue()-1;
               d[i] = (new Double(tokenizer.nextToken())).doubleValue();
               i++;
             }
             else if (i==2)
             {
               types[i] = tokenizer.nextToken();
-              d_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
+              d_atom[i] = (Integer.valueOf(tokenizer.nextToken())).intValue()-1;
               d[i] = (new Double(tokenizer.nextToken())).doubleValue();
               a_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
               a[i] = (new Double(tokenizer.nextToken())).doubleValue();

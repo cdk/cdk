@@ -38,7 +38,6 @@ import org.openscience.cdk.applications.swing.GraphRenderer;
 import org.openscience.cdk.math.IFunction;
 import org.openscience.cdk.math.Matrix;
 import org.openscience.cdk.math.Vector;
-import org.openscience.cdk.renderer.GraphRendererModel;
 
 /**
  * @cdk.module test-extra

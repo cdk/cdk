@@ -28,6 +28,7 @@
 package org.openscience.cdk;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -151,7 +152,7 @@ public class PolymerTest extends NewCDKTestCase {
 		oPolymer.addAtom(oAtom1);
 		oPolymer.addAtom(oAtom2, oMono1);
 		oPolymer.addAtom(oAtom3, oMono2);
-		Hashtable monomers = new Hashtable();
+		Map monomers = new Hashtable();
 		//IMonomer oMon = builder.newMonomer();
 		monomers.put("TRP279", oMono1);
 		monomers.put("HOH", oMono2);
@@ -189,7 +190,7 @@ public class PolymerTest extends NewCDKTestCase {
 		IAtom oAtom3 = builder.newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
-		Hashtable monomers = new Hashtable();
+		Map monomers = new Hashtable();
 		monomers.put("TRP279", oMono1);
 		monomers.put("HOH", oMono2);
         String description = oStrand.toString();

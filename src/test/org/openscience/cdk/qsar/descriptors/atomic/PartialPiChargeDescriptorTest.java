@@ -190,7 +190,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(molecule);
 		
 		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
-			params[0] = new Integer(6);
+			params[0] = Integer.valueOf(6);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i),molecule).getValue()).doubleValue();
 			assertNotNull(result);
@@ -228,7 +228,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(molecule);
 		
 		for (int i = 0 ; i < 4/*mol.getAtomCount() */; i++){
-			params[0] = new Integer(6);
+			params[0] = Integer.valueOf(6);
 	        descriptor.setParameters(params);
 	        double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i),molecule).getValue()).doubleValue();
 	        assertNotNull(result);
@@ -420,7 +420,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("CC(=O)N");
 		addExplicitHydrogens(mol);
-		Object[] object = {new Integer(6),new Boolean(true)};
+		Object[] object = {6,true};
 		descriptor.setParameters(object);
 		
 		lpcheck.saturate(mol);
@@ -477,7 +477,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		mol.addBond(11,12,Order.SINGLE);
 		
 		addExplicitHydrogens(mol);
-		Object[] object = {new Integer(6),new Boolean(true)};
+		Object[] object = {6,true};
 		descriptor.setParameters(object);
 		
 		lpcheck.saturate(mol);
@@ -507,7 +507,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         double[] testResult = {0.0,0.0004,0.0,-0.0004,0.0,0.0,0.0,0.0,0.0277,0.0,-0.0277}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])C([H])=O");
-		Object[] object = {new Integer(6),new Boolean(true)};
+		Object[] object = {6,true};
 		descriptor.setParameters(object);
 		
 		lpcheck.saturate(mol);
@@ -564,7 +564,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         double[] testResult = {0.0,-0.0009,0.0,0.0009,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("[H]C([H])=C([H])C([H])([H])[H]");
-		Object[] object = {new Integer(6),new Boolean(true)};
+		Object[] object = {6,true};
 		descriptor.setParameters(object);
 		
 		lpcheck.saturate(mol);
@@ -590,7 +590,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
         double[] testResult = {0.0,0.25,0.0,0.0,0.0,0.25,0.0,0.0,0.0,0.0,0.0,0.0,}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
-		Object[] object = {new Integer(6),new Boolean(true)};
+		Object[] object = {6,true};
 		descriptor.setParameters(object);
 		
 		lpcheck.saturate(mol);
@@ -623,7 +623,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
-		Object[] object = {new Integer(6),new Boolean(false)};
+		Object[] object = {6,true};
 		descriptor.setParameters(object);
 
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){

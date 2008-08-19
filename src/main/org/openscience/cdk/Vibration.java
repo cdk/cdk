@@ -23,8 +23,9 @@
  */
 package org.openscience.cdk;
 
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * A molecular vibration composed of a set of atom vectors.
@@ -46,7 +47,7 @@ public class Vibration {
     /**
      * List of atom vectors of type double[3]
      */
-    private Vector<double[]> atomVectors = new Vector<double[]>();
+    private List<double[]> atomVectors = new ArrayList<double[]>();
     
     /**
      * Create a vibration identified by the label.
@@ -72,7 +73,7 @@ public class Vibration {
      * @param atomVector atom vector in double[3] array
      */
     public void addAtomVector(double[] atomVector) {
-        atomVectors.addElement(atomVector);
+        atomVectors.add(atomVector);
     }
     
     /**
@@ -82,7 +83,7 @@ public class Vibration {
      * @return atom vector in double[3] array
      */
     public double[] getAtomVector(int index) {
-        return atomVectors.elementAt(index);
+        return atomVectors.get(index);
     }
     
     /**
@@ -99,14 +100,14 @@ public class Vibration {
      *
      * @return an enumeration of the atom vectors of this vibration
      */
-    public Enumeration getAtomVectors() {
-        return atomVectors.elements();
+    public Iterator<double[]> getAtomVectors() {
+        return atomVectors.iterator();
     }
     
     /**
      * Removes all atom vectors from this vibration.
      */
     public void removeAtomVectors() {
-        atomVectors.removeAllElements();
+        atomVectors.clear();
     }
 }

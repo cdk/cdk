@@ -28,6 +28,7 @@
 package org.openscience.cdk;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -197,7 +198,7 @@ public class StrandTest extends NewCDKTestCase {
 		IAtom oAtom3 = builder.newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
-		Hashtable monomers = new Hashtable();
+		Map monomers = new Hashtable();
 		IMonomer oMon = builder.newMonomer();
 		oMon.setMonomerName("");
 		oMon.setMonomerType("UNKNOWN");
@@ -236,7 +237,7 @@ public class StrandTest extends NewCDKTestCase {
 		IAtom oAtom3 = builder.newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
-		Hashtable monomers = new Hashtable();
+		Map monomers = new Hashtable();
 		IMonomer oMon = builder.newMonomer();
 		oMon.setMonomerName("");
 		oMon.setMonomerType("UNKNOWN");
@@ -260,7 +261,7 @@ public class StrandTest extends NewCDKTestCase {
 		IAtom oAtom3 = builder.newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
-		Hashtable monomers = new Hashtable();
+		Map monomers = new Hashtable();
 		IMonomer oMon = builder.newMonomer();
 		oMon.setMonomerName("");
 		oMon.setMonomerType("UNKNOWN");

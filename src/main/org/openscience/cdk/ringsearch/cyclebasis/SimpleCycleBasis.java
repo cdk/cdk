@@ -789,7 +789,7 @@ public class SimpleCycleBasis {
 	private HashMap createEdgeIndexMap(List edgeList) {
 		HashMap map = new HashMap();
 		for (int i=0; i<edgeList.size(); i++) {
-			map.put(edgeList.get(i), new Integer(i));
+			map.put(edgeList.get(i), Integer.valueOf(i));
 		}
 		return map;
 	}

@@ -25,6 +25,7 @@
 package org.openscience.cdk.protein.data;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -298,7 +299,7 @@ public class PDBPolymerTest extends NewCDKTestCase {
 		PDBAtom oPDBAtom2 = new PDBAtom("C2");
 		pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
 		pdbPolymer.addAtom(oPDBAtom2, oMono2, oStrand2);
-		Hashtable strands = new Hashtable();
+		Map strands = new Hashtable();
 		strands = new Hashtable();
 		strands.put("A", oStrand1);
 		strands.put("B", oStrand2);
@@ -336,7 +337,7 @@ public class PDBPolymerTest extends NewCDKTestCase {
 		PDBAtom oPDBAtom2 = new PDBAtom("C2");
 		pdbPolymer.addAtom(oPDBAtom1, oMono1, oStrand1);
 		pdbPolymer.addAtom(oPDBAtom2, oMono2, oStrand2);
-		Hashtable strands = new Hashtable();
+		Map strands = new Hashtable();
 		strands = new Hashtable();
 		strands.put("A", oStrand1);
 		strands.put("B", oStrand2);
