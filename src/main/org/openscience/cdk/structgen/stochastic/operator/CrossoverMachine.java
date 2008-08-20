@@ -98,11 +98,11 @@ public class CrossoverMachine
 		{
 			/*better way to randomly divide atoms into two parts: redAtoms and blueAtoms.*/
 			for (int i = 0; i < dim; i++)
-				redAtoms.add(new Integer(i));
+				redAtoms.add(Integer.valueOf(i));
 			for (int i = 0; i < (dim - numatoms); i++)
 			{   int ranInt = RandomNumbersTool.randomInt(0,redAtoms.size()-1);
 				redAtoms.remove(ranInt);
-				blueAtoms.add(new Integer(ranInt));
+				blueAtoms.add(Integer.valueOf(ranInt));
 			}
 				 
 		}
@@ -119,7 +119,7 @@ public class CrossoverMachine
 				redAtoms = graph.pickBFgraph();
 				
 			for (int i = 0; i < dim; i++){
-				Integer element = new Integer(i);
+				Integer element = Integer.valueOf(i);
 				if (!(redAtoms.contains(element)))
 				{
 					blueAtoms.add(element);

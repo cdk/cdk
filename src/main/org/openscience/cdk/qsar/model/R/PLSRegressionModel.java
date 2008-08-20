@@ -115,8 +115,8 @@ public class PLSRegressionModel extends RModel {
         this.params.put("ncomp", new Boolean(false));
         this.params.put("method", "SIMPLS");
         this.params.put("validation", "none");
-        this.params.put("grpsize", new Integer(0));
-        this.params.put("niter", new Integer(10));
+        this.params.put("grpsize", Integer.valueOf(0));
+        this.params.put("niter", Integer.valueOf(10));
         this.params.put("nlv", new Boolean(false));
     }
     /**

@@ -223,7 +223,7 @@ public class CNNClassificationModel extends RModel {
         }
         this.params.put("x", xx);
         this.params.put("y", yy);
-        this.params.put("size", new Integer(size));
+        this.params.put("size", Integer.valueOf(size));
         this.setDefaults();
     }
     
@@ -279,7 +279,7 @@ public class CNNClassificationModel extends RModel {
         }
         this.params.put("x", xx);
         this.params.put("y", yy);
-        this.params.put("size", new Integer(size));
+        this.params.put("size", Integer.valueOf(size));
         this.setDefaults();
     }
 

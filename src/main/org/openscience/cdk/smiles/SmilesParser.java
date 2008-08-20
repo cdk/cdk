@@ -348,13 +348,13 @@ public class SmilesParser {
 					status = 2;
 					chars[0] = mychar;
 					currentSymbol = new String(chars);
-					thisRing = (new Integer(currentSymbol)).intValue();
+					thisRing = (Integer.valueOf(currentSymbol)).intValue();
 					handleRing(lastNode);
 					position++;
 				} else if (mychar == '%')
 				{
 					currentSymbol = getRingNumber(smiles, position);
-					thisRing = (new Integer(currentSymbol)).intValue();
+					thisRing = (Integer.valueOf(currentSymbol)).intValue();
 					handleRing(lastNode);
 					position += currentSymbol.length() + 1;
 				} else if (mychar == '[')

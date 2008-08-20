@@ -106,15 +106,15 @@ public class AtomTypeTools {
 				ringSetA = ringSetMolecule.getRings(atom2);
 				RingSetManipulator.sort(ringSetA);
 				IRing sring = (IRing) ringSetA.getAtomContainer(ringSetA.getAtomContainerCount()-1);
-				atom2.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, new Integer(sring.getRingSize()));
-				atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, new Integer(ringSystemClassifier(
+				atom2.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, Integer.valueOf(sring.getRingSize()));
+				atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, Integer.valueOf(ringSystemClassifier(
 						sring, sg.createSMILES(atom2.getBuilder().newMolecule(sring)))
 				));
 				atom2.setFlag(CDKConstants.ISINRING, true);
 				atom2.setFlag(CDKConstants.ISALIPHATIC, false);
 			}else{
 				atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, 
-					new Integer(CDKConstants.ISNOTINRING)
+					Integer.valueOf(CDKConstants.ISNOTINRING)
 				);
 				atom2.setFlag(CDKConstants.ISINRING, false);
 				atom2.setFlag(CDKConstants.ISALIPHATIC,true);

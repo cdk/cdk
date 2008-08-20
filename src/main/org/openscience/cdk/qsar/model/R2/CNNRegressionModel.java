@@ -124,10 +124,10 @@ public class CNNRegressionModel extends RModel {
         this.params.put("skip", Boolean.FALSE);
         this.params.put("rang", new Double(0.7));
         this.params.put("decay", new Double(0.0));
-        this.params.put("maxit", new Integer(100));
+        this.params.put("maxit", Integer.valueOf(100));
         this.params.put("Hess", Boolean.FALSE);
         this.params.put("trace", Boolean.FALSE); // no need to see output
-        this.params.put("MaxNWts", new Integer(1000));
+        this.params.put("MaxNWts", Integer.valueOf(1000));
         this.params.put("abstol", new Double(1.0e-4));
         this.params.put("reltol", new Double(1.0e-8));
     }
@@ -209,7 +209,7 @@ public class CNNRegressionModel extends RModel {
         }
         params.put("x", xx);
         params.put("y", yy);
-        params.put("size", new Integer(size));
+        params.put("size", Integer.valueOf(size));
         setDefaults();
     }
 
@@ -267,7 +267,7 @@ public class CNNRegressionModel extends RModel {
         }
         params.put("x", xx);
         params.put("y", yy);
-        params.put("size", new Integer(size));
+        params.put("size", Integer.valueOf(size));
         setDefaults();
     }
 

@@ -75,7 +75,7 @@ public class ChemGraph
 	{
 		if ((travIndex < numAtoms)&&(!visited[atom]))
 		{
-			subGraph.add(new Integer(atom));
+			subGraph.add(Integer.valueOf(atom));
 			travIndex++;
 			visited[atom] = true;
 			
@@ -86,7 +86,7 @@ public class ChemGraph
             {
 				if ((int)contab[atom][nextAtom] != 0)
 				{
-					adjSet.add(new Integer(nextAtom));
+					adjSet.add(Integer.valueOf(nextAtom));
 				}
             }
 			while (adjSet.size() > 0)
@@ -110,13 +110,13 @@ public class ChemGraph
         int seedAtom = RandomNumbersTool.randomInt(0,dim-1);
 		
 		List atomQueue = new ArrayList();
-		atomQueue.add(new Integer(seedAtom));
+		atomQueue.add(Integer.valueOf(seedAtom));
 		visited[seedAtom] = true;		
 		
 		while (!atomQueue.isEmpty()&&(subGraph.size()<numAtoms))
 		{
 			int foreAtom = ((Integer)atomQueue.get(0)).intValue();
-			subGraph.add(new Integer(foreAtom));
+			subGraph.add(Integer.valueOf(foreAtom));
 			atomQueue.remove(0);
 			travIndex++;
 			
@@ -125,7 +125,7 @@ public class ChemGraph
             {
 				if (((int)contab[foreAtom][nextAtom] != 0)&&(!visited[nextAtom]))
 				{
-					adjSet.add(new Integer(nextAtom));
+					adjSet.add(Integer.valueOf(nextAtom));
 				}
             }
 			while (adjSet.size() > 0)
