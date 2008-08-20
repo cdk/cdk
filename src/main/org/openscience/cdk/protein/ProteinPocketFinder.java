@@ -38,6 +38,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -72,8 +74,8 @@ public class ProteinPocketFinder {
 	String vanDerWaalsFile="org/openscience/cdk/config/data/pdb_atomtypes.xml";
 	double[][][] grid = null;
 	GridGenerator gridGenerator = new GridGenerator();
-	Hashtable visited = new Hashtable();
-	Vector pockets = new Vector();
+	Map<String,Integer> visited = new Hashtable<String,Integer>();
+	List<List<Point3d>> pockets = new Vector<List<Point3d>>();
 
 	/**
 	 * @param biopolymerFile The file name containing the protein
@@ -331,32 +333,30 @@ public class ProteinPocketFinder {
 	 */
 	private void sortPockets() {
 //		logger.debug("	SORT POCKETS Start#:" + pockets.size());
-		Hashtable hashPockets = new Hashtable();
-		Vector pocket;
-		Vector sortPockets = new Vector(pockets.size());
+		Hashtable<Integer,List<Integer>> hashPockets = new Hashtable<Integer,List<Integer>>();
+		List<Point3d> pocket;
+		List<List<Point3d>> sortPockets = new Vector<List<Point3d>>(pockets.size());
 		for (int i = 0; i < pockets.size(); i++) {
-			pocket = (Vector) pockets.get(i);
-			if (hashPockets.containsKey(new Integer(pocket.size()))) {
-				Vector tmp = (Vector) hashPockets
-						.get(new Integer(pocket.size()));
-				tmp.add(new Integer(i));
-				hashPockets.put(new Integer(pocket.size()), tmp);
+			pocket = pockets.get(i);
+			if (hashPockets.containsKey(Integer.valueOf(pocket.size()))) {
+			    List<Integer> tmp = hashPockets.get(Integer.valueOf(pocket.size()));
+				tmp.add(Integer.valueOf(i));
+				hashPockets.put(Integer.valueOf(pocket.size()), tmp);
 			} else {
-				Vector value = new Vector();
-				value.add(new Integer(i));
-				hashPockets.put(new Integer(pocket.size()), value);
+				Vector<Integer> value = new Vector<Integer>();
+				value.add(Integer.valueOf(i));
+				hashPockets.put(Integer.valueOf(pocket.size()), value);
 			}
 		}
 
-		ArrayList keys = new ArrayList(hashPockets.keySet());
+		List<Integer> keys = new ArrayList<Integer>(hashPockets.keySet());
 		Collections.sort(keys);
 		for (int i = keys.size() - 1; i >= 0; i--) {
-			Vector value = (Vector) hashPockets.get(keys.get(i));
+			List<Integer> value = hashPockets.get(keys.get(i));
 //			logger.debug("key:" + i + " Value" + keys.get(i)
 //					+ " #Pockets:" + value.size());
 			for (int j = 0; j < value.size(); j++) {
-				sortPockets.add(pockets
-						.get(((Integer) value.get(j)).intValue()));
+				sortPockets.add(pockets.get((value.get(j)).intValue()));
 			}
 		}
 //		logger.debug("	SORT POCKETS End#:" + sortPockets.size());
@@ -385,14 +385,14 @@ public class ProteinPocketFinder {
 					//pointsVisited++;
 					if (this.grid[x][y][z] >= minPSPocket
 							& !visited.containsKey(x + "." + y + "."+ z)) {
-						Vector subPocket = new Vector();
+						List<Point3d> subPocket = new Vector<Point3d>();
 						// logger.debug.print("new Point: "+grid[x][y][z]);
 						//significantPointsVisited++;
 						// logger.debug("visited:"+pointsVisited);
 						subPocket = this
 								.clusterPSPPocket(start, subPocket, dim);
 						if (subPocket != null && subPocket.size() >= pocketSize) {
-							pockets.add((Vector) subPocket);
+							pockets.add(subPocket);
 						}
 						// logger.debug(" Points visited:"+pointsVisited+"
 						// subPocketSize:"+subPocket.size()+"
@@ -419,7 +419,7 @@ public class ProteinPocketFinder {
 	/**
 	 * Method performs the clustering, is called by findPockets().
 	 */
-	public Vector clusterPSPPocket(Point3d root, Vector sub_Pocket, int[] dim) {
+	public List<Point3d> clusterPSPPocket(Point3d root, List<Point3d> sub_Pocket, int[] dim) {
 		// logger.debug(" ****** New Root ******:"+root.x+" "+root.y+"
 		// "+root.z);
 		visited.put((int) root.x + "." + (int) root.y + "."
@@ -488,12 +488,10 @@ public class ProteinPocketFinder {
 	/**
 	 * Method which assigns upon a PSP event +1 to these grid points.
 	 */
-	private void firePSPEvent(Vector line) {
+	private void firePSPEvent(List<Point3d> line) {
 		for (int i = 0; i < line.size(); i++) {
-			this.grid[(int) ((Point3d) line.get(i)).x][(int) ((Point3d) line
-					.get(i)).y][(int) ((Point3d) line.get(i)).z] = this.grid[(int) ((Point3d) line
-					.get(i)).x][(int) ((Point3d) line.get(i)).y][(int) ((Point3d) line
-					.get(i)).z] + 1;
+			this.grid[(int)line.get(i).x][(int)line.get(i).y][(int)line.get(i).z] = 
+			    this.grid[(int)line.get(i).x][(int)line.get(i).y][(int)line.get(i).z] + 1;
 		}
 
 	}
@@ -512,25 +510,25 @@ public class ProteinPocketFinder {
 			dimL = dimM;
 		}
 		//int gridPoints = 0;//Debugging
-		Vector line = new Vector();
+		List<Point3d> line = new Vector<Point3d>();
 		int pspEvent = 0;
 		int m = 0;
 		for (int j = dimM; j >= 1; j--) {// z
-			line.removeAllElements();
+			line.clear();
 			pspEvent = 0;
 			for (int k = 0; k <= dimK; k++) {// min -> max; x
 				m = dimM;// m==y
-				line.removeAllElements();
+				line.clear();
 				pspEvent = 0;
 				for (int l = dimL; l >= 0; l--) {// z
 					//gridPoints++;
 					if (grid[k][m][l] < 0) {
 						if (pspEvent < 2) {
-							line.removeAllElements();
+							line.clear();
 							pspEvent = 1;
 						} else if (pspEvent == 2) {
 							firePSPEvent(line);
-							line.removeAllElements();
+							line.clear();
 							pspEvent = 1;
 						}
 					} else {
@@ -561,25 +559,25 @@ public class ProteinPocketFinder {
 		if (dimM < dimL) {
 			dimL = dimM;
 		}
-		Vector line = new Vector();
+		List<Point3d> line = new Vector<Point3d>();
 		int pspEvent = 0;
 		int m = 0;
 		for (int j = dimM; j >= 1; j--) {// z
-			line.removeAllElements();
+			line.clear();
 			pspEvent = 0;
 			for (int k = 0; k <= dimK; k++) {// min -> max; y
 				m = dimM;// m==x
-				line.removeAllElements();
+				line.clear();
 				pspEvent = 0;
 				for (int l = dimL; l >= 0; l--) {// z
 					//gridPoints++;
 					if (grid[m][k][l] < 0) {
 						if (pspEvent < 2) {
-							line.removeAllElements();
+							line.clear();
 							pspEvent = 1;
 						} else if (pspEvent == 2) {
 							firePSPEvent(line);
-							line.removeAllElements();
+							line.clear();
 							pspEvent = 1;
 						}
 					} else {
@@ -612,25 +610,25 @@ public class ProteinPocketFinder {
 		} else {
 			dimM = dimL;
 		}
-		Vector line = new Vector();
+		List<Point3d> line = new Vector<Point3d>();
 		int pspEvent = 0;
 		int l = 0;
 		for (int j = dimL; j >= 1; j--) {// z
-			line.removeAllElements();
+			line.clear();
 			pspEvent = 0;
 			for (int k = 0; k <= dimK; k++) {// min -> max; y
-				line.removeAllElements();
+				line.clear();
 				pspEvent = 0;
 				l = 0;// x
 				for (int m = dimM; m >= 0; m--) {// z
 					//gridPoints++;
 					if (grid[l][k][m] < 0) {
 						if (pspEvent < 2) {
-							line.removeAllElements();
+							line.clear();
 							pspEvent = 1;
 						} else if (pspEvent == 2) {
 							firePSPEvent(line);
-							line.removeAllElements();
+							line.clear();
 							pspEvent = 1;
 						}
 					} else {
@@ -663,25 +661,25 @@ public class ProteinPocketFinder {
 		} else {
 			dimM = dimL;
 		}
-		Vector line = new Vector();
+		List<Point3d> line = new Vector<Point3d>();
 		int pspEvent = 0;
 		int l = 0;
 		for (int j = dimL; j >= 1; j--) {// z
-			line.removeAllElements();
+			line.clear();
 			pspEvent = 0;
 			for (int k = 0; k <= dimK; k++) {// min -> max;x
-				line.removeAllElements();
+				line.clear();
 				pspEvent = 0;
 				l = 0;// y
 				for (int m = dimM; m >= 0; m--) {// z
 					//gridPoints++;
 					if (grid[k][l][m] < 0) {
 						if (pspEvent < 2) {
-							line.removeAllElements();
+							line.clear();
 							pspEvent = 1;
 						} else if (pspEvent == 2) {
 							firePSPEvent(line);
-							line.removeAllElements();
+							line.clear();
 							pspEvent = 1;
 						}
 					} else {
@@ -709,23 +707,23 @@ public class ProteinPocketFinder {
 		// z,y,x
 //		logger.debug.print("	diagonalAxisScanX");
 		//int gridPoints = 0;//Debugging
-		Vector line = new Vector();
+		List<Point3d> line = new Vector<Point3d>();
 		int pspEvent = 0;
 		for (int k = 0; k <= dimK; k++) {
-			line.removeAllElements();
+			line.clear();
 			pspEvent = 0;
 			for (int l = 0; l <= dimL; l++) {
-				line.removeAllElements();
+				line.clear();
 				pspEvent = 0;
 				for (int m = 0; m <= dimM; m++) {
 					//gridPoints++;
 					if (grid[m][l][k] < 0) {
 						if (pspEvent < 2) {
 							pspEvent = 1;
-							line.removeAllElements();
+							line.clear();
 						} else if (pspEvent == 2) {
 							firePSPEvent(line);
-							line.removeAllElements();
+							line.clear();
 							pspEvent = 1;
 						}
 					} else {
@@ -749,24 +747,24 @@ public class ProteinPocketFinder {
 	 */
 	public void axisScanY(int dimK, int dimL, int dimM) {
 		// z,x,y
-		Vector line = new Vector();
+		List<Point3d> line = new Vector<Point3d>();
 		int pspEvent = 0;
 		for (int k = 0; k <= dimK; k++) {
-			line.removeAllElements();
+			line.clear();
 			pspEvent = 0;
 			for (int l = 0; l <= dimL; l++) {
-				line.removeAllElements();
+				line.clear();
 				pspEvent = 0;
 				for (int m = 0; m <= dimM; m++) {
 					if (grid[l][m][k] < 0) {
 						if (pspEvent < 2) {
 							pspEvent = 1;
-							line.removeAllElements();
+							line.clear();
 						} else if (pspEvent == 2) {
 							// if (line.size()>2){
 							firePSPEvent(line);
 							// }
-							line.removeAllElements();
+							line.clear();
 							pspEvent = 1;
 						}
 					} else {
@@ -789,22 +787,22 @@ public class ProteinPocketFinder {
 	 */
 	public void axisScanZ(int dimK, int dimL, int dimM) {
 		// x,y,z
-		Vector line = new Vector();
+		List<Point3d> line = new Vector<Point3d>();
 		int pspEvent = 0;
 		for (int k = 0; k <= dimK; k++) {
-			line.removeAllElements();
+			line.clear();
 			pspEvent = 0;
 			for (int l = 0; l <= dimL; l++) {
-				line.removeAllElements();
+				line.clear();
 				pspEvent = 0;
 				for (int m = 0; m <= dimM; m++) {
 					if (grid[k][l][m] < 0) {
 						if (pspEvent < 2) {
 							pspEvent = 1;
-							line.removeAllElements();
+							line.clear();
 						} else if (pspEvent == 2) {
 							firePSPEvent(line);
-							line.removeAllElements();
+							line.clear();
 							pspEvent = 1;
 						}
 					} else {
@@ -889,7 +887,7 @@ public class ProteinPocketFinder {
 				// pocket
 				BufferedWriter writer = new BufferedWriter(new FileWriter(
 						outPutFileName + "-" + i + ".pmesh"));
-				Vector pocket = (Vector) pockets.get(i);
+				List<Point3d> pocket = pockets.get(i);
 				writer.write(pocket.size() + "\n");
 				for (int j = 0; j < pocket.size(); j++) {// go through every
 					// grid point of the
@@ -1103,7 +1101,7 @@ public class ProteinPocketFinder {
 	/**
 	 * @return 	Returns the pockets.
 	 */
-	public Vector getPockets() {
+	public List<List<Point3d>> getPockets() {
 		return pockets;
 	}
 
