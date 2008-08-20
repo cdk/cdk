@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 2001-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -43,14 +40,14 @@ import org.openscience.cdk.math.IFunction;
 import org.openscience.cdk.renderer.GraphRendererModel;
  
 /**
- * This class is a function plotter
+ * This class is a function plotter.
  *
  * @cdk.module  extra
  * @cdk.svnrev  $Revision$
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.created 2001-07-02
- * @cdk.require swing
+ * @cdk.module  qm
  */
 public class GraphRenderer extends JComponent
 {

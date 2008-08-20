@@ -35,6 +35,7 @@ import org.openscience.cdk.math.IFunction;
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.svnrev  $Revision$
  * @cdk.created 2001-07-02
+ * @cdk.module  qm
  */ 
 public class GraphRendererModel
 {

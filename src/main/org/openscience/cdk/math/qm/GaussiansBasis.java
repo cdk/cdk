@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  * 
- * Copyright (C) 2001-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * 
  * Contact: cdk-devel@lists.sf.net
  * 
@@ -46,6 +46,7 @@ import org.openscience.cdk.math.Vector;
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.svnrev  $Revision$
  * @cdk.created 2001-06-14
+ * @cdk.module  qm
  *
  * @cdk.keyword Gaussian basis set
  */ 

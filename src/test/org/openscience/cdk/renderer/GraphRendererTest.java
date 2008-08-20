@@ -40,7 +40,7 @@ import org.openscience.cdk.math.Matrix;
 import org.openscience.cdk.math.Vector;
 
 /**
- * @cdk.module test-extra
+ * @cdk.module test-qm
  *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.created 2001-07-23

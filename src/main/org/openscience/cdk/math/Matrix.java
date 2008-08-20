@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 2001-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2001-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -36,6 +33,7 @@ import java.text.DecimalFormat;
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.svnrev  $Revision$
  * @cdk.created 2001-06-07
+ * @cdk.module  qm
  */
 public class Matrix
 {

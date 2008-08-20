@@ -1,10 +1,6 @@
 /* IMatrix.java
  * 
- * Autor: Stephan Michels 
- * EMail: stephan@vern.chem.tu-berlin.de
- * Datum: 22.7.2001
- * 
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -32,7 +28,9 @@ package org.openscience.cdk.math;
 import java.text.DecimalFormat;
 
 /**
- * This class contains a complex matrix
+ * This class contains a complex matrix.
+ * 
+ * @cdk.module qm
  */
 public class IMatrix
 {

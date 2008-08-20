@@ -55,6 +55,7 @@
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="valencycheck"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="charges"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="diff"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="qm"/></antcall>
       <!-- the test modules -->
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-core"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-data"/></antcall>
@@ -76,6 +77,7 @@
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-qsarprotein"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-charges"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-diff"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-qm"/></antcall>
     </target>
 
     <target id="test-module" name="test-module"

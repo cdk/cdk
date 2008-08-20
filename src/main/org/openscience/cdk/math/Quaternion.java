@@ -1,10 +1,6 @@
 /* Quaternion.java
  * 
- * Autor: Stephan Michels 
- * EMail: stephan@vern.chem.tu-berlin.de
- * Datum: 6.7.2001
- * 
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -30,8 +26,10 @@
 package org.openscience.cdk.math;
 
 /**
- * This class handles quaternions
- * Quaternion are 2*2 complex matrices
+ * This class handles quaternions.
+ * Quaternion are 2*2 complex matrices.
+ * 
+ * @cdk.module qm
  */ 
 public class Quaternion
 {
