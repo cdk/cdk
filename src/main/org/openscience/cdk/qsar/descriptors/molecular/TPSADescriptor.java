@@ -56,7 +56,7 @@ import java.util.List;
  * <td>Description</td>
  * </tr>
  * <tr>
- * <td>useAromaticity</td>
+ * <td>checkAromaticity</td>
  * <td>false</td>
  * <td>If true, it will check aromaticity</td>
  * </tr>
@@ -366,7 +366,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
      */
     public String[] getParameterNames() {
         String[] params = new String[1];
-        params[0] = "useAromaticity";
+        params[0] = "checkAromaticity";
         return params;
     }
 
