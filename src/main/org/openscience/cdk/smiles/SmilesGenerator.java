@@ -1669,7 +1669,8 @@ public class SmilesGenerator
 					buffer.append("#");
 				}
 			}
-			buffer.append(integer);
+            if (integer >= 10) buffer.append("%"+integer);
+            else buffer.append(integer);
 		}
 		atomsInOrderOfSmiles.add(a);
 		//logger.debug("End of parseAtom()");
