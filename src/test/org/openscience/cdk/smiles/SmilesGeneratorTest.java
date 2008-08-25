@@ -829,8 +829,15 @@ public class SmilesGeneratorTest extends CDKTestCase {
         SmilesGenerator smilesGenerator = new SmilesGenerator();
         smilesGenerator.setUseAromaticityFlag(true);    
         String genSmiles = smilesGenerator.createSMILES(cdkMol);
+
+        // check that we have the appropriate ring closure symbols
         assertTrue( "There were'nt any % ring closures in the output", genSmiles.indexOf("%") >= 0);
-        System.out.println(genSmiles);
+        assertTrue(genSmiles.indexOf("%10") >= 0);
+        assertTrue(genSmiles.indexOf("%11") >= 0);
+        assertTrue(genSmiles.indexOf("%12") >= 0);
+        assertTrue(genSmiles.indexOf("%13") >= 0);
+
+        // check that we can read in the SMILES we got
         IMolecule cdkRoundTripMol 
             = smilesParser.parseSmiles(genSmiles);
         assertTrue(cdkRoundTripMol != null);
