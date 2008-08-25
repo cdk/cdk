@@ -24,12 +24,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -39,6 +33,8 @@ import org.openscience.cdk.io.formats.PubChemSubstanceXMLFormat;
 import org.openscience.cdk.io.pubchemxml.PubChemXMLHelper;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.*;
 
 /**
  * Reads an object from ASN.1 XML formated input for PubChem Compound entries. The following
@@ -110,7 +106,7 @@ public class PCCompoundXMLReader extends DefaultChemObjectReader {
         	try {
             	parserHelper = new PubChemXMLHelper(object.getBuilder());
             	builder = object.getBuilder();
-        		return readMolecule((IMolecule)object);
+        		return readMolecule();
         	} catch (IOException e) {
         		throw new CDKException("An IO Exception occured while reading the file.", e);
         	} catch (CDKException e) {
@@ -129,7 +125,7 @@ public class PCCompoundXMLReader extends DefaultChemObjectReader {
 
     // private procedures
 
-    private IMolecule readMolecule(IMolecule file) throws Exception {
+    private IMolecule readMolecule() throws Exception {
     	boolean foundCompound = false;
     	while (parser.next() != XmlPullParser.END_DOCUMENT) {
     		if (parser.getEventType() == XmlPullParser.START_TAG) {
