@@ -118,7 +118,7 @@ public class PharmacophoreUtilityTest {
     public void testInvalidPcoreXML() throws IOException, CDKException {
         String filename = "data/pcore/invalid1.xml";
         InputStream ins = PharmacophoreUtilityTest.class.getClassLoader().getResourceAsStream(filename);
-        List<IQueryAtomContainer> defs = PharmacophoreUtils.readPharmacophoreDefinitions(ins);
+        PharmacophoreUtils.readPharmacophoreDefinitions(ins);
     }
 
     @Test

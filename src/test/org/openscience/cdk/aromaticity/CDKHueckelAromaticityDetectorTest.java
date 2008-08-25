@@ -292,14 +292,13 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
         IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
         RingSetManipulator.markAromaticRings(rs);
         IRing r = null;
-        int i = 0, aromacount = 0;
+        int aromacount = 0;
         Iterator<IAtomContainer> rings = rs.atomContainers();
         while (rings.hasNext()) {
             r = (IRing) rings.next();
             isAromatic = r.getFlag(CDKConstants.ISAROMATIC);
 
-            if (isAromatic) aromacount++;
-            i++;
+            if (isAromatic) aromacount++;            
         }
         Assert.assertEquals(1, aromacount);
     }

@@ -23,21 +23,18 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.util.Iterator;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.qsar.IAtomicDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.Iterator;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -96,14 +93,14 @@ public class AtomHybridizationDescriptorTest extends AtomicDescriptorTest {
         IAtomContainer mol;
         Iterator atoms;
 
-        for (int i = 0; i < smiles.length; i++) {
-            mol = sp.parseSmiles(smiles[i]);
+        for (String smile : smiles) {
+            mol = sp.parseSmiles(smile);
             addImplicitHydrogens(mol);
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
             atoms = mol.atoms();
             while (atoms.hasNext()) {
                 IAtom atom = (IAtom) atoms.next();
-                int htype = ((IntegerResult) descriptor.calculate(atom, mol).getValue()).intValue();
+                ((IntegerResult) descriptor.calculate(atom, mol).getValue()).intValue();
             }
         }
 

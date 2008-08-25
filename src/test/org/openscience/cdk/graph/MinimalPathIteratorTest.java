@@ -32,7 +32,6 @@ import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.graph.MinimalPathIterator;
 import org.openscience.cdk.NewCDKTestCase;
 
 import java.util.List;
@@ -106,11 +105,9 @@ public class MinimalPathIteratorTest extends NewCDKTestCase {
 
     @Test(expected = UnsupportedOperationException.class)
     public void testRemove() {
-        int count = 0;
         for (MinimalPathIterator i = new MinimalPathIterator(g, "a", "l"); i.hasNext();) {
             Assert.assertTrue(((List) i.next()).size() == 5);
             i.remove();
-            count++;
         }
     }
 	

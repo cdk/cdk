@@ -24,13 +24,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 import java.io.InputStream;
@@ -81,7 +80,7 @@ public class SSSRFinderTest extends NewCDKTestCase {
     @Test public void testRingFlags1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule molecule = sp.parseSmiles("c1ccccc1");
-        IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
+        new SSSRFinder(molecule).findSSSR();
 
         int count = 0;
         Iterator atoms = molecule.atoms();
@@ -95,7 +94,7 @@ public class SSSRFinderTest extends NewCDKTestCase {
     @Test public void testRingFlags2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule molecule = sp.parseSmiles("c1cccc1CC");
-        IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
+        new SSSRFinder(molecule).findSSSR();
 
         int count = 0;
         Iterator atoms = molecule.atoms();
