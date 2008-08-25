@@ -20,6 +20,12 @@
  */
 package org.openscience.cdk.tools;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.PeriodicTableElement;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.config.ElementPTFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,12 +33,6 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.PeriodicTableElement;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.ElementPTFactory;
 
 /**
  * Represents elements of the Periodic Table.
@@ -55,7 +55,6 @@ import org.openscience.cdk.config.ElementPTFactory;
 public class PeriodicTable {
     boolean isInitialized = false;
 
-    private static PeriodicTable ourInstance = new PeriodicTable();
     private static Map<String, PeriodicTableElement> elements;
     private Map<Integer, PeriodicTableElement> elementsByNumber;
 
