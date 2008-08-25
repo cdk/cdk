@@ -25,23 +25,19 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.PathTools;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Generate ring and Murcko-like fragments.
@@ -376,20 +372,19 @@ public class GenerateFragments {
 	 * @return	IMolecule		murcko fragment
 	 */
 	private IMolecule addFragments(IAtomContainer addAtomContainer, IMolecule targetMolecule, IMolecule mainMolecule){
-		List atoms=null;
+		List<IAtom> atoms;
 		for (int i=0;i<addAtomContainer.getAtomCount();i++){
 			targetMolecule.addAtom(addAtomContainer.getAtom(i));
 			targetMolecule.addAtom(addAtomContainer.getAtom(i));	
 			//Check for double bonds
 			atoms=mainMolecule.getConnectedAtomsList(addAtomContainer.getAtom(i));
-			for (int j = 0; j < atoms.size(); j++) {
-				IAtom atom = (IAtom)atoms.get(j);
-				if (this.exocyclicDoubleBonds && 
-					mainMolecule.getBond(atom,addAtomContainer.getAtom(i)).getOrder() != IBond.Order.SINGLE && 
-					!targetMolecule.contains(atom)){
-					targetMolecule.addAtom(atom);
-				}
-			}
+            for (IAtom atom : atoms) {
+                if (this.exocyclicDoubleBonds &&
+                        mainMolecule.getBond(atom, addAtomContainer.getAtom(i)).getOrder() != IBond.Order.SINGLE &&
+                        !targetMolecule.contains(atom)) {
+                    targetMolecule.addAtom(atom);
+                }
+            }
 		}
 		return targetMolecule;
 	}
@@ -404,11 +399,8 @@ public class GenerateFragments {
 	 */
 	private boolean checkPath(IAtom firstRingAtom, IAtom secondRingAtom, IAtomContainer path){
 		//logger.debug("CHECK PATH");
-		if (path.contains(firstRingAtom) || path.contains(secondRingAtom)){
-			return false;
-		}
-		return true;
-	}
+        return !(path.contains(firstRingAtom) || path.contains(secondRingAtom));
+    }
 	
 	/**
 	 * get starting points (IAtom) of possible linkers  
@@ -418,14 +410,13 @@ public class GenerateFragments {
 	 * @return	IAtomContainer possible starting points of linkers
 	 */
 	private IAtomContainer getPossibleLinkerSubstituents(IAtom ringAtom,IMolecule molecule, IAtomContainer ringSystem){
-		List atoms = molecule.getConnectedAtomsList(ringAtom);
-		IAtomContainer substituents=new AtomContainer();
-		for (int i = 0; i<atoms.size();i++){
-			IAtom atom = (IAtom)atoms.get(i);
-			if (!ringSystem.contains(atom)&& !atom.getSymbol().equals("H")){
-				substituents.addAtom(atom);
-			}
-		}
+		List<IAtom> atoms = molecule.getConnectedAtomsList(ringAtom);
+		IAtomContainer substituents=new AtomContainer();        
+        for (IAtom atom : atoms) {
+            if (!ringSystem.contains(atom) && !atom.getSymbol().equals("H")) {
+                substituents.addAtom(atom);
+            }
+        }
 		return substituents;
 	}
 
@@ -439,10 +430,7 @@ public class GenerateFragments {
 	private boolean zeroAtomLinker(IAtom firstRingAtom, IAtom secondRingAtom, IMolecule molecule){
 		
 		List atoms= molecule.getConnectedAtomsList(firstRingAtom);
-		if (atoms.contains(secondRingAtom)){		
-			return true;
-		}else{
-			return false;}		
+        return atoms.contains(secondRingAtom);
 	}
 	
 	
@@ -452,7 +440,7 @@ public class GenerateFragments {
 	 * @return String[] smiles of the murcko fragments
 	 */
 	public String[] getMurckoFrameworksAsSmileArray(){
-		SmilesGenerator sg =null;
+		SmilesGenerator sg;
 		String[] murckoFragmentsmiles={};
 		if (this.murckoFragments !=null){
 			murckoFragmentsmiles=new String[this.murckoFragments.size()];
@@ -484,7 +472,7 @@ public class GenerateFragments {
 	 * @return String[] smiles of the ring fragments NOT WORKING
 	 */
 	public String[] getRingFragmentsAsSmileArray(){
-		SmilesGenerator sg =null;
+		SmilesGenerator sg;
 		String[] ringFragmentSmiles={};
 		if (this.ringFragments !=null){
 			ringFragmentSmiles=new String[this.ringFragments.size()];
@@ -511,7 +499,7 @@ public class GenerateFragments {
 	 * @return String[] smiles of the linker fragments
 	 */
 	public String[] getLinkerFragmentsAsSmileArray(){
-		SmilesGenerator sg =null;
+		SmilesGenerator sg;
 		String[] linkerFragmentSmiles={};
 		if (this.linkerFragments !=null){
 			linkerFragmentSmiles=new String[this.linkerFragments.size()];
