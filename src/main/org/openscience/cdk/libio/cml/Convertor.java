@@ -175,7 +175,7 @@ public class Convertor {
 
     private CMLCml cdkChemFileToCMLList(IChemFile file, boolean setIDs) {
         CMLCml cmlList = new CMLCml();
-        cmlList.setDictRef("cdk:document");
+        cmlList.setConvention("cdk:document");
 
         if (useCMLIDs && setIDs) {
             IDCreator.createIDs(file);
@@ -199,7 +199,7 @@ public class Convertor {
 
     private CMLList cdkChemSequenceToCMLList(IChemSequence sequence, boolean setIDs) {
         CMLList cmlList = new CMLList();
-        cmlList.setDictRef("cdk:sequence");
+        cmlList.setConvention("cdk:sequence");
 
         if (useCMLIDs && setIDs) {
             IDCreator.createIDs(sequence);
@@ -222,7 +222,7 @@ public class Convertor {
 
     private CMLList cdkChemModelToCMLList(IChemModel model, boolean setIDs) {
         CMLList cmlList = new CMLList();
-        cmlList.setDictRef("cdk:model");
+        cmlList.setConvention("cdk:model");
 
         if (useCMLIDs && setIDs) {
             IDCreator.createIDs(model);
@@ -315,7 +315,7 @@ public class Convertor {
 
     private CMLMoleculeList cdkMoleculeSetToCMLList(IMoleculeSet moleculeSet, boolean setIDs) {
     	CMLMoleculeList cmlList = new CMLMoleculeList();
-        cmlList.setDictRef("cdk:moleculeSet");
+        cmlList.setConvention("cdk:moleculeSet");
 
         if (useCMLIDs && setIDs) {
             IDCreator.createIDs(moleculeSet);
