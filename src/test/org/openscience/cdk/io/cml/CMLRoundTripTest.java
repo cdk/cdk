@@ -84,6 +84,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         convertor.registerCustomizer(new QSARCustomizer());
     }
 
+    /* Called from MlibiocmlTests */ 
     public static Test suite() {
         return new TestSuite(CMLRoundTripTest.class);
     }
@@ -666,6 +667,20 @@ public class CMLRoundTripTest extends CDKTestCase {
         assertEquals(value, actual);
     }
 
-
+    public void testMoleculeSet() throws Exception {
+    	MoleculeSet list = new MoleculeSet();
+    	list.addAtomContainer(new Molecule());
+    	list.addAtomContainer(new Molecule());
+    	IChemModel model = new ChemModel();
+    	model.setMoleculeSet(list);
+    	
+    	IChemModel roundTripped = roundTripChemModel(model);
+    	IMoleculeSet newList = roundTripped.getMoleculeSet();
+    	assertNotNull(newList);
+    	assertEquals(2, newList.getAtomContainerCount());
+    	assertNotNull(newList.getAtomContainer(0));
+    	assertNotNull(newList.getAtomContainer(1));
+    }
+    
 }
 

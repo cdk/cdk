@@ -72,6 +72,7 @@ import org.xmlcml.cml.element.CMLFormula;
 import org.xmlcml.cml.element.CMLIdentifier;
 import org.xmlcml.cml.element.CMLList;
 import org.xmlcml.cml.element.CMLMolecule;
+import org.xmlcml.cml.element.CMLMoleculeList;
 import org.xmlcml.cml.element.CMLProduct;
 import org.xmlcml.cml.element.CMLProductList;
 import org.xmlcml.cml.element.CMLReactant;
@@ -308,12 +309,12 @@ public class Convertor {
         return reactionList;
     }
 
-    public CMLList cdkMoleculeSetToCMLList(IMoleculeSet moleculeSet) {
+    public CMLMoleculeList cdkMoleculeSetToCMLList(IMoleculeSet moleculeSet) {
         return cdkMoleculeSetToCMLList(moleculeSet, true);
     }
 
-    private CMLList cdkMoleculeSetToCMLList(IMoleculeSet moleculeSet, boolean setIDs) {
-        CMLList cmlList = new CMLList();
+    private CMLMoleculeList cdkMoleculeSetToCMLList(IMoleculeSet moleculeSet, boolean setIDs) {
+    	CMLMoleculeList cmlList = new CMLMoleculeList();
         cmlList.setDictRef("cdk:moleculeSet");
 
         if (useCMLIDs && setIDs) {
