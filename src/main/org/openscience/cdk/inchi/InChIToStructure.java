@@ -49,7 +49,7 @@ import java.util.Map;
  * <code>// Get InChIToStructure</code><br>
  * <code>InChIToStructure intostruct = factory.getInChIToStructure(inchi);</code><br>
  * <code></code><br>
- * <code>INCHI_RET intostruct = gen.getReturnStatus();</code><br>
+ * <code>INCHI_RET ret = intostruct.getReturnStatus();</code><br>
  * <code>if (ret == INCHI_RET.WARNING) {</code><br>
  * <code>  // Structure generated, but with warning message</code><br>
  * <code>  System.out.println("InChI warning: " + intostruct.getMessage());</code><br>
