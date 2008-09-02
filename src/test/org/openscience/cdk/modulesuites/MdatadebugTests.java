@@ -28,6 +28,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.coverage.DatadebugCoverageTest;
 import org.openscience.cdk.debug.DebugAminoAcidTest;
 import org.openscience.cdk.debug.DebugAtomContainerSetTest;
 import org.openscience.cdk.debug.DebugAtomContainerTest;
@@ -74,6 +75,8 @@ public class MdatadebugTests {
     
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.debug Tests");
+        
+        suite.addTest(new JUnit4TestAdapter(DatadebugCoverageTest.class));
         
         suite.addTest(new JUnit4TestAdapter(DebugChemObjectBuilderTest.class));
         
