@@ -29,11 +29,7 @@ package org.openscience.cdk.tools.manipulator;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -86,11 +82,9 @@ public class ChemSequenceManipulator {
      */
     @TestMethod("testGetAllAtomContainers_IChemSequence")
     public static List<IAtomContainer> getAllAtomContainers(IChemSequence sequence) {
-        Iterator<IChemModel> models = sequence.chemModels();
         List<IAtomContainer> acList = new ArrayList<IAtomContainer>();
-        while (models.hasNext()) {
-    		IChemModel chemmodel = models.next();
-            acList.addAll(ChemModelManipulator.getAllAtomContainers(chemmodel));
+        for (IChemModel model : sequence.chemModels()) {
+            acList.addAll(ChemModelManipulator.getAllAtomContainers(model));
         }
         return acList;
     }
@@ -107,9 +101,8 @@ public class ChemSequenceManipulator {
         for (int i=0; i<sequence.getChemModelCount(); i++) {
         	list.add(sequence.getChemModel(i));
         	List<IChemObject> current = ChemModelManipulator.getAllChemObjects(sequence.getChemModel(i));
-            for (Iterator<IChemObject> iter = current.iterator(); iter.hasNext();) {
-            	IChemObject o = iter.next();
-            	if (!list.contains(o)) list.add(o);
+            for (IChemObject chemObject : current) {
+                if (!list.contains(chemObject)) list.add(chemObject);
             }
             
         }

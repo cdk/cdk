@@ -154,7 +154,7 @@ public class SpanningTree {
 				cb[i][a] = 0;
 		
 		// remove ATOM_NUMBER props again
-		Iterator atoms = atomContainer.atoms();
+		Iterator atoms = atomContainer.atoms().iterator();
 		while (atoms.hasNext()) ((IAtom)atoms.next()).removeProperty(ATOM_NUMBER);
 	}
 

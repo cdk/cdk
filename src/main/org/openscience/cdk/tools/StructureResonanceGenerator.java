@@ -20,32 +20,21 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
-import org.openscience.cdk.reaction.type.PiBondingMovementReaction;
-import org.openscience.cdk.reaction.type.RearrangementAnionReaction;
-import org.openscience.cdk.reaction.type.RearrangementCationReaction;
-import org.openscience.cdk.reaction.type.RearrangementLonePairReaction;
-import org.openscience.cdk.reaction.type.RearrangementRadicalReaction;
-import org.openscience.cdk.reaction.type.SharingLonePairReaction;
+import org.openscience.cdk.reaction.type.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * <p>This class try to generate resonance structure for a determinate molecule.</p>
@@ -239,28 +228,28 @@ public class StructureResonanceGenerator {
 		
 		for(int i = 0 ; i < setOfMol.getMoleculeCount() ; i++){
 			IMolecule mol = setOfMol.getMolecule(i);
-			Iterator<IReactionProcess> itReact = reactionsList.iterator();
-			while(itReact.hasNext()){
-				IReactionProcess reaction = itReact.next();
-				IMoleculeSet setOfReactants = molecule.getBuilder().newMoleculeSet();
-				setOfReactants.addMolecule(mol);
-				try {
-					IReactionSet setOfReactions = reaction.initiate(setOfReactants, null);
-					 if(setOfReactions.getReactionCount() != 0)
-						for(int k = 0 ; k < setOfReactions.getReactionCount() ; k++)
-							for(int j = 0 ; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount() ; j++){
-								IMolecule product = setOfReactions.getReaction(k).getProducts().getMolecule(j);
-								if(!existAC(setOfMol,product)){
-									setOfMol.addMolecule(product);
-									countStructure++;
-									if(countStructure>maxStructures)
-										return setOfMol;
-								}
-						}
-				} catch (CDKException e) {
-					e.printStackTrace();
-				}
-			}
+            for (IReactionProcess aReactionsList : reactionsList) {
+                IReactionProcess reaction = aReactionsList;
+                IMoleculeSet setOfReactants = molecule.getBuilder().newMoleculeSet();
+                setOfReactants.addMolecule(mol);
+                try {
+                    IReactionSet setOfReactions = reaction.initiate(setOfReactants, null);
+                    if (setOfReactions.getReactionCount() != 0)
+                        for (int k = 0; k < setOfReactions.getReactionCount(); k++)
+                            for (int j = 0; j < setOfReactions.getReaction(k).getProducts().getAtomContainerCount(); j++)
+                            {
+                                IMolecule product = setOfReactions.getReaction(k).getProducts().getMolecule(j);
+                                if (!existAC(setOfMol, product)) {
+                                    setOfMol.addMolecule(product);
+                                    countStructure++;
+                                    if (countStructure > maxStructures)
+                                        return setOfMol;
+                                }
+                            }
+                } catch (CDKException e) {
+                    e.printStackTrace();
+                }
+            }
 		}
 		return setOfMol;
 	}
@@ -378,12 +367,11 @@ public class StructureResonanceGenerator {
     	IAtomContainerSet setOfCont = getContainers(molecule);
     	if(setOfCont == null)
     		return null;
-    	
-    	for(Iterator<IAtomContainer> it = setOfCont.atomContainers(); it.hasNext();){
-    		IAtomContainer container = it.next();
-        	if(container.contains(atom))
-    			return container;
-    	}
+
+        for (IAtomContainer container : setOfCont.atomContainers()) {
+            if (container.contains(atom))
+                return container;
+        }
     	
     	return null;
 	}
@@ -401,12 +389,11 @@ public class StructureResonanceGenerator {
     	IAtomContainerSet setOfCont = getContainers(molecule);
     	if(setOfCont == null)
     		return null;
-    	
-    	for(Iterator<IAtomContainer> it = setOfCont.atomContainers(); it.hasNext();){
-    		IAtomContainer container = it.next();
-        	if(container.contains(bond))
-    			return container;
-    	}
+
+        for (IAtomContainer container : setOfCont.atomContainers()) {
+            if (container.contains(bond))
+                return container;
+        }
     	
     	return null;
 	}

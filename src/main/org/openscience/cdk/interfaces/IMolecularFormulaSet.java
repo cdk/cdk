@@ -23,9 +23,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Iterator;
-
-
 /**
  *  Class defining a molecular formula object. It maintains
  *   a list of list IMoleculaFormula.<p>
@@ -76,14 +73,6 @@ public interface IMolecularFormulaSet {
      * @see #setMolecules
      */
 	public Iterable<IMolecularFormula> molecularFormulas();
-	
-	/**
-	 *  Returns an Iterator for looping over all IMolecularFormula
-	 *   in this MolecularFormulaSet.
-	 *
-	 * @return    An Iterator with the IMolecularFormula in this MolecularFormulaSet
-	 */
-	public Iterator<IMolecularFormula> iterator();
 	
 	/**
      * Returns the number of MolecularFormulas in this IMolecularFormulaSet.

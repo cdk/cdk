@@ -27,14 +27,14 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IStrand;
+
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.IStrand;
 
 /**
  * A Strand is an AtomContainer which stores additional strand specific
@@ -248,7 +248,7 @@ public class Strand extends AtomContainer implements java.io.Serializable, IStra
         clone.monomers.clear();
         for (Iterator<String> iter = clone.getMonomerNames().iterator(); iter.hasNext();) {
         	Monomer monomerClone = (Monomer)(clone.getMonomer(iter.next().toString()).clone());
-        	Iterator<IAtom> atoms = monomerClone.atoms();
+        	Iterator<IAtom> atoms = monomerClone.atoms().iterator();
             while (atoms.hasNext()) {
             	clone.addAtom(atoms.next(), monomerClone);
             }

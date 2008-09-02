@@ -53,7 +53,7 @@ public class DeAromatizationToolTest extends NewCDKTestCase {
     @Test
     public void testBezene() {
 		Ring benzene = new Ring(6, "C");
-		Iterator bonds = benzene.bonds();
+		Iterator bonds = benzene.bonds().iterator();
 		while (bonds.hasNext()) ((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
 		boolean success = DeAromatizationTool.deAromatize(benzene);
 		Assert.assertTrue(success);
@@ -65,7 +65,7 @@ public class DeAromatizationToolTest extends NewCDKTestCase {
     public void testPyridine() {
 		Ring pyridine = new Ring(6, "C");
 		pyridine.getAtom(0).setSymbol("N");
-		Iterator bonds = pyridine.bonds();
+		Iterator bonds = pyridine.bonds().iterator();
 		while (bonds.hasNext()) ((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
 		boolean success = DeAromatizationTool.deAromatize(pyridine);
 		Assert.assertTrue(success);

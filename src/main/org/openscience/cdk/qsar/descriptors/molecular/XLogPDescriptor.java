@@ -858,7 +858,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
                         createAminoAcid(ac.getBuilder())
                 );
 
-            Iterator bonds = aminoAcid.bonds();
+            Iterator bonds = aminoAcid.bonds().iterator();
             IAtom bondAtom0=null;
             IAtom bondAtom1=null;
             while (bonds.hasNext()) {

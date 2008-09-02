@@ -20,12 +20,11 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import java.util.Iterator;
-
-import javax.vecmath.Point2d;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+
+import javax.vecmath.Point2d;
+import java.util.Iterator;
 
 /**
  * Difference between two boolean[]'s.
@@ -69,7 +68,7 @@ public class Point2dDifference extends AbstractDifferenceList implements IDiffer
         
         StringBuffer diffBuffer = new StringBuffer();
         diffBuffer.append(this.name).append('{');
-        Iterator<IDifference> children = getChildren();
+        Iterator<IDifference> children = getChildren().iterator();
         while (children.hasNext()) {
             diffBuffer.append(children.next().toString());
             if (children.hasNext()) {

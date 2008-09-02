@@ -121,13 +121,17 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 	}
 
 	/**
-     * Returns an Iterator to ChemModels in this container.
+     * Returns an Iterable to ChemModels in this container.
      *
-     * @return    The Iterator to ChemModels in this container
+     * @return    The Iterable to ChemModels in this container
      * @see       #addChemModel
      */
-     public Iterator<IChemModel> chemModels() {
-    	 return new ChemModelIterator();
+     public Iterable<IChemModel> chemModels() {
+    	 return new Iterable<IChemModel>(){
+             public Iterator<IChemModel> iterator() {
+                 return new ChemModelIterator();
+             }
+         };
      }
 
      /**

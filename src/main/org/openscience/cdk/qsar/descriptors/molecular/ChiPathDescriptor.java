@@ -126,7 +126,7 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
 
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = localAtomContainer.atoms();
+        Iterator<IAtom> atoms = localAtomContainer.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             IAtomType type;
@@ -224,7 +224,7 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
 
     private List<List<Integer>> order0(IAtomContainer atomContainer) {
         List<List<Integer>> fragments = new ArrayList<List<Integer>>();
-        Iterator<IAtom> atoms = atomContainer.atoms();
+        Iterator<IAtom> atoms = atomContainer.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             List<Integer> tmp = new ArrayList<Integer>();
@@ -237,7 +237,7 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
     private List<List<Integer>> order1(IAtomContainer atomContainer) throws CDKException {
         List<List<Integer>> fragments = new ArrayList<List<Integer>>();
 
-        Iterator<IBond> bonds = atomContainer.bonds();
+        Iterator<IBond> bonds = atomContainer.bonds().iterator();
 
         while (bonds.hasNext()) {
             IBond bond = bonds.next();

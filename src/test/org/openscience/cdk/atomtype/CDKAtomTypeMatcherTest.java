@@ -1743,7 +1743,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
 			"O.minus"
 		};
 		IMolecule molecule = MoleculeFactory.makePyridineOxide();
-		Iterator<IBond> bonds = molecule.bonds();
+		Iterator<IBond> bonds = molecule.bonds().iterator();
 		while (bonds.hasNext()) bonds.next().setOrder(CDKConstants.BONDORDER_SINGLE);
 		for (int i=0; i<6; i++) {
 			molecule.getAtom(i).setHybridization(IAtomType.Hybridization.SP2);

@@ -28,18 +28,14 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.HashMap;
-import java.util.Iterator;
-
-import org.openscience.cdk.AminoAcid;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.BioPolymer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Strand;
+import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.templates.AminoAcids;
+
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Class that facilitates building protein structures. Building DNA and RNA
@@ -152,16 +148,8 @@ public class ProteinBuilderTool {
     }
 
     private static BioPolymer addAminoAcid(BioPolymer protein, AminoAcid aaToAdd, Strand strand) {
-        java.util.Iterator atoms = aaToAdd.atoms();
-        while (atoms.hasNext()) {
-            protein.addAtom((IAtom)atoms.next(), aaToAdd, strand);
-        }
-
-        Iterator bonds = aaToAdd.bonds();
-        while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
-            protein.addBond(bond);
-        }
+        for (IAtom atom : aaToAdd.atoms())  protein.addAtom(atom, aaToAdd, strand);
+        for (IBond bond : aaToAdd.bonds()) protein.addBond(bond);
         return protein;
     }
 }

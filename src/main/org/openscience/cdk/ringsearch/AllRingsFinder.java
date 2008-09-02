@@ -88,7 +88,7 @@ public class AllRingsFinder
 		startTime = System.currentTimeMillis();
 		SpanningTree spanningTree = new SpanningTree(atomContainer);
 		IAtomContainer ringSystems = spanningTree.getCyclicFragmentsContainer();
-		Iterator separateRingSystem = ConnectivityChecker.partitionIntoMolecules(ringSystems).molecules();
+		Iterator separateRingSystem = ConnectivityChecker.partitionIntoMolecules(ringSystems).molecules().iterator();
 		IRingSet resultSet = atomContainer.getBuilder().newRingSet();
 		while (separateRingSystem.hasNext()) {
 			resultSet.add(findAllRingsInIsolatedRingSystem((IMolecule)separateRingSystem.next()));
@@ -163,7 +163,7 @@ public class AllRingsFinder
 		do
 		{
 			removedSomething = false;
-			for (Iterator e = ac.atoms(); e.hasNext(); )
+			for (Iterator e = ac.atoms().iterator(); e.hasNext(); )
 			{
 				atom = (IAtom) e.next();
 				if (ac.getConnectedBondsCount(atom) == 1)
@@ -310,7 +310,7 @@ public class AllRingsFinder
 	{
 		Path path;
 
-        Iterator bonds = ac.bonds();
+        Iterator bonds = ac.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();                    
 			path = new Path(bond.getAtom(0), bond.getAtom(1));

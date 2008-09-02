@@ -105,7 +105,7 @@ public class BondToolsTest extends NewCDKTestCase {
 		);
 		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		IMolecule mol=chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);
-		Iterator atoms = mol.atoms();
+		Iterator atoms = mol.atoms().iterator();
 		while (atoms.hasNext()) {
 			atf.configure((IAtom)atoms.next());
 		}

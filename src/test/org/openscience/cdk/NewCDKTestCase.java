@@ -20,11 +20,6 @@
  */
 package org.openscience.cdk;
 
-import java.util.Iterator;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -36,6 +31,10 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.util.Iterator;
 
 /**
  * Super class for <b>all</b> CDK TestCase implementations that ensures that
@@ -132,7 +131,7 @@ public class NewCDKTestCase {
      */
     public void assertAtomTypesPerceived(IAtomContainer container) throws Exception {
     	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-    	Iterator<IAtom> atoms = container.atoms();
+    	Iterator<IAtom> atoms = container.atoms().iterator();
     	while (atoms.hasNext()) {
     		IAtom atom = atoms.next();
     		IAtomType type = matcher.findMatchingAtomType(container, atom);
@@ -164,7 +163,7 @@ public class NewCDKTestCase {
      */
     protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
     	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-    	Iterator<IAtom> atoms = container.atoms();
+    	Iterator<IAtom> atoms = container.atoms().iterator();
     	while (atoms.hasNext()) {
     		IAtom atom = atoms.next();
     		IAtomType type = matcher.findMatchingAtomType(container, atom);
@@ -182,10 +181,10 @@ public class NewCDKTestCase {
 	 * @param container the atom container to check
 	 */
 	protected void assertAllSingleAndAromatic(IAtomContainer container) throws Exception {
-		for (Iterator<IBond> bonds = container.bonds(); bonds.hasNext();)
+		for (Iterator<IBond> bonds = container.bonds().iterator(); bonds.hasNext();)
 			Assert.assertEquals(IBond.Order.SINGLE, bonds.next().getOrder());
 		
-		for (Iterator<IAtom> atoms = container.atoms(); atoms.hasNext();) {
+		for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext();) {
 			IAtom atom = atoms.next();
 			if (atom.getSymbol().equals("H"))
 				Assert.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
@@ -203,7 +202,7 @@ public class NewCDKTestCase {
 	 */
 	protected void assertAtomSymbols(String[] symbols, IAtomContainer container) throws Exception {
 		int i = 0;
-		for (Iterator<IAtom> atoms = container.atoms(); atoms.hasNext(); i++)
+		for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext(); i++)
 			Assert.assertEquals(symbols[i], atoms.next().getSymbol());
 	}
 
@@ -216,7 +215,7 @@ public class NewCDKTestCase {
 	 */
 	protected void assertHybridizations(IAtomType.Hybridization[] hybridizations, IAtomContainer container) throws Exception {
 		int i = 0;
-		for (Iterator<IAtom> atoms = container.atoms(); atoms.hasNext(); i++)
+		for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext(); i++)
 			Assert.assertEquals(hybridizations[i], atoms.next().getHybridization());
 	}
 
@@ -229,7 +228,7 @@ public class NewCDKTestCase {
 	 */
 	protected void assertHydrogenCounts(int[] hydrogenCounts, IAtomContainer container) throws Exception {
 		int i = 0;
-		for (Iterator<IAtom> atoms = container.atoms(); atoms.hasNext(); i++)
+		for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext(); i++)
 			Assert.assertEquals(hydrogenCounts[i], atoms.next().getHydrogenCount().intValue());
 	}
 

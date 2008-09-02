@@ -164,10 +164,12 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @return An Iterator to the Mappings.
      * @see    #addMapping
      */
-    public Iterator<IMapping> mappings() {
-        Mapping[] returnMappings = new Mapping[mappingCount];
-        System.arraycopy(this.map, 0, returnMappings, 0, returnMappings.length);
-        return new MappingIterator();
+    public Iterable<IMapping> mappings() {
+    	return new Iterable<IMapping>() {
+        	public Iterator<IMapping> iterator() {
+        		return new MappingIterator();
+        	}
+        };
     }
     
     /**

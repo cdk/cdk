@@ -190,7 +190,7 @@ public class PharmacophoreMatcher {
             // even though the atoms comprising the pcore groups are
             // constant, their coords will differ, so we need to make
             // sure we get the latest set of effective coordinates
-            Iterator<IAtom> atoms = pharmacophoreMolecule.atoms();
+            Iterator<IAtom> atoms = pharmacophoreMolecule.atoms().iterator();
             while (atoms.hasNext()) {
                 PharmacophoreAtom patom = (PharmacophoreAtom) atoms.next();
                 List<Integer> tmpList = new ArrayList<Integer>();
@@ -357,7 +357,7 @@ public class PharmacophoreMatcher {
 
         logger.debug("Converting [" + atomContainer.getProperty(CDKConstants.TITLE) + "] to a pcore molecule");
 
-        Iterator qatoms = pharmacophoreQuery.atoms();
+        Iterator qatoms = pharmacophoreQuery.atoms().iterator();
         while (qatoms.hasNext()) {
             PharmacophoreQueryAtom qatom = (PharmacophoreQueryAtom) qatoms.next();
             String smarts = qatom.getSmarts();
@@ -415,7 +415,7 @@ public class PharmacophoreMatcher {
         if (hasAngleConstraints(pharmacophoreQuery)) {
             int nangleDefs = 0;
 
-            Iterator<IBond> qbonds = pharmacophoreQuery.bonds();
+            Iterator<IBond> qbonds = pharmacophoreQuery.bonds().iterator();
             while (qbonds.hasNext()) {
                 IBond bond = qbonds.next();
                 if (!(bond instanceof PharmacophoreQueryAngleBond)) continue;
@@ -430,7 +430,7 @@ public class PharmacophoreMatcher {
                 List<IAtom> middlel = new ArrayList<IAtom>();
                 List<IAtom> endl = new ArrayList<IAtom>();
 
-                Iterator<IAtom> tatoms = pharmacophoreMolecule.atoms();
+                Iterator<IAtom> tatoms = pharmacophoreMolecule.atoms().iterator();
                 while (tatoms.hasNext()) {
                     IAtom tatom = tatoms.next();
                     if (tatom.getSymbol().equals(startQAtom.getSymbol())) startl.add(tatom);
@@ -485,7 +485,7 @@ public class PharmacophoreMatcher {
     }
 
     private boolean hasDistanceConstraints(IQueryAtomContainer query) {
-        Iterator<IBond> bonds = query.bonds();
+        Iterator<IBond> bonds = query.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
             if (bond instanceof PharmacophoreQueryBond) return true;
@@ -494,7 +494,7 @@ public class PharmacophoreMatcher {
     }
 
     private boolean hasAngleConstraints(IQueryAtomContainer query) {
-        Iterator<IBond> bonds = query.bonds();
+        Iterator<IBond> bonds = query.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
             if (bond instanceof PharmacophoreQueryAngleBond) return true;

@@ -132,7 +132,7 @@ public class TautomerizationReaction extends ReactionEngine implements IReaction
 			setActiveCenters(reactant);
 		}
 		
-		Iterator<IAtom> atoms = reactant.atoms();
+		Iterator<IAtom> atoms = reactant.atoms().iterator();
         while (atoms.hasNext()) {
 			IAtom atomi = atoms.next(); // Atom pos 1
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) 
@@ -218,7 +218,7 @@ public class TautomerizationReaction extends ReactionEngine implements IReaction
 	 * @throws CDKException 
 	 */
     private void setActiveCenters(IMolecule reactant) throws CDKException {
-    	Iterator<IAtom> atoms = reactant.atoms();
+    	Iterator<IAtom> atoms = reactant.atoms().iterator();
 		while (atoms.hasNext()) {
 			IAtom atomi = atoms.next(); // Atom pos 1
 			if((atomi.getFormalCharge() == CDKConstants.UNSET ? 0 : atomi.getFormalCharge())  == 0	

@@ -132,7 +132,7 @@ public class RearrangementLonePairReaction extends ReactionEngine implements IRe
 			setActiveCenters(reactant);
 		}
 
-		Iterator<IAtom> atomis = reactant.atoms();
+		Iterator<IAtom> atomis = reactant.atoms().iterator();
 		while(atomis.hasNext()){
 			IAtom atomi = atomis.next();
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)&& 
@@ -203,7 +203,7 @@ public class RearrangementLonePairReaction extends ReactionEngine implements IRe
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		Iterator<IAtom> atomis = reactant.atoms();
+		Iterator<IAtom> atomis = reactant.atoms().iterator();
 		while(atomis.hasNext()){
 			IAtom atomi = atomis.next();
 			if((atomi.getFormalCharge() == CDKConstants.UNSET ? 0 : atomi.getFormalCharge()) == 0

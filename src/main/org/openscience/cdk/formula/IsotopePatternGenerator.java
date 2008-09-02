@@ -177,7 +177,7 @@ public class IsotopePatternGenerator{
         
         /*search atoms which have more than one isotope and they have the minimum abundance*/
 		int countt = 0;
-		Iterator<IIsotope> itI2 = molFor.isotopes();
+		Iterator<IIsotope> itI2 = molFor.isotopes().iterator();
 		while(itI2.hasNext()){
 			IIsotope isotope = itI2.next();
         	for(int z = 0 ; z < molFor.getIsotopeCount(isotope); z++){

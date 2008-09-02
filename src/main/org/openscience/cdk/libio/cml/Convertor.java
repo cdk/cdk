@@ -184,7 +184,7 @@ public class Convertor {
         	cmlList.setId(file.getID());
         
         if (file.getChemSequenceCount() > 0) {
-            Iterator<IChemSequence> sequences = file.chemSequences();
+            Iterator<IChemSequence> sequences = file.chemSequences().iterator();
             while (sequences.hasNext()) {
                 cmlList.appendChild(cdkChemSequenceToCMLList(sequences.next()));
             }
@@ -266,7 +266,7 @@ public class Convertor {
         if (cdkScheme.getID() != null && !cdkScheme.getID().equals(""))
         	reactionScheme.setId(cdkScheme.getID());
         	
-    	for(Iterator<IReaction> it = cdkScheme.reactions(); it.hasNext();){
+    	for(Iterator<IReaction> it = cdkScheme.reactions().iterator(); it.hasNext();){
     		reactionScheme.appendChild(cdkReactionToCMLReaction(it.next(), true));
     	}
     	for(IReactionScheme intScheme : cdkScheme.reactionSchemes()){
@@ -301,7 +301,7 @@ public class Convertor {
         if (reactionSet.getID() != null && !reactionSet.getID().equals(""))
         	reactionList.setId(reactionSet.getID());
         	
-        Iterator<IReaction> reactionIter = reactionSet.reactions();
+        Iterator<IReaction> reactionIter = reactionSet.reactions().iterator();
         while (reactionIter.hasNext()) {
             reactionList.appendChild(cdkReactionToCMLReaction(reactionIter.next(), false));
         }
@@ -344,7 +344,7 @@ public class Convertor {
         
         // reactants
         CMLReactantList cmlReactants = new CMLReactantList();
-        Iterator<IAtomContainer> reactants = reaction.getReactants().molecules();
+        Iterator<IAtomContainer> reactants = reaction.getReactants().molecules().iterator();
         while (reactants.hasNext()) {
             CMLReactant cmlReactant = new CMLReactant();
             cmlReactant.addMolecule(cdkMoleculeToCMLMolecule((IMolecule)reactants.next(), false));
@@ -354,7 +354,7 @@ public class Convertor {
 
         // products
         CMLProductList cmlProducts = new CMLProductList();
-        Iterator<IAtomContainer> products = reaction.getProducts().molecules();
+        Iterator<IAtomContainer> products = reaction.getProducts().molecules().iterator();
         while (products.hasNext()) {
             CMLProduct cmlProduct = new CMLProduct();
             cmlProduct.addMolecule(cdkMoleculeToCMLMolecule((IMolecule)products.next(), false));
@@ -363,7 +363,7 @@ public class Convertor {
         
 //      substance
         CMLSubstanceList cmlSubstances = new CMLSubstanceList();
-        Iterator<IAtomContainer> substance = reaction.getAgents().molecules();
+        Iterator<IAtomContainer> substance = reaction.getAgents().molecules().iterator();
         while (substance.hasNext()) {
             CMLSubstance cmlSubstance = new CMLSubstance();
             cmlSubstance.addMolecule(cdkMoleculeToCMLMolecule((IMolecule)substance.next(), false));
@@ -537,7 +537,7 @@ public class Convertor {
 	        			cmlMolecule.appendChild(cmlFormula);
         			}else if (props.get(key) instanceof IMolecularFormulaSet){
         				IMolecularFormulaSet cdkFormulaSet = (IMolecularFormulaSet)props.get(key);
-	        			for(Iterator<IMolecularFormula> it = cdkFormulaSet.iterator(); it.hasNext();){
+	        			for(Iterator<IMolecularFormula> it = cdkFormulaSet.molecularFormulas().iterator(); it.hasNext();){
 	        				IMolecularFormula cdkFormula = it.next(); 
 	        				List<IIsotope> isotopesList = MolecularFormulaManipulator.putInOrder(MolecularFormulaManipulator.generateOrderEle(),cdkFormula);
 	        				CMLFormula cmlFormula = new CMLFormula();
@@ -616,7 +616,7 @@ public class Convertor {
         	if (container != null) {
         		Iterator<IBond> bonds = container.getConnectedBondsList(cdkAtom).iterator();
         		while (bonds.hasNext()) {
-        			Iterator<IAtom> atoms = (bonds.next()).atoms();
+        			Iterator<IAtom> atoms = (bonds.next()).atoms().iterator();
         			while (atoms.hasNext()) {
         				IAtom atom= atoms.next();
         				if ("H".equals(atom.getSymbol()) && atom!=cdkAtom) totalHydrogen++;

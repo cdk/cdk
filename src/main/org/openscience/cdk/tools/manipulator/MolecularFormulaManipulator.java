@@ -24,24 +24,18 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -66,11 +60,9 @@ public class MolecularFormulaManipulator {
 	public static int getAtomCount(IMolecularFormula formula){
 		
 		int count = 0;
-		Iterator<IIsotope> iterIsot = formula.isotopes();
-		while(iterIsot.hasNext()){
-			IIsotope isotope = iterIsot.next();
-			count += formula.getIsotopeCount(isotope);
-		}
+        for (IIsotope isotope : formula.isotopes()) {
+            count += formula.getIsotopeCount(isotope);
+        }
 		return count;
 	}
 	
@@ -87,12 +79,10 @@ public class MolecularFormulaManipulator {
 	public static int getElementCount(IMolecularFormula formula, IElement element){
 		
 		int count = 0;
-		Iterator<IIsotope> iterIsot = formula.isotopes();
-		while(iterIsot.hasNext()){
-			IIsotope isotope = iterIsot.next();
-			if (isotope.getSymbol().equals(element.getSymbol())) 
-				count += formula.getIsotopeCount(isotope);
-		}
+        for (IIsotope isotope : formula.isotopes()) {
+            if (isotope.getSymbol().equals(element.getSymbol()))
+                count += formula.getIsotopeCount(isotope);
+        }
 		return count;
 	}
 	
@@ -108,13 +98,11 @@ public class MolecularFormulaManipulator {
 	public static List<IIsotope> getIsotopes(IMolecularFormula formula, IElement element){
 		
 		List<IIsotope> isotopeList = new ArrayList<IIsotope>();
-		Iterator<IIsotope> iterIsot = formula.isotopes();
-		while(iterIsot.hasNext()){
-			IIsotope isotope = iterIsot.next();
-			if (isotope.getSymbol().equals(element.getSymbol())) 
-				isotopeList.add(isotope);
-			
-		}
+        for (IIsotope isotope : formula.isotopes()) {
+            if (isotope.getSymbol().equals(element.getSymbol()))
+                isotopeList.add(isotope);
+
+        }
 		return isotopeList;
 	}
 	
@@ -130,15 +118,13 @@ public class MolecularFormulaManipulator {
 		
 		List<IElement> elementList = new ArrayList<IElement>();
 		List<String> stringList = new ArrayList<String>();
-		Iterator<IIsotope> iterIsot = formula.isotopes();
-		while(iterIsot.hasNext()){
-			IIsotope isotope = iterIsot.next();
-			if(!stringList.contains(isotope.getSymbol())){
-				elementList.add(isotope);
-				stringList.add(isotope.getSymbol());	
-			}
-			
-		}
+        for (IIsotope isotope : formula.isotopes()) {
+            if (!stringList.contains(isotope.getSymbol())) {
+                elementList.add(isotope);
+                stringList.add(isotope.getSymbol());
+            }
+
+        }
 		return elementList;
 	}
 	
@@ -151,11 +137,10 @@ public class MolecularFormulaManipulator {
 	 */
 	@TestMethod("testContainsElement_IMolecularFormula_IElement")
 	public static boolean containsElement(IMolecularFormula formula, IElement element){
-		
-		Iterator<IIsotope> iterIsot = formula.isotopes();
-		while(iterIsot.hasNext()){		
-			if (element.getSymbol().equals(iterIsot.next().getSymbol())) return true;
-		}
+
+        for (IIsotope isotope : formula.isotopes()) {
+            if (element.getSymbol().equals(isotope.getSymbol())) return true;
+        }
 		
 		return false;
 	}
@@ -169,10 +154,9 @@ public class MolecularFormulaManipulator {
 	 */
 	@TestMethod("testRemoveElement_IMolecularFormula_IElement")
 	public static IMolecularFormula removeElement(IMolecularFormula formula, IElement element){
-		Iterator<IIsotope> itIsotopes = getIsotopes(formula,element).iterator();
-		while(itIsotopes.hasNext()){
-			formula.removeIsotope(itIsotopes.next());
-		}
+        for (IIsotope isotope : getIsotopes(formula, element)) {
+            formula.removeIsotope(isotope);
+        }
 		return formula;
 	}
 	
@@ -193,10 +177,9 @@ public class MolecularFormulaManipulator {
 	public static String getString(IMolecularFormula formula, String[] orderElements ){
 		String stringMF = "";
 		List<IIsotope> isotopesList = putInOrder(orderElements, formula);
-		for(Iterator<IIsotope> it = isotopesList.iterator(); it.hasNext(); ){
-			IIsotope isotope = it.next();
-			stringMF = stringMF + isotope.getSymbol() +  getElementCount(formula, isotope);
-		}
+        for (IIsotope isotope : isotopesList) {
+            stringMF = stringMF + isotope.getSymbol() + getElementCount(formula, isotope);
+        }
 		return stringMF;
 	}
 	
@@ -231,15 +214,15 @@ public class MolecularFormulaManipulator {
 	 */
 	public static List<IIsotope> putInOrder(String[] orderElements, IMolecularFormula formula) {
 		List<IIsotope> isotopesList = new ArrayList<IIsotope>();
-		for(int i = 0 ; i < orderElements.length; i++){
-			IElement element = formula.getBuilder().newElement(orderElements[i]);
-			if(containsElement(formula,element)){
-				List<IIsotope> isotopes = getIsotopes(formula, element);
-				for(int j = 0; j < isotopes.size(); j++){
-					isotopesList.add(isotopes.get(j));
-				}
-			}
-		}
+        for (String orderElement : orderElements) {
+            IElement element = formula.getBuilder().newElement(orderElement);
+            if (containsElement(formula, element)) {
+                List<IIsotope> isotopes = getIsotopes(formula, element);
+                for (IIsotope isotope : isotopes) {
+                    isotopesList.add(isotope);
+                }
+            }
+        }
 		return isotopesList;
 	}
 	
@@ -286,23 +269,21 @@ public class MolecularFormulaManipulator {
 	public static String getHTML(IMolecularFormula formula, boolean chargeB, boolean isotopeB) {
 		String htmlString = "";
 		String[] orderElements = generateOrderEle();
-		for(int i = 0 ; i < orderElements.length; i++){
-			IElement element = formula.getBuilder().newElement(orderElements[i]);
-			if(containsElement(formula,element)){
-				if(!isotopeB){
-					String eleToAdd = element.getSymbol() + "<sub>" + getElementCount(formula, element) + "</sub>";
-					htmlString += eleToAdd;
-				}else{
-					Iterator<IIsotope> it  = getIsotopes(formula,element).iterator();
-					while(it.hasNext()){
-						IIsotope isotope = it.next();
-						String isoToAdd = "<sup>" + isotope.getMassNumber() + "</sup>" 
-						+ isotope.getSymbol() + "<sub>" + formula.getIsotopeCount(isotope) + "</sub>";
-						htmlString += isoToAdd;
-					}
-				}
-			}
-		}
+        for (String orderElement : orderElements) {
+            IElement element = formula.getBuilder().newElement(orderElement);
+            if (containsElement(formula, element)) {
+                if (!isotopeB) {
+                    String eleToAdd = element.getSymbol() + "<sub>" + getElementCount(formula, element) + "</sub>";
+                    htmlString += eleToAdd;
+                } else {
+                    for (IIsotope isotope : getIsotopes(formula, element)) {
+                        String isoToAdd = "<sup>" + isotope.getMassNumber() + "</sup>"
+                                + isotope.getSymbol() + "<sub>" + formula.getIsotopeCount(isotope) + "</sub>";
+                        htmlString += isoToAdd;
+                    }
+                }
+            }
+        }
 		if(chargeB){
 			Double charge = formula.getCharge();
 			if((charge == CDKConstants.UNSET) || (charge == 0)){
@@ -452,12 +433,10 @@ public class MolecularFormulaManipulator {
 	 @TestMethod("testGetTotalExactMass_IMolecularFormula")
 	public static double getTotalExactMass(IMolecularFormula formula) {
 		double mass = 0.0;
-		Iterator<IIsotope> iterIsot = formula.isotopes();
-		while(iterIsot.hasNext()) {
-			IIsotope isotope = iterIsot.next();
-			if (isotope.getExactMass() == null) return 0.0;
-			mass += isotope.getExactMass()*formula.getIsotopeCount(isotope);
-		}
+        for (IIsotope isotope : formula.isotopes()) {
+            if (isotope.getExactMass() == null) return 0.0;
+            mass += isotope.getExactMass() * formula.getIsotopeCount(isotope);
+        }
 		return mass;
 	 }
 	  
@@ -476,12 +455,10 @@ public class MolecularFormulaManipulator {
 		} catch (IOException e) {
 			throw new RuntimeException("Could not instantiate the IsotopeFactory.");
 		}
-		 Iterator<IIsotope> iterIsot = formula.isotopes();
-		 while(iterIsot.hasNext()) {
-			 IIsotope isotope = iterIsot.next();
-			 IElement isotopesElement = isotope.getBuilder().newElement(isotope);
-			 mass += factory.getNaturalMass(isotopesElement)*formula.getIsotopeCount(isotope);
-		 }
+        for (IIsotope isotope : formula.isotopes()) {
+            IElement isotopesElement = isotope.getBuilder().newElement(isotope);
+            mass += factory.getNaturalMass(isotopesElement) * formula.getIsotopeCount(isotope);
+        }
 		 return mass;
 	 }
 		  
@@ -500,12 +477,10 @@ public class MolecularFormulaManipulator {
 	       } catch (IOException e) {
 	           throw new RuntimeException("Could not instantiate the IsotopeFactory.");
 	       }
-	       Iterator<IIsotope> iterIsot = formula.isotopes();
-	       while(iterIsot.hasNext()) {
-	           IIsotope isotope = iterIsot.next();
-	           IIsotope major = factory.getMajorIsotope(isotope.getSymbol());
-	           mass += major.getExactMass()*formula.getIsotopeCount(isotope);
-	       }
+          for (IIsotope isotope : formula.isotopes()) {
+              IIsotope major = factory.getMajorIsotope(isotope.getSymbol());
+              mass += major.getExactMass() * formula.getIsotopeCount(isotope);
+          }
 	       return mass;
 	   }
 
@@ -519,12 +494,10 @@ public class MolecularFormulaManipulator {
 	  @TestMethod("testGetTotalNaturalAbundance_IMolecularFormula")
 	public static double getTotalNaturalAbundance(IMolecularFormula formula) {
 	      double abundance =  1.0;
-	      Iterator<IIsotope> iterIsot = formula.isotopes();
-	      while(iterIsot.hasNext()) {
-	    	  IIsotope isotope = iterIsot.next();
-	    	  if (isotope.getNaturalAbundance() == null) return 0.0; 
-	    	  abundance = abundance*Math.pow( isotope.getNaturalAbundance(),formula.getIsotopeCount(isotope));
-	      }
+          for (IIsotope isotope : formula.isotopes()) {
+              if (isotope.getNaturalAbundance() == null) return 0.0;
+              abundance = abundance * Math.pow(isotope.getNaturalAbundance(), formula.getIsotopeCount(isotope));
+          }
 	      return abundance/Math.pow(100,getAtomCount(formula));
 	  }
 	
@@ -582,11 +555,10 @@ public class MolecularFormulaManipulator {
 	 */
 	@TestMethod("testGetMolecularFormula_IAtomContainer_IMolecularFormula")
 	public static IMolecularFormula getMolecularFormula(IAtomContainer atomContainer, IMolecularFormula formula) {
-		
-		Iterator<IAtom> iter = atomContainer.atoms();
-		while (iter.hasNext()) {
-			formula.addIsotope(iter.next());
-		}
+
+        for (IAtom iAtom : atomContainer.atoms()) {
+            formula.addIsotope(iAtom);
+        }
 		return formula;
 	}
 	/**
@@ -616,15 +588,13 @@ public class MolecularFormulaManipulator {
 	 */
 	@TestMethod("testGetAtomContainer_IMolecularFormula_IAtomContainer")
 	public static IAtomContainer getAtomContainer(IMolecularFormula formula, IAtomContainer atomContainer) {
-		
-		Iterator<IIsotope> it = formula.isotopes();
-		while(it.hasNext()){
-			IIsotope isotope = it.next();
-			int occur = formula.getIsotopeCount(isotope);
-			for(int i = 0 ; i < occur; i++)
-				atomContainer.addAtom(formula.getBuilder().newAtom(isotope));
-			
-		}
+
+        for (IIsotope isotope : formula.isotopes()) {
+            int occur = formula.getIsotopeCount(isotope);
+            for (int i = 0; i < occur; i++)
+                atomContainer.addAtom(formula.getBuilder().newAtom(isotope));
+
+        }
 		return atomContainer;
 	}
 	
@@ -666,19 +636,18 @@ public class MolecularFormulaManipulator {
 	 * @return  Array with the elements ordered
 	 */
 	private static String[] generateOrderEle_Hill_NoCarbons(){
-		String[] listElements = new String[]{
-				"Ac", "Ag", "Al", "Ar", "As", "At", "Au", 
-				"B", "Ba", "Be", "Bi", "Br", "Ca", "Cd", "Ce", "Cl", "Co", "Cr", "Cs", "Cu", 
-				"Dy", "Er", "Eu", "F", "Fe", "Fr", 
-				"Ga", "Gd", "Ge", "H", "Hf", "Hg", "Ho", "I", "In", "Ir",  
-				"K", "Kr", "La", "Li", "Lu", "Mg", "Mn", "Mo",    
-				"N", "Na", "Nb", "Nd", "Ne", "Ni", "Np", "O", "Os",
-				"P", "Pa", "Pb", "Pd", "Pm", "Po", "Pr", "Pt", "Pu",
-				"Ra", "Rb", "Re", "Rh", "Rn", "Ru",
-				"S", "Sb", "Sc", "Se", "Si", "Sr", "Sm", "Sn",  
-				"Ta", "Tb", "Tc", "Te", "Th", "Ti", "Tl", "Tm",  
-				"U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr"};
-		return listElements;
+        return new String[]{
+                "Ac", "Ag", "Al", "Ar", "As", "At", "Au",
+                "B", "Ba", "Be", "Bi", "Br", "Ca", "Cd", "Ce", "Cl", "Co", "Cr", "Cs", "Cu",
+                "Dy", "Er", "Eu", "F", "Fe", "Fr",
+                "Ga", "Gd", "Ge", "H", "Hf", "Hg", "Ho", "I", "In", "Ir",
+                "K", "Kr", "La", "Li", "Lu", "Mg", "Mn", "Mo",
+                "N", "Na", "Nb", "Nd", "Ne", "Ni", "Np", "O", "Os",
+                "P", "Pa", "Pb", "Pd", "Pm", "Po", "Pr", "Pt", "Pu",
+                "Ra", "Rb", "Re", "Rh", "Rn", "Ru",
+                "S", "Sb", "Sc", "Se", "Si", "Sr", "Sm", "Sn",
+                "Ta", "Tb", "Tc", "Te", "Th", "Ti", "Tl", "Tm",
+                "U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr"};
 	}
 	/**
 	 * Generate the order of the Elements according Hill system 
@@ -687,19 +656,18 @@ public class MolecularFormulaManipulator {
 	 * @return  Array with the elements ordered
 	 */
 	private static String[] generateOrderEle_Hill_WithCarbons(){
-		String[] listElements = new String[]{
-			    "C", "H", "Ac", "Ag", "Al", "Ar", "As", "At", "Au", 
-			    "B", "Ba", "Be", "Bi", "Br", "Ca", "Cd", "Ce", "Cl", "Co", "Cr", "Cs", "Cu", 
-			    "Dy", "Er", "Eu", "F", "Fe", "Fr", 
-			    "Ga", "Gd", "Ge", "Hf", "Hg", "Ho", "I", "In", "Ir",  
-			    "K", "Kr", "La", "Li", "Lu", "Mg", "Mn", "Mo",    
-			    "N", "Na", "Nb", "Nd", "Ne", "Ni", "Np", "O", "Os",
-			    "P", "Pa", "Pb", "Pd", "Pm", "Po", "Pr", "Pt", "Pu",
-			    "Ra", "Rb", "Re", "Rh", "Rn", "Ru",
-			    "S", "Sb", "Sc", "Se", "Si", "Sr", "Sm", "Sn",  
-			    "Ta", "Tb", "Tc", "Te", "Th", "Ti", "Tl", "Tm",  
-			    "U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr"};
-		return listElements;
+        return new String[]{
+                "C", "H", "Ac", "Ag", "Al", "Ar", "As", "At", "Au",
+                "B", "Ba", "Be", "Bi", "Br", "Ca", "Cd", "Ce", "Cl", "Co", "Cr", "Cs", "Cu",
+                "Dy", "Er", "Eu", "F", "Fe", "Fr",
+                "Ga", "Gd", "Ge", "Hf", "Hg", "Ho", "I", "In", "Ir",
+                "K", "Kr", "La", "Li", "Lu", "Mg", "Mn", "Mo",
+                "N", "Na", "Nb", "Nd", "Ne", "Ni", "Np", "O", "Os",
+                "P", "Pa", "Pb", "Pd", "Pm", "Po", "Pr", "Pt", "Pu",
+                "Ra", "Rb", "Re", "Rh", "Rn", "Ru",
+                "S", "Sb", "Sc", "Se", "Si", "Sr", "Sm", "Sn",
+                "Ta", "Tb", "Tc", "Te", "Th", "Ti", "Tl", "Tm",
+                "U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr"};
 	}
 
 	/**
@@ -719,27 +687,23 @@ public class MolecularFormulaManipulator {
 		
 		if(formula1.getIsotopeCount() != formula2.getIsotopeCount())
 			return false;
-		
-		
-		Iterator<IIsotope> itIsotopes1 = formula1.isotopes();
-		while(itIsotopes1.hasNext()){
-			IIsotope isotope = itIsotopes1.next();
-			if(!formula2.contains(isotope))
-				return false;
-			
-			if(formula1.getIsotopeCount(isotope) != formula2.getIsotopeCount(isotope))
-				return false;
-			
-		}
-		
-		Iterator<IIsotope> itIsotopes2 = formula2.isotopes();
-		while(itIsotopes2.hasNext()){
-			IIsotope isotope = itIsotopes2.next();
-			if(!formula1.contains(isotope))
-				return false;
-			if(formula2.getIsotopeCount(isotope) != formula1.getIsotopeCount(isotope))
-				return false;
-		}
+
+
+        for (IIsotope isotope : formula1.isotopes()) {
+            if (!formula2.contains(isotope))
+                return false;
+
+            if (formula1.getIsotopeCount(isotope) != formula2.getIsotopeCount(isotope))
+                return false;
+
+        }
+
+        for (IIsotope isotope : formula2.isotopes()) {
+            if (!formula1.contains(isotope))
+                return false;
+            if (formula2.getIsotopeCount(isotope) != formula1.getIsotopeCount(isotope))
+                return false;
+        }
 		
 		return true;
 	}
@@ -755,13 +719,11 @@ public class MolecularFormulaManipulator {
 	@TestMethod("testGetHeavyElements_IMolecularFormula")
 	public static List<IElement> getHeavyElements(IMolecularFormula formula) {
 		List<IElement> newEle = new ArrayList<IElement>();
-		Iterator<IElement> itEle = elements(formula).iterator();
-		while(itEle.hasNext()){
-			IElement element = itEle.next();
-			if (!element.getSymbol().equals("H")) {
-				newEle.add(element);
-			}
-		}
+        for (IElement element : elements(formula)) {
+            if (!element.getSymbol().equals("H")) {
+                newEle.add(element);
+            }
+        }
 		return newEle;
 	}
 	

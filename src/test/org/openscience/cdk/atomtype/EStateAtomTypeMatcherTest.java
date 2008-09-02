@@ -342,7 +342,7 @@ public class EStateAtomTypeMatcherTest extends NewCDKTestCase {
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
 
         matcher.setRingSet(getRings());
-        Iterator<IAtom> atoms = mol.atoms();        
+        Iterator<IAtom> atoms = mol.atoms().iterator();        
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             if (atom.getSymbol().equals("C")){

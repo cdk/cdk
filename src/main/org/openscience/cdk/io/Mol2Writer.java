@@ -237,7 +237,7 @@ NO_CHARGES
             writer.newLine();
 
             int counter = 0;
-            Iterator bonds = mol.bonds();
+            Iterator bonds = mol.bonds().iterator();
             while (bonds.hasNext()) {
                 IBond bond = (IBond) bonds.next();
                 writer.write(counter + " " +

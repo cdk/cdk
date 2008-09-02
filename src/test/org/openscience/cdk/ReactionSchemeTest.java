@@ -124,7 +124,7 @@ public class ReactionSchemeTest extends NewCDKTestCase {
 
         Assert.assertEquals(3, scheme.getReactionCount());
         int count = 0;
-        for(Iterator<IReaction> it = scheme.reactions(); it.hasNext();) {
+        for(Iterator<IReaction> it = scheme.reactions().iterator(); it.hasNext();) {
         	it.next();
         	++count;
         }

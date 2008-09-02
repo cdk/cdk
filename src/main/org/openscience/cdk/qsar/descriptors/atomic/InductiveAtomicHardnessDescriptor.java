@@ -180,7 +180,7 @@ public class InductiveAtomicHardnessDescriptor implements IAtomicDescriptor {
 
 		double radiusTarget;
 		
-		java.util.Iterator allAtoms = ac.atoms();
+		java.util.Iterator allAtoms = ac.atoms().iterator();
 		atomicHardness = 0;
 		double partial;
 		double radius;

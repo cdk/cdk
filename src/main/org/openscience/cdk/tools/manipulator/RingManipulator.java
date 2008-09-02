@@ -52,15 +52,11 @@ public class RingManipulator {
     public static void markAromaticRings(IRing ring) {
 		// return as soon as the conditions are not met:
 		// 1. all atoms are labeled aromatic
-		Iterator<IAtom> atoms = ring.atoms();
-		while (atoms.hasNext()) {
-			if (!atoms.next().getFlag(CDKConstants.ISAROMATIC)) return;
-		}
-		// 2. all bonds are labeled aromatic
-		Iterator<IBond> bonds = ring.bonds();
-		while (bonds.hasNext()) {
-			if (!bonds.next().getFlag(CDKConstants.ISAROMATIC)) return;
-		}
+        for (IAtom atom : ring.atoms()) if (!atom.getFlag(CDKConstants.ISAROMATIC)) return;
+
+        // 2. all bonds are labeled aromatic
+        for (IBond bond : ring.bonds()) if (!bond.getFlag(CDKConstants.ISAROMATIC)) return;
+				
 		// OK, all conditions are met, so ring is aromatic
 		ring.setFlag(CDKConstants.ISAROMATIC, true);
 	}

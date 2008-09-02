@@ -236,7 +236,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
 		}
 
-		java.util.Iterator atoms = ac.atoms();
+		java.util.Iterator atoms = ac.atoms().iterator();
 		while (atoms.hasNext()) {
 			IAtom atom = (IAtom)atoms.next();
 			if (!target.equals(atom)) {

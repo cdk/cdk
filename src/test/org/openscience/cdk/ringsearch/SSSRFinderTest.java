@@ -83,7 +83,7 @@ public class SSSRFinderTest extends NewCDKTestCase {
         new SSSRFinder(molecule).findSSSR();
 
         int count = 0;
-        Iterator atoms = molecule.atoms();
+        Iterator atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = (IAtom) atoms.next();
             if (atom.getFlag(CDKConstants.ISINRING)) count++;
@@ -97,7 +97,7 @@ public class SSSRFinderTest extends NewCDKTestCase {
         new SSSRFinder(molecule).findSSSR();
 
         int count = 0;
-        Iterator atoms = molecule.atoms();
+        Iterator atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = (IAtom) atoms.next();
             if (atom.getFlag(CDKConstants.ISINRING)) count++;

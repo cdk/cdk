@@ -71,11 +71,11 @@ public class RemoveAtomsAndBondsEditTest extends CDKTestCase {
 		Molecule mol = MoleculeFactory.makeAlphaPinene();
 		atomCount = mol.getAtomCount();
 		bondCount = mol.getBondCount();
-		Iterator atoms = mol.atoms();
+		Iterator atoms = mol.atoms().iterator();
 		while (atoms.hasNext()) {
 			undoCont.addAtom((IAtom)atoms.next());
 		}
-		Iterator bonds = mol.bonds();
+		Iterator bonds = mol.bonds().iterator();
 		while (bonds.hasNext()) {
 			undoCont.addBond((IBond)bonds.next());
 		}

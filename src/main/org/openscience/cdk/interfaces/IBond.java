@@ -25,7 +25,6 @@ package org.openscience.cdk.interfaces;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-import java.util.Iterator;
 
 /**
  * Implements the concept of a covalent bond between two or more atoms. A bond is
@@ -50,12 +49,12 @@ public interface IBond extends IElectronContainer {
 	}
 	
 	/**
-	 *  Returns the Iterator to atoms making up this bond.
+	 *  Returns the Iterable to atoms making up this bond.
 	 *
-	 *@return    An Iterator to atoms participating in this bond
+	 *@return    An Iterable to atoms participating in this bond
 	 *@see       #setAtoms
 	 */
-	public Iterator<IAtom> atoms();
+	public Iterable<IAtom> atoms();
 
 	/**
 	 * Sets the array of atoms making up this bond.

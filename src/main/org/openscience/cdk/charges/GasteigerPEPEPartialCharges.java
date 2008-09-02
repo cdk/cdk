@@ -193,7 +193,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 		iSet.addAtomContainer(ac);
 		
 		if(acSet != null)
-		for(Iterator<IAtomContainer> it = acSet.atomContainers(); it.hasNext();){
+		for(Iterator<IAtomContainer> it = acSet.atomContainers().iterator(); it.hasNext();){
 			IAtomContainer container = it.next();
 			ac = setFlags(container, ac, true);
 			
@@ -410,9 +410,9 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	 * @return   The IATomContainer with the flags removed
 	 */
 	private IAtomContainer removingFlagsAromaticity(IAtomContainer ac) {
-		Iterator<IAtom> atoms = ac.atoms();
+		Iterator<IAtom> atoms = ac.atoms().iterator();
 		while (atoms.hasNext()) atoms.next().setFlag(CDKConstants.ISAROMATIC, false);
-		Iterator<IBond> bonds = ac.bonds();
+		Iterator<IBond> bonds = ac.bonds().iterator();
 		while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISAROMATIC, false);
 		return ac;
 	}
@@ -426,11 +426,11 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	 */
 	private IAtomContainer setFlags(IAtomContainer container,
 			IAtomContainer ac, boolean b) {
-		for(Iterator<IAtom> it = container.atoms(); it.hasNext();){
+		for(Iterator<IAtom> it = container.atoms().iterator(); it.hasNext();){
 			int positionA = ac.getAtomNumber(it.next());
 			ac.getAtom(positionA).setFlag(CDKConstants.REACTIVE_CENTER,b);
 		}
-		for(Iterator<IBond> it = container.bonds(); it.hasNext();){
+		for(Iterator<IBond> it = container.bonds().iterator(); it.hasNext();){
 			int positionB = ac.getBondNumber(it.next());
 			ac.getBond(positionB).setFlag(CDKConstants.REACTIVE_CENTER,b);
 		

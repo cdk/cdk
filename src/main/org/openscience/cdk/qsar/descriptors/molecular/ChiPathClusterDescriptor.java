@@ -131,7 +131,7 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
 
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = localAtomContainer.atoms();
+        Iterator<IAtom> atoms = localAtomContainer.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             IAtomType type;

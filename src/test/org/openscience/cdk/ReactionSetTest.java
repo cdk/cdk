@@ -87,7 +87,7 @@ public class ReactionSetTest extends NewCDKTestCase {
 		reactionSet.addReaction(builder.newReaction()); // 3
 		reactionSet.addReaction(builder.newReaction()); // 4
         
-		Iterator<IReaction> reactionIter = reactionSet.reactions();
+		Iterator<IReaction> reactionIter = reactionSet.reactions().iterator();
         Assert.assertNotNull(reactionIter);
         int count = 0;
         

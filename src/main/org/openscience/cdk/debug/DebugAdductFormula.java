@@ -20,16 +20,11 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Iterator;
-
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.formula.AdductFormula;
-import org.openscience.cdk.interfaces.IAdductFormula;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IMolecularFormulaSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.Iterator;
 
 /**
  * @cdk.module datadebug
@@ -67,7 +62,7 @@ public class DebugAdductFormula extends AdductFormula implements IAdductFormula 
 	    return super.getIsotopeCount();
     }
 
-	public Iterator<IIsotope> isotopes() {
+	public Iterable<IIsotope> isotopes() {
 	    logger.debug("Getting isotope iterator..");
 	    return super.isotopes();
     }

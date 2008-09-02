@@ -148,8 +148,8 @@ public class DebugReactionSet extends org.openscience.cdk.ReactionSet
 		return super.getReaction(number);
 	}
 
-	public java.util.Iterator reactions() {
-		logger.debug("Getting reactionIterator");
+	public Iterable<IReaction> reactions() {
+		logger.debug("Getting reactionIterable");
 		return super.reactions();
 	}
 

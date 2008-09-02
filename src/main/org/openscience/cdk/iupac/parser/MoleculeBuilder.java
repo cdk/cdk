@@ -548,7 +548,7 @@ public class MoleculeBuilder
         
         //Add the hydrogens to create a balanced molecule
     	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(currentMolecule.getBuilder());
-    	Iterator<IAtom> atoms = currentMolecule.atoms();
+    	Iterator<IAtom> atoms = currentMolecule.atoms().iterator();
     	while (atoms.hasNext()) {
     		IAtom atom = atoms.next();
     		IAtomType type = matcher.findMatchingAtomType(currentMolecule, atom);

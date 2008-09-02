@@ -106,7 +106,7 @@ public class EquivalentClassPartitioner
 	 */
 	public double[] prepareNode(AtomContainer atomContainer)
 	{
-		java.util.Iterator atoms=atomContainer.atoms();
+		java.util.Iterator atoms=atomContainer.atoms().iterator();
 		 double nodeSequence[]=new double[atomContainer.getAtomCount()];
 		 int i = 0;
 		 while (atoms.hasNext())

@@ -160,7 +160,7 @@ public class HINWriter extends DefaultChemObjectWriter {
                 writer.newLine();
 
                 // Loop through the atoms and write them out:
-                java.util.Iterator atoms = mol.atoms();
+                java.util.Iterator atoms = mol.atoms().iterator();
                 
                 int i = 0;
                 while (atoms.hasNext()) {
@@ -179,7 +179,7 @@ public class HINWriter extends DefaultChemObjectWriter {
 
                     String buf = "";
                     int ncon = 0;
-                    Iterator bonds = mol.bonds();
+                    Iterator bonds = mol.bonds().iterator();
                     while (bonds.hasNext()) {
                         IBond bond = (IBond)bonds.next();
                         if (bond.contains(atom)) {

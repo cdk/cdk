@@ -250,7 +250,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
         }
 
         // iterate over all atoms of ac
-        java.util.Iterator atoms = ac.atoms();
+        java.util.Iterator atoms = ac.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = (IAtom) atoms.next();
             if (atom.getSymbol().equals("N") || atom.getSymbol().equals("O") ||

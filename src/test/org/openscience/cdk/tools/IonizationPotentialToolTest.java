@@ -74,7 +74,7 @@ public class IonizationPotentialToolTest extends NewCDKTestCase {
 
         
         List<Double> carbonIPs = new ArrayList<Double>();
-        Iterator<IAtom> atoms = molecule.atoms();
+        Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             if (atom.getSymbol().equals("H")) continue;

@@ -115,7 +115,7 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue("Expected the molecule to be aromatic.", CDKHueckelAromaticityDetector.detectAromaticity(mol));
 
-        Iterator<IAtom> atoms = mol.atoms();
+        Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
         	Assert.assertTrue(atoms.next().getFlag(CDKConstants.ISAROMATIC));
         }
@@ -143,7 +143,7 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue("Expected the molecule to be aromatic.", CDKHueckelAromaticityDetector.detectAromaticity(mol));
 
-        Iterator<IAtom> atoms = mol.atoms();
+        Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
         	Assert.assertTrue(atoms.next().getFlag(CDKConstants.ISAROMATIC));
         }
@@ -157,7 +157,7 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
 
     @Test public void testPyridineOxide_SP2() throws Exception {
 		Molecule molecule = MoleculeFactory.makePyridineOxide();
-		Iterator<IBond> bonds = molecule.bonds();
+		Iterator<IBond> bonds = molecule.bonds().iterator();
 		while (bonds.hasNext()) bonds.next().setOrder(CDKConstants.BONDORDER_SINGLE);
 		for (int i=0; i<6; i++) {
 			molecule.getAtom(i).setHybridization(IAtomType.Hybridization.SP2);
@@ -293,7 +293,7 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
         RingSetManipulator.markAromaticRings(rs);
         IRing r = null;
         int aromacount = 0;
-        Iterator<IAtomContainer> rings = rs.atomContainers();
+        Iterator<IAtomContainer> rings = rs.atomContainers().iterator();
         while (rings.hasNext()) {
             r = (IRing) rings.next();
             isAromatic = r.getFlag(CDKConstants.ISAROMATIC);
@@ -697,7 +697,7 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
         boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(mol);
         Assert.assertTrue(isAromatic);
 
-        Iterator<IAtom> atoms = mol.atoms();
+        Iterator<IAtom> atoms = mol.atoms().iterator();
         int nCarom = 0;
         int nCalip = 0;
         int nNarom = 0;

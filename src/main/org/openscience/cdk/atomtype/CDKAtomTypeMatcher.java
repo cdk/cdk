@@ -272,7 +272,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private boolean hasOneSingleElectron(IAtomContainer atomContainer, IAtom atom) {
-	    Iterator<ISingleElectron> singleElectrons = atomContainer.singleElectrons();
+	    Iterator<ISingleElectron> singleElectrons = atomContainer.singleElectrons().iterator();
 	    while (singleElectrons.hasNext()) {
 	    	if (singleElectrons.next().contains(atom)) return true;
 	    }

@@ -24,18 +24,14 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.*;
+
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Assumes CDK atom types to be detected and adds missing hydrogens based on the
@@ -64,10 +60,9 @@ public class CDKValencyChecker implements IValencyChecker {
     }
 
 	public boolean isSaturated(IAtomContainer atomContainer) throws CDKException {
-		Iterator<IAtom> atoms = atomContainer.atoms();
-		while (atoms.hasNext()) {
-			if (!isSaturated(atoms.next(), atomContainer)) return false;
-		}
+        for (IAtom atom : atomContainer.atoms()) {
+            if (!isSaturated(atom, atomContainer)) return false;
+        }        
 		return true;
 	}
 

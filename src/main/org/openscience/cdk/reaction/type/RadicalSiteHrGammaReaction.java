@@ -149,7 +149,7 @@ public class RadicalSiteHrGammaReaction extends ReactionEngine implements IReact
 		}
 		
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
-		Iterator<IAtom> atomis = reactant.atoms();
+		Iterator<IAtom> atomis = reactant.atoms().iterator();
 		while(atomis.hasNext()){
 			IAtom  atomi = atomis.next();
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getSymbol().equals("C")
@@ -207,7 +207,7 @@ public class RadicalSiteHrGammaReaction extends ReactionEngine implements IReact
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
-		Iterator<IAtom> atomis = reactant.atoms();
+		Iterator<IAtom> atomis = reactant.atoms().iterator();
 		while(atomis.hasNext()){
 			IAtom  atomi = atomis.next();
 			if(atomi.getSymbol().equals("C")

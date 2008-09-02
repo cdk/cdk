@@ -387,7 +387,7 @@ public class FiguerasSSSRFinder {
 	 * @param   molecule  The molecule that contains the atom
 	 */
     private void breakBond(Atom atom, Molecule molecule) {
-        Iterator<IBond> bonds = molecule.bonds();
+        Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
             if (bond.contains(atom)) {
@@ -415,7 +415,7 @@ public class FiguerasSSSRFinder {
 		int minMaxSize = Integer.MAX_VALUE;
 		int minMax = 0;
 		logger.debug("Molecule: " + molecule);
-		Iterator<IBond> bonds = ring.bonds();
+		Iterator<IBond> bonds = ring.bonds().iterator();
 		while (bonds.hasNext())
 		{
 			bond = (IBond)bonds.next();

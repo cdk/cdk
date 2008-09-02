@@ -120,7 +120,7 @@ public class GasteigerMarsiliPartialChargesTest extends NewCDKTestCase {
 		addExplicitHydrogens(molecule);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		lpcheck.saturate(molecule);
-		for(Iterator<IAtom> it = molecule.atoms();it.hasNext();)
+		for(Iterator<IAtom> it = molecule.atoms().iterator();it.hasNext();)
 			it.next().setCharge(0.0);
 		
 		Assert.assertNotNull(peoe.assignGasteigerSigmaMarsiliFactors(molecule).length);

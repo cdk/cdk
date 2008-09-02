@@ -200,7 +200,7 @@ public class DescriptorEngine {
                 }
                 logger.debug("Calculated molecular descriptors...");
             } else if (descriptor instanceof IAtomicDescriptor) {
-                Iterator atoms = molecule.atoms();
+                Iterator atoms = molecule.atoms().iterator();
                 while (atoms.hasNext()) {
                     IAtom atom = (IAtom) atoms.next();
                     DescriptorValue value = ((IAtomicDescriptor) descriptor).calculate(atom, molecule);
@@ -212,7 +212,7 @@ public class DescriptorEngine {
                 }
                 logger.debug("Calculated atomic descriptors...");
             } else if (descriptor instanceof IBondDescriptor) {
-                Iterator bonds = molecule.bonds();
+                Iterator bonds = molecule.bonds().iterator();
                 while (bonds.hasNext()) {
                     IBond bond = (IBond) bonds.next();
                     DescriptorValue value = ((IBondDescriptor) descriptor).calculate(bond, molecule);

@@ -142,7 +142,7 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 	 */
 	public DescriptorValue calculate(IAtomContainer ac) {
 		int rotatableBondsCount = 0;
-		Iterator bonds = ac.bonds();
+		Iterator<IBond> bonds = ac.bonds().iterator();
 		int degree0;
 		int degree1;
         IRingSet ringSet;
@@ -158,7 +158,7 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 				bond.setFlag(CDKConstants.ISINRING, true);
 			}
 		}
-		bonds = ac.bonds();
+		bonds = ac.bonds().iterator();
 		while (bonds.hasNext()) {
 			IBond bond = (IBond)bonds.next();
 			IAtom atom0 = bond.getAtom(0);

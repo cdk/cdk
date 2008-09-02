@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Iterator;
 
 
 /** 
@@ -60,11 +59,11 @@ public interface IReactionSet extends IChemObject {
         public IReaction getReaction(int number);
 
 	/**
-	 * Returns the Iterator over Reactions of this container.
+	 * Returns the {@link Iterable} over Reactions of this container.
 	 *
-	 * @return    The Iterator over Reactions of this container 
+	 * @return    The {@link Iterable} over Reactions of this container 
 	 */
-	public Iterator<IReaction> reactions();
+	public Iterable<IReaction> reactions();
 	
 	/**
 	 * Returns the number of Reactions in this Container.

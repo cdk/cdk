@@ -81,11 +81,11 @@ public class PathToolsTest extends NewCDKTestCase {
     	PathTools.resetFlags(atomContainer);
     	
     	// now assume that no VISITED is set
-    	Iterator<IAtom> atoms = atomContainer.atoms();
+    	Iterator<IAtom> atoms = atomContainer.atoms().iterator();
     	while (atoms.hasNext()) {
     		Assert.assertNull(atoms.next().getProperty(CDKConstants.VISITED));
     	}
-    	Iterator<IBond> bonds = atomContainer.bonds();
+    	Iterator<IBond> bonds = atomContainer.bonds().iterator();
     	while (bonds.hasNext()) {
     		Assert.assertNull(bonds.next().getProperty(CDKConstants.VISITED));
     	}
@@ -280,7 +280,7 @@ public class PathToolsTest extends NewCDKTestCase {
     @Test
     public void testDepthFirstTargetSearch_IAtomContainer_IAtom_IAtom_IAtomContainer() throws CDKException {
     	IMolecule molecule = sp.parseSmiles("C(COF)(Br)NC");
-        Iterator<IAtom> atoms = molecule.atoms();
+        Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             atom.setFlag(CDKConstants.VISITED, false);
@@ -290,7 +290,7 @@ public class PathToolsTest extends NewCDKTestCase {
         IAtom root = molecule.getAtom(0);
         IAtom target = null;
 
-        atoms = molecule.atoms();
+        atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             if (atom.getSymbol().equals("F")) {

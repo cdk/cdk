@@ -229,7 +229,7 @@ public class CrystalGeometryTools {
 	 * @return  boolean indication that 3D coordinates are available 
 	 */
     public static boolean hasCrystalCoordinates(IAtomContainer container) {
-    	java.util.Iterator atoms = container.atoms();
+    	java.util.Iterator atoms = container.atoms().iterator();
         while (atoms.hasNext()) {
             if (((IAtom)atoms.next()).getFractionalPoint3d() == null) {
                 return false;
@@ -242,7 +242,7 @@ public class CrystalGeometryTools {
      * Creates cartesian coordinates for all Atoms in the Crystal.
 	 */
     public static void fractionalToCartesian(ICrystal crystal) {
-    	java.util.Iterator atoms = crystal.atoms();
+    	java.util.Iterator atoms = crystal.atoms().iterator();
         Vector3d aAxis = crystal.getA();
         Vector3d bAxis = crystal.getB();
         Vector3d cAxis = crystal.getC();

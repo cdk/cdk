@@ -280,7 +280,7 @@ public class MolecularFormulaTest extends NewCDKTestCase {
         mf.addIsotope( builder.newIsotope("F") );
         mf.addIsotope( builder.newIsotope("H") ,3);
         
-        Iterator<IIsotope> istoIter = mf.isotopes();
+        Iterator<IIsotope> istoIter = mf.isotopes().iterator();
         int counter = 0;
         while (istoIter.hasNext()) {
         	istoIter.next();
@@ -329,7 +329,7 @@ public class MolecularFormulaTest extends NewCDKTestCase {
         mf.addIsotope( flu );
         mf.addIsotope( h1 ,3);
 
-        Iterator<IIsotope> istoIter = mf.isotopes();
+        Iterator<IIsotope> istoIter = mf.isotopes().iterator();
         Assert.assertNotNull(istoIter);
         Assert.assertTrue(istoIter.hasNext());
         IIsotope next = istoIter.next();

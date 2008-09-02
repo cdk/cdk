@@ -24,19 +24,17 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Hashtable;
-
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Adds implicit hydrogens based on atom type definitions. The class assumes
@@ -101,10 +99,9 @@ public class CDKHydrogenAdder {
 	 * @throws CDKException Throws if insufficient information is present
 	 */
 	public void addImplicitHydrogens(IAtomContainer container) throws CDKException {
-		Iterator<IAtom> atoms = container.atoms();
-		while (atoms.hasNext()) {
-			addImplicitHydrogens(container, atoms.next());
-		}
+        for (IAtom atom : container.atoms()) {
+            addImplicitHydrogens(container, atom);
+        }        
 	}
 	
 	/**

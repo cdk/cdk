@@ -156,7 +156,7 @@ public class AddHydrogenEditTest extends CDKTestCase {
 	private Map<IAtom,int[]> addImplicitHydrogens(IMolecule toAddTo) throws Exception {
 		Molecule implicitMolecule = MoleculeFactory.makeAlphaPinene();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(implicitMolecule.getBuilder());
-		Iterator<IAtom> atoms = implicitMolecule.atoms();
+		Iterator<IAtom> atoms = implicitMolecule.atoms().iterator();
 		while (atoms.hasNext()) {
 		  IAtom atom = atoms.next();
 		  IAtomType type = matcher.findMatchingAtomType(implicitMolecule, atom);
@@ -204,7 +204,7 @@ public class AddHydrogenEditTest extends CDKTestCase {
     	Map<IAtom,int[]> changes = new HashMap<IAtom,int[]>();
     	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
     	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
-    	Iterator<IAtom> atoms = container.atoms();
+    	Iterator<IAtom> atoms = container.atoms().iterator();
     	while (atoms.hasNext()) {
     		IAtom atom = atoms.next();
     		IAtomType type = matcher.findMatchingAtomType(container, atom);

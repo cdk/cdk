@@ -178,7 +178,7 @@ public class SmilesParser {
 		// perceive atom types
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
 		int i = 0;
-		Iterator<IAtom> atoms = molecule.atoms();
+		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		while (atoms.hasNext()) {
 			IAtom atom = atoms.next();
 			i++;
@@ -790,7 +790,7 @@ public class SmilesParser {
 	private void addImplicitHydrogens(IMolecule container) {
 		try {
 			logger.debug("before H-adding: ", container);
-			Iterator<IAtom> atoms = container.atoms();
+			Iterator<IAtom> atoms = container.atoms().iterator();
 			while (atoms.hasNext()) {
 				IAtom nextAtom = atoms.next();
 				if (nextAtom.getProperty(HAS_HARDCODED_HYDROGEN_COUNT) == null) {

@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Iterator;
-
 /**
  * A set of AtomContainers.
  *
@@ -125,11 +123,11 @@ public interface IAtomContainerSet extends IChemObject {
 	public void add(IAtomContainerSet atomContainerSet);
 	
 	/**
-	 *  Get an iterator for this AtomContainerSet.
+	 *  Get an Iterable for this AtomContainerSet.
      * 
-     * @return A new Iterator for this AtomContainerSet.
+     * @return A new Iterable for this AtomContainerSet.
 	 */
-	public Iterator<IAtomContainer> atomContainers();
+	public Iterable<IAtomContainer> atomContainers();
 
 	/**
 	 * Returns the AtomContainer at position <code>number</code> in the

@@ -159,7 +159,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
            
            // Loop through the atoms and write them out:
            StringBuffer buffer = new StringBuffer();
-           java.util.Iterator atoms = molecule.atoms();
+           java.util.Iterator atoms = molecule.atoms().iterator();
            FormatStringBuffer fsb = new FormatStringBuffer("");
            while (atoms.hasNext()) {
                buffer.setLength(0);
@@ -216,7 +216,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
            writer.newLine();
                                                                                                  
            // before saving the atoms, we need to create cartesian coordinates
-           java.util.Iterator atoms = crystal.atoms();
+           java.util.Iterator atoms = crystal.atoms().iterator();
            while (atoms.hasNext()) {
             	IAtom atom = (IAtom)atoms.next();
 //            	logger.debug("PDBWriter: atom -> " + atom);

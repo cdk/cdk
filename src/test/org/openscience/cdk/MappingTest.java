@@ -75,7 +75,7 @@ public class MappingTest extends NewCDKTestCase {
 		Atom atom1 = new Atom();
 		Mapping mapping = new Mapping(atom0, atom1);
 
-		Iterator<IChemObject> iter = mapping.relatedChemObjects();
+		Iterator<IChemObject> iter = mapping.relatedChemObjects().iterator();
 		Assert.assertTrue(iter.hasNext());
 		Assert.assertEquals(atom0, (Atom)iter.next());
 		Assert.assertTrue(iter.hasNext());

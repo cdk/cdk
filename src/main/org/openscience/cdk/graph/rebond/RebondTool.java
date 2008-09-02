@@ -24,14 +24,14 @@
  */
 package org.openscience.cdk.graph.rebond;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+
+import java.util.Iterator;
 
 /**
  * Provides tools to rebond a molecule from 3D coordinates only.
@@ -79,7 +79,7 @@ public class RebondTool {
     maxCovalentRadius = 0.0;
     // construct a new binary space partition tree
     bspt = new Bspt(3);
-    Iterator<IAtom> atoms = container.atoms();
+    Iterator<IAtom> atoms = container.atoms().iterator();
     while (atoms.hasNext()) {
       IAtom atom = atoms.next();
       double myCovalentRadius = atom.getCovalentRadius();
@@ -92,7 +92,7 @@ public class RebondTool {
       bspt.addTuple(tupleAtom);
     }
     // rebond all atoms
-    atoms = container.atoms();
+    atoms = container.atoms().iterator();
     while (atoms.hasNext()) {
       bondAtom(container, (IAtom)atoms.next());
     }

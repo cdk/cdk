@@ -119,7 +119,7 @@ public class MACCSFingerprinter implements IFingerprinter {
         for (int i = 0; i < rings.getAtomContainerCount(); i++) {
             IAtomContainer ring = rings.getAtomContainer(i);
             boolean allAromatic = true;
-            Iterator<IBond> bonds = ring.bonds();
+            Iterator<IBond> bonds = ring.bonds().iterator();
             while (bonds.hasNext()) {
                 IBond bond = bonds.next();
                 if (!bond.getFlag(CDKConstants.ISAROMATIC)) {

@@ -20,33 +20,22 @@
  */
 package org.openscience.cdk.atomtype;
 
-import java.io.InputStream;
-import java.util.Iterator;
-import java.util.List;
-
 import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.*;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.nonotify.NNMolecule;
-import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -245,7 +234,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
         Assert.assertNotNull("Could not read the file into a IMolecule: " + filename, mol);
         
         TestResults results = new TestResults();
-        Iterator<IAtom> atoms = mol.atoms();
+        Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
         	results.tested++;
         	IAtom atom = atoms.next();

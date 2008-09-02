@@ -219,14 +219,14 @@ public class GeometryToolsTest extends NewCDKTestCase {
     }
 
     @Test public void testGet2DCenter_arrayIAtom(){
+    	IAtomContainer container = new AtomContainer();
     	Atom atom1=new Atom("C");
     	atom1.setPoint2d(new Point2d(1,1));
     	Atom atom2=new Atom("C");
     	atom2.setPoint2d(new Point2d(1,0));
-    	IAtom[] array=new IAtom[2];
-    	array[0]=atom1;
-    	array[1]=atom2;
-    	Point2d p=GeometryTools.get2DCenter(array);
+    	container.addAtom(atom1);
+    	container.addAtom(atom2);
+    	Point2d p=GeometryTools.get2DCenter(container.atoms());
     	Assert.assertEquals(p.x,1.0,.1);
     	Assert.assertEquals(p.y,0.5,.1);
     }

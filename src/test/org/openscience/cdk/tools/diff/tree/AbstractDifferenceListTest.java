@@ -20,13 +20,13 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.NewCDKTestCase;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @cdk.module test-diff
@@ -54,7 +54,7 @@ public class AbstractDifferenceListTest extends NewCDKTestCase {
 		diffs.add(IntegerDifference.construct("Foo", 1, 2));
 		diffClass.addChildren(diffs);
 		Assert.assertEquals(2, diffClass.childCount());
-		Iterator<IDifference> diffs2 = diffClass.getChildren();
+		Iterator<IDifference> diffs2 = diffClass.getChildren().iterator();
 		int count = 0;
 		while (diffs2.hasNext()) {
 			diffs2.next();

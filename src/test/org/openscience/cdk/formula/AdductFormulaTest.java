@@ -128,7 +128,7 @@ public class AdductFormulaTest extends NewCDKTestCase {
         mfS.addMolecularFormula(new MolecularFormula());
 
         Assert.assertEquals(3, mfS.size());
-        Iterator<IMolecularFormula> iter = mfS.iterator();
+        Iterator<IMolecularFormula> iter = mfS.molecularFormulas().iterator();
         int count = 0;
         while (iter.hasNext()) {
         	iter.next();
@@ -433,7 +433,7 @@ public class AdductFormulaTest extends NewCDKTestCase {
     	add.addMolecularFormula(formula2);
     	
     	int count = 0;
-		Iterator<IIsotope> it = add.isotopes();
+		Iterator<IIsotope> it = add.isotopes().iterator();
 		while(it.hasNext()){
          	it.next();
          	++count;

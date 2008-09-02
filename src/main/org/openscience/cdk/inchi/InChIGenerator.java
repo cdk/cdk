@@ -157,7 +157,7 @@ public class InChIGenerator {
     protected void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer) throws CDKException {
         this.atomContainer = atomContainer;
         
-        Iterator<IAtom> atoms = atomContainer.atoms();
+        Iterator<IAtom> atoms = atomContainer.atoms().iterator();
         
         // Check for 3d coordinates
         boolean all3d = true;
@@ -181,7 +181,7 @@ public class InChIGenerator {
         }
         
         Map<IAtom, JniInchiAtom> atomMap = new HashMap<IAtom, JniInchiAtom>();
-        atoms = atomContainer.atoms();
+        atoms = atomContainer.atoms().iterator();
         while (atoms.hasNext()) {
         	IAtom atom = atoms.next();
             
@@ -256,7 +256,7 @@ public class InChIGenerator {
         
         
         // Process bonds
-        Iterator<IBond> bonds =  atomContainer.bonds();
+        Iterator<IBond> bonds =  atomContainer.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
 
@@ -316,7 +316,7 @@ public class InChIGenerator {
         }
         
         // Process atom parities (tetrahedral InChI Stereo0D Parities)
-        atoms = atomContainer.atoms();
+        atoms = atomContainer.atoms().iterator();
         while (atoms.hasNext()) {
         	IAtom atom = atoms.next();
             IAtomParity parity = atomContainer.getAtomParity(atom);

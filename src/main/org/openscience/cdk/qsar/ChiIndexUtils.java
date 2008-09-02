@@ -270,7 +270,7 @@ public class ChiIndexUtils {
             List<Integer> tmp = new ArrayList<Integer>();
             for (Object anABondList : aBondList) {
                 int bondNumber = (Integer) anABondList;
-                Iterator<IAtom> atomIterator = ac.getBond(bondNumber).atoms();
+                Iterator<IAtom> atomIterator = ac.getBond(bondNumber).atoms().iterator();
                 while (atomIterator.hasNext()) {
                     IAtom atom = atomIterator.next();
                     Integer atomInt = ac.getAtomNumber(atom);

@@ -200,10 +200,10 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 	        try {
 				peoe.assignGasteigerMarsiliSigmaPartialCharges(ac, true);
 				List<Double> peoeAtom = new ArrayList<Double>();
-				for(Iterator<IAtom> it = ac.atoms(); it.hasNext();)
+				for(Iterator<IAtom> it = ac.atoms().iterator(); it.hasNext();)
 					peoeAtom.add(it.next().getCharge());
 				
-				for(Iterator<IAtom> it = ac.atoms(); it.hasNext();)
+				for(Iterator<IAtom> it = ac.atoms().iterator(); it.hasNext();)
 					it.next().setCharge(0.0);
 
 				pepe.assignGasteigerPiPartialCharges(ac, true);

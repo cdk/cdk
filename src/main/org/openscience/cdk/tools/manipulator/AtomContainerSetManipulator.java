@@ -49,9 +49,8 @@ public class AtomContainerSetManipulator {
     @TestMethod("testGetAtomCount_IAtomContainerSet")
     public static int getAtomCount(IAtomContainerSet set) {
 		int count = 0;
-		Iterator<IAtomContainer> acs = set.atomContainers();
-        while (acs.hasNext()) {
-        	count += ((IAtomContainer)acs.next()).getAtomCount();
+        for (IAtomContainer atomContainer : set.atomContainers()) {
+            count += (atomContainer).getAtomCount();
         }
         return count;
 	}
@@ -59,26 +58,23 @@ public class AtomContainerSetManipulator {
     @TestMethod("testGetBondCount_IAtomContainerSet")
     public static int getBondCount(IAtomContainerSet set) {
 		int count = 0;
-		Iterator<IAtomContainer> acs = set.atomContainers();
-        while (acs.hasNext()) {
-        	count += ((IAtomContainer)acs.next()).getBondCount();
+        for (IAtomContainer atomContainer : set.atomContainers()) {
+            count += (atomContainer).getBondCount();
         }
         return count;
 	}
 
     @TestMethod("testRemoveAtomAndConnectedElectronContainers_IAtomContainerSet_IAtom")
     public static void removeAtomAndConnectedElectronContainers(IAtomContainerSet set, IAtom atom) {
-    	Iterator<IAtomContainer> acs = set.atomContainers();
-        while (acs.hasNext()) {
-            IAtomContainer container = (IAtomContainer)acs.next();
-            if (container.contains(atom)) {
-                container.removeAtomAndConnectedElectronContainers(atom);
-                IMoleculeSet molecules = ConnectivityChecker.partitionIntoMolecules(container);
-                if(molecules.getAtomContainerCount()>1){
-                	set.removeAtomContainer(container);
-                	for(int k=0;k<molecules.getAtomContainerCount();k++){
-                		set.addAtomContainer(molecules.getAtomContainer(k));
-                	}
+        for (IAtomContainer atomContainer : set.atomContainers()) {
+            if (atomContainer.contains(atom)) {
+                atomContainer.removeAtomAndConnectedElectronContainers(atom);
+                IMoleculeSet molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer);
+                if (molecules.getAtomContainerCount() > 1) {
+                    set.removeAtomContainer(atomContainer);
+                    for (int k = 0; k < molecules.getAtomContainerCount(); k++) {
+                        set.addAtomContainer(molecules.getAtomContainer(k));
+                    }
                 }
                 return;
             }
@@ -87,17 +83,15 @@ public class AtomContainerSetManipulator {
 
     @TestMethod("testRemoveElectronContainer_IAtomContainerSet_IElectronContainer")
     public static void removeElectronContainer(IAtomContainerSet set, IElectronContainer electrons) {
-    	Iterator<IAtomContainer> acs = set.atomContainers();
-        while (acs.hasNext()) {
-            IAtomContainer container = (IAtomContainer)acs.next();
-            if (container.contains(electrons)) {
-                container.removeElectronContainer(electrons);
-                IMoleculeSet molecules = ConnectivityChecker.partitionIntoMolecules(container);
-                if(molecules.getAtomContainerCount()>1){
-                	set.removeAtomContainer(container);
-                	for(int k=0;k<molecules.getAtomContainerCount();k++){
-                		set.addAtomContainer(molecules.getMolecule(k));
-                	}
+        for (IAtomContainer atomContainer : set.atomContainers()) {
+            if (atomContainer.contains(electrons)) {
+                atomContainer.removeElectronContainer(electrons);
+                IMoleculeSet molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer);
+                if (molecules.getAtomContainerCount() > 1) {
+                    set.removeAtomContainer(atomContainer);
+                    for (int k = 0; k < molecules.getAtomContainerCount(); k++) {
+                        set.addAtomContainer(molecules.getMolecule(k));
+                    }
                 }
                 return;
             }
@@ -113,10 +107,9 @@ public class AtomContainerSetManipulator {
     @TestMethod("testGetAllAtomContainers_IAtomContainerSet")
     public static List<IAtomContainer> getAllAtomContainers(IAtomContainerSet set) {
     	List<IAtomContainer> atomContainerList = new ArrayList<IAtomContainer>();
-    	Iterator<IAtomContainer> acs = set.atomContainers();
-    	while(acs.hasNext()){
-    		atomContainerList.add(acs.next());
-    	}
+        for (IAtomContainer atomContainer : set.atomContainers()) {
+            atomContainerList.add(atomContainer);
+        }
     	return atomContainerList;
     }
 	
@@ -186,11 +179,9 @@ public class AtomContainerSetManipulator {
 
     @TestMethod("testGetRelevantAtomContainer_IAtomContainerSet_IAtom")
     public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet containerSet, IAtom atom) {
-    	Iterator<IAtomContainer> acs = containerSet.atomContainers();
-        while (acs.hasNext()) {
-        	IAtomContainer ac = (IAtomContainer)acs.next();
-            if (ac.contains(atom)) {
-                return ac;
+        for (IAtomContainer atomContainer : containerSet.atomContainers()) {
+            if (atomContainer.contains(atom)) {
+                return atomContainer;
             }
         }
         return null;
@@ -198,11 +189,9 @@ public class AtomContainerSetManipulator {
 
     @TestMethod("testGetRelevantAtomContainer_IAtomContainerSet_IBond")
     public static IAtomContainer getRelevantAtomContainer(IAtomContainerSet containerSet, IBond bond) {
-    	Iterator<IAtomContainer> acs = containerSet.atomContainers();
-        while (acs.hasNext()) {
-        	IAtomContainer ac = (IAtomContainer)acs.next();
-            if (ac.contains(bond)) {
-                return ac;
+        for (IAtomContainer atomContainer : containerSet.atomContainers()) {
+            if (atomContainer.contains(bond)) {
+                return atomContainer;
             }
         }
         return null;
@@ -218,9 +207,8 @@ public class AtomContainerSetManipulator {
     public static List<IChemObject> getAllChemObjects(IAtomContainerSet set) {
         ArrayList<IChemObject> list = new ArrayList<IChemObject>();
         list.add(set);
-        Iterator<IAtomContainer> acs = set.atomContainers();
-        while (acs.hasNext()) {
-            list.add((IAtomContainer)acs.next());
+        for (IAtomContainer atomContainer : set.atomContainers()) {
+            list.add(atomContainer);
         }
         return list;
     }

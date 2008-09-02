@@ -97,7 +97,7 @@ public class AtomHybridizationDescriptorTest extends AtomicDescriptorTest {
             mol = sp.parseSmiles(smile);
             addImplicitHydrogens(mol);
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
-            atoms = mol.atoms();
+            atoms = mol.atoms().iterator();
             while (atoms.hasNext()) {
                 IAtom atom = (IAtom) atoms.next();
                 ((IntegerResult) descriptor.calculate(atom, mol).getValue()).intValue();

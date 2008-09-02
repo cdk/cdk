@@ -66,7 +66,7 @@ public class AromaticityCalculator
     public static boolean isAromatic(IRing ring, IAtomContainer atomContainer)
 	{
 		
-		java.util.Iterator<IAtom> ringAtoms = ring.atoms();
+		java.util.Iterator<IAtom> ringAtoms = ring.atoms().iterator();
 		int eCount = 0;
 		java.util.List<IBond> conectedBonds;
 		int numDoubleBond = 0;

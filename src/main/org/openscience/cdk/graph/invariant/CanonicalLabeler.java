@@ -117,7 +117,7 @@ public class CanonicalLabeler {
    * @return ArrayList containting the
    */
   private ArrayList createInvarLabel(IAtomContainer atomContainer) {
-    java.util.Iterator atoms = atomContainer.atoms();
+    java.util.Iterator atoms = atomContainer.atoms().iterator();
     IAtom a;
     StringBuffer inv;
     ArrayList vect = new ArrayList();

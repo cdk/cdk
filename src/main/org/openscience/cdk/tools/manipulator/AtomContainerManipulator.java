@@ -81,20 +81,18 @@ public class AtomContainerManipulator {
 	    return false;
         } else {
             container.setAtom(container.getAtomNumber(atom), newAtom);
-            Iterator<IElectronContainer> eContainers = container.electronContainers();
-    		while (eContainers.hasNext()){
-    			IElectronContainer eContainer = (IElectronContainer)eContainers.next();
+            for (IElectronContainer eContainer : container.electronContainers()) {
                 if (eContainer instanceof IBond) {
-                    IBond bond = (IBond)eContainer;
+                    IBond bond = (IBond) eContainer;
                     if (bond.contains(atom)) {
-                        for (int j=0; j<bond.getAtomCount(); j++) {
+                        for (int j = 0; j < bond.getAtomCount(); j++) {
                             if (atom.equals(bond.getAtom(j))) {
                                 bond.setAtom(newAtom, j);
                             }
                         }
                     }
                 } else if (eContainer instanceof ILonePair) {
-                    ILonePair lonePair = (ILonePair)eContainer;
+                    ILonePair lonePair = (ILonePair) eContainer;
                     if (atom.equals(lonePair.getAtom())) {
                         lonePair.setAtom(newAtom);
                     }
@@ -114,10 +112,9 @@ public class AtomContainerManipulator {
     @TestMethod("testGetTotalCharge")
     public static double getTotalCharge(IAtomContainer atomContainer) {
         double charge = 0.0;
-        Iterator<IAtom> iterAtoms = atomContainer.atoms();
-        while (iterAtoms.hasNext()) {
+        for (IAtom atom : atomContainer.atoms()) {
             // we assume CDKConstant.UNSET is equal to 0
-            Double thisCharge = iterAtoms.next().getCharge();
+            Double thisCharge = atom.getCharge();
             if (thisCharge != CDKConstants.UNSET)
                 charge += thisCharge;
         }
@@ -133,9 +130,8 @@ public class AtomContainerManipulator {
     @TestMethod("testGetTotalExactMass_IAtomContainer")
     public static double getTotalExactMass(IAtomContainer atomContainer) {
         double mass = 0.0;
-        Iterator<IAtom> iterAtoms = atomContainer.atoms();
-        while(iterAtoms.hasNext()) {
-        	mass += iterAtoms.next().getExactMass();
+        for (IAtom atom : atomContainer.atoms()) {
+            mass += atom.getExactMass();
         }
         return mass;
     }
@@ -156,12 +152,10 @@ public class AtomContainerManipulator {
 		 } catch (IOException e) {
 			 throw new RuntimeException("Could not instantiate the IsotopeFactory.");
 		 }
-		 Iterator<IAtom> atoms = atomContainer.atoms();
-		 while(atoms.hasNext()) {
-			 IAtom atom = atoms.next();
-			 IElement isotopesElement = atom.getBuilder().newElement(atom.getSymbol());
-			 mass += factory.getNaturalMass(isotopesElement);
-		 }
+        for (IAtom atom : atomContainer.atoms()) {
+            IElement isotopesElement = atom.getBuilder().newElement(atom.getSymbol());
+            mass += factory.getNaturalMass(isotopesElement);
+        }
 		 return mass;
     }
     /** 
@@ -173,9 +167,7 @@ public class AtomContainerManipulator {
     @TestMethod("testGetTotalNaturalAbundance_IAtomContainer")
     public static double getTotalNaturalAbundance(IAtomContainer atomContainer) {
         double abundance =  1.0;
-        Iterator<IAtom> iterAtoms = atomContainer.atoms();
-        while(iterAtoms.hasNext())
-        	abundance = abundance* iterAtoms.next().getNaturalAbundance();
+        for (IAtom iAtom : atomContainer.atoms()) abundance = abundance * iAtom.getNaturalAbundance();
         
     	
         return abundance/Math.pow(100,atomContainer.getAtomCount());
@@ -252,24 +244,22 @@ public class AtomContainerManipulator {
      */
     @TestMethod("testConvertImplicitToExplicitHydrogens_IAtomContainer")
     public static void convertImplicitToExplicitHydrogens(IAtomContainer atomContainer) {
-    	Iterator<IAtom> atoms = atomContainer.atoms();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
-            if (!atom.getSymbol().equals("H")) {            	
-            	Integer hCount = atom.getHydrogenCount();
-            	if (hCount != null) {
-            		for (int i=0; i< hCount; i++) {
-            			IAtom hydrogen = atom.getBuilder().newAtom("H");
-            			atomContainer.addAtom(hydrogen);
-            			atomContainer.addBond(
-            				atom.getBuilder().newBond(
-            					atom, hydrogen, 
-            					CDKConstants.BONDORDER_SINGLE
-            				)
-            			);
-            		}
-            		atom.setHydrogenCount(0);
-            	}
+        for (IAtom atom : atomContainer.atoms()) {
+            if (!atom.getSymbol().equals("H")) {
+                Integer hCount = atom.getHydrogenCount();
+                if (hCount != null) {
+                    for (int i = 0; i < hCount; i++) {
+                        IAtom hydrogen = atom.getBuilder().newAtom("H");
+                        atomContainer.addAtom(hydrogen);
+                        atomContainer.addBond(
+                                atom.getBuilder().newBond(
+                                        atom, hydrogen,
+                                        CDKConstants.BONDORDER_SINGLE
+                                )
+                        );
+                    }
+                    atom.setHydrogenCount(0);
+                }
             }
         }
     }
@@ -289,15 +279,11 @@ public class AtomContainerManipulator {
     	List<String> idList = new ArrayList<String>();
         if (mol != null) {
             if (mol.getID() != null) idList.add(mol.getID());
-            Iterator<IAtom> atoms = mol.atoms();
-            while (atoms.hasNext()) {
-                IAtom atom = atoms.next();
+            for (IAtom atom : mol.atoms()) {
                 if (atom.getID() != null) idList.add(atom.getID());
             }
 
-            Iterator<IBond> bonds = mol.bonds();
-            while (bonds.hasNext()) {
-                IBond bond = bonds.next();                            
+            for (IBond bond : mol.bonds()) {
                 if (bond.getID() != null) idList.add(bond.getID());
             }
         }
@@ -418,13 +404,11 @@ public class AtomContainerManipulator {
 		// Find multiply bonded H.
 		int count = ac.getBondCount();
 		for (int i = 0; i < count; i++) {
-			Iterator<IAtom> atoms = ac.getBond(i).atoms();
-			while (atoms.hasNext()) {
-				final IAtom atom = (IAtom)atoms.next();
-				if (atom.getSymbol().equals(Symbols.byAtomicNumber[1])) {
-					(h.contains(atom) ? multi_h : h).add(atom);
-				}
-			}
+            for (IAtom atom : ac.getBond(i).atoms()) {
+                if (atom.getSymbol().equals(Symbols.byAtomicNumber[1])) {
+                    (h.contains(atom) ? multi_h : h).add(atom);
+                }
+            }
 		}
 
 		return removeHydrogens(ac, multi_h);
@@ -477,10 +461,9 @@ public class AtomContainerManipulator {
 			final IBond bond = ac.getBond(i);
 			IAtom atom0 = bond.getAtom(0);
 			IAtom atom1 = bond.getAtom(1);
-			Iterator<IAtom> atoms = bond.atoms();
 			boolean remove_bond = false;
-			while (atoms.hasNext()){
-				if (remove.contains((IAtom)atoms.next())) {
+			for (IAtom atom : bond.atoms()){
+				if (remove.contains(atom)) {
 					remove_bond = true;
 					break;
 				}
@@ -502,14 +485,12 @@ public class AtomContainerManipulator {
 		}
 
 		// Recompute hydrogen counts of neighbours of removed Hydrogens.
-		for (Iterator<IAtom> i = remove.iterator();
-				i.hasNext(); ) {
+		for (IAtom removeAtom : remove) {
 			// Process neighbours.
-			for (Iterator<IAtom> n = ac.getConnectedAtomsList(i.next()).iterator();
-					n.hasNext(); ) {
-				final IAtom neighb = map.get(n.next());
+            for (IAtom  neighbor : ac.getConnectedAtomsList(removeAtom)) {
+                final IAtom neighb = map.get(neighbor);
 				neighb.setHydrogenCount(neighb.getHydrogenCount() + 1);
-			}
+            }
 		}
 
 		return (mol);
@@ -520,9 +501,7 @@ public class AtomContainerManipulator {
      */
     public static void setAtomProperties(IAtomContainer container, Object propKey, Object propVal) {
         if (container != null) {
-            Iterator<IAtom> atoms = container.atoms();
-            while (atoms.hasNext()) {
-                IAtom atom = atoms.next();
+            for (IAtom atom : container.atoms()) {
                 atom.setProperty(propKey, propVal);
             }
         }
@@ -539,10 +518,8 @@ public class AtomContainerManipulator {
 	 */
 	public static void unregisterElectronContainerListeners(IAtomContainer container)
 	{
-		for (int f = 0; f < container.getElectronContainerCount(); f++)
-		{
-			container.getElectronContainer(f).removeListener(container);	
-		}
+        for (IElectronContainer electronContainer : container.electronContainers())
+            electronContainer.removeListener(container);
 	}
 
 	/**
@@ -556,10 +533,7 @@ public class AtomContainerManipulator {
 	 */
 	public static void unregisterAtomListeners(IAtomContainer container)
 	{
-		for (int f = 0; f < container.getAtomCount(); f++)
-		{
-			container.getAtom(f).removeListener(container);	
-		}
+        for (IAtom atom : container.atoms()) atom.removeListener(container);
 	}
 
 	/**
@@ -679,11 +653,9 @@ public class AtomContainerManipulator {
     @TestMethod("testPerceiveAtomTypesAndConfigureAtoms")
     public static void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws CDKException {
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = container.atoms();
-        while (atoms.hasNext()) {
-        	IAtom atom = atoms.next();
-        	IAtomType matched = matcher.findMatchingAtomType(container, atom);
-        	if (matched != null) AtomTypeManipulator.configure(atom, matched);
+        for (IAtom atom : container.atoms()) {
+            IAtomType matched = matcher.findMatchingAtomType(container, atom);
+            if (matched != null) AtomTypeManipulator.configure(atom, matched);
         }
 	}
 	
@@ -697,25 +669,23 @@ public class AtomContainerManipulator {
     @TestMethod("testGetSBE")
     public static int getSingleBondEquivalentSum(IAtomContainer container) {
 		int sum = 0;
-		Iterator<IBond> bonds = container.bonds();
-		while (bonds.hasNext()) {
-			IBond nextBond = bonds.next();
-			if (nextBond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
-				sum += 1;
-			} else if (nextBond.getOrder() == CDKConstants.BONDORDER_DOUBLE) {
-				sum += 2;
-			} else if (nextBond.getOrder() == CDKConstants.BONDORDER_TRIPLE) {
-				sum += 3;
-			} else if (nextBond.getOrder() == CDKConstants.BONDORDER_QUADRUPLE) {
-				sum += 4;
-			}
-		}
+        for (IBond bond : container.bonds()) {
+            if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
+                sum += 1;
+            } else if (bond.getOrder() == CDKConstants.BONDORDER_DOUBLE) {
+                sum += 2;
+            } else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE) {
+                sum += 3;
+            } else if (bond.getOrder() == CDKConstants.BONDORDER_QUADRUPLE) {
+                sum += 4;
+            }
+        }
 		return sum;
 	}
 
     @TestMethod("testGetMaxBondOrder_IAtomContainer")
     public static IBond.Order getMaximumBondOrder(IAtomContainer container) {
-		return BondManipulator.getMaximumBondOrder(container.bonds());
+		return BondManipulator.getMaximumBondOrder(container.bonds().iterator());
 	}
     /**
 	 * Returns a set of nodes excluding all the hydrogens.

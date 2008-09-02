@@ -146,7 +146,7 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
         int c3sp3 = 0;
         int c4sp3 = 0;
 
-        Iterator<IAtom> atoms = container.atoms();
+        Iterator<IAtom> atoms = container.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             if (!atom.getSymbol().equals("C") && !atom.getSymbol().equals("c")) continue;

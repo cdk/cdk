@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -36,7 +35,7 @@ public interface IDifferenceList extends IDifference {
 
     public void addChildren(List<IDifference> children);
 
-    public Iterator<IDifference> getChildren();
+    public Iterable<IDifference> getChildren();
     
     public int childCount();
 

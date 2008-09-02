@@ -172,7 +172,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 	  java.util.Iterator molecules = null;
   try
 	  {
-	    molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer).molecules();
+	    molecules = ConnectivityChecker.partitionIntoMolecules(atomContainer).molecules().iterator();
 	  }
 
 	  catch (Exception exception)
@@ -594,7 +594,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 		if (!isAromatic)
 		{
 			isAromatic = true;
-			Iterator bonds = ring.bonds();
+			Iterator bonds = ring.bonds().iterator();
 			while (bonds.hasNext())
 				if (!((IBond)bonds.next()).getFlag(CDKConstants.ISAROMATIC))
 					return false;
@@ -684,7 +684,7 @@ public class Java2DRenderer implements IJava2DRenderer {
 	{
 		Color bondColor;
 		IRing ring;
-		Iterator bonds = atomCon.bonds();
+		Iterator bonds = atomCon.bonds().iterator();
 		ArrayList painted_rings = new ArrayList();
 
 		logger.debug("Painting bonds...");

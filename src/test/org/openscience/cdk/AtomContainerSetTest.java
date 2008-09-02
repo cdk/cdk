@@ -68,7 +68,7 @@ public class AtomContainerSetTest extends NewCDKTestCase {
         som.addAtomContainer(builder.newAtomContainer());
         
         Assert.assertEquals(3, som.getAtomContainerCount());
-        Iterator<IAtomContainer> iter = som.atomContainers();
+        Iterator<IAtomContainer> iter = som.atomContainers().iterator();
         int count = 0;
         while (iter.hasNext()) {
         	iter.next();

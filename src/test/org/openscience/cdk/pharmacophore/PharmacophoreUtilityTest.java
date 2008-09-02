@@ -55,7 +55,7 @@ public class PharmacophoreUtilityTest {
         Assert.assertNull(def2.getProperty(CDKConstants.TITLE));
         
         String[] ids = {"Aromatic", "Hydroxyl", "BasicAmine"};
-        Iterator<IAtom> atoms = def2.atoms();
+        Iterator<IAtom> atoms = def2.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             String sym = atom.getSymbol();
@@ -85,7 +85,7 @@ public class PharmacophoreUtilityTest {
 
 
         String[] ids = {"Aromatic", "Hydroxyl", "BasicAmine"};
-        Iterator<IAtom> atoms = def1.atoms();
+        Iterator<IAtom> atoms = def1.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             String sym = atom.getSymbol();
@@ -99,7 +99,7 @@ public class PharmacophoreUtilityTest {
             Assert.assertTrue("'" + sym + "' in pcore.xml is invalid", found);
         }
 
-        Iterator<IBond> bonds = def1.bonds();
+        Iterator<IBond> bonds = def1.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
             if (bond instanceof PharmacophoreQueryBond) {
@@ -150,7 +150,7 @@ public class PharmacophoreUtilityTest {
 
     private IAtom[] getAtoms(IBond bond) {
         ArrayList<IAtom> alist = new ArrayList<IAtom>();
-        Iterator<IAtom> atoms = bond.atoms();
+        Iterator<IAtom> atoms = bond.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             alist.add(atom);

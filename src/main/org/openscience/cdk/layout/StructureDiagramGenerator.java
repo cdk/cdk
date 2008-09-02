@@ -494,12 +494,12 @@ public class StructureDiagramGenerator
 			/*
 			 * Find mapped substructures
 			 */
-			for (Iterator substructureIterator = mappedSubstructures.atomContainers(); substructureIterator.hasNext(); ) {
+			for (Iterator substructureIterator = mappedSubstructures.atomContainers().iterator(); substructureIterator.hasNext(); ) {
 				IAtomContainer substructure = (IAtomContainer) substructureIterator.next();
 				boolean substructureMapped = false;
-				for (Iterator ringSetIterator = rs.atomContainers(); ringSetIterator.hasNext() && !substructureMapped; ) {
+				for (Iterator ringSetIterator = rs.atomContainers().iterator(); ringSetIterator.hasNext() && !substructureMapped; ) {
 					IRing ring = (IRing) ringSetIterator.next();
-					for (Iterator atomIterator = ring.atoms(); atomIterator.hasNext() && !substructureMapped; ) {
+					for (Iterator atomIterator = ring.atoms().iterator(); atomIterator.hasNext() && !substructureMapped; ) {
 						IAtom atom = (IAtom) atomIterator.next();
 							if (substructure.contains(atom))
 								substructureMapped = true;
@@ -514,7 +514,7 @@ public class StructureDiagramGenerator
 						logger.warn("A supposedly matched substructure failed to match.");
 					else {
 						// Mark substructure atoms as CDKConstants.ISPLACED
-						for (Iterator iterator = substructure.atoms(); iterator.hasNext(); ) {
+						for (Iterator iterator = substructure.atoms().iterator(); iterator.hasNext(); ) {
 							IAtom atom = (IAtom) iterator.next();
 							atom.setFlag(CDKConstants.ISPLACED, true);
 						}
@@ -849,7 +849,7 @@ public class StructureDiagramGenerator
 	 *  @return    the next bond with an unplaced ring atom
 	 */
 	private IBond getNextBondWithUnplacedRingAtom() {
-		Iterator bonds = molecule.bonds();
+		Iterator bonds = molecule.bonds().iterator();
 		while (bonds.hasNext()) {
 			IBond bond = (IBond) bonds.next();
 

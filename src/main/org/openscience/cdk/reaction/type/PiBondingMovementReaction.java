@@ -144,14 +144,14 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 			int nrAtoms = ring.getAtomCount(); 
 			if (nrAtoms%2 == 0){
 				int nrSingleBonds = 0;
-				Iterator<IBond> bondrs = ring.bonds();
+				Iterator<IBond> bondrs = ring.bonds().iterator();
 				while(bondrs.hasNext()){
 					if(bondrs.next().getOrder() == IBond.Order.SINGLE)
 						nrSingleBonds++;
 				}
 				//if exactly half (nrAtoms/2==nrSingleBonds)
 				if(nrSingleBonds != 0 && nrAtoms/2 == nrSingleBonds){
-					Iterator<IBond> bondfs = ring.bonds();
+					Iterator<IBond> bondfs = ring.bonds().iterator();
 					boolean ringCompletActive = false;
 					while(bondfs.hasNext()){
 						if(bondfs.next().getFlag(CDKConstants.REACTIVE_CENTER))
@@ -175,7 +175,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 						throw new CDKException("Could not clone IMolecule!", e);
 					}
 					
-					Iterator<IBond> bondis = ring.bonds();
+					Iterator<IBond> bondis = ring.bonds().iterator();
 					while(bondis.hasNext()){
 						IBond bondi = bondis.next();
 						int bondiP = reactant.getBondNumber(bondi);
@@ -214,14 +214,14 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 			int nrAtoms = ring.getAtomCount(); 
 			if (nrAtoms%2 == 0){
 				int nrSingleBonds = 0;
-				Iterator<IBond> bondrs = ring.bonds();
+				Iterator<IBond> bondrs = ring.bonds().iterator();
 				while(bondrs.hasNext()){
 					if(bondrs.next().getOrder() == IBond.Order.SINGLE)
 						nrSingleBonds++;
 				}
 				//if exactly half (nrAtoms/2==nrSingleBonds)
 				if(nrSingleBonds != 0 && nrAtoms/2 == nrSingleBonds){
-					Iterator<IBond> bondfs = ring.bonds();
+					Iterator<IBond> bondfs = ring.bonds().iterator();
 					while(bondfs.hasNext())
 						bondfs.next().setFlag(CDKConstants.REACTIVE_CENTER, true);
 					

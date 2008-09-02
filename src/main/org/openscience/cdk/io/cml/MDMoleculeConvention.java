@@ -144,7 +144,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 					// ok, an atom is referenced; look it up
 					currentAtom = null;
 //					System.out.println("#atoms: " + currentMolecule.getAtomCount());
-					Iterator atoms = currentMolecule.atoms();
+					Iterator atoms = currentMolecule.atoms().iterator();
 					while (atoms.hasNext()) {
 						IAtom nextAtom = (IAtom)atoms.next();
 						if (nextAtom.getID().equals(id)) {
@@ -163,7 +163,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 					// ok, an atom is referenced; look it up
 					IAtom referencedAtom = null;
 //					System.out.println("#atoms: " + currentMolecule.getAtomCount());
-					Iterator atoms = currentMolecule.atoms();
+					Iterator atoms = currentMolecule.atoms().iterator();
 					while (atoms.hasNext()) {
 						IAtom nextAtom = (IAtom)atoms.next();
 						if (nextAtom.getID().equals(id)) {

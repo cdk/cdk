@@ -151,7 +151,7 @@ public class ChiChainDescriptor implements IMolecularDescriptor {
         // we don't make a clone, since removeHydrogens returns a deep copy
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = localAtomContainer.atoms();
+        Iterator<IAtom> atoms = localAtomContainer.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             IAtomType type;
@@ -237,7 +237,7 @@ public class ChiChainDescriptor implements IMolecularDescriptor {
             IAtomContainer ring = rings.getAtomContainer(i);
             if (ring.getAtomCount() == 3) {
                 List<Integer> tmp = new ArrayList<Integer>();
-                Iterator<IAtom> iter = ring.atoms();
+                Iterator<IAtom> iter = ring.atoms().iterator();
                 while (iter.hasNext()) {
                     IAtom atom = iter.next();
                     tmp.add(container.getAtomNumber(atom));

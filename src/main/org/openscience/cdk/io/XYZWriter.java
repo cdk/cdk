@@ -138,7 +138,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
             writer.newLine();
             
             // Loop through the atoms and write them out:
-            Iterator<IAtom> atoms = mol.atoms();
+            Iterator<IAtom> atoms = mol.atoms().iterator();
             while (atoms.hasNext()) {
             	IAtom a = atoms.next();
                 st = a.getSymbol();

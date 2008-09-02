@@ -51,9 +51,8 @@ public class RingSetManipulator {
     @TestMethod("testGetAllInOneContainer_IRingSet")
     public static int getAtomCount(IRingSet set) {
 		int count = 0;
-		Iterator<IAtomContainer> acs = set.atomContainers();
-        while (acs.hasNext()) {
-        	count += acs.next().getAtomCount();
+        for (IAtomContainer atomContainer : set.atomContainers()) {
+            count += atomContainer.getAtomCount();
         }
         return count;
 	}
@@ -67,9 +66,8 @@ public class RingSetManipulator {
     @TestMethod("testGetBondCount")
     public static int getBondCount(IRingSet set) {
         int count = 0;
-        Iterator<IAtomContainer> acs = set.atomContainers();
-        while (acs.hasNext()) {
-            count += acs.next().getBondCount();
+        for (IAtomContainer atomContainer : set.atomContainers()) {
+            count += atomContainer.getBondCount();
         }
         return count;
 	}
@@ -82,10 +80,9 @@ public class RingSetManipulator {
     @TestMethod("testGetAllAtomContainers_IRingSet")
     public static List<IAtomContainer> getAllAtomContainers(IRingSet set) {
     	List<IAtomContainer> atomContainerList = new ArrayList<IAtomContainer>();
-    	Iterator<IAtomContainer> acs = set.atomContainers();
-    	while(acs.hasNext()){
-    		atomContainerList.add(acs.next());
-    	}
+        for (IAtomContainer atomContainer : set.atomContainers()) {
+            atomContainerList.add(atomContainer);
+        }
     	return atomContainerList;
     }
 
@@ -97,10 +94,9 @@ public class RingSetManipulator {
     @TestMethod("testSort_IRingSet")
     public static void sort(IRingSet ringSet) {
 		List<IRing> ringList = new ArrayList<IRing>();
-		Iterator<IAtomContainer> rings = ringSet.atomContainers();
-		while (rings.hasNext()) {
-			ringList.add((IRing) rings.next());
-		}
+        for (IAtomContainer atomContainer : ringSet.atomContainers()) {
+            ringList.add((IRing) atomContainer);
+        }
 		Collections.sort(ringList, new RingSizeComparator(RingSizeComparator.SMALL_FIRST));
 		ringSet.removeAllAtomContainers();
         for (IAtomContainer aRingList : ringList) ringSet.addAtomContainer(aRingList);
@@ -199,13 +195,10 @@ public class RingSetManipulator {
       @TestMethod("testIsSameRing_IRingSet_IAtom_IAtom")
       public static boolean isSameRing(IRingSet ringSet, IAtom atom1, IAtom atom2)
 	  {
-	    Iterator<IAtomContainer> rings = ringSet.atomContainers();
-	    while (rings.hasNext()) {
-	      IRing ring = (IRing)rings.next();
-	      if(ring.contains(atom1))
-	        if(ring.contains(atom2))
-	          return true;
-	    }
+          for (IAtomContainer atomContainer : ringSet.atomContainers()) {
+              IRing ring = (IRing) atomContainer;
+              if (ring.contains(atom1) && ring.contains(atom2)) return true;
+          }
 	    return false;
 	  }
 	  
@@ -236,12 +229,8 @@ public class RingSetManipulator {
 
 
               if (ring.getBondCount() == newRing.getBondCount()) {
-                  Iterator<IBond> bonds = ring.bonds();
-                  Iterator<IBond> newBonds = newRing.bonds();
-                  while (newBonds.hasNext()) {
-                      IBond newBond = (IBond) newBonds.next();
-                      while (bonds.hasNext()) {
-                          IBond bond = (IBond) bonds.next();
+                  for (IBond newBond : newRing.bonds()) {
+                      for (IBond bond : ring.bonds()) {
                           if (newBond == bond) {
                               equals = true;
                               equalCount++;
@@ -269,9 +258,8 @@ public class RingSetManipulator {
      */
     @TestMethod("markAromatic")
     public static void markAromaticRings(IRingSet ringset) {
-		Iterator<IAtomContainer> rings = ringset.atomContainers();
-		while (rings.hasNext()) {
-			RingManipulator.markAromaticRings((IRing)rings.next());
-		}
+        for (IAtomContainer atomContainer : ringset.atomContainers()) {
+            RingManipulator.markAromaticRings((IRing) atomContainer);
+        }
 	}
 }

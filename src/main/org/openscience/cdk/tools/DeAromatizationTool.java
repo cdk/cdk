@@ -28,8 +28,6 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Element;
 import org.openscience.cdk.annotations.TestClass;
@@ -39,6 +37,8 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+
+import java.util.Iterator;
 
 /**
  * Methods that takes a ring of which all bonds are aromatic, and assigns single
@@ -135,11 +135,9 @@ public class DeAromatizationTool {
 	}
 
     private static boolean deAromatizeBenzene(IRing ring) {
-        if (ring.getBondCount() != 6) return false;
-        Iterator bonds = ring.bonds();
+        if (ring.getBondCount() != 6) return false;        
         int counter = 0;
-        while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+        for (IBond bond : ring.bonds()) {
             if (counter % 2 == 0) {
                 bond.setOrder(CDKConstants.BONDORDER_SINGLE);
             } else {

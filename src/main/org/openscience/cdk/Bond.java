@@ -170,8 +170,12 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * @return An Iterator to atoms participating in this bond
      * @see #setAtoms
      */
-    public Iterator<IAtom> atoms() {
-        return new AtomsIterator();
+    public Iterable<IAtom> atoms() {
+        return new Iterable<IAtom>() {
+        	public Iterator<IAtom> iterator() {
+        		return new AtomsIterator();
+        	}
+        };
     }
 
     /**

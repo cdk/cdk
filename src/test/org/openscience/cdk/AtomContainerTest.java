@@ -20,27 +20,14 @@
  */
 package org.openscience.cdk;
 
-import java.util.Iterator;
-import java.util.List;
-
-import javax.vecmath.Point2d;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.*;
+
+import javax.vecmath.Point2d;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Checks the functionality of the AtomContainer.
@@ -746,7 +733,7 @@ public class AtomContainerTest extends NewCDKTestCase {
         acetone.addAtom(c3);
         acetone.addAtom(o);
         
-        java.util.Iterator atomIter = acetone.atoms();
+        java.util.Iterator atomIter = acetone.atoms().iterator();
         int counter = 0;
         while (atomIter.hasNext()) {
             atomIter.next();
@@ -773,7 +760,7 @@ public class AtomContainerTest extends NewCDKTestCase {
         acetone.addAtom(c3);
         acetone.addAtom(o);
         
-        java.util.Iterator atomIter = acetone.atoms();
+        java.util.Iterator atomIter = acetone.atoms().iterator();
         Assert.assertNotNull(atomIter);
         Assert.assertTrue(atomIter.hasNext());
         IAtom next = (IAtom)atomIter.next();
@@ -814,7 +801,7 @@ public class AtomContainerTest extends NewCDKTestCase {
         acetone.addBond(bond2);
         acetone.addBond(bond3);
 
-        java.util.Iterator bonds = acetone.bonds();
+        java.util.Iterator bonds = acetone.bonds().iterator();
         Assert.assertNotNull(bonds);
         Assert.assertTrue(bonds.hasNext());
 
@@ -856,7 +843,7 @@ public class AtomContainerTest extends NewCDKTestCase {
         acetone.addLonePair(lp1);
         acetone.addLonePair(lp2);
 
-        java.util.Iterator lonePairs = acetone.lonePairs();
+        java.util.Iterator lonePairs = acetone.lonePairs().iterator();
         Assert.assertNotNull(lonePairs);
         Assert.assertTrue(lonePairs.hasNext());
 
@@ -894,7 +881,7 @@ public class AtomContainerTest extends NewCDKTestCase {
         acetone.addSingleElectron(se1);
         acetone.addSingleElectron(se2);
 
-        java.util.Iterator singleElectrons = acetone.singleElectrons();
+        java.util.Iterator singleElectrons = acetone.singleElectrons().iterator();
         Assert.assertNotNull(singleElectrons);
         Assert.assertTrue(singleElectrons.hasNext());
 
@@ -936,7 +923,7 @@ public class AtomContainerTest extends NewCDKTestCase {
         acetone.addLonePair(lp1);
         acetone.addLonePair(lp2);
 
-        java.util.Iterator electronContainers = acetone.electronContainers();
+        java.util.Iterator electronContainers = acetone.electronContainers().iterator();
         Assert.assertNotNull(electronContainers);
         Assert.assertTrue(electronContainers.hasNext());
         electronContainers.next();
@@ -1134,7 +1121,7 @@ public class AtomContainerTest extends NewCDKTestCase {
         acetone.addBond(b3);
         
         Assert.assertEquals(3, acetone.getBondCount());
-        Iterator bonds = acetone.bonds();
+        Iterator bonds = acetone.bonds().iterator();
         while (bonds.hasNext()) Assert.assertNotNull(bonds.next());
         Assert.assertEquals(b1, acetone.getBond(0));
         Assert.assertEquals(b2, acetone.getBond(1));
@@ -1275,7 +1262,7 @@ public class AtomContainerTest extends NewCDKTestCase {
         acetone.addBond(1, 2, IBond.Order.SINGLE);
         
         Assert.assertEquals(3, acetone.getBondCount());
-        Iterator bonds = acetone.bonds();
+        Iterator bonds = acetone.bonds().iterator();
         while (bonds.hasNext()) Assert.assertNotNull(bonds.next());
 
         Assert.assertEquals(c1, acetone.getBond(0).getAtom(0));
@@ -1305,7 +1292,7 @@ public class AtomContainerTest extends NewCDKTestCase {
         acetone.addBond(1, 2, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_NONE);
         
         Assert.assertEquals(3, acetone.getBondCount());
-        Iterator bonds = acetone.bonds();
+        Iterator bonds = acetone.bonds().iterator();
         while (bonds.hasNext()) Assert.assertNotNull(bonds.next());
 
         Assert.assertEquals(c1, acetone.getBond(0).getAtom(0));
@@ -1851,7 +1838,7 @@ public class AtomContainerTest extends NewCDKTestCase {
         mol.addSingleElectron(1);
         Assert.assertEquals(2, mol.getSingleElectronCount());
         Assert.assertNotNull(mol.getSingleElectron(1));
-        Iterator<ISingleElectron> singles = mol.singleElectrons();
+        Iterator<ISingleElectron> singles = mol.singleElectrons().iterator();
         ISingleElectron singleElectron = singles.next();
         Assert.assertNotNull(singleElectron);
         Assert.assertEquals(c1, singleElectron.getAtom());

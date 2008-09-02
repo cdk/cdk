@@ -174,7 +174,7 @@ public class PharmacophoreUtils {
                 pcore.addAttribute(new Attribute("name", (String) name));
 
             // we add the pcore groups for this query as local to the group
-            Iterator<IAtom> atoms = query.atoms();
+            Iterator<IAtom> atoms = query.atoms().iterator();
             while (atoms.hasNext()) {
                 IAtom atom = atoms.next();
                 Element group = new Element("group");
@@ -184,7 +184,7 @@ public class PharmacophoreUtils {
             }
 
             // now add the constraints
-            Iterator<IBond> bonds = query.bonds();
+            Iterator<IBond> bonds = query.bonds().iterator();
             while (bonds.hasNext()) {
                 IBond bond = bonds.next();
                 Element elem = null;
@@ -203,7 +203,7 @@ public class PharmacophoreUtils {
                 }
 
                 // now add the group associated with this constraint
-                Iterator<IAtom> constraintGroups = bond.atoms();
+                Iterator<IAtom> constraintGroups = bond.atoms().iterator();
                 while (constraintGroups.hasNext()) {
                     PharmacophoreQueryAtom atom = (PharmacophoreQueryAtom) constraintGroups.next();
                     Element gelem = new Element("groupRef");
@@ -326,7 +326,7 @@ public class PharmacophoreUtils {
 
         // now add the constraint as a bond
         IAtom a1 = null, a2 = null;
-        Iterator<IAtom> atoms = ret.atoms();
+        Iterator<IAtom> atoms = ret.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom queryAtom = atoms.next();
             if (queryAtom.getSymbol().equals(id1)) a1 = queryAtom;
@@ -389,7 +389,7 @@ public class PharmacophoreUtils {
         // now add the constraint as a bond
         IAtom a1 = null, a2 = null;
         IAtom a3 = null;
-        Iterator<IAtom> atoms = ret.atoms();
+        Iterator<IAtom> atoms = ret.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom queryAtom = atoms.next();
             if (queryAtom.getSymbol().equals(id1)) a1 = queryAtom;
@@ -403,7 +403,7 @@ public class PharmacophoreUtils {
     }
 
     private static boolean containsPatom(IQueryAtomContainer q, String id) {
-        Iterator<IAtom> atoms = q.atoms();
+        Iterator<IAtom> atoms = q.atoms().iterator();
         while (atoms.hasNext()) {
             IQueryAtom queryAtom = (IQueryAtom) atoms.next();
             if (queryAtom.getSymbol().equals(id)) return true;

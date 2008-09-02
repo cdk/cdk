@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Iterator;
 
 /**
  *  Class defining an adduct object in a MolecularFormula. It maintains
@@ -62,7 +61,7 @@ public interface IAdductFormula extends IMolecularFormulaSet{
 	 *
 	 * @return    An Iterator with the isotopes in this adduct formula
 	 */
-	public Iterator<IIsotope> isotopes();
+	public Iterable<IIsotope> isotopes();
 	
 	/**
      *  Returns the partial charge of this Adduct. If the charge 

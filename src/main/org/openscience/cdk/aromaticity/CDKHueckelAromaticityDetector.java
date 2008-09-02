@@ -64,17 +64,17 @@ public class CDKHueckelAromaticityDetector {
 			return false;
 		}
 		// FIXME: should not really mark them here
-		Iterator<IAtom> atoms = ringSystems.atoms();
+		Iterator<IAtom> atoms = ringSystems.atoms().iterator();
 		while (atoms.hasNext()) atoms.next().setFlag(CDKConstants.ISINRING, true);
-		Iterator<IBond> bonds = ringSystems.bonds();
+		Iterator<IBond> bonds = ringSystems.bonds().iterator();
 		while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISINRING, true);		
 		
 		boolean foundSomeAromaticity = false;
-		Iterator<IAtomContainer> isolatedRingSystems = ConnectivityChecker.partitionIntoMolecules(ringSystems).atomContainers();
+		Iterator<IAtomContainer> isolatedRingSystems = ConnectivityChecker.partitionIntoMolecules(ringSystems).atomContainers().iterator();
 		while (isolatedRingSystems.hasNext()) {
 			IAtomContainer isolatedSystem = isolatedRingSystems.next();
 			IRingSet singleRings = new SSSRFinder(isolatedSystem).findSSSR();
-			Iterator<IAtomContainer> singleRingsIterator = singleRings.atomContainers();
+			Iterator<IAtomContainer> singleRingsIterator = singleRings.atomContainers().iterator();
 			int maxRingSize = 20;
 			boolean atLeastOneRingIsSprouted = false;
 			// test single rings in SSSR
@@ -93,7 +93,7 @@ public class CDKHueckelAromaticityDetector {
 			if (!foundSomeAromaticity && !atLeastOneRingIsSprouted &&
 				singleRings.getAtomContainerCount() <= 3) {
 				// every ring system consisting of more than two rings is too difficult
-				Iterator<IAtomContainer> allRingsIterator = new AllRingsFinder().findAllRingsInIsolatedRingSystem(isolatedSystem).atomContainers();
+				Iterator<IAtomContainer> allRingsIterator = new AllRingsFinder().findAllRingsInIsolatedRingSystem(isolatedSystem).atomContainers().iterator();
 				while (allRingsIterator.hasNext()) {
 					// there should be exactly three rings, of which only one has a size larger
 					// than the two previous ones
@@ -116,7 +116,7 @@ public class CDKHueckelAromaticityDetector {
 	private static boolean isRingAllSP2AndHueckelValid(IAtomContainer singleRing) throws CDKException {
 		boolean foundSomeAromaticity = false;
 		// OK, all atoms must be sp2, or sp3 with a lone pair
-		Iterator<IAtom> ringAtoms = singleRing.atoms();
+		Iterator<IAtom> ringAtoms = singleRing.atoms().iterator();
 		boolean allAtomsSuitable = true;
 		int electronCount = 0;
 		while (ringAtoms.hasNext()) {
@@ -176,7 +176,7 @@ public class CDKHueckelAromaticityDetector {
 	 * and not part of any other ring system.
 	 */
 	private static boolean isRingSystemSproutedWithNonRingDoubleBonds(IAtomContainer fullContainer, IAtomContainer isolatedRingSystem) {
-		Iterator<IAtom> atoms = isolatedRingSystem.atoms();
+		Iterator<IAtom> atoms = isolatedRingSystem.atoms().iterator();
 		while (atoms.hasNext()) {
 			Iterator<IBond> neighborBonds = fullContainer.getConnectedBondsList(atoms.next()).iterator();
 			while (neighborBonds.hasNext()) {
@@ -201,9 +201,9 @@ public class CDKHueckelAromaticityDetector {
 	}
 	
 	private static void markRingAtomsAndBondsAromatic(IAtomContainer container) {
-		Iterator<IAtom> atoms = container.atoms();
+		Iterator<IAtom> atoms = container.atoms().iterator();
 		while (atoms.hasNext()) atoms.next().setFlag(CDKConstants.ISAROMATIC, true);
-		Iterator<IBond> bonds = container.bonds();
+		Iterator<IBond> bonds = container.bonds().iterator();
 		while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISAROMATIC, true);
 	}
 }

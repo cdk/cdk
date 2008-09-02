@@ -54,12 +54,12 @@ public class RingManipulatorTest extends NewCDKTestCase {
 		RingManipulator.markAromaticRings(ring);
 		Assert.assertFalse(ring.getFlag(CDKConstants.ISAROMATIC));
 		
-		Iterator<IAtom> atoms = ring.atoms();
+		Iterator<IAtom> atoms = ring.atoms().iterator();
 		while (atoms.hasNext()) atoms.next().setFlag(CDKConstants.ISAROMATIC, true);
 		RingManipulator.markAromaticRings(ring);
 		Assert.assertFalse(ring.getFlag(CDKConstants.ISAROMATIC));
 		
-		Iterator<IBond> bonds = ring.bonds();
+		Iterator<IBond> bonds = ring.bonds().iterator();
 		while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISAROMATIC, true);
 		RingManipulator.markAromaticRings(ring);
 		Assert.assertTrue(ring.getFlag(CDKConstants.ISAROMATIC));

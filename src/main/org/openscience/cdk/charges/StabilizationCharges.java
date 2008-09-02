@@ -94,7 +94,7 @@ public class StabilizationCharges {
     	List<Integer> distance1 = new ArrayList<Integer>();
     	
     	resonanceS.removeAtomContainer(0);// the first is the initial structure
-    	for(Iterator<IAtomContainer> itA = resonanceS.atomContainers(); itA.hasNext();){
+    	for(Iterator<IAtomContainer> itA = resonanceS.atomContainers().iterator(); itA.hasNext();){
 			IAtomContainer resonance = itA.next();
 
 			if(resonance.getAtomCount() < 2) // resonance with only one atom donnot have resonance
@@ -104,7 +104,7 @@ public class StabilizationCharges {
 			
             PiElectronegativity electronegativity = new PiElectronegativity();
 	    	
-            for(Iterator<IAtom> itAtoms = resonance.atoms(); itAtoms.hasNext();){
+            for(Iterator<IAtom> itAtoms = resonance.atoms().iterator(); itAtoms.hasNext();){
 				 IAtom atomP = itAtoms.next();
 				 IAtom atomR = atomContainer.getAtom(resonance.getAtomNumber(atomP));
 				 if(containerS.getAtomContainer(0).contains(atomR)){

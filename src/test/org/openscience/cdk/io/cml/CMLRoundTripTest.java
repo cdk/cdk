@@ -579,12 +579,12 @@ public class CMLRoundTripTest extends CDKTestCase {
      */
     public void testAromaticity() throws Exception {
     	IMolecule molecule = MoleculeFactory.makeBenzene();
-    	for (Iterator bonds=molecule.bonds(); bonds.hasNext();) {
+    	for (Iterator bonds=molecule.bonds().iterator(); bonds.hasNext();) {
     		((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
     	}
     	
         IMolecule roundTrippedMol = roundTripMolecule(molecule);
-        Iterator<IBond> bonds = roundTrippedMol.bonds();
+        Iterator<IBond> bonds = roundTrippedMol.bonds().iterator();
         double orderSum = BondManipulator.getSingleBondEquivalentSum(bonds);
         while (bonds.hasNext()) {
     		assertTrue(bonds.next().getFlag(CDKConstants.ISAROMATIC));
@@ -603,7 +603,7 @@ public class CMLRoundTripTest extends CDKTestCase {
  	   String value = "true";
  	   
         Molecule mol = MoleculeFactory.makeBenzene();
-        for (Iterator<IAtom> it = mol.atoms(); it.hasNext();) {
+        for (Iterator<IAtom> it = mol.atoms().iterator(); it.hasNext();) {
            IAtom a = it.next();
            a.setProperty(key, value);
         }       
@@ -612,7 +612,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         //assertEquals(convertor.cdkMoleculeToCMLMolecule(mol).toXML(), 
      	//	   convertor.cdkMoleculeToCMLMolecule(roundTrippedMol).toXML());
         
-        for (Iterator<IAtom> it = roundTrippedMol.atoms(); it.hasNext();) {
+        for (Iterator<IAtom> it = roundTrippedMol.atoms().iterator(); it.hasNext();) {
             IAtom a = it.next();
             String actual = (String)a.getProperty(key);
             assertNotNull(actual);
@@ -630,7 +630,7 @@ public class CMLRoundTripTest extends CDKTestCase {
  	   String key = "customBondProperty";
  	   String value = "true";
         Molecule mol = MoleculeFactory.makeBenzene();
-        for (Iterator<IBond> it = mol.bonds(); it.hasNext();) {
+        for (Iterator<IBond> it = mol.bonds().iterator(); it.hasNext();) {
            IBond b = it.next();
            b.setProperty(key, value);
         }       
@@ -639,7 +639,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         //assertEquals(convertor.cdkMoleculeToCMLMolecule(mol).toXML(), 
         //	   convertor.cdkMoleculeToCMLMolecule(roundTrippedMol).toXML());
         
-        for (Iterator<IBond> it = roundTrippedMol.bonds(); it.hasNext();) {
+        for (Iterator<IBond> it = roundTrippedMol.bonds().iterator(); it.hasNext();) {
             IBond b = it.next();
             String actual = (String)b.getProperty(key); 
             assertNotNull(actual);

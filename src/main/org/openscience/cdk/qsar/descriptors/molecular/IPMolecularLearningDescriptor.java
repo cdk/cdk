@@ -179,7 +179,7 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
         public DescriptorValue calculatePlus(IAtomContainer container) throws CDKException {
 
         ArrayList<Double> dar = new ArrayList<Double>();
-        for(Iterator<IAtom> itA = container.atoms(); itA.hasNext();){
+        for(Iterator<IAtom> itA = container.atoms().iterator(); itA.hasNext();){
             IAtom atom = itA.next();
     		double value = IonizationPotentialTool.predictIP(container,atom);
     		if(value != 0)

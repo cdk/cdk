@@ -135,7 +135,7 @@ public class AdductionProtonLPReaction extends ReactionEngine implements IReacti
 		if(AtomContainerManipulator.getTotalCharge(reactant) > 0)
 			return setOfReactions;
 		
-		Iterator<IAtom> atoms = reactant.atoms();
+		Iterator<IAtom> atoms = reactant.atoms().iterator();
         while (atoms.hasNext()) {
 			IAtom atomi = atoms.next(); // Atom pos 1
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) &&  
@@ -179,7 +179,7 @@ public class AdductionProtonLPReaction extends ReactionEngine implements IReacti
     	if(AtomContainerManipulator.getTotalCharge(reactant) > 0)
 			return;
 		
-    	Iterator<IAtom> atoms = reactant.atoms();
+    	Iterator<IAtom> atoms = reactant.atoms().iterator();
         while (atoms.hasNext()) {
 			IAtom atomi = atoms.next(); // Atom pos 1
 			if((atomi.getFormalCharge() == CDKConstants.UNSET ? 0 : atomi.getFormalCharge()) <= 0

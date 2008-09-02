@@ -90,9 +90,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 */
     @TestMethod("testAdd_IMolecularFormula")
 	public IMolecularFormula add(IMolecularFormula formula) {
-		Iterator<IIsotope> newIsotopes = formula.isotopes();
-		while (newIsotopes.hasNext()){
-			IIsotope newIsotope = newIsotopes.next();
+		for (IIsotope newIsotope : formula.isotopes()) {
 			addIsotope(newIsotope,formula.getIsotopeCount(newIsotope));
 		}
 		if(formula.getCharge() != null)charge += formula.getCharge();
@@ -121,8 +119,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
     @TestMethod("testAddIsotope_IIsotope_int")
 	public IMolecularFormula addIsotope(IIsotope isotope, int count) {
 		boolean flag = false;
-		for(Iterator<IIsotope> it = isotopes(); it.hasNext(); ) {
-			IIsotope thisIsotope = it.next();
+		for (IIsotope thisIsotope : isotopes()) {
 			if(isTheSame(thisIsotope, isotope)){
 				isotopes.put(thisIsotope, isotopes.get(thisIsotope) + count);
 				flag = true;
@@ -146,8 +143,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 */
     @TestMethod("testContains_IIsotope")
 	public boolean contains(IIsotope isotope) {
-		for(Iterator<IIsotope> it = isotopes(); it.hasNext(); ) {
-			IIsotope thisIsotope = it.next();
+		for (IIsotope thisIsotope : isotopes()) {
 			if(isTheSame(thisIsotope, isotope)){
 				return true;
 			}
@@ -203,8 +199,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
    * @see            #isotopes
 	 */
 	private IIsotope getIsotope(IIsotope isotope){
-		for(Iterator<IIsotope> it = isotopes(); it.hasNext(); ) {
-			IIsotope thisIsotope = it.next();
+		for (IIsotope thisIsotope : isotopes()) {
 			if(isTheSame(isotope,thisIsotope))
 				return thisIsotope;
 		}
@@ -216,8 +211,8 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 	 * @return    An Iterator with the isotopes in this IMolecularFormula
 	 */
     @TestMethod("testIsotopes")
-	public Iterator<IIsotope> isotopes() {
-		return isotopes.keySet().iterator();
+	public Iterable<IIsotope> isotopes() {
+		return isotopes.keySet();
 	}
 
 	/**
@@ -271,9 +266,7 @@ public class MolecularFormula implements IMolecularFormula, Cloneable {
 //		}
 		
 		MolecularFormula clone = new MolecularFormula();
-		Iterator<IIsotope> iterIso = this.isotopes();
-		while(iterIso.hasNext()){
-			IIsotope isotope = iterIso.next();
+		for (IIsotope isotope : isotopes()) {
 			clone.addIsotope((IIsotope) isotope.clone(),getIsotopeCount(isotope));
 		}
 		clone.setCharge(getCharge());

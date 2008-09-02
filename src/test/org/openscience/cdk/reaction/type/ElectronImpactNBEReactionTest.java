@@ -101,7 +101,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
 	    lpcheck.saturate(reactant);
 		
-		Iterator<IAtom> atoms = reactant.atoms();
+		Iterator<IAtom> atoms = reactant.atoms().iterator();
 		while (atoms.hasNext()) {
 			IAtom atom = (IAtom)atoms.next();
 			if(reactant.getConnectedLonePairsCount(atom) > 0){
@@ -128,7 +128,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, molecule.getAtom(4).getFormalCharge().intValue());
         Assert.assertEquals(1, molecule.getConnectedSingleElectronsCount(molecule.getAtom(4)));
         
-        Assert.assertTrue(setOfReactions.getReaction(0).mappings().hasNext());
+        Assert.assertTrue(setOfReactions.getReaction(0).mappings().iterator().hasNext());
         
 		
 	}
@@ -480,7 +480,7 @@ public class ElectronImpactNBEReactionTest extends ReactionProcessTest {
 	 */
 	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws CDKException {
 
-		Iterator<IAtom> atoms = molecule.atoms();
+		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
 		while (atoms.hasNext()) {
 				IAtom nextAtom = atoms.next();

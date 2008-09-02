@@ -145,11 +145,11 @@ public class MDLV2000ReaderTest extends ChemObjectIOTest {
         IAtomContainer container = (IAtomContainer)containersList.get(0); 
         Assert.assertEquals(10, container.getAtomCount());
         Assert.assertEquals(9, container.getBondCount());
-        Iterator<IAtom> atoms = container.atoms();
+        Iterator<IAtom> atoms = container.atoms().iterator();
         while (atoms.hasNext()) {
         	Assert.assertEquals("C", atoms.next().getSymbol());
         }
-        Iterator<IBond> bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
         	Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bonds.next().getOrder());
         }

@@ -315,8 +315,8 @@ public class ReactionTest extends NewCDKTestCase {
         IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
         reaction.addMapping(mapping);
         IReaction clonedReaction = (IReaction)reaction.clone();
-        java.util.Iterator mappings = reaction.mappings();
-        java.util.Iterator clonedMappings = clonedReaction.mappings();
+        java.util.Iterator mappings = reaction.mappings().iterator();
+        java.util.Iterator clonedMappings = clonedReaction.mappings().iterator();
         Assert.assertNotNull(mappings);
         Assert.assertTrue(mappings.hasNext());
         Assert.assertNotNull(clonedMappings);
@@ -327,7 +327,7 @@ public class ReactionTest extends NewCDKTestCase {
         IReaction reaction = builder.newReaction();
         IMapping mapping = builder.newMapping(builder.newAtom("C"), builder.newAtom("C"));
         reaction.addMapping(mapping);
-        java.util.Iterator mappings = reaction.mappings();
+        java.util.Iterator mappings = reaction.mappings().iterator();
         Assert.assertNotNull(mappings);
         Assert.assertTrue(mappings.hasNext());
         Assert.assertEquals(mapping, (IMapping)mappings.next());

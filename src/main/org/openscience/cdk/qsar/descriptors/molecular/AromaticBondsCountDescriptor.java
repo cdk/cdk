@@ -179,7 +179,7 @@ public class AromaticBondsCountDescriptor implements IMolecularDescriptor {
                         new CDKException("Error during aromaticity detection: " + e.getMessage()));
             }
         }
-        Iterator bonds = ac.bonds();
+        Iterator bonds = ac.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {

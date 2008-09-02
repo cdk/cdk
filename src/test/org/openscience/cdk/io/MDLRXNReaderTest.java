@@ -143,7 +143,7 @@ public class MDLRXNReaderTest extends ChemObjectIOTest {
 		reader2.close();
 
 		Assert.assertNotNull(reaction2);
-		java.util.Iterator maps = reaction2.mappings();
+		java.util.Iterator maps = reaction2.mappings().iterator();
 		maps.next();
 		Assert.assertTrue(maps.hasNext());
     }

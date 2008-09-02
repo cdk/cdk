@@ -136,7 +136,7 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
 		if(AtomContainerManipulator.getTotalCharge(reactant) != 0)
 			return setOfReactions;
 		
-		Iterator<IBond> bondis = reactant.bonds();
+		Iterator<IBond> bondis = reactant.bonds().iterator();
         while (bondis.hasNext()) {
             IBond bondi = bondis.next();
 
@@ -200,7 +200,7 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
     	if(AtomContainerManipulator.getTotalCharge(reactant) != 0)
 			return;
 		
-    	Iterator<IBond> bondis = reactant.bonds();
+    	Iterator<IBond> bondis = reactant.bonds().iterator();
         while (bondis.hasNext()) {
             IBond bondi = bondis.next();
 

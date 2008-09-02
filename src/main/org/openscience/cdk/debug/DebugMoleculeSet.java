@@ -195,7 +195,7 @@ public class DebugMoleculeSet extends org.openscience.cdk.MoleculeSet
 		super.add(atomContainerSet);
 	}
 
-	public java.util.Iterator atomContainers() {
+	public Iterable<IAtomContainer> atomContainers() {
 		logger.debug("Getting atom container iterator");
 		return super.atomContainers();
 	}
@@ -235,7 +235,7 @@ public class DebugMoleculeSet extends org.openscience.cdk.MoleculeSet
 		super.setMolecules(molecules);
 	}
 
-	public java.util.Iterator molecules() {
+	public Iterable<IAtomContainer> molecules() {
 		logger.debug("Getting molecule iterator");
 		return super.molecules();
 	}

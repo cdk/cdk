@@ -174,7 +174,7 @@ public class ReactionManipulatorTest extends NewCDKTestCase {
 		Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
 		while (atomContainers.hasNext()) {
 			IAtomContainer container = atomContainers.next();
-			Iterator<IAtom> atoms = container.atoms();
+			Iterator<IAtom> atoms = container.atoms().iterator();
 			while (atoms.hasNext()) {
 				IAtom atom = atoms.next();
 				Assert.assertNotNull(atom.getProperty("test"));

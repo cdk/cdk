@@ -315,7 +315,7 @@ public class ModelBuilder3dTest extends NewCDKTestCase {
 
 		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
 			IAtomContainer molecules = (IAtomContainer) iter.next();
-			for (Iterator atom = molecules.atoms(); atom.hasNext();){
+			for (Iterator atom = molecules.atoms().iterator(); atom.hasNext();){
 				Atom last = (Atom) atom.next();
 				last.setPoint2d(null);
 			}
@@ -338,7 +338,7 @@ public class ModelBuilder3dTest extends NewCDKTestCase {
 		
 		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
 			IAtomContainer molecules = (IAtomContainer) iter.next();
-			for (Iterator atom = molecules.atoms(); atom.hasNext();){
+			for (Iterator atom = molecules.atoms().iterator(); atom.hasNext();){
 				Atom last = (Atom) atom.next();
 				if (last.getPoint3d() == null) notCalculatedResults = true;
 			}

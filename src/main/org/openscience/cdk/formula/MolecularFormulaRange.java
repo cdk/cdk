@@ -72,7 +72,7 @@ public class MolecularFormulaRange implements Cloneable {
 	@TestMethod("testAddIsotope_IIsotope_int_int")
 	public void addIsotope(IIsotope isotope, int countMin, int countMax) {
 		boolean flag = false;
-		for(Iterator<IIsotope> it = isotopes(); it.hasNext(); ) {
+		for(Iterator<IIsotope> it = isotopes().iterator(); it.hasNext(); ) {
 			IIsotope thisIsotope = it.next();
 			if(isTheSame(thisIsotope, isotope)){
 				isotopesMax.put(thisIsotope, countMax);
@@ -97,7 +97,7 @@ public class MolecularFormulaRange implements Cloneable {
 	 */
 	@TestMethod("testContains_IIsotope")
 	public boolean contains(IIsotope isotope) {
-		for(Iterator<IIsotope> it = isotopes(); it.hasNext(); ) {
+		for(Iterator<IIsotope> it = isotopes().iterator(); it.hasNext(); ) {
 			IIsotope thisIsotope = it.next();
 			if(isTheSame(thisIsotope, isotope)){
 				return true;
@@ -152,7 +152,7 @@ public class MolecularFormulaRange implements Cloneable {
    * @see            #isotopes
 	 */
 	private IIsotope getIsotope(IIsotope isotope){
-		for(Iterator<IIsotope> it = isotopes(); it.hasNext(); ) {
+		for(Iterator<IIsotope> it = isotopes().iterator(); it.hasNext(); ) {
 			IIsotope thisIsotope = it.next();
 			if(isTheSame(isotope,thisIsotope))
 				return thisIsotope;
@@ -165,8 +165,12 @@ public class MolecularFormulaRange implements Cloneable {
 	 * @return    An Iterator with the isotopes in this MolecularFormulaExpand
 	 */
 	@TestMethod("testIsotopes")
-	public Iterator<IIsotope> isotopes() {
-		return isotopesMax.keySet().iterator();
+	public Iterable<IIsotope> isotopes() {
+        return new Iterable<IIsotope>(){
+            public Iterator<IIsotope> iterator() {
+                return isotopesMax.keySet().iterator();
+            }
+        };
 	}
 
 	/**
@@ -201,7 +205,7 @@ public class MolecularFormulaRange implements Cloneable {
 	public Object clone() throws CloneNotSupportedException {
 		
 		MolecularFormulaRange clone = new MolecularFormulaRange();
-		Iterator<IIsotope> iterIso = this.isotopes();
+		Iterator<IIsotope> iterIso = this.isotopes().iterator();
 		while(iterIso.hasNext()){
 			IIsotope isotope = iterIso.next();
 			clone.addIsotope((IIsotope) isotope.clone(),getIsotopeCountMin(isotope),getIsotopeCountMax(isotope));

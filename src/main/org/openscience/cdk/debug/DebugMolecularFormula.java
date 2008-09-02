@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Iterator;
 import java.util.Map;
 
 import org.openscience.cdk.formula.MolecularFormula;
@@ -82,7 +81,7 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
 	    return super.getProperty(description);
     }
 
-	public Iterator<IIsotope> isotopes() {
+	public Iterable<IIsotope> isotopes() {
 		logger.debug("Getting isotope iterator..");
 	    return super.isotopes();
     }

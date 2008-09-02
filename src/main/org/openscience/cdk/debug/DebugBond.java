@@ -170,8 +170,8 @@ public class DebugBond extends org.openscience.cdk.Bond
 		return DebugChemObjectBuilder.getInstance();
 	}
 
-	public java.util.Iterator atoms() {
-		logger.debug("Getting atoms iterator");
+	public Iterable<IAtom> atoms() {
+		logger.debug("Getting atoms iterable");
 		return super.atoms();
 	}
 

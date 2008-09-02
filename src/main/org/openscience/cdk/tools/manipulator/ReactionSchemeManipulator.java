@@ -27,17 +27,13 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.*;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionScheme;
 
 /**
  * @cdk.module standard
@@ -59,35 +55,32 @@ public class ReactionSchemeManipulator {
     	// A ReactionScheme can contain other IRreactionSet objects
 		if(scheme.getReactionSchemeCount() != 0)
     		for(IReactionScheme rm : scheme.reactionSchemes()){
-    			for(Iterator<IAtomContainer> iter = getAllMolecules(rm, molSet).atomContainers(); iter.hasNext(); ){
-    	        	IAtomContainer ac = iter.next();
-    	        	boolean contain = false;
-    	        	for(Iterator<IAtomContainer> it2 = molSet.molecules();it2.hasNext();){
-    	         		if(it2.next().equals(ac)){
-    	             		contain = true;
-    	             		break;
-    	             	}
-    	         	}
-    	         	if(!contain)
-                 		molSet.addMolecule((IMolecule)(ac));
-    			}
+                for (IAtomContainer ac : getAllMolecules(rm, molSet).atomContainers()) {
+                    boolean contain = false;
+                    for (IAtomContainer atomContainer : molSet.molecules()) {
+                        if (atomContainer.equals(ac)) {
+                            contain = true;
+                            break;
+                        }
+                    }
+                    if (!contain)
+                        molSet.addMolecule((IMolecule) (ac));
+                }
     		}
-	    for(Iterator<IReaction> iter = scheme.reactions(); iter.hasNext();) {
-	        IReaction reaction = iter.next();
-	        IMoleculeSet newMoleculeSet = ReactionManipulator.getAllMolecules(reaction);
-	        for(Iterator<IAtomContainer> it = newMoleculeSet.molecules(); it.hasNext(); ){
-	        	IAtomContainer ac = it.next();
-	        	boolean contain = false;
-	        	for(Iterator<IAtomContainer> it2 = molSet.molecules();it2.hasNext();){
-	         		if(it2.next().equals(ac)){
-	             		contain = true;
-	             		break;
-	             	}
-	         	}
-	         	if(!contain)
-             		molSet.addMolecule((IMolecule)(ac));
-	         	
-	        }
+        for (IReaction reaction : scheme.reactions()) {
+            IMoleculeSet newMoleculeSet = ReactionManipulator.getAllMolecules(reaction);
+            for (IAtomContainer ac : newMoleculeSet.molecules()) {
+                boolean contain = false;
+                for (IAtomContainer atomContainer : molSet.molecules()) {
+                    if (atomContainer.equals(ac)) {
+                        contain = true;
+                        break;
+                    }
+                }
+                if (!contain)
+                    molSet.addMolecule((IMolecule) (ac));
+
+            }
         }
 	    
 	    return molSet;
@@ -113,8 +106,7 @@ public class ReactionSchemeManipulator {
 	public static List<String> getAllIDs(IReactionScheme scheme) {
         List<String> IDlist = new ArrayList<String>();
         if (scheme.getID() != null) IDlist.add(scheme.getID());
-        for (Iterator<IReaction> iter = scheme.reactions(); iter.hasNext();) {
-            IReaction reaction = iter.next();
+        for (IReaction reaction : scheme.reactions()) {
             IDlist.addAll(ReactionManipulator.getAllIDs(reaction));
         }
         return IDlist;

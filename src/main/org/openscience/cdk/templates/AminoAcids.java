@@ -71,7 +71,7 @@ public class AminoAcids {
         	total += acid.getBondCount();
         	logger.debug("total #bonds: ", total);
 
-            Iterator bonds = acid.bonds();
+            Iterator bonds = acid.bonds().iterator();
             while (bonds.hasNext()) {
                 IBond bond = (IBond) bonds.next();
         		info[counter][0] = counter;
@@ -128,7 +128,7 @@ public class AminoAcids {
         		logger.debug("Adding AA: ", ac);
         		// convert into an AminoAcid
         		AminoAcid aminoAcid = new AminoAcid();
-        		Iterator<IAtom> atoms = ac.atoms();
+        		Iterator<IAtom> atoms = ac.atoms().iterator();
         		Iterator<Object> props = ac.getProperties().keySet().iterator();
         		while (props.hasNext()) {
         			Object next = props.next();
@@ -162,7 +162,7 @@ public class AminoAcids {
         			}
         		}
 //        		org.openscience.cdk.interfaces.IBond[] bonds = ac.getBonds();
-                Iterator bonds = ac.bonds();
+                Iterator bonds = ac.bonds().iterator();
                 while (bonds.hasNext()) {
                     IBond bond = (IBond) bonds.next();
         			aminoAcid.addBond(bond);

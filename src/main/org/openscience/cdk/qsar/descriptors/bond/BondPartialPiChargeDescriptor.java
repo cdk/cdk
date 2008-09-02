@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
@@ -39,6 +37,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.Iterator;
 
 /**
  *  The calculation of bond-pi Partial charge is calculated 
@@ -195,7 +195,7 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
 	    			ac.getAtom(i).setCharge(0.0);
 	    		
 	        	pepe.assignGasteigerPiPartialCharges(ac, true);
-				for(Iterator<IBond> it = ac.bonds() ; it.hasNext(); ) {
+				for(Iterator<IBond> it = ac.bonds().iterator() ; it.hasNext(); ) {
 					IBond bondi = it.next();
 					double result = Math.abs(bondi.getAtom(0).getCharge()-bondi.getAtom(1).getCharge());
 					cacheDescriptorValue(bondi, ac, new DoubleResult(result));

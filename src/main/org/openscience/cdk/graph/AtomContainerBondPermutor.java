@@ -62,7 +62,7 @@ public class AtomContainerBondPermutor extends AtomContainerPermutor
     }
 
     public void initObjectArray() {
-        Iterator bonds = atomContainer.bonds();
+        Iterator bonds = atomContainer.bonds().iterator();
         objects = new Object[atomContainer.getBondCount()];
         int i = 0;
         while (bonds.hasNext()) {

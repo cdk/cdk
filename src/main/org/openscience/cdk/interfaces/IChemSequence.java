@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Iterator;
 
 /** 
  * A sequence of ChemModels, which can, for example, be used to
@@ -54,12 +53,12 @@ public interface IChemSequence extends IChemObject {
 	public void removeChemModel(int pos);
 	
     /**
-     * Returns an Iterator to ChemModels in this container.
+     * Returns an Iterable to ChemModels in this container.
      *
-     * @return    The Iterator to ChemModels in this container
+     * @return    The Iterable to ChemModels in this container
      * @see       #addChemModel
      */
-     public Iterator<IChemModel> chemModels();
+     public Iterable<IChemModel> chemModels();
 
 	/**
 	 * Returns the ChemModel at position <code>number</code> in the

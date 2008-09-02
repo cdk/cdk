@@ -180,7 +180,7 @@ public class RDBERule implements IRule{
 		int nE = 0; // number of elements to change
 		List<String> eV = new ArrayList<String>(); // number of elements chaning
 		List<Integer> nV = new ArrayList<Integer>(); // number of valence chaning
-		for(Iterator<IIsotope> it = formula.isotopes(); it.hasNext();){
+		for(Iterator<IIsotope> it = formula.isotopes().iterator(); it.hasNext();){
     		IIsotope isotope = it.next();
     		int[] valence = getOxidationState(formula.getBuilder().newAtom(isotope.getSymbol()));
     		if(valence.length != 1){
@@ -194,7 +194,7 @@ public class RDBERule implements IRule{
 		
 		double RDBE = 0;
 		if(nE == 0){
-			for(Iterator<IIsotope> it = formula.isotopes(); it.hasNext();){
+			for(Iterator<IIsotope> it = formula.isotopes().iterator(); it.hasNext();){
 	    		IIsotope isotope = it.next();
 	    		int[] valence = getOxidationState(formula.getBuilder().newAtom(isotope.getSymbol()));
 	    		double value = (valence[0]-2)*formula.getIsotopeCount(isotope)/2.0;
@@ -204,7 +204,7 @@ public class RDBERule implements IRule{
 	    	RDBEList.add(RDBE);
 		}else{
 			double RDBE_1 = 0;
-			for(Iterator<IIsotope> it = formula.isotopes(); it.hasNext();){
+			for(Iterator<IIsotope> it = formula.isotopes().iterator(); it.hasNext();){
 	    		IIsotope isotope = it.next();
 	    		if(eV.contains(isotope.getSymbol()))
 	    			continue;

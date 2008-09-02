@@ -130,7 +130,7 @@ public class SharingAnionReaction extends ReactionEngine implements IReactionPro
 			setActiveCenters(reactant);
 		}
 		
-		Iterator<IAtom> atomis = reactant.atoms();
+		Iterator<IAtom> atomis = reactant.atoms().iterator();
 		while(atomis.hasNext()){
 			IAtom atomi = atomis.next();
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getFormalCharge() == -1 &&
@@ -181,7 +181,7 @@ public class SharingAnionReaction extends ReactionEngine implements IReactionPro
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		Iterator<IAtom> atomis = reactant.atoms();
+		Iterator<IAtom> atomis = reactant.atoms().iterator();
 		while(atomis.hasNext()){
 			IAtom atomi = atomis.next();
 			if(atomi.getFormalCharge() == -1 &&

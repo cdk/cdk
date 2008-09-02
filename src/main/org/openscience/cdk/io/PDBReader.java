@@ -532,7 +532,7 @@ public class PDBReader extends DefaultChemObjectReader {
 //			 configure atoms
 		      AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", 
 		    	  pol.getBuilder());
-		      java.util.Iterator atoms = pol.atoms();
+		      java.util.Iterator atoms = pol.atoms().iterator();
 		      while (atoms.hasNext()) {
 		    	  IAtom atom = (IAtom)atoms.next();
 		        try {

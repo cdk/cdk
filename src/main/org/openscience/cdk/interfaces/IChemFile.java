@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Iterator;
 
 /**
  * A Object containing a number of ChemSequences. This is supposed to be the
@@ -53,12 +52,12 @@ public interface IChemFile extends IChemObject {
 	public void removeChemSequence(int pos);
 	
 	/**
-	 *  Returns the Iterator to ChemSequences of this container.
+	 *  Returns the Iterable to ChemSequences of this container.
 	 *
-	 *@return    The Iterator to ChemSequences of this container
+	 *@return    The Iterable to ChemSequences of this container
 	 *@see       #addChemSequence
 	 */
-	public Iterator<IChemSequence> chemSequences();
+	public Iterable<IChemSequence> chemSequences();
 
 	/**
 	 * Returns the ChemSequence at position <code>number</code> in the container.

@@ -20,22 +20,12 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.List;
-import java.util.Map;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Debugging data class.
@@ -123,27 +113,27 @@ public class DebugMolecule extends org.openscience.cdk.Molecule
 //		super.setAtomCount(atomCount);
 //	}
 
-	public java.util.Iterator atoms() {
+	public Iterable<IAtom> atoms() {
 		logger.debug("Getting atoms iterator");
 		return super.atoms();
 	}
 	
-	public java.util.Iterator bonds() {
+	public Iterable<IBond> bonds() {
 		logger.debug("Getting bonds iterator");
 		return super.bonds();
 	}
 	
-	public java.util.Iterator lonePairs() {
+	public Iterable<ILonePair> lonePairs() {
 		logger.debug("Getting lone pairs iterator");
 		return super.lonePairs();
 	}
 	
-	public java.util.Iterator singleElectrons() {
+	public Iterable<ISingleElectron> singleElectrons() {
 		logger.debug("Getting single electrons iterator");
 		return super.singleElectrons();
 	}
 	
-	public java.util.Iterator electronContainers() {
+	public Iterable<IElectronContainer> electronContainers() {
 		logger.debug("Getting electron containers iterator");
 		return super.electronContainers();
 	}

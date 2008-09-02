@@ -137,7 +137,7 @@ public class CrossoverMachine
 		
 		for (int j = 0; j < blueAtoms.size(); j++)
 		{
-			Iterator bonds = redChild[1].bonds();
+			Iterator bonds = redChild[1].bonds().iterator();
 			while (bonds.hasNext()) {
 				IBond bond = (IBond)bonds.next();
 				if (bond.contains(redChild[0].getAtom(((Integer)blueAtoms.get(j)).intValue())))
@@ -150,7 +150,7 @@ public class CrossoverMachine
 
 		for (int j = 0; j < blueAtoms.size(); j++)
 		{
-			Iterator bonds = redChild[1].bonds();
+			Iterator bonds = redChild[1].bonds().iterator();
 			while (bonds.hasNext()) {
 				IBond bond = (IBond)bonds.next();
 				if (bond.contains(redChild[1].getAtom(((Integer)blueAtoms.get(j)).intValue())))
@@ -163,7 +163,7 @@ public class CrossoverMachine
 
 		for (int j = 0; j < redAtoms.size(); j++)
 		{
-			Iterator bonds = blueChild[0].bonds();
+			Iterator bonds = blueChild[0].bonds().iterator();
 			while (bonds.hasNext()) {
 				IBond bond = (IBond)bonds.next();
 				if (bond.contains(blueChild[0].getAtom(((Integer)redAtoms.get(j)).intValue())))
@@ -175,7 +175,7 @@ public class CrossoverMachine
 
 
 		for (int j = 0; j < redAtoms.size(); j++) {
-			Iterator bonds = blueChild[1].bonds();
+			Iterator bonds = blueChild[1].bonds().iterator();
 			while (bonds.hasNext()) {
 				IBond bond = (IBond)bonds.next();
 				if (bond.contains(blueChild[1].getAtom(((Integer)redAtoms.get(j)).intValue())))

@@ -21,19 +21,14 @@
  */
 package org.openscience.cdk.graph;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Tool class for checking whether the (sub)structure in an
@@ -79,7 +74,7 @@ public class ConnectivityChecker
 			newContainer.addAtom(atomContainer.getAtom(f));
 		}
 
-        Iterator<IBond> bonds = atomContainer.bonds();
+        Iterator<IBond> bonds = atomContainer.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
 			bond.setFlag(CDKConstants.VISITED, false);
@@ -116,7 +111,7 @@ public class ConnectivityChecker
 			atom.setFlag(CDKConstants.VISITED, false);
 			newContainer.addAtom(atom);
 		}
-		Iterator<IElectronContainer> eContainers = atomContainer.electronContainers();
+		Iterator<IElectronContainer> eContainers = atomContainer.electronContainers().iterator();
 		while (eContainers.hasNext()){
 			eContainer = (IElectronContainer)eContainers.next();
 			eContainer.setFlag(CDKConstants.VISITED, false);

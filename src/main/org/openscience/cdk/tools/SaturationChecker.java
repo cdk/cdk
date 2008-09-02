@@ -270,20 +270,14 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
      * Resets the bond orders of all atoms to 1.0.
      */
     public void unsaturate(IAtomContainer atomContainer) {
-    	Iterator<IBond> bonds = atomContainer.bonds();
-    	while (bonds.hasNext()) {
-    		bonds.next().setOrder(CDKConstants.BONDORDER_SINGLE);
-    	}
+        for (IBond bond : atomContainer.bonds()) bond.setOrder(CDKConstants.BONDORDER_SINGLE);
     }
     
     /**
      * Resets the bond order of the Bond to 1.0.
      */
     public void unsaturateBonds(IAtomContainer container) {
-    	Iterator<IBond> bonds = container.bonds();
-        while (bonds.hasNext()) {
-            bonds.next().setOrder(IBond.Order.SINGLE);
-        }
+        for (IBond bond : container.bonds()) bond.setOrder(CDKConstants.BONDORDER_SINGLE);        
     }
 
 	/**

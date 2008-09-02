@@ -79,11 +79,11 @@ public interface IMolecularFormula{
 	public int getIsotopeCount(IIsotope isotope);
 	
 	/**
-	 *  Returns an Iterator for looping over all isotopes in this IMolecularFormula.
+	 *  Returns an {@link Iterable} for looping over all isotopes in this IMolecularFormula.
 	 *
-	 * @return    An Iterator with the isotopes in this IMolecularFormula
+	 * @return    An {@link Iterable} with the isotopes in this IMolecularFormula
 	 */
-	public Iterator<IIsotope> isotopes();
+	public Iterable<IIsotope> isotopes();
 	
 	/**
 	 *  Checks a set of Nodes for the number of different isotopes in the 
@@ -174,7 +174,7 @@ public interface IMolecularFormula{
 	 *@param  description  An object description of the property (most likely a
 	 *      unique string)
 	 *@return              The object containing the property. Returns null if
-	 *      propert is not set.
+	 *      property is not set.
 	 *@see                 #setProperty
 	 *@see                 #removeProperty
 	 */

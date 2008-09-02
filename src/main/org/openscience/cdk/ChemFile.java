@@ -118,14 +118,18 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 	}
 
 	/**
-	 *  Returns the Iterator to ChemSequences of this container.
+	 *  Returns the Iterable to ChemSequences of this container.
 	 *
-	 *@return    The Iterator to ChemSequences of this container
+	 *@return    The Iterable to ChemSequences of this container
 	 *@see       #addChemSequence
 	 */
-	public Iterator<IChemSequence> chemSequences()
+	public Iterable<IChemSequence> chemSequences()
 	{
-		return new ChemSequenceIterator();
+		return new Iterable<IChemSequence>(){
+            public Iterator<IChemSequence> iterator() {
+                return new ChemSequenceIterator();
+            }
+        };
 	}
 
 	/**
@@ -200,7 +204,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 		buffer.append("ChemFile(#S=");
 		buffer.append(chemSequenceCount);
 		if (chemSequenceCount > 0) {
-			Iterator<IChemSequence> seqs = chemSequences();
+			Iterator<IChemSequence> seqs = chemSequences().iterator();
 			while (seqs.hasNext()) {
 				buffer.append(", ");
 				IChemSequence sequence = (IChemSequence)seqs.next();

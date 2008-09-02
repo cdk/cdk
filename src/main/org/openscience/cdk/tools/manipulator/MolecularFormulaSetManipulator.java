@@ -67,20 +67,19 @@ public class MolecularFormulaSetManipulator {
 		
 		IMolecularFormula molecularFormula = mfSet.getBuilder().newMolecularFormula();
 		for(IMolecularFormula mf: mfSet.molecularFormulas()){
-			Iterator<IIsotope> iterIsot = mf.isotopes();
-			while(iterIsot.hasNext()){
-				IElement element = mfSet.getBuilder().newElement(iterIsot.next());
-				int occur_new = MolecularFormulaManipulator.getElementCount(mf,element);
-				if(!MolecularFormulaManipulator.containsElement(molecularFormula,element)){
-						molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element),occur_new);
-				}else{
-					int occur_old = MolecularFormulaManipulator.getElementCount(molecularFormula,element);
-					if(occur_new > occur_old){
-						MolecularFormulaManipulator.removeElement(molecularFormula,element);
-							molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element),occur_new);
-					}
-				}
-			}
+            for (IIsotope isotope : mf.isotopes()) {
+                IElement element = mfSet.getBuilder().newElement(isotope);
+                int occur_new = MolecularFormulaManipulator.getElementCount(mf, element);
+                if (!MolecularFormulaManipulator.containsElement(molecularFormula, element)) {
+                    molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element), occur_new);
+                } else {
+                    int occur_old = MolecularFormulaManipulator.getElementCount(molecularFormula, element);
+                    if (occur_new > occur_old) {
+                        MolecularFormulaManipulator.removeElement(molecularFormula, element);
+                        molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element), occur_new);
+                    }
+                }
+            }
 		}
 		return molecularFormula;
 	}
@@ -98,20 +97,19 @@ public class MolecularFormulaSetManipulator {
 		
 		IMolecularFormula molecularFormula = mfSet.getBuilder().newMolecularFormula();
 		for(IMolecularFormula mf: mfSet.molecularFormulas()){
-			Iterator<IIsotope> iterIsot = mf.isotopes();
-			while(iterIsot.hasNext()){
-				IElement element = mfSet.getBuilder().newElement(iterIsot.next());
-				int occur_new = MolecularFormulaManipulator.getElementCount(mf,element);
-				if(!MolecularFormulaManipulator.containsElement(molecularFormula,element)){
-						molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element),occur_new);
-				}else{
-					int occur_old = MolecularFormulaManipulator.getElementCount(molecularFormula,element);
-					if(occur_new < occur_old){
-						MolecularFormulaManipulator.removeElement(molecularFormula,element);
-							molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element),occur_new);
-					}
-				}
-			}
+            for (IIsotope isotope : mf.isotopes()) {
+                IElement element = mfSet.getBuilder().newElement(isotope);
+                int occur_new = MolecularFormulaManipulator.getElementCount(mf, element);
+                if (!MolecularFormulaManipulator.containsElement(molecularFormula, element)) {
+                    molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element), occur_new);
+                } else {
+                    int occur_old = MolecularFormulaManipulator.getElementCount(molecularFormula, element);
+                    if (occur_new < occur_old) {
+                        MolecularFormulaManipulator.removeElement(molecularFormula, element);
+                        molecularFormula.addIsotope(mfSet.getBuilder().newIsotope(element), occur_new);
+                    }
+                }
+            }
 		}
 		return molecularFormula;
 	}
@@ -145,20 +143,18 @@ public class MolecularFormulaSetManipulator {
 			// the formula must contain all element found into the formulaMin
 			if(!validCorrelation(formula,formulaMin)) 
 					continue;
-			
-			Iterator<IElement> itEle = MolecularFormulaManipulator.elements(formulaMin).iterator();
-			while(itEle.hasNext()){
-				IElement element = itEle.next();
-				int occur = MolecularFormulaManipulator.getElementCount(formula, element);
-				int occurMax = MolecularFormulaManipulator.getElementCount(formulaMax, element);
-				int occurMin = MolecularFormulaManipulator.getElementCount(formulaMin, element);
-				
-				if(!(occurMin <= occur) || !(occur <= occurMax)){
-					flagPass = false;
-					break;
-				}
-					
-			}
+
+            for (IElement element : MolecularFormulaManipulator.elements(formulaMin)) {
+                int occur = MolecularFormulaManipulator.getElementCount(formula, element);
+                int occurMax = MolecularFormulaManipulator.getElementCount(formulaMax, element);
+                int occurMin = MolecularFormulaManipulator.getElementCount(formulaMin, element);
+
+                if (!(occurMin <= occur) || !(occur <= occurMax)) {
+                    flagPass = false;
+                    break;
+                }
+
+            }
 			if(flagPass) // stored if each IElement occurrence is into the limits
 				newFormulaSet.addMolecularFormula(formula);
 			
@@ -175,12 +171,11 @@ public class MolecularFormulaSetManipulator {
 	 * @return            True, if the correlation is valid
 	 */
 	private static boolean validCorrelation(IMolecularFormula formulaMin, IMolecularFormula formulamax){
-		Iterator<IElement> itMin = MolecularFormulaManipulator.elements(formulaMin).iterator();
-		while(itMin.hasNext()){
-			if(!MolecularFormulaManipulator.containsElement(formulamax, itMin.next()))
-				return false;
-			
-		}
+        for (IElement element : MolecularFormulaManipulator.elements(formulaMin)) {
+            if (!MolecularFormulaManipulator.containsElement(formulamax, element))
+                return false;
+
+        }
 		return true;
 	}
 
@@ -223,21 +218,20 @@ public class MolecularFormulaSetManipulator {
 		for(IMolecularFormula formula: formulaSet.molecularFormulas()){
 			
 			boolean flagCorrect = true;
-			Iterator<IIsotope> itEle = formulaRange.isotopes();
-			while(itEle.hasNext()){
-				IIsotope isotope = itEle.next();
-				if(formula.getIsotopeCount(isotope) != 0){
-					if((formula.getIsotopeCount(isotope) < formulaRange.getIsotopeCountMin(isotope))
-							||(formula.getIsotopeCount(isotope) > formulaRange.getIsotopeCountMax(isotope))){
-						flagCorrect = false;
-						break;
-					}	
-				}else if(formulaRange.getIsotopeCountMin(isotope) != 0){
-					flagCorrect = false;
-					break;
-				}
-			}
-			itEle = formula.isotopes();
+			Iterator<IIsotope> itEle = formulaRange.isotopes().iterator();
+            for (IIsotope isotope : formulaRange.isotopes()) {
+                if (formula.getIsotopeCount(isotope) != 0) {
+                    if ((formula.getIsotopeCount(isotope) < formulaRange.getIsotopeCountMin(isotope))
+                            || (formula.getIsotopeCount(isotope) > formulaRange.getIsotopeCountMax(isotope))) {
+                        flagCorrect = false;
+                        break;
+                    }
+                } else if (formulaRange.getIsotopeCountMin(isotope) != 0) {
+                    flagCorrect = false;
+                    break;
+                }
+            }
+			itEle = formula.isotopes().iterator();
 			while(itEle.hasNext()){
 				IIsotope isotope = itEle.next();
 				if(!formulaRange.contains(isotope)){

@@ -34,7 +34,7 @@ import java.util.List;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainer;                            
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElectronContainer;
@@ -279,14 +279,12 @@ public class ReactionManipulator {
      */
     @TestMethod("testGetMappedChemObject_IReaction_IAtom,testGetMappedChemObject_IReaction_IBond")
     public static IChemObject getMappedChemObject(IReaction reaction, IChemObject chemObject){
-    	Iterator<IMapping> mappings = reaction.mappings();
-    	while (mappings.hasNext()){
-    		IMapping mapping = mappings.next();
-			if (mapping.getChemObject(0).equals(chemObject)){
-				return mapping.getChemObject(1);
-			} else if (mapping.getChemObject(1).equals(chemObject))
-				return mapping.getChemObject(0);
-    	}
+        for (IMapping mapping : reaction.mappings()) {
+            if (mapping.getChemObject(0).equals(chemObject)) {
+                return mapping.getChemObject(1);
+            } else if (mapping.getChemObject(1).equals(chemObject))
+                return mapping.getChemObject(0);
+        }
     	return null;
     }
     

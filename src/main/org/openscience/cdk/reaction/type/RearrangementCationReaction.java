@@ -133,7 +133,7 @@ public class RearrangementCationReaction extends ReactionEngine implements IReac
 			setActiveCenters(reactant);
 		}
 		
-		Iterator<IAtom> atomis = reactant.atoms();
+		Iterator<IAtom> atomis = reactant.atoms().iterator();
 		while(atomis.hasNext()){
 			IAtom atomi = atomis.next();
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)&& atomi.getFormalCharge() == 1 ){
@@ -204,7 +204,7 @@ public class RearrangementCationReaction extends ReactionEngine implements IReac
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		
-		Iterator<IAtom> atomis = reactant.atoms();
+		Iterator<IAtom> atomis = reactant.atoms().iterator();
 		while(atomis.hasNext()){
 			IAtom atomi = atomis.next();
 			if(atomi.getFormalCharge() == 1 ){

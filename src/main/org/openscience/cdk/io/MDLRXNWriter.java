@@ -184,7 +184,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 	 */
 	private void writeReactionSet(IReactionSet reactions) throws CDKException{
 		
-		for(Iterator<IReaction> it = reactions.reactions();it.hasNext();){
+		for(Iterator<IReaction> it = reactions.reactions().iterator();it.hasNext();){
 			writeReaction(it.next());
 		}
 	}

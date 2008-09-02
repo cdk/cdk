@@ -180,7 +180,7 @@ public class SMARTSQueryTool {
             IQueryAtom queryAtom = (IQueryAtom) query.getAtom(0);
 
             matchingAtoms = new ArrayList<List<Integer>>();
-            Iterator<IAtom> atoms = this.atomContainer.atoms();
+            Iterator<IAtom> atoms = this.atomContainer.atoms().iterator();
             while (atoms.hasNext()) {
                 IAtom atom = atoms.next();
                 if (queryAtom.matches(atom)) {
@@ -332,7 +332,7 @@ public class SMARTSQueryTool {
         SSSRFinder finder = new SSSRFinder(atomContainer);
         IRingSet sssr = finder.findEssentialRings();
 
-        Iterator<IAtom> atoms = atomContainer.atoms();
+        Iterator<IAtom> atoms = atomContainer.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
 
@@ -375,7 +375,7 @@ public class SMARTSQueryTool {
             }
         }
 
-        Iterator<IBond> bonds = atomContainer.bonds();
+        Iterator<IBond> bonds = atomContainer.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
             if (allRings.getRings(bond).size() > 0) {
@@ -383,7 +383,7 @@ public class SMARTSQueryTool {
             }
         }
 
-        atoms = atomContainer.atoms();
+        atoms = atomContainer.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
@@ -417,7 +417,7 @@ public class SMARTSQueryTool {
      * @throws CDKException
      */
     private void initializeRecursiveSmarts(IAtomContainer atomContainer) throws CDKException {
-        for (Iterator<IAtom> it = this.query.atoms(); it.hasNext();) {
+        for (Iterator<IAtom> it = this.query.atoms().iterator(); it.hasNext();) {
             IAtom atom = it.next();
             initializeRecursiveSmartsAtom(atom, atomContainer);
         }

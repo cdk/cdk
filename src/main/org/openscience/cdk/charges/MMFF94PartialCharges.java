@@ -90,7 +90,7 @@ public class MMFF94PartialCharges implements IChargeCalculator {
 		Vector data = null;
 		Vector bondData = null;
 		Vector dataNeigh = null;
-		java.util.Iterator<IAtom> atoms = ac.atoms();
+		java.util.Iterator<IAtom> atoms = ac.atoms().iterator();
 		while(atoms.hasNext()) {
 			//logger.debug("ATOM "+i+ " " +atoms[i].getSymbol());
 			thisAtom = atoms.next();

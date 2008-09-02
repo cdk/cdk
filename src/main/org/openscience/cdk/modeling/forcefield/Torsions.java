@@ -1,18 +1,17 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Vector;
-
-import javax.vecmath.GMatrix;
-import javax.vecmath.GVector;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import javax.vecmath.GMatrix;
+import javax.vecmath.GVector;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Vector;
 
 
 /**
@@ -86,7 +85,7 @@ public class Torsions {
         // looks like we need the bonds in an array for the rest of the class
         bond = new IBond[molecule.getBondCount()];
         int counter = 0;
-        Iterator bonds = molecule.bonds();
+        Iterator bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond aBond = (IBond) bonds.next();
             bond[counter] = aBond;

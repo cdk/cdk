@@ -53,7 +53,7 @@ public class QueryAtomContainerCreator {
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolQueryAtom(container.getAtom(i)));
         }
-        Iterator<IBond> bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
         	IBond bond = bonds.next();
             int index1 = container.getAtomNumber(bond.getAtom(0));
@@ -85,7 +85,7 @@ public class QueryAtomContainerCreator {
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolQueryAtom(container.getAtom(i)));
         }
-        Iterator<IBond> bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
         	IBond bond = (IBond)bonds.next();
             int index1 = container.getAtomNumber(bond.getAtom(0));
@@ -113,7 +113,7 @@ public class QueryAtomContainerCreator {
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolAndChargeQueryAtom(container.getAtom(i)));
         }
-        Iterator<IBond> bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
         	IBond bond = bonds.next();
             int index1 = container.getAtomNumber(bond.getAtom(0));
@@ -136,7 +136,7 @@ public class QueryAtomContainerCreator {
         for (int i = 0; i < container.getAtomCount(); i++) {
             queryContainer.addAtom(new SymbolChargeIDQueryAtom(container.getAtom(i)));
         }
-        Iterator<IBond> bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
         	IBond bond = bonds.next();
             int index1 = container.getAtomNumber(bond.getAtom(0));
@@ -173,7 +173,7 @@ public class QueryAtomContainerCreator {
             }
         }
 
-        Iterator<IBond> bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
         	IBond bond = bonds.next();
             int index1 = container.getAtomNumber(bond.getAtom(0));
@@ -212,7 +212,7 @@ public class QueryAtomContainerCreator {
             }
         }
 
-        Iterator<IBond> bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
         	IBond bond = bonds.next();
             int index1 = container.getAtomNumber(bond.getAtom(0));
@@ -243,7 +243,7 @@ public class QueryAtomContainerCreator {
 			}
             
         }
-        Iterator<IBond> bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
         	IBond bond = bonds.next();
             int index1 = container.getAtomNumber(bond.getAtom(0));

@@ -38,7 +38,7 @@ public class DistanceMoment {
         double y = 0;
         double z = 0;
 
-        Iterator<IAtom> atoms = atomContainer.atoms();
+        Iterator<IAtom> atoms = atomContainer.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             Point3d p = atom.getPoint3d();
@@ -100,7 +100,7 @@ public class DistanceMoment {
         double[] distFct = new double[natom];
         double[] distFtf = new double[natom];
 
-        atoms = atomContainer.atoms();
+        atoms = atomContainer.atoms().iterator();
         int counter = 0;
         double min = Double.MAX_VALUE;
         double max = Double.MIN_VALUE;
@@ -127,7 +127,7 @@ public class DistanceMoment {
         }
 
         // eval dist to cst
-        atoms = atomContainer.atoms();
+        atoms = atomContainer.atoms().iterator();
         counter = 0;
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
@@ -137,7 +137,7 @@ public class DistanceMoment {
         }
 
         // eval dist to fct
-        atoms = atomContainer.atoms();
+        atoms = atomContainer.atoms().iterator();
         counter = 0;
         max = Double.MIN_VALUE;
         while (atoms.hasNext()) {
@@ -155,7 +155,7 @@ public class DistanceMoment {
         }
 
         // eval dist to ftf
-        atoms = atomContainer.atoms();
+        atoms = atomContainer.atoms().iterator();
         counter = 0;
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();

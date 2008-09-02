@@ -694,7 +694,7 @@ public class SmilesGenerator
 		List tree = new Vector();
 		
 		// set all ISVISITED labels to FALSE
-		Iterator atoms = atomContainer.atoms();
+		Iterator atoms = atomContainer.atoms().iterator();
 		while (atoms.hasNext()) ((IAtom)atoms.next()).setFlag(CDKConstants.VISITED, false);
 		
 		createDFSTree(a, tree, null, atomContainer);

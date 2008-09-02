@@ -1163,7 +1163,7 @@ public class ParserTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(smiles);
         if (dumpAtomTypes) {
-            Iterator<IAtom> atoms = atomContainer.atoms();
+            Iterator<IAtom> atoms = atomContainer.atoms().iterator();
             while (atoms.hasNext()) {
                 IAtom nextAtom = atoms.next();
                 System.out.println("atom: " + nextAtom.getSymbol() + " -> " +

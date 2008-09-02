@@ -86,7 +86,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 		reactant.addBond(1, 2, IBond.Order.SINGLE);
 		addExplicitHydrogens(reactant);
         		
-		Iterator<IBond> bonds = reactant.bonds();
+		Iterator<IBond> bonds = reactant.bonds().iterator();
 		while (bonds.hasNext()){
 			IBond bond = (IBond)bonds.next();
 			IAtom atom1 = bond.getAtom(0);
@@ -128,7 +128,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, molecule2.getSingleElectronCount());
         Assert.assertEquals(1, molecule2.getConnectedSingleElectronsCount(molecule2.getAtom(0)));
         
-        Assert.assertTrue(setOfReactions.getReaction(0).mappings().hasNext());
+        Assert.assertTrue(setOfReactions.getReaction(0).mappings().iterator().hasNext());
 
         Assert.assertEquals(2, setOfReactions.getReaction(1).getProductCount());
 
@@ -150,7 +150,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 	 */
 	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws CDKException {
 
-		Iterator<IAtom> atoms = molecule.atoms();
+		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
 		while (atoms.hasNext()) {
 				IAtom nextAtom = atoms.next();

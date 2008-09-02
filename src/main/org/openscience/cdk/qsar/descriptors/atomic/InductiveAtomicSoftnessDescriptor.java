@@ -178,7 +178,7 @@ public class InductiveAtomicSoftnessDescriptor implements IAtomicDescriptor {
             }
 
 
-        java.util.Iterator allAtoms = ac.atoms();
+        java.util.Iterator allAtoms = ac.atoms().iterator();
         double atomicSoftness;
         double radiusTarget;
 

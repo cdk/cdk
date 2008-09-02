@@ -113,11 +113,9 @@ public class ChemFileManipulator {
      */
     @TestMethod("testGetAllAtomContainers_IChemFile")
     public static List<IAtomContainer> getAllAtomContainers(IChemFile file) {
-        Iterator<IChemSequence> sequences = file.chemSequences();
         List<IAtomContainer> acList = new ArrayList<IAtomContainer>();
-        while (sequences.hasNext()) {
-        	IChemSequence chemseq = sequences.next();
-            acList.addAll(ChemSequenceManipulator.getAllAtomContainers(chemseq));
+        for (IChemSequence sequence : file.chemSequences()) {
+            acList.addAll(ChemSequenceManipulator.getAllAtomContainers(sequence));
         }
         return acList;
     }
@@ -133,9 +131,8 @@ public class ChemFileManipulator {
         List<IChemModel> modelsList = new ArrayList<IChemModel>();
 
 	    for (int f = 0; f < file.getChemSequenceCount(); f++){
-		    java.util.Iterator<IChemModel> iter = file.getChemSequence(f).chemModels();
-		    while (iter.hasNext()) {
-			    modelsList.add(iter.next());
+		    for (IChemModel model : file.getChemSequence(f).chemModels()) {
+			    modelsList.add(model);
 		    }
 	    }
 	    return modelsList;
@@ -151,10 +148,9 @@ public class ChemFileManipulator {
     public static List<IReaction> getAllReactions(IChemFile file) {
         List<IReaction> reactonList = new ArrayList<IReaction>();
         List<IChemModel> chemModel = getAllChemModels(file);
-	    for (int f = 0; f < chemModel.size(); f++){
-		    Iterator<IReaction> iter = chemModel.get(f).getReactionSet().reactions();
-		    while (iter.hasNext()) {
-		    	reactonList.add(iter.next());
+	    for (int f = 0; f < chemModel.size(); f++){		    
+		    for (IReaction reaction : chemModel.get(f).getReactionSet().reactions()) {
+		    	reactonList.add(reaction);
 		    }
 	    }
 	    return reactonList;

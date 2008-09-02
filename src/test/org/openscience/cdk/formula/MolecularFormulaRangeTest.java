@@ -258,7 +258,7 @@ public class MolecularFormulaRangeTest extends NewCDKTestCase {
     	mfRange.addIsotope( builder.newIsotope("C"), 0, 10);
     	mfRange.addIsotope( builder.newIsotope("F"), 0, 10);
         
-        Iterator<IIsotope> istoIter = mfRange.isotopes();
+        Iterator<IIsotope> istoIter = mfRange.isotopes().iterator();
         int counter = 0;
         while (istoIter.hasNext()) {
         	istoIter.next();

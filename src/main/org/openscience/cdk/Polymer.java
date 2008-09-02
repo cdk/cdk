@@ -27,13 +27,13 @@
  *  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IMonomer;
+
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IMonomer;
 
 /**
  * Subclass of Molecule to store Polymer specific attributes that a Polymer has.
@@ -146,7 +146,7 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
         clone.removeAllElements();
         for (Iterator<String> iter = clone.getMonomerNames().iterator(); iter.hasNext();) {
             Monomer monomerClone = (Monomer)(clone.getMonomer(iter.next().toString()).clone());
-            Iterator<IAtom> atoms = monomerClone.atoms();
+            Iterator<IAtom> atoms = monomerClone.atoms().iterator();
             while (atoms.hasNext()) {
                 clone.addAtom(atoms.next(), monomerClone);
             }

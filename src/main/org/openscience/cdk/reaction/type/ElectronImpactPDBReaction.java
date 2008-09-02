@@ -128,7 +128,7 @@ public class ElectronImpactPDBReaction extends ReactionEngine implements IReacti
             setActiveCenters(reactant);
         }
 
-        Iterator<IBond> bonds = reactant.bonds();
+        Iterator<IBond> bonds = reactant.bonds().iterator();
         while (bonds.hasNext()) {
         	IBond bondi = bonds.next();
             IAtom atom1 = bondi.getAtom(0);
@@ -176,7 +176,7 @@ public class ElectronImpactPDBReaction extends ReactionEngine implements IReacti
      * @throws CDKException
      */
     private void setActiveCenters(IMolecule reactant) throws CDKException {
-    	Iterator<IBond> bonds = reactant.bonds();
+    	Iterator<IBond> bonds = reactant.bonds().iterator();
         while (bonds.hasNext()) {
         	IBond bondi = bonds.next();
             IAtom atom1 = bondi.getAtom(0);

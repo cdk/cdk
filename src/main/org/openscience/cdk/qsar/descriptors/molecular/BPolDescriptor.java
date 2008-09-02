@@ -149,7 +149,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
 
             String symbol0;
             String symbol1;
-            Iterator bonds = container.bonds();
+            Iterator bonds = container.bonds().iterator();
             while (bonds.hasNext()) {
                 IBond bond = (IBond) bonds.next();
 

@@ -20,7 +20,6 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Iterator;
 import java.util.Map;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -194,7 +193,7 @@ public class DebugAtomContainerSet extends org.openscience.cdk.AtomContainerSet
 		super.add(atomContainerSet);
 	}
 
-	public Iterator<IAtomContainer> atomContainers() {
+	public Iterable<IAtomContainer> atomContainers() {
 		logger.debug("Getting AtomContainer iterator");
 		return super.atomContainers();
 	}

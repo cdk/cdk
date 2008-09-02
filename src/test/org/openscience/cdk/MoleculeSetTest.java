@@ -118,14 +118,14 @@ public class MoleculeSetTest extends NewCDKTestCase {
         som.addMolecule(builder.newMolecule());
         som.addMolecule(builder.newMolecule());
         Assert.assertEquals(3, som.getMoleculeCount());
-        Iterator<IAtomContainer> mols = som.molecules();
+        Iterator<IAtomContainer> mols = som.molecules().iterator();
         int count = 0;
         while (mols.hasNext()) {
         	count++;
         	mols.next();
         }
         Assert.assertEquals(3, count);
-        mols = som.molecules();
+        mols = som.molecules().iterator();
         while (mols.hasNext()) {
         	mols.next();
         	mols.remove();

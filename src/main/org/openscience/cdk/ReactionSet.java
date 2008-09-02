@@ -27,9 +27,9 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /** 
  * A set of reactions, for example those taking part in a reaction.
@@ -142,8 +142,12 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
      * 
      * @return A new Iterator for this ReactionSet.
      */
-    public Iterator<IReaction> reactions() {
-    	return new ReactionIterator();
+    public Iterable<IReaction> reactions() {
+    	return new Iterable<IReaction>() {
+        	public Iterator<IReaction> iterator() {
+        		return new ReactionIterator();
+        	}
+        };
     }
     
     /**
@@ -196,9 +200,8 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
         buffer.append("ReactionSet(");
         buffer.append(this.hashCode());
         buffer.append(", R=").append(getReactionCount()).append(", ");
-        java.util.Iterator reactions = reactions();
-        while (reactions.hasNext()) {
-            buffer.append(((IReaction)reactions.next()).toString());
+        for (IReaction reaction : reactions()) {
+            buffer.append(reaction.toString());
         }
         buffer.append(')');
         return buffer.toString();

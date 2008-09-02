@@ -61,36 +61,32 @@ public class MolecularFormulaRangeManipulator {
 		MolecularFormulaRange mfRange = new MolecularFormulaRange();
 		
 		for(IMolecularFormula mf: mfSet.molecularFormulas()){
-			Iterator<IIsotope> iterIsot = mf.isotopes();
-			while(iterIsot.hasNext()){
-				IIsotope isotope = iterIsot.next();
-				int occur_new = mf.getIsotopeCount(isotope);
-				if(!mfRange.contains(isotope)){
-						mfRange.addIsotope(isotope,occur_new,occur_new);
-				}else{
-					int occur_old_Max = mfRange.getIsotopeCountMax(isotope);
-					int occur_old_Min = mfRange.getIsotopeCountMin(isotope);
-					if(occur_new > occur_old_Max){
-						mfRange.removeIsotope(isotope);
-						mfRange.addIsotope(isotope,occur_old_Min,occur_new);
-					}else if(occur_new < occur_old_Min){
-						mfRange.removeIsotope(isotope);
-						mfRange.addIsotope(isotope,occur_new,occur_old_Max);
-					}
-				}
-			}
+            for (IIsotope isotope : mf.isotopes()) {
+                int occur_new = mf.getIsotopeCount(isotope);
+                if (!mfRange.contains(isotope)) {
+                    mfRange.addIsotope(isotope, occur_new, occur_new);
+                } else {
+                    int occur_old_Max = mfRange.getIsotopeCountMax(isotope);
+                    int occur_old_Min = mfRange.getIsotopeCountMin(isotope);
+                    if (occur_new > occur_old_Max) {
+                        mfRange.removeIsotope(isotope);
+                        mfRange.addIsotope(isotope, occur_old_Min, occur_new);
+                    } else if (occur_new < occur_old_Min) {
+                        mfRange.removeIsotope(isotope);
+                        mfRange.addIsotope(isotope, occur_new, occur_old_Max);
+                    }
+                }
+            }
 		}
 		// looking for those Isotopes which are not contained which then should be 0.
 		for(IMolecularFormula mf: mfSet.molecularFormulas()){
 			if(mf.getIsotopeCount() != mfRange.getIsotopeCount()){
-				Iterator<IIsotope> iterIsot = mfRange.isotopes();
-				while(iterIsot.hasNext()){
-					IIsotope isotope = iterIsot.next();
-					if(!mf.contains(isotope)){
-						int occurMax = mfRange.getIsotopeCountMax(isotope);
-						mfRange.addIsotope(isotope,0,occurMax);
-					}
-				}
+                for (IIsotope isotope : mfRange.isotopes()) {
+                    if (!mf.contains(isotope)) {
+                        int occurMax = mfRange.getIsotopeCountMax(isotope);
+                        mfRange.addIsotope(isotope, 0, occurMax);
+                    }
+                }
 			}
 		}
 		return mfRange;
@@ -105,12 +101,10 @@ public class MolecularFormulaRangeManipulator {
     @TestMethod("testGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder")
 	public static IMolecularFormula getMaximalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder){
 		IMolecularFormula formula = builder.newMolecularFormula();
-		
-		Iterator<IIsotope> iterIsot = mfRange.isotopes();
-		while(iterIsot.hasNext()){
-			IIsotope isotope = iterIsot.next();
-			formula.addIsotope(isotope,mfRange.getIsotopeCountMax(isotope));
-		}
+
+        for (IIsotope isotope : mfRange.isotopes()) {
+            formula.addIsotope(isotope, mfRange.getIsotopeCountMax(isotope));
+        }
 		
 		return formula;
 	}
@@ -125,12 +119,10 @@ public class MolecularFormulaRangeManipulator {
     @TestMethod("testGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder")
 	public static IMolecularFormula getMinimalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder){
 		IMolecularFormula formula = builder.newMolecularFormula();
-		
-		Iterator<IIsotope> iterIsot = mfRange.isotopes();
-		while(iterIsot.hasNext()){
-			IIsotope isotope = iterIsot.next();
-			formula.addIsotope(isotope,mfRange.getIsotopeCountMin(isotope));
-		}
+
+        for (IIsotope isotope : mfRange.isotopes()) {
+            formula.addIsotope(isotope, mfRange.getIsotopeCountMin(isotope));
+        }
 		
 		return formula;
 	}

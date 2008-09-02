@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Iterator;
 
 /**
  * Represents a set of Molecules.
@@ -36,11 +35,11 @@ import java.util.Iterator;
 public interface IMapping extends IChemObject {
     
     /**
-     * Returns an Iterator to the two IChemObjects.
+     * Returns an {@link Iterable} to the two IChemObjects.
      *
-     * @return An Iterator to two IChemObjects that define the mapping
+     * @return An {@link Iterable} to two IChemObjects that define the mapping
      */
-    public Iterator<IChemObject> relatedChemObjects();
+    public Iterable<IChemObject> relatedChemObjects();
     
     /**
      * Retrieve the first or second of the related IChemObjects.

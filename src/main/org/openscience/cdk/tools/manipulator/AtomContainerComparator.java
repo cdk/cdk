@@ -157,18 +157,16 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
    *         of all heavy atoms of the given IAtomContainer
    */
   private double getMolecularWeight(IAtomContainer atomContainer) throws CDKException {
-    double mw = 0.0;
-    Iterator<IAtom> iterator = atomContainer.atoms();
-    try {
-      while (iterator.hasNext()) {
-        IAtom atom = ((IAtom) iterator.next());
-        if (!atom.getSymbol().equals("H"))
-          mw += IsotopeFactory.getInstance(atomContainer.getBuilder()).getMajorIsotope(atom.getSymbol()).getExactMass();
+      double mw = 0.0;
+      try {
+          for (IAtom atom : atomContainer.atoms()) {
+              if (!atom.getSymbol().equals("H"))
+                  mw += IsotopeFactory.getInstance(atomContainer.getBuilder()).getMajorIsotope(atom.getSymbol()).getExactMass();
+          }
+      } catch (IOException e) {
+          throw new CDKException(e.getMessage(), e);
       }
-    } catch (IOException e) {
-      throw new CDKException(e.getMessage(), e);
-    }
-    return mw;
+      return mw;
   }
   
 }

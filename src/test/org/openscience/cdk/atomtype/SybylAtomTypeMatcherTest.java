@@ -69,8 +69,8 @@ public class SybylAtomTypeMatcherTest extends NewCDKTestCase {
         
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
-        Iterator<IAtom> refAtoms = reference.atoms();
-        Iterator<IAtom> atoms = molecule.atoms();
+        Iterator<IAtom> refAtoms = reference.atoms().iterator();
+        Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext() && refAtoms.hasNext()) {
         	// work around aromaticity, which we skipped for now
         	Assert.assertEquals(
@@ -91,8 +91,8 @@ public class SybylAtomTypeMatcherTest extends NewCDKTestCase {
         
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
-        Iterator<IAtom> refAtoms = reference.atoms();
-        Iterator<IAtom> atoms = molecule.atoms();
+        Iterator<IAtom> refAtoms = reference.atoms().iterator();
+        Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext() && refAtoms.hasNext()) {
         	// work around aromaticity, which we skipped for now
         	IAtom refAtom = refAtoms.next();
@@ -114,8 +114,8 @@ public class SybylAtomTypeMatcherTest extends NewCDKTestCase {
         
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
-        Iterator<IAtom> refAtoms = reference.atoms();
-        Iterator<IAtom> atoms = molecule.atoms();
+        Iterator<IAtom> refAtoms = reference.atoms().iterator();
+        Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext() && refAtoms.hasNext()) {
         	// work around aromaticity, which we skipped for now
         	IAtom refAtom = refAtoms.next();
@@ -137,8 +137,8 @@ public class SybylAtomTypeMatcherTest extends NewCDKTestCase {
         
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
-        Iterator<IAtom> refAtoms = reference.atoms();
-        Iterator<IAtom> atoms = molecule.atoms();
+        Iterator<IAtom> refAtoms = reference.atoms().iterator();
+        Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext() && refAtoms.hasNext()) {
         	// work around aromaticity, which we skipped for now
         	IAtom refAtom = refAtoms.next();
@@ -152,7 +152,7 @@ public class SybylAtomTypeMatcherTest extends NewCDKTestCase {
 
     private void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws CDKException {
     	SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(container.getBuilder());
-        Iterator<IAtom> atoms = container.atoms();
+        Iterator<IAtom> atoms = container.atoms().iterator();
         while (atoms.hasNext()) {
         	IAtom atom = atoms.next();
         	atom.setAtomTypeName(null);

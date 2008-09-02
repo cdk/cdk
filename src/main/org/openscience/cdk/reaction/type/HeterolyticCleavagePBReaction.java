@@ -137,7 +137,7 @@ public class HeterolyticCleavagePBReaction extends ReactionEngine implements IRe
 			setActiveCenters(reactant);
 		}
 		
-        Iterator<IBond> bondis = reactant.bonds();
+        Iterator<IBond> bondis = reactant.bonds().iterator();
         while (bondis.hasNext()) {
             IBond bondi = bondis.next();
             IAtom atom1 = bondi.getAtom(0);
@@ -188,7 +188,7 @@ public class HeterolyticCleavagePBReaction extends ReactionEngine implements IRe
 	 * @throws CDKException 
 	 */
     private void setActiveCenters(IMolecule reactant) throws CDKException {
-        Iterator<IBond> bonds = reactant.bonds();
+        Iterator<IBond> bonds = reactant.bonds().iterator();
         while (bonds.hasNext()) {
         	 IBond bond = bonds.next();
              IAtom atom1 = bond.getAtom(0);

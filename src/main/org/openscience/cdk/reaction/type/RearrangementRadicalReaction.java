@@ -137,7 +137,7 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
 			setActiveCenters(reactant);
 		}
 		
-		Iterator<IAtom> atoms = reactants.getMolecule(0).atoms();
+		Iterator<IAtom> atoms = reactants.getMolecule(0).atoms().iterator();
         while (atoms.hasNext()) {
 			IAtom atomi = atoms.next();
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)&& reactant.getConnectedSingleElectronsCount(atomi) == 1){
@@ -212,7 +212,7 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 		if(AtomContainerManipulator.getTotalNegativeFormalCharge(reactant) != 0 /*|| AtomContainerManipulator.getTotalPositiveFormalCharge(reactant) != 0*/)
 			return;
-		Iterator<IAtom> atoms = reactant.atoms();
+		Iterator<IAtom> atoms = reactant.atoms().iterator();
         while (atoms.hasNext()) {
 			IAtom atomi = atoms.next();
 			if(reactant.getConnectedSingleElectronsCount(atomi) == 1){

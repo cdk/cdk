@@ -110,7 +110,7 @@ public class ChemSequenceTest extends NewCDKTestCase {
         cs.addChemModel(new ChemModel());
 
         Assert.assertEquals(3, cs.getChemModelCount());
-        java.util.Iterator models = cs.chemModels();
+        java.util.Iterator models = cs.chemModels().iterator();
         int count = 0;
         while (models.hasNext()) {
         	Assert.assertNotNull(models.next());

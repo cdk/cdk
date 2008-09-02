@@ -264,7 +264,7 @@ public class MassToFormulaTool {
 		
 		// put IIsotope into a list
 		List<IIsotope> isotopes_TO = new ArrayList<IIsotope>();
-		Iterator<IIsotope> isIt = mfRange.isotopes();
+		Iterator<IIsotope> isIt = mfRange.isotopes().iterator();
 		while(isIt.hasNext())
 			isotopes_TO.add(isIt.next());
 		

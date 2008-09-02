@@ -126,7 +126,7 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
 			setActiveCenters(reactant);
 		}
 		
-		Iterator<IAtom> atomis = reactant.atoms();
+		Iterator<IAtom> atomis = reactant.atoms().iterator();
 		while(atomis.hasNext()){
 			IAtom atomi = atomis.next();
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getSymbol().equals("O") &&
@@ -191,7 +191,7 @@ public class CarbonylEliminationReaction extends ReactionEngine implements IReac
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		Iterator<IAtom> atomis = reactant.atoms();
+		Iterator<IAtom> atomis = reactant.atoms().iterator();
 		while(atomis.hasNext()){
 			IAtom atomi = atomis.next();
 			if(atomi.getSymbol().equals("O") &&

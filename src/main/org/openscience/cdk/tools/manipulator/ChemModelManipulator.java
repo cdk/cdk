@@ -326,19 +326,17 @@ public class ChemModelManipulator {
         if (moleculeSet != null) {
         	list.add(moleculeSet);
         	List<IChemObject> current = MoleculeSetManipulator.getAllChemObjects(moleculeSet);
-        	for (Iterator<IChemObject> iter = current.iterator(); iter.hasNext();) {
-        		IChemObject o = iter.next();
-        		if (!list.contains(o)) list.add(o);
-        	}
+            for (IChemObject chemObject : current) {
+                if (!list.contains(chemObject)) list.add(chemObject);
+            }
         }
         IReactionSet reactionSet = chemModel.getReactionSet();
         if (reactionSet != null) {
         	list.add(reactionSet);
             List<IChemObject> current = ReactionSetManipulator.getAllChemObjects(reactionSet);
-        	for (Iterator<IChemObject> iter = current.iterator(); iter.hasNext();) {
-        		IChemObject o = iter.next();
-        		if (!list.contains(o)) list.add(o);
-        	}
+            for (IChemObject chemObject : current) {
+                if (!list.contains(chemObject)) list.add(chemObject);
+            }            
         }
 		return list;
 	}

@@ -196,7 +196,7 @@ public abstract class IDCreator {
 				internalTabuList = tabuList;
         }
         
-        Iterator atoms = container.atoms();
+        Iterator atoms = container.atoms().iterator();
         while(atoms.hasNext()) {
         	IAtom atom = (IAtom)atoms.next();
 			if (null == atom.getID()) {
@@ -204,7 +204,7 @@ public abstract class IDCreator {
             }
         }
 
-        Iterator bonds = container.bonds();
+        Iterator bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
 			if (null == bond.getID()) {
@@ -232,7 +232,7 @@ public abstract class IDCreator {
 			BOND_COUNT = 0;
         }
 
-        Iterator acs = containerSet.atomContainers();
+        Iterator acs = containerSet.atomContainers().iterator();
         while (acs.hasNext()) {
 			createIDsForAtomContainer((IAtomContainer)acs.next(), tabuList);
         }
@@ -256,15 +256,13 @@ public abstract class IDCreator {
 			BOND_COUNT = 0;
         }
 
-        Iterator reactants = reaction.getReactants().atomContainers();
-        while (reactants.hasNext()) {
-            createIDsForAtomContainer((IAtomContainer)reactants.next(), tabuList);
+        for (IAtomContainer reactant : reaction.getReactants().atomContainers()) {
+            createIDsForAtomContainer(reactant, tabuList);
         }
-        Iterator products = reaction.getProducts().atomContainers();
-        while (products.hasNext()) {
-            createIDsForAtomContainer((IAtomContainer)products.next(), tabuList);
+        for (IAtomContainer product : reaction.getReactants().atomContainers()) {
+            createIDsForAtomContainer(product, tabuList);
         }
-		Iterator agents = reaction.getAgents().atomContainers();
+		Iterator agents = reaction.getAgents().atomContainers().iterator();
 		while (agents.hasNext()) {
 			createIDsForAtomContainer((IAtomContainer)agents.next(), tabuList);
 		}
@@ -278,7 +276,7 @@ public abstract class IDCreator {
 			REACTIONSET_COUNT = setID(REACTIONSET_PREFIX, REACTIONSET_COUNT, reactionSet, tabuList);
         }
 
-		for (Iterator reaction = reactionSet.reactions(); reaction.hasNext();) {
+		for (Iterator reaction = reactionSet.reactions().iterator(); reaction.hasNext();) {
 			createIDsForReaction((IReaction)reaction.next(), tabuList);
         }
     }
@@ -294,11 +292,10 @@ public abstract class IDCreator {
 			// start indices within a chem file always from 1
 			CHEMSEQUENCE_COUNT = 0;
         }
-    	
-    	Iterator sequences = file.chemSequences();
-    	while (sequences.hasNext()) {
-    		createIDsForChemSequence((IChemSequence)sequences.next(), tabuList);
-    	}
+
+        for (IChemSequence chemSequence : file.chemSequences()) {
+            createIDsForChemSequence(chemSequence, tabuList);
+        }
     }
     
     private static void createIDsForChemSequence(IChemSequence sequence, List<String> tabuList) {
@@ -312,11 +309,10 @@ public abstract class IDCreator {
 			// start indices within a chem file always from 1
 			CHEMSEQUENCE_COUNT = 0;
         }
-    	
-    	Iterator models = sequence.chemModels();
-    	while (models.hasNext()) {
-    		createIDsForChemModel((IChemModel)models.next(), tabuList);
-    	}
+
+        for (IChemModel chemModel : sequence.chemModels()) {
+            createIDsForChemModel(chemModel, tabuList);
+        }
     }
     
     private static void createIDsForChemModel(IChemModel model, List<String> tabuList) {

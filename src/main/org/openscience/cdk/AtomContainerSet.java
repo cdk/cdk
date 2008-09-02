@@ -232,8 +232,8 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 * @param  atomContainerSet  The AtomContainerSet
 	 */
 	public void add(IAtomContainerSet atomContainerSet) {
-		for (Iterator<IAtomContainer> iter = atomContainerSet.atomContainers();iter.hasNext();) {
-			addAtomContainer((IAtomContainer)iter.next());
+		for (IAtomContainer iter : atomContainerSet.atomContainers()) {
+			addAtomContainer(iter);
 		}
 		/*
 		 *  notifyChanged() is called by addAtomContainer()
@@ -245,8 +245,12 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      * 
      * @return A new Iterator for this AtomContainerSet.
 	 */
-	public Iterator<IAtomContainer> atomContainers() {
-		return new AtomContainerIterator();
+	public Iterable<IAtomContainer> atomContainers() {
+		return new Iterable<IAtomContainer>() {
+        	public Iterator<IAtomContainer> iterator() {
+        		return new AtomContainerIterator();
+        	}
+        };
 	}
 
 	/**

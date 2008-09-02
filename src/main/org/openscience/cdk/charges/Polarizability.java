@@ -65,7 +65,7 @@ public class Polarizability {
     private void addExplicitHydrogens(IAtomContainer container) {
         try {
         	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-        	Iterator<IAtom> atoms = container.atoms();
+        	Iterator<IAtom> atoms = container.atoms().iterator();
         	while (atoms.hasNext()) {
         		IAtom atom = atoms.next();
         		IAtomType type = matcher.findMatchingAtomType(container, atom);

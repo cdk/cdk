@@ -6,7 +6,6 @@ import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
@@ -85,7 +84,7 @@ public class BondStretching {
 		k4 = new double[molecule.getBondCount()];
 
         String bondType;
-        Iterator bonds = molecule.bonds();
+        Iterator bonds = molecule.bonds().iterator();
         int i = 0;
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();

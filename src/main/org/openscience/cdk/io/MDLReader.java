@@ -477,7 +477,7 @@ public class MDLReader extends DefaultChemObjectReader {
             // convert to 2D, if totalZ == 0
             if (totalZ == 0.0 && !forceReadAs3DCoords.isSet()) {
                 logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
-                Iterator<IAtom> atomsToUpdate = molecule.atoms();
+                Iterator<IAtom> atomsToUpdate = molecule.atoms().iterator();
                 while (atomsToUpdate.hasNext()) {
                     IAtom atomToUpdate = (IAtom)atomsToUpdate.next();
                     Point3d p3d = atomToUpdate.getPoint3d();

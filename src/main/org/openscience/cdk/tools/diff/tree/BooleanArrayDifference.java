@@ -20,10 +20,10 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+
+import java.util.Iterator;
 
 /**
  * Difference between two boolean[]'s.
@@ -78,7 +78,7 @@ public class BooleanArrayDifference extends AbstractDifferenceList implements ID
         
         StringBuffer diffBuffer = new StringBuffer();
         diffBuffer.append(this.name).append('{');
-        Iterator<IDifference> children = getChildren();
+        Iterator<IDifference> children = getChildren().iterator();
         while (children.hasNext()) {
             diffBuffer.append(children.next().toString());
             if (children.hasNext()) {

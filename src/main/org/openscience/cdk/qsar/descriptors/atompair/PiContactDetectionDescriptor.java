@@ -171,7 +171,7 @@ public class PiContactDetectionDescriptor implements IAtomPairDescriptor {
           acold=ac;
           acSet = ConjugatedPiSystemsDetector.detect(mol);
         }
-        java.util.Iterator<IAtomContainer> detected = acSet.atomContainers();
+        java.util.Iterator<IAtomContainer> detected = acSet.atomContainers().iterator();
 
         java.util.List<IAtom> neighboorsFirst = mol.getConnectedAtomsList(clonedFirst);
         java.util.List<IAtom> neighboorsSecond = mol.getConnectedAtomsList(clonedSecond);

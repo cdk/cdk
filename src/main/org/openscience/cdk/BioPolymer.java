@@ -27,15 +27,15 @@
  *  */
 package org.openscience.cdk;
 
-import java.util.Collection;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
+
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * A BioPolymer is a subclass of a Polymer which is supposed to store
@@ -271,7 +271,7 @@ public class BioPolymer extends Polymer implements java.io.Serializable, IBioPol
             Strand strand = (Strand)clone.getStrand(strands.next().toString()).clone();
             for (Iterator<String> iter = strand.getMonomerNames().iterator(); iter.hasNext();) {
             	IMonomer monomer = strand.getMonomer(iter.next().toString());
-            	Iterator<IAtom> atoms = monomer.atoms();
+            	Iterator<IAtom> atoms = monomer.atoms().iterator();
             	while (atoms.hasNext()) {
                     clone.addAtom((IAtom)atoms.next(), monomer, strand);
                 } 

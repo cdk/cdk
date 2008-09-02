@@ -131,7 +131,7 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
 		}
 		
 		
-		Iterator<IAtom> atoms = reactant.atoms();
+		Iterator<IAtom> atoms = reactant.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             if(atom.getFlag(CDKConstants.REACTIVE_CENTER) &&
@@ -161,7 +161,7 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		Iterator<IAtom> atoms = reactant.atoms();
+		Iterator<IAtom> atoms = reactant.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             if(reactant.getConnectedLonePairsCount(atom) > 0 && 

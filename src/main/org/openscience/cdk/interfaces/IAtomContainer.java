@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.interfaces.IBond.Order;
+
+import java.util.List;
 
 /**
  *  Base class for all chemical objects that maintain a list of Atoms and
@@ -32,11 +31,14 @@ import org.openscience.cdk.interfaces.IBond.Order;
  *  Looping over all <code>IBond</code>s in the <code>IAtomContainer</code>
  *  is typically done like:
  *  <pre>
- *  Iterator bonds = atomContainer.bonds();
- *  while (bonds.hasNext()) {
- *      IBond b = (IBond)bonds.next();
+ *  for (IBond bond : atomContainer.bonds()) {
+ *    // do something
  *  }
  *  </pre>
+ * If you do need an explicit Iterator then use
+ * <pre>
+ * Iterator<IBond> bondIter = atomContainer.bonds().iterator();
+ * </pre>
  *
  * @cdk.module interfaces
  * @cdk.svnrev  $Revision$
@@ -126,39 +128,39 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	public ISingleElectron getSingleElectron(int number);
 
 	/**
-	 *  Returns an Iterator for looping over all atoms in this container.
+	 *  Returns an Iterable for looping over all atoms in this container.
 	 *
-	 *@return    An Iterator with the atoms in this container
+	 *@return    An Iterable with the atoms in this container
 	 */
-	public Iterator<IAtom> atoms();
+	public Iterable<IAtom> atoms();
 
 	/**
-	 *  Returns an Iterator for looping over all bonds in this container.
+	 *  Returns an Iterable for looping over all bonds in this container.
 	 *
-	 *@return    An Iterator with the bonds in this container
+	 *@return    An Iterable with the bonds in this container
 	 */
-	public Iterator<IBond> bonds();
+	public Iterable<IBond> bonds();
 	
 	/**
-	 *  Returns an Iterator for looping over all lone pairs in this container.
+	 *  Returns an Iterable for looping over all lone pairs in this container.
 	 *
-	 *@return    An Iterator with the lone pairs in this container
+	 *@return    An Iterable with the lone pairs in this container
 	 */
-	public Iterator<ILonePair> lonePairs();
+	public Iterable<ILonePair> lonePairs();
 	
 	/**
-	 *  Returns an Iterator for looping over all single electrons in this container.
+	 *  Returns an Iterable for looping over all single electrons in this container.
 	 *
-	 *@return    An Iterator with the single electrons in this container
+	 *@return    An Iterable with the single electrons in this container
 	 */
-	public Iterator<ISingleElectron> singleElectrons();
+	public Iterable<ISingleElectron> singleElectrons();
 	
 	/**
-	 *  Returns an Iterator for looping over all electron containers in this container.
+	 *  Returns an Iterable for looping over all electron containers in this container.
 	 *
-	 *@return    An Iterator with the electron containers in this container
+	 *@return    An Iterable with the electron containers in this container
 	 */
-	public Iterator<IElectronContainer> electronContainers();
+	public Iterable<IElectronContainer> electronContainers();
 	
 	/**
 	 *  Returns the atom at position 0 in the container.

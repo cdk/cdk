@@ -335,7 +335,7 @@ public class RadicalChargeSiteInitiationHReactionTest extends ReactionProcessTes
 	 */
 	private void makeSureAtomTypesAreRecognized(IMolecule molecule) throws CDKException {
 
-		Iterator<IAtom> atoms = molecule.atoms();
+		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
 		while (atoms.hasNext()) {
 				IAtom nextAtom = atoms.next();

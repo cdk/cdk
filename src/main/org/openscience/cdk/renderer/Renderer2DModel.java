@@ -855,7 +855,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable {
 		{
 			getColorHash().put(selectedPart.getAtom(i), this.getSelectedPartColor());
 		}
-        Iterator<IBond> bonds = selectedPart.bonds();
+        Iterator<IBond> bonds = selectedPart.bonds().iterator();
 		while (bonds.hasNext()) {
 			getColorHash().put(bonds.next(), getSelectedPartColor());
 		}		
@@ -1083,7 +1083,7 @@ public class Renderer2DModel implements java.io.Serializable, Cloneable {
 		{
 			getColorHash().put(externalSelectedPart.getAtom(i), this.getExternalHighlightColor());
 		}
-        Iterator<IBond> bonds = externalSelectedPart.bonds();
+        Iterator<IBond> bonds = externalSelectedPart.bonds().iterator();
 		while (bonds.hasNext()) {
 			getColorHash().put(bonds.next(), getExternalHighlightColor());
 		}		

@@ -23,18 +23,14 @@
  */
 package org.openscience.cdk.formula;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IAdductFormula;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IMolecularFormulaSet;
+import org.openscience.cdk.interfaces.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  *  Class defining an adduct object in a MolecularFormula. It maintains
@@ -123,7 +119,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
 	 */
     @TestMethod("testContains_IIsotope")
 	public boolean contains(IIsotope isotope) {
-		for(Iterator<IIsotope> it = isotopes(); it.hasNext(); ) {
+		for(Iterator<IIsotope> it = isotopes().iterator(); it.hasNext(); ) {
 			IIsotope thisIsotope = it.next();
 			if(isTheSame(thisIsotope, isotope)){
 				return true;
@@ -187,8 +183,12 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
 	 * @return    An Iterator with the isotopes in this adduct formula
 	 */
     @TestMethod("testIsotopes")
-	public Iterator<IIsotope> isotopes() {
-		return isotopesList().iterator();
+	public Iterable<IIsotope> isotopes() {
+		return new Iterable() {
+            public Iterator iterator() {
+                return isotopesList().iterator();
+            }
+        };
 	}
 	
 	/**
@@ -200,7 +200,7 @@ public class AdductFormula implements Iterable<IMolecularFormula>, IAdductFormul
 		List<IIsotope> isotopes = new ArrayList<IIsotope>();
 		Iterator<IMolecularFormula> componentIterator = components.iterator();
 		while (componentIterator.hasNext()) {
-			Iterator<IIsotope> compIsotopes = componentIterator.next().isotopes();
+			Iterator<IIsotope> compIsotopes = componentIterator.next().isotopes().iterator();
 			while (compIsotopes.hasNext()) {
 				IIsotope isotope = compIsotopes.next();
 				if (!isotopes.contains(isotope)) {

@@ -46,25 +46,17 @@ import java.util.Iterator;
 public class MoleculeFeaturesTool {
 
     public static boolean hasPartialCharges(IMolecule molecule) {
-        java.util.Iterator atoms = molecule.atoms();
-        while (atoms.hasNext()) {
-            if (((IAtom)atoms.next()).getCharge() != 0.0000) return true;
-        }
+        for (IAtom atom : molecule.atoms()) if (atom.getCharge() != 0.0000) return true;
         return false;
     }
 
     public static boolean hasFormalCharges(IMolecule molecule) {
-        java.util.Iterator atoms = molecule.atoms();
-        while (atoms.hasNext()) {
-            if (((IAtom)atoms.next()).getFormalCharge() != 0) return true;
-        }
+        for (IAtom atom : molecule.atoms()) if (atom.getFormalCharge() != 0) return true;
         return false;
     }
 
     public static boolean hasElementSymbols(IMolecule molecule) {
-        java.util.Iterator atoms = molecule.atoms();
-        while (atoms.hasNext()) {
-            IAtom atom = (IAtom)atoms.next();
+        for (IAtom atom : molecule.atoms()) {
             if (atom.getSymbol() != null &&
                 atom.getSymbol().length() > 0) return true;
         }
@@ -74,13 +66,8 @@ public class MoleculeFeaturesTool {
     /**
      * Checks whether all bonds have exactly two atoms.
      */
-    public static boolean hasGraphRepresentation(IMolecule molecule) {
-
-        Iterator bonds = molecule.bonds();
-        while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();       
-            if (bond.getAtomCount() != 2) return false;
-        }
+    public static boolean hasGraphRepresentation(IMolecule molecule) {        
+        for (IBond bond : molecule.bonds()) if (bond.getAtomCount() != 2) return false;
         return true;
     }
 

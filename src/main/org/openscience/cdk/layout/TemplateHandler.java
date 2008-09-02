@@ -285,12 +285,12 @@ public class TemplateHandler
 						IAtom atom = molecule.getAtom(map.getId1());
 						matchedSubstructure.addAtom(atom);
 					}
-					for (Iterator<IAtom> atomIterator = matchedSubstructure.atoms(); atomIterator.hasNext(); ) {
+					for (Iterator<IAtom> atomIterator = matchedSubstructure.atoms().iterator(); atomIterator.hasNext(); ) {
 						IAtom atom = atomIterator.next();
 						for (Iterator<IBond> connectedBondsIterator = molecule.getConnectedBondsList(atom).iterator(); connectedBondsIterator.hasNext(); ) {
 							IBond bond = connectedBondsIterator.next();
 							boolean addBond = true;
-							for (Iterator<IAtom> bondIterator = bond.atoms(); bondIterator.hasNext(); ) {
+							for (Iterator<IAtom> bondIterator = bond.atoms().iterator(); bondIterator.hasNext(); ) {
 								IAtom connectedAtom = bondIterator.next();
 								if (!matchedSubstructure.contains(connectedAtom) || matchedSubstructure.contains(bond))
 									addBond = false;
@@ -333,7 +333,7 @@ public class TemplateHandler
 	private boolean haveSameAtoms(IAtomContainer atomContainer1, IAtomContainer atomContainer2) {
 		if (atomContainer1.getAtomCount() != atomContainer2.getAtomCount())
 			return false;
-		for (Iterator<IAtom> iterator = atomContainer1.atoms(); iterator.hasNext(); )
+		for (Iterator<IAtom> iterator = atomContainer1.atoms().iterator(); iterator.hasNext(); )
 			if (!atomContainer2.contains(iterator.next()))
 				return false;
 		return true;

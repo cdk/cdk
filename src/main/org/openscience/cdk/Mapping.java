@@ -69,13 +69,17 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
     }
 
     /**
-     * Returns an Iterator to the two IChemObjects.
-     * Iterator.remove() is not implemented.
+     * Returns an Iterable to the two IChemObjects.
+     * Iterable.remove() is not implemented.
      *
-     * @return An Iterator to two IChemObjects that define the mapping
+     * @return An Iterable to two IChemObjects that define the mapping
      */
-    public Iterator<IChemObject> relatedChemObjects() {
-    	return new ChemObjectIterator();
+    public Iterable<IChemObject> relatedChemObjects() {
+    	return new Iterable<IChemObject>(){
+            public Iterator<IChemObject> iterator() {
+                return new ChemObjectIterator();
+            }
+        };
     }
     
     /**

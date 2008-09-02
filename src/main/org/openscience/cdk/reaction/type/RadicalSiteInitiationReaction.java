@@ -127,7 +127,7 @@ public class RadicalSiteInitiationReaction extends ReactionEngine implements IRe
 			setActiveCenters(reactant);
 		}
 		
-		Iterator<IAtom> atoms = reactants.getMolecule(0).atoms();
+		Iterator<IAtom> atoms = reactants.getMolecule(0).atoms().iterator();
         while (atoms.hasNext()) {
 			IAtom atomi = atoms.next();
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)&& reactant.getConnectedSingleElectronsCount(atomi) == 1 &&
@@ -199,7 +199,7 @@ public class RadicalSiteInitiationReaction extends ReactionEngine implements IRe
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
 
-		Iterator<IAtom> atoms = reactant.atoms();
+		Iterator<IAtom> atoms = reactant.atoms().iterator();
         while (atoms.hasNext()) {
 			IAtom atomi = atoms.next();
 			if(reactant.getConnectedSingleElectronsCount(atomi) == 1 &&

@@ -61,7 +61,7 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor
 	
 	public void initObjectArray()
 	{
-		java.util.Iterator atoms = atomContainer.atoms();
+		java.util.Iterator atoms = atomContainer.atoms().iterator();
 		objects = new Object[atomContainer.getAtomCount()];
 		int count = -1;
 		while (atoms.hasNext())

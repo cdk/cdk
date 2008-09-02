@@ -20,11 +20,11 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
+
+import java.util.Iterator;
 
 /**
  * {@link IDifference} between two {@link IChemObject}s.
@@ -47,7 +47,7 @@ public class ChemObjectDifference extends AbstractDifferenceList implements IDif
         
         StringBuffer diffBuffer = new StringBuffer();
         diffBuffer.append(this.name).append('{');
-        Iterator<IDifference> children = getChildren();
+        Iterator<IDifference> children = getChildren().iterator();
         while (children.hasNext()) {
             diffBuffer.append(children.next().toString());
             if (children.hasNext()) {

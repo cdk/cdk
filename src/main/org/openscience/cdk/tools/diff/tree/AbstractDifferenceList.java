@@ -20,12 +20,12 @@
  */
 package org.openscience.cdk.tools.diff.tree;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Diff between two IChemObjects.
@@ -57,8 +57,12 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
     }
 
     @TestMethod("testChildDiffs")
-    public Iterator<IDifference> getChildren() {
-        return differences.iterator();
+    public Iterable<IDifference> getChildren() {
+        return new Iterable<IDifference>(){
+            public Iterator<IDifference> iterator() {
+                return differences.iterator();
+            }
+        };        
     }
 
     @TestMethod("testAddChild")

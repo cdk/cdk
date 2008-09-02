@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.Iterator;
-
 /**
  * Represents a set of Molecules.
  * 
@@ -64,7 +62,7 @@ public interface IMoleculeSet extends IAtomContainerSet {
      * @return    The array of Molecules of this container 
      * @see       #setMolecules(IMolecule[])
      */
-    public Iterator<IAtomContainer> molecules();
+    public Iterable<IAtomContainer> molecules();
     
     /**
      * Returns the Molecule at position <code>number</code> in the

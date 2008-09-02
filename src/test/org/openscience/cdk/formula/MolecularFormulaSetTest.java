@@ -111,7 +111,7 @@ public class MolecularFormulaSetTest extends NewCDKTestCase {
         mfS.addMolecularFormula(new MolecularFormula());
 
         Assert.assertEquals(3, mfS.size());
-        Iterator<IMolecularFormula> iter = mfS.iterator();
+        Iterator<IMolecularFormula> iter = mfS.molecularFormulas().iterator();
         int count = 0;
         while (iter.hasNext()) {
         	iter.next();

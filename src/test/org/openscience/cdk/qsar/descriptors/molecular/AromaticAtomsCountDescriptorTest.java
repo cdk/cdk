@@ -68,7 +68,7 @@ public class AromaticAtomsCountDescriptorTest extends MolecularDescriptorTest {
     
     public void testViaFlags() throws Exception {
     	IMolecule molecule = MoleculeFactory.makeBenzene();
-    	for (Iterator atoms=molecule.atoms(); atoms.hasNext();) {
+    	for (Iterator atoms=molecule.atoms().iterator(); atoms.hasNext();) {
     		((IAtom)atoms.next()).setFlag(CDKConstants.ISAROMATIC, true);
     	}
     	assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());

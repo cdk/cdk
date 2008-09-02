@@ -272,7 +272,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         // see cdk-user@list.sf.net on 2005-06-16
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
 //		CDKHueckelAromaticityDetector.detectAromaticity(mol1);
-		Iterator<IAtom> atoms = mol1.atoms();
+		Iterator<IAtom> atoms = mol1.atoms().iterator();
 		int i= 1;
 		while (atoms.hasNext()) {
 			IAtom nextAtom = atoms.next();

@@ -598,7 +598,7 @@ public class DeduceBondSystemTool {
     private boolean isStructureOK(IMolecule molecule) {
         try {
         	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
-            Iterator<IAtom> atoms = molecule.atoms();
+            Iterator<IAtom> atoms = molecule.atoms().iterator();
             while (atoms.hasNext()) {
             	IAtom atom = atoms.next();
             	IAtomType matched = matcher.findMatchingAtomType(molecule, atom);

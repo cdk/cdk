@@ -252,7 +252,7 @@ public class AllRingsFinderTest extends NewCDKTestCase
 
 
         int count = 0;
-        Iterator atoms = molecule.atoms();
+        Iterator atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = (IAtom) atoms.next();
             if (atom.getFlag(CDKConstants.ISINRING)) count++;
@@ -270,7 +270,7 @@ public class AllRingsFinderTest extends NewCDKTestCase
 
 
         int count = 0;
-        Iterator atoms = molecule.atoms();
+        Iterator atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = (IAtom) atoms.next();
             if (atom.getFlag(CDKConstants.ISINRING)) count++;

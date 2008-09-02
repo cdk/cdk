@@ -201,13 +201,13 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
 	        try {
 				peoe.assignGasteigerMarsiliSigmaPartialCharges(ac, true);
 				List<Double> peoeBond = new ArrayList<Double>();
-				for(Iterator<IBond> it = ac.bonds() ; it.hasNext(); ) {
+				for(Iterator<IBond> it = ac.bonds().iterator() ; it.hasNext(); ) {
 					IBond bondi = it.next();
 					double result = Math.abs(bondi.getAtom(0).getCharge()-bondi.getAtom(1).getCharge());
 					peoeBond.add(result);
 				}
 				
-				for(Iterator<IAtom> it = ac.atoms(); it.hasNext();)
+				for(Iterator<IAtom> it = ac.atoms().iterator(); it.hasNext();)
 					it.next().setCharge(0.0);
 
 				pepe.assignGasteigerPiPartialCharges(ac, true);

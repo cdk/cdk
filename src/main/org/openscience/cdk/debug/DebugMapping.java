@@ -20,14 +20,10 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Map;
-
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.Map;
 
 /**
  * Debugging data class.
@@ -148,7 +144,7 @@ public class DebugMapping extends org.openscience.cdk.Mapping
         return super.getChemObject(pos);
     }
 
-    public java.util.Iterator relatedChemObjects() {
+    public Iterable<IChemObject> relatedChemObjects() {
     	logger.debug("Getting related ChemObjects");
     	return super.relatedChemObjects();
     }

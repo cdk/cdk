@@ -145,7 +145,7 @@ public class BondCountDescriptor implements IMolecularDescriptor {
     	}
     	
         int bondCount = 0;
-        Iterator<IBond> bonds = container.bonds();
+        Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
             if (bondMatch(bond.getOrder(), order)) {

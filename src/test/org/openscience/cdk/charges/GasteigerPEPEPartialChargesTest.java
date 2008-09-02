@@ -259,7 +259,7 @@ public class GasteigerPEPEPartialChargesTest extends NewCDKTestCase {
         addExplicitHydrogens(molecule);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         lpcheck.saturate(molecule);
-        for (Iterator<IAtom> it = molecule.atoms(); it.hasNext();)
+        for (Iterator<IAtom> it = molecule.atoms().iterator(); it.hasNext();)
             it.next().setCharge(0.0);
 
         IMoleculeSet set = builder.newMoleculeSet();

@@ -181,7 +181,7 @@ public class BondTest extends NewCDKTestCase {
 
         IBond b = builder.newBond(c, o, IBond.Order.DOUBLE); // C=O bond
 
-        java.util.Iterator atoms = b.atoms();
+        java.util.Iterator atoms = b.atoms().iterator();
         Assert.assertEquals(2, b.getAtomCount());
         Assert.assertTrue(atoms.hasNext());
         Assert.assertEquals(c, atoms.next());
@@ -437,7 +437,7 @@ public class BondTest extends NewCDKTestCase {
         IAtom atom4 = builder.newAtom("C");
 
         IBond bond1 = builder.newBond(new IAtom[]{atom1, atom2, atom3, atom4});
-        Iterator<IAtom> atoms = bond1.atoms();
+        Iterator<IAtom> atoms = bond1.atoms().iterator();
         int natom = 0;
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();

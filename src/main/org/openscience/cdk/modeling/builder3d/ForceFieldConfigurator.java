@@ -24,31 +24,23 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.HOSECodeGenerator;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
 import java.io.InputStream;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.NoSuchAtomTypeException;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.tools.HOSECodeGenerator;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  *  Reads in a force field configuration file, set the atom types into a vector, and the data into a hashtable
@@ -298,7 +290,7 @@ public class ForceFieldConfigurator {
 		
 //		IBond[] bond = molecule.getBonds();
 		String bondType;
-        Iterator bonds = molecule.bonds();
+        Iterator bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
 

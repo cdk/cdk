@@ -20,32 +20,21 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.charges.Electronegativity;
-import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
-import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
-import org.openscience.cdk.charges.PiElectronegativity;
-import org.openscience.cdk.charges.Polarizability;
-import org.openscience.cdk.charges.StabilizationCharges;
+import org.openscience.cdk.charges.*;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.ElectronImpactNBEReaction;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * <p>This class contains the necessary information to predict ionization
@@ -191,12 +180,10 @@ public class IonizationPotentialTool {
 		if(getDoubleBondNumber(ac) > 15) // taking to long
         	return false;
 		
-        for(Iterator<IAtom> it = container.atoms(); it.hasNext();){
-			IAtom atom = it.next();
+        for(IAtom atom : container.atoms()){
 			if(!normalAt.contains(atom.getSymbol()))
 				if(ac.contains(atom))
 					return false;
-				
 		}
 		
 		return true;
@@ -208,10 +195,8 @@ public class IonizationPotentialTool {
 	 * @return          The number
 	 */
 	private static int getDoubleBondNumber(IAtomContainer container) {
-		Iterator<IBond> bonds = container.bonds();
 		int doubleNumber = 0;
-		while (bonds.hasNext()) {
-			IBond bond = bonds.next(); 
+		for (IBond bond : container.bonds()) {
 			if(bond.getOrder().equals(IBond.Order.DOUBLE) || bond.getOrder().equals(IBond.Order.TRIPLE))
 				doubleNumber++;
 		}
@@ -280,10 +265,9 @@ public class IonizationPotentialTool {
 			boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(container);
 			IRingSet ringSet = SSSRFinder.findSSSR(container);
 			RingSetManipulator.markAromaticRings(ringSet);
-			int aromRingCount = 0;
-			Iterator<IAtomContainer> rings = ringSet.atomContainers();
-			while (rings.hasNext()) {
-				if (rings.next().getFlag(CDKConstants.ISAROMATIC)) aromRingCount++;
+			int aromRingCount = 0;			
+			for (IAtomContainer ring : ringSet.atomContainers()) {
+				if (ring.getFlag(CDKConstants.ISAROMATIC)) aromRingCount++;
 			}
 		    results[7] = aromRingCount;
 		}else{

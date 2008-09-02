@@ -233,7 +233,7 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 		
 		Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
 		while (containers.hasNext()) {
-			Iterator<IAtom> atoms = containers.next().atoms();
+			Iterator<IAtom> atoms = containers.next().atoms().iterator();
 			while (atoms.hasNext()) {
 				IAtom nextAtom = atoms.next();
 				double distance = nextAtom.getPoint2d().distance(worldCoord);
@@ -252,7 +252,7 @@ public class Controller2DHub implements IMouseEventRelay, IChemModelRelay {
 		
 		Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
 		while (containers.hasNext()) {
-			Iterator<IBond> bonds = containers.next().bonds();
+			Iterator<IBond> bonds = containers.next().bonds().iterator();
 			while (bonds.hasNext()) {
 				IBond nextBond = bonds.next();
 				double distance = nextBond.get2DCenter().distance(worldCoord);

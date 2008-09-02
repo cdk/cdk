@@ -364,13 +364,17 @@ public class AtomContainer extends ChemObject
 
 
 	/**
-	 *  Returns an Iterator for looping over all atoms in this container.
+	 *  Returns an Iterable for looping over all atoms in this container.
 	 *
-	 *@return    An Iterator with the atoms in this container
+	 *@return    An Iterable with the atoms in this container
 	 */
-	public Iterator<IAtom> atoms()
+	public Iterable<IAtom> atoms()
 	{
-		return new AtomIterator();
+        return new Iterable<IAtom>() {
+            public Iterator<IAtom> iterator() {
+                return new AtomIterator();
+            }
+        };
 	}
 
 	/**
@@ -394,15 +398,19 @@ public class AtomContainer extends ChemObject
         }
     	
     }
-	
+
     /**
-	 *  Returns an Iterator for looping over all bonds in this container.
+	 *  Returns an Iterable for looping over all bonds in this container.
 	 *
-	 *@return    An Iterator with the bonds in this container
+	 *@return    An Iterable with the bonds in this container
 	 */
-	public Iterator<IBond> bonds()
+	public Iterable<IBond> bonds()
 	{
-		return new BondIterator();
+		return new Iterable<IBond>() {
+            public Iterator<IBond> iterator() {
+                return new BondIterator();
+            }
+        };
 	}
 
 	/**
@@ -428,13 +436,17 @@ public class AtomContainer extends ChemObject
     }
     
     /**
-	 *  Returns an Iterator for looping over all lone pairs in this container.
+	 *  Returns an Iterable for looping over all lone pairs in this container.
 	 *
-	 *@return    An Iterator with the lone pairs in this container
+	 *@return    An Iterable with the lone pairs in this container
 	 */
-	public Iterator<ILonePair> lonePairs()
+	public Iterable<ILonePair> lonePairs()
 	{
-		return new LonePairIterator();
+        return new Iterable<ILonePair>() {
+            public Iterator<ILonePair> iterator() {
+                return new LonePairIterator();
+            }
+        };
 	}
     
 	/**
@@ -460,13 +472,17 @@ public class AtomContainer extends ChemObject
     }
 	
     /**
-	 *  Returns an Iterator for looping over all single electrons in this container.
+	 *  Returns an Iterable for looping over all single electrons in this container.
 	 *
-	 *@return    An Iterator with the single electrons in this container
+	 *@return    An Iterable with the single electrons in this container
 	 */
-	public Iterator<ISingleElectron> singleElectrons()
+	public Iterable<ISingleElectron> singleElectrons()
 	{
-		return new SingleElectronIterator();
+		return new Iterable<ISingleElectron>() {
+            public Iterator<ISingleElectron> iterator() {                
+                return new SingleElectronIterator();
+            }
+        };
 	}
 	
 	/**
@@ -492,13 +508,17 @@ public class AtomContainer extends ChemObject
     }
     
     /**
-	 *  Returns an Iterator for looping over all electron containers in this container.
+	 *  Returns an Iterable for looping over all electron containers in this container.
 	 *
-	 *@return    An Iterator with the electron containers in this container
+	 *@return    An Iterable with the electron containers in this container
 	 */
-	public Iterator<IElectronContainer> electronContainers()
+	public Iterable<IElectronContainer> electronContainers()
 	{
-		return new ElectronContainerIterator();
+		return new Iterable<IElectronContainer>() {
+            public Iterator<IElectronContainer> iterator() {
+                return new ElectronContainerIterator();
+            }
+        };
 	}
     
 	/**

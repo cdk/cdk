@@ -20,20 +20,18 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -362,7 +360,7 @@ public class AtomPlacer3D {
 	 * author:    steinbeck,cho
 	 */
 	public IAtom getNextUnplacedHeavyAtomWithAliphaticPlacedNeighbour(IAtomContainer molecule) {
-        Iterator bonds = molecule.bonds();
+        Iterator bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
 			if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) & !(bond.getAtom(1).getFlag(CDKConstants.ISPLACED))) {
@@ -386,7 +384,7 @@ public class AtomPlacer3D {
 	 * author: steinbeck,cho
 	 */
 	public IAtom getNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour(IAtomContainer molecule) {
-        Iterator bonds = molecule.bonds();
+        Iterator bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
 			IAtom atom0 = bond.getAtom(0);
@@ -412,7 +410,7 @@ public class AtomPlacer3D {
 	 */
 	public IAtom getNextPlacedHeavyAtomWithUnplacedRingNeighbour(IAtomContainer molecule) {
 //		IBond[] bonds = molecule.getBonds();
-        Iterator bonds = molecule.bonds();
+        Iterator bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
 			IAtom atom0 = bond.getAtom(0);

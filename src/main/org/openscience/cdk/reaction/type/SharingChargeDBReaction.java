@@ -132,7 +132,7 @@ public class SharingChargeDBReaction extends ReactionEngine implements IReaction
 			setActiveCenters(reactant);
 		}
 
-		Iterator<IAtom> atomis = reactant.atoms();
+		Iterator<IAtom> atomis = reactant.atoms().iterator();
 		while(atomis.hasNext()){
 			IAtom atomi = atomis.next();
 			
@@ -182,7 +182,7 @@ public class SharingChargeDBReaction extends ReactionEngine implements IReaction
 	 * @throws CDKException 
 	 */
 	private void setActiveCenters(IMolecule reactant) throws CDKException {
-		Iterator<IAtom> atomis = reactant.atoms();
+		Iterator<IAtom> atomis = reactant.atoms().iterator();
 		while(atomis.hasNext()){
 			IAtom atomi = atomis.next();
 			

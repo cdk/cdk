@@ -20,14 +20,10 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.Map;
-
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.Map;
 
 /**
  * Debugging data class.
@@ -148,7 +144,7 @@ public class DebugChemSequence extends org.openscience.cdk.ChemSequence
 		super.removeChemModel(pos);
 	}
 	
-	public java.util.Iterator chemModels() {
+	public Iterable<IChemModel> chemModels() {
 		logger.debug("Getting chemModels");
 		return super.chemModels();
 	}

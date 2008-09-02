@@ -169,7 +169,7 @@ public class IsProtonInConjugatedPiSystemDescriptor  implements IAtomicDescripto
                 acold=clonedAtomContainer;
                 acSet = ConjugatedPiSystemsDetector.detect(mol);
             }
-            java.util.Iterator detected = acSet.atomContainers();
+            java.util.Iterator detected = acSet.atomContainers().iterator();
             java.util.List neighboors = mol.getConnectedAtomsList(clonedAtom);
             for (Object neighboor : neighboors) {
                 while (detected.hasNext()) {

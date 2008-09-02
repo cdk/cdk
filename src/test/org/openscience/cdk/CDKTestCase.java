@@ -23,13 +23,7 @@
  */
 package org.openscience.cdk;
 
-import java.util.Iterator;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-
 import junit.framework.TestCase;
-
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -38,6 +32,10 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import java.util.Iterator;
 
 /**
  * Super class for <b>all</b> CDK TestCase implementations that ensures that
@@ -153,7 +151,7 @@ public class CDKTestCase extends TestCase {
      */
     protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
     	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-    	Iterator<IAtom> atoms = container.atoms();
+    	Iterator<IAtom> atoms = container.atoms().iterator();
     	int atomCounter = 0;
     	while (atoms.hasNext()) {
     		IAtom atom = atoms.next();

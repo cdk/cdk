@@ -215,7 +215,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
 	 */
 	private void writeMoleculeSet(IMoleculeSet som)
 	{
-		java.util.Iterator molecules = som.molecules();
+		java.util.Iterator molecules = som.molecules().iterator();
 		while (molecules.hasNext())
 		{
 			IMolecule mol = (IMolecule)molecules.next();
@@ -327,7 +327,7 @@ public class MDLWriter extends DefaultChemObjectWriter {
         }
 
         // write Bond block
-        Iterator bonds = container.bonds();
+        Iterator bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = (IBond) bonds.next();
 

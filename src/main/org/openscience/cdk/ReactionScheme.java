@@ -25,7 +25,6 @@
 package org.openscience.cdk;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.annotations.TestMethod;
@@ -123,8 +122,8 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme{
 			clone.add((IReactionScheme) scheme.clone());
 		}
 		
-		for (Iterator<IReaction> it = this.reactions(); it.hasNext();){
-			clone.addReaction((IReaction)it.next().clone());
+		for (IReaction reaction : reactions()) {
+			clone.addReaction((IReaction)reaction.clone());
 		}
 		
 		return clone;

@@ -165,7 +165,7 @@ public class APolDescriptor implements IMolecularDescriptor {
         try {
             ifac = IsotopeFactory.getInstance(container.getBuilder());			
             IElement element = null;
-            java.util.Iterator atoms = container.atoms();
+            java.util.Iterator atoms = container.atoms().iterator();
             String symbol = null;
             while (atoms.hasNext()) {
                 symbol = ((IAtom)atoms.next()).getSymbol();
