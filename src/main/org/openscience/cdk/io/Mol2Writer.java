@@ -21,8 +21,11 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.atomtype.SybylAtomTypeMatcher;
+import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -47,6 +50,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
 	private LoggingTool logger;
+	  private SybylAtomTypeMatcher matcher;
     
     public Mol2Writer() {
     	this(new StringWriter());
@@ -121,7 +125,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
      * @param mol the Molecule to write
      */
     public void writeMolecule(IMolecule mol) throws IOException {
-
+        matcher = SybylAtomTypeMatcher.getInstance(mol.getBuilder());
         try {
 
 /*
@@ -197,7 +201,17 @@ NO_CHARGES
                 } else {
                     writer.write("0.000 0.000 0.000 ");
                 }
-                writer.write(atom.getSymbol()); // FIXME: should use perceived Mol2 Atom Types!
+                IAtomType sybylType = null;
+                try {
+                    sybylType = matcher.findMatchingAtomType(mol, atom);
+                } catch ( CDKException e ) {
+                    e.printStackTrace();
+                }
+                if (sybylType != null) {
+                    writer.write(sybylType.getAtomTypeName());
+                } else {
+                    writer.write(atom.getSymbol());
+                }
                 writer.newLine();
             }
 
