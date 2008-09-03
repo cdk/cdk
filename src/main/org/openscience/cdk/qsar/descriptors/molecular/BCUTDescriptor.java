@@ -29,7 +29,6 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
@@ -37,9 +36,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -50,9 +47,6 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
-
-import java.util.Iterator;
 
 /**
  * Eigenvalue based descriptor noted for its utility in chemical diversity.
@@ -316,13 +310,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
 
         // add H's in case they're not present
         try {
-            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
-            Iterator<IAtom> atoms = molecule.atoms().iterator();
-            while (atoms.hasNext()) {
-                IAtom atom = atoms.next();
-                IAtomType type = matcher.findMatchingAtomType(molecule, atom);
-                AtomTypeManipulator.configure(atom, type);
-            }
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);            
             CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
             hAdder.addImplicitHydrogens(molecule);
             AtomContainerManipulator.convertImplicitToExplicitHydrogens(molecule);
