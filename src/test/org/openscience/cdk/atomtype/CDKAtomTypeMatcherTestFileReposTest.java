@@ -34,7 +34,6 @@ import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.io.InputStream;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -63,11 +62,11 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     	int tested = 0;
     	int failed = 0;
     	ISimpleChemObjectReader reader = new PDBReader();
-    	for (int i=0;i<testFiles.length; i++) {
-    		TestResults results = testFile(DIRNAME, testFiles[i], reader);
-    		tested += results.tested;
-    		failed += results.failed;
-    	}
+        for (String testFile : testFiles) {
+            TestResults results = testFile(DIRNAME, testFile, reader);
+            tested += results.tested;
+            failed += results.failed;
+        }
     	Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
     }    
 
@@ -79,11 +78,11 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     	int tested = 0;
     	int failed = 0;
     	ISimpleChemObjectReader reader = new PDBReader();
-    	for (int i=0;i<testFiles.length; i++) {
-    		TestResults results = testFile(DIRNAME, testFiles[i], reader);
-    		tested += results.tested;
-    		failed += results.failed;
-    	}
+        for (String testFile : testFiles) {
+            TestResults results = testFile(DIRNAME, testFile, reader);
+            tested += results.tested;
+            failed += results.failed;
+        }
     	Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
     }    
 
@@ -95,11 +94,11 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     	int tested = 0;
     	int failed = 0;
     	ISimpleChemObjectReader reader = new PDBReader();
-    	for (int i=0;i<testFiles.length; i++) {
-    		TestResults results = testFile(DIRNAME, testFiles[i], reader);
-    		tested += results.tested;
-    		failed += results.failed;
-    	}
+        for (String testFile : testFiles) {
+            TestResults results = testFile(DIRNAME, testFile, reader);
+            tested += results.tested;
+            failed += results.failed;
+        }
     	Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
     }    
 
@@ -204,16 +203,18 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     		"testisopropylacetate.mol",
     		"thiamin.mol",
     		"withcharges.mol",
-    		"zinc_1309609.sdf"
-    	};
+    		"zinc_1309609.sdf",
+            "noxide.sdf",
+            "noxide2.sdf"    
+        };
     	int tested = 0;
     	int failed = 0;
     	ISimpleChemObjectReader reader = new MDLV2000Reader();
-    	for (int i=0;i<testFiles.length; i++) {
-    		TestResults results = testFile(DIRNAME, testFiles[i], reader);
-    		tested += results.tested;
-    		failed += results.failed;
-    	}
+        for (String testFile : testFiles) {
+            TestResults results = testFile(DIRNAME, testFile, reader);
+            tested += results.tested;
+            failed += results.failed;
+        }
     	Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
     }
     
@@ -234,60 +235,57 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
         Assert.assertNotNull("Could not read the file into a IMolecule: " + filename, mol);
         
         TestResults results = new TestResults();
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-        	results.tested++;
-        	IAtom atom = atoms.next();
-        	IAtomType matched = matcher.findMatchingAtomType(mol, atom);
-        	if (matched == null) {
-        		results.failed++;
-        		System.out.println("Could not match atom: " + results.tested + " in file " + filename);
-        	} else
-        	// OK, the matcher did find something. Now, let's see of the
-        	// atom type properties are consistent with those of the atom
-        	if (!atom.getSymbol().equals(matched.getSymbol())) {
-        		// OK, OK, that's very basic indeed, but why not
-        		results.failed++;
-        		System.out.println("Symbol does not match: " + results.tested + " in file " + filename);
-        		System.out.println("Found: " + atom.getSymbol() + 
-        				           ", expected: " + matched.getSymbol());
-        	} else
-        	if (atom.getHybridization() != CDKConstants.UNSET &&
-        		atom.getHybridization() != matched.getHybridization()) {
-        		results.failed++;
-        		System.out.println("Hybridization does not match: " + results.tested + " in file " + filename);
-        		System.out.println("Found: " + atom.getHybridization() + 
-        				           ", expected: " + matched.getHybridization() + 
-        				           " (" + matched.getAtomTypeName() + ")");
-        	} else
-        	if (atom.getFormalCharge() != matched.getFormalCharge()) {
-        		results.failed++;
-        		System.out.println("Formal charge does not match: " + results.tested + " in file " + filename);
-        		System.out.println("Found: " + atom.getFormalCharge() + 
-        				           ", expected: " + matched.getFormalCharge() + 
-        				           " (" + matched.getAtomTypeName() + ")");
-        	} else {
-        		List<IBond> connections = mol.getConnectedBondsList(atom);
-        		int connectionCount = connections.size();
+        assert mol != null;
+        for (IAtom atom : mol.atoms()) {
+            results.tested++;
+            IAtomType matched = matcher.findMatchingAtomType(mol, atom);
+            if (matched == null) {
+                results.failed++;
+                System.out.println("Could not match atom: " + results.tested + " in file " + filename);
+            } else
+                // OK, the matcher did find something. Now, let's see of the
+                // atom type properties are consistent with those of the atom
+                if (!atom.getSymbol().equals(matched.getSymbol())) {
+                    // OK, OK, that's very basic indeed, but why not
+                    results.failed++;
+                    System.out.println("Symbol does not match: " + results.tested + " in file " + filename);
+                    System.out.println("Found: " + atom.getSymbol() +
+                            ", expected: " + matched.getSymbol());
+                } else if (atom.getHybridization() != CDKConstants.UNSET &&
+                        atom.getHybridization() != matched.getHybridization()) {
+                    results.failed++;
+                    System.out.println("Hybridization does not match: " + results.tested + " in file " + filename);
+                    System.out.println("Found: " + atom.getHybridization() +
+                            ", expected: " + matched.getHybridization() +
+                            " (" + matched.getAtomTypeName() + ")");
+                } else if (atom.getFormalCharge() != matched.getFormalCharge()) {
+                    results.failed++;
+                    System.out.println("Formal charge does not match: " + results.tested + " in file " + filename);
+                    System.out.println("Found: " + atom.getFormalCharge() +
+                            ", expected: " + matched.getFormalCharge() +
+                            " (" + matched.getAtomTypeName() + ")");
+                } else {
+                    List<IBond> connections = mol.getConnectedBondsList(atom);
+                    int connectionCount = connections.size();
 //        		int piBondsFound = (int)mol.getBondOrderSum(atom) - connectionCount;
-        		// there might be missing hydrogens, so: found <= expected
-        		if (matched.getFormalNeighbourCount() != CDKConstants.UNSET &&
-        			connectionCount > matched.getFormalNeighbourCount() &&
-        			!"X".equals(matched.getAtomTypeName())) {
-            		results.failed++;
-            		System.out.println("Number of neighbors is too high: " + results.tested + " in file " + filename);
-            		System.out.println("Found: " + connectionCount + 
-            				           ", expected (max): " + matched.getFormalNeighbourCount() + 
-            				           " (" + matched.getAtomTypeName() + ")");
-        		}
-        		// there might be missing double bonds, so: found <= expected
+                    // there might be missing hydrogens, so: found <= expected
+                    if (matched.getFormalNeighbourCount() != CDKConstants.UNSET &&
+                            connectionCount > matched.getFormalNeighbourCount() &&
+                            !"X".equals(matched.getAtomTypeName())) {
+                        results.failed++;
+                        System.out.println("Number of neighbors is too high: " + results.tested + " in file " + filename);
+                        System.out.println("Found: " + connectionCount +
+                                ", expected (max): " + matched.getFormalNeighbourCount() +
+                                " (" + matched.getAtomTypeName() + ")");
+                    }
+                    // there might be missing double bonds, so: found <= expected
 //        		if (piBondsFound > matched.getXXXX()) {
 //            		results.failed++;
 //            		System.out.println("Number of neighbors is too high: " + results.tested + " in file " + filename);
 //            		System.out.println("Found: " + atom.getFormalNeighbourCount() + 
 //            				           ", expected (max): " + matched.getFormalNeighbourCount());
 //        		}
-        	}
+                }
         }
         return results;
     }
