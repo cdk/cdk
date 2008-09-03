@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CDK plugin
 Bundle-SymbolicName: org.openscience.cdk;singleton:=true
-Bundle-Version: 1.1.0.A20080808
+Bundle-Version: 1.1.0.A20080903
 Bundle-Vendor: The Chemistry Development Kit Project
 Bundle-ActivationPolicy: lazy
 Export-Package: javax.vecmath,
@@ -13,6 +13,7 @@ Export-Package: javax.vecmath,
  org.openscience.cdk.applications.undoredo,
  org.openscience.cdk.aromaticity,
  org.openscience.cdk.atomtype,
+ org.openscience.cdk.atomtype.mapper,
  org.openscience.cdk.charges,
  org.openscience.cdk.config,
  org.openscience.cdk.config.atomtypes,
