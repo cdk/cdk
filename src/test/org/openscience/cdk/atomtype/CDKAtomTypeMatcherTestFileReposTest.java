@@ -205,7 +205,8 @@ public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
     		"withcharges.mol",
     		"zinc_1309609.sdf",
             "noxide.sdf",
-            "noxide2.sdf"    
+            "noxide2.sdf",
+            "noxide3.sdf"
         };
     	int tested = 0;
     	int failed = 0;
