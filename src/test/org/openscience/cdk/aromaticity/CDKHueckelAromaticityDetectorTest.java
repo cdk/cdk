@@ -342,6 +342,13 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
         }
     }
 
+    @Test public void testNoxide() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+    }
+
     /**
      * A unit test for JUnit
      */
