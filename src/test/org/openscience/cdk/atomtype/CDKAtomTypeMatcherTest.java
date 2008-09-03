@@ -2608,6 +2608,31 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+
+    @Test
+    public void testNOxide() throws CDKException {
+        IMolecule mol = new Molecule();
+        IAtom a1 = mol.getBuilder().newAtom("C");
+        IAtom a2 = mol.getBuilder().newAtom("C");
+        IAtom a3 = mol.getBuilder().newAtom("N");
+        IAtom a4 = mol.getBuilder().newAtom("O");
+        IAtom a5 = mol.getBuilder().newAtom("O");
+
+        mol.addAtom(a1);
+        mol.addAtom(a2);
+        mol.addAtom(a3);
+        mol.addAtom(a4);
+        mol.addAtom(a5);
+
+        mol.addBond(mol.getBuilder().newBond(a1, a2, IBond.Order.SINGLE));
+        mol.addBond(mol.getBuilder().newBond(a2, a3, IBond.Order.SINGLE));
+        mol.addBond(mol.getBuilder().newBond(a3, a4, IBond.Order.DOUBLE));
+        mol.addBond(mol.getBuilder().newBond(a3, a5, IBond.Order.DOUBLE));
+
+        String[] expectedTypes = {"C.sp3", "C.sp3", "N.nitro", "O.sp2", "O.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void countTestedAtomTypes() {
     	super.countTestedAtomTypes(testedAtomTypes);
     }
