@@ -156,7 +156,11 @@ NO_CHARGES
             logger.debug("Writing molecule block...");
             writer.write("@<TRIPOS>MOLECULE");
             writer.newLine();
-            writer.write(mol.getID());
+            if (mol.getID() == null) {
+                writer.write("CDKMolecule");
+            } else {
+                writer.write(mol.getID());
+            }
             writer.newLine();
             writer.write(mol.getAtomCount() + " " + 
                         mol.getBondCount()); // that's the minimum amount of info required the format
