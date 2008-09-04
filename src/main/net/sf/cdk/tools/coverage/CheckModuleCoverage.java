@@ -41,6 +41,8 @@ public class CheckModuleCoverage {
 		blackList.add("interfaces");
 		blackList.add("jchempaint");
 		blackList.add("controlold");
+		blackList.add("experimental");
+		blackList.add("applications");
 	}
 	
 	private void findModules() {
