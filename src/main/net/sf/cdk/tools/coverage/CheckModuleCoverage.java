@@ -24,8 +24,10 @@
  */
 package net.sf.cdk.tools.coverage;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +43,8 @@ public class CheckModuleCoverage {
 		blackList.add("interfaces");
 		blackList.add("jchempaint");
 		blackList.add("controlold");
+		blackList.add("experimental");
+		blackList.add("applications");
 	}
 	
 	private void findModules() {
@@ -59,9 +63,6 @@ public class CheckModuleCoverage {
 		System.out.println("Number of modules found: " + modules.size());
 	}
 	
-	/**
-	 * 
-	 */
 	private void checkModuleSuites() {
 		int missingSuites = 0;
 		for (String module : modules) {
@@ -77,6 +78,41 @@ public class CheckModuleCoverage {
 		}
 	}
 	
+  private void checkModuleSuiteContainsCoverageTest() {
+      int missingCoverages = 0;
+      for (String module : modules) {
+          String expectedSuite = "src/test/org/openscience/cdk/modulesuites/M" +
+              module + "Tests.java";
+          File file = new File(expectedSuite);
+          boolean coverageTestFound = false;
+          if (file.exists()) {
+              try {
+                  BufferedReader reader = new BufferedReader(
+                      new FileReader(file)
+                  );
+                  String line = reader.readLine();
+                  while (line != null && !coverageTestFound) {
+                      if (line.contains(module.substring(0,1).toUpperCase() +
+                                        module.substring(1) + "CoverageTest")) {
+                          coverageTestFound = true;
+                      }
+                      line = reader.readLine();
+                  }
+                  if (!coverageTestFound) {
+                      System.out.println("Missing coverage test in suite: " + module);
+                      missingCoverages++;
+                  }
+                  reader.close();
+              } catch (Exception e) {
+                  e.printStackTrace();
+              }
+          }
+      }
+      if (missingCoverages > 0) {
+        System.out.println("Missing coverage tests in suite: " + missingCoverages);
+      }
+    }
+    
 	private void checkCoverageTesting() {
 		int missingCoverage = 0;
 		for (String module : modules) {
@@ -98,6 +134,7 @@ public class CheckModuleCoverage {
 	    checker.findModules();
 	    checker.checkModuleSuites();
 	    checker.checkCoverageTesting();
+	    checker.checkModuleSuiteContainsCoverageTest();
     }
 	
 	class JavaFilesFilter implements FileFilter {
