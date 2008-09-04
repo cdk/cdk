@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
 /**
  * TestSuite that runs all the sample tests.
  *
- * @cdk.module test-data
+ * @cdk.module test-valencycheck
  */
 public class ValencycheckCoverageTest extends CoverageTest {
 
