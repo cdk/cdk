@@ -372,15 +372,10 @@ public class TemplateExtractor {
 		}
 	}
 
-	public void makeFingerprintFromRingSystems(String dataFileIn,
-			String dataFileOut, boolean anyAtom, boolean anyAtomAnyBond)
-	throws Exception {
-		System.out.println("Start make fingerprint from file:" + dataFileIn
-				+ " ...");
+	public List makeFingerprintsFromSdf(boolean anyAtom, boolean anyAtomAnyBond, Map timings, BufferedReader fin, int limit) throws Exception{
 		AllRingsFinder allRingsFinder = new AllRingsFinder();
 		allRingsFinder.setTimeout(10000); // 10 seconds
 
-		Map timings = new HashMap();
 		
 		Fingerprinter fingerPrinter = new Fingerprinter(Fingerprinter.DEFAULT_SIZE, Fingerprinter.DEFAULT_SEARCH_DEPTH);
 		IMolecule m = null;
@@ -390,19 +385,18 @@ public class TemplateExtractor {
 		List data = new ArrayList();
 		try {
 			System.out.print("Read data file in ...");
-			BufferedReader fin = new BufferedReader(new FileReader(dataFileIn));
 			imdl = new IteratingMDLReader(fin, NoNotificationChemObjectBuilder
 					.getInstance());
 			// fin.close();
 			System.out.println("ready");
 		} catch (Exception exc) {
-			System.out.println("Could not read Molecules from file "
-					+ dataFileIn + " due to: " + exc.getMessage());
+			System.out.println("Could not read Molecules from file"+
+					" due to: " + exc.getMessage());
 		}
 		int moleculeCounter = 0;
 		int fingerprintCounter = 0;
 		System.out.print("Generated Fingerprints: " + fingerprintCounter + "    ");
-		while (imdl.hasNext()) {
+		while (imdl.hasNext() && (moleculeCounter<limit || limit==-1)) {
 			// query=new QueryAtomContainer();
 			query = builder.newAtomContainer();
 			m = (IMolecule) imdl.next();
@@ -477,10 +471,22 @@ public class TemplateExtractor {
 		{
 			exc2.printStackTrace();
 		}
-
 		System.out.print("...ready with:" + moleculeCounter
 				+ " molecules\nWrite data...of data vector:" + data.size()
 				+ " fingerprintCounter:" + fingerprintCounter);
+
+		return data;
+	}
+	
+	public void makeFingerprintFromRingSystems(String dataFileIn,
+			String dataFileOut, boolean anyAtom, boolean anyAtomAnyBond)
+	throws Exception {
+		Map timings = new HashMap();
+
+		System.out.println("Start make fingerprint from file:" + dataFileIn
+				+ " ...");
+		BufferedReader fin = new BufferedReader(new FileReader(dataFileIn));
+		List data=makeFingerprintsFromSdf(anyAtom, anyAtomAnyBond, timings, fin,-1);
 		BufferedWriter fout = null;
 		try {
 			fout = new BufferedWriter(new FileWriter(dataFileOut));

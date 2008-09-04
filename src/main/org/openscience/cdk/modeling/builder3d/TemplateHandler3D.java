@@ -145,9 +145,9 @@ public class TemplateHandler3D {
         templatesLoaded = true;
     }
 
-    private BitSet getBitSetFromFile(StringTokenizer st) throws Exception {
+    public static BitSet getBitSetFromFile(StringTokenizer st) throws Exception {
         BitSet bitSet = new BitSet(1024);
-        for (int i = 0; i < st.countTokens(); i++) {
+        while(st.hasMoreTokens()){
         	bitSet.set(Integer.parseInt(st.nextToken()));
         }
         return bitSet;
