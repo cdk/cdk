@@ -32,11 +32,11 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test-data
  */
-public class DataCoverageTest extends CoverageTest {
+public class SmartsCoverageTest extends CoverageTest {
 
-    private final static String CLASS_LIST = "data.javafiles";
+    private final static String CLASS_LIST = "smarts.javafiles";
     
-    public DataCoverageTest(String name){
+    public SmartsCoverageTest(String name){
         super(name);
     }
 
@@ -46,7 +46,7 @@ public class DataCoverageTest extends CoverageTest {
     }
 
     public static Test suite() {
-        return new TestSuite(DataCoverageTest.class);
+        return new TestSuite(SmartsCoverageTest.class);
     }
 
     public void testCoverage() {
