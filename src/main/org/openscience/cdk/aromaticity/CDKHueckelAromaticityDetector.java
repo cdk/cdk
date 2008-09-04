@@ -201,10 +201,8 @@ public class CDKHueckelAromaticityDetector {
 	}
 	
 	private static void markRingAtomsAndBondsAromatic(IAtomContainer container) {
-		Iterator<IAtom> atoms = container.atoms().iterator();
-		while (atoms.hasNext()) atoms.next().setFlag(CDKConstants.ISAROMATIC, true);
-		Iterator<IBond> bonds = container.bonds().iterator();
-		while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISAROMATIC, true);
+	    for (IAtom atom : container.atoms()) atom.setFlag(CDKConstants.ISAROMATIC, true);
+		  for (IBond bond : container.bonds()) bond.setFlag(CDKConstants.ISAROMATIC, true);
 	}
 }
 
