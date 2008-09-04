@@ -23,6 +23,7 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.coverage.LibiomdCoverageTest;
 import org.openscience.cdk.libio.md.MDMoleculeTest;
 
 /**
@@ -34,6 +35,8 @@ public class MlibiomdTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("libiomd inchi module Tests");
+        
+        suite.addTest(LibiomdCoverageTest.suite());
         
         suite.addTest(MDMoleculeTest.suite());
         

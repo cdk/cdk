@@ -24,6 +24,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.coverage.DictCoverageTest;
 import org.openscience.cdk.dict.DictDBTest;
 
 /**
@@ -37,6 +38,8 @@ public class MdictTests {
     
     public static Test suite() {
         TestSuite suite= new TestSuite("All CDK dict module Tests");
+        
+        suite.addTest(DictCoverageTest.suite());
 
         // from cdk.dict
         suite.addTest(new JUnit4TestAdapter(DictDBTest.class));

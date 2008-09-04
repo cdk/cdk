@@ -20,10 +20,10 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.coverage.ValencycheckCoverageTest;
 import org.openscience.cdk.tools.CDKHydrogenAdderTest;
 import org.openscience.cdk.tools.CDKValencyCheckerTest;
 import org.openscience.cdk.tools.DeduceBondOrderTestFromExplicitHydrogens;
@@ -40,6 +40,8 @@ public class MvalencycheckTests {
     
     public static Test suite( ) {
         TestSuite suite= new TestSuite("All valencycheck Tests");
+        
+        suite.addTest(ValencycheckCoverageTest.suite());
 
         suite.addTest(SaturationCheckerTest.suite());
         suite.addTest(DeduceBondOrderTestFromExplicitHydrogens.suite());

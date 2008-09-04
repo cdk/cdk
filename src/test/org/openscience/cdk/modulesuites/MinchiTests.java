@@ -23,6 +23,8 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.openscience.cdk.coverage.InchiCoverageTest;
 import org.openscience.cdk.inchi.InChIGeneratorTest;
 
 /**
@@ -34,6 +36,8 @@ public class MinchiTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("The inchi module Tests");
+        
+        suite.addTest(InchiCoverageTest.suite());
         
         suite.addTest(new JUnit4TestAdapter(InChIGeneratorTest.class));
         
