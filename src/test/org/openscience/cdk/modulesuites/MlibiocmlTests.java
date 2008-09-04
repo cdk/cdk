@@ -23,6 +23,7 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.coverage.LibiocmlCoverageTest;
 import org.openscience.cdk.libio.cml.ConvertorTest;
 
 /**
@@ -34,6 +35,8 @@ public class MlibiocmlTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("libiocml module Tests");
+        
+        suite.addTest(LibiocmlCoverageTest.suite());
         
         suite.addTest(ConvertorTest.suite());
         

@@ -28,6 +28,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.coverage.NonotifyCoverageTest;
 import org.openscience.cdk.nonotify.NNAminoAcidTest;
 import org.openscience.cdk.nonotify.NNAtomContainerSetTest;
 import org.openscience.cdk.nonotify.NNAtomContainerTest;
@@ -74,6 +75,8 @@ public class MnonotifyTests {
     
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.debug Tests");
+        
+        suite.addTest(NonotifyCoverageTest.suite());
         
         suite.addTest(new JUnit4TestAdapter(NNChemObjectBuilderTest.class));
         

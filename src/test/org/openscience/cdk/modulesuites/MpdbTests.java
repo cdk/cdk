@@ -26,6 +26,8 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.openscience.cdk.coverage.PdbCoverageTest;
 import org.openscience.cdk.io.PDBReaderTest;
 import org.openscience.cdk.templates.AminoAcidsTest;
 import org.openscience.cdk.tools.ProteinBuilderToolTest;
@@ -39,6 +41,8 @@ public class MpdbTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("The pdb module Tests");
+        
+        suite.addTest(PdbCoverageTest.suite());
         
         suite.addTest(new JUnit4TestAdapter(AminoAcidsTest.class));
         suite.addTest(new JUnit4TestAdapter(PDBReaderTest.class));

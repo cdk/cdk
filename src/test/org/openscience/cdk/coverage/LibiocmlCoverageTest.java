@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
 /**
  * TestSuite that runs all the sample tests.
  *
- * @cdk.module test-data
+ * @cdk.module test-libiocml
  */
 public class LibiocmlCoverageTest extends CoverageTest {
 

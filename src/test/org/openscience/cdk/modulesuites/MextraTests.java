@@ -27,6 +27,7 @@ import junit.framework.TestSuite;
 import org.openscience.cdk.CloneAtomContainerTest;
 import org.openscience.cdk.VariousTests;
 import org.openscience.cdk.applications.APIVersionTesterTest;
+import org.openscience.cdk.coverage.ExtraCoverageTest;
 import org.openscience.cdk.geometry.RDFCalculatorTest;
 import org.openscience.cdk.geometry.alignment.KabschAlignmentTest;
 import org.openscience.cdk.index.CASNumberTest;
@@ -49,6 +50,8 @@ public class MextraTests {
     {
         TestSuite suite= new TestSuite("All CDK Tests");
 
+        suite.addTest(ExtraCoverageTest.suite());
+        
         // Individual Tests
         suite.addTest(new JUnit4TestAdapter(CloneAtomContainerTest.class));
         // from cdk.test.applications

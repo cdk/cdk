@@ -27,6 +27,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.openscience.cdk.coverage.SmilesCoverageTest;
 import org.openscience.cdk.io.SMILESReaderTest;
 import org.openscience.cdk.io.iterator.IteratingSMILESReaderTest;
 import org.openscience.cdk.smiles.DeduceBondSystemToolTest;
@@ -43,6 +44,8 @@ public class MsmilesTests {
 
     public static Test suite() {
         TestSuite suite = new TestSuite("The SMILES Tests");
+        
+        suite.addTest(SmilesCoverageTest.suite());
 
         // IO classes
         suite.addTest(new JUnit4TestAdapter(SMILESReaderTest.class));
