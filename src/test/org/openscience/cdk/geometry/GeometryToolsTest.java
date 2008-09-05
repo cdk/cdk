@@ -173,7 +173,22 @@ public class GeometryToolsTest extends NewCDKTestCase {
     	Assert.assertEquals(minmax[3],1d,.1);
     }
     
-    
+    /** @cdk.bug 2094881 */
+    @Test public void testGetMinMax2(){
+        Atom atom1=new Atom("C");
+        atom1.setPoint2d(new Point2d(-2,-1));
+        Atom atom2=new Atom("C");
+        atom2.setPoint2d(new Point2d(-5,-1));
+        IAtomContainer ac=DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        ac.addAtom(atom1);
+        ac.addAtom(atom2);
+        double [] minmax=GeometryTools.getMinMax(ac);
+        Assert.assertEquals(-5, minmax[0],.1);
+        Assert.assertEquals(-1, minmax[1],.1);
+        Assert.assertEquals(-2, minmax[2],.1);
+        Assert.assertEquals(-1, minmax[3],.1);
+    }
+      
     @Test public void testRotate_IAtom_Point3d_Point3d_double(){
     	Atom atom1=new Atom("C");
     	atom1.setPoint3d(new Point3d(1,1,0));
