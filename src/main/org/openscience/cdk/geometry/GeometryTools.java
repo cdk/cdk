@@ -298,13 +298,10 @@ public class GeometryTools {
 	 *@return            An four int array as defined above.
 	 */
 	public static double[] getMinMax(IAtomContainer container) {
-		double maxX = Double.MIN_VALUE;
-		double
-				maxY = Double.MIN_VALUE;
-		double
-				minX = Double.MAX_VALUE;
-		double
-				minY = Double.MAX_VALUE;
+		double maxX = -Double.MAX_VALUE;
+		double maxY = -Double.MAX_VALUE;
+		double minX = Double.MAX_VALUE;
+		double minY = Double.MAX_VALUE;
 		for (int i = 0; i < container.getAtomCount(); i++) {
 			IAtom atom = container.getAtom(i);
 			if (atom.getPoint2d() != null) {
