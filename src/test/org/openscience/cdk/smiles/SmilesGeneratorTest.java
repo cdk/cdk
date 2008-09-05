@@ -443,8 +443,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	{
 		String smiles = "";
 		Molecule molecule = new Molecule();
-        SmilesGenerator sg = new SmilesGenerator();
-        sg.setUseAromaticityFlag(true);
+        SmilesGenerator sg = new SmilesGenerator(true);
 		Atom sp2CarbonWithOneHydrogen = new Atom("C");
 		sp2CarbonWithOneHydrogen.setHybridization(IAtomType.Hybridization.SP2);
 		sp2CarbonWithOneHydrogen.setHydrogenCount(1);
@@ -462,6 +461,9 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		molecule.addBond(5, 0, IBond.Order.SINGLE);
 		smiles = sg.createSMILES(molecule);
 		assertEquals("c1ccccc1", smiles);
+		sg.setUseAromaticityFlag(false);
+		smiles = sg.createSMILES(molecule);
+		assertEquals("C1CCCCC1", smiles);
 	}
 
 
