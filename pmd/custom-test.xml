@@ -14,6 +14,7 @@
   <rule ref="rulesets/basic.xml"/>
   <rule ref="rulesets/unusedcode.xml"/>
   <rule ref="rulesets/imports.xml"/>
+  <rule ref="rulesets/migrating_to_junit4.xml"/>
 
   <!-- Rules specific for CDK -->
 
