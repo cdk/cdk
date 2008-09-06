@@ -10,5 +10,6 @@
   <rule ref="rulesets/migrating_to_13.xml"/>
   <rule ref="rulesets/migrating_to_14.xml"/>
   <rule ref="rulesets/migrating_to_15.xml"/>
+  <rule ref="rulesets/migrating_to_junit4.xml"/>
 
 </ruleset>
