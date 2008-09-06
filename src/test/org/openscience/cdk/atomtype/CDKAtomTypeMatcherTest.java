@@ -75,6 +75,22 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testFindMatchingAtomType_IAtomContainer() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        final IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP3;
+        atom.setHybridization(thisHybridization);
+        mol.addAtom(atom);
+
+        // just check consistency; other methods do perception testing
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
+        IAtomType[] types = matcher.findMatchingAtomType(mol);
+        for (int i=0; i<types.length; i++) {
+            IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
+            Assert.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
+        }
+    }
+
     @Test public void testDummy() throws Exception {
         IMolecule mol = new Molecule();
         IAtom atom = new PseudoAtom("R");

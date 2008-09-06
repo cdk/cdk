@@ -29,8 +29,10 @@ import junit.framework.JUnit4TestAdapter;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.atomtype.MM2AtomTypeMatcher;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -87,6 +89,22 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 	    Assert.assertNotNull(matcher);
     }
     
+    @Test public void testFindMatchingAtomType_IAtomContainer() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        final IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP3;
+        atom.setHybridization(thisHybridization);
+        mol.addAtom(atom);
+
+        // just check consistency; other methods do perception testing
+        MM2AtomTypeMatcher matcher = new MM2AtomTypeMatcher();
+        IAtomType[] types = matcher.findMatchingAtomType(mol);
+        for (int i=0; i<types.length; i++) {
+            IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
+            Assert.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
+        }
+    }
+
     @Test public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
     	for (int i=0;i<testMolecule.getAtomCount();i++) {
     		Assert.assertNotNull(testMolecule.getAtom(i).getAtomTypeName());
