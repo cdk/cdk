@@ -23,6 +23,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.mapper.AtomTypeMapper;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -68,6 +69,7 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
     	return factories.get(builder);
     }
 
+    @TestMethod("testFindMatchingAtomType_IAtomContainer")
     public IAtomType[] findMatchingAtomType(IAtomContainer atomContainer) throws CDKException {
         for (IAtom atom : atomContainer.atoms()) {
             IAtomType type = cdkMatcher.findMatchingAtomType(atomContainer, atom);

@@ -90,6 +90,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return factories.get(mode).get(builder);
     }
     
+    @TestMethod("testFindMatchingAtomType_IAtomContainer")
     public IAtomType[] findMatchingAtomType(IAtomContainer atomContainer) throws CDKException {
         IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
         int typeCounter = 0;

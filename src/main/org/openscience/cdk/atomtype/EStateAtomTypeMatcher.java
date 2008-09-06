@@ -48,6 +48,7 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 		ringSet = rs;
 	}
 
+	@TestMethod("testFindMatchingAtomType_IAtomContainer")
   public IAtomType[] findMatchingAtomType(IAtomContainer atomContainer) throws CDKException {
       IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
       int typeCounter = 0;
