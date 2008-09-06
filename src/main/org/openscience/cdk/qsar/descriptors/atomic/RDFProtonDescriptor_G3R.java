@@ -221,9 +221,9 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
                 return getDummyDescriptorValue(e);
             }
         }
-		List<IRing> rsAtom;
+		IRingSet rsAtom;
 		Ring ring;
-		List<IRing> ringsWithThisBond;
+		IRingSet ringsWithThisBond;
 		// SET ISINRING FLAGS FOR BONDS
 //		org.openscience.cdk.interfaces.IBond[] bondsInContainer = varAtomContainer.getBonds();
 
@@ -231,7 +231,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
         while (bondsInContainer.hasNext()) {
             IBond bond = bondsInContainer.next();
 			ringsWithThisBond = varRingSet.getRings(bond);
-			if (ringsWithThisBond.size() > 0) {
+			if (ringsWithThisBond.getAtomContainerCount() > 0) {
 				bond.setFlag(CDKConstants.ISINRING, true);
 			}
 		}
@@ -324,7 +324,7 @@ public class RDFProtonDescriptor_G3R implements IAtomicDescriptor {
                             if (!thirdBond.getFlag(CDKConstants.ISAROMATIC)) {
                                 if (!curAtomThird.equals(neighbour0)) {
                                     rsAtom = varRingSet.getRings(thirdBond);
-                                    for (IRing aRsAtom : rsAtom) {
+                                    for (IAtomContainer aRsAtom : rsAtom.atomContainers()) {
                                         ring = (Ring) aRsAtom;
                                         if (ring.getRingSize() > 4
                                                 && ring.contains(thirdBond)) {

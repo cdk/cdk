@@ -20,8 +20,6 @@
  */
 package org.openscience.cdk.debug;
 
-import java.util.List;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
@@ -46,7 +44,7 @@ public class DebugRingSet extends org.openscience.cdk.RingSet
 		super();
 	}
 	
-	public List getRings(IBond bond) {
+	public IRingSet getRings(IBond bond) {
 		logger.debug("Getting rings for bond: ", bond);
 		return super.getRings(bond);
 	}
@@ -56,7 +54,7 @@ public class DebugRingSet extends org.openscience.cdk.RingSet
 		return super.getRings(atom);
 	}
 
-	public List getConnectedRings(IRing ring) {
+	public IRingSet getConnectedRings(IRing ring) {
 		logger.debug("Getting connected rings for ring: ", ring);
 		return super.getConnectedRings(ring);
 	}

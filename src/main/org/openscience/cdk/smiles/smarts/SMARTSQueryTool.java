@@ -378,7 +378,7 @@ public class SMARTSQueryTool {
         Iterator<IBond> bonds = atomContainer.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-            if (allRings.getRings(bond).size() > 0) {
+            if (allRings.getRings(bond).getAtomContainerCount() > 0) {
                 bond.setFlag(CDKConstants.ISINRING, true);
             }
         }

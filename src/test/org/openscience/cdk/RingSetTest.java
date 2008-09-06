@@ -25,14 +25,13 @@
 package org.openscience.cdk;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
@@ -225,13 +224,13 @@ public class RingSetTest extends NewCDKTestCase {
         ringset.addAtomContainer(ring1);
         ringset.addAtomContainer(ring2);
         
-        Assert.assertEquals(1, ringset.getRings(ring1Bond1).size());
-        Assert.assertEquals(1, ringset.getRings(ring1Bond2).size());
-        Assert.assertEquals(1, ringset.getRings(ring1Bond3).size());
-        Assert.assertEquals(2, ringset.getRings(sharedBond).size());
-        Assert.assertEquals(1, ringset.getRings(ring2Bond1).size());
-        Assert.assertEquals(1, ringset.getRings(ring2Bond2).size());
-        Assert.assertEquals(1, ringset.getRings(ring2Bond3).size());
+        Assert.assertEquals(1, ringset.getRings(ring1Bond1).getAtomContainerCount());
+        Assert.assertEquals(1, ringset.getRings(ring1Bond2).getAtomContainerCount());
+        Assert.assertEquals(1, ringset.getRings(ring1Bond3).getAtomContainerCount());
+        Assert.assertEquals(2, ringset.getRings(sharedBond).getAtomContainerCount());
+        Assert.assertEquals(1, ringset.getRings(ring2Bond1).getAtomContainerCount());
+        Assert.assertEquals(1, ringset.getRings(ring2Bond2).getAtomContainerCount());
+        Assert.assertEquals(1, ringset.getRings(ring2Bond3).getAtomContainerCount());
     }
 
     @Test public void testGetRings_IAtom() {
@@ -320,8 +319,8 @@ public class RingSetTest extends NewCDKTestCase {
         ringset.addAtomContainer(ring1);
         ringset.addAtomContainer(ring2);
         
-        Assert.assertEquals(1, ringset.getConnectedRings(ring2).size());
-        Assert.assertEquals(1, ringset.getConnectedRings(ring1).size());
+        Assert.assertEquals(1, ringset.getConnectedRings(ring2).getAtomContainerCount());
+        Assert.assertEquals(1, ringset.getConnectedRings(ring1).getAtomContainerCount());
     }
 
     @Test public void testClone() {
@@ -387,12 +386,12 @@ public class RingSetTest extends NewCDKTestCase {
         ringSet.addAtomContainer(rightCyclohexane);
         
         // Get connected rings
-        List connectedRings = ringSet.getConnectedRings(leftCyclohexane);
+        IRingSet connectedRings = ringSet.getConnectedRings(leftCyclohexane);
         
         // Iterate over the connectedRings and fail if any duplicate is found
         List foundRings = new ArrayList();
-        for (Iterator iterator = connectedRings.iterator(); iterator.hasNext(); ) {
-            IRing connectedRing = (IRing) iterator.next();
+        for (IAtomContainer container : connectedRings.atomContainers()) {
+            IRing connectedRing = (IRing)container;
             if (foundRings.contains(connectedRing))
                 Assert.fail("The list of connected rings contains duplicates.");
             foundRings.add(connectedRing);

@@ -210,15 +210,15 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
                 return getDummyDescriptorValue(e);
             }
         }
-        List<IRing> rsAtom;
+        IRingSet rsAtom;
         Ring ring;
-        List<IRing> ringsWithThisBond;
+        IRingSet ringsWithThisBond;
 // SET ISINRING FLAGS FOR BONDS
         Iterator<IBond> bondsInContainer = varAtomContainer.bonds().iterator();
         while (bondsInContainer.hasNext()) {
             IBond bond = bondsInContainer.next();
             ringsWithThisBond = varRingSet.getRings(bond);
-            if (ringsWithThisBond.size() > 0) {
+            if (ringsWithThisBond.getAtomContainerCount() > 0) {
                 bond.setFlag(CDKConstants.ISINRING, true);
             }
         }
@@ -295,7 +295,7 @@ public class RDFProtonDescriptor_GHR_topol implements IAtomicDescriptor {
                             if (!thirdBond.getFlag(CDKConstants.ISAROMATIC)) {
                                 if (!curAtomThird.equals(neighbour0)) {
                                     rsAtom = varRingSet.getRings(thirdBond);
-                                    for (Object aRsAtom : rsAtom) {
+                                    for (Object aRsAtom : rsAtom.atomContainers()) {
                                         ring = (Ring) aRsAtom;
                                         if (ring.getRingSize() > 4 && ring.contains(thirdBond)) {
                                             theBondIsInA6MemberedRing = true;

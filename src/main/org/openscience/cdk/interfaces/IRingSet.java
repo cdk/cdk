@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-import java.util.List;
 
 /**
  * Maintains a set of Ring objects.
@@ -41,7 +40,7 @@ public interface IRingSet extends IAtomContainerSet {
 	 * @param   bond  The bond to be checked
 	 * @return   A vector of all rings that this bond is part of  
 	 */
-	public List<IRing> getRings(IBond bond);
+	public IRingSet getRings(IBond bond);
 	
 	/**
 	 * Returns a vector of all rings that this atom is part of.
@@ -58,7 +57,7 @@ public interface IRingSet extends IAtomContainerSet {
 	 * @param   ring  A ring with which all return rings must share one or more atoms
 	 * @return  All the rings that share one or more atoms with a given ring.   
 	 */
-	public List<IRing> getConnectedRings(IRing ring);
+	public IRingSet getConnectedRings(IRing ring);
 	
 	/**
 	 * Adds all rings of another RingSet if they are not allready part of this ring set.

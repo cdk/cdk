@@ -154,7 +154,7 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
         }
         while (bonds.hasNext()) {
 			IBond bond = (IBond)bonds.next();
-			if (ringSet.getRings(bond).size() > 0) {
+			if (ringSet.getRings(bond).getAtomContainerCount() > 0) {
 				bond.setFlag(CDKConstants.ISINRING, true);
 			}
 		}
