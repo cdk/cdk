@@ -27,57 +27,57 @@
 
     <target name="pmd" id="pmd">
       <!-- the data classes modules -->
-      <antcall target="test-module"><param name="module" value="data"/></antcall>
-      <antcall target="test-module"><param name="module" value="datadebug"/></antcall>
-      <antcall target="test-module"><param name="module" value="nonotify"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="data"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="datadebug"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="nonotify"/></antcall>
       <!-- the other modules -->
-      <antcall target="test-module"><param name="module" value="interfaces"/></antcall>
-      <antcall target="test-module"><param name="module" value="core"/></antcall>
-      <antcall target="test-module"><param name="module" value="standard"/></antcall>
-      <antcall target="test-module"><param name="module" value="atomtype"/></antcall>
-      <antcall target="test-module"><param name="module" value="io"/></antcall>
-      <antcall target="test-module"><param name="module" value="extra"/></antcall>
-      <antcall target="test-module"><param name="module" value="formula"/></antcall>
-      <antcall target="test-module"><param name="module" value="render"/></antcall>
-      <antcall target="test-module"><param name="module" value="reaction"/></antcall>
-      <antcall target="test-module"><param name="module" value="libiocml"/></antcall>
-      <antcall target="test-module"><param name="module" value="builder3d"/></antcall>
-      <antcall target="test-module"><param name="module" value="smiles"/></antcall>
-      <antcall target="test-module"><param name="module" value="smarts"/></antcall>
-      <antcall target="test-module"><param name="module" value="pcore"/></antcall>
-      <antcall target="test-module"><param name="module" value="forcefield"/></antcall>
-      <antcall target="test-module"><param name="module" value="qsar"/></antcall>
-      <antcall target="test-module"><param name="module" value="qsaratomic"/></antcall>
-      <antcall target="test-module"><param name="module" value="qsarbond"/></antcall>
-      <antcall target="test-module"><param name="module" value="qsarmolecular"/></antcall>
-      <antcall target="test-module"><param name="module" value="qsarprotein"/></antcall>
-      <antcall target="test-module"><param name="module" value="structgen"/></antcall>
-      <antcall target="test-module"><param name="module" value="valencycheck"/></antcall>
-      <antcall target="test-module"><param name="module" value="charges"/></antcall>
-      <antcall target="test-module"><param name="module" value="diff"/></antcall>
-      <antcall target="test-module"><param name="module" value="qm"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="interfaces"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="core"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="standard"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="atomtype"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="io"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="extra"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="formula"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="render"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="reaction"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="libiocml"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="builder3d"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="smiles"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="smarts"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="pcore"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="forcefield"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="qsar"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="qsaratomic"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="qsarbond"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="qsarmolecular"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="qsarprotein"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="structgen"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="valencycheck"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="charges"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="diff"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration-qm"/><param name="module" value="qm"/></antcall>
       <!-- the test modules -->
-      <antcall target="test-module"><param name="module" value="test-core"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-data"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-datadebug"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-nonotify"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-atomtype"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-extra"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-forcefield"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-io"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-reaction"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-smiles"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-standard"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-valencycheck"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-charges"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-pcore"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-qsar"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-qsaratomic"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-qsarbond"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-qsarmolecular"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-qsarprotein"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-diff"/></antcall>
-      <antcall target="test-module"><param name="module" value="test-qm"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-core"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-data"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-datadebug"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-nonotify"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-atomtype"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-extra"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-forcefield"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-io"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-reaction"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-smiles"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-standard"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-valencycheck"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-charges"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-pcore"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-qsar"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-qsaratomic"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-qsarbond"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-qsarmolecular"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-qsarprotein"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-diff"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migration"/><param name="module" value="test-qm"/></antcall>
     </target>
 
     <target id="test-module" name="test-module"
@@ -86,7 +86,8 @@
       <echo message="Checking for migrating code updates in CDK's ${module} module." />
 
       <mkdir dir="${reports.tests}/pmd-migrating"/>
-      <pmd shortFilenames="true" rulesetfiles="pmd/migrating.xml">
+      
+      <pmd shortFilenames="true" rulesetfiles="pmd/${pmd.test}.xml">
         <formatter type="xml" toFile="${reports.tests}/pmd-migrating/${module}.xml"/>
         <fileset dir="${src}/main">
           <includesfile name="${build}/${module}.javafiles"/>

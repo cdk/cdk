@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ruleset name="custom">
+
+  <description>
+    This ruleset checks for migration clean up in the CDK sources.
+  </description>
+
+  <!-- The rule sets that come with PMD -->
+
+  <rule ref="rulesets/migrating_to_13.xml"/>
+  <rule ref="rulesets/migrating_to_14.xml"/>
+  <rule ref="rulesets/migrating_to_15.xml"/>
+  <rule ref="rulesets/migrating_to_junit4.xml"/>
+
+</ruleset>
