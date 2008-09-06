@@ -25,6 +25,7 @@ import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.exception.CDKException;
@@ -58,6 +59,21 @@ public class SybylAtomTypeMatcherTest extends NewCDKTestCase {
 		String sybylType = matcher.findMatchingAtomType(ethane, ethane.getAtom(0)).getAtomTypeName();
 		Assert.assertEquals("C.3", sybylType);
 	}
+
+  @Test public void testFindMatchingAtomType_IAtomContainer() throws Exception {
+      String filename = "data/mol2/atomtyping.mol2";
+      InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+      Mol2Reader reader = new Mol2Reader(ins);
+      IMolecule mol = (IMolecule)reader.read(new Molecule());
+
+      // just check consistency; other methods do perception testing
+      SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
+      IAtomType[] types = matcher.findMatchingAtomType(mol);
+      for (int i=0; i<types.length; i++) {
+          IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
+          Assert.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
+      }
+  }
 
     @Test public void testAtomTyping() throws Exception {
         String filename = "data/mol2/atomtyping.mol2";

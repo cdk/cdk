@@ -20,9 +20,12 @@
  */
 package org.openscience.cdk.atomtype;
 
+import java.util.Iterator;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
@@ -30,14 +33,13 @@ import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.util.Iterator;
 
 /**
  * @cdk.module test-standard
@@ -78,6 +80,21 @@ public class EStateAtomTypeMatcherTest extends NewCDKTestCase {
 		return expectedAtType.equals(matcher.findMatchingAtomType(mol,atom).getAtomTypeName());
 	}
 	
+  @Test public void testFindMatchingAtomType_IAtomContainer() throws Exception {
+      IMolecule mol = new Molecule();
+      IAtom atom = new Atom("C");
+      final IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP3;
+      atom.setHybridization(thisHybridization);
+      mol.addAtom(atom);
+
+      // just check consistency; other methods do perception testing
+      IAtomType[] types = matcher.findMatchingAtomType(mol);
+      for (int i=0; i<types.length; i++) {
+          IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
+          Assert.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
+      }
+  }
+
 	@Test public void testSP3Atoms(){
 		//Testing with CC(C)(C)CC 
 		mol = new Molecule();
