@@ -25,13 +25,11 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringReader;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.openscience.cdk.exception.CDKException;
@@ -64,39 +62,25 @@ import org.xml.sax.XMLReader;
 public class CMLReader extends DefaultChemObjectReader {
 
     private XMLReader parser;
-    private Reader input;
+    private InputStream input;
     private String url;
     
-    private Map userConventions = new HashMap();
+    private Map<String,ICMLModule> userConventions = new HashMap<String,ICMLModule>();
 
     private LoggingTool logger;
 
-    /**
-     * Define this CMLReader to take the input from a java.io.Reader
-     * class. Possible readers are (among others) StringReader and FileReader.
-     * FIXME: this can not be used in combination with Aelfred2 yet.
-     *
-     * @param input Reader type input
-     * 
-     * @deprecated XML reading should not be done with a Reader, but with an
-     *             InputStream instead.
-     */
-    public CMLReader(Reader input) {
-        this.init();
-        this.input = input;
-    }
-    
     /**
      * Reads CML from an java.io.InputStream, for example the FileInputStream.
      *
      * @param input InputStream type input
      */
     public CMLReader(InputStream input) {
-        this(new InputStreamReader(input));
+        this.input = input;
+        init();
     }
     
     public CMLReader() {
-        this(new StringReader(""));
+        this(new ByteArrayInputStream(new byte[0]));
     }
     
     public void registerConvention(String convention, ICMLModule conv) {
@@ -118,12 +102,16 @@ public class CMLReader extends DefaultChemObjectReader {
         return CMLFormat.getInstance();
     }
 
+    /**
+     * This method must not be used; XML reading requires the use of an InputStream.
+     * Use setReader(InputStream) instead.
+     */
     public void setReader(Reader reader) throws CDKException {
-        this.input = reader;
+        throw new CDKException("Invalid method call; use SetReader(InputStream) instead.");
     }
 
     public void setReader(InputStream input) throws CDKException {
-        setReader(new InputStreamReader(input));
+        this.input = input;
     }
 
     private void init() {
@@ -214,10 +202,8 @@ public class CMLReader extends DefaultChemObjectReader {
         }
         CMLHandler handler = new CMLHandler(file);
         // copy the manually added conventions
-        Iterator conventions = userConventions.keySet().iterator();
-        while (conventions.hasNext()) {
-        	String conv = (String)conventions.next();
-        	handler.registerConvention(conv, (ICMLModule)userConventions.get(conv));
+        for (String conv : userConventions.keySet()) {
+        	handler.registerConvention(conv, userConventions.get(conv));
         }
         parser.setContentHandler(handler);
         parser.setEntityResolver(new CMLResolver());

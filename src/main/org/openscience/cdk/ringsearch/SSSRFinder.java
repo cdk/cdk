@@ -68,14 +68,6 @@ public class SSSRFinder {
 	private CycleBasis cycleBasis;
 	
 	/**
-	 * Constructs a SSSRFinder.
-	 *
-	 * @deprecated Replaced by {@link #SSSRFinder(IAtomContainer)}
-	 */
-	public SSSRFinder() {
-	}
-	
-	/**
 	 * Constructs a SSSRFinder for a specified molecule.
 	 *
 	 * @param   container the molecule to be searched for rings 
@@ -175,25 +167,6 @@ public class SSSRFinder {
 			result[i] = ((Collection)equivalenceClasses.get(i)).size();
 		}
 		return result;
-	}
-	
-	
-	
-	/**
-	 * Finds a Smallest Set of Smallest Rings.
-	 * The returned set is not uniquely defined.
-	 *
-	 * @deprecated replaced by {@link #findSSSR()}
-	 * @param   container the molecule to be searched for rings 
-	 * @return      a RingSet containing the SSSR
-	 */
-	static public IRingSet findSSSR(IAtomContainer container)
-	{
-		UndirectedGraph molGraph = MoleculeGraphs.getMoleculeGraph(container);
-		
-		CycleBasis cycleBasis = new CycleBasis(molGraph);
-		
-		return toRingSet(container, cycleBasis.cycles());  
 	}
 	
 	private CycleBasis cycleBasis() {

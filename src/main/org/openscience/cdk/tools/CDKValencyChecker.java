@@ -95,11 +95,4 @@ public class CDKValencyChecker implements IValencyChecker {
 		return false;
 	}
 
-	/** @deprecated Use CDKHydrogenAdder instead.
-	 */
-	public int calculateNumberOfImplicitHydrogens(IAtom atom,
-			IAtomContainer container) throws CDKException {
-		return -1;
-	}
-
 }

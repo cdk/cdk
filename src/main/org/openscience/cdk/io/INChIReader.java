@@ -28,15 +28,14 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringReader;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.INChIFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.inchi.INChIHandler;
@@ -68,21 +67,9 @@ import org.xml.sax.XMLReader;
 public class INChIReader extends DefaultChemObjectReader {
 
     private XMLReader parser;
-    private Reader input;
+    private InputStream input;
 
     private LoggingTool logger;
-
-    /**
-     * Construct a INChI reader from a Reader object.
-     *
-     * @param input the Reader with the content
-     * 
-     * @deprecated XML parsing should use InputStream instead of a Reader.
-     */
-    public INChIReader(Reader input) {
-        this.init();
-        this.input = input;
-    }
 
     /**
      * Construct a INChI reader from a InputStream object.
@@ -90,24 +77,28 @@ public class INChIReader extends DefaultChemObjectReader {
      * @param input the InputStream with the content
      */
     public INChIReader(InputStream input) {
-        this(new InputStreamReader(input));
+        this.input = input;
+        init();
     }
     
     public INChIReader() {
-        this(new StringReader(""));
+        this(new ByteArrayInputStream(new byte[0]));
     }
     
     public IResourceFormat getFormat() {
         return INChIFormat.getInstance();
     }
     
-    
-    public void setReader(Reader input) throws CDKException {
-        this.input = input;
+    /**
+     * This method must not be used; XML reading requires the use of an InputStream.
+     * Use setReader(InputStream) instead.
+     */
+    public void setReader(Reader reader) throws CDKException {
+        throw new CDKException("Invalid method call; use SetReader(InputStream) instead.");
     }
 
     public void setReader(InputStream input) throws CDKException {
-        setReader(new InputStreamReader(input));
+        this.input = input;
     }
 
     /**
