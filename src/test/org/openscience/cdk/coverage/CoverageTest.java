@@ -46,6 +46,8 @@ abstract public class CoverageTest extends TestCase {
     private ClassLoader classLoader;
     private List<String> classesToTest;
     
+    private String module;
+    
     public CoverageTest(String name) {
         super(name);
         classesToTest = null;
@@ -64,6 +66,7 @@ abstract public class CoverageTest extends TestCase {
 
     protected void loadClassList(String classList) throws Exception {
         classesToTest = new ArrayList<String>();
+        module = classList.substring(0, classList.indexOf('.'));
         
         // get the src/core.javafiles file
         InputStream stream = this.getClass().getClassLoader().getResourceAsStream(classList);
@@ -84,16 +87,22 @@ abstract public class CoverageTest extends TestCase {
     protected boolean runCoverageTest() {
         int missingTestsCount = 0;
         int uncoveredClassesCount = 0;
-        Iterator classes = classesToTest.iterator();
+        int untestedClassesCount = 0;
+        Iterator<String> classes = classesToTest.iterator();
         while (classes.hasNext()) {
             String className = (String)classes.next();
             int errors = checkClass(className);
-            missingTestsCount += errors;
-            if (errors > 0) uncoveredClassesCount++;
+            if (errors == -1) {
+                untestedClassesCount++;
+            } else {
+                missingTestsCount += errors;
+                if (errors > 0) uncoveredClassesCount++;
+            }
         }
-        if (missingTestsCount > 0) {
-            fail("The module is not fully tested! Missing number of method tests: " + 
-                 missingTestsCount + " in number of classes: " + uncoveredClassesCount);
+        if (missingTestsCount > 0 || untestedClassesCount > 0) {
+            fail("The " + module + " module is not fully tested! Missing number of method tests: " + 
+                 missingTestsCount + " in number of classes: " + uncoveredClassesCount + "; " +
+                 "Missing test classes: " + untestedClassesCount);
         }
         return true;
     }
@@ -106,6 +115,11 @@ abstract public class CoverageTest extends TestCase {
 
         if (!coreClass.isInterface()) {
             Class testClass = loadClass(getTestClassName(className));
+            
+            if (testClass == null) {
+                // all tests methods are more or less missing, so this is a good enough estimate 
+                return -1;
+            }
             
             int missingTestsCount = 0;
 
@@ -222,11 +236,9 @@ abstract public class CoverageTest extends TestCase {
         Class loadedClass = null;
         try {
             loadedClass = classLoader.loadClass(className);
-        } catch (ClassNotFoundException exception) {
-            exception.printStackTrace();
-            fail("Could not find class: " + exception.getMessage());
-        } catch (NoSuchMethodError error) {
-            fail("No such method in class: " + error.getMessage());
+        } catch (Exception exception) {
+            System.out.println("Missing test class: " + className);
+            loadedClass = null;
         }
         return loadedClass;
     }
