@@ -50,6 +50,15 @@ public class SmilesParserTest extends NewCDKTestCase {
 	
 	private static SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 
+	/** @cdk.bug 1363882 */
+  @Test (timeout=1000)
+  public void testBug1363882() throws Exception {
+    String smiles = "[H]c2c([H])c(c1c(nc(n1([H]))C(F)(F)F)c2Cl)Cl";
+    IMolecule mol = sp.parseSmiles(smiles);
+    Assert.assertEquals(18, mol.getAtomCount());
+    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+  }
+  
 	@org.junit.Test (timeout=1000)
 	public void testPyridine_N_oxideUncharged() throws Exception {
 		String smiles = "O=n1ccccc1";
