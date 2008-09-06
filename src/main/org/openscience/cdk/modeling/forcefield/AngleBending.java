@@ -1,7 +1,7 @@
 package org.openscience.cdk.modeling.forcefield;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
@@ -99,7 +99,7 @@ public class AngleBending {
 		}
 		//logger.debug("angleNumber = " + angleNumber);
 
-		Vector angleData = null;
+		List angleData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
 		pc.initialize(parameterSet);
 		

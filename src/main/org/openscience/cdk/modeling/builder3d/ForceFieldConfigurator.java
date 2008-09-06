@@ -24,16 +24,6 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.NoSuchAtomTypeException;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.ringsearch.SSSRFinder;
-import org.openscience.cdk.tools.HOSECodeGenerator;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
@@ -42,9 +32,25 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomTypeException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.tools.HOSECodeGenerator;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
 /**
  *  Reads in a force field configuration file, set the atom types into a vector, and the data into a hashtable
- *  Therfore it uses the class MM2BasedParamterSetReader
+ *  Therefore, it uses the class {@link MM2BasedParameterSetReader}.
  *  private Hashtable parameterSet;
  *  key=nameofdatafield+atomid1+;atomid2;atomxid
  *  
@@ -260,7 +266,7 @@ public class ForceFieldConfigurator {
 				ringSetA = ringSetMolecule.getRings(atom);
 				RingSetManipulator.sort(ringSetA);
 				IRing sring = (IRing) ringSetA.getAtomContainer(ringSetA.getAtomContainerCount()-1);
-				atom.setProperty("RING_SIZE", new Integer(sring.getRingSize()));
+				atom.setProperty("RING_SIZE", Integer.valueOf(sring.getRingSize()));
 				isInHeteroRing = false;
 				Iterator containers = RingSetManipulator.getAllAtomContainers(ringSetA).iterator();
 				while (!isInHeteroRing && containers.hasNext()) {
@@ -429,9 +435,9 @@ public class ForceFieldConfigurator {
 				if (j == 0) {
 					//csp3
 					if (atom.getFlag(CDKConstants.ISINRING)) {
-						if (atom.getProperty("RING_SIZE").equals(new Integer(3))) {
+						if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(3))) {
 							ID=ids[21];
-						}else if (atom.getProperty("RING_SIZE").equals(new Integer(6)) & atom.getFlag(CDKConstants.ISAROMATIC)) {
+						}else if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(6)) & atom.getFlag(CDKConstants.ISAROMATIC)) {
 							ID=ids[1];
 						}else if (atom.getFlag(CDKConstants.ISAROMATIC)){
 							ID=ids[1];
@@ -440,8 +446,8 @@ public class ForceFieldConfigurator {
 				} else if (j == 1) {
 					//csp2
 					if (atom.getFlag(CDKConstants.ISINRING)) {
-						if (atom.getProperty("RING_SIZE").equals(new Integer(6)) & atom.getFlag(CDKConstants.ISAROMATIC)) {
-						}else if (atom.getProperty("RING_SIZE").equals(new Integer(3))) {
+						if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(6)) & atom.getFlag(CDKConstants.ISAROMATIC)) {
+						}else if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(3))) {
 							ID=ids[37];
 						}else{
 							ID=ids[1];
@@ -457,10 +463,10 @@ public class ForceFieldConfigurator {
 				} else if (j == 5) {
 					//OH/Ether
 					if (atom.getFlag(CDKConstants.ISINRING)) {
-						if (atom.getProperty("RING_SIZE").equals(new Integer(3))) {
+						if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(3))) {
 							ID=ids[48];
 							//EPOXY
-						}else if (atom.getProperty("RING_SIZE").equals(new Integer(5)) & atom.getFlag(CDKConstants.ISAROMATIC)){
+						}else if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(5)) & atom.getFlag(CDKConstants.ISAROMATIC)){
 							ID=ids[40];
 						}else{
 							ID=ids[5];
@@ -469,7 +475,7 @@ public class ForceFieldConfigurator {
 				} else if (j == 7) {
 					//n sp3
 					if (atom.getFlag(CDKConstants.ISINRING) & atom.getFlag(CDKConstants.ISAROMATIC)) {
-						if (atom.getProperty("RING_SIZE").equals(new Integer(5))) {
+						if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))) {
 							ID=ids[39];
 						}
 					}
@@ -482,7 +488,7 @@ public class ForceFieldConfigurator {
 				} else if (j == 8) {
 					//nsp2
 					if (atom.getFlag(CDKConstants.ISINRING)) {
-						if (atom.getProperty("RING_SIZE").equals(new Integer(6))) {
+						if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(6))) {
 							ID=ids[36];
 						}
 					}
@@ -555,7 +561,7 @@ public class ForceFieldConfigurator {
 	 */
 	public org.openscience.cdk.interfaces.IAtom configureMMFF94BasedAtom(org.openscience.cdk.interfaces.IAtom atom, String hoseCode, boolean isInHetRing) throws Exception {
 		//logger.debug("****** Configure MMFF94 AtomType ******");
-		Vector atomTypePattern = null;
+		List atomTypePattern = null;
 		MMFF94BasedAtomTypePattern atp = new MMFF94BasedAtomTypePattern();
 		atomTypePattern = atp.getAtomTypePatterns();
 		Pattern p = null;
@@ -582,31 +588,31 @@ public class ForceFieldConfigurator {
 		}
 		
 		for (int j = 0; j < atomTypePattern.size(); j++) {
-			p = (Pattern) atomTypePattern.elementAt(j);
+			p = (Pattern) atomTypePattern.get(j);
 			mat = p.matcher(hoseCode);
 			if (mat.matches()) {
 				ID = ids[j];
 				if (j == 0) {//csp3
 					if (atom.getFlag(CDKConstants.ISINRING)) {
-						p = (Pattern) atomTypePattern.elementAt(13);//c beta heteroaromatic ring
+						p = (Pattern) atomTypePattern.get(13);//c beta heteroaromatic ring
 						mat = p.matcher(hoseCode);
-						p2 = (Pattern) atomTypePattern.elementAt(12);//c alpha heteroaromatic ring
+						p2 = (Pattern) atomTypePattern.get(12);//c alpha heteroaromatic ring
 						mat2 = p2.matcher(hoseCode);
-						if (mat.matches() && isInHetRing && atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(new Integer(5))){
+						if (mat.matches() && isInHetRing && atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
 							ID = ids[13];
-						}else if (mat2.matches() && isInHetRing && atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(new Integer(5))){
+						}else if (mat2.matches() && isInHetRing && atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
 							ID = ids[12];
-						}else if (atom.getProperty("RING_SIZE").equals(new Integer(3))& !atom.getFlag(CDKConstants.ISAROMATIC)) {
+						}else if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(3))& !atom.getFlag(CDKConstants.ISAROMATIC)) {
 							ID = ids[9];//sp3 3mem rings
-						}else if (atom.getProperty("RING_SIZE").equals(new Integer(4)) & !atom.getFlag(CDKConstants.ISAROMATIC)) {
+						}else if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(4)) & !atom.getFlag(CDKConstants.ISAROMATIC)) {
 							ID = ids[8];//sp3 4mem rings
-						}else if (atom.getFlag(CDKConstants.ISAROMATIC) && isInHetRing && atom.getProperty("RING_SIZE").equals(new Integer(5))) {
+						}else if (atom.getFlag(CDKConstants.ISAROMATIC) && isInHetRing && atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))) {
 							ID = ids[14];//C in het 5 ring
 						}else if (atom.getFlag(CDKConstants.ISAROMATIC)) {
 							ID = ids[11];//C in benzene, pyroll
 						}
 					}else{
-						p = (Pattern) atomTypePattern.elementAt(66);//S=C
+						p = (Pattern) atomTypePattern.get(66);//S=C
 						mat = p.matcher(hoseCode);
 						if (mat.matches()){
 							ID = ids[66];
@@ -614,7 +620,7 @@ public class ForceFieldConfigurator {
 					}
 				} else if (j == 1) {//csp2
 					if (atom.getFlag(CDKConstants.ISINRING)) {
-						if (atom.getProperty("RING_SIZE").equals(new Integer(4)) & !atom.getFlag(CDKConstants.ISAROMATIC) && !isInHetRing) {
+						if (atom.getProperty("RING_SIZE").equals(Integer.valueOf(4)) & !atom.getFlag(CDKConstants.ISAROMATIC) && !isInHetRing) {
 							ID = ids[29];//C= in 4 ring
 						}
 					}
@@ -626,68 +632,68 @@ public class ForceFieldConfigurator {
 				
 				} else if (j == 36) {//n sp3
 					//Amid
-					p = (Pattern) atomTypePattern.elementAt(48);
+					p = (Pattern) atomTypePattern.get(48);
 					mat = p.matcher(hoseCode);
 					if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
 						ID = ids[48];
 					}
 					
-					p = (Pattern) atomTypePattern.elementAt(44);//sp3 n-oxide
+					p = (Pattern) atomTypePattern.get(44);//sp3 n-oxide
 					mat = p.matcher(hoseCode);
 					if (mat.matches()){
 						ID = ids[44];
 					}
 					
-					p = (Pattern) atomTypePattern.elementAt(56);//npyd
+					p = (Pattern) atomTypePattern.get(56);//npyd
 					mat = p.matcher(hoseCode);
 					
-					if (atom.getFlag(CDKConstants.ISAROMATIC)){//id in pyridin, pyrol etc...						if (mat.matches() && atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(new Integer(5))){
-						if(atom.getProperty("RING_SIZE").equals(new Integer(6)) && mat.matches()){
+					if (atom.getFlag(CDKConstants.ISAROMATIC)){//id in pyridin, pyrol etc...						if (mat.matches() && atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
+						if(atom.getProperty("RING_SIZE").equals(Integer.valueOf(6)) && mat.matches()){
 							ID = ids[56];
-						}else if(atom.getProperty("RING_SIZE").equals(new Integer(5)) && mat.matches()){
+						}else if(atom.getProperty("RING_SIZE").equals(Integer.valueOf(5)) && mat.matches()){
 							ID = ids[57];
 						}else{
 							ID=ids[64];
 						}
 					}
 					
-					p = (Pattern) atomTypePattern.elementAt(61);//npyd
+					p = (Pattern) atomTypePattern.get(61);//npyd
 					mat = p.matcher(hoseCode);
-					if (atom.getFlag(CDKConstants.ISAROMATIC)){//id in pyridin, pyrol etc...						if (mat.matches() && atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(new Integer(5))){
-						if(atom.getProperty("RING_SIZE").equals(new Integer(6)) && mat.matches()){
+					if (atom.getFlag(CDKConstants.ISAROMATIC)){//id in pyridin, pyrol etc...						if (mat.matches() && atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
+						if(atom.getProperty("RING_SIZE").equals(Integer.valueOf(6)) && mat.matches()){
 							ID = ids[61];
-						}else if(atom.getProperty("RING_SIZE").equals(new Integer(5)) && mat.matches()){
+						}else if(atom.getProperty("RING_SIZE").equals(Integer.valueOf(5)) && mat.matches()){
 							ID = ids[62];
 						}else{
 							ID=ids[43];
 						}
 					}
 					
-					p = (Pattern) atomTypePattern.elementAt(45);//NC#N
+					p = (Pattern) atomTypePattern.get(45);//NC#N
 					mat = p.matcher(hoseCode);
 					if (mat.matches()){
 						ID = ids[45];
 					}
 				
 				}else if (j == 37) {//N=C n in imine
-					p = (Pattern) atomTypePattern.elementAt(59);//n beta heteroaromatic ring
+					p = (Pattern) atomTypePattern.get(59);//n beta heteroaromatic ring
 					mat = p.matcher(hoseCode);
 					if (atom.getFlag(CDKConstants.ISINRING)) {
-						if (mat.matches() && isInHetRing && atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(new Integer(5))){
+						if (mat.matches() && isInHetRing && atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
 							ID = ids[59];
-						}else if( atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(new Integer(6))){
+						}else if( atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(Integer.valueOf(6))){
 							ID = ids[56];
-						}else if( atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(new Integer(5))){
+						}else if( atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
 							ID = ids[57];
 						}
 					}
 					
-					p = (Pattern) atomTypePattern.elementAt(43);//N2OX
+					p = (Pattern) atomTypePattern.get(43);//N2OX
 					mat = p.matcher(hoseCode);
 					if (mat.matches()){
-						if (atom.getFlag(CDKConstants.ISAROMATIC)&& atom.getProperty("RING_SIZE").equals(new Integer(6))){
+						if (atom.getFlag(CDKConstants.ISAROMATIC)&& atom.getProperty("RING_SIZE").equals(Integer.valueOf(6))){
 							ID = ids[61];//npox
-						}else if (mat.matches() && atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(new Integer(5))){
+						}else if (mat.matches() && atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
 							ID = ids[62];//n5ox
 						}else{
 							ID = ids[43];
@@ -696,44 +702,44 @@ public class ForceFieldConfigurator {
 				
 				}else if (j==43){//sp2 n oxide
 					if (atom.getFlag(CDKConstants.ISINRING) && atom.getFlag(CDKConstants.ISAROMATIC)
-						&& atom.getProperty("RING_SIZE").equals(new Integer(5))){
+						&& atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
 						ID = ids[62];
 					}else if (atom.getFlag(CDKConstants.ISINRING) && atom.getFlag(CDKConstants.ISAROMATIC)
-						&& atom.getProperty("RING_SIZE").equals(new Integer(6))){
+						&& atom.getProperty("RING_SIZE").equals(Integer.valueOf(6))){
 						ID = ids[61];
 					}
 				}else if (j==40 || j==41){//n in c=n=n or terminal n in azido
 					if (atom.getFlag(CDKConstants.ISINRING) && atom.getFlag(CDKConstants.ISAROMATIC)
-						&& atom.getProperty("RING_SIZE").equals(new Integer(5))){
+						&& atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
 						ID = ids[59];//aromatic N 5R alpha
 					}
 				}else if (j==50){//n+= 
 					if (atom.getFlag(CDKConstants.ISINRING) && atom.getFlag(CDKConstants.ISAROMATIC)
-						&& atom.getProperty("RING_SIZE").equals(new Integer(5))){
+						&& atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
 						ID = ids[63];//n5+
 					}else if (atom.getFlag(CDKConstants.ISINRING) && atom.getFlag(CDKConstants.ISAROMATIC)
-						&& atom.getProperty("RING_SIZE").equals(new Integer(6))){
+						&& atom.getProperty("RING_SIZE").equals(Integer.valueOf(6))){
 						ID = ids[58];//npd+
 					}
 				}else if (j==28){//O ->furan
 					if (atom.getFlag(CDKConstants.ISINRING) && atom.getFlag(CDKConstants.ISAROMATIC)
-						&& atom.getProperty("RING_SIZE").equals(new Integer(5))){
+						&& atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
 							ID = ids[35];
 					}
 				}else if (j==16){//H-Object-> enol
-					p = (Pattern) atomTypePattern.elementAt(21);//enol
+					p = (Pattern) atomTypePattern.get(21);//enol
 					mat = p.matcher(hoseCode);
 					if (mat.matches()){
 						ID = ids[21];
 					}
-					p = (Pattern) atomTypePattern.elementAt(18);//enol
+					p = (Pattern) atomTypePattern.get(18);//enol
 					mat = p.matcher(hoseCode);
 					if (mat.matches()){
 						ID = ids[18];
 					}
 					
 				}else if (j==74){//P
-					p = (Pattern) atomTypePattern.elementAt(75);//-P=C
+					p = (Pattern) atomTypePattern.get(75);//-P=C
 					mat = p.matcher(hoseCode);
 					if (mat.matches()){
 						ID = ids[75];
