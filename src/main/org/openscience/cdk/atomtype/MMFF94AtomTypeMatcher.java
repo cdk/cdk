@@ -83,6 +83,16 @@ public class MMFF94AtomTypeMatcher implements IAtomTypeMatcher {
 		return getSphericalMatcher(factory.getAtomType(type));
 	}
 
+  public IAtomType[] findMatchingAtomType(IAtomContainer atomContainer) throws CDKException {
+      IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
+      int typeCounter = 0;
+      for (IAtom atom : atomContainer.atoms()) {
+          types[typeCounter] = findMatchingAtomType(atomContainer, atom);
+          typeCounter++;
+      }
+      return types;
+  }
+
 	/**
 	 * Assign the mmff94 atom type to a given atom.
 	 * Before this method can be called the following has to be done:

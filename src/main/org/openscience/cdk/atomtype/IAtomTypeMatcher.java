@@ -1,6 +1,7 @@
 /* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2005-2007  Matteo Floris <mfe4@users.sf.net>
+ *                    2008  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -20,10 +21,10 @@
  */
 package org.openscience.cdk.atomtype;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.exception.CDKException;
 
 /**
  * Classes that implement this interface are atom type matchers. They find the
@@ -49,4 +50,15 @@ public interface IAtomTypeMatcher {
       *                   the AtomType's
       */
     public IAtomType findMatchingAtomType(IAtomContainer container, IAtom atom) throws CDKException;
+
+    /**
+     * Method that assigns atom types to atoms in the given atom container.
+     *
+     * @param  container AtomContainer for which atom types are perceived
+     * @return           The matching AtomType
+     * @throws           CDKException when something went wrong with going through
+     *                   the AtomType's
+     */
+   public IAtomType[] findMatchingAtomType(IAtomContainer container) throws CDKException;
+
 }
