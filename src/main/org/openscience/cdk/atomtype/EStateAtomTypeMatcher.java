@@ -26,6 +26,7 @@ package org.openscience.cdk.atomtype;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 
 /**
@@ -46,6 +47,16 @@ public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
 	{
 		ringSet = rs;
 	}
+
+  public IAtomType[] findMatchingAtomType(IAtomContainer atomContainer) throws CDKException {
+      IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
+      int typeCounter = 0;
+      for (IAtom atom : atomContainer.atoms()) {
+          types[typeCounter] = findMatchingAtomType(atomContainer, atom);
+          typeCounter++;
+      }
+      return types;
+  }
 
     @TestMethod("testSP3Atoms,testNaCl,testNaphthalene,testSP2Atoms,testSPAtoms,testBenzeneFromSmiles")
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)

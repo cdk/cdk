@@ -43,10 +43,9 @@ import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 
 /**
- * Atom Type matcher... TO BE WRITTEN.
- *
- * <p>This class uses the <code>org/openscience/cdk/dict/data/cdk-atom-types.owl</code> 
- * list. If there is not an atom type defined for the tested atom, then NULL 
+ * Atom Type matcher that perceives atom types as defined in the CDK atom type list
+ * <code>org/openscience/cdk/dict/data/cdk-atom-types.owl</code>. 
+ * If there is not an atom type defined for the tested atom, then NULL 
  * is returned.
  *
  * @author         egonw
@@ -91,6 +90,16 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return factories.get(mode).get(builder);
     }
     
+    public IAtomType[] findMatchingAtomType(IAtomContainer atomContainer) throws CDKException {
+        IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
+        int typeCounter = 0;
+        for (IAtom atom : atomContainer.atoms()) {
+            types[typeCounter] = findMatchingAtomType(atomContainer, atom);
+            typeCounter++;
+        }
+        return types;
+    }
+
     @TestMethod("testFindMatchingAtomType_IAtomContainer_IAtom")
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         throws CDKException {

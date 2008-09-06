@@ -68,18 +68,50 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
     	return factories.get(builder);
     }
 
+    public IAtomType[] findMatchingAtomType(IAtomContainer atomContainer) throws CDKException {
+        for (IAtom atom : atomContainer.atoms()) {
+            IAtomType type = cdkMatcher.findMatchingAtomType(atomContainer, atom);
+            atom.setAtomTypeName(type == null ? null : type.getAtomTypeName());
+        }
+        CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
+        IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
+        int typeCounter = 0;
+        for (IAtom atom : atomContainer.atoms()) {
+            String mappedType = mapCDKToSybylType(atom);
+            if (mappedType == null) {
+                types[typeCounter] = null;
+            } else {
+                types[typeCounter] = factory.getAtomType(mappedType);
+            }
+            typeCounter++;
+        }
+        return types;
+    }
+
+    /**
+     * Sybyl atom type perception for a single atom. The molecular property <i>aromaticity</i> is not perceived; 
+     * Aromatic carbons will, therefore, be perceived as <i>C.2</i> and not <i>C.ar</i>. If the latter is
+     * required, please use findMatchingAtomType(IAtomContainer) instead.
+     */
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         throws CDKException {
         IAtomType type = cdkMatcher.findMatchingAtomType(atomContainer, atom);
-        CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
         if (type == null) return null;
-        String mappedType = mapper.mapAtomType(type.getAtomTypeName());
+        String mappedType = mapCDKToSybylType(type);
+        if (mappedType == null) return null;
+        return factory.getAtomType(mappedType);
+    }
+    
+    private String mapCDKToSybylType(IAtomType atom) {
+        String typeName = atom.getAtomTypeName();
+        if (typeName == null) return null;
+        String mappedType = mapper.mapAtomType(typeName);
         if ("C.2".equals(mappedType) && atom.getFlag(CDKConstants.ISAROMATIC)) {
             mappedType = "C.ar";
         } else if ("N.pl3".equals(mappedType) && atom.getFlag(CDKConstants.ISAROMATIC)) {
             mappedType = "N.ar";
         }
-        return factory.getAtomType(mappedType);
+        return mappedType;
     }
     
 }

@@ -55,6 +55,16 @@ public class StructGenMatcher implements IAtomTypeMatcher {
 	}
 
 
+  public IAtomType[] findMatchingAtomType(IAtomContainer atomContainer) throws CDKException {
+      IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
+      int typeCounter = 0;
+      for (IAtom atom : atomContainer.atoms()) {
+          types[typeCounter] = findMatchingAtomType(atomContainer, atom);
+          typeCounter++;
+      }
+      return types;
+  }
+
 	/**
 	 * Finds the AtomType matching the Atom's element symbol, formal charge and 
      * hybridization state.
