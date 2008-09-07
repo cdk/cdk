@@ -106,6 +106,9 @@ public class ParserTest extends CDKTestCase {
         assertTrue(atom instanceof SMARTSAtom);
     }
 
+    /**
+     * @cdk.bug 1760967
+     */
     public void testSingleBond() throws Exception {
         QueryAtomContainer container = SMARTSParser.parse("C-C");
         assertEquals(2, container.getAtomCount());
