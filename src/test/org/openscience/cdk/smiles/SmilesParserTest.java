@@ -69,6 +69,18 @@ public class SmilesParserTest extends NewCDKTestCase {
     Assert.assertEquals("N", mol.getAtom(8).getSymbol());
     Assert.assertTrue(mol.getAtom(8).getFlag(CDKConstants.ISAROMATIC));
   }
+
+  /** @cdk.bug 1579229 */
+  @Test (timeout=1000)
+  public void testBug1579229() throws Exception {
+    String smiles = "c1c(c23)ccc(c34)ccc4ccc2c1";
+    IMolecule mol = sp.parseSmiles(smiles);
+    Assert.assertEquals(14, mol.getAtomCount());
+    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+    for (IAtom atom : mol.atoms()) {
+        Assert.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
+    }
+  }
   
 	@org.junit.Test (timeout=1000)
 	public void testPyridine_N_oxideUncharged() throws Exception {
