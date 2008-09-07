@@ -70,6 +70,23 @@ public class SmilesParserTest extends NewCDKTestCase {
     Assert.assertTrue(mol.getAtom(8).getFlag(CDKConstants.ISAROMATIC));
   }
 
+  /** @cdk.bug 1579235 */
+  @Test (timeout=1000)
+  public void testBug1579235() throws Exception {
+    String smiles = "c2cc1cccn1cc2";
+    IMolecule mol = sp.parseSmiles(smiles);
+    Assert.assertEquals(9, mol.getAtomCount());
+    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+    Assert.assertEquals("N", mol.getAtom(6).getSymbol());
+    for (IAtom atom : mol.atoms()) {
+        if (atom.getSymbol().equals("C")) {
+            Assert.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
+        } else {
+            Assert.assertEquals(IAtomType.Hybridization.PLANAR3, atom.getHybridization());
+        }
+    }
+  }
+
   /** @cdk.bug 1579229 */
   @Test (timeout=1000)
   public void testBug1579229() throws Exception {
