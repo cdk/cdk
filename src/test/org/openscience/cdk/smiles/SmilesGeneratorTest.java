@@ -41,6 +41,7 @@ import org.openscience.cdk.layout.HydrogenPlacer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 import javax.vecmath.Point2d;
 import java.io.ByteArrayInputStream;
@@ -751,6 +752,30 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		assertFalse(moleculeSmile1.equals(moleculeSmile2));
 	}
 	
+  /**
+   * @cdk.bug 1535055
+   */
+	public void testSFBug1535055() throws Exception {
+	    String filename_cml = "data/cml/test1.cml";
+	    InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_cml);
+	    CMLReader reader1 = new CMLReader(ins1);
+	    IChemFile chemFile = (IChemFile)reader1.read(new ChemFile());
+	    assertNotNull(chemFile);
+	    IChemSequence seq = chemFile.getChemSequence(0);
+	    assertNotNull(seq);
+	    IChemModel model = seq.getChemModel(0);
+	    assertNotNull(model);
+	    IMolecule mol1 = model.getMoleculeSet().getMolecule(0);
+	    assertNotNull(mol1);
+	    
+	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+	    assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol1));
+	    
+	    SmilesGenerator sg = new SmilesGenerator();
+      sg.setUseAromaticityFlag(true);
+	    String mol1SMILES = sg.createSMILES(mol1);
+	    assertTrue(mol1SMILES.contains("nH"));
+	}
 	
 	/**
 	 * @cdk.bug 1014344

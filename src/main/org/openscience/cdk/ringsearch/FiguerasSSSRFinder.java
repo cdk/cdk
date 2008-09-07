@@ -45,6 +45,9 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * Finds the Smallest Set of Smallest Rings. 
  * This is an implementation of the algorithm published in
  * {@cdk.cite FIG96}.
+ * 
+ * <p>The {@link SSSRFinder} is encouraged to be used, providing an exact
+ * algorithm for finding the SSSR.
  *
  * @cdk.module extra
  * @cdk.svnrev  $Revision$

@@ -74,6 +74,7 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         for (IAtom atom : atomContainer.atoms()) {
             IAtomType type = cdkMatcher.findMatchingAtomType(atomContainer, atom);
             atom.setAtomTypeName(type == null ? null : type.getAtomTypeName());
+            atom.setHybridization(type == null ? null : type.getHybridization());
         }
         CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
         IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];

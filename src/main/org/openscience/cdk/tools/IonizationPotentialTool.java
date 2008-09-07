@@ -20,21 +20,31 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.charges.*;
+import org.openscience.cdk.charges.Electronegativity;
+import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
+import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
+import org.openscience.cdk.charges.PiElectronegativity;
+import org.openscience.cdk.charges.Polarizability;
+import org.openscience.cdk.charges.StabilizationCharges;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.ElectronImpactNBEReaction;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * <p>This class contains the necessary information to predict ionization
@@ -263,7 +273,7 @@ public class IonizationPotentialTool {
 			results[6] = acR.getAtomCount();
 			// numberAromaticAtoms
 			boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(container);
-			IRingSet ringSet = SSSRFinder.findSSSR(container);
+			IRingSet ringSet = new SSSRFinder(container).findSSSR();
 			RingSetManipulator.markAromaticRings(ringSet);
 			int aromRingCount = 0;			
 			for (IAtomContainer ring : ringSet.atomContainers()) {

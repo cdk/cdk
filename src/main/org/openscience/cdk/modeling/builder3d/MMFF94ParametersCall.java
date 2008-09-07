@@ -1,5 +1,6 @@
 package org.openscience.cdk.modeling.builder3d;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -14,7 +15,7 @@ import java.util.Vector;
  */
 public class MMFF94ParametersCall {
 	
-	private Map pSet = null;
+	private Map<String,List> pSet = null;
 	//private final static double DEFAULT_BOND_LENGTH = 1.5;
 	//private final static double DEFAULT_ANGLE = 90;			// Only to test
 	//private final static double DEFAULT_TORSION_ANGLE = 90;
@@ -28,7 +29,7 @@ public class MMFF94ParametersCall {
 	 * 
 	 * @param  parameterSet  Force Field parameter as Map
 	 */
-	public void initialize(Map parameterSet) {
+	public void initialize(Map<String,List> parameterSet) {
 		pSet = parameterSet;
 	}
 
@@ -41,7 +42,7 @@ public class MMFF94ParametersCall {
 	 * @return                The distance value from the force field parameter set
 	 * @exception  Exception  Description of the Exception
 	 */
-	public Vector getBondData(String code, String id1, String id2) throws Exception {
+	public List getBondData(String code, String id1, String id2) throws Exception {
 		String dkey = "";
 		if (pSet.containsKey(("bond" + code + ";" + id1 + ";" + id2))) {
 			dkey="bond" + code + ";" + id1 + ";" + id2;
@@ -52,7 +53,7 @@ public class MMFF94ParametersCall {
 			return DEFAULT_BOND_LENGTH;
 			}*/
 		//logger.debug("dkey = " + dkey);
-		return (Vector) pSet.get(dkey);
+		return (List) pSet.get(dkey);
 	}
 
 
@@ -65,7 +66,7 @@ public class MMFF94ParametersCall {
 	 * @return                The angle data from the force field parameter set
 	 * @exception  Exception  Description of the Exception
 	 */
-	public Vector getAngleData(String angleType, String id1, String id2, String id3) throws Exception {
+	public List getAngleData(String angleType, String id1, String id2, String id3) throws Exception {
 		String akey = "";
 		if (pSet.containsKey(("angle" + angleType + ";" + id1 + ";" + id2 + ";" + id3))) {
 			akey = "angle" + angleType + ";" + id1 + ";" + id2 + ";" + id3;
@@ -76,7 +77,7 @@ public class MMFF94ParametersCall {
 	   		return (Vector)[DEFAULT_ANGLE,0,0];
 	   		}*/
 		//logger.debug("angle key : " + akey);
-		return (Vector) pSet.get(akey);
+		return (List) pSet.get(akey);
 	}
 
 
@@ -89,7 +90,7 @@ public class MMFF94ParametersCall {
 	 * @return                The bond-angle interaction data from the force field parameter set
 	 * @exception  Exception  Description of the Exception
 	 */
-	public Vector getBondAngleInteractionData(String strbndType, String id1, String id2, String id3) throws Exception {
+	public List getBondAngleInteractionData(String strbndType, String id1, String id2, String id3) throws Exception {
 		String akey = "";
 		if (pSet.containsKey(("strbnd" + strbndType + ";" + id1 + ";" + id2 + ";" + id3))) {
 			akey = "strbnd" + strbndType + ";" + id1 + ";" + id2 + ";" + id3;
@@ -108,7 +109,7 @@ public class MMFF94ParametersCall {
 			return (Vector)[DEFAULT_ANGLE,0,0];
 			}*/
 		//logger.debug("akey : " + akey);
-		return (Vector) pSet.get(akey);
+		return (List) pSet.get(akey);
 	}
 	
 
@@ -121,7 +122,7 @@ public class MMFF94ParametersCall {
 	 * @return                The bond-angle interaction data from the force field parameter set
 	 * @exception  Exception  Description of the Exception
 	 */
-	public Vector getDefaultStretchBendData(int iR, int jR, int kR) throws Exception {
+	public List getDefaultStretchBendData(int iR, int jR, int kR) throws Exception {
 		String dfsbkey = "";
 		if (pSet.containsKey(("DFSB" + iR + ";" + jR + ";" + kR))) {
 			dfsbkey = "DFSB" + iR + ";" + jR + ";" + kR;
@@ -129,7 +130,7 @@ public class MMFF94ParametersCall {
 			System.out.println("KEYErrorDefaultStretchBend:Unknown default stretch-bend key in pSet: " + iR + " ; " + jR + " ; " + kR);
 			}*/
 		//logger.debug("dfsbkey : " + dfsbkey);
-		return (Vector) pSet.get(dfsbkey);
+		return (List) pSet.get(dfsbkey);
 	}
 	
 		
@@ -141,7 +142,7 @@ public class MMFF94ParametersCall {
 	 * @return                The distance value from the force field parameter set
 	 * @exception  Exception  Description of the Exception
 	 */
-	public Vector getTorsionData(String code, String id1, String id2, String id3, String id4) throws Exception {
+	public List getTorsionData(String code, String id1, String id2, String id3, String id4) throws Exception {
 		String dkey = "";
 		if (pSet.containsKey(("torsion" + code + ";" + id1 + ";" + id2 + ";" + id3 + ";" + id4))) {
 			dkey="torsion" + code + ";" + id1 + ";" + id2 + ";" + id3 + ";" + id4;
@@ -160,7 +161,7 @@ public class MMFF94ParametersCall {
 			return DEFAULT_TORSION_ANGLE;
 			}*/
 		//logger.debug("dkey = " + dkey);
-		return (Vector) pSet.get(dkey);
+		return (List) pSet.get(dkey);
 	}
 	
 }

@@ -1,15 +1,15 @@
 package org.openscience.cdk.modeling.forcefield;
 
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Vector;
-//import org.openscience.cdk.tools.LoggingTool;
+
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.modeling.builder3d.MMFF94ParametersCall;
 
 
 /**
@@ -74,7 +74,7 @@ public class BondStretching {
 		//logger.debug("bondsNumber = " + bondsNumber);
 		bondAtomPosition = new int[molecule.getBondCount()][];
 
-		Vector bondData = null;
+		List bondData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
 		pc.initialize(parameterSet);
 

@@ -50,6 +50,75 @@ public class SmilesParserTest extends NewCDKTestCase {
 	
 	private static SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 
+	/** @cdk.bug 1363882 */
+  @Test (timeout=1000)
+  public void testBug1363882() throws Exception {
+    String smiles = "[H]c2c([H])c(c1c(nc(n1([H]))C(F)(F)F)c2Cl)Cl";
+    IMolecule mol = sp.parseSmiles(smiles);
+    Assert.assertEquals(18, mol.getAtomCount());
+    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+  }
+  
+  /** @cdk.bug 1535587 */
+  @Test (timeout=1000)
+  public void testBug1535587() throws Exception {
+    String smiles = "COC(=O)c2ccc3n([H])c1ccccc1c3(c2)";
+    IMolecule mol = sp.parseSmiles(smiles);
+    Assert.assertEquals(18, mol.getAtomCount());
+    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+    Assert.assertEquals("N", mol.getAtom(8).getSymbol());
+    Assert.assertTrue(mol.getAtom(8).getFlag(CDKConstants.ISAROMATIC));
+  }
+
+  /** @cdk.bug 1579235 */
+  @Test (timeout=1000)
+  public void testBug1579235() throws Exception {
+    String smiles = "c2cc1cccn1cc2";
+    IMolecule mol = sp.parseSmiles(smiles);
+    Assert.assertEquals(9, mol.getAtomCount());
+    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+    Assert.assertEquals("N", mol.getAtom(6).getSymbol());
+    for (IAtom atom : mol.atoms()) {
+        if (atom.getSymbol().equals("C")) {
+            Assert.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
+        } else {
+            Assert.assertEquals(IAtomType.Hybridization.PLANAR3, atom.getHybridization());
+        }
+    }
+  }
+
+  /** @cdk.bug 1579229 */
+  @Test (timeout=1000)
+  public void testBug1579229() throws Exception {
+    String smiles = "c1c(c23)ccc(c34)ccc4ccc2c1";
+    IMolecule mol = sp.parseSmiles(smiles);
+    Assert.assertEquals(14, mol.getAtomCount());
+    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+    for (IAtom atom : mol.atoms()) {
+        Assert.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
+    }
+  }
+  
+  /** @cdk.bug 1579230 */
+  @Test (timeout=1000)
+  public void testBug1579230() throws Exception {
+    String smiles = "Cc1cccc2sc3nncn3c12";
+    IMolecule mol = sp.parseSmiles(smiles);
+    Assert.assertEquals(13, mol.getAtomCount());
+    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+    for (int i=1;i<13;i++) { // first atom is not aromatic
+        IAtom atom = mol.getAtom(i);
+        if (atom.getSymbol().equals("C"))
+            Assert.assertEquals(IAtomType.Hybridization.SP2, atom.getHybridization());
+        if (atom.getSymbol().equals("N") || atom.getSymbol().equals("S")) {
+            Assert.assertTrue(
+                IAtomType.Hybridization.SP2 == atom.getHybridization() ||
+                IAtomType.Hybridization.PLANAR3 == atom.getHybridization()
+            );
+        }
+    }
+  }
+  
 	@org.junit.Test (timeout=1000)
 	public void testPyridine_N_oxideUncharged() throws Exception {
 		String smiles = "O=n1ccccc1";

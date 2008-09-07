@@ -34,11 +34,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
 import org.openscience.cdk.AtomType;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.interfaces.IAtomType;
 
 /**
  * AtomType list configurator that uses the ParameterSet originally
@@ -57,28 +59,28 @@ public class MM2BasedParameterSetReader {
 	
 	private String configFile = "org/openscience/cdk/modeling/forcefield/data/mm2.prm";
 	private InputStream ins = null;
-	private Hashtable parameterSet;
-	private Vector atomTypes;
+	private Map parameterSet;
+	private List<IAtomType> atomTypes;
 	private StringTokenizer st;
 	private String key = "";
 
 	/**
-	 *Constructor for the MM2BasedParameterSetReader object
+	 * Constructor for the MM2BasedParameterSetReader object.
 	 */
 	public MM2BasedParameterSetReader() {
 		parameterSet = new Hashtable();
-		atomTypes = new Vector();
+		atomTypes = new Vector<IAtomType>();
 	}
 
-	public Hashtable getParamterSet(){
+	public Map getParamterSet(){
 		return parameterSet;
 	}
 	
-	public Vector getAtomTypes(){
+	public List<IAtomType> getAtomTypes(){
 		return atomTypes;
 	}
 	/**
-	 * Sets the file containing the config data
+	 * Sets the file containing the config data.
 	 *
 	 * @param  ins  The new inputStream type InputStream
 	 */
@@ -288,7 +290,7 @@ public class MM2BasedParameterSetReader {
 					"Malformed Number");
 		}
 
-		AtomType atomType = new AtomType(name, rootType);
+		IAtomType atomType = new AtomType(name, rootType);
 		atomType.setAtomicNumber(an);
 		atomType.setExactMass(mass);
 		atomType.setFormalNeighbourCount(maxbond);
@@ -296,7 +298,7 @@ public class MM2BasedParameterSetReader {
 		Color co = new Color(rl, gl, bl);
 		atomType.setProperty("org.openscience.cdk.renderer.color", co);
 		atomType.setAtomTypeName(sid);
-		atomTypes.addElement(atomType);
+		atomTypes.add(atomType);
 	}
 
 	/**
@@ -305,7 +307,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setvdWaals() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid = st.nextToken();
 		String sradius = st.nextToken();
@@ -331,7 +333,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setvdWaalpr() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
@@ -356,7 +358,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setBond() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
@@ -382,7 +384,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setBond3() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
@@ -408,7 +410,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setBond4() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
@@ -434,7 +436,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setAngle() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
@@ -476,7 +478,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setAngle3() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
@@ -509,7 +511,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setAngle4() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
@@ -542,7 +544,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setStrBnd() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String value1 = st.nextToken();
@@ -563,7 +565,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setOpBend() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
@@ -592,7 +594,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setTorsion() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
@@ -636,7 +638,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setTorsion4() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
@@ -673,7 +675,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setCharge() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String value1 = st.nextToken();
@@ -694,7 +696,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setDipole() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
@@ -721,7 +723,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setDipole3() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
@@ -748,7 +750,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setPiAtom() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String value1 = st.nextToken();
@@ -777,7 +779,7 @@ public class MM2BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setPiBond() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();

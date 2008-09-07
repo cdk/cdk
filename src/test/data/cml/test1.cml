@@ -1,0 +1,48 @@
+<cml id="cml1" xmlns="http://www.xml-cml.org/schema">
+<molecule id="m1">
+<name>methyl carbazole-3-carboxylate</name>
+<identifier 
+convention="iupac:inchi">InChI=1/C14H11NO2/c1-17-14(16)9-6-7-13-11(8-9)10-4-2-3-5-12(10)15-13/h2-8,15H,1H3</identifier>
+<atomArray>
+<atom id="a1" elementType="C"/>
+<atom id="a2" elementType="C"/>
+<atom id="a3" elementType="C"/>
+<atom id="a4" elementType="C"/>
+<atom id="a5" elementType="C"/>
+<atom id="a6" elementType="C"/>
+<atom id="a7" elementType="C"/>
+<atom id="a8" elementType="C"/>
+<atom id="a9" elementType="C"/>
+<atom id="a10" elementType="C"/>
+<atom id="a11" elementType="C"/>
+<atom id="a12" elementType="C"/>
+<atom id="a13" elementType="N"/>
+<atom id="a14" elementType="C"/>
+<atom id="a15" elementType="C"/>
+<atom id="a16" elementType="O"/>
+<atom id="a17" elementType="O"/>
+</atomArray>
+<bondArray>
+<bond atomRefs2="a2 a3" order="2"/>
+<bond atomRefs2="a3 a4" order="1"/>
+<bond atomRefs2="a4 a5" order="2"/>
+<bond atomRefs2="a5 a6" order="1"/>
+<bond atomRefs2="a6 a7" order="1"/>
+<bond atomRefs2="a7 a8" order="2"/>
+<bond atomRefs2="a8 a9" order="1"/>
+<bond atomRefs2="a9 a10" order="2"/>
+<bond atomRefs2="a10 a11" order="1"/>
+<bond atomRefs2="a11 a12" order="2"/>
+<bond atomRefs2="a12 a7" order="1"/>
+<bond atomRefs2="a12 a13" order="1"/>
+<bond atomRefs2="a13 a14" order="1"/>
+<bond atomRefs2="a14 a6" order="2"/>
+<bond atomRefs2="a14 a2" order="1"/>
+<bond atomRefs2="a15 a4" order="1"/>
+<bond atomRefs2="a15 a16" order="2"/>
+<bond atomRefs2="a15 a17" order="1"/>
+<bond atomRefs2="a17 a1" order="1"/>
+</bondArray>
+</molecule>
+</cml>
+ 	  	 

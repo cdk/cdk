@@ -34,6 +34,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -54,8 +56,8 @@ public class MMFF94BasedParameterSetReader {
 
 	private String configFile = "org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
 	private InputStream ins = null;
-	private Hashtable parameterSet;
-	private Vector atomTypes;
+	private Map parameterSet;
+	private List atomTypes;
 	private StringTokenizer st;
 	private String key = "";
 	private String sid;
@@ -77,11 +79,11 @@ public class MMFF94BasedParameterSetReader {
 		atomTypes = new Vector();
 	}
 	
-	public Hashtable getParamterSet(){
+	public Map getParamterSet(){
 		return parameterSet;
 	}
 	
-	public Vector getAtomTypes(){
+	public List getAtomTypes(){
 		return atomTypes;
 	}
 	/**
@@ -209,7 +211,7 @@ public class MMFF94BasedParameterSetReader {
 		Color co = new Color(rl, gl, bl);
 		atomType.setProperty("org.openscience.cdk.renderer.color", co);
 		atomType.setAtomTypeName(sid);
-		atomTypes.addElement(atomType);
+		atomTypes.add(atomType);
 	}
 	
 	
@@ -219,7 +221,7 @@ public class MMFF94BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setBond() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String scode = st.nextToken();
 		String sid1 = st.nextToken();
@@ -255,7 +257,7 @@ public class MMFF94BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setAngle() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String scode = st.nextToken(); // String scode
 		String sid1 = st.nextToken();
@@ -299,7 +301,7 @@ public class MMFF94BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setStrBnd() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String scode = st.nextToken(); // String scode
 		String sid1 = st.nextToken();
@@ -329,7 +331,7 @@ public class MMFF94BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setTorsion() throws Exception {
-		Vector data = null;
+		List data = null;
 		st.nextToken();
 		String scode = st.nextToken(); // String scode
 		String sid1 = st.nextToken();
@@ -383,7 +385,7 @@ public class MMFF94BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setOpBend() throws Exception {
-		Vector data = new Vector();
+		List data = new Vector();
 		st.nextToken();
 		String sid1 = st.nextToken();
 		String sid2 = st.nextToken();
@@ -414,7 +416,7 @@ public class MMFF94BasedParameterSetReader {
 	 */
 	private void setDefaultStrBnd() throws Exception {
 		//logger.debug("Sets the Default Stretch-Bend Parameters");
-		Vector data = new Vector();
+		List data = new Vector();
 		stDFSB.nextToken();
 		String sIR = stDFSB.nextToken();
 		String sJR = stDFSB.nextToken();

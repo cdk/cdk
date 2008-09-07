@@ -8,5 +8,7 @@
   <rule ref="rulesets/junit.xml">
     <exclude name="JUnitAssertionsShouldIncludeMessage"/>
   </rule>
+  
+  <!-- to JUnit4 migration tested in migration*.xml -->
 
 </ruleset>

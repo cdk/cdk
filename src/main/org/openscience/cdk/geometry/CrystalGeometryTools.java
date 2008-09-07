@@ -96,31 +96,6 @@ public class CrystalGeometryTools {
     }
 
     /**
-     * Method that transforms fractional coordinates into cartesian coordinates.
-     *
-     * @param aAxis the a axis vector of the unit cell in cartesian coordinates
-     * @param bAxis the b axis vector of the unit cell in cartesian coordinates
-     * @param cAxis the c axis vector of the unit cell in cartesian coordinates
-     * @param frac  a fractional coordinate to convert
-     * @return     an array of length 3 with the cartesian coordinates of the
-     *              point defined by frac
-     *
-     * @cdk.keyword     cartesian coordinates
-     * @cdk.keyword     fractional coordinates
-     *
-     * @see #cartesianToFractional(javax.vecmath.Vector3d, javax.vecmath.Vector3d, javax.vecmath.Vector3d, javax.vecmath.Point3d)
-     * @deprecated
-     */
-    public static double[] fractionalToCartesian(double[] aAxis, double[] bAxis, double[] cAxis,
-                                                 double[] frac) {
-        double[] cart = new double[3];
-        cart[0] = frac[0]*aAxis[0] + frac[1]*bAxis[0] + frac[2]*cAxis[0];
-        cart[1] = frac[0]*aAxis[1] + frac[1]*bAxis[1] + frac[2]*cAxis[1];
-        cart[2] = frac[0]*aAxis[2] + frac[1]*bAxis[2] + frac[2]*cAxis[2];
-        return cart;
-    }
-    
-    /**
      * @cdk.dictref blue-obelisk:convertFractionIntoCartesianCoordinates
      */
     @TestMethod("testFractionalToCartesian_Vector3d_Vector3d_Vector3d_Point3d")
@@ -133,19 +108,6 @@ public class CrystalGeometryTools {
         return cart;
     }
 
-    /**
-     * @deprecated
-     */
-    public static Point3d fractionalToCartesian(double[] aAxis, double[] bAxis, double[] cAxis,
-                                                 Point3d fracPoint) {
-        double[] frac = new double[3];
-        frac[0] = fracPoint.x;
-        frac[1] = fracPoint.y;
-        frac[2] = fracPoint.z;
-        double[] cart = fractionalToCartesian(aAxis,bAxis,cAxis, frac);
-        return new Point3d(cart[0], cart[1], cart[2]);
-    }
-    
     /**
      * Calculates cartesian vectors for unit cell axes from axes lengths and angles
      * between axes.

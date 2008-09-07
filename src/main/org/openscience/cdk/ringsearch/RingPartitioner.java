@@ -128,12 +128,11 @@ public class RingPartitioner {
      */
     private static IRingSet walkRingSystem(IRingSet rs, IRing ring, IRingSet newRs) {
         IRing tempRing;
-        List<IRing> tempRings = rs.getConnectedRings(ring);
+        IRingSet tempRings = rs.getConnectedRings(ring);
 //        logger.debug("walkRingSystem -> tempRings.size(): " + tempRings.size());
         rs.removeAtomContainer(ring);
-        Iterator<IRing> iter = tempRings.iterator();
-        while (iter.hasNext()) {
-            tempRing = (IRing)iter.next();
+        for (IAtomContainer container : tempRings.atomContainers()) {
+            tempRing = (IRing)container;
             if (!newRs.contains(tempRing)) {
                 newRs.addAtomContainer(tempRing);
                 newRs.add(walkRingSystem(rs, tempRing, newRs));

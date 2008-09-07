@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="custom">
+<ruleset name="custom-data">
 
   <description>
     This ruleset checks the CDK sources for bad code.
@@ -12,12 +12,20 @@
   <!-- The rule sets that come with PMD -->
 
   <rule ref="rulesets/basic.xml"/>
+  <rule ref="pmd/customNaming.xml"/>
   <rule ref="rulesets/unusedcode.xml"/>
   <rule ref="rulesets/imports.xml"/>
-  <rule ref="rulesets/migrating_to_junit4.xml"/>
+  <rule ref="rulesets/strings.xml"/>
+  <rule ref="rulesets/codesize.xml">
+    <exclude name="TooManyMethods"/>
+    <exclude name="ExcessivePublicCount"/>
+  </rule>
+  <rule ref="rulesets/strictexception.xml"/>
+  <rule ref="pmd/migrating-qm.xml"/>
 
   <!-- Rules specific for CDK -->
 
-  <rule ref="pmd/customJunit.xml"/>
+  <rule ref="pmd/customCDK.xml"/>
+  <rule ref="pmd/customOptimization.xml"/>
 
 </ruleset>

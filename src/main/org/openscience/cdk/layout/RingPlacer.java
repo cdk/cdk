@@ -28,8 +28,6 @@
  */
 package org.openscience.cdk.layout;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Vector;
 
 import javax.vecmath.Point2d;
@@ -629,7 +627,7 @@ public class RingPlacer
 	 */
 	void placeConnectedRings(IRingSet rs, IRing ring, int handleType, double bondLength)
 	{
-		List connectedRings = rs.getConnectedRings(ring);
+		IRingSet connectedRings = rs.getConnectedRings(ring);
 		IRing connectedRing;
 		IAtomContainer sharedAtoms;
 		int sac;
@@ -637,9 +635,8 @@ public class RingPlacer
 		Vector2d tempVector, oldRingCenterVector, newRingCenterVector;
 
 //		logger.debug(rs.reportRingList(molecule));
-		Iterator iter = connectedRings.iterator();
-		while (iter.hasNext()) {
-			connectedRing = (IRing)iter.next();
+		for (IAtomContainer container : connectedRings.atomContainers()) {
+			connectedRing = (IRing)container;
 			if (!connectedRing.getFlag(CDKConstants.ISPLACED))
 			{
 //				logger.debug(ring.toString(molecule));

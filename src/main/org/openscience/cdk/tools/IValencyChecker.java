@@ -46,7 +46,6 @@ public interface IValencyChecker {
 
 	public boolean isSaturated(IAtomContainer ac) throws CDKException;
 	public boolean isSaturated(IAtom atom, IAtomContainer container) throws CDKException;
-	public int calculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container) throws CDKException;
 
 }
 

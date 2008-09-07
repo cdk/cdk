@@ -1,7 +1,7 @@
 package org.openscience.cdk.modeling.forcefield;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.vecmath.GMatrix;
 import javax.vecmath.GVector;
@@ -86,8 +86,8 @@ public class StretchBendInteractions {
 
 		IAtom[] atomConnected = null;
 
-		Vector stretchBendInteractionsData = null;
-		Vector bondData = null;
+		List stretchBendInteractionsData = null;
+		List bondData = null;
 		MMFF94ParametersCall pc = new MMFF94ParametersCall();
 		pc.initialize(parameterSet);
 

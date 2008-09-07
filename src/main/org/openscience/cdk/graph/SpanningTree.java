@@ -28,9 +28,11 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.NoSuchAtomException;
-import org.openscience.cdk.interfaces.*;
-
-import java.util.Iterator;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 
 /**
  * Spanning tree of a molecule.
@@ -154,8 +156,7 @@ public class SpanningTree {
 				cb[i][a] = 0;
 		
 		// remove ATOM_NUMBER props again
-		Iterator atoms = atomContainer.atoms().iterator();
-		while (atoms.hasNext()) ((IAtom)atoms.next()).removeProperty(ATOM_NUMBER);
+		for (IAtom atom : atomContainer.atoms()) atom.removeProperty(ATOM_NUMBER);
 	}
 
     @TestMethod("testGetSpanningTree")
@@ -172,7 +173,8 @@ public class SpanningTree {
 		IAtomContainer path = spt.getBuilder().newAtomContainer();
 		PathTools.resetFlags(spt);
 		path.addAtom(a1);
-		PathTools.depthFirstTargetSearch(spt,a1,a2,path);		
+		PathTools.depthFirstTargetSearch(spt,a1,a2,path);
+		if (path.getAtomCount() == 1) path.removeAtom(a1); // no path found: remove initial atom
 		return path;
 	}
 

@@ -97,6 +97,35 @@ public class SybylAtomTypeMatcherTest extends NewCDKTestCase {
         }
     }
 
+    /**
+     * Uses findMatchingAtomType(IAtomContainer, IAtom) type.
+     */
+    @Test public void testBenzene() throws Exception {
+        IMolecule benzene = MoleculeFactory.makeBenzene();
+
+        // test if the perceived atom types match that
+        SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
+        for (IAtom atom : benzene.atoms()) {
+          atom.setAtomTypeName(null);
+          IAtomType matched = matcher.findMatchingAtomType(benzene, atom);
+          Assert.assertEquals("C.2", matched.getAtomTypeName());
+        }
+    }
+
+    /**
+     * Uses findMatchingAtomType(IAtomContainer) type.
+     */
+    @Test public void testBenzene_AtomContainer() throws Exception {
+        IMolecule benzene = MoleculeFactory.makeBenzene();
+
+        // test if the perceived atom types match that
+        SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
+        IAtomType[] types = matcher.findMatchingAtomType(benzene);
+        for (IAtomType type : types) {
+          Assert.assertEquals("C.ar", type.getAtomTypeName());
+        }
+    }
+
 	@Test public void testAtomTyping4() throws Exception {
         String filename = "data/mol2/atomtyping4.mol2";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
