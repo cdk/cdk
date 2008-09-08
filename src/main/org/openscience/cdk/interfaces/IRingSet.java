@@ -66,7 +66,14 @@ public interface IRingSet extends IAtomContainerSet {
 	 */
 	public void add(IRingSet ringSet);
 
-	/**
+    /**
+     * Add a ring to the current set of rings if not already present.
+     *
+     * @param ring The ring to add
+     */
+    public void add(IRing ring);
+
+    /**
 	 * True, if at least one of the rings in the ringset contains
 	 * the given atom.
 	 *
