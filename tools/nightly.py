@@ -1487,7 +1487,7 @@ if __name__ == '__main__':
     # get the results of doccheck
     resultTable.addRow()
     resultTable.addCell("<a href=\"http://java.sun.com/j2se/javadoc/doccheck/index.html\">DocCheck</a> Results:")
-    if successDoccheck:
+    if successDoccheck and os.path.exists(os.path.join(nightly_repo, 'reports', 'javadoc')):
         print '  Generating DocCheck section'
 
         if os.path.exists(os.path.join(nightly_repo, 'reports', 'javadoc')):
