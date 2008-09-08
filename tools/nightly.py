@@ -961,6 +961,7 @@ if __name__ == '__main__':
           help   - this message
           dryrun - do a dry run. This does not sync with SVN or run ant tasks. It is expected
                    that you have stuff from a previous run available and is mainly for testing
+          firsttime - specify this argument if you're running the script for the first time                     
           nomail - if specified no mail will be sent in response to build errors
         """
         sys.exit(0)
