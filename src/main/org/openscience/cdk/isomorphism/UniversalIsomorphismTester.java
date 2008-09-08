@@ -178,6 +178,8 @@ public class UniversalIsomorphismTester {
    * @param  g2  second molecule. May be an IQueryAtomContainer.
    * @return     the first isomorph atom mapping found projected on g1.
    * This is a List of RMap objects containing Ids of matching atoms.
+   * @throws org.openscience.cdk.exception.CDKException if the first molecules is not an instance of
+   *  {@link org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer}
    */
   public static List<RMap> getIsomorphAtomsMap(IAtomContainer g1, IAtomContainer g2)  throws CDKException {
 	  if (g1 instanceof IQueryAtomContainer)
@@ -191,8 +193,7 @@ public class UniversalIsomorphismTester {
       } else if (list.isEmpty()) {
           return null;
       } else {
-    	  // FIXME: is this correct??
-          return (List)list.get(0);
+          return list;
       }
   }
 
