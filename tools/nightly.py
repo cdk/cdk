@@ -148,6 +148,7 @@ today = time.localtime()
 todayStr = '%04d%02d%02d' % (today[0], today[1], today[2])
 todayNice = '%04d-%02d-%02d' % (today[0], today[1], today[2])
 dryRun = False
+firstTime = False
 haveXSLT = True
 noMail = False
 
@@ -936,6 +937,9 @@ def updateVersion():
     return True
         
 def getSVNRevision():
+    if not os.path.exists(os.path.join(nightly_dir,'svn.log')):
+        return None
+    
     tmp = [x.strip() for x in open(os.path.join(nightly_dir,'svn.log'), 'r').readlines()]
     revision = None
     for line in tmp:
@@ -985,15 +989,15 @@ if __name__ == '__main__':
     # check that the specified dir's exist. Also if the nightly_web
     # does not exists make it
     if not os.path.exists(nightly_dir):
-        print '\'%s\' does not exist. Cannot carry on'
+        print '\'%s\' does not exist. Cannot carry on' % (nightly_dir)
         sys.exit(-1)
     if not os.path.exists(nightly_repo):
-        print '\'%s\' does not exist. Cannot carry on'
+        print '\'%s\' does not exist. Cannot carry on' % (nightly_repo)
         sys.exit(-1)
     if not os.path.exists(nightly_web):
-        print '\'%s\' does not exist. Will create it'
+        print '\'%s\' does not exist. Will create it' % (nightly_web)
         try:
-            os.mkdird(nightly_web)
+            os.makedirs(nightly_web)
         except:
             print 'Could not make the output directory for the nightly build. Exiting'
             sys.exit(-1)
@@ -1005,6 +1009,8 @@ if __name__ == '__main__':
     if 'nomail' in [x.lower() for x in sys.argv]:
         noMail = True
 
+    if 'firsttime' in [x.lower() for x in sys.argv] or 'first' in [x.lower() for x in sys.argv]:
+        firstTime= True
 
     # print out some status stuff
     print """
@@ -1055,7 +1061,7 @@ if __name__ == '__main__':
                     if line.startswith('Testcase:'):
                         oldReports.append(''.join(line.split(':')[:2]))
             oldRevision = getSVNRevision()
-            if not oldRevision:
+            if not oldRevision and not firstTime:
                 print 'Error getting the SVN revision. Exiting'
                 sys.exit(-1)
 
