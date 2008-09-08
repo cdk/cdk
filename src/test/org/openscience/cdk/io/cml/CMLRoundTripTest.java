@@ -25,7 +25,9 @@
 package org.openscience.cdk.io.cml;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -34,16 +36,21 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import nu.xom.Element;
 
+import org.junit.Assert;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SingleElectron;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -60,9 +67,9 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * TestCase for the reading CML 2 files using a few test files
@@ -682,5 +689,19 @@ public class CMLRoundTripTest extends CDKTestCase {
     	assertNotNull(newList.getAtomContainer(1));
     }
     
+    /**
+     * @cdk.bug 1930029
+     */
+    public void testAtomProperties() throws CDKException{
+        String filename = "data/cml/custompropertiestest.cml";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        CMLReader reader = new CMLReader(ins);
+        ChemFile chemFile = (ChemFile)reader.read((ChemFile)new ChemFile());
+        Assert.assertNotNull(chemFile);
+        IAtomContainer container = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+        for(int i=0;i<container.getAtomCount();i++){
+        	Assert.assertEquals(2,container.getAtom(i).getProperties().size());
+        }
+    }
 }
 
