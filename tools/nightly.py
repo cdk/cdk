@@ -1489,16 +1489,18 @@ if __name__ == '__main__':
     resultTable.addCell("<a href=\"http://java.sun.com/j2se/javadoc/doccheck/index.html\">DocCheck</a> Results:")
     if successDoccheck:
         print '  Generating DocCheck section'
-        shutil.copytree('%s/reports/javadoc' % (nightly_repo),
-                        '%s/javadoc' % (nightly_web))
-        subdirs = os.listdir('%s/reports/javadoc' % (nightly_repo))
-        subdirs.sort()
-        count = 1
-        s = ''
-        for dir in subdirs:
-            s = s+"<a href=\"javadoc/%s/\">%s</a>\n" % (dir, dir)
-            if count % per_line == 0: s += "<br>"
-            count += 1
+
+        if os.path.exists(os.path.join(nightly_repo, 'reports', 'javadoc')):
+            shutil.copytree(os.path.join(nightly_repo, 'reports', 'javadoc'),
+                            os.path.join(nightly_web, 'javadoc'))
+            subdirs = os.listdir(os.path.join(nightly_repo, 'reports', 'javadoc')) 
+            subdirs.sort()
+            count = 1
+            s = ''
+            for dir in subdirs:
+                s = s+"<a href=\"javadoc/%s/\">%s</a>\n" % (dir, dir)
+                if count % per_line == 0: s += "<br>"
+                count += 1
         resultTable.addCell(s)
     else:
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
