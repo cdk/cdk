@@ -89,14 +89,6 @@ public class SmilesParser {
 	protected IChemObjectBuilder builder;
 
 	/**
-	 * Construct a SmilesParser that uses a {@link DefaultChemObjectBuilder}
-	 * to build IMolecules.
-	 */
-	public SmilesParser() {
-		this(DefaultChemObjectBuilder.getInstance());
-	}
-
-	/**
 	 * Constructor for the SmilesParser object.
 	 *
 	 * @param builder IChemObjectBuilder used to create the IMolecules from
