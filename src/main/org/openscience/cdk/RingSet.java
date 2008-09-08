@@ -143,14 +143,6 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 		}
 	}
 
-    /**
-     * Add a ring to the current set of rings if not already present.
-     *
-     * @param ring The ring to add
-     */
-    public void add(IRing ring) {
-        if (!contains(ring)) addAtomContainer(ring);
-    }
 
     /**
 	 * True, if at least one of the rings in the ringset contains

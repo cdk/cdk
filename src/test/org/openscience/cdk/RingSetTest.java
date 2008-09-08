@@ -81,7 +81,7 @@ public class RingSetTest extends NewCDKTestCase {
     @Test public void testClone() throws CloneNotSupportedException {
         IRingSet ringset = builder.newRingSet();
         IRing ring = builder.newRing();
-        ringset.add(ring);
+        ringset.addAtomContainer(ring);
         
         IRingSet clone = (IRingSet)ringset.clone();
         Assert.assertNotNull(clone);
