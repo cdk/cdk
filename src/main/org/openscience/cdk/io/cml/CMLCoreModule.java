@@ -114,8 +114,7 @@ public class CMLCoreModule implements ICMLModule {
     protected List atomDictRefs;
     protected List spinMultiplicities;
     protected List occupancies;
-    protected List<String> atomCustomProperty;
-    protected boolean atomCustomPropertyGiven;
+    protected Map<Integer,List<String>> atomCustomProperty;
 
 
     protected int bondCounter;
@@ -269,7 +268,7 @@ public class CMLCoreModule implements ICMLModule {
         atomDictRefs = new ArrayList();
         spinMultiplicities = new ArrayList();
         occupancies = new ArrayList();
-        atomCustomProperty = new ArrayList<String>();
+        atomCustomProperty = new HashMap<Integer,List<String>>();
     }
 
     /**
@@ -448,7 +447,6 @@ public class CMLCoreModule implements ICMLModule {
                 else {
                     logger.warn("Unparsed attribute: " + att);
                 }
-                atomCustomPropertyGiven = false;
             }
         } else if ("atomArray".equals(name) &&
         		   !xpath.endsWith("formula", "atomArray")) {
@@ -717,11 +715,6 @@ public class CMLCoreModule implements ICMLModule {
                 yfract.add(null);
                 zfract.add(null);
             }
-            
-        	if (!atomCustomPropertyGiven){
-        		atomCustomProperty.add("");
-        		atomCustomProperty.add("");
-        	}
         } else if ("molecule".equals(name)) {
             storeData();
 //            cdo.endObject("Molecule");
@@ -994,9 +987,10 @@ public class CMLCoreModule implements ICMLModule {
                 if (DICTREF.equals("cdk:partialCharge")) {
                     partialCharges.add(cData.trim());
                 }else {
-                	atomCustomProperty.add(elementTitle);
-                	atomCustomProperty.add(cData.trim());
-                	atomCustomPropertyGiven = true;
+                	if(atomCustomProperty.get(new Integer(atomCounter-1))==null)
+                		atomCustomProperty.put(new Integer(atomCounter-1),new ArrayList<String>());
+                	atomCustomProperty.get(new Integer(atomCounter-1)).add(elementTitle);
+                	atomCustomProperty.get(new Integer(atomCounter-1)).add(cData.trim());
                 }
             } else if (xpath.endsWith("molecule", "scalar")) {
                 if (DICTREF.equals("pdb:id")) {
@@ -1158,7 +1152,6 @@ public class CMLCoreModule implements ICMLModule {
         boolean hasDictRefs = false;
         boolean hasSpinMultiplicities = false;
         boolean hasOccupancies = false;
-        Iterator customs = atomCustomProperty.iterator();
 
         if (elid.size() == atomCounter) {
             hasID = true;
@@ -1406,10 +1399,10 @@ public class CMLCoreModule implements ICMLModule {
             		currentAtom.setMassNumber((int)Double.parseDouble((String)isotope.get(i)));
             }
             
-            if(customs.hasNext()){
-            	String nextCustom = (String)customs.next();
-            	if(!nextCustom.equals("")){
-            		currentAtom.setProperty(nextCustom,(String)customs.next());
+            if(atomCustomProperty.get(new Integer(i))!=null){
+            	Iterator<String> it=atomCustomProperty.get(new Integer(i)).iterator();
+            	while(it.hasNext()){
+	            	currentAtom.setProperty(it.next(),it.next());
             	}
             }
 
