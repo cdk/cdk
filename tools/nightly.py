@@ -1502,7 +1502,7 @@ if __name__ == '__main__':
                 s = s+"<a href=\"javadoc/%s/\">%s</a>\n" % (dir, dir)
                 if count % per_line == 0: s += "<br>"
                 count += 1
-        resultTable.addCell(s)
+            resultTable.addCell(s)
     else:
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         if os.path.exists( os.path.join(nightly_dir, 'doccheck.log') ):
