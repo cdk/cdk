@@ -318,9 +318,18 @@ def sendMail(message, subject = 'CDK Nightly Trunk Build Failed'):
 def transformXML2HTML(src, dest, xsltFile, pmd=True):
     if haveXSLT: # if we have the proper libs do the xform
         print '    Transforming %s' % (src)
-        styleDoc = libxml2.parseFile(xsltFile)
+        try:
+            styleDoc = libxml2.parseFile(xsltFile)
+        except libxml2.parserError:
+            return False
+        
         style = libxslt.parseStylesheetDoc(styleDoc)
-        doc = libxml2.parseFile(src)
+
+        try:
+            doc = libxml2.parseFile(src)
+        except libxml2.parserError:
+            return False
+        
         result = style.applyStylesheet(doc, None)
         htmlString = style.saveResultToString(result)        
         style.freeStylesheet()
@@ -336,11 +345,13 @@ def transformXML2HTML(src, dest, xsltFile, pmd=True):
         f = open(dest, 'w')
         f.write(htmlString)
         f.close()
+        return True
         
     else: # cannot xform, so just copy the XML file
         shutil.copyfile(src, dest)
+        return False
     
-def writeJunitSummaryHTML(stats, stable=True, verbose=True):
+def writeJunitSummaryHTML(stats, testCoverage = None, stable=True, verbose=True):
     unstableModules = []
 
     if not stable and len(unstableModules) == 0: return None
@@ -356,6 +367,7 @@ def writeJunitSummaryHTML(stats, stable=True, verbose=True):
     <title>CDK JUnit Test Summary (%s) [%s]</title>
     <style type="text/css">
     tr.crash { background-color: #F778A1;}
+    td.cov { color: #A5A5A5; }
     </style>
     </head>
     <body>
@@ -364,15 +376,16 @@ def writeJunitSummaryHTML(stats, stable=True, verbose=True):
     <table border=0 cellspacing=5 cellpadding=3>
     <thead>
     <tr>
-    <td valign="top"><b>Module</b></td>
-    <td valign="top"><b>Number<br>of Tests</b></td>
-    <td valign="top"><b>Failed</b></td>
-    <td valign="top"><b>Errors</b></td>
-    <td valign="top"><b>Success<br>Rate (%%)</b></td>
+    <td valign="top" align="center"><b>Module</b></td>
+    <td valign="top" align="center"><b>Number<br>of Tests</b></td>
+    <td valign="top" align="center"><b>Failed</b></td>
+    <td valign="top" align="center"><b>Errors</b></td>
+    <td valign="top" align="center"><b>Success<br>Rate (%%)</b></td>
+    <td valign="top" align="center"><b>Missing Test<br>Coverage</b></td>
     </tr>
     </thead>
     <tr>
-    <td colspan=5><hr></td>
+    <td colspan=6><hr></td>
     </tr>
     """ % (todayNice, pagetype, todayNice, pagetype)
 
@@ -380,6 +393,9 @@ def writeJunitSummaryHTML(stats, stable=True, verbose=True):
     totalFail = 0
     totalError = 0
 
+    totalMissingMethod = 0
+    totalMissingClass = 0
+    
     for entry in stats:
         if stable and (entry[0] in unstableModules): continue
         if not stable and entry[0] not in unstableModules: continue
@@ -404,11 +420,20 @@ def writeJunitSummaryHTML(stats, stable=True, verbose=True):
         else:
             summary = summary + "<td align=\"right\">NA</td>" 
 
+        try:
+            nmeth,nclass = testCoverage[entry[0]]
+            summary += '<td class="cov" align="right">%d methods in %d classes<td>' % (nmeth, nclass)
+            totalMissingMethod += nmeth
+            totalMissingClass += nclass
+        except KeyError, e:
+            print '      No test coverage info for module %s' % (entry[0])
+            summary += '<td>&nbsp;</td>'
+        
         summary = summary + "</tr>"
 
     summary = summary + """
     <tr>
-    <td colspan=5><hr></td>
+    <td colspan=6><hr></td>
     </tr>
     <tr>
     <td><b>Totals</b></td>
@@ -416,20 +441,38 @@ def writeJunitSummaryHTML(stats, stable=True, verbose=True):
     <td align=\"right\">%d</td>
     <td align=\"right\">%d</td>
     <td align=\"right\">%.2f</td>
+    <td class=\"cov\" align=\"right\">%d methods in %d classes</td>
     </tr>
     <tr>
-    <td colspan=5><hr></td>
+    <td colspan=6><hr></td>
     </tr>
     </table>
     </center>
     </body>
-    </html>""" % (totalTest, totalFail, totalError, (float(totalTest-totalFail-totalError)/float(totalTest))*100)
+    </html>""" % (totalTest, totalFail, totalError, (float(totalTest-totalFail-totalError)/float(totalTest))*100, totalMissingMethod, totalMissingClass)
 
     summary += """
     </center>
     </body>
     </html>"""
     return summary
+
+def parseJunitCoverage():
+    coverageDict = {}
+    testOutputs = glob.glob(os.path.join(nightly_repo, 'reports', 'result-*.txt'))
+    for testOutput in testOutputs:
+        moduleName = os.path.basename(testOutput).split('.')[0].split('-')[1]
+        f = open(testOutput, 'r')
+        while True:
+            line = f.readline()
+            if not line: break
+            if line.find('Testcase: testCoverage(') == -1: continue
+            line = f.readline()
+            regex = re.compile('tests:\s+(\d+)\s+in number of classes: (\d+)')
+            nmeth, nclass = regex.findall(line)[0]
+            coverageDict[moduleName] = (int(nmeth), int(nclass))
+            break
+    return coverageDict
 
 def parseJunitOutput(summaryFile, stable=True):
     f = open(os.path.join(nightly_dir,'test.log'), 'r')
@@ -462,9 +505,12 @@ def parseJunitOutput(summaryFile, stable=True):
 
     # sort the modules alphabetically
     stats.sort(cmp = lambda x,y: cmp(x[0],y[0]))
-    
+
+    # get test coverage info
+    covDict = parseJunitCoverage()
+
     # get an HTML summary
-    summary = writeJunitSummaryHTML(stats, stable)
+    summary = writeJunitSummaryHTML(stats, covDict, stable)
     
     # write out this HTML
     if summary:
@@ -935,7 +981,23 @@ if __name__ == '__main__':
     except KeyError, ke:
         print 'JAVA_HOME & ANT_HOME must be set in the environment'
         sys.exit(-1)
-        
+
+    # check that the specified dir's exist. Also if the nightly_web
+    # does not exists make it
+    if not os.path.exists(nightly_dir):
+        print '\'%s\' does not exist. Cannot carry on'
+        sys.exit(-1)
+    if not os.path.exists(nightly_repo):
+        print '\'%s\' does not exist. Cannot carry on'
+        sys.exit(-1)
+    if not os.path.exists(nightly_web):
+        print '\'%s\' does not exist. Will create it'
+        try:
+            os.mkdird(nightly_web)
+        except:
+            print 'Could not make the output directory for the nightly build. Exiting'
+            sys.exit(-1)
+            
     # are we going to do a dry run?
     if 'dryrun' in [x.lower() for x in sys.argv] or 'dry' in [x.lower() for x in sys.argv]:
         dryRun = True
@@ -1375,15 +1437,13 @@ if __name__ == '__main__':
 
         # summarize JUnit test results - it will go into nightly_web
         parseJunitOutput('junitsummary.html')
-        status = parseJunitOutput('junitsummary-unstable.html', stable=False)
-        
+
         # check whether we can copy the run output and link to the summary
         if os.path.exists( os.path.join(nightly_dir, 'test.log') ):
             shutil.copyfile(os.path.join(nightly_dir, 'test.log'),
                             os.path.join(nightly_web, 'test.log'))
             resultTable.addCell("<a href=\"test.log\">test.log</a>")
             resultTable.appendToCell("<a href=\"junitsummary.html\">Stable</a>")
-            if status: resultTable.appendToCell("<a href=\"junitsummary-unstable.html\">Unstable</a>")
 
             if not dryRun:
                 resultTable.appendToCell("<br>No. old fails fixed since r%s = %s" % (oldRevision,str(nTestFixed)))
@@ -1493,8 +1553,10 @@ if __name__ == '__main__':
             prefix = os.path.basename(xmlFile).split('.')[0]
             htmlFile = os.path.join(nightly_web, 'pmd-migrating', prefix)+'.html'
             xsltFile = os.path.join(nightly_repo,'pmd','wz-pmd-report.xslt')
-            transformXML2HTML(xmlFile, htmlFile, xsltFile)
-            s = s+"<a href=\"pmd-migrating/%s\">%s</a>\n" % (os.path.basename(htmlFile), prefix)
+            status = transformXML2HTML(xmlFile, htmlFile, xsltFile)
+            if status:
+                s = s+"<a href=\"pmd-migrating/%s\">%s</a>\n" % (os.path.basename(htmlFile), prefix)
+            else: s += ""
             if count % per_line == 0: s += "<br>"
             count += 1
         resultTable.addCell(s)
