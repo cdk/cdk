@@ -34,7 +34,7 @@ public class ElectrostaticInteractions {
 	double[][][] ddR = null;	// internuclear separation second order derivative respect to atoms coordinates
 
 	IAtomicDescriptor shortestPathBetweenTwoAtoms = new BondsToAtomDescriptor();
-	Object[] params = {new Integer(0)};
+	Object[] params = {Integer.valueOf(0)};
 	
 	int electrostaticInteractionNumber;
 	int[][] electrostaticInteractionAtomPosition = null;
@@ -82,7 +82,7 @@ public class ElectrostaticInteractions {
 		electrostaticInteractionNumber = 0;
 		for (int i=0; i<molecule.getAtomCount(); i++) {
 			for (int j=i+1; j<molecule.getAtomCount(); j++) {
-				params[0] = new Integer(j);
+				params[0] = Integer.valueOf(j);
 				shortestPathBetweenTwoAtoms.setParameters(params);
 				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
 				if (((IntegerResult)shortestPathBetweenTwoAtoms.calculate(molecule.getAtom(i),molecule).getValue()).intValue()>2){
@@ -102,7 +102,7 @@ public class ElectrostaticInteractions {
 		int l = -1;
 		for (int i=0; i<molecule.getAtomCount(); i++) {
 			for (int j=i+1; j<molecule.getAtomCount(); j++) {
-				params[0] = new Integer(j);
+				params[0] = Integer.valueOf(j);
 				shortestPathBetweenTwoAtoms.setParameters(params);
 				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
 				if (((IntegerResult)shortestPathBetweenTwoAtoms.calculate(molecule.getAtom(i),molecule).getValue()).intValue()>2){

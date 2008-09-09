@@ -74,7 +74,7 @@ public class MMFF94PartialCharges implements IChargeCalculator {
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
 		ffc.setForceFieldConfigurator("mmff94");
 		ffc.assignAtomTyps((IMolecule)ac);
-		Map<String,List> parameterSet = ffc.getParameterSet();
+		Map<String,Object> parameterSet = ffc.getParameterSet();
 		// for this calculation,
 		// we need some values stored in the vector "data" in the
 		// hashtable of these atomTypes:		
@@ -86,9 +86,9 @@ public class MMFF94PartialCharges implements IChargeCalculator {
 		double sumOfBondIncrements = 0;
 		org.openscience.cdk.interfaces.IAtom thisAtom = null;
 		List<IAtom> neighboors;
-		List data = null;
-		List bondData = null;
-		List dataNeigh = null;
+		Object data = null;
+		Object bondData = null;
+		Object dataNeigh = null;
 		java.util.Iterator<IAtom> atoms = ac.atoms().iterator();
 		while(atoms.hasNext()) {
 			//logger.debug("ATOM "+i+ " " +atoms[i].getSymbol());
@@ -96,7 +96,7 @@ public class MMFF94PartialCharges implements IChargeCalculator {
 			data = parameterSet.get("data"+thisAtom.getAtomTypeName());
 			neighboors = ac.getConnectedAtomsList(thisAtom);
 			formalCharge = thisAtom.getCharge();
-			theta = (Double)data.get(5);
+			theta = (Double)((List)data).get(5);
 			charge = formalCharge * (1 - (neighboors.size() * theta));
 			sumOfFormalCharges = 0;
 			sumOfBondIncrements = 0;
@@ -105,14 +105,14 @@ public class MMFF94PartialCharges implements IChargeCalculator {
                 dataNeigh = parameterSet.get("data" + neighbour.getAtomTypeName());
                 if (parameterSet.containsKey("bond" + thisAtom.getAtomTypeName() + ";" + neighbour.getAtomTypeName())) {
                     bondData = parameterSet.get("bond" + thisAtom.getAtomTypeName() + ";" + neighbour.getAtomTypeName());
-                    sumOfBondIncrements -= (Double) bondData.get(4);
+                    sumOfBondIncrements -= (Double) ((List)bondData).get(4);
                 } else
                 if (parameterSet.containsKey("bond" + neighbour.getAtomTypeName() + ";" + thisAtom.getAtomTypeName())) {
                     bondData = parameterSet.get("bond" + neighbour.getAtomTypeName() + ";" + thisAtom.getAtomTypeName());
-                    sumOfBondIncrements += (Double) bondData.get(4);
+                    sumOfBondIncrements += (Double) ((List)bondData).get(4);
                 } else {
                     // Maybe not all bonds have pbci in mmff94.prm, i.e. C-N
-                    sumOfBondIncrements += (theta - (Double) dataNeigh.get(5));
+                    sumOfBondIncrements += (theta - (Double) ((List)dataNeigh).get(5));
                 }
 
 

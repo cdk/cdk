@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,8 +64,8 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 public class ForceFieldConfigurator {
 
 	private String ffName = "mmff94";
-	private List atomTypes;
-	private Map parameterSet=null;
+	private List<IAtomType> atomTypes;
+	private Map<String, Object> parameterSet=null;
 	private MM2BasedParameterSetReader mm2 = null;
 	private MMFF94BasedParameterSetReader mmff94= null;
 	private InputStream ins = null;
@@ -167,7 +166,7 @@ public class ForceFieldConfigurator {
 	 *
 	 * @param  atomtypes  The new atomTypes 
 	 */
-	public void setAtomTypes(Vector atomtypes) {
+	public void setAtomTypes(List<IAtomType> atomtypes) {
 		atomTypes = atomtypes;
 	}
 
@@ -176,7 +175,7 @@ public class ForceFieldConfigurator {
 	 *
 	 * @param  parameterset  The new parameter values
 	 */
-	public void setParameters(Map parameterset) {
+	public void setParameters(Map<String, Object> parameterset) {
 		parameterSet = parameterset;
 	}
 
@@ -204,7 +203,7 @@ public class ForceFieldConfigurator {
 	 *
 	 * @return    The atomTypes vector
 	 */
-	public List getAtomTypes() {
+	public List<IAtomType> getAtomTypes() {
 		return atomTypes;
 	}
 
@@ -213,7 +212,7 @@ public class ForceFieldConfigurator {
 	 *
 	 * @return    The parameterSet hashtable
 	 */
-	public Map getParameterSet() {
+	public Map<String,Object> getParameterSet() {
 		return this.parameterSet;
 	}
 
@@ -268,9 +267,9 @@ public class ForceFieldConfigurator {
 				IRing sring = (IRing) ringSetA.getAtomContainer(ringSetA.getAtomContainerCount()-1);
 				atom.setProperty("RING_SIZE", Integer.valueOf(sring.getRingSize()));
 				isInHeteroRing = false;
-				Iterator containers = RingSetManipulator.getAllAtomContainers(ringSetA).iterator();
+				Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSetA).iterator();
 				while (!isInHeteroRing && containers.hasNext()) {
-					isInHeteroRing = isHeteroRingSystem((IAtomContainer) containers.next());
+					isInHeteroRing = isHeteroRingSystem(containers.next());
 				}
 			} else {
 				atom.setFlag(CDKConstants.ISALIPHATIC, true);
@@ -296,9 +295,7 @@ public class ForceFieldConfigurator {
 		
 //		IBond[] bond = molecule.getBonds();
 		String bondType;
-        Iterator bonds = molecule.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+        for (IBond bond : molecule.bonds()) {
 
 			//logger.debug("bond[" + i + "] properties : " + molecule.getBond(i).getProperties());
 			bondType = "0";
@@ -353,7 +350,7 @@ public class ForceFieldConfigurator {
 	private org.openscience.cdk.interfaces.IAtom setAtom(org.openscience.cdk.interfaces.IAtom atom, String ID) throws Exception {
 		IAtomType at = null;
 		String key = "";
-		Vector data = null;
+		List<?> data = null;
 		Double value = null;
 		
 		at = getAtomType(ID);
@@ -363,12 +360,12 @@ public class ForceFieldConfigurator {
 		atom.setAtomTypeName(at.getAtomTypeName());
 		atom.setFormalNeighbourCount(at.getFormalNeighbourCount());
 		key = "vdw" + ID;
-		data = (Vector) parameterSet.get(key);
-		value = (Double) data.firstElement();
+		data = (List) parameterSet.get(key);
+		value = (Double) data.get(0);
 		key = "charge" + ID;
 		if (parameterSet.containsKey(key)) {
-			data = (Vector) parameterSet.get(key);
-			value = (Double) data.firstElement();
+			data = (List) parameterSet.get(key);
+			value = (Double) data.get(0);
 			atom.setCharge(value.doubleValue());
 		}
 		Object color = at.getProperty("org.openscience.cdk.renderer.color");
@@ -403,7 +400,7 @@ public class ForceFieldConfigurator {
 	 */
 	public org.openscience.cdk.interfaces.IAtom configureMM2BasedAtom(org.openscience.cdk.interfaces.IAtom atom, String hoseCode,boolean hetRing) throws Exception {
 		//logger.debug("CONFIGURE MM2 ATOM");
-		Vector atomTypePattern = null;
+		List<Pattern> atomTypePattern = null;
 		MM2BasedAtomTypePattern atp = new MM2BasedAtomTypePattern();
 		atomTypePattern = atp.getAtomTypePatterns();
 		Double d_tmp = null;
@@ -427,7 +424,7 @@ public class ForceFieldConfigurator {
 		};
 		
 		for (int j = 0; j < atomTypePattern.size(); j++) {
-			p = (Pattern) atomTypePattern.elementAt(j);
+			p = (Pattern) atomTypePattern.get(j);
 			Matcher mat = p.matcher(hoseCode);
 			if (mat.matches()) {
 				ID = ids[j];
@@ -453,7 +450,7 @@ public class ForceFieldConfigurator {
 							ID=ids[1];
 							}
 					}
-					p = (Pattern) atomTypePattern.elementAt(2);
+					p = (Pattern) atomTypePattern.get(2);
 					//COOH
 					mat = p.matcher(hoseCode);
 					if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
@@ -480,7 +477,7 @@ public class ForceFieldConfigurator {
 						}
 					}
 					//Amid
-					p = (Pattern) atomTypePattern.elementAt(77);
+					p = (Pattern) atomTypePattern.get(77);
 					mat = p.matcher(hoseCode);
 					if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
 						ID=ids[8];
@@ -492,7 +489,7 @@ public class ForceFieldConfigurator {
 							ID=ids[36];
 						}
 					}
-					p = (Pattern) atomTypePattern.elementAt(36);
+					p = (Pattern) atomTypePattern.get(36);
 					//AZO
 					mat = p.matcher(hoseCode);
 					if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
@@ -507,20 +504,20 @@ public class ForceFieldConfigurator {
 					}
 				} else if (j == 20) {
 					//h alcohol,ether
-					p = (Pattern) atomTypePattern.elementAt(76);
+					p = (Pattern) atomTypePattern.get(76);
 					//Enol
 					mat = p.matcher(hoseCode);
 					if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
 						ID=ids[27];
 					}
-					p = (Pattern) atomTypePattern.elementAt(23);
+					p = (Pattern) atomTypePattern.get(23);
 					//COOH
 					mat = p.matcher(hoseCode);
 					if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
 						ID=ids[23];
 					}
 				} else if (j == 22) {
-					p = (Pattern) atomTypePattern.elementAt(75);
+					p = (Pattern) atomTypePattern.get(75);
 					//Amid
 					mat = p.matcher(hoseCode);
 					if (mat.matches()) {
@@ -561,7 +558,7 @@ public class ForceFieldConfigurator {
 	 */
 	public org.openscience.cdk.interfaces.IAtom configureMMFF94BasedAtom(org.openscience.cdk.interfaces.IAtom atom, String hoseCode, boolean isInHetRing) throws Exception {
 		//logger.debug("****** Configure MMFF94 AtomType ******");
-		List atomTypePattern = null;
+		List<Pattern> atomTypePattern = null;
 		MMFF94BasedAtomTypePattern atp = new MMFF94BasedAtomTypePattern();
 		atomTypePattern = atp.getAtomTypePatterns();
 		Pattern p = null;

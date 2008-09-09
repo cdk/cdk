@@ -59,7 +59,7 @@ public class MM2BasedParameterSetReader {
 	
 	private String configFile = "org/openscience/cdk/modeling/forcefield/data/mm2.prm";
 	private InputStream ins = null;
-	private Map parameterSet;
+	private Map<String, Object> parameterSet;
 	private List<IAtomType> atomTypes;
 	private StringTokenizer st;
 	private String key = "";
@@ -68,11 +68,11 @@ public class MM2BasedParameterSetReader {
 	 * Constructor for the MM2BasedParameterSetReader object.
 	 */
 	public MM2BasedParameterSetReader() {
-		parameterSet = new Hashtable();
+		parameterSet = new Hashtable<String,Object>();
 		atomTypes = new Vector<IAtomType>();
 	}
 
-	public Map getParamterSet(){
+	public Map<String,Object> getParamterSet(){
 		return parameterSet;
 	}
 	
