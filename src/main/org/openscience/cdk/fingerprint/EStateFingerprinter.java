@@ -55,7 +55,7 @@ import java.util.BitSet;
  * @cdk.module fingerprint
  * @cdk.svnrev $Revision: 11674 $
  */
-@TestClass("org.openscience.cdk.fingerprint.EStateFingerprinter")
+@TestClass("org.openscience.cdk.fingerprint.EStateFingerprinterTest")
 public class EStateFingerprinter implements IFingerprinter {
 
 	private static final String[] patterns = EStateFragments.getSmarts();

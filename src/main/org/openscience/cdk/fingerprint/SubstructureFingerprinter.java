@@ -399,7 +399,7 @@ public class SubstructureFingerprinter implements IFingerprinter {
 	/**
 	 * Calculates the substructure fingerprint for the given AtomContainer.
 	 */
-    @TestMethod("testUerFunctionalGroups,testFingerprint")
+    @TestMethod("testUserFunctionalGroups,testFingerprint")
     public BitSet getFingerprint(IAtomContainer atomContainer) throws CDKException {
         if (smarts == null) {
             throw new CDKException("No substructures were defined");
@@ -419,7 +419,7 @@ public class SubstructureFingerprinter implements IFingerprinter {
         return fingerPrint;
     }
 
-    @TestMethod("getSize")
+    @TestMethod("testSize")
     public int getSize() {
 		return smarts.length;
 	}
