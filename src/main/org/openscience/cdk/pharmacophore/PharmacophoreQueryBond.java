@@ -109,10 +109,12 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
         } else return false;
     }
 
+    @TestMethod("testUpper")
     public double getUpper() {
         return upper;
     }
 
+    @TestMethod("testLower")
     public double getLower() {
         return lower;
     }

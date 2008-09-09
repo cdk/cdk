@@ -56,7 +56,7 @@ public class PharmacophoreAngleBond extends Bond {
      *
      * @return The angle in degrees between the two groups
      */
-    @TestMethod("testGetAngle1,testGetAngle2,testGetAngle3,testAngle4,testAngle5")
+    @TestMethod("testGetAngle1,testGetAngle2,testGetAngle3,testGetAngle4,testGetAngle5")
     public double getBondLength() {
         double epsilon = 1e-3;
         PharmacophoreAtom atom1 = (PharmacophoreAtom) getAtom(0);

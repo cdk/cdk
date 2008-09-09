@@ -38,6 +38,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -148,6 +149,51 @@ public class PharmacophoreMatcherTest {
         List<List<PharmacophoreAtom>> upmatches = matcher.getUniqueMatchingPharmacophoreAtoms();
         Assert.assertEquals(1, upmatches.size());
 
+    }
+
+    @Test
+    public void testMatchedBonds() throws CDKException {
+       Assert.assertNotNull(conformers);
+
+        // make a query
+        QueryAtomContainer query = new QueryAtomContainer();
+
+        PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
+        PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
+        PharmacophoreQueryAtom n2 = new PharmacophoreQueryAtom("A", "[N]");
+
+        query.addAtom(o);
+        query.addAtom(n1);
+        query.addAtom(n2);
+
+        PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(o, n1, 4.0, 4.5);
+        PharmacophoreQueryBond b2 = new PharmacophoreQueryBond(o, n2, 4.0, 5.0);
+        PharmacophoreQueryBond b3 = new PharmacophoreQueryBond(n1, n2, 5.4, 5.8);
+
+        query.addBond(b1);
+        query.addBond(b2);
+        query.addBond(b3);
+
+        IAtomContainer conf1 = conformers.get(0);
+        PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
+        boolean status = matcher.matches(conf1);
+        Assert.assertTrue(status);
+
+        List<List<IBond>> bMatches = matcher.getMatchingPharmacophoreBonds();
+        Assert.assertEquals(2, bMatches.size()); // 2 since we haven't gotten a unique set
+        Assert.assertEquals(3, bMatches.get(0).size());
+
+        PharmacophoreBond pbond = (PharmacophoreBond) bMatches.get(0).get(0);
+        PharmacophoreAtom patom1 = (PharmacophoreAtom) pbond.getAtom(0);
+        PharmacophoreAtom patom2 = (PharmacophoreAtom) pbond.getAtom(1);
+        Assert.assertEquals("D", patom1.getSymbol());
+        Assert.assertEquals("A", patom2.getSymbol());
+
+        List<HashMap<IBond, IBond>> bondMap = matcher.getTargetQueryBondMappings();
+        Assert.assertEquals(2, bondMap.size());
+        HashMap<IBond, IBond> mapping = bondMap.get(0);
+        IBond value = mapping.get(pbond);
+        Assert.assertEquals(b1, value);
     }
 
     @Test(expected = CDKException.class)
