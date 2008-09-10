@@ -24,19 +24,6 @@
  */
 package org.openscience.cdk.geometry;
 
-import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector2d;
-import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -44,6 +31,14 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.LoggingTool;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector2d;
+import javax.vecmath.Vector3d;
+import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * A set of static utility classes for geometric calculations and operations.
@@ -826,7 +821,7 @@ public class GeometryTools {
         Iterator<IBond> bonds = container.bonds().iterator();
         int bondCounter = 0;
         while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+            IBond bond = bonds.next();
 			IAtom atom1 = bond.getAtom(0);
 			IAtom atom2 = bond.getAtom(1);
 			if (atom1.getPoint2d() != null &&
@@ -876,23 +871,22 @@ public class GeometryTools {
 	 *  Determines if this AtomContainer contains 2D coordinates for some or all molecules.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
-	 *@param  m  Description of the Parameter
-	 *@return    0 no 2d, 1=some, 2= for each atom
+	 *
+	 *@param container the molecule to be considered
+     * @return    0 no 2d, 1=some, 2= for each atom
 	 */
 	public static int has2DCoordinatesNew(IAtomContainer container) {
 		if (container == null) return 0;
 		
 		boolean no2d=false;
 		boolean with2d=false;
-		Iterator<IAtom> atoms = container.atoms().iterator();
-		while (atoms.hasNext()) {
-			IAtom atom = (IAtom)atoms.next();
-			if (atom.getPoint2d() == null) {
-				no2d=true;
-			}else{
-				with2d=true;
-			}
-		}
+        for (IAtom atom : container.atoms()) {
+            if (atom.getPoint2d() == null) {
+                no2d = true;
+            } else {
+                with2d = true;
+            }
+        }
 		if(!no2d && with2d){
 			return 2;
 		} else if(no2d && with2d){
@@ -923,13 +917,11 @@ public class GeometryTools {
 	 *@return    boolean indication that 2D coordinates are available
 	 */
 	public static boolean has2DCoordinates(IBond bond) {
-		Iterator<IAtom> atoms = bond.atoms().iterator();
-		while (atoms.hasNext()) {
-			IAtom atom = (IAtom)atoms.next();
-			if (atom.getPoint2d() == null) {
-				return false;
-			}
-		}
+        for (IAtom iAtom : bond.atoms()) {
+            if (iAtom.getPoint2d() == null) {
+                return false;
+            }
+        }
 		return true;
 	}
 
@@ -937,18 +929,16 @@ public class GeometryTools {
 	/**
 	 *  Determines if this model contains 3D coordinates
 	 *
-	 *@param  m  Description of the Parameter
+	 *@param container the molecule to consider
 	 *@return    boolean indication that 3D coordinates are available
 	 */
 	public static boolean has3DCoordinates(IAtomContainer container) {
 		boolean hasinfo = true;
-		Iterator<IAtom> atoms = container.atoms().iterator();
-		while (atoms.hasNext()) {
-			IAtom atom = (IAtom)atoms.next();
-			if (atom.getPoint3d() == null) {
-				return false;
-			}
-		}
+        for (IAtom atom : container.atoms()) {
+            if (atom.getPoint3d() == null) {
+                return false;
+            }
+        }
 		return hasinfo;
 	}
 
@@ -988,18 +978,16 @@ public class GeometryTools {
 		double desiredBondLength = 1.5;
 		// loop over all bonds and determine the mean bond distance
 		int counter = 0;
-        Iterator<IBond> bonds = container.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
-			// only consider two atom bonds into account
-			if (bond.getAtomCount() == 2) {
-				counter++;
-				IAtom atom1 = bond.getAtom(0);
-				IAtom atom2 = bond.getAtom(1);
-				bondlength += Math.sqrt(Math.pow(atom1.getPoint2d().x - atom2.getPoint2d().x, 2) +
-						Math.pow(atom1.getPoint2d().y - atom2.getPoint2d().y, 2));
-			}
-		}
+        for (IBond bond : container.bonds()) {
+            // only consider two atom bonds into account
+            if (bond.getAtomCount() == 2) {
+                counter++;
+                IAtom atom1 = bond.getAtom(0);
+                IAtom atom2 = bond.getAtom(1);
+                bondlength += Math.sqrt(Math.pow(atom1.getPoint2d().x - atom2.getPoint2d().x, 2) +
+                        Math.pow(atom1.getPoint2d().y - atom2.getPoint2d().y, 2));
+            }
+        }
 		bondlength = bondlength / counter;
 		ratio = desiredBondLength / bondlength;
 		return ratio;
@@ -1016,10 +1004,8 @@ public class GeometryTools {
 	 *@return            The bestAlignmentForLabel value
 	 */
 	public static int getBestAlignmentForLabel(IAtomContainer container, IAtom atom) {
-		Iterator<IAtom> connectedAtoms = container.getConnectedAtomsList(atom).iterator();
 		int overallDiffX = 0;
-		while (connectedAtoms.hasNext()) {
-			IAtom connectedAtom = (IAtom)connectedAtoms.next();
+		for (IAtom connectedAtom : container.getConnectedAtomsList(atom)) {
 			overallDiffX = overallDiffX + (int) (connectedAtom.getPoint2d().x - atom.getPoint2d().x);
 		}
 		if (overallDiffX <= 0) {
@@ -1040,11 +1026,9 @@ public class GeometryTools {
 	 *@return            The bestAlignmentForLabel value
 	 */
 	public static int getBestAlignmentForLabelXY(IAtomContainer container, IAtom atom) {
-		Iterator<IAtom> connectedAtoms = container.getConnectedAtomsList(atom).iterator();
 		double overallDiffX = 0;
 		double overallDiffY = 0;
-		while (connectedAtoms.hasNext()) {
-			IAtom connectedAtom = (IAtom)connectedAtoms.next();
+		for (IAtom connectedAtom : container.getConnectedAtomsList(atom)) {
 			overallDiffX += connectedAtom.getPoint2d().x - atom.getPoint2d().x;
 			overallDiffY += connectedAtom.getPoint2d().y - atom.getPoint2d().y;
 		}
@@ -1073,20 +1057,18 @@ public class GeometryTools {
 	 *@exception  CDKException  Description of the Exception
 	 */
 	public static List<IAtom> findClosestInSpace(IAtomContainer container, IAtom startAtom, int max) throws CDKException {
-		Iterator<IAtom> atoms = container.atoms().iterator();
 		Point3d originalPoint = startAtom.getPoint3d();
 		if (originalPoint == null) {
 			throw new CDKException("No point3d, but findClosestInSpace is working on point3ds");
 		}
 		Map<Double,IAtom> atomsByDistance = new TreeMap<Double,IAtom>();
-		while (atoms.hasNext()) {
-			IAtom atom = (IAtom)atoms.next();
+		for (IAtom atom : container.atoms()) {
 			if (atom != startAtom) {
 				if (atom.getPoint3d() == null) {
 					throw new CDKException("No point3d, but findClosestInSpace is working on point3ds");
 				}
 				double distance = atom.getPoint3d().distance(originalPoint);
-				atomsByDistance.put(new Double(distance), atom);
+				atomsByDistance.put(distance, atom);
 			}
 		}
 		// FIXME: should there not be some sort here??
@@ -1275,7 +1257,7 @@ public class GeometryTools {
         double sum=0;
         double n=0;
         while(firstAtoms.hasNext()){
-            int firstAtomNumber=((Integer)firstAtoms.next()).intValue();
+            int firstAtomNumber= firstAtoms.next();
             centerAtomfirstAC=firstAtomContainer.getAtom(firstAtomNumber);
             List<IAtom> connectedAtoms=firstAtomContainer.getConnectedAtomsList(centerAtomfirstAC);
             if (connectedAtoms.size() >1){
@@ -1329,7 +1311,7 @@ public class GeometryTools {
 	 *@param  mappedAtoms             			Map: a Map of the mapped atoms
 	 *@param  Coords3d            			    boolean: true if moecules has 3D coords, false if molecules has 2D coords
 	 *@return                   				double: the value of the RMSD 
-	 *@exception  CDKException
+	 *@exception  CDKException  if there is an error in getting mapped atoms
 	 *
 	 **/
 	public static double getAllAtomRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, 
@@ -1342,7 +1324,7 @@ public class GeometryTools {
 		int secondAtomNumber;
 		int n=0;
 		while(firstAtoms.hasNext()){
-			firstAtomNumber=((Integer)firstAtoms.next()).intValue();
+			firstAtomNumber= firstAtoms.next();
 			try{
 				secondAtomNumber= mappedAtoms.get(firstAtomNumber);
 				IAtom firstAtom=firstAtomContainer.getAtom(firstAtomNumber);
@@ -1370,11 +1352,10 @@ public class GeometryTools {
 	 *@param hetAtomOnly                        boolean: true if only hetero atoms should be considered
 	 *@param  Coords3d            			    boolean: true if moecules has 3D coords, false if molecules has 2D coords
 	 *@return                   				double: the value of the RMSD 
-	 *@exception  CDK
 	 *
 	 **/
 	public static double getHeavyAtomRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer,
-			Map<Integer,Integer> mappedAtoms, boolean hetAtomOnly ,boolean Coords3d)throws CDKException {
+			Map<Integer,Integer> mappedAtoms, boolean hetAtomOnly ,boolean Coords3d) {
 		//logger.debug("**** GT getAllAtomRMSD ****");
 		double sum=0;
 		double RMSD=0;
@@ -1384,7 +1365,6 @@ public class GeometryTools {
 		int n=0;
 		while(firstAtoms.hasNext()){
 			firstAtomNumber=firstAtoms.next();
-			try{
 				secondAtomNumber=mappedAtoms.get(firstAtomNumber);
 				IAtom firstAtom=firstAtomContainer.getAtom(firstAtomNumber);
 				if (hetAtomOnly){
@@ -1408,8 +1388,7 @@ public class GeometryTools {
 						}
 					}
 				}
-			}catch (Exception ex){
-			}
+
 		}
 		RMSD=Math.sqrt(sum/n);
 		return RMSD;
@@ -1427,18 +1406,16 @@ public class GeometryTools {
 	 */
 	public static double getBondLengthAverage3D(IAtomContainer container) {
 		double bondLengthSum = 0;
-        Iterator<IBond> bonds = container.bonds().iterator();
         int bondCounter = 0;
-        while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
-			IAtom atom1 = bond.getAtom(0);
-			IAtom atom2 = bond.getAtom(1);
-			if (atom1.getPoint3d() != null &&
-					atom2.getPoint3d() != null) {
-				bondCounter++;
-				bondLengthSum += atom1.getPoint3d().distance(atom2.getPoint3d());
-			}
-		}
+        for (IBond bond : container.bonds()) {
+            IAtom atom1 = bond.getAtom(0);
+            IAtom atom2 = bond.getAtom(1);
+            if (atom1.getPoint3d() != null &&
+                    atom2.getPoint3d() != null) {
+                bondCounter++;
+                bondLengthSum += atom1.getPoint3d().distance(atom2.getPoint3d());
+            }
+        }
 		return bondLengthSum / bondCounter;
 	}
 }
