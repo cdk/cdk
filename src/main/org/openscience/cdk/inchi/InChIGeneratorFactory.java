@@ -20,14 +20,13 @@
  */
 package org.openscience.cdk.inchi;
 
-import java.util.List;
-
 import net.sf.jniinchi.JniInchiWrapper;
 import net.sf.jniinchi.LoadNativeLibraryException;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+
+import java.util.List;
 
 /**
  * <p>Factory providing access to InChIGenerator and InChIToStructure. See those
@@ -61,7 +60,7 @@ public class InChIGeneratorFactory {
      * required for InChI/Structure interconversion is available, otherwise
      * throws CDKException.
      * 
-     * @throws CDKException
+     * @throws CDKException if unable to load native code
      */
     public InChIGeneratorFactory() throws CDKException {
         try {
@@ -72,44 +71,47 @@ public class InChIGeneratorFactory {
     }
     
     /**
-     * <p>Gets InChI generator for CDK IAtomContainer.
+     * Gets InChI generator for CDK IAtomContainer.
      * 
      * @param container     AtomContainer to generate InChI for.
+     * @return the InChI generator object
+     * @throws CDKException if the generator cannot be instantiated
      */
     public InChIGenerator getInChIGenerator(IAtomContainer container) throws CDKException {
         return(new InChIGenerator(container));
     }
     
     /**
-     * <p>Gets InChI generator for CDK IAtomContainer.
+     * Gets InChI generator for CDK IAtomContainer.
      * 
      * @param container     AtomContainer to generate InChI for.
      * @param options       String of options for InChI generation.
-     * @return
-     * @throws CDKException
+     * @return the InChI generator object
+     * @throws CDKException if the generator cannot be instantiated
      */
     public InChIGenerator getInChIGenerator(IAtomContainer container, String options) throws CDKException {
         return(new InChIGenerator(container, options));
     }
     
     /**
-     * <p>Gets InChI generator for CDK IAtomContainer.
+     * Gets InChI generator for CDK IAtomContainer.
      * 
      * @param container     AtomContainer to generate InChI for.
      * @param options       List of options (net.sf.jniinchi.INCHI_OPTION) for InChI generation.
-     * @return
-     * @throws CDKException
+     * @return the InChI generator object
+     * @throws CDKException  if the generator cannot be instantiated
      */
     public InChIGenerator getInChIGenerator(IAtomContainer container, List options) throws CDKException {
         return(new InChIGenerator(container, options));
     }
     
     /**
-     * <p>Gets structure generator for an InChI string.
+     * Gets structure generator for an InChI string.
      * 
      * @param inchi         InChI to generate structure from.
-     * @return
-     * @throws CDKException
+     * @param builder the builder to use
+     * @return   the InChI structure generator object
+     * @throws CDKException    if the generator cannot be instantiated
      */
     public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
         return(new InChIToStructure(inchi, builder));
@@ -119,9 +121,10 @@ public class InChIGeneratorFactory {
      * <p>Gets structure generator for an InChI string.
      * 
      * @param inchi         InChI to generate structure from.
+     * @param builder the builder to employ
      * @param options       String of options for structure generation.
-     * @return
-     * @throws CDKException
+     * @return   the InChI structure generator object
+     * @throws CDKException    if the generator cannot be instantiated
      */
     public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, String options) throws CDKException {
         return(new InChIToStructure(inchi, builder, options));
@@ -132,8 +135,9 @@ public class InChIGeneratorFactory {
      * 
      * @param inchi         InChI to generate structure from.
      * @param options       List of options (net.sf.jniinchi.INCHI_OPTION) for structure generation.
-     * @return
-     * @throws CDKException
+     * @param builder the builder to employ
+     * @return   the InChI structure generator object
+     * @throws CDKException    if the generator cannot be instantiated     
      */
     public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, List options) throws CDKException {
         return(new InChIToStructure(inchi, builder, options));
