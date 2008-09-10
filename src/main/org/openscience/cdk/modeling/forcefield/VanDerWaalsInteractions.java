@@ -51,7 +51,7 @@ public class VanDerWaalsInteractions {
 	
 	//int[][] distances = null;	//Better check common atom connected
 	IAtomicDescriptor shortestPathBetweenToAtoms = new BondsToAtomDescriptor();
-	Object[] params = {new Integer(0)};
+	Object[] params = {Integer.valueOf(0)};
 	
 	int vdwInteractionNumber;
 	int[][] vdWiAtomPosition = null;
@@ -103,7 +103,7 @@ public class VanDerWaalsInteractions {
 		vdwInteractionNumber = 0;
 		for (int i=0; i<molecule.getAtomCount(); i++) {
 			for (int j=i+1; j<molecule.getAtomCount(); j++) {
-				params[0] = new Integer(j);
+				params[0] = Integer.valueOf(j);
 				shortestPathBetweenToAtoms.setParameters(params);
 				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
 				if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule.getAtom(i),molecule).getValue()).intValue()>2){
@@ -145,7 +145,7 @@ public class VanDerWaalsInteractions {
 		int l = -1;
 		for (int i=0; i<molecule.getAtomCount(); i++) {
 			for (int j=i+1; j<molecule.getAtomCount(); j++) {
-				params[0] = new Integer(j);
+				params[0] = Integer.valueOf(j);
 				shortestPathBetweenToAtoms.setParameters(params);
 				//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))]>2) {
 				if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule.getAtom(i),molecule).getValue()).intValue()>2){
@@ -192,7 +192,7 @@ public class VanDerWaalsInteractions {
 					
 					t[l] = 1;
 					
-					params[0] = new Integer(j);
+					params[0] = Integer.valueOf(j);
 					shortestPathBetweenToAtoms.setParameters(params);
 					if (((IntegerResult)shortestPathBetweenToAtoms.calculate(molecule.getAtom(i),molecule).getValue()).intValue()==3){
 					//if (distances[molecule.getAtomNumber(molecule.getAtomAt(i))][molecule.getAtomNumber(molecule.getAtomAt(j))] == 3) {

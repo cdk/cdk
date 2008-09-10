@@ -40,6 +40,7 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 import org.openscience.cdk.AtomType;
+import org.openscience.cdk.interfaces.IAtomType;
 
 /**
  * AtomType list configurator that uses the ParameterSet originally
@@ -56,8 +57,8 @@ public class MMFF94BasedParameterSetReader {
 
 	private String configFile = "org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
 	private InputStream ins = null;
-	private Map parameterSet;
-	private List atomTypes;
+	private Map<String,Object> parameterSet;
+	private List<IAtomType> atomTypes;
 	private StringTokenizer st;
 	private String key = "";
 	private String sid;
@@ -75,15 +76,15 @@ public class MMFF94BasedParameterSetReader {
 	 *Constructor for the MM2BasedParameterSetReader object
 	 */
 	public MMFF94BasedParameterSetReader() {
-		parameterSet = new Hashtable();
-		atomTypes = new Vector();
+		parameterSet = new Hashtable<String,Object>();
+		atomTypes = new Vector<IAtomType>();
 	}
 	
-	public Map getParamterSet(){
+	public Map<String,Object> getParamterSet(){
 		return parameterSet;
 	}
 	
-	public List getAtomTypes(){
+	public List<IAtomType> getAtomTypes(){
 		return atomTypes;
 	}
 	/**
@@ -103,7 +104,7 @@ public class MMFF94BasedParameterSetReader {
 	private void setAtomTypeData() throws Exception {
 		
 		key = "data" + sid;
-		Vector data = new Vector();
+		List data = new Vector();
 		
 		String sradius = st.nextToken();
 		String swell = st.nextToken();
