@@ -23,15 +23,15 @@
  */
 package org.openscience.cdk.config;
 
-import org.openscience.cdk.PeriodicTableElement;
-import org.openscience.cdk.config.elements.ElementPTReader;
-import org.openscience.cdk.tools.LoggingTool;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OptionalDataException;
-import java.util.Vector;
+import java.util.List;
+
+import org.openscience.cdk.PeriodicTableElement;
+import org.openscience.cdk.config.elements.ElementPTReader;
+import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Used to store and return data of a particular chemicalElement. As this class is a
@@ -49,7 +49,7 @@ public class ElementPTFactory
 {
 
 	private static ElementPTFactory efac = null;
-	private Vector<PeriodicTableElement> elements = null;
+	private List<PeriodicTableElement> elements = null;
 	private boolean debug = false;
 	private LoggingTool logger;
 
@@ -121,7 +121,7 @@ public class ElementPTFactory
      * @return  A Vector of PeriodicTableElement objects
      * @see org.openscience.cdk.PeriodicTableElement
      */
-    public Vector<PeriodicTableElement> getElements() {
+    public List<PeriodicTableElement> getElements() {
         return elements;
     }
 
