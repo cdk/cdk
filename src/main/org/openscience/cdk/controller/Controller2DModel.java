@@ -31,7 +31,6 @@ package org.openscience.cdk.controller;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEditSupport;
 
-import org.openscience.cdk.applications.undoredo.UndoAdapter;
 
 /**
  * @cdk.module  control
