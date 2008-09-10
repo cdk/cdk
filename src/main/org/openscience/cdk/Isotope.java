@@ -234,7 +234,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      *
      * @return The atomic mass of this element
      *
-     * @see    #setMassNumber(int)
+     * @see    #setMassNumber(Integer)
      */
     public Integer getMassNumber() {
         return this.massNumber;

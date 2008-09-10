@@ -233,7 +233,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *
 	 *@param  number  The position of the ElectronContainer to be returned.
 	 *@return         The ElectronContainer at position <code>number</code>.
-	 *@see            #setElectronContainerAt
+	 *@see            #addElectronContainer(IElectronContainer) 
 	 */
 	public IElectronContainer getElectronContainer(int number);
 

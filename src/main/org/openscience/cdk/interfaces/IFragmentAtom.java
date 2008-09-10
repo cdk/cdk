@@ -49,14 +49,14 @@ public interface IFragmentAtom extends IPseudoAtom {
 	/**
 	 * Returns the fully expended form of the IFragmentAtom.
 	 * 
-	 * @return
+	 * @return the fully expanded form as an IAtomContainer object
 	 */
 	public IAtomContainer getFragment();
 
 	/**
 	 * Sets the fully expended form of the IFragmentAtom.
 	 * 
-	 * @param fragment
+	 * @param fragment The fragment
 	 */
 	public void setFragment(IAtomContainer fragment);
 

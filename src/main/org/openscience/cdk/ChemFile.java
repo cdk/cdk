@@ -100,12 +100,13 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 		notifyChanged();
 	}
 
-	/**
-	 *  Removes a ChemSequence from this container.
-	 *
-	 *@param  chemSequence  The chemSequence to be added to this container
-	 *@see                  #chemSequences
-	 */
+    /**
+     *  Removes a ChemSequence from this container.
+     *
+     * @param  pos  The position from which to remove
+     * @see   #chemSequences
+     * @see #addChemSequence(org.openscience.cdk.interfaces.IChemSequence)
+     */
 	public void removeChemSequence(int pos)
 	{
 		chemSequences[pos].removeListener(this);
@@ -204,12 +205,10 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
 		buffer.append("ChemFile(#S=");
 		buffer.append(chemSequenceCount);
 		if (chemSequenceCount > 0) {
-			Iterator<IChemSequence> seqs = chemSequences().iterator();
-			while (seqs.hasNext()) {
-				buffer.append(", ");
-				IChemSequence sequence = (IChemSequence)seqs.next();
-				buffer.append(sequence.toString());
-			}
+            for (IChemSequence iChemSequence : chemSequences()) {
+                buffer.append(", ");
+                buffer.append(iChemSequence.toString());
+            }
 		}
 		buffer.append(')');
 		return buffer.toString();

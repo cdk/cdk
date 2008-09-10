@@ -87,7 +87,7 @@ public class PseudoAtom extends Atom
     /**
      * Constructs an PseudoAtom from a IAtom.
      *
-     * @param   atom  IAtom from which the PseudoAtom is constructed
+     * @param   element  IAtom from which the PseudoAtom is constructed
      */
     public PseudoAtom(IElement element) {
         super(element);

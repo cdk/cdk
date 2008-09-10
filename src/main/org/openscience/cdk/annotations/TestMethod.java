@@ -29,7 +29,7 @@ import java.lang.annotation.*;
 /**
  * An annotation for source classes to indicate the specific test class and method that tests the source class.
  *
- * @cdk.author Rajarshi Guha
+ * @author Rajarshi Guha
  * @cdk.svnrev $Revision$
  * @cdk.module core
  */

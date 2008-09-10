@@ -25,7 +25,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * {@link IDifference} between two {@link IBond.Order}s.
+ * {@link org.openscience.cdk.tools.diff.tree.IDifference} between two {@link org.openscience.cdk.interfaces.IBond.Order}s.
  * 
  * @author     egonw
  * @cdk.module diff

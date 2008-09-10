@@ -25,16 +25,12 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.interfaces.*;
+
 import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
 
 /**
  * Represents the idea of a chemical reaction. The reaction consists of 
@@ -113,7 +109,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @see    #setReactants
      */
     public org.openscience.cdk.interfaces.IMoleculeSet getReactants() {
-        return (MoleculeSet)reactants;
+        return reactants;
     }
 
     /**
@@ -134,7 +130,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @see    #setProducts
      */
     public org.openscience.cdk.interfaces.IMoleculeSet getProducts() {
-        return (MoleculeSet)products;
+        return products;
     }
     
 	/**
@@ -155,7 +151,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * @see    #addAgent
      */
     public org.openscience.cdk.interfaces.IMoleculeSet getAgents() {
-        return (MoleculeSet)agents;
+        return agents;
     }
     
     /**
@@ -181,8 +177,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         private int pointer = 0;
     	
         public boolean hasNext() {
-            if (pointer < mappingCount) return true;
-	    return false;
+            return pointer < mappingCount;
         }
 
         public IMapping next() {
@@ -370,7 +365,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      * Returns the direction of the reaction.
      *
      * @return The direction of this reaction (FORWARD, BACKWARD or BIDIRECTIONAL).
-     * @see    #BIDIRECTIONAL
+     * @see    org.openscience.cdk.interfaces.IReaction.Direction
      * @see    #setDirection
      */
     public IReaction.Direction getDirection() {
@@ -465,7 +460,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         // create a Map of corresponding atoms for molecules (key: original Atom, 
         // value: clone Atom)
         Map<IAtom, IAtom> atomatom = new Hashtable<IAtom, IAtom>();
-        for (int i = 0; i < ((MoleculeSet)reactants).getMoleculeCount(); ++i) {
+        for (int i = 0; i < reactants.getMoleculeCount(); ++i) {
             Molecule mol = (Molecule)((MoleculeSet)reactants).getMolecule(i);
             Molecule mol2 = (Molecule)clone.reactants.getMolecule(i);
             for (int j = 0; j < mol.getAtomCount(); ++j) atomatom.put(mol.getAtom(j), mol2.getAtom(j));

@@ -32,7 +32,7 @@ import java.lang.annotation.RetentionPolicy;
  * An annotation for source classes to indicate the JUnit test
  * class tests the functionality.
  *
- * @cdk.author Egon Willighagen
+ * @author Egon Willighagen
  * @cdk.svnrev $Revision$
  * @cdk.module core
  */

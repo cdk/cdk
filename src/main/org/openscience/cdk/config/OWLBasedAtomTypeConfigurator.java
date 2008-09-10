@@ -20,11 +20,6 @@
  */
 package org.openscience.cdk.config;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.atomtypes.OWLAtomTypeReader;
@@ -32,11 +27,16 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+
 /**
  * AtomType resource that reads the atom type configuration from an OWL file.
  *
  * @cdk.module  core
- * @cdk.svnrev  $Revision$
+ * @cdk.svnrev  $Revision: 12444 $
  */
 @TestClass("org.openscience.cdk.config.OWLBasedAtomTypeConfiguratorTest")
 public class OWLBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
