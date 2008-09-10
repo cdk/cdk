@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.xml.sax.Attributes;
 
 /**
- * Core CML 1.x and 2.0 elements are pcustomsarsed by this class.
+ * Core CML 1.x and 2.x elements are parsed by this class.
  *
  * <p>Please file a bug report if this parser fails to parse
  * a certain element or attribute value in a valid CML document.
@@ -110,10 +110,10 @@ public class CMLCoreModule implements ICMLModule {
     protected List<String> yfract;
     protected List<String> zfract;
     protected List<String> hCounts;
-    protected List atomParities;
-    protected List atomDictRefs;
-    protected List spinMultiplicities;
-    protected List occupancies;
+    protected List<String> atomParities;
+    protected List<String> atomDictRefs;
+    protected List<String> spinMultiplicities;
+    protected List<String> occupancies;
     protected Map<Integer,List<String>> atomCustomProperty;
 
 
@@ -264,10 +264,10 @@ public class CMLCoreModule implements ICMLModule {
         yfract = new ArrayList<String>();
         zfract = new ArrayList<String>();
         hCounts = new ArrayList<String>();
-        atomParities = new ArrayList();
-        atomDictRefs = new ArrayList();
-        spinMultiplicities = new ArrayList();
-        occupancies = new ArrayList();
+        atomParities = new ArrayList<String>();
+        atomDictRefs = new ArrayList<String>();
+        spinMultiplicities = new ArrayList<String>();
+        occupancies = new ArrayList<String>();
         atomCustomProperty = new HashMap<Integer,List<String>>();
     }
 
@@ -987,10 +987,10 @@ public class CMLCoreModule implements ICMLModule {
                 if (DICTREF.equals("cdk:partialCharge")) {
                     partialCharges.add(cData.trim());
                 }else {
-                	if(atomCustomProperty.get(new Integer(atomCounter-1))==null)
-                		atomCustomProperty.put(new Integer(atomCounter-1),new ArrayList<String>());
-                	atomCustomProperty.get(new Integer(atomCounter-1)).add(elementTitle);
-                	atomCustomProperty.get(new Integer(atomCounter-1)).add(cData.trim());
+                	if(atomCustomProperty.get(Integer.valueOf(atomCounter-1))==null)
+                		atomCustomProperty.put(Integer.valueOf(atomCounter-1),new ArrayList<String>());
+                	atomCustomProperty.get(Integer.valueOf(atomCounter-1)).add(elementTitle);
+                	atomCustomProperty.get(Integer.valueOf(atomCounter-1)).add(cData.trim());
                 }
             } else if (xpath.endsWith("molecule", "scalar")) {
                 if (DICTREF.equals("pdb:id")) {
@@ -1123,10 +1123,10 @@ public class CMLCoreModule implements ICMLModule {
         if (formula != null){
         	currentMolecule.setProperty(CDKConstants.FORMULA, formula);
         }
-        Iterator customs=moleculeCustomProperty.iterator();
+        Iterator<String> customs=moleculeCustomProperty.iterator();
         while(customs.hasNext()){
-        	String x=(String)customs.next();
-        	String y=(String)customs.next();
+        	String x = customs.next();
+        	String y = customs.next();
        		currentMolecule.setProperty(x,y);
         }
         storeAtomData();
@@ -1399,8 +1399,8 @@ public class CMLCoreModule implements ICMLModule {
             		currentAtom.setMassNumber((int)Double.parseDouble((String)isotope.get(i)));
             }
             
-            if(atomCustomProperty.get(new Integer(i))!=null){
-            	Iterator<String> it=atomCustomProperty.get(new Integer(i)).iterator();
+            if(atomCustomProperty.get(Integer.valueOf(i))!=null){
+            	Iterator<String> it=atomCustomProperty.get(Integer.valueOf(i)).iterator();
             	while(it.hasNext()){
 	            	currentAtom.setProperty(it.next(),it.next());
             	}
@@ -1426,13 +1426,13 @@ public class CMLCoreModule implements ICMLModule {
             (bondARef2.size() == bondCounter)) {
             logger.debug("About to add bond info...");
 
-            Iterator orders = order.iterator();
-            Iterator ids = bondid.iterator();
-            Iterator bar1s = bondARef1.iterator();
-            Iterator bar2s = bondARef2.iterator();
-            Iterator stereos = bondStereo.iterator();
-            Iterator aroms = bondAromaticity.iterator();
-            Iterator customs = bondCustomProperty.iterator();
+            Iterator<String> orders = order.iterator();
+            Iterator<String> ids = bondid.iterator();
+            Iterator<String> bar1s = bondARef1.iterator();
+            Iterator<String> bar2s = bondARef2.iterator();
+            Iterator<String> stereos = bondStereo.iterator();
+            Iterator<Boolean> aroms = bondAromaticity.iterator();
+            Iterator<String> customs = bondCustomProperty.iterator();
 
             while (bar1s.hasNext()) {
 //                cdo.startObject("Bond");
@@ -1440,10 +1440,10 @@ public class CMLCoreModule implements ICMLModule {
 //                    cdo.setObjectProperty("Bond", "id", (String)ids.next());
 //                }
 //                cdo.setObjectProperty("Bond", "atom1", 
-//                                      new Integer(bondElid.indexOf(
+//                                      Integer.valueOf(bondElid.indexOf(
 //                                                          (String)bar1s.next())).toString());
 //                cdo.setObjectProperty("Bond", "atom2", 
-//                                      new Integer(bondElid.indexOf(
+//                                      Integer.valueOf(bondElid.indexOf(
 //                                                          (String)bar2s.next())).toString());
                 IAtom a1 = (IAtom)atomEnumeration.get((String)bar1s.next());
             	IAtom a2 = (IAtom)atomEnumeration.get((String)bar2s.next());
