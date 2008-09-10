@@ -24,9 +24,6 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.util.BitSet;
-import java.util.List;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -35,6 +32,9 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+
+import java.util.BitSet;
+import java.util.List;
 
 /**
  * Generates an extended fingerprint for a given {@link IAtomContainer}, that
@@ -107,7 +107,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
 	 *@param 	 rslist		A list of all ring systems in ac
 	 *@exception Exception  Description of the Exception
 	 */
-    @TestMethod("testGetFingerprint_IAtomContainer_IRingSet")
+    @TestMethod("testGetFingerprint_IAtomContainer_IRingSet_List")
     public BitSet getFingerprint(IAtomContainer container, IRingSet ringSet, List<IRingSet> rslist) throws CDKException {
 		BitSet bitSet = fingerprinter.getFingerprint(container);
 		int size = this.getSize();
