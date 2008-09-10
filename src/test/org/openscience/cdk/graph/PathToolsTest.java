@@ -28,6 +28,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -341,6 +342,22 @@ public class PathToolsTest extends NewCDKTestCase {
         PathTools.resetFlags(atomContainer);
         PathTools.breadthFirstSearch(atomContainer, sphere, result, 3);
         Assert.assertEquals(4, result.getAtomCount());
+    }
+
+    @Test
+    public void testFindClosestByBond() throws InvalidSmilesException {
+        IAtomContainer container = sp.parseSmiles("CCN(CSCP)CCCOF");
+        IAtom queryAtom = null;
+        for (IAtom atom : container.atoms()) {
+            if (atom.getSymbol().equals("N")) {
+                queryAtom = atom;
+                break;
+            }
+        }
+        IAtom[] closestAtoms = PathTools.findClosestByBond(container, queryAtom, 2);
+        for (IAtom atom : closestAtoms) {
+            Assert.assertEquals("C", atom.getSymbol());
+        }
     }
 }
 

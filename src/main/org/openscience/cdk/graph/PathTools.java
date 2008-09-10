@@ -218,6 +218,7 @@ public class PathTools {
      * @param max           the number of neighbours to return
      * @return the average bond length
      */
+    @TestMethod("testFindClosestByBond")
     public static IAtom[] findClosestByBond(IAtomContainer atomContainer, IAtom atom, int max) {
         IMolecule mol = atomContainer.getBuilder().newMolecule();
         List<IAtom> v = new ArrayList<IAtom>();
@@ -346,6 +347,7 @@ public class PathTools {
         return -1;
     }
 
+    @TestMethod("testResetFlags_IAtomContainer")
     protected static void resetFlags(IAtomContainer atomContainer) {
         for (int f = 0; f < atomContainer.getAtomCount(); f++) {
             atomContainer.getAtom(f).setFlag(CDKConstants.VISITED, false);
