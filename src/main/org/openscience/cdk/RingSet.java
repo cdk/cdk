@@ -24,13 +24,9 @@
 
 package org.openscience.cdk;
 
-import java.io.Serializable;
+import org.openscience.cdk.interfaces.*;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import java.io.Serializable;
 
 /**
  * Maintains a set of Ring objects.
@@ -140,7 +136,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 	{
 		for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
 		{
-			if (!contains((IRing)ringSet.getAtomContainer(f)))
+			if (!contains(ringSet.getAtomContainer(f)))
 			{
 				addAtomContainer(ringSet.getAtomContainer(f));
 			}
@@ -156,7 +152,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 	 */
 	public boolean contains(IAtom atom) {
 		for (int i = 0; i < getAtomContainerCount(); i++) {
-			if (((IRing)getAtomContainer(i)).contains(atom)) {
+			if (getAtomContainer(i).contains(atom)) {
 				return true;
 			}
 		}
