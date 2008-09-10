@@ -61,6 +61,8 @@ public interface IRingSet extends IAtomContainerSet {
 	
 	/**
 	 * Adds all rings of another RingSet if they are not allready part of this ring set.
+     *
+     * If you want to add a single ring to the set use {@link #addAtomContainer(org.openscience.cdk.interfaces.IAtomContainer)} 
 	 *
 	 * @param   ringSet  the ring set to be united with this one.
 	 */
