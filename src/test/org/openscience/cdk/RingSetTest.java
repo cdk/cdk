@@ -24,18 +24,13 @@
  */
 package org.openscience.cdk;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Checks the functionality of the RingSet class.
@@ -82,18 +77,18 @@ public class RingSetTest extends NewCDKTestCase {
         }
     }
     
-    /* FIXME: make RingSet inherited from IChemObject, see #1117775
-    @Test public void testClone() {
-        RingSet ringset = builder.newRingSet();
-        Ring ring = builder.newRing();
+
+    @Test public void testClone() throws CloneNotSupportedException {
+        IRingSet ringset = builder.newRingSet();
+        IRing ring = builder.newRing();
         ringset.add(ring);
         
-        RingSet clone = (RingSet)ringset.clone();
+        IRingSet clone = (IRingSet)ringset.clone();
         Assert.assertNotNull(clone);
-        Assert.assertTrue(clone instanceof RingSet);
-        Assert.assertEquals(1, clone.size());
-        Assert.assertNotSame(ring, clone.elementAt(0));
-    } */
+        Assert.assertTrue(clone instanceof IRingSet);
+        Assert.assertEquals(1, clone.getAtomContainerCount());
+        Assert.assertNotSame(ring, clone.getAtomContainer(0));
+    }
     
     @Test public void testContains_IAtom() {
         IRingSet ringset = builder.newRingSet();
@@ -323,11 +318,6 @@ public class RingSetTest extends NewCDKTestCase {
         Assert.assertEquals(1, ringset.getConnectedRings(ring1).getAtomContainerCount());
     }
 
-    @Test public void testClone() {
-        // Added to make the Coverage tool happy
-        // The method is apparently not part of the interface yet
-      Assert.assertTrue(true);
-    }
     
     /**
      * Test for RingSetTest bug #1772613.
