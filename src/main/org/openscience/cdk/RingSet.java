@@ -190,11 +190,7 @@ public class RingSet extends AtomContainerSet implements Serializable, IRingSet,
 	 * @return  The cloned object
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		RingSet clone = (RingSet)super.clone();
-		for (IAtomContainer container : atomContainers()) {
-			clone.addAtomContainer((IAtomContainer)container.clone());
-		}
-		return clone;
+        return super.clone();
 	}
 
     /**
