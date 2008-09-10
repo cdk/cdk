@@ -20,10 +20,6 @@
  */
 package org.openscience.cdk.charges;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.annotations.TestClass;
@@ -38,6 +34,10 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 /**
  * The stabilization of the positive and the negative charge 
  * obtained (e.g in the polar breaking of a bond) is calculated from the sigma- and
@@ -60,7 +60,7 @@ public class StabilizationCharges {
     /**
      * calculate the stabilization of orbitals when they contain deficiency of charge.
      *
-     * @param container  IAtomContainer
+     * @param atomContainer the molecule to be considered
      * @param atom       IAtom for which effective atom StabilizationCharges 
      *                   factor should be calculated     
      * 

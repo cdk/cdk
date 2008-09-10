@@ -117,10 +117,10 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 		return MX_ITERATIONS;
 	}
 	/**
-	 *  Sets the maximum resonance structures to be searched
+	 *  Gets the maximum resonance structures to be searched
 	 *
-	 *@param  numbReson  The number of resonance Structures to be searched
-	 */
+     * @return the maximum numebr of resonance structures that will be returned
+     */
     @TestMethod("testGetMaxResoStruc")
 	public int getMaxResoStruc() {
 		return MX_RESON;
@@ -130,7 +130,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	 *  
 	 *
 	 *@param  ac             AtomContainer
-	 *@param  addCharge      unused
+	 *@param  setCharge      currently unused
 	 *@return                AtomContainer with partial charges
 	 *@exception  Exception  Possible Exceptions
 	 */

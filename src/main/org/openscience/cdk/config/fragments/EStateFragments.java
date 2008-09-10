@@ -39,7 +39,7 @@ package org.openscience.cdk.config.fragments;
  * converted into SMARTS forms by the <a href="http://www.rdkit.org">RDKit</a> project
  *
  * @cdk.module  standard
- * @cdk.author  Greg Landrum
+ * @author  Greg Landrum
  * @cdk.created 2008-07-22
  * @cdk.keyword estate
  * @cdk.keyword fragment
