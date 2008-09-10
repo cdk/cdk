@@ -246,6 +246,7 @@ public class PharmacophoreMatcher {
      * @see org.openscience.cdk.pharmacophore.PharmacophoreBond
      * @see org.openscience.cdk.pharmacophore.PharmacophoreAngleBond
      */
+    @TestMethod("testMatchedBonds")
     public List<List<IBond>> getMatchingPharmacophoreBonds() {
         if (bondMapping == null) return null;
         matchingPBonds = new ArrayList<List<IBond>>();
@@ -281,6 +282,7 @@ public class PharmacophoreMatcher {
      * @return A List of HashMaps, identifying the query constraint corresponding to a matched constraint in the target
      *         molecule.
      */
+    @TestMethod("testMatchedBonds")
     public List<HashMap<IBond, IBond>> getTargetQueryBondMappings() {
         return bondMapHash;
     }

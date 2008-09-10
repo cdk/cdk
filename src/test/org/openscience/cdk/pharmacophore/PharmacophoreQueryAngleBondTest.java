@@ -52,6 +52,27 @@ public class PharmacophoreQueryAngleBondTest {
         Assert.assertTrue(qbond2.matches(pbond));
         Assert.assertFalse(qbond3.matches(pbond));
         Assert.assertFalse(qbond4.matches(pbond));
+    }
 
+    @Test public void testUpper() {
+        PharmacophoreQueryAtom qatom1 = new PharmacophoreQueryAtom("Amine", "[CX2]N");
+        PharmacophoreQueryAtom qatom2 = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
+        PharmacophoreQueryAtom qatom3 = new PharmacophoreQueryAtom("blah", "C");
+        PharmacophoreQueryAngleBond qbond1 = new PharmacophoreQueryAngleBond(qatom1, qatom2, qatom3, 54.735);
+        PharmacophoreQueryAngleBond qbond2 = new PharmacophoreQueryAngleBond(qatom1, qatom2, qatom3, 50,60);
+
+        Assert.assertEquals(54.74, qbond1.getUpper(), 0.01);
+        Assert.assertEquals(60.00, qbond2.getUpper(), 0.01);
+    }
+
+    @Test public void testLower() {
+        PharmacophoreQueryAtom qatom1 = new PharmacophoreQueryAtom("Amine", "[CX2]N");
+        PharmacophoreQueryAtom qatom2 = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
+        PharmacophoreQueryAtom qatom3 = new PharmacophoreQueryAtom("blah", "C");
+        PharmacophoreQueryAngleBond qbond1 = new PharmacophoreQueryAngleBond(qatom1, qatom2, qatom3, 54.735);
+        PharmacophoreQueryAngleBond qbond2 = new PharmacophoreQueryAngleBond(qatom1, qatom2, qatom3, 50,60);
+
+        Assert.assertEquals(54.74, qbond1.getLower(), 0.01);
+        Assert.assertEquals(50.00, qbond2.getLower(), 0.01);
     }
 }

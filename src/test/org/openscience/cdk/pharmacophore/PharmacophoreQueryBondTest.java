@@ -35,8 +35,8 @@ public class PharmacophoreQueryBondTest {
 
     @Test
     public void testMatches() {
-        PharmacophoreAtom patom1 = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0,0,0));
-        PharmacophoreAtom patom2 = new PharmacophoreAtom("c1ccccc1", "Aromatic", new Point3d(1,1,1));
+        PharmacophoreAtom patom1 = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0, 0, 0));
+        PharmacophoreAtom patom2 = new PharmacophoreAtom("c1ccccc1", "Aromatic", new Point3d(1, 1, 1));
         PharmacophoreBond pbond = new PharmacophoreBond(patom1, patom2);
 
         PharmacophoreQueryAtom qatom1 = new PharmacophoreQueryAtom("Amine", "[CX2]N");
@@ -50,4 +50,28 @@ public class PharmacophoreQueryBondTest {
         Assert.assertFalse(qbond3.matches(pbond));
 
     }
+
+    @Test
+    public void testUpper() {
+        PharmacophoreQueryAtom qatom1 = new PharmacophoreQueryAtom("Amine", "[CX2]N");
+        PharmacophoreQueryAtom qatom2 = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
+        PharmacophoreQueryBond qbond1 = new PharmacophoreQueryBond(qatom1, qatom2, 1.0, 2.0);
+        PharmacophoreQueryBond qbond2 = new PharmacophoreQueryBond(qatom1, qatom2, 1.732);
+
+        Assert.assertEquals(2.0, qbond1.getUpper(), 0.01);
+        Assert.assertEquals(1.732, qbond2.getUpper(), 0.01);
+    }
+
+    @Test
+    public void testLower() {
+        PharmacophoreQueryAtom qatom1 = new PharmacophoreQueryAtom("Amine", "[CX2]N");
+        PharmacophoreQueryAtom qatom2 = new PharmacophoreQueryAtom("aromatic", "c1ccccc1");
+        PharmacophoreQueryBond qbond1 = new PharmacophoreQueryBond(qatom1, qatom2, 1.0, 2.0);
+        PharmacophoreQueryBond qbond2 = new PharmacophoreQueryBond(qatom1, qatom2, 1.732);
+
+        Assert.assertEquals(1.0, qbond1.getLower(), 0.01);
+        Assert.assertEquals(1.732, qbond2.getLower(), 0.01);
+    }
+
+
 }
