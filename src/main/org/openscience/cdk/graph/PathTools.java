@@ -558,19 +558,19 @@ public class PathTools {
      * @return A  <code>List</code> containing the paths found
      */
     @TestMethod("testGetPathsOfLength_IAtomContainer_IAtom_int")
-    public static List<ArrayList<IAtom>> getPathsOfLength(IAtomContainer atomContainer, IAtom start, int length) {
-        ArrayList<IAtom> curPath = new ArrayList<IAtom>();
-        ArrayList<ArrayList<IAtom>> paths = new ArrayList<ArrayList<IAtom>>();
+    public static List<List<IAtom>> getPathsOfLength(IAtomContainer atomContainer, IAtom start, int length) {
+        List<IAtom> curPath = new ArrayList<IAtom>();
+        List<List<IAtom>> paths = new ArrayList<List<IAtom>>();
         curPath.add(start);
         paths.add(curPath);
         for (int i = 0; i < length; i++) {
-            ArrayList<ArrayList<IAtom>> tmpList = new ArrayList<ArrayList<IAtom>>();
-            for (ArrayList<IAtom> path : paths) {
+            List<List<IAtom>> tmpList = new ArrayList<List<IAtom>>();
+            for (List<IAtom> path : paths) {
                 curPath = path;
                 IAtom lastVertex = curPath.get(curPath.size() - 1);
                 List<IAtom> neighbors = atomContainer.getConnectedAtomsList(lastVertex);
                 for (IAtom neighbor : neighbors) {
-                    ArrayList<IAtom> newPath = new ArrayList<IAtom>(curPath);
+                    List<IAtom> newPath = new ArrayList<IAtom>(curPath);
                     if (newPath.contains(neighbor)) continue;
                     newPath.add(neighbor);
                     tmpList.add(newPath);
