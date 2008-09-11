@@ -36,7 +36,6 @@ import java.util.zip.GZIPInputStream;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
@@ -53,7 +52,6 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -157,7 +155,7 @@ public class TemplateHandler3D {
     }
     
 	public static IAtomContainer createAnyAtomAnyBondAtomContainer(
-			IAtomContainer atomContainer) throws Exception {
+		IAtomContainer atomContainer) throws Exception {
 		IAtomContainer query = (IAtomContainer) atomContainer.clone();
 		for (int i = 0; i < query.getBondCount(); i++) {
 			query.getBond(i).setOrder(IBond.Order.SINGLE);
@@ -182,39 +180,50 @@ public class TemplateHandler3D {
 		if (!templatesLoaded) self.loadTemplates();
 
         //logger.debug("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
-        IAtomContainer template;
-        IAtomContainer queryRingSystemAnyBondAnyAtom = createAnyAtomAnyBondAtomContainer(ringSystems);
-        QueryAtomContainer queryRingSystem = QueryAtomContainerCreator.createAnyAtomContainer(queryRingSystemAnyBondAnyAtom, false);
+        IAtomContainer ringSystemAnyBondAnyAtom = createAnyAtomAnyBondAtomContainer(ringSystems);
+        QueryAtomContainer queryRingSystem = QueryAtomContainerCreator.createAnyAtomContainer(ringSystemAnyBondAnyAtom, false);
         BitSet ringSystemFingerprint = new Fingerprinter().getFingerprint(queryRingSystem);
         boolean flagMaxSubstructure = false;
+        boolean flagSecondbest=false;
         for (int i = 0; i < fingerprintData.size(); i++) {
-            template = templates.getMolecule(i);
+            IAtomContainer template = templates.getMolecule(i);
+            //if the atom count is different, it can't be right anyway
             if (template.getAtomCount() != ringSystems.getAtomCount()) {
                 continue;
             }
+            //we compare the fingerprint with any atom and any bond
             if (FingerprinterTool.isSubset(fingerprintData.get(i),ringSystemFingerprint)) {
-                IAtomContainer query = createAnyAtomAnyBondAtomContainer(template);
-                QueryAtomContainer queryAny = QueryAtomContainerCreator.createAnyAtomContainer(queryRingSystemAnyBondAnyAtom, false);
-                if (UniversalIsomorphismTester.isSubgraph(queryRingSystemAnyBondAnyAtom, queryAny)) {
-                    List list = UniversalIsomorphismTester.getSubgraphAtomsMap(queryRingSystemAnyBondAnyAtom, queryAny);
-                    if ((NumberOfRingAtoms) / list.size() == 1 && query.getBondCount()==ringSystems.getBondCount()) {
-                    	if(UniversalIsomorphismTester.isSubgraph(ringSystems, query)){
+                IAtomContainer templateAnyBondAnyAtom = createAnyAtomAnyBondAtomContainer(template);
+                QueryAtomContainer queryTemplate = QueryAtomContainerCreator.createAnyAtomContainer(ringSystemAnyBondAnyAtom, false);
+                //we do the exact match with any atom and any bond
+                if (UniversalIsomorphismTester.isSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom)) {
+                	//if this is the case, we keep it as a guess, but look if we can do better
+                    List list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom, queryTemplate);
+                    boolean flagwritefromsecondbest=false;
+                    if ((NumberOfRingAtoms) / list.size() == 1 && templateAnyBondAnyAtom.getBondCount()==ringSystems.getBondCount()) {
+                    	//so atom and bond count match, could be it's even an exact match,
+                    	//we check this with the original ring system
+                    	if(UniversalIsomorphismTester.isSubgraph(ringSystems, templateAnyBondAnyAtom)){
                     		flagMaxSubstructure = true;
-                    		list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystems, query);
-                    	}else if(UniversalIsomorphismTester.isSubgraph(queryRingSystemAnyBondAnyAtom, query)){
-                    		list = UniversalIsomorphismTester.getSubgraphAtomsMap(queryRingSystemAnyBondAnyAtom, query);                    		
-                    		flagMaxSubstructure = true;
+                    		list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystems, templateAnyBondAnyAtom);
+                    	}else{
+                    		//if it isn't we still now it's better than just the isomorphism
+                    		list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom);                    		
+                    		flagSecondbest = true;
+                    		flagwritefromsecondbest=true;
                     	}
                     }
 
-                    for (int j = 0; j < list.size(); j++) {
-                        RMap map = (RMap) list.get(j);
-                        IAtom atom1 = ringSystems.getAtom(map.getId1());
-                        IAtom atom2 = template.getAtom(map.getId2());
-                        if (atom1.getFlag(CDKConstants.ISINRING)) {
-                        	atom1.setPoint3d(new Point3d(atom2.getPoint3d()));
-                        }
-                    }//for j
+                    if(!flagSecondbest || flagwritefromsecondbest){
+	                    for (int j = 0; j < list.size(); j++) {
+	                        RMap map = (RMap) list.get(j);
+	                        IAtom atom1 = ringSystems.getAtom(map.getId1());
+	                        IAtom atom2 = template.getAtom(map.getId2());
+	                        if (atom1.getFlag(CDKConstants.ISINRING)) {
+	                        	atom1.setPoint3d(new Point3d(atom2.getPoint3d()));
+	                        }
+	                    }//for j
+                    }
 
                     if (flagMaxSubstructure) {
                         break;
