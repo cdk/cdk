@@ -36,11 +36,13 @@ import java.util.zip.GZIPInputStream;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -51,6 +53,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -152,6 +155,20 @@ public class TemplateHandler3D {
         }
         return bitSet;
     }
+    
+	public static IAtomContainer createAnyAtomAnyBondAtomContainer(
+			IAtomContainer atomContainer) throws Exception {
+		IAtomContainer query = (IAtomContainer) atomContainer.clone();
+		for (int i = 0; i < query.getBondCount(); i++) {
+			query.getBond(i).setOrder(IBond.Order.SINGLE);
+			query.getBond(i).setFlag(CDKConstants.ISAROMATIC, false);
+			query.getBond(i).getAtom(0).setSymbol("C");
+			query.getBond(i).getAtom(1).setSymbol("C");
+			query.getBond(i).getAtom(0).setFlag(CDKConstants.ISAROMATIC, false);
+			query.getBond(i).getAtom(1).setFlag(CDKConstants.ISAROMATIC, false);
+		}
+		return query;
+	}
 
     /**
      * Checks if one of the loaded templates is a substructure in the given
@@ -166,30 +183,34 @@ public class TemplateHandler3D {
 
         //logger.debug("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
         IAtomContainer template;
-        QueryAtomContainer queryRingSystem = QueryAtomContainerCreator.createAnyAtomContainer(ringSystems, false);
-        QueryAtomContainer query;
+        IAtomContainer queryRingSystemAnyBondAnyAtom = createAnyAtomAnyBondAtomContainer(ringSystems);
+        QueryAtomContainer queryRingSystem = QueryAtomContainerCreator.createAnyAtomContainer(queryRingSystemAnyBondAnyAtom, false);
         BitSet ringSystemFingerprint = new Fingerprinter().getFingerprint(queryRingSystem);
-        RMap map;
-        IAtom atom1;
-        IAtom atom2;
         boolean flagMaxSubstructure = false;
         for (int i = 0; i < fingerprintData.size(); i++) {
             template = templates.getMolecule(i);
             if (template.getAtomCount() != ringSystems.getAtomCount()) {
                 continue;
             }
-            if (FingerprinterTool.isSubset(ringSystemFingerprint, (BitSet) fingerprintData.get(i))) {
-                query = QueryAtomContainerCreator.createAnyAtomContainer(template, true);
-                if (UniversalIsomorphismTester.isSubgraph(ringSystems, query)) {
-                    List list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystems, query);
+            if (FingerprinterTool.isSubset(fingerprintData.get(i),ringSystemFingerprint)) {
+                IAtomContainer query = createAnyAtomAnyBondAtomContainer(template);
+                QueryAtomContainer queryAny = QueryAtomContainerCreator.createAnyAtomContainer(queryRingSystemAnyBondAnyAtom, false);
+                if (UniversalIsomorphismTester.isSubgraph(queryRingSystemAnyBondAnyAtom, queryAny)) {
+                    List list = UniversalIsomorphismTester.getSubgraphAtomsMap(queryRingSystemAnyBondAnyAtom, queryAny);
                     if ((NumberOfRingAtoms) / list.size() == 1 && query.getBondCount()==ringSystems.getBondCount()) {
-                        flagMaxSubstructure = true;
+                    	if(UniversalIsomorphismTester.isSubgraph(ringSystems, query)){
+                    		flagMaxSubstructure = true;
+                    		list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystems, query);
+                    	}else if(UniversalIsomorphismTester.isSubgraph(queryRingSystemAnyBondAnyAtom, query)){
+                    		list = UniversalIsomorphismTester.getSubgraphAtomsMap(queryRingSystemAnyBondAnyAtom, query);                    		
+                    		flagMaxSubstructure = true;
+                    	}
                     }
 
                     for (int j = 0; j < list.size(); j++) {
-                        map = (RMap) list.get(j);
-                        atom1 = ringSystems.getAtom(map.getId1());
-                        atom2 = template.getAtom(map.getId2());
+                        RMap map = (RMap) list.get(j);
+                        IAtom atom1 = ringSystems.getAtom(map.getId1());
+                        IAtom atom2 = template.getAtom(map.getId2());
                         if (atom1.getFlag(CDKConstants.ISINRING)) {
                         	atom1.setPoint3d(new Point3d(atom2.getPoint3d()));
                         }

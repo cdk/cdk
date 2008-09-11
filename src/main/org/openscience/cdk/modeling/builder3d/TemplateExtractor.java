@@ -540,12 +540,16 @@ public class TemplateExtractor {
 		IAtomContainer query = (IAtomContainer) atomContainer.clone();
 		for (int i = 0; i < query.getBondCount(); i++) {
 			query.getBond(i).setOrder(IBond.Order.SINGLE);
+			query.getBond(i).setFlag(CDKConstants.ISAROMATIC, false);
 			query.getBond(i).getAtom(0).setSymbol("C");
 			query.getBond(i).getAtom(1).setSymbol("C");
+			query.getBond(i).getAtom(0).setFlag(CDKConstants.ISAROMATIC, false);
+			query.getBond(i).getAtom(1).setFlag(CDKConstants.ISAROMATIC, false);
 		}
 		return query;
 	}
-
+	
+	
 	public IAtomContainer resetFlags(IAtomContainer ac) {
 		for (int f = 0; f < ac.getAtomCount(); f++) {
 			ac.getAtom(f).setFlag(CDKConstants.VISITED, false);
