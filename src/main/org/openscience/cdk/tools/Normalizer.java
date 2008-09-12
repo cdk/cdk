@@ -28,10 +28,9 @@
  */
 package org.openscience.cdk.tools;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,6 +41,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Adjusts parts of an AtomContainer to the congiguratin of a fragment.
  *
@@ -50,6 +52,7 @@ import org.w3c.dom.NodeList;
  * @cdk.module    smiles
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.tools.NormalizerTest")
 public class Normalizer {
 
   /**
@@ -68,6 +71,7 @@ public class Normalizer {
    * @return                             Did a replacement take place?
    * @exception  InvalidSmilesException  doc contains an invalid smiles.
    */
+  @TestMethod("testNormalize")
   public static boolean normalize(IAtomContainer ac, Document doc) throws InvalidSmilesException, CDKException {
     NodeList nl = doc.getElementsByTagName("replace-set");
     SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

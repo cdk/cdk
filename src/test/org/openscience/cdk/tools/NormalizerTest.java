@@ -23,40 +23,26 @@
  */
 package org.openscience.cdk.tools;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.Normalizer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * @cdk.module test-smiles
  */
-public class NormalizerTest extends CDKTestCase {
-	
-	public NormalizerTest(String name)
-	{
-		super(name);
-	}
-  
-  public void setUp() {}
-    
-	public static Test suite() 
-	{
-		return new TestSuite(NormalizerTest.class);
-	}
+public class NormalizerTest extends NewCDKTestCase {
 
-	public void testNormalize()	throws ParserConfigurationException, Exception{
+    @Test
+	public void testNormalize()	throws Exception{
     Molecule ac=new Molecule();
     ac.addAtom(new Atom("C"));
     ac.addAtom(new Atom("N"));
@@ -77,7 +63,7 @@ public class NormalizerTest extends CDKTestCase {
     set.appendChild(replacement);
     replacement.appendChild(doc.createTextNode("[O-][N+]=O"));
     Normalizer.normalize(ac,doc);
-    assertTrue(ac.getBond(1).getOrder() == IBond.Order.SINGLE ^ ac.getBond(2).getOrder() == IBond.Order.SINGLE);
+    Assert.assertTrue(ac.getBond(1).getOrder() == IBond.Order.SINGLE ^ ac.getBond(2).getOrder() == IBond.Order.SINGLE);
 	}
 }
 

@@ -54,7 +54,7 @@ public class MsmilesTests {
         suite.addTest(new JUnit4TestAdapter(SmilesGeneratorTest.class));
         suite.addTest(new JUnit4TestAdapter(SmilesParserTest.class));
         // from cdk.tools
-        suite.addTest(NormalizerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(NormalizerTest.class));
 
         return suite;
     }
