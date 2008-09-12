@@ -24,11 +24,13 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.util.Iterator;
-import java.util.List;
-
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -45,6 +47,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @author  Egon Willighagen
  * @cdk.created 2003-08-07
  */
+@TestClass("org.openscience.cdk.tools.manipulator.BondManipulatorTest")
 public class BondManipulator {
 	
 	/**
@@ -52,7 +55,8 @@ public class BondManipulator {
 	 * @param  container The Bond object.
 	 * @return The array of Atom objects.
 	 */
-	public static IAtom[] getAtomArray(IBond container) {
+    @TestMethod("testGetAtomArray_IBond")
+    public static IAtom[] getAtomArray(IBond container) {
 		IAtom[] ret = new IAtom[container.getAtomCount()];
 		for (int i = 0; i < ret.length; ++i) ret[i] = container.getAtom(i);
 		return ret;
@@ -64,11 +68,13 @@ public class BondManipulator {
 	 * bond is larger than that of the second. Also returns false if either bond
 	 * order is unset.
 	 * 
-	 * @param first
-	 * @param second
-	 * @return
+	 * @param first  The first bond order object
+	 * @param second The second bond order object
+	 * @return true if the first bond order is lower than the second one, false othrwise
+     * @see #isHigherOrder(org.openscience.cdk.interfaces.IBond.Order, org.openscience.cdk.interfaces.IBond.Order)
 	 */
-	public static boolean isLowerOrder(IBond.Order first, IBond.Order second) {
+    @TestMethod("testIsLowerOrder_IBond_Order_IBond_Order")
+    public static boolean isLowerOrder(IBond.Order first, IBond.Order second) {
 		if (first == null || second == null) return false;
 		
 		if (second == IBond.Order.QUADRUPLE) {
@@ -89,11 +95,13 @@ public class BondManipulator {
 	 * bond is lower than that of the second. Also returns false if either bond
 	 * order is unset.
 	 * 
-	 * @param first
-	 * @param second
-	 * @return
+	 * @param first  The first bond order object
+	 * @param second  The second bond order object
+	 * @return true if the first bond order is higher than the second one, false othrwise
+     * @see #isLowerOrder(org.openscience.cdk.interfaces.IBond.Order, org.openscience.cdk.interfaces.IBond.Order)
 	 */
-	public static boolean isHigherOrder(IBond.Order first, IBond.Order second) {
+    @TestMethod("testIsHigherOrder_IBond_Order_IBond_Order")
+    public static boolean isHigherOrder(IBond.Order first, IBond.Order second) {
 		if (first == null || second == null) return false;
 		
 		if (second == IBond.Order.QUADRUPLE) {
@@ -113,8 +121,14 @@ public class BondManipulator {
 	/**
 	 * Returns the IBond.Order one higher. Does not increase the bond order
 	 * beyond the QUADRUPLE bond order.
-	 */
-	public static IBond.Order increaseBondOrder(IBond.Order oldOrder) {
+     * @param oldOrder the old order
+     * @return The incremented bond order
+     * @see #increaseBondOrder(org.openscience.cdk.interfaces.IBond)
+     * @see #decreaseBondOrder(org.openscience.cdk.interfaces.IBond.Order)
+     * @see #decreaseBondOrder(org.openscience.cdk.interfaces.IBond)
+     */
+    @TestMethod("testIncreaseBondOrder_IBond_Order")
+    public static IBond.Order increaseBondOrder(IBond.Order oldOrder) {
 		if (oldOrder == IBond.Order.TRIPLE) {
 			return IBond.Order.QUADRUPLE;
 		} else if (oldOrder == IBond.Order.DOUBLE) {
@@ -124,15 +138,31 @@ public class BondManipulator {
 		}
 		return oldOrder;
 	}
-	public static void increaseBondOrder(IBond bond) {
+
+    /**
+     * Increment the bond order of this bond.
+     *
+     * @param bond  The bond whose order is to be incremented
+     * @see #increaseBondOrder(org.openscience.cdk.interfaces.IBond.Order)
+     * @see #decreaseBondOrder(org.openscience.cdk.interfaces.IBond.Order)
+     * @see #decreaseBondOrder(org.openscience.cdk.interfaces.IBond)
+     */
+    @TestMethod("testIncreaseBondOrder_IBond")
+    public static void increaseBondOrder(IBond bond) {
 		bond.setOrder(increaseBondOrder(bond.getOrder()));
 	}
 
 	/**
 	 * Returns the IBond.Order one lower. Does not decrease the bond order
 	 * lower the QUADRUPLE bond order.
-	 */
-	public static IBond.Order decreaseBondOrder(IBond.Order oldOrder) {
+     * @param oldOrder the old order
+     * @return the decremented order
+     * @see #decreaseBondOrder(org.openscience.cdk.interfaces.IBond)
+     * @see #increaseBondOrder(org.openscience.cdk.interfaces.IBond.Order)
+     * @see #increaseBondOrder(org.openscience.cdk.interfaces.IBond.Order)
+     */
+    @TestMethod("testDecreaseBondOrder_IBond_Order")
+    public static IBond.Order decreaseBondOrder(IBond.Order oldOrder) {
 		if (oldOrder == IBond.Order.TRIPLE) {
 			return IBond.Order.DOUBLE;
 		} else if (oldOrder == IBond.Order.DOUBLE) {
@@ -142,15 +172,29 @@ public class BondManipulator {
 		}
 		return oldOrder;
 	}
-	public static void decreaseBondOrder(IBond bond) {
+
+    /**
+     * Decrease the order of a bond.
+     *
+     * @param bond  The bond in question
+     * @see #decreaseBondOrder(org.openscience.cdk.interfaces.IBond.Order)
+     * @see #increaseBondOrder(org.openscience.cdk.interfaces.IBond.Order)
+     * @see #increaseBondOrder(org.openscience.cdk.interfaces.IBond.Order)
+     */
+    @TestMethod("testDecreaseBondOrder_IBond")
+    public static void decreaseBondOrder(IBond bond) {
 		bond.setOrder(decreaseBondOrder(bond.getOrder()));
 	}
 
 	/**
 	 * Convenience method to convert a double into an IBond.Order.
 	 * Returns NULL if the bond order is not 1.0, 2.0, 3.0 and 4.0.
-	 */
-	public static IBond.Order createBondOrder(double bondOrder) {
+     * @param bondOrder The numerical bond order
+     * @return An instance of {@link org.openscience.cdk.interfaces.IBond.Order}
+     * @see #destroyBondOrder(org.openscience.cdk.interfaces.IBond.Order)
+     */
+    @TestMethod("testCreateBondOrder_double")
+    public static IBond.Order createBondOrder(double bondOrder) {
 		if (bondOrder == 1.0) {
 			return IBond.Order.SINGLE;
 		} else if (bondOrder == 2.0) {
@@ -162,8 +206,19 @@ public class BondManipulator {
 		}
 		return null;
 	}
-	
-	public static double destroyBondOrder(IBond.Order bondOrder) {
+
+    /**
+     * Convert a {@link org.openscience.cdk.interfaces.IBond.Order} to a numeric value.
+     *
+     * Single, double, triple and quadruple bonds are converted to 1.0, 2.0, 3.0
+     * and 4.0 respectively.
+     *
+     * @param bondOrder The bond order object
+     * @return  The numeric value
+     * @see #createBondOrder(double)
+     */
+    @TestMethod("testDestroyBondOrder_IBond_Order")
+    public static double destroyBondOrder(IBond.Order bondOrder) {
 		if (bondOrder == IBond.Order.SINGLE) {
 			return 1.0;
 		} else if (bondOrder == IBond.Order.DOUBLE) {
@@ -177,13 +232,23 @@ public class BondManipulator {
 	/**
 	 * Returns the maximum bond order for a List of bonds.
 	 * 
-	 * @param bonds
-	 * @return
+	 * @param bonds The list of bonds to search through
+	 * @return  The maximum bond order found
+     * @see #getMaximumBondOrder(java.util.Iterator)
 	 */
-	public static IBond.Order getMaximumBondOrder(List<IBond> bonds) {
+    @TestMethod("testGetMaximumBondOrder_List")
+    public static IBond.Order getMaximumBondOrder(List<IBond> bonds) {
 		return getMaximumBondOrder(bonds.iterator());
-	}		
-	public static IBond.Order getMaximumBondOrder(Iterator<IBond> bonds) {
+	}
+
+    /**
+     * Returns the maximum bond order for a List of bonds, given an iterator to the list.
+     * @param bonds An iterator for the list of bonds
+     * @return The maximum bond order found
+     * @see #getMaximumBondOrder(java.util.List)
+     */
+    @TestMethod("testGetMaximumBondOrder_Iterator")
+    public static IBond.Order getMaximumBondOrder(Iterator<IBond> bonds) {
 		IBond.Order maxOrder = IBond.Order.SINGLE;
 		while (bonds.hasNext()) {
 			IBond bond = bonds.next();
@@ -192,11 +257,28 @@ public class BondManipulator {
 		return maxOrder;
 	}
 
-	public static int getSingleBondEquivalentSum(List<IBond> bonds) {
+    /**
+     * Get the single bond equivalent (SBE) of a list of bonds.
+     *
+     * This sums the bond orders of all the bonds.
+     *
+     * @param bonds The list of bonds
+     * @return  The SBE sum
+     * @see #getSingleBondEquivalentSum(java.util.Iterator)
+     */
+    @TestMethod("testGetSingleBondEquivalentSum_List")
+    public static int getSingleBondEquivalentSum(List<IBond> bonds) {
 		return getSingleBondEquivalentSum(bonds.iterator());
 	}
-	
-	public static int getSingleBondEquivalentSum(Iterator<IBond> bonds) {
+
+    /**
+     * Get the single bond equivalent (SBE) of a list of bonds, given an iterator to the list.
+     *
+     * @param bonds An iterator to the list of bonds
+     * @return The SBE sum
+     */
+    @TestMethod("testGetSingleBondEquivalentSum_Iterato")
+    public static int getSingleBondEquivalentSum(Iterator<IBond> bonds) {
 		int sum = 0;
 		while (bonds.hasNext()) {
 			IBond nextBond = bonds.next();
