@@ -323,7 +323,7 @@ public class SmilesGenerator
 	 *@see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
      * @return the SMILES representation of the molecule
 	 */
-	public synchronized String createSMILESWithoutCheckForMultipleMolecules(IMolecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
+	private synchronized String createSMILESWithoutCheckForMultipleMolecules(IMolecule molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
 	{
 		if (molecule.getAtomCount() == 0)
 		{
