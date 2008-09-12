@@ -25,6 +25,8 @@
 package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -70,6 +72,7 @@ import java.util.*;
  * @cdk.bug        1793446
  * @cdk.bug        1875946
  */
+@TestClass("org.openscience.cdk.smiles.SmilesGeneratorTest")
 public class SmilesGenerator
 {
 	//private final static boolean debug = false;
@@ -171,7 +174,8 @@ public class SmilesGenerator
      * @see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
      * @return the SMILES representation of the molecule
      */
-	public synchronized String createSMILES(IMolecule molecule)
+    @TestMethod("testCisResorcinol,testEthylPropylPhenantren,testAlanin")
+    public synchronized String createSMILES(IMolecule molecule)
 	{
 		try
 		{
@@ -249,7 +253,8 @@ public class SmilesGenerator
 	 * @see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
      * @return the SMILES representation of the molecule
 	 */
-	public synchronized String createChiralSMILES(IMolecule molecule, boolean[] doubleBondConfiguration) throws CDKException
+    @TestMethod("testAlaSMILES,testSugarSMILES")
+    public synchronized String createChiralSMILES(IMolecule molecule, boolean[] doubleBondConfiguration) throws CDKException
 	{
 		return (createSMILES(molecule, true, doubleBondConfiguration));
 	}
@@ -1852,10 +1857,13 @@ public class SmilesGenerator
 	}
 
 	/**
+     * Indicates whether output should be an aromatic SMILES.
+     *
 	 * @param useAromaticityFlag if false only SP2-hybridized atoms will be lower case (default),
      * true=SP2 or aromaticity trigger lower case
 	 */
-	public void setUseAromaticityFlag(boolean useAromaticityFlag) {
+    @TestMethod("testSFBug956923")
+    public void setUseAromaticityFlag(boolean useAromaticityFlag) {
 		this.useAromaticityFlag = useAromaticityFlag;
 	}
 
