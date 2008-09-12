@@ -211,23 +211,20 @@ public class Fingerprinter implements IFingerprinter {
         return paths;
     }
 
-    private String convertSymbol(String symbol)
-	{
+    private String convertSymbol(String symbol) {
+
+        String[] query = {"Cl", "Br", "Si", "As", "Li", "Se", "Na", "Ca", "Al"};
+        String[] replace = {"X", "Z", "Y",  "D",  "L",  "E",  "G",  "J",  "A" };
 
         String returnSymbol = symbol;
-		if (symbol.equals("Cl"))
-		{
-			returnSymbol = "X";
-		} else if (symbol.equals("Si"))
-		{
-			returnSymbol = "Y";
-		} else if (symbol.equals("Br"))
-		{
-			returnSymbol = "Z";
-		}
-		return returnSymbol;
-
-	}
+        for (int i = 0; i < query.length; i++) {
+            if (symbol.equals(query[i])) {
+                returnSymbol = replace[i];
+                break;
+            }
+        }
+        return returnSymbol;
+    }
 
 
 	/**
