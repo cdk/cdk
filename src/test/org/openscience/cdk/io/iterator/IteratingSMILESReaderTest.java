@@ -51,7 +51,7 @@ public class IteratingSMILESReaderTest extends NewCDKTestCase {
     private static LoggingTool logger;
 
     @Before
-    public static void setup() {
+    public void setup() {
        logger = new LoggingTool(IteratingSMILESReaderTest.class);
     }
 
@@ -71,6 +71,8 @@ public class IteratingSMILESReaderTest extends NewCDKTestCase {
         }
 
         Assert.assertEquals(5, molCount);
+
+        reader.close();
     }
 
     @Test
@@ -89,6 +91,8 @@ public class IteratingSMILESReaderTest extends NewCDKTestCase {
         }
 
         Assert.assertEquals(5, molCount);
+
+        reader.close();
     }
 
     @Test
@@ -127,11 +131,47 @@ public class IteratingSMILESReaderTest extends NewCDKTestCase {
 
     @Test
     public void testGetFormat() {
-       String filename = "data/smiles/test2.smi";
+        String filename = "data/smiles/test2.smi";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(ins);
         IResourceFormat format = reader.getFormat();
         Assert.assertTrue(format instanceof SMILESFormat);
+    }
+
+    @Test
+    public void testSetReader1() {
+        String filename = "data/smiles/test2.smi";
+        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename);
+        IteratingSMILESReader reader = new IteratingSMILESReader(ins1);
+        int molCount = 0;
+        while (reader.hasNext()) {
+            reader.next();
+            molCount++;
+        }
+        filename = "data/smiles/tabs.smi";
+        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename);
+        reader.setReader(ins2);
+        molCount = 0;
+        while (reader.hasNext()) {
+            reader.next();
+            molCount++;
+        }
+        Assert.assertEquals(5, molCount);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRemove() {
+        String filename = "data/smiles/test2.smi";
+        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename);
+        IteratingSMILESReader reader = new IteratingSMILESReader(ins1);
+        int molCount = 0;
+        while (reader.hasNext()) {
+            reader.next();
+            molCount++;
+            if (molCount > 2)
+                break;
+        }
+        reader.remove();
     }
 }
