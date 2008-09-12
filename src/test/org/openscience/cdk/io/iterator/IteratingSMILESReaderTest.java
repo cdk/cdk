@@ -27,13 +27,15 @@
  *  */
 package org.openscience.cdk.io.iterator;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import org.openscience.cdk.Molecule;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.iterator.IteratingSMILESReader;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.tools.LoggingTool;
 
 import java.io.InputStream;
@@ -44,19 +46,16 @@ import java.io.InputStream;
  * @cdk.module test-smiles
  * @see org.openscience.cdk.io.SMILESReader
  */
-public class IteratingSMILESReaderTest extends CDKTestCase {
+public class IteratingSMILESReaderTest extends NewCDKTestCase {
 
-    private LoggingTool logger;
+    private static LoggingTool logger;
 
-    public IteratingSMILESReaderTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
+    @Before
+    public static void setup() {
+       logger = new LoggingTool(IteratingSMILESReaderTest.class);
     }
 
-    public static Test suite() {
-        return new TestSuite(IteratingSMILESReaderTest.class);
-    }
-
+    @Test
     public void testSMILESFileWithNames() throws Exception {
         String filename = "data/smiles/test.smi";
         logger.info("Testing: " + filename);
@@ -66,14 +65,15 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
-            assertNotNull(object);
-            assertTrue(object instanceof Molecule);
+            Assert.assertNotNull(object);
+            Assert.assertTrue(object instanceof Molecule);
             molCount++;
         }
 
-        assertEquals(5, molCount);
+        Assert.assertEquals(5, molCount);
     }
 
+    @Test
     public void testSMILESFileWithSpacesAndTabs() throws Exception {
         String filename = "data/smiles/tabs.smi";
         logger.info("Testing: " + filename);
@@ -83,14 +83,15 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
-            assertNotNull(object);
-            assertTrue(object instanceof Molecule);
+            Assert.assertNotNull(object);
+            Assert.assertTrue(object instanceof Molecule);
             molCount++;
         }
 
-        assertEquals(5, molCount);
+        Assert.assertEquals(5, molCount);
     }
 
+    @Test
     public void testSMILESTitles() throws Exception {
         String filename = "data/smiles/tabs.smi";
         logger.info("Testing: " + filename);
@@ -101,11 +102,12 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
 
             IMolecule mol = (IMolecule) reader.next();
             String title = (String) mol.getProperty(CDKConstants.TITLE);
-            assertNotNull(title);
+            Assert.assertNotNull(title);
         }
 
     }
 
+    @Test
     public void testSMILESFile() {
         String filename = "data/smiles/test2.smi";
         logger.info("Testing: " + filename);
@@ -115,11 +117,21 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
-            assertNotNull(object);
-            assertTrue(object instanceof Molecule);
+            Assert.assertNotNull(object);
+            Assert.assertTrue(object instanceof Molecule);
             molCount++;
         }
 
-        assertEquals(5, molCount);
+        Assert.assertEquals(5, molCount);
+    }
+
+    @Test
+    public void testGetFormat() {
+       String filename = "data/smiles/test2.smi";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        IteratingSMILESReader reader = new IteratingSMILESReader(ins);
+        IResourceFormat format = reader.getFormat();
+        Assert.assertTrue(format instanceof SMILESFormat);
     }
 }
