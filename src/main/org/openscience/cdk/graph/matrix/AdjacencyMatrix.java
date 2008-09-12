@@ -23,6 +23,8 @@
  */
 package org.openscience.cdk.graph.matrix;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -41,6 +43,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.created 2004-07-04
  * @cdk.dictref blue-obelisk:calculateAdjecencyMatrix
  */
+@TestClass("org.openscience.cdk.graph.matrix.AdjacencyMatrixTest")
 public class AdjacencyMatrix implements IGraphMatrix {
 
 	/**
@@ -49,8 +52,9 @@ public class AdjacencyMatrix implements IGraphMatrix {
      * @param  container The AtomContainer for which the matrix is calculated
 	 * @return           A adjacency matrix representating this AtomContainer
 	 */
-	public static int[][] getMatrix(IAtomContainer container) {
-		IBond bond = null;
+    @TestMethod("testGetMatrix_IAtomContainer")
+    public static int[][] getMatrix(IAtomContainer container) {
+		IBond bond;
 		int indexAtom1;
 		int indexAtom2;
 		int[][] conMat = new int[container.getAtomCount()][container.getAtomCount()];
