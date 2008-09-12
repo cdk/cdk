@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test-smiles
  */
-public class SmilesCoverageTest extends CoverageTest {
+public class SmilesCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "smiles.javafiles";
     
@@ -46,7 +46,9 @@ public class SmilesCoverageTest extends CoverageTest {
     }
 
     public static Test suite() {
-        return new TestSuite(SmilesCoverageTest.class);
+        TestSuite suite = new TestSuite();
+        suite.addTestSuite(SmilesCoverageTest.class);
+        return suite;
     }
 
     public void testCoverage() {
