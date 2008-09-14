@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test-inchi
  */
-public class InchiCoverageTest extends CoverageTest {
+public class InchiCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "inchi.javafiles";
     
