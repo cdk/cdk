@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test-qsarprotein
  */
-public class QsarproteinCoverageTest extends CoverageTest {
+public class QsarproteinCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "qsarprotein.javafiles";
     
