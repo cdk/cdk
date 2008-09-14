@@ -23,11 +23,8 @@ import net.sf.jniinchi.INCHI_RET;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.*;
-import org.openscience.cdk.inchi.InChIGenerator;
-import org.openscience.cdk.inchi.InChIGeneratorFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.NewCDKTestCase;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -302,6 +299,6 @@ public class InChIGeneratorTest extends NewCDKTestCase {
         InChIGenerator genD = getFactory().getInChIGenerator(acD);
         Assert.assertEquals(genD.getReturnStatus(), INCHI_RET.OKAY);
         Assert.assertEquals(genD.getInchi(), "InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1");
-    };
+    }
     
 }
