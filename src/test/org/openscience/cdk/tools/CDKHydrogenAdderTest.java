@@ -56,6 +56,10 @@ public class CDKHydrogenAdderTest extends NewCDKTestCase {
 	private final static CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(NoNotificationChemObjectBuilder.getInstance());
 	private final static CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(NoNotificationChemObjectBuilder.getInstance());
 
+    @Test
+    public void testInstance() {
+        Assert.assertNotNull(adder);
+    }
     
     @Test
     public void testMethane() throws CDKException {

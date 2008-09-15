@@ -88,6 +88,7 @@ public class CDKHydrogenAdder {
     }
 
 
+    @TestMethod("testInstance")
     public static CDKHydrogenAdder getInstance(IChemObjectBuilder builder) {
         if (!tables.containsKey(builder.getClass().getName()))
             tables.put(builder.getClass().getName(), new CDKHydrogenAdder(builder));
