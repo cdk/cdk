@@ -29,6 +29,7 @@
 package org.openscience.cdk.tools;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
@@ -38,7 +39,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -59,6 +59,7 @@ import java.util.List;
  * @cdk.module     valencycheck
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.tools.SaturationCheckerTest")
 public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool {
 
 	AtomTypeFactory structgenATF;
