@@ -25,6 +25,8 @@
 package org.openscience.cdk.tools;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -33,7 +35,6 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -73,6 +74,7 @@ import java.util.Map;
  * @cdk.module valencycheck
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.tools.CDKHydrogenAdderTest")
 public class CDKHydrogenAdder {
 
     private AtomTypeFactory atomTypeList;
@@ -85,6 +87,7 @@ public class CDKHydrogenAdder {
             atomTypeList = AtomTypeFactory.getInstance(ATOM_TYPE_LIST, builder);
     }
 
+
     public static CDKHydrogenAdder getInstance(IChemObjectBuilder builder) {
         if (!tables.containsKey(builder.getClass().getName()))
             tables.put(builder.getClass().getName(), new CDKHydrogenAdder(builder));
@@ -95,10 +98,11 @@ public class CDKHydrogenAdder {
 	/**
 	 * Sets implicit hydrogen counts for all atoms in the given IAtomContainer.
 	 * 
-	 * @param  container
+	 * @param  container The molecule to which H's will be added
 	 * @throws CDKException Throws if insufficient information is present
 	 */
-	public void addImplicitHydrogens(IAtomContainer container) throws CDKException {
+    @TestMethod("testMethane,testFormaldehyde,testHCN")
+    public void addImplicitHydrogens(IAtomContainer container) throws CDKException {
         for (IAtom atom : container.atoms()) {
             addImplicitHydrogens(container, atom);
         }        
@@ -108,11 +112,12 @@ public class CDKHydrogenAdder {
 	 * Sets the implicit hydrogen count for the indicated IAtom in the given IAtomContainer.
 	 * If the atom type is "X", then the atom is assigned zero implicit hydrogens.
 	 * 
-	 * @param  container
+	 * @param  container  The molecule to which H's will be added
 	 * @param  atom         IAtom to set the implicit hydrogen count for
 	 * @throws CDKException Throws if insufficient information is present
 	 */
-	public void addImplicitHydrogens(IAtomContainer container, IAtom atom) throws CDKException {
+    @TestMethod("testImpHByAtom")
+    public void addImplicitHydrogens(IAtomContainer container, IAtom atom) throws CDKException {
 		if (atom.getAtomTypeName() == null)
 			throw new CDKException("IAtom is not typed! " + atom.getSymbol());
 		
