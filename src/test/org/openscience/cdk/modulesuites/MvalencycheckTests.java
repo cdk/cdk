@@ -48,7 +48,7 @@ public class MvalencycheckTests {
         
         // the next generation valency tools that rely on CDKAtomTypeMatcher
         suite.addTest(new JUnit4TestAdapter(CDKHydrogenAdderTest.class));
-        suite.addTest(CDKValencyCheckerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(CDKValencyCheckerTest.class));
         
         return suite;
     }
