@@ -152,7 +152,21 @@ abstract public class CoverageAnnotationTest extends TestCase {
         }
         List<String> testMethodNames = new ArrayList<String>();
         Method[] testMethods = testClass.getMethods();
-        for (Method method : testMethods) testMethodNames.add(method.getName());
+        for (Method method : testMethods) {
+            if (method.getAnnotation(org.junit.Test.class) != null)
+                testMethodNames.add(method.getName());
+        }
+
+        // at this point we look at the superclass of the test class and pull
+        // test methods from there. This is done since some test classes for IO
+        // and decsriptors have test methods in the superclass, rather than all
+        // individual subclasses
+        Class superClass = testClass.getSuperclass();
+        Method[] superMethods = superClass.getMethods();
+        for (Method method : superMethods) {
+            if (method.getAnnotation(org.junit.Test.class) != null)
+                testMethodNames.add(method.getName());
+        }
 
         // now we check that the methods specified in the annotations
         // of the source class are found in the specified test class
