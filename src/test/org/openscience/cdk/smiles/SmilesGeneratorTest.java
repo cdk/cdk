@@ -354,6 +354,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		mol1.getAtom(4).setPoint2d(new Point2d(0, 3));
 		mol1.getAtom(5).setPoint2d(new Point2d(2, 3));
 		
+		ifac.configureAtoms(mol1);
 		smiles1 = sg.createSMILES(mol1, true, bool);
 		assertNotNull(smiles1);
 		assertEquals("F/C(=C\\(F)S)S", smiles1);
