@@ -44,7 +44,7 @@ public class MvalencycheckTests {
         suite.addTest(ValencycheckCoverageTest.suite());
 
         suite.addTest(new JUnit4TestAdapter(SaturationCheckerTest.class));
-        suite.addTest(DeduceBondOrderTestFromExplicitHydrogens.suite());
+        suite.addTest(new JUnit4TestAdapter(DeduceBondOrderTestFromExplicitHydrogens.class));
         
         // the next generation valency tools that rely on CDKAtomTypeMatcher
         suite.addTest(new JUnit4TestAdapter(CDKHydrogenAdderTest.class));
