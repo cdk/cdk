@@ -83,7 +83,8 @@ public class SMILESReader extends DefaultChemObjectReader {
     public SMILESReader() {
         this(new StringReader(""));
     }
-    
+
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return SMILESFormat.getInstance();
     }
