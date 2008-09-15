@@ -20,6 +20,11 @@
  */
 package org.openscience.cdk.coverage;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,12 +34,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * This test class is <b>not</b> intended to be tested directly,
@@ -110,8 +109,7 @@ abstract public class CoverageAnnotationTest extends TestCase {
         if (coreClass.isInterface()) return 0;
 
         // lets get all the methods in the class we're checking
-        // we're going to skip private and protected methods. We
-        // also skip the toString() method
+        // we're going to skip private.
         int missingTestCount = 0;
         HashMap<String, TestMethod> methodAnnotations = new HashMap<String, TestMethod>();
         Method[] sourceMethods = coreClass.getDeclaredMethods();
