@@ -85,6 +85,38 @@
             <echo message="   optimization: ${optimization}" />
         </target>
 
+    <!-- Tasks that will be used to clean up ${basedir} after test runs.
+        We only cleanup files in the top level directory, but keep the
+        cdk.log file, ince it might be important for debugging
+    -->
+
+    <target id="tcSnapshot" name="tcSnapshot">
+        <copy todir="oldfiles" includeEmptyDirs="false">
+            <fileset dir="${basedir}" includes="*" excludes="cdk.log"/>
+        </copy>
+    </target>
+
+    <target id="tcCleanup" name="tcCleanup">
+        <copy todir="newfiles" includeEmptyDirs="false">
+            <fileset dir="${basedir}" includes="*" excludes="cdk.log"/>
+        </copy>
+        <foreach target="tcRemoveNewFiles" param="file.to.delete">
+            <path>
+                <fileset id="result" dir="newfiles">
+                    <different targetdir="oldfiles" ignoreFileTimes="true"/>
+                </fileset>
+            </path>
+        </foreach>
+        <delete dir="oldfiles"/>
+        <delete dir="newfiles"/>
+    </target>
+
+    <target name="tcRemoveNewFiles">
+        <basename property="file.basename" file="${file.to.delete}"/>
+        <delete file="${file.basename}"/>
+    </target>
+
+    <!-- See what platform were on -->
         <target id="checkPlatforms" name="checkPlatforms">
             <condition property="isMacOsX">
                 <and>
@@ -1030,7 +1062,10 @@
 	                if="junit.present">
 
             <echo message="Testing classes for CDK's ${module} module." />
-            
+
+            <!-- take the directory snapshot -->
+            <antcall target="tcSnapshot" />
+
             <!-- check for availability for meta info files -->
             <available file="${metainf}/test-${module}.cdkdepends" property="module.cdkdepends.present"/>
             <available file="${metainf}/test-${module}.libdepends" property="module.libdepends.present"/>
@@ -1065,7 +1100,11 @@
             	     <formatter type="brief" />
             	 </test>
 			</junit>
-	    </target>
+
+            <!-- cleanup after ourselves -->
+            <antcall target="tcCleanup" />
+            
+        </target>
 			
         <target id="test-all" name="test-all" depends="noJunit, dist-all, test-dist-all, jarTestdata"
                 description="Performs a full JUnit test for the CDK." 
