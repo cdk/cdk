@@ -285,6 +285,7 @@ public interface IChemObjectBuilder {
 	/**
 	 * Constructs an new IChemObject from an existing one.
 	 * 
+     * @param object THe source object
      * @return IChemObject implementation defined for this IChemObjectBuilder
 	 */
 	public IChemObject newChemObject(IChemObject object);
@@ -438,7 +439,9 @@ public interface IChemObjectBuilder {
      * initial capacity of the arrays.
 	 *
 	 * @param  atomCount               init capacity of IAtom array
-	 * @param  electronContainerCount  init capacity of IElectronContainer array
+	 * @param  bondCount  init capacity of IElectronContainer array
+     * @param lonePairCount init capacity of ILonePair array
+     * @param singleElectronCount init capacity of ISingleElectron array
      * @return                         IMolecule implementation defined for this IChemObjectBuilder
 	 */
 	public IMolecule newMolecule(int atomCount, int bondCount, int lonePairCount, int singleElectronCount);
@@ -606,6 +609,8 @@ public interface IChemObjectBuilder {
     
     /**
      * Constructs a IFragmentAtom.
+     *
+     * @return a fragment atom
      */
     public IFragmentAtom newFragmentAtom();
     
