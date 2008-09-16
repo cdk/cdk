@@ -69,6 +69,9 @@ public class CML2Test extends CDKTestCase {
         return new TestSuite(CML2Test.class);
     }
 
+    /**
+     * @cdk.bg 2114987
+     */
     public void testCMLTestCase() throws CDKException, FileNotFoundException {
         String filename = "data/cml/olaCmlAtomType.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
