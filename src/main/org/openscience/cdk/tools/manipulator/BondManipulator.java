@@ -277,7 +277,7 @@ public class BondManipulator {
      * @param bonds An iterator to the list of bonds
      * @return The SBE sum
      */
-    @TestMethod("testGetSingleBondEquivalentSum_Iterato")
+    @TestMethod("testGetSingleBondEquivalentSum_Iterator")
     public static int getSingleBondEquivalentSum(Iterator<IBond> bonds) {
 		int sum = 0;
 		while (bonds.hasNext()) {
