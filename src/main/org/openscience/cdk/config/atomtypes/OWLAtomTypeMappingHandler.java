@@ -20,13 +20,13 @@
  */
 package org.openscience.cdk.config.atomtypes;
 
-import java.util.Hashtable;
-import java.util.Map;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * SAX Handler for the {@link OWLAtomTypeMappingReader}.
@@ -53,7 +53,7 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
     /**
      * Returns a {@link Map} with atom type mappings.
      */
-    @TestMethod("testGetAtomTypes")
+    @TestMethod("testGetAtomTypeMappings")
     public Map<String,String> getAtomTypeMappings() {
         return atomTypeMappings;
     }

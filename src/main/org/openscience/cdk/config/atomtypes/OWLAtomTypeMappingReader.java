@@ -24,17 +24,18 @@
  */
 package org.openscience.cdk.config.atomtypes;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.OWLBasedAtomTypeConfigurator;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * XML Reader for the {@link OWLBasedAtomTypeConfigurator}.
@@ -42,7 +43,7 @@ import org.xml.sax.XMLReader;
  * @cdk.module  atomtype
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.config.atomtypes.OWLAtomTypeReaderTest")
+@TestClass("org.openscience.cdk.config.atomtypes.OWLAtomTypeMappingReaderTest")
 public class OWLAtomTypeMappingReader {
 
     private XMLReader parser;
@@ -54,6 +55,7 @@ public class OWLAtomTypeMappingReader {
      * 
      * @param input The Reader to read the IAtomType's from.
      */
+    @TestMethod("testOWLAtomTypeMappingReader_Reader")
     public OWLAtomTypeMappingReader(Reader input) {
         this.init();
         this.input = input;
@@ -99,6 +101,7 @@ public class OWLAtomTypeMappingReader {
      *
      * @return         a Map with atom type mappings. Null, if some reading error occurred.
      */
+    @TestMethod("testReadAtomTypeMappings,testReadAtomTypes_CDK2Sybyl")
     public Map<String,String> readAtomTypeMappings() {
     	Map<String,String> mappings = null;
         try {

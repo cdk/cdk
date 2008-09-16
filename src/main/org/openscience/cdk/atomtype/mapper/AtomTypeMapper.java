@@ -19,14 +19,14 @@
  */
 package org.openscience.cdk.atomtype.mapper;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.config.atomtypes.OWLAtomTypeMappingReader;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.atomtypes.OWLAtomTypeMappingReader;
 
 /**
  * An <code>AtomTypeMapper</code> allows the mapping of atom types between atom type
@@ -62,7 +62,7 @@ public class AtomTypeMapper {
 	 * @param  mappingFile File name of the OWL file defining the atom type to atom type mappings.
 	 * @return             An instance of AtomTypeMapper for the given mapping file.
 	 */
-	@TestMethod("testMapAtomType")
+	@TestMethod("testGetInstance_String")
 	public static AtomTypeMapper getInstance(String mappingFile) {
 		if (!mappers.containsKey(mappingFile)) {
 			mappers.put(mappingFile, new AtomTypeMapper(mappingFile));
@@ -70,7 +70,7 @@ public class AtomTypeMapper {
 		return mappers.get(mappingFile);
 	}
 	
-	@TestMethod("testMapAtomType")
+	@TestMethod("testMapAtomType_String")
 	public String mapAtomType(String type) {
 		return mappings.get(type);
 	}
