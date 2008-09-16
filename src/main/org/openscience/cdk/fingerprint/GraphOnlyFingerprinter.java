@@ -25,11 +25,11 @@
 package org.openscience.cdk.fingerprint;
 
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 import java.util.BitSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
@@ -76,12 +76,13 @@ public class GraphOnlyFingerprinter extends Fingerprinter {
 		return "";
 	}
 
-	protected BitSet getFingerprint(IAtomContainer container, int size) throws Exception {
-		Map paths = findPathes(container, super.getSearchDepth());
+    @TestMethod("testFingerPrint,testFingerprint")
+    public BitSet getFingerprint(IAtomContainer container, int size) throws Exception {
+		Map<String, String> paths = findPathes(container, super.getSearchDepth());
 		BitSet bitSet = new BitSet(size);
-		for (Iterator e = paths.values().iterator(); e.hasNext(); ) {
-			bitSet.set(new Random(((String)e.next()).hashCode()).nextInt(size));
-		}
+        for (String s : paths.values()) {
+            bitSet.set(new Random(s.hashCode()).nextInt(size));
+        }
 		return bitSet;
 	}
 }
