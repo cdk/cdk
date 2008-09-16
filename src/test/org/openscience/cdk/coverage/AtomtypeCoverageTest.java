@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test-atomtype
  */
-public class AtomtypeCoverageTest extends CoverageTest {
+public class AtomtypeCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "atomtype.javafiles";
     
