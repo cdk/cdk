@@ -27,32 +27,27 @@
  *  */
 package org.openscience.cdk.io.cml;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.Iterator;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBioPolymer;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.protein.data.PDBPolymer;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.Iterator;
 
 /**
  * TestCase for the reading CML 2 files using a few test files
@@ -72,6 +67,18 @@ public class CML2Test extends CDKTestCase {
 
     public static Test suite() {
         return new TestSuite(CML2Test.class);
+    }
+
+    public void testCMLTestCase() throws CDKException, FileNotFoundException {
+        String filename = "data/cml/olaCmlAtomType.cml";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = new org.openscience.cdk.ChemFile();
+        chemFile = (IChemFile) reader.read(chemFile);
+        IAtomContainer container = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+        for (IAtom atom : container.atoms()) {
+            assertTrue( atom.getHydrogenCount() == CDKConstants.UNSET);
+        }
     }
 
     public void testCOONa() throws Exception {
