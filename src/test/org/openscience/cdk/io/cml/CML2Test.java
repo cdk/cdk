@@ -70,7 +70,7 @@ public class CML2Test extends CDKTestCase {
     }
 
     /**
-     * @cdk.bg 2114987
+     * @cdk.bug 2114987
      */
     public void testCMLTestCase() throws CDKException, FileNotFoundException {
         String filename = "data/cml/olaCmlAtomType.cml";
