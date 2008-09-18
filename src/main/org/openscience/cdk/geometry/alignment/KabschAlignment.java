@@ -91,7 +91,7 @@ import javax.vecmath.Point3d;
  * @cdk.dictref      blue-obelisk:alignmentKabsch
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.geometry.alignment.KabschAlignment")
+@TestClass("org.openscience.cdk.geometry.alignment.KabschAlignmentTest")
 public class KabschAlignment {
 
 	private LoggingTool logger = new LoggingTool(KabschAlignment.class);
