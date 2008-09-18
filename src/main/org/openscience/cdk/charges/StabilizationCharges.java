@@ -76,14 +76,10 @@ public class StabilizationCharges {
 
     	// only must be generated all structures which stabilize the atom in question.
     	StructureResonanceGenerator gRI = new StructureResonanceGenerator();
-    	try {
-    		List<IReactionProcess> reactionList = gRI.getReactions();
-    		reactionList.add(new HyperconjugationReaction());
-    		gRI.setReactions(reactionList);
-		} catch (CDKException e) {
-			e.printStackTrace();
-		}
-    	IAtomContainerSet resonanceS = gRI.getStructures((IMolecule) atomContainer);
+    	List<IReactionProcess> reactionList = gRI.getReactions();
+    	reactionList.add(new HyperconjugationReaction());
+    	gRI.setReactions(reactionList);
+		IAtomContainerSet resonanceS = gRI.getStructures((IMolecule) atomContainer);
     	IAtomContainerSet containerS = gRI.getContainers((IMolecule) atomContainer);
     	if(resonanceS.getAtomContainerCount() < 2)// meaning it was not find any resonance structure
 			return 0.0;

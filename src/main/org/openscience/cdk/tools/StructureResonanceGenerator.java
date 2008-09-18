@@ -20,21 +20,31 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
-import org.openscience.cdk.reaction.type.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import org.openscience.cdk.reaction.type.PiBondingMovementReaction;
+import org.openscience.cdk.reaction.type.RearrangementAnionReaction;
+import org.openscience.cdk.reaction.type.RearrangementCationReaction;
+import org.openscience.cdk.reaction.type.RearrangementLonePairReaction;
+import org.openscience.cdk.reaction.type.RearrangementRadicalReaction;
+import org.openscience.cdk.reaction.type.SharingLonePairReaction;
 
 /**
  * <p>This class try to generate resonance structure for a determinate molecule.</p>
@@ -106,7 +116,7 @@ public class StructureResonanceGenerator {
 	 * @see IReactionProcess
 	 */
 	@TestMethod("testSetReactions_List")
-	public void setReactions(List<IReactionProcess> newReactionsList)  throws CDKException {
+	public void setReactions(List<IReactionProcess> newReactionsList){
 		reactionsList = newReactionsList;
 	}
 	/**
