@@ -77,7 +77,7 @@ public class StructureResonanceGenerator {
 	 * Construct an instance of StructureResonanceGenerator. Default restrictions 
 	 * are initiated.
 	 * 
-	 * @see #setDefaultReactionss()
+	 * @see #setDefaultReactions()
 	 */
 	public StructureResonanceGenerator(){
 		this(false);	
@@ -87,7 +87,7 @@ public class StructureResonanceGenerator {
 	 * are initiated.
 	 * 
 	 * @param lookingSymmetry  Specify if the resonance generation is based looking at the symmetry     
-	 * @see #setDefaultReactionss()
+	 * @see #setDefaultReactions()
 	 */
 	public StructureResonanceGenerator(boolean lookingSymmetry){
         logger.info("Initiate StructureResonanceGenerator");
@@ -101,11 +101,11 @@ public class StructureResonanceGenerator {
 	 * @param newReactionsList  The IReactionsProcess's to use
 	 * 
 	 * @see #getReactions()
-	 * @see #setReactionsDefault()
+	 * @see #setReactions(java.util.List)
 	 * @see IReactionProcess
 	 */
 	@TestMethod("testSetReactions_List")
-	public void setReactions(List<IReactionProcess> newReactionsList)  throws CDKException {
+	public void setReactions(List<IReactionProcess> newReactionsList) {
 		reactionsList = newReactionsList;
 	}
 	/**
@@ -113,7 +113,7 @@ public class StructureResonanceGenerator {
 	 * 
 	 * @return The reactions to be imposed
 	 * 
-	 * @see #getReactions(IRreactionProcess)
+	 *
 	 * @see #setDefaultReactions()
 	 */
 	@TestMethod("testGetReactions")
@@ -141,26 +141,18 @@ public class StructureResonanceGenerator {
 	}
 	/**
 	 * Set the default reactions that must be presents to generate the resonance.
-	 *  
-	 * @return The reactions imposed
-	 * 
-	 * @see #getReactions(IReactionProcess)
-	 * @see #setDefaultReactions()
+	 *
+	 * @see #getReactions()
 	 */
 	@TestMethod("testSetDefaultReactions")
 	public void setDefaultReactions(){
 		callDefaultReactions();
 		
 	}
-	/**
-	 * Create the default reactions List. They are:<p>
-	 * 
-	 * @throws CDKException 
-	 * 
-	 */
+
 	private void callDefaultReactions() {
 		HashMap<String,Object> params = new HashMap<String,Object>();
-		params.put("hasActiveCenter",Boolean.FALSE);;
+		params.put("hasActiveCenter",Boolean.FALSE);
 		
 		IReactionProcess type  = new SharingLonePairReaction();
         try {
