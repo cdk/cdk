@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test-reaction
  */
-public class ReactionCoverageTest extends CoverageTest {
+public class ReactionCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "reaction.javafiles";
     

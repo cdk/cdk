@@ -33,7 +33,6 @@ import org.openscience.cdk.reaction.type.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -65,7 +64,7 @@ import java.util.List;
  * 
  * @see org.openscience.cdk.reaction.IReactionProcess
  */
-@TestClass("org.openscience.cdk.test.tools.StructureResonanceGeneratorTest")
+@TestClass("org.openscience.cdk.tools.StructureResonanceGeneratorTest")
 public class StructureResonanceGenerator {
 	
 	private LoggingTool logger = new LoggingTool(StructureResonanceGenerator.class);
