@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test-extra
  */
-public class ExtraCoverageTest extends CoverageTest {
+public class ExtraCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "extra.javafiles";
     
