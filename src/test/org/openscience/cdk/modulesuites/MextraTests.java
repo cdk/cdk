@@ -61,7 +61,7 @@ public class MextraTests {
         // from cdk.test.isomorphism
         // from cdk.test.math
         // from cdk.test.similarity
-        suite.addTest(TanimotoTest.suite());
+        suite.addTest(new JUnit4TestAdapter(TanimotoTest.class));
         suite.addTest(DistanceMomentTest.suite());
         suite.addTest(HOSECodeAnalyserTest.suite());
         suite.addTest(new JUnit4TestAdapter(DeAromatizationToolTest.class));
