@@ -260,8 +260,7 @@ public class CDKValencyCheckerTest extends NewCDKTestCase {
     	while (atoms.hasNext()) {
     		IAtom atom = atoms.next();
     		IAtomType type = matcher.findMatchingAtomType(container, atom);
-        	Assert.assertNotNull(type);
-        	AtomTypeManipulator.configure(atom, type);
+    		if (type != null) AtomTypeManipulator.configure(atom, type);
     	}
     }
     
