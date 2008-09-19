@@ -35,6 +35,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
@@ -316,7 +317,7 @@ public class ConjugatedPiSystemsDetectorTest extends NewCDKTestCase
     	IMolecule mol = null;
     	String filename = "data/mdl/NN_dimethylaniline.mol";
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	MDLReader reader = new MDLReader(ins);
+    	MDLV2000Reader reader = new MDLV2000Reader(ins);
     	IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
     	mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getMolecule(0);  
     	
