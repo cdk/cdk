@@ -1591,6 +1591,7 @@ public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
 		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
 		IAtomContainerSet setOfContainers = gRI.getContainers(molecule);
         
+		Assert.assertNotNull(setOfContainers);
 		Assert.assertEquals(1,setOfContainers.getAtomContainerCount());
 		Assert.assertEquals(6,setOfContainers.getAtomContainer(0).getAtomCount());
 	}
