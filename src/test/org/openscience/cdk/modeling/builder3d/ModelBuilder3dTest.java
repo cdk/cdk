@@ -147,7 +147,7 @@ public class ModelBuilder3dTest extends NewCDKTestCase {
     }
 
     @Test
-    public void xtestModelBuilder3D_Konstanz2() throws Exception {
+    public void testModelBuilder3D_Konstanz2() throws Exception {
     	if (!this.runSlowTests()) Assert.fail("Slow tests turned of");
     	
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
