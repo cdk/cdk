@@ -1002,6 +1002,16 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+    @Test public void testHydroxyl2() throws Exception {
+        IMolecule mol = new Molecule();
+          IAtom oxygen = new Atom("O");
+          oxygen.setFormalCharge(-1);
+          mol.addAtom(oxygen);
+
+          String[] expectedTypes = {"O.minus"};
+          assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+      }
+      
     @Test public void testHydroxonium() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("H");
