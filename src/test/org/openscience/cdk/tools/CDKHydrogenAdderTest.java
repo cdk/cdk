@@ -748,8 +748,6 @@ public class CDKHydrogenAdderTest extends NewCDKTestCase {
     	Iterator<IAtom> atoms = container.atoms().iterator();
     	while (atoms.hasNext()) {
     		IAtom atom = atoms.next();
-        Integer oldHCount = atom.getHydrogenCount();
-        atom.setHydrogenCount(null);
     		IAtomType type = matcher.findMatchingAtomType(container, atom);
         	Assert.assertNotNull(type);
         	AtomTypeManipulator.configure(atom, type);
