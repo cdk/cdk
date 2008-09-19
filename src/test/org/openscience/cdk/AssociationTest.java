@@ -131,6 +131,6 @@ public class AssociationTest extends NewCDKTestCase {
     @Test
     public void testGetElectronCount() {
         Association association = new Association();
-        Assert.assertEquals(0, association.getElectronCount());
+        Assert.assertEquals(0, association.getElectronCount(),0.00001);
     }
 }
