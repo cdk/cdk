@@ -512,8 +512,6 @@ public class CDKHydrogenAdderTest extends NewCDKTestCase {
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(1, 2, IBond.Order.SINGLE);
         
-        oxygen.setHydrogenCount(2); /* e.g. caused by the fact that the element symbol
-                                       was changed from C to O (=actual bug) */
         findAndConfigureAtomTypesForAllAtoms(mol);
         adder.addImplicitHydrogens(mol);
         
