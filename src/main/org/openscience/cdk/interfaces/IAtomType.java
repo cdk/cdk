@@ -37,6 +37,7 @@ package org.openscience.cdk.interfaces;
 public interface IAtomType extends IIsotope {
 
 	public enum Hybridization {
+	    S,
 	    SP1,     // linear
 	    SP2,     // trigonal planar (single pi-electron in pz)
 	    SP3,     // tetrahedral
