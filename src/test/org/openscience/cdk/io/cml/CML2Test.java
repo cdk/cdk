@@ -76,11 +76,11 @@ public class CML2Test extends CDKTestCase {
         String filename = "data/cml/olaCmlAtomType.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = new org.openscience.cdk.ChemFile();
+        IChemFile chemFile = new ChemFile();
         chemFile = (IChemFile) reader.read(chemFile);
         IAtomContainer container = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
         for (IAtom atom : container.atoms()) {
-            assertTrue( atom.getHydrogenCount() == CDKConstants.UNSET);
+            assertEquals(CDKConstants.UNSET, atom.getHydrogenCount());
         }
     }
 
