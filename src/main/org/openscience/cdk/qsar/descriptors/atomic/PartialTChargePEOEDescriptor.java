@@ -31,6 +31,7 @@ import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -175,6 +176,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
     	String originalAtomtypeName = atom.getAtomTypeName();
     	Integer originalNeighborCount = atom.getFormalNeighbourCount();
     	Integer originalValency = atom.getValency();
+    	IAtomType.Hybridization originalHybridization = atom.getHybridization();
         if (!isCachedAtomContainer(ac)) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
@@ -220,6 +222,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
     	atom.setAtomTypeName(originalAtomtypeName);
     	atom.setFormalNeighbourCount(originalNeighborCount);
     	atom.setValency(originalValency);
+    	atom.setHybridization(originalHybridization);
 
         return getCachedDescriptorValue(atom) != null
                 ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),

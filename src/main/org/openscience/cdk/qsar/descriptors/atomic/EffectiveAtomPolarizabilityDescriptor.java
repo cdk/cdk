@@ -30,6 +30,7 @@ import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -133,6 +134,7 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
         	Integer originalNeighborCount = atom.getFormalNeighbourCount();
         	Integer originalHCount = atom.getHydrogenCount();
         	Integer originalValency = atom.getValency();
+        	IAtomType.Hybridization originalHybridization = atom.getHybridization();
         	boolean originalFlag = atom.getFlag(4);
             polarizability = pol.calculateGHEffectiveAtomPolarizability(ac, atom, 100, true);
         	// restore original props
@@ -141,6 +143,7 @@ public class EffectiveAtomPolarizabilityDescriptor implements IAtomicDescriptor 
         	atom.setValency(originalValency);
         	atom.setHydrogenCount(originalHCount);
         	atom.setFlag(4, originalFlag);
+        	atom.setHybridization(originalHybridization);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new DoubleResult(polarizability),
                     getDescriptorNames());

@@ -26,6 +26,7 @@ import org.openscience.cdk.charges.MMFF94PartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -126,14 +127,24 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      */
     @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
+        String originalAtomtypeName = atom.getAtomTypeName();
+        Integer originalNeighborCount = atom.getFormalNeighbourCount();
+        Integer originalValency = atom.getValency();
+        IAtomType.Hybridization originalHybridization = atom.getHybridization();
+
         DoubleResult aphaPartialCharge = null;
         try {
             mmff.assignMMFF94PartialCharges(ac);
             aphaPartialCharge = new DoubleResult((Double) atom.getProperty("MMFF94charge"));
         } catch (Exception exception) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new DoubleResult(Double.NaN), names, exception);
+            aphaPartialCharge = new DoubleResult(Double.NaN);
         }
+        // restore original props
+        atom.setAtomTypeName(originalAtomtypeName);
+        atom.setFormalNeighbourCount(originalNeighborCount);
+        atom.setValency(originalValency);
+        atom.setHybridization(originalHybridization);
+
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 aphaPartialCharge, names);
     }
