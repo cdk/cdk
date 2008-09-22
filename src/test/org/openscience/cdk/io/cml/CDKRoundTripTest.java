@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.tools.diff.AtomContainerDiff;
+import org.openscience.cdk.tools.diff.AtomDiff;
 
 /**
  * @cdk.module test-libiocml
@@ -42,10 +42,10 @@ public class CDKRoundTripTest extends NewCDKTestCase {
     
     @Test public void testAtom() throws Exception {
         IMolecule mol = builder.newMolecule();
-        IAtom atom = builder.newAtom();
+        IAtom atom = builder.newAtom("C");
         mol.addAtom(atom);
         IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
-        String difference = AtomContainerDiff.diff(mol, copy);;
+        String difference = AtomDiff.diff(atom, copy.getAtom(0));;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
