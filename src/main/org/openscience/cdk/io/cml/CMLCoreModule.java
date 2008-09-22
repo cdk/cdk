@@ -101,6 +101,7 @@ public class CMLCoreModule implements ICMLModule {
     protected List<String> partialCharges;
     protected List<String> isotope;
     protected List<String> atomicNumbers;
+    protected List<String> exactMasses;
     protected List<String> x3;
     protected List<String> y3;
     protected List<String> z3;
@@ -185,6 +186,7 @@ public class CMLCoreModule implements ICMLModule {
             this.partialCharges = conv.partialCharges;
             this.isotope = conv.isotope;
             this.atomicNumbers = conv.atomicNumbers;
+            this.exactMasses = conv.exactMasses;
             this.x3 = conv.x3;
             this.y3 = conv.y3;
             this.z3 = conv.z3;
@@ -257,6 +259,7 @@ public class CMLCoreModule implements ICMLModule {
         partialCharges = new ArrayList<String>();
         isotope = new ArrayList<String>();
         atomicNumbers = new ArrayList<String>();
+        exactMasses = new ArrayList<String>();
         x3 = new ArrayList<String>();
         y3 = new ArrayList<String>();
         z3 = new ArrayList<String>();
@@ -684,6 +687,9 @@ public class CMLCoreModule implements ICMLModule {
             if (atomCounter > atomicNumbers.size()) {
                 isotope.add(null);
             }
+            if (atomCounter > exactMasses.size()) {
+                exactMasses.add(null);
+            }
             if (atomCounter > spinMultiplicities.size()) {
                 spinMultiplicities.add(null);
             }
@@ -991,6 +997,8 @@ public class CMLCoreModule implements ICMLModule {
                     partialCharges.add(cData.trim());
                 } else if (DICTREF.equals("cdk:atomicNumber")) {
                     atomicNumbers.add(cData.trim());
+                } else if (DICTREF.equals("cdk:isotopicMass")) {
+                    exactMasses.add(cData.trim());
                 }else {
                 	if(atomCustomProperty.get(Integer.valueOf(atomCounter-1))==null)
                 		atomCustomProperty.put(Integer.valueOf(atomCounter-1),new ArrayList<String>());
@@ -1155,6 +1163,7 @@ public class CMLCoreModule implements ICMLModule {
         boolean hasTitles = false;
         boolean hasIsotopes = false;
         boolean hasAtomicNumbers = false;
+        boolean hasExactMasses = false;
         boolean hasDictRefs = false;
         boolean hasSpinMultiplicities = false;
         boolean hasOccupancies = false;
@@ -1262,6 +1271,13 @@ public class CMLCoreModule implements ICMLModule {
         }
         if (atomicNumbers.size() == atomCounter) {
             hasAtomicNumbers = true;
+        } else {
+            logger.debug(
+                    "No atomicNumbers info: " + atomicNumbers.size(),
+                    " != " + atomCounter);
+        }
+        if (exactMasses.size() == atomCounter) {
+            hasExactMasses = true;
         } else {
             logger.debug(
                     "No atomicNumbers info: " + atomicNumbers.size(),
@@ -1416,6 +1432,11 @@ public class CMLCoreModule implements ICMLModule {
               if (atomicNumbers.get(i) != null)
                 currentAtom.setAtomicNumber(Integer.parseInt(atomicNumbers.get(i)));
             }
+
+            if (hasExactMasses) {
+                if (exactMasses.get(i) != null)
+                  currentAtom.setExactMass(Double.parseDouble(exactMasses.get(i)));
+              }
 
             if(atomCustomProperty.get(Integer.valueOf(i))!=null){
             	Iterator<String> it=atomCustomProperty.get(Integer.valueOf(i)).iterator();
