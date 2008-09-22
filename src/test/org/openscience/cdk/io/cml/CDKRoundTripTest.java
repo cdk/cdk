@@ -24,21 +24,14 @@
  */
 package org.openscience.cdk.io.cml;
 
-import java.io.ByteArrayInputStream;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.NewCDKTestCase;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.CMLReader;
-import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.tools.diff.AtomDiff;
-import org.xmlcml.cml.base.CMLElement;
+import org.openscience.cdk.tools.diff.AtomContainerDiff;
 
 /**
  * @cdk.module test-libiocml
@@ -46,37 +39,14 @@ import org.xmlcml.cml.base.CMLElement;
 public class CDKRoundTripTest extends NewCDKTestCase {
 
     private static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
-    private static Convertor convertor = new Convertor(true, null);
     
-    @Test public void testAtom() {
+    @Test public void testAtom() throws Exception {
+        IMolecule mol = builder.newMolecule();
         IAtom atom = builder.newAtom();
-        String cmlString = createCMLFragment(atom);
-        System.out.println("CML: " + cmlString);
-        IChemObject cdkObject = createMolecule(cmlString);
-        Assert.assertTrue(cdkObject instanceof IMolecule);
-        IMolecule mol = (IMolecule)cdkObject;
-        Assert.assertEquals(1, mol.getAtomCount());
-        IAtom atomCopy = mol.getAtom(0); 
-        String difference = AtomDiff.diff(atom, atomCopy);;
+        mol.addAtom(atom);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        String difference = AtomContainerDiff.diff(mol, copy);;
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    private IChemObject createMolecule( String cmlString ) {
-        CMLReader cmlReader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
-        try {
-            return cmlReader.read(builder.newMolecule());
-        } catch (CDKException exception) {
-            exception.printStackTrace();
-        }
-        return null;
-    }
-
-    private String createCMLFragment(IChemObject object) {
-        if (object instanceof IAtom) { 
-            CMLElement element = convertor.cdkAtomToCMLAtom((IAtom)object);
-            return element.toXML();
-        }
-        return "<!-- failed -->";
-    }
-    
 }
