@@ -58,9 +58,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  *  ModelBuilder3D mb3d = new ModelBuilder3D();
  *  mb3d.setTemplateHandler();
  *  mb3d.setForceField("mm2");
- *  mb3d.setMolecule(molecule, false);
- *  mb3d.generate3DCoordinates();
- *  Molecule molecule = mb3d.getMolecule();
+ *  IMolecule molecule = mb3d.generate3DCoordinates(molecule, false);
  *  </pre>
  *
  *  <p>Standing problems:
