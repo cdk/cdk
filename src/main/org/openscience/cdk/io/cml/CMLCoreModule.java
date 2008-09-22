@@ -37,7 +37,6 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -101,6 +100,7 @@ public class CMLCoreModule implements ICMLModule {
     protected List<String> formalCharges;
     protected List<String> partialCharges;
     protected List<String> isotope;
+    protected List<String> atomicNumbers;
     protected List<String> x3;
     protected List<String> y3;
     protected List<String> z3;
@@ -184,6 +184,7 @@ public class CMLCoreModule implements ICMLModule {
             this.formalCharges = conv.formalCharges;
             this.partialCharges = conv.partialCharges;
             this.isotope = conv.isotope;
+            this.atomicNumbers = conv.atomicNumbers;
             this.x3 = conv.x3;
             this.y3 = conv.y3;
             this.z3 = conv.z3;
@@ -255,6 +256,7 @@ public class CMLCoreModule implements ICMLModule {
         formalCharges = new ArrayList<String>();
         partialCharges = new ArrayList<String>();
         isotope = new ArrayList<String>();
+        atomicNumbers = new ArrayList<String>();
         x3 = new ArrayList<String>();
         y3 = new ArrayList<String>();
         z3 = new ArrayList<String>();
@@ -679,6 +681,9 @@ public class CMLCoreModule implements ICMLModule {
             if (atomCounter > isotope.size()) {
                 isotope.add(null);
             }
+            if (atomCounter > atomicNumbers.size()) {
+                isotope.add(null);
+            }
             if (atomCounter > spinMultiplicities.size()) {
                 spinMultiplicities.add(null);
             }
@@ -984,6 +989,8 @@ public class CMLCoreModule implements ICMLModule {
             } else if (xpath.endsWith("atom", "scalar")) {
                 if (DICTREF.equals("cdk:partialCharge")) {
                     partialCharges.add(cData.trim());
+                } else if (DICTREF.equals("cdk:atomicNumber")) {
+                    atomicNumbers.add(cData.trim());
                 }else {
                 	if(atomCustomProperty.get(Integer.valueOf(atomCounter-1))==null)
                 		atomCustomProperty.put(Integer.valueOf(atomCounter-1),new ArrayList<String>());
@@ -1147,6 +1154,7 @@ public class CMLCoreModule implements ICMLModule {
         boolean hasSymbols = false;
         boolean hasTitles = false;
         boolean hasIsotopes = false;
+        boolean hasAtomicNumbers = false;
         boolean hasDictRefs = false;
         boolean hasSpinMultiplicities = false;
         boolean hasOccupancies = false;
@@ -1250,6 +1258,13 @@ public class CMLCoreModule implements ICMLModule {
         } else {
             logger.debug(
                     "No isotope info: " + isotope.size(),
+                    " != " + atomCounter);
+        }
+        if (atomicNumbers.size() == atomCounter) {
+            hasAtomicNumbers = true;
+        } else {
+            logger.debug(
+                    "No atomicNumbers info: " + atomicNumbers.size(),
                     " != " + atomCounter);
         }
 
@@ -1397,6 +1412,11 @@ public class CMLCoreModule implements ICMLModule {
             		currentAtom.setMassNumber((int)Double.parseDouble((String)isotope.get(i)));
             }
             
+            if (hasAtomicNumbers) {
+              if (atomicNumbers.get(i) != null)
+                currentAtom.setAtomicNumber(Integer.parseInt(atomicNumbers.get(i)));
+            }
+
             if(atomCustomProperty.get(Integer.valueOf(i))!=null){
             	Iterator<String> it=atomCustomProperty.get(Integer.valueOf(i)).iterator();
             	while(it.hasNext()){
