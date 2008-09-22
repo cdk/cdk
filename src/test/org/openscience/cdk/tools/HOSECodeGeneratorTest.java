@@ -73,7 +73,7 @@ public class HOSECodeGeneratorTest extends NewCDKTestCase {
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void testSecondSphere() throws Exception {
+	@Test public void testSecondSphere() throws Exception {
         String filename = "data/mdl/isopropylacetate.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -93,7 +93,7 @@ public class HOSECodeGeneratorTest extends NewCDKTestCase {
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void test1Sphere() throws Exception
+	@Test public void test1Sphere() throws Exception
 	{
 		String[] result = 
 		{ 
@@ -247,7 +247,7 @@ public class HOSECodeGeneratorTest extends NewCDKTestCase {
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void testMakeBremserCompliant() throws Exception
+	@Test public void testMakeBremserCompliant() throws Exception
 	{
 		String[] startData = { 
      "O-1;=C(//)",
@@ -318,7 +318,7 @@ public class HOSECodeGeneratorTest extends NewCDKTestCase {
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void test4Sphere() throws Exception
+	@Test public void test4Sphere() throws Exception
 	{
 		String[] result = { 
 			
@@ -470,7 +470,7 @@ public class HOSECodeGeneratorTest extends NewCDKTestCase {
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void test4() throws Exception
+	@Test public void test4() throws Exception
 	{
 		String[] result = {
 		     "C-3;*C*C*C(*C*N,*C,*C/*C,*&,*&,*&/*&)",
@@ -501,7 +501,7 @@ public class HOSECodeGeneratorTest extends NewCDKTestCase {
 	/**
 	 * @cdk.bug 655169
 	 */
-	public void testBug655169() throws Exception
+	@Test public void testBug655169() throws Exception
 	{
 		IMolecule molecule = null;
 		HOSECodeGenerator hcg = null;
@@ -555,7 +555,7 @@ public class HOSECodeGeneratorTest extends NewCDKTestCase {
 	/**
 	 * @cdk.bug 795480
 	 */
-	public void testBug795480() throws Exception
+	@Test public void testBug795480() throws Exception
 	{
 		IMolecule molecule = null;
 		HOSECodeGenerator hcg = null;
@@ -584,7 +584,7 @@ public class HOSECodeGeneratorTest extends NewCDKTestCase {
 		}
     }
 	
-  	public void testGetAtomsOfSphere() throws Exception {
+  	@Test public void testGetAtomsOfSphere() throws Exception {
   		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
   		CDKHueckelAromaticityDetector.detectAromaticity(molecule);
   		HOSECodeGenerator hcg = new HOSECodeGenerator();
@@ -596,7 +596,7 @@ public class HOSECodeGeneratorTest extends NewCDKTestCase {
   		Assert.assertEquals("Br", ((IAtom)atoms.get(0)).getSymbol());
 	}
   	
-  	public void testGetAtomsOfSphereWithHydr() throws Exception {
+  	@Test public void testGetAtomsOfSphereWithHydr() throws Exception {
   		IMolecule molecule = (new SmilesParser(org.openscience.cdk.DefaultChemObjectBuilder.getInstance())).parseSmiles("C([H])([H])([H])C([H])=C([H])Br");
   		CDKHueckelAromaticityDetector.detectAromaticity(molecule);
   		HOSECodeGenerator hcg = new HOSECodeGenerator();
