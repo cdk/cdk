@@ -1302,11 +1302,6 @@ public class CMLCoreModule implements ICMLModule {
                     	atomEnumeration.put((String)elid.get(i), currentAtom);
                 }
                 currentAtom.setSymbol(symbol);
-                try{
-                	IsotopeFactory.getInstance(currentAtom.getBuilder()).configure(currentAtom);
-                }catch(Exception ex){
-                	logger.warn("Could not configure atom");
-                }
             }
 
             if (has3D) {
