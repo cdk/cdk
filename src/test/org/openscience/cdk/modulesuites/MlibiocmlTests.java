@@ -45,35 +45,25 @@ public class MlibiocmlTests {
         	System.getProperty("java.version").startsWith("1.6") ||
         	System.getProperty("java.version").startsWith("1.7")) {
             System.out.println("Found required Java 1.5 (or better), so running the CML2 tests.");
-            try {
-                Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.io.cml.CML2Test");
-                suite.addTest(new TestSuite(testClass));
-            } catch (Exception exception) {
-                // ok, do without. Probably compiled not Java 1.4
-                System.out.println("Could not load the CML2 test: " + exception.getMessage());
-                exception.printStackTrace();
-            }
-            try {
-                Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.io.cml.CML2WriterTest");
-                suite.addTest(new TestSuite(testClass));
-            } catch (Exception exception) {
-                // ok, do without. Probably compiled not Java 1.4
-                System.out.println("Could not load the CML2Writer test: " + exception.getMessage());
-                exception.printStackTrace();
-            }
-            try {
-                Class testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.io.cml.CMLRoundTripTest");
-                suite.addTest(new TestSuite(testClass));
-            } catch (Exception exception) {
-                // ok, do without. Probably compiled not Java 1.4
-                System.out.println("Could not load the CML Roundtrip test: " + exception.getMessage());
-                exception.printStackTrace();
-            }
+            addTestSuite(suite, "org.openscience.cdk.io.cml.CML2Test");
+            addTestSuite(suite, "org.openscience.cdk.io.cml.CML2WriterTest");
+            addTestSuite(suite, "org.openscience.cdk.io.cml.CMLRoundTripTest");
         } else {
         	System.out.println("Did not find the required Java 1.5 (or better), so not running the CML2 tests.");
         }
         
         return suite;
+    }
+
+    private static void addTestSuite(TestSuite suite, String className) {
+        try {
+            Class testClass = suite.getClass().getClassLoader().loadClass(className);
+            suite.addTest(new TestSuite(testClass));
+        } catch (Exception exception) {
+            // OK, do without. Probably compiled not Java 1.4
+            System.out.println("Could not load the CML2 test: " + exception.getMessage());
+            exception.printStackTrace();
+        }
     }
 
 }
