@@ -40,7 +40,7 @@ public class CDKRoundTripTest extends NewCDKTestCase {
 
     private static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
     
-    @Test public void testAtom() throws Exception {
+    @Test public void testIElement_Symbol() throws Exception {
         IMolecule mol = builder.newMolecule();
         IAtom atom = builder.newAtom("C");
         mol.addAtom(atom);
@@ -49,7 +49,7 @@ public class CDKRoundTripTest extends NewCDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Test public void testAtom_AtomicNumber() throws Exception {
+    @Test public void testIElement_AtomicNumber() throws Exception {
         IMolecule mol = builder.newMolecule();
         IAtom atom = builder.newAtom("C");
         atom.setAtomicNumber(6);
