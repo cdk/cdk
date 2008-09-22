@@ -49,4 +49,14 @@ public class CDKRoundTripTest extends NewCDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
+    @Test public void testAtom_AtomicNumber() throws Exception {
+        IMolecule mol = builder.newMolecule();
+        IAtom atom = builder.newAtom("C");
+        atom.setAtomicNumber(6);
+        mol.addAtom(atom);
+        IMolecule copy = CMLRoundTripTool.roundTripMolecule(mol);
+        String difference = AtomDiff.diff(atom, copy.getAtom(0));;
+        Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
+    }
+
 }
