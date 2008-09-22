@@ -113,6 +113,30 @@ public class CML23FragmentsTest extends CDKTestCase {
         assertEquals(12, atom.getMassNumber().intValue());
     }
 
+    public void testAtomicNumber() throws Exception {
+        String cmlString = "<molecule><atomArray><atom id='a1' elementType=\"C\"><scalar dataType=\"xsd:integer\" dictRef=\"cdk:atomicNumber\">6</scalar></atom></atomArray></molecule>";
+
+        IChemFile chemFile = parseCMLString(cmlString);
+        IMolecule mol = checkForSingleMoleculeFile(chemFile);
+
+        assertEquals(1, mol.getAtomCount());
+        IAtom atom = mol.getAtom(0);
+        assertEquals("C", atom.getSymbol());
+        assertEquals(6, atom.getAtomicNumber().intValue());
+    }
+
+    public void testIsotopicMass() throws Exception {
+        String cmlString = "<molecule><atomArray><atom id='a1' elementType=\"C\"><scalar dataType=\"xsd:float\" dictRef=\"cdk:isotopicMass\">12.0</scalar></atom></atomArray></molecule>";
+
+        IChemFile chemFile = parseCMLString(cmlString);
+        IMolecule mol = checkForSingleMoleculeFile(chemFile);
+
+        assertEquals(1, mol.getAtomCount());
+        IAtom atom = mol.getAtom(0);
+        assertEquals("C", atom.getSymbol());
+        assertEquals(12.0, atom.getExactMass().doubleValue());
+    }
+
     public void testBond() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
         

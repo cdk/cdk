@@ -199,5 +199,23 @@
     <formula concise="C 1 H 4" dictRef="mb:possibleMatch"/>
     <formula concise="C 2 H 6" dictRef="mb:possibleMatch"/>
   </molecule>
-	
+
+  <!-- atomic number -->
+  <molecule>
+    <atomArray>
+      <atom id='a1' elementType="C">
+        <scalar dataType="xsd:integer" dictRef="cdk:atomicNumber">6</scalar>
+      </atom>
+    </atomArray>
+  </molecule>
+
+  <!-- isotopic mass -->
+  <molecule>
+    <atomArray>
+      <atom id='a1' elementType="C">
+        <scalar dataType="xsd:float" dictRef="cdk:isotopicMass">12.0</scalar>
+      </atom>
+    </atomArray>
+  </molecule>
+
 </cml>
