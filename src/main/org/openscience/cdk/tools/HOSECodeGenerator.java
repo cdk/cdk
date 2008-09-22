@@ -32,6 +32,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -57,6 +59,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * @cdk.created    2002-05-10
  * @cdk.module     standard
  */
+@TestClass("org.openscience.cdk.tools.HOSECodeGeneratorTest")
 public class HOSECodeGenerator implements java.io.Serializable
 {
 
@@ -159,6 +162,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	/**
 	 *  Constructor for the HOSECodeGenerator.
 	 */
+	@TestMethod("test1Sphere")
 	public HOSECodeGenerator()
 	{
 		logger = new LoggingTool(this);
@@ -238,6 +242,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 * @return The HOSECode value
 	 * @exception  org.openscience.cdk.exception.CDKException  Thrown if something is wrong
 	 */
+  @TestMethod("test4,test4Sphere,testBug655169")
 	public String getHOSECode(IAtomContainer ac, IAtom root, int noOfSpheres) throws CDKException
 	{
 		return getHOSECode(ac,root,noOfSpheres, false);
@@ -457,6 +462,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		}
 	}
 
+  @TestMethod("testMakeBremserCompliant")
 	public String makeBremserCompliant(String code)
 	{
 		int sepIndex = code.indexOf(";");
