@@ -26,13 +26,13 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import nu.xom.Attribute;
@@ -66,9 +66,9 @@ import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * Serializes a {@link IMoleculeSet} or a {@link IMolecule} object to CML 2 code.
- * Chemical Markup Language is an XML based file format {@cdk.cite PMR99}.
- * Output can be redirected to other Writer objects like StringWriter
- * and FileWriter. An example:
+ * Chemical Markup Language is an XML-based file format {@cdk.cite PMR99}.
+ * Output can be redirected to other Writer objects like {@link StringWriter}
+ * and {@link FileWriter}. An example:
  *
  * <pre>
  *   StringWriter output = new StringWriter();
@@ -119,7 +119,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     
     private LoggingTool logger;
     
-    private static List customizers = null;
+    private static List<ICMLCustomizer> customizers = null;
 
     /**
      * Constructs a new CMLWriter class. Output will be stored in the Writer
@@ -151,7 +151,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
 
     public void registerCustomizer(ICMLCustomizer customizer) {
-    	if (customizers == null) customizers = new ArrayList();
+    	if (customizers == null) customizers = new ArrayList<ICMLCustomizer>();
     	
     	customizers.add(customizer);
     	logger.info("Loaded Customizer: ", customizer.getClass().getName());
@@ -225,9 +225,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
         );
         // adding the customizer
         if (customizers != null) {
-        	Iterator customIter = customizers.iterator();
-        	while (customIter.hasNext()) {
-        		convertor.registerCustomizer((ICMLCustomizer)customIter.next());
+        	for (ICMLCustomizer customizer : customizers) {
+        		convertor.registerCustomizer(customizer);
         	}
         }
         
