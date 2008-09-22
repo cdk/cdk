@@ -568,36 +568,31 @@ public class PDBConvention extends CMLCoreModule {
             }
             
             if(hasScalar){
+                IPDBAtom pdbAtom = (IPDBAtom)currentAtom;
 //                cdo.setObjectProperty("PDBAtom", "altLoc", altLocV.get(i).toString());
-                ((IPDBAtom)currentAtom).setAltLoc(altLocV.get(i).toString());
+                if (altLocV.size() > 0) pdbAtom.setAltLoc(altLocV.get(i).toString());
 //                cdo.setObjectProperty("PDBAtom", "chainID", chainIDV.get(i).toString());
-                ((IPDBAtom)currentAtom).setChainID(chainIDV.get(i).toString());
+                if (chainIDV.size() > 0) pdbAtom.setChainID(chainIDV.get(i).toString());
 //                cdo.setObjectProperty("PDBAtom", "hetAtom", hetAtomV.get(i).toString());
-                boolean hetAtom = false;
-                if(hetAtomV.get(i).toString().equals("true"))
-                	hetAtom = true;
-                ((IPDBAtom)currentAtom).setHetAtom(hetAtom);
+                if (hetAtomV.size() > 0) pdbAtom.setHetAtom(hetAtomV.get(i).toString().equals("true"));
 //                cdo.setObjectProperty("PDBAtom", "iCode", iCodeV.get(i).toString());
-                ((IPDBAtom)currentAtom).setICode(iCodeV.get(i).toString());
+                if (iCodeV.size() > 0) pdbAtom.setICode(iCodeV.get(i).toString());
 //                cdo.setObjectProperty("PDBAtom", "name", nameV.get(i).toString());
-                ((IPDBAtom)currentAtom).setName(nameV.get(i).toString());
+                if (nameV.size() > 0) pdbAtom.setName(nameV.get(i).toString());
 //                cdo.setObjectProperty("PDBAtom", "oxt", oxtV.get(i).toString());
-                boolean oxt = false;
-                if(oxtV.get(i).toString().equals("true"))
-                	oxt = true;
-                ((IPDBAtom)currentAtom).setOxt(oxt);
+                if (oxtV.size() > 0) pdbAtom.setOxt(oxtV.get(i).toString().equals("true"));
 //                cdo.setObjectProperty("PDBAtom", "resSeq", resSeqV.get(i).toString());
-                ((IPDBAtom)currentAtom).setResSeq(resSeqV.get(i).toString());
+                if (resSeqV.size() > 0) pdbAtom.setResSeq(resSeqV.get(i).toString());
 //                cdo.setObjectProperty("PDBAtom", "record", recordV.get(i).toString());
-                ((IPDBAtom)currentAtom).setRecord(recordV.get(i).toString());
+                if (recordV.size() > 0) pdbAtom.setRecord(recordV.get(i).toString());
 //                cdo.setObjectProperty("PDBAtom", "resName", resNameV.get(i).toString());
-                ((IPDBAtom)currentAtom).setResName(resNameV.get(i).toString());
+                if (resNameV.size() > 0) pdbAtom.setResName(resNameV.get(i).toString());
 //                cdo.setObjectProperty("PDBAtom", "segID", segIDV.get(i).toString());
-                ((IPDBAtom)currentAtom).setSegID(segIDV.get(i).toString());
+                if (segIDV.size() > 0) pdbAtom.setSegID(segIDV.get(i).toString());
 //                cdo.setObjectProperty("PDBAtom", "serial", serialV.get(i).toString());
-                ((IPDBAtom)currentAtom).setSerial(Integer.parseInt(serialV.get(i).toString()));
+                if (serialV.size() > 0) pdbAtom.setSerial(Integer.parseInt(serialV.get(i).toString()));
 //                cdo.setObjectProperty("PDBAtom", "tempFactor", tempFactorV.get(i).toString());
-                ((IPDBAtom)currentAtom).setTempFactor(Double.parseDouble(tempFactorV.get(i).toString()));
+                if (tempFactorV.size() > 0) pdbAtom.setTempFactor(Double.parseDouble(tempFactorV.get(i).toString()));
             }
             
 //            cdo.endObject("PDBAtom");
