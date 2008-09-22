@@ -56,7 +56,6 @@ public class ElementDiff {
         IElement secondElem = (IElement)second;
         ChemObjectDifference coDiff = new ChemObjectDifference("ElementDiff");
         coDiff.addChild(StringDifference.construct("S", firstElem.getSymbol(), secondElem.getSymbol()));
-        coDiff.addChild(StringDifference.construct("S", firstElem.getSymbol(), secondElem.getSymbol()));
         coDiff.addChild(StringDifference.construct("ID", firstElem.getID(), secondElem.getID()));
         coDiff.addChild(IntegerDifference.construct("AN", firstElem.getAtomicNumber(), secondElem.getAtomicNumber()));
         coDiff.addChild(ChemObjectDiff.difference(first, second));
