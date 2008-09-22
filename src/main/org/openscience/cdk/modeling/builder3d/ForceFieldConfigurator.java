@@ -35,6 +35,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
@@ -398,7 +399,7 @@ public class ForceFieldConfigurator {
 	 * @return                   atom
 	 * @exception  CDKException  Description of the Exception
 	 */
-	public org.openscience.cdk.interfaces.IAtom configureMM2BasedAtom(org.openscience.cdk.interfaces.IAtom atom, String hoseCode,boolean hetRing) throws Exception {
+	public IAtom configureMM2BasedAtom(IAtom atom, String hoseCode,boolean hetRing) throws Exception {
 		//logger.debug("CONFIGURE MM2 ATOM");
 		List<Pattern> atomTypePattern = null;
 		MM2BasedAtomTypePattern atp = new MM2BasedAtomTypePattern();
@@ -556,7 +557,7 @@ public class ForceFieldConfigurator {
 	 * @return                   atom
 	 * @exception  CDKException  Description of the Exception
 	 */
-	public org.openscience.cdk.interfaces.IAtom configureMMFF94BasedAtom(org.openscience.cdk.interfaces.IAtom atom, String hoseCode, boolean isInHetRing) throws Exception {
+	public IAtom configureMMFF94BasedAtom(IAtom atom, String hoseCode, boolean isInHetRing) throws Exception {
 		//logger.debug("****** Configure MMFF94 AtomType ******");
 		List<Pattern> atomTypePattern = null;
 		MMFF94BasedAtomTypePattern atp = new MMFF94BasedAtomTypePattern();
