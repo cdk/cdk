@@ -32,7 +32,7 @@ import org.openscience.cdk.NewCDKTestCase;
 public class AtomTypeChargesTest extends NewCDKTestCase {
 
 	/**
-	 * Tests the initial assignement of partial charges of
+	 * Tests the initial assignment of partial charges of
 	 * atom types matching the HOSE code for pOC atom types.
 	 */
 	@Ignore public void testCharges_pOC() throws Exception {
@@ -40,7 +40,7 @@ public class AtomTypeChargesTest extends NewCDKTestCase {
 	}
 	
 	/**
-	 * Tests the initial assignement of partial charges of
+	 * Tests the initial assignment of partial charges of
 	 * atom types matching the HOSE code for pOP atom types.
 	 */
 	@Ignore public void testCharges_pOP() throws Exception {
@@ -48,7 +48,7 @@ public class AtomTypeChargesTest extends NewCDKTestCase {
 	}
 	
 	/**
-	 * Tests the initial assignement of partial charges of
+	 * Tests the initial assignment of partial charges of
 	 * atom types matching the HOSE code for pOS atom types.
 	 */
 	@Ignore public void testCharges_pOS() throws Exception {
@@ -56,7 +56,7 @@ public class AtomTypeChargesTest extends NewCDKTestCase {
 	}
 	
 	/**
-	 * Tests the initial assignement of partial charges of
+	 * Tests the initial assignment of partial charges of
 	 * atom types matching the HOSE code for p_p atom types.
 	 */
 	@Ignore public void testCharges_p_p() throws Exception {
@@ -64,7 +64,7 @@ public class AtomTypeChargesTest extends NewCDKTestCase {
 	}
 	
 	/**
-	 * Tests the initial assignement of partial charges of
+	 * Tests the initial assignment of partial charges of
 	 * atom types matching the HOSE code for p_n atom types.
 	 */
 	@Ignore public void testCharges_p_n() throws Exception {
