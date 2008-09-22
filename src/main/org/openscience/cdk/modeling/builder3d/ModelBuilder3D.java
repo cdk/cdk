@@ -160,6 +160,11 @@ public class ModelBuilder3D {
 	 * Generate 3D coordinates with force field information.
 	 */
 	public IMolecule generate3DCoordinates(IMolecule molecule, boolean clone) throws Exception {
+	    String[] originalAtomTypeNames = new String[molecule.getAtomCount()];
+	    for (int i=0; i<originalAtomTypeNames.length; i++) {
+	        originalAtomTypeNames[i] = molecule.getAtom(i).getAtomTypeName();
+	    }
+
 		logger.debug("******** GENERATE COORDINATES ********");
 		for(int i=0;i<molecule.getAtomCount();i++){
 			molecule.getAtom(i).setFlag(CDKConstants.ISPLACED,false);
@@ -236,6 +241,11 @@ public class ModelBuilder3D {
 			logger.debug(ex3);
 			throw new Exception("PlaceSubstitutensERROR: Cannot place substitutents due to:" + ex3.getMessage(), ex3);
 		}
+		// restore the original atom type names
+    for (int i=0; i<originalAtomTypeNames.length; i++) {
+        molecule.getAtom(i).setAtomTypeName(originalAtomTypeNames[i]);
+    }
+
 		return molecule;
 	}
 
