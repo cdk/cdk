@@ -101,8 +101,8 @@ public class CML23FragmentsTest extends CDKTestCase {
         assertEquals("C", atom.getSymbol());
     }
 
-    public void testMAssNumber() throws Exception {
-        String cmlString = "<molecule id='m1'><atomArray atomID='a1' elementType='C' isotopeNumber='12'/></molecule>";
+    public void testMassNumber() throws Exception {
+        String cmlString = "<molecule id='m1'><atomArray><atom id='a1' elementType='C' isotopeNumber='12'/></atomArray></molecule>";
         
         IChemFile chemFile = parseCMLString(cmlString);
         IMolecule mol = checkForSingleMoleculeFile(chemFile);
