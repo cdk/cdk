@@ -685,7 +685,7 @@ public class CMLCoreModule implements ICMLModule {
                 isotope.add(null);
             }
             if (atomCounter > atomicNumbers.size()) {
-                isotope.add(null);
+                atomicNumbers.add(null);
             }
             if (atomCounter > exactMasses.size()) {
                 exactMasses.add(null);
