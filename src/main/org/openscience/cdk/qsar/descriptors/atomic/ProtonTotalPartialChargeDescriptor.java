@@ -113,7 +113,7 @@ public class ProtonTotalPartialChargeDescriptor implements IAtomicDescriptor {
 
     @TestMethod(value="testNamesConsistency")
     public String[] getDescriptorNames() {
-       String[] labels = new String[neighboors.size()+1];
+       String[] labels = new String[(neighboors == null ? 0 : neighboors.size()) +1];
         for (int i = 0; i < labels.length; i++) {
             labels[i] = "protonTotalPartialCharge" + (i+1);
         }

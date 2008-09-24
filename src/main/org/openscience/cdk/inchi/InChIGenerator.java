@@ -22,6 +22,8 @@ package org.openscience.cdk.inchi;
 
 import net.sf.jniinchi.*;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -66,7 +68,7 @@ import java.util.Map;
  * <code>String inchi = gen.getInchi();</code><br>
  * <code>String auxinfo = gen.getAuxInfo();</code><br>
  * <p><tt><b>
- * TODO: distinguish between singlet and undefined rcsfilespin multiplicity<br/>
+ * TODO: distinguish between singlet and undefined spin multiplicity<br/>
  * TODO: double bond and allene parities<br/>
  * TODO: problem recognising bond stereochemistry<br/>
  * </b></tt>
@@ -76,6 +78,7 @@ import java.util.Map;
  * @cdk.module inchi
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.inchi.InChIGeneratorTest")
 public class InChIGenerator {
     
     protected JniInchiInput input;
@@ -94,7 +97,10 @@ public class InChIGenerator {
      * InChI library requires, then calls the library.
      * 
      * @param atomContainer      AtomContainer to generate InChI for.
+     * @throws org.openscience.cdk.exception.CDKException if there is an
+     * error during InChI generation
      */
+    @TestClass("testGetInchiFromChlorineAtom,testGetInchiFromLithiumIontestGetInchiFromChlorine37Atom")
     protected InChIGenerator(IAtomContainer atomContainer) throws CDKException {
         try {
             input = new JniInchiInput("");
@@ -154,7 +160,7 @@ public class InChIGenerator {
      * @param atomContainer      AtomContainer to generate InChI for.
      * @throws CDKException
      */
-    protected void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer) throws CDKException {
+    private void generateInchiFromCDKAtomContainer(IAtomContainer atomContainer) throws CDKException {
         this.atomContainer = atomContainer;
         
         Iterator<IAtom> atoms = atomContainer.atoms().iterator();
@@ -356,6 +362,7 @@ public class InChIGenerator {
      * InChI has been generated, in all other cases InChI generation
      * has failed.
      */
+    @TestMethod("testGetInchiFromLandDAlanine3D,testGetInchiEandZ12Dichloroethene2D")
     public INCHI_RET getReturnStatus() {
         return(output.getReturnStatus());
     }
@@ -363,12 +370,13 @@ public class InChIGenerator {
     /**
      * Gets generated InChI string.
      */
+    @TestMethod("testGetInchiEandZ12Dichloroethene2D,testGetInchiFromEthyne,testGetInchiFromEthene")
     public String getInchi() {
         return(output.getInchi());
     }
     
     /**
-     * Gets generated InChI string.
+     * Gets auxillary information.
      */
     public String getAuxInfo() {
         return(output.getAuxInfo());

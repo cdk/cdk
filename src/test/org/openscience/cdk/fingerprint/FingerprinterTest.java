@@ -24,36 +24,32 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.io.InputStream;
-import java.math.BigInteger;
-import java.util.BitSet;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
-import org.openscience.cdk.Reaction;
+import org.openscience.cdk.*;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLRXNV2000Reader;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.InputStream;
+import java.math.BigInteger;
+import java.util.BitSet;
 
 /**
  * @cdk.module test-standard
  */
 public class FingerprinterTest extends NewCDKTestCase
 {
-	
+
 	boolean standAlone = false;
 	private static LoggingTool logger = new LoggingTool(FingerprinterTest.class);
-	
+
 	public FingerprinterTest()
 	{
 		super();
@@ -65,11 +61,11 @@ public class FingerprinterTest extends NewCDKTestCase
 		IMolecule mol2 = MoleculeFactory.makePyrrole();
 		Fingerprinter fingerprinter = new Fingerprinter();
 		BitSet bs1 = fingerprinter.getFingerprint(mol1);
-		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 32, bs1.cardinality());
+		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 33, bs1.cardinality());
 		BitSet bs2 = fingerprinter.getFingerprint(mol2);
 		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 13, bs2.cardinality());
 	}
-	
+
 	/**
 	 * @cdk.bug 706786
 	 */
@@ -77,7 +73,7 @@ public class FingerprinterTest extends NewCDKTestCase
 	{
 		Molecule superstructure = null;
 		Molecule substructure = null;
-		/* We make a specifically substituted chromane here 
+		/* We make a specifically substituted chromane here
 		 * as well as the pure chromane skeleton, which should
 		 * be a substructure of the first.
 		 */
@@ -93,9 +89,9 @@ public class FingerprinterTest extends NewCDKTestCase
 		 * whether the latter is likely to be a substructure of the first by
 		 * using the fingerprinter.
 		*/
-		
+
 		Fingerprinter fingerprinter = new Fingerprinter();
-		
+
 		BitSet superBS = fingerprinter.getFingerprint(superstructure);
 		BitSet subBS = fingerprinter.getFingerprint(substructure);
 		boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
@@ -108,7 +104,7 @@ public class FingerprinterTest extends NewCDKTestCase
 		}
 		Assert.assertTrue(isSubset);
 	}
-	
+
 	/**
 	 * @cdk.bug 853254
 	 */
@@ -116,7 +112,7 @@ public class FingerprinterTest extends NewCDKTestCase
 	{
 		Molecule superstructure = null;
 		Molecule substructure = null;
-		/* We make a specifically substituted chromane here 
+		/* We make a specifically substituted chromane here
 		 * as well as the pure chromane skeleton, which should
 		 * be a substructure of the first.
 		 */
@@ -124,19 +120,19 @@ public class FingerprinterTest extends NewCDKTestCase
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		superstructure = (Molecule) reader.read((ChemObject) new Molecule());
-		//MoleculeViewer2D.display(superstructure, false, true);		
+		//MoleculeViewer2D.display(superstructure, false, true);
 		filename = "data/mdl/bug853254-1.mol";
 		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		reader = new MDLV2000Reader(ins, Mode.STRICT);
 		substructure = (Molecule) reader.read((ChemObject) new Molecule());
-		//MoleculeViewer2D.display(substructure, false, true);		
+		//MoleculeViewer2D.display(substructure, false, true);
 		/* now we've read the two and we are going to check now
 		 * whether the latter is likely to be a substructure of the first by
 		 * using the fingerprinter.
 		*/
-		
+
 		Fingerprinter fingerprinter = new Fingerprinter();
-		
+
 		BitSet superBS = fingerprinter.getFingerprint(superstructure);
 		BitSet subBS = fingerprinter.getFingerprint(substructure);
 		boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
@@ -150,19 +146,19 @@ public class FingerprinterTest extends NewCDKTestCase
 		//Fingerprinter.listDifferences(superBS, subBS);
 		Assert.assertTrue(isSubset);
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Problems with different aromaticity concepts.
-	 * 
+	 *
 	 * @cdk.bug 771485
 	 */
 	@Test public void testBug771485() throws java.lang.Exception
 	{
 		Molecule structure1 = null;
 		Molecule structure2 = null;
-		/* We make a specifically substituted chromane here 
+		/* We make a specifically substituted chromane here
 		 * as well as the pure chromane skeleton, which should
 		 * be a substructure of the first.
 		 */
@@ -178,9 +174,9 @@ public class FingerprinterTest extends NewCDKTestCase
 		 * whether the latter is likely to be a substructure of the first by
 		 * using the fingerprinter.
 		*/
-		
+
 		Fingerprinter fingerprinter = new Fingerprinter();
-		
+
 		BitSet superBS = fingerprinter.getFingerprint(structure2);
 		BitSet subBS = fingerprinter.getFingerprint(structure1);
 		boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
@@ -195,14 +191,14 @@ public class FingerprinterTest extends NewCDKTestCase
 
 	/**
 	 * Fingerprint not subset.
-	 * 
+	 *
 	 * @cdk.bug 934819
 	 */
 	@Test public void testBug934819() throws java.lang.Exception
 	{
 		Molecule superstructure = null;
 		Molecule substructure = null;
-		/* We make a specifically substituted chromane here 
+		/* We make a specifically substituted chromane here
 		 * as well as the pure chromane skeleton, which should
 		 * be a substructure of the first.
 		 */
@@ -218,9 +214,9 @@ public class FingerprinterTest extends NewCDKTestCase
 		 * whether the latter is likely to be a substructure of the first by
 		 * using the fingerprinter.
 		*/
-		
+
 		Fingerprinter fingerprinter = new Fingerprinter();
-		
+
 		BitSet superBS = fingerprinter.getFingerprint(superstructure);
 		BitSet subBS = fingerprinter.getFingerprint(substructure);
 		boolean isSubset = FingerprinterTool.isSubset(superBS, subBS);
@@ -239,7 +235,7 @@ public class FingerprinterTest extends NewCDKTestCase
 
 	/**
 	 * Fingerprinter gives different fingerprints for same molecule.
-	 * 
+	 *
 	 * @cdk.bug 931608
 	 * @cdk.bug 934819
 	 */
@@ -247,7 +243,7 @@ public class FingerprinterTest extends NewCDKTestCase
 	{
 		Molecule structure1 = null;
 		Molecule structure2 = null;
-		/* We make a specifically substituted chromane here 
+		/* We make a specifically substituted chromane here
 		 * as well as the pure chromane skeleton, which should
 		 * be a substructure of the first.
 		 */
@@ -262,16 +258,16 @@ public class FingerprinterTest extends NewCDKTestCase
 		/* now we've read the two molecules and we are going to check now
 		 * whether the two give the same bitstring.
 		*/
-		
+
 		Fingerprinter fingerprinter = new Fingerprinter();
-		
+
 		BitSet bs1 = fingerprinter.getFingerprint(structure1);
 		BitSet bs2 = fingerprinter.getFingerprint(structure2);
 		// now we do the boolean XOR on the two bitsets, leading
 		// to a bitset that has all the bits set to "true" which differ
 		// between the two original bitsets
 		bs1.xor(bs2);
-		// cardinality gives us the number of "true" bits in the 
+		// cardinality gives us the number of "true" bits in the
 		// result of the XOR operation.
 		int cardinality = bs1.cardinality();
 		if (standAlone)
@@ -300,49 +296,49 @@ public class FingerprinterTest extends NewCDKTestCase
 	@Test public void testGetFingerprint_IAtomContainer() throws java.lang.Exception
 	{
 		Fingerprinter fingerprinter = new Fingerprinter();
-		
+
 		Molecule mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Assert.assertNotNull(bs);
 		Assert.assertEquals(fingerprinter.getSize(), bs.size());
 	}
-	
+
 	@Test public void testFingerprinter() throws java.lang.Exception
 	{
 		Fingerprinter fingerprinter = new Fingerprinter();
 		Assert.assertNotNull(fingerprinter);
-		
+
 		Molecule mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
-	
+
 	@Test public void testFingerprinter_int() throws java.lang.Exception
 	{
 		Fingerprinter fingerprinter = new Fingerprinter(512);
 		Assert.assertNotNull(fingerprinter);
-		
+
 		Molecule mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
-	
+
 	@Test public void testFingerprinter_int_int() throws java.lang.Exception
 	{
 		Fingerprinter fingerprinter = new Fingerprinter(1024,7);
 		Assert.assertNotNull(fingerprinter);
-		
+
 		Molecule mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getFingerprint(mol);
 		Molecule frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getFingerprint(frag1);
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
-	
+
 	/**
 	 * @cdk.bug 1851202
 	 */
@@ -357,14 +353,14 @@ public class FingerprinterTest extends NewCDKTestCase
 
         IAtomContainer reactant = reaction.getReactants().getAtomContainer(0);
         IAtomContainer product = reaction.getProducts().getAtomContainer(0);
-        
+
         Fingerprinter fingerprinter = new Fingerprinter(64*26,8);
         BitSet bs1 = fingerprinter.getFingerprint(reactant);
         Assert.assertNotNull(bs1);
         BitSet bs2 = fingerprinter.getFingerprint(product);
         Assert.assertNotNull(bs2);
 	}
-	
+
 	public static Molecule makeFragment1()
 	{
 		Molecule mol = new Molecule();
@@ -375,7 +371,7 @@ public class FingerprinterTest extends NewCDKTestCase
 		mol.addAtom(new Atom("C")); // 4
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("C")); // 6
-				
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(0, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(0, 3, IBond.Order.SINGLE); // 3
@@ -391,7 +387,7 @@ public class FingerprinterTest extends NewCDKTestCase
 		Molecule mol = new Molecule();
 		mol.addAtom(new Atom("C")); // 0
 		mol.addAtom(new Atom("C")); // 1
-				
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		return mol;
 	}
@@ -406,7 +402,7 @@ public class FingerprinterTest extends NewCDKTestCase
 		mol.addAtom(new Atom("O")); // 4
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("C")); // 6
-				
+
 		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
 		mol.addBond(0, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(0, 3, IBond.Order.SINGLE); // 3
@@ -416,7 +412,7 @@ public class FingerprinterTest extends NewCDKTestCase
 		mol.addBond(5, 6, IBond.Order.DOUBLE); // 7
 		return mol;
 	}
-	
+
 	public static Molecule makeFragment3()
 	{
 		Molecule mol = new Molecule();
@@ -427,7 +423,7 @@ public class FingerprinterTest extends NewCDKTestCase
 		mol.addAtom(new Atom("C")); // 4
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("C")); // 6
-				
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(0, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(0, 3, IBond.Order.SINGLE); // 3
@@ -453,6 +449,6 @@ public class FingerprinterTest extends NewCDKTestCase
 		//fpt.testBug853254();
 		//fpt.testBug931608();
 		fpt.testBug934819();
-	}
+	}   
 }
 

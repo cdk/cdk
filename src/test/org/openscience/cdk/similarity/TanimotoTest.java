@@ -30,38 +30,27 @@
 
 package org.openscience.cdk.similarity;
 
-import java.util.BitSet;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 
+import java.util.BitSet;
+
 /**
  * @cdk.module test-extra
  */
-public class TanimotoTest extends CDKTestCase
+public class TanimotoTest extends NewCDKTestCase
 {
 	
 	boolean standAlone = false;
-	//private static LoggingTool logger = new LoggingTool(TanimotoTest.class);
-	
-	public TanimotoTest(String name)
-	{
-		super(name);
-	}
 
-	public static Test suite() {
-		return new TestSuite(TanimotoTest.class);
-	}
-
-	public void testTanimoto1() throws java.lang.Exception
+	@Test public void testTanimoto1() throws java.lang.Exception
 	{
 		Molecule mol1 = MoleculeFactory.makeIndole();
 		Molecule mol2 = MoleculeFactory.makePyrrole();
@@ -70,9 +59,10 @@ public class TanimotoTest extends CDKTestCase
 		BitSet bs2 = fingerprinter.getFingerprint(mol2);
 		float tanimoto = Tanimoto.calculate(bs1, bs2);
 		if (standAlone) System.out.println("Tanimoto: " + tanimoto);
-		if (!standAlone) assertEquals(0.40625, tanimoto, 0.01);
+		if (!standAlone) Assert.assertEquals(0.40625, tanimoto, 0.01);
 	}
-	public void testTanimoto2() throws java.lang.Exception
+	@Test
+    public void testTanimoto2() throws java.lang.Exception
 	{
 		Molecule mol1 = MoleculeFactory.makeIndole();
 		Molecule mol2 = MoleculeFactory.makeIndole();
@@ -81,19 +71,19 @@ public class TanimotoTest extends CDKTestCase
 		BitSet bs2 = fingerprinter.getFingerprint(mol2);
 		float tanimoto = Tanimoto.calculate(bs1, bs2);
 		if (standAlone) System.out.println("Tanimoto: " + tanimoto);
-		if (!standAlone) assertEquals(1.0, tanimoto, 0.001);
+		if (!standAlone) Assert.assertEquals(1.0, tanimoto, 0.001);
 	}
 	
-        public void testTanimoto3() throws java.lang.Exception
+        @Test public void testTanimoto3() throws java.lang.Exception
         {
             double[] f1 = {1,2,3,4,5,6,7};
             double[] f2 = {1,2,3,4,5,6,7};
             float tanimoto = Tanimoto.calculate(f1,f2);
             if (standAlone) System.out.println("Tanimoto: " + tanimoto);
-            if (!standAlone) assertEquals(1.0, tanimoto, 0.001);
+            if (!standAlone) Assert.assertEquals(1.0, tanimoto, 0.001);
         }
 
-    	public void visualTestR00258() throws java.lang.Exception
+    	@Test public void visualTestR00258() throws java.lang.Exception
     	{
     		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     		String smiles1 = "O=C(O)CCC(=O)C(=O)O";

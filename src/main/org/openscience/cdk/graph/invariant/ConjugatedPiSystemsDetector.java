@@ -21,6 +21,8 @@
 package org.openscience.cdk.graph.invariant;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -37,6 +39,7 @@ import java.util.Stack;
  *
  * @cdk.todo add negatively charged atoms (e.g. O-) to the pi system
  */
+@TestClass("org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetectorTest")
 public class ConjugatedPiSystemsDetector {
 
     /**
@@ -68,7 +71,8 @@ public class ConjugatedPiSystemsDetector {
      *@param  ac  The AtomContainer for which to detect conjugated pi systems
      *@return     The set of AtomContainers with conjugated pi systems
      */
-	public static IAtomContainerSet detect(IAtomContainer ac) {
+    @TestMethod("testDetectButadiene,test3Aminomethane_cation,testPiSystemWithCarbokation,testCyanoallene")
+    public static IAtomContainerSet detect(IAtomContainer ac) {
         IAtomContainerSet piSystemSet = ac.getBuilder().newAtomContainerSet();
 
         for (int i = 0; i < ac.getAtomCount(); i++) {

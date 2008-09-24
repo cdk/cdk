@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.zip.GZIPInputStream;
 
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IChemFormatMatcher;
 import org.openscience.cdk.io.formats.XYZFormat;
@@ -253,7 +254,36 @@ public class ReaderFactory {
             logger.error(exception.getMessage());
             logger.debug(exception);
         }
-        return createReader(new InputStreamReader(istreamToRead));
+        ISimpleChemObjectReader reader 
+            = createReader(new InputStreamReader(istreamToRead));
+        
+        /*
+         * The CMLReader demands to be given an inputstream and not a 
+         * Reader. So I am redoing everyhting one more time and giving 
+         * it that. Code below is a quick fix for olas who really needed
+         * to release Bioclipse. 
+         * 
+         *  // jonalv 
+         */
+        if ( reader instanceof CMLReader ) {
+            try {
+                bistream.reset();
+                byte[] abMagic = new byte[4];
+                countRead = bistream.read(abMagic, 0, 4);
+                bistream.reset();
+                if (countRead == 4) {
+                    if (abMagic[0] == (byte)0x1F && abMagic[1] == (byte)0x8B) {
+                        istreamToRead = new GZIPInputStream(bistream);
+                    }
+                }
+                reader.setReader( istreamToRead );
+            } 
+            catch ( CDKException e ) {
+                logger.error("Could not set the Reader source: ", e.getMessage());
+                logger.debug(e);
+            }
+        }
+        return reader;
     }
     
     /**

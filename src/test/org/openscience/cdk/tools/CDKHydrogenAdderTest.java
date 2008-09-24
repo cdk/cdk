@@ -20,32 +20,13 @@
  */
 package org.openscience.cdk.tools;
 
-import java.io.InputStream;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.vecmath.Point2d;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.*;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNAtom;
 import org.openscience.cdk.nonotify.NNMolecule;
@@ -54,6 +35,11 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+
+import javax.vecmath.Point2d;
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Tests CDK's hydrogen adding capabilities in terms of
@@ -64,37 +50,33 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * @author      Egon Willighagen <egonw@users.sf.net>
  * @cdk.created 2007-07-28
  */
-public class CDKHydrogenAdderTest extends CDKTestCase {
+public class CDKHydrogenAdderTest extends NewCDKTestCase {
 
 //	private final static LoggingTool logger = new LoggingTool(CDKHydrogenAdderTest.class);
 	private final static CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(NoNotificationChemObjectBuilder.getInstance());
 	private final static CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(NoNotificationChemObjectBuilder.getInstance());
-	
-    public CDKHydrogenAdderTest(String name) {
-        super(name);
-    }
 
-    public void setUp() throws Exception {}
-
-    public static Test suite() {
-        return new TestSuite(CDKHydrogenAdderTest.class);
+    @Test
+    public void testInstance() {
+        Assert.assertNotNull(adder);
     }
     
+    @Test
     public void testMethane() throws CDKException {
     	IMolecule molecule = new NNMolecule();
     	IAtom newAtom = new NNAtom(Elements.CARBON);
     	molecule.addAtom(newAtom);
     	IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(newAtom, type);
     	
-    	assertNull(newAtom.getHydrogenCount());
+    	Assert.assertNull(newAtom.getHydrogenCount());
     	adder.addImplicitHydrogens(molecule);
-    	assertNotNull(newAtom.getHydrogenCount());
-    	assertEquals(4, newAtom.getHydrogenCount().intValue());	
+    	Assert.assertNotNull(newAtom.getHydrogenCount());
+    	Assert.assertEquals(4, newAtom.getHydrogenCount().intValue());
     }
 
-    public void testFormaldehyde() throws CDKException {
+    @Test public void testFormaldehyde() throws CDKException {
     	IMolecule molecule = new NNMolecule();
     	IAtom newAtom = new NNAtom(Elements.CARBON);
     	IAtom newAtom2 = new NNAtom(Elements.OXYGEN);
@@ -102,21 +84,21 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	molecule.addAtom(newAtom2);
     	molecule.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
     	IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(newAtom, type);
     	type = matcher.findMatchingAtomType(molecule, newAtom2);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(newAtom2, type);
     	
-    	assertNull(newAtom.getHydrogenCount());
+    	Assert.assertNull(newAtom.getHydrogenCount());
     	adder.addImplicitHydrogens(molecule);
-    	assertNotNull(newAtom.getHydrogenCount());
-    	assertNotNull(newAtom2.getHydrogenCount());
-    	assertEquals(2, newAtom.getHydrogenCount().intValue());	
-    	assertEquals(0, newAtom2.getHydrogenCount().intValue());	
+    	Assert.assertNotNull(newAtom.getHydrogenCount());
+    	Assert.assertNotNull(newAtom2.getHydrogenCount());
+    	Assert.assertEquals(2, newAtom.getHydrogenCount().intValue());
+    	Assert.assertEquals(0, newAtom2.getHydrogenCount().intValue());
     }
 
-    public void testMethanol() throws CDKException {
+    @Test public void testMethanol() throws CDKException {
     	IMolecule molecule = new NNMolecule();
     	IAtom newAtom = new NNAtom(Elements.CARBON);
     	IAtom newAtom2 = new NNAtom(Elements.OXYGEN);
@@ -124,21 +106,21 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	molecule.addAtom(newAtom2);
     	molecule.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
     	IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(newAtom, type);
     	type = matcher.findMatchingAtomType(molecule, newAtom2);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(newAtom2, type);
     	
-    	assertNull(newAtom.getHydrogenCount());
+    	Assert.assertNull(newAtom.getHydrogenCount());
     	adder.addImplicitHydrogens(molecule);
-    	assertNotNull(newAtom.getHydrogenCount());
-    	assertNotNull(newAtom2.getHydrogenCount());
-    	assertEquals(3, newAtom.getHydrogenCount().intValue());	
-    	assertEquals(1, newAtom2.getHydrogenCount().intValue());	
+    	Assert.assertNotNull(newAtom.getHydrogenCount());
+    	Assert.assertNotNull(newAtom2.getHydrogenCount());
+    	Assert.assertEquals(3, newAtom.getHydrogenCount().intValue());
+    	Assert.assertEquals(1, newAtom2.getHydrogenCount().intValue());
     }
 
-    public void testHCN() throws CDKException {
+    @Test public void testHCN() throws CDKException {
     	IMolecule molecule = new NNMolecule();
     	IAtom newAtom = new NNAtom(Elements.CARBON);
     	IAtom newAtom2 = new NNAtom(Elements.NITROGEN);
@@ -146,21 +128,21 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	molecule.addAtom(newAtom2);
     	molecule.addBond(0,1,CDKConstants.BONDORDER_TRIPLE);
     	IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(newAtom, type);
     	type = matcher.findMatchingAtomType(molecule, newAtom2);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(newAtom2, type);
     	
-    	assertNull(newAtom.getHydrogenCount());
+    	Assert.assertNull(newAtom.getHydrogenCount());
     	adder.addImplicitHydrogens(molecule);
-    	assertNotNull(newAtom.getHydrogenCount());
-    	assertNotNull(newAtom2.getHydrogenCount());
-    	assertEquals(1, newAtom.getHydrogenCount().intValue());	
-    	assertEquals(0, newAtom2.getHydrogenCount().intValue());	
+    	Assert.assertNotNull(newAtom.getHydrogenCount());
+    	Assert.assertNotNull(newAtom2.getHydrogenCount());
+    	Assert.assertEquals(1, newAtom.getHydrogenCount().intValue());
+    	Assert.assertEquals(0, newAtom2.getHydrogenCount().intValue());
     }
 
-    public void testMethylAmine() throws CDKException {
+    @Test public void testMethylAmine() throws CDKException {
     	IMolecule molecule = new NNMolecule();
     	IAtom newAtom = new NNAtom(Elements.CARBON);
     	IAtom newAtom2 = new NNAtom(Elements.NITROGEN);
@@ -168,21 +150,21 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	molecule.addAtom(newAtom2);
     	molecule.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
     	IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(newAtom, type);
     	type = matcher.findMatchingAtomType(molecule, newAtom2);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(newAtom2, type);
     	
-    	assertNull(newAtom.getHydrogenCount());
+    	Assert.assertNull(newAtom.getHydrogenCount());
     	adder.addImplicitHydrogens(molecule);
-    	assertNotNull(newAtom.getHydrogenCount());
-    	assertNotNull(newAtom2.getHydrogenCount());
-    	assertEquals(3, newAtom.getHydrogenCount().intValue());	
-    	assertEquals(2, newAtom2.getHydrogenCount().intValue());	
+    	Assert.assertNotNull(newAtom.getHydrogenCount());
+    	Assert.assertNotNull(newAtom2.getHydrogenCount());
+    	Assert.assertEquals(3, newAtom.getHydrogenCount().intValue());
+    	Assert.assertEquals(2, newAtom2.getHydrogenCount().intValue());
     }
 
-    public void testMethyleneImine() throws CDKException {
+    @Test public void testMethyleneImine() throws CDKException {
     	IMolecule molecule = new NNMolecule();
     	IAtom newAtom = new NNAtom(Elements.CARBON);
     	IAtom newAtom2 = new NNAtom(Elements.NITROGEN);
@@ -190,148 +172,148 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	molecule.addAtom(newAtom2);
     	molecule.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
     	IAtomType type = matcher.findMatchingAtomType(molecule, newAtom);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(newAtom, type);
     	type = matcher.findMatchingAtomType(molecule, newAtom2);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(newAtom2, type);
     	
-    	assertNull(newAtom.getHydrogenCount());
+    	Assert.assertNull(newAtom.getHydrogenCount());
     	adder.addImplicitHydrogens(molecule);
-    	assertNotNull(newAtom.getHydrogenCount());
-    	assertNotNull(newAtom2.getHydrogenCount());
-    	assertEquals(2, newAtom.getHydrogenCount().intValue());	
-    	assertEquals(1, newAtom2.getHydrogenCount().intValue());	
+    	Assert.assertNotNull(newAtom.getHydrogenCount());
+    	Assert.assertNotNull(newAtom2.getHydrogenCount());
+    	Assert.assertEquals(2, newAtom.getHydrogenCount().intValue());
+    	Assert.assertEquals(1, newAtom2.getHydrogenCount().intValue());
     }
     
-    public void testSulphur() throws Exception {
+    @Test public void testSulphur() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("S");
         mol.addAtom(atom);
     	IAtomType type = matcher.findMatchingAtomType(mol, atom);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(atom, type);
         
-    	assertNull(atom.getHydrogenCount());
+    	Assert.assertNull(atom.getHydrogenCount());
         adder.addImplicitHydrogens(mol);
-        assertEquals(1, mol.getAtomCount());
-    	assertNotNull(atom.getHydrogenCount());
-    	assertEquals(2, atom.getHydrogenCount().intValue());	
+        Assert.assertEquals(1, mol.getAtomCount());
+    	Assert.assertNotNull(atom.getHydrogenCount());
+    	Assert.assertEquals(2, atom.getHydrogenCount().intValue());
     }
 
-    public void testProton() throws Exception {
+    @Test public void testProton() throws Exception {
     	Molecule mol = new Molecule();
     	Atom proton = new Atom("H");
     	proton.setFormalCharge(+1);
     	mol.addAtom(proton);
     	IAtomType type = matcher.findMatchingAtomType(mol, proton);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(proton, type);
 
     	adder.addImplicitHydrogens(mol);
 
-    	assertEquals(1, mol.getAtomCount());
+    	Assert.assertEquals(1, mol.getAtomCount());
     	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(mol);
-    	assertEquals(1, MolecularFormulaManipulator.getElementCount(formula,mol.getBuilder().newElement("H")));
-    	assertEquals(0, mol.getConnectedBondsCount(proton));
-    	assertNotNull(proton.getHydrogenCount());
-    	assertEquals(0, proton.getHydrogenCount().intValue());
+    	Assert.assertEquals(1, MolecularFormulaManipulator.getElementCount(formula,mol.getBuilder().newElement("H")));
+    	Assert.assertEquals(0, mol.getConnectedBondsCount(proton));
+    	Assert.assertNotNull(proton.getHydrogenCount());
+    	Assert.assertEquals(0, proton.getHydrogenCount().intValue());
     }
 
-    public void testHydrogen() throws Exception {
+    @Test public void testHydrogen() throws Exception {
     	Molecule mol = new Molecule();
     	Atom proton = new Atom("H");
     	mol.addAtom(proton);
     	IAtomType type = matcher.findMatchingAtomType(mol, proton);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(proton, type);
 
     	adder.addImplicitHydrogens(mol);
 
-    	assertEquals(1, mol.getAtomCount());
+    	Assert.assertEquals(1, mol.getAtomCount());
     	IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(mol);
-    	assertEquals(1, MolecularFormulaManipulator.getElementCount(formula,mol.getBuilder().newElement("H")));
-    	assertEquals(0, mol.getConnectedBondsCount(proton));
-    	assertNotNull(proton.getHydrogenCount());
-    	assertEquals(1, proton.getHydrogenCount().intValue());
+    	Assert.assertEquals(1, MolecularFormulaManipulator.getElementCount(formula,mol.getBuilder().newElement("H")));
+    	Assert.assertEquals(0, mol.getConnectedBondsCount(proton));
+    	Assert.assertNotNull(proton.getHydrogenCount());
+    	Assert.assertEquals(1, proton.getHydrogenCount().intValue());
     }
 
-    public void testAmmonia() throws Exception {
+    @Test public void testAmmonia() throws Exception {
         Molecule mol = new Molecule();
         Atom nitrogen = new Atom("N");
         mol.addAtom(nitrogen);
         IAtomType type = matcher.findMatchingAtomType(mol, nitrogen);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(nitrogen, type);
         
         adder.addImplicitHydrogens(mol);
-        assertNotNull(nitrogen.getHydrogenCount());
-        assertEquals(3, nitrogen.getHydrogenCount().intValue());
+        Assert.assertNotNull(nitrogen.getHydrogenCount());
+        Assert.assertEquals(3, nitrogen.getHydrogenCount().intValue());
     }
 
-    public void testAmmonium() throws Exception {
+    @Test public void testAmmonium() throws Exception {
         Molecule mol = new Molecule();
         Atom nitrogen = new Atom("N");
         nitrogen.setFormalCharge(+1);
         mol.addAtom(nitrogen);
         IAtomType type = matcher.findMatchingAtomType(mol, nitrogen);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(nitrogen, type);
         
         adder.addImplicitHydrogens(mol);
-        assertNotNull(nitrogen.getHydrogenCount());
-        assertEquals(4, nitrogen.getHydrogenCount().intValue());
+        Assert.assertNotNull(nitrogen.getHydrogenCount());
+        Assert.assertEquals(4, nitrogen.getHydrogenCount().intValue());
     }
 
-    public void testWater() throws Exception {
+    @Test public void testWater() throws Exception {
         Molecule mol = new Molecule();
         Atom oxygen = new Atom("O");
         mol.addAtom(oxygen);
         IAtomType type = matcher.findMatchingAtomType(mol, oxygen);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(oxygen, type);
         
         adder.addImplicitHydrogens(mol);
-        assertNotNull(oxygen.getHydrogenCount());
-        assertEquals(2, oxygen.getHydrogenCount().intValue());
+        Assert.assertNotNull(oxygen.getHydrogenCount());
+        Assert.assertEquals(2, oxygen.getHydrogenCount().intValue());
     }
 
-    public void testHydroxonium() throws Exception {
+    @Test public void testHydroxonium() throws Exception {
         Molecule mol = new Molecule();
         Atom oxygen = new Atom("O");
         oxygen.setFormalCharge(+1);
         mol.addAtom(oxygen);
         IAtomType type = matcher.findMatchingAtomType(mol, oxygen);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(oxygen, type);
 
         adder.addImplicitHydrogens(mol);
-        assertNotNull(oxygen.getHydrogenCount());
-        assertEquals(3, oxygen.getHydrogenCount().intValue());
+        Assert.assertNotNull(oxygen.getHydrogenCount());
+        Assert.assertEquals(3, oxygen.getHydrogenCount().intValue());
     }
 
-    public void testHydroxyl() throws Exception {
+    @Test public void testHydroxyl() throws Exception {
         Molecule mol = new Molecule();
         Atom oxygen = new Atom("O");
         oxygen.setFormalCharge(-1);
         mol.addAtom(oxygen);
         IAtomType type = matcher.findMatchingAtomType(mol, oxygen);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(oxygen, type);
         
         adder.addImplicitHydrogens(mol);
-        assertNotNull(oxygen.getHydrogenCount());
-        assertEquals(1, oxygen.getHydrogenCount().intValue());
+        Assert.assertNotNull(oxygen.getHydrogenCount());
+        Assert.assertEquals(1, oxygen.getHydrogenCount().intValue());
     }    
 
-    public void testHalogens() throws Exception {
+    @Test public void testHalogens() throws Exception {
         halogenTest("I");
         halogenTest("F");
         halogenTest("Cl");
         halogenTest("Br");
     }
 
-    public void testHalogenAnions() throws Exception {
+    @Test public void testHalogenAnions() throws Exception {
         negativeHalogenTest("I");
         negativeHalogenTest("F");
         negativeHalogenTest("Cl");
@@ -343,13 +325,13 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         Atom atom = new Atom(halogen);
         mol.addAtom(atom);
         IAtomType type = matcher.findMatchingAtomType(mol, atom);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(atom, type);
         
         adder.addImplicitHydrogens(mol);
-        assertEquals(1, mol.getAtomCount());
-        assertNotNull(atom.getHydrogenCount());
-        assertEquals(1, atom.getHydrogenCount().intValue());
+        Assert.assertEquals(1, mol.getAtomCount());
+        Assert.assertNotNull(atom.getHydrogenCount());
+        Assert.assertEquals(1, atom.getHydrogenCount().intValue());
     }
 
     private void negativeHalogenTest(String halogen) throws Exception {
@@ -358,16 +340,16 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         atom.setFormalCharge(-1);
         mol.addAtom(atom);
         IAtomType type = matcher.findMatchingAtomType(mol, atom);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(atom, type);
         
         adder.addImplicitHydrogens(mol);
-        assertEquals(1, mol.getAtomCount());
-        assertNotNull(atom.getHydrogenCount());
-        assertEquals(0, atom.getHydrogenCount().intValue());
+        Assert.assertEquals(1, mol.getAtomCount());
+        Assert.assertNotNull(atom.getHydrogenCount());
+        Assert.assertEquals(0, atom.getHydrogenCount().intValue());
     }
 
-    public void testSulfite() throws Exception {
+    @Test public void testSulfite() throws Exception {
         Molecule mol = new Molecule();
         Atom s = new Atom("S");
         Atom o1 = new Atom("O");
@@ -384,34 +366,34 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         mol.addBond(b2);
         mol.addBond(b3);
         IAtomType type = matcher.findMatchingAtomType(mol, s);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(s, type);
         type = matcher.findMatchingAtomType(mol, o1);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(o1, type);
         type = matcher.findMatchingAtomType(mol, o2);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(o2, type);
         type = matcher.findMatchingAtomType(mol, o3);
-    	assertNotNull(type);
+    	Assert.assertNotNull(type);
     	AtomTypeManipulator.configure(o3, type);
         
         adder.addImplicitHydrogens(mol);
 
-        assertEquals(4, mol.getAtomCount());
-        assertEquals(3, mol.getBondCount());
-        assertNotNull(s.getHydrogenCount());
-        assertEquals(0, s.getHydrogenCount().intValue());
-        assertNotNull(o1.getHydrogenCount());
-        assertEquals(1, o1.getHydrogenCount().intValue());
-        assertNotNull(o2.getHydrogenCount());
-        assertEquals(1, o2.getHydrogenCount().intValue());
-        assertNotNull(o3.getHydrogenCount());
-        assertEquals(0, o3.getHydrogenCount().intValue());
+        Assert.assertEquals(4, mol.getAtomCount());
+        Assert.assertEquals(3, mol.getBondCount());
+        Assert.assertNotNull(s.getHydrogenCount());
+        Assert.assertEquals(0, s.getHydrogenCount().intValue());
+        Assert.assertNotNull(o1.getHydrogenCount());
+        Assert.assertEquals(1, o1.getHydrogenCount().intValue());
+        Assert.assertNotNull(o2.getHydrogenCount());
+        Assert.assertEquals(1, o2.getHydrogenCount().intValue());
+        Assert.assertNotNull(o3.getHydrogenCount());
+        Assert.assertEquals(0, o3.getHydrogenCount().intValue());
 
     }
     
-    public void testAceticAcid() throws Exception {
+    @Test public void testAceticAcid() throws Exception {
         Molecule mol = new Molecule();
         Atom carbonylOxygen = new Atom("O");
         Atom hydroxylOxygen = new Atom("O");
@@ -430,15 +412,15 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         findAndConfigureAtomTypesForAllAtoms(mol);
         adder.addImplicitHydrogens(mol);
         
-        assertEquals(4, mol.getAtomCount());
-        assertEquals(3, mol.getBondCount());
-        assertEquals(0, carbonylOxygen.getHydrogenCount().intValue());
-        assertEquals(1, hydroxylOxygen.getHydrogenCount().intValue());
-        assertEquals(3, methylCarbon.getHydrogenCount().intValue());
-        assertEquals(0, carbonylCarbon.getHydrogenCount().intValue());
+        Assert.assertEquals(4, mol.getAtomCount());
+        Assert.assertEquals(3, mol.getBondCount());
+        Assert.assertEquals(0, carbonylOxygen.getHydrogenCount().intValue());
+        Assert.assertEquals(1, hydroxylOxygen.getHydrogenCount().intValue());
+        Assert.assertEquals(3, methylCarbon.getHydrogenCount().intValue());
+        Assert.assertEquals(0, carbonylCarbon.getHydrogenCount().intValue());
     }
 
-    public void testEthane() throws Exception {
+    @Test public void testEthane() throws Exception {
         Molecule mol = new Molecule();
         Atom carbon1 = new Atom("C");
         Atom carbon2 = new Atom("C");
@@ -449,13 +431,13 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         findAndConfigureAtomTypesForAllAtoms(mol);
         adder.addImplicitHydrogens(mol);
         
-        assertEquals(2, mol.getAtomCount());
-        assertEquals(1, mol.getBondCount());
-        assertEquals(3, carbon1.getHydrogenCount().intValue());
-        assertEquals(3, carbon2.getHydrogenCount().intValue());
+        Assert.assertEquals(2, mol.getAtomCount());
+        Assert.assertEquals(1, mol.getBondCount());
+        Assert.assertEquals(3, carbon1.getHydrogenCount().intValue());
+        Assert.assertEquals(3, carbon2.getHydrogenCount().intValue());
     }
 
-    public void testEthene() throws Exception {
+    @Test public void testEthene() throws Exception {
         Molecule mol = new Molecule();
         Atom carbon1 = new Atom("C");
         Atom carbon2 = new Atom("C");
@@ -466,13 +448,13 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         findAndConfigureAtomTypesForAllAtoms(mol);
         adder.addImplicitHydrogens(mol);
         
-        assertEquals(2, mol.getAtomCount());
-        assertEquals(1, mol.getBondCount());
-        assertEquals(2, carbon1.getHydrogenCount().intValue());
-        assertEquals(2, carbon2.getHydrogenCount().intValue());
+        Assert.assertEquals(2, mol.getAtomCount());
+        Assert.assertEquals(1, mol.getBondCount());
+        Assert.assertEquals(2, carbon1.getHydrogenCount().intValue());
+        Assert.assertEquals(2, carbon2.getHydrogenCount().intValue());
     }
 
-    public void testEthyne() throws Exception {
+    @Test public void testEthyne() throws Exception {
         Molecule mol = new Molecule();
         Atom carbon1 = new Atom("C");
         Atom carbon2 = new Atom("C");
@@ -483,13 +465,13 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         findAndConfigureAtomTypesForAllAtoms(mol);
         adder.addImplicitHydrogens(mol);
         
-        assertEquals(2, mol.getAtomCount());
-        assertEquals(1, mol.getBondCount());
-        assertEquals(1, carbon1.getHydrogenCount().intValue());
-        assertEquals(1, carbon2.getHydrogenCount().intValue());
+        Assert.assertEquals(2, mol.getAtomCount());
+        Assert.assertEquals(1, mol.getBondCount());
+        Assert.assertEquals(1, carbon1.getHydrogenCount().intValue());
+        Assert.assertEquals(1, carbon2.getHydrogenCount().intValue());
     }
 
-    public void testAromaticSaturation() throws Exception {
+    @Test public void testAromaticSaturation() throws Exception {
         Molecule mol = new Molecule();
         mol.addAtom(new Atom("C")); // 0
         mol.addAtom(new Atom("C")); // 1
@@ -517,10 +499,10 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         }
         findAndConfigureAtomTypesForAllAtoms(mol);
         adder.addImplicitHydrogens(mol);
-        assertEquals(6, AtomContainerManipulator.getTotalHydrogenCount(mol));
+        Assert.assertEquals(6, AtomContainerManipulator.getTotalHydrogenCount(mol));
     }
 
-    public void testaddImplicitHydrogensToSatisfyValency_OldValue() throws Exception {
+    @Test public void testaddImplicitHydrogensToSatisfyValency_OldValue() throws Exception {
         Molecule mol = new Molecule();
         mol.addAtom(new Atom("C"));
         Atom oxygen = new Atom("O");
@@ -530,16 +512,14 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         mol.addBond(0, 1, IBond.Order.SINGLE);
         mol.addBond(1, 2, IBond.Order.SINGLE);
         
-        oxygen.setHydrogenCount(2); /* e.g. caused by the fact that the element symbol
-                                       was changed from C to O (=actual bug) */
         findAndConfigureAtomTypesForAllAtoms(mol);
         adder.addImplicitHydrogens(mol);
         
-        assertNotNull(oxygen.getHydrogenCount());
-        assertEquals(0, oxygen.getHydrogenCount().intValue());
+        Assert.assertNotNull(oxygen.getHydrogenCount());
+        Assert.assertEquals(0, oxygen.getHydrogenCount().intValue());
     }
 
-    public void testAdenine() throws Exception 
+    @Test public void testAdenine() throws Exception
     {
     	IMolecule mol = new Molecule(); // Adenine
     	IAtom a1 = mol.getBuilder().newAtom("C");
@@ -587,14 +567,14 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
 
     	findAndConfigureAtomTypesForAllAtoms(mol);
         adder.addImplicitHydrogens(mol);
-        assertEquals(5, AtomContainerManipulator.getTotalHydrogenCount(mol));
+        Assert.assertEquals(5, AtomContainerManipulator.getTotalHydrogenCount(mol));
     }
 
     /**
      * @cdk.bug 1727373
      *
      */
-    public void testBug1727373() throws Exception {
+    @Test public void testBug1727373() throws Exception {
         Molecule molecule = null;
         String filename = "data/mdl/carbocations.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -602,29 +582,45 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         molecule = (Molecule)reader.read((ChemObject)new Molecule());
     	findAndConfigureAtomTypesForAllAtoms(molecule);
         adder.addImplicitHydrogens(molecule);
-        assertEquals(2,molecule.getAtom(0).getHydrogenCount().intValue());
-        assertEquals(0,molecule.getAtom(1).getHydrogenCount().intValue());
-        assertEquals(1,molecule.getAtom(2).getHydrogenCount().intValue());
-        assertEquals(2,molecule.getAtom(3).getHydrogenCount().intValue());
+        Assert.assertEquals(2,molecule.getAtom(0).getHydrogenCount().intValue());
+        Assert.assertEquals(0,molecule.getAtom(1).getHydrogenCount().intValue());
+        Assert.assertEquals(1,molecule.getAtom(2).getHydrogenCount().intValue());
+        Assert.assertEquals(2,molecule.getAtom(3).getHydrogenCount().intValue());
     }
 
     /**
      * @cdk.bug 1575269
      */
-    public void testBug1575269() throws Exception {
+    @Test public void testBug1575269() throws Exception {
         String filename = "data/mdl/furan.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IMolecule molecule = (IMolecule)reader.read((ChemObject)new Molecule());
     	findAndConfigureAtomTypesForAllAtoms(molecule);
         adder.addImplicitHydrogens(molecule);
-        assertEquals(1,molecule.getAtom(0).getHydrogenCount().intValue());
-        assertEquals(1,molecule.getAtom(1).getHydrogenCount().intValue());
-        assertEquals(1,molecule.getAtom(2).getHydrogenCount().intValue());
-        assertEquals(1,molecule.getAtom(3).getHydrogenCount().intValue());
+        Assert.assertEquals(1,molecule.getAtom(0).getHydrogenCount().intValue());
+        Assert.assertEquals(1,molecule.getAtom(1).getHydrogenCount().intValue());
+        Assert.assertEquals(1,molecule.getAtom(2).getHydrogenCount().intValue());
+        Assert.assertEquals(1,molecule.getAtom(3).getHydrogenCount().intValue());
     }
 
-    public void testNaCl() throws Exception {
+    @Test
+    public void testImpHByAtom() throws Exception {
+        String filename = "data/mdl/furan.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IMolecule molecule = (IMolecule) reader.read((ChemObject) new Molecule());
+        findAndConfigureAtomTypesForAllAtoms(molecule);
+        for (IAtom atom : molecule.atoms()) {
+            adder.addImplicitHydrogens(molecule, atom);
+        }
+        Assert.assertEquals(1, molecule.getAtom(0).getHydrogenCount().intValue());
+        Assert.assertEquals(1, molecule.getAtom(1).getHydrogenCount().intValue());
+        Assert.assertEquals(1, molecule.getAtom(2).getHydrogenCount().intValue());
+        Assert.assertEquals(1, molecule.getAtom(3).getHydrogenCount().intValue());
+    }
+
+    @Test public void testNaCl() throws Exception {
         Molecule mol = new Molecule();
         Atom cl = new Atom("Cl");
         cl.setFormalCharge(-1);
@@ -635,46 +631,46 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	findAndConfigureAtomTypesForAllAtoms(mol);
         adder.addImplicitHydrogens(mol);
         
-        assertEquals(2, mol.getAtomCount());
-        assertEquals(0, AtomContainerManipulator.getTotalHydrogenCount(mol));
-        assertEquals(0, mol.getConnectedBondsCount(cl));
-        assertEquals(0, cl.getHydrogenCount().intValue());
-        assertEquals(0, mol.getConnectedBondsCount(na));
-        assertEquals(0, na.getHydrogenCount().intValue());
+        Assert.assertEquals(2, mol.getAtomCount());
+        Assert.assertEquals(0, AtomContainerManipulator.getTotalHydrogenCount(mol));
+        Assert.assertEquals(0, mol.getConnectedBondsCount(cl));
+        Assert.assertEquals(0, cl.getHydrogenCount().intValue());
+        Assert.assertEquals(0, mol.getConnectedBondsCount(na));
+        Assert.assertEquals(0, na.getHydrogenCount().intValue());
     }
 
     /**
      * @cdk.bug 1244612
      */
-    public void testSulfurCompound_ImplicitHydrogens() throws Exception {
+    @Test public void testSulfurCompound_ImplicitHydrogens() throws Exception {
         String filename = "data/mdl/sulfurCompound.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-        assertEquals(1, containersList.size());
+        Assert.assertEquals(1, containersList.size());
 
         IAtomContainer atomContainer_0 = (IAtomContainer)containersList.get(0);
-        assertEquals(10, atomContainer_0.getAtomCount());
+        Assert.assertEquals(10, atomContainer_0.getAtomCount());
         IAtom sulfur = atomContainer_0.getAtom(1);
     	findAndConfigureAtomTypesForAllAtoms(atomContainer_0);
         adder.addImplicitHydrogens(atomContainer_0);
-        assertEquals("S", sulfur.getSymbol());
-        assertNotNull(sulfur.getHydrogenCount());
-        assertEquals(0, sulfur.getHydrogenCount().intValue());
-        assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
+        Assert.assertEquals("S", sulfur.getSymbol());
+        Assert.assertNotNull(sulfur.getHydrogenCount());
+        Assert.assertEquals(0, sulfur.getHydrogenCount().intValue());
+        Assert.assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
 
-        assertEquals(10, atomContainer_0.getAtomCount());
+        Assert.assertEquals(10, atomContainer_0.getAtomCount());
 
-        assertNotNull(sulfur.getHydrogenCount());
-        assertEquals(0, sulfur.getHydrogenCount().intValue());
-        assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
+        Assert.assertNotNull(sulfur.getHydrogenCount());
+        Assert.assertEquals(0, sulfur.getHydrogenCount().intValue());
+        Assert.assertEquals(3, atomContainer_0.getConnectedAtomsCount(sulfur));
     }
     
     /**
      * @cdk.bug 1627763
      */
-    public void testBug1627763() throws Exception {
+    @Test public void testBug1627763() throws Exception {
     	IMolecule mol = new Molecule();
     	mol.addAtom(mol.getBuilder().newAtom("C"));
     	mol.addAtom(mol.getBuilder().newAtom("O"));
@@ -689,16 +685,16 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         while (neighbors.hasNext()) {
         	if (neighbors.next().getSymbol().equals("H")) hCount++;
         }
-        assertEquals(3, hCount);
+        Assert.assertEquals(3, hCount);
         hCount = 0;
         neighbors = mol.getConnectedAtomsList(mol.getAtom(1)).iterator(); 
         while (neighbors.hasNext()) {
         	if (neighbors.next().getSymbol().equals("H")) hCount++;
         }
-        assertEquals(1, hCount);
+        Assert.assertEquals(1, hCount);
     }
     
-    public void testMercaptan() throws Exception {
+    @Test public void testMercaptan() throws Exception {
     	IMolecule mol = new Molecule();
     	mol.addAtom(mol.getBuilder().newAtom("C"));
     	mol.addAtom(mol.getBuilder().newAtom("C"));
@@ -725,25 +721,25 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         while (neighbors.hasNext()) {
         	if (neighbors.next().getSymbol().equals("H")) hCount++;
         }
-        assertEquals(2, hCount);
+        Assert.assertEquals(2, hCount);
         hCount = 0;
         neighbors = mol.getConnectedAtomsList(mol.getAtom(1)).iterator(); 
         while (neighbors.hasNext()) {
         	if (neighbors.next().getSymbol().equals("H")) hCount++;
         }
-        assertEquals(1, hCount);
+        Assert.assertEquals(1, hCount);
         hCount = 0;
         neighbors = mol.getConnectedAtomsList(mol.getAtom(2)).iterator(); 
         while (neighbors.hasNext()) {
         	if (neighbors.next().getSymbol().equals("H")) hCount++;
         }
-        assertEquals(2, hCount);
+        Assert.assertEquals(2, hCount);
         hCount = 0;
         neighbors = mol.getConnectedAtomsList(mol.getAtom(3)).iterator(); 
         while (neighbors.hasNext()) {
         	if (neighbors.next().getSymbol().equals("H")) hCount++;
         }
-        assertEquals(1, hCount);
+        Assert.assertEquals(1, hCount);
     }
 
     private void findAndConfigureAtomTypesForAllAtoms(IAtomContainer container) throws CDKException {
@@ -751,7 +747,7 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
     	while (atoms.hasNext()) {
     		IAtom atom = atoms.next();
     		IAtomType type = matcher.findMatchingAtomType(container, atom);
-        	assertNotNull(type);
+        	Assert.assertNotNull(type);
         	AtomTypeManipulator.configure(atom, type);
     	}
     }

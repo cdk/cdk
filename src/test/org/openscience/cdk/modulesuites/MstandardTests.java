@@ -188,7 +188,7 @@ public class MstandardTests {
         suite.addTest(new JUnit4TestAdapter(EStateAtomTypeMatcherTest.class));
         suite.addTest(new JUnit4TestAdapter(AtomContainerComparatorTest.class));
         suite.addTest(new JUnit4TestAdapter(CDKHueckelAromaticityDetectorTest.class));
-        suite.addTest(HOSECodeGeneratorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(HOSECodeGeneratorTest.class));
         suite.addTest(LonePairElectronCheckerTest.suite());
 
         return suite;

@@ -26,7 +26,6 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.coverage.SmilesCoverageTest;
 import org.openscience.cdk.io.SMILESReaderTest;
 import org.openscience.cdk.io.iterator.IteratingSMILESReaderTest;
@@ -49,13 +48,13 @@ public class MsmilesTests {
 
         // IO classes
         suite.addTest(new JUnit4TestAdapter(SMILESReaderTest.class));
-        suite.addTest(IteratingSMILESReaderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(IteratingSMILESReaderTest.class));
         // from cdk.test.smiles
         suite.addTest(new JUnit4TestAdapter(DeduceBondSystemToolTest.class));
-        suite.addTest(SmilesGeneratorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SmilesGeneratorTest.class));
         suite.addTest(new JUnit4TestAdapter(SmilesParserTest.class));
         // from cdk.tools
-        suite.addTest(NormalizerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(NormalizerTest.class));
 
         return suite;
     }

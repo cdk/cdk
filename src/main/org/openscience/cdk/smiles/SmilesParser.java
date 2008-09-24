@@ -27,6 +27,8 @@ package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -78,6 +80,7 @@ import java.util.StringTokenizer;
  * @cdk.bug        1719287
  * @cdk.bug        1875949
  */
+@TestClass("org.openscience.cdk.smiles.SmilesParserTest")
 public class SmilesParser {
 
 	private final static String HAS_HARDCODED_HYDROGEN_COUNT = "SmilesParser.HasHardcodedHydrogenCount";
@@ -93,7 +96,7 @@ public class SmilesParser {
 	 *
 	 * @param builder IChemObjectBuilder used to create the IMolecules from
 	 */
-	public SmilesParser(IChemObjectBuilder builder)
+    public SmilesParser(IChemObjectBuilder builder)
 	{
 		logger = new LoggingTool(this);
 		this.builder = builder;
@@ -118,7 +121,16 @@ public class SmilesParser {
 	IMolecule molecule = null;
 	String currentSymbol = null;
 
-	public IReaction parseReactionSmiles(String smiles) throws InvalidSmilesException
+    /**
+     * Parse a reaction SMILES.
+     *
+     * @param smiles The SMILES string to parse
+     * @return An instance of {@link org.openscience.cdk.interfaces.IReaction}
+     * @see #parseSmiles(String)
+     * @throws InvalidSmilesException if the string cannot be parsed
+     */
+    @TestMethod("testReaction,testReactionWithAgents")
+    public IReaction parseReactionSmiles(String smiles) throws InvalidSmilesException
 	{
 		StringTokenizer tokenizer = new StringTokenizer(smiles, ">");
 		String reactantSmiles = tokenizer.nextToken();
@@ -169,10 +181,10 @@ public class SmilesParser {
 	 *@param  smiles                      A SMILES string
 	 *@return                             A Molecule representing the constitution
 	 *      given in the SMILES string
-	 *@exception  InvalidSmilesException  Exception thrown when the SMILES string
-	 *      is invalid
+	 *@throws  InvalidSmilesException  thrown when the SMILES string is invalid
 	 */
-	public IMolecule parseSmiles(String smiles) throws InvalidSmilesException {
+    @TestMethod("testAromaticSmiles,testSFBug1296113")
+    public IMolecule parseSmiles(String smiles) throws InvalidSmilesException {
 		IMolecule molecule = this.parseString(smiles);
 
 		// perceive atom types

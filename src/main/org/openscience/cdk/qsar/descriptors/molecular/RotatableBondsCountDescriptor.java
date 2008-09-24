@@ -40,8 +40,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
-import java.util.Iterator;
-
 /**
  *  The number of rotatable bonds is given by the SMARTS specified by Daylight on
  *  <a href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</a><p>
@@ -142,7 +140,6 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 	 */
 	public DescriptorValue calculate(IAtomContainer ac) {
 		int rotatableBondsCount = 0;
-		Iterator<IBond> bonds = ac.bonds().iterator();
 		int degree0;
 		int degree1;
         IRingSet ringSet;
@@ -152,15 +149,12 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new IntegerResult((int) Double.NaN), getDescriptorNames(), e);
         }
-        while (bonds.hasNext()) {
-			IBond bond = (IBond)bonds.next();
+        for (IBond bond : ac.bonds()) {
 			if (ringSet.getRings(bond).getAtomContainerCount() > 0) {
 				bond.setFlag(CDKConstants.ISINRING, true);
 			}
 		}
-		bonds = ac.bonds().iterator();
-		while (bonds.hasNext()) {
-			IBond bond = (IBond)bonds.next();
+		for (IBond bond : ac.bonds()) {
 			IAtom atom0 = bond.getAtom(0);
 			IAtom atom1 = bond.getAtom(1);
 			if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {

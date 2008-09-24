@@ -23,11 +23,10 @@ package org.openscience.cdk.graph.matrix;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * @cdk.module test-core
@@ -47,7 +46,10 @@ public class AdjacencyMatrixTest extends NewCDKTestCase {
 		int[][] matrix = AdjacencyMatrix.getMatrix(container);
 		Assert.assertEquals(3,matrix.length);
 		Assert.assertEquals(3,matrix[0].length);
-	}
+        Assert.assertEquals(0, matrix[0][0]);
+        Assert.assertEquals(1, matrix[0][2]);
+        Assert.assertEquals(1, matrix[0][1]);
+    }
 
 }
 

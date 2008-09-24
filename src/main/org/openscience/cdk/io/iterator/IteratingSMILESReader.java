@@ -27,15 +27,10 @@
  */
 package org.openscience.cdk.io.iterator;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.NoSuchElementException;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -43,6 +38,9 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.*;
+import java.util.NoSuchElementException;
 
 /**
  * Iterating SMILES file reader. It allows to iterate over all molecules
@@ -62,6 +60,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.keyword    file format, SMILES
  */
+@TestClass("org.openscience.cdk.io.iterator.IteratingSMILESReaderTest")
 public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
 
     private BufferedReader input;
@@ -77,7 +76,11 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
      * Contructs a new IteratingSMILESReader that can read Molecule from a given Reader.
      *
      * @param  in  The Reader to read from
+     * @param builder The builder to use
+     * @see org.openscience.cdk.DefaultChemObjectBuilder
+     * @see org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder
      */
+    @TestMethod("testSMILESFileWithNames")
     public IteratingSMILESReader(Reader in, IChemObjectBuilder builder) {
         logger = new LoggingTool(this);
         sp = new SmilesParser(builder);
@@ -91,6 +94,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
      *
      * @param  in  The InputStream to read from
      */
+    @TestMethod("testSMILESFileWithNames")
     public IteratingSMILESReader(InputStream in) {
         this(new InputStreamReader(in), DefaultChemObjectBuilder.getInstance());
     }
@@ -105,11 +109,22 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
         this(new InputStreamReader(in), builder);
     }
 
-
+    /**
+     * Get the format for this reader.
+     *
+     * @return An instance of {@link org.openscience.cdk.io.formats.SMILESFormat}
+     */
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return SMILESFormat.getInstance();
     }
 
+    /**
+     * Checks whether there is another molecule to read.
+     *
+     * @return  true if there are molecules to read, false otherwise
+     */
+    @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testSMILESTitles,testSMILESFile")
     public boolean hasNext() {
         if (!nextAvailableIsKnown) {
             hasNext = false;
@@ -157,7 +172,13 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
         }
         return hasNext;
     }
-    
+
+    /**
+     * Get the next molecule from the stream.
+     *
+     * @return The next molecule
+     */
+    @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testSMILESTitles,testSMILESFile")
     public IChemObject next() {
         if (!nextAvailableIsKnown) {
             hasNext();
@@ -168,11 +189,18 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
         }
         return nextMolecule;
     }
-    
+
+    /**
+     * Close the reader.
+     *
+     * @throws IOException if there is an error during closing
+     */
+    @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs")
     public void close() throws IOException {
         input.close();
     }
-    
+
+    @TestMethod("testRemove")
     public void remove() {
         throw new UnsupportedOperationException();
     }
@@ -188,7 +216,8 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
         hasNext = false;
     }
 
-	public void setReader(InputStream reader) {
+    @TestMethod("testSetReader1")
+    public void setReader(InputStream reader) {
 	    setReader(new InputStreamReader(reader));
     }
 

@@ -139,7 +139,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
-        assertEquals(IAtomType.Hybridization.SP2.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
+        assertEquals(IAtomType.Hybridization.PLANAR3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
         assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(1),molecule).getValue()).intValue());
 

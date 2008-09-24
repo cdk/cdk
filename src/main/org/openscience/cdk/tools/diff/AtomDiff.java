@@ -30,7 +30,6 @@ import org.openscience.cdk.tools.diff.tree.IDifference;
 import org.openscience.cdk.tools.diff.tree.IntegerDifference;
 import org.openscience.cdk.tools.diff.tree.Point2dDifference;
 import org.openscience.cdk.tools.diff.tree.Point3dDifference;
-import org.openscience.cdk.tools.diff.tree.StringDifference;
 
 /**
  * Compares two {@link IAtom} classes.
@@ -58,7 +57,6 @@ public class AtomDiff {
         IAtom firstElem = (IAtom)first;
         IAtom secondElem = (IAtom)second;
         ChemObjectDifference totalDiff = new ChemObjectDifference("AtomDiff");
-        totalDiff.addChild(StringDifference.construct("S", firstElem.getSymbol(), secondElem.getSymbol()));
         totalDiff.addChild(IntegerDifference.construct("H", firstElem.getHydrogenCount(), secondElem.getHydrogenCount()));
         totalDiff.addChild(IntegerDifference.construct("SP", firstElem.getStereoParity(), secondElem.getStereoParity()));
         totalDiff.addChild(Point2dDifference.construct("2D", firstElem.getPoint2d(), secondElem.getPoint2d()));

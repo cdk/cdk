@@ -28,25 +28,17 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.*;
 
 /**
  * This Reader reads files which has one SMILES string on each
@@ -66,6 +58,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.io.iterator.IteratingSMILESReader
  */
+@TestClass("org.openscience.cdk.io.SMILESReaderTest")
 public class SMILESReader extends DefaultChemObjectReader {
 
     private BufferedReader input = null;
@@ -90,7 +83,8 @@ public class SMILESReader extends DefaultChemObjectReader {
     public SMILESReader() {
         this(new StringReader(""));
     }
-    
+
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return SMILESFormat.getInstance();
     }
@@ -107,12 +101,13 @@ public class SMILESReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
+    @TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemFile.class.equals(interfaces[i])) return true;
-			if (IMoleculeSet.class.equals(interfaces[i])) return true;
-		}
+        for (Class anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
+            if (IMoleculeSet.class.equals(anInterface)) return true;
+        }
 		return false;
 	}
 
@@ -124,9 +119,10 @@ public class SMILESReader extends DefaultChemObjectReader {
      *
      * @see IChemFile
      */
+    @TestMethod("testReading,testReadingSmiFile_1,testReadingSmiFile_2,testReadingSmiFile_3")
     public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof IMoleculeSet) {
-            return (IChemObject)readMoleculeSet((IMoleculeSet)object);
+            return readMoleculeSet((IMoleculeSet)object);
         } else if (object instanceof IChemFile) {
             IChemFile file = (IChemFile)object;
             IChemSequence sequence = file.getBuilder().newChemSequence();
@@ -136,7 +132,7 @@ public class SMILESReader extends DefaultChemObjectReader {
             ));
             sequence.addChemModel(chemModel);
             file.addChemSequence(sequence);
-            return (IChemObject) file;
+            return file;
         } else {
             throw new CDKException("Only supported is reading of MoleculeSet objects.");
         }
@@ -148,6 +144,7 @@ public class SMILESReader extends DefaultChemObjectReader {
      *  Private method that actually parses the input to read a ChemFile
      *  object.
      *
+     * @param som The set of molecules that came fron the file
      * @return A ChemFile containing the data parsed from input.
      */
     private IMoleculeSet readMoleculeSet(IMoleculeSet som) {

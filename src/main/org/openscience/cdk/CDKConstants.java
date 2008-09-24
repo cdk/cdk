@@ -32,10 +32,8 @@ import org.openscience.cdk.interfaces.IBond;
  * constants used throughout the CDK. Classes using these constants should
  * <b>not</b> implement this interface, but use it like:
  * <pre>
- *   double singleBondOrder = CDKConstants.BONDORDER_SINGLE;
+ *   IBond.Order singleBondOrder = CDKConstants.BONDORDER_SINGLE;
  * </pre>
- *
- * <p>The lazyCreation patch has been applied to this class.
  *
  * @cdk.module  core
  * @cdk.svnrev  $Revision$

@@ -23,7 +23,6 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import org.openscience.cdk.CloneAtomContainerTest;
 import org.openscience.cdk.VariousTests;
 import org.openscience.cdk.coverage.ExtraCoverageTest;
@@ -58,11 +57,11 @@ public class MextraTests {
         // from cdk.test.geometry.align
         suite.addTest(new JUnit4TestAdapter(KabschAlignmentTest.class));
         // from cdk.test.index
-        suite.addTest(CASNumberTest.suite());
+        suite.addTest(new JUnit4TestAdapter(CASNumberTest.class));
         // from cdk.test.isomorphism
         // from cdk.test.math
         // from cdk.test.similarity
-        suite.addTest(TanimotoTest.suite());
+        suite.addTest(new JUnit4TestAdapter(TanimotoTest.class));
         suite.addTest(DistanceMomentTest.suite());
         suite.addTest(HOSECodeAnalyserTest.suite());
         suite.addTest(new JUnit4TestAdapter(DeAromatizationToolTest.class));

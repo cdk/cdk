@@ -48,7 +48,7 @@ public class MACCSFingerprinterTest extends NewCDKTestCase {
         super();
     }
 
-
+    @Test
     public void getsize() throws Exception {
         IFingerprinter printer = new MACCSFingerprinter();
         Assert.assertEquals(166, printer.getSize());

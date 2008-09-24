@@ -279,6 +279,31 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+    /**
+     * Aim of this test is to see if the atom type matcher is OK with
+     * partial filled implicit hydrogen counts.
+     */
+    @Test public void testPartialMethane() throws Exception {
+        IMolecule methane = new Molecule();
+        IAtom carbon = new Atom("C");
+        methane.addAtom(carbon);
+        
+        String[] expectedTypes = {"C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, methane);
+        
+        carbon.setHydrogenCount(1);
+        assertAtomTypes(testedAtomTypes, expectedTypes, methane);
+
+        carbon.setHydrogenCount(2);
+        assertAtomTypes(testedAtomTypes, expectedTypes, methane);
+
+        carbon.setHydrogenCount(3);
+        assertAtomTypes(testedAtomTypes, expectedTypes, methane);
+
+        carbon.setHydrogenCount(4);
+        assertAtomTypes(testedAtomTypes, expectedTypes, methane);
+    }
+    
     @Test public void testMethanol() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("O");
@@ -1002,6 +1027,16 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+    @Test public void testHydroxyl2() throws Exception {
+        IMolecule mol = new Molecule();
+          IAtom oxygen = new Atom("O");
+          oxygen.setFormalCharge(-1);
+          mol.addAtom(oxygen);
+
+          String[] expectedTypes = {"O.minus"};
+          assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+      }
+      
     @Test public void testHydroxonium() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("H");

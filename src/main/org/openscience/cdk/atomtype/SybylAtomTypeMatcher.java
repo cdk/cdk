@@ -19,10 +19,8 @@
  */
 package org.openscience.cdk.atomtype;
 
-import java.util.Hashtable;
-import java.util.Map;
-
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.mapper.AtomTypeMapper;
@@ -32,6 +30,9 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * Atom Type matcher for Sybyl atom types. It uses the {@link CDKAtomTypeMatcher}
@@ -43,6 +44,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.svnrev     $Revision: 11555 $
  * @cdk.keyword    atom types, Sybyl
  */
+@TestClass("org.openscience.cdk.atomtype.SybylAtomTypeMatcherTest")
 public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
 
 	private AtomTypeFactory factory;
@@ -63,6 +65,7 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         );
     }
 
+    @TestMethod("testGetInstance_IChemObjectBuilder")
     public static SybylAtomTypeMatcher getInstance(IChemObjectBuilder builder) {
     	if (!factories.containsKey(builder))
     		factories.put(builder, new SybylAtomTypeMatcher(builder));
@@ -96,6 +99,7 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
      * Aromatic carbons will, therefore, be perceived as <i>C.2</i> and not <i>C.ar</i>. If the latter is
      * required, please use findMatchingAtomType(IAtomContainer) instead.
      */
+    @TestMethod("testFindMatchingAtomType_IAtomContainer_IAtom")
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         throws CDKException {
         IAtomType type = cdkMatcher.findMatchingAtomType(atomContainer, atom);

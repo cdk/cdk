@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test-valencycheck
  */
-public class ValencycheckCoverageTest extends CoverageTest {
+public class ValencycheckCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "valencycheck.javafiles";
     

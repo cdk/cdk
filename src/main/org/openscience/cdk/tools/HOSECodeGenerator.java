@@ -1,6 +1,6 @@
 /* $Revision$ $Author$ $Date$
  *
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *                    2008  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -32,11 +32,15 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -47,7 +51,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
 /**
  * Generates HOSE codes {@cdk.cite BRE78}.
  * IMPORTANT: Your molecule must contain implicit or explicit hydrogens
- * for this method to work properly
+ * for this method to work properly.
  *
  * @author     steinbeck
  * @cdk.svnrev  $Revision$
@@ -55,6 +59,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * @cdk.created    2002-05-10
  * @cdk.module     standard
  */
+@TestClass("org.openscience.cdk.tools.HOSECodeGeneratorTest")
 public class HOSECodeGenerator implements java.io.Serializable
 {
 
@@ -65,16 +70,16 @@ public class HOSECodeGenerator implements java.io.Serializable
     /**
 	 *  Container for the nodes in a sphere.
 	 */
-	protected List sphereNodes = null;
-    protected List sphereNodesWithAtoms = null;
+	protected List<TreeNode> sphereNodes = null;
+    protected List<IAtom> sphereNodesWithAtoms = null;
     
 	/**
 	 *  Container for the node in the next sphere Assembled in a recursive method
-	 *  and then passed to the next recursion to become "sphereNodes"
+	 *  and then passed to the next recursion to become "sphereNodes".
 	 */
-	protected List nextSphereNodes = null;
+	protected List<TreeNode> nextSphereNodes = null;
 	/**
-	 *  Counter for the sphere in which we currently work
+	 *  Counter for the sphere in which we currently work.
 	 */
 	protected int sphere = 0;
 	/**
@@ -86,8 +91,8 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *  Here we store the spheres that we assemble, in order to parse them into a
 	 *  code later.
 	 */
-	protected List[] spheres = null;
-	protected List[] spheresWithAtoms = null;
+	protected List<TreeNode>[] spheres = null;
+	protected List<IAtom>[] spheresWithAtoms = null;
 
 	/**
 	 *  The HOSECode string that we assemble
@@ -127,7 +132,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	private IRingSet soar=null;
 
 	/**
-	 *  The rank order for the given element symbols
+	 *  The rank order for the given element symbols.
 	 */
 
 	static final String[] rankedSymbols =
@@ -136,7 +141,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			};
 
 	/**
-	 *  The ranking values to be used for the symbols above
+	 *  The ranking values to be used for the symbols above.
 	 */
 	static final int[] symbolRankings =
 			{
@@ -145,7 +150,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			};
 
 	/**
-	 *  The bond rankings to be used for the four bond order possibilities
+	 *  The bond rankings to be used for the four bond order possibilities.
 	 */
 
 	static final int[] bondRankings =
@@ -155,15 +160,16 @@ public class HOSECodeGenerator implements java.io.Serializable
 
 
 	/**
-	 *  Constructor for the HOSECodeGenerator
+	 *  Constructor for the HOSECodeGenerator.
 	 */
+	@TestMethod("test1Sphere")
 	public HOSECodeGenerator()
 	{
 		logger = new LoggingTool(this);
 		
-		sphereNodes = new ArrayList();
-		sphereNodesWithAtoms = new ArrayList();
-		nextSphereNodes = new ArrayList();
+		sphereNodes = new ArrayList<TreeNode>();
+		sphereNodesWithAtoms = new ArrayList<IAtom>();
+		nextSphereNodes = new ArrayList<TreeNode>();
 		HOSECode = new StringBuffer();
 	}
   
@@ -181,15 +187,15 @@ public class HOSECodeGenerator implements java.io.Serializable
   
 	/**
 	 *  This method is intended to be used to get the atoms around an atom in spheres. It is not used in this class, but is provided for other classes to use.
-	 *  It also creates the HOSE code in HOSECode as a side-effect
+	 *  It also creates the HOSE code in HOSECode as a side-effect.
 	 *  
-	 *@param  ac  The AtomContainer with the molecular skeleton in which the root atom resides.
+	 *@param  ac  The {@link IMolecule} with the molecular skeleton in which the root atom resides.
 	 *@param  root The root atom for which to produce the spheres.
 	 *@param  noOfSpheres  The number of spheres to look at.
-	 *@paramm ringsize  Shall the center code have the ring size in it? Only use if you want to have the hose code later, else say false.
-	 *@return An array of Vectors. The vector at i-1 contains the atoms at sphere i as TreeNodes.
+	 *@param  ringsize  Shall the center code have the ring size in it? Only use if you want to have the hose code later, else say false.
+	 *@return An array of {@link List}. The list at i-1 contains the atoms at sphere i as TreeNodes.
 	 **/
-	public List[] getSpheres(IMolecule ac, IAtom root, int noOfSpheres, boolean ringsize) throws CDKException
+	public List<IAtom>[] getSpheres(IMolecule ac, IAtom root, int noOfSpheres, boolean ringsize) throws CDKException
 	{
 		ensureIsotopeFactory(ac.getBuilder());
 		centerCode = "";
@@ -206,7 +212,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		/*
 		 *  All we need to observe is how the ranking of substituents
 		 *  in the subsequent spheres of the root nodes influences the
-		 *  ranking of the first sphere, sinces the order of a node in a sphere
+		 *  ranking of the first sphere, since the order of a node in a sphere
 		 *  depends on the order the preceding node in its branch
 		 */
 		HOSECode = new StringBuffer();
@@ -220,45 +226,48 @@ public class HOSECodeGenerator implements java.io.Serializable
 
 
 	/**
-	 *  Produces a HOSE code for Atom 'root' in the AtomContainer 'ac'. The HOSE
-	 *  code is produced for the number of spheres given by noOfSpheres
-	 *  IMPORTANT: if you want aromaticity to be included in the code, you need
-	 *  to run the AtomContainer ac to the HueckelAromaticityDetector prior to 
-	 *  using getHOSECode(). This method only gives proper results if the molecule is
-	 *  fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
-	 *  This method is known to fail for protons sometimes.
-	 *  IMPORTANT: Your molecule must contain implicit or explicit hydrogens
-	 * for this method to work properly
+	 * Produces a HOSE code for Atom <code>root</code> in the {@link IAtomContainer} <code>ac</code>. The HOSE
+	 * code is produced for the number of spheres given by <code>noOfSpheres</code>.
+	 * IMPORTANT: if you want aromaticity to be included in the code, you need
+	 * to run the IAtomContainer <code>ac</code> to the {@link CDKHueckelAromaticityDetector} prior to 
+	 * using <code>getHOSECode()</code>. This method only gives proper results if the molecule is
+	 * fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
+	 * This method is known to fail for protons sometimes.
+	 * IMPORTANT: Your molecule must contain implicit or explicit hydrogens
+	 * for this method to work properly.
 	 *
-	 *@param  ac  The AtomContainer with the molecular skeleton in which the root atom resides
-	 *@param  root The root atom for which to produce the HOSE code
-	 *@param  noOfSpheres  The number of spheres to look at
-	 *@return The HOSECode value
-	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something is wrong
+	 * @param  ac  The {@link IAtomContainer} with the molecular skeleton in which the root atom resides
+	 * @param  root The root atom for which to produce the HOSE code
+	 * @param  noOfSpheres  The number of spheres to look at
+	 * @return The HOSECode value
+	 * @exception  org.openscience.cdk.exception.CDKException  Thrown if something is wrong
 	 */
-	public String getHOSECode(IAtomContainer ac, IAtom root, int noOfSpheres) throws org.openscience.cdk.exception.CDKException
+  @TestMethod("test4,test4Sphere,testBug655169")
+	public String getHOSECode(IAtomContainer ac, IAtom root, int noOfSpheres) throws CDKException
 	{
 		return getHOSECode(ac,root,noOfSpheres, false);
 	}
 	
 	
 	/**
-	 *  Produces a HOSE code for Atom 'root' in the AtomContainer 'ac'. The HOSE
-	 *  code is produced for the number of spheres given by noOfSpheres
-	 *  IMPORTANT: if you want aromaticity to be included in the code, you need
-	 *  to run the AtomContainer ac to the HueckelAromaticityDetector prior to 
-	 *  using getHOSECode(). This method only gives proper results if the molecule is
-   *  fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
-   *  This method is known to fail for protons sometimes.
+   * Produces a HOSE code for Atom <code>root</code> in the {@link IAtomContainer} <code>ac</code>. The HOSE
+   * code is produced for the number of spheres given by <code>noOfSpheres</code>.
+   * IMPORTANT: if you want aromaticity to be included in the code, you need
+   * to run the IAtomContainer <code>ac</code> to the {@link CDKHueckelAromaticityDetector} prior to 
+   * using <code>getHOSECode()</code>. This method only gives proper results if the molecule is
+   * fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
+   * This method is known to fail for protons sometimes.
+   * IMPORTANT: Your molecule must contain implicit or explicit hydrogens
+   * for this method to work properly.
 	 *
-	 *@param  ac  The AtomContainer with the molecular skeleton in which the root atom resides
-	 *@param  root The root atom for which to produce the HOSE code
-	 *@param  noOfSpheres  The number of spheres to look at
-	 *@param  ringsize  The size of the ring(s) it is in is included in center atom code
-	 *@return The HOSECode value
-	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something is wrong
+	 * @param  ac  The IAtomContainer with the molecular skeleton in which the root atom resides
+	 * @param  root The root atom for which to produce the HOSE code
+	 * @param  noOfSpheres  The number of spheres to look at
+	 * @param  ringsize  The size of the ring(s) it is in is included in center atom code
+	 * @return The HOSECode value
+	 * @exception  org.openscience.cdk.exception.CDKException  Thrown if something is wrong
 	 */
-	public String getHOSECode(IAtomContainer ac, IAtom root, int noOfSpheres, boolean ringsize) throws org.openscience.cdk.exception.CDKException
+	public String getHOSECode(IAtomContainer ac, IAtom root, int noOfSpheres, boolean ringsize) throws CDKException
 	{
 		ensureIsotopeFactory(ac.getBuilder());
     CanonicalLabeler canLabler = new CanonicalLabeler();
@@ -276,7 +285,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		/*
 		 *  All we need to observe is how the ranking of substituents
 		 *  in the subsequent spheres of the root nodes influences the
-		 *  ranking of the first sphere, sinces the order of a node in a sphere
+		 *  ranking of the first sphere, since the order of a node in a sphere
 		 *  depends on the order the preceding node in its branch
 		 */
 		HOSECode = new StringBuffer();
@@ -344,29 +353,28 @@ public class HOSECodeGenerator implements java.io.Serializable
     }
 
     /**
-	 *  Prepares for a breadth first search within the AtomContainer. The actual
-	 *  recursion is done in nextSphere()
+	 *  Prepares for a breadth first search within the {@link IAtomContainer}. The actual
+	 *  recursion is done in <code>nextSphere()</code>.
 	 *
 	 *@param  root  The atom at which we start the search
 	 *@exception  org.openscience.cdk.exception.CDKException  If something goes wrong.
 	 */
-	private void breadthFirstSearch(IAtom root,boolean addTreeNode) throws org.openscience.cdk.exception.CDKException
-	{
+	private void breadthFirstSearch(IAtom root,boolean addTreeNode) throws CDKException {
 		sphere = 0;
 		TreeNode tempNode = null;
-		java.util.List conAtoms = atomContainer.getConnectedAtomsList(root);
+		List<IAtom> conAtoms = atomContainer.getConnectedAtomsList(root);
 		IAtom atom;
-		org.openscience.cdk.interfaces.IBond bond = null;
+		IBond bond = null;
 		sphereNodes.clear();
 		sphereNodesWithAtoms.clear();
 		for (int i = 0; i < conAtoms.size(); i++){
 			try{
-				atom = (IAtom)conAtoms.get(i);
+				atom = conAtoms.get(i);
 				if(atom.getSymbol().equals("H"))
 					continue;
 				bond = atomContainer.getBond(root, atom);
 				/*
-				 *  In the first sphere the atoms are labled with
+				 *  In the first sphere the atoms are labeled with
 				 *  their own atom atom as source
 				 */
 				if (bond.getFlag(CDKConstants.ISAROMATIC))
@@ -393,15 +401,15 @@ public class HOSECodeGenerator implements java.io.Serializable
 	}
 
 	/**
-	 *  The actual recursion method for our breadth first search Each node in
-	 *  sphereNodes is inspected for its decendants which are then stored in
-	 *  nextSphereNodes, which again is passed to the next recursion level of
-	 *  nextSphere()
+	 *  The actual recursion method for our breadth first search. Each node in
+	 *  sphereNodes is inspected for its descendants which are then stored in
+	 *  <code>nextSphereNodes</code>, which again is passed to the next recursion level of
+	 *  <code>nextSphere()</code>.
 	 *
 	 *@param  sphereNodes The sphereNodes to be inspected
 	 *@exception  org.openscience.cdk.exception.CDKException  If something goes wrong
 	 */
-	private void nextSphere(List sphereNodes) throws org.openscience.cdk.exception.CDKException
+	private void nextSphere(List<TreeNode> sphereNodes) throws CDKException
 	{
 		spheres[sphere] = sphereNodes;
 		if(spheresWithAtoms!=null)
@@ -411,10 +419,10 @@ public class HOSECodeGenerator implements java.io.Serializable
 		 */
         IAtom node = null;
         IAtom toNode = null;
-        java.util.List conAtoms = null;
+        List<IAtom> conAtoms = null;
 		TreeNode treeNode = null;
-		nextSphereNodes = new ArrayList();
-		org.openscience.cdk.interfaces.IBond bond = null;
+		nextSphereNodes = new ArrayList<TreeNode>();
+		IBond bond = null;
 		for (int i = 0; i < sphereNodes.size(); i++)
 		{
 			treeNode = (TreeNode) sphereNodes.get(i);
@@ -430,7 +438,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 				}else{
 					for (int j = 0; j < conAtoms.size(); j++)
 					{
-						toNode = (IAtom)conAtoms.get(j);
+						toNode = conAtoms.get(j);
 						if (toNode != treeNode.source.atom)
 						{
 							bond = atomContainer.getBond(node, toNode);
@@ -454,6 +462,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 		}
 	}
 
+  @TestMethod("testMakeBremserCompliant")
 	public String makeBremserCompliant(String code)
 	{
 		int sepIndex = code.indexOf(";");
@@ -465,14 +474,13 @@ public class HOSECodeGenerator implements java.io.Serializable
 	}
 	
 	/**
-	 *  After recursivly having established the spheres and assigning each node an
+	 *  After recursively having established the spheres and assigning each node an
 	 *  appropriate score, we now generate the complete HOSE code.
 	 *
 	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something goes wrong
 	 */
-	private void createCode() throws org.openscience.cdk.exception.CDKException
-	{
-		List sphereNodes = null;
+	private void createCode() throws CDKException {
+		List<TreeNode> sphereNodes = null;
 		TreeNode tn = null;
 		for (int f = 0; f < atomContainer.getAtomCount(); f++)
 		{
@@ -484,7 +492,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			sphereNodes = spheres[maxSphere - f];
 			for (int g = 0; g < sphereNodes.size(); g++)
 			{
-				tn = (TreeNode) sphereNodes.get(g);
+				tn = sphereNodes.get(g);
 				if (tn.source != null)
 				{
 					tn.source.ranking += tn.degree;
@@ -535,13 +543,13 @@ public class HOSECodeGenerator implements java.io.Serializable
 	}
 
 	/**
-	 *  Generates the string code for a given sphere
+	 *  Generates the string code for a given sphere.
 	 *
 	 *@param  sphereNodes A vector of TreeNodes for which a string code is to be generated
 	 *@return The SphereCode value
 	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something goes wrong
 	 */
-	private String getSphereCode(List sphereNodes) throws org.openscience.cdk.exception.CDKException
+	private String getSphereCode(List<TreeNode> sphereNodes) throws org.openscience.cdk.exception.CDKException
 	{
 		if (sphereNodes == null || sphereNodes.size() < 1)
 		{
@@ -554,11 +562,11 @@ public class HOSECodeGenerator implements java.io.Serializable
 		 *  their now determined order, using commas to
 		 *  separate nodes from different branches
 		 */
-		IAtom branch = ((TreeNode) (((TreeNode) sphereNodes.get(0)).source)).atom;
+		IAtom branch = sphereNodes.get(0).source.atom;
 		StringBuffer tempCode = null;
 		for (int i = 0; i < sphereNodes.size(); i++)
 		{
-			treeNode = (TreeNode) sphereNodes.get(i);
+			treeNode = sphereNodes.get(i);
 			tempCode = new StringBuffer();
 			if (!treeNode.source.stopper && treeNode.source.atom != branch)
 			{
@@ -597,7 +605,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 
 	/**
 	 *  Gets the element rank for a given element symbol as given in Bremser's
-	 *  publication
+	 *  publication.
 	 *
 	 *@param  symbol  The element symbol for which the rank is to be determined
 	 *@return         The element rank
@@ -654,7 +662,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 *@param  sphereNodes The nodes for which the score is to be calculated.
 	 *@exception  org.openscience.cdk.exception.CDKException  Thrown if something goes wrong.
 	 */
-	private void calculateNodeScores(List sphereNodes) throws CDKException
+	private void calculateNodeScores(List<TreeNode> sphereNodes) throws CDKException
 	{
 		TreeNode treeNode = null;
 		for (int i = 0; i < sphereNodes.size(); i++)
@@ -672,14 +680,14 @@ public class HOSECodeGenerator implements java.io.Serializable
 	}
 
 	/**
-	 *  Sorts the nodes (atoms) in the sphereNode vector according to their score
-	 *  This is used for the essential ranking of nodes in HOSE code sphere
+	 *  Sorts the nodes (atoms) in the sphereNode vector according to their score.
+	 *  This is used for the essential ranking of nodes in HOSE code sphere.
 	 *
 	 *@param  sphereNodes  A vector with sphere nodes to be sorted.
 	 */
-	private void sortNodesByScore(List sphereNodes)
+	private void sortNodesByScore(List<TreeNode> sphereNodes)
 	{
-		Object obj;
+		TreeNode obj;
 		boolean changed;
 		if (sphereNodes.size() == 0) return;
 		/*
@@ -699,7 +707,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 				}
 			}
 		} while (changed);
-		/* Having sorted a sphere, we lable the nodes with their sort order */
+		/* Having sorted a sphere, we label the nodes with their sort order */
 		TreeNode temp = null;
 		for (int i = 0; i < sphereNodes.size(); i++)
 		{
@@ -722,7 +730,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	}
 
 	
-	class TreeNodeComparator implements Comparator {
+	class TreeNodeComparator implements Comparator<TreeNode> {
     /**
      *The compare method, compares by canonical label of atoms
      *
@@ -730,7 +738,7 @@ public class HOSECodeGenerator implements java.io.Serializable
      * @param  obj2  The second TreeNode
      * @return       -1,0,1
      */
-    public int compare(Object obj1, Object obj2) {
+    public int compare(TreeNode obj1, TreeNode obj2) {
     	if(obj1==null || obj2==null || ((TreeNode) obj1).getAtom()==null || ((TreeNode) obj2).getAtom()==null)
     		return 0;
     	Long label1 = (Long)((TreeNode) obj1).getAtom().getProperty("CanonicalLable");
@@ -749,7 +757,7 @@ public class HOSECodeGenerator implements java.io.Serializable
     
   /**
 	 *  Helper class for storing the properties of a node in our breadth first
-	 *  search
+	 *  search.
 	 *
 	 * @author     steinbeck
 	 * @cdk.created    2002-11-16
@@ -764,17 +772,17 @@ public class HOSECodeGenerator implements java.io.Serializable
 		long score;
 		int ranking;
 		int sortOrder = 1;
-		List childs = null;
+		List<TreeNode> childs = null;
 		String hSymbol = null;
 		boolean stopper = false;
     String stringscore="";
 
 		/**
-		 *  Constructor for the TreeNode object
+		 *  Constructor for the TreeNode object.
 		 *
 		 *@param  symbol    The Element symbol of the node
 		 *@param  source    The preceding node for this node
-		 *@param  atom      The cdk atom object belonging to this node
+		 *@param  atom      The IAtom object belonging to this node
 		 *@param  bondType  The bond type by which this node was connect to its
 		 *      predecessor
 		 *@param  score     The score used to rank this node within its sphere.
@@ -790,7 +798,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			this.bondType = bondType;
 			ranking = 0;
 			sortOrder = 1;
-			childs = new ArrayList();
+			childs = new ArrayList<TreeNode>();
 		}
     
     public IAtom getAtom(){
@@ -800,9 +808,9 @@ public class HOSECodeGenerator implements java.io.Serializable
 
 		/**
 		 *  A TreeNode is equal to another TreeNode if it
-		 *  stands for the same atom object
+		 *  stands for the same atom object.
 		 *
-		 *@param  o  The object tht we compare this TreeNode to
+		 *@param  o  The object that we compare this TreeNode to
 		 *@return    True, if the this TreeNode's atom object equals the one of the other TreeNode
 		 */
 		public boolean equals(Object o)
@@ -845,9 +853,9 @@ public class HOSECodeGenerator implements java.io.Serializable
 	}
   
   
-	public List getNodesInSphere(int sphereNumber){
+	public List<IAtom> getNodesInSphere(int sphereNumber){
 		sphereNodes = spheres[sphereNumber-1];
-		List atoms=new ArrayList();
+		List<IAtom> atoms=new ArrayList<IAtom>();
 		for (int g = 0; g < sphereNodes.size() ; g++) {
 			atoms.add(((TreeNode) sphereNodes.get(g)).atom);
 		}

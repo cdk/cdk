@@ -591,6 +591,9 @@ public class Convertor {
         return true;
     }
 
+    public CMLAtom cdkAtomToCMLAtom(IAtom cdkAtom) {
+        return cdkAtomToCMLAtom(null, cdkAtom);
+    }
     public CMLAtom cdkAtomToCMLAtom(IAtomContainer container, IAtom cdkAtom) {
         CMLAtom cmlAtom = new CMLAtom();
         this.checkPrefix(cmlAtom);

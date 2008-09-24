@@ -29,6 +29,8 @@
 package org.openscience.cdk.similarity;
 
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 
 import java.util.BitSet;
@@ -60,6 +62,7 @@ import java.util.BitSet;
  *@cdk.keyword    jaccard
  *@cdk.keyword    similarity, tanimoto
  */
+@TestClass("org.openscience.cdk.similarity.TanimotoTest")
 public class Tanimoto 
 {
 
@@ -71,6 +74,7 @@ public class Tanimoto
      * @return The Tanimoto coefficient
      * @throws org.openscience.cdk.exception.CDKException  if bitsets are not of the same length
      */
+    @TestMethod("testTanimoto1,testTanimoto2")
     public static float calculate(BitSet bitset1, BitSet bitset2) throws CDKException
     {
         float _bitset1_cardinality = bitset1.cardinality();
@@ -92,6 +96,7 @@ public class Tanimoto
      * @return The continuous Tanimoto coefficient
      * @throws org.openscience.cdk.exception.CDKException  if the features are not of the same length
      */
+    @TestMethod("testTanimoto3")
     public static float calculate(double[] features1, double[] features2) throws CDKException {
 
         if (features1.length != features2.length) {

@@ -29,6 +29,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -116,17 +117,18 @@ public class Fingerprinter implements IFingerprinter {
 		this.searchDepth = searchDepth;
 
     }
-	
-	/**
-	 * Generates a fingerprint of the default size for the given AtomContainer.
-	 *
-	 *@param     container         The AtomContainer for which a Fingerprint is generated
-	 *@exception Exception  Description of the Exception
-	 */
+
+    /**
+     * Generates a fingerprint of the default size for the given AtomContainer.
+     *
+     *@param     container         The AtomContainer for which a Fingerprint is generated
+     *@param ringFinder An instance of {@link org.openscience.cdk.ringsearch.AllRingsFinder}
+     * @exception CDKException  if there is a timeout in ring or aromaticity perception
+     * @return A {@link BitSet} representing the fingerprint
+     */
 
     @TestMethod("testGetFingerprint_IAtomContainer")
     public BitSet getFingerprint(IAtomContainer container, AllRingsFinder ringFinder) throws CDKException {
-		String path = null;
 		int position = -1;
 		logger.debug("Entering Fingerprinter");
 		logger.debug("Starting Aromaticity Detection");
@@ -136,16 +138,16 @@ public class Fingerprinter implements IFingerprinter {
 		long after = System.currentTimeMillis();
 		logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
 		logger.debug("Finished Aromaticity Detection");
-		Map paths = findPathes(container, searchDepth);
+		Map<String,String> paths = findPathes(container, searchDepth);
 		BitSet bitSet = new BitSet(size);
-		for (Iterator e = paths.values().iterator(); e.hasNext(); )
-		{
-			path = (String)e.next();
-			position = new java.util.Random(path.hashCode()).nextInt(size);
-			logger.debug("Setting bit " + position + " for " + path);
-			bitSet.set(position);
-		}
-		return bitSet;
+
+        for (String path : paths.values()) {
+            position = new java.util.Random(path.hashCode()).nextInt(size);
+            logger.debug("Setting bit " + position + " for " + path);
+            bitSet.set(position);
+        }
+
+        return bitSet;
 	}
 
 
@@ -158,153 +160,71 @@ public class Fingerprinter implements IFingerprinter {
     public BitSet getFingerprint(IAtomContainer container) throws CDKException {
 		return getFingerprint(container, null);
 	}
-	
-	/**
-	 *  Gets all paths of length 1 up to the length given by the 'searchDepth"
-	 *  parameter. The paths are acquired by a number of depth first searches, one
-	 *  for each atom.
-	 *
-	 *@param  container           The AtomContainer which is to be searched.
-	 *@param  searchDepth  Description of the Parameter
-	 */
-	protected Map findPathes(IAtomContainer container, int searchDepth)
-	{
-		Map paths = new HashMap();
-		List currentPath = new ArrayList();
-		debugCounter = 0;
-		for (int f = 0; f < container.getAtomCount(); f++)
-		{
-			currentPath.clear();
-			currentPath.add(container.getAtom(f));
-			checkAndStore(currentPath, paths);
-			logger.info("Starting at atom " + (f + 1) + " with symbol " + container.getAtom(f).getSymbol());
-			depthFirstSearch(container, container.getAtom(f), paths, currentPath, 0, searchDepth);
-		}
-		return paths;
-	}
 
+    /**
+     * Get all paths of lengths 1 to the specified length.
+     *
+     * This method will find all paths of length N starting from each
+     * atom in the molecule and return the unique set of such paths.
+     *
+     * @param container The molecule to search
+     * @param searchDepth The maximum path length desired
+     * @return A Map of path strings, keyed on themselves
+     */
+    protected Map<String,String> findPathes(IAtomContainer container, int searchDepth) {
+        Map<String,String> paths = new HashMap<String,String>();
 
-	/**
-	 *  Performs a recursive depth first search
-	 *
-	 *@param  container            The AtomContainer to be searched
-	 *@param  root          The Atom to start the search at
-	 *@param  currentPath   The Path that has been generated so far
-	 *@param  currentDepth  The current depth in this recursive search
-	 *@param  searchDepth   Description of the Parameter
-	 */
-	private void depthFirstSearch(IAtomContainer container, IAtom root, Map paths, List currentPath, int currentDepth, int searchDepth)
-	{
-		List bonds = container.getConnectedBondsList(root);
+        List<StringBuffer> allPaths = new ArrayList<StringBuffer>();
 
-		/*
-		 *  try
-		 *  {
-		 *  logger.debug("Currently at atom no. " + (ac.getAtomNumber(root)  + 1) + " with symbol "  + root.getSymbol());
-		 *  }
-		 *  catch(Exception exc){}
-		 */
-		IAtom nextAtom = null;
+        for (IAtom startAtom : container.atoms()) {
+            for (int pathLength = 0; pathLength <= searchDepth; pathLength++) {
+                List<List<IAtom>> p = PathTools.getPathsOfLength(container, startAtom, pathLength);
+                for (List<IAtom> path : p) {
+                    StringBuffer sb = new StringBuffer();
+                    IAtom x = path.get(0);
+                    sb.append(convertSymbol(x.getSymbol()));
 
-		/*
-		 *  try
-		 *  {
-		 *  logger.debug("Currently at atom no. " + (ac.getAtomNumber(root)  + 1) + " with symbol "  + root.getSymbol());
-		 *  }
-		 *  catch(Exception exc){}
-		 */
-		List newPath = null;
-		String bondSymbol = null;
-		currentDepth++;
-		logger.info("New incremented searchDepth " + currentDepth);
-		logger.info("Current Path is: " + currentPath);
-		for (int f = 0; f < bonds.size(); f++)
-		{
-			IBond bond = (IBond)bonds.get(f);
-			nextAtom = bond.getConnectedAtom(root);
+                    for (int i = 1; i < path.size(); i++) {
+                        IAtom y = path.get(i);
+                        sb.append(getBondSymbol(container.getBond(x, y)));
+                        sb.append(convertSymbol(y.getSymbol()));
+                        x = y;
+                    }
 
-			/*
-			 *  try
-			 *  {
-			 *  logger.debug("Found connected atom no. " + (ac.getAtomNumber(nextAtom) + 1) + " with symbol "  + nextAtom.getSymbol() + "...");
-			 *  }
-			 *  catch(Exception exc){}
-			 */
-			if (!currentPath.contains(nextAtom))
-			{
-				newPath = new ArrayList(currentPath);
-				bondSymbol = this.getBondSymbol(bond);
-				newPath.add(bondSymbol);
-				logger.debug("Bond has symbol " + bondSymbol);
-				newPath.add(nextAtom);
-				// FIXME: this is dirty: adding both Strings and IAtoms... no way to figure what should be happening then
-				checkAndStore(newPath, paths);
-
-				if (currentDepth < searchDepth)
-				{
-					depthFirstSearch(container, nextAtom, paths, newPath, currentDepth, searchDepth);
-					logger.debug("DepthFirstSearch Fallback to searchDepth " + currentDepth);
-				}
-			} else
-			{
-				logger.debug("... already visited!");
-			}
-		}
-	}
-
-	private void checkAndStore(List newPath, Map paths)
-	{
-		StringBuilder newPathString = new StringBuilder();
-        for (Object aNewPath : newPath) {
-            if (aNewPath instanceof IAtom) {
-                newPathString.append(convertSymbol(((IAtom) aNewPath).getSymbol()));
-            } else {
-                newPathString.append((String) aNewPath);
+                    // we store the lexicographically lower one of the
+                    // string and its reverse
+                    StringBuffer revForm = new StringBuffer(sb);
+                    revForm.reverse();
+                    if (sb.toString().compareTo(revForm.toString()) <= 0)
+                        allPaths.add(sb);
+                    else allPaths.add(revForm);
+                }
             }
         }
-		logger.debug("Checking for existence of Path " +  newPathString);
-		String storePath = newPathString.toString();
-		String reversePath = newPathString.reverse().toString();
-		/*
-		 *  Pathes can be found twice (search from one or the other side)
-		 *  so they will occur in reversed order. We only handle the
-		 *  lexicographically smaller path (This is an arbitrary choice)
-		 */
-		if (reversePath.compareTo(storePath) < 0)
-		{
-			/*
-			 *  reversePath is smaller than newPath
-			 *  so we keep reversePath
-			 */
-			storePath = reversePath;
-		}
-		if (!paths.containsKey(storePath))
-		{
-			paths.put(storePath, storePath);
-			logger.debug("Storing path no. " + debugCounter + ": " +  storePath + ", Hash: " + storePath.hashCode());
-		} else
-		{
-			logger.debug("Path " + storePath + " already contained");
-		}
-	}
+        // now lets clean stuff up
+        List<String> cleanPath = new ArrayList<String>();
+        for (StringBuffer s : allPaths) {
+            if (cleanPath.contains(s.toString()) || cleanPath.contains(s.reverse().toString())) continue;
+            else cleanPath.add(s.toString());
+        }
+        for (String s : cleanPath) paths.put(s, s);
+        return paths;
+    }
 
-	private String convertSymbol(String symbol)
-	{
+    private String convertSymbol(String symbol) {
+
+        String[] query = {"Cl", "Br", "Si", "As", "Li", "Se", "Na", "Ca", "Al"};
+        String[] replace = {"X", "Z", "Y",  "D",  "L",  "E",  "G",  "J",  "A" };
 
         String returnSymbol = symbol;
-		if (symbol.equals("Cl"))
-		{
-			symbol = "X";
-		} else if (symbol.equals("Si"))
-		{
-			symbol = "Y";
-		} else if (symbol.equals("Br"))
-		{
-			symbol = "Z";
-		}
-		return returnSymbol;
-
-	}
+        for (int i = 0; i < query.length; i++) {
+            if (symbol.equals(query[i])) {
+                returnSymbol = replace[i];
+                break;
+            }
+        }
+        return returnSymbol;
+    }
 
 
 	/**

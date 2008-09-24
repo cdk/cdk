@@ -16,3 +16,4 @@ cdk-pdb.jar
 cdk-pdbcml.jar
 cdk-formula.jar
 cdk-testdata.jar
+cdk-diff.jar

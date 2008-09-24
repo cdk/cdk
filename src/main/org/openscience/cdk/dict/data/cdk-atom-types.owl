@@ -701,7 +701,7 @@
     <at:formalNeighbourCount>1</at:formalNeighbourCount>
     <at:lonePairCount>3</at:lonePairCount>
     <at:piBondCount>0</at:piBondCount>
-    <at:hybridization rdf:resource="&at;s"/>
+    <at:hybridization rdf:resource="&at;sp3"/>
   </at:AtomType>
 
   <at:AtomType rdf:ID="F.radical">
@@ -710,7 +710,7 @@
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:lonePairCount>3</at:lonePairCount>
     <at:piBondCount>0</at:piBondCount>
-    <at:hybridization rdf:resource="&at;s"/>
+    <at:hybridization rdf:resource="&at;sp3"/>
   </at:AtomType>
 
   <at:AtomType rdf:ID="F.minus">
@@ -719,7 +719,7 @@
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:lonePairCount>4</at:lonePairCount>
     <at:piBondCount>0</at:piBondCount>
-    <at:hybridization rdf:resource="&at;s"/>
+    <at:hybridization rdf:resource="&at;sp3"/>
   </at:AtomType>
 
   <at:AtomType rdf:ID="F.plus.sp3">

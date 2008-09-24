@@ -27,7 +27,6 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
-import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -36,7 +35,6 @@ import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
-import org.openscience.cdk.tools.LoggingTool;
 
 /**
  *  This class returns the hybridization of an atom.
@@ -47,20 +45,20 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  *  <p>The basic premise of the model is that the electrons are paired in a molecule 
  *    and that the molecule geometry is determined only by the repulsion between the pairs. 
- *    The geomtry adopted by a molecule is then the one in which the reulsions are minimized.
+ *    The geometry adopted by a molecule is then the one in which the repulsions are minimized.
  *
- *  <p>It counts the number of electron pairs in the lewis dot diagram which
+ *  <p>It counts the number of electron pairs in the Lewis dot diagram which
  *   are attached to an atom. Then uses the following table.
  * <pre>
  * <table border="1">
  *   <tr>  
  * 	  <td>pairs on an atom</td>
  *    <td>hybridization of the atom</td>
- *    <td>geomtry</td>
+ *    <td>geometry</td>
  *    <td>number for CDK.Constants</td> 
  *   </tr>   
  *   <tr><td>2</td><td>sp</td><td>linear</td><td>1</td></tr>
- *   <tr><td>3</td><td>sp^2</td><td>trigonal planarb</td><td>2</td></tr>
+ *   <tr><td>3</td><td>sp^2</td><td>trigonal planar</td><td>2</td></tr>
  *   <tr><td>4</td><td>sp^3</td><td>tetrahedral</td><td>3</td></tr>
  *   <tr><td>5</td><td>sp^3d</td><td>trigonal bipyramid</td><td>4</td></tr>
  *   <tr><td>6</td><td>sp^3d^2</td><td>octahedral</td><td>5</td></tr>
@@ -98,17 +96,10 @@ import org.openscience.cdk.tools.LoggingTool;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptorTest")
 public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 
-	org.openscience.cdk.interfaces.IAtom atom = null;
-	private LoggingTool logger;
-	private static AtomTypeFactory atomATF = null;
-	
 	/**
 	 *  Constructor for the AtomHybridizationVSEPRDescriptor object
 	 */
-	public AtomHybridizationVSEPRDescriptor() {
-		logger = new LoggingTool(this);
-	}
-
+	public AtomHybridizationVSEPRDescriptor() {}
 
 	/**
 	 *  Gets the specification attribute of the AtomHybridizationVSEPRDescriptor object

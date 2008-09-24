@@ -28,6 +28,8 @@
 package org.openscience.cdk.smiles;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -54,6 +56,7 @@ import java.util.List;
  * @cdk.bug 1895807
  * @cdk.bug 1931262
  */
+@TestClass("org.openscience.cdk.smiles.DeduceBondSystemToolTest")
 public class DeduceBondSystemTool {
 
 	private AllRingsFinder allRingsFinder;
@@ -84,6 +87,7 @@ public class DeduceBondSystemTool {
         return StructureOK && count == 0;
     }
 
+    @TestMethod("xtestQuinone,xtestPyrrole")
     public IMolecule fixAromaticBondOrders(IMolecule molecule) throws CDKException {
         //logger.debug("here");
     	

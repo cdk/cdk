@@ -419,7 +419,9 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 
     private boolean isCarboxylate(IAtom atom, IAtomContainer container) {
         // assumes that the oxygen only has one neighbor (C=O, or C-[O-])
-        IAtom carbon = container.getConnectedAtomsList(atom).get(0);
+        List<IAtom> neighbors = container.getConnectedAtomsList(atom);
+        if (neighbors.size() != 1) return false;
+        IAtom carbon = neighbors.get(0);
         if (!"C".equals(carbon.getSymbol())) return false;
         
         int oxygenCount = 0;
@@ -1384,7 +1386,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     		int hCount = atom.getHydrogenCount();
     		int actualNeighbourCount =  connectedAtoms + hCount;
     		int requiredNeighbourCount = type.getFormalNeighbourCount();
-    		if (actualNeighbourCount != requiredNeighbourCount)
+    		if (actualNeighbourCount > requiredNeighbourCount)
     			return false;
     	}
 

@@ -29,6 +29,9 @@
 
 package org.openscience.cdk.index;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,14 +55,18 @@ import java.util.regex.Pattern;
  * @cdk.keyword CAS number
  * @cdk.require java1.4+
  */
+@TestClass("org.openscience.cdk.index.CASNumberTest")
 public class CASNumber {
 
     /**
      * Checks whether the registry number is valid.
      *
+     * @param casNumber  the CAS number to validate
      * @cdk.keyword CAS number
      * @cdk.keyword validation
+     * @return true if a valid CAS number, false otherwise
      */
+    @TestMethod("testInvalidCheckDigits,testValidNumbers")
     public static boolean isValid(String casNumber) {
         boolean overall = true;
         /*
@@ -89,8 +96,8 @@ public class CASNumber {
         
         return overall;
     }
-    
-    public static int calculateCheckDigit(String part1, String part2) {
+
+    private static int calculateCheckDigit(String part1, String part2) {
         int total = 0;
         total = total + 1*Integer.parseInt(part2.substring(1,2));
         total = total + 2*Integer.parseInt(part2.substring(0,1));

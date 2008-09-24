@@ -26,6 +26,7 @@ package org.openscience.cdk;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * Checks the functionality of the Association class.
@@ -83,9 +84,53 @@ public class AssociationTest extends NewCDKTestCase {
         
         Association association = new Association(c, o);
         
-        Atom[] atoms = association.getAtoms();
+        IAtom[] atoms = association.getAtoms();
         Assert.assertEquals(2, atoms.length);
         Assert.assertNotNull(atoms[0]);
         Assert.assertNotNull(atoms[1]);
+    }
+
+    @Test
+    public void testSetAtoms() {
+        Atom c = new Atom("C");
+        Atom o = new Atom("O");
+        Association association = new Association();
+        association.setAtoms(new IAtom[]{c, o});
+
+        Assert.assertTrue(association.contains(c));
+        Assert.assertTrue(association.contains(o));
+    }
+
+    @Test
+    public void testSetAtomAt() {
+        Atom c = new Atom("C");
+        Atom o = new Atom("O");
+        Atom n = new Atom("N");
+        Association association = new Association(c, o);
+        association.setAtomAt(n, 1);
+
+        Assert.assertTrue(association.contains(c));
+        Assert.assertTrue(association.contains(n));
+        Assert.assertFalse(association.contains(o));
+    }
+
+    @Test
+    public void testGetAtomAt() {
+        Atom c = new Atom("C");
+        Atom o = new Atom("O");
+        Atom n = new Atom("N");
+        Association association = new Association(c, o);
+
+        Assert.assertEquals(c, association.getAtomAt(0));
+        Assert.assertEquals(o, association.getAtomAt(1));
+
+        association.setAtomAt(n, 0);
+        Assert.assertEquals(n, association.getAtomAt(0));
+    }
+
+    @Test
+    public void testGetElectronCount() {
+        Association association = new Association();
+        Assert.assertEquals(0, association.getElectronCount(),0.00001);
     }
 }

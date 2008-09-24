@@ -63,7 +63,7 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism{
      * 
 	 */
 	public IReaction initiate(IMoleculeSet moleculeSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
-		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(moleculeSet.getBuilder());
+		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(moleculeSet.getBuilder(), CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
 		if (moleculeSet.getMoleculeCount() != 1) {
 			throw new CDKException("TautomerizationMechanism only expects one IMolecule");
 		}

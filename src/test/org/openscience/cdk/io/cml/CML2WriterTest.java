@@ -121,6 +121,19 @@ public class CML2WriterTest extends CDKTestCase {
         assertTrue(writer.toString().indexOf("hydrogenCount=\"4\"") != -1);
 	}
 
+	public void testNullFormalCharge() throws Exception {
+	    StringWriter writer = new StringWriter();
+	    IMolecule molecule = new NNMolecule(); // methane
+	    molecule.addAtom(molecule.getBuilder().newAtom(Elements.CARBON));
+	    molecule.getAtom(0).setFormalCharge(null);
+	    CMLWriter cmlWriter = new CMLWriter(writer);
+
+	    cmlWriter.write(molecule);
+	    logger.debug("****************************** testNullFormalCharge()");
+	    logger.debug(writer.toString());
+	    logger.debug("******************************");
+	    assertFalse(writer.toString().contains("formalCharge"));
+	}
 	
 	 /**
    * Test example with one explicit carbon, writing of MassNumber
@@ -431,7 +444,7 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        assertTrue(cmlContent.indexOf("<list dictRef=\"cdk:model\" id=\"cm0") != -1);
+        assertTrue(cmlContent.indexOf("<list convention=\"cdk:model\" id=\"cm0") != -1);
     }
     public void testMoleculeSetID() throws Exception {
     	StringWriter writer = new StringWriter();
@@ -444,7 +457,7 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        assertTrue(cmlContent.indexOf("<list dictRef=\"cdk:moleculeSet\" id=\"ms0") != -1);
+        assertTrue(cmlContent.indexOf("<moleculeList convention=\"cdk:moleculeSet\" id=\"ms0") != -1);
     }
     /**
      * TODO: introduce concept for ReactionStepList and ReactionStep.

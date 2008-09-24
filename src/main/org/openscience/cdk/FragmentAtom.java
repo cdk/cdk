@@ -24,8 +24,6 @@
  */
 package org.openscience.cdk;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IFragmentAtom;
@@ -73,10 +71,9 @@ public class FragmentAtom extends PseudoAtom implements IFragmentAtom {
 	 */
 	public Double getExactMass() {
 		double totalMass = 0.0;
-		Iterator<IAtom> atoms = fragment.atoms().iterator();
-		while (atoms.hasNext()) {
-			totalMass += atoms.next().getExactMass();
-		}
+        for (IAtom atom : fragment.atoms()) {
+            totalMass += atom.getExactMass();
+        }
 		return totalMass;
 	}
 
