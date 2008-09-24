@@ -35,8 +35,6 @@ import org.openscience.cdk.interfaces.IBond;
  *   IBond.Order singleBondOrder = CDKConstants.BONDORDER_SINGLE;
  * </pre>
  *
- * <p>The lazyCreation patch has been applied to this class.
- *
  * @cdk.module  core
  * @cdk.svnrev  $Revision$
  *
