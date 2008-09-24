@@ -194,11 +194,10 @@ public class TemplateHandler3D {
             //we compare the fingerprint with any atom and any bond
             if (FingerprinterTool.isSubset(fingerprintData.get(i),ringSystemFingerprint)) {
                 IAtomContainer templateAnyBondAnyAtom = createAnyAtomAnyBondAtomContainer(template);
-                QueryAtomContainer queryTemplate = QueryAtomContainerCreator.createAnyAtomContainer(ringSystemAnyBondAnyAtom, false);
                 //we do the exact match with any atom and any bond
                 if (UniversalIsomorphismTester.isSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom)) {
                 	//if this is the case, we keep it as a guess, but look if we can do better
-                    List list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom, queryTemplate);
+                    List list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom);
                     boolean flagwritefromsecondbest=false;
                     if ((NumberOfRingAtoms) / list.size() == 1 && templateAnyBondAnyAtom.getBondCount()==ringSystems.getBondCount()) {
                     	//so atom and bond count match, could be it's even an exact match,
@@ -208,7 +207,6 @@ public class TemplateHandler3D {
                     		list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystems, templateAnyBondAnyAtom);
                     	}else{
                     		//if it isn't we still now it's better than just the isomorphism
-                    		list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom);                    		
                     		flagSecondbest = true;
                     		flagwritefromsecondbest=true;
                     	}
