@@ -1428,10 +1428,13 @@ public class CMLCoreModule implements ICMLModule {
             		currentAtom.setMassNumber((int)Double.parseDouble((String)isotope.get(i)));
             }
             
+            Iterator<String> customs=moleculeCustomProperty.iterator();
             if(customs.hasNext()){
             	String nextCustom = (String)customs.next();
             	if(!nextCustom.equals("")){
             		currentAtom.setProperty(nextCustom,(String)customs.next());
+            	}
+            }
             if (hasAtomicNumbers) {
               if (atomicNumbers.get(i) != null)
                 currentAtom.setAtomicNumber(Integer.parseInt(atomicNumbers.get(i)));

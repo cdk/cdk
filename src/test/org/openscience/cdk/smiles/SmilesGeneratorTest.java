@@ -445,7 +445,7 @@ public class SmilesGeneratorTest extends NewCDKTestCase {
 		Assert.assertEquals("c1ccccc1", smiles);
 		sg.setUseAromaticityFlag(false);
 		smiles = sg.createSMILES(molecule);
-		assertEquals("C1CCCCC1", smiles);
+		Assert.assertEquals("C1CCCCC1", smiles);
 	}
 
 
