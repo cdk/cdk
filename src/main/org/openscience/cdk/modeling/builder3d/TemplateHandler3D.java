@@ -219,9 +219,6 @@ public class TemplateHandler3D {
         boolean flagSecondbest=false;
         for (int i = 0; i < fingerprintData.size(); i++) {
             IAtomContainer template = templates.getMolecule(i);
-            for(IAtom atom : template.atoms()){
-            	atom.setHydrogenCount(0);
-            }
             //if the atom count is different, it can't be right anyway
             if (template.getAtomCount() != ringSystems.getAtomCount()) {
                 continue;
