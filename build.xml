@@ -83,6 +83,15 @@
             <echo message="          debug: ${debug}" />
             <echo message="    deprecation: ${deprecation}" />
             <echo message="   optimization: ${optimization}" />
+            <echo message="" />
+            <echo message="Available Targets" />
+            <echo message="          clean: Remove class files and any temporary files" />
+            <echo message="       dist-all: Compile all modules" />
+            <echo message="     dist-large: Create the comprehensive jar, with all modules" />
+            <echo message="  test-dist-all: Compile all test modules" />
+            <echo message="test-dist-large: Create a single jar file with all test modules" />
+            <echo message="    jarTestdata: Create the jar file with all test data. Used in testing" />
+            <echo message="" />
         </target>
 
     <!-- Tasks that will be used to clean up ${basedir} after test runs.
@@ -117,7 +126,9 @@
     </target>
 
     <!-- See what platform were on -->
+    
         <target id="checkPlatforms" name="checkPlatforms">
+            <property name="isMacOsX" value="false" />
             <condition property="isMacOsX">
                 <and>
                     <os family="mac"/>
@@ -148,6 +159,9 @@
             <!-- Checks which parts of CDK can be build. -->
 
             <!-- test for optional jars -->
+            <property name="vecmath.present" value="false" />
+            <property name="log4j.present" value="false" />
+            <property name="jgrapht.present" value="false" />
             <available property="vecmath.present"
                        file="${lib}/vecmath1.2-1.14.jar"/>
             <available property="log4j.present"
@@ -161,11 +175,14 @@
                 <available file="${lib}/jumbo-5.4.2-b2.jar"/>
               </or>
             </condition>
+
+            <property name="junit.present" value="false" />
             <available property="junit.present"
                        classname="junit.framework.TestCase"
                        classpath="${ant.home}/lib/junit.jar"/>
 
             <!-- test Ant version -->
+            <property name="hasAnt17" value="false" />
             <condition property="hasAnt17">
               <contains string="${ant.version}" substring="1.7"/>
             </condition>
