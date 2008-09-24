@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -168,10 +169,27 @@ public class ConnectivityCheckerTest extends NewCDKTestCase {
         Assert.assertTrue(ConnectivityChecker.isConnected(container));
     }
 
+    /**
+     * @cdk.bug 2126904
+     */
     @Test public void testIsConnectedFromHINFile() throws CDKException {
         String filename = "data/hin/connectivity1.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
+        ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
+        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = (IAtomContainer) cList.get(0);
+
+        Assert.assertTrue("Molecule appears not to be connected", ConnectivityChecker.isConnected(ac));
+    }
+
+     /**
+     * @cdk.bug 2126904
+     */
+    @Test public void testIsConnectedFromSDFile() throws CDKException {
+        String filename = "data/mdl/mdeotest.sdf";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
