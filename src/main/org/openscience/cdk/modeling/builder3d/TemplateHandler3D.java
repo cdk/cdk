@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.zip.GZIPInputStream;
@@ -36,6 +37,7 @@ import java.util.zip.GZIPInputStream;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
@@ -52,7 +54,9 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Helper class for ModelBuilder3D. Handles templates. This is
@@ -168,6 +172,35 @@ public class TemplateHandler3D {
 		return query;
 	}
 
+	
+	/**
+	 * Returns the largest (number of atoms) ring set in a molecule
+	 *
+	 *@param  ringSystems  RingSystems of a molecule 
+	 *@return              The largestRingSet 
+	 */
+	public IRingSet getLargestRingSet(List ringSystems) {
+		IRingSet largestRingSet = null;
+		int atomNumber = 0;
+		IAtomContainer container = null;
+		for (int i = 0; i < ringSystems.size(); i++) {
+			container = getAllInOneContainer((IRingSet) ringSystems.get(i));
+			if (atomNumber < container.getAtomCount()) {
+				atomNumber = container.getAtomCount();
+				largestRingSet = (IRingSet) ringSystems.get(i);
+			}
+		}
+		return largestRingSet;
+	}
+
+	private IAtomContainer getAllInOneContainer(IRingSet ringSet) {
+		IAtomContainer resultContainer = ringSet.getBuilder().newAtomContainer();
+		Iterator containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
+		while (containers.hasNext()) {
+			resultContainer.add((IAtomContainer) containers.next());
+		}
+		return resultContainer;
+	}
     /**
      * Checks if one of the loaded templates is a substructure in the given
      * Molecule. If so, it assigns the coordinates from the template to the
@@ -181,12 +214,14 @@ public class TemplateHandler3D {
 
         //logger.debug("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
         IAtomContainer ringSystemAnyBondAnyAtom = createAnyAtomAnyBondAtomContainer(ringSystems);
-        QueryAtomContainer queryRingSystem = QueryAtomContainerCreator.createAnyAtomContainer(ringSystemAnyBondAnyAtom, false);
-        BitSet ringSystemFingerprint = new Fingerprinter().getFingerprint(queryRingSystem);
+        BitSet ringSystemFingerprint = new Fingerprinter().getFingerprint(ringSystemAnyBondAnyAtom);
         boolean flagMaxSubstructure = false;
         boolean flagSecondbest=false;
         for (int i = 0; i < fingerprintData.size(); i++) {
             IAtomContainer template = templates.getMolecule(i);
+            for(IAtom atom : template.atoms()){
+            	atom.setHydrogenCount(0);
+            }
             //if the atom count is different, it can't be right anyway
             if (template.getAtomCount() != ringSystems.getAtomCount()) {
                 continue;
@@ -202,7 +237,7 @@ public class TemplateHandler3D {
                     if ((NumberOfRingAtoms) / list.size() == 1 && templateAnyBondAnyAtom.getBondCount()==ringSystems.getBondCount()) {
                     	//so atom and bond count match, could be it's even an exact match,
                     	//we check this with the original ring system
-                    	if(UniversalIsomorphismTester.isSubgraph(ringSystems, templateAnyBondAnyAtom)){
+                    	if(UniversalIsomorphismTester.isSubgraph(ringSystems, template)){
                     		flagMaxSubstructure = true;
                     		list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystems, templateAnyBondAnyAtom);
                     	}else{
@@ -211,8 +246,8 @@ public class TemplateHandler3D {
                     		flagwritefromsecondbest=true;
                     	}
                     }
-
-                    if(!flagSecondbest || flagwritefromsecondbest){
+                    
+                    if(!flagSecondbest || flagMaxSubstructure || flagwritefromsecondbest){
 	                    for (int j = 0; j < list.size(); j++) {
 	                        RMap map = (RMap) list.get(j);
 	                        IAtom atom1 = ringSystems.getAtom(map.getId1());
