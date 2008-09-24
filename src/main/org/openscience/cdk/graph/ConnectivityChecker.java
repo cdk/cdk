@@ -27,7 +27,6 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -64,23 +63,19 @@ public class ConnectivityChecker
     public static boolean isConnected(IAtomContainer atomContainer)
 	{
 		IAtomContainer newContainer = atomContainer.getBuilder().newAtomContainer();
-		IAtom atom = null;
 		IMolecule molecule = atomContainer.getBuilder().newMolecule();
 		List<IAtom> sphere = new ArrayList<IAtom>();
-		for (int f = 0; f < atomContainer.getAtomCount(); f++)
-		{
-			atom = atomContainer.getAtom(f);
-			atomContainer.getAtom(f).setFlag(CDKConstants.VISITED, false);
-			newContainer.addAtom(atomContainer.getAtom(f));
-		}
+        for (IAtom atom : atomContainer.atoms()) {
+            atom.setFlag(CDKConstants.VISITED, false);
+            newContainer.addAtom(atom);
+        }
 
-        Iterator<IBond> bonds = atomContainer.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
+        for (IBond bond : atomContainer.bonds()) {
 			bond.setFlag(CDKConstants.VISITED, false);
 			newContainer.addBond(bond);
 		}
-		atom = newContainer.getAtom(0);
+        
+        IAtom atom = newContainer.getAtom(0);
 		sphere.add(atom);
 		atom.setFlag(CDKConstants.VISITED, true);
 		PathTools.breadthFirstSearch(newContainer, sphere, molecule);
@@ -100,25 +95,27 @@ public class ConnectivityChecker
     @TestMethod("testPartitionIntoMolecules_IAtomContainer,testPartitionIntoMoleculesKeepsAtomIDs,testPartitionIntoMolecules_IsConnected_Consistency")
     public static IMoleculeSet partitionIntoMolecules(IAtomContainer atomContainer) {
 		IAtomContainer newContainer = atomContainer.getBuilder().newAtomContainer();
-		IAtom atom = null;
-		IElectronContainer eContainer = null;
-		IMolecule molecule = null;
+		IMolecule molecule;
 		IMoleculeSet molecules = atomContainer.getBuilder().newMoleculeSet();
 		List<IAtom> sphere = new ArrayList<IAtom>();
-		for (int f = 0; f < atomContainer.getAtomCount(); f++)
-		{
-			atom = atomContainer.getAtom(f);
-			atom.setFlag(CDKConstants.VISITED, false);
-			newContainer.addAtom(atom);
-		}
-		Iterator<IElectronContainer> eContainers = atomContainer.electronContainers().iterator();
-		while (eContainers.hasNext()){
-			eContainer = (IElectronContainer)eContainers.next();
-			eContainer.setFlag(CDKConstants.VISITED, false);
-			newContainer.addElectronContainer(eContainer);
-		}
-		while(newContainer.getAtomCount() > 0) {
-			atom = newContainer.getAtom(0);
+
+        for (IAtom atom : atomContainer.atoms()) {
+            atom.setFlag(CDKConstants.VISITED, false);
+            newContainer.addAtom(atom);
+        }
+
+        for (IBond bond : atomContainer.bonds()) {
+            bond.setFlag(CDKConstants.VISITED, false);
+            newContainer.addBond(bond);
+        }
+
+        for (IElectronContainer eContainer : atomContainer.electronContainers()) {
+            eContainer.setFlag(CDKConstants.VISITED, false);
+            newContainer.addElectronContainer(eContainer);
+        }
+
+        while(newContainer.getAtomCount() > 0) {
+			IAtom atom = newContainer.getAtom(0);
 			molecule = atomContainer.getBuilder().newMolecule();
 			sphere.clear();
 			sphere.add(atom);
