@@ -43,6 +43,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
@@ -649,6 +651,17 @@ public class AtomContainerManipulatorTest extends NewCDKTestCase {
         Assert.assertEquals("incorrect no. Bs", 2, b);
         Assert.assertEquals("incorrect no. Hs", 2, h);
     }
+    
+    @Test public void testCreateAnyAtomAnyBondAtomContainer_IAtomContainer() throws Exception {
+        String smiles = "c1ccccc1";
+        SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles(smiles);
+        //mol=AtomContainerManipulator.createAnyAtomAnyBondAtomContainer(mol);
+        String smiles2 = "C1CCCCC1";
+        IAtomContainer mol2 = sp.parseSmiles(smiles2);
+        Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(mol, mol2));
+    }
+    
 
 }
 
