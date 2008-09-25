@@ -165,7 +165,9 @@ public class TemplateHandler3D {
 			query.getBond(i).setOrder(IBond.Order.SINGLE);
 			query.getBond(i).setFlag(CDKConstants.ISAROMATIC, false);
 			query.getBond(i).getAtom(0).setSymbol("C");
+			query.getBond(i).getAtom(0).setHybridization(null);
 			query.getBond(i).getAtom(1).setSymbol("C");
+			query.getBond(i).getAtom(1).setHybridization(null);
 			query.getBond(i).getAtom(0).setFlag(CDKConstants.ISAROMATIC, false);
 			query.getBond(i).getAtom(1).setFlag(CDKConstants.ISAROMATIC, false);
 		}
@@ -236,7 +238,7 @@ public class TemplateHandler3D {
                     	//we check this with the original ring system
                     	if(UniversalIsomorphismTester.isSubgraph(ringSystems, template)){
                     		flagMaxSubstructure = true;
-                    		list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystems, templateAnyBondAnyAtom);
+                    		list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystems, template);
                     	}else{
                     		//if it isn't we still now it's better than just the isomorphism
                     		flagSecondbest = true;
