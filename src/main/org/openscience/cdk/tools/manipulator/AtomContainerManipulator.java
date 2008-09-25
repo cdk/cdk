@@ -37,7 +37,10 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -658,8 +661,44 @@ public class AtomContainerManipulator {
             if (matched != null) AtomTypeManipulator.configure(atom, matched);
         }
 	}
-	
-	/**
+
+
+    /**
+     * This method will reset all atom configuration to UNSET.
+     *
+     * This method is the reverse of {@link #percieveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IAtomContainer)}
+     * and after a call to this method all atoms will be "unconfigured".
+     *
+     * Note that it is not a complete reversal of {@link #percieveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IAtomContainer)}
+     * since the atomic symbol of the atoms remains unchanged. Also, all the flags that were set
+     * by the configuration method (such as IS_HYDROGENBOND_ACCEPTOR or ISAROMATIC) will be set to False.
+     *
+     * @param container The molecule, whose atoms are to be unconfigured
+     * @see #percieveAtomTypesAndConfigureAtoms(org.openscience.cdk.interfaces.IAtomContainer)
+     */
+    @TestMethod("testClearConfig")
+    public static void clearAtomConfigurations(IAtomContainer container) {
+        for (IAtom atom : container.atoms()) {
+            atom.setAtomTypeName((String) CDKConstants.UNSET);
+            atom.setMaxBondOrder((IBond.Order) CDKConstants.UNSET);
+            atom.setBondOrderSum((Double) CDKConstants.UNSET);
+            atom.setCovalentRadius((Double) CDKConstants.UNSET);
+            atom.setValency((Integer) CDKConstants.UNSET);
+            atom.setFormalCharge((Integer) CDKConstants.UNSET);
+            atom.setHybridization((IAtomType.Hybridization) CDKConstants.UNSET);
+            atom.setFormalNeighbourCount((Integer) CDKConstants.UNSET);
+            atom.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, false);
+            atom.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, false);
+            atom.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, CDKConstants.UNSET);
+            atom.setFlag(CDKConstants.ISAROMATIC, false);
+            atom.setProperty("org.openscience.cdk.renderer.color", CDKConstants.UNSET);
+            atom.setAtomicNumber((Integer) CDKConstants.UNSET);
+            atom.setExactMass((Double) CDKConstants.UNSET);
+        }
+    }
+
+
+    /**
 	 * Returns the sum of bond orders, where a single bond counts as one
 	 * <i>single bond equivalent</i>, a double as two, etc.
 	 * 

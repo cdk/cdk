@@ -23,29 +23,19 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.io.IOException;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.*;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @cdk.module test-standard
@@ -483,6 +473,33 @@ public class AtomContainerManipulatorTest extends NewCDKTestCase {
 		} catch (CDKException e) {
 			Assert.fail("The percieveAtomTypesAndConfigureAtoms must not throw exceptions when no atom type is perceived.");
 		}
+    }
+
+    @Test
+    public void testClearConfig() throws CDKException {
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newAtomContainer();
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+        IAtom atom3 = DefaultChemObjectBuilder.getInstance().newAtom("C");
+        container.addAtom(atom1);
+        container.addAtom(atom2);
+        container.addAtom(atom3);
+        container.addBond(new Bond(atom1, atom2, IBond.Order.SINGLE));
+        container.addBond(new Bond(atom2, atom3, IBond.Order.SINGLE));
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        for (IAtom atom : container.atoms()) {
+            Assert.assertTrue(atom.getAtomTypeName() != CDKConstants.UNSET);
+            Assert.assertTrue(atom.getHybridization() != CDKConstants.UNSET);
+            Assert.assertTrue(atom.getAtomicNumber() != CDKConstants.UNSET);
+        }
+
+        AtomContainerManipulator.clearAtomConfigurations(container);
+        for (IAtom atom : container.atoms()) {
+            Assert.assertTrue(atom.getAtomTypeName() == CDKConstants.UNSET);
+            Assert.assertTrue(atom.getHybridization() == CDKConstants.UNSET);
+            Assert.assertTrue(atom.getAtomicNumber() == CDKConstants.UNSET);
+        }
     }
 
     @Test
