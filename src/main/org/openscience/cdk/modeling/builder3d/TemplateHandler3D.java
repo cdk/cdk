@@ -37,7 +37,6 @@ import java.util.zip.GZIPInputStream;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
@@ -52,8 +51,6 @@ import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.smiles.SmilesGenerator;
-import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -71,8 +68,6 @@ public class TemplateHandler3D {
 	
 	private static final IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	private static final LoggingTool logger = new LoggingTool(TemplateHandler3D.class);
-    SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
-    SmilesGenerator sg = new SmilesGenerator();
 	
     IMolecule molecule;
     IRingSet sssr;
@@ -166,7 +161,9 @@ public class TemplateHandler3D {
 			query.getBond(i).setOrder(IBond.Order.SINGLE);
 			query.getBond(i).setFlag(CDKConstants.ISAROMATIC, false);
 			query.getBond(i).getAtom(0).setSymbol("C");
+			query.getBond(i).getAtom(0).setHybridization(null);
 			query.getBond(i).getAtom(1).setSymbol("C");
+			query.getBond(i).getAtom(1).setHybridization(null);
 			query.getBond(i).getAtom(0).setFlag(CDKConstants.ISAROMATIC, false);
 			query.getBond(i).getAtom(1).setFlag(CDKConstants.ISAROMATIC, false);
 		}
@@ -215,7 +212,6 @@ public class TemplateHandler3D {
 
         //logger.debug("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
         IAtomContainer ringSystemAnyBondAnyAtom = createAnyAtomAnyBondAtomContainer(ringSystems);
-        ringSystemAnyBondAnyAtom = sp.parseSmiles(sg.createSMILES(new Molecule(ringSystemAnyBondAnyAtom)));
         BitSet ringSystemFingerprint = new Fingerprinter().getFingerprint(ringSystemAnyBondAnyAtom);
         boolean flagMaxSubstructure = false;
         boolean flagSecondbest=false;
@@ -228,7 +224,7 @@ public class TemplateHandler3D {
             //we compare the fingerprint with any atom and any bond
             if (FingerprinterTool.isSubset(fingerprintData.get(i),ringSystemFingerprint)) {
                 IAtomContainer templateAnyBondAnyAtom = createAnyAtomAnyBondAtomContainer(template);
-                templateAnyBondAnyAtom = sp.parseSmiles(sg.createSMILES(new Molecule(templateAnyBondAnyAtom)));
+                //we do the exact match with any atom and any bond
                 if (UniversalIsomorphismTester.isSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom)) {
                 	//if this is the case, we keep it as a guess, but look if we can do better
                     List list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom);
@@ -244,6 +240,7 @@ public class TemplateHandler3D {
                     		flagSecondbest = true;
                     		flagwritefromsecondbest=true;
                     	}
+                    }
                     
                     if(!flagSecondbest || flagMaxSubstructure || flagwritefromsecondbest){
 	                    for (int j = 0; j < list.size(); j++) {
@@ -254,7 +251,6 @@ public class TemplateHandler3D {
 	                        	atom1.setPoint3d(new Point3d(atom2.getPoint3d()));
 	                        }
 	                    }//for j
-                    }
                     }
 
                     if (flagMaxSubstructure) {
