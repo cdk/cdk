@@ -656,7 +656,7 @@ public class AtomContainerManipulatorTest extends NewCDKTestCase {
         String smiles = "c1ccccc1";
         SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles(smiles);
-        //mol=AtomContainerManipulator.createAnyAtomAnyBondAtomContainer(mol);
+        mol=AtomContainerManipulator.createAnyAtomAnyBondAtomContainer(mol);
         String smiles2 = "C1CCCCC1";
         IAtomContainer mol2 = sp.parseSmiles(smiles2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(mol, mol2));
