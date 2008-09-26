@@ -128,7 +128,6 @@
     <!-- See what platform were on -->
     
         <target id="checkPlatforms" name="checkPlatforms">
-            <property name="isMacOsX" value="false" />
             <condition property="isMacOsX">
                 <and>
                     <os family="mac"/>
@@ -159,9 +158,6 @@
             <!-- Checks which parts of CDK can be build. -->
 
             <!-- test for optional jars -->
-            <property name="vecmath.present" value="false" />
-            <property name="log4j.present" value="false" />
-            <property name="jgrapht.present" value="false" />
             <available property="vecmath.present"
                        file="${lib}/vecmath1.2-1.14.jar"/>
             <available property="log4j.present"
@@ -176,13 +172,11 @@
               </or>
             </condition>
 
-            <property name="junit.present" value="false" />
             <available property="junit.present"
                        classname="junit.framework.TestCase"
                        classpath="${ant.home}/lib/junit.jar"/>
 
             <!-- test Ant version -->
-            <property name="hasAnt17" value="false" />
             <condition property="hasAnt17">
               <contains string="${ant.version}" substring="1.7"/>
             </condition>
