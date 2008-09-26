@@ -201,9 +201,7 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 	 */
 	@TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
-		String[] params = new String[1];
-		params[0] = "targetPosition";
-		return params;
+		return null;
 	}
 }
 
