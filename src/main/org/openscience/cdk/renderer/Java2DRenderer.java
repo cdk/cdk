@@ -766,7 +766,6 @@ public class Java2DRenderer implements IJava2DRenderer {
 		} else
 		{
 			logger.warn("Drawing bond as single even though it has order: ", bond.getOrder());
-			//System.out.println("Drawing bond as single even though it has order: " + bond.getOrder());
 
 			paintSingleBond(bond, bondColor, graphics);
 		}
