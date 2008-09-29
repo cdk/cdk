@@ -484,14 +484,17 @@ public class CMLRoundTripTest extends CDKTestCase {
     public void testDescriptorValue() throws Exception {
     	Molecule molecule = MoleculeFactory.makeBenzene();
 
-    	String propertyName = "testKey";
-    	String propertyValue = "testValue";
-    	
-    	molecule.setProperty(propertyName, propertyValue);
+    	String[] propertyName = {"testKey1","testKey2"};
+    	String[] propertyValue = {"testValue1","testValue2"};
+
+    	for (int i=0; i < propertyName.length;i++)
+    		molecule.setProperty(propertyName[i], propertyValue[i]);
         IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(molecule);
 
-        assertNotNull(roundTrippedMol.getProperty(propertyName));
-        assertEquals(propertyValue, roundTrippedMol.getProperty(propertyName));
+        for (int i=0; i < propertyName.length;i++) {
+        	assertNotNull(roundTrippedMol.getProperty(propertyName[i]));
+        	assertEquals(propertyValue[i], roundTrippedMol.getProperty(propertyName[i]));
+        }
     }
 
     /**
@@ -513,7 +516,19 @@ public class CMLRoundTripTest extends CDKTestCase {
     	}
         assertEquals(9.0, orderSum, 0.001);
     }
-    
+
+    public void testAtomAromaticity() throws Exception {
+    	IMolecule molecule = MoleculeFactory.makeBenzene();
+    	for (IAtom atom : molecule.atoms()) {
+    		atom.setFlag(CDKConstants.ISAROMATIC, true);
+    	}
+
+    	IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(molecule);
+    	for (IAtom atom : roundTrippedMol.atoms()) {
+    		assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+    	}
+    }
+
     /**
      * Tests whether the custom atom properties survive the CML round-trip
      * @throws Exception
@@ -521,13 +536,14 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @cdk.bug 1930029 
      */
     public void testAtomProperty() throws Exception {
- 	   String key = "customAtomProperty";
- 	   String value = "true";
+    	String[] key = {"customAtomProperty1","customAtomProperty2"};
+    	String[] value = {"true","false"};
  	   
         Molecule mol = MoleculeFactory.makeBenzene();
         for (Iterator<IAtom> it = mol.atoms().iterator(); it.hasNext();) {
            IAtom a = it.next();
-           a.setProperty(key, value);
+           for (int i=0; i < key.length;i++)
+        	   a.setProperty(key[i], value[i]);
         }       
         
         IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(mol);
@@ -536,9 +552,11 @@ public class CMLRoundTripTest extends CDKTestCase {
         
         for (Iterator<IAtom> it = roundTrippedMol.atoms().iterator(); it.hasNext();) {
             IAtom a = it.next();
-            String actual = (String)a.getProperty(key);
-            assertNotNull(actual);
-            assertEquals(value, actual);
+            for (int i=0; i < key.length;i++) {
+            	Object actual = a.getProperty(key[i]);
+            	assertNotNull(actual);
+            	assertEquals(value[i], actual);
+            }
          }       
     }
     
@@ -549,12 +567,13 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @cdk.bug 1930029 
      */
     public void testBondProperty() throws Exception {
- 	   String key = "customBondProperty";
- 	   String value = "true";
+    	String[] key = {"customBondProperty1","customBondProperty2"};
+    	String[] value = {"true","false"};
         Molecule mol = MoleculeFactory.makeBenzene();
         for (Iterator<IBond> it = mol.bonds().iterator(); it.hasNext();) {
            IBond b = it.next();
-           b.setProperty(key, value);
+           for (int i=0; i < key.length;i++)
+        	   b.setProperty(key[i], value[i]);
         }       
         
         IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(mol);
@@ -563,9 +582,11 @@ public class CMLRoundTripTest extends CDKTestCase {
         
         for (Iterator<IBond> it = roundTrippedMol.bonds().iterator(); it.hasNext();) {
             IBond b = it.next();
-            String actual = (String)b.getProperty(key); 
-            assertNotNull(actual);
-            assertEquals(value, actual);
+            for (int i=0; i < key.length;i++) {
+            	Object actual = b.getProperty(key[i]);
+            	assertNotNull(actual);
+            	assertEquals(value[i], actual);
+            }
          }       
     }
     
@@ -576,17 +597,21 @@ public class CMLRoundTripTest extends CDKTestCase {
      * @cdk.bug 1930029 
      */
     public void testMoleculeProperty() throws Exception {
- 	   String key = "customMoleculeProperty";
- 	   String value = "true";      
+    	String[] key = {"customMoleculeProperty1","customMoleculeProperty2"};
+    	String[] value = {"true","false"};
 
- 	   IMolecule mol = MoleculeFactory.makeAdenine();
-        mol.setProperty(key, value);	   
+    	IMolecule mol = MoleculeFactory.makeAdenine();
+    	for (int i=0; i < key.length;i++) {
+    		mol.setProperty(key[i], value[i]);
+    	}
         IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(mol);
         //assertEquals(convertor.cdkMoleculeToCMLMolecule(mol).toXML(), 
      	//	   convertor.cdkMoleculeToCMLMolecule(roundTrippedMol).toXML());
-        String actual = (String)roundTrippedMol.getProperty(key);
-        assertNotNull(actual);
-        assertEquals(value, actual);
+        for (int i=0; i < key.length;i++) {
+        	Object actual = roundTrippedMol.getProperty(key[i]);
+        	assertNotNull(actual);
+        	assertEquals(value[i], actual);
+        }
     }
 
     public void testMoleculeSet() throws Exception {
@@ -618,5 +643,23 @@ public class CMLRoundTripTest extends CDKTestCase {
         	Assert.assertEquals(2,container.getAtom(i).getProperties().size());
         }
     }
+    
+    /**
+     * Test roundtripping of Unset property (Hydrogencount).
+     * @throws Exception
+     */
+    public void testUnsetHydrogenCount() throws Exception {
+    	Molecule mol = new Molecule();
+    	Atom atom = new Atom("C");
+    	assertNull(atom.getHydrogenCount());
+    	mol.addAtom(atom);
+
+    	IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(mol);
+
+    	assertEquals(1, roundTrippedMol.getAtomCount());
+    	IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+    	assertNull(roundTrippedAtom.getHydrogenCount());
+    }
+    
 }
 
