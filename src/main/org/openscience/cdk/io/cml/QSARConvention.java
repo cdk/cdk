@@ -126,7 +126,6 @@ public class QSARConvention extends CMLCoreModule {
     	    		new String[0])
     		);
     	} else if (xpath.endsWith("property", "scalar")) {
-    		System.out.println("touch1");
 //    		cdo.setObjectProperty("MolecularDescriptor", "DescriptorValue", currentChars);
     		currentDescriptorResult = currentChars;
     	} else {
