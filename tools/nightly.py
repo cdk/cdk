@@ -134,7 +134,7 @@ smtpPassword = 'beeb1e'
 # A list of links that will be included on the final build
 # page. Each item of the list should be a tuple of the link
 # text and the actual URL. If empty there will be no links section
-links = [ ('DTP Atom Type QA', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/dtp-atype-report.txt'), ('1.0.x Nightly Build', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly-1.0.x/')]
+links = [ ('DTP Atom Type QA', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/dtp-atype-report.txt'), ('1.0.x Nightly Build', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly-1.0.x/'), ('1.2.x Nightly Build', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly-1.2.x/')]
 
 #################################################################
 #
