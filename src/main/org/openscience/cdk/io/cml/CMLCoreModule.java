@@ -1532,14 +1532,16 @@ public class CMLCoreModule implements ICMLModule {
                 	}
                 }
                 
-                Map<String,String> currentBondProperties = bondCustomProperty.get(currentBond.getID());
-                if (currentBondProperties != null) {
-                	Iterator<String> keys = currentBondProperties.keySet().iterator();
-                	while (keys.hasNext()) {
-                		String key = keys.next();
-                		currentBond.setProperty(key,currentBondProperties.get(key));
-                	}
-                	bondCustomProperty.remove(currentBond.getID());
+                if (currentBond.getID() != null) {
+                    Map<String,String> currentBondProperties = bondCustomProperty.get(currentBond.getID());
+                    if (currentBondProperties != null) {
+                        Iterator<String> keys = currentBondProperties.keySet().iterator();
+                        while (keys.hasNext()) {
+                            String key = keys.next();
+                            currentBond.setProperty(key,currentBondProperties.get(key));
+                        }
+                        bondCustomProperty.remove(currentBond.getID());
+                    }
                 }
 
 //                cdo.endObject("Bond");
