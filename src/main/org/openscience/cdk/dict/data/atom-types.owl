@@ -73,6 +73,11 @@
     <rdfs:range rdf:resource="&xsd;nonNegativeInteger"/>
   </owl:DatatypeProperty>
 
+  <owl:DatatypeProperty rdf:ID="singleElectronCount">
+    <rdfs:domain rdf:resource="&at;AtomType"/>
+    <rdfs:range rdf:resource="&xsd;nonNegativeInteger"/>
+  </owl:DatatypeProperty>
+
   <!-- the hybridization states -->
 
   <Hybridization rdf:ID="s"/>
