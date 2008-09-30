@@ -130,6 +130,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveBeryllium(atomContainer, atom);
         } else if ("Se".equals(atom.getSymbol())) {
             type = perceiveSelenium(atomContainer, atom);
+        } else if ("W".equals(atom.getSymbol())) {
+            type = perceiveTungsten(atomContainer, atom);
         } else {
             if (type == null) type = perceiveHalogens(atomContainer, atom);
             if (type == null) type = perceiveCommonSalts(atomContainer, atom);
@@ -143,6 +145,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
         if (!isCharged(atom) && maxBondOrder == IBond.Order.SINGLE && atomContainer.getConnectedAtomsCount(atom) <= 2) {
             IAtomType type = getAtomType("Se.3");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+		return null;
+	}
+
+    private IAtomType perceiveTungsten(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        if (!isCharged(atom) && atomContainer.getConnectedAtomsCount(atom) == 0) {
+            IAtomType type = getAtomType("W");
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
 		return null;
@@ -287,6 +297,15 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 	    	if (singleElectrons.next().contains(atom)) return true;
 	    }
 	    return false;
+    }
+
+    private int countSingleElectrons(IAtomContainer atomContainer, IAtom atom) {
+	    Iterator<ISingleElectron> singleElectrons = atomContainer.singleElectrons().iterator();
+	    int count = 0;
+	    while (singleElectrons.hasNext()) {
+	    	if (singleElectrons.next().contains(atom)) count++;
+	    }
+	    return count;
     }
 
     private IAtomType perceiveOxygenRadicals(IAtomContainer atomContainer, IAtom atom) throws CDKException {
@@ -793,7 +812,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         List<IBond> neighbors = atomContainer.getConnectedBondsList(atom);
         int neighborcount = neighbors.size();
         IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-        if (hasOneSingleElectron(atomContainer, atom)) {
+        int singleElectronCount = countSingleElectrons(atomContainer, atom);
+        if (singleElectronCount == 3 && neighborcount == 0) {
+        	IAtomType type = getAtomType("P.se.3");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (singleElectronCount > 0) { // but not 3
             // no idea how to deal with this yet
             return null;
         } else if (neighborcount == 3) {

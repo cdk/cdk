@@ -2567,6 +2567,27 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testElementalPhosphorus() throws Exception {
+    	IMolecule mol = new Molecule();
+    	IAtom a1 = mol.getBuilder().newAtom("P");
+    	mol.addAtom(a1);
+    	mol.addSingleElectron(0);
+    	mol.addSingleElectron(0);
+    	mol.addSingleElectron(0);
+
+    	String[] expectedTypes = {"P.se.3"};
+    	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testTungsten() throws Exception {
+    	IMolecule mol = new Molecule();
+    	IAtom a1 = mol.getBuilder().newAtom("W");
+    	mol.addAtom(a1);
+
+    	String[] expectedTypes = {"W"};
+    	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     /**
      * @cdk.inchi InChI=1/C3H9NO/c1-4(2,3)5/h1-3H3
      */
