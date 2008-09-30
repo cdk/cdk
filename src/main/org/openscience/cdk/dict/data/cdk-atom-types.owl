@@ -1283,12 +1283,4 @@
     <at:hybridization rdf:resource="&at;sp3"/>
   </at:AtomType>
 
-  <at:AtomType rdf:ID="W">
-    <at:formalCharge>0</at:formalCharge>
-    <at:hasElement rdf:resource="&elem;W"/>
-    <at:formalNeighbourCount>0</at:formalNeighbourCount>
-    <at:lonePairCount>0</at:lonePairCount>
-    <at:piBondCount>0</at:piBondCount>
-  </at:AtomType>
-
 </rdf:RDF>
