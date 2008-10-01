@@ -1,6 +1,8 @@
 bin
 build
 dist
+reports
+.settings
 jar/libJniInchi.so.1.4
 jar/libinchi.so.1.01.00
-
+cdk.log*
