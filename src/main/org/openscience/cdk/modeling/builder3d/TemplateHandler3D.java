@@ -56,6 +56,7 @@ import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -158,23 +159,6 @@ public class TemplateHandler3D {
         return bitSet;
     }
     
-	public static IAtomContainer createAnyAtomAnyBondAtomContainer(
-		IAtomContainer atomContainer) throws Exception {
-		IAtomContainer query = (IAtomContainer) atomContainer.clone();
-		for (int i = 0; i < query.getBondCount(); i++) {
-			query.getBond(i).setOrder(IBond.Order.SINGLE);
-			query.getBond(i).setFlag(CDKConstants.ISAROMATIC, false);
-			query.getBond(i).getAtom(0).setSymbol("C");
-			query.getBond(i).getAtom(0).setHybridization(null);
-			query.getBond(i).getAtom(1).setSymbol("C");
-			query.getBond(i).getAtom(1).setHybridization(null);
-			query.getBond(i).getAtom(0).setFlag(CDKConstants.ISAROMATIC, false);
-			query.getBond(i).getAtom(1).setFlag(CDKConstants.ISAROMATIC, false);
-		}
-		return query;
-	}
-
-	
 	/**
 	 * Returns the largest (number of atoms) ring set in a molecule
 	 *
@@ -215,7 +199,7 @@ public class TemplateHandler3D {
 		if (!templatesLoaded) self.loadTemplates();
 
         //logger.debug("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
-        IAtomContainer ringSystemAnyBondAnyAtom = createAnyAtomAnyBondAtomContainer(ringSystems);
+        IAtomContainer ringSystemAnyBondAnyAtom = AtomContainerManipulator.createAnyAtomAnyBondAtomContainer(ringSystems);
         BitSet ringSystemFingerprint = new Fingerprinter().getFingerprint(ringSystemAnyBondAnyAtom);
         boolean flagMaxSubstructure = false;
         boolean flagSecondbest=false;
@@ -227,7 +211,7 @@ public class TemplateHandler3D {
             }
             //we compare the fingerprint with any atom and any bond
             if (FingerprinterTool.isSubset(fingerprintData.get(i),ringSystemFingerprint)) {
-                IAtomContainer templateAnyBondAnyAtom = createAnyAtomAnyBondAtomContainer(template);
+                IAtomContainer templateAnyBondAnyAtom = AtomContainerManipulator.createAnyAtomAnyBondAtomContainer(template);
                 //we do the exact match with any atom and any bond
                 if (UniversalIsomorphismTester.isSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom)) {
                 	//if this is the case, we keep it as a guess, but look if we can do better

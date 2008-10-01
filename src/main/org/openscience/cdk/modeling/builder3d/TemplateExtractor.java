@@ -34,6 +34,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -50,6 +51,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -417,7 +419,7 @@ public class TemplateExtractor {
 				// }
 				// query=createAnyAtomAtomContainer(m);
 				// query=(AtomContainer)m.clone();
-				query = createAnyAtomAnyBondAtomContainer(m);
+				query = AtomContainerManipulator.createAnyAtomAnyBondAtomContainer(m);
 
 			}
 			try {
@@ -531,22 +533,7 @@ public class TemplateExtractor {
 			query.getAtom(i).setSymbol("C");
 		}
 		return query;
-	}
-
-	public IAtomContainer createAnyAtomAnyBondAtomContainer(
-			IAtomContainer atomContainer) throws Exception {
-		IAtomContainer query = (IAtomContainer) atomContainer.clone();
-		for (int i = 0; i < query.getBondCount(); i++) {
-			query.getBond(i).setOrder(IBond.Order.SINGLE);
-			query.getBond(i).setFlag(CDKConstants.ISAROMATIC, false);
-			query.getBond(i).getAtom(0).setSymbol("C");
-			query.getBond(i).getAtom(1).setSymbol("C");
-			query.getBond(i).getAtom(0).setFlag(CDKConstants.ISAROMATIC, false);
-			query.getBond(i).getAtom(1).setFlag(CDKConstants.ISAROMATIC, false);
-		}
-		return query;
-	}
-	
+	}	
 	
 	public IAtomContainer resetFlags(IAtomContainer ac) {
 		for (int f = 0; f < ac.getAtomCount(); f++) {
