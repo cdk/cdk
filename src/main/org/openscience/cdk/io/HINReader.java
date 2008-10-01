@@ -20,30 +20,17 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.io.formats.HINFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
+
+import javax.vecmath.Point3d;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import javax.vecmath.Point3d;
-
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.io.formats.HINFormat;
-import org.openscience.cdk.io.formats.IResourceFormat;
 
 /**
  * Reads an object from HIN formated input.
@@ -99,9 +86,9 @@ public class HINReader extends DefaultChemObjectReader {
 
 	public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemFile.class.equals(interfaces[i])) return true;
-		}
+        for (Class anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
+        }
 		return false;
 	}
 
@@ -115,7 +102,7 @@ public class HINReader extends DefaultChemObjectReader {
      */
     public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof IChemFile) {
-            return (IChemObject)readChemFile((IChemFile)object);
+            return readChemFile((IChemFile)object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -197,7 +184,7 @@ public class HINReader extends DefaultChemObjectReader {
                     String[] toks = new String[ ntoken ];
                     for (int i = 0; i < ntoken; i++) toks[i] = tokenizer.nextToken();
 
-                    String sym = new String(toks[3]);
+                    String sym = toks[3];
                     double charge = Double.parseDouble(toks[6]);
                     double x = Double.parseDouble(toks[7]);
                     double y = Double.parseDouble(toks[8]);
@@ -207,70 +194,44 @@ public class HINReader extends DefaultChemObjectReader {
                     IAtom atom = file.getBuilder().newAtom(sym, new Point3d(x,y,z));
                     atom.setCharge(charge);
 
+                    IBond.Order bo = IBond.Order.SINGLE;
+
                     for (int j = 11; j < (11+nbond*2); j += 2) {
-                        double bo = 1;
                         int s = Integer.parseInt(toks[j]) - 1; // since atoms start from 1 in the file
                         char bt = toks[j+1].charAt(0);
                         switch(bt) {
                             case 's': 
-                                bo = 1;
+                                bo = IBond.Order.SINGLE;
                                 break;
                             case 'd': 
-                                bo = 2;
+                                bo = IBond.Order.DOUBLE;
                                 break;
                             case 't': 
-                                bo = 3;
+                                bo = IBond.Order.TRIPLE;
                                 break;      
                             case 'a': 
-                                bo = 1.5;
+                                bo = IBond.Order.QUADRUPLE;
                                 break;
                         }
                         List<Object> ar = new ArrayList<Object>(3);
-                        ar.add(Integer.valueOf(atomSerial));
-                        ar.add(Integer.valueOf(s));
-                        ar.add(Double.valueOf(bo));
+                        ar.add(atomSerial);
+                        ar.add(s);
+                        ar.add(bo);
                         cons.add( ar );
                     }
                     m.addAtom(atom);
                     atomSerial++;
                     line = input.readLine();
                 }
-
-                // before storing the molecule lets include the connections
-                // First we reduce the number of bonds stored, since we have
-                // stored both, say, C1-H1 and H1-C1.
-                List<List<Object>> blist = new ArrayList<List<Object>>();
-                for (int i = 0; i < cons.size(); i++) {
-                    List<Object> ar = cons.get(i);
-                    
-                    // make a reversed list
-                    List<Object> arev = new ArrayList<Object>(3);
-                    arev.add( ar.get(1) );
-                    arev.add( ar.get(0) );
-                    arev.add( ar.get(2) );
-                        
-                    // Now see if ar or arev are already in blist
-                    if (blist.contains(ar) || blist.contains(arev)) continue;
-                    else blist.add( ar );
-                }
                 
                 // now just store all the bonds we have
-                for (int i = 0; i < blist.size(); i++) {
-                    List<Object> ar = blist.get(i);
-                    int s = ((Integer)ar.get(0)).intValue();
-                    int e = ((Integer)ar.get(1)).intValue();
-                    double bo = ((Double)ar.get(2)).doubleValue();
-                    if (bo == 1.0) {
-                    	m.addBond(s, e, IBond.Order.SINGLE);
-                    } else if (bo == 2.0) {
-                    	m.addBond(s, e, IBond.Order.DOUBLE);
-                    } else if (bo == 3.0) {
-                    	m.addBond(s, e, IBond.Order.TRIPLE);
-                    } else if (bo == 4.0) {
-                    	m.addBond(s, e, IBond.Order.QUADRUPLE);
-                    }	
+                for (List<Object> ar : cons) {
+                    IAtom s = m.getAtom((Integer) ar.get(0));
+                    IAtom e = m.getAtom((Integer) ar.get(1));
+                    IBond.Order bo = (IBond.Order) ar.get(2);
+                    if (!isConnected(m, s, e))
+                        m.addBond(file.getBuilder().newBond(s, e, bo));
                 }
-
                 setOfMolecules.addMolecule(m);
                 line = input.readLine(); // read in the 'mol N'
             }
@@ -285,6 +246,13 @@ public class HINReader extends DefaultChemObjectReader {
             file = null;
         }
         return file;
+    }
+
+    private boolean isConnected(IAtomContainer atomContainer, IAtom atom1, IAtom atom2) {
+        for (IBond bond : atomContainer.bonds()) {
+            if (bond.contains(atom1) && bond.contains(atom2)) return true;
+        }
+        return false;
     }
 }
 
