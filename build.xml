@@ -83,6 +83,15 @@
             <echo message="          debug: ${debug}" />
             <echo message="    deprecation: ${deprecation}" />
             <echo message="   optimization: ${optimization}" />
+            <echo message="" />
+            <echo message="Available Targets" />
+            <echo message="          clean: Remove class files and any temporary files" />
+            <echo message="       dist-all: Compile all modules" />
+            <echo message="     dist-large: Create the comprehensive jar, with all modules" />
+            <echo message="  test-dist-all: Compile all test modules" />
+            <echo message="test-dist-large: Create a single jar file with all test modules" />
+            <echo message="    jarTestdata: Create the jar file with all test data. Used in testing" />
+            <echo message="" />
         </target>
 
     <!-- Tasks that will be used to clean up ${basedir} after test runs.
@@ -117,6 +126,7 @@
     </target>
 
     <!-- See what platform were on -->
+    
         <target id="checkPlatforms" name="checkPlatforms">
             <condition property="isMacOsX">
                 <and>
@@ -161,6 +171,7 @@
                 <available file="${lib}/jumbo-5.4.2-b2.jar"/>
               </or>
             </condition>
+
             <available property="junit.present"
                        classname="junit.framework.TestCase"
                        classpath="${ant.home}/lib/junit.jar"/>

@@ -151,7 +151,7 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 
 	@TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
-        IAtomType atomType = null;
+        IAtomType atomType;
         try {
             atomType = CDKAtomTypeMatcher.getInstance(atom.getBuilder()).findMatchingAtomType(container, atom);
         } catch (CDKException e) {
@@ -167,8 +167,14 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
                     getDescriptorNames(), new CDKException("Atom type was null"));
 
         }
-        int hybridizationCDK =
-                atomType.getHybridization() == null ? 0 : atomType.getHybridization().ordinal();
+
+        if (atomType.getHybridization() == null) {
+            return new DescriptorValue(
+                    getSpecification(), getParameterNames(), getParameters(),
+                    new IntegerResult((int) Double.NaN), // does that work??
+                    getDescriptorNames(), new CDKException("Hybridization was null"));
+        }
+        int hybridizationCDK = atomType.getHybridization().ordinal();
 
         return new DescriptorValue(
                 getSpecification(), getParameterNames(), getParameters(),
@@ -195,9 +201,7 @@ public class AtomHybridizationVSEPRDescriptor implements IAtomicDescriptor {
 	 */
 	@TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
-		String[] params = new String[1];
-		params[0] = "targetPosition";
-		return params;
+		return null;
 	}
 }
 

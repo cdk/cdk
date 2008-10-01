@@ -27,6 +27,7 @@ package org.openscience.cdk.io.cml;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -127,9 +128,8 @@ public class CMLCoreModule implements ICMLModule {
     protected List<String> bondDictRefs;
     protected List<String> bondElid;
     protected List<Boolean> bondAromaticity;
-    protected List<String> bondCustomProperty;
+    protected Map<String,Map<String,String>> bondCustomProperty;
     protected boolean stereoGiven;
-    protected boolean bondCustomPropertyGiven;
     protected String inchi;
     protected int curRef;
     protected int CurrentElement;
@@ -286,7 +286,7 @@ public class CMLCoreModule implements ICMLModule {
         bondARef2 = new ArrayList<String>();
         order = new ArrayList<String>();
         bondStereo = new ArrayList<String>();
-        bondCustomProperty = new ArrayList<String>();
+        bondCustomProperty = new Hashtable<String,Map<String,String>>();
         bondDictRefs = new ArrayList<String>();
         bondElid = new ArrayList<String>();
         bondAromaticity = new ArrayList<Boolean>();
@@ -518,7 +518,6 @@ public class CMLCoreModule implements ICMLModule {
             }
             
             stereoGiven = false;
-            bondCustomPropertyGiven = false;
             curRef = 0;
         } else if ("bondArray".equals(name)) {
             boolean bondsCounted = false;
@@ -663,10 +662,6 @@ public class CMLCoreModule implements ICMLModule {
         if ("bond".equals(name)) {
         	if (!stereoGiven)
                 bondStereo.add("");
-        	if (!bondCustomPropertyGiven){
-        		bondCustomProperty.add("");
-        		bondCustomProperty.add("");
-        	}
             if (bondStereo.size() > bondDictRefs.size())
                 bondDictRefs.add(null);
             if (bondAromaticity.size() > bondDictRefs.size())
@@ -988,9 +983,12 @@ public class CMLCoreModule implements ICMLModule {
                 	bondStereo.add(cData.trim());
                     stereoGiven=true;
                 }else{
-                	bondCustomProperty.add(elementTitle);
-                	bondCustomProperty.add(cData.trim());
-                	bondCustomPropertyGiven = true;
+                	Map<String,String> bp = bondCustomProperty.get(bondid.get(bondid.size()-1));
+                	if (bp == null) {
+                		bp = new Hashtable<String, String>();
+                		bondCustomProperty.put(bondid.get(bondid.size()-1), bp);
+                	}
+                	bp.put(elementTitle, cData.trim());
                 }
             } else if (xpath.endsWith("atom", "scalar")) {
                 if (DICTREF.equals("cdk:partialCharge")) {
@@ -1478,7 +1476,6 @@ public class CMLCoreModule implements ICMLModule {
             Iterator<String> bar2s = bondARef2.iterator();
             Iterator<String> stereos = bondStereo.iterator();
             Iterator<Boolean> aroms = bondAromaticity.iterator();
-            Iterator<String> customs = bondCustomProperty.iterator();
 
             while (bar1s.hasNext()) {
 //                cdo.startObject("Bond");
@@ -1542,11 +1539,16 @@ public class CMLCoreModule implements ICMLModule {
                 	}
                 }
                 
-                if(customs.hasNext()){
-                	String nextCustom = (String)customs.next();
-                	if(!nextCustom.equals("")){
-                		currentBond.setProperty(nextCustom,(String)customs.next());
-                	}
+                if (currentBond.getID() != null) {
+                    Map<String,String> currentBondProperties = bondCustomProperty.get(currentBond.getID());
+                    if (currentBondProperties != null) {
+                        Iterator<String> keys = currentBondProperties.keySet().iterator();
+                        while (keys.hasNext()) {
+                            String key = keys.next();
+                            currentBond.setProperty(key,currentBondProperties.get(key));
+                        }
+                        bondCustomProperty.remove(currentBond.getID());
+                    }
                 }
 
 //                cdo.endObject("Bond");
