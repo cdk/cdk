@@ -28,13 +28,18 @@
 package org.openscience.cdk.io;
 
 import java.io.InputStream;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * TestCase for the reading HIN mol files using one test file.
@@ -124,4 +129,14 @@ public class HINReaderTest extends ChemObjectIOTest {
         Assert.assertEquals(3, som.getMoleculeCount());
     }
 
+    @Test public void testIsConnectedFromHINFile() throws CDKException {
+        String filename = "data/hin/connectivity1.hin";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ISimpleChemObjectReader reader = new HINReader(ins);
+        IChemFile content = (IChemFile) reader.read(new ChemFile());
+        List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = cList.get(0);
+        Assert.assertEquals(57, ac.getAtomCount());
+        Assert.assertEquals(59, ac.getBondCount());
+    }
 }
