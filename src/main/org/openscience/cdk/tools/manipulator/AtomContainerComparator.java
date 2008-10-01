@@ -57,7 +57,7 @@ import java.util.Iterator;
  * @cdk.svnrev  $Revision$
  */
 @TestClass("org.openscience.cdk.tools.manipulator.AtomContainerComparatorTest")
-public class AtomContainerComparator implements Comparator<IAtomContainer> {
+public class AtomContainerComparator implements Comparator {
   
   /** Configure LoggingTool */
   private LoggingTool logger = new LoggingTool(AtomContainerComparator.class);
@@ -86,7 +86,7 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
    *         to, or greater than the second.
    */
     @TestMethod("testCompare_Object_Object")
-  public int compare(IAtomContainer o1, IAtomContainer o2) {
+  public int compare(Object o1, Object o2) {
     // Check for nulls
     if (o1 == null && o2 == null)
       return 0;
