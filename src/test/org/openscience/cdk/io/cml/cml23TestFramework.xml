@@ -218,4 +218,39 @@
     </atomArray>
   </molecule>
 
+  <!-- hydrogen count #1 -->
+  <molecule>
+    <atomArray>
+      <atom id='a1' elementType='C' hydrogenCount='4'/>
+    </atomArray>
+  </molecule>
+
+  <!-- hydrogen count #2 -->
+  <molecule>
+    <atomArray>
+      <atom id='a1' elementType='C' hydrogenCount='4'/>
+      <atom id='a2' elementType='H'/>
+      <atom id='a3' elementType='H'/>
+      <atom id='a4' elementType='H'/>
+      <atom id='a5' elementType='H'/>
+    </atomArray>
+    <bondArray>
+      <bond id='b1' atomRefs2='a1 a2' order='S'/>
+      <bond id='b2' atomRefs2='a1 a3' order='S'/>
+      <bond id='b3' atomRefs2='a1 a4' order='S'/>
+      <bond id='b4' atomRefs2='a1 a5' order='S'/>
+    </bondArray>
+  </molecule>
+
+  <!-- hydrogen count #3 -->
+  <molecule>
+    <atomArray>
+      <atom id='a1' elementType='C' hydrogenCount='4'/>
+      <atom id='a2' elementType='H'/>
+    </atomArray>
+    <bondArray>
+      <bond id='b1' atomRefs2='a1 a2' order='S'/>
+    </bondArray>
+  </molecule>
+
 </cml>
