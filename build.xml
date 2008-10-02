@@ -35,7 +35,7 @@
 
          <property environment="env" />
 
-    <!-- Inlcude the ant-contrib goodies -->
+    <!-- Include the ant-contrib goodies -->
     <taskdef resource="net/sf/antcontrib/antlib.xml">
         <classpath>
             <pathelement location="${basedir}/develjar/ant-contrib-1.0b3.jar"/>
