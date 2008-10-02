@@ -43,7 +43,7 @@ import java.util.Map;
  *
  * @cdk.module test-core
  */
-public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
+public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 
     private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
 

@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
@@ -49,11 +49,17 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 
-	private final static String ATOMTYPE_LIST = "cdk-atom-types.owl"; 
+	public String getAtomTypeListName() {
+		return "";
+	};
 	
-	private final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
-		"org/openscience/cdk/dict/data/" + ATOMTYPE_LIST, NoNotificationChemObjectBuilder.getInstance()
-    );
+	public AtomTypeFactory getFactory() {
+		return null;
+	}
+	
+	public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder) {
+		return null;
+	}
 	
 	/**
 	 * Helper method to test if atom types are correctly perceived. Meanwhile, it maintains a list
@@ -70,7 +76,7 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 			"The number of expected atom types is unequal to the number of atoms",
 			expectedTypes.length, mol.getAtomCount()
 		);
-		CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
+		IAtomTypeMatcher atm = getAtomTypeMatcher(mol.getBuilder());
         for (int i=0; i<expectedTypes.length; i++) {
         	IAtom testedAtom = mol.getAtom(i);
         	IAtomType foundType = atm.findMatchingAtomType(mol, testedAtom); 
@@ -142,14 +148,14 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 		}
 
 		try {
-			IAtomType type = factory.getAtomType(expectedID);
+			IAtomType type = getFactory().getAtomType(expectedID);
 			Assert.assertNotNull(
-				"Attempt to test atom type which is not defined in the " + ATOMTYPE_LIST + ": " + expectedID,
+				"Attempt to test atom type which is not defined in the " + getAtomTypeListName() + ": " + expectedID,
 				type
 			);
 		} catch (NoSuchAtomTypeException exception) {
 			Assert.assertNotNull(
-				"Attempt to test atom type which is not defined in the " + ATOMTYPE_LIST + ": " + 
+				"Attempt to test atom type which is not defined in the " + getAtomTypeListName() + ": " + 
 				exception.getMessage()
 			);
 		}
@@ -164,7 +170,7 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
 	}
 	
 	public void testForDuplicateDefinitions() {
-        IAtomType[] expectedTypesArray = factory.getAllAtomTypes();
+        IAtomType[] expectedTypesArray = getFactory().getAllAtomTypes();
         Set<String> alreadyDefinedTypes = new HashSet<String>();
 
         for (int i=0; i<expectedTypesArray.length; i++) {
@@ -181,7 +187,7 @@ abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
         testedAtomTypes.addAll(testedAtomTypesMap.keySet());
         
         Set<String> definedTypes = new HashSet<String>();
-        IAtomType[] expectedTypesArray = factory.getAllAtomTypes();
+        IAtomType[] expectedTypesArray = getFactory().getAllAtomTypes();
         for (int i=0; i<expectedTypesArray.length; i++) {
         	definedTypes.add(expectedTypesArray[i].getAtomTypeName());
         }
