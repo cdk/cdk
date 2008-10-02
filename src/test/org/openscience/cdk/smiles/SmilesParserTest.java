@@ -32,7 +32,6 @@ import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -1422,7 +1421,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 		
 		assertHybridizations(new IAtomType.Hybridization[] {
 			IAtomType.Hybridization.PLANAR3,
-			null,
+			IAtomType.Hybridization.S,
 			IAtomType.Hybridization.SP2,
 			IAtomType.Hybridization.SP2,
 			IAtomType.Hybridization.SP2,
@@ -1514,7 +1513,7 @@ public class SmilesParserTest extends NewCDKTestCase {
 		
 		assertHybridizations(new IAtomType.Hybridization[] {
 			IAtomType.Hybridization.PLANAR3,
-			null,
+			IAtomType.Hybridization.S,
 			IAtomType.Hybridization.SP2,
 			IAtomType.Hybridization.SP2,
 			IAtomType.Hybridization.SP2,
