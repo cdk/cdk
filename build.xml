@@ -937,9 +937,6 @@
                         <fileset dir="${src}/main/" includes="**/*.jjt" />
                         <fileset dir="${src}/main/" includes="org/openscience/cdk/io/cml/data/**" />
                 </copy>
-                <copy todir="${sourcedist.dir}/${src}/test/">
-                    <fileset dir="${src}/test/" includes="**/*.java" />
-                </copy>
                 <copy todir="${sourcedist.dir}">
                         <fileset dir="." includes="build.props" />
                         <fileset dir="." includes="build.xml" />
@@ -1007,12 +1004,10 @@
                 <property name="package" value="cdk-${version}"/>
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
                 <delete dir="${sourcedist.dir}"/>
-                <copy todir="${sourcedist.dir}/${src}">
-                        <fileset dir="${build}" includes="*.javafiles" />
-                        <fileset dir="${build}" includes="*.classes" />
-                        <fileset dir="${build}" includes="*.set" />
+                <copy todir="${sourcedist.dir}/${src}/main">
                         <fileset dir="${src}/main/" includes="**/*.java" />
                         <fileset dir="${src}/main/" includes="**/*.jj" />
+                        <fileset dir="${src}/main/" includes="**/*.jjt" />
                         <fileset dir="${src}/main/" includes="org/openscience/cdk/io/cml/data/**" />
                 </copy>
                 <copy todir="${sourcedist.dir}">
@@ -1021,9 +1016,6 @@
                         <fileset dir="." includes="javadoc.xml" />
                         <fileset dir="." includes="README" />
                         <fileset dir="." includes="changelog*" />
-                </copy>
-                <copy todir="${sourcedist.dir}/src/data">
-                        <fileset dir="src/data" />
                 </copy>
                 <copy todir="${sourcedist.dir}/src/META-INF">
                     <fileset dir="src/META-INF" />
@@ -1035,9 +1027,9 @@
                 <copy
                   file="${src}/main/org/openscience/cdk/dict/data/chemical.xml"
                   tofile="${sourcedist.dir}/${src}/main/org/openscience/cdk/dict/data/chemical.xml" />
-                <copy
-                  file="${src}/org/openscience/cdk/dict/data/elements.xml"
-                  tofile="${sourcedist.dir}/${src}/main/org/openscience/cdk/dict/data/elements.xml" />
+                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/dict/data/">
+                  <fileset dir="${src}/main/org/openscience/cdk/dict/data/" includes="*.owl"/>
+                </copy>
                 <mkdir dir="${sourcedist.dir}/${src}/org/openscience/cdk/qsar/model/data/"/>
                 <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/qsar/model/data/">
                     <fileset dir="${src}/main/org/openscience/cdk/qsar/model/data/" includes="*.R"/>
@@ -1050,9 +1042,6 @@
             <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/builder3d/data/">
                 <fileset dir="${src}/main/org/openscience/cdk/modeling/builder3d/data/" includes="*.gz"/>
             </copy>
-                <copy todir="${sourcedist.dir}/${src}/">
-                    <fileset dir="${src}/main/" includes="*.manifest" />
-                </copy>
                 <mkdir dir="${sourcedist.dir}/doc/" />
                 <copy todir="${sourcedist.dir}/doc/">
                     <fileset dir="doc/" includes="lgpl.license" />
@@ -1061,7 +1050,7 @@
                 <!-- the below deteles are a workaround, because the above should not have copied
                      in the src/data and src/org/openscience/cdk/test dirs -->
                 <delete dir="${sourcedist.dir}/src/data"/>
-                <delete dir="${sourcedist.dir}/src/org/openscience/cdk/test"/>
+                <delete dir="${sourcedist.dir}/src/test"/>
 
                 <!-- now package things up -->
                 <tar tarfile="${package}.tar" basedir="${sourcedist}/" includes="${package}/**" />
