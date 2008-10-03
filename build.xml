@@ -937,6 +937,9 @@
                         <fileset dir="${src}/main/" includes="**/*.jjt" />
                         <fileset dir="${src}/main/" includes="org/openscience/cdk/io/cml/data/**" />
                 </copy>
+                <copy todir="${sourcedist.dir}/${src}/test/">
+                    <fileset dir="${src}/test/" includes="**/*.java" />
+                </copy>
                 <copy todir="${sourcedist.dir}">
                         <fileset dir="." includes="build.props" />
                         <fileset dir="." includes="build.xml" />
