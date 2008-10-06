@@ -21,11 +21,10 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 
 /**
  * Defines the ability to be matched against {@link IAtom}'s. Most prominent application
- * is in isomorphism and substructure matching in the {@link UniversalIsomorphismTester}.
+ * is in isomorphism and substructure matching in the {@link org.openscience.cdk.isomorphism.UniversalIsomorphismTester}.
  * 
  * @cdk.module interfaces
  * @cdk.svnrev  $Revision$
