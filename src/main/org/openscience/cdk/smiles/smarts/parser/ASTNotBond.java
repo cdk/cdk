@@ -31,7 +31,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 public class ASTNotBond extends SimpleNode {
     /**
-     * Whether it's not 
+     * Whether it's not .
      */
     private int type;
 
@@ -44,19 +44,14 @@ public class ASTNotBond extends SimpleNode {
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param id
+     * Creates a new instance.
      */
     public ASTNotBond(int id) {
         super(id);
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param p
-     * @param id
+     * Creates a new instance.
      */
     public ASTNotBond(SMARTSParser p, int id) {
         super(p, id);

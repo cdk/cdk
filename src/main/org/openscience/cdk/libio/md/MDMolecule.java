@@ -90,7 +90,8 @@ public class MDMolecule extends Molecule{
 
 	/**
 	 * Add a ChargeGroup to the MDMolecule if not already present
-	 * @param residue Residue to add
+	 * 
+	 * @param chargeGroup {@link ChargeGroup} to add
 	 */
 	public void addChargeGroup(ChargeGroup chargeGroup){
 		if (chargeGroups==null) chargeGroups=new ArrayList();

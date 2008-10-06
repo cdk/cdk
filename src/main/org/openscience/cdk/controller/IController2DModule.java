@@ -42,38 +42,38 @@ public interface IController2DModule {
 	public abstract void setChemModelRelay(IChemModelRelay relay);
 	//public abstract void setEventRelay(IViewEventRelay relay);
 	/**
-	 * @param Point2d worldCoord
+	 * @param worldCoord
 	 */
 	public abstract void mouseClickedUp(Point2d worldCoord);
 
 	/**
-	 * @param Point2d worldCoord
+	 * @param worldCoord
 	 */
 	public abstract void mouseClickedDown(Point2d worldCoord);
 
 	/**
-	 * @param Point2d worldCoord
+	 * @param worldCoord
 	 */
 	public abstract void mouseClickedDouble(Point2d worldCoord);
 
 	/**
-	 * @param Point2d worldCoord
+	 * @param worldCoord
 	 */
 	public abstract void mouseMove(Point2d worldCoord);
 
 	/**
-	 * @param Point2d worldCoord
+	 * @param worldCoord
 	 */
 	public abstract void mouseEnter(Point2d worldCoord);
 
 	/**
-	 * @param Point2d worldCoord
+	 * @param worldCoord
 	 */
 	public abstract void mouseExit(Point2d worldCoord);
 
 	/**
-	 * @param Point2d worldCoordFrom
-	 * @param Point2d worldCoordTo
+	 * @param worldCoordFrom
+	 * @param worldCoordTo
 	 */
 	public abstract void mouseDrag(Point2d worldCoordFrom, Point2d worldCoordTo);
 

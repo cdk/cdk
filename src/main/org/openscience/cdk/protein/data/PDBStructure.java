@@ -140,7 +140,7 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
     /**
      * set the start sequence number of this structure.
      * 
-     * @param endSequenceNumber  the start sequence number of this structure
+     * @param startSequenceNumber  the start sequence number of this structure
      */
     public void setStartSequenceNumber(Integer startSequenceNumber) {
     	this.startSequenceNumber = startSequenceNumber;

@@ -106,7 +106,7 @@ public class MassToFormulaTool {
 	 * @param rulesNew  The restrictions to impose
 	 * 
 	 * @see #getRestrictions()
-	 * @see #setRestrictionsDefault()
+	 * @see #setDefaultRestrictions()
 	 * @see IRule
 	 */
 	@TestMethod("testSetRestrictions_List")
@@ -166,7 +166,6 @@ public class MassToFormulaTool {
 	 * 
 	 * @return The restrictions to be imposed
 	 * 
-	 * @see #getRestrictions(IRule)
 	 * @see #setDefaultRestrictions()
 	 */
 	@TestMethod("testGetRestrictions")
@@ -179,8 +178,7 @@ public class MassToFormulaTool {
 	 * 
 	 * @return The restrictions imposed
 	 * 
-	 * @see #getRestrictions(Restrictions)
-	 * @see #setDefaultRestrictions()
+	 * @see #getRestrictions()
 	 */
 	@TestMethod("testSetDefaultRestrictions")
 	public void setDefaultRestrictions(){

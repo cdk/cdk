@@ -30,19 +30,14 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 public class ASTPrimitiveAtomExpression extends SimpleNode {
 	/**
-	 * Creates a new instance
-	 * 
-	 * @param id
+	 * Creates a new instance.
 	 */
 	public ASTPrimitiveAtomExpression(int id) {
 		super(id);
 	}
 
 	/**
-	 * Creates a new instance
-	 * 
-	 * @param p
-	 * @param id
+	 * Creates a new instance.
 	 */
 	public ASTPrimitiveAtomExpression(SMARTSParser p, int id) {
 		super(p, id);

@@ -111,12 +111,6 @@ public class OWLReact extends Dictionary {
         return dict;
     }
 
-    /**
-     * 
-     * @param entry
-     * @param ownNS
-     * @return
-     */
     public static EntryReact unmarshal(Element entry, String ownNS) {
     	LoggingTool logger = new LoggingTool(OWLReact.class);
 

@@ -66,11 +66,11 @@ public interface IMolecularFormulaSet {
 	public IMolecularFormula getMolecularFormula(int position);
 	
 	/**
-     *  Returns the array of IMolecularFormula of this chemObject.
+     * Returns the array of IMolecularFormula of this chemObject.
      *
      * @return    The array of IMolecularFormulas of this chemObject
      *  
-     * @see #setMolecules
+     * @see #addMolecularFormula(IMolecularFormula)
      */
 	public Iterable<IMolecularFormula> molecularFormulas();
 	

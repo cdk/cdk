@@ -36,8 +36,6 @@ import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.EntryReact;
 import org.openscience.cdk.exception.CDKException;
 
-
-
 /**
  * <p>The base class for all chemical reactions objects in this cdk. 
  * It provides methods for adding parameters</p>
@@ -54,10 +52,9 @@ public class ReactionEngine{
     
 	private Dictionary dictionary;
 	public HashMap<String, Object> paramsMap;
+	
 	/**
 	 * Constructor of the ReactionEngine object.
-	 * 
-	 * @param reaction 
 	 */
 	public ReactionEngine(){
 		
@@ -87,8 +84,6 @@ public class ReactionEngine{
 	}
 	/**
 	 * Creates a map with the name and type of the parameters.
-	 * 
-	 * @return A HashMap with the name and type of the parameters
 	 */
 	private void initiateParameterMap(EntryReact entry){
 		HashMap<String, String> paramDic = entry.getParameters();

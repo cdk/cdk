@@ -34,29 +34,16 @@ public class ASTAtomicMass extends SimpleNode {
 	 */
     private int mass;
 
-    /**
-     * Creates a new instance
-     *
-     * @param id
-     */
     public ASTAtomicMass(int id) {
         super(id);
     }
 
-    /**
-     * Creates a new instance
-     *
-     * @param p
-     * @param id
-     */
     public ASTAtomicMass(SMARTSParser p, int id) {
         super(p, id);
     }
 
     /**
-     * Returns the mass value
-     * 
-     * @return
+     * Returns the mass value.
      */
     public int getMass() {
         return mass;
@@ -70,9 +57,9 @@ public class ASTAtomicMass extends SimpleNode {
     }
 
     /**
-     * Sets the mass value
+     * Sets the mass value.
      * 
-     * @param mass
+     * @param mass new mass value
      */
     public void setMass(int mass) {
         this.mass = mass;

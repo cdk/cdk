@@ -1,4 +1,5 @@
-/* 
+/* $Revision:$
+ * 
  * Copyright (C) 2005-2008   Nina Jeliazkova <nina@acad.bg>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -20,9 +21,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
-
 package org.openscience.cdk.io.random;
 
 import java.io.File;
@@ -45,8 +44,8 @@ import org.openscience.cdk.io.listener.IReaderListener;
 
 /**
  * Random access of SDF file. Doesn't load molecules in memory, uses prebuilt index and seeks to find the correct record offset.
+ * 
  * @author Nina Jeliazkova nina@acad.bg
- * <b>Modified</b> May 25, 2008
  */
 public class RandomAccessSDFReader extends RandomAccessReader {
 

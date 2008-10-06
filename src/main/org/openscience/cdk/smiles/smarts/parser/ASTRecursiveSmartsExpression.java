@@ -30,19 +30,14 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 public class ASTRecursiveSmartsExpression extends SimpleNode {
 	/**
-	 * Creates a new instance
-	 * 
-	 * @param id
+	 * Creates a new instance.
 	 */
 	public ASTRecursiveSmartsExpression(int id) {
 		super(id);
 	}
 
 	/**
-	 * Creates a new instance
-	 *
-	 * @param p
-	 * @param id
+	 * Creates a new instance.
 	 */
 	public ASTRecursiveSmartsExpression(SMARTSParser p, int id) {
 		super(p, id);

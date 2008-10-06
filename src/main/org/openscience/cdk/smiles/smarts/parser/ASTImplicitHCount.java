@@ -30,33 +30,26 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 public class ASTImplicitHCount extends SimpleNode {
     /**
-     * Value of implicit H count
+     * Value of implicit H count.
      */
     private int count;
 
     /**
-     * Creates a new instance
-     *
-     * @param id
+     * Creates a new instance.
      */
     public ASTImplicitHCount(int id) {
         super(id);
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param p
-     * @param id
+     * Creates a new instance.
      */
     public ASTImplicitHCount(SMARTSParser p, int id) {
         super(p, id);
     }
 
     /**
-     * Returns implicit H count
-     * 
-     * @return
+     * Returns implicit H count.
      */
     public int getCount() {
         return count;
@@ -70,9 +63,7 @@ public class ASTImplicitHCount extends SimpleNode {
     }
 
     /**
-     * Set the value of implicit H count 
-     * 
-     * @param count
+     * Set the value of implicit H count.
      */
     public void setCount(int count) {
         this.count = count;

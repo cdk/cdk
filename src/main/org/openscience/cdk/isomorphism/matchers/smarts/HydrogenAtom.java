@@ -39,7 +39,7 @@ public class HydrogenAtom extends SMARTSAtom {
 	private IAtomContainer atomContainer;
 
 	/**
-	 * Creates a new instance
+	 * Creates a new instance.
 	 *
 	 */
 	public HydrogenAtom() {
@@ -80,18 +80,14 @@ public class HydrogenAtom extends SMARTSAtom {
 	}
 
 	/**
-	 * Returns local copy of IAtomContainer
-	 * 
-	 * @return
+	 * Returns local copy of IAtomContainer.
 	 */
 	public IAtomContainer getAtomContainer() {
 		return atomContainer;
 	}
 
 	/**
-	 * Sets IAtomContainer
-	 * 
-	 * @param atomContainer
+	 * Sets IAtomContainer.
 	 */
 	public void setAtomContainer(IAtomContainer atomContainer) {
 		this.atomContainer = atomContainer;

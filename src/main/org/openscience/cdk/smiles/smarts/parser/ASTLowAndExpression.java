@@ -31,19 +31,14 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 public class ASTLowAndExpression extends SimpleNode {
 	/**
-	 * Creates a new instance
-	 *
-	 * @param id
+	 * Creates a new instance.
 	 */
 	public ASTLowAndExpression(int id) {
 		super(id);
 	}
 
 	/**
-	 * Creates a new instance
-	 *
-	 * @param p
-	 * @param id
+	 * Creates a new instance.
 	 */
 	public ASTLowAndExpression(SMARTSParser p, int id) {
 		super(p, id);

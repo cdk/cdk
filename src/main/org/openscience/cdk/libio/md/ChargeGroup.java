@@ -45,18 +45,14 @@ public class ChargeGroup extends AtomContainer{
 	private MDMolecule parentMolecule;
 	private IAtom switchingAtom;
 	
-	
 	/**
-	 * Empty constructor
+	 * Empty constructor.
 	 */
 	public ChargeGroup(){
 	}
 	
 	/**
-	 * Constructor to create a ChargeGroup based on an AC, a number, and a MDMolecule
-	 * @param container
-	 * @param number
-	 * @param molecule
+	 * Constructor to create a ChargeGroup based on an AC, a number, and a MDMolecule.
 	 */
 	public ChargeGroup(IAtomContainer container, int number, MDMolecule parentMolecule) {
 		super(container);

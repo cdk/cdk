@@ -35,28 +35,21 @@ public class ASTAtomicNumber extends SimpleNode {
     private int number;
 
     /**
-     * Creates a new instance
-     *
-     * @param id
+     * Creates a new instance.
      */
     public ASTAtomicNumber(int id) {
         super(id);
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param p
-     * @param id
+     * Creates a new instance.
      */
     public ASTAtomicNumber(SMARTSParser p, int id) {
         super(p, id);
     }
 
     /**
-     * Returns the atomic number
-     * 
-     * @return
+     * Returns the atomic number.
      */
     public int getNumber() {
         return number;
@@ -70,9 +63,7 @@ public class ASTAtomicNumber extends SimpleNode {
     }
 
     /**
-     * Sets the atomic number
-     * 
-     * @param number
+     * Sets the atomic number.
      */
     public void setNumber(int number) {
         this.number = number;

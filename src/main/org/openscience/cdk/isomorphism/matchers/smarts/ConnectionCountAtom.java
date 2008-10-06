@@ -49,10 +49,7 @@ public class ConnectionCountAtom extends SMARTSAtom {
     }
 
     /**
-     * Returns the connection count of an atom
-     * 
-     * @param atom
-     * @return
+     * Returns the connection count of an atom.
      */
     public int getCC(IAtom atom){
         return ((Integer)atom.getProperty(CC_PROP)).intValue();

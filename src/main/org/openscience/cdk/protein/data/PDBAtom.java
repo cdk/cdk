@@ -46,10 +46,10 @@ import org.openscience.cdk.interfaces.IPDBAtom;
 public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
 
     /**
-     * Determines if a de-serialized object is compatible with this class.
+     * Determines if a deserialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
-     * of this class is imcompatible with the old version. See Sun docs
+     * of this class is incompatible with the old version. See Sun docs
      * for <a href="http://java.sun.com/products/jdk/1.1/docs/guide/serialization/spec/version.doc.html">details</a>.
 	 */
 	private static final long serialVersionUID = 7670650135045832543L;
@@ -78,7 +78,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
         initValues();
 	}
     /**
-	 * Constructs an IPDBAtom from a String containing an element symbol.
+     * Constructs an {@link IPDBAtom} from a String containing an element symbol.
      * 
      * @param symbol  The String describing the element for the PDBAtom
      */
@@ -87,10 +87,10 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
         initValues();
     }
     /**
-     * Constructs an IPDBAtom from an Element and a Point3d.
+     * Constructs an {@link IPDBAtom} from an Element and a Point3d.
      *
-     * @param   elementSymbol   The symbol of the atom
-     * @param   point3d         The 3D coordinates of the atom
+     * @param   symbol    The symbol of the atom
+     * @param   coorinate The 3D coordinates of the atom
      */
     public PDBAtom(String symbol, Point3d coordinate) {
         super(symbol, coordinate);

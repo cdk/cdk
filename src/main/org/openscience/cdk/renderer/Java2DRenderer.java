@@ -1089,11 +1089,10 @@ public class Java2DRenderer implements IJava2DRenderer {
 	}
 
 	/**
-	 *  Really paints the bond. It is triggered by all the other paintbond methods
-	 *  to draw a polygon as wide as bond width.
+	 * Really paints the bond. It is triggered by all the other paintbond methods
+	 * to draw a polygon as wide as bond width.
 	 *
-	 *@param  coords
-	 *@param  bondColor  Color of the bond
+	 * @param  bondColor  Color of the bond
 	 */
 	public void paintOneBond(final Line2D line, final Color bondColor, final Graphics2D graphics)
 	{

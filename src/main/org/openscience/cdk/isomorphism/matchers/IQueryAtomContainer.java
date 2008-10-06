@@ -21,6 +21,7 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 
 /**
  * General concept of a IAtomContainer aimed at doing molecular subgraph
