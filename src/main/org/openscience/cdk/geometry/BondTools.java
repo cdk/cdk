@@ -291,6 +291,8 @@ public class BondTools {
   
 	/**
 	 *  Says if an atom as a center of a tetrahedral chirality.
+	 *  This method uses wedge bonds. 3D coordinates are not taken into account. If there
+	 *  are no wedge bonds around a potential stereo center, it will not be found.
 	 *
 	 *@param  atom          The atom which is the center
 	 *@param  container  The atomContainer the atom is in
@@ -352,7 +354,8 @@ public class BondTools {
 
 	/**
 	 *  Says if an atom as a center of a trigonal-bipyramidal or actahedral
-	 *  chirality
+	 *  chirality. This method uses wedge bonds. 3D coordinates are not taken into account. If there
+	 *  are no wedge bonds around a potential stereo center, it will not be found.
 	 *
 	 *@param  atom          The atom which is the center
 	 *@param  container  The atomContainer the atom is in
@@ -391,7 +394,9 @@ public class BondTools {
 
 
 	/**
-	 *  Says if an atom as a center of any valid stereo configuration or not
+	 *  Says if an atom as a center of any valid stereo configuration or not.
+	 *  This method uses wedge bonds. 3D coordinates are not taken into account. If there
+	 *  are no wedge bonds around a potential stereo center, it will not be found.
 	 *
 	 *@param  stereoAtom          The atom which is the center
 	 *@param  container  The atomContainer the atom is in
@@ -488,7 +493,9 @@ public class BondTools {
 
 
 	/**
-	 *  Says if an atom as a center of a square planar chirality
+	 *  Says if an atom as a center of a square planar chirality.
+	 *  This method uses wedge bonds. 3D coordinates are not taken into account. If there
+	 *  are no wedge bonds around a potential stereo center, it will not be found.
 	 *
 	 *@param  atom          The atom which is the center
 	 *@param  container  The atomContainer the atom is in
