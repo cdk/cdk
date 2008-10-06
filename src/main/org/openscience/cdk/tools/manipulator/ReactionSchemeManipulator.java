@@ -27,13 +27,16 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.*;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionScheme;
 
 /**
  * @cdk.module standard
@@ -44,11 +47,11 @@ import java.util.List;
 public class ReactionSchemeManipulator {
 
     /**
-     * get all Molecules object from a set of Reactions given a IMoleculeSet to add. 
+     * Get all Molecules object from a set of Reactions given a IMoleculeSet to add. 
      * 
-     * @param scheme The set of reaction to inspect
-     * @param set    The set of molecules to be added
-     * @return    The IMoleculeSet
+     * @param  scheme The set of reaction to inspect
+     * @param  molSet The set of molecules to be added
+     * @return        The IMoleculeSet
      */
     @TestMethod("testGetAllMolecules_IReactionScheme_IMoleculeSet")
     public static IMoleculeSet getAllMolecules(IReactionScheme scheme, IMoleculeSet molSet) {

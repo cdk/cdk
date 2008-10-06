@@ -57,7 +57,7 @@ public interface IRule {
 	    /**
 	     * Analyze the validity for the given IMolecularFormula.
 	     *
-	     * @param container     An {@link IMolecularFormula} for which this rule
+	     * @param  formula      An {@link IMolecularFormula} for which this rule
 	     *                      should be analyzed
 	     * @return              A double value between 0 and 1. 1 meaning 100% valid
 	     *                      and 0 not valid

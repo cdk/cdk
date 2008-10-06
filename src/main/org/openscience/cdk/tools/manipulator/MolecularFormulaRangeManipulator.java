@@ -27,8 +27,6 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.util.Iterator;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.formula.MolecularFormulaRange;
@@ -36,7 +34,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -95,7 +92,7 @@ public class MolecularFormulaRangeManipulator {
 	 * Returns the maximal occurrence of the IIsotope into IMolecularFormula 
 	 * from this MolelecularFormulaRange.
 	 * 
-	 * @param   The MolecularFormulaRange to analyze
+	 * @param   mfRange The MolecularFormulaRange to analyze
 	 * @return  A IMolecularFormula containing the maximal occurrence of each isotope 
 	 */
     @TestMethod("testGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder")
@@ -113,7 +110,7 @@ public class MolecularFormulaRangeManipulator {
 	 * Returns the minimal occurrence of the IIsotope into IMolecularFormula 
 	 * from this MolelecularFormulaRange.
 	 * 
-	 * @param   The MolecularFormulaRange to analyze
+	 * @param   mfRange The MolecularFormulaRange to analyze
 	 * @return  A IMolecularFormula containing the minimal occurrence of each isotope 
 	 */
     @TestMethod("testGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder")

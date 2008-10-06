@@ -1,7 +1,4 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
+/*  $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
  *
@@ -24,7 +21,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 package org.openscience.cdk.modeling.builder3d;
 
@@ -95,10 +91,10 @@ public class ModelBuilder3D {
 	private LoggingTool logger = new LoggingTool(ModelBuilder3D.class);
 	
 	/**
-	 *  Constructor for the ModelBuilder3D object
+	 * Constructor for the ModelBuilder3D object.
 	 *	 
-	 *@param  templateHandler  templateHandler Object
-	 *@param  ffname           name of force field
+	 * @param  templateHandler  templateHandler Object
+	 * @param  ffname           name of force field
 	 */
 	private ModelBuilder3D(TemplateHandler3D templateHandler, String ffname) throws CDKException {
 		setTemplateHandler(templateHandler);
@@ -125,9 +121,9 @@ public class ModelBuilder3D {
 	}
 
 	/**
-	 *  gives a list of possible force field types
+	 * Gives a list of possible force field types.
 	 *
-	 *@return                the list
+	 * @return                the list
 	 */
   public String[] getFfTypes(){
     return ffc.getFfTypes();
@@ -135,10 +131,9 @@ public class ModelBuilder3D {
 
 
 	/**
-	 *  Sets the forceField attribute of the ModelBuilder3D object
+	 * Sets the forceField attribute of the ModelBuilder3D object.
 	 *
-	 *@param  ffname  forceField name
-	 * @throws CDKException 
+	 * @param  ffname  forceField name
 	 */
 	private void setForceField(String ffname) throws CDKException {
 		if (ffname == null) {
@@ -252,10 +247,8 @@ public class ModelBuilder3D {
 
 
 	/**
-	 *  Gets the ringSetOfAtom attribute of the ModelBuilder3D object
+	 * Gets the ringSetOfAtom attribute of the ModelBuilder3D object.
 	 *
-	 *@param  ringSystems  Description of the Parameter
-	 *@param  atom         Description of the Parameter
 	 *@return              The ringSetOfAtom value
 	 */
 	private IRingSet getRingSetOfAtom(List ringSystems, IAtom atom) {
@@ -270,11 +263,9 @@ public class ModelBuilder3D {
 
 
 	/**
-	 *  Layout the molecule, starts with ring systems and than aliphatic chains
+	 * Layout the molecule, starts with ring systems and than aliphatic chains.
 	 *
 	 *@param  ringSetMolecule  ringSystems of the molecule
-	 * @param atlp3d 
-	 * @param atomPlacer 
 	 *@exception  Exception    Description of the Exception
 	 */
 	private void layoutMolecule(List ringSetMolecule, IMolecule molecule, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws Exception {
@@ -325,14 +316,13 @@ public class ModelBuilder3D {
 
 
 	/**
-	 *  Layout the ring system, rotate and translate the template
+	 * Layout the ring system, rotate and translate the template.
 	 *
 	 *@param  originalCoord         coordinates of the placedRingAtom from the template 
 	 *@param  placedRingAtom        placedRingAtom
 	 *@param  ringSet               ring system which placedRingAtom is part of
 	 *@param  centerPlacedMolecule  the geometric center of the already placed molecule
 	 *@param  atomB                 placed neighbour atom of  placedRingAtom
-	 * @param ap3d 
 	 */
 	private void layoutRingSystem(Point3d originalCoord, IAtom placedRingAtom, IRingSet ringSet, Point3d centerPlacedMolecule, IAtom atomB, AtomPlacer3D ap3d) {
 		//logger.debug("****** Layout ring System ******");System.out.println(">around atom:"+molecule.getAtomNumber(placedRingAtom));
@@ -422,13 +412,11 @@ public class ModelBuilder3D {
 
 
 	/**
-	 *  Sets a branch atom to a ring or aliphatic chain
+	 * Sets a branch atom to a ring or aliphatic chain.
 	 *
 	 *@param  unplacedAtom    The new branchAtom 
 	 *@param  atomA           placed atom to which the unplaced satom is connected
 	 *@param  atomNeighbours  placed atomNeighbours of atomA
-	 * @param ap3d 
-	 * @param atlp3d 
 	 *@exception  Exception   Description of the Exception
 	 */
 	private void setBranchAtom(IMolecule molecule, IAtom unplacedAtom, IAtom atomA, IAtomContainer atomNeighbours, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d) throws Exception {
@@ -486,12 +474,9 @@ public class ModelBuilder3D {
 
 
 	/**
-	 *  Search and place branches of a chain or ring
+	 * Search and place branches of a chain or ring.
 	 *
 	 *@param  chain          AtomContainer if atoms in an aliphatic chain or ring system 
-	 * @param ap3d 
-	 * @param atlp3d 
-	 * @param atomPlacer 
 	 *@exception  Exception  Description of the Exception
 	 */
 	private void searchAndPlaceBranches(IMolecule molecule, IAtomContainer chain, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws Exception {
@@ -531,12 +516,9 @@ public class ModelBuilder3D {
 
 
 	/**
-	 *  Layout all aliphatic chains with ZMatrix
+	 * Layout all aliphatic chains with ZMatrix.
 	 *
 	 *@param  startAtoms     AtomContainer of possible start atoms for a chain
-	 * @param ap3d 
-	 * @param atlp3d 
-	 * @param atomPlacer 
 	 *@exception  Exception  Description of the Exception
 	 */
 	private void placeLinearChains3D(IMolecule molecule, IAtomContainer startAtoms, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws Exception {
@@ -579,7 +561,7 @@ public class ModelBuilder3D {
 
 
 	/**
-	 *  Translates the template ring system to new coordinates
+	 * Translates the template ring system to new coordinates.
 	 *
 	 *@param  originalCoord  original coordinates of the placed ring atom from template
 	 *@param  newCoord       new coordinates from branch placement
@@ -598,7 +580,7 @@ public class ModelBuilder3D {
 
 
 	/**
-	 * Returns the largest (number of atoms) ring set in a molecule
+	 * Returns the largest (number of atoms) ring set in a molecule.
 	 *
 	 *@param  ringSystems  RingSystems of a molecule 
 	 *@return              The largestRingSet 
@@ -619,10 +601,7 @@ public class ModelBuilder3D {
 
 
 	/**
-	 *  Returns true if all atoms in an AtomContainer have coordinates
-	 *
-	 *@param  ac  AtomContainer
-	 *@return     boolean
+	 * Returns true if all atoms in an AtomContainer have coordinates.
 	 */
 	private boolean checkAllRingAtomsHasCoordinates(IAtomContainer ac) {
 		for (int i = 0; i < ac.getAtomCount(); i++) {
@@ -637,7 +616,7 @@ public class ModelBuilder3D {
 
 
 	/**
-	 *  Sets the atomsToPlace attribute of the ModelBuilder3D object
+	 * Sets the atomsToPlace attribute of the ModelBuilder3D object.
 	 *
 	 *@param  ac  The new atomsToPlace value
 	 */
@@ -649,7 +628,7 @@ public class ModelBuilder3D {
 
 
 	/**
-	 *  Sets the atomsToUnPlaced attribute of the ModelBuilder3D object
+	 * Sets the atomsToUnPlaced attribute of the ModelBuilder3D object.
 	 */
 	private void setAtomsToUnPlaced(IMolecule molecule) {
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
@@ -659,7 +638,7 @@ public class ModelBuilder3D {
 
 
 	/**
-	 *  Sets the atomsToUnVisited attribute of the ModelBuilder3D object
+	 * Sets the atomsToUnVisited attribute of the ModelBuilder3D object.
 	 */
 	private void setAtomsToUnVisited(IMolecule molecule) {
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
@@ -668,9 +647,9 @@ public class ModelBuilder3D {
 	}
 
 	/**
-	 *  Sets the templateHandler attribute of the ModelBuilder3D object
+	 * Sets the templateHandler attribute of the ModelBuilder3D object.
 	 *
-	 *@param  templateHandler  The new templateHandler value
+	 * @param  templateHandler  The new templateHandler value
 	 */
 	private void setTemplateHandler(TemplateHandler3D templateHandler) throws CDKException {
 		if (templateHandler == null) throw new NullPointerException("The given template handler is null!");
@@ -682,7 +661,7 @@ public class ModelBuilder3D {
 	 * Returns the number of loaded templates. Note that it may return 0 because
 	 * templates are lazy loaded, that is upon the first ring being layed out.
 	 * 
-	 * @returns 0, if not templates are loaded
+	 * @return 0, if not templates are loaded
 	 */
 	public int getTemplateCount() {
 		return this.templateHandler.getTemplateCount();

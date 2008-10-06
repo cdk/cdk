@@ -30,33 +30,26 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 public class ASTSmallestRingSize extends SimpleNode {
     /**
-     * The smallest SSSR size
+     * The smallest SSSR size.
      */
     private int size;
 
     /**
-     * Creates a new instance
-     *
-     * @param id
+     * Creates a new instance.
      */
     public ASTSmallestRingSize(int id) {
         super(id);
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param p
-     * @param id
+     * Creates a new instance.
      */
     public ASTSmallestRingSize(SMARTSParser p, int id) {
         super(p, id);
     }
 
     /**
-     * Returns the smallest SSSR size
-     * 
-     * @return
+     * Returns the smallest SSSR size.
      */
     public int getSize() {
         return size;
@@ -70,9 +63,7 @@ public class ASTSmallestRingSize extends SimpleNode {
     }
 
     /**
-     * Sets the smallest SSSR size
-     * 
-     * @param size
+     * Sets the smallest SSSR size.
      */
     public void setSize(int size) {
         this.size = size;

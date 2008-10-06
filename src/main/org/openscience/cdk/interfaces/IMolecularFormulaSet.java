@@ -60,8 +60,8 @@ public interface IMolecularFormulaSet {
      * Returns the IMolecularFormula at position <code>number</code> in the
      * chemObject.
      *
-     * @param  number  The position of the MolecularFormula to be returned. 
-     * @return         The IMolecularFormula at position <code>number</code> . 
+     * @param  position  The position of the MolecularFormula to be returned. 
+     * @return           The IMolecularFormula at position <code>number</code> . 
      */
 	public IMolecularFormula getMolecularFormula(int position);
 	

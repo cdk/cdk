@@ -187,7 +187,8 @@ public class MolecularFormulaSetManipulator {
 	 * @param formulaSet   The IMolecularFormulaSet
 	 * @param  formula     The IMolecularFormula this IMolecularFormulaSet is searched for
 	 * @return             True, if the IMolecularFormulaSet contains the given formula
-	 * @see                IMolecularFormula.contains(IMolecularFormula)
+	 * 
+	 * @see                IMolecularFormulaSet#contains(IMolecularFormula)
 	 */
     @TestMethod("testContains_IMolecularFormulaSet_IMolecularFormula")
 	public static boolean contains(IMolecularFormulaSet formulaSet, IMolecularFormula formula){

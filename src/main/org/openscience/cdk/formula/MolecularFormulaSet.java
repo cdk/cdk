@@ -149,8 +149,8 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      * Returns the MolecularFormula at position <code>number</code> in the
      * chemObject.
      *
-     * @param  number  The position of the IMolecularFormula to be returned. 
-     * @return         The IMolecularFormula at position <code>number</code> . 
+     * @param  position The position of the IMolecularFormula to be returned. 
+     * @return          The IMolecularFormula at position <code>number</code> . 
      */
     @TestMethod("testGetMolecularFormula_int")
     public  IMolecularFormula getMolecularFormula(int position) {
@@ -179,7 +179,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     /**
 	 * Removes an MolecularFormula from this chemObject.
 	 *
-	 * @param  pos  The position of the MolecularFormula to be removed from this chemObject
+	 * @param  position  The position of the MolecularFormula to be removed from this chemObject
 	 */
     @TestMethod("testRemoveMolecularFormula_int")
     public void removeMolecularFormula(int position) {

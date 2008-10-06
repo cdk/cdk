@@ -89,8 +89,8 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
     /**
      * Constructs an {@link IPDBAtom} from an Element and a Point3d.
      *
-     * @param   symbol    The symbol of the atom
-     * @param   coorinate The 3D coordinates of the atom
+     * @param  symbol     The symbol of the atom
+     * @param  coordinate The 3D coordinates of the atom
      */
     public PDBAtom(String symbol, Point3d coordinate) {
         super(symbol, coordinate);

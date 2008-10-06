@@ -24,6 +24,11 @@
  */
 package org.openscience.cdk.formula;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
@@ -33,14 +38,13 @@ import org.openscience.cdk.formula.rules.ChargeRule;
 import org.openscience.cdk.formula.rules.ElementRule;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.ToleranceRangeRule;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * <p>Tool to determine molecular formula consistent with a given accurate mass. The 
@@ -175,8 +179,6 @@ public class MassToFormulaTool {
 	
 	/**
 	 * Set the default restrictions that must be presents in the molecular formula.
-	 * 
-	 * @return The restrictions imposed
 	 * 
 	 * @see #getRestrictions()
 	 */

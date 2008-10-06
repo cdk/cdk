@@ -36,6 +36,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * @cdk.module    standard
  * @cdk.svnrev    $Revision: 10777 $
+ * @cdk.bug       1956606
  */
 public class AtomMappingTools {
 
@@ -51,7 +52,6 @@ public class AtomMappingTools {
      * @param secondAtomContainer the second aligned AtomContainer
      * @return a Map of the mapped atoms
      * @throws CDKException if there is an error in the UniversalIsomorphismTester
-     * @cdk.bug 1956606
      */
     public static Map<Integer,Integer> mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, 
             IAtomContainer secondAtomContainer, Map<Integer,Integer> mappedAtoms) throws CDKException {

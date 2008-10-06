@@ -2,8 +2,6 @@ package org.openscience.cdk.modeling.builder3d;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
-
 
 /**
  * Set the right atoms order to get the parameters.
@@ -35,7 +33,7 @@ public class MMFF94ParametersCall {
 
 
 	/**
-	 *  Gets the bond parameter set
+	 *  Gets the bond parameter set.
 	 *
 	 * @param  id1            atom1 id
 	 * @param  id2            atom2 id
@@ -58,7 +56,7 @@ public class MMFF94ParametersCall {
 
 
 	/**
-	 *  Gets the angle parameter set
+	 *  Gets the angle parameter set.
 	 *
 	 * @param  id1            ID from Atom 1.
 	 * @param  id2            ID from Atom 2.
@@ -82,7 +80,7 @@ public class MMFF94ParametersCall {
 
 
 	/**
-	 *  Gets the bond-angle interaction parameter set
+	 *  Gets the bond-angle interaction parameter set.
 	 *
 	 * @param  id1            ID from Atom 1.
 	 * @param  id2            ID from Atom 2.
@@ -114,11 +112,11 @@ public class MMFF94ParametersCall {
 	
 
 	/**
-	 *  Gets the bond-angle interaction parameter set
+	 * Gets the bond-angle interaction parameter set.
 	 *
-	 * @param  id1            ID from Atom 1.
-	 * @param  id2            ID from Atom 2.
-	 * @param  id3            ID from Atom 3.
+	 * @param  iR             ID from Atom 1.
+	 * @param  jR             ID from Atom 2.
+	 * @param  kR             ID from Atom 3.
 	 * @return                The bond-angle interaction data from the force field parameter set
 	 * @exception  Exception  Description of the Exception
 	 */
@@ -135,7 +133,7 @@ public class MMFF94ParametersCall {
 	
 		
 	/**
-	 *  Gets the bond parameter set
+	 *  Gets the bond parameter set.
 	 *
 	 * @param  id1            atom1 id
 	 * @param  id2            atom2 id

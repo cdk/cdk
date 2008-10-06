@@ -30,33 +30,26 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 public class ASTRingConnectivity extends SimpleNode {
     /**
-     * Number of ring connections
+     * Number of ring connections.
      */
     private int numOfConnection;
 
     /**
-     * Creates a new instance
-     *
-     * @param id
+     * Creates a new instance/
      */
     public ASTRingConnectivity(int id) {
         super(id);
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param p
-     * @param id
+     * Creates a new instance.
      */
     public ASTRingConnectivity(SMARTSParser p, int id) {
         super(p, id);
     }
 
     /**
-     * Returns the number of ring connections
-     * 
-     * @return
+     * Returns the number of ring connections.
      */
     public int getNumOfConnection() {
         return numOfConnection;
@@ -70,9 +63,7 @@ public class ASTRingConnectivity extends SimpleNode {
     }
 
     /**
-     * Sets the number of ring connections
-     * 
-     * @param numOfConnection
+     * Sets the number of ring connections.
      */
     public void setNumOfConnection(int numOfConnection) {
         this.numOfConnection = numOfConnection;

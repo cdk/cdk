@@ -701,9 +701,6 @@ public class AtomContainerManipulator {
     /**
 	 * Returns the sum of bond orders, where a single bond counts as one
 	 * <i>single bond equivalent</i>, a double as two, etc.
-	 * 
-	 * @param container
-	 * @return
 	 */
     @TestMethod("testGetSBE")
     public static int getSingleBondEquivalentSum(IAtomContainer container) {
