@@ -29,6 +29,7 @@ import java.io.Writer;
 
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -48,6 +49,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
  * @cdk.module extra
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.io.CrystClustWriterTest")
 public class CrystClustWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;

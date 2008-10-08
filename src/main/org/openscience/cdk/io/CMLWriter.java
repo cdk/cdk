@@ -40,6 +40,7 @@ import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Serializer;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -105,6 +106,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.keyword file format, CML
  */
+@TestClass("org.openscience.cdk.io.CMLWriterTest")
 public class CMLWriter extends DefaultChemObjectWriter {
 
     private OutputStream output;

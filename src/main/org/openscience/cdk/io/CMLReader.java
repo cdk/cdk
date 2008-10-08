@@ -32,6 +32,7 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -59,6 +60,7 @@ import org.xml.sax.XMLReader;
  * @cdk.keyword file format, CML
  * @cdk.bug     1544406
  */
+@TestClass("org.openscience.cdk.io.CMLReaderTest")
 public class CMLReader extends DefaultChemObjectReader {
 
     private XMLReader parser;

@@ -35,6 +35,7 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -72,6 +73,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * @cdk.module io
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.io.Gaussian98ReaderTest")
 public class Gaussian98Reader extends DefaultChemObjectReader {
 
     private BufferedReader input;

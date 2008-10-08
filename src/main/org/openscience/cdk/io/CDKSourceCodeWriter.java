@@ -35,6 +35,7 @@ import java.util.Iterator;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -69,6 +70,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @cdk.keyword file format, CDK source code
  */
+@TestClass("org.openscience.cdk.io.CDKSourceCodeWriterTest")
 public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
