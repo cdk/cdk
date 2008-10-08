@@ -3,10 +3,14 @@ build
 dist
 reports
 .settings
+doc/api
+doc/javadoc
 jar/libJniInchi.so.1.4
 jar/libinchi.so.1.01.00
 cdk.log*
 cdk-src+libs-*.tar.gz
 cdk-src+libs-*.zip
 sourcedist
-
+src/main/net/sf/cdk/tools/doclets/*.class
+src/main/net/sf/cdk/tools/coverage/*.class
+src/main/net/sf/cdk/tools/bibtex/*.class
