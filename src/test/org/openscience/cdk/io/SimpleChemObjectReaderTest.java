@@ -28,6 +28,7 @@ import java.io.InputStream;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObject;
 
 /**
  * TestCase for CDK IO classes.
@@ -42,11 +43,24 @@ public abstract class SimpleChemObjectReaderTest extends ChemObjectReaderTest {
         ChemObjectReaderTest.setChemObjectReader(aSimpelChemObjectReader, testFile);
         SimpleChemObjectReaderTest.chemObjectIO = aSimpelChemObjectReader;
     }
-    
+
     @Test public void testRead_IChemObject() throws Exception {
         Assert.assertNotNull("No test file has been set!", testFile);
-        InputStream ins = SimpleChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
-        chemObjectIO.setReader(ins);
+
+        boolean read = false;
+        for (IChemObject object : acceptableChemObjects) {
+            if (chemObjectIO.accepts(object.getClass())) {
+                InputStream ins = SimpleChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
+                chemObjectIO.setReader(ins);
+                IChemObject readObject = chemObjectIO.read(object);
+                chemObjectIO.close();
+                Assert.assertNotNull(readObject);
+                read = true;
+            }
+        }
+        if (!read) {
+            Assert.fail("Reading an IChemObject from the Reader did not work properly.");
+        }
     }
 
 }
