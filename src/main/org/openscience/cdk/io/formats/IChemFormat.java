@@ -59,7 +59,7 @@ public interface IChemFormat extends IResourceFormat {
      * 
      * @see org.openscience.cdk.tools.DataFeatures
      */
-    public int getSupportedDataFeatures();
+	public int getSupportedDataFeatures();
 
     /**
      * Returns an integer indicating the data features that this 

@@ -84,6 +84,7 @@ public class INChIFormat implements IChemFormatMatcher {
 		return true;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}

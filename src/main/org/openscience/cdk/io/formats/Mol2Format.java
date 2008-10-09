@@ -86,6 +86,7 @@ public class Mol2Format implements IChemFormatMatcher {
 		return false;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return getRequiredDataFeatures () |
 		       DataFeatures.HAS_2D_COORDINATES |

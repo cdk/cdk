@@ -74,6 +74,7 @@ public class PubChemCompoundXMLFormat implements IChemFormatMatcher {
 		return true;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}

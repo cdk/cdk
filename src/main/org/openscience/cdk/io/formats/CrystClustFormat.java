@@ -84,6 +84,7 @@ public class CrystClustFormat implements IChemFormatMatcher {
 		return false;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return getRequiredDataFeatures();
 	}

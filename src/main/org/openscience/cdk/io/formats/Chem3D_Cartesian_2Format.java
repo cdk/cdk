@@ -76,6 +76,7 @@ public class Chem3D_Cartesian_2Format implements IChemFormat {
 		return false;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}

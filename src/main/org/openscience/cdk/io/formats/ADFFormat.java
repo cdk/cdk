@@ -81,6 +81,7 @@ public class ADFFormat implements IChemFormatMatcher {
 		return false;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}

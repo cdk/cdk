@@ -77,6 +77,7 @@ public class XYZFormat implements IChemFormat {
 		return false;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return getRequiredDataFeatures() |
 		       DataFeatures.HAS_ATOM_PARTIAL_CHARGES;

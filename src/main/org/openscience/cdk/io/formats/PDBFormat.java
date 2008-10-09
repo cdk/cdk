@@ -88,6 +88,7 @@ public class PDBFormat implements IChemFormatMatcher {
 		return false;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.HAS_FRACTIONAL_CRYSTAL_COORDINATES |
         	   getRequiredDataFeatures();

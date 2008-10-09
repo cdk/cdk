@@ -80,6 +80,7 @@ public class PDBMLFormat implements IChemFormat {
 		return true;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}

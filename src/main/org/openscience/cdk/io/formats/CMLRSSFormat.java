@@ -73,6 +73,7 @@ public class CMLRSSFormat implements IChemFormat {
 		return true;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.HAS_3D_COORDINATES |
 		       DataFeatures.HAS_GRAPH_REPRESENTATION |
