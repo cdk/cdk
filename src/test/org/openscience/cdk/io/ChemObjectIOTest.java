@@ -27,6 +27,10 @@ package org.openscience.cdk.io;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.io.formats.IResourceFormat;
 
 /**
@@ -55,6 +59,20 @@ public abstract class ChemObjectIOTest extends NewCDKTestCase {
             "The IChemObjectIO.getFormat method returned null.",
             format
         );
+    }
+
+    @Test public void testAcceptsAtLeastOne() {
+        Class[] objects = {
+            IChemFile.class, IChemModel.class, IMolecule.class,
+            IReaction.class
+        };
+        boolean oneAccepted = false;
+        for (int i=0; (i<objects.length && !oneAccepted); i++) {
+            if (chemObjectIO.accepts(objects[i])) {
+                oneAccepted = true;
+            }
+        }
+        Assert.assertTrue("At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IMolecule, IReaction", oneAccepted);
     }
 
 }
