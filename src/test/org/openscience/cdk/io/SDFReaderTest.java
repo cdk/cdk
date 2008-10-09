@@ -43,10 +43,10 @@ import org.openscience.cdk.Molecule;
  *
  * @see org.openscience.cdk.io.MDLReader
  */
-public class SDFReaderTest extends ChemObjectIOTest {
+public class SDFReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass public static void setup() throws Exception {
-        setChemObjectIO(new MDLV2000Reader());
+        setSimpleChemObjectReader(new MDLV2000Reader(), "data/mdl/test.sdf");
     }
 
     @Test public void testAccepts() {

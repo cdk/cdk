@@ -38,13 +38,13 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * @cdk.module test-extra
  */
-public class VASPReaderTest extends ChemObjectIOTest {
+public class VASPReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() throws Exception {
         logger = new LoggingTool(VASPReaderTest.class);
-        setChemObjectIO(new VASPReader());
+        setSimpleChemObjectReader(new VASPReader(), "data/vasp/LiMoS2_optimisation_ISIF3.vasp");
     }
 
     @Test public void testAccepts() {

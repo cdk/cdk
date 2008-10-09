@@ -48,13 +48,13 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @see org.openscience.cdk.io.HINReader
  */
-public class HINReaderTest extends ChemObjectIOTest {
+public class HINReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
     
     @BeforeClass public static void setup() {
         logger = new LoggingTool(HINReaderTest.class);
-        setChemObjectIO(new HINReader());
+        setSimpleChemObjectReader(new HINReader(), "data/hin/benzene.hin");
     }
 
     @Test public void testAccepts() {

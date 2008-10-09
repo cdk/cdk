@@ -45,13 +45,13 @@ import org.openscience.cdk.tools.LoggingTool;
  * @see org.openscience.cdk.io.MDLReader
  * @see org.openscience.cdk.io.SDFReaderTest
  */
-public class MDLV3000ReaderTest extends ChemObjectIOTest {
+public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() throws Exception {
         logger = new LoggingTool(MDLV3000ReaderTest.class);
-        setChemObjectIO(new MDLV3000Reader());
+        setSimpleChemObjectReader(new MDLV3000Reader(), "data/mdl/reaction_v3.rxn");
     }
 
     @Test public void testAccepts() {

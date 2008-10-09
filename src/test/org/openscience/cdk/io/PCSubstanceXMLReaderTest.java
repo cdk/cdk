@@ -37,13 +37,13 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * @cdk.module test-io
  */
-public class PCSubstanceXMLReaderTest extends ChemObjectIOTest {
+public class PCSubstanceXMLReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() throws Exception {
         logger = new LoggingTool(Mol2ReaderTest.class);
-        setChemObjectIO(new Mol2Reader());
+        setSimpleChemObjectReader(new Mol2Reader(), "data/asn/pubchem/sid577309.xml");
     }
 
     @Test public void testAccepts() throws Exception {

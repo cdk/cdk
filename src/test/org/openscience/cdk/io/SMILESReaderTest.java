@@ -43,13 +43,13 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.io.MDLReader
  */
-public class SMILESReaderTest extends ChemObjectIOTest {
+public class SMILESReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() throws Exception {
         logger = new LoggingTool(SMILESReaderTest.class);
-        setChemObjectIO(new SMILESReader());
+        setSimpleChemObjectReader(new SMILESReader(), "data/smiles/smiles.smi");
     }
 
     @Test public void testAccepts() {

@@ -60,13 +60,13 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  *
  * @see org.openscience.cdk.io.Mol2Reader
  */
-public class Mol2ReaderTest extends ChemObjectIOTest {
+public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() {
         logger = new LoggingTool(Mol2ReaderTest.class);
-        setChemObjectIO(new Mol2Reader());
+        setSimpleChemObjectReader(new Mol2Reader(), "data/mol2/fromWebsite.mol2");
     }
 
     @Test public void testAccepts() {
