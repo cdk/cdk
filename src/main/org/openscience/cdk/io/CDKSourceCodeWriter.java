@@ -36,6 +36,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -118,6 +119,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
+    @TestMethod("testClose")
     public void close() throws IOException {
     	writer.flush();
         writer.close();

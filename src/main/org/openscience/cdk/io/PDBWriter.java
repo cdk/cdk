@@ -35,6 +35,8 @@ import java.util.Iterator;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -57,6 +59,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * @cdk.module io
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.io.PDBWriterTest")
 public class PDBWriter extends DefaultChemObjectWriter {
 
     final String SERIAL_FORMAT = "%5d";
@@ -238,7 +241,8 @@ public class PDBWriter extends DefaultChemObjectWriter {
    /**
      * Flushes the output and closes this object.
      */
-    public void close() throws IOException {
+   @TestMethod("testClose")
+   public void close() throws IOException {
         writer.close();
     }
 

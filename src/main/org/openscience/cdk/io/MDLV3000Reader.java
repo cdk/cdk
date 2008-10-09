@@ -37,6 +37,8 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -65,6 +67,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.keyword MDL molfile V3000
  * @cdk.require java1.4+
  */
+@TestClass("org.openscience.cdk.io.MDLV3000ReaderTest")
 public class MDLV3000Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
@@ -584,6 +587,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         return false;
     }
 
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

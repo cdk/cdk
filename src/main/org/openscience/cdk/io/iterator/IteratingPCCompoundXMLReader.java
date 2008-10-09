@@ -30,6 +30,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.NoSuchElementException;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -149,6 +150,7 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
         return nextMolecule;
     }
     
+    @TestMethod("testClose")
     public void close() throws IOException {
     	primarySource.close();
     }

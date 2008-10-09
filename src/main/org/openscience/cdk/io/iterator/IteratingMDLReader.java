@@ -32,6 +32,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.NoSuchElementException;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -238,6 +239,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
         return nextMolecule;
     }
     
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

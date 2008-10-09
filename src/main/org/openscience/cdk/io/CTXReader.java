@@ -31,6 +31,7 @@ import java.io.Reader;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -217,7 +218,8 @@ public class CTXReader extends DefaultChemObjectReader {
 		return (line.length() > 1 && line.charAt(0) == ' ' && line.charAt(1) == '/');
 	}
 
-	public void close() throws IOException {
+	@TestMethod("testClose")
+  public void close() throws IOException {
         input.close();
     }
 }

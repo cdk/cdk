@@ -29,15 +29,16 @@ import java.io.Reader;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.formats.CrystClustFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.math.FortranFormat;
@@ -231,6 +232,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
         return file;
     }
     
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

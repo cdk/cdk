@@ -32,6 +32,7 @@ import java.util.List;
 
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -109,6 +110,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     	setWriter(new OutputStreamWriter(output));
     }
 
+    @TestMethod("testClose")
     public void close() throws IOException {
         writer.close();
     }

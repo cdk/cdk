@@ -36,6 +36,8 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -53,6 +55,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.keyword file format
  */
+@TestClass("org.openscience.cdk.io.SMILESWriterTest")
 public class SMILESWriter extends DefaultChemObjectWriter {
 
     private LoggingTool logger;
@@ -111,6 +114,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object
      */
+    @TestMethod("testClose")
     public void close() throws IOException {
         writer.flush();
         writer.close();

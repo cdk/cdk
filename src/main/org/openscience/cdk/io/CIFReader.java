@@ -437,6 +437,7 @@ public class CIFReader extends DefaultChemObjectReader {
         return result.toString();
     }
     
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

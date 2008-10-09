@@ -20,18 +20,33 @@
  */
 package org.openscience.cdk.io;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.io.formats.HINFormat;
-import org.openscience.cdk.io.formats.IResourceFormat;
-
-import javax.vecmath.Point3d;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import javax.vecmath.Point3d;
+
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.io.formats.HINFormat;
+import org.openscience.cdk.io.formats.IResourceFormat;
 
 /**
  * Reads an object from HIN formated input.
@@ -70,6 +85,7 @@ public class HINReader extends DefaultChemObjectReader {
         return HINFormat.getInstance();
     }
 
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

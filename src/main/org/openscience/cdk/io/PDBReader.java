@@ -37,6 +37,8 @@ import java.util.Map;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -84,6 +86,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.bug     1794439
  * @cdk.bug     2046633
  */
+@TestClass("org.openscience.cdk.io.PDBReaderTest")
 public class PDBReader extends DefaultChemObjectReader {
 	
 	private LoggingTool logger;
@@ -648,7 +651,8 @@ public class PDBReader extends DefaultChemObjectReader {
 		return oAtom;
 	}
 	
-	public void close() throws IOException {
+	@TestMethod("testClose")
+  public void close() throws IOException {
 		_oInput.close();
 	}
 

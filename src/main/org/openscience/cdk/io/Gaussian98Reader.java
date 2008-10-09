@@ -36,6 +36,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -166,6 +167,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

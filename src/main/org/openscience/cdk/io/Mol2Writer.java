@@ -20,9 +20,18 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Iterator;
+
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.SybylAtomTypeMatcher;
-import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -32,9 +41,6 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.tools.LoggingTool;
-
-import java.io.*;
-import java.util.Iterator;
 
 /**
  * An output Writer that writes molecular data into the
@@ -46,6 +52,7 @@ import java.util.Iterator;
  *
  * @author     Egon Willighagen
  */
+@TestClass("org.openscience.cdk.io.Mol2WriterTest")
 public class Mol2Writer extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
@@ -95,6 +102,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
+    @TestMethod("testClose")
     public void close() throws IOException {
         writer.close();
     }

@@ -35,6 +35,8 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -46,8 +48,6 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.io.DefaultChemObjectReader;
-import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLRXNFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -65,6 +65,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.keyword    file format, MDL RXN
  * @cdk.bug        1849923
  */
+@TestClass("org.openscience.cdk.io.MDLRXNV2000ReaderTest")
 public class MDLRXNV2000Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
@@ -309,6 +310,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
         return reaction;
     }
     
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

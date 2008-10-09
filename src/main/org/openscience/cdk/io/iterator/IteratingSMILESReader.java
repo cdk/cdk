@@ -195,7 +195,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
      *
      * @throws IOException if there is an error during closing
      */
-    @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs")
+    @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testClose")
     public void close() throws IOException {
         input.close();
     }

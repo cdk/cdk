@@ -22,6 +22,8 @@ import nu.xom.ProcessingInstruction;
 import nu.xom.Text;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -52,7 +54,7 @@ import org.openscience.cdk.libio.cml.Convertor;
  *
  * @cdk.keyword RSS
  */
-
+@TestClass("org.openscience.cdk.io.RssWriterTest")
 public class RssWriter extends DefaultChemObjectWriter {
 	
 	private final static String NS_RSS10      = "http://purl.org/rss/1.0/";
@@ -78,6 +80,7 @@ public class RssWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
+    @TestMethod("testClose")
     public void close() throws IOException {
         writer.close();
     }

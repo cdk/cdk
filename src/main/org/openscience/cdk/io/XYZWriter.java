@@ -22,7 +22,19 @@
  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Iterator;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -30,10 +42,6 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
 import org.openscience.cdk.tools.LoggingTool;
-
-import javax.vecmath.Point3d;
-import java.io.*;
-import java.util.Iterator;
 
 /**
  * @cdk.module io
@@ -43,6 +51,7 @@ import java.util.Iterator;
  * @author  J. Daniel Gezelter
  * @author  Egon Willighagen
  */
+@TestClass("org.openscience.cdk.io.XYZWriterTest")
 public class XYZWriter extends DefaultChemObjectWriter {
   
     private BufferedWriter writer;
@@ -92,6 +101,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
+    @TestMethod("testClose")
     public void close() throws IOException {
     	writer.close();
     }

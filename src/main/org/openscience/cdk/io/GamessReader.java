@@ -33,16 +33,17 @@ import java.io.StringReader;
 
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.PhysicalConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.PhysicalConstants;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.GamessFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 
@@ -431,7 +432,8 @@ public class GamessReader extends DefaultChemObjectReader {
 	 * @see org.openscience.cdk.io.ChemObjectIO#close()
 	 */
 	//TODO Answer the question : What are all concerned ressources ? 
-	public void close() throws IOException {
+	@TestMethod("testClose")
+  public void close() throws IOException {
 		/* 
 		 * Closes the BufferedReader used to read the file content.
 		 */ 

@@ -36,6 +36,8 @@ import java.io.StringReader;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -62,6 +64,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.keyword    file format, MDL RXN
  */
+@TestClass("org.openscience.cdk.io.MDLRXNReaderTest")
 public class MDLRXNReader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
@@ -415,6 +418,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         return reaction;
     }
     
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }
