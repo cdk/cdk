@@ -100,6 +100,8 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
 			if (IChemModel.class.equals(interfaces[i])) return true;
 			if (IChemFile.class.equals(interfaces[i])) return true;
 		}
+    Class superClass = classObject.getSuperclass();
+    if (superClass != null) return this.accepts(superClass);
 		return false;
 	}
 

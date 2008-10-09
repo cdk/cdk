@@ -154,6 +154,8 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
 			if (IReaction.class.equals(interfaces[i])) return true;
 			if (IReactionSet.class.equals(interfaces[i])) return true;
 		}
+    Class superClass = classObject.getSuperclass();
+    if (superClass != null) return this.accepts(superClass);
 		return false;
 	}
 
