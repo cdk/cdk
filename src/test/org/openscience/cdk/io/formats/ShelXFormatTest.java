@@ -27,10 +27,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class ShelXFormatTest extends ChemFormatTest {
+public class ShelXFormatTest extends ChemFormatMatcherTest {
 
     public ShelXFormatTest() {
-        super.setChemFormat((IChemFormat)ShelXFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)ShelXFormat.getInstance());
     }
     
 }

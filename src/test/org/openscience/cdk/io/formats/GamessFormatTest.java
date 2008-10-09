@@ -28,10 +28,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class GamessFormatTest extends ChemFormatTest {
+public class GamessFormatTest extends ChemFormatMatcherTest {
 
     public GamessFormatTest() {
-        super.setChemFormat((IChemFormat)GamessFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)GamessFormat.getInstance());
     }
     
 }

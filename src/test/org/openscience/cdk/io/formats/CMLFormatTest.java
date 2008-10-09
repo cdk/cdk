@@ -28,10 +28,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class CMLFormatTest extends ChemFormatTest {
+public class CMLFormatTest extends ChemFormatMatcherTest {
 
     public CMLFormatTest() {
-        super.setChemFormat((IChemFormat)CMLFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)CMLFormat.getInstance());
     }
     
 }

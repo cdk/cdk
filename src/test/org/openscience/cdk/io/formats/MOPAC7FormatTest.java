@@ -27,10 +27,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class MOPAC7FormatTest extends ChemFormatTest {
+public class MOPAC7FormatTest extends ChemFormatMatcherTest {
 
     public MOPAC7FormatTest() {
-        super.setChemFormat((IChemFormat)MOPAC7Format.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)MOPAC7Format.getInstance());
     }
     
 }

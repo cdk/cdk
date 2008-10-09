@@ -27,10 +27,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class PubChemCompoundsXMLFormatTest extends ChemFormatTest {
+public class PubChemCompoundsXMLFormatTest extends ChemFormatMatcherTest {
 
     public PubChemCompoundsXMLFormatTest() {
-        super.setChemFormat((IChemFormat)PubChemCompoundsXMLFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)PubChemCompoundsXMLFormat.getInstance());
     }
     
 }

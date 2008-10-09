@@ -28,10 +28,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class Gaussian03FormatTest extends ChemFormatTest {
+public class Gaussian03FormatTest extends ChemFormatMatcherTest {
 
     public Gaussian03FormatTest() {
-        super.setChemFormat((IChemFormat)Gaussian03Format.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)Gaussian03Format.getInstance());
     }
     
 }

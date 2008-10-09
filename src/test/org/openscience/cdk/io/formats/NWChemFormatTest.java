@@ -27,10 +27,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class NWChemFormatTest extends ChemFormatTest {
+public class NWChemFormatTest extends ChemFormatMatcherTest {
 
     public NWChemFormatTest() {
-        super.setChemFormat((IChemFormat)NWChemFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)NWChemFormat.getInstance());
     }
     
 }

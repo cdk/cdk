@@ -27,10 +27,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class SpartanFormatTest extends ChemFormatTest {
+public class SpartanFormatTest extends ChemFormatMatcherTest {
 
     public SpartanFormatTest() {
-        super.setChemFormat((IChemFormat)SpartanFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)SpartanFormat.getInstance());
     }
     
 }

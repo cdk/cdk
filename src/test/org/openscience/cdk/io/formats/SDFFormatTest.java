@@ -27,10 +27,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class SDFFormatTest extends ChemFormatTest {
+public class SDFFormatTest extends ChemFormatMatcherTest {
 
     public SDFFormatTest() {
-        super.setChemFormat((IChemFormat)SDFFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)SDFFormat.getInstance());
     }
     
 }

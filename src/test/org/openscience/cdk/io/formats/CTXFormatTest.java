@@ -28,10 +28,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class CTXFormatTest extends ChemFormatTest {
+public class CTXFormatTest extends ChemFormatMatcherTest {
 
     public CTXFormatTest() {
-        super.setChemFormat((IChemFormat)CTXFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)CTXFormat.getInstance());
     }
     
 }

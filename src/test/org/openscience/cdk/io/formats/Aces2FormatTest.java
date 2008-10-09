@@ -28,10 +28,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class Aces2FormatTest extends ChemFormatTest {
+public class Aces2FormatTest extends ChemFormatMatcherTest {
 
     public Aces2FormatTest() {
-        super.setChemFormat((IChemFormat)Aces2Format.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)Aces2Format.getInstance());
     }
     
 }

@@ -27,10 +27,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class MDLRXNV3000FormatTest extends ChemFormatTest {
+public class MDLRXNV3000FormatTest extends ChemFormatMatcherTest {
 
     public MDLRXNV3000FormatTest() {
-        super.setChemFormat((IChemFormat)MDLRXNV3000Format.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)MDLRXNV3000Format.getInstance());
     }
     
 }
