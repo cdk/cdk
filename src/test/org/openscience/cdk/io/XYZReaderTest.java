@@ -40,13 +40,13 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.io.XYZReader
  */
-public class XYZReaderTest extends ChemObjectIOTest {
+public class XYZReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() throws Exception {
         logger = new LoggingTool(XYZReaderTest.class);
-        setChemObjectIO(new XYZReader());
+        setSimpleChemObjectReader(new XYZReader(), "data/xyz/viagra.xyz");
     }
 
     @Test public void testAccepts() {
