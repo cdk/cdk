@@ -131,10 +131,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         super.mode = mode;
 	}
 
-	public IResourceFormat getFormat() {
+	@TestMethod("testGetFormat")
+    public IResourceFormat getFormat() {
         return MDLV2000Format.getInstance();
     }
 
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -143,11 +145,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class<? extends IChemObject> classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class<? extends IChemObject> classObject) {
 		Class<?>[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;

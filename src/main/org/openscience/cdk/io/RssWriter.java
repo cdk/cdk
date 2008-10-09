@@ -85,6 +85,7 @@ public class RssWriter extends DefaultChemObjectWriter {
         writer.close();
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CMLRSSFormat.getInstance();
     }
@@ -102,7 +103,8 @@ public class RssWriter extends DefaultChemObjectWriter {
     	setWriter(new OutputStreamWriter(output));
     }
     
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		return true;
 	}
 

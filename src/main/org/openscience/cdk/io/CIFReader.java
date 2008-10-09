@@ -110,14 +110,17 @@ public class CIFReader extends DefaultChemObjectReader {
         return CIFFormat.getInstance();
     }
 
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
         this.input = new BufferedReader(input);
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
+    @TestMethod("testAccepts")
     public boolean accepts(Class testClass) {
 		Class[] interfaces = testClass.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {

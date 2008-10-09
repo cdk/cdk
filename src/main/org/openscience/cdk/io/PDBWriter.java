@@ -92,6 +92,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
         this(new OutputStreamWriter(output));
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return PDBFormat.getInstance();
     }
@@ -108,7 +109,8 @@ public class PDBWriter extends DefaultChemObjectWriter {
     	setWriter(new OutputStreamWriter(output));
     }
     
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (ICrystal.class.equals(interfaces[i])) return true;

@@ -93,6 +93,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         return MDLRXNV3000Format.getInstance();
     }
 
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -101,6 +102,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
@@ -280,6 +282,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testAccepts")
     public boolean accepts(IChemObject object) {
         if (object instanceof IReaction) {
             return true;

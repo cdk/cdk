@@ -99,10 +99,12 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return MDLRXNFormat.getInstance();
     }
 
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -111,11 +113,13 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         }
     }
     
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemModel.class.equals(interfaces[i])) return true;
@@ -154,7 +158,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
          }
      }
      
-     public boolean accepts(IChemObject object) {
+     @TestMethod("testAccepts")
+    public boolean accepts(IChemObject object) {
          if (object instanceof IReaction) {
              return true;
          } else if (object instanceof IChemModel) {

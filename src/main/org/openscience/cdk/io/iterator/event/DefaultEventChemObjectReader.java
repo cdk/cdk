@@ -26,6 +26,7 @@ package org.openscience.cdk.io.iterator.event;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.ReaderEvent;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;

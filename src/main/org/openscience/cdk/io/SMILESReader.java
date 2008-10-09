@@ -99,6 +99,7 @@ public class SMILESReader extends DefaultChemObjectReader {
         return SMILESFormat.getInstance();
     }
     
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -107,6 +108,7 @@ public class SMILESReader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }

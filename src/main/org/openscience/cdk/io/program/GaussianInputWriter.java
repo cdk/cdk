@@ -94,6 +94,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return GaussianInputFormat.getInstance();
     }
@@ -115,7 +116,8 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         writer.close();
     }
     
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		if (IMolecule.class.isInstance(classObject)) return true;
 		return false;
 	}

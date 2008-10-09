@@ -99,6 +99,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         this(new InputStreamReader(input));
     }
 
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return Gaussian98Format.getInstance();
     }
@@ -109,6 +110,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      * @param input The new reader value
      * @throws CDKException Description of the Exception
      */
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader) input;
@@ -117,6 +119,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
@@ -137,6 +140,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         initIOSettings();
     }
 
+    @TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
         Class[] interfaces = classObject.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {
