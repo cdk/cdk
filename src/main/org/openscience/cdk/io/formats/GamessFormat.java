@@ -90,7 +90,8 @@ public class GamessFormat implements IChemFormatMatcher {
 		return DataFeatures.NONE;
 	}
 
-	public int getRequiredDataFeatures() {
+	@TestMethod("testGetRequiredDataFeatures")
+    public int getRequiredDataFeatures() {
 		return DataFeatures.NONE;
 	}
 }

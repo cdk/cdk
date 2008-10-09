@@ -103,7 +103,8 @@ public class CMLFormat implements IChemFormatMatcher {
                DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
 	}
 
-	public int getRequiredDataFeatures() {
+	@TestMethod("testGetRequiredDataFeatures")
+    public int getRequiredDataFeatures() {
 		return DataFeatures.NONE;
 	}
 }
