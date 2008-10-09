@@ -31,11 +31,11 @@ package org.openscience.cdk.io.iterator.event;
 import java.io.IOException;
 import java.io.Reader;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.cml.CMLErrorHandler;
-import org.openscience.cdk.io.cml.CMLHandler;
 import org.openscience.cdk.io.cml.CMLResolver;
 import org.openscience.cdk.io.formats.CMLFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -86,6 +86,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
         this.addChemObjectIOListener(listener);
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CMLFormat.getInstance();
     }
@@ -94,6 +95,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
         return cdo.getAtomContainer();
     }
     
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
         this.input = reader;
     }
@@ -184,6 +186,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
         }
     }
 
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

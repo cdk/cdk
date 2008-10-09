@@ -35,6 +35,8 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
@@ -64,6 +66,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * @cdk.keyword    file format, Mol2
  */
+@TestClass("org.openscience.cdk.io.Mol2ReaderTest")
 public class Mol2Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
@@ -87,10 +90,12 @@ public class Mol2Reader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return Mol2Format.getInstance();
     }
 
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -99,11 +104,13 @@ public class Mol2Reader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemModel.class.equals(interfaces[i])) return true;
@@ -155,7 +162,8 @@ public class Mol2Reader extends DefaultChemObjectReader {
          }
      }
      
-     public boolean accepts(IChemObject object) {
+     @TestMethod("testAccepts")
+    public boolean accepts(IChemObject object) {
          if (object instanceof IChemFile) {
              return true;
          } else if (object instanceof IChemModel) {
@@ -332,7 +340,8 @@ public class Mol2Reader extends DefaultChemObjectReader {
 		return false;
 	}
 
-	public void close() throws IOException {
+    @TestMethod("testClose")
+    public void close() throws IOException {
         input.close();
     }
 }

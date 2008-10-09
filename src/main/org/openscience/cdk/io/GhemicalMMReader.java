@@ -33,6 +33,8 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -57,6 +59,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
+@TestClass("org.openscience.cdk.io.GhemicalMMReaderTest")
 public class GhemicalMMReader extends DefaultChemObjectReader {
 
     private LoggingTool logger = null;
@@ -75,10 +78,12 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
 
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return GhemicalMMFormat.getInstance();
     }
 
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -87,14 +92,17 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
+    @TestMethod("testClose")
     public void close() {
     }
     
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemModel.class.equals(interfaces[i])) return true;

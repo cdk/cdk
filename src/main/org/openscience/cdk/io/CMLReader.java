@@ -32,6 +32,8 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -59,6 +61,7 @@ import org.xml.sax.XMLReader;
  * @cdk.keyword file format, CML
  * @cdk.bug     1544406
  */
+@TestClass("org.openscience.cdk.io.CMLReaderTest")
 public class CMLReader extends DefaultChemObjectReader {
 
     private XMLReader parser;
@@ -98,6 +101,7 @@ public class CMLReader extends DefaultChemObjectReader {
         this.url = url;
     }
 
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CMLFormat.getInstance();
     }
@@ -106,10 +110,12 @@ public class CMLReader extends DefaultChemObjectReader {
      * This method must not be used; XML reading requires the use of an InputStream.
      * Use setReader(InputStream) instead.
      */
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
         throw new CDKException("Invalid method call; use SetReader(InputStream) instead.");
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         this.input = input;
     }
@@ -165,7 +171,8 @@ public class CMLReader extends DefaultChemObjectReader {
         }
     }
 
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;
@@ -236,6 +243,7 @@ public class CMLReader extends DefaultChemObjectReader {
         return file;
     }
 
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

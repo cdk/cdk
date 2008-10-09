@@ -33,15 +33,17 @@ import java.io.StringReader;
 
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.PhysicalConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.PhysicalConstants;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.GamessFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 
@@ -93,7 +95,8 @@ import org.openscience.cdk.io.formats.IResourceFormat;
  */
 //TODO Update class comments with appropriate information.
 //TODO Update "see" tag with reference to GamessWriter when it will be implemented.
-//TODO Update "author" tag with appropriate information. 
+//TODO Update "author" tag with appropriate information.
+@TestClass("org.openscience.cdk.io.GamessReaderTest")
 public class GamessReader extends DefaultChemObjectReader {
 	
 	/**
@@ -154,19 +157,23 @@ public class GamessReader extends DefaultChemObjectReader {
 	 */
 	//TODO Update comment with appropriate information to comply Constructor's documentation. 
 	
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return GamessFormat.getInstance();
     }
     
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
         this.input = new BufferedReader(input);
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;
@@ -429,7 +436,8 @@ public class GamessReader extends DefaultChemObjectReader {
 	 * @see org.openscience.cdk.io.ChemObjectIO#close()
 	 */
 	//TODO Answer the question : What are all concerned ressources ? 
-	public void close() throws IOException {
+	@TestMethod("testClose")
+  public void close() throws IOException {
 		/* 
 		 * Closes the BufferedReader used to read the file content.
 		 */ 

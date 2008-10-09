@@ -35,6 +35,8 @@ import java.util.Iterator;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -69,6 +71,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * 
  * @cdk.keyword file format, CDK source code
  */
+@TestClass("org.openscience.cdk.io.CDKSourceCodeWriterTest")
 public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
@@ -97,6 +100,7 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     public CDKSourceCodeWriter() {
         this(new StringWriter());
     }
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CDKSourceCodeFormat.getInstance();
     }
@@ -116,12 +120,14 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
+    @TestMethod("testClose")
     public void close() throws IOException {
     	writer.flush();
         writer.close();
     }
 
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IMolecule.class.equals(interfaces[i])) return true;

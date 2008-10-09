@@ -28,15 +28,15 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
 
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.MDLRXNV3000Format;
 import org.openscience.cdk.io.setting.IOSetting;
@@ -93,6 +93,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         return MDLRXNV3000Format.getInstance();
     }
 
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -101,6 +102,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
@@ -280,6 +282,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testAccepts")
     public boolean accepts(IChemObject object) {
         if (object instanceof IReaction) {
             return true;
@@ -289,6 +292,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         return false;
     }
 
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

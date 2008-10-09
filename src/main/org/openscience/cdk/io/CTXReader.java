@@ -30,6 +30,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -52,6 +54,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.module io
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.io.CTXReaderTest")
 public class CTXReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
@@ -77,10 +80,12 @@ public class CTXReader extends DefaultChemObjectReader {
         this(new InputStreamReader(input));
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CTXFormat.getInstance();
     }
 
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)reader;
@@ -89,11 +94,13 @@ public class CTXReader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;
@@ -215,7 +222,8 @@ public class CTXReader extends DefaultChemObjectReader {
 		return (line.length() > 1 && line.charAt(0) == ' ' && line.charAt(1) == '/');
 	}
 
-	public void close() throws IOException {
+	@TestMethod("testClose")
+  public void close() throws IOException {
         input.close();
     }
 }

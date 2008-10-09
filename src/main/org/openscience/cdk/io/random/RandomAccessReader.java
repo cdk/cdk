@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.StringReader;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -330,7 +331,8 @@ public abstract class RandomAccessReader extends DefaultIteratingChemObjectReade
     /* (non-Javadoc)
      * @see java.io.Closeable#close()
      */
-    public void close() throws IOException {
+	@TestMethod("testClose")
+  public void close() throws IOException {
         raFile.close();
         //TODO
         //removeChemObjectIOListener(listener)

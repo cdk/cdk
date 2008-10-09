@@ -36,14 +36,16 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.ShelXFormat;
 import org.openscience.cdk.math.FortranFormat;
@@ -67,6 +69,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.keyword file format, ShelXL
  * @author E.L. Willighagen
  */
+@TestClass("org.openscience.cdk.io.ShelXReaderTest")
 public class ShelXReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
@@ -90,10 +93,12 @@ public class ShelXReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return ShelXFormat.getInstance();
     }
 
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -102,11 +107,13 @@ public class ShelXReader extends DefaultChemObjectReader {
         }
     }
     
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (ICrystal.class.equals(interfaces[i])) return true;
@@ -358,6 +365,7 @@ public class ShelXReader extends DefaultChemObjectReader {
         return crystal;
     }
     
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

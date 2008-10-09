@@ -32,6 +32,7 @@ import java.util.List;
 
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -93,6 +94,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return GaussianInputFormat.getInstance();
     }
@@ -109,11 +111,13 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     	setWriter(new OutputStreamWriter(output));
     }
 
+    @TestMethod("testClose")
     public void close() throws IOException {
         writer.close();
     }
     
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		if (IMolecule.class.isInstance(classObject)) return true;
 		return false;
 	}

@@ -36,6 +36,8 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -79,6 +81,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see        org.openscience.cdk.io.MDLV2000Reader 
  */
+@TestClass("org.openscience.cdk.io.MDLReaderTest")
 public class MDLReader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
@@ -120,10 +123,12 @@ public class MDLReader extends DefaultChemObjectReader {
         initIOSettings();
 	}
 
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return MDLFormat.getInstance();
     }
 
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -132,11 +137,13 @@ public class MDLReader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;
@@ -544,7 +551,8 @@ public class MDLReader extends DefaultChemObjectReader {
 		return molecule;
 	}
     
-    public void close() throws IOException {
+	@TestMethod("testClose")
+  public void close() throws IOException {
         input.close();
     }
     

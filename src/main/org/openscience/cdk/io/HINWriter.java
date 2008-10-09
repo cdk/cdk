@@ -34,6 +34,8 @@ import java.util.Iterator;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -52,6 +54,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.svnrev  $Revision$
  * @cdk.created 2004-01-27
  */
+@TestClass("org.openscience.cdk.io.HINWriterTest")
 public class HINWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
@@ -82,6 +85,7 @@ public class HINWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return HINFormat.getInstance();
     }
@@ -101,10 +105,12 @@ public class HINWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
+    @TestMethod("testClose")
     public void close() throws IOException {
         writer.close();
     }
 
+    @TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
         Class[] interfaces = classObject.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {

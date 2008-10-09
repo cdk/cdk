@@ -195,7 +195,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
      *
      * @throws IOException if there is an error during closing
      */
-    @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs")
+    @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testClose")
     public void close() throws IOException {
         input.close();
     }
@@ -205,7 +205,8 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
         throw new UnsupportedOperationException();
     }
 
-	public void setReader(Reader reader) {
+	@TestMethod("testSetReader_Reader")
+    public void setReader(Reader reader) {
 		if (reader instanceof BufferedReader) {
 			input = (BufferedReader)reader;
 		} else {
@@ -216,7 +217,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader {
         hasNext = false;
     }
 
-    @TestMethod("testSetReader1")
+    @TestMethod("testSetReader1,testSetReader_InputStream")
     public void setReader(InputStream reader) {
 	    setReader(new InputStreamReader(reader));
     }

@@ -35,6 +35,8 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -72,6 +74,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
  * @cdk.module io
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.io.Gaussian98ReaderTest")
 public class Gaussian98Reader extends DefaultChemObjectReader {
 
     private BufferedReader input;
@@ -96,6 +99,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         this(new InputStreamReader(input));
     }
 
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return Gaussian98Format.getInstance();
     }
@@ -106,6 +110,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      * @param input The new reader value
      * @throws CDKException Description of the Exception
      */
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader) input;
@@ -114,6 +119,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
@@ -134,6 +140,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         initIOSettings();
     }
 
+    @TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
         Class[] interfaces = classObject.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {
@@ -164,6 +171,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

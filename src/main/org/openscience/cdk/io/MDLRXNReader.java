@@ -36,6 +36,8 @@ import java.io.StringReader;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -62,6 +64,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.keyword    file format, MDL RXN
  */
+@TestClass("org.openscience.cdk.io.MDLRXNReaderTest")
 public class MDLRXNReader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
@@ -96,10 +99,12 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return MDLRXNFormat.getInstance();
     }
 
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -108,11 +113,13 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         }
     }
     
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemModel.class.equals(interfaces[i])) return true;
@@ -151,7 +158,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
          }
      }
      
-     public boolean accepts(IChemObject object) {
+     @TestMethod("testAccepts")
+    public boolean accepts(IChemObject object) {
          if (object instanceof IReaction) {
              return true;
          } else if (object instanceof IChemModel) {
@@ -415,6 +423,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         return reaction;
     }
     
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }
