@@ -67,13 +67,13 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @see org.openscience.cdk.io.MDLV2000Reader
  * @see org.openscience.cdk.io.SDFReaderTest
  */
-public class MDLV2000ReaderTest extends ChemObjectIOTest {
+public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() {
         logger = new LoggingTool(MDLV2000ReaderTest.class);
-        setChemObjectIO(new MDLV2000Reader());
+        setSimpleChemObjectReader(new MDLV2000Reader(), "data/mdl/bug682233.mol");
     }
 
     @Test public void testAccepts() {
