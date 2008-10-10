@@ -57,13 +57,13 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.io.MDLRXNReader
  */
-public class MDLRXNReaderTest extends ChemObjectIOTest {
+public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() {
         logger = new LoggingTool(MDLV2000ReaderTest.class);
-        setChemObjectIO(new MDLV2000Reader());
+        setSimpleChemObjectReader(new MDLV2000Reader(), "data/mdl/reaction-1.rxn");
     }
 
     @Test public void testAccepts() {

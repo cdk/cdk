@@ -49,13 +49,13 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.io.CrystClustReader
  */
-public class CTXReaderTest extends ChemObjectIOTest {
+public class CTXReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() {
         logger = new LoggingTool(CTXReaderTest.class);
-        setChemObjectIO(new CTXReader());
+        setSimpleChemObjectReader(new CTXReader(), "data/ctx/methanol_with_descriptors.ctx");
     }
 
     @Test public void testAccepts() {

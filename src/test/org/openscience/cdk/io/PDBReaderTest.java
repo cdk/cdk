@@ -61,10 +61,10 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
  * @cdk.created 2001-08-09
  */
-public class PDBReaderTest extends ChemObjectIOTest {
+public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass public static void setup() throws Exception {
-        setChemObjectIO(new PDBReader());
+        setSimpleChemObjectReader(new PDBReader(), "data/pdb/coffeine.pdb");
     }
     
     /**
