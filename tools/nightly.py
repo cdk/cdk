@@ -76,73 +76,11 @@ import smtplib
 
 #################################################################
 #
-# User definable variables
-#
-#################################################################
-
-# should point to an SVN repo, within which doing
-# ant dist-all should work
-nightly_repo = '/home/rguha/src/java/cdk-nightly/cdk/'
-
-# should point to a directory in which this script
-# is to be placed and will contain log files
-nightly_dir = '/home/rguha/src/java/cdk-nightly/'
-
-# points to a web accessible directory where the
-# nightly build site will be generated
-nightly_web = '/home/rguha/public_html/code/java/nightly/'
-#nightly_web = '/home/rajarshi/public_html/tmp/'
-
-
-# Jars that are required for Ant to run. In general
-# you should only need to point to the relevant JUnit
-# jar file, since we don't really use any esoteric Ant tasks
-ant_libs = '/home/rguha/src/java/cdk-nightly/cdk/develjar/junit-4.3.1.jar'
-
-# Optional
-# required to generate the dependency graph. Should
-# contain the path to the BeanShell and JGraphT jar files
-# if not required set to "" or None
-classpath = '/home/rguha/src/java/beanshell/bsh.jar:/home/rguha/src/java/cdk-nightly/cdk/jar/jgrapht-0.6.0.jar:/home/rguha/src/java/emma/lib/emma.jar'
-
-# Optional
-# path to the japitools directory for API comparison
-# if not required set to "" or None
-japitools_path = '/home/rguha/src/java/japitools'
-
-# Optional
-# path to the last stable CDK distribution jar
-# if not required set to "" or None
-last_stable = '/home/rguha/src/java/cdk-0-99-1.jar'
-
-per_line = 8
-
-# Optional
-# variables required for sending mail, if desired.
-# should be self explanatory. Set to "" or None if
-# you dont want to send mail
-smtpServerName = 'smtp.gmail.com'
-fromName = 'nightly.py <rguha@indiana.edu>'
-toName = 'cdk-devel@lists.sourceforge.net'
-
-# If your server needs authorization, set them here
-# if not, just set them to None
-smtpLogin = 'rajarshi.guha'
-smtpPassword = 'beeb1e'
-
-
-# A list of links that will be included on the final build
-# page. Each item of the list should be a tuple of the link
-# text and the actual URL. If empty there will be no links section
-links = [ ('DTP Atom Type QA', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/dtp-atype-report.txt'), ('1.0.x Nightly Build', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly-1.0.x/'), ('1.2.x Nightly Build', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly-1.2.x/')]
-
-#################################################################
-#
 # NO NEED TO CHANGE ANYTHING BELOW HERE
 #
 #################################################################
 
-pickle_file = os.path.join(nightly_dir, 'nightly.pickle')
+pickle_file = None
 
 today = time.localtime()
 todayStr = '%04d%02d%02d' % (today[0], today[1], today[2])
@@ -669,8 +607,8 @@ def generateCDKDepGraph():
         return None
     
     os.system('java -cp %s bsh.Interpreter tools/deptodot.bsh > cdkdep.dot' % (classpath))
-    os.system('/usr/bin/dot -Tpng cdkdep.dot -o %s/cdkdep.png' % (nightly_web))
-    os.system('/usr/bin/dot -Tps cdkdep.dot -o %s/cdkdep.ps' % (nightly_web))
+    os.system('/usr/bin/dot -Tpng -o %s/cdkdep.png cdkdep.dot' % (nightly_web))
+    os.system('/usr/bin/dot -Tps -o %s/cdkdep.ps cdkdep.dot' % (nightly_web))
     os.unlink('cdkdep.dot')
 
     celltext = []
@@ -954,8 +892,10 @@ def getSVNRevision():
 if __name__ == '__main__':
     if 'help' in sys.argv:
         print """
-        Usage: nightly.py [ARGS]
+        Usage: nightly.py CONFIG [ARGS]
 
+        A configuration file must be supplied.
+        
         ARGS can be:
 
           help   - this message
@@ -966,6 +906,29 @@ if __name__ == '__main__':
         """
         sys.exit(0)
 
+    # load the config file. We first load it into a dictionary
+    # and make sure that we have only the valid variable names
+    # If we have others, we exit. Otherwise, reload it into the
+    # current environment
+    if not os.path.exists(sys.argv[1]):
+        print 'Couldn\'t find the config file: '+sys.argv[1]
+        sys.exit(0)
+    myl = {}
+    def dummyFunction(): pass
+    validConfigVars = ["nightly_repo", "nightly_dir", "nightly_web", "ant_libs", "classpath", "japitools_path", "last_stable", "per_line", "smtpServerName", "fromName", "toName", "smtpLogin", "smtpPassword", "links"]
+    execfile(sys.argv[1], myl)
+    for key in myl.keys():
+        if key == '__builtins__': continue
+        if key not in validConfigVars:
+            print 'Config file had an unknown variable: '+key
+            sys.exit(0)
+        if isinstance(key, type(dummyFunction)):
+            print 'Config variables must be explicit variables. No functions!'
+            sys.exit(0)
+    execfile(sys.argv[1])
+    print """
+    Configuration file = %s""" % (sys.argv[1])
+    
     # check for the presence of required executable
     executableList = ['java', 'ant', 'tar', 'nice', 'svn', 'rm']
     ret = map( executableExists, executableList )
@@ -1047,6 +1010,7 @@ if __name__ == '__main__':
         # try and load the pickle of the previous test summaries
         # else get a summary of the test results from the previous run
         oldReports = None
+        pickle_file = os.path.join(nightly_dir, 'nightly.pickle')
         if os.path.exists(pickle_file):
             print 'Loading data from persistent storage'
             data = pickle.load(open(pickle_file, 'r'))
@@ -1653,12 +1617,9 @@ if __name__ == '__main__':
         resultTable.addCell(s)
         
     # copy this script to the nightly we dir. The script should be in nightly_dir
-    # we also want to redact the smtp password/login lines
     f = open(os.path.join(nightly_dir,'nightly.py'), 'r')
     script = string.join(f.readlines())
     f.close()
-    script = re.sub('smtpLogin =\s?\'.*\'', 'smtpLogin = "XXX"', script)
-    script = re.sub('smtpPassword =\s?\'.*\'', 'smtpPassword = "XXX"', script)    
     f = open(os.path.join(nightly_web, 'nightly.py'), 'w')
     f.write(script)
     f.close()
