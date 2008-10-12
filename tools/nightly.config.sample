@@ -1,0 +1,50 @@
+# should point to an SVN repo, within which doing
+# ant dist-all should work
+nightly_repo = '/home/rguha/src/java/cdk-nightly/cdk/'
+
+# should point to a directory in which this script
+# is to be placed and will contain log files
+nightly_dir = '/home/rguha/src/java/cdk-nightly/'
+
+# points to a web accessible directory where the
+# nightly build site will be generated
+nightly_web = '/home/rguha/public_html/code/java/nightly/'
+#nightly_web = '/home/rajarshi/public_html/tmp/'
+
+
+# Jars that are required for Ant to run. In general
+# you should only need to point to the relevant JUnit
+# jar file, since we don't really use any esoteric Ant tasks
+ant_libs = '/home/rguha/src/java/cdk-nightly/cdk/develjar/junit-4.3.1.jar'
+
+# Optional
+# required to generate the dependency graph. Should
+# contain the path to the BeanShell and JGraphT jar files
+# if not required set to "" or None
+classpath = '/home/rguha/src/java/beanshell/bsh.jar:/home/rguha/src/java/cdk-nightly/cdk/jar/jgrapht-0.6.0.jar:/home/rguha/src/java/emma/lib/emma.jar'
+
+japitools_path = '/home/rguha/src/java/japitools'
+
+# Optional
+# path to the last stable CDK distribution jar
+# if not required set to "" or None
+last_stable = '/home/rguha/src/java/cdk-0-99-1.jar'
+
+per_line = 8
+
+# Optional
+# variables required for sending mail, if desired.
+# should be self explanatory. Set to "" or None if
+# you dont want to send mail
+smtpServerName = 'smtp.gmail.com'
+fromName = 'nightly.py <foo@bar.com>'
+toName = 'cdk-devel@lists.sourceforge.net'
+
+# If your server needs authorization, set them here
+# if not, just set them to None
+smtpLogin = 'foo'
+smtpPassword = 'bar'
+
+links = [ ('DTP Atom Type QA', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/dtp-atype-report.txt'), ('1.0.x Nightly Build', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly-1.0.x/'), ('1.2.x Nightly Build', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly-1.2.x/')]
+
+

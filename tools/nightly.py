@@ -76,78 +76,17 @@ import smtplib
 
 #################################################################
 #
-# User definable variables
-#
-#################################################################
-
-# should point to an SVN repo, within which doing
-# ant dist-all should work
-nightly_repo = '/home/rguha/src/java/cdk-nightly/cdk/'
-
-# should point to a directory in which this script
-# is to be placed and will contain log files
-nightly_dir = '/home/rguha/src/java/cdk-nightly/'
-
-# points to a web accessible directory where the
-# nightly build site will be generated
-nightly_web = '/home/rguha/public_html/code/java/nightly/'
-#nightly_web = '/home/rajarshi/public_html/tmp/'
-
-
-# Jars that are required for Ant to run. In general
-# you should only need to point to the relevant JUnit
-# jar file, since we don't really use any esoteric Ant tasks
-ant_libs = '/home/rguha/src/java/cdk-nightly/cdk/develjar/junit-4.3.1.jar'
-
-# Optional
-# required to generate the dependency graph. Should
-# contain the path to the BeanShell and JGraphT jar files
-# if not required set to "" or None
-classpath = '/home/rguha/src/java/beanshell/bsh.jar:/home/rguha/src/java/cdk-nightly/cdk/jar/jgrapht-0.6.0.jar:/home/rguha/src/java/emma/lib/emma.jar'
-
-# Optional
-# path to the japitools directory for API comparison
-# if not required set to "" or None
-japitools_path = '/home/rguha/src/java/japitools'
-
-# Optional
-# path to the last stable CDK distribution jar
-# if not required set to "" or None
-last_stable = '/home/rguha/src/java/cdk-0-99-1.jar'
-
-per_line = 8
-
-# Optional
-# variables required for sending mail, if desired.
-# should be self explanatory. Set to "" or None if
-# you dont want to send mail
-smtpServerName = 'smtp.gmail.com'
-fromName = 'nightly.py <rguha@indiana.edu>'
-toName = 'cdk-devel@lists.sourceforge.net'
-
-# If your server needs authorization, set them here
-# if not, just set them to None
-smtpLogin = 'rajarshi.guha'
-smtpPassword = 'beeb1e'
-
-
-# A list of links that will be included on the final build
-# page. Each item of the list should be a tuple of the link
-# text and the actual URL. If empty there will be no links section
-links = [ ('DTP Atom Type QA', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/dtp-atype-report.txt'), ('1.0.x Nightly Build', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly-1.0.x/'), ('1.2.x Nightly Build', 'http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly-1.2.x/')]
-
-#################################################################
-#
 # NO NEED TO CHANGE ANYTHING BELOW HERE
 #
 #################################################################
 
-pickle_file = os.path.join(nightly_dir, 'nightly.pickle')
+pickle_file = None
 
 today = time.localtime()
 todayStr = '%04d%02d%02d' % (today[0], today[1], today[2])
 todayNice = '%04d-%02d-%02d' % (today[0], today[1], today[2])
 dryRun = False
+firstTime = False
 haveXSLT = True
 noMail = False
 
@@ -318,9 +257,18 @@ def sendMail(message, subject = 'CDK Nightly Trunk Build Failed'):
 def transformXML2HTML(src, dest, xsltFile, pmd=True):
     if haveXSLT: # if we have the proper libs do the xform
         print '    Transforming %s' % (src)
-        styleDoc = libxml2.parseFile(xsltFile)
+        try:
+            styleDoc = libxml2.parseFile(xsltFile)
+        except libxml2.parserError:
+            return False
+        
         style = libxslt.parseStylesheetDoc(styleDoc)
-        doc = libxml2.parseFile(src)
+
+        try:
+            doc = libxml2.parseFile(src)
+        except libxml2.parserError:
+            return False
+        
         result = style.applyStylesheet(doc, None)
         htmlString = style.saveResultToString(result)        
         style.freeStylesheet()
@@ -336,11 +284,13 @@ def transformXML2HTML(src, dest, xsltFile, pmd=True):
         f = open(dest, 'w')
         f.write(htmlString)
         f.close()
+        return True
         
     else: # cannot xform, so just copy the XML file
         shutil.copyfile(src, dest)
+        return False
     
-def writeJunitSummaryHTML(stats, stable=True, verbose=True):
+def writeJunitSummaryHTML(stats, testCoverage = None, stable=True, verbose=True):
     unstableModules = []
 
     if not stable and len(unstableModules) == 0: return None
@@ -356,6 +306,7 @@ def writeJunitSummaryHTML(stats, stable=True, verbose=True):
     <title>CDK JUnit Test Summary (%s) [%s]</title>
     <style type="text/css">
     tr.crash { background-color: #F778A1;}
+    td.cov { color: #A5A5A5; }
     </style>
     </head>
     <body>
@@ -364,15 +315,16 @@ def writeJunitSummaryHTML(stats, stable=True, verbose=True):
     <table border=0 cellspacing=5 cellpadding=3>
     <thead>
     <tr>
-    <td valign="top"><b>Module</b></td>
-    <td valign="top"><b>Number<br>of Tests</b></td>
-    <td valign="top"><b>Failed</b></td>
-    <td valign="top"><b>Errors</b></td>
-    <td valign="top"><b>Success<br>Rate (%%)</b></td>
+    <td valign="top" align="center"><b>Module</b></td>
+    <td valign="top" align="center"><b>Number<br>of Tests</b></td>
+    <td valign="top" align="center"><b>Failed</b></td>
+    <td valign="top" align="center"><b>Errors</b></td>
+    <td valign="top" align="center"><b>Success<br>Rate (%%)</b></td>
+    <td valign="top" align="center"><b>Missing Test<br>Coverage</b></td>
     </tr>
     </thead>
     <tr>
-    <td colspan=5><hr></td>
+    <td colspan=6><hr></td>
     </tr>
     """ % (todayNice, pagetype, todayNice, pagetype)
 
@@ -380,6 +332,9 @@ def writeJunitSummaryHTML(stats, stable=True, verbose=True):
     totalFail = 0
     totalError = 0
 
+    totalMissingMethod = 0
+    totalMissingClass = 0
+    
     for entry in stats:
         if stable and (entry[0] in unstableModules): continue
         if not stable and entry[0] not in unstableModules: continue
@@ -404,11 +359,20 @@ def writeJunitSummaryHTML(stats, stable=True, verbose=True):
         else:
             summary = summary + "<td align=\"right\">NA</td>" 
 
+        try:
+            nmeth,nclass = testCoverage[entry[0]]
+            summary += '<td class="cov" align="right">%d methods in %d classes<td>' % (nmeth, nclass)
+            totalMissingMethod += nmeth
+            totalMissingClass += nclass
+        except KeyError, e:
+            print '      No test coverage info for module %s' % (entry[0])
+            summary += '<td>&nbsp;</td>'
+        
         summary = summary + "</tr>"
 
     summary = summary + """
     <tr>
-    <td colspan=5><hr></td>
+    <td colspan=6><hr></td>
     </tr>
     <tr>
     <td><b>Totals</b></td>
@@ -416,20 +380,38 @@ def writeJunitSummaryHTML(stats, stable=True, verbose=True):
     <td align=\"right\">%d</td>
     <td align=\"right\">%d</td>
     <td align=\"right\">%.2f</td>
+    <td class=\"cov\" align=\"right\">%d methods in %d classes</td>
     </tr>
     <tr>
-    <td colspan=5><hr></td>
+    <td colspan=6><hr></td>
     </tr>
     </table>
     </center>
     </body>
-    </html>""" % (totalTest, totalFail, totalError, (float(totalTest-totalFail-totalError)/float(totalTest))*100)
+    </html>""" % (totalTest, totalFail, totalError, (float(totalTest-totalFail-totalError)/float(totalTest))*100, totalMissingMethod, totalMissingClass)
 
     summary += """
     </center>
     </body>
     </html>"""
     return summary
+
+def parseJunitCoverage():
+    coverageDict = {}
+    testOutputs = glob.glob(os.path.join(nightly_repo, 'reports', 'result-*.txt'))
+    for testOutput in testOutputs:
+        moduleName = os.path.basename(testOutput).split('.')[0].split('-')[1]
+        f = open(testOutput, 'r')
+        while True:
+            line = f.readline()
+            if not line: break
+            if line.find('Testcase: testCoverage(') == -1: continue
+            line = f.readline()
+            regex = re.compile('tests:\s+(\d+)\s+in number of classes: (\d+)')
+            nmeth, nclass = regex.findall(line)[0]
+            coverageDict[moduleName] = (int(nmeth), int(nclass))
+            break
+    return coverageDict
 
 def parseJunitOutput(summaryFile, stable=True):
     f = open(os.path.join(nightly_dir,'test.log'), 'r')
@@ -462,9 +444,12 @@ def parseJunitOutput(summaryFile, stable=True):
 
     # sort the modules alphabetically
     stats.sort(cmp = lambda x,y: cmp(x[0],y[0]))
-    
+
+    # get test coverage info
+    covDict = parseJunitCoverage()
+
     # get an HTML summary
-    summary = writeJunitSummaryHTML(stats, stable)
+    summary = writeJunitSummaryHTML(stats, covDict, stable)
     
     # write out this HTML
     if summary:
@@ -622,8 +607,8 @@ def generateCDKDepGraph():
         return None
     
     os.system('java -cp %s bsh.Interpreter tools/deptodot.bsh > cdkdep.dot' % (classpath))
-    os.system('/usr/bin/dot -Tpng cdkdep.dot -o %s/cdkdep.png' % (nightly_web))
-    os.system('/usr/bin/dot -Tps cdkdep.dot -o %s/cdkdep.ps' % (nightly_web))
+    os.system('/usr/bin/dot -Tpng -o %s/cdkdep.png cdkdep.dot' % (nightly_web))
+    os.system('/usr/bin/dot -Tps -o %s/cdkdep.ps cdkdep.dot' % (nightly_web))
     os.unlink('cdkdep.dot')
 
     celltext = []
@@ -890,6 +875,9 @@ def updateVersion():
     return True
         
 def getSVNRevision():
+    if not os.path.exists(os.path.join(nightly_dir,'svn.log')):
+        return None
+    
     tmp = [x.strip() for x in open(os.path.join(nightly_dir,'svn.log'), 'r').readlines()]
     revision = None
     for line in tmp:
@@ -904,17 +892,43 @@ def getSVNRevision():
 if __name__ == '__main__':
     if 'help' in sys.argv:
         print """
-        Usage: nightly.py [ARGS]
+        Usage: nightly.py CONFIG [ARGS]
 
+        A configuration file must be supplied.
+        
         ARGS can be:
 
           help   - this message
           dryrun - do a dry run. This does not sync with SVN or run ant tasks. It is expected
                    that you have stuff from a previous run available and is mainly for testing
+          firsttime - specify this argument if you're running the script for the first time                     
           nomail - if specified no mail will be sent in response to build errors
         """
         sys.exit(0)
 
+    # load the config file. We first load it into a dictionary
+    # and make sure that we have only the valid variable names
+    # If we have others, we exit. Otherwise, reload it into the
+    # current environment
+    if not os.path.exists(sys.argv[1]):
+        print 'Couldn\'t find the config file: '+sys.argv[1]
+        sys.exit(0)
+    myl = {}
+    def dummyFunction(): pass
+    validConfigVars = ["nightly_repo", "nightly_dir", "nightly_web", "ant_libs", "classpath", "japitools_path", "last_stable", "per_line", "smtpServerName", "fromName", "toName", "smtpLogin", "smtpPassword", "links"]
+    execfile(sys.argv[1], myl)
+    for key in myl.keys():
+        if key == '__builtins__': continue
+        if key not in validConfigVars:
+            print 'Config file had an unknown variable: '+key
+            sys.exit(0)
+        if isinstance(key, type(dummyFunction)):
+            print 'Config variables must be explicit variables. No functions!'
+            sys.exit(0)
+    execfile(sys.argv[1])
+    print """
+    Configuration file = %s""" % (sys.argv[1])
+    
     # check for the presence of required executable
     executableList = ['java', 'ant', 'tar', 'nice', 'svn', 'rm']
     ret = map( executableExists, executableList )
@@ -935,7 +949,23 @@ if __name__ == '__main__':
     except KeyError, ke:
         print 'JAVA_HOME & ANT_HOME must be set in the environment'
         sys.exit(-1)
-        
+
+    # check that the specified dir's exist. Also if the nightly_web
+    # does not exists make it
+    if not os.path.exists(nightly_dir):
+        print '\'%s\' does not exist. Cannot carry on' % (nightly_dir)
+        sys.exit(-1)
+    if not os.path.exists(nightly_repo):
+        print '\'%s\' does not exist. Cannot carry on' % (nightly_repo)
+        sys.exit(-1)
+    if not os.path.exists(nightly_web):
+        print '\'%s\' does not exist. Will create it' % (nightly_web)
+        try:
+            os.makedirs(nightly_web)
+        except:
+            print 'Could not make the output directory for the nightly build. Exiting'
+            sys.exit(-1)
+            
     # are we going to do a dry run?
     if 'dryrun' in [x.lower() for x in sys.argv] or 'dry' in [x.lower() for x in sys.argv]:
         dryRun = True
@@ -943,6 +973,8 @@ if __name__ == '__main__':
     if 'nomail' in [x.lower() for x in sys.argv]:
         noMail = True
 
+    if 'firsttime' in [x.lower() for x in sys.argv] or 'first' in [x.lower() for x in sys.argv]:
+        firstTime= True
 
     # print out some status stuff
     print """
@@ -978,6 +1010,7 @@ if __name__ == '__main__':
         # try and load the pickle of the previous test summaries
         # else get a summary of the test results from the previous run
         oldReports = None
+        pickle_file = os.path.join(nightly_dir, 'nightly.pickle')
         if os.path.exists(pickle_file):
             print 'Loading data from persistent storage'
             data = pickle.load(open(pickle_file, 'r'))
@@ -993,7 +1026,7 @@ if __name__ == '__main__':
                     if line.startswith('Testcase:'):
                         oldReports.append(''.join(line.split(':')[:2]))
             oldRevision = getSVNRevision()
-            if not oldRevision:
+            if not oldRevision and not firstTime:
                 print 'Error getting the SVN revision. Exiting'
                 sys.exit(-1)
 
@@ -1375,15 +1408,13 @@ if __name__ == '__main__':
 
         # summarize JUnit test results - it will go into nightly_web
         parseJunitOutput('junitsummary.html')
-        status = parseJunitOutput('junitsummary-unstable.html', stable=False)
-        
+
         # check whether we can copy the run output and link to the summary
         if os.path.exists( os.path.join(nightly_dir, 'test.log') ):
             shutil.copyfile(os.path.join(nightly_dir, 'test.log'),
                             os.path.join(nightly_web, 'test.log'))
             resultTable.addCell("<a href=\"test.log\">test.log</a>")
             resultTable.appendToCell("<a href=\"junitsummary.html\">Stable</a>")
-            if status: resultTable.appendToCell("<a href=\"junitsummary-unstable.html\">Unstable</a>")
 
             if not dryRun:
                 resultTable.appendToCell("<br>No. old fails fixed since r%s = %s" % (oldRevision,str(nTestFixed)))
@@ -1421,19 +1452,21 @@ if __name__ == '__main__':
     # get the results of doccheck
     resultTable.addRow()
     resultTable.addCell("<a href=\"http://java.sun.com/j2se/javadoc/doccheck/index.html\">DocCheck</a> Results:")
-    if successDoccheck:
+    if successDoccheck and os.path.exists(os.path.join(nightly_repo, 'reports', 'javadoc')):
         print '  Generating DocCheck section'
-        shutil.copytree('%s/reports/javadoc' % (nightly_repo),
-                        '%s/javadoc' % (nightly_web))
-        subdirs = os.listdir('%s/reports/javadoc' % (nightly_repo))
-        subdirs.sort()
-        count = 1
-        s = ''
-        for dir in subdirs:
-            s = s+"<a href=\"javadoc/%s/\">%s</a>\n" % (dir, dir)
-            if count % per_line == 0: s += "<br>"
-            count += 1
-        resultTable.addCell(s)
+
+        if os.path.exists(os.path.join(nightly_repo, 'reports', 'javadoc')):
+            shutil.copytree(os.path.join(nightly_repo, 'reports', 'javadoc'),
+                            os.path.join(nightly_web, 'javadoc'))
+            subdirs = os.listdir(os.path.join(nightly_repo, 'reports', 'javadoc')) 
+            subdirs.sort()
+            count = 1
+            s = ''
+            for dir in subdirs:
+                s = s+"<a href=\"javadoc/%s/\">%s</a>\n" % (dir, dir)
+                if count % per_line == 0: s += "<br>"
+                count += 1
+            resultTable.addCell(s)
     else:
         resultTable.addCell("<b>FAILED</b>", klass="tdfail")
         if os.path.exists( os.path.join(nightly_dir, 'doccheck.log') ):
@@ -1493,8 +1526,10 @@ if __name__ == '__main__':
             prefix = os.path.basename(xmlFile).split('.')[0]
             htmlFile = os.path.join(nightly_web, 'pmd-migrating', prefix)+'.html'
             xsltFile = os.path.join(nightly_repo,'pmd','wz-pmd-report.xslt')
-            transformXML2HTML(xmlFile, htmlFile, xsltFile)
-            s = s+"<a href=\"pmd-migrating/%s\">%s</a>\n" % (os.path.basename(htmlFile), prefix)
+            status = transformXML2HTML(xmlFile, htmlFile, xsltFile)
+            if status:
+                s = s+"<a href=\"pmd-migrating/%s\">%s</a>\n" % (os.path.basename(htmlFile), prefix)
+            else: s += ""
             if count % per_line == 0: s += "<br>"
             count += 1
         resultTable.addCell(s)
@@ -1582,12 +1617,9 @@ if __name__ == '__main__':
         resultTable.addCell(s)
         
     # copy this script to the nightly we dir. The script should be in nightly_dir
-    # we also want to redact the smtp password/login lines
     f = open(os.path.join(nightly_dir,'nightly.py'), 'r')
     script = string.join(f.readlines())
     f.close()
-    script = re.sub('smtpLogin =\s?\'.*\'', 'smtpLogin = "XXX"', script)
-    script = re.sub('smtpPassword =\s?\'.*\'', 'smtpPassword = "XXX"', script)    
     f = open(os.path.join(nightly_web, 'nightly.py'), 'w')
     f.write(script)
     f.close()
