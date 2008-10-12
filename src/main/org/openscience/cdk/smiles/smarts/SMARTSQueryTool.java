@@ -180,9 +180,7 @@ public class SMARTSQueryTool {
             IQueryAtom queryAtom = (IQueryAtom) query.getAtom(0);
 
             matchingAtoms = new ArrayList<List<Integer>>();
-            Iterator<IAtom> atoms = this.atomContainer.atoms().iterator();
-            while (atoms.hasNext()) {
-                IAtom atom = atoms.next();
+            for (IAtom atom : this.atomContainer.atoms()) {
                 if (queryAtom.matches(atom)) {
                     List<Integer> tmp = new ArrayList<Integer>();
                     tmp.add(this.atomContainer.getAtomNumber(atom));
@@ -332,9 +330,7 @@ public class SMARTSQueryTool {
         SSSRFinder finder = new SSSRFinder(atomContainer);
         IRingSet sssr = finder.findEssentialRings();
 
-        Iterator<IAtom> atoms = atomContainer.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : atomContainer.atoms()) {
 
             // add a property to each ring atom that will be an array of
             // Integers, indicating what size ring the given atom belongs to
@@ -370,22 +366,18 @@ public class SMARTSQueryTool {
             atom.setProperty(CDKConstants.TOTAL_H_COUNT, hCount);
 
             if (valencesTable.get(atom.getSymbol()) != null) {
-                atom.setValency(valencesTable.get(atom.getSymbol()) -
-                        atom.getFormalCharge());
+                int formalCharge = atom.getFormalCharge() == CDKConstants.UNSET ? 0 : atom.getFormalCharge();
+                atom.setValency(valencesTable.get(atom.getSymbol()) - formalCharge);
             }
         }
 
-        Iterator<IBond> bonds = atomContainer.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
+        for (IBond bond : atomContainer.bonds()) {
             if (allRings.getRings(bond).getAtomContainerCount() > 0) {
                 bond.setFlag(CDKConstants.ISINRING, true);
             }
         }
 
-        atoms = atomContainer.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : atomContainer.atoms()) {
             List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
 
             int counter = 0;
@@ -417,8 +409,7 @@ public class SMARTSQueryTool {
      * @throws CDKException
      */
     private void initializeRecursiveSmarts(IAtomContainer atomContainer) throws CDKException {
-        for (Iterator<IAtom> it = this.query.atoms().iterator(); it.hasNext();) {
-            IAtom atom = it.next();
+        for (IAtom atom : atomContainer.atoms()) {
             initializeRecursiveSmartsAtom(atom, atomContainer);
         }
     }
