@@ -29,13 +29,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.NewCDKTestCase;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 import java.util.List;
 
@@ -158,7 +157,7 @@ public class RingSetManipulatorTest extends NewCDKTestCase {
     	Assert.assertEquals(2, list.size());
     }
     
-    @Test public void testGetAllInOneContainer_IRingSet()
+    @Test public void testGetAtomCount()
     {
     	IRingSet rs = builder.newRingSet();
     	IAtomContainer ac1 = builder.newRing();
@@ -172,7 +171,7 @@ public class RingSetManipulatorTest extends NewCDKTestCase {
     	Assert.assertEquals(3, RingSetManipulator.getAtomCount(rs));
     	Assert.assertEquals(1, RingSetManipulator.getBondCount(rs));
     }
-    
+
     @Test public void testGetHeaviestRing_IRingSet_IBond()
     {
     	IRing ring = RingSetManipulator.getHeaviestRing(ringset, bondRing2Ring3);
