@@ -1254,7 +1254,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         assertEquals(3, results[0]);
         assertEquals(3, results[1]);
 
-        results = match("[G1]", "CCN");
+        results = match("[G0]", "CCN");
         assertEquals(3, results[0]);
         assertEquals(3, results[1]);
     }
