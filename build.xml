@@ -713,9 +713,6 @@
                     <includesfile name="${metainf}/formula.libdepends"/>
                     <includesfile name="${metainf}/isomorphism.libdepends"/>
                 </fileset>
-                <fileset dir="${lib}">
-                    <include name="commons-cli-1.0.jar"/>
-                </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-atomtype.jar"/>
                     <include name="cdk-builder3d.jar"/>
