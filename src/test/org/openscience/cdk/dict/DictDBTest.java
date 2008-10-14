@@ -62,5 +62,16 @@ public class DictDBTest extends CDKTestCase {
     	Assert.assertNotNull(def);
     	Assert.assertTrue(def.length() > 0);
     }
+
+    @Test public void testOWLReactEntry() {
+    	DictionaryDatabase db = new DictionaryDatabase();
+    	Dictionary dict = db.getDictionary("reaction-processes");
+    	Entry entry = dict.getEntry("AdductionProtonLP".toLowerCase());
+    	Assert.assertNotNull(entry);
+    	Assert.assertEquals("Adduction Proton from Lone Pair Orbitals", entry.getLabel());
+    	String def = entry.getDefinition();
+    	Assert.assertNotNull(def);
+    	Assert.assertTrue(def.length() > 0);
+    }
     
 }
