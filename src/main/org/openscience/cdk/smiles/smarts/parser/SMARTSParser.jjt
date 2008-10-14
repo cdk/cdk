@@ -620,10 +620,10 @@ void PeriodicGroupNumber() throws ParseException #PeriodicGroupNumber :
 { StringBuffer digits = new StringBuffer(); }
 {
     <G> { }
-    [ ( <DIGIT> { digits.append(token.image); } )+
+    ( <DIGIT> { digits.append(token.image); } )+
     { int tmpInt = Integer.parseInt(digits.toString());
       if (tmpInt < 1 || tmpInt > 18) throw new ParseException("Invalid group number");
-      jjtThis.setGroupNumber( Integer.parseInt(digits.toString()) ); } ]
+      jjtThis.setGroupNumber( Integer.parseInt(digits.toString()) ); }
 
 }
 
