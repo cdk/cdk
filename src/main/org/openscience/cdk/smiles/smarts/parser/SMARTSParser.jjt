@@ -616,13 +616,15 @@ void RingConnectivity() #RingConnectivity : {}
     [ ( <DIGIT> )+ { jjtThis.setNumOfConnection( Integer.parseInt(token.image) ); } ]
 }
 
-void PeriodicGroupNumber() #PeriodicGroupNumber :
+void PeriodicGroupNumber() throws ParseException #PeriodicGroupNumber :
 { StringBuffer digits = new StringBuffer(); }
 {
 //    <G> { jjtThis.setGroupNumber(1); }
     <G> { }
     [ ( <DIGIT> { digits.append(token.image); } )+
-    { jjtThis.setGroupNumber( Integer.parseInt(digits.toString()) ); } ]
+    { int tmpInt = Integer.parseInt(digits.toString());
+      if (tmpInt < 1 || tmpInt > 18) throw new ParseException("Invalid group number");
+      jjtThis.setGroupNumber( Integer.parseInt(digits.toString()) ); } ]
 
 }
 

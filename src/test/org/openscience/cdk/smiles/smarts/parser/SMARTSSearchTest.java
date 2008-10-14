@@ -1253,10 +1253,30 @@ public class SMARTSSearchTest extends CDKTestCase {
         results = match("[G14,G15]", "CCN");
         assertEquals(3, results[0]);
         assertEquals(3, results[1]);
+    }
 
-        results = match("[G0]", "CCN");
-        assertEquals(3, results[0]);
-        assertEquals(3, results[1]);
+    public void testInvalidPeriodicGroupNumber() throws Exception {
+        try {
+            int[] results = match("[G19]", "CCN");
+            fail();
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+
+        try {
+            int[] results = match("[G0]", "CCN");
+            fail();
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+
+        try {
+            int[] results = match("[G345]", "CCN");
+            fail();
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+
     }
 }
 
