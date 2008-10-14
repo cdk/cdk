@@ -70,7 +70,7 @@ import java.util.*;
  * in the Daylight specification. However they are supported by other packages and
  * are noted as such.
  *
- * <table>
+ * <table border=1 cellpadding=3>
  * <thead>
  * <tr>
  * <th>Symbol</th><th>Meaning</th><th>Default</th><th>Notes</th>
@@ -417,7 +417,10 @@ public class SMARTSQueryTool {
     }
 
     /**
-     * Initializes recursive smarts atoms in the query
+     * Initializes recursive smarts atoms in the query.
+     *
+     * We loop over the SMARTS atoms in the query and associate the
+     * target molecule with each of the SMARTS atoms that need it
      *
      * @param atomContainer
      * @throws CDKException
