@@ -423,7 +423,7 @@ public class SMARTSQueryTool {
      * @throws CDKException
      */
     private void initializeRecursiveSmarts(IAtomContainer atomContainer) throws CDKException {
-        for (IAtom atom : atomContainer.atoms()) {
+        for (IAtom atom : query.atoms()) {
             initializeRecursiveSmartsAtom(atom, atomContainer);
         }
     }
