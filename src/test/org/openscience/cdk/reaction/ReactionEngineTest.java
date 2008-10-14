@@ -30,7 +30,7 @@ import org.openscience.cdk.reaction.type.AdductionProtonLPReaction;
  *
  * @cdk.module test-reaction
  */
-public abstract class ReactionEngineTest extends NewCDKTestCase {
+public class ReactionEngineTest extends NewCDKTestCase {
 	
 	/**
 	 *  Constructor for the ReactionEngineTest object.

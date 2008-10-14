@@ -24,8 +24,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-import javax.vecmath.Point3d;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.NewCDKTestCase;
@@ -33,13 +31,6 @@ import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.EntryReact;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 /**
  * Tests for IReactionProcess implementations.
@@ -51,7 +42,6 @@ public abstract class ReactionProcessTest extends NewCDKTestCase {
 	private static IReactionProcess reaction;
 	private static Dictionary dictionary;
 	private static String entryString;
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	
 	/**
 	 * Set the IReactionProcess to analyzed
