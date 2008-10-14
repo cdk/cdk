@@ -79,7 +79,19 @@ public abstract class ReactionChainTest extends CDKTestCase {
 	 * @throws Exception 
 	 */
 	@Test public void testGetReactionStep_IReaction(){
+		ReactionChain chain = new ReactionChain();
+		IReaction reaction1 = builder.newReaction();
+		reaction1.setID("reaction1");
+		chain.addReaction(reaction1, 0);
+		IReaction reaction2 = builder.newReaction();
+		reaction1.setID("reaction2");
+		IReaction reaction3 = builder.newReaction();
+		reaction1.setID("reaction3");
+		chain.addReaction(reaction1, 0);
+		chain.addReaction(reaction2, 1);
+		chain.addReaction(reaction3, 2);
 		
+		Assert.assertEquals(1,chain.getReactionStep(reaction2));
 	}
 	
 	/**
@@ -87,8 +99,21 @@ public abstract class ReactionChainTest extends CDKTestCase {
 	 * 
 	 * @throws Exception 
 	 */
-	@Test public void testGetReaction_int(){
+	@Test public void testGetReaction(){
+		ReactionChain chain = new ReactionChain();
+		IReaction reaction1 = builder.newReaction();
+		reaction1.setID("reaction1");
+		chain.addReaction(reaction1, 0);
+		IReaction reaction2 = builder.newReaction();
+		reaction1.setID("reaction2");
+		IReaction reaction3 = builder.newReaction();
+		reaction1.setID("reaction3");
+		chain.addReaction(reaction1, 0);
+		chain.addReaction(reaction2, 1);
+		chain.addReaction(reaction3, 2);
 		
+		Assert.assertEquals(reaction2,chain.getReaction(1));
+
 		
 	}
 }

@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -49,6 +51,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module     reaction
  *
  */
+@TestClass(value="org.openscience.cdk.reaction.mechanism.AdductionLPMechanismTest")
 public class AdductionLPMechanism implements IReactionMechanism{
 
 	/** 
@@ -62,6 +65,7 @@ public class AdductionLPMechanism implements IReactionMechanism{
      * @return            The Reaction mechanism
      * 
 	 */
+    @TestMethod(value="testInitiate_IMoleculeSet_ArrayList_ArrayList")
 	public IReaction initiate(IMoleculeSet moleculeSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
 		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(moleculeSet.getBuilder());
 		if (moleculeSet.getMoleculeCount() != 2) {

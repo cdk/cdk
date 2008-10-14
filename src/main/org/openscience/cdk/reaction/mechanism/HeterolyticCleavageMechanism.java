@@ -24,6 +24,8 @@ import java.util.ArrayList;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -48,6 +50,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.module     reaction
  *
  */
+@TestClass(value="org.openscience.cdk.reaction.mechanism.HeterolyticCleavageMechanismTest")
 public class HeterolyticCleavageMechanism implements IReactionMechanism{
 
 	/** 
@@ -62,6 +65,7 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism{
      * @return            The Reaction mechanism
      * 
 	 */
+    @TestMethod(value="testInitiate_IMoleculeSet_ArrayList_ArrayList")
 	public IReaction initiate(IMoleculeSet moleculeSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
 		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(moleculeSet.getBuilder(), CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
 		if (moleculeSet.getMoleculeCount() != 1) {

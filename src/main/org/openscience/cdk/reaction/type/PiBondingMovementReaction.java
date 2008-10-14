@@ -30,6 +30,8 @@ import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -77,6 +79,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.set        reaction-types
  * 
  **/
+@TestClass(value="org.openscience.cdk.reaction.type.PiBondingMovementReactionTest")
 public class PiBondingMovementReaction extends ReactionEngine implements IReactionProcess{
 	private LoggingTool logger;
 	
@@ -93,6 +96,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 	 *
 	 *@return    The specification value
 	 */
+    @TestMethod("testGetSpecification")
 	public ReactionSpecification getSpecification() {
 		return new ReactionSpecification(
 				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#PiBondingMovement",
@@ -112,6 +116,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 	 *
 	 *@exception  CDKException  Description of the Exception
 	 */
+    @TestMethod("testInitiate_IMoleculeSet_IMoleculeSet")
 	public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: PiBondingMovementReaction");
