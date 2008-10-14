@@ -63,12 +63,26 @@ import java.util.*;
  *    }
  * }
  * </pre>
- * <p/>
- * To use the JJTree based Smarts Parser, use:
- * <p/>
- * <pre>
- * SMARTSQueryTool querytool = new SMARTSQueryTool(&quot;O=CO&quot;, true);
- * </pre>
+ *
+ * <h3>SMARTS Extensions</h3>
+ *
+ * Currently the CDK supports the following SMARTS symbols, that are not described
+ * in the Daylight specification. However they are supported by other packages and
+ * are noted as such.
+ *
+ * <table>
+ * <thead>
+ * <tr>
+ * <th>Symbol</th><th>Meaning</th><th>Default</th><th>Notes</th>
+ * </tr>
+ * </thead>
+ * <tbody>
+ * <tr>
+ * <td>Gx</td><td>Periodic group number</td><td>None</td><td>x must be a number between 1 and 18. This
+ * symbol is supported by the MOE SMARTS implementation</td>
+ * </tr>
+ * </tbody>
+ * </table>
  *
  * @author Rajarshi Guha
  * @cdk.created 2007-04-08
