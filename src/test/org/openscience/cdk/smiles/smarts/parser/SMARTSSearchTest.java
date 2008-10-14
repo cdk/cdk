@@ -1244,5 +1244,19 @@ public class SMARTSSearchTest extends CDKTestCase {
         assertEquals(1, results[0]);
         assertEquals(1, results[1]);
     }
+
+    public void testPeriodicGroupNumber() throws Exception {
+        int[] results = match("[G14]", "CCN");
+        assertEquals(2, results[0]);
+        assertEquals(2, results[1]);
+
+        results = match("[G14,G15]", "CCN");
+        assertEquals(3, results[0]);
+        assertEquals(3, results[1]);
+
+        results = match("[G1]", "CCN");
+        assertEquals(3, results[0]);
+        assertEquals(3, results[1]);
+    }
 }
 

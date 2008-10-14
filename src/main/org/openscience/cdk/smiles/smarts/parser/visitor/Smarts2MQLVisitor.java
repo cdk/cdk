@@ -19,45 +19,8 @@
  */
 package org.openscience.cdk.smiles.smarts.parser.visitor;
 
-import org.openscience.cdk.smiles.smarts.parser.ASTAliphatic;
-import org.openscience.cdk.smiles.smarts.parser.ASTAnyAtom;
-import org.openscience.cdk.smiles.smarts.parser.ASTAromatic;
-import org.openscience.cdk.smiles.smarts.parser.ASTAtom;
-import org.openscience.cdk.smiles.smarts.parser.ASTAtomicMass;
-import org.openscience.cdk.smiles.smarts.parser.ASTAtomicNumber;
-import org.openscience.cdk.smiles.smarts.parser.ASTCharge;
-import org.openscience.cdk.smiles.smarts.parser.ASTChirality;
-import org.openscience.cdk.smiles.smarts.parser.ASTExplicitConnectivity;
-import org.openscience.cdk.smiles.smarts.parser.ASTElement;
-import org.openscience.cdk.smiles.smarts.parser.ASTExplicitAtom;
-import org.openscience.cdk.smiles.smarts.parser.ASTExplicitHighAndBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTExplicitHighAndExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTGroup;
-import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHCount;
-import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHighAndBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHighAndExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTLowAndBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTLowAndExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTNotBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTNotExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTOrBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTOrExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTReaction;
-import org.openscience.cdk.smiles.smarts.parser.ASTRecursiveSmartsExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTRingConnectivity;
-import org.openscience.cdk.smiles.smarts.parser.ASTRingIdentifier;
-import org.openscience.cdk.smiles.smarts.parser.ASTRingMembership;
-import org.openscience.cdk.smiles.smarts.parser.ASTSmallestRingSize;
-import org.openscience.cdk.smiles.smarts.parser.ASTSimpleBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTSmarts;
-import org.openscience.cdk.smiles.smarts.parser.ASTStart;
-import org.openscience.cdk.smiles.smarts.parser.ASTTotalConnectivity;
-import org.openscience.cdk.smiles.smarts.parser.ASTTotalHCount;
-import org.openscience.cdk.smiles.smarts.parser.ASTValence;
-import org.openscience.cdk.smiles.smarts.parser.Node;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParserConstants;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParserVisitor;
-import org.openscience.cdk.smiles.smarts.parser.SimpleNode;
+import org.openscience.cdk.isomorphism.matchers.smarts.PeriodicGroupNumberAtom;
+import org.openscience.cdk.smiles.smarts.parser.*;
 
 /**
  * An AST tree visitor. It is a prototype that translate Smarts to MQL. 
@@ -300,6 +263,10 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
     public Object visit(ASTRingConnectivity node, Object data) {
 
         return data;
+    }
+
+    public Object visit(ASTPeriodicGroupNumber node, Object data) {
+        return new PeriodicGroupNumberAtom(node.getGroupNumber());
     }
 
     public Object visit(ASTTotalConnectivity node, Object data) {

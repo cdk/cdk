@@ -272,6 +272,8 @@ PARSER_END(SMARTSParser)
     |
     <x : "x" >
     |
+    <G : "G" >
+    |
     <DOLLAR : "$" >
     |
     <L_PAREN : "(" >
@@ -546,6 +548,8 @@ void PrimitiveAtomExpression() : {}
         AtomicNumber()
         |
         Chirality()
+        |
+        PeriodicGroupNumber()
     )
 }
 
@@ -610,6 +614,16 @@ void RingConnectivity() #RingConnectivity : {}
 {
     <x> { jjtThis.setNumOfConnection(1); } 
     [ ( <DIGIT> )+ { jjtThis.setNumOfConnection( Integer.parseInt(token.image) ); } ]
+}
+
+void PeriodicGroupNumber() #PeriodicGroupNumber :
+{ StringBuffer digits = new StringBuffer(); }
+{
+//    <G> { jjtThis.setGroupNumber(1); }
+    <G> { }
+    [ ( <DIGIT> { digits.append(token.image); } )+
+    { jjtThis.setGroupNumber( Integer.parseInt(digits.toString()) ); } ]
+
 }
 
 void TotalConnectivity() #TotalConnectivity : 

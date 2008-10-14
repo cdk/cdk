@@ -19,9 +19,6 @@
  */
 package org.openscience.cdk.smiles.smarts.parser.visitor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -30,76 +27,12 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.smarts.AliphaticAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.AliphaticSymbolAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.AromaticSymbolAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.AtomicNumberAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.ChiralityAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.ExplicitConnectionAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.FormalChargeAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.HydrogenAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.ImplicitHCountAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.MassAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.RecursiveSmartsAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.RingAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.RingBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.RingIdentifierAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.RingMembershipAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.SmallestRingAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.StereoBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.TotalConnectionAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.TotalRingConnectionAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.TotalValencyAtom;
-import org.openscience.cdk.smiles.smarts.parser.ASTAliphatic;
-import org.openscience.cdk.smiles.smarts.parser.ASTAnyAtom;
-import org.openscience.cdk.smiles.smarts.parser.ASTAromatic;
-import org.openscience.cdk.smiles.smarts.parser.ASTAtom;
-import org.openscience.cdk.smiles.smarts.parser.ASTAtomicMass;
-import org.openscience.cdk.smiles.smarts.parser.ASTAtomicNumber;
-import org.openscience.cdk.smiles.smarts.parser.ASTCharge;
-import org.openscience.cdk.smiles.smarts.parser.ASTChirality;
-import org.openscience.cdk.smiles.smarts.parser.ASTElement;
-import org.openscience.cdk.smiles.smarts.parser.ASTExplicitAtom;
-import org.openscience.cdk.smiles.smarts.parser.ASTExplicitConnectivity;
-import org.openscience.cdk.smiles.smarts.parser.ASTExplicitHighAndBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTExplicitHighAndExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTGroup;
-import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHCount;
-import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHighAndBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHighAndExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTLowAndBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTLowAndExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTNotBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTNotExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTOrBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTOrExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTReaction;
-import org.openscience.cdk.smiles.smarts.parser.ASTRecursiveSmartsExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTRingConnectivity;
-import org.openscience.cdk.smiles.smarts.parser.ASTRingIdentifier;
-import org.openscience.cdk.smiles.smarts.parser.ASTRingMembership;
-import org.openscience.cdk.smiles.smarts.parser.ASTSimpleBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTSmallestRingSize;
-import org.openscience.cdk.smiles.smarts.parser.ASTSmarts;
-import org.openscience.cdk.smiles.smarts.parser.ASTStart;
-import org.openscience.cdk.smiles.smarts.parser.ASTTotalConnectivity;
-import org.openscience.cdk.smiles.smarts.parser.ASTTotalHCount;
-import org.openscience.cdk.smiles.smarts.parser.ASTValence;
-import org.openscience.cdk.smiles.smarts.parser.Node;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParserConstants;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParserVisitor;
-import org.openscience.cdk.smiles.smarts.parser.SimpleNode;
+import org.openscience.cdk.isomorphism.matchers.smarts.*;
+import org.openscience.cdk.smiles.smarts.parser.*;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An AST tree visitor. It builds an instance of <code>QueryAtomContainer</code>
@@ -501,7 +434,11 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		return new TotalRingConnectionAtom(node.getNumOfConnection());
 	}
 
-	public Object visit(ASTTotalConnectivity node, Object data) {
+    public Object visit(ASTPeriodicGroupNumber node, Object data) {
+        return new PeriodicGroupNumberAtom(node.getGroupNumber());
+    }
+
+    public Object visit(ASTTotalConnectivity node, Object data) {
 		return new TotalConnectionAtom(node.getNumOfConnection());
 	}
 
