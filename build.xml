@@ -553,10 +553,10 @@
             <antcall target="compile-module"><param name="module" value="structgen"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="pdb"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="isomorphism"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="smarts"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="fingerprint"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="smiles"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="extra"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="smarts"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="fingerprint"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="libiocml"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="libiomd"/><param name="source" value="${src}/main"/></antcall>
             <antcall target="compile-module"><param name="module" value="pdbcml"/><param name="source" value="${src}/main"/></antcall>
