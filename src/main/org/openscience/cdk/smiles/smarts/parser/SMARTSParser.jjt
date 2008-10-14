@@ -619,7 +619,6 @@ void RingConnectivity() #RingConnectivity : {}
 void PeriodicGroupNumber() throws ParseException #PeriodicGroupNumber :
 { StringBuffer digits = new StringBuffer(); }
 {
-//    <G> { jjtThis.setGroupNumber(1); }
     <G> { }
     [ ( <DIGIT> { digits.append(token.image); } )+
     { int tmpInt = Integer.parseInt(digits.toString());
