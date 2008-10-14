@@ -1278,5 +1278,14 @@ public class SMARTSSearchTest extends CDKTestCase {
         }
 
     }
+
+    public void testNonPeriodicGroupNumber() throws Exception {
+        try {
+            int[] results = match("[GA]", "CCN");
+            fail("Should throw an exception if G is not followed by a number");
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+    }
 }
 
