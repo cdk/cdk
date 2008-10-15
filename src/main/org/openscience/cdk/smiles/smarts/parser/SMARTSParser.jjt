@@ -315,8 +315,9 @@ PARSER_END(SMARTSParser)
  *             NotExpression ::= "!" ( <PrimitiveAtomExpression> | <RecursiveSmartsExpression> )
  * RecursiveSmartsExpression ::= "$" "(" <SmartsExpression> ")"
  *   PrimitiveAtomExpression ::= <NonHydrogenElement> | "*" | "A" | "a" | "D" (<Digits>)? | "H" (<Digits>)? | "h" (<Digits>)?
- *                               | "R" (<Digit>+)? | "r" (<Digit>+)? | "v" (<Digit>+)? | "X" (<Digit>+)? | "x" (<Digit>+)? 
- *                               | ("+" | "-") (<Digit>+)? | "#" (<Digit>+)? | "@" | "@@" | <Digit>+
+ *                               | "R" (<Digit>+)? | "r" (<Digit>+)? | "v" (<Digit>+)? | "#X" | "G" (<DIGIT>+)  
+ *                               | "X" (<Digit>+)? | "x" (<Digit>+)?
+ *                               | ("+" | "-") (<Digit>+)? | "#" (<Digit>+) | "@" | "@@" | <Digit>+
  *                     Digit ::= ( "0" - "9")
  *        NonHydrogenElement ::= [ "HE" | "LI" | "BE" | "NE" | "NA" | "MG" | "AL" | "SI" | "AR" | "CA" | "SC" |
  *                               "TI" | "CR" | "MN" | "FE" | "CO" | "NI" | "CU" | "ZN" | "GA" | "GE" | "AS" |
