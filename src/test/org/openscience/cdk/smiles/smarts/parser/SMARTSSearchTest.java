@@ -1332,6 +1332,10 @@ public class SMARTSSearchTest extends CDKTestCase {
         assertEquals(1, results[0]);
         assertEquals(1, results[1]);
 
+        results = match("[^1&N,^2&C]", "CC(=O)CC(=O)CC#N");
+        assertEquals(3, results[0]);
+        assertEquals(3, results[1]);
+
     }
 
     public void testBadHybridizationNumber() throws Exception {
