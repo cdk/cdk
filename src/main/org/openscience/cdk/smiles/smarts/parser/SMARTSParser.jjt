@@ -274,6 +274,8 @@ PARSER_END(SMARTSParser)
     |
     <G : "G" >
     |
+    <HX : "#X" >
+    |
     <DOLLAR : "$" >
     |
     <L_PAREN : "(" >
@@ -550,6 +552,8 @@ void PrimitiveAtomExpression() : {}
         Chirality()
         |
         PeriodicGroupNumber()
+        |
+        NonCHHeavyAtom()
     )
 }
 
@@ -662,6 +666,11 @@ void SmallestRingSize() #SmallestRingSize :
 void Aliphatic() #Aliphatic : {}
 {
     <A> 
+}
+
+void NonCHHeavyAtom() #NonCHHeavyAtom : {}
+{
+    <HX>
 }
 
 void Aromatic() #Aromatic : {}

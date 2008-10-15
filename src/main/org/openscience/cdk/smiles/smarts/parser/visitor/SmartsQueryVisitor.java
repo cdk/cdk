@@ -379,10 +379,8 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		isParsingRS = true;
 		node.jjtGetChild(0).jjtAccept(this, null);
 		isParsingRS = false;
-		
-		RecursiveSmartsAtom atom = new RecursiveSmartsAtom(rsQuery);
-		
-		return atom;
+
+        return new RecursiveSmartsAtom(rsQuery);
 	}
 
 	public ASTStart getRoot(Node node) {
@@ -455,23 +453,23 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 	}
 
 	public Object visit(ASTAliphatic node, Object data) {
-		AliphaticAtom atom = new AliphaticAtom();
-		return atom;
+        return new AliphaticAtom();
 	}
 
-	public Object visit(ASTAromatic node, Object data) {
-		AromaticAtom atom = new AromaticAtom();
-		return atom;
+    public Object visit(ASTNonCHHeavyAtom node, Object data) {
+        return new NonCHHeavyAtom();
+    }
+
+    public Object visit(ASTAromatic node, Object data) {
+        return new AromaticAtom();
 	}
 
 	public Object visit(ASTAnyAtom node, Object data) {
-		AnyAtom atom = new AnyAtom();
-		return atom;
+        return new AnyAtom();
 	}
 
 	public Object visit(ASTAtomicMass node, Object data) {
-		MassAtom atom = new MassAtom(node.getMass());
-		return atom;
+        return new MassAtom(node.getMass());
 	}
 
 	public Object visit(ASTChirality node, Object data) {

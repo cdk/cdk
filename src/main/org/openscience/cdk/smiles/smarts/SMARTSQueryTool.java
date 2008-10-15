@@ -80,6 +80,9 @@ import java.util.*;
  * <tr>
  * <td>Gx</td><td>Periodic group number</td><td>None</td><td>x must be a number between 1 and 18. This
  * symbol is supported by the MOE SMARTS implementation</td>
+ * <tr>
+ * <td>#X</td><td>Any non-carbon heavy element</td><td>None</td><td>This
+ * symbol is supported by the MOE SMARTS implementation</td>
  * </tr>
  * </tbody>
  * </table>

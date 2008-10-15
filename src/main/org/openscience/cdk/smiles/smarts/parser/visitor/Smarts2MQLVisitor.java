@@ -19,6 +19,7 @@
  */
 package org.openscience.cdk.smiles.smarts.parser.visitor;
 
+import org.openscience.cdk.isomorphism.matchers.smarts.NonCHHeavyAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.PeriodicGroupNumberAtom;
 import org.openscience.cdk.smiles.smarts.parser.*;
 
@@ -290,6 +291,10 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
 
     public Object visit(ASTAliphatic node, Object data) {
         return data;
+    }
+
+    public Object visit(ASTNonCHHeavyAtom node, Object data) {
+        return new NonCHHeavyAtom();
     }
 
     public Object visit(ASTAromatic node, Object data) {

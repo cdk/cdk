@@ -19,6 +19,7 @@
  */
 package org.openscience.cdk.smiles.smarts.parser.visitor;
 
+import org.openscience.cdk.isomorphism.matchers.smarts.NonCHHeavyAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.PeriodicGroupNumberAtom;
 import org.openscience.cdk.smiles.smarts.parser.*;
 
@@ -244,7 +245,12 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
+
+    public Object visit(ASTNonCHHeavyAtom node, Object data) {
+        return new NonCHHeavyAtom();
+    }
+
     public Object visit(ASTAromatic node, Object data){
         System.out.println(indentString() + node);
         ++indent;

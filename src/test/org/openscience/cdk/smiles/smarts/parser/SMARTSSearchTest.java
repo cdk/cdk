@@ -1294,5 +1294,25 @@ public class SMARTSSearchTest extends CDKTestCase {
             assertTrue(true);
         }
     }
+
+    public void testNonCHHeavyAtom() throws Exception {
+        int[] results = match("[#X]", "CCN");
+        assertEquals(1, results[0]);
+        assertEquals(1, results[1]);
+
+        results = match("[#X]", "CCNC(=O)CCSF");
+        assertEquals(4, results[0]);
+        assertEquals(4, results[1]);
+
+
+        results = match("C#[#X]", "CCNC(=O)C#N");
+        assertEquals(2, results[0]);
+        assertEquals(1, results[1]);
+
+        results = match("C#[#X]", "CCNC(=O)C#C");
+        assertEquals(0, results[0]);
+        assertEquals(0, results[1]);
+
+    }
 }
 
