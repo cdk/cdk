@@ -1,4 +1,4 @@
-/* $Revision$ $Author$ $Date$
+/* $Revision: 8418 $ $Author: egonw $ $Date: 2007-06-25 22:05:44 +0200 (Mon, 25 Jun 2007) $
  * 
  * Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
  * 
@@ -18,44 +18,55 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.reaction;
+package org.openscience.cdk.reaction.type.parameters;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.NewCDKTestCase;
-import org.openscience.cdk.reaction.type.AdductionProtonLPReaction;
-import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 
 /**
- * Tests for ReactionEngine implementations.
+ * Tests for ParameterReact implementations.
  *
  * @cdk.module test-reaction
  */
-public class ReactionEngineTest extends NewCDKTestCase {
+public class ParameterReactTest extends NewCDKTestCase {
 	
 	/**
-	 *  Constructor for the ReactionEngineTest object.
+	 *  Constructor for the ParameterReactTest object.
 	 */
-	public ReactionEngineTest(){
+	public ParameterReactTest(){
         super();
 	}
+	
 	/**
 	 * Junit test.
 	 * 
 	 * @throws Exception 
 	 */
-	@Test public void testReactionEngine() throws Exception {
-		ReactionEngine engine = new AdductionProtonLPReaction();
-		Assert.assertNotNull(engine);
+	@Test public void testParameterReact(){
+		IParameterReact paramSet = new ParameterReact();
+		Assert.assertNotNull(paramSet);
 	}
 	/**
 	 * Junit test.
 	 * 
 	 * @throws Exception 
 	 */
-	@Test public void testGetParameterList() throws Exception {
-		ReactionEngine engine = new AdductionProtonLPReaction();
-		Assert.assertNotNull(engine.getParameterList());
+	@Test public void testSetParameter_boolean(){
+		IParameterReact paramSet = new ParameterReact();
+		
+		paramSet.setParameter(Boolean.TRUE);
+		Assert.assertTrue(paramSet.isSetParameter());
+		
+	}
+	/**
+	 * Junit test.
+	 * 
+	 * @throws Exception 
+	 */
+	@Test public void testIsSetParameter(){
+		IParameterReact paramSet = new ParameterReact();
+		Assert.assertFalse(paramSet.isSetParameter());
 	}
 	
 	/**
@@ -63,19 +74,20 @@ public class ReactionEngineTest extends NewCDKTestCase {
 	 * 
 	 * @throws Exception 
 	 */
-	@Test public void testSetParameterList_List() throws Exception {
-		ReactionEngine engine = new AdductionProtonLPReaction();
-		engine.setParameterList(engine.getParameterList());
-		Assert.assertNotNull(engine.getParameterList());
+	@Test public void testSetValue_object(){
+		IParameterReact paramSet = new ParameterReact();
+		paramSet.setValue(null);
+		Assert.assertNull(paramSet.getValue());
+		
 	}
-	
 	/**
 	 * Junit test.
 	 * 
 	 * @throws Exception 
 	 */
-	@Test public void testGetParameterClass_Class() throws Exception {
-		ReactionEngine engine = new AdductionProtonLPReaction();
-		Assert.assertNotNull(engine.getParameterClass(SetReactionCenter.class));
+	@Test public void testGetValue(){
+		IParameterReact paramSet = new ParameterReact();
+		paramSet.setValue(new Object());
+		Assert.assertNotNull(paramSet.getValue());
 	}
 }

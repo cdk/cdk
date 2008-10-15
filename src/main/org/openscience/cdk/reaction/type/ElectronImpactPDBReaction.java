@@ -42,6 +42,8 @@ import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionEngine;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.reaction.mechanism.RemovingSEofBMechanism;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -79,7 +81,6 @@ import org.openscience.cdk.tools.LoggingTool;
 @TestClass(value="org.openscience.cdk.reaction.type.ElectronImpactPDBReactionTest")
 public class ElectronImpactPDBReaction extends ReactionEngine implements IReactionProcess{
     private LoggingTool logger;
-	private RemovingSEofBMechanism mechanism;
 
     /**
      * Constructor of the ElectronImpactPDBReaction object.
@@ -87,7 +88,6 @@ public class ElectronImpactPDBReaction extends ReactionEngine implements IReacti
      */
     public ElectronImpactPDBReaction(){
         logger = new LoggingTool(this);
-        mechanism = new RemovingSEofBMechanism();
     }
     /**
      *  Gets the specification attribute of the ElectronImpactPDBReaction object.
@@ -129,9 +129,9 @@ public class ElectronImpactPDBReaction extends ReactionEngine implements IReacti
         IMolecule reactant = reactants.getMolecule(0);
         
         /* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
-        if(!(Boolean)paramsMap.get("hasActiveCenter")){
-            setActiveCenters(reactant);
-        }
+        IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
+		if( ipr != null && !ipr.isSetParameter())
+			setActiveCenters(reactant);
 
         Iterator<IBond> bonds = reactant.bonds().iterator();
         while (bonds.hasNext()) {

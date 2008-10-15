@@ -99,7 +99,7 @@ public class ReactionChainTest extends NewCDKTestCase {
 	 * 
 	 * @throws Exception 
 	 */
-	@Test public void testGetReaction(){
+	@Test public void testGetReaction_int(){
 		ReactionChain chain = new ReactionChain();
 		IReaction reaction1 = builder.newReaction();
 		reaction1.setID("reaction1");

@@ -38,11 +38,12 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionEngine;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.reaction.mechanism.RadicalSiteIonizationMechanism;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -81,7 +82,6 @@ import org.openscience.cdk.tools.LoggingTool;
 @TestClass(value="org.openscience.cdk.reaction.type.RadicalChargeSiteInitiationReactionTest")
 public class RadicalChargeSiteInitiationReaction extends ReactionEngine implements IReactionProcess{
 	private LoggingTool logger;
-	private IReactionMechanism mechanism;
 	
 	/**
 	 * Constructor of the RadicalChargeSiteInitiationReaction object
@@ -89,7 +89,6 @@ public class RadicalChargeSiteInitiationReaction extends ReactionEngine implemen
 	 */
 	public RadicalChargeSiteInitiationReaction(){
 		logger = new LoggingTool(this);
-		mechanism = new RadicalSiteIonizationMechanism();
 	}
 	/**
 	 *  Gets the specification attribute of the RadicalChargeSiteInitiationReaction object
@@ -128,9 +127,9 @@ public class RadicalChargeSiteInitiationReaction extends ReactionEngine implemen
 		IMolecule reactant = reactants.getMolecule(0);
 
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
-		if(!(Boolean)paramsMap.get("hasActiveCenter")){
+		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
+		if( ipr != null && !ipr.isSetParameter())
 			setActiveCenters(reactant);
-		}
 		
 		Iterator<IAtom> atoms = reactants.getMolecule(0).atoms().iterator();
         while (atoms.hasNext()) {

@@ -18,32 +18,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-package org.openscience.cdk.reaction.mechanism;
+package org.openscience.cdk.reaction.type.parameters;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.reaction.IReactionMechanism;
-import org.openscience.cdk.reaction.ReactionMechanismTest;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
- * Tests for SharingElectronMechanism implementations.
+ * Tests for SetReactionCenter implementations.
  *
  * @cdk.module test-reaction
  */
-public class SharingElectronMechanismTest extends ReactionMechanismTest {
-
+public class SetReactionCenterTest extends NewCDKTestCase {
+	
 	/**
-	 *  The JUnit setup method
+	 *  Constructor for the SetReactionCenterTest object.
 	 */
-	 @BeforeClass public static void setUp() throws Exception {
-	 	setMechanism(SharingElectronMechanism.class);
-	 }
-	 
-	/**
-	 *  Constructor for the SharingElectronMechanismTest object.
-	 */
-	public SharingElectronMechanismTest(){
+	public SetReactionCenterTest(){
         super();
 	}
 	
@@ -52,20 +43,8 @@ public class SharingElectronMechanismTest extends ReactionMechanismTest {
 	 * 
 	 * @throws Exception 
 	 */
-	@Test public void testSharingElectronMechanism(){
-		IReactionMechanism mechanism = new SharingElectronMechanism();
-		Assert.assertNotNull(mechanism);
-	}
-
-	/**
-	 * Junit test.
-	 * TODDO: REACT: add an example
-	 * 
-	 * @throws Exception 
-	 */
-	@Test public void testInitiate_IMoleculeSet_ArrayList_ArrayList(){
-		IReactionMechanism mechanism = new SharingElectronMechanism();
-		
-		Assert.assertNotNull(mechanism);
+	@Test public void testSetReactionCenter(){
+		SetReactionCenter react = new SetReactionCenter();
+		Assert.assertNotNull(react);
 	}
 }

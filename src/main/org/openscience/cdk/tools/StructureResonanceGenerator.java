@@ -21,7 +21,6 @@
 package org.openscience.cdk.tools;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
@@ -45,6 +44,8 @@ import org.openscience.cdk.reaction.type.RearrangementCationReaction;
 import org.openscience.cdk.reaction.type.RearrangementLonePairReaction;
 import org.openscience.cdk.reaction.type.RearrangementRadicalReaction;
 import org.openscience.cdk.reaction.type.SharingLonePairReaction;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 
 /**
  * <p>This class try to generate resonance structure for a determinate molecule.</p>
@@ -116,7 +117,7 @@ public class StructureResonanceGenerator {
 	 * @see IReactionProcess
 	 */
 	@TestMethod("testSetReactions_List")
-	public void setReactions(List<IReactionProcess> newReactionsList) {
+	public void setReactions(List<IReactionProcess> newReactionsList)  throws CDKException {
 		reactionsList = newReactionsList;
 	}
 	/**
@@ -168,22 +169,26 @@ public class StructureResonanceGenerator {
 	 * 
 	 */
 	private void callDefaultReactions() {
-		HashMap<String,Object> params = new HashMap<String,Object>();
-		params.put("hasActiveCenter",Boolean.FALSE);
-		
+		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+	    IParameterReact param = new SetReactionCenter();
+        param.setParameter(Boolean.FALSE);
+        paramList.add(param);
+        
 		IReactionProcess type  = new SharingLonePairReaction();
         try {
-			type.setParameters(params);
+			type.setParameterList(paramList);
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
 		reactionsList.add(type);
 		
 		type  = new PiBondingMovementReaction();
-		HashMap<String,Object> params2 = new HashMap<String,Object>();
-		params2.put("hasActiveCenter",Boolean.FALSE);
-		try {
-			type.setParameters(params2);
+		List<IParameterReact> paramList2 = new ArrayList<IParameterReact>();
+	    IParameterReact param2 = new SetReactionCenter();
+        param2.setParameter(Boolean.FALSE);
+        paramList2.add(param2);
+        try {
+			type.setParameterList(paramList2);
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
@@ -191,7 +196,7 @@ public class StructureResonanceGenerator {
 		
 		type  = new RearrangementAnionReaction();
 		try {
-			type.setParameters(params);
+			type.setParameterList(paramList);
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
@@ -199,7 +204,7 @@ public class StructureResonanceGenerator {
 		
 		type  = new RearrangementCationReaction();
 		try {
-			type.setParameters(params);
+			type.setParameterList(paramList);
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
@@ -207,7 +212,7 @@ public class StructureResonanceGenerator {
 		
 		type  = new RearrangementLonePairReaction();
 		try {
-			type.setParameters(params);
+			type.setParameterList(paramList);
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
@@ -215,7 +220,7 @@ public class StructureResonanceGenerator {
 		
 		type  = new RearrangementRadicalReaction();
 		try {
-			type.setParameters(params);
+			type.setParameterList(paramList);
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
