@@ -420,7 +420,11 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		return new AtomicNumberAtom(node.getNumber());
 	}
 
-	public Object visit(ASTCharge node, Object data) {
+    public Object visit(ASTHybrdizationNumber node, Object data) {
+        return new HybridizationNumberAtom(node.getHybridizationNumber());
+    }
+
+    public Object visit(ASTCharge node, Object data) {
 		if (node.isPositive()) {
 			return new FormalChargeAtom(node.getCharge());
 		} else {

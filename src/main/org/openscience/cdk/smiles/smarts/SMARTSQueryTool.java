@@ -78,11 +78,14 @@ import java.util.*;
  * </thead>
  * <tbody>
  * <tr>
- * <td>Gx</td><td>Periodic group number</td><td>None</td><td>x must be a number between 1 and 18. This
- * symbol is supported by the MOE SMARTS implementation</td>
+ * <td>Gx</td><td>Periodic group number</td><td>None</td><td>x must be specified and must be a number between
+ *  1 and 18. This symbol is supported by the MOE SMARTS implementation</td>
  * <tr>
  * <td>#X</td><td>Any non-carbon heavy element</td><td>None</td><td>This
  * symbol is supported by the MOE SMARTS implementation</td>
+ * <td>^x</td><td>Any atom with the a specified hybridization state</td><td>None</td><td>x must be specified and
+ * should be between 1 and 8 (inclusive), corresponding to SP1, SP2, SP3, SP3D1, SP3D2
+ * SP3D3, SP3D4 and SP3D5. Supported by the OpenEye SMARTS implementation</td>
  * </tr>
  * </tbody>
  * </table>

@@ -19,8 +19,6 @@
  */
 package org.openscience.cdk.smiles.smarts.parser.visitor;
 
-import org.openscience.cdk.isomorphism.matchers.smarts.NonCHHeavyAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.PeriodicGroupNumberAtom;
 import org.openscience.cdk.smiles.smarts.parser.*;
 
 /**
@@ -191,7 +189,16 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
+
+    public Object visit(ASTHybrdizationNumber node, Object data) {
+        System.out.println(indentString() + node + " " + node.getHybridizationNumber());
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;
+    }
+
     public Object visit(ASTCharge node, Object data){
         System.out.println(indentString() + node + " " + node.getCharge());
         ++indent;
@@ -208,7 +215,11 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
     }
 
     public Object visit(ASTPeriodicGroupNumber node, Object data) {
-        return new PeriodicGroupNumberAtom(node.getGroupNumber());
+        System.out.println(indentString() + node + " " + node.getGroupNumber());
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;
     }
 
     public Object visit(ASTTotalConnectivity node, Object data){
@@ -248,7 +259,11 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
     }
 
     public Object visit(ASTNonCHHeavyAtom node, Object data) {
-        return new NonCHHeavyAtom();
+        System.out.println(indentString() +  node);
+        ++indent;
+        data = node.childrenAccept(this, data);
+        --indent;
+        return data;
     }
 
     public Object visit(ASTAromatic node, Object data){

@@ -276,6 +276,8 @@ PARSER_END(SMARTSParser)
     |
     <HX : "#X" >
     |
+    <CARET : "^">
+    |
     <DOLLAR : "$" >
     |
     <L_PAREN : "(" >
@@ -316,7 +318,7 @@ PARSER_END(SMARTSParser)
  * RecursiveSmartsExpression ::= "$" "(" <SmartsExpression> ")"
  *   PrimitiveAtomExpression ::= <NonHydrogenElement> | "*" | "A" | "a" | "D" (<Digits>)? | "H" (<Digits>)? | "h" (<Digits>)?
  *                               | "R" (<Digit>+)? | "r" (<Digit>+)? | "v" (<Digit>+)? | "#X" | "G" (<DIGIT>+)  
- *                               | "X" (<Digit>+)? | "x" (<Digit>+)?
+ *                               | "X" (<Digit>+)? | "x" (<Digit>+)? | "^" (<DIGIT>)
  *                               | ("+" | "-") (<Digit>+)? | "#" (<Digit>+) | "@" | "@@" | <Digit>+
  *                     Digit ::= ( "0" - "9")
  *        NonHydrogenElement ::= [ "HE" | "LI" | "BE" | "NE" | "NA" | "MG" | "AL" | "SI" | "AR" | "CA" | "SC" |
@@ -555,6 +557,8 @@ void PrimitiveAtomExpression() : {}
         PeriodicGroupNumber()
         |
         NonCHHeavyAtom()
+        |
+        HybridizationNumber()
     )
 }
 
@@ -587,6 +591,16 @@ void AtomicNumber() #AtomicNumber :
     { jjtThis.setNumber( Integer.parseInt(digits.toString()) ); }
 }
 
+void HybridizationNumber() #HybrdizationNumber :
+{}
+{
+    <CARET> ( <DIGIT> ) {
+        int tmp = Integer.parseInt(token.image);
+        if (tmp < 1 || tmp > 8) throw new ParseException("Hybridization number must be between 1 & 8");
+        jjtThis.setHybridizationNumber(tmp);
+   }
+}
+        
 void Charge() #Charge : 
 { StringBuffer digits = new StringBuffer(); }
 {

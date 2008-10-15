@@ -1314,5 +1314,55 @@ public class SMARTSSearchTest extends CDKTestCase {
         assertEquals(0, results[1]);
 
     }
+
+    public void testHybridizationNumber() throws Exception {
+        int[] results = match("[^1]", "CCN");
+        assertEquals(0, results[0]);
+        assertEquals(0, results[1]);
+
+        results = match("[^1]", "N#N");
+        assertEquals(2, results[0]);
+        assertEquals(2, results[1]);
+
+        results = match("[^1&N]", "CC#C");
+        assertEquals(0, results[0]);
+        assertEquals(0, results[1]);
+
+        results = match("[^1&N]", "CC#N");
+        assertEquals(1, results[0]);
+        assertEquals(1, results[1]);
+
+    }
+
+    public void testBadHybridizationNumber() throws Exception {
+
+        try {
+            int[] results = match("[^]", "CCN");
+            fail("Should throw an exception if ^ is not followed by a number");
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+
+        try {
+            int[] results = match("[^X]", "CCN");
+            fail("Should throw an exception if ^ is not followed by a number");
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+
+        try {
+            int[] results = match("[^0]", "CCN");
+            fail("Should throw an exception if ^ is not between 1 & 8");
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+
+        try {
+            int[] results = match("[^9]", "CCN");
+            fail("Should throw an exception if ^ is not between 1 & 8");
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+    }
 }
 
