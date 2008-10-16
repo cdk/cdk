@@ -21,7 +21,7 @@
     </p>
 <p>
       Besides the below statistics, JavaDoc errors are given in more detail on
-      a per module basis <a href="http://almost.cubic.uni-koeln.de/cdk/devel/modules/" target="_top">elsewhere on this site</a>.
+      a per module basis <a href="http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/" target="_top">elsewhere on this site</a>.
     </p>
 <p>These statistics were generated on
 <xsl:value-of select="javancss/date"/> at
