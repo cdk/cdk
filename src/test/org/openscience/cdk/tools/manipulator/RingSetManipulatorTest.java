@@ -24,20 +24,25 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.util.List;
+import java.util.Vector;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.NewCDKTestCase;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import java.util.List;
 
 /**
  * @cdk.module test-standard
@@ -158,7 +163,7 @@ public class RingSetManipulatorTest extends NewCDKTestCase {
     	Assert.assertEquals(2, list.size());
     }
     
-    @Test public void testGetAllInOneContainer_IRingSet()
+    @Test public void testGetAtomCount_IRingSet()
     {
     	IRingSet rs = builder.newRingSet();
     	IAtomContainer ac1 = builder.newRing();
@@ -225,5 +230,25 @@ public class RingSetManipulatorTest extends NewCDKTestCase {
             IRing ring = (IRing) ringSet.getAtomContainer(i);
             Assert.assertTrue(ring.getFlag(CDKConstants.ISAROMATIC));
         }
+    }
+    
+    @Test
+    public void testGetAllInOneContainer_IRingSet(){
+    	IAtomContainer ac = RingSetManipulator.getAllInOneContainer(ringset);
+    	Assert.assertEquals(10,ac.getAtomCount());
+    }
+    
+    @Test
+    public void testGetLargestRingSet_List_IRingSet() throws CDKException{
+    	List<IRingSet> list=new Vector<IRingSet>();
+    	list.add(ringset);
+        IAtomContainer mol = MoleculeFactory.makeBiphenyl();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        
+        AllRingsFinder arf = new AllRingsFinder();
+        IRingSet ringSet = arf.findAllRings(mol);
+        list.add(ringSet);
+    	Assert.assertEquals(2, RingSetManipulator.getLargestRingSet(list).getAtomContainerCount());    	
     }
 }

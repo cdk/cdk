@@ -37,12 +37,13 @@ import java.util.zip.GZIPInputStream;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -190,12 +191,14 @@ public class TemplateHandler3D {
      *
      * @param ringSystems       AtomContainer from the ring systems
      * @param NumberOfRingAtoms double
+     * @throws CDKException 
+     * @throws CloneNotSupportedException 
      */
-    public void mapTemplates(IAtomContainer ringSystems, double NumberOfRingAtoms) throws Exception {
+    public void mapTemplates(IAtomContainer ringSystems, double NumberOfRingAtoms) throws CDKException, CloneNotSupportedException {
 		if (!templatesLoaded) self.loadTemplates();
 
         //logger.debug("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
-        IAtomContainer ringSystemAnyBondAnyAtom = AtomContainerManipulator.createAnyAtomAnyBondAtomContainer(ringSystems);
+        IAtomContainer ringSystemAnyBondAnyAtom = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(ringSystems);
         BitSet ringSystemFingerprint = new Fingerprinter().getFingerprint(ringSystemAnyBondAnyAtom);
         boolean flagMaxSubstructure = false;
         boolean flagSecondbest=false;
@@ -207,7 +210,7 @@ public class TemplateHandler3D {
             }
             //we compare the fingerprint with any atom and any bond
             if (FingerprinterTool.isSubset(fingerprintData.get(i),ringSystemFingerprint)) {
-                IAtomContainer templateAnyBondAnyAtom = AtomContainerManipulator.createAnyAtomAnyBondAtomContainer(template);
+                IAtomContainer templateAnyBondAnyAtom = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(template);
                 //we do the exact match with any atom and any bond
                 if (UniversalIsomorphismTester.isSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom)) {
                 	//if this is the case, we keep it as a guess, but look if we can do better

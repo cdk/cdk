@@ -29,6 +29,7 @@ package org.openscience.cdk.tools.manipulator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
@@ -51,13 +52,50 @@ public class RingSetManipulator {
      * @param set The collection of rings
      * @return  The total number of atoms
      */
-    @TestMethod("testGetAllInOneContainer_IRingSet")
+    @TestMethod("testGetAtomCount_IRingSet")
     public static int getAtomCount(IRingSet set) {
 		int count = 0;
         for (IAtomContainer atomContainer : set.atomContainers()) {
             count += atomContainer.getAtomCount();
         }
         return count;
+	}
+    
+	/**
+	 * Puts all rings of a ringSet in a single atomContainer
+	 * 
+	 * @param ringSet The ringSet to use
+	 * @return	The produced atomContainer
+	 */
+    @TestMethod("testGetAllInOneContainer_IRingSet")
+	public static IAtomContainer getAllInOneContainer(IRingSet ringSet) {
+		IAtomContainer resultContainer = ringSet.getBuilder().newAtomContainer();
+		Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
+		while (containers.hasNext()) {
+			resultContainer.add(containers.next());
+		}
+		return resultContainer;
+	}
+	
+	/**
+	 * Returns the largest (number of atoms) ring set in a molecule
+	 *
+	 *@param  ringSystems  RingSystems of a molecule 
+	 *@return              The largestRingSet 
+	 */
+    @TestMethod("testGetLargestRingSet_List_IRingSet")
+	public static IRingSet getLargestRingSet(List<IRingSet> ringSystems) {
+		IRingSet largestRingSet = null;
+		int atomNumber = 0;
+		IAtomContainer container = null;
+		for (int i = 0; i < ringSystems.size(); i++) {
+			container = RingSetManipulator.getAllInOneContainer(ringSystems.get(i));
+			if (atomNumber < container.getAtomCount()) {
+				atomNumber = container.getAtomCount();
+				largestRingSet = ringSystems.get(i);
+			}
+		}
+		return largestRingSet;
 	}
 
     /**
