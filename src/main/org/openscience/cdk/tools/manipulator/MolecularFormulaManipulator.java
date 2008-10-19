@@ -24,23 +24,17 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -298,7 +292,8 @@ public class MolecularFormulaManipulator {
 	 * <p> The hydrogens must be implicit.
 	 *
 	 * @param  stringMF   The molecularFormula string 
-	 * @return            The filled IMolecularFormula
+	 * @param builder a IChemObjectBuilder which is used to construct atoms
+     * @return            The filled IMolecularFormula
 	 * @see               #getMolecularFormula(String,IMolecularFormula)
 	 */
 	@TestMethod("testGetMolecularFormula_String_IChemObjectBuilder")
@@ -307,15 +302,16 @@ public class MolecularFormulaManipulator {
 	}
 
 	/**
-	 * Construct an instance of IMolecularFormula, initialized with a molecular
-	 * formula string. The string is immediately analyzed and a set of Nodes
-	 * is built based on this analysis. The hydrogens must be implicit. Major
-	 * isotopes are being used.
-	 *
-	 * @param  stringMF   The molecularFormula string 
-	 * @return            The filled IMolecularFormula
-	 * @see               #getMolecularFormula(String,IMolecularFormula)
-	 */
+     * Construct an instance of IMolecularFormula, initialized with a molecular
+     * formula string. The string is immediately analyzed and a set of Nodes
+     * is built based on this analysis. The hydrogens must be implicit. Major
+     * isotopes are being used.
+     *
+     * @param  stringMF   The molecularFormula string
+     * @param builder a IChemObjectBuilder which is used to construct atoms
+     * @return The filled IMolecularFormula
+     * @see               #getMolecularFormula(String,IMolecularFormula)
+     */
 	@TestMethod("testGetMajorIsotopeMolecularFormula_String_IChemObjectBuilder")
 	public static IMolecularFormula getMajorIsotopeMolecularFormula(String stringMF, IChemObjectBuilder builder) {
 		return getMolecularFormula(stringMF, true, builder);
@@ -352,7 +348,8 @@ public class MolecularFormulaManipulator {
 	 * @param  stringMF           The molecularFormula string
 	 * @param  assumeMajorIsotope If true, it will take the major isotope for each element 
 	 * @return                    The filled IMolecularFormula
-	 * @see                       #getMolecularFormula(String)
+	 * @see                       #getMolecularFormula(String, org.openscience.cdk.interfaces.IChemObjectBuilder)
+     * @see #getMolecularFormula(String, boolean, org.openscience.cdk.interfaces.IChemObjectBuilder)
 	 */
 	private static IMolecularFormula getMolecularFormula(String stringMF, IMolecularFormula formula, boolean assumeMajorIsotope) {
 		// FIXME: MF: variables with lower case first char
@@ -398,8 +395,7 @@ public class MolecularFormulaManipulator {
 				/*
 				 *  Here an element symbol as well as its number should have been read completely
 				 */
-				Integer RecentElementCountInteger = Integer.valueOf(RecentElementCountString);
-				RecentElementCount = RecentElementCountInteger.intValue();
+                RecentElementCount = Integer.valueOf(RecentElementCountString);
 				if (RecentElementCount == 0) {
 					RecentElementCount = 1;
 				}
@@ -501,7 +497,7 @@ public class MolecularFormulaManipulator {
 	 *
 	 * @param  formula  The IMolecularFormula to calculate
 	 * @return          The number of DBEs
-     * @throws          CDKException 
+     * @throws          CDKException if DBE cannot be be evaluated
 	 * 
 	 * @cdk.keyword DBE
 	 * @cdk.keyword double bond equivalent
@@ -529,6 +525,7 @@ public class MolecularFormulaManipulator {
 	 *
 	 * @param  atomContainer     IAtomContainer object
 	 * @see                      #getMolecularFormula(IAtomContainer,IMolecularFormula)
+     * @return a molecular formula object
 	 */
 	@TestMethod("testGetMolecularFormula_IAtomContainer")
 	public static IMolecularFormula getMolecularFormula(IAtomContainer atomContainer) {
@@ -609,19 +606,18 @@ public class MolecularFormulaManipulator {
 	 * 
 	 */
 	public static String[] generateOrderEle(){
-		String[] listElements = new String[]{
-			    "C", "H", "O", "N", "Si", "P", "S", "F", "Cl",
-			    "Br", "I", "Sn", "B", "Pb", "Tl", "Ba", "In", "Pd",
-			    "Pt", "Os", "Ag", "Zr", "Se", "Zn", "Cu", "Ni", "Co", 
-			    "Fe", "Cr", "Ti", "Ca", "K", "Al", "Mg", "Na", "Ce",
-			    "Hg", "Au", "Ir", "Re", "W", "Ta", "Hf", "Lu", "Yb", 
-			    "Tm", "Er", "Ho", "Dy", "Tb", "Gd", "Eu", "Sm", "Pm",
-			    "Nd", "Pr", "La", "Cs", "Xe", "Te", "Sb", "Cd", "Rh", 
-			    "Ru", "Tc", "Mo", "Nb", "Y", "Sr", "Rb", "Kr", "As", 
-			    "Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "Be", "Li", 
-			    "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", 
-			    "Th", "Pa", "U", "Np", "Pu"};
-		return listElements;
+        return new String[]{
+                "C", "H", "O", "N", "Si", "P", "S", "F", "Cl",
+                "Br", "I", "Sn", "B", "Pb", "Tl", "Ba", "In", "Pd",
+                "Pt", "Os", "Ag", "Zr", "Se", "Zn", "Cu", "Ni", "Co",
+                "Fe", "Cr", "Ti", "Ca", "K", "Al", "Mg", "Na", "Ce",
+                "Hg", "Au", "Ir", "Re", "W", "Ta", "Hf", "Lu", "Yb",
+                "Tm", "Er", "Ho", "Dy", "Tb", "Gd", "Eu", "Sm", "Pm",
+                "Nd", "Pr", "La", "Cs", "Xe", "Te", "Sb", "Cd", "Rh",
+                "Ru", "Tc", "Mo", "Nb", "Y", "Sr", "Rb", "Kr", "As",
+                "Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "Be", "Li",
+                "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac",
+                "Th", "Pa", "U", "Np", "Pu"};
 		
 	}
 	/**
