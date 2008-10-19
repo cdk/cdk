@@ -20,22 +20,20 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.io.IOException;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.formula.MolecularFormula;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
+import org.openscience.cdk.smiles.SmilesParser;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Checks the functionality of the MolecularFormulaManipulator.
@@ -894,4 +892,17 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
 		Assert.assertEquals(null,listGenerated);
 		
 	}
+
+    /**
+     * @cdk.bug 1944604
+     * @throws InvalidSmilesException
+     */
+    @Test
+    public void testSingleAtomFromSmiles() throws InvalidSmilesException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C");
+        IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula(mol);
+        double exactMass = MolecularFormulaManipulator.getTotalExactMass(mf);
+        System.out.println("exactMass = " + exactMass);
+    }
 }
