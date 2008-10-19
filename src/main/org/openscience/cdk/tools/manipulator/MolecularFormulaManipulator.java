@@ -422,14 +422,23 @@ public class MolecularFormulaManipulator {
 	 * @return         The summed exact mass of all atoms in this MolecularFormula
 	 */
 	 @TestMethod("testGetTotalExactMass_IMolecularFormula")
-	public static double getTotalExactMass(IMolecularFormula formula) {
-		double mass = 0.0;
+     public static double getTotalExactMass(IMolecularFormula formula) {
+        double mass = 0.0;
+        IsotopeFactory factory;
+        try {
+            factory = IsotopeFactory.getInstance(formula.getBuilder());
+        } catch (IOException e) {
+            throw new RuntimeException("Could not instantiate the IsotopeFactory.");
+        }
+
         for (IIsotope isotope : formula.isotopes()) {
-            if (isotope.getExactMass() == null) return 0.0;
+            if (isotope.getExactMass() == CDKConstants.UNSET) {
+                factory.configure((IAtom)isotope);
+            }
             mass += isotope.getExactMass() * formula.getIsotopeCount(isotope);
         }
-		return mass;
-	 }
+        return mass;
+    }
 	  
 	/**
 	 * Get the summed natural mass of all elements from an MolecularFormula.

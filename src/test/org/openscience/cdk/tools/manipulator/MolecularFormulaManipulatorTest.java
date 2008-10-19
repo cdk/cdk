@@ -903,6 +903,6 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
         IAtomContainer mol = sp.parseSmiles("C");
         IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula(mol);
         double exactMass = MolecularFormulaManipulator.getTotalExactMass(mf);
-        System.out.println("exactMass = " + exactMass);
+        Assert.assertEquals(12.0000, exactMass, 0.0001);
     }
 }
