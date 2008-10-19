@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IMonomer;
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09
  */
-public class MonomerTest extends NewCDKTestCase {
+public class MonomerTest extends AtomContainerTest {
 
 	protected static IChemObjectBuilder builder;
 	

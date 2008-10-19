@@ -34,7 +34,7 @@ import java.util.List;
  *
  * @cdk.module test-data
  */
-public class AtomContainerTest extends NewCDKTestCase {
+public class AtomContainerTest extends ChemObjectTest {
 
 	protected static IChemObjectBuilder builder;
 	

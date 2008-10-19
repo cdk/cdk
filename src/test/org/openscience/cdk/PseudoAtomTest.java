@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  *
  * @cdk.module test-data
  */
-public class PseudoAtomTest extends NewCDKTestCase {
+public class PseudoAtomTest extends AtomTest {
 
 	protected static IChemObjectBuilder builder;
 	

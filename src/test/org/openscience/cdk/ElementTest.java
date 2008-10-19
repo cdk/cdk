@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.diff.ElementDiff;
  *
  * @see org.openscience.cdk.Element
  */
-public class ElementTest extends NewCDKTestCase {
+public class ElementTest extends ChemObjectTest {
 
 	protected static IChemObjectBuilder builder;
 	

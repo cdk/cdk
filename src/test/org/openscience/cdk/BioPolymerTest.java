@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @see org.openscience.cdk.BioPolymer
  */
-public class BioPolymerTest extends NewCDKTestCase {
+public class BioPolymerTest extends PolymerTest {
 	
 	protected static IChemObjectBuilder builder;
 

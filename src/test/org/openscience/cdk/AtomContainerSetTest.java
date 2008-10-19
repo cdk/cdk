@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  *
  * @see org.openscience.cdk.MoleculeSet
  */
-public class AtomContainerSetTest extends NewCDKTestCase {
+public class AtomContainerSetTest extends ChemObjectTest {
 
 	protected static IChemObjectBuilder builder;
 	

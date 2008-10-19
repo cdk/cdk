@@ -41,7 +41,7 @@ import java.util.Iterator;
  * @cdk.module test-data
  * @see org.openscience.cdk.Bond
  */
-public class BondTest extends NewCDKTestCase {
+public class BondTest extends ElectronContainerTest {
 
     protected static IChemObjectBuilder builder;
 

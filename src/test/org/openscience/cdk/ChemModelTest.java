@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  *
  * @see org.openscience.cdk.ChemModel
  */
-public class ChemModelTest extends NewCDKTestCase {
+public class ChemModelTest extends ChemObjectTest {
 
 	protected static IChemObjectBuilder builder;
 	

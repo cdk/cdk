@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IMolecule;
  *
  * @see org.openscience.cdk.Molecule
  */
-public class MoleculeTest extends NewCDKTestCase {
+public class MoleculeTest extends AtomContainerTest {
 
 	protected static IChemObjectBuilder builder;
 	

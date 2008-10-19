@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @see org.openscience.cdk.AtomParity
  */
-public class AtomParityTest extends NewCDKTestCase {
+public class AtomParityTest extends ChemObjectTest {
 
 	protected static IChemObjectBuilder builder;
 	
