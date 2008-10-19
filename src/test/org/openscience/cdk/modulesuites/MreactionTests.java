@@ -32,6 +32,8 @@ import org.openscience.cdk.atomtype.ResonanceStructuresTest;
 import org.openscience.cdk.coverage.ReactionCoverageTest;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetectorTest;
 import org.openscience.cdk.reaction.ReactionChainTest;
+import org.openscience.cdk.reaction.ReactionEngineTest;
+import org.openscience.cdk.reaction.ReactionMechanismTest;
 import org.openscience.cdk.reaction.ReactionSpecificationTest;
 import org.openscience.cdk.reaction.mechanism.AdductionLPMechanismTest;
 import org.openscience.cdk.reaction.mechanism.AdductionPBMechanismTest;
@@ -76,6 +78,8 @@ import org.openscience.cdk.reaction.type.SharingChargeDBReactionTest;
 import org.openscience.cdk.reaction.type.SharingChargeSBReactionTest;
 import org.openscience.cdk.reaction.type.SharingLonePairReactionTest;
 import org.openscience.cdk.reaction.type.TautomerizationReactionTest;
+import org.openscience.cdk.reaction.type.parameters.ParameterReactTest;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenterTest;
 import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
 
 /**
@@ -93,8 +97,10 @@ public class MreactionTests {
         suite.addTest(new JUnit4TestAdapter(ReactionCoverageTest.class));	
         
         // Individual Tests
-        suite.addTest(new JUnit4TestAdapter(ReactionSpecificationTest.class));
         suite.addTest(new JUnit4TestAdapter(ReactionChainTest.class));
+        suite.addTest(new JUnit4TestAdapter(ReactionEngineTest.class));
+        suite.addTest(new JUnit4TestAdapter(ReactionMechanismTest.class));
+        suite.addTest(new JUnit4TestAdapter(ReactionSpecificationTest.class));
 
         // from cdk.test.reaction.mechanism
         suite.addTest(new JUnit4TestAdapter(AdductionLPMechanismTest.class));
@@ -110,8 +116,6 @@ public class MreactionTests {
         suite.addTest(new JUnit4TestAdapter(ConjugatedPiSystemsDetectorTest.class));
               
         // from cdk.test.reaction.type
-        suite.addTest(new JUnit4TestAdapter(ResonanceStructuresTest.class));
-        
         suite.addTest(new JUnit4TestAdapter(AdductionProtonLPReactionTest.class));
         suite.addTest(new JUnit4TestAdapter(AdductionProtonPBReactionTest.class));
         suite.addTest(new JUnit4TestAdapter(AdductionSodiumLPReactionTest.class));
@@ -145,9 +149,14 @@ public class MreactionTests {
         suite.addTest(new JUnit4TestAdapter(SharingChargeSBReactionTest.class));
         suite.addTest(new JUnit4TestAdapter(SharingLonePairReactionTest.class));
         suite.addTest(new JUnit4TestAdapter(TautomerizationReactionTest.class));
+
+        // parameters test
+        suite.addTest(new JUnit4TestAdapter(ParameterReactTest.class));
+        suite.addTest(new JUnit4TestAdapter(SetReactionCenterTest.class));
         
         // tools test
         suite.addTest(new JUnit4TestAdapter(StructureResonanceGeneratorTest.class));
+        suite.addTest(new JUnit4TestAdapter(ResonanceStructuresTest.class));
         
         return suite;
     }
