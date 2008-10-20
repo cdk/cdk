@@ -424,18 +424,18 @@ public class MolecularFormulaManipulator {
 	 @TestMethod("testGetTotalExactMass_IMolecularFormula")
      public static double getTotalExactMass(IMolecularFormula formula) {
         double mass = 0.0;
-        IsotopeFactory factory;
-        try {
-            factory = IsotopeFactory.getInstance(formula.getBuilder());
-        } catch (IOException e) {
-            throw new RuntimeException("Could not instantiate the IsotopeFactory.");
-        }
 
+        IChemObjectBuilder builder = formula.getBuilder();
         for (IIsotope isotope : formula.isotopes()) {
             if (isotope.getExactMass() == CDKConstants.UNSET) {
-                factory.configure((IAtom)isotope);
-            }
-            mass += isotope.getExactMass() * formula.getIsotopeCount(isotope);
+                try {
+                    mass += IsotopeFactory.getInstance(builder).getMajorIsotope(isotope.getSymbol()).getExactMass() *
+                            formula.getIsotopeCount(isotope);
+                } catch (IOException e) {
+                    throw new RuntimeException("Could not instantiate the IsotopeFactory.");
+                }
+            } else
+                mass += isotope.getExactMass() * formula.getIsotopeCount(isotope);
         }
         return mass;
     }
