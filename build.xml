@@ -597,7 +597,6 @@
               <antcall target="compile-module"><param name="module" value="test-charges"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-smarts"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-fingerprint"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-builder3d"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-reaction"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-inchi"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-pcore"/><param name="source" value="${src}/test"/></antcall>
@@ -618,6 +617,7 @@
               <antcall target="compile-module"><param name="module" value="test-atomtype"/><param name="source" value="${src}/test"/></antcall>
               <antcall target="compile-module"><param name="module" value="test-render"/><param name="source" value="${src}/test"/></antcall>
             </parallel>
+            <antcall target="compile-module"><param name="module" value="test-builder3d"/><param name="source" value="${src}/test"/></antcall>
             <antcall target="compile-module"><param name="module" value="test-extra"/><param name="source" value="${src}/test"/></antcall>
             <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/><param name="source" value="${src}/test"/></antcall>
             <antcall target="compile-module"><param name="module" value="test-qsarionpot"/><param name="source" value="${src}/test"/></antcall>
@@ -650,7 +650,6 @@
         <antcall target="compile-module"><param name="module" value="test-extra"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-smiles"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-reaction"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-builder3d"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-forcefield"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-valencycheck"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-charges"/><param name="source" value="${src}/test"/></antcall>
@@ -662,6 +661,7 @@
         <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarionpot"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-qsarprotein"/><param name="source" value="${src}/test"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-builder3d"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-pdb"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-inchi"/><param name="source" value="${src}/test"/></antcall>
         <antcall target="compile-module"><param name="module" value="test-libiomd"/><param name="source" value="${src}/test"/></antcall>
