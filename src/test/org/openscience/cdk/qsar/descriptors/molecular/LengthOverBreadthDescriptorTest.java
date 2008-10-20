@@ -57,8 +57,8 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        Assert.assertEquals(1.1476784, result.get(0), 0.000001);
-        Assert.assertEquals(1.0936984, result.get(1), 0.000001);
+        Assert.assertEquals(1.1476784, result.get(0), 0.01);
+        Assert.assertEquals(1.0936984, result.get(1), 0.01);
     }
 
     public void testLOBDescriptorNaphthalene() throws Exception {
@@ -71,8 +71,8 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        Assert.assertEquals(1.3083278, result.get(0), 0.000001);
-        Assert.assertEquals(1.3083278, result.get(1), 0.000001);
+        Assert.assertEquals(1.3083278, result.get(0), 0.01);
+        Assert.assertEquals(1.3083278, result.get(1), 0.01);
     }
 
     public void testLOBDescriptorNButane() throws Exception {
