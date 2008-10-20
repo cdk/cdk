@@ -23,31 +23,24 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
-import java.io.IOException;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.*;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.io.ISimpleChemObjectReader;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * @cdk.module test-standard
@@ -661,8 +654,32 @@ public class AtomContainerManipulatorTest extends NewCDKTestCase {
         IAtomContainer mol2 = sp.parseSmiles(smiles2);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(mol, mol2));
     }
-    
 
+    /**
+     * @cdk.bug  1969156
+     * @throws CDKException
+     */
+    @Test
+    public void testOverWriteConfig() throws CDKException {
+        String filename = "data/mdl/lobtest2.sdf";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
+        ChemFile content = (ChemFile) reader.read(new ChemFile());
+        List cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = (IAtomContainer) cList.get(0);
+
+        for (IAtom atom : ac.atoms()) {
+            Assert.assertNotNull(atom.getExactMass());
+            Assert.assertTrue(atom.getExactMass() > 0);
+        }
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
+
+        for (IAtom atom : ac.atoms()) {
+            Assert.assertNotNull("exact mass should not be null, after typing", atom.getExactMass());
+            Assert.assertTrue(atom.getExactMass() > 0);
+        }
+    }
 }
 
 
