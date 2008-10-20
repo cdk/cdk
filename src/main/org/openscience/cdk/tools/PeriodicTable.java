@@ -82,6 +82,7 @@ public class PeriodicTable {
 
         try {
             readVDW();
+            readCovalent();
             readPEneg();
         } catch (IOException e) {
             return;
@@ -108,6 +109,27 @@ public class PeriodicTable {
                 String symbol = e.getSymbol();
                 if (vdw == 2) elements.get(symbol).setVdwRadius((Double) CDKConstants.UNSET);
                 else elements.get(symbol).setVdwRadius(vdw);
+            }
+        }
+    }
+
+     private static void readCovalent() throws IOException {
+        // now read in the covalent radi
+        String filename = "org/openscience/cdk/config/data/radii-covalent.txt";
+        InputStream ins = PeriodicTable.class.getClassLoader().getResourceAsStream(filename);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
+
+        for (int i = 0; i < 5; i++) reader.readLine();
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] toks = line.split("\\s");
+            int atnum = Integer.parseInt(toks[0]);
+            double vdw = Double.parseDouble(toks[1]);
+            PeriodicTableElement e = elementsByNumber.get(atnum);
+            if (e != null) {
+                String symbol = e.getSymbol();
+                elements.get(symbol).setCovalentRadius(vdw);
             }
         }
     }
@@ -139,6 +161,14 @@ public class PeriodicTable {
         PeriodicTableElement e = elements.get(symbol);
         if (e == null) return null;
         else return e.getVdwRadius();
+    }
+
+    @TestMethod("testTable")
+    public static Double getCovalentRadius(String symbol) {
+        initialize();
+        PeriodicTableElement e = elements.get(symbol);
+        if (e == null) return null;
+        else return e.getCovalentRadius();
     }
 
     @TestMethod("testTable")

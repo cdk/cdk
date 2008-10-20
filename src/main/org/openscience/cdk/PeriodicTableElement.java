@@ -94,6 +94,11 @@ public class PeriodicTableElement extends Element
     protected Double vdwRadius = (Double) CDKConstants.UNSET;
 
     /**
+     * The covalent radius of the element.
+     */
+    protected Double covalentRadius = (Double) CDKConstants.UNSET;
+
+    /**
      * The Pauling electronegativity of the element.
      */
     protected Double paulingEneg = (Double) CDKConstants.UNSET;
@@ -278,6 +283,24 @@ public class PeriodicTableElement extends Element
     }
 
     /**
+     * Get the covalent radius.
+     *
+     * @return the covalent radius, or null if it is unavailable
+     */
+    public Double getCovalentRadius() {
+        return covalentRadius;
+    }
+
+    /**
+     * Set the covalent radius.
+     *
+     * @param covalentRadius the covalent radius
+     */
+    public void setCovalentRadius(Double covalentRadius) {
+        this.covalentRadius = covalentRadius;
+    }
+
+    /**
      * Get the Pauling electronegativity of this element.
      *
      * @return   The electronegativity, null if not available for the element
@@ -349,6 +372,7 @@ public class PeriodicTableElement extends Element
 		resultString.append(", Ph:"); resultString.append(getPhase());
 		resultString.append(", CAS:"); resultString.append(getCASid());
         resultString.append(", VdW:"); resultString.append(getVdwRadius());
+        resultString.append(", Cov:"); resultString.append(getCovalentRadius());
         resultString.append(", Eneg:"); resultString.append(getPaulingEneg());
 
         resultString.append(')');
