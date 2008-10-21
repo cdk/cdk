@@ -38,6 +38,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -90,11 +91,11 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *  out of a paramter set if available. Angles are tetrahedral or trigonal
 	 *
 	 *@param  atomContainer  the set of atoms involved
-	 *@exception  Exception  Description of the Exception
+	 * @throws CDKException 
 	 *@cdk.keyword           coordinate calculation
 	 *@cdk.keyword           3D model
 	 */
-	public void add3DCoordinatesForSinglyBondedLigands(IAtomContainer atomContainer) throws Exception {
+	public void add3DCoordinatesForSinglyBondedLigands(IAtomContainer atomContainer) throws CDKException {
 		IAtomContainer noCoords = new org.openscience.cdk.AtomContainer();
 		IAtomContainer withCoords = new org.openscience.cdk.AtomContainer();
 		IAtom refAtom = null;
@@ -141,7 +142,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@return                new coords for atom 2
 	 *@exception  Exception  Description of the Exception
 	 */
-	public Point3d rescaleBondLength(IAtom atom1, IAtom atom2, Point3d point2) throws Exception {
+	public Point3d rescaleBondLength(IAtom atom1, IAtom atom2, Point3d point2){
 		Point3d point1 = atom1.getPoint3d();
 		Double d1 = atom1.getCovalentRadius();
 		Double d2 = atom2.getCovalentRadius();
@@ -195,12 +196,12 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@return                Point3D[] points calculated. If request could not be
 	 *      fulfilled (e.g. too many atoms, or strange geometry, returns empty
 	 *      array (zero length, not null)
-	 *@exception  Exception  Description of the Exception
+	 * @throws CDKException 
 	 *@cdk.keyword           coordinate generation
 	 */
 
 	public Point3d[] get3DCoordinatesForLigands(IAtom refAtom,
-			IAtomContainer noCoords, IAtomContainer withCoords, IAtom atomC, int nwanted, double length, double angle) throws Exception {
+			IAtomContainer noCoords, IAtomContainer withCoords, IAtom atomC, int nwanted, double length, double angle) throws CDKException {
 		Point3d newPoints[] = new Point3d[1];
 
 		if (noCoords.getAtomCount() == 0 && withCoords.getAtomCount() == 0) {
@@ -232,7 +233,7 @@ public class AtomTetrahedralLigandPlacer3D {
 				newPoints = get3DCoordinatesForSP2Ligands(refAtom, noCoords, withCoords, atomC, length, angle);
 			} catch (Exception ex1) {
 //				logger.debug("Get3DCoordinatesForLigandsERROR: Cannot place SP2 Ligands due to:" + ex1.toString());
-				throw new IOException("Cannot place sp2 substituents");
+				throw new CDKException("Cannot place sp2 substituents");
 			}
 
 		} else {
@@ -241,7 +242,7 @@ public class AtomTetrahedralLigandPlacer3D {
 				newPoints = get3DCoordinatesForSP3Ligands(refAtom, noCoords, withCoords, atomC, nwanted, length, angle);
 			} catch (Exception ex1) {
 //				logger.debug("Get3DCoordinatesForLigandsERROR: Cannot place SP3 Ligands due to:" + ex1.toString());
-				throw new IOException("Cannot place sp3 substituents");
+				throw new CDKException("Cannot place sp3 substituents");
 			}
 		}
 		//logger.debug("...Ready "+newPoints.length+" "+newPoints[0].toString());
@@ -354,11 +355,13 @@ public class AtomTetrahedralLigandPlacer3D {
 			points[0] = new Point3d(aPoint);
 			points[0].add(new Vector3d(length, 0.0, 0.0));
 		} else if (nwanted == 2) {
+			points = new Point3d[2];
 			points[0] = new Point3d(aPoint);
 			points[0].add(new Vector3d(length, 0.0, 0.0));
 			points[1] = new Point3d(aPoint);
 			points[1].add(new Vector3d(-length, 0.0, 0.0));
 		} else if (nwanted == 3) {
+			points = new Point3d[3];
 			points[0] = new Point3d(aPoint);
 			points[0].add(new Vector3d(length, 0.0, 0.0));
 			points[1] = new Point3d(aPoint);
@@ -366,6 +369,7 @@ public class AtomTetrahedralLigandPlacer3D {
 			points[2] = new Point3d(aPoint);
 			points[2].add(new Vector3d(-length * 0.5, length * 0.5 * Math.sqrt(3.0), 0.0f));
 		} else if (nwanted == 4) {
+			points = new Point3d[4];
 			double dx = length / Math.sqrt(3.0);
 			points[0] = new Point3d(aPoint);
 			points[0].add(new Vector3d(dx, dx, dx));
@@ -703,7 +707,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@return                The distanceValue value
 	 *@exception  Exception  Description of the Exception
 	 */
-	private double getDistanceValue(String id1, String id2) throws Exception {
+	private double getDistanceValue(String id1, String id2) {
 		String dkey = "";
 		if (pSet.containsKey(("bond" + id1 + ";" + id2))) {
 			dkey = "bond" + id1 + ";" + id2;
@@ -726,7 +730,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@return                The angleKey value
 	 *@exception  Exception  Description of the Exception
 	 */
-	public double getAngleValue(String id1, String id2, String id3) throws Exception {
+	public double getAngleValue(String id1, String id2, String id3) {
 		String akey = "";
 		if (pSet.containsKey(("angle" + id1 + ";" + id2 + ";" + id3))) {
 			akey = "angle" + id1 + ";" + id2 + ";" + id3;
