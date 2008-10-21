@@ -726,5 +726,21 @@ public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
         Assert.assertEquals(1, nNaliph);
     }
 
+    @Test
+    public void testPolyCyclicSystem() throws CDKException {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer kekuleForm = sp.parseSmiles("C1=CC2=CC3=CC4=C(C=CC=C4)C=C3C=C2C=C1");
+        IAtomContainer aromaticForm = sp.parseSmiles("c1ccc2cc3cc4ccccc4cc3cc2c1");
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(kekuleForm);
+        boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(kekuleForm);
+        Assert.assertTrue(isAromatic);
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(aromaticForm);
+        isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(aromaticForm);
+        Assert.assertTrue(isAromatic);
+    }
+
+
 }
 
