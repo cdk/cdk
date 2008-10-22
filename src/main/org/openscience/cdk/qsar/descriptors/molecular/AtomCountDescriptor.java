@@ -161,7 +161,7 @@ public class AtomCountDescriptor implements IMolecularDescriptor {
         if (container.getAtomCount() == 0) {
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new IntegerResult((int) Double.NaN), getDescriptorNames(),
-                    new CDKException("The supplied AtomContainer was NULL"));
+                    new CDKException("The supplied AtomContainer did not have any atoms"));
         }
 
         if (elementName.equals("*")) {
