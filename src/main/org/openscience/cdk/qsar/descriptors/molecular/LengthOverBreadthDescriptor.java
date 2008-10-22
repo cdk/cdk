@@ -26,12 +26,10 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import Jama.Matrix;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -39,7 +37,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+import org.openscience.cdk.tools.PeriodicTable;
 
 import javax.vecmath.Point3d;
 
@@ -245,25 +243,13 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
         double ymin = 1e30;
         double zmin = 1e30;
 
-        AtomTypeFactory atomTypeFactory = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/data/jmol_atomtypes.txt",
-                atomContainer.getBuilder()
-        );
-
         int natom = atomContainer.getAtomCount();
         for (int i = 0; i < natom; i++) {
             double[] coord = new double[coords[0].length];
             System.arraycopy(coords[i], 0, coord, 0, coords[0].length);
             if (withRadii) {
                 IAtom atom = atomContainer.getAtom(i);
-                // FIXME (see bug #1862142): should really do proper atom type perception here
-                IAtomType[] types = atomTypeFactory.getAtomTypes(atom.getSymbol());
-                if (types.length == 0) throw new CDKException("Could not determine covalent radius for: " + atom);
-                AtomTypeManipulator.configure(atom,types[0]);
-
-                // TODO: is this the same as the VDW radius?
-                double radius = atom.getCovalentRadius();
-                //logger.debug("radius = " + radius);
+                double radius = PeriodicTable.getCovalentRadius(atom.getSymbol());
 
                 xmax = Math.max(xmax, coord[0] + radius);
                 ymax = Math.max(ymax, coord[1] + radius);

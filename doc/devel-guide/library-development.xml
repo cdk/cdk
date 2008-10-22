@@ -23,7 +23,7 @@
       </para>
       <para>
         Many of these modules have dependencies on other modules. An overview
-        is available on the CDK website: <ulink url="http://almost.cubic.uni-koeln.de/cdk/cdk_top/devel/modules/">module
+        is available on the CDK website: <ulink url="http://cheminfo.informatics.indiana.edu/~rguha/code/java/nightly/cdkdep.ps">module
         dependencies</ulink>.
       </para>
       <section>
