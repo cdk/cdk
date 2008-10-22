@@ -61,5 +61,18 @@ public class AtomCountDescriptorTest extends MolecularDescriptorTest {
         assertEquals("nC", value.getNames()[0]);
         assertEquals(descriptor.getDescriptorNames()[0], value.getNames()[0]);
     }
+
+    public void testImplicitExplicitH() throws CDKException {
+        Object[] params = {"*"};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C"); // ethanol
+        DescriptorValue value = descriptor.calculate(mol);
+        assertEquals(5, ((IntegerResult)value.getValue()).intValue());
+
+        mol = sp.parseSmiles("[C]"); // ethanol
+        value = descriptor.calculate(mol);
+        assertEquals(1, ((IntegerResult)value.getValue()).intValue());
+    }
 }
 
