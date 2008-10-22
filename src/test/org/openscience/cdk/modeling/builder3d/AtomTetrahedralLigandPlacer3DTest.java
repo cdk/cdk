@@ -79,4 +79,37 @@ public class AtomTetrahedralLigandPlacer3DTest extends NewCDKTestCase{
 		Assert.assertEquals(0.4,newpoint.distance(atom1.getPoint3d()), 0.001);
 	}
 
+	@Test
+	public void testGet3DCoordinatesForLigands_IAtom_IAtomContainer_IAtomContainer_IAtom_int_double_double() throws CDKException{
+		IAtom atom1=new Atom("C");
+		atom1.setPoint3d(new Point3d(1,1,1));
+		IAtom atom2=new Atom("H");
+		IAtom atom3=new Atom("H");
+		IAtom atom4=new Atom("H");
+		IAtom atom5=new Atom("H");
+		IBond bond1=new Bond(atom1,atom2);
+		IBond bond2=new Bond(atom1,atom3);
+		IBond bond3=new Bond(atom1,atom4);
+		IBond bond4=new Bond(atom1,atom5);
+		IAtomContainer ac=atom1.getBuilder().newAtomContainer();
+		ac.addAtom(atom1);
+		ac.addAtom(atom2);
+		ac.addAtom(atom3);
+		ac.addAtom(atom4);
+		ac.addAtom(atom5);
+		ac.addBond(bond1);
+		ac.addBond(bond2);
+		ac.addBond(bond3);
+		ac.addBond(bond4);
+		IAtomContainer noCoords = new AtomTetrahedralLigandPlacer3D().getUnsetAtomsInAtomContainer(atom1, ac);
+		IAtomContainer withCoords = new AtomTetrahedralLigandPlacer3D().getPlacedAtomsInAtomContainer(atom1, ac);
+		Point3d[] newPoints = new AtomTetrahedralLigandPlacer3D().get3DCoordinatesForLigands(atom1, noCoords, withCoords, null, 4, new AtomTetrahedralLigandPlacer3D().DEFAULT_BOND_LENGTH_H, -1);
+		for (int j = 0; j < noCoords.getAtomCount(); j++) {
+			if(newPoints[j]==null)
+				Assert.fail();
+			IAtom ligand = noCoords.getAtom(j);
+			ligand.setPoint3d(newPoints[j]);
+		}
+		ModelBuilder3DTest.checkAverageBondLength(ac);
+	}
 }
