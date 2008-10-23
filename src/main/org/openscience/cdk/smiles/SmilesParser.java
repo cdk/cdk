@@ -68,16 +68,10 @@ import java.util.StringTokenizer;
  * @cdk.svnrev     $Revision$
  * @cdk.created    2002-04-29
  * @cdk.keyword    SMILES, parser
- * @cdk.bug        1274464
- * @cdk.bug        1535587
- * @cdk.bug        1541333
  * @cdk.bug        1579229
  * @cdk.bug        1579230
- * @cdk.bug        1579231
  * @cdk.bug        1579235
  * @cdk.bug        1579244
- * @cdk.bug        1719287
- * @cdk.bug        1875949
  */
 @TestClass("org.openscience.cdk.smiles.SmilesParserTest")
 public class SmilesParser {
