@@ -28,11 +28,18 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.descriptors.DescriptorTest;
+import org.openscience.cdk.qsar.result.BooleanResult;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -172,6 +179,50 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     	);
     }
     
+    public void testTakeIntoAccountImplicitHydrogens() {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule methane1 = builder.newMolecule();
+        IAtom c1 = builder.newAtom("C");
+        c1.setHydrogenCount(4);
+        methane1.addAtom(c1);
+
+        IMolecule methane2 = builder.newMolecule();
+        IAtom c2 = builder.newAtom("C");
+        methane2.addAtom(c2);
+        IAtom h1 = builder.newAtom("H"); methane2.addAtom(h1);
+        IAtom h2 = builder.newAtom("H"); methane2.addAtom(h2);
+        IAtom h3 = builder.newAtom("H"); methane2.addAtom(h3);
+        IAtom h4 = builder.newAtom("H"); methane2.addAtom(h4);
+        methane2.addBond(0, 1, Order.SINGLE);
+        methane2.addBond(0, 2, Order.SINGLE);
+        methane2.addBond(0, 3, Order.SINGLE);
+        methane2.addBond(0, 4, Order.SINGLE);
+
+        IDescriptorResult v1 = descriptor.calculate(methane1).getValue();
+        IDescriptorResult v2 = descriptor.calculate(methane2).getValue();
+
+        String errorMessage = "The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
+        if (v1 instanceof IntegerResult) {
+            Assert.assertEquals(errorMessage, ((IntegerResult)v1).intValue(), ((IntegerResult)v2).intValue());
+        } else if (v1 instanceof DoubleResult) {
+            Assert.assertEquals(errorMessage, ((DoubleResult)v1).doubleValue(), ((DoubleResult)v2).doubleValue(), 0.00001);
+        } else if (v1 instanceof BooleanResult) {
+            Assert.assertEquals(errorMessage, ((BooleanResult)v1).booleanValue(), ((BooleanResult)v2).booleanValue());
+        } else if (v1 instanceof DoubleArrayResult) {
+            DoubleArrayResult da1 = (DoubleArrayResult)v1;
+            DoubleArrayResult da2 = (DoubleArrayResult)v2;
+            for (int i=0; i<da1.length(); i++) {
+                Assert.assertEquals(errorMessage, da1.get(i), da2.get(i), 0.00001);
+            }
+        } else if (v1 instanceof IntegerArrayResult) {
+            IntegerArrayResult da1 = (IntegerArrayResult)v1;
+            IntegerArrayResult da2 = (IntegerArrayResult)v2;
+            for (int i=0; i<da1.length(); i++) {
+                Assert.assertEquals(errorMessage, da1.get(i), da2.get(i));
+            }
+        }
+    }
+
     private IMolecule someoneBringMeSomeWater() throws Exception {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("O");
