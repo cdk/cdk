@@ -58,8 +58,8 @@ public class MqsarmolecularTests {
 
 //      from cdk.test.qsar.molecular
         suite.addTest(new JUnit4TestAdapter(ALOGPDescriptorTest.class));
-        suite.addTest(APolDescriptorTest.suite());
-        suite.addTest(AromaticAtomsCountDescriptorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(APolDescriptorTest.class));
+        suite.addTest(new JUnit4TestAdapter(AromaticAtomsCountDescriptorTest.class));
         suite.addTest(AromaticBondsCountDescriptorTest.suite());
         suite.addTest(AtomCountDescriptorTest.suite());
         suite.addTest(BCUTDescriptorTest.suite());
