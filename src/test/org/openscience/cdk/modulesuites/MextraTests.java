@@ -24,6 +24,7 @@ import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.openscience.cdk.CloneAtomContainerTest;
+import org.openscience.cdk.PeriodicTableElementTest;
 import org.openscience.cdk.VariousTests;
 import org.openscience.cdk.coverage.ExtraCoverageTest;
 import org.openscience.cdk.geometry.RDFCalculatorTest;
@@ -34,6 +35,7 @@ import org.openscience.cdk.similarity.DistanceMomentTest;
 import org.openscience.cdk.similarity.TanimotoTest;
 import org.openscience.cdk.tools.DeAromatizationToolTest;
 import org.openscience.cdk.tools.HOSECodeAnalyserTest;
+import org.openscience.cdk.tools.PeriodicTableTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -46,10 +48,13 @@ public class MextraTests {
     
     public static Test suite( )
     {
-        TestSuite suite= new TestSuite("All CDK Tests");
+        TestSuite suite= new TestSuite("All CDK extra Tests");
 
         suite.addTest(ExtraCoverageTest.suite());
-        
+
+        suite.addTest(new JUnit4TestAdapter(PeriodicTableElementTest.class));
+        suite.addTest(new JUnit4TestAdapter(PeriodicTableTest.class));
+
         // Individual Tests
         suite.addTest(new JUnit4TestAdapter(CloneAtomContainerTest.class));
         // from cdk.test.geometry
