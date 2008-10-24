@@ -20,14 +20,25 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
+import java.io.InputStream;
+import java.util.List;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 
 /**
@@ -59,6 +70,26 @@ public class AtomPlacer3DTest extends NewCDKTestCase{
 			atom.setFlag(CDKConstants.ISPLACED,true);
 		}
 		Assert.assertTrue(new AtomPlacer3D().allHeavyAtomsPlaced(ac));
+	}
+	
+	@Test
+	public void testFindHeavyAtomsInChain_IAtomContainer_IAtomContainer() throws CDKException{
+    	String filename = "data/mdl/allmol232.mol";
+    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    	MDLV2000Reader reader = new MDLV2000Reader(ins);
+    	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+    	List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+    	IMolecule ac = new NNMolecule((IAtomContainer)containersList.get(0));
+    	addExplicitHydrogens(ac);
+    	IAtomContainer chain=ac.getBuilder().newAtomContainer();
+    	for(int i=16;i<25;i++){
+    		chain.addAtom(ac.getAtom(i));
+    	}
+    	chain.addAtom(ac.getAtom(29));
+    	chain.addAtom(ac.getAtom(30));
+    	int[] result=new AtomPlacer3D().findHeavyAtomsInChain(ac,chain);
+    	Assert.assertEquals(result[0],16);
+    	Assert.assertEquals(result[1],11);
 	}
 }
 
