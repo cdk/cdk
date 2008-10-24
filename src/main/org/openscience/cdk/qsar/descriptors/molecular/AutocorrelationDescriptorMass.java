@@ -153,7 +153,8 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
                 "The Chemistry Development Kit");
 	}
 	
-	public IDescriptorResult getDescriptorResultType() {
+	@TestMethod("testGetDescriptorResultType")
+    public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(5);
     }
 

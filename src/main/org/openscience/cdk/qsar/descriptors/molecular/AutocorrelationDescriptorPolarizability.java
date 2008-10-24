@@ -184,6 +184,7 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
                 "The Chemistry Development Kit");
     }
 
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(5);
     }
