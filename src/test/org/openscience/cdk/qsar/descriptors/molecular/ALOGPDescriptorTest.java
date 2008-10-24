@@ -1,14 +1,13 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -22,15 +21,13 @@ public class ALOGPDescriptorTest extends MolecularDescriptorTest {
 
     private CDKHydrogenAdder hydrogenAdder;
 
-    public static Test suite() {
-        return new TestSuite(ALOGPDescriptorTest.class);
-    }
-
+    @Before
     protected void setUp() throws Exception {
         setDescriptor(ALOGPDescriptor.class);
         hydrogenAdder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
     }
 
+    @Test
     public void testChloroButane() throws Exception {
         IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
         IAtom c1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
@@ -58,8 +55,8 @@ public class ALOGPDescriptorTest extends MolecularDescriptorTest {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
         DescriptorValue v = descriptor.calculate(mol);
-        assertEquals(0.5192, ((DoubleArrayResult) v.getValue()).get(0), 0.0001);
-        assertEquals(19.1381, ((DoubleArrayResult) v.getValue()).get(2), 0.0001);
+        Assert.assertEquals(0.5192, ((DoubleArrayResult) v.getValue()).get(0), 0.0001);
+        Assert.assertEquals(19.1381, ((DoubleArrayResult) v.getValue()).get(2), 0.0001);
     }
 
 }

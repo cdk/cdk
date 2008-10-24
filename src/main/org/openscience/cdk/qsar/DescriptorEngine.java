@@ -72,7 +72,7 @@ import java.util.jar.JarFile;
  * @see Dictionary
  * @see org.openscience.cdk.dict.OWLFile
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.molecular.DescriptorEngineTest")
+@TestClass(value="org.openscience.cdk.qsar.DescriptorEngineTest")
 public class DescriptorEngine {
     private static String rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
