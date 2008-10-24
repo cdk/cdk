@@ -43,7 +43,8 @@ public class PeriodicTableTest extends NewCDKTestCase {
         Assert.assertEquals(2.55, PeriodicTable.getPaulingElectronegativity("C"), 0.001);
         Assert.assertEquals(CDKConstants.UNSET, PeriodicTable.getPaulingElectronegativity("He"));
         Assert.assertEquals(CDKConstants.UNSET, PeriodicTable.getCovalentRadius("Pu"));
-        Assert.assertEquals(0.32, (double) PeriodicTable.getCovalentRadius("He"), 0.001);
+        Assert.assertEquals(0.32, PeriodicTable.getCovalentRadius("He"), 0.001);
+        Assert.assertEquals("14", PeriodicTable.getGroup("C"));
     }
 
 }
