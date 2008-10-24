@@ -19,8 +19,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Before;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -48,10 +48,7 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
     public MomentOfInertiaDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(MomentOfInertiaDescriptorTest.class);
-    }
-
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(MomentOfInertiaDescriptor.class);
     }
@@ -64,7 +61,7 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC");
         DescriptorValue value = descriptor.calculate(mol);        
-        assertNotNull("The Exception should be non-null since we don't have 3D coords" , value.getException());
+        Assert.assertNotNull("The Exception should be non-null since we don't have 3D coords" , value.getException());
 
     }
     public void testMomentOfInertia1() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -77,13 +74,13 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        assertEquals(1820.692519, retval.get(0), 0.00001);
-        assertEquals(1274.532522, retval.get(1), 0.00001);
-        assertEquals(979.210423, retval.get(2), 0.00001);
-        assertEquals(1.428517, retval.get(3), 0.00001);
-        assertEquals(1.859347, retval.get(4), 0.00001);
-        assertEquals(1.301592, retval.get(5), 0.00001);
-        assertEquals(5.411195, retval.get(6), 0.00001);
+        Assert.assertEquals(1820.692519, retval.get(0), 0.00001);
+        Assert.assertEquals(1274.532522, retval.get(1), 0.00001);
+        Assert.assertEquals(979.210423, retval.get(2), 0.00001);
+        Assert.assertEquals(1.428517, retval.get(3), 0.00001);
+        Assert.assertEquals(1.859347, retval.get(4), 0.00001);
+        Assert.assertEquals(1.301592, retval.get(5), 0.00001);
+        Assert.assertEquals(5.411195, retval.get(6), 0.00001);
     }
 
 
@@ -97,13 +94,13 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        assertEquals(10068.419360, retval.get(0), 0.00001);
-        assertEquals(9731.078356, retval.get(1), 0.00001);
-        assertEquals(773.612799, retval.get(2), 0.00001);
-        assertEquals(1.034666, retval.get(3), 0.00001);
-        assertEquals(13.014804, retval.get(4), 0.00001);
-        assertEquals(12.578745, retval.get(5), 0.00001);
-        assertEquals(8.2966226, retval.get(6), 0.00001);
+        Assert.assertEquals(10068.419360, retval.get(0), 0.00001);
+        Assert.assertEquals(9731.078356, retval.get(1), 0.00001);
+        Assert.assertEquals(773.612799, retval.get(2), 0.00001);
+        Assert.assertEquals(1.034666, retval.get(3), 0.00001);
+        Assert.assertEquals(13.014804, retval.get(4), 0.00001);
+        Assert.assertEquals(12.578745, retval.get(5), 0.00001);
+        Assert.assertEquals(8.2966226, retval.get(6), 0.00001);
     }
 
 }

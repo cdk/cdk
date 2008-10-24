@@ -19,8 +19,8 @@
 */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Before;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
@@ -46,10 +46,8 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
     public CPSADescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(CPSADescriptorTest.class);
-    }
 
+    @Before
     public void setUp() throws Exception {
         setDescriptor(CPSADescriptor.class);
     }
@@ -70,10 +68,10 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
         }
         */
 
-        assertEquals(0, retval.get(28), 0.0001);
-        assertEquals(1, retval.get(27), 0.0001);
-        assertEquals(0, retval.get(26), 0.0001);
-        assertEquals(356.8849, retval.get(25), 0.0001);
+        Assert.assertEquals(0, retval.get(28), 0.0001);
+        Assert.assertEquals(1, retval.get(27), 0.0001);
+        Assert.assertEquals(0, retval.get(26), 0.0001);
+        Assert.assertEquals(356.8849, retval.get(25), 0.0001);
 
     }
 
@@ -87,7 +85,7 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
         int ndesc = retval.length();
-        for (int i = 0; i < ndesc; i++) assertTrue(retval.get(i) != Double.NaN);
+        for (int i = 0; i < ndesc; i++) Assert.assertTrue(retval.get(i) != Double.NaN);
     }
 
     public void testUnChargedMolecule() throws CDKException {
@@ -100,7 +98,7 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
         int ndesc = retval.length();
-        for (int i = 0; i < ndesc; i++) assertTrue(retval.get(i) != Double.NaN);
+        for (int i = 0; i < ndesc; i++) Assert.assertTrue(retval.get(i) != Double.NaN);
     }
 }
 

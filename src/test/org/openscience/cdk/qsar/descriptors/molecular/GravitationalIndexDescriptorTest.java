@@ -19,21 +19,19 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.InputStream;
-import java.util.List;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.qsar.descriptors.molecular.GravitationalIndexDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -46,10 +44,7 @@ public class GravitationalIndexDescriptorTest extends MolecularDescriptorTest {
     public GravitationalIndexDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(GravitationalIndexDescriptorTest.class);
-    }
-
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(GravitationalIndexDescriptor.class);
     }
@@ -64,15 +59,15 @@ public class GravitationalIndexDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        assertEquals(1756.5060703860984, retval.get(0), 0.00000001);
-        assertEquals(41.91069159994975, retval.get(1), 0.00000001);
-        assertEquals(12.06562671430088, retval.get(2), 0.00000001);
-        assertEquals(1976.6432599699767, retval.get(3), 0.00000001);
-        assertEquals(44.45945636161082, retval.get(4), 0.00000001);
-        assertEquals(12.549972243701887, retval.get(5), 0.00000001);
-        assertEquals(4333.097373073368, retval.get(6), 0.00000001);
-        assertEquals(65.82626658920714, retval.get(7), 0.00000001);
-        assertEquals(16.302948232909483, retval.get(8), 0.00000001);
+        Assert.assertEquals(1756.5060703860984, retval.get(0), 0.00000001);
+        Assert.assertEquals(41.91069159994975, retval.get(1), 0.00000001);
+        Assert.assertEquals(12.06562671430088, retval.get(2), 0.00000001);
+        Assert.assertEquals(1976.6432599699767, retval.get(3), 0.00000001);
+        Assert.assertEquals(44.45945636161082, retval.get(4), 0.00000001);
+        Assert.assertEquals(12.549972243701887, retval.get(5), 0.00000001);
+        Assert.assertEquals(4333.097373073368, retval.get(6), 0.00000001);
+        Assert.assertEquals(65.82626658920714, retval.get(7), 0.00000001);
+        Assert.assertEquals(16.302948232909483, retval.get(8), 0.00000001);
     }
 }
 

@@ -19,21 +19,19 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.InputStream;
-import java.util.List;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.qsar.descriptors.molecular.EccentricConnectivityIndexDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -46,10 +44,7 @@ public class EccentricConnectivityIndexDescriptorTest extends MolecularDescripto
     public EccentricConnectivityIndexDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(EccentricConnectivityIndexDescriptorTest.class);
-    }
-
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(EccentricConnectivityIndexDescriptor.class);
     }
@@ -65,7 +60,7 @@ public class EccentricConnectivityIndexDescriptorTest extends MolecularDescripto
         IntegerResult retval = (IntegerResult) descriptor.calculate(ac).getValue();
         //logger.debug(retval.intValue());
 
-        assertEquals(254, retval.intValue(), 0);
+        Assert.assertEquals(254, retval.intValue(), 0);
     }
 }
 

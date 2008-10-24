@@ -23,9 +23,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Before;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -46,10 +45,7 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
     public KierHallSmartsDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(KierHallSmartsDescriptorTest.class);
-    }
-
+    @Before
     public void setUp() throws Exception {
         setDescriptor(KierHallSmartsDescriptor.class);
         names = descriptor.getDescriptorNames();

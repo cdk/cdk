@@ -23,13 +23,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.InputStream;
-import java.util.List;
-
 import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Before;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -37,11 +32,13 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.descriptors.molecular.WeightedPathDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -54,10 +51,7 @@ public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
     public WeightedPathDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(WeightedPathDescriptorTest.class);
-    }
-    
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(WeightedPathDescriptor.class);
     }

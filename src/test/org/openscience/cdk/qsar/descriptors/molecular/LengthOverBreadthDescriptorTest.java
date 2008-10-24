@@ -1,8 +1,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -25,10 +24,8 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
     public LengthOverBreadthDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(LengthOverBreadthDescriptorTest.class);
-    }
 
+    @Before
     public void setUp() throws Exception {
         setDescriptor(LengthOverBreadthDescriptor.class);
     }

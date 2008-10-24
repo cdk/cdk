@@ -23,13 +23,11 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.descriptors.molecular.RuleOfFiveDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -44,10 +42,7 @@ public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
     public RuleOfFiveDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(RuleOfFiveDescriptorTest.class);
-    }
-
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(RuleOfFiveDescriptor.class);
     }
@@ -58,7 +53,7 @@ public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("CCCC(OCC)OCC(c1cccc2ccccc12)C4CCC(CCCO)C(CC3CNCNC3)C4"); // 
         addExplicitHydrogens(mol);
-        assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 }
 

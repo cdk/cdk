@@ -1,17 +1,15 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import javax.vecmath.Point2d;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.descriptors.molecular.ChiPathClusterDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+
+import javax.vecmath.Point2d;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -24,10 +22,7 @@ public class ChiPathClusterDescriptorTest extends MolecularDescriptorTest {
     public ChiPathClusterDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(ChiPathClusterDescriptorTest.class);
-    }
-
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(ChiPathClusterDescriptor.class);
     }
@@ -57,12 +52,12 @@ public class ChiPathClusterDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
-        assertEquals(0.0000, ret.get(0), 0.0001);
-        assertEquals(0.0000, ret.get(1), 0.0001);
-        assertEquals(0.0000, ret.get(2), 0.0001);
-        assertEquals(0.0000, ret.get(3), 0.0001);
-        assertEquals(0.0000, ret.get(4), 0.0001);
-        assertEquals(0.0000, ret.get(5), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(0), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(1), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(2), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(3), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(4), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(5), 0.0001);
     }
 
     public void testDan154() throws CDKException {
@@ -111,12 +106,12 @@ public class ChiPathClusterDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
-        assertEquals(0.7416, ret.get(0), 0.0001);
-        assertEquals(1.0934, ret.get(1), 0.0001);
-        assertEquals(1.0202, ret.get(2), 0.0001);
-        assertEquals(0.4072, ret.get(3), 0.0001);
-        assertEquals(0.5585, ret.get(4), 0.0001);
-        assertEquals(0.4376, ret.get(5), 0.0001);
+        Assert.assertEquals(0.7416, ret.get(0), 0.0001);
+        Assert.assertEquals(1.0934, ret.get(1), 0.0001);
+        Assert.assertEquals(1.0202, ret.get(2), 0.0001);
+        Assert.assertEquals(0.4072, ret.get(3), 0.0001);
+        Assert.assertEquals(0.5585, ret.get(4), 0.0001);
+        Assert.assertEquals(0.4376, ret.get(5), 0.0001);
     }
 
     public void testDan248() throws CDKException {
@@ -175,13 +170,13 @@ public class ChiPathClusterDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
-        assertEquals(1.6076, ret.get(0), 0.0001);
-        assertEquals(3.6550, ret.get(1), 0.0001);
+        Assert.assertEquals(1.6076, ret.get(0), 0.0001);
+        Assert.assertEquals(3.6550, ret.get(1), 0.0001);
 
-        assertEquals(3.2503, ret.get(2), 0.0001); // 3.3337 ?
-        assertEquals(1.1410, ret.get(3), 0.0001);
-        assertEquals(2.1147, ret.get(4), 0.0001);
-        assertEquals(1.6522, ret.get(5), 0.0001); // 1.7148 ?
+        Assert.assertEquals(3.2503, ret.get(2), 0.0001); // 3.3337 ?
+        Assert.assertEquals(1.1410, ret.get(3), 0.0001);
+        Assert.assertEquals(2.1147, ret.get(4), 0.0001);
+        Assert.assertEquals(1.6522, ret.get(5), 0.0001); // 1.7148 ?
     }
 
 }

@@ -23,8 +23,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Before;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -33,7 +33,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanShapeIndexDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
@@ -51,11 +50,8 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
 
     public PetitjeanShapeIndexDescriptorTest() {
     }
-
-    public static Test suite() {
-        return new TestSuite(PetitjeanShapeIndexDescriptorTest.class);
-    }
-
+   
+    @Before
     public void setUp() throws Exception {
         setDescriptor(PetitjeanShapeIndexDescriptor.class);
     }
@@ -71,14 +67,14 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
 
         DescriptorValue result = descriptor.calculate(ac);
         DoubleArrayResult dar = (DoubleArrayResult) result.getValue();
-        assertEquals(0.5, dar.get(0), 0.00001);
-        assertEquals(0.606477, dar.get(1), 0.000001);
+        Assert.assertEquals(0.5, dar.get(0), 0.00001);
+        Assert.assertEquals(0.606477, dar.get(1), 0.000001);
 
         ac = (IAtomContainer) cList.get(1);
         result = descriptor.calculate(ac);
         dar = (DoubleArrayResult) result.getValue();
-        assertEquals(0.666666, dar.get(0), 0.000001);
-        assertEquals(0.845452, dar.get(1), 0.000001);
+        Assert.assertEquals(0.666666, dar.get(0), 0.000001);
+        Assert.assertEquals(0.845452, dar.get(1), 0.000001);
 
     }
 
@@ -87,7 +83,7 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer atomContainer = sp.parseSmiles("CCCOCCC(O)=O");
         DescriptorValue result = descriptor.calculate(atomContainer);
         DoubleArrayResult dar = (DoubleArrayResult) result.getValue();
-        assertTrue(Double.isNaN(dar.get(1)));
+        Assert.assertTrue(Double.isNaN(dar.get(1)));
 
     }
 }

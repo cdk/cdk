@@ -23,8 +23,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Before;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -51,10 +51,7 @@ public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
     public ZagrebIndexDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(ZagrebIndexDescriptorTest.class);
-    }
-
+    @Before
     public void setUp() throws Exception {
         setDescriptor(ZagrebIndexDescriptor.class);
     }
@@ -62,7 +59,7 @@ public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
     public void testZagrebIndexDescriptor() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
-        assertEquals(16, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
+        Assert.assertEquals(16, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
     }
 
     public void test2Dvs3D() throws Exception {
@@ -86,7 +83,7 @@ public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
         
         double value3D = ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue();
 
-        assertEquals(value2D, value3D, 0.001);
+        Assert.assertEquals(value2D, value3D, 0.001);
 
     }
 }

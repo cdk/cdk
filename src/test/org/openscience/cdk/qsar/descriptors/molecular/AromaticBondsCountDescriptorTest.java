@@ -23,15 +23,14 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Before;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.descriptors.molecular.AromaticBondsCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -48,10 +47,7 @@ public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
     public AromaticBondsCountDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(AromaticBondsCountDescriptorTest.class);
-    }
-
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(AromaticBondsCountDescriptor.class);
     }
@@ -61,7 +57,7 @@ public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCOc1ccccc1"); // ethanol
-        assertEquals(6, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
     
     public void testViaFlags() throws Exception {
@@ -69,7 +65,7 @@ public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
     	for (Iterator bonds=molecule.bonds().iterator(); bonds.hasNext();) {
     		((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
     	}
-    	assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
+    	Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
     }
 
 }

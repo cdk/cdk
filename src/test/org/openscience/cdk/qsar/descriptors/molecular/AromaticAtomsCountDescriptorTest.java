@@ -48,8 +48,7 @@ public class AromaticAtomsCountDescriptorTest extends MolecularDescriptorTest {
     public AromaticAtomsCountDescriptorTest() {
     }
 
-    @Before
-    public void setUp() throws Exception {
+    @Before public void setUp() throws Exception {
     	setDescriptor(AromaticAtomsCountDescriptor.class);
     }
 

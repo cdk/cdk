@@ -20,10 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptor;
+import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * TestSuite for the VAdjMaDescriptor.
@@ -31,17 +29,14 @@ import org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptor;
  * @cdk.module test-qsarmolecular
  */
 public class VAdjMaDescriptorTest extends MolecularDescriptorTest {
-
-    public static Test suite() {
-        return new TestSuite(VAdjMaDescriptorTest.class);
-    }
     
+    @Before
     protected void setUp() throws Exception {
         setDescriptor(TPSADescriptor.class);
     }
 
     public void ignoreCalculate_IAtomContainer() {
-    	fail("Not tested");
+    	Assert.fail("Not tested");
     }
     
 }

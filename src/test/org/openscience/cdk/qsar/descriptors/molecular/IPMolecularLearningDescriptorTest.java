@@ -20,9 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
@@ -52,22 +51,15 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     public  IPMolecularLearningDescriptorTest() {
     }
     
-    /**
-	 *  A unit test suite for JUnit
-	 *
-	 *@return    The test suite
-	 */
-    public static Test suite() {
-        return new TestSuite(IPMolecularLearningDescriptorTest.class);
-    }
 
+    @Before
     public void setUp() throws Exception {
     	super.setDescriptor(IPMolecularLearningDescriptor.class);
     }
 
 
     public void testIPMolecularLearningDescriptor() throws Exception {
-    	assertNotNull(descriptor);
+    	Assert.assertNotNull(descriptor);
     }
 
 	/**
@@ -98,7 +90,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 0.0; 
         
-        assertEquals(resultAccordingNIST, result, 0.0001);
+        Assert.assertEquals(resultAccordingNIST, result, 0.0001);
     }
 
     /**
@@ -120,7 +112,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 		double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.26; 
 
-        assertEquals(resultAccordingNIST, result, 0.53);
+        Assert.assertEquals(resultAccordingNIST, result, 0.53);
     }
     /**
 	 *  A unit test for JUnit with COCCCC=O
@@ -138,8 +130,8 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
         
         double resultAccordingNIST = 9.37; 
         
-        assertEquals(2, dar.length());
-        assertEquals(resultAccordingNIST, dar.get(0), 0.3);
+        Assert.assertEquals(2, dar.length());
+        Assert.assertEquals(resultAccordingNIST, dar.get(0), 0.3);
     }
     /**
 	 *  A unit test for JUnit with C=CCC(=O)CC
@@ -156,8 +148,8 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 		DoubleArrayResult dar = ((DoubleArrayResult)((IPMolecularLearningDescriptor)descriptor).calculatePlus(mol).getValue());
 
         double resultAccordingNIST = 9.50; 
-        assertEquals(2, dar.length());
-        assertEquals(resultAccordingNIST, dar.get(0), 0.15);
+        Assert.assertEquals(2, dar.length());
+        Assert.assertEquals(resultAccordingNIST, dar.get(0), 0.15);
         
     }
 //    /**
@@ -180,8 +172,8 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //		double resultAccordingNIST = 11.26; 
 //
 //		double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
-//        assertEquals(1, reactionSet.getReactionCount());
-//        assertEquals(resultAccordingNIST, result, 0.53);
+//        Assert.assertEquals(1, reactionSet.getReactionCount());
+//        Assert.assertEquals(resultAccordingNIST, result, 0.53);
 //    }
 //    /**
 //     * A unit test for JUnit with CCCC
@@ -201,7 +193,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //		
 //		IReactionSet reactionSet = ((IPMolecularLearningDescriptor)descriptor).getReactionSet();
 //		
-//        assertEquals(0, reactionSet.getReactionCount());
+//        Assert.assertEquals(0, reactionSet.getReactionCount());
 //    }
 //    /**
 //     * A unit test for JUnit with CCC#CCCO
@@ -221,7 +213,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //		
 //		IReactionSet reactionSet = ((IPMolecularLearningDescriptor)descriptor).getReactionSet();
 //		
-//        assertEquals(3, reactionSet.getReactionCount());
+//        Assert.assertEquals(3, reactionSet.getReactionCount());
 //    }
 //    /**
 //     * A unit test for JUnit with CCC#CCCO
@@ -241,6 +233,6 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //		
 //		IReactionSet reactionSet = ((IPMolecularLearningDescriptor)descriptor).getReactionSet();
 //		
-//        assertEquals(3, reactionSet.getReactionCount());
+//        Assert.assertEquals(3, reactionSet.getReactionCount());
 //    }
 }
