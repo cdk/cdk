@@ -26,6 +26,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -80,6 +81,7 @@ import java.util.List;
  * @cdk.keyword chi path index
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.ChiPathDescriptorTest")
 public class ChiPathDescriptor implements IMolecularDescriptor {
     private SmilesParser sp;
 

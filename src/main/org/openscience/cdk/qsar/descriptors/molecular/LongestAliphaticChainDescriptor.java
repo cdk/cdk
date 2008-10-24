@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomException;
@@ -71,6 +72,7 @@ import java.util.List;
  * @cdk.dictref qsar-descriptors:largestAliphaticChain
  */
 
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.LongestAliphaticChainDescriptorTest")
 public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
 	private boolean checkRingSystem = false;
 

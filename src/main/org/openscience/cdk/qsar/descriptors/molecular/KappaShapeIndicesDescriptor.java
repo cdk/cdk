@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -75,6 +76,7 @@ import java.util.ArrayList;
  * @cdk.keyword Kappe shape index
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.KappaShapeIndicesDescriptorTest")
 public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {   
 
     private static final String[] names = {"Kier1", "Kier2", "Kier3"};

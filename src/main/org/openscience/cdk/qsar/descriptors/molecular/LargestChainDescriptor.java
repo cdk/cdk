@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -77,6 +78,7 @@ import java.util.List;
  * @cdk.dictref qsar-descriptors:largestChain
  */
 
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.LargestChainDescriptorTest")
 public class LargestChainDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = false;
     private boolean checkRingSystem = false;

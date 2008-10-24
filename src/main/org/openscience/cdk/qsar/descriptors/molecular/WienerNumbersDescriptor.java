@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
@@ -82,6 +83,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref    qsar-descriptors:wienerNumbers
  * @cdk.keyword    Wiener number
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.WienerNumbersDescriptorTest")
 public class WienerNumbersDescriptor implements IMolecularDescriptor {
 
     private static final String[] names = {"WPATH", "WPOL"};

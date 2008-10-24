@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import Jama.EigenvalueDecomposition;
 import Jama.Matrix;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -123,6 +124,7 @@ import java.util.Map;
  * @cdk.keyword WHIM
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.WHIMDescriptorTest")
 public class WHIMDescriptor implements IMolecularDescriptor {
 
     LoggingTool logger;

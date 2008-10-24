@@ -19,6 +19,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
@@ -81,6 +82,7 @@ import java.util.List;
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:weightedPath
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.WeightedPathDescriptorTest")
 public class WeightedPathDescriptor implements IMolecularDescriptor {
 
     private static final String[] names = {

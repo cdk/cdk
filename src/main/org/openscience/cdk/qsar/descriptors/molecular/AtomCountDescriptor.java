@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -64,6 +65,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomCount
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.AtomCountDescriptorTest")
 public class AtomCountDescriptor implements IMolecularDescriptor {
 
     private String elementName = "*";

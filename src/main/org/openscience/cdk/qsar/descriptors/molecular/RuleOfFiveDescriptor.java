@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -65,6 +66,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.keyword rule-of-five
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.RuleOfFiveDescriptorTest")
 public class RuleOfFiveDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = false;
 

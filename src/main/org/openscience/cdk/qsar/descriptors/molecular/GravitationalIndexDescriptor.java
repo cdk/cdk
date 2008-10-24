@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -84,6 +85,7 @@ import java.util.ArrayList;
  * @cdk.keyword gravitational index
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.GravitationalIndexDescriptorTest")
 public class GravitationalIndexDescriptor implements IMolecularDescriptor {
 
     private LoggingTool logger;

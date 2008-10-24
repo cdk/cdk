@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -68,6 +69,7 @@ import java.util.Iterator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bpol
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptorTest")
 public class BPolDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */

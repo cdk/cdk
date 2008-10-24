@@ -19,6 +19,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
@@ -135,6 +136,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:CPSA
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.CPSADescriptorTest")
 public class CPSADescriptor implements IMolecularDescriptor {
 
     private static final String[] names = {

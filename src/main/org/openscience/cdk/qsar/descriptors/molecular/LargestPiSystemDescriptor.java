@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -70,6 +71,7 @@ import java.util.List;
  */
 
 
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.LargestPiSystemDescriptorTest")
 public class LargestPiSystemDescriptor implements IMolecularDescriptor {
 
     private boolean checkAromaticity = false;

@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -79,6 +80,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:hBondacceptors
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.HBondAcceptorCountDescriptorTest")
 public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
     // only parameter of this descriptor; true if aromaticity has to be checked prior to descriptor calculation, false otherwise
     private boolean checkAromaticity = false;

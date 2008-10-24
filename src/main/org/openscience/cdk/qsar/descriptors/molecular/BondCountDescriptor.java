@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -66,6 +67,7 @@ import java.util.Iterator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondCount
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.BondCountDescriptorTest")
 public class BondCountDescriptor implements IMolecularDescriptor {
 
 	/** defaults to UNSET, which means: count all bonds **/

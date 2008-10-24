@@ -22,6 +22,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Element;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -45,6 +46,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorMassTest")
 public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 
     private final static String[] names = {"ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5"};

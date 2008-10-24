@@ -26,6 +26,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -85,6 +86,7 @@ import java.util.List;
  * @cdk.keyword chi cluster index
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.ChiClusterDescriptorTest")
 public class ChiClusterDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
     private SmilesParser sp;

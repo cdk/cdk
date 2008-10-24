@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
@@ -68,6 +69,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.dictref    qsar-descriptors:petitjeanNumber
  * @cdk.keyword    Petit-Jean, number
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.PetitjeanNumberDescriptorTest")
 public class PetitjeanNumberDescriptor implements IMolecularDescriptor {
     private static final String[] names = {"PetitjeanNumber"};
 
