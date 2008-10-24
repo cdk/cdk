@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -57,13 +58,14 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
      * @cdk.bug 1956139
      * @throws InvalidSmilesException
      */
-    public void testMOIFromSmiles() throws InvalidSmilesException {
+    @Test public void testMOIFromSmiles() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC");
         DescriptorValue value = descriptor.calculate(mol);        
         Assert.assertNotNull("The Exception should be non-null since we don't have 3D coords" , value.getException());
 
     }
+    @Test
     public void testMomentOfInertia1() throws ClassNotFoundException, CDKException, java.lang.Exception {
         String filename = "data/hin/gravindex.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -84,7 +86,7 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
     }
 
 
-    public void testMomentOfInertia2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test public void testMomentOfInertia2() throws ClassNotFoundException, CDKException, java.lang.Exception {
         String filename = "data/hin/momi2.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);

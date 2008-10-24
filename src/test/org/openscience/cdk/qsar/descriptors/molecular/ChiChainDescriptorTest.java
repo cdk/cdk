@@ -2,6 +2,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -27,6 +28,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(ChiChainDescriptor.class);
     }
 
+    @Test
     public void testDan64() throws CDKException {
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");
@@ -62,7 +64,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.0000, ret.get(8), 0.0001);
     }
 
-    public void testDan80() throws CDKException {
+    @Test public void testDan80() throws CDKException {
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");
         a1.setPoint2d(new Point2d(0.0, 1.5));
@@ -104,7 +106,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
     }
 
 
-    public void testDan81() throws CDKException {
+    @Test public void testDan81() throws CDKException {
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");
         a1.setPoint2d(new Point2d(0.0, 1.5));
@@ -144,7 +146,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.0000, ret.get(8), 0.0001);
     }
 
-    public void testDan82() throws CDKException {
+    @Test public void testDan82() throws CDKException {
 
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");
@@ -185,7 +187,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.0000, ret.get(8), 0.0001);
     }
 
-    public void testDan154() throws CDKException {
+    @Test public void testDan154() throws CDKException {
 
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");
@@ -241,7 +243,7 @@ public class ChiChainDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.02778, ret.get(8), 0.00001);
     }
 
-//    public void testDan277() throws CDKException {
+//    @Test public void testDan277() throws CDKException {
 //
 //        IMolecule mol = null;
 //

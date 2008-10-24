@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -47,6 +48,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(RotatableBondsCountDescriptor.class);
     }
 
+    @Test
     public void testRotatableBondsCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true)};
         descriptor.setParameters(params);

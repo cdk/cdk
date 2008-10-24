@@ -22,6 +22,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import junit.framework.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.BioPolymer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
@@ -46,7 +47,7 @@ public class AminoAcidCountDescriptorTest extends CDKTestCase {
         descriptor = new AminoAcidCountDescriptor();
     }
 
-	public void testAACount() throws CDKException {
+	@Test public void testAACount() throws CDKException {
         BioPolymer protein = ProteinBuilderTool.createProtein("ARNDCFQEGHIPLKMSTYVW");
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         Assert.assertTrue(result instanceof IntegerArrayResult);
@@ -57,7 +58,8 @@ public class AminoAcidCountDescriptorTest extends CDKTestCase {
         Assert.assertEquals(20, iaResult.get(8)); // glycine is in all of them, so 20 times
 	}
 
-	public void testFCount() throws CDKException {
+	@Test
+    public void testFCount() throws CDKException {
         BioPolymer protein = ProteinBuilderTool.createProtein("FF");
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         Assert.assertTrue(result instanceof IntegerArrayResult);
@@ -66,7 +68,7 @@ public class AminoAcidCountDescriptorTest extends CDKTestCase {
         Assert.assertEquals(4, iaResult.get(5)); // thingy is symmetrical, so two mappings at each AA position possible
 	}
 
-	public void testTCount() throws CDKException {
+	@Test public void testTCount() throws CDKException {
         BioPolymer protein = ProteinBuilderTool.createProtein("TT");
         IDescriptorResult result = descriptor.calculate(protein).getValue();
         Assert.assertTrue(result instanceof IntegerArrayResult);

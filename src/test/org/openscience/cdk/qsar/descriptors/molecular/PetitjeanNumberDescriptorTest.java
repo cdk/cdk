@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -47,6 +48,7 @@ public class PetitjeanNumberDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(PetitjeanNumberDescriptor.class);
     }
 
+    @Test
     public void testPetitjeanNumberDescriptor() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
@@ -54,7 +56,7 @@ public class PetitjeanNumberDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.33333334, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 
-    public void testSingleAtomCase() throws CDKException {
+    @Test public void testSingleAtomCase() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O");
         Assert.assertEquals(0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);

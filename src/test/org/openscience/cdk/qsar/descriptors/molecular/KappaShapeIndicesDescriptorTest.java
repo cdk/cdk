@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -48,6 +49,7 @@ public class KappaShapeIndicesDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(KappaShapeIndicesDescriptor.class);
     }
 	
+    @Test
     public void testKappaShapeIndicesDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         double [] testResult = {5, 2.25, 4};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

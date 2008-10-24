@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -49,11 +50,11 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(BondCountDescriptor.class);
     }
     
-    public void testBondCountDescriptor() throws Exception {
+    @Test public void testBondCountDescriptor() throws Exception {
     	Assert.assertNotNull(descriptor);
     }
 
-    public void testSingleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test public void testSingleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
         descriptor.setParameters(new String[]{"s"});
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
         Assert.assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
@@ -61,6 +62,7 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
     }
 
+    @Test
     public void testDoubleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
         descriptor.setParameters(new String[]{"d"});
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
@@ -78,7 +80,7 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
      * 
      * @cdk.bug 1651263
      */
-    public void testDefaultSetting() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test public void testDefaultSetting() throws ClassNotFoundException, CDKException, java.lang.Exception {
     	IMolecularDescriptor descriptor  = new BondCountDescriptor();
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
         Assert.assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());

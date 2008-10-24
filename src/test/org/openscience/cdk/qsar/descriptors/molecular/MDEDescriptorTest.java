@@ -2,6 +2,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -29,6 +30,7 @@ public class MDEDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(MDEDescriptor.class);
     }
 
+    @Test
     public void testMDE1() throws ClassNotFoundException, CDKException, Exception {
         String filename = "data/mdl/mdeotest.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

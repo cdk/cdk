@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -52,7 +53,7 @@ public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(AromaticBondsCountDescriptor.class);
     }
     
-    public void testAromaticBondsCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test public void testAromaticBondsCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -60,6 +61,7 @@ public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
     
+    @Test
     public void testViaFlags() throws Exception {
     	IMolecule molecule = MoleculeFactory.makeBenzene();
     	for (Iterator bonds=molecule.bonds().iterator(); bonds.hasNext();) {

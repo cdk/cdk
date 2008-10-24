@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,6 +45,7 @@ public class HBondDonorCountDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(HBondDonorCountDescriptor.class);
     }
 
+    @Test
     public void testHBondDonorCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true)};
         descriptor.setParameters(params);

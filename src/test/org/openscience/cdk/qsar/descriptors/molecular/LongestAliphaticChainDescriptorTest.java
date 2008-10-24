@@ -2,6 +2,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -24,7 +25,7 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
     	setDescriptor(LongestAliphaticChainDescriptor.class);
     }
     
-	public void test1LongestAliphaticChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void test1LongestAliphaticChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		Object[] params = {new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -32,7 +33,8 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
 		//logger.debug("test1>:"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		Assert.assertEquals(4, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
-	public void test2LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void test2LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		Object[] params = {new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -40,7 +42,7 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
 		//logger.debug("test2>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		Assert.assertEquals(4, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
-	public void test3LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void test3LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		Object[] params = {new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -48,7 +50,7 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
 		//logger.debug("test3>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		Assert.assertEquals(5, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
-	public void test4LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void test4LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		Object[] params = {new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -56,7 +58,7 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
 		//logger.debug("test4>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		Assert.assertEquals(4, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
-	public void test5LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void test5LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		Object[] params = {new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -65,7 +67,7 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
 		Assert.assertEquals(3, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 	
-	public void test6LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void test6LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		Object[] params = {new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -73,7 +75,7 @@ public class LongestAliphaticChainDescriptorTest extends MolecularDescriptorTest
 		//logger.debug("test6>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 		Assert.assertEquals(4, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
-	public void test7LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void test7LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		Object[] params = {new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import junit.framework.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -56,6 +57,7 @@ public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(WeightedPathDescriptor.class);
     }
 
+    @Test
     public void testWeightedPathDescriptor() throws ClassNotFoundException, CDKException, Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = null;

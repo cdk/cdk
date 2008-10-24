@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -45,6 +46,7 @@ public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(WienerNumbersDescriptor.class);
     }
 
+    @Test
     public void testWienerNumbersDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         double [] testResult = {18, 2};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -47,7 +48,8 @@ public class AtomCountDescriptorTest extends MolecularDescriptorTest {
 		setDescriptor(AtomCountDescriptor.class);
 	}
     
-	public void testCarbonCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testCarbonCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {"C"};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -59,7 +61,7 @@ public class AtomCountDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(descriptor.getDescriptorNames()[0], value.getNames()[0]);
     }
 
-    public void testImplicitExplicitH() throws CDKException {
+    @Test public void testImplicitExplicitH() throws CDKException {
         Object[] params = {"*"};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

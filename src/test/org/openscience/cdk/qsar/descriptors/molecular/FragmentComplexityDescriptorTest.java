@@ -1,6 +1,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -22,7 +23,7 @@ public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
 	public  FragmentComplexityDescriptorTest() {}
 
 	   
-	public void test1FragmentComplexityDescriptor() throws Exception {
+	@Test public void test1FragmentComplexityDescriptor() throws Exception {
 		IMolecularDescriptor descriptor = new FragmentComplexityDescriptor();
 		String filename = "data/mdl/murckoTest1.mol";
     	//System.out.println("\nFragmentComplexityTest: " + filename);
@@ -41,7 +42,8 @@ public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
     	 Assert.assertEquals(659.00,Complexity , 0.01);
 	}
 	
-	public void test2FragmentComplexityDescriptor() throws Exception {
+	@Test
+    public void test2FragmentComplexityDescriptor() throws Exception {
 		IMolecularDescriptor descriptor = new FragmentComplexityDescriptor();
 		String filename = "data/mdl/murckoTest10.mol";
     	//System.out.println("\nFragmentComplexityTest: " + filename);

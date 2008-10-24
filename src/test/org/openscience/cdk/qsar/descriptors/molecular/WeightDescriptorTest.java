@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -47,7 +48,8 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
 		setDescriptor(WeightDescriptor.class);
 	}
 	
-	public void testWeightDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testWeightDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		Object[] params = {"*"};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -58,7 +60,7 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
   /**
    * @cdk.bug 2185475
    */
-    public void testNoHydrogens() throws Exception {
+    @Test public void testNoHydrogens() throws Exception {
         Object[] params = {"*"};
         descriptor.setParameters(params);
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -70,7 +72,7 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
     /**
      * @cdk.bug 2185475
      */
-    public void testExplicitHydrogens() throws Exception {
+    @Test public void testExplicitHydrogens() throws Exception {
         Object[] params = {"*"};
         descriptor.setParameters(params);
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -90,7 +92,7 @@ public class WeightDescriptorTest extends MolecularDescriptorTest {
     /**
      * @cdk.bug 2185475
      */
-    public void testImplicitHydrogens() throws Exception {
+    @Test public void testImplicitHydrogens() throws Exception {
         Object[] params = {"*"};
         descriptor.setParameters(params);
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();

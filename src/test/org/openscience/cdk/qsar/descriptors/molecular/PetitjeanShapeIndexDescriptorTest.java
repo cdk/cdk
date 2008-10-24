@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -56,7 +57,7 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
         setDescriptor(PetitjeanShapeIndexDescriptor.class);
     }
 
-    public void testPetitjeanShapeIndexDescriptor() throws ClassNotFoundException, CDKException, Exception {
+    @Test public void testPetitjeanShapeIndexDescriptor() throws ClassNotFoundException, CDKException, Exception {
         // first molecule is nbutane, second is naphthalene
         String filename = "data/mdl/petitejean.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -78,6 +79,7 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
 
     }
 
+    @Test
     public void testPetiteJeanShapeNo3D() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CCCOCCC(O)=O");

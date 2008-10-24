@@ -2,6 +2,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -27,6 +28,7 @@ public class ChiPathClusterDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(ChiPathClusterDescriptor.class);
     }
 
+   @Test
    public void testDan64() throws CDKException {
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");
@@ -60,7 +62,7 @@ public class ChiPathClusterDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.0000, ret.get(5), 0.0001);
     }
 
-    public void testDan154() throws CDKException {
+    @Test public void testDan154() throws CDKException {
 
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");
@@ -114,7 +116,7 @@ public class ChiPathClusterDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.4376, ret.get(5), 0.0001);
     }
 
-    public void testDan248() throws CDKException {
+    @Test public void testDan248() throws CDKException {
 
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");

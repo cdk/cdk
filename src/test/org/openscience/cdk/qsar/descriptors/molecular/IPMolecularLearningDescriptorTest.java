@@ -22,6 +22,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
@@ -58,6 +59,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     }
 
 
+    @Test
     public void testIPMolecularLearningDescriptor() throws Exception {
     	Assert.assertNotNull(descriptor);
     }
@@ -67,7 +69,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C6H14/c1-5(2)6(3)4/h5-6H,1-4H3
 	 */
-    public void testIPDescriptor0() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor0() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
     	IMolecule mol = builder.newMolecule();
 		mol.addAtom(builder.newAtom("C"));
@@ -100,7 +102,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
      * @throws CDKException
      * @throws java.lang.Exception
 	 */
-    public void testIPDescriptor_1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor_1() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
 		IMolecule mol = sp.parseSmiles("C-Cl");
 
@@ -117,7 +119,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     /**
 	 *  A unit test for JUnit with COCCCC=O
 	 */
-    public void testIPDescriptor_2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor_2() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
 		IMolecule mol = sp.parseSmiles("COCCCC=O");
 
@@ -136,7 +138,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     /**
 	 *  A unit test for JUnit with C=CCC(=O)CC
 	 */
-    public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
 		IMolecule mol = sp.parseSmiles("C=CCCC(=O)C");
 		
@@ -159,7 +161,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //     * @throws CDKException
 //     * @throws java.lang.Exception
 //     */
-//    public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException, java.lang.Exception{
+//    @Test public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException, java.lang.Exception{
 //    	IMolecule mol = sp.parseSmiles("C-Cl");
 //
 //		addExplicitHydrogens(mol);
@@ -182,7 +184,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //     * @throws CDKException
 //     * @throws java.lang.Exception
 //     */
-//    public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+//    @Test public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
 //    	IMolecule mol = sp.parseSmiles("CCCC");
 //
 //		addExplicitHydrogens(mol);
@@ -202,7 +204,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //     * @throws CDKException
 //     * @throws java.lang.Exception
 //     */
-//    public void testIPDescriptorReaction3() throws ClassNotFoundException, CDKException, java.lang.Exception{
+//    @Test public void testIPDescriptorReaction3() throws ClassNotFoundException, CDKException, java.lang.Exception{
 //    	IMolecule mol = sp.parseSmiles("CCC#CCCO");
 //
 //		addExplicitHydrogens(mol);
@@ -222,7 +224,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //     * @throws CDKException
 //     * @throws java.lang.Exception
 //     */
-//    public void testIPDescriptorReaction4() throws ClassNotFoundException, CDKException, java.lang.Exception{
+//    @Test public void testIPDescriptorReaction4() throws ClassNotFoundException, CDKException, java.lang.Exception{
 //    	IMolecule mol = sp.parseSmiles("CCCCC=CO");
 //
 //		addExplicitHydrogens(mol);

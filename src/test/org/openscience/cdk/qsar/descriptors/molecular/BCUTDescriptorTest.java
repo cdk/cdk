@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -55,6 +56,7 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         setDescriptor(BCUTDescriptor.class);
     }
 
+    @Test
     public void testBCUT() throws Exception {
         String filename = "data/hin/gravindex.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -96,7 +98,7 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         */
     }
 
-    public void testExtraEigenvalues() throws Exception {
+    @Test public void testExtraEigenvalues() throws Exception {
         String filename = "data/hin/gravindex.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -122,7 +124,7 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
 
     }
 
-    public void testAromaticity() throws Exception {
+    @Test public void testAromaticity() throws Exception {
         setDescriptor(BCUTDescriptor.class);
 
         String smiles1 = "c1ccccc1";
@@ -147,7 +149,7 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         }
     }
 
-    public void testHAddition() throws Exception {
+    @Test public void testHAddition() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
         DoubleArrayResult result1 = (DoubleArrayResult) descriptor.calculate(mol).getValue();

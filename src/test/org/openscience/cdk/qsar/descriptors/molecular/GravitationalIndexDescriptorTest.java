@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
@@ -49,6 +50,7 @@ public class GravitationalIndexDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(GravitationalIndexDescriptor.class);
     }
 
+    @Test
     public void testGravitationalIndex() throws ClassNotFoundException, CDKException, java.lang.Exception {
         String filename = "data/hin/gravindex.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

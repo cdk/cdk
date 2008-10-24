@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -48,6 +49,7 @@ public class BPolDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(BPolDescriptor.class);
     }
 
+    @Test
     public void testBPolDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("O=C(O)CC");
