@@ -28,6 +28,7 @@ import javax.vecmath.Point3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
@@ -66,6 +67,6 @@ public class DistanceToAtomDescriptorTest extends AtomicDescriptorTest {
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
 		
-		assertEquals(2.46, ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue(), 0.1);
+		Assert.assertEquals(2.46, ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue(), 0.1);
 	}
 }

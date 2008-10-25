@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -66,7 +67,7 @@ public class CovalentRadiusDescriptorTest extends AtomicDescriptorTest {
 		IMolecule mol = sp.parseSmiles("NCCN(C)(C)"); 
 		double retval = ((DoubleResult)descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
 
-		assertEquals(testResult[0], retval, 0.01);
+		Assert.assertEquals(testResult[0], retval, 0.01);
 	}
 }
 

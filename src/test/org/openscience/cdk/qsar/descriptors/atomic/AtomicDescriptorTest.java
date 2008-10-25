@@ -45,10 +45,6 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
 
 	public AtomicDescriptorTest() {}
 	
-	public AtomicDescriptorTest(String name) {
-		super(name);
-	}
-	
 	public void setDescriptor(Class descriptorClass) throws Exception {
 		if (descriptor == null) {
 			Object descriptor = descriptorClass.newInstance();
