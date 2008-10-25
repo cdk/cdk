@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -58,7 +59,7 @@ public class IsProtonInAromaticSystemDescriptorTest extends AtomicDescriptorTest
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("Oc1cc(OC)c(cc1Br)Br"); 
 		addExplicitHydrogens(mol);
-		assertEquals(1, ((IntegerResult)descriptor.calculate(mol.getAtom(13),mol).getValue()).intValue());
+		Assert.assertEquals(1, ((IntegerResult)descriptor.calculate(mol.getAtom(13),mol).getValue()).intValue());
 	}
 }
 

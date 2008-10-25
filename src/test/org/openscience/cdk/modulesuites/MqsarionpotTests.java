@@ -25,7 +25,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.coverage.QsarionpotCoverageTest;
-import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicHOSEDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicLearningDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescriptorTest;
@@ -47,7 +46,7 @@ public class MqsarionpotTests {
 
         suite.addTest(IPAtomicLearningDescriptorTest.suite());
         suite.addTest(IPBondLearningDescriptorTest.suite());
-        suite.addTest(IPMolecularLearningDescriptorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(IPMolecularLearningDescriptorTest.class));
         
         return suite;
     }

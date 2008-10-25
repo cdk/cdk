@@ -25,6 +25,8 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.junit.Assert;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -66,7 +68,7 @@ public class AtomHybridizationDescriptorTest extends AtomicDescriptorTest {
         	IAtomType.Hybridization.SP3
         };
         for (int i=0; i<expectedStates.length; i++) {
-            assertEquals(
+            Assert.assertEquals(
                	expectedStates[i].ordinal(),
                	((IntegerResult) descriptor.calculate(mol.getAtom(i), mol).getValue()).intValue()
             );

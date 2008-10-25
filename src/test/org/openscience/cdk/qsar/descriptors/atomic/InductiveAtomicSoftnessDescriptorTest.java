@@ -28,6 +28,7 @@ import javax.vecmath.Point3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
@@ -90,7 +91,7 @@ public class InductiveAtomicSoftnessDescriptorTest extends AtomicDescriptorTest 
 		IAtomicDescriptor descriptor  = new InductiveAtomicSoftnessDescriptor();
 		
 		double retval = ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
-		assertEquals(testResult[0], retval, 0.1);
+		Assert.assertEquals(testResult[0], retval, 0.1);
 		
 		// F: expected is 0.32, calculated is 0.35
 		// difference depends on different starting values (3D distances and small differences

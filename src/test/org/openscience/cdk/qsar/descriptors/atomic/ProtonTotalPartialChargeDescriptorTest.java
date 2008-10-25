@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -58,7 +59,7 @@ public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest
 		addExplicitHydrogens(mol);
 		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol.getAtom(0),mol).getValue();
 		for (int i = 0; i < testResult.length; ++i) {
-			assertEquals(testResult[i], retval.get(i), 0.00001);
+		    Assert.assertEquals(testResult[i], retval.get(i), 0.00001);
 		}
 	}
 }

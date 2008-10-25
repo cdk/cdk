@@ -23,6 +23,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -63,7 +64,7 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
 	 */
 	public void testProtonAffinityHOSEDescriptor() throws Exception {
 		IAtomicDescriptor descriptor = new ProtonAffinityHOSEDescriptor();
-		assertNotNull(descriptor);
+		Assert.assertNotNull(descriptor);
 	}
 	/**
 	 *  A unit test for JUnit with
@@ -97,7 +98,7 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
     	double result= ((DoubleResult)descriptor.calculate(mol.getAtom(6),mol).getValue()).doubleValue();
         double resultAccordingNIST = 753.1; 
         
-        assertEquals(resultAccordingNIST, result, 0.00001);
+        Assert.assertEquals(resultAccordingNIST, result, 0.00001);
     }
 
 	/**
@@ -121,7 +122,7 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
 		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2),mol).getValue()).doubleValue();
         double resultAccordingNIST = 693.4; 
         
-        assertEquals(resultAccordingNIST, result, 0.00001);
+        Assert.assertEquals(resultAccordingNIST, result, 0.00001);
     }
 
 }

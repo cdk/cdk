@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -55,6 +56,6 @@ public class PeriodicTablePositionDescriptorTest extends AtomicDescriptorTest {
 		IAtomicDescriptor descriptor  = new PeriodicTablePositionDescriptor();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CCCl"); // 
-		assertEquals(3, ((IntegerResult)descriptor.calculate(mol.getAtom(2),mol).getValue()).intValue());
+		Assert.assertEquals(3, ((IntegerResult)descriptor.calculate(mol.getAtom(2),mol).getValue()).intValue());
 	}
 }

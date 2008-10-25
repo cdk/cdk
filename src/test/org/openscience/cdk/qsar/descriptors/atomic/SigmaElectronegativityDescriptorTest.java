@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -70,7 +71,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 			params[0] = 6;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.01);
+			Assert.assertEquals(testResult[i],result,0.01);
 		}
         
 	}
@@ -90,7 +91,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 			params[0] = 6;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.05);
+			Assert.assertEquals(testResult[i],result,0.05);
 		}
 	}
 	/**
@@ -110,7 +111,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 			params[0] = 6;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.02);
+			Assert.assertEquals(testResult[i],result,0.02);
 		}
 	}
 	/**
@@ -125,7 +126,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		addExplicitHydrogens(mol);
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(5),mol).getValue()).doubleValue();
-		assertEquals(testResult,result,0.08);
+		Assert.assertEquals(testResult,result,0.08);
 	}
 	/**
 	 *  A unit test for JUnit with Ethoxy ethane
@@ -143,7 +144,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 			params[0] = 6;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.002);
+			Assert.assertEquals(testResult[i],result,0.002);
 		}
 	}
 	/**
@@ -162,7 +163,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 			params[0] = 6;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.002);
+			Assert.assertEquals(testResult[i],result,0.002);
 		}
 	}
 	/**
@@ -178,7 +179,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < 4 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.01);
+			Assert.assertEquals(testResult[i],result,0.01);
 		}
 	}
 	/**
@@ -220,13 +221,13 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molB);
 		lpcheck.saturate(molB);
 		
-		assertEquals(1, molB.getAtom(3).getFormalCharge(), 0.00001);
-		assertEquals(1, molB.getSingleElectronCount(), 0.00001);
-		assertEquals(2, molB.getLonePairCount(), 0.00001);
+		Assert.assertEquals(1, molB.getAtom(3).getFormalCharge(), 0.00001);
+		Assert.assertEquals(1, molB.getSingleElectronCount(), 0.00001);
+		Assert.assertEquals(2, molB.getLonePairCount(), 0.00001);
 		
         double resultB= ((DoubleResult)descriptor.calculate(molB.getAtom(3),molB).getValue()).doubleValue();
         
-        assertEquals(resultA, resultB, 0.00001);
+        Assert.assertEquals(resultA, resultB, 0.00001);
     }
 }
 
