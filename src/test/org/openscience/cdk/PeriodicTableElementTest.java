@@ -67,20 +67,20 @@ public class PeriodicTableElementTest extends NewCDKTestCase {
     @Test
     public void testVdw() {
         periodicTableElement.setVdwRadius(1.9);
-        Assert.assertEquals(1.9, periodicTableElement.getVdwRadius());
+        Assert.assertEquals(1.9, periodicTableElement.getVdwRadius(), 0.1);
     }
 
 
     @Test
     public void testCovalent() {
         periodicTableElement.setCovalentRadius(1.9);
-        Assert.assertEquals(1.9, periodicTableElement.getCovalentRadius());
+        Assert.assertEquals(1.9, periodicTableElement.getCovalentRadius(), 0.1);
     }
 
     @Test
     public void testEneg() {
         periodicTableElement.setPaulingEneg(3.4);
-        Assert.assertEquals(3.4, periodicTableElement.getPaulingEneg());
+        Assert.assertEquals(3.4, periodicTableElement.getPaulingEneg(), 0.1);
     }
 
     @Test
@@ -138,7 +138,7 @@ public class PeriodicTableElementTest extends NewCDKTestCase {
     public void testConfigure() {
         Element elem = PeriodicTableElement.configure(periodicTableElement);
         Assert.assertEquals("C", elem.getSymbol());
-        Assert.assertEquals(6, elem.getAtomicNumber());
+        Assert.assertEquals(6, elem.getAtomicNumber().intValue());
     }
 
 }
