@@ -153,6 +153,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
      *
      * @return The specification value
      */
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#tpsa",
@@ -173,6 +174,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
      * @throws CDKException if the supplied parameter is not of type Boolean
      * @see #getParameters
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
             throw new CDKException("TPSADescriptor expects one parameter");
@@ -192,6 +194,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
      *         indicating whether aromaticity was to be checked or not
      * @see #setParameters
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -226,6 +229,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
      * @param atomContainer The AtomContainer whose TPSA is to be calculated
      * @return A double containing the topological surface area
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
         try {
@@ -368,6 +372,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "checkAromaticity";
@@ -381,6 +386,7 @@ public class TPSADescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return true;
     }

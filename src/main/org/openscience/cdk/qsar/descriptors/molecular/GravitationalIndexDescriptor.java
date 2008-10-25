@@ -109,6 +109,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
         logger = new LoggingTool(this);
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex",
@@ -124,6 +125,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
      * @throws CDKException Description of the Exception
      * @see #getParameters
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -134,6 +136,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
      * @return The parameters value
      * @see #setParameters
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // no parameters to return
         return (null);
@@ -149,6 +152,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -161,6 +165,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return (null);
     }
@@ -180,6 +185,7 @@ public class GravitationalIndexDescriptor implements IMolecularDescriptor {
      * @return An ArrayList containing 9 elements in the order described above
      */
 
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         if (!GeometryTools.has3DCoordinates(container))
             return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));

@@ -94,6 +94,7 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
      *@return    The specification value
      */
     @TestMethod(value="testGetSpecification")
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ip",
@@ -110,6 +111,7 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Description of the Exception
      */
     @TestMethod(value="testSetParameters_arrayObject")
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) throw new CDKException("One parameter expected");
         if (!(params[0] instanceof Boolean)) throw new CDKException("Boolean parameter expected");
@@ -123,6 +125,7 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
      * @return The parameters value
      */
     @TestMethod(value="testGetParameters")
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return new Object[]{addlp};
     }
@@ -140,6 +143,7 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
      *@return                   The first ionization energy
      */
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer local;
         if (addlp) {
@@ -176,7 +180,8 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Possible Exceptions
      */
     @TestMethod(value="testCalculatePlus_IAtomContainer")
-        public DescriptorValue calculatePlus(IAtomContainer container) throws CDKException {
+        @TestMethod("testCalculate_IAtomContainer")
+    public DescriptorValue calculatePlus(IAtomContainer container) throws CDKException {
 
         ArrayList<Double> dar = new ArrayList<Double>();
         for(Iterator<IAtom> itA = container.atoms().iterator(); itA.hasNext();){
@@ -241,6 +246,7 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
      *@return    The parameterNames value
      */
     @TestMethod(value="testGetParameterNames")
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         return new String[] {"addlp"};
     }
@@ -254,6 +260,7 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
      *@return       The parameterType value
      */
     @TestMethod(value="testGetParameterType_String")
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return addlp;
     }

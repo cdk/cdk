@@ -96,6 +96,7 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
      *
      * @return    The specification value
      */
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors",
@@ -110,6 +111,7 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
      * @param  params            a boolean true means that aromaticity has to be checked
      * @exception  CDKException  Description of the Exception
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
             throw new CDKException("HBondAcceptorCountDescriptor expects a single parameter");
@@ -126,6 +128,7 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
      *
      * @return    The parameters value
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -149,6 +152,7 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
      * @param  atomContainer             AtomContainer
      * @return                   number of H bond acceptors     
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         int hBondAcceptors = 0;
 
@@ -221,6 +225,7 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
      *
      * @return    The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "checkAromaticity";
@@ -233,6 +238,7 @@ public class HBondAcceptorCountDescriptor implements IMolecularDescriptor {
      * @param  name  Description of the Parameter
      * @return       The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return false;
     }

@@ -335,6 +335,7 @@ public class KierHallSmartsDescriptor implements IMolecularDescriptor {
      *
      * @return An object containing the descriptor specification
      */
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts",
@@ -351,6 +352,7 @@ public class KierHallSmartsDescriptor implements IMolecularDescriptor {
      *          if any parameters are specified
      * @see #getParameters
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params != null) throw new CDKException("Must not supply any parameters");
     }
@@ -362,6 +364,7 @@ public class KierHallSmartsDescriptor implements IMolecularDescriptor {
      * @return The parameters value
      * @see #setParameters
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return null;
     }
@@ -385,6 +388,7 @@ public class KierHallSmartsDescriptor implements IMolecularDescriptor {
      * @param atomContainer The molecule for which this descriptor is to be calculated
      * @return Counts of the fragments
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         if (atomContainer == null || atomContainer.getAtomCount() == 0) {
             return getDummyDescriptorValue(new CDKException("Container was null or else had no atoms"));
@@ -433,6 +437,7 @@ public class KierHallSmartsDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         return null;
     }
@@ -444,6 +449,7 @@ public class KierHallSmartsDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return An Object whose class is that of the parameter requested
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }

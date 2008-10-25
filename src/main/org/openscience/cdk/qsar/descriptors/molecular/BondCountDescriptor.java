@@ -84,6 +84,7 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      *
      *@return    The specification value
      */
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount",
@@ -99,6 +100,7 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      *@param  params            The new parameters value
      *@exception  CDKException  Description of the Exception
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("BondCount only expects one parameter");
@@ -120,6 +122,7 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      *
      *@return    The parameters value
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -140,6 +143,7 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      *@param  container  AtomContainer
      *@return            The number of bonds of a certain type.
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
     	if (order.equals("")) {
     		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
@@ -190,6 +194,7 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      *
      *@return    The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "order";
@@ -203,6 +208,7 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
     	if ("order".equals(name)) return "";
     	return null;

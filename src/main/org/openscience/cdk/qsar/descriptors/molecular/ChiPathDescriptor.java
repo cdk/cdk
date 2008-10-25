@@ -89,6 +89,7 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
         sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiPath",
@@ -97,18 +98,22 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
                 "The Chemistry Development Kit");
     }
 
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -124,6 +129,7 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
     }
 
 
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
 
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);

@@ -65,6 +65,7 @@ public class ZagrebIndexDescriptor implements IMolecularDescriptor {
      *
      *@return    The specification value
      */
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex",
@@ -81,6 +82,7 @@ public class ZagrebIndexDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Description of the Exception
          *@see #getParameters
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -92,6 +94,7 @@ public class ZagrebIndexDescriptor implements IMolecularDescriptor {
      *@return    The parameters value
          *@see #setParameters
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return (null);
         // no parameters to return
@@ -109,6 +112,7 @@ public class ZagrebIndexDescriptor implements IMolecularDescriptor {
      *@param  atomContainer                AtomContainer
      *@return                   zagreb index     
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         double zagreb = 0;        
         IAtom atomi;
@@ -149,6 +153,7 @@ public class ZagrebIndexDescriptor implements IMolecularDescriptor {
      *
      *@return    The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -162,6 +167,7 @@ public class ZagrebIndexDescriptor implements IMolecularDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return (null);
     }

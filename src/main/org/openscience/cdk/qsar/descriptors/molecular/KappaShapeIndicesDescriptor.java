@@ -94,6 +94,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      *
      * @return The specification value
      */
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues",
@@ -110,6 +111,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      * @param params The new parameters value
      * @throws CDKException Description of the Exception
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -121,6 +123,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      *
      * @return The parameters value
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // no parameters to return
         return (null);
@@ -139,6 +142,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      * @return kier1, kier2 and kier3 are returned as arrayList of doubles
      * @throws CDKException Possible Exceptions
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
 
         //org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
@@ -266,6 +270,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -279,6 +284,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return (null);
     }

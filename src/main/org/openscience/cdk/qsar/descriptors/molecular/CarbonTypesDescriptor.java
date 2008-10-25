@@ -69,6 +69,7 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
         LoggingTool logger = new LoggingTool(this);
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes",
@@ -86,6 +87,7 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
      *          Description of the Exception
      * @see #getParameters
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -96,6 +98,7 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
      * @return The parameters value
      * @see #setParameters
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // no parameters to return
         return (null);
@@ -111,6 +114,7 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -123,6 +127,7 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return (null);
     }
@@ -133,7 +138,7 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
      * @param container Parameter is the atom container.
      * @return An ArrayList containing 9 elements in the order described above
      */
-    @TestMethod("testButane,testComplex1,testComplex2")
+    @TestMethod("testCalculate_IAtomContainer,testButane,testComplex1,testComplex2")
     public DescriptorValue calculate(IAtomContainer container) {
         int c1sp1 = 0;
         int c2sp1 = 0;
