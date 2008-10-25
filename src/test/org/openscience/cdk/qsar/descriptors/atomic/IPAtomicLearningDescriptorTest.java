@@ -382,7 +382,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 //     * @throws java.lang.Exception
 //     */
 //    @Test
-    public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException, java.lang.Exception{
+//    public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException, java.lang.Exception{
 //        
 //    	IMolecule mol = sp.parseSmiles("C-C-N");
 //		assertEquals(3, mol.getAtomCount());
@@ -414,7 +414,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 //     * @throws java.lang.Exception
 //     */
 //    @Test
-    public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+//    public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
 //        
 //		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 //		IMolecule mol = sp.parseSmiles("CCCCCC");
@@ -522,7 +522,7 @@ public class IPAtomicLearningDescriptorTest extends AtomicDescriptorTest {
 ////     * @throws java.lang.Exception
 ////     */
 ////    @Test
-    public void testIDescriptor5() throws ClassNotFoundException, CDKException, java.lang.Exception{
+//    public void testIDescriptor5() throws ClassNotFoundException, CDKException, java.lang.Exception{
 ////        
 ////		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 ////		IMolecule mol = sp.parseSmiles("OC(C#CC)(C)C");
