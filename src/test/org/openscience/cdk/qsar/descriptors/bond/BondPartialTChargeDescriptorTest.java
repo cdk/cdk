@@ -24,6 +24,7 @@ package org.openscience.cdk.qsar.descriptors.bond;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -70,7 +71,7 @@ public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
 		
         for (int i = 0 ; i < 2 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.01);
+			Assert.assertEquals(testResult[i],result,0.01);
 		}
         
 	}
@@ -88,7 +89,7 @@ public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
 		
 		for (int i = 0 ; i < 8 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.035);
+			Assert.assertEquals(testResult[i],result,0.035);
 		}
 	}
 	/**
@@ -101,7 +102,7 @@ public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
 		IMolecule mol = sp.parseSmiles("C(C)(C)CCI");
 		addExplicitHydrogens(mol);
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
-			assertEquals(testResult,result,0.001);
+		Assert.assertEquals(testResult,result,0.001);
 	}
 	/**
 	 *  A unit test for JUnit with Allyl mercaptan
@@ -115,7 +116,7 @@ public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
 		
 		for (int i = 0 ; i < 9 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.03);
+			Assert.assertEquals(testResult[i],result,0.03);
 		}
 	}
 }

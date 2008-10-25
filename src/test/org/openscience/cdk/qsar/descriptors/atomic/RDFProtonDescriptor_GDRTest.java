@@ -5,6 +5,7 @@ import java.io.InputStream;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
@@ -56,7 +57,7 @@ public class RDFProtonDescriptor_GDRTest extends AtomicDescriptorTest {
 				DescriptorValue dv = descriptor.calculate(mol.getAtom(i),mol );
 				IDescriptorResult result = dv.getValue();
 //				System.out.println("array: " + result.toString());
-				assertNotNull(result);
+				Assert.assertNotNull(result);
 			}		
 
 		}
@@ -68,11 +69,11 @@ public class RDFProtonDescriptor_GDRTest extends AtomicDescriptorTest {
         mol.addAtom(atom);
         DescriptorValue dv = descriptor.calculate(atom,mol );
         IDescriptorResult result = dv.getValue();
-        assertNotNull(result);
-        assertTrue(result instanceof DoubleArrayResult);
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result instanceof DoubleArrayResult);
         DoubleArrayResult dResult = (DoubleArrayResult)result;
         for (int i=0; i<result.length(); i++) {
-            assertEquals(Double.NaN, dResult.get(i), 0.000001);
+            Assert.assertEquals(Double.NaN, dResult.get(i), 0.000001);
         }
     }
 

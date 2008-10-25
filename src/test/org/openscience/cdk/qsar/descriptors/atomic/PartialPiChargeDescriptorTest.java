@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -84,15 +85,15 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i),molecule).getValue()).doubleValue();
-			assertNotNull(result);
+			Assert.assertNotNull(result);
 			
 			if(testResult[i] == 0.0)
-				assertTrue(result == 0.0);
+			    Assert.assertTrue(result == 0.0);
 			else {
-				assertTrue(result != 0.0);
-				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			    Assert.assertTrue(result != 0.0);
+			    Assert.assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 			}
-			assertEquals(testResult[i],result, 0.0001);
+			Assert.assertEquals(testResult[i],result, 0.0001);
 		}
 	}
 	/**
@@ -117,7 +118,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
 	        double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i),molecule).getValue()).doubleValue();
-	        assertNotNull(result);
+	        Assert.assertNotNull(result);
 	        
 	        /*TODO:REACT: revision*/
 //	        if(testResult[i] == 0.0)
@@ -126,7 +127,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 //				assertTrue(result != 0.0);
 //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 //			}
-			assertEquals(testResult[i],result, 0.05);
+	        Assert.assertEquals(testResult[i],result, 0.05);
 		}
 	}
 	/**
@@ -150,15 +151,15 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i),molecule).getValue()).doubleValue();
-			assertNotNull(result);
+			Assert.assertNotNull(result);
 			
 	        if(testResult[i] == 0.0)
-				assertTrue(result == 0.0);
+	            Assert.assertTrue(result == 0.0);
 			else {
-				assertTrue(result != 0.0);
-				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			    Assert.assertTrue(result != 0.0);
+			    Assert.assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 			}
-			assertEquals(testResult[i],result, 0.04);
+	        Assert.assertEquals(testResult[i],result, 0.04);
 		}
 	}
 	/**
@@ -193,15 +194,15 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 			params[0] = Integer.valueOf(6);
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i),molecule).getValue()).doubleValue();
-			assertNotNull(result);
+			Assert.assertNotNull(result);
 				
 			if(testResult[i] == 0.0)
-				assertTrue(result == 0.0);
+			    Assert.assertTrue(result == 0.0);
 			else {
-				assertTrue(result != 0.0);
-				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			    Assert.assertTrue(result != 0.0);
+			    Assert.assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 			}
-			assertEquals(testResult[i],result, 0.01);
+			Assert.assertEquals(testResult[i],result, 0.01);
 		}
 	}
 	/**
@@ -231,7 +232,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 			params[0] = Integer.valueOf(6);
 	        descriptor.setParameters(params);
 	        double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i),molecule).getValue()).doubleValue();
-	        assertNotNull(result);
+	        Assert.assertNotNull(result);
 	        
 	        /*TODO:REACT: revision*/
 //	        if(testResult[i] == 0.0)
@@ -240,7 +241,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 //				assertTrue(result != 0.0);
 //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 //			}
-			assertEquals(testResult[i],result, 0.05);
+	        Assert.assertEquals(testResult[i],result, 0.05);
 		}
 	}
 	/**
@@ -271,7 +272,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < molecule.getAtomCount(); i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i),molecule).getValue()).doubleValue();
-	        assertNotNull(result);
+			Assert.assertNotNull(result);
 	        
 	        /*TODO:REACT: revision*/
 //	        if(testResult[i] == 0.0)
@@ -280,7 +281,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 //				assertTrue(result != 0.0);
 //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 //			}
-			assertEquals(testResult[i],result, 0.3);
+			Assert.assertEquals(testResult[i],result, 0.3);
 		}
 	}
 	/**
@@ -308,7 +309,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < 6; i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-	        assertNotNull(result);
+	        Assert.assertNotNull(result);
 	        
 	        /*TODO:REACT: revision*/
 //	        if(testResult[i] == 0.0)
@@ -317,7 +318,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 //				assertTrue(result != 0.0);
 //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 //			}
-			assertEquals(testResult[i],result, 0.2);
+	        Assert.assertEquals(testResult[i],result, 0.2);
 			
 		}
 	}
@@ -350,7 +351,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-	        assertNotNull(result);
+	        Assert.assertNotNull(result);
 	        
 	        /*TODO:REACT: revision*/
 //	        if(testResult[i] == 0.0)
@@ -359,7 +360,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 //				assertTrue(result != 0.0);
 //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 //			}
-			assertEquals(testResult[i],result, 0.08);
+	        Assert.assertEquals(testResult[i],result, 0.08);
 		}
 	}
 	/**
@@ -376,7 +377,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-	        assertNotNull(result);
+	        Assert.assertNotNull(result);
 	        
 	        /*TODO:REACT: revision*/
 //	        if(testResult[i] == 0.0)
@@ -385,7 +386,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 //				assertTrue(result != 0.0);
 //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 //			}
-			assertEquals(testResult[i],result, 0.1);
+	        Assert.assertEquals(testResult[i],result, 0.1);
 		}
 	}
 
@@ -406,7 +407,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < mol.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[0],result, 0.0001);
+	        Assert.assertEquals(testResult[0],result, 0.0001);
 		}
 	}
 	/**
@@ -426,15 +427,15 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-			assertNotNull(result);
+			Assert.assertNotNull(result);
 			
 			if(testResult[i] == 0.0)
-				assertTrue(result == 0.0);
+			    Assert.assertTrue(result == 0.0);
 			else {
-				assertTrue(result != 0.0);
-				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
+			    Assert.assertTrue(result != 0.0);
+			    Assert.assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 			}
-			assertEquals(testResult[i],result,0.1);
+			Assert.assertEquals(testResult[i],result,0.1);
 		}
 	}
 	/**
@@ -484,7 +485,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-			assertNotNull(result);
+			Assert.assertNotNull(result);
 	        
 	        /*TODO:REACT: revision*/
 //			if(testResult[i] == 0.0)
@@ -493,7 +494,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 //				assertTrue(result != 0.0);
 //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 //			}
-			assertEquals(testResult[i],result,0.15);
+			Assert.assertEquals(testResult[i],result,0.15);
 		}
 	}
 	/**
@@ -514,7 +515,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-			assertNotNull(result);
+			Assert.assertNotNull(result);
 			
 	        /*TODO:REACT: revision*/
 //	        if(testResult[i] == 0.0)
@@ -523,7 +524,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 //				assertTrue(result != 0.0);
 //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 //			}
-			assertEquals(testResult[i],result,0.03);
+			Assert.assertEquals(testResult[i],result,0.03);
 		}
 	}
 	/**
@@ -547,10 +548,10 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		for (int i = 0 ; i < 5 ; i++){
 			double result1 = ((DoubleResult)descriptor1.calculate(mol1.getAtom(i), mol1).getValue()).doubleValue();
 			double result2 = ((DoubleResult)descriptor2.calculate(mol2.getAtom(5-i-1), mol2).getValue()).doubleValue();
-			assertNotNull(result1);
-			assertNotNull(result2);
+			Assert.assertNotNull(result1);
+			Assert.assertNotNull(result2);
 			
-			assertEquals(result1,result2, 0.0001);
+			Assert.assertEquals(result1,result2, 0.0001);
 		}
 	}
 
@@ -570,7 +571,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-			assertNotNull(result);
+			Assert.assertNotNull(result);
 			
 //			if(testResult[i] == 0.0)
 //				assertTrue(result == 0.0);
@@ -578,7 +579,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 //				assertTrue(result != 0.0);
 //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 //			}
-			assertEquals(testResult[i],result,0.02);
+			Assert.assertEquals(testResult[i],result,0.02);
 		}
 	}
 	/**
@@ -596,7 +597,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(mol);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-			assertNotNull(result);
+			Assert.assertNotNull(result);
 			
 //			TODO: REACT: revision
 //	        if(testResult[i] == 0.0)
@@ -605,7 +606,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 //				assertTrue(result != 0.0);
 //				assertEquals(getSign(testResult[i]),getSign(result), 0.00001);
 //			}
-			assertEquals(testResult[i],result,0.29);
+			Assert.assertEquals(testResult[i],result,0.29);
 		}
 	}
 
@@ -628,7 +629,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-			assertNotNull(result);
+			Assert.assertNotNull(result);
 			
 		}
 	}

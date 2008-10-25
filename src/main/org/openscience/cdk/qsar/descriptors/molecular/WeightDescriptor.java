@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -69,6 +70,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:weight
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptorTest")
 public class WeightDescriptor implements IMolecularDescriptor {
 
     private String elementName = "*";
@@ -212,6 +214,7 @@ public class WeightDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
     }

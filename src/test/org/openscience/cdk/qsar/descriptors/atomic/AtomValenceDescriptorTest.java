@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -56,6 +57,6 @@ public class AtomValenceDescriptorTest extends AtomicDescriptorTest {
         IAtomicDescriptor descriptor = new AtomValenceDescriptor();
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCl"); //
-        assertEquals(7, ((IntegerResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).intValue());
+        Assert.assertEquals(7, ((IntegerResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).intValue());
     }
 }

@@ -1,8 +1,8 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -25,15 +25,13 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
     public LengthOverBreadthDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(LengthOverBreadthDescriptorTest.class);
-    }
 
+    @Before
     public void setUp() throws Exception {
         setDescriptor(LengthOverBreadthDescriptor.class);
     }
 
-    public void testLOBDescriptorCholesterol() throws Exception {
+    @Test public void testLOBDescriptorCholesterol() throws Exception {
         String filename = "data/mdl/lobtest.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
@@ -47,7 +45,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(3.560092, result.get(1), 0.001);
     }
 
-    public void testLOBDescriptorCyclohexane() throws Exception {
+    @Test public void testLOBDescriptorCyclohexane() throws Exception {
         String filename = "data/mdl/lobtest.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
@@ -61,6 +59,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(1.0936984, result.get(1), 0.01);
     }
 
+    @Test
     public void testLOBDescriptorNaphthalene() throws Exception {
         String filename = "data/mdl/lobtest.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -75,7 +74,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(1.3083278, result.get(1), 0.01);
     }
 
-    public void testLOBDescriptorNButane() throws Exception {
+    @Test public void testLOBDescriptorNButane() throws Exception {
         String filename = "data/mdl/lobtest.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
@@ -92,7 +91,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
     /**
      * @cdk.bug 1965254
      */
-    public void testLOBDescriptor2() throws Exception {
+    @Test public void testLOBDescriptor2() throws Exception {
         String filename = "data/mdl/lobtest2.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);

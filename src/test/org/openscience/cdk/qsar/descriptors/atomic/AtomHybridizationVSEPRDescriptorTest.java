@@ -27,6 +27,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -79,11 +80,11 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
-        assertEquals(IAtomType.Hybridization.SP2.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
+        Assert.assertEquals(IAtomType.Hybridization.SP2.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
-        assertEquals(IAtomType.Hybridization.SP2.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(1),molecule).getValue()).intValue());
+        Assert.assertEquals(IAtomType.Hybridization.SP2.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(1),molecule).getValue()).intValue());
 
-        assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(2),molecule).getValue()).intValue());
+        Assert.assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(2),molecule).getValue()).intValue());
     }
 
     /**
@@ -108,11 +109,11 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
-        assertEquals(IAtomType.Hybridization.SP1.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
+        Assert.assertEquals(IAtomType.Hybridization.SP1.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
-        assertEquals(IAtomType.Hybridization.SP1.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(1),molecule).getValue()).intValue());
+        Assert.assertEquals(IAtomType.Hybridization.SP1.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(1),molecule).getValue()).intValue());
 
-        assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(2),molecule).getValue()).intValue());
+        Assert.assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(2),molecule).getValue()).intValue());
     }
 
     /**
@@ -139,11 +140,11 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
-        assertEquals(IAtomType.Hybridization.PLANAR3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
+        Assert.assertEquals(IAtomType.Hybridization.PLANAR3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
-        assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(1),molecule).getValue()).intValue());
+        Assert.assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(1),molecule).getValue()).intValue());
 
-        assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(2),molecule).getValue()).intValue());
+        Assert.assertEquals(IAtomType.Hybridization.SP3.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(2),molecule).getValue()).intValue());
     }
 
     /**
@@ -170,7 +171,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b2);
         molecule.addBond(b3);
 
-        assertEquals(IAtomType.Hybridization.SP2.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
+        Assert.assertEquals(IAtomType.Hybridization.SP2.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
     }
 
@@ -202,7 +203,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b3);
         molecule.addBond(b4);
 
-        assertEquals(IAtomType.Hybridization.SP3D2.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
+        Assert.assertEquals(IAtomType.Hybridization.SP3D2.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
     }
 
@@ -227,7 +228,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         molecule.addBond(b1);
         molecule.addBond(b2);
 
-        assertEquals(IAtomType.Hybridization.SP3D1.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
+        Assert.assertEquals(IAtomType.Hybridization.SP3D1.ordinal(), ((IntegerResult)descriptor.calculate(molecule.getAtom(0),molecule).getValue()).intValue());
 
     }
     /**
@@ -252,7 +253,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(mol);
 		
 		for(int i = 0 ; i < 3; i++){
-	        assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).intValue());
+		    Assert.assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).intValue());
 		}
     }
     /**
@@ -277,7 +278,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(mol);
 		
 		for(int i = 0 ; i < 3; i++){
-	        assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).intValue());
+		    Assert.assertEquals(testResult[i], ((IntegerResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).intValue());
 
 		}
     }

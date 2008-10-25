@@ -22,6 +22,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -114,6 +115,7 @@ import java.util.List;
  * @cdk.keyword XLogP
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptorTest")
 public class XLogPDescriptor implements IMolecularDescriptor {
 
     private boolean checkAromaticity = false;
@@ -960,6 +962,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
     }

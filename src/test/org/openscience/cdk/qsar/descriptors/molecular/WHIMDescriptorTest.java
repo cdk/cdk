@@ -19,21 +19,20 @@
 */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.InputStream;
-import java.util.List;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.qsar.descriptors.molecular.WHIMDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 
 /**
@@ -47,14 +46,12 @@ public class WHIMDescriptorTest extends MolecularDescriptorTest {
     public WHIMDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(WHIMDescriptorTest.class);
-    }
-    
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(WHIMDescriptor.class);
     }
 
+    @Test
     public void testWHIM() throws ClassNotFoundException, CDKException, java.lang.Exception {
         String filename = "data/hin/gravindex.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -72,17 +69,17 @@ public class WHIMDescriptorTest extends MolecularDescriptorTest {
             //logger.debug( retval.get(i) );
         }
 
-        fail("This descriptor is not tested.");
+        Assert.fail("This descriptor is not tested.");
         /*
-        assertEquals(1756.5060703860984, ((Double)retval.get(0)).doubleValue(), 0.00000001);
-        assertEquals(41.91069159994975,  ((Double)retval.get(1)).doubleValue(), 0.00000001);
-        assertEquals(12.06562671430088,  ((Double)retval.get(2)).doubleValue(), 0.00000001);
-        assertEquals(1976.6432599699767, ((Double)retval.get(3)).doubleValue(), 0.00000001);
-        assertEquals(44.45945636161082,  ((Double)retval.get(4)).doubleValue(), 0.00000001);
-        assertEquals(12.549972243701887, ((Double)retval.get(5)).doubleValue(), 0.00000001);
-        assertEquals(4333.097373073368,  ((Double)retval.get(6)).doubleValue(), 0.00000001);
-        assertEquals(65.82626658920714,  ((Double)retval.get(7)).doubleValue(), 0.00000001);
-        assertEquals(16.302948232909483, ((Double)retval.get(8)).doubleValue(), 0.00000001);
+        Assert.assertEquals(1756.5060703860984, ((Double)retval.get(0)).doubleValue(), 0.00000001);
+        Assert.assertEquals(41.91069159994975,  ((Double)retval.get(1)).doubleValue(), 0.00000001);
+        Assert.assertEquals(12.06562671430088,  ((Double)retval.get(2)).doubleValue(), 0.00000001);
+        Assert.assertEquals(1976.6432599699767, ((Double)retval.get(3)).doubleValue(), 0.00000001);
+        Assert.assertEquals(44.45945636161082,  ((Double)retval.get(4)).doubleValue(), 0.00000001);
+        Assert.assertEquals(12.549972243701887, ((Double)retval.get(5)).doubleValue(), 0.00000001);
+        Assert.assertEquals(4333.097373073368,  ((Double)retval.get(6)).doubleValue(), 0.00000001);
+        Assert.assertEquals(65.82626658920714,  ((Double)retval.get(7)).doubleValue(), 0.00000001);
+        Assert.assertEquals(16.302948232909483, ((Double)retval.get(8)).doubleValue(), 0.00000001);
         */
     }
 }

@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomException;
@@ -70,6 +71,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.keyword bond count, rotatable
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.RotatableBondsCountDescriptorTest")
 public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 	private boolean includeTerminals = false;
 
@@ -190,6 +192,7 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
     }

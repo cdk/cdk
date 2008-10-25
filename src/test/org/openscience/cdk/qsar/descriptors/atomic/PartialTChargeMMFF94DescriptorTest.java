@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Elements;
@@ -86,7 +87,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,METHOD_ERROR);
+			Assert.assertEquals(testResult[i],result,METHOD_ERROR);
 		}
 	}
 	/**
@@ -107,7 +108,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 
 		for (int i = 0 ; i < 6 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,METHOD_ERROR);
+			Assert.assertEquals(testResult[i],result,METHOD_ERROR);
 		}
 	}
 	/**
@@ -132,7 +133,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < 3 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,METHOD_ERROR);
+			Assert.assertEquals(testResult[i],result,METHOD_ERROR);
 		}
 	}
 	/**
@@ -153,7 +154,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 
 		for (int i = 0 ; i < 3 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,METHOD_ERROR);
+			Assert.assertEquals(testResult[i],result,METHOD_ERROR);
 		}
 	}
 	/**
@@ -175,7 +176,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 
 		for (int i = 0 ; i < 3 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,METHOD_ERROR);
+			Assert.assertEquals(testResult[i],result,METHOD_ERROR);
 		}
 	}
 	/**
@@ -215,7 +216,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < 12 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,METHOD_ERROR);
+			Assert.assertEquals(testResult[i],result,METHOD_ERROR);
 		}
 	}
 	/**
@@ -233,7 +234,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 
 		for (int i = 0 ; i < 3 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,METHOD_ERROR);
+			Assert.assertEquals(testResult[i],result,METHOD_ERROR);
 		}
 	}
 }

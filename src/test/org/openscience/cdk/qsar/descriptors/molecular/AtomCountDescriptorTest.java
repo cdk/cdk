@@ -23,8 +23,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -41,38 +42,36 @@ import org.openscience.cdk.smiles.SmilesParser;
 public class AtomCountDescriptorTest extends MolecularDescriptorTest {
 	
 	public  AtomCountDescriptorTest() {}
-    
-	public static Test suite() {
-		return new TestSuite(AtomCountDescriptorTest.class);
-	}
-	
-	public void setUp() throws Exception {
+
+	@Before
+    public void setUp() throws Exception {
 		setDescriptor(AtomCountDescriptor.class);
 	}
     
-	public void testCarbonCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testCarbonCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {"C"};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
         DescriptorValue value = descriptor.calculate(mol);
-        assertEquals(2, ((IntegerResult)value.getValue()).intValue());
-        assertEquals(1, value.getNames().length);
-        assertEquals("nC", value.getNames()[0]);
-        assertEquals(descriptor.getDescriptorNames()[0], value.getNames()[0]);
+        Assert.assertEquals(2, ((IntegerResult)value.getValue()).intValue());
+        Assert.assertEquals(1, value.getNames().length);
+        Assert.assertEquals("nC", value.getNames()[0]);
+        Assert.assertEquals(descriptor.getDescriptorNames()[0], value.getNames()[0]);
     }
 
-    public void testImplicitExplicitH() throws CDKException {
+    @Test public void testImplicitExplicitH() throws CDKException {
         Object[] params = {"*"};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C"); // ethanol
         DescriptorValue value = descriptor.calculate(mol);
-        assertEquals(5, ((IntegerResult)value.getValue()).intValue());
+        Assert.assertEquals(5, ((IntegerResult)value.getValue()).intValue());
 
         mol = sp.parseSmiles("[C]"); // ethanol
         value = descriptor.calculate(mol);
-        assertEquals(1, ((IntegerResult)value.getValue()).intValue());
+        Assert.assertEquals(1, ((IntegerResult)value.getValue()).intValue());
     }
 }
 

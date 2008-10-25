@@ -19,6 +19,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -71,6 +72,7 @@ import javax.vecmath.Point3d;
  * @cdk.dictref qsar-descriptors:petitjeanShapeIndex
  * @cdk.keyword Petit-Jean, shape index
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.PetitjeanShapeIndexDescriptorTest")
 public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
 
     private static final String[] names = {"topoShape", "geomShape"};
@@ -201,6 +203,7 @@ public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(2);
     }

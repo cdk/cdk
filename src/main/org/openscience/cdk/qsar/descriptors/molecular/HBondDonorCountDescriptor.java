@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -72,6 +73,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:hBondDonors
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptorTest")
 public class HBondDonorCountDescriptor implements IMolecularDescriptor {
     private static final String[] names = {"nHBDon"};
 
@@ -184,6 +186,7 @@ public class HBondDonorCountDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
     }

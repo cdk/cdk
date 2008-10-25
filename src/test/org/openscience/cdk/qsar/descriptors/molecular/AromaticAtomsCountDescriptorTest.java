@@ -23,21 +23,19 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.util.Iterator;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.descriptors.molecular.AromaticAtomsCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+
+import java.util.Iterator;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -50,28 +48,26 @@ public class AromaticAtomsCountDescriptorTest extends MolecularDescriptorTest {
     public AromaticAtomsCountDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(AromaticAtomsCountDescriptorTest.class);
-    }
-    
-    public void setUp() throws Exception {
+    @Before public void setUp() throws Exception {
     	setDescriptor(AromaticAtomsCountDescriptor.class);
     }
 
-    public void testAromaticAtomsCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        Object[] params = {new Boolean(true)};
+    @Test
+    public void testAromaticAtomsCountDescriptor() throws java.lang.Exception {
+        Object[] params = {true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCOc1ccccc1"); // ethanol
-        assertEquals(6, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
-    
+
+    @Test
     public void testViaFlags() throws Exception {
     	IMolecule molecule = MoleculeFactory.makeBenzene();
     	for (Iterator atoms=molecule.atoms().iterator(); atoms.hasNext();) {
     		((IAtom)atoms.next()).setFlag(CDKConstants.ISAROMATIC, true);
     	}
-    	assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
+    	Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
     }
 }
 

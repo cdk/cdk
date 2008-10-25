@@ -23,13 +23,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -41,19 +40,17 @@ public class HBondDonorCountDescriptorTest extends MolecularDescriptorTest {
     public HBondDonorCountDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(HBondDonorCountDescriptorTest.class);
-    }
-
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(HBondDonorCountDescriptor.class);
     }
 
+    @Test
     public void testHBondDonorCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("Oc1ccccc1"); //
-        assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 }

@@ -1,17 +1,16 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import javax.vecmath.Point2d;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.descriptors.molecular.ChiClusterDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
+
+import javax.vecmath.Point2d;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -24,14 +23,12 @@ public class ChiClusterDescriptorTest extends MolecularDescriptorTest {
     public ChiClusterDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(ChiClusterDescriptorTest.class);
-    }
-
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(ChiClusterDescriptor.class);
     }
 
+    @Test
     public void testDan64() throws CDKException {
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");
@@ -57,17 +54,17 @@ public class ChiClusterDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
-        assertEquals(0.2887, ret.get(0), 0.0001);
-        assertEquals(0.0000, ret.get(1), 0.0001);
-        assertEquals(0.0000, ret.get(2), 0.0001);
-        assertEquals(0.0000, ret.get(3), 0.0001);
-        assertEquals(0.1667, ret.get(4), 0.0001);
-        assertEquals(0.0000, ret.get(5), 0.0001);
-        assertEquals(0.0000, ret.get(6), 0.0001);
-        assertEquals(0.0000, ret.get(7), 0.0001);
+        Assert.assertEquals(0.2887, ret.get(0), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(1), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(2), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(3), 0.0001);
+        Assert.assertEquals(0.1667, ret.get(4), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(5), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(6), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(7), 0.0001);
     }
 
-    public void testDan154() throws CDKException {
+    @Test public void testDan154() throws CDKException {
 
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");
@@ -113,17 +110,17 @@ public class ChiClusterDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
-        assertEquals(0.5774, ret.get(0), 0.0001);
-        assertEquals(0.0000, ret.get(1), 0.0001);
-        assertEquals(0.0000, ret.get(2), 0.0001);
-        assertEquals(0.0000, ret.get(3), 0.0001);
-        assertEquals(0.3780, ret.get(4), 0.0001);
-        assertEquals(0.0000, ret.get(5), 0.0001);
-        assertEquals(0.0000, ret.get(6), 0.0001);
-        assertEquals(0.0000, ret.get(7), 0.0001);
+        Assert.assertEquals(0.5774, ret.get(0), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(1), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(2), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(3), 0.0001);
+        Assert.assertEquals(0.3780, ret.get(4), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(5), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(6), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(7), 0.0001);
     }
 
-    public void testDan248() throws CDKException {
+    @Test public void testDan248() throws CDKException {
 
         IMolecule mol = new Molecule();
         IAtom a1 = mol.getBuilder().newAtom("C");
@@ -179,31 +176,31 @@ public class ChiClusterDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult ret = (DoubleArrayResult) descriptor.calculate(mol).getValue();
 
-        assertEquals(1.7845, ret.get(0), 0.0001);
-        assertEquals(0.2500, ret.get(1), 0.0001);
-        assertEquals(0.0000, ret.get(2), 0.0001);
-        assertEquals(0.0000, ret.get(3), 0.0001);
-        assertEquals(1.4946, ret.get(4), 0.0001);
-        assertEquals(0.2500, ret.get(5), 0.0001);
-        assertEquals(0.0000, ret.get(6), 0.0001);
-        assertEquals(0.0000, ret.get(7), 0.0001);
+        Assert.assertEquals(1.7845, ret.get(0), 0.0001);
+        Assert.assertEquals(0.2500, ret.get(1), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(2), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(3), 0.0001);
+        Assert.assertEquals(1.4946, ret.get(4), 0.0001);
+        Assert.assertEquals(0.2500, ret.get(5), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(6), 0.0001);
+        Assert.assertEquals(0.0000, ret.get(7), 0.0001);
     }
 
-//    public void testDan277() throws CDKException {
+//    @Test public void testDan277() throws CDKException {
 //
 //        IMolecule mol = null;
 //
 //        ChiClusterDescriptor desc = new ChiClusterDescriptor();
 //        DoubleArrayResult ret = (DoubleArrayResult) desc.calculate(mol).getValue();
 //
-//        assertEquals(0.0000, ret.get(0), 0.0001);
-//        assertEquals(0.0000, ret.get(1), 0.0001);
-//        assertEquals(0.0000, ret.get(2), 0.0001);
-//        assertEquals(0.08333, ret.get(3), 0.00001);
-//        assertEquals(0.0000, ret.get(4), 0.0001);
-//        assertEquals(0.0000, ret.get(5), 0.0001);
-//        assertEquals(0.0000, ret.get(6), 0.0001);
-//        assertEquals(0.02778, ret.get(7), 0.00001);
+//        Assert.assertEquals(0.0000, ret.get(0), 0.0001);
+//        Assert.assertEquals(0.0000, ret.get(1), 0.0001);
+//        Assert.assertEquals(0.0000, ret.get(2), 0.0001);
+//        Assert.assertEquals(0.08333, ret.get(3), 0.00001);
+//        Assert.assertEquals(0.0000, ret.get(4), 0.0001);
+//        Assert.assertEquals(0.0000, ret.get(5), 0.0001);
+//        Assert.assertEquals(0.0000, ret.get(6), 0.0001);
+//        Assert.assertEquals(0.02778, ret.get(7), 0.00001);
 //    }
 
 }

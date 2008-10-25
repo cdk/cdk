@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -70,6 +71,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.keyword polarizability, atomic
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.APolDescriptorTest")
 public class APolDescriptor implements IMolecularDescriptor {
 
     private LoggingTool logger;
@@ -159,6 +161,7 @@ public class APolDescriptor implements IMolecularDescriptor {
      *@throws CDKException if there is an error in getting element symbols from the
      * {@link IsotopeFactory}
      */
+    @TestMethod("testAPolDescriptorTest")
     public DescriptorValue calculate(IAtomContainer container) {
         double apol = 0;
         int atomicNumber = 0;
@@ -194,6 +197,7 @@ public class APolDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
     }

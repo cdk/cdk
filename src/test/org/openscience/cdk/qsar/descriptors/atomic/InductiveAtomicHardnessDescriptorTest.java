@@ -28,6 +28,7 @@ import javax.vecmath.Point3d;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
@@ -90,7 +91,7 @@ public class InductiveAtomicHardnessDescriptorTest extends AtomicDescriptorTest 
 		IAtomicDescriptor descriptor  = new InductiveAtomicHardnessDescriptor();
 		
 		double retval = ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
-		assertEquals(testResult[0], retval, 0.1);
+		Assert.assertEquals(testResult[0], retval, 0.1);
 	}
 }
 

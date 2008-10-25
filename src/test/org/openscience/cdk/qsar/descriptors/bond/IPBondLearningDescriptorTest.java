@@ -23,6 +23,7 @@ package org.openscience.cdk.qsar.descriptors.bond;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -59,7 +60,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
 	 *  A unit test for JUnit
 	 */
     public void testIPBondLearningDescriptor(){
-    	assertNotNull(descriptor);
+        Assert.assertNotNull(descriptor);
     }
     
     /**
@@ -75,7 +76,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getBond(3),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.80; 
-        assertEquals(result, resultAccordingNIST, 0.051);
+        Assert.assertEquals(result, resultAccordingNIST, 0.051);
     }
     /**
 	 *  A unit test for JUnit with CC1CCC=C1
@@ -90,7 +91,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getBond(4),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.95; 
-        assertEquals(result, resultAccordingNIST, 0.1);
+        Assert.assertEquals(result, resultAccordingNIST, 0.1);
     }
     /**
 	 *  A unit test for JUnit with C=CCCCC
@@ -105,7 +106,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.44; 
-        assertEquals(result, resultAccordingNIST, 0.3);
+        Assert.assertEquals(result, resultAccordingNIST, 0.3);
     }
     /**
      * A unit test for JUnit with C=CCCCC
@@ -126,7 +127,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.44; 
         
-        assertEquals(resultAccordingNIST, result, 0.3);
+        Assert.assertEquals(resultAccordingNIST, result, 0.3);
 		
     }
     /**
@@ -147,7 +148,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 0.0; 
         
-        assertEquals(resultAccordingNIST, result, 0.0001);
+        Assert.assertEquals(resultAccordingNIST, result, 0.0001);
     }
     /**
      * A unit test for JUnit with C#CCC
@@ -166,7 +167,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.44; 
-        assertEquals(resultAccordingNIST, result, 0.75);
+        Assert.assertEquals(resultAccordingNIST, result, 0.75);
     }
     /**
      * A unit test for JUnit with C(#CC(C)(C)C)C(C)(C)C
@@ -185,7 +186,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.98; 
-        assertEquals(resultAccordingNIST, result, 0.1);
+        Assert.assertEquals(resultAccordingNIST, result, 0.1);
     }
     /**
      * A unit test for JUnit with C=C(C=CC)C
@@ -204,11 +205,11 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 8.47; 
-        assertEquals(resultAccordingNIST, result, 0.6);
+        Assert.assertEquals(resultAccordingNIST, result, 0.6);
         
         result= ((DoubleResult)descriptor.calculate(mol.getBond(2),mol).getValue()).doubleValue();
         resultAccordingNIST = 8.47; 
-        assertEquals(resultAccordingNIST, result, 0.4);
+        Assert.assertEquals(resultAccordingNIST, result, 0.4);
     }
     
     /**
@@ -228,7 +229,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
         double resultAccordingNIST = 9.072; 
-        assertEquals(resultAccordingNIST, result, 2.11);
+        Assert.assertEquals(resultAccordingNIST, result, 2.11);
         
     }
     

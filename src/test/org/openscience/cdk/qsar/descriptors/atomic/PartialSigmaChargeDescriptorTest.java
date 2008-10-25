@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.junit.Assert;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -94,7 +95,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.003);
+			Assert.assertEquals(testResult[i],result,0.003);
 		}
 	}
 	/**
@@ -116,7 +117,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		addExplicitHydrogens(molecule);
 		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.001);
+			Assert.assertEquals(testResult[i],result,0.001);
 		}
 	}
 	/**
@@ -137,7 +138,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.001);
+			Assert.assertEquals(testResult[i],result,0.001);
 		}
 	}
 	/**
@@ -158,7 +159,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 
 		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.01);
+			Assert.assertEquals(testResult[i],result,0.01);
 		}
 	}
 	/**
@@ -179,7 +180,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 
 		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.001);
+			Assert.assertEquals(testResult[i],result,0.001);
 		}
 	}
 	/**
@@ -203,7 +204,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(molecule);
 		
 		double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(3), molecule).getValue()).doubleValue();
-		assertEquals(testResult,result,0.01);
+		Assert.assertEquals(testResult,result,0.01);
 	}
 	/**
 	 *  A unit test for JUnit with Isopentyl iodide
@@ -219,7 +220,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < 6 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.001);
+			Assert.assertEquals(testResult[i],result,0.001);
 		}
 	}
 	/**
@@ -245,7 +246,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		lpcheck.saturate(molecule);
 		
 		double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(2), molecule).getValue()).doubleValue();
-		assertEquals(testResult,result,0.01);
+		Assert.assertEquals(testResult,result,0.01);
 	}
 	/**
 	 *  A unit test for JUnit with Ethanolamine
@@ -269,7 +270,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < 4 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.01);
+			Assert.assertEquals(testResult[i],result,0.01);
 		}
 	}
 	/**
@@ -294,7 +295,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < 4 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.01);
+			Assert.assertEquals(testResult[i],result,0.01);
 		}
 	}
 	/**
@@ -307,7 +308,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.003);
+			Assert.assertEquals(testResult[i],result,0.003);
 		}
 	}
 	/**
@@ -321,7 +322,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		descriptor.setParameters(object);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.2);
+			Assert.assertEquals(testResult[i],result,0.2);
 		}
 	}
 	/**
@@ -334,7 +335,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.2);
+			Assert.assertEquals(testResult[i],result,0.2);
 		}
 	}
 	/**
@@ -359,7 +360,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.003);
+			Assert.assertEquals(testResult[i],result,0.003);
 		}
 	}
 	/**
@@ -391,7 +392,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i), molecule).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.03);
+			Assert.assertEquals(testResult[i],result,0.03);
 		}
 	}
 	/**
@@ -406,7 +407,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 //			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
-			assertEquals(testResult[i],result,0.3);
+			Assert.assertEquals(testResult[i],result,0.3);
 		}
 	}
 	/**
@@ -421,7 +422,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i), mol).getValue()).doubleValue();
 //			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
-			assertEquals(testResult[i],result,0.05);
+			Assert.assertEquals(testResult[i],result,0.05);
 		}
 	}
 }

@@ -21,6 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import Jama.EigenvalueDecomposition;
 import Jama.Matrix;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -84,6 +85,7 @@ import javax.vecmath.Point3d;
  * @cdk.dictref      qsar-descriptors:momentOfInertia
  * @cdk.keyword      moment of inertia
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.MomentOfInertiaDescriptorTest")
 public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
 
     private LoggingTool logger;
@@ -276,6 +278,7 @@ public class MomentOfInertiaDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(7);
     }

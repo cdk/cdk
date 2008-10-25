@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -35,6 +37,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module    extra
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.PeriodicTableElementTest")
 public class PeriodicTableElement extends Element
 {
 	
@@ -108,7 +111,8 @@ public class PeriodicTableElement extends Element
 	 *
 	 * @param symbol The symbol of the element
 	 */
-	public PeriodicTableElement(String symbol)
+    @TestMethod("testConstructor")
+    public PeriodicTableElement(String symbol)
 	{
 		this.symbol = symbol;
 		logger = new LoggingTool(this);
@@ -120,7 +124,8 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #setName
 	*/
-	public String getName() 
+    @TestMethod("testName")
+    public String getName()
 	{
 		return this.name;
 	}
@@ -132,7 +137,8 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #getName
 	*/
-	public void setName(String name) 
+    @TestMethod("testName")
+    public void setName(String name)
 	{
 		this.name=name;
 		notifyChanged();
@@ -145,7 +151,8 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #setChemicalSerie
 	*/
-	public String getChemicalSerie() 
+    @TestMethod("testSeries")
+    public String getChemicalSerie()
 	{
 		return this.chemicalSerie;
 	}
@@ -157,7 +164,8 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #getChemicalSerie
 	*/
-	public void setChemicalSerie(String chemicalSerie) 
+    @TestMethod("testSeries")
+    public void setChemicalSerie(String chemicalSerie)
 	{
 		this.chemicalSerie = chemicalSerie;
 		notifyChanged();
@@ -170,7 +178,8 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #setPeriod
 	*/
-	public String getPeriod() 
+    @TestMethod("testPeriod")
+    public String getPeriod()
 	{
 		return this.period;
 	}
@@ -182,7 +191,8 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #getPeriod
 	*/
-	public void setPeriod(String period) 
+    @TestMethod("testPeriod")
+    public void setPeriod(String period)
 	{
 		this.period = period;
 		notifyChanged();
@@ -195,7 +205,8 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #setGroup
 	*/
-	public String getGroup() 
+    @TestMethod("testGroup")
+    public String getGroup()
 	{
 		return this.group;
 	}
@@ -207,7 +218,8 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #getGroup
 	*/
-	public void setGroup(String group) 
+    @TestMethod("testGroup")
+    public void setGroup(String group)
 	{
 		this.group = group;
 		notifyChanged();
@@ -220,7 +232,8 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #setPhase
 	*/
-	public String getPhase() 
+    @TestMethod("testPhase")
+    public String getPhase()
 	{
 		return this.phase;
 	}
@@ -233,7 +246,8 @@ public class PeriodicTableElement extends Element
 	* @see    #getGroup
 	* @see #getPhase
 	*/
-	public void setPhase(String  phase) 
+    @TestMethod("testPhase")
+    public void setPhase(String  phase)
 	{
 		this.phase = phase;
 		notifyChanged();
@@ -246,7 +260,8 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #setCASid
 	*/
-	public String getCASid() 
+    @TestMethod("testCASid")
+    public String getCASid()
 	{
 		return this.casId;
 	}
@@ -258,7 +273,8 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #getCASid
 	*/
-	public void setCASid(String  casId) 
+    @TestMethod("testCASid")
+    public void setCASid(String  casId)
 	{
 		this.casId = casId;
 		notifyChanged();
@@ -269,6 +285,7 @@ public class PeriodicTableElement extends Element
      *
      * @return The VdW radius, or null if it is unavailable
      */
+    @TestMethod("testVdw")
     public Double getVdwRadius() {
         return vdwRadius;
     }
@@ -278,6 +295,7 @@ public class PeriodicTableElement extends Element
      *
      * @param vdwRadius  The VdW radius
      */
+    @TestMethod("testVdw")
     public void setVdwRadius(Double vdwRadius) {
         this.vdwRadius = vdwRadius;
     }
@@ -287,6 +305,7 @@ public class PeriodicTableElement extends Element
      *
      * @return the covalent radius, or null if it is unavailable
      */
+    @TestMethod("testCovalent")
     public Double getCovalentRadius() {
         return covalentRadius;
     }
@@ -296,6 +315,7 @@ public class PeriodicTableElement extends Element
      *
      * @param covalentRadius the covalent radius
      */
+    @TestMethod("testCovalent")
     public void setCovalentRadius(Double covalentRadius) {
         this.covalentRadius = covalentRadius;
     }
@@ -305,6 +325,7 @@ public class PeriodicTableElement extends Element
      *
      * @return   The electronegativity, null if not available for the element
      */
+    @TestMethod("testEneg")
     public Double getPaulingEneg() {
         return paulingEneg;
     }
@@ -314,24 +335,25 @@ public class PeriodicTableElement extends Element
      *
      * @param paulingEneg The electronegativity
      */
+    @TestMethod("testEneg")
     public void setPaulingEneg(Double paulingEneg) {
         this.paulingEneg = paulingEneg;
     }
 
     /**
-         * Clones this element object.
-         *
-         * @return  The cloned object   
-         */
-	 public Object clone() throws CloneNotSupportedException 
-	 {
-		 Object clone = null;
-		 try {
-			 clone = super.clone();
-		 } catch (Exception exception) {
-			 logger.debug(exception);
-		 }
-		 return clone;
+     * Clones this element object.
+     *
+     * @return The cloned object
+     */
+    @TestMethod("testClone")
+    public Object clone() throws CloneNotSupportedException {
+        Object clone = null;
+        try {
+            clone = super.clone();
+        } catch (Exception exception) {
+            logger.debug(exception);
+        }
+        return clone;
 	 }
 	 /**
 	 *  Configures an element. Finds the correct element type
@@ -340,7 +362,8 @@ public class PeriodicTableElement extends Element
 	 *@param  elementPT   The element of the Periodic Table to be configure
 	 *@return element     The configured element
 	 */
-	 public static Element configure(PeriodicTableElement elementPT)
+     @TestMethod("testConfigure")
+     public static Element configure(PeriodicTableElement elementPT)
 	 {
 		Element element = new Element(elementPT.getSymbol());
 		
@@ -354,15 +377,16 @@ public class PeriodicTableElement extends Element
 		//element.setCASid(ElementInt.getCASid());
 		return element;
 	}
-    	/**
-	*
-	*@return resultString  String
-	*/
-	public String toString() 
-	{
+
+    /**
+     *
+     *@return resultString  String
+     */
+    @TestMethod("testString")
+    public String toString() {
 		StringBuffer resultString = new StringBuffer();
 		resultString.append("PeriodicTableElement(");
-		
+
 		resultString.append(getSymbol());
 		resultString.append(", AN:"); resultString.append(getAtomicNumber());
 		resultString.append(", N:"); resultString.append(getName());

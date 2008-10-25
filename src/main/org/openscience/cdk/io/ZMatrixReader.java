@@ -28,29 +28,18 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.StringTokenizer;
-
-import javax.vecmath.Point3d;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.ZMatrixTools;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.ZMatrixFormat;
+
+import javax.vecmath.Point3d;
+import java.io.*;
+import java.util.StringTokenizer;
 
 /**
  * It reads Z matrices like in Gaussian input files. It seems that it cannot
@@ -107,9 +96,9 @@ public class ZMatrixReader extends DefaultChemObjectReader {
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemFile.class.equals(interfaces[i])) return true;
-		}
+        for (Class anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
+        }
 		return false;
 	}
 
@@ -120,12 +109,12 @@ public class ZMatrixReader extends DefaultChemObjectReader {
    *  The function supports only reading of ChemFile's.
    *
    * @param     object  IChemObject that types the class to return.
-   * @throws    Exception when a IChemObject is requested that cannot be read.
+   * @throws    CDKException when a IChemObject is requested that cannot be read.
    */
   public IChemObject read(IChemObject object) throws CDKException 
   {
     if (object instanceof IChemFile) 
-      return (IChemObject)readChemFile((IChemFile)object);
+      return readChemFile((IChemFile)object);
     else 
       throw new CDKException("Only ChemFile objects can be read.");
   }
@@ -134,12 +123,13 @@ public class ZMatrixReader extends DefaultChemObjectReader {
    *  Private method that actually parses the input to read a ChemFile
    *  object.
    *
+   * @param file  the file to read from
    * @return A ChemFile containing the data parsed from input.
    */
   private IChemFile readChemFile(IChemFile file) {
     IChemSequence chemSequence = file.getBuilder().newChemSequence();
         
-    int number_of_atoms = 0;
+    int number_of_atoms;
     StringTokenizer tokenizer;
         
     try 
@@ -199,28 +189,28 @@ public class ZMatrixReader extends DefaultChemObjectReader {
             else if (i==1)
             {
               types[i] = tokenizer.nextToken();
-              d_atom[i] = (Integer.valueOf(tokenizer.nextToken())).intValue()-1;
-              d[i] = (new Double(tokenizer.nextToken())).doubleValue();
+              d_atom[i] = Integer.valueOf(tokenizer.nextToken()) -1;
+              d[i] = new Double(tokenizer.nextToken());
               i++;
             }
             else if (i==2)
             {
               types[i] = tokenizer.nextToken();
-              d_atom[i] = (Integer.valueOf(tokenizer.nextToken())).intValue()-1;
-              d[i] = (new Double(tokenizer.nextToken())).doubleValue();
-              a_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
-              a[i] = (new Double(tokenizer.nextToken())).doubleValue();
+              d_atom[i] = Integer.valueOf(tokenizer.nextToken()) -1;
+              d[i] = new Double(tokenizer.nextToken());
+              a_atom[i] = new Integer(tokenizer.nextToken()) -1;
+              a[i] = new Double(tokenizer.nextToken());
               i++;
             }
             else
             {
               types[i] = tokenizer.nextToken();
-              d_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
-              d[i] = (new Double(tokenizer.nextToken())).doubleValue();
-              a_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
-              a[i] = (new Double(tokenizer.nextToken())).doubleValue();
-              da_atom[i] = (new Integer(tokenizer.nextToken())).intValue()-1;
-              da[i] = (new Double(tokenizer.nextToken())).doubleValue();
+              d_atom[i] = new Integer(tokenizer.nextToken()) -1;
+              d[i] = new Double(tokenizer.nextToken());
+              a_atom[i] = new Integer(tokenizer.nextToken()) -1;
+              a[i] = new Double(tokenizer.nextToken());
+              da_atom[i] = new Integer(tokenizer.nextToken()) -1;
+              da[i] = new Double(tokenizer.nextToken());
               i++;
             }
           }

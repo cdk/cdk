@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -62,6 +63,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:vAdjMa
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.VAdjMaDescriptorTest")
 public class VAdjMaDescriptor implements IMolecularDescriptor {
     private static final String[] names = {"VAdjMat"};
 
@@ -140,6 +142,7 @@ public class VAdjMaDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0); 
     }

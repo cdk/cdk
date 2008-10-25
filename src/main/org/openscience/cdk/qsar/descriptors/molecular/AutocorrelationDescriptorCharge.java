@@ -23,6 +23,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
@@ -48,6 +49,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.bug     1728862
  */
 
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorChargeTest")
 public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
 
     private static final String[] names = {"ATSc1", "ATSc2", "ATSc3", "ATSc4", "ATSc5"};
@@ -131,6 +133,7 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
                 "The Chemistry Development Kit");
     }
 
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(5);
     }

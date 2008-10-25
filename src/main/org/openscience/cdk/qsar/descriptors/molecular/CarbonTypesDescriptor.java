@@ -1,5 +1,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -14,7 +15,6 @@ import org.openscience.cdk.qsar.result.IntegerArrayResultType;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -55,9 +55,8 @@ import java.util.List;
  * @cdk.keyword topological bond order ctypes
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.CarbonTypesDescriptorTest")
 public class CarbonTypesDescriptor implements IMolecularDescriptor {
-
-    private LoggingTool logger;
 
 
     private final static String[] names = {
@@ -67,7 +66,7 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
     };
     
     public CarbonTypesDescriptor() {
-        logger = new LoggingTool(this);
+        LoggingTool logger = new LoggingTool(this);
     }
 
     public DescriptorSpecification getSpecification() {
@@ -134,7 +133,7 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
      * @param container Parameter is the atom container.
      * @return An ArrayList containing 9 elements in the order described above
      */
-
+    @TestMethod("testButane,testComplex1,testComplex2")
     public DescriptorValue calculate(IAtomContainer container) {
         int c1sp1 = 0;
         int c2sp1 = 0;
@@ -146,9 +145,7 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
         int c3sp3 = 0;
         int c4sp3 = 0;
 
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : container.atoms()) {
             if (!atom.getSymbol().equals("C") && !atom.getSymbol().equals("c")) continue;
             List<IAtom> connectedAtoms = container.getConnectedAtomsList(atom);
 
@@ -207,6 +204,7 @@ public class CarbonTypesDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerArrayResultType(9);
     }

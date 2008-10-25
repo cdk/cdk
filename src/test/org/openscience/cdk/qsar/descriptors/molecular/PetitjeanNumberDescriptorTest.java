@@ -23,13 +23,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanNumberDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -43,26 +42,24 @@ public class PetitjeanNumberDescriptorTest extends MolecularDescriptorTest {
 
     public PetitjeanNumberDescriptorTest() {
     }
-
-    public static Test suite() {
-        return new TestSuite(PetitjeanNumberDescriptorTest.class);
-    }
-
+    
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(PetitjeanNumberDescriptor.class);
     }
 
+    @Test
     public void testPetitjeanNumberDescriptor() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
         AtomContainerManipulator.removeHydrogens(mol);
-        assertEquals(0.33333334, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
+        Assert.assertEquals(0.33333334, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 
-    public void testSingleAtomCase() throws CDKException {
+    @Test public void testSingleAtomCase() throws CDKException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O");
-        assertEquals(0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
+        Assert.assertEquals(0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 }
 

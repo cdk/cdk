@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -62,6 +63,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:aromaticAtomsCount
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.AromaticAtomsCountDescriptorTest")
 public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = false;
     private static final String[] names = {"naAromAtom"};
@@ -149,6 +151,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
      *@return                   the number of aromatic atoms of this AtomContainer
      *@see #setParameters
      */
+    @TestMethod("testAromaticAtomsCountDescriptor,testViaFlags")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
         try {
@@ -197,6 +200,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
     }

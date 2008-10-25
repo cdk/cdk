@@ -27,6 +27,7 @@ import Jama.EigenvalueDecomposition;
 import Jama.Matrix;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
@@ -123,6 +124,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.keyword BCUT
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptorTest")
 public class BCUTDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
 
@@ -474,6 +476,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(6);
     }
