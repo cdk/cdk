@@ -21,6 +21,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -56,6 +57,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
 		super.setDescriptor(descriptorClass);
 	}
 
+    @Test
     public void testCalculate_IAtomContainer() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
 
@@ -66,6 +68,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
             Assert.fail("A descriptor must not throw an exception");
         }
         Assert.assertNotNull(v);
+        assert v != null;
         Assert.assertNotSame(
         	"The descriptor did not calculate any value.",
         	0, v.getValue().length()
@@ -77,7 +80,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
 	 * 
 	 * @throws Exception Passed on from calculate.
 	 */
-    public void testLabels() throws Exception {
+    @Test public void testLabels() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         
         DescriptorValue v = descriptor.calculate(mol.getAtom(1), mol);
@@ -91,15 +94,15 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
         	"At least one label must be given.",
         	0, names.length
         );
-        for (int i=0; i<names.length; i++) {
+        for (String name : names) {
             Assert.assertNotNull(
-        		"A descriptor label may not be null.",
-        		names[i]
-        	);
-        	Assert.assertNotSame(
-        		"The label string must not be empty.",
-        		0, names[i].length()
-        	);
+                    "A descriptor label may not be null.",
+                    name
+            );
+            Assert.assertNotSame(
+                    "The label string must not be empty.",
+                    0, name.length()
+            );
 //        	System.out.println("Label: " + names[i]);
         }
         Assert.assertNotNull(v.getValue());
@@ -116,7 +119,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
      * Also ensure that the number of actual values matches the length
      * of the names
      */
-    public void testNamesConsistency() {
+    @Test public void testNamesConsistency() {
         IAtomContainer mol = someoneBringMeSomeWater();
 
         String[] names1 = descriptor.getDescriptorNames();
@@ -130,7 +133,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
         Assert.assertEquals(valueCount, names1.length);        
     }
 
-    public void testCalculate_NoModifications() throws Exception {
+    @Test public void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         IAtom atom = mol.getAtom(1);
         IAtom clone = (IAtom)mol.getAtom(1).clone();
