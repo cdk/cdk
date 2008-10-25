@@ -1,26 +1,20 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.io.InputStream;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GHR_topol;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+
+import java.io.InputStream;
 
 /**
  * @cdk.module test-qsaratomic
@@ -30,15 +24,13 @@ public class RDFProtonDescriptor_GHR_topolTest extends AtomicDescriptorTest {
 	public RDFProtonDescriptor_GHR_topolTest() {
     }
 
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(RDFProtonDescriptor_GHR_topol.class);
     }
     
-	public static Test suite() {
-		return new TestSuite(RDFProtonDescriptor_GHR_topolTest.class);
-	}
-    
-	public void testExample1() throws Exception {
+	@Test
+    public void testExample1() throws Exception {
 		//firstly read file to molecule		
 		String filename = "data/mdl/hydroxyamino.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -63,6 +55,7 @@ public class RDFProtonDescriptor_GHR_topolTest extends AtomicDescriptorTest {
 		}
 	}
 
+    @Test
     public void testReturnsNaNForNonHydrogen() throws Exception {
         IMolecule mol = new Molecule();
         IAtom atom = new Atom("O");

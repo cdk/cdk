@@ -23,19 +23,17 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import javax.vecmath.Point3d;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.InductiveAtomicSoftnessDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+
+import javax.vecmath.Point3d;
 
 /**
  * @cdk.module test-qsaratomic
@@ -44,15 +42,13 @@ public class InductiveAtomicSoftnessDescriptorTest extends AtomicDescriptorTest 
 	
 	public  InductiveAtomicSoftnessDescriptorTest() {}
     
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(InductiveAtomicSoftnessDescriptor.class);
     }
-    
-	public static Test suite() {
-		return new TestSuite(InductiveAtomicSoftnessDescriptorTest.class);
-	}
 	
-	public void testInductiveAtomicSoftnessDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testInductiveAtomicSoftnessDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.78};
 		
 		Point3d c_coord=new Point3d(1.392, 0.0, 0.0);

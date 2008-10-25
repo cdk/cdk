@@ -23,10 +23,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -59,11 +58,9 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	 *
 	 *@return    The test suite
 	 */
-	public static Test suite() {
-		return new TestSuite(PartialSigmaChargeDescriptorTest.class);
-	}
 	
-	public void setUp() throws Exception {
+	@Before
+    public void setUp() throws Exception {
 		setDescriptor(PartialSigmaChargeDescriptor.class);
 		Integer[] params = {6};
         descriptor.setParameters(params);
@@ -74,7 +71,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
 	 */
-	public void testPartialSigmaChargeDescriptor_Fluoroethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor_Fluoroethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.2138,0.079,0.0942,-0.072,0.0563,0.0563};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
 		IMolecule molecule = builder.newMolecule();
@@ -103,7 +101,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
 	 */
-	public void testPartialSigmaChargeDescriptor_Methyl_Floride() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor_Methyl_Floride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.07915,-0.25264,0.05783,0.05783,0.05783};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
 		IMolecule molecule = builder.newMolecule();
@@ -125,7 +124,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi  InChI=1/CH3Cl/c1-2/h1H3
 	 */
-	public void testPartialSigmaChargeDescriptor_Methyl_chloride() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor_Methyl_chloride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0382,-0.1755,0.0457,0.0457,0.0457};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 
 		IMolecule molecule = builder.newMolecule();
@@ -146,7 +146,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi  InChI=1/CH3Br/c1-2/h1H3
 	 */
-	public void testPartialSigmaChargeDescriptor_Methyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor_Methyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.021,-0.1448,0.0413,0.0413,0.0413};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
 		IMolecule molecule = builder.newMolecule();
@@ -167,7 +168,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi 
 	 */
-	public void testPartialSigmaChargeDescriptor_Methyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor_Methyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.0116,-0.0892,0.0336,0.0336,0.0336};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
 		IMolecule molecule = builder.newMolecule();
@@ -188,7 +190,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi  InChI=1/C3H5Br/c1-2-3-4/h2H,1,3H2
 	 */
-	public void testPartialSigmaChargeDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double testResult = -0.1366;/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
 		IMolecule molecule = builder.newMolecule();
@@ -211,7 +214,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi  InChI=1/C5H11I/c1-5(2)3-4-6/h5H,3-4H2,1-2H3 
 	 */
-	public void testPartialSigmaChargeDescriptor_Isopentyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor_Isopentyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.0458,-0.0623,-0.0623,-0.0415,0.0003,-0.0855}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -228,7 +232,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi  InChI=1/C4H10O/c1-3-5-4-2/h3-4H2,1-2H3
 	 */
-	public void testPartialSigmaChargeDescriptor_Ethoxy_ethane() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor_Ethoxy_ethane() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double testResult = -0.3809; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
 		IMolecule molecule = builder.newMolecule();
@@ -253,7 +258,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi  InChI=1/C2H7NO/c3-1-2-4/h4H,1-3H2 
 	 */
-	public void testPartialSigmaChargeDescriptor_Ethanolamine() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor_Ethanolamine() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.3293,0.017,0.057,-0.3943}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
 		IMolecule molecule = builder.newMolecule();
@@ -278,7 +284,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi  InChI=1/C3H6S/c1-2-3-4/h2,4H,1,3H2
 	 */
-	public void testPartialSigmaChargeDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.1031,-0.0828,0.0093,-0.1742}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
 		IMolecule molecule = builder.newMolecule();
@@ -301,7 +308,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with
 	 */
-	public void testPartialSigmaChargeDescriptor1() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor1() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.2138,0.079,0.0942,-0.072,0.0563,0.0563}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("[F+]=C([H])[C-]([H])[H]");
@@ -314,7 +322,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with
 	 */
-	public void testPartialSigmaChargeDescriptor2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor2() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.3855,-0.0454,0.0634,-0.0544,-0.0391,-0.0391}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("O=C([H])[C-]([H])[H]");
@@ -328,7 +337,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with
 	 */
-	public void testPartialSigmaChargeDescriptor3() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor3() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.3855,-0.0454,0.0634,-0.0544,-0.0391,-0.0391}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("[O-]C([H])=C([H])[H]");
@@ -343,7 +353,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi  InChI=1/CH2O/c1-2/h1H2 
 	 */
-	public void testPartialSigmaChargeDescriptor4() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor4() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.3041,0.1055,0.0993,0.0993}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
 		IMolecule molecule = builder.newMolecule();
@@ -368,7 +379,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
 	 */
-	public void testPartialSigmaChargeDescriptor5() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor5() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.3291,0.144,0.1028,-0.0084,0.0303,0.0303,0.0303}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
 		IMolecule molecule = builder.newMolecule();
@@ -398,7 +410,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with
 	 */
-	public void testPartialSigmaChargeDescriptor6() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor6() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {-0.4331,-0.1067,0.0133,0.0133,0.0133}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("[O-]C([H])([H])[H]");
@@ -413,7 +426,8 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with [H]c1[n-][c+]([H])c([H])c([H])c1([H])
 	 */
-	public void testPartialSigmaChargeDescriptor7() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialSigmaChargeDescriptor7() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] testResult = {0.0835,0.0265,-0.2622,0.0265,0.0835,-0.0444,0.064,-0.0596,0.0626,-0.0444,0.064}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("[H]c1[n-][c+]([H])c([H])c([H])c1([H])");

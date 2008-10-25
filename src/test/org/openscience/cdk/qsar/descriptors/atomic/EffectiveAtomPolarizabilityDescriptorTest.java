@@ -23,15 +23,13 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -44,17 +42,15 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 	
 	public  EffectiveAtomPolarizabilityDescriptorTest() {}
     
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(EffectiveAtomPolarizabilityDescriptor.class);
     }
-    
-    public static Test suite() {
-		return new TestSuite(EffectiveAtomPolarizabilityDescriptorTest.class);
-	}
 	/**
 	 *  A unit test for JUnit with 2-(dimethylamino)ethyl)amino
 	 */
-	public void testEffectivePolarizabilityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testEffectivePolarizabilityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         double [] testResult = {4.7253,6.1345,6.763,6.925,5.41,5.41};
         IAtomicDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
@@ -70,7 +66,8 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 	/**
 	 *  A unit test for JUnit with Ethyl chloride
 	 */
-	public void testPolarizabilityDescriptor_Ethyl_chloride()throws Exception {
+	@Test
+    public void testPolarizabilityDescriptor_Ethyl_chloride()throws Exception {
 		double [] testResult={4.8445,5.824,4.6165};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
@@ -85,7 +82,8 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 	/**
 	 *  A unit test for JUnit with Allyl bromide
 	 */
-	public void testPolarizabilityDescriptor_Allyl_bromide()throws Exception {
+	@Test
+    public void testPolarizabilityDescriptor_Allyl_bromide()throws Exception {
 		double testResult = 6.1745; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
@@ -99,7 +97,8 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 	/**
 	 *  A unit test for JUnit with Isopentyl iodide
 	 */
-	public void testPolarizabilityDescriptor_Isopentyl_iodide()throws Exception {
+	@Test
+    public void testPolarizabilityDescriptor_Isopentyl_iodide()throws Exception {
 		double[] testResult = {8.3585,6.1118,6.1118,9.081,10.526,8.69}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
@@ -115,7 +114,8 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 	/**
 	 *  A unit test for JUnit with Ethoxy ethane
 	 */
-	public void testPolarizabilityDescriptor_Ethoxy_ethane()throws Exception {
+	@Test
+    public void testPolarizabilityDescriptor_Ethoxy_ethane()throws Exception {
 		double testResult = 5.207; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
@@ -129,7 +129,8 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 	/**
 	 *  A unit test for JUnit with Ethanolamine
 	 */
-	public void testPolarizabilityDescriptor_Ethanolamine()throws Exception {
+	@Test
+    public void testPolarizabilityDescriptor_Ethanolamine()throws Exception {
 		double [] testResult={4.2552,5.1945,4.883,3.595}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         
@@ -144,7 +145,8 @@ public class EffectiveAtomPolarizabilityDescriptorTest extends AtomicDescriptorT
 	/**
 	 *  A unit test for JUnit with Allyl mercaptan
 	 */
-	public void testPolarizabilityDescriptor_Allyl_mercaptan()throws Exception {
+	@Test
+    public void testPolarizabilityDescriptor_Allyl_mercaptan()throws Exception {
 		double[] testResult = {5.2995,6.677,7.677,6.2545}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
         

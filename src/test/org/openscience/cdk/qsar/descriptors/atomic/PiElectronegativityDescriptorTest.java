@@ -23,10 +23,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
@@ -58,10 +57,8 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	 *
 	 *@return    The test suite
 	 */
-	public static Test suite() {
-		return new TestSuite(PiElectronegativityDescriptorTest.class);
-	}
     
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(PiElectronegativityDescriptor.class);
     }
@@ -69,7 +66,8 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with Methyl Fluoride
 	 */
-	public void testPiElectronegativityDescriptor_Methyl_Fluoride() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPiElectronegativityDescriptor_Methyl_Fluoride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={3.9608,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
@@ -96,7 +94,8 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with Methyl Chloride
 	 */
-	public void testPiElectronegativityDescriptor_Methyl_Chloride() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPiElectronegativityDescriptor_Methyl_Chloride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={4.7054,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
@@ -123,7 +122,8 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with Methyl iodide
 	 */
-	public void testPiElectronegativityDescriptor_Methyl_Iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPiElectronegativityDescriptor_Methyl_Iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={4.1951,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
@@ -150,7 +150,8 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with Methyl Bromide
 	 */
-	public void testPiElectronegativityDescriptor_Methyl_Bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPiElectronegativityDescriptor_Methyl_Bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={3.8922,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
@@ -177,7 +178,8 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with Methyl Alcohol
 	 */
-	public void testPiElectronegativityDescriptor_Methyl_Alcohol() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPiElectronegativityDescriptor_Methyl_Alcohol() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={3.1138,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
@@ -204,7 +206,8 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with Formaldehyde
 	 */
-	public void testPiElectronegativityDescriptor_Formaldehyde() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPiElectronegativityDescriptor_Formaldehyde() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={6.3012,8.0791,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
@@ -231,7 +234,8 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with Ethylene
 	 */
-	public void testPiElectronegativityDescriptor_Ethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPiElectronegativityDescriptor_Ethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		
 		double [] testResult={5.1519,5.1519,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
@@ -259,7 +263,8 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with Fluoroethylene
 	 */
-	public void testPiElectronegativityDescriptor_Fluoroethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPiElectronegativityDescriptor_Fluoroethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={4.7796,5.9414,5.0507,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
         
@@ -285,7 +290,8 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with Formic Acid
 	 */
-	public void testPiElectronegativityDescriptor_FormicAcid() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPiElectronegativityDescriptor_FormicAcid() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={6.8954,7.301,4.8022,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
         
@@ -311,7 +317,8 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with Methoxyethylene
 	 */
-	public void testPiElectronegativityDescriptor_Methoxyethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPiElectronegativityDescriptor_Methoxyethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={4.916,5.7345,3.971,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		 
@@ -337,7 +344,8 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with F[C+][C-]
 	 */
-	public void testPiElectronegativity1() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPiElectronegativity1() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={5.1788,5.465,5.2475,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		
@@ -363,7 +371,8 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with CCOCCCO
 	 */
-	public void testPiElectronegativity2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPiElectronegativity2() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.0,0.0,3.2849,0.0,0.0,0.0,3.2849,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		
@@ -391,6 +400,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
 	 */
+    @Test
     public void testCompareIonized() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
 		IMolecule molA = builder.newMolecule();

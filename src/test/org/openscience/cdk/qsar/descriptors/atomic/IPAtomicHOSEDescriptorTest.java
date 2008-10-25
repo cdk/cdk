@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
@@ -48,18 +47,16 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     	descriptor = new IPAtomicHOSEDescriptor();
     }
     
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(IPAtomicHOSEDescriptor.class);
-    }
-    
-    public static Test suite() {
-        return new TestSuite(IPAtomicHOSEDescriptorTest.class);
     }
 
     /**
 	 *  A unit test for JUnit
 	 */
-	public void testIPAtomicHOSEDescriptor() throws Exception {
+	@Test
+    public void testIPAtomicHOSEDescriptor() throws Exception {
 		IAtomicDescriptor descriptor = new IPAtomicHOSEDescriptor();
 		Assert.assertNotNull(descriptor);
 	}
@@ -68,6 +65,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
 	 */
+    @Test
     public void testIPDescriptor1() throws Exception{
         
 		IMolecule mol = sp.parseSmiles("CCCCl");
@@ -84,6 +82,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C3H7Cl/c1-3(2)4/h3H,1-2H3
 	 */
+    @Test
     public void testIPDescriptor2() throws Exception{
         
 		IMolecule mol = sp.parseSmiles("CC(CC)Cl"); // not in db
@@ -101,6 +100,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C3H5Cl/c1-2-3-4/h2H,1,3H2
 	 */
+    @Test
     public void testNotDB() throws Exception{
         
 		IMolecule mol = sp.parseSmiles("C=CCCl"); // not in db
@@ -117,6 +117,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
 	 */
+    @Test
     public void testIPDescriptor_1() throws Exception{
         
 		IMolecule mol = sp.parseSmiles("C-Cl");
@@ -133,6 +134,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 	 *  A unit test for JUnit with C-C-Br
 	 *  
 	 */
+    @Test
     public void testIPDescriptor_2() throws Exception{
         
 		IMolecule mol = sp.parseSmiles("C-C-Br");
@@ -149,6 +151,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 	 *  A unit test for JUnit with C-C-C-I
 	 *  
 	 */
+    @Test
     public void testIPDescriptor_3() throws Exception{
         
 		IMolecule mol = sp.parseSmiles("C-C-C-I");
@@ -165,6 +168,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //	 *  
 //	 *  @cdk.inchi InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3
 //	 */
+//    @Test
 //    public void testIPDescriptor_4() throws Exception{
 //        
 //		IMolecule mol = sp.parseSmiles("C-C-O");
@@ -177,13 +181,14 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
 //        double resultAccordingNIST = 10.48;
 //
-//        assertEquals(resultAccordingNIST, result, 1.24);
+//        Assert.assertEquals(resultAccordingNIST, result, 1.24);
 //    }
 //    
 //    /**
 //	 *  A unit test for JUnit with N1(C)CCC(C)(C)CC1
 //	 *  
 //	 */
+//    @Test
 //    public void testIPDescriptor_5() throws Exception{
 //
 //    	IMolecule mol = sp.parseSmiles("N1(C)CCC(C)(C)CC1");
@@ -196,13 +201,14 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
 //        double resultAccordingNIST = 7.77;
 //
-//        assertEquals(resultAccordingNIST, result, 0.02);
+//        Assert.assertEquals(resultAccordingNIST, result, 0.02);
 //    }
 //    /**
 //	 *  A unit test for JUnit with C-N-C
 //	 *  
 //	 *  @cdk.inchi InChI=1/C2H7N/c1-3-2/h3H,1-2H3
 //	 */
+//    @Test
 //    public void testIPDescriptor_6() throws Exception{
 //
 //    	IMolecule mol = sp.parseSmiles("C-N-C");
@@ -215,13 +221,14 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(1),mol).getValue()).doubleValue();
 //        double resultAccordingNIST = 8.24; 
 //
-//        assertEquals(resultAccordingNIST, result, 0.09);
+//        Assert.assertEquals(resultAccordingNIST, result, 0.09);
 //    }
 //    /**
 //	 *  A unit test for JUnit with C-C-N
 //	 *  
 //	 *  @cdk.inchi InChI=1/C2H7N/c1-2-3/h2-3H2,1H3
 //	 */
+//    @Test
 //    public void testIPDescriptor_7() throws Exception{
 //        
 //		IMolecule mol = sp.parseSmiles("C-C-N");
@@ -234,13 +241,14 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2),mol).getValue()).doubleValue();
 //        double resultAccordingNIST = 8.9; 
 //
-//        assertEquals(resultAccordingNIST, result, 0.35);
+//        Assert.assertEquals(resultAccordingNIST, result, 0.35);
 //    }
 //    /**
 //	 *  A unit test for JUnit with C-C-P-C-C
 //	 *  
 //	 *  @cdk.inchi InChI=1/C4H11P/c1-3-5-4-2/h5H,3-4H2,1-2H3
 //	 */
+//    @Test
 //    public void testIPDescriptor_8() throws Exception{
 //
 //    	IMolecule mol = sp.parseSmiles("C-C-P-C-C");
@@ -253,7 +261,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
 //        double resultAccordingNIST = 8.5; 
 //
-//        assertEquals(resultAccordingNIST, result, 0.051);
+//        Assert.assertEquals(resultAccordingNIST, result, 0.051);
 //    }
 //
 //    /**
@@ -261,6 +269,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //	 *  
 //	 *  @cdk.inchi InChI=1/C6H12O/c1-5(2)4-6(3)7/h5H,4H2,1-3H3
 //	 */
+//    @Test
 //    public void testIPDescriptor_9() throws Exception{
 //
 //    	IMolecule mol = sp.parseSmiles("O=C(C)CC(C)C");
@@ -273,13 +282,14 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
 //        double resultAccordingNIST = 9.3; 
 //
-//        assertEquals(resultAccordingNIST, result, 0.051);
+//        Assert.assertEquals(resultAccordingNIST, result, 0.051);
 //    }
 //    /**
 //	 *  A unit test for JUnit with O=C1C2CCC1CC2
 //	 *  
 //	 *  @cdk.inchi InChI=1/C7H10O/c8-7-5-1-2-6(7)4-3-5/h5-6H,1-4H2
 //	 */
+//    @Test
 //    public void testIPDescriptor_10() throws Exception{
 //        
 //		IMolecule mol = sp.parseSmiles("O=C1C2CCC1CC2");
@@ -292,7 +302,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
 //        double resultAccordingNIST = 9.01; 
 //
-//        assertEquals(resultAccordingNIST, result, 0.06);
+//        Assert.assertEquals(resultAccordingNIST, result, 0.06);
 //    }
 //
 //    /**
@@ -300,6 +310,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //	 *  
 //	 *  @cdk.inchi InChI=1/C5H12O2/c1-2-7-5-3-4-6/h6H,2-5H2,1H3
 //	 */
+//    @Test
 //    public void testIPDescriptor_14() throws Exception{
 //        
 //		IMolecule mol = sp.parseSmiles("CCOCCCO");
@@ -310,10 +321,10 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //		lpcheck.saturate(mol);
 //		
 //        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(2), mol).getValue()).doubleValue();
-////        assertNotNull(result);
+////        Assert.assertNotNull(result);
 //        
 //        result= ((DoubleResult)descriptor.calculate(mol.getAtom(7), mol).getValue()).doubleValue();
-////        assertNotNull(result);
+////        Assert.assertNotNull(result);
 //        
 //    }
 //    /**
@@ -325,6 +336,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //     * @throws CDKException
 //     * @throws java.lang.Exception
 //     */
+//    @Test
 //    public void testIPDescriptorReaction() throws Exception{
 //        
 //    	IMolecule mol = sp.parseSmiles("C-C-N");
@@ -345,8 +357,8 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //        double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
 //        double resultAccordingNIST = 8.9; 
 //
-//        assertEquals(1, reactionSet.getReactionCount());
-//        assertEquals(resultAccordingNIST, result, 0.5);
+//        Assert.assertEquals(1, reactionSet.getReactionCount());
+//        Assert.assertEquals(resultAccordingNIST, result, 0.5);
 //    }
 //    /**
 //     * A unit test for JUnit with CCCCCC
@@ -357,6 +369,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //     * @throws CDKException
 //     * @throws java.lang.Exception
 //     */
+//    @Test
 //    public void testIPDescriptorReaction2() throws Exception{
 //        
 //		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -370,7 +383,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //		descriptor.calculate(mol.getAtom(0), mol);
 //		IReactionSet reactionSet = descriptor.getReactionSet();
 //		
-//        assertEquals(0, reactionSet.getReactionCount());
+//        Assert.assertEquals(0, reactionSet.getReactionCount());
 //    }
 //
 //    /**
@@ -382,6 +395,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //     * @throws CDKException
 //     * @throws java.lang.Exception
 //     */
+//    @Test
 //    public void testIPPySystemWithHeteroatomDescriptor3() throws Exception{
 //        
 //		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -394,7 +408,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //		
 //		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
 //        double resultAccordingNIST = 8.03; 
-//        assertEquals(resultAccordingNIST, result, 0.11);
+//        Assert.assertEquals(resultAccordingNIST, result, 0.11);
 //        
 //        IReactionSet reactionSet = descriptor.getReactionSet();
 //		assertEquals(5, reactionSet.getReactionCount());
@@ -409,6 +423,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //     * @throws CDKException
 //     * @throws java.lang.Exception
 //     */
+//    @Test
 //    public void testIPPySystemWithHeteroatomDescriptor2() throws Exception{
 //        
 //		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -421,7 +436,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //		
 //		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
 //        double resultAccordingNIST = 8.64; 
-//        assertEquals(resultAccordingNIST, result, 0.21);
+//        Assert.assertEquals(resultAccordingNIST, result, 0.21);
 //        
 //        IReactionSet reactionSet = descriptor.getReactionSet();
 //		assertEquals(3, reactionSet.getReactionCount());
@@ -436,6 +451,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //     * @throws CDKException
 //     * @throws java.lang.Exception
 //     */
+//    @Test
 //    public void testIPPySystemWithHeteroatomDescriptor1() throws Exception{
 //        
 //		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -448,7 +464,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //		
 //		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(5),mol).getValue()).doubleValue();
 //        double resultAccordingNIST = 7.77; 
-//        assertEquals(resultAccordingNIST, result, 0.3);
+//        Assert.assertEquals(resultAccordingNIST, result, 0.3);
 //        
 //        IReactionSet reactionSet = descriptor.getReactionSet();
 //		assertEquals(3, reactionSet.getReactionCount());
@@ -464,6 +480,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
 //     * @throws CDKException
 //     * @throws java.lang.Exception
 //     */
+//    @Test
 //    public void testIDescriptor5() throws Exception{
 //        
 //		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

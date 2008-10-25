@@ -23,15 +23,13 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.CovalentRadiusDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -45,6 +43,7 @@ public class CovalentRadiusDescriptorTest extends AtomicDescriptorTest {
 	 */
 	public  CovalentRadiusDescriptorTest() {}
 
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(CovalentRadiusDescriptor.class);
     }
@@ -54,13 +53,11 @@ public class CovalentRadiusDescriptorTest extends AtomicDescriptorTest {
 	 *
 	 *@return    The test suite
 	 */
-	public static Test suite() {
-		return new TestSuite(CovalentRadiusDescriptorTest.class);
-	}
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testVdWRadiusDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testVdWRadiusDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.77};
 		IAtomicDescriptor descriptor  = new CovalentRadiusDescriptor();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

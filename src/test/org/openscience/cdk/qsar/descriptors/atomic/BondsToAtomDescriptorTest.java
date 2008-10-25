@@ -23,14 +23,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -43,14 +41,12 @@ public class BondsToAtomDescriptorTest extends AtomicDescriptorTest {
 
     public  BondsToAtomDescriptorTest() {}
 
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(BondsToAtomDescriptor.class);
     }
-    
-    public static Test suite() {
-        return new TestSuite(BondsToAtomDescriptorTest.class);
-    }
 
+    @Test
     public void testBondsToAtomDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
     	BondsToAtomDescriptor descriptor   = new BondsToAtomDescriptor();
         Object[] params = {Integer.valueOf(5)};

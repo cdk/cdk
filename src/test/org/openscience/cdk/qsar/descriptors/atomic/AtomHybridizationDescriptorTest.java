@@ -23,10 +23,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -48,14 +47,12 @@ public class AtomHybridizationDescriptorTest extends AtomicDescriptorTest {
     public AtomHybridizationDescriptorTest() {
     }
 
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(AtomHybridizationDescriptor.class);
     }
-    
-    public static Test suite() {
-        return new TestSuite(AtomHybridizationDescriptorTest.class);
-    }
 
+    @Test
     public void testAtomHybridizationDescriptorTest() throws ClassNotFoundException, CDKException, java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C#CC=CC"); //
@@ -75,6 +72,7 @@ public class AtomHybridizationDescriptorTest extends AtomicDescriptorTest {
         }
     }
 
+    @Test
     public void testBug1701073() throws Exception {
 
         String[] smiles = new String[]
