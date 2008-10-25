@@ -142,7 +142,7 @@ public class BondSigmaElectronegativityDescriptor implements IBondDescriptor {
      *@param  ac                AtomContainer
      *@return                   return the sigma electronegativity
      */
-    @TestMethod(value="testCalculate_IBond_IAtomContainer")
+    @TestMethod(value="testCalculate_IBond_IAtomContainer,testBondSigmaElectronegativityDescriptor,testBondSigmaElectronegativityDescriptor_Methyl_chloride")
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
         try {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);

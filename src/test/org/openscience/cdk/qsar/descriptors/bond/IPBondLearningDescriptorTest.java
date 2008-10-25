@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -48,25 +47,23 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     public  IPBondLearningDescriptorTest() {
     	descriptor = new IPBondLearningDescriptor();
     }
-	
+
+
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(IPBondLearningDescriptor.class);
     }
-    
-    public static Test suite() {
-        return new TestSuite(IPBondLearningDescriptorTest.class);
-    }
-    /**
+       /**
 	 *  A unit test for JUnit
 	 */
-    public void testIPBondLearningDescriptor(){
+    @Test public void testIPBondLearningDescriptor(){
         Assert.assertNotNull(descriptor);
     }
     
     /**
 	 *  A unit test for JUnit with CCCC=CCCCC
 	 */
-    public void testIPDescriptor_1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor_1() throws java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("CCCC=CCCCC");
@@ -81,7 +78,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     /**
 	 *  A unit test for JUnit with CC1CCC=C1
 	 */
-    public void testIPDescriptor_2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor_2() throws  java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("CC1CCC=C1");
@@ -96,7 +93,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
     /**
 	 *  A unit test for JUnit with C=CCCCC
 	 */
-    public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor_3() throws  java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C=CCCCC");
@@ -115,7 +112,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      * @throws CDKException
      * @throws java.lang.Exception
      */
-    public void testIPDescriptorReaction1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptorReaction1() throws  java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C=CCCCC");
@@ -137,7 +134,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      * @throws CDKException
      * @throws java.lang.Exception
      */
-    public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptorReaction2() throws  java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("CCCCCC");
@@ -157,7 +154,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      * @throws CDKException
      * @throws java.lang.Exception
      */
-    public void testIPTripleDescriptor1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPTripleDescriptor1() throws  java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C#CCC");
@@ -176,7 +173,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      * @throws CDKException
      * @throws java.lang.Exception
      */
-    public void testIPTripleDescriptor2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPTripleDescriptor2() throws  java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C(#CC(C)(C)C)C(C)(C)C");
@@ -195,7 +192,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      * @throws CDKException
      * @throws java.lang.Exception
      */
-    public void testIPConjugatedDescriptor1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPConjugatedDescriptor1() throws  java.lang.Exception{
 
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C=C(C=CC)C");
@@ -219,7 +216,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
      * @throws CDKException
      * @throws java.lang.Exception
      */
-    public void testIPPySystemReaction1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPPySystemReaction1() throws  java.lang.Exception{
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("C=CC=C");

@@ -20,8 +20,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import java.io.IOException;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -35,6 +33,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.io.IOException;
 
 /**
  * Describes the inbalance in mass number of the IBond. (Sorry, I needed *something* in the qsarbond module :)
@@ -90,7 +90,7 @@ public class MassNumberDifferenceDescriptor implements IBondDescriptor {
         return descriptorName;
     }
 
-    @TestMethod(value="testCalculate_IBond_IAtomContainer")
+    @TestMethod(value="testCalculate_IBond_IAtomContainer,testDescriptor")
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
     	ensureIsotopeFactory(ac.getBuilder());
     	if (bond.getAtomCount() != 2) {
