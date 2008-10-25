@@ -283,7 +283,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      *          Description of the
      *          Exception
      */
-    public void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws org.openscience.cdk.exception.CDKException {
+    private void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws org.openscience.cdk.exception.CDKException {
         IAtom atom;
         IAtom nextAtom;
         List<IAtom> newSphere = new ArrayList<IAtom>();

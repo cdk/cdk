@@ -263,7 +263,7 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
         return new DoubleArrayResultType(5);
     }
 
-    double[] getPathWeights(List pathList, IAtomContainer atomContainer) {
+    private double[] getPathWeights(List pathList, IAtomContainer atomContainer) {
         double[] pathWts = new double[pathList.size()];
         for (int i = 0; i < pathList.size(); i++) {
             List p = (List) pathList.get(i);

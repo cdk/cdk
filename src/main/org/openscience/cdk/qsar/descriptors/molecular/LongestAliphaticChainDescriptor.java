@@ -297,7 +297,7 @@ public class LongestAliphaticChainDescriptor implements IMolecularDescriptor {
 	 *@exception  org.openscience.cdk.exception.CDKException  Description of the
 	 *      Exception
 	 */
-	public  void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws org.openscience.cdk.exception.CDKException{
+	private void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws org.openscience.cdk.exception.CDKException{
 		IAtom nextAtom;
 		List<IAtom> newSphere = new ArrayList<IAtom>();
         for (IAtom atom : sphere) {

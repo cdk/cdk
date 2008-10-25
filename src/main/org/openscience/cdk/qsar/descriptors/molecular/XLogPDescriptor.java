@@ -977,7 +977,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      * @param pairCheck value
      * @return void
      */
-    public int[][] initializeHydrogenPairCheck(int [][] pairCheck) {
+    private int[][] initializeHydrogenPairCheck(int [][] pairCheck) {
         for (int i = 0; i < pairCheck.length; i++) {
             for (int j = 0; j < pairCheck[0].length; j++) {
                     pairCheck[i][j] = 0;
