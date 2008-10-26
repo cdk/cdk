@@ -22,14 +22,14 @@ package org.openscience.cdk.charges;
 
 import org.junit.Assert;
 import org.junit.Ignore;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module  test-charges
  * @author      egonw
  * @cdk.created 2008-01-04
  */
-public class AtomTypeChargesTest extends NewCDKTestCase {
+public class AtomTypeChargesTest extends CDKTestCase {
 
 	/**
 	 * Tests the initial assignment of partial charges of

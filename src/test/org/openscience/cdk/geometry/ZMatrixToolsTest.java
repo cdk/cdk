@@ -24,12 +24,12 @@ import javax.vecmath.Point3d;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-io
  */
-public class ZMatrixToolsTest extends NewCDKTestCase {
+public class ZMatrixToolsTest extends CDKTestCase {
     
 	@Test public void testZmatrixToCartesian_arraydouble_arrayint_arraydouble_arrayint_arraydouble_arrayint() {
 		// acetaldehyde example from http://www.shodor.org/chemviz/zmatrices/babelex.html

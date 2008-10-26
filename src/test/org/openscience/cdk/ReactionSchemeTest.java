@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IReactionScheme;
  *
  * @see ReactionScheme
  */
-public class ReactionSchemeTest extends NewCDKTestCase {
+public class ReactionSchemeTest extends CDKTestCase {
 
 	protected static IChemObjectBuilder builder;
 	

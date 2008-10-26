@@ -27,7 +27,7 @@ package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -40,7 +40,7 @@ import java.util.BitSet;
 /**
  * @cdk.module test-fingerprint
  */
-public class MACCSFingerprinterTest extends NewCDKTestCase {
+public class MACCSFingerprinterTest extends CDKTestCase {
 
     private static LoggingTool logger = new LoggingTool(MACCSFingerprinterTest.class);
 

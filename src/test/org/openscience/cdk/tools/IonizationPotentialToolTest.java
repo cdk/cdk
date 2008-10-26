@@ -23,7 +23,7 @@ package org.openscience.cdk.tools;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -40,7 +40,7 @@ import java.util.List;
  *
  * @cdk.module test-ionpot
  */
-public class IonizationPotentialToolTest extends NewCDKTestCase {
+public class IonizationPotentialToolTest extends CDKTestCase {
 
     private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
     LonePairElectronChecker lpcheck = new LonePairElectronChecker();

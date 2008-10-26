@@ -22,12 +22,12 @@ package org.openscience.cdk.reaction;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-reaction
  */
-public class ReactionSpecificationTest extends NewCDKTestCase {
+public class ReactionSpecificationTest extends CDKTestCase {
     
     public ReactionSpecificationTest() {
         super();

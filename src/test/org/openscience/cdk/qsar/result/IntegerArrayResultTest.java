@@ -23,12 +23,12 @@ package org.openscience.cdk.qsar.result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class IntegerArrayResultTest extends NewCDKTestCase {
+public class IntegerArrayResultTest extends CDKTestCase {
     
     public IntegerArrayResultTest() {
         super();

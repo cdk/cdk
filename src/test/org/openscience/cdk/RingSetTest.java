@@ -39,7 +39,7 @@ import java.util.List;
  *
  * @see org.openscience.cdk.RingSet
  */
-public class RingSetTest extends NewCDKTestCase {
+public class RingSetTest extends CDKTestCase {
 
 	protected static IChemObjectBuilder builder;
   

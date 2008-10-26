@@ -26,13 +26,13 @@ import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.AminoAcidManipulator;
 
 /**
  * @cdk.module test-standard
  */
-public class AminoAcidManipulatorTest extends NewCDKTestCase {
+public class AminoAcidManipulatorTest extends CDKTestCase {
     
 	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	

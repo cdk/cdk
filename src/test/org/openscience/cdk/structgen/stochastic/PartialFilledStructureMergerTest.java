@@ -20,12 +20,12 @@
  */
 package org.openscience.cdk.structgen.stochastic;
 
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-structgen
  */
-public class PartialFilledStructureMergerTest extends NewCDKTestCase {
+public class PartialFilledStructureMergerTest extends CDKTestCase {
 
 }
 

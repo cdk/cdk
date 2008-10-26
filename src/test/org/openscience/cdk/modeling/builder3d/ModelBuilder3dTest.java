@@ -35,7 +35,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-public class ModelBuilder3dTest extends NewCDKTestCase {
+public class ModelBuilder3dTest extends CDKTestCase {
 	
 	boolean standAlone = false;
 

@@ -30,7 +30,7 @@ import java.util.StringTokenizer;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.nonotify.NNAtomContainer;
 
 /**
@@ -40,7 +40,7 @@ import org.openscience.cdk.nonotify.NNAtomContainer;
  * @author      Christoph Steinbeck
  * @cdk.created 2004-11-04
  */
-public class TemplateHandler3DTest extends NewCDKTestCase {
+public class TemplateHandler3DTest extends CDKTestCase {
 		
 	@Test
 	public void testGetInstance() throws Exception {

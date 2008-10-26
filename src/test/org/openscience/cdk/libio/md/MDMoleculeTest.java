@@ -34,7 +34,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  * @cdk.module test-libiomd
  */
-public class MDMoleculeTest extends NewCDKTestCase {
+public class MDMoleculeTest extends CDKTestCase {
 
     private LoggingTool logger = new LoggingTool(this);
 

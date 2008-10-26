@@ -25,14 +25,14 @@ package org.openscience.cdk.qsar;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * TestSuite that runs all tests for the DescriptorEngine.
  *
  * @cdk.module test-qsar
  */
-public class DescriptorExceptionTest extends NewCDKTestCase {
+public class DescriptorExceptionTest extends CDKTestCase {
 
     @Test
     public void testConstructor() {

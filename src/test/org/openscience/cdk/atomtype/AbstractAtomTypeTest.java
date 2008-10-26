@@ -28,7 +28,7 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * @cdk.module test-core
  * @cdk.bug    1890702
  */
-abstract public class AbstractAtomTypeTest extends NewCDKTestCase {
+abstract public class AbstractAtomTypeTest extends CDKTestCase {
 
 	public String getAtomTypeListName() {
 		return "";

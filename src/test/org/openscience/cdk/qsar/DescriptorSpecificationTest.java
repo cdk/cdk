@@ -23,12 +23,12 @@ package org.openscience.cdk.qsar;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.qsar.DescriptorSpecification;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class DescriptorSpecificationTest extends NewCDKTestCase {
+public class DescriptorSpecificationTest extends CDKTestCase {
     
     public DescriptorSpecificationTest() {
         super();

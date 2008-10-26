@@ -36,7 +36,7 @@ import javax.vecmath.Point3d;
  *
  * @see org.openscience.cdk.inchi.InChIGenerator
  */
-public class InChIGeneratorTest extends NewCDKTestCase {
+public class InChIGeneratorTest extends CDKTestCase {
     
     protected InChIGeneratorFactory factory;
     

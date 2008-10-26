@@ -27,7 +27,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.rules.ChargeRule;
@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  *
  * @cdk.module test-formula
  */
-public class MassToFormulaToolTest extends NewCDKTestCase {
+public class MassToFormulaToolTest extends CDKTestCase {
 
 	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	private IsotopeFactory ifac;

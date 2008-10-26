@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.diff.AtomDiff;
  *
  * @cdk.module test-data
  */
-public class AtomTest extends NewCDKTestCase {
+public class AtomTest extends CDKTestCase {
 
 	protected static IChemObjectBuilder builder;
 	

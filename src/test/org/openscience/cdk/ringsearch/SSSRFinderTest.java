@@ -24,7 +24,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -38,7 +38,7 @@ import java.util.Iterator;
 /**
  * @cdk.module test-standard
  */
-public class SSSRFinderTest extends NewCDKTestCase {
+public class SSSRFinderTest extends CDKTestCase {
 
     private final LoggingTool logger = new LoggingTool(SSSRFinderTest.class);
 

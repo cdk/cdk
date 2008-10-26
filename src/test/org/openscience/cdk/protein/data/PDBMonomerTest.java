@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.protein.data.PDBMonomer;
 import org.openscience.cdk.protein.data.PDBPolymer;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the PDBMonomer class.
@@ -41,7 +41,7 @@ import org.openscience.cdk.NewCDKTestCase;
  *
  * @see PDBPolymer
  */
-public class PDBMonomerTest extends NewCDKTestCase {
+public class PDBMonomerTest extends CDKTestCase {
 	
 	protected static IChemObjectBuilder builder;
 

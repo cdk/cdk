@@ -34,7 +34,7 @@ import java.io.StringWriter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 
@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IChemFile;
  * @cdk.module test-io
  */
 
-public class MDLCMLRoundtripTest extends NewCDKTestCase {
+public class MDLCMLRoundtripTest extends CDKTestCase {
 
 
     public MDLCMLRoundtripTest() {

@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
  *
  * @see org.openscience.cdk.MoleculeSet
  */
-public class MoleculeSetTest extends NewCDKTestCase {
+public class MoleculeSetTest extends CDKTestCase {
 
 	protected static IChemObjectBuilder builder;
 	

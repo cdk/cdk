@@ -29,7 +29,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  *  Description of the Class
@@ -39,7 +39,7 @@ import org.openscience.cdk.NewCDKTestCase;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-public class PolarizabilityTest extends NewCDKTestCase {
+public class PolarizabilityTest extends CDKTestCase {
 	
 	private boolean standAlone = false;
 	

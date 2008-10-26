@@ -30,7 +30,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  *
  * @see org.openscience.cdk.tools.SaturationChecker
  */
-public class SaturationCheckerTest extends NewCDKTestCase {
+public class SaturationCheckerTest extends CDKTestCase {
 
     SaturationChecker satcheck = null;
     

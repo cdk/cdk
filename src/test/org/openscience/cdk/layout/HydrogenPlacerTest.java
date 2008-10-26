@@ -34,7 +34,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * @cdk.module test-sdg
  */
-public class HydrogenPlacerTest extends NewCDKTestCase {
+public class HydrogenPlacerTest extends CDKTestCase {
     
     public boolean standAlone = false;
     private LoggingTool logger = new LoggingTool(this);

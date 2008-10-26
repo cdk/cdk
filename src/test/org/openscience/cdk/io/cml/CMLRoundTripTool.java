@@ -29,7 +29,7 @@ import java.io.ByteArrayInputStream;
 import nu.xom.Element;
 
 import org.junit.Assert;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.require xom-1.0.jar
  * @cdk.require java1.5+
  */
-public class CMLRoundTripTool extends NewCDKTestCase {
+public class CMLRoundTripTool extends CDKTestCase {
 
     private static LoggingTool logger = new LoggingTool(CMLRoundTripTool.class);
     private static Convertor convertor = new Convertor(true, null);

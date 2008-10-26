@@ -29,7 +29,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * This class defines regression tests that should ensure that the source code
@@ -42,7 +42,7 @@ import org.openscience.cdk.NewCDKTestCase;
  *
  * @see org.openscience.cdk.geometry.RDFCalculator
  */
-public class RDFCalculatorTest extends NewCDKTestCase {
+public class RDFCalculatorTest extends CDKTestCase {
 
     @Test public void testRDFCalculator_double_double_double_double() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0);

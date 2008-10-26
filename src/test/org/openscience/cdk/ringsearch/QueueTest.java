@@ -24,12 +24,12 @@ package org.openscience.cdk.ringsearch;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ringsearch.Queue;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class QueueTest extends NewCDKTestCase {
+public class QueueTest extends CDKTestCase {
     
     public QueueTest() {
         super();

@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.ICrystal;
  *
  * @cdk.module test-data
  */
-public class CrystalTest extends NewCDKTestCase {
+public class CrystalTest extends CDKTestCase {
 
 	protected static IChemObjectBuilder builder;
 	

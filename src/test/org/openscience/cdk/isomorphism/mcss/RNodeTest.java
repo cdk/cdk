@@ -22,12 +22,12 @@ package org.openscience.cdk.isomorphism.mcss;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class RNodeTest extends NewCDKTestCase {
+public class RNodeTest extends CDKTestCase {
     
 	@Test public void testRNode_int_int() {
 		RNode node = new RNode(1,2);

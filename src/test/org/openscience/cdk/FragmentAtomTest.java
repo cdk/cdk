@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IFragmentAtom;
  *
  * @cdk.module test-data
  */
-public class FragmentAtomTest extends NewCDKTestCase {
+public class FragmentAtomTest extends CDKTestCase {
 
 	protected static IChemObjectBuilder builder;
 	

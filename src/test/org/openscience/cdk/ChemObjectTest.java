@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.diff.ChemObjectDiff;
  * @cdk.module  test-data
  * @cdk.created 2001-08-09
  */
-public class ChemObjectTest extends NewCDKTestCase {
+public class ChemObjectTest extends CDKTestCase {
 
 	protected static IChemObjectBuilder builder;
 	

@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  *
  * @see org.openscience.cdk.ChemFile
  */
-public class ChangeEventPropagationTest extends NewCDKTestCase {
+public class ChangeEventPropagationTest extends CDKTestCase {
 
     @BeforeClass public static void setUp() {}
 

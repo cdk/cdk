@@ -29,7 +29,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * @cdk.module test-standard
  */
-public class EStateAtomTypeMatcherTest extends NewCDKTestCase {
+public class EStateAtomTypeMatcherTest extends CDKTestCase {
     
 	static EStateAtomTypeMatcher matcher;
 	IMolecule mol = null;

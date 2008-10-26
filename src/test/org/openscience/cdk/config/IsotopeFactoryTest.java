@@ -35,7 +35,7 @@ import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -57,7 +57,7 @@ import java.io.*;
  *
  * @cdk.module test-core
  */
-public class IsotopeFactoryTest extends NewCDKTestCase
+public class IsotopeFactoryTest extends CDKTestCase
 {
 	boolean standAlone = false;
 

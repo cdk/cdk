@@ -30,13 +30,13 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
 
 /**
  * @cdk.module test-reaction
  */
-public class ResonanceStructuresTest extends NewCDKTestCase {
+public class ResonanceStructuresTest extends CDKTestCase {
 
 	private final static IChemObjectBuilder builder;
 	private final static CDKAtomTypeMatcher matcher;

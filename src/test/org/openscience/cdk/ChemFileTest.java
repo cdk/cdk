@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  *
  * @see org.openscience.cdk.ChemSequence
  */
-public class ChemFileTest extends NewCDKTestCase {
+public class ChemFileTest extends CDKTestCase {
 
 	protected static IChemObjectBuilder builder;
 	

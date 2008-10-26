@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.ISingleElectron;
  *
  * @cdk.module test-data
  */
-public class SingleElectronTest extends NewCDKTestCase {
+public class SingleElectronTest extends CDKTestCase {
 
 	protected static IChemObjectBuilder builder;
 	

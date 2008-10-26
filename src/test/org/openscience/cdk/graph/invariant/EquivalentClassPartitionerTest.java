@@ -24,7 +24,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IBond;
  *
  * @cdk.module test-extra
  */
-public class EquivalentClassPartitionerTest extends NewCDKTestCase
+public class EquivalentClassPartitionerTest extends CDKTestCase
 {
 	AtomContainer C40C3V = null;
 	AtomContainer C24D6D = null;

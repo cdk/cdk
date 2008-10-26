@@ -33,7 +33,7 @@ import java.util.Arrays;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * This class tests the SimpleCycleBasis class.
@@ -42,7 +42,7 @@ import org.openscience.cdk.NewCDKTestCase;
  *
  * @author     Ulrich Bauer <baueru@cs.tum.edu>
  */
-public class SimpleCycleBasisTest extends NewCDKTestCase {
+public class SimpleCycleBasisTest extends CDKTestCase {
 
 	SimpleGraph g;
 	SimpleCycleBasis basis;

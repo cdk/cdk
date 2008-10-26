@@ -25,12 +25,12 @@ import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.ringsearch.Path;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class PathTest extends NewCDKTestCase {
+public class PathTest extends CDKTestCase {
     
     public PathTest() {
         super();

@@ -23,12 +23,12 @@ package org.openscience.cdk.graph.rebond;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.graph.rebond.Point;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class PointTest extends NewCDKTestCase {
+public class PointTest extends CDKTestCase {
     
     public PointTest() {
         super();

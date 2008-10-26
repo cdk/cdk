@@ -37,7 +37,7 @@ import org.openscience.cdk.tools.diff.AtomTypeDiff;
  *
  * @see org.openscience.cdk.AtomType
  */
-public class AtomTypeTest extends NewCDKTestCase {
+public class AtomTypeTest extends CDKTestCase {
 
 	protected static IChemObjectBuilder builder;
 	

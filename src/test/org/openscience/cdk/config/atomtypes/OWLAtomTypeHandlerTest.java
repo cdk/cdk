@@ -24,14 +24,14 @@ package org.openscience.cdk.config.atomtypes;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the {@link OWLAtomTypeHandler}.
  *
  * @cdk.module test-core
  */
-public class OWLAtomTypeHandlerTest extends NewCDKTestCase {
+public class OWLAtomTypeHandlerTest extends CDKTestCase {
      
     // serious testing is done in OWLAtomTypeFactoryTest; the factory
     // requires this class to work properly. But nevertheless:

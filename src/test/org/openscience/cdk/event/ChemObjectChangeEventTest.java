@@ -25,7 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.event.ChemObjectChangeEvent;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the ChemObjectChangeEvent class.
@@ -34,7 +34,7 @@ import org.openscience.cdk.NewCDKTestCase;
  *
  * @see org.openscience.cdk.event.ChemObjectChangeEvent
  */
-public class ChemObjectChangeEventTest extends NewCDKTestCase {
+public class ChemObjectChangeEventTest extends CDKTestCase {
 
     @BeforeClass public static void setUp() {}
 

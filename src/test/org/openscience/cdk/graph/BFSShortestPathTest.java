@@ -27,14 +27,14 @@ import org.openscience.cdk.graph.BFSShortestPath;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import java.util.List;
 
 /**
  * @cdk.module test-standard
  */
-public class BFSShortestPathTest extends NewCDKTestCase {
+public class BFSShortestPathTest extends CDKTestCase {
     
     public BFSShortestPathTest() {
         super();

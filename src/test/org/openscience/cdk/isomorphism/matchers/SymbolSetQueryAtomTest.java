@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the IsomorphismTester
  *
  * @cdk.module test-extra
  */
-public class SymbolSetQueryAtomTest extends NewCDKTestCase
+public class SymbolSetQueryAtomTest extends CDKTestCase
 {
 	
     SymbolSetQueryAtom symbolSet = null;

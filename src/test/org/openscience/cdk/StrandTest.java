@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.IStrand;
  * @author     Martin Eklund <martin.eklund@farmbio.uu.se>
  * @cdk.module test-data
  */
-public class StrandTest extends NewCDKTestCase {
+public class StrandTest extends CDKTestCase {
 	
 	protected static IChemObjectBuilder builder;
 	

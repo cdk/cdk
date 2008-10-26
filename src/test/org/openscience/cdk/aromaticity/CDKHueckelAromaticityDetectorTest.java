@@ -45,7 +45,7 @@ import java.util.Iterator;
  * @cdk.module test-standard
  * @cdk.created 2002-10-06
  */
-public class CDKHueckelAromaticityDetectorTest extends NewCDKTestCase {
+public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
 
 
     public CDKHueckelAromaticityDetectorTest() {

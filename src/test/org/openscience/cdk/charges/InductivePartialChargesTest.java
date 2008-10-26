@@ -36,7 +36,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import javax.vecmath.Point3d;
 import java.io.IOException;
@@ -50,7 +50,7 @@ import java.io.IOException;
  *@cdk.created       2004-11-04
  */
 
-public class InductivePartialChargesTest extends NewCDKTestCase {
+public class InductivePartialChargesTest extends CDKTestCase {
 
     private static IAtomContainer mol;
 

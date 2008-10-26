@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.protein.data.PDBAtom;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the AtomTypeFactory
@@ -43,7 +43,7 @@ import org.openscience.cdk.NewCDKTestCase;
  * @cdk.module test-data
  * @see PDBAtom
  */
-public class PDBAtomTest extends NewCDKTestCase {
+public class PDBAtomTest extends CDKTestCase {
 
 	protected static IChemObjectBuilder builder;
 	

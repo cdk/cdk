@@ -24,12 +24,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class DoubleArrayResultTypeTest extends NewCDKTestCase {
+public class DoubleArrayResultTypeTest extends CDKTestCase {
     
     public DoubleArrayResultTypeTest() {
         super();

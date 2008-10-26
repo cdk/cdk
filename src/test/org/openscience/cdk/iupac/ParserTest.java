@@ -20,7 +20,7 @@ package org.openscience.cdk.iupac;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.iupac.parser.NomParser;
@@ -36,7 +36,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  *
  * @author Stephen Tomkinson
  */
-public class ParserTest extends NewCDKTestCase
+public class ParserTest extends CDKTestCase
 {
     IsomorphismTester comparer = new IsomorphismTester();
     

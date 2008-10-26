@@ -44,7 +44,7 @@ import java.util.BitSet;
 /**
  * @cdk.module test-standard
  */
-public class FingerprinterTest extends NewCDKTestCase
+public class FingerprinterTest extends CDKTestCase
 {
 
 	boolean standAlone = false;

@@ -34,7 +34,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.MDLV2000Format;
@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module test-io
  * @see org.openscience.cdk.io.MDLReader
  */
-public class IteratingMDLReaderTest extends NewCDKTestCase {
+public class IteratingMDLReaderTest extends CDKTestCase {
 
     private LoggingTool logger = new LoggingTool(this);
 

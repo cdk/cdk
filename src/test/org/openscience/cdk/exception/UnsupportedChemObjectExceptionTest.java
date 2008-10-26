@@ -23,12 +23,12 @@ package org.openscience.cdk.exception;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class UnsupportedChemObjectExceptionTest extends NewCDKTestCase {
+public class UnsupportedChemObjectExceptionTest extends CDKTestCase {
     
     public UnsupportedChemObjectExceptionTest() {
         super();

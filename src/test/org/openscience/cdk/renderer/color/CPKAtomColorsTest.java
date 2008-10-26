@@ -29,12 +29,12 @@ import java.awt.Color;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-render
  */
-public class CPKAtomColorsTest extends NewCDKTestCase {
+public class CPKAtomColorsTest extends CDKTestCase {
 	
 	@Test public void testGetAtomColor() {
 		CPKAtomColors colors = new CPKAtomColors();

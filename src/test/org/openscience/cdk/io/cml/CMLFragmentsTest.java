@@ -34,7 +34,7 @@ import javax.vecmath.Vector3d;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -49,7 +49,7 @@ import org.openscience.cdk.io.CMLReader;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
-public class CMLFragmentsTest extends NewCDKTestCase {
+public class CMLFragmentsTest extends CDKTestCase {
 
     @Test public void testAtomId() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>";

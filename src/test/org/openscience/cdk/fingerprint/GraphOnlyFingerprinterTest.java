@@ -37,7 +37,7 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 import java.io.IOException;
@@ -47,7 +47,7 @@ import java.util.BitSet;
 /**
  * @cdk.module test-standard
  */
-public class GraphOnlyFingerprinterTest extends NewCDKTestCase {
+public class GraphOnlyFingerprinterTest extends CDKTestCase {
 
 	private static LoggingTool logger = new LoggingTool(FingerprinterTest.class);
 

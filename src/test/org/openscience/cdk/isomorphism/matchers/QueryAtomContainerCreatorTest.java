@@ -25,7 +25,7 @@ package org.openscience.cdk.isomorphism.matchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -37,7 +37,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  *
  * @cdk.module test-extra
  */
-public class QueryAtomContainerCreatorTest extends NewCDKTestCase {
+public class QueryAtomContainerCreatorTest extends CDKTestCase {
 	
 	@BeforeClass public static void setUp() {}
 	

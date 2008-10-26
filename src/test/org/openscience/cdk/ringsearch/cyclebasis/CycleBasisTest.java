@@ -34,7 +34,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import java.util.Arrays;
 
@@ -46,7 +46,7 @@ import java.util.Arrays;
  * @author     Ulrich Bauer <baueru@cs.tum.edu>
  */
 
-public class CycleBasisTest extends NewCDKTestCase {
+public class CycleBasisTest extends CDKTestCase {
 
 	CycleBasis basis;
 	SimpleGraph g;

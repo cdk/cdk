@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.type.ElectronImpactNBEReaction;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.reaction.type.AdductionSodiumLPReactionTest;
 import org.openscience.cdk.reaction.type.HeterolyticCleavageSBReactionTest;
 import org.openscience.cdk.reaction.type.HomolyticCleavageReactionTest;
@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * @cdk.module test-reaction
  */
-public class ReactionStructuresTest extends NewCDKTestCase {
+public class ReactionStructuresTest extends CDKTestCase {
 
 	private final static IChemObjectBuilder builder;
 	private final static CDKAtomTypeMatcher matcher;

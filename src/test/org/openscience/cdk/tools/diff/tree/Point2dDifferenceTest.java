@@ -24,12 +24,12 @@ import javax.vecmath.Point2d;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-diff
  */
-public class Point2dDifferenceTest extends NewCDKTestCase {
+public class Point2dDifferenceTest extends CDKTestCase {
 
     @Test public void testDiff() {
     	Point2d foo = new Point2d(1.0, 2.0);

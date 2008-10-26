@@ -22,13 +22,13 @@ package org.openscience.cdk.tools;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module test-core
  */
-public class LoggingToolTest extends NewCDKTestCase {
+public class LoggingToolTest extends CDKTestCase {
 	
 
 	@Test public void testLoggingTool_Object() throws Exception {

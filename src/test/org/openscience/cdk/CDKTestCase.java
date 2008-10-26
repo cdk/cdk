@@ -44,7 +44,7 @@ import java.util.Iterator;
  * 
  * @see        CDKTestCase
  */
-public class NewCDKTestCase {
+public class CDKTestCase {
 
     static {
         LoggingTool.configureLog4j();

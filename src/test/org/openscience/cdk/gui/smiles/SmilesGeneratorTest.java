@@ -32,7 +32,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *@cdk.created    February 9, 2004
  *@cdk.module     test-gui-smiles
  */
-public class SmilesGeneratorTest extends NewCDKTestCase {
+public class SmilesGeneratorTest extends CDKTestCase {
 
 	boolean standAlone = false;
 

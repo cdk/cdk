@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09
  */
-public class AminoAcidTest extends NewCDKTestCase {
+public class AminoAcidTest extends CDKTestCase {
 
 	protected static IChemObjectBuilder builder;
 	

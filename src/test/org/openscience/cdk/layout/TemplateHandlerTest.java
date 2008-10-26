@@ -26,7 +26,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created September 4, 2003
  * @cdk.require java1.4+
  */
-public class TemplateHandlerTest extends NewCDKTestCase {
+public class TemplateHandlerTest extends CDKTestCase {
 
 	public boolean standAlone = false;
 	private LoggingTool logger = null;

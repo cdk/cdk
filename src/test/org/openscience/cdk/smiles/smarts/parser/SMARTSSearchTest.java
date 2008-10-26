@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.DefaultChemObjectReader;
@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-smarts
  * @cdk.require ant1.6
  */
-public class SMARTSSearchTest extends NewCDKTestCase {
+public class SMARTSSearchTest extends CDKTestCase {
 
     private LoggingTool logger;
 

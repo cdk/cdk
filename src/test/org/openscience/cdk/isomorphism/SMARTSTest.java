@@ -28,7 +28,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -48,7 +48,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  * @cdk.module  test-smarts
  * @cdk.require java1.4+
  */
-public class SMARTSTest extends NewCDKTestCase {
+public class SMARTSTest extends CDKTestCase {
 	
 	@Test public void testStrictSMARTS() throws Exception {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

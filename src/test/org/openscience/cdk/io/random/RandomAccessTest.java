@@ -29,7 +29,7 @@ import java.io.File;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.tools.LoggingTool;
@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     Nina Jeliazkova <nina@acad.bg>
  * @cdk.module test-extra
  */
-public class RandomAccessTest extends NewCDKTestCase {
+public class RandomAccessTest extends CDKTestCase {
 
     private LoggingTool logger = new LoggingTool(this);
 

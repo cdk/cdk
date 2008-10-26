@@ -26,14 +26,14 @@ package org.openscience.cdk.io.cml;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * TestCase for the CMLStack class.
  *
  * @cdk.module test-io
  */
-public class CMLStackTest extends NewCDKTestCase {
+public class CMLStackTest extends CDKTestCase {
 
     @Test public void testPush_String() {
     	// the class has a hardcoded default length. Test going beyond this.

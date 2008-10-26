@@ -5,7 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 import java.io.InputStream;
@@ -17,7 +17,7 @@ import java.io.InputStream;
  *
  * @see org.openscience.cdk.io.MDLReader
  */
-public class IteratingMDLConformerReaderTest extends NewCDKTestCase {
+public class IteratingMDLConformerReaderTest extends CDKTestCase {
 
     private static LoggingTool logger;
 

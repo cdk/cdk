@@ -33,7 +33,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-extra
  */
-public class VariousTests extends NewCDKTestCase {
+public class VariousTests extends CDKTestCase {
 
 	@Test public void test1456139() throws Exception{
 		SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());

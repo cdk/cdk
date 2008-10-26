@@ -31,7 +31,7 @@ import java.io.InputStream;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.module test-io
  */
-public class JumboTest extends NewCDKTestCase {
+public class JumboTest extends CDKTestCase {
 
     private LoggingTool logger = new LoggingTool(this);
 

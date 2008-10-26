@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -14,7 +14,7 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 /**
  * @cdk.module test-standard
  */
-public class TopologicalMatrixTest extends NewCDKTestCase {
+public class TopologicalMatrixTest extends CDKTestCase {
 
 	@Test public void testTopologicalMatrix_IAtomContainer() throws Exception {
 		String filename = "data/mdl/clorobenzene.mol";

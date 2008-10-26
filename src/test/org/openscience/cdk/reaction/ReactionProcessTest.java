@@ -28,7 +28,7 @@ import javax.vecmath.Point3d;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.EntryReact;
@@ -46,7 +46,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  *
  * @cdk.module test-reaction
  */
-public abstract class ReactionProcessTest extends NewCDKTestCase {
+public abstract class ReactionProcessTest extends CDKTestCase {
 	
 	private static IReactionProcess reaction;
 	private static Dictionary dictionary;

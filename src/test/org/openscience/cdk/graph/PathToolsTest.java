@@ -46,7 +46,7 @@ import java.util.List;
 /**
  * @cdk.module test-core
  */
-public class PathToolsTest extends NewCDKTestCase {
+public class PathToolsTest extends CDKTestCase {
     private static Molecule molecule;
     private static SmilesParser sp;
 

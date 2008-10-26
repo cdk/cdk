@@ -26,7 +26,7 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module test-smarts
  * @cdk.require ant1.6
  */
-public class RecursiveTest extends NewCDKTestCase {
+public class RecursiveTest extends CDKTestCase {
     private int nmatch;
     private int nqmatch;
 

@@ -35,7 +35,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.io.formats.ABINITFormat;
 import org.openscience.cdk.io.formats.ADFFormat;
@@ -74,7 +74,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.module test-io
  */
-public class ReaderFactoryTest extends NewCDKTestCase {
+public class ReaderFactoryTest extends CDKTestCase {
 
     private ReaderFactory factory = new ReaderFactory();
     private LoggingTool logger = new LoggingTool(this);

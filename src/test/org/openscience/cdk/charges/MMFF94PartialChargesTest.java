@@ -31,7 +31,7 @@ import org.openscience.cdk.charges.MMFF94PartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  *  TestSuite that runs a test for the MMFF94PartialCharges.
@@ -42,7 +42,7 @@ import org.openscience.cdk.NewCDKTestCase;
  *@cdk.created       2004-11-04
  */
 
-public class MMFF94PartialChargesTest extends NewCDKTestCase {
+public class MMFF94PartialChargesTest extends CDKTestCase {
 
 	/**
 

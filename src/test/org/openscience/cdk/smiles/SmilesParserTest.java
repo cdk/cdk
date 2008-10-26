@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -60,7 +60,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * 
  * @see org.openscience.cdk.gui.smiles.SmilesParserTest
  */
-public class SmilesParserTest extends NewCDKTestCase {
+public class SmilesParserTest extends CDKTestCase {
 	
 	private static SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 

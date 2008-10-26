@@ -3,7 +3,7 @@ package org.openscience.cdk.smiles.smarts.parser.visitor;
 import java.io.StringReader;
 
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.smiles.smarts.parser.ASTStart;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 
@@ -15,7 +15,7 @@ import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
  * @cdk.module test-smarts
  * @cdk.keyword SMARTS 
  */
-public class SmartsQueryVisitorTest extends NewCDKTestCase {
+public class SmartsQueryVisitorTest extends CDKTestCase {
 
     public void visit(String smarts) throws Exception {
     	SMARTSParser parser = new SMARTSParser(new StringReader(smarts));

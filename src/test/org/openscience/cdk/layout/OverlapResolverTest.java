@@ -31,7 +31,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.io.CMLReader;
@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *@cdk.created    September 4, 2003
  * @cdk.require java1.4+
  */
-public class OverlapResolverTest extends NewCDKTestCase {
+public class OverlapResolverTest extends CDKTestCase {
 
 	/**
 	 *  Description of the Field

@@ -50,7 +50,7 @@ import java.util.List;
  * @author      Egon Willighagen <egonw@users.sf.net>
  * @cdk.created 2007-07-28
  */
-public class CDKHydrogenAdderTest extends NewCDKTestCase {
+public class CDKHydrogenAdderTest extends CDKTestCase {
 
 //	private final static LoggingTool logger = new LoggingTool(CDKHydrogenAdderTest.class);
 	private final static CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(NoNotificationChemObjectBuilder.getInstance());

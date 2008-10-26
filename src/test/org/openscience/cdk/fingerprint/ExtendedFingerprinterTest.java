@@ -36,7 +36,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -49,7 +49,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * @cdk.module test-fingerprint
  */
-public class ExtendedFingerprinterTest extends NewCDKTestCase {
+public class ExtendedFingerprinterTest extends CDKTestCase {
 	
 	public ExtendedFingerprinterTest() {
 		super();

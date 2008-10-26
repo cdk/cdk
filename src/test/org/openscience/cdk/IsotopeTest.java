@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.diff.IsotopeDiff;
  *
  * @see org.openscience.cdk.Isotope
  */
-public class IsotopeTest extends NewCDKTestCase {
+public class IsotopeTest extends CDKTestCase {
 
 	protected static IChemObjectBuilder builder;
 	

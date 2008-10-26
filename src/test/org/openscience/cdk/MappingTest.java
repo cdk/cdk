@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  *
  * @see org.openscience.cdk.Mapping
  */
-public class MappingTest extends NewCDKTestCase {
+public class MappingTest extends CDKTestCase {
 
     @Test public void testMapping_IChemObject_IChemObject() {
         Mapping mapping = new Mapping(new Atom(), new Atom());

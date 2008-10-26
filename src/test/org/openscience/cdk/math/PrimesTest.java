@@ -23,12 +23,12 @@ package org.openscience.cdk.math;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.math.Primes;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class PrimesTest extends NewCDKTestCase {
+public class PrimesTest extends CDKTestCase {
     
     public PrimesTest() {
         super();

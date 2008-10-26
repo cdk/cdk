@@ -24,14 +24,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Element;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
 /**
  * @cdk.module test-diff
  */
-public class AtomTypeDiffTest extends NewCDKTestCase {
+public class AtomTypeDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
         IAtomType element1 = new AtomType(new Element());

@@ -24,13 +24,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.validate.ProblemMarker;
 
 /**
  * @cdk.module test-standard
  */
-public class ProblemMarkerTest extends NewCDKTestCase {
+public class ProblemMarkerTest extends CDKTestCase {
     
     public ProblemMarkerTest() {
         super();

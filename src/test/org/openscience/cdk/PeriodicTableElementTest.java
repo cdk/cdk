@@ -29,7 +29,7 @@ import org.openscience.cdk.tools.diff.ElementDiff;
 /**
  * @cdk.module test-extra
  */
-public class PeriodicTableElementTest extends NewCDKTestCase {
+public class PeriodicTableElementTest extends CDKTestCase {
     private static PeriodicTableElement periodicTableElement;
 
     @BeforeClass

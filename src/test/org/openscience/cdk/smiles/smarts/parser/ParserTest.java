@@ -27,7 +27,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -46,7 +46,7 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
  * @cdk.module test-smarts
  * @cdk.require ant1.6
  */
-public class ParserTest extends NewCDKTestCase {
+public class ParserTest extends CDKTestCase {
  
     private void parse(String smarts) throws Exception {
         //SMARTSParser.parse(smarts);

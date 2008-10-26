@@ -23,14 +23,14 @@ package org.openscience.cdk.tools.diff;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
 /**
  * @cdk.module test-diff
  */
-public class AtomDiffTest extends NewCDKTestCase {
+public class AtomDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
         IAtom atom1 = new Atom();

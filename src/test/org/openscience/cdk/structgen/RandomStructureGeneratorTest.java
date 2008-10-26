@@ -30,7 +30,7 @@ import javax.vecmath.Vector2d;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -39,7 +39,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * @cdk.module test-structgen
  */
-public class RandomStructureGeneratorTest extends NewCDKTestCase {
+public class RandomStructureGeneratorTest extends CDKTestCase {
 
 	public boolean debug = false;
 	boolean standAlone = false;

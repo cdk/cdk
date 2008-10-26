@@ -34,7 +34,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -45,7 +45,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * @cdk.module test-structgen
  */
-public class VicinitySamplerTest extends NewCDKTestCase {
+public class VicinitySamplerTest extends CDKTestCase {
 	
 	private static SmilesParser parser;
 	

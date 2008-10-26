@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import java.util.Iterator;
 
@@ -39,7 +39,7 @@ import java.util.Iterator;
  *
  * @cdk.module test-standard
  */
-public class CanonicalLabelerTest extends NewCDKTestCase {
+public class CanonicalLabelerTest extends CDKTestCase {
 	
 	private SmilesParser parser;
 	private CanonicalLabeler labeler;
