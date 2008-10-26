@@ -126,7 +126,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
         DescriptorValue v = descriptor.calculate(mol.getAtom(1), mol);
         String[] names2 = v.getNames();
 
-        Assert.assertEquals(names1.length, names2.length);
+        Assert.assertEquals("("+descriptor.getClass().toString()+") fails. ",names1.length, names2.length);
         Assert.assertArrayEquals(names1, names2);
 
         int valueCount = v.getValue().length();
