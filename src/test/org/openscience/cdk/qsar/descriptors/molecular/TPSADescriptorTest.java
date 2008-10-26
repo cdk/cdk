@@ -45,7 +45,7 @@ public class TPSADescriptorTest extends MolecularDescriptorTest {
     }
 
     @Before
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         setDescriptor(TPSADescriptor.class);
         Object[] params = {true};

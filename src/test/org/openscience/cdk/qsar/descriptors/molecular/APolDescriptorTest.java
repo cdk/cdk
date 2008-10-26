@@ -44,7 +44,7 @@ public class APolDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Before
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         setDescriptor(APolDescriptor.class);
     }
 

@@ -196,7 +196,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         IDescriptorResult v1 = descriptor.calculate(methane1).getValue();
         IDescriptorResult v2 = descriptor.calculate(methane2).getValue();
 
-        String errorMessage = "The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
+        String errorMessage = "("+descriptor.getClass().toString()+") The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
         if (v1 instanceof IntegerResult) {
             Assert.assertEquals(errorMessage, ((IntegerResult)v1).intValue(), ((IntegerResult)v2).intValue());
         } else if (v1 instanceof DoubleResult) {
