@@ -70,7 +70,7 @@ public class MextraTests {
         // from cdk.test.similarity
         suite.addTest(new JUnit4TestAdapter(TanimotoTest.class));
         suite.addTest(new JUnit4TestAdapter(DistanceMomentTest.class));
-        suite.addTest(HOSECodeAnalyserTest.suite());
+        suite.addTest(new JUnit4TestAdapter(HOSECodeAnalyserTest.class));
         suite.addTest(new JUnit4TestAdapter(DeAromatizationToolTest.class));
         suite.addTest(ShelXWriterTest.suite());
         suite.addTest(new JUnit4TestAdapter(BremserPredictorTest.class));

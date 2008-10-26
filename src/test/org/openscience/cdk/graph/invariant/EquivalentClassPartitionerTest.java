@@ -20,39 +20,25 @@
  */
 package org.openscience.cdk.graph.invariant;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.graph.invariant.EquivalentClassPartitioner;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the TopologicalEquivalentClass.
  *
  * @cdk.module test-extra
  */
-public class EquivalentClassPartitionerTest extends CDKTestCase
+public class EquivalentClassPartitionerTest extends NewCDKTestCase
 {
 	AtomContainer C40C3V = null;
 	AtomContainer C24D6D = null;
 	AtomContainer  C28TD = null;
-	public EquivalentClassPartitionerTest(String name)
-	{
-		super(name);
-		
-		
-	}
 	
-	
-	
-	public static Test suite() {
-		return new TestSuite(EquivalentClassPartitionerTest.class);
-	}
-
-	public void testEquivalent() throws Exception 
+	@Test public void testEquivalent() throws Exception 
 	{
 		AtomContainer C40C3V = new org.openscience.cdk.AtomContainer();
 		C40C3V.addAtom(new Atom("C")); // 1
@@ -162,13 +148,13 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
 		for(int i=1;i<equivalentClass.length-1;i++)
 			arrEquivalent[i-1]=Integer.toString(equivalentClass[i]).charAt(0);
 		String strEquivalent=new String(arrEquivalent);
-		assertNotNull(equivalentClass);
-		assertTrue(equivalentClass[0]==10);//number of Class
-		assertTrue(equivalentClass[40]==10);
-		assertEquals("111112221333444556667878222879995555444", strEquivalent);
+		Assert.assertNotNull(equivalentClass);
+		Assert.assertTrue(equivalentClass[0]==10);//number of Class
+		Assert.assertTrue(equivalentClass[40]==10);
+		Assert.assertEquals("111112221333444556667878222879995555444", strEquivalent);
 	}
 
-	public void testFullereneC24D6D() throws Exception
+	@Test public void testFullereneC24D6D() throws Exception
 	{
 		AtomContainer C24D6D = new org.openscience.cdk.AtomContainer();
 		C24D6D.addAtom(new Atom("C")); // 1
@@ -240,9 +226,9 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
 		for(int i=1;i<equivalentClass.length;i++)
 			arrEquivalent[i-1]=Integer.toString(equivalentClass[i]).charAt(0);
 		String strEquivalent=new String(arrEquivalent);
-		assertNotNull(equivalentClass);
-		assertTrue(equivalentClass[0]==2);//number of Class
-		assertTrue(strEquivalent.equals("111111222222222222111111"));
+		Assert.assertNotNull(equivalentClass);
+		Assert.assertTrue(equivalentClass[0]==2);//number of Class
+		Assert.assertTrue(strEquivalent.equals("111111222222222222111111"));
 	}
 	
 }

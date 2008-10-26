@@ -30,12 +30,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -45,29 +44,17 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  */
-public class ChemObjectIOInstantionTests extends CDKTestCase {
+public class ChemObjectIOInstantionTests extends NewCDKTestCase {
     
     private final static String IO_FORMATS_LIST = "io-formats.set";
 
-    private LoggingTool logger;
+    private static LoggingTool logger = new LoggingTool(ChemObjectIOInstantionTests.class);
 
-    private static List formats = null;
+    private static List<IChemFormat> formats = null;
 
-    /**
-     * Constructs a ChemObjectIOInstantionTests.
-     */
-    public ChemObjectIOInstantionTests(String name) {
-    	super(name);
-    	logger = new LoggingTool(this);
-    }
-
-    public static Test suite() {
-        return new TestSuite(ChemObjectIOInstantionTests.class);
-    }
-    
     private void loadFormats() {
         if (formats == null) {
-            formats = new ArrayList();
+            formats = new ArrayList<IChemFormat>();
             try {
                 logger.debug("Starting loading Formats...");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -82,7 +69,7 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
                         IResourceFormat format = (IResourceFormat)this.getClass().getClassLoader().
                             loadClass(formatName).newInstance();
                         if (format instanceof IChemFormat) {
-                        	formats.add(format);
+                        	formats.add((IChemFormat)format);
                         	logger.info("Loaded IChemFormat: " + format.getClass().getName());
                         }
                     } catch (ClassNotFoundException exception) {
@@ -101,11 +88,11 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
         }
     }
 
-    public void testInstantion() {
+    @Test public void testInstantion() {
     	loadFormats();
     	
     	IChemFormat format = null;
-    	Iterator formatIter = formats.iterator();
+    	Iterator<IChemFormat> formatIter = formats.iterator();
     	while (formatIter.hasNext()) {
             format = (IChemFormat)formatIter.next();
             if (format.getReaderClassName() != null) {
@@ -121,14 +108,14 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
     	try {
             // make a new instance of this class
             Object instance = this.getClass().getClassLoader().loadClass(className).newInstance();
-            assertNotNull(instance);
-            assertEquals(className, instance.getClass().getName());
+            Assert.assertNotNull(instance);
+            Assert.assertEquals(className, instance.getClass().getName());
         } catch (ClassNotFoundException exception) {
             logger.debug("Could not find this class: " + className);
             // but that's not error, it can mean that it is a Jmol based IO class, and no Jmol is in the classpath
         } catch (Exception exception) {
         	logger.debug(exception);
-            fail("Could not instantiate this class: " + className);
+            Assert.fail("Could not instantiate this class: " + className);
         }
     }
 

@@ -20,22 +20,12 @@
  */
 package org.openscience.cdk.qsar;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * @cdk.module test-qsarmolecular
  */
-public class ChiIndexUtilsTest extends CDKTestCase {
-
-    public ChiIndexUtilsTest() {
-    }
-
-    public static Test suite() {
-        return new TestSuite(ChiIndexUtilsTest.class);
-    }
+public class ChiIndexUtilsTest extends NewCDKTestCase {
 
 }
 

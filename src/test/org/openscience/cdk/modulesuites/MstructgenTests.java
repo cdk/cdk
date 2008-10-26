@@ -53,8 +53,8 @@ public class MstructgenTests {
         
         // structgen.stoichastic
         suite.addTest(PartialFilledStructureMergerTest.suite());
-        suite.addTest(ChemGraphTest.suite());
-        suite.addTest(CrossoverMachineTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ChemGraphTest.class));
+        suite.addTest(new JUnit4TestAdapter(CrossoverMachineTest.class));
 
         return suite;
     }

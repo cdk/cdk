@@ -23,34 +23,19 @@
  */
 package org.openscience.cdk.graph;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.graph.AtomContainerAtomPermutor;
-import org.openscience.cdk.graph.AtomContainerBondPermutor;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-extra
  */
-public class AtomContainerPermutorTest extends CDKTestCase
-{
-	public AtomContainerPermutorTest(String name) {
-		super(name);
-	}
+public class AtomContainerPermutorTest extends NewCDKTestCase {
 
-	public void setUp() {
-		
-	}
-
-	public static Test suite() {
-		return new TestSuite(AtomContainerPermutorTest.class);
-	}
-
-	public void testAtomPermutation() 
+	@Test public void testAtomPermutation() 
 	{
 		AtomContainer ac = new org.openscience.cdk.AtomContainer();
 		AtomContainer result;
@@ -79,10 +64,10 @@ public class AtomContainerPermutorTest extends CDKTestCase
 				atoms += result.getAtom(f).getSymbol(); 
 			}
 		}
-		assertEquals(719, counter);
+		Assert.assertEquals(719, counter);
 	}
 
-	public void testBondPermutation() 
+	@Test public void testBondPermutation() 
 	{
 		AtomContainer ac = new org.openscience.cdk.AtomContainer();
 		AtomContainer result;
@@ -112,7 +97,7 @@ public class AtomContainerPermutorTest extends CDKTestCase
 			}
 			//logger.debug(bonds);
 		}
-		assertEquals(119, counter);
+		Assert.assertEquals(119, counter);
 	}
 
 	

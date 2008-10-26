@@ -23,9 +23,9 @@
  */
 package org.openscience.cdk.qsar.model.R2;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.rosuda.JRI.RList;
@@ -37,33 +37,25 @@ import org.rosuda.JRI.RList;
  * @cdk.require r-project
  * @cdk.module  test-qsar
  */
-public class LinearRegressionModelTest extends CDKTestCase {
+public class LinearRegressionModelTest extends NewCDKTestCase {
 
-    public LinearRegressionModelTest(String name) {
-    	super(name);
-    }
-
-    public static Test suite() {
-        return new TestSuite(org.openscience.cdk.qsar.model.R2.LinearRegressionModelTest.class);
-    }
-
-    public void testLinearRegressionModel() throws CDKException, Exception, QSARModelException {
+    @Test public void testLinearRegressionModel() throws CDKException, Exception, QSARModelException {
 
         double[][] x = getXData();
         double[] y = getYData();
 
         LinearRegressionModel lrm = new LinearRegressionModel(x, y);
-        assertTrue(RModel.getRengine() != null);
+        Assert.assertTrue(RModel.getRengine() != null);
 
         lrm.build();
-        assertTrue(lrm.summary() != null);
+        Assert.assertTrue(lrm.summary() != null);
 
         double[] coeff = lrm.getCoefficients();
-        assertTrue(coeff != null);
-        assertEquals(coeff[0], 0.5079196, .000001);
-        assertEquals(coeff[1], 0.0017640, .000001);
-        assertEquals(coeff[2], 0.0038752, .000001);
-        assertEquals(coeff[3], -0.00228948, .000001);
+        Assert.assertTrue(coeff != null);
+        Assert.assertEquals(coeff[0], 0.5079196, .000001);
+        Assert.assertEquals(coeff[1], 0.0017640, .000001);
+        Assert.assertEquals(coeff[2], 0.0038752, .000001);
+        Assert.assertEquals(coeff[3], -0.00228948, .000001);
 
         /* Test predictions */
         Double[][] newx = {
@@ -80,18 +72,18 @@ public class LinearRegressionModelTest extends CDKTestCase {
         RList predList = lrm.getModelPredict();
         double[] preds = predList.at("fit").asDoubleArray();
 
-        assertTrue(preds != null);
-        assertEquals(preds[0], 0.5235362, 0.0000001);
-        assertEquals(preds[1], 0.5030381, 0.0000001);
-        assertEquals(preds[2], 0.5184706, 0.0000001);
-        assertEquals(preds[3], 0.5232108, 0.0000001);
-        assertEquals(preds[4], 0.5436967, 0.0000001);
+        Assert.assertTrue(preds != null);
+        Assert.assertEquals(preds[0], 0.5235362, 0.0000001);
+        Assert.assertEquals(preds[1], 0.5030381, 0.0000001);
+        Assert.assertEquals(preds[2], 0.5184706, 0.0000001);
+        Assert.assertEquals(preds[3], 0.5232108, 0.0000001);
+        Assert.assertEquals(preds[4], 0.5436967, 0.0000001);
 
-        assertEquals(predList.at("df").asInt(), 96, 0.1);
+        Assert.assertEquals(predList.at("df").asInt(), 96, 0.1);
     }
 
 
-    public void testModelLoadSave() throws QSARModelException {
+    @Test public void testModelLoadSave() throws QSARModelException {
         double[][] x = getXData();
         double[] y = getYData();
 
@@ -102,15 +94,15 @@ public class LinearRegressionModelTest extends CDKTestCase {
         LinearRegressionModel loadedModel = new LinearRegressionModel();
         loadedModel.loadModel("lmtest.Rda");
 
-        assertEquals("cdkLMModel1", loadedModel.getModelName());
-        assertNotNull(loadedModel.getModelObject());
+        Assert.assertEquals("cdkLMModel1", loadedModel.getModelName());
+        Assert.assertNotNull(loadedModel.getModelObject());
 
         double[] coeff = loadedModel.getCoefficients();
-        assertTrue(coeff != null);
-        assertEquals(coeff[0], 0.5079196, .000001);
-        assertEquals(coeff[1], 0.0017640, .000001);
-        assertEquals(coeff[2], 0.0038752, .000001);
-        assertEquals(coeff[3], -0.00228948, .000001);
+        Assert.assertTrue(coeff != null);
+        Assert.assertEquals(coeff[0], 0.5079196, .000001);
+        Assert.assertEquals(coeff[1], 0.0017640, .000001);
+        Assert.assertEquals(coeff[2], 0.0038752, .000001);
+        Assert.assertEquals(coeff[3], -0.00228948, .000001);
 
         /* Test predictions */
         Double[][] newx = {
@@ -128,13 +120,13 @@ public class LinearRegressionModelTest extends CDKTestCase {
 
 
         double[] preds = predList.at("fit").asDoubleArray();
-        assertTrue(preds != null);
-        assertEquals(preds[0], 0.5235362, 0.0000001);
-        assertEquals(preds[1], 0.5030381, 0.0000001);
-        assertEquals(preds[2], 0.5184706, 0.0000001);
-        assertEquals(preds[3], 0.5232108, 0.0000001);
-        assertEquals(preds[4], 0.5436967, 0.0000001);
-        assertEquals(predList.at("df").asInt(), 96, 0.1);
+        Assert.assertTrue(preds != null);
+        Assert.assertEquals(preds[0], 0.5235362, 0.0000001);
+        Assert.assertEquals(preds[1], 0.5030381, 0.0000001);
+        Assert.assertEquals(preds[2], 0.5184706, 0.0000001);
+        Assert.assertEquals(preds[3], 0.5232108, 0.0000001);
+        Assert.assertEquals(preds[4], 0.5436967, 0.0000001);
+        Assert.assertEquals(predList.at("df").asInt(), 96, 0.1);
     }
 
     private double[] getYData() {

@@ -25,36 +25,20 @@ package org.openscience.cdk.validate;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.validate.Geometry3DValidator;
-import org.openscience.cdk.validate.ValidationReport;
-import org.openscience.cdk.validate.ValidatorEngine;
 
 /**
  * @cdk.module test-extra
  */
-public class Geometry3DValidatorTest extends CDKTestCase {
+public class Geometry3DValidatorTest extends NewCDKTestCase {
 	
-	public Geometry3DValidatorTest(String name)
-	{
-		super(name);
-	}
-
-	public void setUp() {};
-
-	public static Test suite() 
-	{
-		return new TestSuite(Geometry3DValidatorTest.class);
-	}
-
-	public void testEthane() throws Exception {
+	@Test public void testEthane() throws Exception {
 		String filename = "data/Heptan-TestFF-output.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
@@ -62,8 +46,8 @@ public class Geometry3DValidatorTest extends CDKTestCase {
         ValidatorEngine engine = new ValidatorEngine();
         engine.addValidator(new Geometry3DValidator());
         ValidationReport report = engine.validateChemFile(chemFile);
-        assertEquals(0, report.getErrorCount());
-        assertEquals(0, report.getWarningCount());
+        Assert.assertEquals(0, report.getErrorCount());
+        Assert.assertEquals(0, report.getWarningCount());
     }
 }
 

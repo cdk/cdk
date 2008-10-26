@@ -20,23 +20,13 @@
  */
 package org.openscience.cdk.structgen.stochastic.operator;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * @cdk.module test-structgen
  */
-public class CrossoverMachineTest extends CDKTestCase {
+public class CrossoverMachineTest extends NewCDKTestCase {
     
-    public CrossoverMachineTest(String name) {
-        super(name);
-    }
-    
-	public static Test suite() {
-		return new TestSuite(CrossoverMachineTest.class);
-	}
 
 }
 

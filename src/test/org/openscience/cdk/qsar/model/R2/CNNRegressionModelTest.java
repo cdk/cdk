@@ -23,10 +23,9 @@
  */
 package org.openscience.cdk.qsar.model.R2;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.exception.CDKException;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.qsar.model.QSARModelException;
 
 /**
@@ -36,46 +35,38 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  * @cdk.require r-project
  * @cdk.module test-qsar
  */
+public class CNNRegressionModelTest extends NewCDKTestCase {
 
-public class CNNRegressionModelTest extends CDKTestCase {
-
-    public CNNRegressionModelTest() {
-    }
-
-    public static Test suite() {
-        return new TestSuite(org.openscience.cdk.qsar.model.R2.CNNRegressionModelTest.class);
-    }
-
-    public void testCNNRegressionModel() throws CDKException, Exception, QSARModelException {
+    @Test public void testCNNRegressionModel() throws Exception {
 
         double[][] x = getXData();
         double[] y = getYData();
 
         CNNRegressionModel cnnrm = new CNNRegressionModel(x, y, 3);
-        assertNotNull(RModel.getRengine());
-        assertEquals("cdkCNNModel0", cnnrm.getModelName());
+        Assert.assertNotNull(RModel.getRengine());
+        Assert.assertEquals("cdkCNNModel0", cnnrm.getModelName());
 
         Double[] Wts = getWeights();
         cnnrm.setParameters("Wts", Wts);
         cnnrm.build();
-        assertNotNull(cnnrm.getModelObject());
+        Assert.assertNotNull(cnnrm.getModelObject());
 
         double value = cnnrm.getValue();
-        assertEquals(value, 8.076735, .000001);
+        Assert.assertEquals(value, 8.076735, .000001);
 
         double[] wts = cnnrm.getWts();
-        assertTrue(wts != null);
-        assertEquals(-1.635880, wts[0], .000001);
-        assertEquals(-6.227619, wts[1], .000001);
-        assertEquals(-4.639471, wts[2], .000001);
-        assertEquals(-4.060546, wts[3], .000001);
+        Assert.assertTrue(wts != null);
+        Assert.assertEquals(-1.635880, wts[0], .000001);
+        Assert.assertEquals(-6.227619, wts[1], .000001);
+        Assert.assertEquals(-4.639471, wts[2], .000001);
+        Assert.assertEquals(-4.060546, wts[3], .000001);
 
         double[][] fitted = cnnrm.getFittedValues();
-        assertTrue(fitted != null);
-        assertEquals(0.527783, fitted[0][0], .000001);
-        assertEquals(0.527783, fitted[1][0], .000001);
-        assertEquals(0.527783, fitted[2][0], .000001);
-        assertEquals(0.203857, fitted[6][0], .000001);
+        Assert.assertTrue(fitted != null);
+        Assert.assertEquals(0.527783, fitted[0][0], .000001);
+        Assert.assertEquals(0.527783, fitted[1][0], .000001);
+        Assert.assertEquals(0.527783, fitted[2][0], .000001);
+        Assert.assertEquals(0.203857, fitted[6][0], .000001);
 
         /* Test predictions */
         Double[][] newx = {
@@ -91,23 +82,23 @@ public class CNNRegressionModelTest extends CDKTestCase {
         cnnrm.predict();
 
         double[][] preds = cnnrm.getPredictions();
-        assertTrue(preds != null);
-        assertEquals(0.527783, preds[0][0], 0.000001);
-        assertEquals(0.401678, preds[1][0], 0.000001);
-        assertEquals(0.390702, preds[2][0], 0.000001);
-        assertEquals(0.527783, preds[3][0], 0.000001);
-        assertEquals(0.527783, preds[4][0], 0.000001);
+        Assert.assertTrue(preds != null);
+        Assert.assertEquals(0.527783, preds[0][0], 0.000001);
+        Assert.assertEquals(0.401678, preds[1][0], 0.000001);
+        Assert.assertEquals(0.390702, preds[2][0], 0.000001);
+        Assert.assertEquals(0.527783, preds[3][0], 0.000001);
+        Assert.assertEquals(0.527783, preds[4][0], 0.000001);
 
-        assertTrue(cnnrm.summary() != null);
+        Assert.assertTrue(cnnrm.summary() != null);
     }
 
-    public void testModelLoadSave() throws QSARModelException {
+    @Test public void testModelLoadSave() throws QSARModelException {
         double[][] x = getXData();
         double[] y = getYData();
 
         CNNRegressionModel cnnrm = new CNNRegressionModel(x, y, 3);
-        assertNotNull(RModel.getRengine());
-        assertEquals("cdkCNNModel1", cnnrm.getModelName());
+        Assert.assertNotNull(RModel.getRengine());
+        Assert.assertEquals("cdkCNNModel1", cnnrm.getModelName());
 
         Double[] Wts = getWeights();
         cnnrm.setParameters("Wts", Wts);
@@ -119,22 +110,22 @@ public class CNNRegressionModelTest extends CDKTestCase {
 
         System.out.println("loadedModel.getModelName() = " + loadedModel.getModelName());
 
-//        assertEquals("cdkCNNModel0", loadedModel.getModelName());
-        assertNotNull(loadedModel.getModelObject());
+//        Assert.assertEquals("cdkCNNModel0", loadedModel.getModelName());
+        Assert.assertNotNull(loadedModel.getModelObject());
 
         double[] wts = cnnrm.getWts();
-        assertTrue(wts != null);
-        assertEquals(-1.635880, wts[0], .000001);
-        assertEquals(-6.227619, wts[1], .000001);
-        assertEquals(-4.639471, wts[2], .000001);
-        assertEquals(-4.060546, wts[3], .000001);
+        Assert.assertTrue(wts != null);
+        Assert.assertEquals(-1.635880, wts[0], .000001);
+        Assert.assertEquals(-6.227619, wts[1], .000001);
+        Assert.assertEquals(-4.639471, wts[2], .000001);
+        Assert.assertEquals(-4.060546, wts[3], .000001);
 
         double[][] fitted = cnnrm.getFittedValues();
-        assertTrue(fitted != null);
-        assertEquals(0.527783, fitted[0][0], .000001);
-        assertEquals(0.527783, fitted[1][0], .000001);
-        assertEquals(0.527783, fitted[2][0], .000001);
-        assertEquals(0.203857, fitted[6][0], .000001);
+        Assert.assertTrue(fitted != null);
+        Assert.assertEquals(0.527783, fitted[0][0], .000001);
+        Assert.assertEquals(0.527783, fitted[1][0], .000001);
+        Assert.assertEquals(0.527783, fitted[2][0], .000001);
+        Assert.assertEquals(0.203857, fitted[6][0], .000001);
 
         /* Test predictions */
         Double[][] newx = {
@@ -150,12 +141,12 @@ public class CNNRegressionModelTest extends CDKTestCase {
         loadedModel.predict();
 
         double[][] preds = loadedModel.getPredictions();
-        assertTrue(preds != null);
-        assertEquals(0.527783, preds[0][0], 0.000001);
-        assertEquals(0.401678, preds[1][0], 0.000001);
-        assertEquals(0.390702, preds[2][0], 0.000001);
-        assertEquals(0.527783, preds[3][0], 0.000001);
-        assertEquals(0.527783, preds[4][0], 0.000001);
+        Assert.assertTrue(preds != null);
+        Assert.assertEquals(0.527783, preds[0][0], 0.000001);
+        Assert.assertEquals(0.401678, preds[1][0], 0.000001);
+        Assert.assertEquals(0.390702, preds[2][0], 0.000001);
+        Assert.assertEquals(0.527783, preds[3][0], 0.000001);
+        Assert.assertEquals(0.527783, preds[4][0], 0.000001);
 
 
     }

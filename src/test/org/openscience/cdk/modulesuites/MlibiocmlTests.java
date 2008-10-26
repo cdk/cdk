@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -38,7 +39,7 @@ public class MlibiocmlTests {
         
         suite.addTest(LibiocmlCoverageTest.suite());
         
-        suite.addTest(ConvertorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ConvertorTest.class));
         
         // the following classes require Java 1.5 (or better)
         if (System.getProperty("java.version").startsWith("1.5") ||

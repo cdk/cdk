@@ -22,41 +22,29 @@ package org.openscience.cdk.tools;
 
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.HOSECodeAnalyser;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * @cdk.module test-extra
  */
-public class HOSECodeAnalyserTest extends CDKTestCase {
+public class HOSECodeAnalyserTest extends NewCDKTestCase {
 	
-	public HOSECodeAnalyserTest(String name) {
-		super(name);
-	}
-
-	public void setUp() {}
-
-	public static Test suite() {
-		return new TestSuite(HOSECodeAnalyserTest.class);
-	}
-
-	public void testGetElements_String()	{
+	@Test public void testGetElements_String()	{
 		List elements = HOSECodeAnalyser.getElements("CCY(CF,C,/C,,&/&)//");
-		assertEquals(3, elements.size());
-		assertTrue(elements.contains("C"));
-		assertTrue(elements.contains("F"));
-		assertTrue(elements.contains("Br"));
+		Assert.assertEquals(3, elements.size());
+		Assert.assertTrue(elements.contains("C"));
+		Assert.assertTrue(elements.contains("F"));
+		Assert.assertTrue(elements.contains("Br"));
 	}
     
-	public void testCode1()	{
+	@Test public void testCode1()	{
 		List elements = HOSECodeAnalyser.getElements("*C*CC(*C,*C,=C/*C,*&,CC/*&O,=OO,%N),C,,C,/");
-		assertEquals(3, elements.size());
-		assertTrue(elements.contains("C"));
-		assertTrue(elements.contains("O"));
-		assertTrue(elements.contains("N"));
+		Assert.assertEquals(3, elements.size());
+		Assert.assertTrue(elements.contains("C"));
+		Assert.assertTrue(elements.contains("O"));
+		Assert.assertTrue(elements.contains("N"));
 	}
     
 }

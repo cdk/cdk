@@ -21,20 +21,19 @@
  */
 package org.openscience.cdk.tools;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -46,45 +45,21 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author         Miguel Rojas
  * @cdk.created    2006-04-01
  */
-public class LonePairElectronCheckerTest extends CDKTestCase
-{
+public class LonePairElectronCheckerTest extends NewCDKTestCase {
 
-	LonePairElectronChecker lpcheck = null;
-	boolean standAlone = false;
-
-
-	/**
-	 *  Constructor for the LonePairCheckerTest object
-	 *
-	 *@param  name  Description of the Parameter
-	 */
-	public LonePairElectronCheckerTest(String name)
-	{
-		super(name);
-	}
+	private static LonePairElectronChecker lpcheck = null;
 
     /**
     *  The JUnit setup method
     */
-    public void setUp() throws Exception {
+    @BeforeClass public void setUp() throws Exception {
     	lpcheck = new LonePairElectronChecker();
     }
 
 	/**
-	 * A unit test suite for JUnit
-	 *
-	 * @return    The test suite
-	 */
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LonePairElectronCheckerTest.class);
-        return suite;
-	}
-
-
-	/**
 	 *  A unit test for JUnit
 	 */
-	public void testAllSaturated_Formaldehyde() throws CDKException
+	@Test public void testAllSaturated_Formaldehyde() throws CDKException
 	{
 		// test Formaldehyde, CH2=O with explicit hydrogen
 		Molecule m = new Molecule();
@@ -105,13 +80,13 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		m.addBond(new Bond(c, O, IBond.Order.DOUBLE));
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		
-		assertTrue(lpcheck.allSaturated(m));
+		Assert.assertTrue(lpcheck.allSaturated(m));
 	}
 
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testAllSaturated_Methanethiol() throws CDKException {
+	@Test public void testAllSaturated_Methanethiol() throws CDKException {
 		// test Methanethiol, CH4S
 		Atom c = new Atom("C");
 		c.setHydrogenCount(3);
@@ -130,12 +105,12 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		}
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		
-		assertFalse(lpcheck.allSaturated(m));
+		Assert.assertFalse(lpcheck.allSaturated(m));
 	}
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testNewSaturate_Methyl_chloride() throws CDKException {
+	@Test public void testNewSaturate_Methyl_chloride() throws CDKException {
 		// test Methyl chloride, CH3Cl
 		Atom c1 = new Atom("C");
 		c1.setHydrogenCount(3);
@@ -149,13 +124,13 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		lpcheck.saturate(m);
-		assertEquals(3, m.getConnectedLonePairsCount(cl));
-		assertEquals(0, m.getConnectedLonePairsCount(c1));
+		Assert.assertEquals(3, m.getConnectedLonePairsCount(cl));
+		Assert.assertEquals(0, m.getConnectedLonePairsCount(c1));
 	}
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testNewSaturate_Methyl_alcohol() throws CDKException {
+	@Test public void testNewSaturate_Methyl_alcohol() throws CDKException {
 		// test Methyl chloride, CH3OH
 		Atom c1 = new Atom("C");
 		c1.setHydrogenCount(3);
@@ -170,13 +145,13 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		lpcheck.saturate(m);
-		assertEquals(2, m.getConnectedLonePairsCount(o));
-		assertEquals(0, m.getConnectedLonePairsCount(c1));
+		Assert.assertEquals(2, m.getConnectedLonePairsCount(o));
+		Assert.assertEquals(0, m.getConnectedLonePairsCount(c1));
 	}
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testNewSaturate_Methyl_alcohol_AddH() throws CDKException {
+	@Test public void testNewSaturate_Methyl_alcohol_AddH() throws CDKException {
 		// test Methyl alcohol, CH3OH
 		Molecule m = new Molecule();
 		m.addAtom(new Atom("C"));
@@ -192,13 +167,13 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		lpcheck.saturate(m);
 		
-		assertEquals(2, m.getConnectedLonePairsCount(m.getAtom(1)));
-		assertEquals(0, m.getConnectedLonePairsCount(m.getAtom(0)));
+		Assert.assertEquals(2, m.getConnectedLonePairsCount(m.getAtom(1)));
+		Assert.assertEquals(0, m.getConnectedLonePairsCount(m.getAtom(0)));
 	}
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testNewSaturate_Methyl_alcohol_protonated() throws CDKException {
+	@Test public void testNewSaturate_Methyl_alcohol_protonated() throws CDKException {
 		// test Methyl alcohol protonated, CH3OH2+
 		Atom c1 = new Atom("C");
 		c1.setHydrogenCount(3);
@@ -215,12 +190,12 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		lpcheck.saturate(m);
 		
-		assertEquals(1, m.getConnectedLonePairsCount(o));
+		Assert.assertEquals(1, m.getConnectedLonePairsCount(o));
 	}
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testNewSaturate_methoxide_anion() throws CDKException {
+	@Test public void testNewSaturate_methoxide_anion() throws CDKException {
 		// test methoxide anion, CH3O-
 		Atom c1 = new Atom("C");
 		c1.setHydrogenCount(3);
@@ -236,12 +211,12 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		lpcheck.saturate(m);
 		
-		assertEquals(3, m.getConnectedLonePairsCount(o));
+		Assert.assertEquals(3, m.getConnectedLonePairsCount(o));
 	}
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testNewSaturate_Ammonia() throws CDKException {
+	@Test public void testNewSaturate_Ammonia() throws CDKException {
 		// test Ammonia, H3N
 		Atom n = new Atom("N");
 		n.setHydrogenCount(3);
@@ -252,12 +227,12 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		lpcheck.saturate(m);
 		
-		assertEquals(1, m.getConnectedLonePairsCount(n));
+		Assert.assertEquals(1, m.getConnectedLonePairsCount(n));
 	}
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testNewSaturate_methylamine_radical_cation() throws CDKException {
+	@Test public void testNewSaturate_methylamine_radical_cation() throws CDKException {
 		// test Ammonia, CH3NH3+
 		Atom c = new Atom("C");
 		c.setHydrogenCount(3);
@@ -274,19 +249,19 @@ public class LonePairElectronCheckerTest extends CDKTestCase
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
 		lpcheck.saturate(m);
 		
-		assertEquals(0, m.getConnectedLonePairsCount(n));
+		Assert.assertEquals(0, m.getConnectedLonePairsCount(n));
 	}
 	/**
 	 *  A unit test for JUnit O=C([H])[C+]([H])[C-]([H])[H]
 	 */
-	public void testNewSaturate_withHAdded() throws CDKException {
+	@Test public void testNewSaturate_withHAdded() throws CDKException {
 		// O=C([H])[C+]([H])[C-]([H])[H]
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("O=C([H])[C+]([H])[C-]([H])[H]");
 		lpcheck.saturate(mol);
 		
-		assertEquals(2, mol.getConnectedLonePairsCount(mol.getAtom(0)));
-		assertEquals(0, mol.getConnectedLonePairsCount(mol.getAtom(3)));
-		assertEquals(1, mol.getConnectedLonePairsCount(mol.getAtom(5)));
+		Assert.assertEquals(2, mol.getConnectedLonePairsCount(mol.getAtom(0)));
+		Assert.assertEquals(0, mol.getConnectedLonePairsCount(mol.getAtom(3)));
+		Assert.assertEquals(1, mol.getConnectedLonePairsCount(mol.getAtom(5)));
 	}
 }
