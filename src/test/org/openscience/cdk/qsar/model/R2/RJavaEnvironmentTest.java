@@ -23,11 +23,10 @@
  */
 package org.openscience.cdk.qsar.model.R2;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.qsar.model.QSARModelException;
-
 
 /**
  * TestSuite that checks some SJava requirements
@@ -36,18 +35,11 @@ import org.openscience.cdk.qsar.model.QSARModelException;
  * @cdk.require r-project
  * @cdk.module test-qsar
  */
-public class RJavaEnvironmentTest extends CDKTestCase {
+public class RJavaEnvironmentTest extends NewCDKTestCase {
 
-    public RJavaEnvironmentTest() {
-    }
-
-    public static Test suite() {
-        return new TestSuite(RJavaEnvironmentTest.class);
-    }
-
-    public void testRJavaEnvironment() throws Exception {
+    @Test public void testRJavaEnvironment() throws Exception {
     	NoneModel noneModel = new NoneModel();
-    	assertNotNull(noneModel);
+    	Assert.assertNotNull(noneModel);
 
     	// stop the R process
     	noneModel.getRengine().end();

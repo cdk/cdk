@@ -72,8 +72,8 @@ public class MioTests {
         suite.addTest(new JUnit4TestAdapter(XYZReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(XYZWriterTest.class));
 
-        suite.addTest(ReaderFactoryTest.suite());
-        suite.addTest(WriterFactoryTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ReaderFactoryTest.class));
+        suite.addTest(new JUnit4TestAdapter(WriterFactoryTest.class));
         suite.addTest(new JUnit4TestAdapter(ChemObjectIOInstantionTests.class));
 
         // cdk.io.iterator package

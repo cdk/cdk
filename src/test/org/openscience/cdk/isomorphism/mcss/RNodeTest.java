@@ -20,30 +20,20 @@
  */
 package org.openscience.cdk.isomorphism.mcss;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.isomorphism.mcss.RNode;
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class RNodeTest extends CDKTestCase {
+public class RNodeTest extends NewCDKTestCase {
     
-    public RNodeTest(String name) {
-        super(name);
-    }
-    
-	public static Test suite() {
-		return new TestSuite(RNodeTest.class);
-	}
-
-	public void testRNode_int_int() {
+	@Test public void testRNode_int_int() {
 		RNode node = new RNode(1,2);
-		assertNotNull(node);
-		assertNotNull(node.getExtension());
-		assertNotNull(node.getForbidden());
+		Assert.assertNotNull(node);
+		Assert.assertNotNull(node.getExtension());
+		Assert.assertNotNull(node.getForbidden());
 	}
 	
 }

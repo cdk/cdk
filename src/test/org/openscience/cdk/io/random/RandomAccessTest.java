@@ -26,8 +26,10 @@ package org.openscience.cdk.io.random;
 
 import java.io.File;
 
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.tools.LoggingTool;
@@ -38,25 +40,17 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author     Nina Jeliazkova <nina@acad.bg>
  * @cdk.module test-extra
  */
-public class RandomAccessTest extends CDKTestCase {
+public class RandomAccessTest extends NewCDKTestCase {
 
-    private LoggingTool logger;
-    @Override
-    protected void setUp() throws Exception {
-    	super.setUp();
-        logger = new LoggingTool(this);
-    }
-    @Override
-    protected void tearDown() throws Exception {
-    	super.tearDown();
-    }
-    public void test() throws Exception {
+    private LoggingTool logger = new LoggingTool(this);
+
+    @Test public void test() throws Exception {
         String filename = "cdk/src/data/mdl/test2.sdf";
         logger.info("Testing: " + filename);
         File f = new File(filename);
         //System.out.println(System.getProperty("user.dir"));
         RandomAccessReader rf = new RandomAccessSDFReader(f,DefaultChemObjectBuilder.getInstance());
-        assertEquals(6,rf.size());
+        Assert.assertEquals(6,rf.size());
         String[] mdlnumbers = {
         		"MFCD00000387",
         		"MFCD00000661",
@@ -68,9 +62,9 @@ public class RandomAccessTest extends CDKTestCase {
         //reading backwards - just for the test
         for (int i=rf.size()-1; i >=0;i--) {
             IChemObject m = rf.readRecord(i);
-            assertEquals(m.getProperty("MDLNUMBER"),mdlnumbers[i]);
-            assertTrue(m instanceof IMolecule);
-            assertTrue(((IMolecule)m).getAtomCount()>0);
+            Assert.assertEquals(m.getProperty("MDLNUMBER"),mdlnumbers[i]);
+            Assert.assertTrue(m instanceof IMolecule);
+            Assert.assertTrue(((IMolecule)m).getAtomCount()>0);
         }
         rf.close();
     }

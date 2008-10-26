@@ -32,30 +32,19 @@ import java.io.StringWriter;
 
 import javax.vecmath.Vector3d;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Crystal;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.io.ShelXReader;
-import org.openscience.cdk.io.ShelXWriter;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-extra
  */
-public class ShelXWriterTest extends CDKTestCase {
+public class ShelXWriterTest extends NewCDKTestCase {
 
-    public ShelXWriterTest(String name) {
-        super(name);
-    }
-
-    public static Test suite() {
-        return new TestSuite(ShelXWriterTest.class);
-    }
-
-    public void testRoundTrip() throws Exception {
+    @Test public void testRoundTrip() throws Exception {
         Crystal crystal = new Crystal();
         double a = 3.0;
         double b = 5.0;
@@ -80,15 +69,15 @@ public class ShelXWriterTest extends CDKTestCase {
         ICrystal rCrystal = (ICrystal)resReader.read(new Crystal());
 		
 		// OK, do checking
-		assertNotNull(rCrystal);
-		assertEquals(crystal.getA().x, rCrystal.getA().x, 0.001);  
-		assertEquals(crystal.getA().y, rCrystal.getA().y, 0.001);  
-		assertEquals(crystal.getA().z, rCrystal.getA().z, 0.001);  
-		assertEquals(crystal.getB().x, rCrystal.getB().x, 0.001);
-		assertEquals(crystal.getB().y, rCrystal.getB().y, 0.001);
-		assertEquals(crystal.getB().z, rCrystal.getB().z, 0.001);  
-		assertEquals(crystal.getC().x, rCrystal.getC().x, 0.001);  
-		assertEquals(crystal.getC().y, rCrystal.getC().y, 0.001);  
-		assertEquals(crystal.getC().z, rCrystal.getC().z, 0.001);  
+		Assert.assertNotNull(rCrystal);
+		Assert.assertEquals(crystal.getA().x, rCrystal.getA().x, 0.001);  
+		Assert.assertEquals(crystal.getA().y, rCrystal.getA().y, 0.001);  
+		Assert.assertEquals(crystal.getA().z, rCrystal.getA().z, 0.001);  
+		Assert.assertEquals(crystal.getB().x, rCrystal.getB().x, 0.001);
+		Assert.assertEquals(crystal.getB().y, rCrystal.getB().y, 0.001);
+		Assert.assertEquals(crystal.getB().z, rCrystal.getB().z, 0.001);  
+		Assert.assertEquals(crystal.getC().x, rCrystal.getC().x, 0.001);  
+		Assert.assertEquals(crystal.getC().y, rCrystal.getC().y, 0.001);  
+		Assert.assertEquals(crystal.getC().z, rCrystal.getC().z, 0.001);  
     }
 }

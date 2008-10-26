@@ -48,11 +48,11 @@ public class MstructgenTests {
         suite.addTest(new JUnit4TestAdapter(StructGenMatcherTest.class));
         suite.addTest(new JUnit4TestAdapter(StructGenAtomTypeGuesserTest.class));
 
-        suite.addTest(RandomStructureGeneratorTest.suite());
-        suite.addTest(VicinitySamplerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(RandomStructureGeneratorTest.class));
+        suite.addTest(new JUnit4TestAdapter(VicinitySamplerTest.class));
         
         // structgen.stoichastic
-        suite.addTest(PartialFilledStructureMergerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(PartialFilledStructureMergerTest.class));
         suite.addTest(new JUnit4TestAdapter(ChemGraphTest.class));
         suite.addTest(new JUnit4TestAdapter(CrossoverMachineTest.class));
 

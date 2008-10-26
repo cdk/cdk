@@ -39,7 +39,7 @@ public class MsmartsTests {
         
         suite.addTest(SmartsCoverageTest.suite());
         
-        suite.addTest(SMARTSTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SMARTSTest.class));
         
         try {
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.ParserTest");

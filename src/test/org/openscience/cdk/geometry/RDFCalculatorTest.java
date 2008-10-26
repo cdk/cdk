@@ -25,14 +25,11 @@ package org.openscience.cdk.geometry;
 
 import javax.vecmath.Point3d;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.geometry.RDFCalculator;
-import org.openscience.cdk.geometry.IRDFWeightFunction;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * This class defines regression tests that should ensure that the source code
@@ -45,30 +42,15 @@ import org.openscience.cdk.CDKTestCase;
  *
  * @see org.openscience.cdk.geometry.RDFCalculator
  */
-public class RDFCalculatorTest extends CDKTestCase {
+public class RDFCalculatorTest extends NewCDKTestCase {
 
-    public RDFCalculatorTest(String name) {
-        super(name);
-    }
-    
-    public void setUp() {}
-    
-    /**
-     * Defines a set of tests that can be used in automatic regression testing
-     * with JUnit.
-     */
-    public static Test suite() {
-        TestSuite suite = new TestSuite(RDFCalculatorTest.class);
-        return suite;
-    }
-    
-    public void testRDFCalculator_double_double_double_double() {
+    @Test public void testRDFCalculator_double_double_double_double() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0);
         
-        assertNotNull(calculator);
+        Assert.assertNotNull(calculator);
     }
     
-    public void testRDFCalculator_double_double_double_double_RDFWeightFunction() {
+    @Test public void testRDFCalculator_double_double_double_double_RDFWeightFunction() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0,
             new IRDFWeightFunction() {
                 public double calculate(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom atom2) {
@@ -77,10 +59,10 @@ public class RDFCalculatorTest extends CDKTestCase {
             }
         );
         
-        assertNotNull(calculator);
+        Assert.assertNotNull(calculator);
     }
     
-    public void testCalculate() {
+    @Test public void testCalculate() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0);
         AtomContainer h2mol = new org.openscience.cdk.AtomContainer();
         Atom h1 = new Atom("H"); h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
@@ -91,17 +73,17 @@ public class RDFCalculatorTest extends CDKTestCase {
         double[] rdf2 = calculator.calculate(h2mol, h2);
 
         // test whether the double array length is ok
-        assertEquals(51, rdf1.length);
+        Assert.assertEquals(51, rdf1.length);
         
         // test whether the RDFs are identical
-        assertEquals(rdf1.length, rdf2.length);
+        Assert.assertEquals(rdf1.length, rdf2.length);
         for (int i=0; i<rdf1.length; i++) {
-            assertEquals(rdf1[i], rdf2[i], 0.00001);
+            Assert.assertEquals(rdf1[i], rdf2[i], 0.00001);
         }
         
     }
     
-    public void testCalculate_RDFWeightFunction() {
+    @Test public void testCalculate_RDFWeightFunction() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0,
             new IRDFWeightFunction() {
                 public double calculate(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom atom2) {
@@ -118,17 +100,17 @@ public class RDFCalculatorTest extends CDKTestCase {
         double[] rdf2 = calculator.calculate(h2mol, h2);
 
         // test whether the double array length is ok
-        assertEquals(51, rdf1.length);
+        Assert.assertEquals(51, rdf1.length);
         
         // test whether the RDFs are identical
-        assertEquals(rdf1.length, rdf2.length);
+        Assert.assertEquals(rdf1.length, rdf2.length);
         for (int i=0; i<rdf1.length; i++) {
-            assertEquals(rdf1[i], rdf2[i], 0.00001);
+            Assert.assertEquals(rdf1[i], rdf2[i], 0.00001);
         }
         
     }
     
-    public void testCalculate_RDFWeightFunction2() {
+    @Test public void testCalculate_RDFWeightFunction2() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0,
             new IRDFWeightFunction() {
                 public double calculate(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom atom2) {
@@ -147,12 +129,12 @@ public class RDFCalculatorTest extends CDKTestCase {
         double[] rdf2 = calculator.calculate(h2mol, h2);
 
         // test whether the double array length is ok
-        assertEquals(51, rdf1.length);
+        Assert.assertEquals(51, rdf1.length);
         
         // test whether the RDFs are identical
-        assertEquals(rdf1.length, rdf2.length);
+        Assert.assertEquals(rdf1.length, rdf2.length);
         for (int i=0; i<rdf1.length; i++) {
-            assertEquals(rdf1[i], rdf2[i], 0.00001);
+            Assert.assertEquals(rdf1[i], rdf2[i], 0.00001);
         }
         
     }

@@ -24,14 +24,11 @@
  */
 package org.openscience.cdk.io;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.io.IChemObjectWriter;
-import org.openscience.cdk.io.WriterFactory;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
@@ -39,33 +36,24 @@ import org.openscience.cdk.tools.DataFeatures;
  *
  * @cdk.module test-io
  */
-public class WriterFactoryTest extends CDKTestCase {
+public class WriterFactoryTest extends NewCDKTestCase {
 
-    private WriterFactory factory;
-    
-    public WriterFactoryTest(String name) {
-        super(name);
-        factory = new WriterFactory();
-    }
+    private WriterFactory factory = new WriterFactory();
 
-    public static Test suite() {
-        return new TestSuite(WriterFactoryTest.class);
-    }
-
-    public void testFormatCount() {
-    	assertTrue(factory.formatCount() > 0);
+    @Test public void testFormatCount() {
+    	Assert.assertTrue(factory.formatCount() > 0);
     }
     
-    public void testFindChemFormats() {
+    @Test public void testFindChemFormats() {
         IChemFormat[] formats = factory.findChemFormats(DataFeatures.HAS_3D_COORDINATES);
-        assertNotNull(formats);
-        assertTrue(formats.length > 0);
+        Assert.assertNotNull(formats);
+        Assert.assertTrue(formats.length > 0);
     }
 
-    public void testCreateWriter_IChemFormat() {
+    @Test public void testCreateWriter_IChemFormat() {
     	IChemFormat format = (IChemFormat)XYZFormat.getInstance();
         IChemObjectWriter writer = factory.createWriter(format);
-        assertNotNull(writer);
-        assertEquals(format.getFormatName(), writer.getFormat().getFormatName());
+        Assert.assertNotNull(writer);
+        Assert.assertEquals(format.getFormatName(), writer.getFormat().getFormatName());
     }
 }

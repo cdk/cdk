@@ -23,13 +23,14 @@
  */
 package org.openscience.cdk.limitations.tools;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -37,7 +38,6 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.SaturationChecker;
 
 /**
@@ -51,27 +51,18 @@ import org.openscience.cdk.tools.SaturationChecker;
  *
  * @see org.openscience.cdk.tools.SaturationChecker
  */
-public class SaturationCheckerTest extends CDKTestCase {
+public class SaturationCheckerTest extends NewCDKTestCase {
 
     SaturationChecker satcheck = null;
     
-    public SaturationCheckerTest(String name) {
-        super(name);
+    @BeforeClass public void setup() throws Exception {
+        satcheck = new SaturationChecker();
     }
     
-    public void setUp() throws Exception {
-    	satcheck = new SaturationChecker();
-    }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SaturationCheckerTest.class);
-        return suite;
-    }
-
     /**
      * Tests the method saturate().
      */
-    public void testSaturate_WithNitrate() throws CDKException {
+    @Test public void testSaturate_WithNitrate() throws CDKException {
         Molecule mol = new Molecule();
         Atom a1 = new Atom("O");
         mol.addAtom(a1);
@@ -138,14 +129,14 @@ public class SaturationCheckerTest extends CDKTestCase {
         Bond b16 = new Bond(a14, a16, IBond.Order.SINGLE);
         mol.addBond(b16);
         satcheck.saturate(mol);
-        assertEquals(IBond.Order.DOUBLE, b1.getOrder());
-        assertEquals(IBond.Order.DOUBLE, b2.getOrder());
+        Assert.assertEquals(IBond.Order.DOUBLE, b1.getOrder());
+        Assert.assertEquals(IBond.Order.DOUBLE, b2.getOrder());
     }
     
     /**
      * Tests the method saturate().
      */
-    public void testSaturation_S4AtomType() throws CDKException {
+    @Test public void testSaturation_S4AtomType() throws CDKException {
         Molecule mol = new Molecule();
         Atom a1 = new Atom("N");
         mol.addAtom(a1);
@@ -244,14 +235,14 @@ public class SaturationCheckerTest extends CDKTestCase {
         Bond b24 = new Bond(a22, a24, IBond.Order.SINGLE);
         mol.addBond(b24);
         satcheck.saturate(mol);
-        assertEquals(IBond.Order.DOUBLE, b6.getOrder());
-        assertEquals(IBond.Order.DOUBLE, b7.getOrder());
+        Assert.assertEquals(IBond.Order.DOUBLE, b6.getOrder());
+        Assert.assertEquals(IBond.Order.DOUBLE, b7.getOrder());
     }
     
     /**
      * Tests the method saturate().
      */
-    public void testSaturate_NumberingProblem() throws CDKException {
+    @Test public void testSaturate_NumberingProblem() throws CDKException {
         Molecule mol = new Molecule();
         Atom a1 = new Atom("C");
         mol.addAtom(a1);
@@ -290,26 +281,26 @@ public class SaturationCheckerTest extends CDKTestCase {
         Bond b9 = new Bond(a5, a9, IBond.Order.SINGLE);
         mol.addBond(b9);
         satcheck.saturate(mol);
-        assertEquals(IBond.Order.SINGLE, b1.getOrder());
-        assertEquals(IBond.Order.DOUBLE, b2.getOrder());
-        assertEquals(IBond.Order.SINGLE, b6.getOrder());
-        assertEquals(IBond.Order.SINGLE, b8.getOrder());
-        assertEquals(IBond.Order.DOUBLE, b4.getOrder());
+        Assert.assertEquals(IBond.Order.SINGLE, b1.getOrder());
+        Assert.assertEquals(IBond.Order.DOUBLE, b2.getOrder());
+        Assert.assertEquals(IBond.Order.SINGLE, b6.getOrder());
+        Assert.assertEquals(IBond.Order.SINGLE, b8.getOrder());
+        Assert.assertEquals(IBond.Order.DOUBLE, b4.getOrder());
     }
     
     /**
      * Tests whether the saturation checker gets a proton right.
      */
-	public void testIsSaturated_Proton() throws CDKException {
+	@Test public void testIsSaturated_Proton() throws CDKException {
 		// test H+
 		Molecule m = new Molecule();
 		Atom h = new Atom("H");
         h.setFormalCharge(+1);
 		m.addAtom(h);
-		assertTrue(satcheck.isSaturated(h, m));
+		Assert.assertTrue(satcheck.isSaturated(h, m));
 	}
     
-    public void testCalculateMissingHydrogens_Aromatic() throws CDKException{
+    @Test public void testCalculateMissingHydrogens_Aromatic() throws CDKException{
 	    Molecule pyrrole = MoleculeFactory.makePyrrole();
 	    IAtom n = pyrrole.getAtom(1);
 	    IRingSet rs = (new SSSRFinder(pyrrole)).findSSSR();
@@ -318,8 +309,8 @@ public class SaturationCheckerTest extends CDKTestCase {
 	    {
 		    ring.getBond(j).setFlag(CDKConstants.ISAROMATIC, true);
 	    }
-	    assertEquals(5, ring.getBondCount());
-	    assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(n, pyrrole));
+	    Assert.assertEquals(5, ring.getBondCount());
+	    Assert.assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(n, pyrrole));
     }
 
 }

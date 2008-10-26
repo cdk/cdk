@@ -30,40 +30,30 @@ package org.openscience.cdk.structgen;
 
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.structgen.VicinitySampler;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-structgen
  */
-public class VicinitySamplerTest extends CDKTestCase {
+public class VicinitySamplerTest extends NewCDKTestCase {
 	
 	private static SmilesParser parser;
 	
-	public VicinitySamplerTest(String name)
-	{
-		super(name);
-	}
-
-	public static Test suite() {
-		return new TestSuite(VicinitySamplerTest.class);
-	}
-	
-	public void setUp() {
+	@BeforeClass public void setUp() {
 		parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 	}
 
-	public  void testVicinitySampler_sample() throws Exception {
+	@Test public void testVicinitySampler_sample() throws Exception {
 		Molecule mol = MoleculeFactory.makeEthylPropylPhenantren();
 		
 		IsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
@@ -71,12 +61,12 @@ public class VicinitySamplerTest extends CDKTestCase {
 		
 		IMolecule temp = null;
 		List structures = VicinitySampler.sample(mol);
-        assertEquals(37, structures.size());
+        Assert.assertEquals(37, structures.size());
 		for (int f = 0; f < structures.size(); f++) {
 			temp = (Molecule)structures.get(f);
-			assertNotNull(temp);
-			assertTrue(ConnectivityChecker.isConnected(temp));
-			assertEquals(mol.getAtomCount(), temp.getAtomCount());
+			Assert.assertNotNull(temp);
+			Assert.assertTrue(ConnectivityChecker.isConnected(temp));
+			Assert.assertEquals(mol.getAtomCount(), temp.getAtomCount());
 		}
 
 	}
@@ -92,12 +82,12 @@ public class VicinitySamplerTest extends CDKTestCase {
 		
 		IMolecule temp = null;
 		List structures = VicinitySampler.sample(mol);
-        assertEquals(1, structures.size());
+        Assert.assertEquals(1, structures.size());
 		for (int f = 0; f < structures.size(); f++) {
 			temp = (Molecule)structures.get(f);
-			assertNotNull(temp);
-			assertTrue(ConnectivityChecker.isConnected(temp));
-			assertEquals(mol.getAtomCount(), temp.getAtomCount());
+			Assert.assertNotNull(temp);
+			Assert.assertTrue(ConnectivityChecker.isConnected(temp));
+			Assert.assertEquals(mol.getAtomCount(), temp.getAtomCount());
 		}
 
 	}

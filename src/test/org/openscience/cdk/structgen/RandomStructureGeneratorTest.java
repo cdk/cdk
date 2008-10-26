@@ -27,11 +27,10 @@ import java.util.Vector;
 
 import javax.vecmath.Vector2d;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -40,37 +39,24 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * @cdk.module test-structgen
  */
-public class RandomStructureGeneratorTest extends CDKTestCase
-{
+public class RandomStructureGeneratorTest extends NewCDKTestCase {
+
 	public boolean debug = false;
 	boolean standAlone = false;
 	
-    public RandomStructureGeneratorTest(String name) {
-        super(name);
-    }
-    
-    public RandomStructureGeneratorTest() {
-        this("RandomStructureGeneratorTest");
-    }
-
 	public void setStandAlone(boolean standAlone)
 	{
 		this.standAlone = standAlone;
 	}
 
-	public static Test suite()
-	{
-		return new TestSuite(RandomStructureGeneratorTest.class);
-	}
-	
-	public void testTwentyRandomStructures() {
+	@Test public void testTwentyRandomStructures() {
 		Molecule molecule = MoleculeFactory.makeAlphaPinene();
 		RandomGenerator rg = new RandomGenerator(molecule);
 		IMolecule result = null;
 		for (int f = 0; f < 50; f++) {
 			result = rg.proposeStructure();
-			assertEquals(molecule.getAtomCount(), result.getAtomCount());
-			assertEquals(1, ConnectivityChecker.partitionIntoMolecules(result).getAtomContainerCount());
+			Assert.assertEquals(molecule.getAtomCount(), result.getAtomCount());
+			Assert.assertEquals(1, ConnectivityChecker.partitionIntoMolecules(result).getAtomContainerCount());
 		}
 	}
 

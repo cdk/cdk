@@ -20,28 +20,18 @@
  */
 package org.openscience.cdk.isomorphism.mcss;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.isomorphism.mcss.RGraph;
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.NewCDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class RGraphTest extends CDKTestCase {
+public class RGraphTest extends NewCDKTestCase {
     
-    public RGraphTest(String name) {
-        super(name);
-    }
-    
-	public static Test suite() {
-		return new TestSuite(RGraphTest.class);
-	}
-	
-	public void testRGraph() {
+	@Test public void testRGraph() {
 		RGraph graph = new RGraph();
-		assertNotNull(graph);
+		Assert.assertNotNull(graph);
 	}
 
 }
