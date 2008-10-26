@@ -30,17 +30,14 @@ package org.openscience.cdk.tools;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.BremserOneSphereHOSECodePredictor;
-import org.openscience.cdk.tools.HOSECodeGenerator;
 
 /**
  * Tests the HOSECode genertor.
@@ -50,42 +47,18 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
  * @author     steinbeck
  * @cdk.created    2002-11-16
  */
-public class BremserPredictorTest extends CDKTestCase
-{
+public class BremserPredictorTest extends NewCDKTestCase {
 	
 	static boolean standAlone = false;
-	
-
-	/**
-	 *  Constructor for the HOSECodeTest object
-	 *
-	 *@param  name  Description of the Parameter
-	 */
-	public BremserPredictorTest(String name) {
-		super(name);
-	}
-
-		/**
-	 *  A unit test suite for JUnit
-	 *
-	 *@return    The test suite
-	 */
-	public static Test suite()
-	{
-		return new TestSuite(BremserPredictorTest.class);
-	}
-
-	
 
 	/**
 	 *  A unit test for JUnit
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void testConstructor()
-	{
+	@Test public void testConstructor() {
 		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
-		assertTrue(bp != null);
+		Assert.assertTrue(bp != null);
 	}
 
 	/**
@@ -93,7 +66,7 @@ public class BremserPredictorTest extends CDKTestCase
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void testPrediction() throws Exception
+	@Test public void testPrediction() throws Exception
 	{
 		String[] data = { 
      "=C(//)",
@@ -153,7 +126,7 @@ public class BremserPredictorTest extends CDKTestCase
 		{
 			prediction = bp.predict(data[f]);
 			//logger.debug("\"" + prediction + "\",");
-			assertEquals(result[f], prediction, 0.001);	
+			Assert.assertEquals(result[f], prediction, 0.001);	
 		}
 		
 	}
@@ -163,7 +136,7 @@ public class BremserPredictorTest extends CDKTestCase
 	 *
 	 *@return    Description of the Return Value
 	 */
-	public void testGetConfidenceLimit() throws Exception
+	@Test public void testGetConfidenceLimit() throws Exception
 	{
 double[] result = { 
      28.5,
@@ -211,7 +184,7 @@ double[] result = {
 		Molecule molecule = null;
 		String filename = "data/mdl/BremserPredictionTest.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLReader reader = new MDLReader(ins, Mode.STRICT);
+		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
 		molecule = (Molecule)reader.read((ChemObject)new Molecule());
 		double prediction;
 		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
@@ -224,12 +197,12 @@ double[] result = {
 			s = hcg.getHOSECode(molecule, molecule.getAtom(f), 1);
 			prediction = bp.getConfidenceLimit(hcg.makeBremserCompliant(s));
 			//logger.debug("\"" + prediction + "\",");
-			assertEquals(result[f], prediction, 0.001);	
+			Assert.assertEquals(result[f], prediction, 0.001);	
 		}
 		
 	}
 
-	public void testFailure1()
+	@Test public void testFailure1()
 	{	
 		boolean correct = false;
 		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
@@ -244,10 +217,10 @@ double[] result = {
 				correct = true;	
 			}
 		}
-		assertTrue(correct);
+		Assert.assertTrue(correct);
 	}
 
-	public void testFailure2()
+	@Test public void testFailure2()
 	{	
 		boolean correct = false;
 		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
@@ -262,10 +235,10 @@ double[] result = {
 				correct = true;	
 			}
 		}
-		assertTrue(correct);
+		Assert.assertTrue(correct);
 	}
 
-	public void testFailure3()
+	@Test public void testFailure3()
 	{	
 		boolean correct = false;
 		String test = null;
@@ -281,7 +254,7 @@ double[] result = {
 				correct = true;	
 			}
 		}
-		assertTrue(correct);
+		Assert.assertTrue(correct);
 	}
 
 	
