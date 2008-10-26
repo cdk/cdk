@@ -32,6 +32,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
@@ -42,6 +43,7 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -489,6 +491,23 @@ public class AtomContainerManipulatorTest extends NewCDKTestCase {
 		} catch (CDKException e) {
 			Assert.fail("The percieveAtomTypesAndConfigureAtoms must not throw exceptions when no atom type is perceived.");
 		}
+    }
+
+    @Test
+    public void testPerceiveAtomTypesAndConfigureUnsetProperties() throws Exception {
+        IAtomContainer container = new AtomContainer();
+        IAtom atom = new Atom("C");
+        atom.setExactMass(13.0);
+        container.addAtom(atom);
+        IAtomType type = new AtomType("C");
+        type.setAtomTypeName("C.sp3");
+        type.setExactMass(12.0);
+        
+        AtomContainerManipulator.percieveAtomTypesAndConfigureUnsetProperties(container);
+        Assert.assertNotNull(atom.getExactMass());
+        Assert.assertEquals(13.0, atom.getExactMass(), 0.1);
+        Assert.assertNotNull(atom.getAtomTypeName());
+        Assert.assertEquals("C.sp3", atom.getAtomTypeName());
     }
 
     @Test
