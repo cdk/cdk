@@ -20,12 +20,12 @@
  */
 package org.openscience.cdk.structgen.stochastic.operator;
 
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-structgen
  */
-public class CrossoverMachineTest extends NewCDKTestCase {
+public class CrossoverMachineTest extends CDKTestCase {
     
 
 }

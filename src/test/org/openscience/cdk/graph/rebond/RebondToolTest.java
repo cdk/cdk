@@ -30,7 +30,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.graph.rebond.RebondTool;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import javax.vecmath.Point3d;
 
@@ -39,7 +39,7 @@ import javax.vecmath.Point3d;
  *
  * @cdk.module test-standard
  */
-public class RebondToolTest extends NewCDKTestCase {
+public class RebondToolTest extends CDKTestCase {
     
 	public RebondToolTest() {
 		super();

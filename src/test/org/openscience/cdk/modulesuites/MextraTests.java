@@ -60,7 +60,7 @@ public class MextraTests {
         // Individual Tests
         suite.addTest(new JUnit4TestAdapter(CloneAtomContainerTest.class));
         // from cdk.test.geometry
-        suite.addTest(RDFCalculatorTest.suite());
+        suite.addTest(new JUnit4TestAdapter(RDFCalculatorTest.class));
         // from cdk.test.geometry.align
         suite.addTest(new JUnit4TestAdapter(KabschAlignmentTest.class));
         // from cdk.test.index
@@ -72,7 +72,7 @@ public class MextraTests {
         suite.addTest(new JUnit4TestAdapter(DistanceMomentTest.class));
         suite.addTest(new JUnit4TestAdapter(HOSECodeAnalyserTest.class));
         suite.addTest(new JUnit4TestAdapter(DeAromatizationToolTest.class));
-        suite.addTest(ShelXWriterTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ShelXWriterTest.class));
         suite.addTest(new JUnit4TestAdapter(BremserPredictorTest.class));
 
         // Below are the tests that are not always possible to execute, because
@@ -89,7 +89,7 @@ public class MextraTests {
         }
 
         // other
-        suite.addTest(VariousTests.suite());        
+        suite.addTest(new JUnit4TestAdapter(VariousTests.class));        
         
         return suite;
     }

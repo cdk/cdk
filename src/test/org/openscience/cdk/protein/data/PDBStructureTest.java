@@ -31,7 +31,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.protein.data.PDBStructure;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the PDBStructure class.
@@ -40,7 +40,7 @@ import org.openscience.cdk.NewCDKTestCase;
  *
  * @see PDBStructure
  */
-public class PDBStructureTest extends NewCDKTestCase {
+public class PDBStructureTest extends CDKTestCase {
 	
 	protected static IChemObjectBuilder builder;
 

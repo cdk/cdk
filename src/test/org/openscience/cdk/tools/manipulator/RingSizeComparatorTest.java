@@ -25,13 +25,13 @@ import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.interfaces.IRing;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.RingSizeComparator;
 
 /**
  * @cdk.module test-standard
  */
-public class RingSizeComparatorTest extends NewCDKTestCase {
+public class RingSizeComparatorTest extends CDKTestCase {
     
     public RingSizeComparatorTest() {
         super();

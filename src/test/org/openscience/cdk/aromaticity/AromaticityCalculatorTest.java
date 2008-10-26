@@ -30,12 +30,12 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class AromaticityCalculatorTest extends NewCDKTestCase {
+public class AromaticityCalculatorTest extends CDKTestCase {
 
 	public AromaticityCalculatorTest() {
 		super();

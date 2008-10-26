@@ -23,12 +23,12 @@ package org.openscience.cdk.config;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class SymbolsTest extends NewCDKTestCase {
+public class SymbolsTest extends CDKTestCase {
     
 	@Test public void testCarbon() {
 		Assert.assertEquals("C", Symbols.byAtomicNumber[6]);

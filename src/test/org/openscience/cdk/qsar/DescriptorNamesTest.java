@@ -27,7 +27,7 @@ package org.openscience.cdk.qsar;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -43,7 +43,7 @@ import java.util.*;
  *
  * @cdk.module test-qsarmolecular
  */
-public class DescriptorNamesTest extends NewCDKTestCase {
+public class DescriptorNamesTest extends CDKTestCase {
 
     public DescriptorNamesTest() {
     }

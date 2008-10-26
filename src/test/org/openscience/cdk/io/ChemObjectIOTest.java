@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.debug.DebugChemFile;
 import org.openscience.cdk.debug.DebugChemModel;
@@ -49,7 +49,7 @@ import org.openscience.cdk.nonotify.NNReaction;
  *
  * @cdk.module test-io
  */
-public abstract class ChemObjectIOTest extends NewCDKTestCase {
+public abstract class ChemObjectIOTest extends CDKTestCase {
 
     protected static IChemObjectIO chemObjectIO;
 

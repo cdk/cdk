@@ -32,7 +32,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  */
-public class ChemObjectIOInstantionTests extends NewCDKTestCase {
+public class ChemObjectIOInstantionTests extends CDKTestCase {
     
     private final static String IO_FORMATS_LIST = "io-formats.set";
 

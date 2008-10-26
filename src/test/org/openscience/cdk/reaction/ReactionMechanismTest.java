@@ -35,14 +35,14 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionMechanism;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Tests for IReactionProcess implementations.
  *
  * @cdk.module test-reaction
  */
-public abstract class ReactionMechanismTest extends NewCDKTestCase {
+public abstract class ReactionMechanismTest extends CDKTestCase {
 	
 	protected static IReactionMechanism reactionMechanism;
 	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();

@@ -42,7 +42,11 @@ import org.openscience.cdk.interfaces.IReactionScheme;
  *
  * @see ReactionScheme
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/ReactionSchemeTest.java
 public class ReactionSchemeTest extends ChemObjectTest {
+=======
+public class ReactionSchemeTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/ReactionSchemeTest.java
 
 	protected static IChemObjectBuilder builder;
 	

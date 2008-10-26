@@ -44,7 +44,7 @@ import java.util.List;
  * 
  * @see org.openscience.cdk.atomtype.CDKAtomTypeMatcher
  */
-public class CDKAtomTypeMatcherTestFileReposTest extends NewCDKTestCase {
+public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
 
     public static junit.framework.Test suite() {
         return new JUnit4TestAdapter(CDKAtomTypeMatcherTestFileReposTest.class);

@@ -33,7 +33,7 @@ import javax.vecmath.Point3d;
  *
  * @cdk.module test-data
  */
-public class DefaultChemObjectBuilderTest extends NewCDKTestCase {
+public class DefaultChemObjectBuilderTest extends CDKTestCase {
 
 	protected static org.openscience.cdk.ChemObject rootObject;
 	

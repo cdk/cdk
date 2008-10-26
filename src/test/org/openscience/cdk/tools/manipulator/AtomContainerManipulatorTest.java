@@ -38,7 +38,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -58,7 +58,7 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 /**
  * @cdk.module test-standard
  */
-public class AtomContainerManipulatorTest extends NewCDKTestCase {
+public class AtomContainerManipulatorTest extends CDKTestCase {
     IAtomContainer ac;
 
     public AtomContainerManipulatorTest()

@@ -29,14 +29,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 
 /**
  * @cdk.module test-extra
  */
-public class Geometry3DValidatorTest extends NewCDKTestCase {
+public class Geometry3DValidatorTest extends CDKTestCase {
 	
 	@Test public void testEthane() throws Exception {
 		String filename = "data/Heptan-TestFF-output.mol";

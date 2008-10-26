@@ -37,7 +37,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-libiocml
  * @cdk.require java1.5+
  */
-public class CML2Test extends NewCDKTestCase {
+public class CML2Test extends CDKTestCase {
 
     private static LoggingTool logger = new LoggingTool(CML2Test.class);
 

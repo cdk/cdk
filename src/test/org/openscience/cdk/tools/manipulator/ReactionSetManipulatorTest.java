@@ -30,7 +30,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -46,7 +46,7 @@ import org.openscience.cdk.io.MDLRXNReader;
 /**
  * @cdk.module test-standard
  */
-public class ReactionSetManipulatorTest extends NewCDKTestCase {
+public class ReactionSetManipulatorTest extends CDKTestCase {
     
     private IChemObjectBuilder builder;
     private ReactionSet set;

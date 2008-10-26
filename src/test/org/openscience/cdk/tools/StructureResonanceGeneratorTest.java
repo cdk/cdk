@@ -30,7 +30,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.LonePair;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.SingleElectron;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 *
 * @cdk.module test-reaction
 */
-public class StructureResonanceGeneratorTest  extends NewCDKTestCase{
+public class StructureResonanceGeneratorTest  extends CDKTestCase{
 
 	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
     LonePairElectronChecker lpcheck = new LonePairElectronChecker();

@@ -36,7 +36,11 @@ import org.openscience.cdk.tools.diff.ElementDiff;
  *
  * @see org.openscience.cdk.Element
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/ElementTest.java
 public class ElementTest extends ChemObjectTest {
+=======
+public class ElementTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/ElementTest.java
 
 	protected static IChemObjectBuilder builder;
 	

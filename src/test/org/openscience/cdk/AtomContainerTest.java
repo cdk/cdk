@@ -34,7 +34,11 @@ import java.util.List;
  *
  * @cdk.module test-data
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/AtomContainerTest.java
 public class AtomContainerTest extends ChemObjectTest {
+=======
+public class AtomContainerTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/AtomContainerTest.java
 
 	protected static IChemObjectBuilder builder;
 	

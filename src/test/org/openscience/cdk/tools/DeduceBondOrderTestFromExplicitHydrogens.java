@@ -24,7 +24,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -44,7 +44,7 @@ import org.openscience.cdk.nonotify.NNMolecule;
  * @cdk.module  test-valencycheck
  * @cdk.created 2006-08-16
  */
-public class DeduceBondOrderTestFromExplicitHydrogens extends NewCDKTestCase {
+public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 	
 	private IDeduceBondOrderTool dboTool;
 

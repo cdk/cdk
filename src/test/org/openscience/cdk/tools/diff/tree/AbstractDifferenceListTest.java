@@ -22,7 +22,7 @@ package org.openscience.cdk.tools.diff.tree;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * @cdk.module test-diff
  */
-public class AbstractDifferenceListTest extends NewCDKTestCase {
+public class AbstractDifferenceListTest extends CDKTestCase {
 
 	@Test public void testConstructor() {
 		DifferenceClass diffClass = new DifferenceClass();

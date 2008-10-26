@@ -34,7 +34,7 @@ import org.openscience.cdk.formula.MolecularFormulaRange;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the MolecularFormulaRange.
@@ -43,7 +43,7 @@ import org.openscience.cdk.NewCDKTestCase;
  * 
  * @see MolecularFormula
  */
-public class MolecularFormulaRangeTest extends NewCDKTestCase {
+public class MolecularFormulaRangeTest extends CDKTestCase {
 
 	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 

@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * @cdk.module test-structgen
  */
-public class StructGenAtomTypeGuesserTest extends NewCDKTestCase {
+public class StructGenAtomTypeGuesserTest extends CDKTestCase {
 
     @Test
     public void testPossibleAtomTypes_IAtomContainer_IAtom() throws java.lang.Exception {

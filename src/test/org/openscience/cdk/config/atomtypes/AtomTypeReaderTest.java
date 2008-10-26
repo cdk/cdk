@@ -29,7 +29,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.config.atomtypes.AtomTypeReader;
 import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import java.io.StringReader;
 import java.util.List;
@@ -39,7 +39,7 @@ import java.util.List;
  *
  * @cdk.module test-core
  */
-public class AtomTypeReaderTest extends NewCDKTestCase {
+public class AtomTypeReaderTest extends CDKTestCase {
      
 
     @Test

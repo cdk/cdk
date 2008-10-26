@@ -29,7 +29,7 @@ import java.util.Iterator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -43,7 +43,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  *
  * @see MolecularFormulaSet
  */
-public class MolecularFormulaSetTest extends NewCDKTestCase {
+public class MolecularFormulaSetTest extends CDKTestCase {
 
 	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**

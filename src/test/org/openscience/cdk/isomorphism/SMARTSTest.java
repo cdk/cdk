@@ -24,16 +24,15 @@
  */
 package org.openscience.cdk.isomorphism;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.SymbolAndChargeQueryAtom;
@@ -44,7 +43,6 @@ import org.openscience.cdk.isomorphism.matchers.smarts.ImplicitHCountAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module  test-smarts
@@ -52,15 +50,7 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class SMARTSTest extends CDKTestCase {
 	
-	public SMARTSTest(String name) {
-		super(name);
-	}
-    
-	public static Test suite() {
-		return new TestSuite(SMARTSTest.class);
-	}
-
-	public void testStrictSMARTS() throws Exception {
+	@Test public void testStrictSMARTS() throws Exception {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
         QueryAtomContainer query = new QueryAtomContainer();
@@ -72,10 +62,10 @@ public class SMARTSTest extends CDKTestCase {
         query.addAtom(atom2);
         query.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.DOUBLE));
         
-        assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+        Assert.assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 	
-	public void testSMARTS() throws Exception {
+	@Test public void testSMARTS() throws Exception {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
         QueryAtomContainer query = new QueryAtomContainer();
@@ -86,7 +76,7 @@ public class SMARTSTest extends CDKTestCase {
         query.addAtom(atom2);
         query.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.DOUBLE));
         
-        assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
+        Assert.assertTrue(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 	
     private IAtomContainer createEthane() {
@@ -101,7 +91,7 @@ public class SMARTSTest extends CDKTestCase {
         return container;
     }
     
-	public void testImplicitHCountAtom() throws Exception {
+	@Test public void testImplicitHCountAtom() throws Exception {
         IAtomContainer container = createEthane();
 
         QueryAtomContainer query1 = new QueryAtomContainer(); // SMARTS [h3][h3]
@@ -110,10 +100,10 @@ public class SMARTSTest extends CDKTestCase {
         query1.addAtom(atom1);
         query1.addAtom(atom2);
         query1.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.SINGLE));
-        assertTrue(UniversalIsomorphismTester.isSubgraph(container, query1));
+        Assert.assertTrue(UniversalIsomorphismTester.isSubgraph(container, query1));
     }
 
-	public void testImplicitHCountAtom2() throws Exception {
+	@Test public void testImplicitHCountAtom2() throws Exception {
         IAtomContainer container = createEthane();
 
         QueryAtomContainer query1 = new QueryAtomContainer(); // SMARTS [h3][h2]
@@ -122,10 +112,10 @@ public class SMARTSTest extends CDKTestCase {
         query1.addAtom(atom1);
         query1.addAtom(atom2);
         query1.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.SINGLE));
-        assertFalse(UniversalIsomorphismTester.isSubgraph(container, query1));
+        Assert.assertFalse(UniversalIsomorphismTester.isSubgraph(container, query1));
     }
 
-	public void testMatchInherited() {
+	@Test public void testMatchInherited() {
 		try {
 			SymbolQueryAtom c1 = new SymbolQueryAtom(
 				new org.openscience.cdk.Atom("C")
@@ -139,7 +129,7 @@ public class SMARTSTest extends CDKTestCase {
 			query1.addAtom(c1);
 			query1.addAtom(c2);
 			query1.addBond(new OrderQueryBond(c1,c2,CDKConstants.BONDORDER_SINGLE));
-			assertTrue(UniversalIsomorphismTester.isSubgraph(c,query1));
+			Assert.assertTrue(UniversalIsomorphismTester.isSubgraph(c,query1));
 			
 			QueryAtomContainer query = new
 			QueryAtomContainer();
@@ -148,10 +138,10 @@ public class SMARTSTest extends CDKTestCase {
 			query.addBond(new AnyOrderQueryBond(c1, c2,
 				CDKConstants.BONDORDER_SINGLE)
 			);
-			assertTrue(UniversalIsomorphismTester.isSubgraph(c,query));
+			Assert.assertTrue(UniversalIsomorphismTester.isSubgraph(c,query));
 			
 		} catch (CDKException exception) {
-			fail(exception.getMessage());
+			Assert.fail(exception.getMessage());
 		}
 		
 	}

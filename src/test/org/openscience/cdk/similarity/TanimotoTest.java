@@ -34,7 +34,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -45,7 +45,7 @@ import java.util.BitSet;
 /**
  * @cdk.module test-extra
  */
-public class TanimotoTest extends NewCDKTestCase
+public class TanimotoTest extends CDKTestCase
 {
 	
 	boolean standAlone = false;

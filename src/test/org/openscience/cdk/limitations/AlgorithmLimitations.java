@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.limitations;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -38,7 +39,7 @@ public class AlgorithmLimitations {
     
     public static Test suite() {
         TestSuite suite= new TestSuite("CDK Algorithm Limitations");
-        suite.addTest(SaturationCheckerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SaturationCheckerTest.class));
         return suite;
     }
     

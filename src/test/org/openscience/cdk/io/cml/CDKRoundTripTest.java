@@ -30,7 +30,7 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.diff.AtomDiff;
 /**
  * @cdk.module test-libiocml
  */
-public class CDKRoundTripTest extends NewCDKTestCase {
+public class CDKRoundTripTest extends CDKTestCase {
 
     private static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
     

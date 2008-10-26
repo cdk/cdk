@@ -29,13 +29,13 @@ import java.awt.Color;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * @cdk.module test-render
  */
-public class CDKAtomColorsTest extends NewCDKTestCase {
+public class CDKAtomColorsTest extends CDKTestCase {
 	
 	@Test public void testGetAtomColor() {
 		CDKAtomColors colors = new CDKAtomColors();

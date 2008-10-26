@@ -30,7 +30,7 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.RingSet;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *@cdk.module     test-forcefield
  *@cdk.created    2005-01-17
  */
-public class ForceFieldTests extends NewCDKTestCase {
+public class ForceFieldTests extends CDKTestCase {
 
 	IMolecule molecule = null;
 	IAtomContainer ac = null;

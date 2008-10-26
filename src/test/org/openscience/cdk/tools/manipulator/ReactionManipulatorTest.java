@@ -30,7 +30,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.ReactionSet;
 import org.openscience.cdk.exception.CDKException;
@@ -51,7 +51,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  * @author     Egon Willighagen
  * @cdk.created    2003-07-23
  */
-public class ReactionManipulatorTest extends NewCDKTestCase {
+public class ReactionManipulatorTest extends CDKTestCase {
 
 	private IReaction reaction;
    	private DefaultChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();

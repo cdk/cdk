@@ -27,7 +27,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.IDCreator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * @cdk.module test-standard
  */
-public class IDCreatorTest extends NewCDKTestCase {
+public class IDCreatorTest extends CDKTestCase {
 	
 	public IDCreatorTest() {
 		super();

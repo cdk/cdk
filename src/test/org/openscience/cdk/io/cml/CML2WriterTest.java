@@ -38,7 +38,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ReactionScheme;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.Elements;
@@ -75,7 +75,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module test-libiocml
  * @cdk.require java1.5+
  */
-public class CML2WriterTest extends NewCDKTestCase {
+public class CML2WriterTest extends CDKTestCase {
 
     private static LoggingTool logger = new LoggingTool(CML2WriterTest.class);
 

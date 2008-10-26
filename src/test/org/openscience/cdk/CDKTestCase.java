@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* $Revision: 8050 $ $Author: egonw $ $Date: 2007-03-08 13:03:42 +0100 (Thu, 08 Mar 2007) $
  * 
  * Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -23,11 +20,13 @@
  */
 package org.openscience.cdk;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -39,27 +38,18 @@ import java.util.Iterator;
 
 /**
  * Super class for <b>all</b> CDK TestCase implementations that ensures that
- * the LoggingTool is configured. This is the JUnit 3.8 version. JUnit4 test
- * cases should extend NewCDKTestCase.
+ * the LoggingTool is configured. This is the JUnit4 version of CDKTestCase.
  *
  * @cdk.module test
  * 
- * @see NewCDKTestCase
+ * @see        CDKTestCase
  */
-public class CDKTestCase extends TestCase {
+public class CDKTestCase {
 
     static {
         LoggingTool.configureLog4j();
     }
 
-    public CDKTestCase() {
-        super();
-    }
-    
-    public CDKTestCase(String name) {
-        super(name);
-    }
-    
     /**
      * Determines if slow JUnit tests are to be run. You can set this
      * from the command line when running Ant: 
@@ -111,8 +101,10 @@ public class CDKTestCase extends TestCase {
      * @param error maximal allowed error
      */
     public void assertEquals(Point2d p1, Point2d p2, double error) {
-        assertEquals(p1.x, p2.x, error);
-        assertEquals(p1.y, p2.y, error);
+    	Assert.assertNotNull("The expected Point2d is null", p1);
+    	Assert.assertNotNull("The tested Point2d is null", p2);
+    	Assert.assertEquals(p1.x, p2.x, error);
+    	Assert.assertEquals(p1.y, p2.y, error);
     }
         
     /**
@@ -124,9 +116,30 @@ public class CDKTestCase extends TestCase {
      * @param error maximal allowed error
      */
     public void assertEquals(Point3d p1, Point3d p2, double error) {
-        assertEquals(p1.x, p2.x, error);
-        assertEquals(p1.y, p2.y, error);
-        assertEquals(p1.z, p2.z, error);
+    	Assert.assertNotNull("The expected Point3d is null", p1);
+    	Assert.assertNotNull("The tested Point3d is null", p2);
+    	Assert.assertEquals(p1.x, p2.x, error);
+    	Assert.assertEquals(p1.y, p2.y, error);
+    	Assert.assertEquals(p1.z, p2.z, error);
+    }
+
+    /**
+     * Tests method that asserts that for all atoms an reasonable CDK atom
+     * type can be perceived.
+     * 
+     * @param container IAtomContainer to test atom types of
+     */
+    public void assertAtomTypesPerceived(IAtomContainer container) throws Exception {
+    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+    	Iterator<IAtom> atoms = container.atoms().iterator();
+    	while (atoms.hasNext()) {
+    		IAtom atom = atoms.next();
+    		IAtomType type = matcher.findMatchingAtomType(container, atom);
+    		Assert.assertNotNull(
+    			"Could not perceive atom type for: " + atom,
+    			type
+    		);
+    	}
     }
 
     /**
@@ -139,7 +152,6 @@ public class CDKTestCase extends TestCase {
     protected void addExplicitHydrogens(IAtomContainer container) throws Exception {
     	addImplicitHydrogens(container);
     	AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
-    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
     }
 
     /**
@@ -152,16 +164,129 @@ public class CDKTestCase extends TestCase {
     protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
     	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
     	Iterator<IAtom> atoms = container.atoms().iterator();
-    	int atomCounter = 0;
     	while (atoms.hasNext()) {
     		IAtom atom = atoms.next();
-    		atomCounter++;
     		IAtomType type = matcher.findMatchingAtomType(container, atom);
-    		assertNotNull("Could not perceive type for atom " + atomCounter + ": " + atom, type);
     		AtomTypeManipulator.configure(atom, type);
     	}
     	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
     	hAdder.addImplicitHydrogens(container);
     }
+
+	/**
+	 * Convenience method to check that all bond orders are single
+	 * and all heavy atoms are aromatic (and that all explicit
+	 * hydrogens are not aromatic).
+	 *
+	 * @param container the atom container to check
+	 */
+	protected void assertAllSingleAndAromatic(IAtomContainer container) throws Exception {
+		for (Iterator<IBond> bonds = container.bonds().iterator(); bonds.hasNext();)
+			Assert.assertEquals(IBond.Order.SINGLE, bonds.next().getOrder());
+		
+		for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext();) {
+			IAtom atom = atoms.next();
+			if (atom.getSymbol().equals("H"))
+				Assert.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
+			else
+				Assert.assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
+		}
+	}
+
+	/**
+	 * Convenience method to check the atom symbols
+	 * of a molecule.
+	 *
+	 * @param symbols an array of the expected atom symbols
+	 * @param container the atom container to check
+	 */
+	protected void assertAtomSymbols(String[] symbols, IAtomContainer container) throws Exception {
+		int i = 0;
+		for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext(); i++)
+			Assert.assertEquals(symbols[i], atoms.next().getSymbol());
+	}
+
+	/**
+	 * Convenience method to check the hybridization states
+	 * of a molecule.
+	 *
+	 * @param hybridizations an array of the expected hybridization states
+	 * @param container the atom container to check
+	 */
+	protected void assertHybridizations(IAtomType.Hybridization[] hybridizations, IAtomContainer container) throws Exception {
+		int i = 0;
+		for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext(); i++)
+			Assert.assertEquals(hybridizations[i], atoms.next().getHybridization());
+	}
+
+	/**
+	 * Convenience method to check the hydrogen counts
+	 * of a molecule.
+	 *
+	 * @param hydrogenCounts an array of the expected hydrogenCounts
+	 * @param container the atom container to check
+	 */
+	protected void assertHydrogenCounts(int[] hydrogenCounts, IAtomContainer container) throws Exception {
+		int i = 0;
+		for (Iterator<IAtom> atoms = container.atoms().iterator(); atoms.hasNext(); i++)
+			Assert.assertEquals(hydrogenCounts[i], atoms.next().getHydrogenCount().intValue());
+	}
+
+	/**
+	 * Asserts that the given String has zero length.
+	 *
+	 * @param String String to test the length of.
+	 */
+	public void assertZeroLength(String testString) {
+	    Assert.assertNotNull("Expected a non-null String.", testString);
+	    Assert.assertEquals(
+	        "Expected a zero-length String, but found '" + testString + "'",
+	        0, testString.length()
+	    );
+	}
+
+	/**
+	 * Asserts that the given String consists of a single line, and thus
+	 * does not contain any '\r' and/or '\n' characters.
+	 *
+	 * @param String String to test.
+	 */
+	public void assertOneLiner(String testString) {
+	    Assert.assertNotNull("Expected a non-null String.", testString);
+	    for (int i=0; i<testString.length(); i++) {
+	    	char c = testString.charAt(i);
+	    	Assert.assertNotSame("The String must not contain newline characters", '\n', c);
+	    	Assert.assertNotSame("The String must not contain newline characters", '\r', c);
+	    }
+	}
+
+	/**
+	 * This test allows people to use the {@link TestMethod} annotation for
+	 * methods that are testing in other classes than identified with {@link TestClass}.
+	 * Bit of a workaround for the current set up, but useful in situations where
+	 * a methods is rather untestable, such as SAXHandler's endElement() methods.
+	 * 
+	 * <p>Should be used only in these rare cases.
+	 */
+    @Test
+    public void testedByOtherClass() {
+    	// several methods, like endElement() are not directly tested
+    	Assert.assertTrue(true);
+    }
+	
+  /**
+   * Asserts that the given subString is present in the fullString.
+   *
+   * @param fullString String which should contain the subString
+   * @param subString String that must be present in the fullString 
+   */
+  public void assertContains(String fullString, String subString) {
+      Assert.assertNotNull("Expected a non-null String to test contains against.", fullString);
+      Assert.assertNotNull("Expected a non-null substring in contains test.", subString);
+      Assert.assertTrue(
+          "Expected the full string '" + fullString + "' to contain '" + subString + "'.",
+          fullString.contains(subString)
+      );
+  }
 
 }

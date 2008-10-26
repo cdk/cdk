@@ -33,7 +33,7 @@ import javax.vecmath.Point2d;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author      steinbeck
  * @cdk.created 2002-11-16
  */
-public class HOSECodeGeneratorTest extends NewCDKTestCase {
+public class HOSECodeGeneratorTest extends CDKTestCase {
 	
 	static boolean standAlone = false;
 	

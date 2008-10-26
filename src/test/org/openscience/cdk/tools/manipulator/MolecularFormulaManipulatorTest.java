@@ -23,7 +23,7 @@ package org.openscience.cdk.tools.manipulator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -40,7 +40,7 @@ import java.util.List;
  *
  * @cdk.module test-formula
  */
-public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
+public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
 	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	private IsotopeFactory ifac;

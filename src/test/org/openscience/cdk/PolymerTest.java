@@ -48,7 +48,11 @@ import org.openscience.cdk.interfaces.IStrand;
  * @cdk.created 2001-08-09
  * @cdk.module  test-data
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/PolymerTest.java
 public class PolymerTest extends MoleculeTest {
+=======
+public class PolymerTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/PolymerTest.java
 
 	protected static IChemObjectBuilder builder;
 	

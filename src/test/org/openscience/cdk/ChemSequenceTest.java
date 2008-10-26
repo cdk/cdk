@@ -42,7 +42,11 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  *
  * @see org.openscience.cdk.ChemSequence
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/ChemSequenceTest.java
 public class ChemSequenceTest extends ChemObjectTest {
+=======
+public class ChemSequenceTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/ChemSequenceTest.java
 
 	protected static IChemObjectBuilder builder;
 	

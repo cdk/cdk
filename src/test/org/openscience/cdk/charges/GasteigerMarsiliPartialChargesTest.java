@@ -27,7 +27,7 @@ package org.openscience.cdk.charges;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -46,7 +46,7 @@ import java.util.Iterator;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-public class GasteigerMarsiliPartialChargesTest extends NewCDKTestCase {
+public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 
 	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
     private LonePairElectronChecker lpcheck = new LonePairElectronChecker();

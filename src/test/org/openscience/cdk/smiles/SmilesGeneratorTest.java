@@ -52,7 +52,7 @@ import java.io.StringWriter;
  * @cdk.created    2004-02-09
  * @cdk.module     test-smiles
  */
-public class SmilesGeneratorTest extends NewCDKTestCase {
+public class SmilesGeneratorTest extends CDKTestCase {
 
 
 	/**

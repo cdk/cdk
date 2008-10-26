@@ -43,7 +43,11 @@ import org.openscience.cdk.interfaces.IReactionSet;
  *
  * @see org.openscience.cdk.ReactionSet
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/ReactionSetTest.java
 public class ReactionSetTest extends ChemObjectTest {
+=======
+public class ReactionSetTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/ReactionSetTest.java
 
 	protected static IChemObjectBuilder builder;
 	

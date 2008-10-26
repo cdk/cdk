@@ -29,7 +29,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.LonePair;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -45,7 +45,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @author         Miguel Rojas
  * @cdk.created    2006-04-01
  */
-public class LonePairElectronCheckerTest extends NewCDKTestCase {
+public class LonePairElectronCheckerTest extends CDKTestCase {
 
 	private static LonePairElectronChecker lpcheck = null;
 

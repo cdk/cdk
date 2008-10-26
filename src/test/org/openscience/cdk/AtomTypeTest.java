@@ -37,7 +37,11 @@ import org.openscience.cdk.tools.diff.AtomTypeDiff;
  *
  * @see org.openscience.cdk.AtomType
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/AtomTypeTest.java
 public class AtomTypeTest extends IsotopeTest {
+=======
+public class AtomTypeTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/AtomTypeTest.java
 
 	protected static IChemObjectBuilder builder;
 	

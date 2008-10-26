@@ -23,14 +23,14 @@ package org.openscience.cdk.tools.diff;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ElectronContainer;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
 /**
  * @cdk.module test-diff
  */
-public class ElectronContainerDiffTest extends NewCDKTestCase {
+public class ElectronContainerDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
         IElectronContainer atom1 = new ElectronContainer();

@@ -31,7 +31,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.MoleculeSet;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
 
 import java.util.List;
@@ -42,7 +42,7 @@ import java.util.List;
  * @author     Kai Hartmann
  * @cdk.created    2004-02-20
  */
-public class MoleculeSetManipulatorTest extends NewCDKTestCase {
+public class MoleculeSetManipulatorTest extends CDKTestCase {
 	
 	
 	IMolecule mol1 = null;

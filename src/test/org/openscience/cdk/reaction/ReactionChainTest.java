@@ -22,7 +22,7 @@ package org.openscience.cdk.reaction;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -33,7 +33,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  *
  * @cdk.module test-reaction
  */
-public abstract class ReactionChainTest extends NewCDKTestCase {
+public abstract class ReactionChainTest extends CDKTestCase {
 	
 	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	

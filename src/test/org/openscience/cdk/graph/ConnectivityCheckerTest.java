@@ -50,7 +50,7 @@ import java.util.List;
  * @author     steinbeck
  * @cdk.created    2001-07-24
  */
-public class ConnectivityCheckerTest extends NewCDKTestCase {
+public class ConnectivityCheckerTest extends CDKTestCase {
 
 
 	public ConnectivityCheckerTest() {

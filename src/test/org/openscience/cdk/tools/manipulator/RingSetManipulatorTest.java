@@ -29,7 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
@@ -41,7 +41,7 @@ import java.util.List;
 /**
  * @cdk.module test-standard
  */
-public class RingSetManipulatorTest extends NewCDKTestCase {
+public class RingSetManipulatorTest extends CDKTestCase {
 
 	protected IChemObjectBuilder builder;
 	

@@ -23,12 +23,12 @@ package org.openscience.cdk.qsar.result;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.qsar.result.BooleanResult;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-standard
  */
-public class BooleanResultTest extends NewCDKTestCase {
+public class BooleanResultTest extends CDKTestCase {
     
     public BooleanResultTest() {
         super();

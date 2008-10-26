@@ -23,12 +23,12 @@ package org.openscience.cdk.tools;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-extra
  */
-public class PeriodicTableTest extends NewCDKTestCase {
+public class PeriodicTableTest extends CDKTestCase {
 
 	public PeriodicTableTest() {
 		super();

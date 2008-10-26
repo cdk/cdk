@@ -24,7 +24,7 @@ import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycle;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,7 +32,7 @@ import java.util.HashSet;
 /**
  * @cdk.module test-standard
  */
-public class SimpleCycleTest extends NewCDKTestCase {
+public class SimpleCycleTest extends CDKTestCase {
     
     public SimpleCycleTest() {
         super();

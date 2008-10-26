@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @cdk.module test-extra                      
  */
-public class DistanceMomentTest extends NewCDKTestCase {
+public class DistanceMomentTest extends CDKTestCase {
 
     boolean standAlone = false;
     //private static LoggingTool logger = new LoggingTool(TanimotoTest.class);

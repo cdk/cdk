@@ -20,12 +20,12 @@
  */
 package org.openscience.cdk.qsar;
 
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-qsarmolecular
  */
-public class ChiIndexUtilsTest extends NewCDKTestCase {
+public class ChiIndexUtilsTest extends CDKTestCase {
 
 }
 

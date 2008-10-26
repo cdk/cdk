@@ -33,7 +33,11 @@ import org.openscience.cdk.interfaces.IFragmentAtom;
  *
  * @cdk.module test-data
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/FragmentAtomTest.java
 public class FragmentAtomTest extends PseudoAtomTest {
+=======
+public class FragmentAtomTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/FragmentAtomTest.java
 
 	protected static IChemObjectBuilder builder;
 	

@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * @author         Miguel Rojas
  * @cdk.created    2007-03-01
  */
-public class IsotopePatternGeneratorTest extends NewCDKTestCase{
+public class IsotopePatternGeneratorTest extends CDKTestCase{
 
 	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**

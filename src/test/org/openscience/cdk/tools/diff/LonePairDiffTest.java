@@ -24,14 +24,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.LonePair;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.tools.diff.tree.IDifference;
 
 /**
  * @cdk.module test-diff
  */
-public class LonePairDiffTest extends NewCDKTestCase {
+public class LonePairDiffTest extends CDKTestCase {
 
     @Test public void testMatchAgainstItself() {
         ILonePair bond1 = new LonePair();

@@ -27,14 +27,12 @@
  * 
  */
 package org.openscience.cdk.ringsearch.cyclebasis;
+
 import java.util.Arrays;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org._3pq.jgrapht.graph.SimpleGraph;
-import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
-import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleBasis;
+import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.openscience.cdk.CDKTestCase;
 
 /**
@@ -46,14 +44,10 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class SimpleCycleBasisTest extends CDKTestCase {
 
-	public static Test suite() {
-		return new TestSuite(SimpleCycleBasisTest.class);
-	}
-
 	SimpleGraph g;
 	SimpleCycleBasis basis;
 
-	protected void setUp() {
+	@BeforeClass public void setUp() {
 		g = new SimpleGraph();
 		g.addVertex( "a" );
 		g.addVertex( "b" );
@@ -85,7 +79,7 @@ public class SimpleCycleBasisTest extends CDKTestCase {
 	}
 	
 	public void testSimpleCycleBasis() {
-		assertTrue(basis.cycles().size() == g.edgeSet().size() - g.vertexSet().size() + 1);
+		Assert.assertTrue(basis.cycles().size() == g.edgeSet().size() - g.vertexSet().size() + 1);
 	}
 	
 	public void testSimpleCycleBasisCompleteGraph() {
@@ -108,27 +102,27 @@ public class SimpleCycleBasisTest extends CDKTestCase {
 		g.addEdge( "d", "e" );
 		
 		basis = new SimpleCycleBasis( g );
-		assertEquals(g.edgeSet().size() - g.vertexSet().size() + 1, basis.cycles().size());
-		assertTrue(Arrays.equals(basis.weightVector(), new int[] {3,3,3,3,3,3}) );
-		assertEquals(10, basis.relevantCycles().size());
-		assertEquals(0, basis.essentialCycles().size());
-		assertEquals(1, basis.equivalenceClasses().size());
+		Assert.assertEquals(g.edgeSet().size() - g.vertexSet().size() + 1, basis.cycles().size());
+		Assert.assertTrue(Arrays.equals(basis.weightVector(), new int[] {3,3,3,3,3,3}) );
+		Assert.assertEquals(10, basis.relevantCycles().size());
+		Assert.assertEquals(0, basis.essentialCycles().size());
+		Assert.assertEquals(1, basis.equivalenceClasses().size());
 	}
 	
 	public void testWeightVector() {
-		assertTrue(Arrays.equals(basis.weightVector(), new int[] {3,3,3,3,3,3,3,3}) );
+		Assert.assertTrue(Arrays.equals(basis.weightVector(), new int[] {3,3,3,3,3,3,3,3}) );
 	}
 	
 	public void testRelevantCycles() {
-		assertEquals(10, basis.relevantCycles().size());
+		Assert.assertEquals(10, basis.relevantCycles().size());
 	}
 	
 	public void testEssentialCycles() {
-		assertEquals(2, basis.essentialCycles().size());
+		Assert.assertEquals(2, basis.essentialCycles().size());
 	}
 		
 	public void testEquivalenceClasses() {
-		assertEquals(4, basis.equivalenceClasses().size());
+		Assert.assertEquals(4, basis.equivalenceClasses().size());
 	}
 
 	public void testEquivalenceClassesEmptyIntersection() {
@@ -203,8 +197,8 @@ public class SimpleCycleBasisTest extends CDKTestCase {
 		
 		CycleBasis b = new CycleBasis( h );
 		
-		assertEquals(19, b.equivalenceClasses().size());		
-		assertEquals(18, b.essentialCycles().size());
+		Assert.assertEquals(19, b.equivalenceClasses().size());		
+		Assert.assertEquals(18, b.essentialCycles().size());
 		
 	}
 
@@ -226,7 +220,7 @@ public class SimpleCycleBasisTest extends CDKTestCase {
 		
 		for (int i=0; i<3; i++) {
 			for (int j=i; j<3; j++) {
-				assertTrue(inv[i][j] == r[i][j]);
+				Assert.assertTrue(inv[i][j] == r[i][j]);
 			}
 		}
 	}
@@ -234,7 +228,7 @@ public class SimpleCycleBasisTest extends CDKTestCase {
 	public void testConstructKernelVector() {
 		boolean[][] am = new boolean[][] {{true,false,true},{false,true,false}};
 		boolean[] u = SimpleCycleBasis.constructKernelVector(3, am, 2);
-		assertTrue(Arrays.equals(
+		Assert.assertTrue(Arrays.equals(
 				SimpleCycleBasis.constructKernelVector(3, am, 2),
 				new boolean[] {true,false,true}
 		));

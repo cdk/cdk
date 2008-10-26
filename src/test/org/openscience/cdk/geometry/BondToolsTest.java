@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.XYZReader;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 import java.io.InputStream;
 import java.util.Iterator;
@@ -39,7 +39,7 @@ import java.util.Iterator;
 /**
  * @cdk.module test-standard
  */
-public class BondToolsTest extends NewCDKTestCase {
+public class BondToolsTest extends CDKTestCase {
 
     public BondToolsTest() {
         super();

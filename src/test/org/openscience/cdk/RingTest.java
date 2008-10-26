@@ -42,7 +42,11 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *
  * @see org.openscience.cdk.Ring
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/RingTest.java
 public class RingTest extends AtomContainerTest {
+=======
+public class RingTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/RingTest.java
 
 	protected static IChemObjectBuilder builder;
 	

@@ -30,7 +30,7 @@ import java.io.InputStreamReader;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.tools.LoggingTool;
@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 /**
  * @cdk.module test-io
  */
-public class IteratingPCSubstancesXMLReaderTest extends NewCDKTestCase {
+public class IteratingPCSubstancesXMLReaderTest extends CDKTestCase {
 
     private LoggingTool logger = new LoggingTool(this);
 

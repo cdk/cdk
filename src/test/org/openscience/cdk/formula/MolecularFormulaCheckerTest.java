@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.formula.rules.ChargeRule;
 import org.openscience.cdk.formula.rules.IRule;
@@ -40,7 +40,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  *
  * @cdk.module test-formula
  */
-public class MolecularFormulaCheckerTest extends NewCDKTestCase {
+public class MolecularFormulaCheckerTest extends CDKTestCase {
 
 	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	private IsotopeFactory ifac;

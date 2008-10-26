@@ -29,12 +29,12 @@ package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * @cdk.module test-fingerprint
  */
-public class StandardSubstructureSetsTest extends NewCDKTestCase {
+public class StandardSubstructureSetsTest extends CDKTestCase {
 	
 	@Test public void testGetFunctionalGroupSubstructureSet() throws Exception {
 		String[] smarts = null;

@@ -22,7 +22,7 @@ package org.openscience.cdk.qsar.descriptors;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.IDescriptor;
 
@@ -31,7 +31,7 @@ import org.openscience.cdk.qsar.IDescriptor;
  *
  * @cdk.module test-qsar
  */
-public abstract class DescriptorTest extends NewCDKTestCase {
+public abstract class DescriptorTest extends CDKTestCase {
 	
 	protected IDescriptor descriptor;
 

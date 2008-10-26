@@ -39,7 +39,11 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  *
  * @see org.openscience.cdk.ElectronContainer
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/ElectronContainerTest.java
 public class ElectronContainerTest extends ChemObjectTest {
+=======
+public class ElectronContainerTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/ElectronContainerTest.java
 
 	protected static IChemObjectBuilder builder;
 	

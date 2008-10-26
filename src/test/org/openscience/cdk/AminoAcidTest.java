@@ -40,7 +40,11 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/AminoAcidTest.java
 public class AminoAcidTest extends MonomerTest {
+=======
+public class AminoAcidTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/AminoAcidTest.java
 
 	protected static IChemObjectBuilder builder;
 	

@@ -39,7 +39,11 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
  *
  * @see org.openscience.cdk.MoleculeSet
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/MoleculeSetTest.java
 public class MoleculeSetTest extends AtomContainerTest {
+=======
+public class MoleculeSetTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/MoleculeSetTest.java
 
 	protected static IChemObjectBuilder builder;
 	

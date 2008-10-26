@@ -35,7 +35,11 @@ import org.openscience.cdk.tools.diff.IsotopeDiff;
  *
  * @see org.openscience.cdk.Isotope
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/IsotopeTest.java
 public class IsotopeTest extends ElementTest {
+=======
+public class IsotopeTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/IsotopeTest.java
 
 	protected static IChemObjectBuilder builder;
 	

@@ -22,11 +22,11 @@ package org.openscience.cdk.layout;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
@@ -42,12 +42,8 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.created September 4, 2003
  * @cdk.require java1.4+
  */
-public class TemplateHandlerTest extends CDKTestCase
-{
+public class TemplateHandlerTest extends CDKTestCase {
 
-	/**
-	 *  Description of the Field
-	 */
 	public boolean standAlone = false;
 	private LoggingTool logger = null;
 
@@ -55,60 +51,35 @@ public class TemplateHandlerTest extends CDKTestCase
 	private StructureDiagramGenerator sdg = null;
 
 	/**
-	 *  Constructor for the TemplateHandlerTest object
-	 *
-	 *@param  name  Description of the Parameter
-	 */
-	public TemplateHandlerTest(String name)
-	{
-		super(name);
-	}
-
-
-	/**
 	 *  The JUnit setup method
 	 */
-	public void setUp() throws Exception
-	{
-        super.setUp();
+	@BeforeClass public void setUp() throws Exception {
 		logger = new LoggingTool(this);
 		sdg = new StructureDiagramGenerator();
 		sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 	}
-
-
-	/**
-	 *  A unit test suite for JUnit
-	 *
-	 *@return    The test suite
-	 */
-	public static Test suite()
-	{
-		return new TestSuite(TemplateHandlerTest.class);
-	}
-
 
 	/**
 	 *  A unit test for JUnit
 	 *
 	 *@exception  Exception  Description of the Exception
 	 */
-	public void testInit() throws Exception
+	@Test public void testInit() throws Exception
 	{
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
 		
-		assertTrue(th.getTemplateCount() > 0);
+		Assert.assertTrue(th.getTemplateCount() > 0);
 	}
 
-	public void testDetection() throws Exception
+	@Test public void testDetection() throws Exception
 	{
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
 		String smiles = "CC12C3(C6CC6)C4(C)C1C5(C(CC)C)C(C(CC)C)2C(C)3C45CC(C)C";
 		IMolecule mol = sp.parseSmiles(smiles);
-		assertTrue(th.mapTemplates(mol));
+		Assert.assertTrue(th.mapTemplates(mol));
 	}
 	
-	public void testAddMolecule() throws Exception
+	@Test public void testAddMolecule() throws Exception
 	{
 		logger.debug("***TestAddMolecule***");
 		boolean itIsInThere = false;
@@ -120,15 +91,15 @@ public class TemplateHandlerTest extends CDKTestCase
 		IMolecule smilesMol = sp.parseSmiles(smiles);
 		itIsInThere = th.mapTemplates(smilesMol);
 		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
-		assertFalse(itIsInThere);
+		Assert.assertFalse(itIsInThere);
 		th.addMolecule(mol);
 		logger.debug("now adding template for alpha-Pinen and trying again.");
 		itIsInThere = th.mapTemplates(smilesMol);
 		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
-		assertTrue(itIsInThere);
+		Assert.assertTrue(itIsInThere);
 	}
 
-	public void testRemoveMolecule() throws Exception
+	@Test public void testRemoveMolecule() throws Exception
 	{
 		logger.debug("***TestRemoveMolecule***");
 		boolean itIsInThere = false;
@@ -140,17 +111,17 @@ public class TemplateHandlerTest extends CDKTestCase
 		IMolecule smilesMol = sp.parseSmiles(smiles);
 		itIsInThere = th.mapTemplates(smilesMol);
 		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
-		assertFalse(itIsInThere);
+		Assert.assertFalse(itIsInThere);
 		th.addMolecule(mol);
 		logger.debug("now adding template for alpha-Pinen and trying again.");
 		itIsInThere = th.mapTemplates(smilesMol);
 		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
-		assertTrue(itIsInThere);
+		Assert.assertTrue(itIsInThere);
 		logger.debug("now removing template for alpha-Pinen again and trying again.");
 		th.removeMolecule(mol);
 		itIsInThere = th.mapTemplates(smilesMol);
 		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
-		assertFalse(itIsInThere);
+		Assert.assertFalse(itIsInThere);
 		
 	}
 
@@ -172,8 +143,8 @@ public class TemplateHandlerTest extends CDKTestCase
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
 		IAtomContainerSet mappedStructures = th.getMappedSubstructures(molecule);
 		
-		// Do the assertion
-		assertEquals("3 mapped templates", 3, mappedStructures.getAtomContainerCount());
+		// Do the Assert.assertion
+		Assert.assertEquals("3 mapped templates", 3, mappedStructures.getAtomContainerCount());
 	}
 
 }

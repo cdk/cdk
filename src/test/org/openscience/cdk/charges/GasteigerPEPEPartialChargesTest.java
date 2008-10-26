@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -48,7 +48,7 @@ import java.util.List;
  * @cdk.module test-charges
  * @cdk.created 2008-18-05
  */
-public class GasteigerPEPEPartialChargesTest extends NewCDKTestCase {
+public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
 
     private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
     private LonePairElectronChecker lpcheck = new LonePairElectronChecker();

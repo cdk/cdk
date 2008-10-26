@@ -28,7 +28,7 @@ package org.openscience.cdk.libio.cml;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.libio.md.MDMolecule;
 import org.xmlcml.cml.element.CMLAtom;
@@ -36,7 +36,7 @@ import org.xmlcml.cml.element.CMLAtom;
 /**
  * @cdk.module test-libiocml
  */
-public class ConvertorTest extends NewCDKTestCase {
+public class ConvertorTest extends CDKTestCase {
 
     /**
      * @cdk.bug 1748257

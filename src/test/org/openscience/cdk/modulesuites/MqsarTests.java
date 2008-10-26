@@ -64,7 +64,7 @@ public class MqsarTests {
         	suite.addTest(new JUnit4TestAdapter(CNNRegressionModelTest.class));
         	suite.addTest(new JUnit4TestAdapter(LinearRegressionModelTest.class));
         	suite.addTest(new JUnit4TestAdapter(QSARRModelTests.class));
-        	suite.addTest(RJavaEnvironmentTest.suite());
+        	suite.addTest(new JUnit4TestAdapter(RJavaEnvironmentTest.class));
         }
 
 //      from cdk.test.qsar.model.R2

@@ -29,7 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
@@ -49,7 +49,7 @@ import java.io.InputStream;
  *
  * @cdk.module test-reaction
  */
-public class ConjugatedPiSystemsDetectorTest extends NewCDKTestCase
+public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 {
 	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
     LonePairElectronChecker lpcheck = new LonePairElectronChecker();

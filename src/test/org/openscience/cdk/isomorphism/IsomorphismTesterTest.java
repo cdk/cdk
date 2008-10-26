@@ -31,14 +31,14 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the IsomorphismTester
  *
  * @cdk.module test-standard
  */
-public class IsomorphismTesterTest extends NewCDKTestCase
+public class IsomorphismTesterTest extends CDKTestCase
 {
 	Molecule pinene_1 = null, pinene_2 = null, pinene_non = null;
 	public IsomorphismTesterTest()

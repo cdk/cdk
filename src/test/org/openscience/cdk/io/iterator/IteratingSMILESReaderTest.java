@@ -32,7 +32,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
@@ -46,7 +46,7 @@ import java.io.InputStream;
  * @cdk.module test-smiles
  * @see org.openscience.cdk.io.SMILESReader
  */
-public class IteratingSMILESReaderTest extends NewCDKTestCase {
+public class IteratingSMILESReaderTest extends CDKTestCase {
 
     private static LoggingTool logger;
 

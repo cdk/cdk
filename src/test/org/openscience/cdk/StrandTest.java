@@ -46,7 +46,11 @@ import org.openscience.cdk.interfaces.IStrand;
  * @author     Martin Eklund <martin.eklund@farmbio.uu.se>
  * @cdk.module test-data
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/StrandTest.java
 public class StrandTest extends AtomContainerTest {
+=======
+public class StrandTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/StrandTest.java
 	
 	protected static IChemObjectBuilder builder;
 	

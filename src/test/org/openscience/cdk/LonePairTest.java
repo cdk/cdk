@@ -39,7 +39,11 @@ import org.openscience.cdk.interfaces.ILonePair;
  *
  * @cdk.module test-data
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/LonePairTest.java
 public class LonePairTest extends ElectronContainerTest {
+=======
+public class LonePairTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/LonePairTest.java
 
 	protected static IChemObjectBuilder builder;
 	

@@ -23,7 +23,7 @@ package org.openscience.cdk.smiles.smarts;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
@@ -47,7 +47,7 @@ import java.util.List;
  * @cdk.module test-smarts
  * @cdk.require ant1.6
  */
-public class SMARTSQueryToolTest extends NewCDKTestCase {
+public class SMARTSQueryToolTest extends CDKTestCase {
 
     @Test
     public void testQueryTool() throws CDKException {

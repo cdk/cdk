@@ -27,13 +27,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
  * @cdk.module test-extra
  */
-public class AtomContainerPermutorTest extends NewCDKTestCase {
+public class AtomContainerPermutorTest extends CDKTestCase {
 
 	@Test public void testAtomPermutation() 
 	{

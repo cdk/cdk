@@ -38,7 +38,7 @@ import java.util.Iterator;
 /**
  * @cdk.module test-standard
  */
-public class AllRingsFinderTest extends NewCDKTestCase
+public class AllRingsFinderTest extends CDKTestCase
 {
 	boolean standAlone = false;
 	

@@ -41,7 +41,11 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  *
  * @cdk.module test-data
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/PseudoAtomTest.java
 public class PseudoAtomTest extends AtomTest {
+=======
+public class PseudoAtomTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/PseudoAtomTest.java
 
 	protected static IChemObjectBuilder builder;
 	

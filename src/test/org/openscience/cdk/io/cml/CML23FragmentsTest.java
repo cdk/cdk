@@ -33,7 +33,7 @@ import java.util.Iterator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -55,7 +55,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
-public class CML23FragmentsTest extends NewCDKTestCase {
+public class CML23FragmentsTest extends CDKTestCase {
 
     @Test public void testAtomId() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>";

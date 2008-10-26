@@ -41,7 +41,11 @@ import org.openscience.cdk.interfaces.ICrystal;
  *
  * @cdk.module test-data
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/CrystalTest.java
 public class CrystalTest extends AtomContainerTest {
+=======
+public class CrystalTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/CrystalTest.java
 
 	protected static IChemObjectBuilder builder;
 	

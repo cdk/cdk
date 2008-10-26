@@ -19,16 +19,12 @@
  * 
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 package org.openscience.cdk;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -39,20 +35,12 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class VariousTests extends CDKTestCase {
 
-    public VariousTests(String name) {
-        super(name);
-    }
-
-	public void test1456139() throws Exception{
+	@Test public void test1456139() throws Exception{
 		SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = p.parseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
 		IMolecule mol2=DefaultChemObjectBuilder.getInstance().newMolecule(mol);		
-		assertNotNull(mol2);
-		assertEquals(22, mol2.getAtomCount());
-	}
-
-	public static Test suite() {
-		return new TestSuite(VariousTests.class);
+		Assert.assertNotNull(mol2);
+		Assert.assertEquals(22, mol2.getAtomCount());
 	}
 
 }

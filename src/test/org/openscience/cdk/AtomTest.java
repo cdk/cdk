@@ -40,7 +40,11 @@ import org.openscience.cdk.tools.diff.AtomDiff;
  *
  * @cdk.module test-data
  */
+<<<<<<< HEAD:src/test/org/openscience/cdk/AtomTest.java
 public class AtomTest extends AtomTypeTest {
+=======
+public class AtomTest extends CDKTestCase {
+>>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/AtomTest.java
 
 	protected static IChemObjectBuilder builder;
 	
