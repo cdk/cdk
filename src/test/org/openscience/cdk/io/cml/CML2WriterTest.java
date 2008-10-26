@@ -32,14 +32,13 @@ import java.io.StringWriter;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.ReactionScheme;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.Elements;
@@ -76,20 +75,11 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module test-libiocml
  * @cdk.require java1.5+
  */
-public class CML2WriterTest extends CDKTestCase {
+public class CML2WriterTest extends NewCDKTestCase {
 
-    private LoggingTool logger;
+    private static LoggingTool logger = new LoggingTool(CML2WriterTest.class);
 
-    public CML2WriterTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
-    }
-
-    public static Test suite() {
-        return new TestSuite(CML2WriterTest.class);
-    }
-
-	public void testCMLWriterBenzene() throws Exception {
+    @Test public void testCMLWriterBenzene() throws Exception {
 		StringWriter writer = new StringWriter();
         IMolecule molecule = MoleculeFactory.makeBenzene();
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
@@ -99,7 +89,7 @@ public class CML2WriterTest extends CDKTestCase {
 		logger.debug("****************************** testCMLWriterBenzene()");
         logger.debug(writer.toString());
 		logger.debug("******************************");
-        assertTrue(writer.toString().indexOf("</molecule>") != -1);
+        Assert.assertTrue(writer.toString().indexOf("</molecule>") != -1);
 	}
 	
 	/**
@@ -107,7 +97,7 @@ public class CML2WriterTest extends CDKTestCase {
 	 * 
 	 * @cdk.bug 1655045
 	 */
-	public void testHydrogenCount() throws Exception {
+	@Test public void testHydrogenCount() throws Exception {
 		StringWriter writer = new StringWriter();
 		IMolecule molecule = new NNMolecule(); // methane
 		molecule.addAtom(molecule.getBuilder().newAtom(Elements.CARBON));
@@ -118,10 +108,10 @@ public class CML2WriterTest extends CDKTestCase {
 		logger.debug("****************************** testHydrogenCount()");
         logger.debug(writer.toString());
 		logger.debug("******************************");
-        assertTrue(writer.toString().indexOf("hydrogenCount=\"4\"") != -1);
+        Assert.assertTrue(writer.toString().indexOf("hydrogenCount=\"4\"") != -1);
 	}
 
-	public void testNullFormalCharge() throws Exception {
+	@Test public void testNullFormalCharge() throws Exception {
 	    StringWriter writer = new StringWriter();
 	    IMolecule molecule = new NNMolecule(); // methane
 	    molecule.addAtom(molecule.getBuilder().newAtom(Elements.CARBON));
@@ -132,14 +122,14 @@ public class CML2WriterTest extends CDKTestCase {
 	    logger.debug("****************************** testNullFormalCharge()");
 	    logger.debug(writer.toString());
 	    logger.debug("******************************");
-	    assertFalse(writer.toString().contains("formalCharge"));
+	    Assert.assertFalse(writer.toString().contains("formalCharge"));
 	}
 	
 	 /**
    * Test example with one explicit carbon, writing of MassNumber
    * 
    */
-	public void testMassNumber() throws Exception {
+	@Test public void testMassNumber() throws Exception {
 	    StringWriter writer = new StringWriter();
 	    Molecule mol = new Molecule();
 	    Atom atom = new Atom("C");
@@ -151,7 +141,7 @@ public class CML2WriterTest extends CDKTestCase {
 	    logger.debug("****************************** testMAssNumber()");
 	    logger.debug(writer.toString());
 	    logger.debug("******************************");
-	    assertTrue(writer.toString().indexOf("isotopeNumber=\"12\"") != -1);
+	    Assert.assertTrue(writer.toString().indexOf("isotopeNumber=\"12\"") != -1);
 	}
 
 	/**
@@ -159,7 +149,7 @@ public class CML2WriterTest extends CDKTestCase {
 	 * 
 	 * @cdk.bug 1655045
 	 */
-	public void testHydrogenCount_2() throws Exception {
+	@Test public void testHydrogenCount_2() throws Exception {
 		StringWriter writer = new StringWriter();
 		IMolecule molecule = new NNMolecule(); // methane
 		molecule.addAtom(molecule.getBuilder().newAtom(Elements.CARBON));
@@ -172,10 +162,10 @@ public class CML2WriterTest extends CDKTestCase {
 		logger.debug("****************************** testHydrogenCount_2()");
         logger.debug(writer.toString());
 		logger.debug("******************************");
-        assertTrue(writer.toString().indexOf("hydrogenCount=\"4\"") != -1);
+        Assert.assertTrue(writer.toString().indexOf("hydrogenCount=\"4\"") != -1);
 	}
 	
-	public void testCMLCrystal() throws Exception {
+	@Test public void testCMLCrystal() throws Exception {
 		StringWriter writer = new StringWriter();
         ICrystal crystal = new NNCrystal();
         IAtom silicon = new NNAtom("Si");
@@ -193,11 +183,11 @@ public class CML2WriterTest extends CDKTestCase {
 		logger.debug("****************************** testCMLCrystal()");
         logger.debug(cmlContent);
 		logger.debug("******************************");
-        assertTrue(cmlContent.indexOf("</crystal>") != -1); // the cystal info has to be present
-        assertTrue(cmlContent.indexOf("<atom") != -1); // an Atom has to be present
+        Assert.assertTrue(cmlContent.indexOf("</crystal>") != -1); // the cystal info has to be present
+        Assert.assertTrue(cmlContent.indexOf("<atom") != -1); // an Atom has to be present
 	}
 	
-    public void testQSARCustomization() throws Exception {
+    @Test public void testQSARCustomization() throws Exception {
         StringWriter writer = new StringWriter();
         IMolecule molecule = MoleculeFactory.makeBenzene();
         IMolecularDescriptor descriptor = new WeightDescriptor();
@@ -212,12 +202,12 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testQSARCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        assertTrue(cmlContent.indexOf("<property") != -1 &&
+        Assert.assertTrue(cmlContent.indexOf("<property") != -1 &&
         		   cmlContent.indexOf("xmlns:qsar") != -1);
-        assertTrue(cmlContent.indexOf("#weight\"") != -1);
+        Assert.assertTrue(cmlContent.indexOf("#weight\"") != -1);
     }
     
-    public void testReactionCustomization() throws Exception {
+    @Test public void testReactionCustomization() throws Exception {
     	StringWriter writer = new StringWriter();
         IReaction reaction = new NNReaction();
         reaction.setID("reaction1");
@@ -238,13 +228,13 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        assertTrue(cmlContent.indexOf("<reaction id=\"reaction1") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"react") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"product") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"agent") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"reaction1") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"react") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"product") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"agent") != -1);
     }
     
-    public void testPDBAtomCustomization() throws Exception {
+    @Test public void testPDBAtomCustomization() throws Exception {
         StringWriter writer = new StringWriter();
         IMolecule molecule = new NNMolecule();
         IPDBAtom atom = new NNPDBAtom("C");
@@ -259,10 +249,10 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testPDBAtomCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        assertTrue(cmlContent.indexOf("<scalar dictRef=\"pdb:resName") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<scalar dictRef=\"pdb:resName") != -1);
     }
     
-    public void testReactionScheme1() throws Exception {
+    @Test public void testReactionScheme1() throws Exception {
     	StringWriter writer = new StringWriter();
     	IReactionScheme scheme1 = DefaultChemObjectBuilder.getInstance().newReactionScheme();
         scheme1.setID("rs0");
@@ -296,16 +286,16 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
-        assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs1") != -1);
-        assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
-        assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs1") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
     }
     
-    public void testReactionScheme2() throws Exception {
+    @Test public void testReactionScheme2() throws Exception {
     	StringWriter writer = new StringWriter();
     	ReactionScheme scheme1 = new ReactionScheme();
         scheme1.setID("rs0");
@@ -337,14 +327,14 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
-        assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
-        assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
     }
-    public void testReactionSchemeWithFormula() throws Exception {
+    @Test public void testReactionSchemeWithFormula() throws Exception {
     	StringWriter writer = new StringWriter();
     	ReactionScheme scheme1 = new ReactionScheme();
         scheme1.setID("rs0");
@@ -383,16 +373,16 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
-        assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
-        assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
-        assertTrue(cmlContent.indexOf("<formula concise=") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<formula concise=") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
     }
 
-    public void testReactionSchemeWithFormula2() throws Exception {
+    @Test public void testReactionSchemeWithFormula2() throws Exception {
     	StringWriter writer = new StringWriter();
     	ReactionScheme scheme1 = new ReactionScheme();
         scheme1.setID("rs0");
@@ -425,15 +415,15 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
-        assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
-        assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
-        assertTrue(cmlContent.indexOf("<scalar dictRef=\"cdk:molecularProperty") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
-        assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<scalar dictRef=\"cdk:molecularProperty") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
     }
-    public void testChemModeID() throws Exception {
+    @Test public void testChemModeID() throws Exception {
     	StringWriter writer = new StringWriter();
     	IChemModel chemModel = new NNChemModel();
     	chemModel.setID("cm0");
@@ -444,9 +434,9 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        assertTrue(cmlContent.indexOf("<list convention=\"cdk:model\" id=\"cm0") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<list convention=\"cdk:model\" id=\"cm0") != -1);
     }
-    public void testMoleculeSetID() throws Exception {
+    @Test public void testMoleculeSetID() throws Exception {
     	StringWriter writer = new StringWriter();
     	IMoleculeSet moleculeSet = new NNMoleculeSet();
     	moleculeSet.setID("ms0");
@@ -457,12 +447,12 @@ public class CML2WriterTest extends CDKTestCase {
         logger.debug("****************************** testReactionCustomization()");
         logger.debug(cmlContent);
         logger.debug("******************************");
-        assertTrue(cmlContent.indexOf("<moleculeList convention=\"cdk:moleculeSet\" id=\"ms0") != -1);
+        Assert.assertTrue(cmlContent.indexOf("<moleculeList convention=\"cdk:moleculeSet\" id=\"ms0") != -1);
     }
     /**
      * TODO: introduce concept for ReactionStepList and ReactionStep.
      */
-//    public void testReactionStepList() throws Exception {
+//    @Test public void testReactionStepList() throws Exception {
 //    	StringWriter writer = new StringWriter();
 //    	ReactionChain chain = new ReactionChain();
 //    	chain.setID("rsl1");
@@ -494,15 +484,15 @@ public class CML2WriterTest extends CDKTestCase {
 //        logger.debug("****************************** testReactionCustomization()");
 //        logger.debug(cmlContent);
 //        logger.debug("******************************");
-//        assertTrue(cmlContent.indexOf("<reactionStepList id=\"rsl1") != -1);
-//        assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
-//        assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
-//        assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
-//        assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
-//        assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<reactionStepList id=\"rsl1") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
 //    }
 //
-//    public void testReactionSchemeStepList1() throws Exception {
+//    @Test public void testReactionSchemeStepList1() throws Exception {
 //    	StringWriter writer = new StringWriter();
 //    	ReactionScheme scheme1 = new ReactionScheme();
 //        scheme1.setID("rs0");
@@ -560,15 +550,15 @@ public class CML2WriterTest extends CDKTestCase {
 //        logger.debug("****************************** testReactionCustomization()");
 //        logger.debug(cmlContent);
 //        logger.debug("******************************");
-//        assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
-//        assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs1") != -1);
-//        assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
-//        assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
-//        assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
-//        assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
-//        assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
-//        assertTrue(cmlContent.indexOf("<reactionStepList id=\"rsl1") != -1);
-//        assertTrue(cmlContent.indexOf("<molecule id=\"D") != -1);
-//        assertTrue(cmlContent.indexOf("<molecule id=\"E") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs0") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<reactionScheme id=\"rs1") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r1") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<reaction id=\"r2") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"A") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"B") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"C") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<reactionStepList id=\"rsl1") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"D") != -1);
+//        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"E") != -1);
 //    }
 }

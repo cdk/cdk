@@ -47,7 +47,7 @@ public class MsdgTests {
         
         // from cdk.test.layout
         suite.addTest(new JUnit4TestAdapter(StructureDiagramGeneratorTest.class));
-        suite.addTest(HydrogenPlacerTest.suite());
+        suite.addTest(new JUnit4TestAdapter(HydrogenPlacerTest.class));
         suite.addTest(OverlapResolverTest.suite());
         suite.addTest(TemplateHandlerTest.suite());
         

@@ -30,6 +30,9 @@ import junit.framework.TestSuite;
 
 import org.openscience.cdk.coverage.QsarCoverageTest;
 import org.openscience.cdk.qsar.DescriptorExceptionTest;
+import org.openscience.cdk.qsar.model.R2.CNNRegressionModelTest;
+import org.openscience.cdk.qsar.model.R2.LinearRegressionModelTest;
+import org.openscience.cdk.qsar.model.R2.QSARRModelTests;
 import org.openscience.cdk.qsar.model.R2.RJavaEnvironmentTest;
 
 /**
@@ -58,9 +61,9 @@ public class MqsarTests {
         	ldlibrarypath != null && ldlibrarypath.equals("")) {
 
 //      	from cdk.test.qsar.model.R2
-        	suite.addTest(org.openscience.cdk.qsar.model.R2.CNNRegressionModelTest.suite());
-        	suite.addTest(org.openscience.cdk.qsar.model.R2.LinearRegressionModelTest.suite());
-        	suite.addTest(org.openscience.cdk.qsar.model.R2.QSARRModelTests.suite());
+        	suite.addTest(new JUnit4TestAdapter(CNNRegressionModelTest.class));
+        	suite.addTest(new JUnit4TestAdapter(LinearRegressionModelTest.class));
+        	suite.addTest(new JUnit4TestAdapter(QSARRModelTests.class));
         	suite.addTest(RJavaEnvironmentTest.suite());
         }
 

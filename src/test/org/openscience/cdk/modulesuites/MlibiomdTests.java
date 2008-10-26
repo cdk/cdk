@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -38,7 +39,7 @@ public class MlibiomdTests {
         
         suite.addTest(LibiomdCoverageTest.suite());
         
-        suite.addTest(MDMoleculeTest.suite());
+        suite.addTest(new JUnit4TestAdapter(MDMoleculeTest.class));
         
         return suite;
     }

@@ -25,37 +25,23 @@
  */
 package org.openscience.cdk.libio.cml;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.libio.cml.Convertor;
 import org.openscience.cdk.libio.md.MDMolecule;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.tools.LoggingTool;
 import org.xmlcml.cml.element.CMLAtom;
 
 /**
  * @cdk.module test-libiocml
  */
-public class ConvertorTest extends CDKTestCase {
-
-    private LoggingTool logger;
-
-    public ConvertorTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
-    }
-
-    public static Test suite() {
-        return new TestSuite(ConvertorTest.class);
-    }
+public class ConvertorTest extends NewCDKTestCase {
 
     /**
      * @cdk.bug 1748257
      */
-    public void testBug1748257 () {
+    @Test public void testBug1748257 () {
     	
     	MDMolecule mol=new MDMolecule();
         mol.addAtom(new Atom("C")); // 0
@@ -73,7 +59,7 @@ public class ConvertorTest extends CDKTestCase {
         
         Convertor convertor=new Convertor(false,"");
         CMLAtom cmlatom=convertor.cdkAtomToCMLAtom(mol,mol.getAtom(2));
-        assertEquals(cmlatom.getHydrogenCount(),0);
+        Assert.assertEquals(cmlatom.getHydrogenCount(),0);
     }
     
 }

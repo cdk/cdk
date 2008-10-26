@@ -26,31 +26,21 @@ package org.openscience.cdk.io.iterator;
 
 import java.io.InputStream;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
  * @cdk.module test-io
  */
-public class IteratingPCCompoundASNReaderTest extends CDKTestCase {
+public class IteratingPCCompoundASNReaderTest extends NewCDKTestCase {
 
-    private LoggingTool logger;
+    private LoggingTool logger = new LoggingTool(this);
 
-    public IteratingPCCompoundASNReaderTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
-    }
-
-    public static Test suite() {
-        return new TestSuite(IteratingPCCompoundASNReaderTest.class);
-    }
-
-    public void testList() throws Exception {
+    @Test public void testList() throws Exception {
         String filename = "data/asn/pubchem/list.asn";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -59,12 +49,12 @@ public class IteratingPCCompoundASNReaderTest extends CDKTestCase {
         int molCount = 0;
         while (reader.hasNext()) {
             Object object = reader.next();
-            assertNotNull(object);
-            assertTrue(object instanceof Molecule);
+            Assert.assertNotNull(object);
+            Assert.assertTrue(object instanceof Molecule);
             molCount++;
         }
 
-        assertEquals(2, molCount);
+        Assert.assertEquals(2, molCount);
     }
 
 }

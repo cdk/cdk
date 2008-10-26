@@ -23,6 +23,7 @@ package org.openscience.cdk.modulesuites;
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 import org.openscience.cdk.CloneAtomContainerTest;
 import org.openscience.cdk.PeriodicTableElementTest;
 import org.openscience.cdk.VariousTests;
@@ -33,6 +34,7 @@ import org.openscience.cdk.index.CASNumberTest;
 import org.openscience.cdk.io.ShelXWriterTest;
 import org.openscience.cdk.similarity.DistanceMomentTest;
 import org.openscience.cdk.similarity.TanimotoTest;
+import org.openscience.cdk.tools.BremserPredictorTest;
 import org.openscience.cdk.tools.DeAromatizationToolTest;
 import org.openscience.cdk.tools.HOSECodeAnalyserTest;
 import org.openscience.cdk.tools.PeriodicTableTest;
@@ -68,9 +70,10 @@ public class MextraTests {
         // from cdk.test.similarity
         suite.addTest(new JUnit4TestAdapter(TanimotoTest.class));
         suite.addTest(new JUnit4TestAdapter(DistanceMomentTest.class));
-        suite.addTest(HOSECodeAnalyserTest.suite());
+        suite.addTest(new JUnit4TestAdapter(HOSECodeAnalyserTest.class));
         suite.addTest(new JUnit4TestAdapter(DeAromatizationToolTest.class));
         suite.addTest(ShelXWriterTest.suite());
+        suite.addTest(new JUnit4TestAdapter(BremserPredictorTest.class));
 
         // Below are the tests that are not always possible to execute, because
         // the class might not be compiled (depending on Ant and Java VM versions).

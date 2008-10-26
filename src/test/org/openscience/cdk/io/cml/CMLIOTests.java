@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.io.cml;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -38,14 +39,14 @@ public class CMLIOTests {
 
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.io.cml Tests");
-        suite.addTest(CMLStackTest.suite());
+        suite.addTest(new JUnit4TestAdapter(CMLStackTest.class));
         
-        suite.addTest(JumboTest.suite());
+        suite.addTest(new JUnit4TestAdapter(JumboTest.class));
         // suite.addTest(JmolTest.suite());
-        suite.addTest(JChemPaintTest.suite());
-        suite.addTest(CMLFragmentsTest.suite());
-        suite.addTest(CML23FragmentsTest.suite()); // schema23 20060209
-        suite.addTest(Jumbo46CMLFragmentsTest.suite());
+        suite.addTest(new JUnit4TestAdapter(JChemPaintTest.class));
+        suite.addTest(new JUnit4TestAdapter(CMLFragmentsTest.class));
+        suite.addTest(new JUnit4TestAdapter(CML23FragmentsTest.class)); // schema23 20060209
+        suite.addTest(new JUnit4TestAdapter(Jumbo46CMLFragmentsTest.class));
         
         return suite;
     }

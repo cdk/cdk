@@ -29,12 +29,12 @@ import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -42,34 +42,21 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.cml.MDMoleculeConvention;
 import org.openscience.cdk.libio.cml.MDMoleculeCustomizer;
-import org.openscience.cdk.libio.md.ChargeGroup;
-import org.openscience.cdk.libio.md.MDMolecule;
-import org.openscience.cdk.libio.md.Residue;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
  * @cdk.module test-libiomd
  */
-public class MDMoleculeTest extends CDKTestCase {
+public class MDMoleculeTest extends NewCDKTestCase {
 
-    private LoggingTool logger;
-
-    public MDMoleculeTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
-    }
-
-    public static Test suite() {
-        return new TestSuite(MDMoleculeTest.class);
-    }
+    private LoggingTool logger = new LoggingTool(this);
 
     /**
      * Test an MDMolecule with residues and chargegroups
      *
      */
-    public void testMDMolecule() {
+    @Test public void testMDMolecule() {
     	
     	MDMolecule mol=new MDMolecule();
         mol.addAtom(new Atom("C")); // 0
@@ -104,16 +91,16 @@ public class MDMoleculeTest extends CDKTestCase {
         mol.addResidue(res2);
                  
         //Test residue creation
-        assertEquals(res1.getParentMolecule(),mol);
-        assertEquals(res2.getParentMolecule(),mol);
-        assertEquals(res1.getAtomCount(), 3);
-        assertEquals(res2.getAtomCount(), 3);
-        assertEquals(res1.getName(), "myResidue1");
-        assertEquals(res2.getName(), "myResidue2");
-        assertNotNull(mol.getResidues());
-        assertEquals(mol.getResidues().size(),2);
-        assertEquals(mol.getResidues().get(0), res1);
-        assertEquals(mol.getResidues().get(1), res2);
+        Assert.assertEquals(res1.getParentMolecule(),mol);
+        Assert.assertEquals(res2.getParentMolecule(),mol);
+        Assert.assertEquals(res1.getAtomCount(), 3);
+        Assert.assertEquals(res2.getAtomCount(), 3);
+        Assert.assertEquals(res1.getName(), "myResidue1");
+        Assert.assertEquals(res2.getName(), "myResidue2");
+        Assert.assertNotNull(mol.getResidues());
+        Assert.assertEquals(mol.getResidues().size(),2);
+        Assert.assertEquals(mol.getResidues().get(0), res1);
+        Assert.assertEquals(mol.getResidues().get(1), res2);
 
         //Create 2 chargegroups
         AtomContainer ac3= new AtomContainer();
@@ -131,19 +118,19 @@ public class MDMoleculeTest extends CDKTestCase {
         mol.addChargeGroup(chg2);
 
         //Test chargegroup creation
-        assertEquals(chg1.getParentMolecule(),mol);
-        assertEquals(chg2.getParentMolecule(),mol);
-        assertEquals(chg1.getAtomCount(), 2);
-        assertEquals(chg2.getAtomCount(), 4);
+        Assert.assertEquals(chg1.getParentMolecule(),mol);
+        Assert.assertEquals(chg2.getParentMolecule(),mol);
+        Assert.assertEquals(chg1.getAtomCount(), 2);
+        Assert.assertEquals(chg2.getAtomCount(), 4);
 
-        assertNotNull(mol.getChargeGroups());
-        assertEquals(mol.getChargeGroups().size(),2);
-        assertEquals(mol.getChargeGroups().get(0), chg1);
-        assertEquals(mol.getChargeGroups().get(1), chg2);
+        Assert.assertNotNull(mol.getChargeGroups());
+        Assert.assertEquals(mol.getChargeGroups().size(),2);
+        Assert.assertEquals(mol.getChargeGroups().get(0), chg1);
+        Assert.assertEquals(mol.getChargeGroups().get(1), chg2);
 
     }
 
-    public void testMDMoleculeCustomizationRoundtripping() throws Exception {
+    @Test public void testMDMoleculeCustomizationRoundtripping() throws Exception {
         StringWriter writer = new StringWriter();
 
         CMLWriter cmlWriter = new CMLWriter(writer);
@@ -163,35 +150,35 @@ public class MDMoleculeTest extends CDKTestCase {
         reader.registerConvention("md:mdMolecule", new MDMoleculeConvention(new ChemFile()));
         IChemFile file = (IChemFile)reader.read(new ChemFile());
         List containers = ChemFileManipulator.getAllAtomContainers(file);
-        assertEquals(1, containers.size());
+        Assert.assertEquals(1, containers.size());
 
         Object molecule2 = containers.get(0);
-        assertTrue(molecule2 instanceof MDMolecule);
+        Assert.assertTrue(molecule2 instanceof MDMolecule);
         MDMolecule mdMol = (MDMolecule)molecule2;
 
-        assertEquals(6, mdMol.getAtomCount());
-        assertEquals(6, mdMol.getBondCount());
+        Assert.assertEquals(6, mdMol.getAtomCount());
+        Assert.assertEquals(6, mdMol.getBondCount());
         
         List residues = mdMol.getResidues();
-        assertEquals(2, residues.size());
-        assertEquals(3, ((Residue)residues.get(0)).getAtomCount());
-        assertEquals(3, ((Residue)residues.get(1)).getAtomCount());
-        assertEquals("myResidue1", ((Residue)residues.get(0)).getName());
-        assertEquals("myResidue2", ((Residue)residues.get(1)).getName());
-        assertEquals(0, ((Residue)residues.get(0)).getNumber());
-        assertEquals(1, ((Residue)residues.get(1)).getNumber());
+        Assert.assertEquals(2, residues.size());
+        Assert.assertEquals(3, ((Residue)residues.get(0)).getAtomCount());
+        Assert.assertEquals(3, ((Residue)residues.get(1)).getAtomCount());
+        Assert.assertEquals("myResidue1", ((Residue)residues.get(0)).getName());
+        Assert.assertEquals("myResidue2", ((Residue)residues.get(1)).getName());
+        Assert.assertEquals(0, ((Residue)residues.get(0)).getNumber());
+        Assert.assertEquals(1, ((Residue)residues.get(1)).getNumber());
         
         List chargeGroup = mdMol.getChargeGroups();
-        assertEquals(2, chargeGroup.size());
-        assertEquals(2, ((ChargeGroup)chargeGroup.get(0)).getAtomCount());
-        assertEquals(4, ((ChargeGroup)chargeGroup.get(1)).getAtomCount());
-        assertNotNull(((ChargeGroup)chargeGroup.get(0)).getSwitchingAtom());
-        assertEquals("a2", ((ChargeGroup)chargeGroup.get(0)).getSwitchingAtom().getID());
-        assertNotNull(((ChargeGroup)chargeGroup.get(1)).getSwitchingAtom());
-        assertEquals("a5", ((ChargeGroup)chargeGroup.get(1)).getSwitchingAtom().getID());
+        Assert.assertEquals(2, chargeGroup.size());
+        Assert.assertEquals(2, ((ChargeGroup)chargeGroup.get(0)).getAtomCount());
+        Assert.assertEquals(4, ((ChargeGroup)chargeGroup.get(1)).getAtomCount());
+        Assert.assertNotNull(((ChargeGroup)chargeGroup.get(0)).getSwitchingAtom());
+        Assert.assertEquals("a2", ((ChargeGroup)chargeGroup.get(0)).getSwitchingAtom().getID());
+        Assert.assertNotNull(((ChargeGroup)chargeGroup.get(1)).getSwitchingAtom());
+        Assert.assertEquals("a5", ((ChargeGroup)chargeGroup.get(1)).getSwitchingAtom().getID());
 
-        assertEquals(2, ((ChargeGroup)chargeGroup.get(0)).getNumber());
-        assertEquals(3, ((ChargeGroup)chargeGroup.get(1)).getNumber());
+        Assert.assertEquals(2, ((ChargeGroup)chargeGroup.get(0)).getNumber());
+        Assert.assertEquals(3, ((ChargeGroup)chargeGroup.get(1)).getNumber());
 
          writer = new StringWriter();
 
@@ -207,11 +194,11 @@ public class MDMoleculeTest extends CDKTestCase {
         logger.debug(serializedMDMol);
         logger.debug("******************************");
 
-        assertEquals(serializedMol, serializedMDMol);
+        Assert.assertEquals(serializedMol, serializedMDMol);
         
     }
 
-    public void testMDMoleculeCustomization() {
+    @Test public void testMDMoleculeCustomization() {
         StringWriter writer = new StringWriter();
 
         CMLWriter cmlWriter = new CMLWriter(writer);
@@ -223,7 +210,7 @@ public class MDMoleculeTest extends CDKTestCase {
         } catch (Exception exception) {
             logger.error("Error while creating an CML2 file: ", exception.getMessage());
             logger.debug(exception);
-            fail(exception.getMessage());
+            Assert.fail(exception.getMessage());
         }
         String cmlContent = writer.toString();
         logger.debug("****************************** testMDMoleculeCustomization()");
@@ -232,12 +219,12 @@ public class MDMoleculeTest extends CDKTestCase {
 //        System.out.println("****************************** testMDMoleculeCustomization()");
 //        System.out.println(cmlContent);
 //        System.out.println("******************************");
-        assertTrue(cmlContent.indexOf("xmlns:md") != -1);
-        assertTrue(cmlContent.indexOf("md:residue\"") != -1);
-        assertTrue(cmlContent.indexOf("md:resNumber\"") != -1);
-        assertTrue(cmlContent.indexOf("md:chargeGroup\"") != -1);
-        assertTrue(cmlContent.indexOf("md:cgNumber\"") != -1);
-        assertTrue(cmlContent.indexOf("md:switchingAtom\"") != -1);
+        Assert.assertTrue(cmlContent.indexOf("xmlns:md") != -1);
+        Assert.assertTrue(cmlContent.indexOf("md:residue\"") != -1);
+        Assert.assertTrue(cmlContent.indexOf("md:resNumber\"") != -1);
+        Assert.assertTrue(cmlContent.indexOf("md:chargeGroup\"") != -1);
+        Assert.assertTrue(cmlContent.indexOf("md:cgNumber\"") != -1);
+        Assert.assertTrue(cmlContent.indexOf("md:switchingAtom\"") != -1);
     }
     
     

@@ -52,7 +52,7 @@ public class MqsarmolecularTests {
         suite.addTest(QsarmolecularCoverageTest.suite());
         
         // Individual Tests - Please add correlatively	
-        suite.addTest(ChiIndexUtilsTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ChiIndexUtilsTest.class));
         suite.addTest(new JUnit4TestAdapter(DescriptorEngineTest.class));
         suite.addTest(new JUnit4TestAdapter(DescriptorNamesTest.class));
 

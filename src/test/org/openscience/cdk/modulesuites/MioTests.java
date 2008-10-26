@@ -74,14 +74,14 @@ public class MioTests {
 
         suite.addTest(ReaderFactoryTest.suite());
         suite.addTest(WriterFactoryTest.suite());
-        suite.addTest(ChemObjectIOInstantionTests.suite());
+        suite.addTest(new JUnit4TestAdapter(ChemObjectIOInstantionTests.class));
 
         // cdk.io.iterator package
-        suite.addTest(IteratingMDLReaderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(IteratingMDLReaderTest.class));
         suite.addTest(new JUnit4TestAdapter(IteratingMDLConformerReaderTest.class));
-        suite.addTest(IteratingPCCompoundASNReaderTest.suite());
-        suite.addTest(IteratingPCCompoundXMLReaderTest.suite());
-        suite.addTest(IteratingPCSubstancesXMLReaderTest.suite());
+        suite.addTest(new JUnit4TestAdapter(IteratingPCCompoundASNReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(IteratingPCCompoundXMLReaderTest.class));
+        suite.addTest(new JUnit4TestAdapter(IteratingPCSubstancesXMLReaderTest.class));
         
         // cdk.io.formats package
         suite.addTest(new JUnit4TestAdapter(ABINITFormatTest.class));

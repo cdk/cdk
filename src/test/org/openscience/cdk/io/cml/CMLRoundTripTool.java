@@ -28,7 +28,8 @@ import java.io.ByteArrayInputStream;
 
 import nu.xom.Element;
 
-import org.openscience.cdk.CDKTestCase;
+import org.junit.Assert;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
@@ -47,7 +48,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.require xom-1.0.jar
  * @cdk.require java1.5+
  */
-public class CMLRoundTripTool extends CDKTestCase {
+public class CMLRoundTripTool extends NewCDKTestCase {
 
     private static LoggingTool logger = new LoggingTool(CMLRoundTripTool.class);
     private static Convertor convertor = new Convertor(true, null);
@@ -69,18 +70,18 @@ public class CMLRoundTripTool extends CDKTestCase {
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
 
         IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
-        assertNotNull(file);
-        assertEquals(1, file.getChemSequenceCount());
+        Assert.assertNotNull(file);
+        Assert.assertEquals(1, file.getChemSequenceCount());
         IChemSequence sequence = file.getChemSequence(0);
-        assertNotNull(sequence);
-        assertEquals(1, sequence.getChemModelCount());
+        Assert.assertNotNull(sequence);
+        Assert.assertEquals(1, sequence.getChemModelCount());
         IChemModel chemModel = sequence.getChemModel(0);
-        assertNotNull(chemModel);
+        Assert.assertNotNull(chemModel);
         IMoleculeSet moleculeSet = chemModel.getMoleculeSet();
-        assertNotNull(moleculeSet);
-        assertEquals(1, moleculeSet.getMoleculeCount());
+        Assert.assertNotNull(moleculeSet);
+        Assert.assertEquals(1, moleculeSet.getMoleculeCount());
         roundTrippedMol = moleculeSet.getMolecule(0);
-        assertNotNull(roundTrippedMol);
+        Assert.assertNotNull(roundTrippedMol);
         
         return roundTrippedMol;
     }
@@ -94,13 +95,13 @@ public class CMLRoundTripTool extends CDKTestCase {
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
 
         IChemFile file = (IChemFile)reader.read(model.getBuilder().newChemFile());
-        assertNotNull(file);
-        assertEquals(1, file.getChemSequenceCount());
+        Assert.assertNotNull(file);
+        Assert.assertEquals(1, file.getChemSequenceCount());
         IChemSequence sequence = file.getChemSequence(0);
-        assertNotNull(sequence);
-        assertEquals(1, sequence.getChemModelCount());
+        Assert.assertNotNull(sequence);
+        Assert.assertEquals(1, sequence.getChemModelCount());
         IChemModel chemModel = sequence.getChemModel(0);
-        assertNotNull(chemModel);
+        Assert.assertNotNull(chemModel);
         
         return chemModel;
     }
@@ -115,18 +116,18 @@ public class CMLRoundTripTool extends CDKTestCase {
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
 
         IChemFile file = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
-        assertNotNull(file);
-        assertEquals(1, file.getChemSequenceCount());
+        Assert.assertNotNull(file);
+        Assert.assertEquals(1, file.getChemSequenceCount());
         IChemSequence sequence = file.getChemSequence(0);
-        assertNotNull(sequence);
-        assertEquals(1, sequence.getChemModelCount());
+        Assert.assertNotNull(sequence);
+        Assert.assertEquals(1, sequence.getChemModelCount());
         IChemModel chemModel = sequence.getChemModel(0);
-        assertNotNull(chemModel);
+        Assert.assertNotNull(chemModel);
         IReactionSet reactionSet = chemModel.getReactionSet();
-        assertNotNull(reactionSet);
-        assertEquals(1, reactionSet.getReactionCount());
+        Assert.assertNotNull(reactionSet);
+        Assert.assertEquals(1, reactionSet.getReactionCount());
         roundTrippedReaction = reactionSet.getReaction(0);
-        assertNotNull(roundTrippedReaction);
+        Assert.assertNotNull(roundTrippedReaction);
         
         return roundTrippedReaction;
     }
