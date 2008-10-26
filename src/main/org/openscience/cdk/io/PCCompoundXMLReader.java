@@ -126,7 +126,7 @@ public class PCCompoundXMLReader extends DefaultChemObjectReader {
         		throw new CDKException("An error occured: " + e.getMessage(), e);
         	}
         } else {
-            throw new CDKException("Only supported is reading of ChemFile objects.");
+            throw new CDKException("Only supported is reading of IMolecule objects.");
         }
     }
 
