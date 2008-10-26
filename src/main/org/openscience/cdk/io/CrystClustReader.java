@@ -20,29 +20,19 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-
-import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.formats.CrystClustFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.math.FortranFormat;
 import org.openscience.cdk.tools.LoggingTool;
+
+import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
+import java.io.*;
 
 /**
  * @cdk.module extra
@@ -78,7 +68,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
     
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
-        if (input instanceof BufferedReader) {
+        if (reader instanceof BufferedReader) {
             this.input = (BufferedReader)reader;
         } else {
             this.input = new BufferedReader(reader);
