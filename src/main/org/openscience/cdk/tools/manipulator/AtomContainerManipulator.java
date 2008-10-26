@@ -649,6 +649,7 @@ public class AtomContainerManipulator {
 	 * matcher finds a matching atom type, the <code>IAtom</code> will be configured
 	 * to have the same properties as the <code>IAtomType</code>. If no matching atom
 	 * type is found, no configuration is performed.
+	 * <b>This method overwrites existing values.</b>
 	 * 
 	 * @param container
 	 * @throws CDKException
@@ -661,6 +662,26 @@ public class AtomContainerManipulator {
             if (matched != null) AtomTypeManipulator.configure(atom, matched);
         }
 	}
+
+    /**
+     * Convenience method to perceive atom types for all <code>IAtom</code>s in the
+     * <code>IAtomContainer</code>, using the <code>CDKAtomTypeMatcher</code>. If the
+     * matcher finds a matching atom type, the <code>IAtom</code> will be configured
+     * to have the same properties as the <code>IAtomType</code>. If no matching atom
+     * type is found, no configuration is performed.
+     * <b>This method overwrites existing values.</b>
+     * 
+     * @param container
+     * @throws CDKException
+     */
+      @TestMethod("testPerceiveAtomTypesAndConfigureAtoms")
+      public static void percieveAtomTypesAndConfigureUnsetProperties(IAtomContainer container) throws CDKException {
+      CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+          for (IAtom atom : container.atoms()) {
+              IAtomType matched = matcher.findMatchingAtomType(container, atom);
+              if (matched != null) AtomTypeManipulator.configureUnsetProperties(atom, matched);
+          }
+    }
 
 
     /**
