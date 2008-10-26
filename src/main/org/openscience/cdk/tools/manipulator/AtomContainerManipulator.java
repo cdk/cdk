@@ -253,6 +253,7 @@ public class AtomContainerManipulator {
                 if (hCount != null) {
                     for (int i = 0; i < hCount; i++) {
                         IAtom hydrogen = atom.getBuilder().newAtom("H");
+                        hydrogen.setAtomTypeName("H");
                         atomContainer.addAtom(hydrogen);
                         atomContainer.addBond(
                                 atom.getBuilder().newBond(
