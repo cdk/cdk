@@ -101,7 +101,6 @@ public class    DescriptorEngineTest extends CDKTestCase {
 
         String[] dictClass = engine.getDictionaryClass(className);
         Assert.assertEquals(2, dictClass.length);
-        System.out.println(dictClass[0]+" "+dictClass[1]);
         Assert.assertEquals("topologicalDescriptor", dictClass[0]);
         Assert.assertEquals("electronicDescriptor", dictClass[1]);
 
@@ -115,9 +114,6 @@ public class    DescriptorEngineTest extends CDKTestCase {
     public void testAvailableClass() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
         String[] availClasses = engine.getAvailableDictionaryClasses();
-        for (String availClass : availClasses) {
-            System.out.println("avail class: " + availClass);
-        }
         Assert.assertEquals(5, availClasses.length);
     }
 }
