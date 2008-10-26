@@ -71,7 +71,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         try {
             v = descriptor.calculate(mol);
         } catch (Exception e) {
-            Assert.fail("A descriptor must not throw an exception. Exception was:\n"+e.toString());
+            Assert.fail("A descriptor must not throw an exception. Exception was:\n"+e.getMessage());
         }
         Assert.assertNotNull(v);
         Assert.assertTrue(
