@@ -72,6 +72,7 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
     }
 
 
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         try {
             double[] w = listcharges(container);
@@ -108,14 +109,17 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
     }
 
 
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
 
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
 
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return null;
     }
@@ -125,6 +129,7 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
         return names;
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge",
@@ -138,6 +143,7 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
         return new DoubleArrayResultType(5);
     }
 
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
 
         }

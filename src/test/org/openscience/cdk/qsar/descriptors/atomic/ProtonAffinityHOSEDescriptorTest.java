@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -51,18 +50,16 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
     	descriptor = new ProtonAffinityHOSEDescriptor();
     }
     
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(ProtonAffinityHOSEDescriptor.class);
-    }
-    
-    public static Test suite() {
-        return new TestSuite(ProtonAffinityHOSEDescriptorTest.class);
     }
 
     /**
 	 *  A unit test for JUnit
 	 */
-	public void testProtonAffinityHOSEDescriptor() throws Exception {
+	@Test
+    public void testProtonAffinityHOSEDescriptor() throws Exception {
 		IAtomicDescriptor descriptor = new ProtonAffinityHOSEDescriptor();
 		Assert.assertNotNull(descriptor);
 	}
@@ -71,6 +68,7 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C6H5Cl/c7-6-4-2-1-3-5-6/h1-5H
 	 */
+    @Test
     public void testAffinityDescriptor1()  throws Exception {
 		
     	IMolecule mol = builder.newMolecule();
@@ -106,6 +104,7 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C2H5Cl/c1-2-3/h2H2,1H3
 	 */
+    @Test
     public void testAffinityDescriptor2() throws Exception {
 		
     	IMolecule mol = builder.newMolecule();

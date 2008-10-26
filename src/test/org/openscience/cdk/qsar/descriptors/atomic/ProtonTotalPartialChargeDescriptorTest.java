@@ -23,15 +23,13 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -42,15 +40,13 @@ public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest
 	
 	public  ProtonTotalPartialChargeDescriptorTest() {}
     
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(ProtonTotalPartialChargeDescriptor.class);
     }
-    
-	public static Test suite() {
-		return new TestSuite(ProtonTotalPartialChargeDescriptorTest.class);
-	}
 	
-	public void testProtonTotalPartialChargeDescriptorTest() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testProtonTotalPartialChargeDescriptorTest() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.07915,0.05783,0.05783,0.05783};
 		IAtomicDescriptor descriptor  = new ProtonTotalPartialChargeDescriptor();
 		

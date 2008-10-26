@@ -99,6 +99,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
      *
      * @return An object containing the descriptor specification
      */
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestPiSystem",
@@ -118,6 +119,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
      * @throws CDKException if more than one parameter or a non-Boolean parameter is specified
      * @see #getParameters
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("LargestPiSystemDescriptor only expects one parameter");
@@ -136,6 +138,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
      * @return The parameters value
      * @see #setParameters
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -167,6 +170,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
      * @return the number of atoms in the largest pi system of this AtomContainer
      * @see #setParameters
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         boolean[] originalFlag4 = new boolean[container.getAtomCount()];
         for (int i=0; i<originalFlag4.length; i++) {
@@ -253,7 +257,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
      *          Description of the
      *          Exception
      */
-    public void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws org.openscience.cdk.exception.CDKException {
+    private void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws org.openscience.cdk.exception.CDKException {
         IAtom nextAtom;
        List<IAtom> newSphere = new ArrayList<IAtom>();
         //logger.debug("Start of breadthFirstSearch");
@@ -291,6 +295,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "checkAromaticity";
@@ -304,6 +309,7 @@ public class LargestPiSystemDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return An Object of class equal to that of the parameter being requested
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         if ("checkAromaticity".equals(name)) return Boolean.FALSE;
     	return null;

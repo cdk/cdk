@@ -143,6 +143,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
         this.checkAromaticity = true;
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT",
@@ -162,6 +163,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      * @throws CDKException if the parameters are of the wrong type
      * @see #getParameters
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         // we expect 3 parameters
         if (params.length != 3) {
@@ -190,6 +192,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      *         to return respectively
      * @see #setParameters
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         Object params[] = new Object[3];
         params[0] = this.nhigh;
@@ -220,6 +223,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[3];
         params[0] = "nhigh";
@@ -235,6 +239,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter (can be either 'nhigh' or 'nlow' or checkAromaticity)
      * @return The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         Object object = null;
         if (name.equals("nhigh")) object = 1;
@@ -300,6 +305,7 @@ public class BCUTDescriptor implements IMolecularDescriptor {
      *         above. If a parameter list was supplied, then only the specified number
      *         of highest and lowest eigenvalues (for each class of BCUT) will be returned.     
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         int counter;
         Molecule molecule;

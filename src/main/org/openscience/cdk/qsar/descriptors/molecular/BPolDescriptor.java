@@ -94,6 +94,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
         }
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bpol",
@@ -108,6 +109,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
      *@param  params            The new parameters value
      *@exception  CDKException  Description of the Exception
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -118,6 +120,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
      *
      *@return    The parameters value
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // no parameters for this descriptor
         return (null);
@@ -138,6 +141,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
      */
 
 
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
 
         double bpol = 0;
@@ -196,6 +200,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
      *
      *@return    The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -208,6 +213,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return (null);
     }

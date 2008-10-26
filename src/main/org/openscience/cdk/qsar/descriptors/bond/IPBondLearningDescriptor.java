@@ -120,7 +120,7 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
 	 *@param  atomContainer         Parameter is the IAtomContainer.
 	 *@return                   The ionization potential
 	 */
-    @TestMethod(value="testCalculate_IBond_IAtomContainer")
+    @TestMethod(value="testCalculate_IBond_IAtomContainer,testIPDescriptor_1,testIPDescriptor_2,testIPDescriptor_3")
 	public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer) {
 		double value = 0;
     	// FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method

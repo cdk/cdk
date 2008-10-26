@@ -92,6 +92,7 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
     public WeightedPathDescriptor() {
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPath",
@@ -108,6 +109,7 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
      * @throws org.openscience.cdk.exception.CDKException
      *          Description of the Exception
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -117,6 +119,7 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
      *
      * @return The parameters value
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // no parameters to return
         return (null);
@@ -132,6 +135,7 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -144,6 +148,7 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return (null);
     }
@@ -155,6 +160,7 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
      * @return A DoubleArrayResult value representing the weighted path values
      */
 
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
         int natom = local.getAtomCount();
@@ -257,7 +263,7 @@ public class WeightedPathDescriptor implements IMolecularDescriptor {
         return new DoubleArrayResultType(5);
     }
 
-    double[] getPathWeights(List pathList, IAtomContainer atomContainer) {
+    private double[] getPathWeights(List pathList, IAtomContainer atomContainer) {
         double[] pathWts = new double[pathList.size()];
         for (int i = 0; i < pathList.size(); i++) {
             List p = (List) pathList.get(i);

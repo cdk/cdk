@@ -1,26 +1,20 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import java.io.InputStream;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GHR;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+
+import java.io.InputStream;
 
 /**
  * @cdk.module test-qsaratomic
@@ -30,18 +24,16 @@ public class RDFProtonDescriptor_GHRTest extends AtomicDescriptorTest {
 	public RDFProtonDescriptor_GHRTest() {
     }
 
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(RDFProtonDescriptor_GHR.class);
     }
     
-	public static Test suite() {
-		return new TestSuite(RDFProtonDescriptor_GHRTest.class);
-	}
-    
 	/**
 	 *  @cdk.bug 1632419
 	 */
-	public void testExample1() throws Exception {
+	@Test
+    public void testExample1() throws Exception {
 		//firstly read file to molecule		
 		String filename = "data/mdl/hydroxyamino.mol" +
 				"";
@@ -69,6 +61,7 @@ public class RDFProtonDescriptor_GHRTest extends AtomicDescriptorTest {
 		}
 	}
 
+    @Test
     public void testReturnsNaNForNonHydrogen() throws Exception {
         IMolecule mol = new Molecule();
         IAtom atom = new Atom("O");

@@ -88,7 +88,8 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 	 *
 	 *@return    The specification value
 	 */
-	public DescriptorSpecification getSpecification() {
+	@TestMethod("testGetSpecification")
+    public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount",
 		    this.getClass().getName(),
@@ -103,7 +104,8 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 	 *@param  params            a boolean true means that terminal atoms must be included in the count
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public void setParameters(Object[] params) throws CDKException {
+	@TestMethod("testSetParameters_arrayObject")
+    public void setParameters(Object[] params) throws CDKException {
 		if (params.length != 1) {
 			throw new CDKException("RotatableBondsCount expects one parameter");
 		}
@@ -120,7 +122,8 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 	 *
 	 *@return    The parameters value
 	 */
-	public Object[] getParameters() {
+	@TestMethod("testGetParameters")
+    public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
 		Object[] params = new Object[1];
 		params[0] = includeTerminals;
@@ -140,7 +143,8 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 	 *@param  ac                AtomContainer
 	 *@return                   number of rotatable bonds
 	 */
-	public DescriptorValue calculate(IAtomContainer ac) {
+	@TestMethod("testCalculate_IAtomContainer")
+    public DescriptorValue calculate(IAtomContainer ac) {
 		int rotatableBondsCount = 0;
 		int degree0;
 		int degree1;
@@ -204,6 +208,7 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
      *
      *@return    The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "includeTerminals";
@@ -219,7 +224,8 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value
 	 */
-	public Object getParameterType(String name) {
+	@TestMethod("testGetParameterType_String")
+    public Object getParameterType(String name) {
 		return true;
 	}
 }

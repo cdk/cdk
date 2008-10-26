@@ -1980,7 +1980,7 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
         return SameRing;
     }
 
-    @TestMethod("testChloroButane")
+    @TestMethod("testCalculate_IAtomContainer,testChloroButane")
     public DescriptorValue calculate(IAtomContainer container) {
         IRingSet rs;
         try {
@@ -2045,6 +2045,7 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
     }
 
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP",
@@ -2054,20 +2055,24 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
     }
 
 
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
 
 
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
 
 
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
     }
 
 
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return null;
     }

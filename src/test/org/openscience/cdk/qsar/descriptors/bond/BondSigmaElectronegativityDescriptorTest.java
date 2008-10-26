@@ -21,12 +21,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -42,19 +40,18 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 	public  BondSigmaElectronegativityDescriptorTest() {
 		descriptor  = new BondSigmaElectronegativityDescriptor() ;
 	}
-	
+
+
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(BondSigmaElectronegativityDescriptor.class);
     }
     
-    public static Test suite() {
-        return new TestSuite(BondSigmaElectronegativityDescriptorTest.class);
-    }
-	
+
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testBondSigmaElectronegativityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void testBondSigmaElectronegativityDescriptor() throws java.lang.Exception {
 		double [] testResult={2.5882,1.1894};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		Integer[] params = new Integer[1];
         
@@ -76,7 +73,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 	/**
 	 *  A unit test for JUnit with Methyl chloride
 	 */
-	public void testBondSigmaElectronegativityDescriptor_Methyl_chloride() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void testBondSigmaElectronegativityDescriptor_Methyl_chloride() throws java.lang.Exception {
 		double [] testResult={2.1612,0.8751};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -90,7 +87,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 	/**
 	 *  A unit test for JUnit with Allyl bromide
 	 */
-	public void testBondSigmaElectronegativityDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void testBondSigmaElectronegativityDescriptor_Allyl_bromide() throws java.lang.Exception {
 		double [] testResult={0.2396,0.3635,1.7086,0.3635,0.338,0.574,0.969,0.969}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -105,7 +102,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 	/**
 	 *  A unit test for JUnit with Isopentyl iodide
 	 */
-	public void testBondSigmaElectronegativityDescriptor_Isopentyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void testBondSigmaElectronegativityDescriptor_Isopentyl_iodide() throws java.lang.Exception {
 		double testResult = 0.1482; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -118,7 +115,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 	/**
 	 *  A unit test for JUnit with Ethoxy ethane
 	 */
-	public void testBondSigmaElectronegativityDescriptor_Ethoxy_ethane() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void testBondSigmaElectronegativityDescriptor_Ethoxy_ethane() throws java.lang.Exception {
 		double [] testResult={0.7939,1.0715,1.0715,0.7939,0.2749,0.2749,0.2749,0.8796,0.8796}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -133,7 +130,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 	/**
 	 *  A unit test for JUnit with Ethanolamine
 	 */
-	public void testBondSigmaElectronegativityDescriptor_Ethanolamine() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void testBondSigmaElectronegativityDescriptor_Ethanolamine() throws java.lang.Exception {
 		double [] testResult={0.0074,0.3728,0.8547,0.2367,0.2367}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -148,7 +145,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 	/**
 	 *  A unit test for JUnit with Allyl mercaptan
 	 */
-	public void testBondSigmaElectronegativityDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void testBondSigmaElectronegativityDescriptor_Allyl_mercaptan() throws java.lang.Exception {
 		double [] testResult={0.1832,0.0143,0.5307,0.3593,0.3593,8.5917}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

@@ -89,6 +89,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
      *
      * @return An object containing the descriptor specification
      */
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticAtomsCount",
@@ -108,6 +109,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
      * @exception  CDKException if more than one parameter or a non-Boolean parameter is specified
      * @see #getParameters
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
             throw new CDKException("AromaticAtomsCountDescriptor expects one parameter");
@@ -126,6 +128,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
      * @return    The parameters value
      * @see #setParameters
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -151,7 +154,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
      *@return                   the number of aromatic atoms of this AtomContainer
      *@see #setParameters
      */
-    @TestMethod("testAromaticAtomsCountDescriptor,testViaFlags")
+    @TestMethod("testCalculate_IAtomContainer,testAromaticAtomsCountDescriptor,testViaFlags")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
         try {
@@ -211,6 +214,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
      *
      *@return    The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "checkAromaticity";
@@ -225,6 +229,7 @@ public class AromaticAtomsCountDescriptor implements IMolecularDescriptor {
      *@param  name  Description of the Parameter
      *@return       An Object of class equal to that of the parameter being requested
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return true;
     }

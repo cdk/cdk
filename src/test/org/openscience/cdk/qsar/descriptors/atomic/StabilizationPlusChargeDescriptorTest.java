@@ -23,14 +23,13 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.LonePairElectronChecker;
@@ -50,12 +49,9 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
 		descriptor = new StabilizationPlusChargeDescriptor();
 	}
     
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(StabilizationPlusChargeDescriptor.class);
-    }
-    
-    public static Test suite() {
-        return new TestSuite(StabilizationPlusChargeDescriptorTest.class);
     }
     
     /**
@@ -63,6 +59,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
 	 *  
      * @throws Exception
      */
+    @Test
     public void testStabilizationPlusChargeDescriptor()  throws Exception  {
 		
 		IMolecule mol = builder.newMolecule();
@@ -85,7 +82,8 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
     /**
      * 
      */
-	public void testNotCharged()  throws Exception {
+	@Test
+    public void testNotCharged()  throws Exception {
 		
 		IMolecule mol = builder.newMolecule();
 		mol.addAtom(builder.newAtom("C"));
@@ -108,6 +106,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
 	 *  
      * @throws Exception
      */
+    @Test
     public void testStabilizationPlusChargeDescriptor2()  throws Exception  {
 		
 		IMolecule mol = builder.newMolecule();
@@ -133,6 +132,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
 	 *  
      * @throws Exception
      */
+    @Test
     public void testStabilizationComparative()  throws Exception  {
 		
 		IMolecule mol1 = builder.newMolecule();
@@ -181,6 +181,7 @@ public class StabilizationPlusChargeDescriptorTest extends AtomicDescriptorTest 
 	 *  
 	 *  @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
 	 */
+    @Test
     public void testCompareIonized() throws Exception{
         
 		IMolecule molA = builder.newMolecule();

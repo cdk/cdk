@@ -81,6 +81,7 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
     /**
      * This method calculate the ATS Autocorrelation descriptor.
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         Molecule molecule;
         try {
@@ -159,14 +160,17 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
                 getParameters(), results, getDescriptorNames(), e);
     }
 
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         return null;
     }
 
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
 
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return null;
     }
@@ -176,6 +180,7 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
         return names;
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationPolarizability",
@@ -189,6 +194,7 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
         return new DoubleArrayResultType(5);
     }
 
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
 
     }
