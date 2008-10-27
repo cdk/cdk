@@ -109,7 +109,7 @@ public class MassNumberDifferenceDescriptor implements IBondDescriptor {
     		getParameters(),
     		new DoubleResult(
     			Math.abs(factory.getElement(atoms[0].getSymbol()).getAtomicNumber() - 
-    					 factory.getElement(atoms[0].getSymbol()).getAtomicNumber())
+    					 factory.getElement(atoms[1].getSymbol()).getAtomicNumber())
     		),
     		descriptorName);
     }
