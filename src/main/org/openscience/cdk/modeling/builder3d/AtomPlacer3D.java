@@ -457,8 +457,7 @@ public class AtomPlacer3D {
 	 * @return       The unplacedRingHeavyAtom value
 	 */
 	public IAtom getUnplacedRingHeavyAtom(IAtomContainer molecule, IAtom atom) {
-
-		java.util.List bonds = molecule.getConnectedBondsList(atom);
+		java.util.List<IBond> bonds = molecule.getConnectedBondsList(atom);
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.size(); i++) {
 			connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
@@ -479,25 +478,6 @@ public class AtomPlacer3D {
 		return GeometryTools.get3DCenter(allPlacedAtoms);
 	}
 
-	/**
-	 *  Returns an unplaced atom connected to a given atom
-	 *
-	 * @param  atom  The Atom whose unplaced bonding partners are to be returned
-	 * @return       an unplaced heavy atom connected to a given atom
-	 * author:      steinbeck,cho
-	 */
-	public IAtom getUnplacedHeavyAtom(IAtomContainer molecule, IAtom atom) {
-
-		java.util.List bonds = molecule.getConnectedBondsList(atom);
-		IAtom connectedAtom = null;
-		for (int i = 0; i < bonds.size(); i++) {
-			connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
-			if (!connectedAtom.getFlag(CDKConstants.ISPLACED) & !connectedAtom.getSymbol().equals("H")) {
-				return connectedAtom;
-			}
-		}
-		return connectedAtom;
-	}
 
 	/**
 	 *  Returns a placed atom connected to a given atom
@@ -507,93 +487,50 @@ public class AtomPlacer3D {
 	 * author:      steinbeck
 	 */
 	public IAtom getPlacedHeavyAtom(IAtomContainer molecule, IAtom atom) {
-
-		java.util.List bonds = molecule.getConnectedBondsList(atom);
-		IAtom connectedAtom = null;
+		java.util.List<IBond> bonds = molecule.getConnectedBondsList(atom);
 		for (int i = 0; i < bonds.size(); i++) {
-			connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
+			IAtom connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
 			if (connectedAtom.getFlag(CDKConstants.ISPLACED) & !connectedAtom.getSymbol().equals("H")) {
 				return connectedAtom;
 			}
 		}
-		return connectedAtom;
+		return null;
 	}
 
-	/**
-	 *  Gets the placedAtom attribute of the AtomPlacer3D object
-	 *
-	 * @param  atomA  Description of the Parameter
-	 * @param  atomB  Description of the Parameter
-	 * @return        The placedAtom value
-	 */
-	public IAtom getPlacedAtom(IAtomContainer molecule, IAtom atomA, IAtom atomB) {
-
-		java.util.List bonds = molecule.getConnectedBondsList(atomA);
-		IAtom connectedAtom = null;
-		for (int i = 0; i < bonds.size(); i++) {
-			connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atomA);
-			if (connectedAtom.getFlag(CDKConstants.ISPLACED) && connectedAtom != atomB) {
-				return connectedAtom;
-			}
-		}
-		return connectedAtom;
-	}
 
 	/**
-	 *  Gets the placedHeavyAtom attribute of the AtomPlacer3D object
+	 *  Gets the first placed Heavy Atom around atomA which is not atomB
 	 *
 	 * @param  atomA  Description of the Parameter
 	 * @param  atomB  Description of the Parameter
 	 * @return        The placedHeavyAtom value
 	 */
 	public IAtom getPlacedHeavyAtom(IAtomContainer molecule, IAtom atomA, IAtom atomB) {
-		java.util.List bonds = molecule.getConnectedBondsList(atomA);
-		IAtom connectedAtom = null;
+		java.util.List<IBond> bonds = molecule.getConnectedBondsList(atomA);
 		for (int i = 0; i < bonds.size(); i++) {
-			connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atomA);
+			IAtom connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atomA);
 			if (connectedAtom.getFlag(CDKConstants.ISPLACED) && !connectedAtom.getSymbol().equals("H")
 					 && connectedAtom != atomB) {
 				return connectedAtom;
 			}
 		}
-		return connectedAtom;
+		return null;
 	}
 
 	/**
-	 *  Gets the placedHeavyAtoms attribute of the AtomPlacer3D object
+	 *  Gets the placed Heavy Atoms connected to an atom.
 	 *
-	 * @param  atom  Description of the Parameter
-	 * @return       The placedHeavyAtoms value
+	 * @param  atom  The atom the atoms must be connected to.
+	 * @return       The placed heavy atoms.
 	 */
 	public IAtomContainer getPlacedHeavyAtoms(IAtomContainer molecule, IAtom atom) {
 
-		java.util.List bonds = molecule.getConnectedBondsList(atom);
+		java.util.List<IBond> bonds = molecule.getConnectedBondsList(atom);
 		IAtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.size(); i++) {
 			connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
 			if (connectedAtom.getFlag(CDKConstants.ISPLACED) & !(connectedAtom.getSymbol().equals("H"))) {
-				connectedAtoms.addAtom(connectedAtom);
-			}
-		}
-		return connectedAtoms;
-	}
-
-	/**
-	 *  Gets all unplacedAtoms around a atom
-	 *
-	 * @param  molecule AtomContainer
-	 * @param  atom  atom: center of search
-	 * @return       AtomContainer of unplaced atoms
-	 */
-	public IAtomContainer getUnplacedAtoms(IAtomContainer molecule, IAtom atom) {
-
-		java.util.List bonds = molecule.getConnectedBondsList(atom);
-		IAtomContainer connectedAtoms = new org.openscience.cdk.AtomContainer();
-		IAtom connectedAtom = null;
-		for (int i = 0; i < bonds.size(); i++) {
-			connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
-			if (!connectedAtom.getFlag(CDKConstants.ISPLACED)) {
 				connectedAtoms.addAtom(connectedAtom);
 			}
 		}
@@ -621,7 +558,7 @@ public class AtomPlacer3D {
 	 *
 	 * @return    The allPlacedAtoms value
 	 */
-	public IAtomContainer getAllPlacedAtoms(IAtomContainer molecule) {
+	private IAtomContainer getAllPlacedAtoms(IAtomContainer molecule) {
 		IAtomContainer placedAtoms = new org.openscience.cdk.AtomContainer();
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
 			if (molecule.getAtom(i).getFlag(CDKConstants.ISPLACED)) {
