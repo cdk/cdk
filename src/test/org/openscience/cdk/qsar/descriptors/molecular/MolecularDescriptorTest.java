@@ -240,7 +240,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         IDescriptorResult v1 = descriptor.calculate(ethane1).getValue();
         IDescriptorResult v2 = descriptor.calculate(ethane2).getValue();
 
-        String errorMessage = "("+descriptor.getClass().toString()+") The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
+        String errorMessage = "("+descriptor.getClass().toString()+") The descriptor does not give the same results depending on whether bond order or atom type are considered.";
         if (v1 instanceof IntegerResult) {
             Assert.assertEquals(errorMessage, ((IntegerResult)v1).intValue(), ((IntegerResult)v2).intValue());
         } else if (v1 instanceof DoubleResult) {
