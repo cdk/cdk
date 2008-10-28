@@ -31,7 +31,7 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
  *
  * @cdk.module test-reaction
  */
-public abstract class ReactionEngineTest extends CDKTestCase {
+public class ReactionEngineTest extends CDKTestCase {
 	
 	/**
 	 *  Constructor for the ReactionEngineTest object.

@@ -33,7 +33,6 @@ import org.openscience.cdk.coverage.ReactionCoverageTest;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetectorTest;
 import org.openscience.cdk.reaction.ReactionChainTest;
 import org.openscience.cdk.reaction.ReactionEngineTest;
-import org.openscience.cdk.reaction.ReactionMechanismTest;
 import org.openscience.cdk.reaction.ReactionSpecificationTest;
 import org.openscience.cdk.reaction.mechanism.AdductionLPMechanismTest;
 import org.openscience.cdk.reaction.mechanism.AdductionPBMechanismTest;
@@ -99,7 +98,6 @@ public class MreactionTests {
         // Individual Tests
         suite.addTest(new JUnit4TestAdapter(ReactionChainTest.class));
         suite.addTest(new JUnit4TestAdapter(ReactionEngineTest.class));
-        suite.addTest(new JUnit4TestAdapter(ReactionMechanismTest.class));
         suite.addTest(new JUnit4TestAdapter(ReactionSpecificationTest.class));
 
         // from cdk.test.reaction.mechanism
