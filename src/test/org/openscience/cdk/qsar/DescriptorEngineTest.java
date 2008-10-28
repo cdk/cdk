@@ -26,6 +26,12 @@ package org.openscience.cdk.qsar;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
+import org.openscience.cdk.modeling.builder3d.TemplateHandler3D;
+import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * TestSuite that runs all tests for the DescriptorEngine.
@@ -101,7 +107,6 @@ public class    DescriptorEngineTest extends CDKTestCase {
 
         String[] dictClass = engine.getDictionaryClass(className);
         Assert.assertEquals(2, dictClass.length);
-        System.out.println(dictClass[0]+" "+dictClass[1]);
         Assert.assertEquals("topologicalDescriptor", dictClass[0]);
         Assert.assertEquals("electronicDescriptor", dictClass[1]);
 
@@ -115,10 +120,28 @@ public class    DescriptorEngineTest extends CDKTestCase {
     public void testAvailableClass() {
         DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
         String[] availClasses = engine.getAvailableDictionaryClasses();
-        for (String availClass : availClasses) {
-            System.out.println("avail class: " + availClass);
-        }
         Assert.assertEquals(5, availClasses.length);
+    }
+
+    /**
+     * @cdk.bug 1965254
+     * @throws Exception
+     */
+    @Test
+    public void testjunk() throws Exception {
+
+        SmilesParser sp = new
+                SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("COC1=CC2=C(C=C1)NC3=C2CCNC3");
+        IMolecule molecule = (IMolecule) mol;
+
+        TemplateHandler3D template = TemplateHandler3D.getInstance();
+        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(template, "mm2");
+        molecule = mb3d.generate3DCoordinates(molecule, true);
+        DescriptorEngine engine = new DescriptorEngine(DescriptorEngine.MOLECULAR);
+
+        engine.process(molecule);
+
     }
 }
 

@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test-qsarionpot
  */
-public class QsarionpotCoverageTest extends CoverageTest {
+public class QsarionpotCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "qsarionpot.javafiles";
     

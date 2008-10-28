@@ -32,8 +32,6 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 
-import java.util.Iterator;
-
 /**
  *  IDescriptor based on the number of bonds of a certain bond order.
  *
@@ -46,7 +44,7 @@ import java.util.Iterator;
  *   </tr>
  *   <tr>
  *     <td>order</td>
- *     <td>any</td>
+ *     <td>""</td>
  *     <td>The bond order</td>
  *   </tr>
  * </table>
@@ -59,6 +57,8 @@ import java.util.Iterator;
  * <li>a for aromatic bonds
  * <li>"" for all bonds
  * </ul>
+ *
+ * Note that the descriptor does not consider bonds to H's.
  *
  * @author      mfe4
  * @cdk.created 2004-11-13
@@ -145,20 +145,29 @@ public class BondCountDescriptor implements IMolecularDescriptor {
      */
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
-    	if (order.equals("")) {
-    		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new IntegerResult(container.getBondCount()), getDescriptorNames(), null);
-    	}
+        if (order.equals("")) {
+            int bondCount = 0;
+            for (IBond bond : container.bonds()) {
+                boolean hasHydrogen = false;
+                for (int i = 0; i < bond.getAtomCount(); i++) {
+                    if (bond.getAtom(i).getSymbol().equals("H")) {
+                        hasHydrogen = true;
+                        break;
+                    }
+                }
+                if (!hasHydrogen) bondCount++;
+
+            }
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    new IntegerResult(bondCount), getDescriptorNames(), null);
+        }
     	
         int bondCount = 0;
-        Iterator<IBond> bonds = container.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
+        for (IBond bond : container.bonds()) {
             if (bondMatch(bond.getOrder(), order)) {
                 bondCount += 1;
             }
         }
-
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
             new IntegerResult(bondCount), getDescriptorNames());

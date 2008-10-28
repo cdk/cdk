@@ -83,4 +83,21 @@ public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 		Assert.assertEquals(6, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
 	}
 
+    @Test public void testSingleCAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		Object[] params = {new Boolean(true),new Boolean(true)};
+		descriptor.setParameters(params);
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IAtomContainer mol = sp.parseSmiles("C");
+		//logger.debug("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+	}
+    @Test public void testSingleOAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
+		Object[] params = {new Boolean(true),new Boolean(true)};
+		descriptor.setParameters(params);
+		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IAtomContainer mol = sp.parseSmiles("O");
+		//logger.debug("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+		Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+	}
+
 }

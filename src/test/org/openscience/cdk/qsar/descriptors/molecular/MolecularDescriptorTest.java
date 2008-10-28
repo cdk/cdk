@@ -21,6 +21,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -71,7 +72,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         try {
             v = descriptor.calculate(mol);
         } catch (Exception e) {
-            Assert.fail("A descriptor must not throw an exception");
+            Assert.fail("A descriptor must not throw an exception. Exception was:\n"+e.getMessage());
         }
         Assert.assertNotNull(v);
         Assert.assertTrue(
@@ -196,7 +197,51 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         IDescriptorResult v1 = descriptor.calculate(methane1).getValue();
         IDescriptorResult v2 = descriptor.calculate(methane2).getValue();
 
-        String errorMessage = "The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
+        String errorMessage = "("+descriptor.getClass().toString()+") The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
+        if (v1 instanceof IntegerResult) {
+            Assert.assertEquals(errorMessage, ((IntegerResult)v1).intValue(), ((IntegerResult)v2).intValue());
+        } else if (v1 instanceof DoubleResult) {
+            Assert.assertEquals(errorMessage, ((DoubleResult)v1).doubleValue(), ((DoubleResult)v2).doubleValue(), 0.00001);
+        } else if (v1 instanceof BooleanResult) {
+            Assert.assertEquals(errorMessage, ((BooleanResult)v1).booleanValue(), ((BooleanResult)v2).booleanValue());
+        } else if (v1 instanceof DoubleArrayResult) {
+            DoubleArrayResult da1 = (DoubleArrayResult)v1;
+            DoubleArrayResult da2 = (DoubleArrayResult)v2;
+            for (int i=0; i<da1.length(); i++) {
+                Assert.assertEquals(errorMessage, da1.get(i), da2.get(i), 0.00001);
+            }
+        } else if (v1 instanceof IntegerArrayResult) {
+            IntegerArrayResult da1 = (IntegerArrayResult)v1;
+            IntegerArrayResult da2 = (IntegerArrayResult)v2;
+            for (int i=0; i<da1.length(); i++) {
+                Assert.assertEquals(errorMessage, da1.get(i), da2.get(i));
+            }
+        }
+    }
+
+    @Ignore
+    public void testTakeIntoAccountBondHybridization() {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule ethane1 = builder.newMolecule();
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        ethane1.addAtom(c1);
+        ethane1.addAtom(c2);
+        ethane1.addBond(0, 1, IBond.Order.DOUBLE);
+
+        IMolecule ethane2 = builder.newMolecule();
+        IAtom c3 = builder.newAtom("C");
+        c3.setHybridization(IAtomType.Hybridization.SP2);
+        IAtom c4 = builder.newAtom("C");
+        c4.setHybridization(IAtomType.Hybridization.SP2);
+        ethane2.addAtom(c3);
+        ethane2.addAtom(c4);
+        ethane2.addBond(0, 1, IBond.Order.SINGLE);
+
+        IDescriptorResult v1 = descriptor.calculate(ethane1).getValue();
+        IDescriptorResult v2 = descriptor.calculate(ethane2).getValue();
+
+        String errorMessage = "("+descriptor.getClass().toString()+") The descriptor does not give the same results depending on whether bond order or atom type are considered.";
         if (v1 instanceof IntegerResult) {
             Assert.assertEquals(errorMessage, ((IntegerResult)v1).intValue(), ((IntegerResult)v2).intValue());
         } else if (v1 instanceof DoubleResult) {

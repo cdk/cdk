@@ -22,7 +22,7 @@ public class ALOGPDescriptorTest extends MolecularDescriptorTest {
     private CDKHydrogenAdder hydrogenAdder;
 
     @Before
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         setDescriptor(ALOGPDescriptor.class);
         hydrogenAdder = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
     }

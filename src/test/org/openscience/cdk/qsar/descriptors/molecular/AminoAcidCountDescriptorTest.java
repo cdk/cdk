@@ -21,7 +21,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.BioPolymer;
@@ -42,7 +41,7 @@ public class AminoAcidCountDescriptorTest extends CDKTestCase {
 	private IMolecularDescriptor descriptor;
     
 	@Before
-    protected void setUp() throws CDKException {
+    public void setUp() throws CDKException {
         descriptor = new AminoAcidCountDescriptor();
     }
 
