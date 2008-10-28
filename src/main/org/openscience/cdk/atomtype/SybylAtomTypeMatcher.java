@@ -19,6 +19,10 @@
  */
 package org.openscience.cdk.atomtype;
 
+import java.io.InputStream;
+import java.util.Hashtable;
+import java.util.Map;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -30,9 +34,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-
-import java.util.Hashtable;
-import java.util.Map;
 
 /**
  * Atom Type matcher for Sybyl atom types. It uses the {@link CDKAtomTypeMatcher}
@@ -47,6 +48,9 @@ import java.util.Map;
 @TestClass("org.openscience.cdk.atomtype.SybylAtomTypeMatcherTest")
 public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
 
+    private final static String SYBYL_ATOM_TYPE_LIST = "org/openscience/cdk/dict/data/sybyl-atom-types.owl";
+    private final static String CDK_TO_SYBYL_MAP = "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl";
+    
 	private AtomTypeFactory factory;
 	private CDKAtomTypeMatcher cdkMatcher;
 	private AtomTypeMapper mapper;
@@ -55,14 +59,11 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         factories = new Hashtable<IChemObjectBuilder,SybylAtomTypeMatcher>(1); 
 
     private SybylAtomTypeMatcher(IChemObjectBuilder builder) {
-    	factory = AtomTypeFactory.getInstance(
-			"org/openscience/cdk/dict/data/sybyl-atom-types.owl",
-			builder
-		);
-    	cdkMatcher = CDKAtomTypeMatcher.getInstance(builder);
-    	mapper = AtomTypeMapper.getInstance(
-            "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl"
-        );
+        InputStream stream = this.getClass().getResourceAsStream(SYBYL_ATOM_TYPE_LIST);
+        factory = AtomTypeFactory.getInstance(stream, SYBYL_ATOM_TYPE_LIST, builder);
+        cdkMatcher = CDKAtomTypeMatcher.getInstance(builder);
+        InputStream mapStream = this.getClass().getResourceAsStream(CDK_TO_SYBYL_MAP);
+        mapper = AtomTypeMapper.getInstance(CDK_TO_SYBYL_MAP, mapStream);
     }
 
     @TestMethod("testGetInstance_IChemObjectBuilder")
