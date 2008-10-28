@@ -30,6 +30,8 @@ package org.openscience.cdk.dict;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 import nu.xom.Attribute;
 import nu.xom.Builder;
@@ -155,6 +157,60 @@ public class OWLReact extends Dictionary {
 	        	dbEntry.setParameters(nameParam,typeParam,value);
 	        }
         
+        Elements paramsList = entry.getChildElements("parameterList", ownNS);
+        if (paramsList != null)
+	        for(int i = 0 ; i< paramsList.size(); i++){
+	        	Elements params2 = paramsList.get(i).getChildElements("parameter2", ownNS);
+	        	if (params2 != null)
+	    	        for(int j = 0 ; j< params2.size(); j++){
+	    	        	String paramClass = params2.get(i).getAttribute(0).getValue();
+	    	        	paramClass = paramClass.substring(paramClass.indexOf("#")+1);
+	    	            logger.debug("parameter class: ", paramClass);
+	    	        	
+	    	        	String needsToSet = "";
+	    	        	String value = "";
+	    	        	String dataType = "";
+	    	        	Elements paramSubt1 = params2.get(i).getChildElements("isSetParameter", ownNS);
+	    	        	if (paramSubt1 != null)
+	    	    	        for(int k = 0 ; k< 1; k++)
+	    	    	        	needsToSet = paramSubt1.get(k).getValue();
+	    	        	Elements paramSubt2 = params2.get(i).getChildElements("value", ownNS);
+	    	        	if (paramSubt1 != null)
+	    	    	        for(int k = 0 ; k< 1; k++){
+	    	    	        	value = paramSubt2.get(k).getValue();
+	    	    	        	dataType = paramSubt2.get(k).getAttributeValue("dataType");
+	    	    	        	dataType = dataType.substring(dataType.indexOf(":")+1, dataType.length());
+	    	    	        }
+	    	        	List<String> pp = new ArrayList<String>();
+	    	        	pp.add(paramClass);
+	    	        	pp.add(needsToSet);
+	    	        	pp.add(dataType);
+	    	        	pp.add(value);
+	    	        	dbEntry.addParameter(pp);
+	    	        }
+	        }
+        
+        Elements mechanismDependence = entry.getChildElements("mechanismDependence", ownNS);
+        String mechanism = "";
+        if (mechanismDependence != null)
+	        for(int i = 0 ; i< mechanismDependence.size(); i++){
+	        	mechanism = mechanismDependence.get(i).getAttribute(0).getValue();
+	        	mechanism = mechanism.substring(mechanism.indexOf("#")+1);
+	            logger.debug("mechanism name: ", mechanism);
+	        }
+
+        dbEntry.setMechanism(mechanism);
+//        System.out.println("mechan: "+mechan);
+        
+        Elements exampleReact = entry.getChildElements("example-Reactions", ownNS);
+        if (exampleReact != null)
+	        for(int i = 0 ; i< exampleReact.size(); i++){
+	        	Elements reaction = exampleReact.get(i).getChildElements("reaction", ownNS);
+	        	if (reaction != null)
+	    	        for(int j = 0 ; j< reaction.size(); j++){
+	    	            dbEntry.addExampleReaction(reaction.get(0).toXML());
+	    	        }
+	        }
         return dbEntry;
     }
     
