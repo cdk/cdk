@@ -22,14 +22,14 @@ package org.openscience.cdk.reaction.type.parameters;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Tests for SetReactionCenter implementations.
  *
  * @cdk.module test-reaction
  */
-public class SetReactionCenterTest extends NewCDKTestCase {
+public class SetReactionCenterTest extends CDKTestCase {
 	
 	/**
 	 *  Constructor for the SetReactionCenterTest object.
