@@ -62,8 +62,8 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() {
-        logger = new LoggingTool(MDLV2000ReaderTest.class);
-        setSimpleChemObjectReader(new MDLV2000Reader(), "data/mdl/reaction-1.rxn");
+        logger = new LoggingTool(MDLRXNReaderTest.class);
+        setSimpleChemObjectReader(new MDLRXNReader(), "data/mdl/reaction-1.rxn");
     }
 
     @Test public void testAccepts() {
