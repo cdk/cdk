@@ -23,8 +23,6 @@ package org.openscience.cdk.reaction.mechanism;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.reaction.ReactionMechanismTest;
 
@@ -34,8 +32,6 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  * @cdk.module test-reaction
  */
 public class TautomerizationMechanismTest extends ReactionMechanismTest {
-	
-	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 
 	/**
 	 *  The JUnit setup method

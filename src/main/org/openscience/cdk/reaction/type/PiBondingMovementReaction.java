@@ -43,6 +43,8 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionEngine;
 import org.openscience.cdk.reaction.ReactionSpecification;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -133,9 +135,10 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 		
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
-		if(!(Boolean)paramsMap.get("hasActiveCenter")){
+		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
+		if( ipr != null && !ipr.isSetParameter())
 			setActiveCenters(reactant);
-		}
+		
 //		if((Boolean)paramsMap.get("lookingSymmetry")){
 //			CDKHueckelAromaticityDetector.detectAromaticity(reactant);
 //		}

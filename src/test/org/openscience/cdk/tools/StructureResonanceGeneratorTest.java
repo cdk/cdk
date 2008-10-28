@@ -21,7 +21,6 @@
 package org.openscience.cdk.tools;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -54,6 +53,8 @@ import org.openscience.cdk.reaction.type.RearrangementCationReaction;
 import org.openscience.cdk.reaction.type.RearrangementLonePairReaction;
 import org.openscience.cdk.reaction.type.RearrangementRadicalReaction;
 import org.openscience.cdk.reaction.type.SharingLonePairReaction;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -114,34 +115,59 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 		Assert.assertEquals(6, reactionList.size());
 		
 		SharingLonePairReaction slReaction = (SharingLonePairReaction)reactionList.get(0);
-		Assert.assertEquals(1, slReaction.getParameters().size());
-		HashMap<String,Object> objects = slReaction.getParameters();
-		Assert.assertFalse((Boolean) objects.get("hasActiveCenter"));
+		Assert.assertEquals(1, slReaction.getParameterList().size());
+		List<IParameterReact> objects = slReaction.getParameterList();
+		for(Iterator<IParameterReact> it = objects.iterator(); it.hasNext();){
+			IParameterReact object = it.next();
+			System.out.println(object.isSetParameter());
+			if(object instanceof SetReactionCenter)
+				Assert.assertFalse((Boolean) object.isSetParameter());
+		}
 		
 		PiBondingMovementReaction pBReaction = (PiBondingMovementReaction)reactionList.get(1);
-		Assert.assertEquals(1, pBReaction.getParameters().size());
-		objects = pBReaction.getParameters();
-		Assert.assertFalse((Boolean) objects.get("hasActiveCenter"));
+		Assert.assertEquals(1, pBReaction.getParameterList().size());
+		objects = pBReaction.getParameterList();
+		for(Iterator<IParameterReact> it = objects.iterator(); it.hasNext();){
+			IParameterReact object = it.next();
+			if(object instanceof SetReactionCenter)
+				Assert.assertFalse((Boolean) object.isSetParameter());
+		}
 		
 		RearrangementAnionReaction raReaction = (RearrangementAnionReaction)reactionList.get(2);
-		Assert.assertEquals(1, raReaction.getParameters().size());
-		objects = raReaction.getParameters();
-		Assert.assertFalse((Boolean) objects.get("hasActiveCenter"));
+		Assert.assertEquals(1, raReaction.getParameterList().size());
+		objects = raReaction.getParameterList();
+		for(Iterator<IParameterReact> it = objects.iterator(); it.hasNext();){
+			IParameterReact object = it.next();
+			if(object instanceof SetReactionCenter)
+				Assert.assertFalse((Boolean) object.isSetParameter());
+		}
 		
 		RearrangementCationReaction rcReaction = (RearrangementCationReaction)reactionList.get(3);
-		Assert.assertEquals(1, rcReaction.getParameters().size());
-		objects = rcReaction.getParameters();
-		Assert.assertFalse((Boolean) objects.get("hasActiveCenter"));
+		Assert.assertEquals(1, rcReaction.getParameterList().size());
+		objects = rcReaction.getParameterList();
+		for(Iterator<IParameterReact> it = objects.iterator(); it.hasNext();){
+			IParameterReact object = it.next();
+			if(object instanceof SetReactionCenter)
+				Assert.assertFalse((Boolean) object.isSetParameter());
+		}
 		
 		RearrangementLonePairReaction lnReaction = (RearrangementLonePairReaction)reactionList.get(4);
-		Assert.assertEquals(1, lnReaction.getParameters().size());
-		objects = lnReaction.getParameters();
-		Assert.assertFalse((Boolean) objects.get("hasActiveCenter"));
+		Assert.assertEquals(1, lnReaction.getParameterList().size());
+		objects = lnReaction.getParameterList();
+		for(Iterator<IParameterReact> it = objects.iterator(); it.hasNext();){
+			IParameterReact object = it.next();
+			if(object instanceof SetReactionCenter)
+				Assert.assertFalse((Boolean) object.isSetParameter());
+		}
 		
 		RearrangementRadicalReaction rrReaction = (RearrangementRadicalReaction)reactionList.get(5);
-		Assert.assertEquals(1, rrReaction.getParameters().size());
-		objects = rrReaction.getParameters();
-		Assert.assertFalse((Boolean) objects.get("hasActiveCenter"));
+		Assert.assertEquals(1, rrReaction.getParameterList().size());
+		objects = rrReaction.getParameterList();
+		for(Iterator<IParameterReact> it = objects.iterator(); it.hasNext();){
+			IParameterReact object = it.next();
+			if(object instanceof SetReactionCenter)
+				Assert.assertFalse((Boolean) object.isSetParameter());
+		}
 		
 	}
     /**
@@ -392,14 +418,16 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 		molecule.getBond(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
-		HashMap<String,Object> params = new HashMap<String,Object>();
-		params.put("hasActiveCenter",Boolean.TRUE);;
-		
+		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+		IParameterReact param = new SetReactionCenter();
+	    param.setParameter(Boolean.TRUE);
+	    paramList.add(param);
+	    
         StructureResonanceGenerator sRG = new StructureResonanceGenerator();
 		Iterator<IReactionProcess> itReaction = sRG.getReactions().iterator();
 		while(itReaction.hasNext()){
 	        IReactionProcess reaction = itReaction.next();
-	        reaction.setParameters(params);
+	        reaction.setParameterList(paramList);
 		}
 		
 		IMoleculeSet setOfMolecules = sRG.getStructures(molecule);
