@@ -30,6 +30,7 @@ import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -81,6 +82,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * 
  * @see RearrangementChargeMechanism
  **/
+@TestClass(value="org.openscience.cdk.reaction.type.RearrangementRadicalReactionTest")
 public class RearrangementRadicalReaction extends ReactionEngine implements IReactionProcess{
 	private LoggingTool logger;
 	private IReactionMechanism mechanism;

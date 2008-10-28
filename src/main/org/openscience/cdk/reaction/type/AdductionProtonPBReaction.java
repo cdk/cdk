@@ -29,6 +29,8 @@ import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -78,6 +80,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * 
  * @see AdductionPBMechanism
  **/
+@TestClass(value="org.openscience.cdk.reaction.type.AdductionProtonPBReactionTest")
 public class AdductionProtonPBReaction extends ReactionEngine implements IReactionProcess{
 	private LoggingTool logger;
 	private IReactionMechanism mechanism;
@@ -96,6 +99,7 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
 	 *
 	 *@return    The specification value
 	 */
+    @TestMethod("testGetSpecification")
 	public ReactionSpecification getSpecification() {
 		return new ReactionSpecification(
 				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#AdductionProtonPB",
@@ -114,6 +118,7 @@ public class AdductionProtonPBReaction extends ReactionEngine implements IReacti
 	 *
 	 *@exception  CDKException  Description of the Exception
 	 */
+    @TestMethod("testInitiate_IMoleculeSet_IMoleculeSet")
 	public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: AdductionProtonPBReaction");
