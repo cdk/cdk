@@ -513,8 +513,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 while (atomsToUpdate.hasNext()) {
                     IAtom atomToUpdate = atomsToUpdate.next();
                     Point3d p3d = atomToUpdate.getPoint3d();
-                    atomToUpdate.setPoint2d(new Point2d(p3d.x, p3d.y));
-                    atomToUpdate.setPoint3d(null);
+                    if (p3d != null) {
+                        atomToUpdate.setPoint2d(new Point2d(p3d.x, p3d.y));
+                        atomToUpdate.setPoint3d(null);
+                    }
                 }
             }
             
