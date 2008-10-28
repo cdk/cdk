@@ -33,7 +33,7 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  *
  * @cdk.module test-reaction
  */
-public abstract class ReactionChainTest extends CDKTestCase {
+public class ReactionChainTest extends CDKTestCase {
 	
 	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	
