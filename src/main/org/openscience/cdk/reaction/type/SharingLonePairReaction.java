@@ -30,6 +30,8 @@ import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -37,11 +39,11 @@ import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionEngine;
 import org.openscience.cdk.reaction.ReactionSpecification;
-import org.openscience.cdk.reaction.mechanism.SharingElectronMechanism;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -77,9 +79,9 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.set        reaction-types
  * 
  **/
+@TestClass(value="org.openscience.cdk.reaction.type.SharingLonePairReactionTest")
 public class SharingLonePairReaction extends ReactionEngine implements IReactionProcess{
 	private LoggingTool logger;
-	private IReactionMechanism mechanism;
 
 	/**
 	 * Constructor of the SharingLonePairReaction object.
@@ -87,13 +89,13 @@ public class SharingLonePairReaction extends ReactionEngine implements IReaction
 	 */
 	public SharingLonePairReaction(){
 		logger = new LoggingTool(this);
-		mechanism = new SharingElectronMechanism();
 	}
 	/**
 	 *  Gets the specification attribute of the SharingLonePairReaction object.
 	 *
 	 *@return    The specification value
 	 */
+    @TestMethod("testGetSpecification")
 	public ReactionSpecification getSpecification() {
 		return new ReactionSpecification(
 				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#SharingLonePair",
@@ -112,6 +114,7 @@ public class SharingLonePairReaction extends ReactionEngine implements IReaction
 	 *
 	 *@exception  CDKException  Description of the Exception
 	 */
+    @TestMethod("testInitiate_IMoleculeSet_IMoleculeSet")
 	public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: SharingLonePairReaction");
@@ -126,9 +129,9 @@ public class SharingLonePairReaction extends ReactionEngine implements IReaction
 		IReactionSet setOfReactions = DefaultChemObjectBuilder.getInstance().newReactionSet();
 		IMolecule reactant = reactants.getMolecule(0);
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
-		if(!(Boolean)paramsMap.get("hasActiveCenter")){
+		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
+		if( ipr != null && !ipr.isSetParameter())
 			setActiveCenters(reactant);
-		}
 		
 		Iterator<IAtom> atomis = reactant.atoms().iterator();
 		while(atomis.hasNext()){

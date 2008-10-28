@@ -20,26 +20,30 @@
  */
 package org.openscience.cdk.reaction;
 
-import java.util.HashMap;
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Set;
-
-import javax.vecmath.Point3d;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.dict.Dictionary;
 import org.openscience.cdk.dict.DictionaryDatabase;
 import org.openscience.cdk.dict.EntryReact;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 
 /**
  * Tests for IReactionProcess implementations.
@@ -48,29 +52,30 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  */
 public abstract class ReactionProcessTest extends CDKTestCase {
 	
-	private static IReactionProcess reaction;
-	private static Dictionary dictionary;
-	private static String entryString;
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
-	
+	private IReactionProcess reaction;
+	private Dictionary dictionary;
+	private String entryString = "";
+	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+
 	/**
 	 * Set the IReactionProcess to analyzed
 	 * 
-	 * @param descriptorClass   The IReactionProcess class
+	 * @param reactionClass   The IReactionProcess class
 	 * @throws Exception
 	 */
-	public static void setReaction(Class<?> reactionClass) throws Exception {
-		if(ReactionProcessTest.dictionary == null)
-			ReactionProcessTest.dictionary = openingDictionary();
+	public void setReaction(Class<?> reactionClass) throws Exception {
+		if(dictionary == null)
+			dictionary = openingDictionary();
 		
-		Object reaction = (Object)reactionClass.newInstance();
-		if (!(reaction instanceof IReactionProcess)) {
+		Object object = (Object)reactionClass.newInstance();
+		if (!(object instanceof IReactionProcess)) {
 			throw new CDKException("The passed reaction class must be a IReactionProcess");
+		}else if(reaction == null){
+			reaction = (IReactionProcess)object;
+
+			entryString = reaction.getSpecification().getSpecificationReference();
+			entryString = entryString.substring(entryString.indexOf("#")+1, entryString.length());
 		}
-		ReactionProcessTest.reaction = (IReactionProcess)reaction;
-		ReactionProcessTest.entryString = "";
-		
-		
 	}
 	
 	/**
@@ -78,7 +83,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 	 * 
 	 * @return The dictionary reaction-processes
 	 */
-	private static Dictionary openingDictionary() {
+	private Dictionary openingDictionary() {
 		DictionaryDatabase db = new DictionaryDatabase();
     	Dictionary dict = db.getDictionary("reaction-processes");
 		return dict;
@@ -90,7 +95,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 	 * <pre>
 	 * public void setUp() {
 	 *   // Pass a Class, not an Object!
-	 *   setDescriptor(SomeDescriptor.class);
+	 *   setReaction(SomeReaction.class);
 	 * }
 	 * 
 	 * <p>The unit tests in the extending class may use this instance, but
@@ -101,6 +106,34 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 	@Test public void testHasSetSuperDotDescriptor() {
 		Assert.assertNotNull("The extending class must set the super.descriptor in its setUp() method.", reaction);    	
 	}
+
+	/**
+	 * Test if the reaction process is contained in the Dictionary as a entry.
+	 * 
+	 * @throws Exception
+	 */
+	@Test public void testGetEntryFromReaction() throws Exception {
+
+		entryString = reaction.getSpecification().getSpecificationReference();
+		entryString = entryString.substring(entryString.indexOf("#")+1, entryString.length());
+		
+		Assert.assertNotSame("The Entry ID from  ["+reaction.getClass()+"] doesn't exist.",
+    			"nothing",entryString);
+    } 
+	
+	/**
+	 * Test if the reaction process is contained in the Dictionary as a entry.
+	 * 
+	 * @throws Exception
+	 */
+	@Test public void testGetDictionaryEntry() throws Exception {
+		
+    	EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
+    	Assert.assertNotNull(
+    			"The Entry ["+entryString+"] doesn't exist in OWL Dictionary.",
+    			entry);
+    	
+    }    
 	
 	/**
 	 * Test if this entry has a definition schema in the Dictionary.
@@ -108,11 +141,8 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 	 * @throws Exception
 	 */
 	@Test public void testGetEntryDefinition() throws Exception {
-    	
-		ReactionProcessTest.entryString = reaction.getSpecification().getSpecificationReference();
-		ReactionProcessTest.entryString = ReactionProcessTest.entryString.substring(ReactionProcessTest.entryString.indexOf("#")+1, ReactionProcessTest.entryString.length());
-    	
-    	EntryReact entry = (EntryReact) dictionary.getEntry(ReactionProcessTest.entryString.toLowerCase());
+		
+		EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
     	
     	Assert.assertNotNull(
     			"The definition entry for ["+entryString+"] must not be null.",
@@ -120,83 +150,24 @@ public abstract class ReactionProcessTest extends CDKTestCase {
     	
     }   
 	/**
-	 * Checks if the parameterization key is consistent.
+	 * Checks if the parameterization key is consistent with those coming from the dictionary.
 	 * 
 	 * @throws Exception 
 	 */
-	@Test public void testGetParameters() throws Exception {
-        HashMap<String,Object> paramObj = reaction.getParameters();
-        
-        ReactionProcessTest.entryString = reaction.getSpecification().getSpecificationReference();
-		ReactionProcessTest.entryString = ReactionProcessTest.entryString.substring(ReactionProcessTest.entryString.indexOf("#")+1, ReactionProcessTest.entryString.length());
+	@Test public void testGetParameterList() throws Exception {
+        List<IParameterReact> paramObj = reaction.getParameterList();
     	
-		EntryReact entry = (EntryReact) dictionary.getEntry(ReactionProcessTest.entryString.toLowerCase());
-        HashMap<String, String> paramDic = entry.getParameters();
+		EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
+        List<List<String>> paramDic = entry.getParameterClass();
         
+        Assert.assertNotNull("The parameters entry for ["+entryString+"]  must contain at least one parameter.",
+        		paramObj);
+        Assert.assertNotNull("The parameters entry for ["+entryString+"]  must contain at least one parameter.",
+        		paramDic);
         Assert.assertSame(
     			"The parameters entry for ["+entryString+"]  must contain the same lenght as the reaction object.",
     			paramObj.size(),paramDic.size());
 	}
-    /**
-	 * Checks if the parameterization key is consistent.
-	 * 
-	 * @throws Exception 
-	 */
-	@Test public void testGetParameterKeyDict() throws Exception {
-        HashMap<String,Object> paramObj = reaction.getParameters();
-        EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
-        HashMap<String, String> paramDic = entry.getParameters();
-        
-        Set<String> set= paramDic.keySet(); 
-	    Iterator<String> iter = set.iterator(); 
-	    while(iter.hasNext()){  
-	       String key = iter.next();
-	       Assert.assertTrue("The key "+key+" doesn't exist into the IReactionProcess. ",
-	    		   paramObj.containsKey(key));
-        }
-    }
-	/**
-	 * Checks if the parameterization key is consistent.
-	 * 
-	 * @throws Exception 
-	 */
-	@Test public void testGetParameterKeyReact() throws Exception {
-        HashMap<String,Object> paramObj = reaction.getParameters();
-        EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
-        HashMap<String, String> paramDic = entry.getParameters();
-        
-        Set<String> set= paramObj.keySet(); 
-	    Iterator<String> iter = set.iterator(); 
-	    while(iter.hasNext()){  
-	       String key = iter.next();
-	       Assert.assertTrue("The key "+key+" doesn't exist into the Dictionary. ",
-	    		   paramDic.containsKey(key));
-        }
-    }
-    
-//	/**
-//	 * Checks if the parameterization type is consistent.
-//	 * 
-//	 * @throws Exception 
-//	 */
-//	@Test public void testGetParameterObject() throws Exception {
-//
-//		 HashMap<String,Object> paramObj = reaction.getParameters();
-//         EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
-//         HashMap<String, String> paramDic = entry.getParameters();
-//        
-//         Set<String> set= paramObj.keySet(); 
-//	     Iterator<String> iter = set.iterator(); 
-//	     while(iter.hasNext()){  
-//	        String key = iter.next();
-//	        Object valueDict = paramDic.get(key); 
-//	        Object valueObj = paramObj.get(key);
-//	        Assert.assertSame(
-//	    			"The parameters entry for ["+entryString+"]  must contain the same lenght as the reaction object.",
-//	    			valueDict,valueObj);
-//         }
-//    }
-	
 	/**
 	 * Test the specification of the IReactionProcess.
 	 * 
@@ -244,25 +215,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
     		0, spec.getSpecificationReference().length()
     	);
     }
-    
-	@Test public void testSetParameters_arrayObject() throws Exception {
-    	HashMap<String,Object> defaultParams = reaction.getParameters();
-    	reaction.setParameters(defaultParams);
-    }    
-	
-	/**
-	 * Test if the reaction process is contained in the Dictionary as a entry.
-	 * 
-	 * @throws Exception
-	 */
-	@Test public void testGetDictionaryEntry() throws Exception {
-    	
-    	EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
-    	Assert.assertNotNull(
-    			"The Entry ["+entryString+"] doesn't exist in OWL Dictionary.",
-    			entry);
-    	
-    }    
+      
 	
 	/**
 	 * Test if this entry has a definition schema in the Dictionary.
@@ -291,5 +244,180 @@ public abstract class ReactionProcessTest extends CDKTestCase {
     			"The representation entry for ["+entryString+"]  must contain at least one representation.",
     			0,entry.getRepresentations().size());
     }  
-	
+	/**
+	 * Test reactive center parameter 
+	 * 
+	 * @return    The test suite
+	 */
+	@Test public void testCentreActive() throws Exception {
+		IReactionProcess type = reaction;
+		
+		IParameterReact ipr = type.getParameterClass(SetReactionCenter.class);
+		Assert.assertNotNull(ipr);
+		Assert.assertFalse(ipr.isSetParameter());
+
+		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        IParameterReact param = new SetReactionCenter();
+        param.setParameter(Boolean.TRUE);
+        paramList.add(param);
+        type.setParameterList(paramList);
+        
+        IParameterReact ipr2 = type.getParameterClass(SetReactionCenter.class);
+		Assert.assertTrue(ipr2.isSetParameter());
+	}
+
+	/**
+	 * Test extracting a reaction as example.
+	 * 
+	 * TODO: REACT: One example for each reaction should be set in owl dictionary.
+	 * @return    The test suite
+	 */
+	@Test public void testGetExampleReaction() throws Exception {
+//		EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
+//    	List<String> xmlList = entry.getExampleReactions();
+//    	Assert.assertTrue("The representation entry for ["+entryString+"]  must contain at least one example of reaction.",
+//    			xmlList.size() != 0);
+//    	Assert.assertTrue("The representation entry for ["+entryString+"]  must contain at least one example of reaction.",
+//    			xmlList.size() > 0);
+//    	for(Iterator<String> it = xmlList.iterator(); it.hasNext();){
+//			String xml = it.next();
+//			CMLReader reader = new CMLReader(new ByteArrayInputStream(xml.getBytes()));
+//	        IChemFile chemFile = (IChemFile)reader.read(builder.newChemFile());
+//	        IReaction reactionDict = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
+//	        for(Iterator<IAtomContainer> itM = reactionDict.getReactants().molecules().iterator(); itM.hasNext();){
+//	        	IMolecule molecule = (IMolecule) itM.next();
+//	        	Assert.assertNotNull("The representation entry for ["+entryString+"]  must contain the InChI id for each reactant.",
+//	        			molecule.getProperty(CDKConstants.INCHI));
+//	        	Assert.assertNotSame("The representation entry for ["+entryString+"]  must contain the InChI id for each reactant.",
+//	        			"",molecule.getProperty(CDKConstants.INCHI));
+//	        	
+//	        }
+//    	}
+	}
+	/**
+	 * Test extracting a reaction as example and comparing with the initiated.
+	 * 
+	 * TODO: REACT: How to comparing two reaction?
+	 * 
+	 * @return    The test suite
+	 */
+	@Test public void testInitiate_IMoleculeSet_IMoleculeSet() throws Exception {
+		EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
+    	List<String> xmlList = entry.getExampleReactions();
+    	Assert.assertTrue("The representation entry for ["+entryString+"]  must contain at least one example of reaction.",
+    			xmlList.size() != 0);
+    	Assert.assertTrue("The representation entry for ["+entryString+"]  must contain at least one example of reaction.",
+    			xmlList.size() > 0);
+    	for(Iterator<String> it = xmlList.iterator(); it.hasNext();){
+			String xml = it.next();
+			CMLReader reader = new CMLReader(new ByteArrayInputStream(xml.getBytes()));
+	        IChemFile chemFile = (IChemFile)reader.read(builder.newChemFile());
+	        IReaction reactionDict = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
+	        
+	        IMoleculeSet reactants = reactionDict.getReactants();
+	        IMoleculeSet agents = reactionDict.getAgents();
+	        IMoleculeSet products = reactionDict.getProducts();
+	        if(agents.getAtomContainerCount() == 0)
+	        	agents = null;
+	        
+	        IReactionSet reactions = reaction.initiate(reactants, agents);
+	        
+	        Assert.assertTrue("The products for ["+entryString+"] reaction is at least one reaction expected.",
+	        		reactions.getReactionCount() > 0);
+	        	
+	        Assert.assertSame("The products for ["+entryString+"] reaction is not the expected.",
+	        		products.getAtomContainer(0).getAtomCount(),reactions.getReaction(0).getProducts().getAtomContainer(0).getAtomCount());
+	        	
+	        
+    	}
+	}
+//	/**
+//	 * Test the reaction center
+//	 * 
+//	 * @return    The test suite
+//	 */
+//	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+//	}
+//
+//	/**
+//	 * Test mapping in reaction process.
+//	 *  
+//	 * @return    The test suite
+//	 */
+//	@Test public void testMapping() throws Exception {
+//        
+//		
+//	}
+//	
+//	/**
+//	 * Set reaction center and generates the product.
+//	 *
+//	 * @return    The test suite
+//	 */
+//	@Test public void testManuallyCentreActive() throws Exception {
+//        
+//	}
+//
+//	/**
+//	 * Automatically looks for reaction center and generates the product.
+//	 *
+//	 * @return    The test suite
+//	 */
+//	@Test public void testAutomaticallyCentreActive() throws Exception {
+//        
+//	}
+//
+//
+//	/**
+//	 * Control that the reactant is the not modified during the process.
+//	 * 
+//	 * @return    The test suite
+//	 */
+//	@Test public void testCalculate_Results() throws Exception {
+//		EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
+//    	List<String> xmlList = entry.getExampleReactions();
+//    	for(Iterator<String> it = xmlList.iterator(); it.hasNext();){
+//			String xml = it.next();
+//			System.out.println(xml);
+//			CMLReader reader = new CMLReader(new ByteArrayInputStream(xml.getBytes()));
+//	        IChemFile chemFile = (IChemFile)reader.read(builder.newChemFile());
+//	        IReaction reactionDict = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
+//	        
+//	        IReaction reactionTest = builder.newReaction();
+//	        for(Iterator<IAtomContainer> itM = reactionDict.getReactants().molecules(); itM.hasNext();){
+//	        	reactionTest.addReactant((IMolecule) itM.next());
+//	        }
+//	        for(Iterator<IAtomContainer> itM = reactionDict.getAgents().molecules(); itM.hasNext();){
+//	        	reactionTest.addAgent((IMolecule) itM.next());
+//	        }
+//	        IMoleculeSet reactants = reactionDict.getReactants();
+//	        System.out.println(reactants);
+//	        if(reactants.getAtomContainerCount() == 0)
+//	        	reactants = null;
+//	        IMoleculeSet agents = reactionDict.getAgents();
+//	        if(agents.getAtomContainerCount() == 0)
+//	        	agents = null;
+//	        System.out.println(agents);
+//	        IReactionSet setOfReactions = reaction.initiate(reactants, agents);
+//	        
+//	        
+//	        
+//		}
+//	}
+//	
+//	/**
+//	 * Control that the reactant is the not modified during the process.
+//	 * 
+//	 * @return    The test suite
+//	 */
+//	@Test public void testGetMechanism() throws Exception {
+//		EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
+//    	
+//		String mechanismName = "org.openscience.cdk.reaction.mechanism."+entry.getMechanism();
+//		
+//		Assert.assertNotNull(
+//    			"The representation entry for ["+entryString+"]  must contain at least one mechanism coming from.",
+//    			this.getClass().getClassLoader().loadClass(mechanismName).newInstance());
+//    
+//	}
 }

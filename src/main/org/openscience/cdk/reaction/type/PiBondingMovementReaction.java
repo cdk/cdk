@@ -30,6 +30,8 @@ import java.util.Iterator;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -41,6 +43,8 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionEngine;
 import org.openscience.cdk.reaction.ReactionSpecification;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -77,6 +81,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.set        reaction-types
  * 
  **/
+@TestClass(value="org.openscience.cdk.reaction.type.PiBondingMovementReactionTest")
 public class PiBondingMovementReaction extends ReactionEngine implements IReactionProcess{
 	private LoggingTool logger;
 	
@@ -93,6 +98,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 	 *
 	 *@return    The specification value
 	 */
+    @TestMethod("testGetSpecification")
 	public ReactionSpecification getSpecification() {
 		return new ReactionSpecification(
 				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#PiBondingMovement",
@@ -112,6 +118,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 	 *
 	 *@exception  CDKException  Description of the Exception
 	 */
+    @TestMethod("testInitiate_IMoleculeSet_IMoleculeSet")
 	public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: PiBondingMovementReaction");
@@ -128,9 +135,10 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 		
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
-		if(!(Boolean)paramsMap.get("hasActiveCenter")){
+		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
+		if( ipr != null && !ipr.isSetParameter())
 			setActiveCenters(reactant);
-		}
+		
 //		if((Boolean)paramsMap.get("lookingSymmetry")){
 //			CDKHueckelAromaticityDetector.detectAromaticity(reactant);
 //		}

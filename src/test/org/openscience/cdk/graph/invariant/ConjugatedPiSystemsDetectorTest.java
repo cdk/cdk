@@ -24,15 +24,24 @@
  */
 package org.openscience.cdk.graph.invariant;
 
+import java.io.InputStream;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -42,8 +51,6 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-import java.io.InputStream;
-
 /**
  * Checks the functionality of the ConjugatedPiSystemsCalculator.
  *
@@ -51,16 +58,17 @@ import java.io.InputStream;
  */
 public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 {
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
-    LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+	private static IChemObjectBuilder builder;
+	private static LonePairElectronChecker lpcheck;
 	
-    private LoggingTool logger;
+    private static LoggingTool logger;
 
-    @Before
-    public void ConjugatedPiSystemsDetectorTest(String name)
-	{
-        logger = new LoggingTool(this);
-	}
+    @BeforeClass
+    public static void setup() {
+        logger = new LoggingTool(ConjugatedPiSystemsDetectorTest.class);
+        builder = NoNotificationChemObjectBuilder.getInstance();
+        lpcheck = new LonePairElectronChecker();
+    }
 
 	@Test
     public void testDetectButadiene() throws Exception

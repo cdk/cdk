@@ -32,6 +32,8 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.Ring;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -41,11 +43,12 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionEngine;
 import org.openscience.cdk.reaction.ReactionSpecification;
 import org.openscience.cdk.reaction.mechanism.RadicalSiteRearrangementMechanism;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.HOSECodeGenerator;
 import org.openscience.cdk.tools.LoggingTool;
@@ -83,9 +86,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * 
  * @see RadicalSiteRearrangementMechanism
  **/
+@TestClass(value="org.openscience.cdk.reaction.type.RadicalSiteHrAlphaReactionTest")
 public class RadicalSiteHrAlphaReaction extends ReactionEngine implements IReactionProcess{
 	private LoggingTool logger;
-	private IReactionMechanism mechanism;
 
 	/**
 	 * Constructor of the RadicalSiteHrAlphaReaction object
@@ -93,13 +96,13 @@ public class RadicalSiteHrAlphaReaction extends ReactionEngine implements IReact
 	 */
 	public RadicalSiteHrAlphaReaction(){
 		logger = new LoggingTool(this);
-		mechanism = new RadicalSiteRearrangementMechanism();
 	}
 	/**
 	 *  Gets the specification attribute of the RadicalSiteHrAlphaReaction object
 	 *
 	 *@return    The specification value
 	 */
+    @TestMethod("testGetSpecification")
 	public ReactionSpecification getSpecification() {
 		return new ReactionSpecification(
 				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#RadicalSiteHrAlpha",
@@ -117,6 +120,7 @@ public class RadicalSiteHrAlphaReaction extends ReactionEngine implements IReact
 	 *
 	 *@exception  CDKException  Description of the Exception
 	 */
+    @TestMethod("testInitiate_IMoleculeSet_IMoleculeSet")
 	public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: RadicalSiteHrAlphaReaction");
@@ -143,9 +147,9 @@ public class RadicalSiteHrAlphaReaction extends ReactionEngine implements IReact
 			}
 		}
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
-		if(!(Boolean)paramsMap.get("hasActiveCenter")){
+		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
+		if( ipr != null && !ipr.isSetParameter())
 			setActiveCenters(reactant);
-		}
 		
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
 		Iterator<IAtom> atomis = reactant.atoms().iterator();

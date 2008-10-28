@@ -23,26 +23,35 @@
  */
 package org.openscience.cdk.charges;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.HeterolyticCleavagePBReaction;
 import org.openscience.cdk.reaction.type.HeterolyticCleavageSBReaction;
 import org.openscience.cdk.reaction.type.HyperconjugationReaction;
 import org.openscience.cdk.reaction.type.SharingAnionReaction;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.StructureResonanceGenerator;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * <p>The calculation of the Gasteiger (PEPE) partial charges is based on 
@@ -158,29 +167,33 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 		/*1: detect resonance structure*/
 		StructureResonanceGenerator gR1 = new StructureResonanceGenerator();/*according G. should be integrated the breaking bonding*/
 		List<IReactionProcess> reactionList1 = gR1.getReactions();
-		HashMap<String,Object> params1 = new HashMap<String,Object>();
-		params1.put("hasActiveCenter",Boolean.TRUE);;
-		HeterolyticCleavagePBReaction reactionHCPB = new HeterolyticCleavagePBReaction();
-		reactionHCPB.setParameters(params1);
+		List<IParameterReact> paramList1 = new ArrayList<IParameterReact>();
+	    IParameterReact param = new SetReactionCenter();
+        param.setParameter(Boolean.TRUE);
+        paramList1.add(param);
+        HeterolyticCleavagePBReaction reactionHCPB = new HeterolyticCleavagePBReaction();
+		reactionHCPB.setParameterList(paramList1);
 		reactionList1.add(new SharingAnionReaction());
 		Iterator<IReactionProcess> itReaction = reactionList1.iterator();
 		while(itReaction.hasNext()){
 	        IReactionProcess reaction = itReaction.next();
-	        reaction.setParameters(params1);
+	        reaction.setParameterList(paramList1);
 		}
 		gR1.setReactions(reactionList1);
 		
 		StructureResonanceGenerator gR2 = new StructureResonanceGenerator();/*according G. should be integrated the breaking bonding*/
 		gR2.setMaximalStructures(MX_RESON);
 		List<IReactionProcess> reactionList2 = gR2.getReactions();
-		HashMap<String,Object> params2 = new HashMap<String,Object>();
-		params2.put("hasActiveCenter",Boolean.TRUE);
-		reactionList2.add(new HeterolyticCleavagePBReaction());
+		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+	    IParameterReact paramA = new SetReactionCenter();
+        paramA.setParameter(Boolean.TRUE);
+        paramList.add(paramA);
+        reactionList2.add(new HeterolyticCleavagePBReaction());
 		reactionList2.add(new SharingAnionReaction());
 		itReaction = reactionList2.iterator();
 		while(itReaction.hasNext()){
 	        IReactionProcess reaction = itReaction.next();
-	        reaction.setParameters(params2);
+	        reaction.setParameterList(paramList);
 		}
 		gR2.setReactions(reactionList2);
 		
@@ -506,11 +519,13 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 		
 		
 		setOfReactants.addMolecule((IMolecule) ac);
-		HashMap<String,Object> params = new HashMap<String,Object>();
-		params.put("hasActiveCenter",Boolean.TRUE);;
 		
-		type.setParameters(params);
-		IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+	    IParameterReact param = new SetReactionCenter();
+        param.setParameter(Boolean.TRUE);
+        paramList.add(param);
+        type.setParameterList(paramList);
+        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         for(int i = 0; i < setOfReactions.getReactionCount(); i++){
         	type = new HyperconjugationReaction();
     		IMoleculeSet setOfM2 = ac.getBuilder().newMoleculeSet();
@@ -521,10 +536,12 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
     			mol.getBond(k).getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,false);
     		}
     		setOfM2.addMolecule((IMolecule) mol);
-    		HashMap<String,Object> params2 = new HashMap<String,Object>();
-    		params2.put("hasActiveCenter",Boolean.FALSE);;
-			type.setParameters(params2);
-			IReactionSet setOfReactions2 = type.initiate(setOfM2, null);
+    		List<IParameterReact> paramList2 = new ArrayList<IParameterReact>();
+    	    IParameterReact param2 = new SetReactionCenter();
+            param2.setParameter(Boolean.FALSE);
+            paramList2.add(param);
+            type.setParameterList(paramList2);
+            IReactionSet setOfReactions2 = type.initiate(setOfM2, null);
 			if(setOfReactions2.getReactionCount() > 0){
 				
 			IMolecule react = setOfReactions2.getReaction(0).getReactants().getMolecule(0);
@@ -555,7 +572,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                     ac.getBuilder()
                 );
 
-			java.util.List<IAtom> atoms = ac.getConnectedAtomsList(ac.getAtom(atom1));
+			List<IAtom> atoms = ac.getConnectedAtomsList(ac.getAtom(atom1));
             for (IAtom atom : atoms) {
                 double covalentradius = 0;
                 String symbol = atom.getSymbol();
