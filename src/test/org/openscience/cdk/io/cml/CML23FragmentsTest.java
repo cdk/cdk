@@ -125,7 +125,7 @@ public class CML23FragmentsTest extends CDKTestCase {
         Assert.assertEquals(1, mol.getAtomCount());
         IAtom atom = mol.getAtom(0);
         Assert.assertEquals("C", atom.getSymbol());
-        Assert.assertEquals(12.0, atom.getExactMass().doubleValue());
+        Assert.assertEquals(12.0, atom.getExactMass().doubleValue(), 0.01);
     }
 
     @Test public void testBond() throws Exception {
