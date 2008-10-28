@@ -22,14 +22,14 @@ package org.openscience.cdk.reaction.type.parameters;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Tests for ParameterReact implementations.
  *
  * @cdk.module test-reaction
  */
-public class ParameterReactTest extends NewCDKTestCase {
+public class ParameterReactTest extends CDKTestCase {
 	
 	/**
 	 *  Constructor for the ParameterReactTest object.

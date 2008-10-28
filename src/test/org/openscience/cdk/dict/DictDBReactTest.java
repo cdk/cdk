@@ -29,7 +29,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the dictionary reaction-processes class.
@@ -38,7 +38,7 @@ import org.openscience.cdk.NewCDKTestCase;
  *
  * @see org.openscience.cdk.dict.DictionaryDatabase
  */
-public class DictDBReactTest extends NewCDKTestCase {
+public class DictDBReactTest extends CDKTestCase {
 
     @Test public void testDictDBReact() {
         DictionaryDatabase db = new DictionaryDatabase();
