@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -395,8 +396,28 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	 */
     @Test public void test3Aminomethane_cation() throws Exception
 	{
-    	IMolecule mol = (new SmilesParser(builder)).parseSmiles("CN(C)C(N(C)C)N(C)C");
+    	IMolecule mol = builder.newMolecule();
+    	mol.addAtom(builder.newAtom("N"));
+    	mol.addAtom(builder.newAtom("C"));
+    	mol.addBond(0, 1, Order.SINGLE);
+    	mol.addAtom(builder.newAtom("C"));
+    	mol.addBond(0, 2, Order.SINGLE);
+    	mol.addAtom(builder.newAtom("C"));
+    	mol.addBond(0, 3, Order.SINGLE);
     	mol.getAtom(3).setFormalCharge(+1);
+    	mol.addAtom(builder.newAtom("N"));
+    	mol.addBond(3, 4, Order.SINGLE);
+    	mol.addAtom(builder.newAtom("C"));
+    	mol.addBond(4, 5, Order.SINGLE);
+    	mol.addAtom(builder.newAtom("C"));
+    	mol.addBond(4, 6, Order.SINGLE);
+    	mol.addAtom(builder.newAtom("N"));
+    	mol.addBond(3, 7, Order.SINGLE);
+    	mol.addAtom(builder.newAtom("C"));
+    	mol.addBond(7, 8, Order.SINGLE);
+    	mol.addAtom(builder.newAtom("C"));
+    	mol.addBond(7, 8, Order.SINGLE);
+    	
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
     	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
