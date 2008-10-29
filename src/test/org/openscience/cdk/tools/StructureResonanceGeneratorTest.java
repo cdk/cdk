@@ -119,7 +119,6 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 		List<IParameterReact> objects = slReaction.getParameterList();
 		for(Iterator<IParameterReact> it = objects.iterator(); it.hasNext();){
 			IParameterReact object = it.next();
-			System.out.println(object.isSetParameter());
 			if(object instanceof SetReactionCenter)
 				Assert.assertFalse((Boolean) object.isSetParameter());
 		}
