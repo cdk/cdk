@@ -20,20 +20,31 @@
  */
 package org.openscience.cdk.tools;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.reaction.IReactionProcess;
-import org.openscience.cdk.reaction.type.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import org.openscience.cdk.reaction.type.PiBondingMovementReaction;
+import org.openscience.cdk.reaction.type.RearrangementAnionReaction;
+import org.openscience.cdk.reaction.type.RearrangementCationReaction;
+import org.openscience.cdk.reaction.type.RearrangementLonePairReaction;
+import org.openscience.cdk.reaction.type.RearrangementRadicalReaction;
+import org.openscience.cdk.reaction.type.SharingLonePairReaction;
 import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 
@@ -220,7 +231,7 @@ public class StructureResonanceGenerator {
     @TestMethod("testGetStructures_IMolecule")
 	public IMoleculeSet getStructures(IMolecule molecule) {
     	int countStructure = 0;
-		IMoleculeSet setOfMol = molecule.getBuilder().newMoleculeSet();
+    	IMoleculeSet setOfMol = molecule.getBuilder().newMoleculeSet();
 		setOfMol.addMolecule(molecule);
 		
 		for(int i = 0 ; i < setOfMol.getMoleculeCount() ; i++){
@@ -403,17 +414,33 @@ public class StructureResonanceGenerator {
 	 * @return   			 True, if the atomContainer is contained
 	 */
 	private boolean existAC(IAtomContainerSet set, IAtomContainer atomContainer) {
-		for(int i = 0 ; i < atomContainer.getAtomCount(); i++)
-//			if(atomContainer.getAtom(i).getID() == null)
-				atomContainer.getAtom(i).setID(""+atomContainer.getAtomNumber(atomContainer.getAtom(i)));
+
+		IAtomContainer acClone = null;
+    	try {
+    		acClone = (IMolecule) atomContainer.clone();
+			if(!lookingSymmetry){ /*remove all aromatic flags*/
+				for (IAtom atom : acClone.atoms()) atom.setFlag(CDKConstants.ISAROMATIC, false);
+				for (IBond bond : acClone.bonds()) bond.setFlag(CDKConstants.ISAROMATIC, false);
+			}
+		} catch (CloneNotSupportedException e1) {
+			e1.printStackTrace();
+		}
+    	
+		for(int i = 0 ; i < acClone.getAtomCount(); i++)
+//			if(acClone.getAtom(i).getID() == null)
+				acClone.getAtom(i).setID(""+acClone.getAtomNumber(acClone.getAtom(i)));
 			
 		if(lookingSymmetry){
 			try {
-				CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
+				CDKHueckelAromaticityDetector.detectAromaticity(acClone);
 			} catch (CDKException e) {
 				e.printStackTrace();
 			}
-			
+		}else{
+				if(!lookingSymmetry){ /*remove all aromatic flags*/
+					for (IAtom atom : acClone.atoms()) atom.setFlag(CDKConstants.ISAROMATIC, false);
+					for (IBond bond : acClone.bonds()) bond.setFlag(CDKConstants.ISAROMATIC, false);
+				}
 		}
 		for(int i = 0 ; i < set.getAtomContainerCount(); i++){
 			IAtomContainer ss = set.getAtomContainer(i);
@@ -424,14 +451,14 @@ public class StructureResonanceGenerator {
 			try {
 				
 				if(!lookingSymmetry ){
-					QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(atomContainer);
+					QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(acClone);
 					if(UniversalIsomorphismTester.isIsomorph(ss,qAC)){
-						QueryAtomContainer qAC2 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(atomContainer);
+						QueryAtomContainer qAC2 = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(acClone);
 						if(UniversalIsomorphismTester.isIsomorph(ss,qAC2))
 							return true;
 					}
 				}else{
-					QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(atomContainer);
+					QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(acClone);
 					CDKHueckelAromaticityDetector.detectAromaticity(ss);
 					if(UniversalIsomorphismTester.isIsomorph(ss,qAC))
 						return true;
