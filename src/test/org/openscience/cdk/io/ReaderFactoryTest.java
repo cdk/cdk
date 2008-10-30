@@ -31,11 +31,11 @@ import java.io.InputStream;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.io.formats.ABINITFormat;
 import org.openscience.cdk.io.formats.ADFFormat;
@@ -240,4 +240,42 @@ public class ReaderFactoryTest extends CDKTestCase {
         }
     }
     
+    /**
+     * @cdk.bug 2153298
+     */
+    @Test public void testBug2153298() throws Exception {
+        String filename = "data/asn/pubchem/aceticAcids38.xml";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        Assert.assertNotNull("Cannot find file: " + filename, ins);
+        IChemFormatMatcher realFormat = (IChemFormatMatcher)PubChemCompoundXMLFormat.getInstance();
+        factory.registerFormat(realFormat);
+        IChemFormat format = factory.guessFormat(ins);
+        Assert.assertNotNull(format);
+        Assert.assertEquals("Incorrect format detected: ", realFormat.getFormatName(), format.getFormatName());
+        // ok, if format ok, try instantiating a reader
+        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ISimpleChemObjectReader reader = factory.createReader(ins);
+        // the above works, but causes the inputstream not to be rewound properly...
+        // using "createReader(format); reader.setReader(ins);" instead makes it work, see expectReader()
+
+        Assert.assertNotNull(reader);
+        Assert.assertEquals(format.getReaderClassName(), reader.getClass().getName());
+        // now try reading something from it
+        ChemObject[] objects = {
+            new ChemFile(), new ChemModel(), new Molecule(),
+            new Reaction()
+        };
+        boolean read = false;
+        for (int i=0; (i<objects.length && !read); i++) {
+          if (reader.accepts(objects[i].getClass())) {
+            reader.read(objects[i]);
+            read = true;
+          }
+        }
+        if (read) {
+          // ok, reseting worked
+        } else {
+          Assert.fail("Reading an IChemObject from the Reader did not work properly.");
+        }
+    }
 }
