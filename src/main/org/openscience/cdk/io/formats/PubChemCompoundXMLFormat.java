@@ -44,7 +44,7 @@ public class PubChemCompoundXMLFormat implements IChemFormatMatcher {
     
     @TestMethod("testGetFormatName")
     public String getFormatName() {
-        return "PubChem Compound XML";
+        return "PubChem Compounds XML";
     }
 
     @TestMethod("testGetMIMEType")
