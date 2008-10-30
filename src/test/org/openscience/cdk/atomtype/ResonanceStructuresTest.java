@@ -76,7 +76,7 @@ public class ResonanceStructuresTest extends CDKTestCase {
 		molecule.addAtom(builder.newAtom("H"));
 		molecule.addAtom(builder.newAtom("H"));
 		molecule.addBond(0,1,IBond.Order.DOUBLE);
-		molecule.addBond(1,2,IBond.Order.SINGLE);
+		molecule.addBond(0,2,IBond.Order.SINGLE);
 		molecule.addBond(2,3,IBond.Order.DOUBLE);
 		molecule.addBond(2,4,IBond.Order.SINGLE);
 		molecule.addBond(0,5,IBond.Order.SINGLE);
