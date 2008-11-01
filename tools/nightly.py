@@ -34,7 +34,7 @@
 # Update 05/13/2006 - Added the output of ant info
 # Update 05/15/2006 - Added a link to the CDK SVN commits page
 # Update 05/16/2006 - Added code to generate and provide the source distribution
-# Update 05/17/2006 - Updated the code to use a seperate class for HTML tables
+# Update 05/17/2006 - Updated the code to use a separate class for HTML tables
 #                     and cells. This allows easier generation of table contents
 #                     and not have to worry about <tr> and <td> tags and so on.
 #                     Also added a link to the keyword list
@@ -464,7 +464,7 @@ def parsePMDOutput(pmdReportDir, title=""):
 
     reportDir = os.path.join(nightly_repo, 'reports', pmdReportDir)
     if not os.path.exists(reportDir):
-        print 'Couldnt find %s' % (reportDir)
+        print 'Could not find %s' % (reportDir)
         return None
     print '    Parsing PMD report files (%s)' % (pmdReportDir)    
     xmlFiles = glob.glob(os.path.join(reportDir, '*.xml'))
@@ -1085,7 +1085,7 @@ if __name__ == '__main__':
 
         status = updateVersion()
         if not status:
-            print "Error parsing build.props. Could not a valid version line. Exiting"
+            print "Error parsing build.props. Not a valid version line. Exiting"
             sys.exit(-1)
 
         # compile the distro
@@ -1124,7 +1124,7 @@ if __name__ == '__main__':
                 f.write(newlines)
                 f.close()
 
-            # before finishing send of an email with the last 20 lines of build.log
+            # before finishing send an email with the last 20 lines of build.log
             f = open(os.path.join(nightly_dir, 'build.log'), 'r')
             lines = f.readlines()
             f.close()
@@ -1336,7 +1336,7 @@ if __name__ == '__main__':
                 
             # dump the new report to the pickle file
             # so that it's the old report for the
-            # next run. Byt only do so, if the current version
+            # next run. But only do so, if the current version
 	    # is newer than the older version
 	    if currentRevision != oldRevision:		
 	        data = [newReports, currentRevision]
