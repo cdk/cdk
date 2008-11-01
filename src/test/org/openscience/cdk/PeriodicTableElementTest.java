@@ -23,7 +23,6 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.diff.ElementDiff;
 
 /**
@@ -54,81 +53,94 @@ public class PeriodicTableElementTest extends CDKTestCase {
 
     @Test
     public void testName() {
-        periodicTableElement.setName("carbon");
-        Assert.assertEquals("carbon", periodicTableElement.getName());
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        pte.setName("carbon");
+        Assert.assertEquals("carbon", pte.getName());
     }
 
     @Test
     public void testCASid() {
-        periodicTableElement.setCASid("43-6847");
-        Assert.assertEquals("43-6847", periodicTableElement.getCASid());
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        pte.setCASid("43-6847");
+        Assert.assertEquals("43-6847", pte.getCASid());
     }
 
     @Test
     public void testVdw() {
-        periodicTableElement.setVdwRadius(1.9);
-        Assert.assertEquals(1.9, periodicTableElement.getVdwRadius(), 0.1);
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        pte.setVdwRadius(1.9);
+        Assert.assertEquals(1.9, pte.getVdwRadius(), 0.1);
     }
 
 
     @Test
     public void testCovalent() {
-        periodicTableElement.setCovalentRadius(1.9);
-        Assert.assertEquals(1.9, periodicTableElement.getCovalentRadius(), 0.1);
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        pte.setCovalentRadius(1.9);
+        Assert.assertEquals(1.9, pte.getCovalentRadius(), 0.1);
     }
 
     @Test
     public void testEneg() {
-        periodicTableElement.setPaulingEneg(3.4);
-        Assert.assertEquals(3.4, periodicTableElement.getPaulingEneg(), 0.1);
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        pte.setPaulingEneg(3.4);
+        Assert.assertEquals(3.4, pte.getPaulingEneg(), 0.1);
     }
 
     @Test
     public void testPhase() {
-        periodicTableElement.setPhase("solid");
-        Assert.assertEquals("solid", periodicTableElement.getPhase());
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        pte.setPhase("solid");
+        Assert.assertEquals("solid", pte.getPhase());
     }
 
     /**
      * @cdk.bug 2192238
      */
-    @Test(expected = CDKException.class)
+    @Test
     public void testGroup() {
-        periodicTableElement.setGroup("14");
-        Assert.assertEquals("14", periodicTableElement.getGroup());
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        pte.setGroup("14");
+        Assert.assertEquals("14", pte.getGroup());
 
-        periodicTableElement.setGroup("VI");
-        periodicTableElement.setGroup("1875");
+        pte.setGroup("VI");
+        Assert.assertEquals("VI", pte.getGroup());
+        pte.setGroup("1875");
+        Assert.assertEquals("1875", pte.getGroup());
     }
 
     @Test
     public void testSeries() {
-        periodicTableElement.setChemicalSerie("blah");
-        Assert.assertEquals("blah", periodicTableElement.getChemicalSerie());
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        pte.setChemicalSerie("blah");
+        Assert.assertEquals("blah", pte.getChemicalSerie());
     }
 
     @Test
     public void testPeriod() {
-        periodicTableElement.setPeriod("4");
-        Assert.assertEquals("4", periodicTableElement.getPeriod());
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        pte.setPeriod("4");
+        Assert.assertEquals("4", pte.getPeriod());
     }
 
     @Test
     public void testClone() throws CloneNotSupportedException {
-        PeriodicTableElement cloneElement = (PeriodicTableElement) periodicTableElement.clone();
-        String diff = ElementDiff.diff(periodicTableElement, cloneElement);
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        PeriodicTableElement cloneElement = (PeriodicTableElement) pte.clone();
+        String diff = ElementDiff.diff(pte, cloneElement);
         Assert.assertEquals("", diff);
     }
 
     @Test
     public void testString() {
+        PeriodicTableElement pte = new PeriodicTableElement("C");
         Assert.assertEquals("PeriodicTableElement(C, AN:0, N:null, CS:null, P:null, G:null, Ph:null, CAS:null, VdW:null, Cov:null, Eneg:null)",
-                periodicTableElement.toString());
+        		pte.toString());
 
-        periodicTableElement.setGroup("14");
-        periodicTableElement.setPhase("solid");
+        pte.setGroup("14");
+        pte.setPhase("solid");
         Assert.assertEquals("PeriodicTableElement(C, AN:0, N:null, CS:null, P:null, G:14, Ph:solid, CAS:null, VdW:null, Cov:null, Eneg:null)",
-                periodicTableElement.toString());
+        		pte.toString());
     }
 
     /**
@@ -136,7 +148,8 @@ public class PeriodicTableElementTest extends CDKTestCase {
      */
     @Test
     public void testConfigure() {
-        Element elem = PeriodicTableElement.configure(periodicTableElement);
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        Element elem = PeriodicTableElement.configure(pte);
         Assert.assertEquals("C", elem.getSymbol());
         Assert.assertEquals(6, elem.getAtomicNumber().intValue());
     }
