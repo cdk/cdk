@@ -32,19 +32,19 @@ import org.openscience.cdk.smiles.SmilesParser;
 /**
  * @cdk.module test-qsarbond
  */
-public class MassNumberDifferenceDescriptorTest extends BondDescriptorTest {
+public class AtomicNumberDifferenceDescriptorTest extends BondDescriptorTest {
 	
 	/**
 	 *  Constructor for the MassNumberDifferenceDescriptorTest object
 	 *
 	 */
-	public  MassNumberDifferenceDescriptorTest() {
+	public  AtomicNumberDifferenceDescriptorTest() {
 		
 	}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(MassNumberDifferenceDescriptor.class);
+    	setDescriptor(AtomicNumberDifferenceDescriptor.class);
     }
 
     @Test

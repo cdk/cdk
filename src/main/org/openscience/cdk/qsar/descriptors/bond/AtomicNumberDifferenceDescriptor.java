@@ -37,23 +37,23 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 import java.io.IOException;
 
 /**
- * Describes the inbalance in mass number of the IBond. (Sorry, I needed *something* in the qsarbond module :)
+ * Describes the imbalance in atomic number of the IBond.
  *
  * @author      Egon Willighagen
  * @cdk.created 2007-12-29
  * @cdk.module  qsarbond
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
- * @cdk.dictref qsar-descriptors:bondMassNumberInbalance
+ * @cdk.dictref qsar-descriptors:bondAtomicNumberImbalance
  */
-@TestClass("org.openscience.cdk.qsar.descriptors.bond.MassNumberDifferenceDescriptorTest")
-public class MassNumberDifferenceDescriptor implements IBondDescriptor {
+@TestClass("org.openscience.cdk.qsar.descriptors.bond.AtomicNumberDifferenceDescriptorTest")
+public class AtomicNumberDifferenceDescriptor implements IBondDescriptor {
 
 	private static IsotopeFactory factory = null;
 	
 	private final static String[] descriptorName = {"MNDiff"};
 	
-    public MassNumberDifferenceDescriptor() {
+    public AtomicNumberDifferenceDescriptor() {
     }	
     
     private void ensureIsotopeFactory(IChemObjectBuilder builder) {
@@ -70,7 +70,7 @@ public class MassNumberDifferenceDescriptor implements IBondDescriptor {
 	@TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondMassNumberInbalance",
+            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondAtomicNumberImbalance",
             this.getClass().getName(),
             "$Id$",
             "The Chemistry Development Kit");
