@@ -23,6 +23,7 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.diff.ElementDiff;
 
 /**
@@ -97,16 +98,14 @@ public class PeriodicTableElementTest extends CDKTestCase {
     /**
      * @cdk.bug 2192238
      */
-    @Test
+    @Test(expected = CDKException.class)
     public void testGroup() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
         pte.setGroup("14");
         Assert.assertEquals("14", pte.getGroup());
 
         pte.setGroup("VI");
-        Assert.assertEquals("VI", pte.getGroup());
         pte.setGroup("1875");
-        Assert.assertEquals("1875", pte.getGroup());
     }
 
     @Test
