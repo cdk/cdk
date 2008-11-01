@@ -16,7 +16,7 @@
     </programlisting>
     Then this file is uploaded to the Plone FTP server at
     almost.cubic.uni-koeln.de (Ask Christoph for upload access).
-    At the time of writing I had to scp the file first to almost, and upload
+    At the time of writing I had to scp the file and upload
     to the FTP server from there.
   </para>
   <para>
@@ -35,7 +35,7 @@ bye
 EOF
 exit 0
     </programlisting>
-    I have this files saved in my home directory on almost as
+    I have these files saved in my home directory on almost as
     <filename>upload.dictref.index.sh</filename> so that I can do from my machine
     at home:
     <programlisting>
