@@ -24,7 +24,7 @@ $ ./configure &amp;&amp; make &amp;&amp; install
     <chapter id="sect:linuxpackages">
       <title>Linux packages</title>
       <para>
-        The above packge is known to to install on Linux systems.
+        The above package is known to to install on Linux systems.
         At this moment Linux users should use and install the
         above tar.gz package, unless they are Debian users.
         They can use the binary Debian package.
@@ -83,7 +83,7 @@ $ make deb
     <chapter id="sect:windowspackages">
       <title>Windows packages</title>
       <para>
-        At this moment there is no Windows pacakges.
+        At this moment there is no Windows packages.
         Windows users can best download the above tar.gz package
         which can be unpacked with programs like WinZip.
         The software can then be compiled with:
