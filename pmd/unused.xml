@@ -7,7 +7,7 @@
 
   <!-- In the below paths, rulesets/ refers to the classpath, and the
        pmd/ refers to this directory, and needs to be excluded because
-       the are called from ../pmd.xml -->
+       they are called from ../pmd.xml -->
 
   <!-- The rule sets that come with PMD -->
 
