@@ -1240,4 +1240,17 @@
                 </java>
         </target>
 
+    <target name="checkCopyright" id="checkCopyright" depends="check, customize">
+        <echo>Checking copyright info...</echo>
+        <mkdir dir="${build}" />
+        <javac includes="net/sf/cdk/tools/copyright/CheckCopyrightStatements.java"
+            srcdir="${src}/main/" destdir="${build}" optimize="${optimization}"
+            debug="${debug}" deprecation="${deprecation}"/>
+        <java classpath="${build}" classname="net.sf.cdk.tools.copyright.CheckCopyrightStatements">
+              <arg value="${src}/META-INF"/>
+              <arg value="${src}/main"/>
+              <arg value="${build}"/>
+        </java>
+    </target>
+
 </project>
