@@ -138,7 +138,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     /**
 	 *  A unit test for JUnit with C=CCC(=O)CC
 	 */
-    @Test public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testCalculatePlus_IAtomContainer() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
 		IMolecule mol = sp.parseSmiles("C=CCCC(=O)C");
 		
