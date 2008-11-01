@@ -29,14 +29,14 @@
 	editor too.
       </para>
       <para>
-        So, where go I download jEdit then?
+        So, where do I go to download jEdit?
 	<ulink url="http://www.jedit.org/index.php?page=download">jEdit's
 	download site</ulink> has binary and installers for most common
 	platforms. When this section was written, version 4.1 was the stable
 	release.
       </para>
       <para>
-        Then remains the question on plugins. jEdit has a very powerfull 
+        Then remains the question on plugins. jEdit has a very powerful 
 	plugin platform (yes, much better than CDK's...). Plugins can be installed
 	directly form the internet from within jEdit using an internet connection.
 	A separate website, 
