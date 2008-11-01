@@ -35,7 +35,7 @@ per_line = 8
 # Optional
 # variables required for sending mail, if desired.
 # should be self explanatory. Set to "" or None if
-# you dont want to send mail
+# you do not want to send mail
 smtpServerName = 'smtp.gmail.com'
 fromName = 'nightly.py <foo@bar.com>'
 toName = 'cdk-devel@lists.sourceforge.net'
