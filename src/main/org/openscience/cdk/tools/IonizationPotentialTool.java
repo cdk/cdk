@@ -21,7 +21,6 @@
 package org.openscience.cdk.tools;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
@@ -274,7 +273,7 @@ public class IonizationPotentialTool {
 		if(acR != null){
 			results[6] = acR.getAtomCount();
 			// numberAromaticAtoms
-			boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(container);
+//			boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(container);
 			IRingSet ringSet = new SSSRFinder(container).findSSSR();
 			RingSetManipulator.markAromaticRings(ringSet);
 			int aromRingCount = 0;			

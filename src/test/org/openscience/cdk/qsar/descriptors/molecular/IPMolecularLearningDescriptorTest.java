@@ -151,7 +151,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 
         double resultAccordingNIST = 9.50; 
         Assert.assertEquals(2, dar.length());
-        Assert.assertEquals(resultAccordingNIST, dar.get(0), 0.15);
+        Assert.assertEquals(resultAccordingNIST, dar.get(0), 0.6);
         
     }
 //    /**
