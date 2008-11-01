@@ -29,7 +29,21 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * subclass of Elements for PeriodicTable.
+ * <p>An PeriodicTableElement class is instantiated with at least the atom symbol:
+ * <pre>
+ *   PeriodicTableElement pte = new PeriodicTableElement("C");
+ * </pre>
+ *
+ * <p>This class is not the same than IElement class. Once instantiated all field not filled by passing parameters
+ * to the constructor are null. PeriodicTableElement can be configured by using
+ * the PeriodicTableElement.configure() method:
+ * <pre>
+ *   ElementPTFactory eptf = ElementPTFactory.getInstance(a.getBuilder());
+ *   ElementPTFactory.configure(pte);
+ * </pre>
+ *
+ * <p>More examples about using this class can be found in the
+ * Junit test for this class.
  *
  * @author        Miguel Rojas
  * @cdk.created   May 8, 2005
@@ -366,7 +380,6 @@ public class PeriodicTableElement extends Element
      public static Element configure(PeriodicTableElement elementPT)
 	 {
 		Element element = new Element(elementPT.getSymbol());
-		
 		element.setSymbol(elementPT.getSymbol());
 		element.setAtomicNumber(elementPT.getAtomicNumber());
 		//element.setName(ElementInt.getName());
