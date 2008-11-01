@@ -81,7 +81,7 @@ public class MextraTests {
         // from cdk.test.iupac
         try {
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.iupac.ParserTest");
-            suite.addTest(new TestSuite(testClass));
+            suite.addTest(new JUnit4TestAdapter(testClass));
             System.out.println("Found IUPAC Parser test.");
         } catch (Exception exception) {
             // ok, do without. Probably compiled with Ant < 1.6

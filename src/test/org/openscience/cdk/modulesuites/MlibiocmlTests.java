@@ -59,7 +59,7 @@ public class MlibiocmlTests {
     private static void addTestSuite(TestSuite suite, String className) {
         try {
             Class testClass = suite.getClass().getClassLoader().loadClass(className);
-            suite.addTest(new TestSuite(testClass));
+            suite.addTest(new JUnit4TestAdapter(testClass));
         } catch (Exception exception) {
             // OK, do without. Probably compiled not Java 1.4
             System.out.println("Could not load the CML2 test: " + exception.getMessage());
