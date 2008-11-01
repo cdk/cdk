@@ -43,15 +43,15 @@ public class MsmartsTests {
         
         try {
             Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.ParserTest");
-            suite.addTest(new TestSuite(testClass));
+            suite.addTest(new JUnit4TestAdapter(testClass));
             testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest");
-            suite.addTest(new TestSuite(testClass));
+            suite.addTest(new JUnit4TestAdapter(testClass));
             testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.RecursiveTest");
-            suite.addTest(new TestSuite(testClass));
+            suite.addTest(new JUnit4TestAdapter(testClass));
             testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.visitor.SmartsDumpVisitorTest");
-            suite.addTest(new TestSuite(testClass));
+            suite.addTest(new JUnit4TestAdapter(testClass));
             testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitorTest");
-            suite.addTest(new TestSuite(testClass));
+            suite.addTest(new JUnit4TestAdapter(testClass));
             testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.SMARTSQueryToolTest");
             suite.addTest(new JUnit4TestAdapter(testClass));
         } catch (Exception exception) {
