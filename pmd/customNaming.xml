@@ -16,7 +16,7 @@
     <description>
       Detects when a field, formal or local variable is declared with a long name.
       This rule customized the default LongVariable rule by allowing names of a
-      length upto 30.
+      length up to 30.
     </description>
     <priority>3</priority>
     <properties>
