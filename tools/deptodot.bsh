@@ -76,7 +76,7 @@ for (int i=0; i<depFiles.length; i++) {
   }
 }
 
-// Now remove direct depdencies if they exist as indirect ones too
+// Now remove direct dependencies if they exist as indirect ones too
 DefaultDirectedGraph output = graph.clone();
 Set nodeSet = graph.vertexSet();
 Iterator iter = nodeSet.iterator();
