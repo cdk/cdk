@@ -34,11 +34,11 @@ New:
 * Added a CML Customizer interface which reduces the CDK module dependency
   of the libio-cml module
 * Added two new module for outputting data for specific CDK modules:
-  pdb-cml for outputing PDBAtom information, and qsar-cml for outputing
+  pdb-cml for outputting PDBAtom information, and qsar-cml for outputting
   QSAR-descriptor information
 
 Fixes:
-* Fixed KabschAlignment so that the rotation matrixi, U, is returned properly
+* Fixed KabschAlignment so that the rotation matrix, U, is returned properly
 * Fixed junit-test and run-test: missing cdk-data.jar
 * Don't consume Exceptions while writing MDL
 * Removed entry for 'D' in the isotope list; '2H' is still present
@@ -111,7 +111,7 @@ New:
 * Added *Manipulator.addAtomProperties()
 * The core module classes are now checked for coverage of JUnit testing
 * Added a radial distribution function (RDF) calculator
-* Added a new LoggingTool(Class) contructor for easier use in static classes
+* Added a new LoggingTool(Class) constructor for easier use in static classes
 
 Fixes:
 * Fixed format detection for Jaguar, Gamess and the HIN format: they were
@@ -253,7 +253,7 @@ New:
 * The MDLReader will reuse the ChemObject given to read(ChemObject)
 * Added UniversalIsomorphismTester.makeAtomsMapsOfBondsMaps() method
 * Added an experimental JMEReader wrapping a Jmol v10 IO class
-* Implemented Jmolv10 to CDK Convertor
+* Implemented Jmolv10 to CDK Converter
 * Readded element toggling between common elements in SYMBOL mode
   in Controller2D
 * Added cdk.applications.APIVersionTester for testing version numbers
@@ -267,7 +267,7 @@ New:
 * Renderer2D now has a field for using AntiAliasing
 
 Fixes:
-* Tropylium is now recognised as aromatic (closes CDK bug #957627)
+* Tropylium is now recognized as aromatic (closes CDK bug #957627)
 * No longer calculates 2D coords for hydrogens which already have 2D coords
   in HydrogenPlacer
 * Fixed output of CML bond orders for bonds with CDKConstants.BONDORDER_AROMATIC
@@ -286,7 +286,7 @@ Fixes:
 API changes:
 * AtomTypeFactory and IsotopeFactory moved from cdk.tools to cdk.config
 * Moved atom type and isotope config files to cdk.config.data
-* The Renderer2D now explicitely requires a Graphics2D (which the Graphics
+* The Renderer2D now explicitly requires a Graphics2D (which the Graphics
   object subclasses in Java1.2 and higher)
 
 20040513 Release
@@ -313,7 +313,7 @@ Fixes:
 * Fixed replacing an PseudoAtom by an EnzymeResidueLocator in MACiEReader
   (closes JCP bug #850154)
 * MDLReader now 'actively' checks if atom is an element
-* Fixed DefaultChemObjectReader so that it checks wether a listener is a
+* Fixed DefaultChemObjectReader so that it checks whether a listener is a
   ReaderListener before trying to cast it
 * Fixed constructor of MACiEReader which resulted in a NPE
 * MACiEReader now actually throws an frameRead event when a frame is read
@@ -321,7 +321,7 @@ Fixes:
 * Updated Xerces to version 2.6.2 which fixes a CML serialization bugs
   (closes #930489)
 * Fixed rendering of non-ring bonds marked as aromatic (closes #927342)
-* Fixed the SMILES parser which now percieves aromaticity at the end of
+* Fixed the SMILES parser which now perceives aromaticity at the end of
   the parsing (closes #927341)
 * Fixed checking of CAS numbers
 * Make sure to also draw proposed bonds when there is nothing else to be 
