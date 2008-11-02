@@ -1,7 +1,7 @@
 Converted from Christoph's EndNote database:
 1. export in BibTex format from EndNote
-2. sanatized that output (e.g. added refid) with 
-   JReferences 0.7.2's (in CVS) endnote-sanatize
+2. sanitized that output (e.g. added refid) with 
+   JReferences 0.7.2's (in CVS) endnote-sanitize
 3. converted to BibTeXML with JReferences 0.7.1's
    bibtex-xml
 4. apply Kate's word wrapping, otherwise CVS will 
