@@ -47,7 +47,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module     extra
  * @cdk.svnrev  $Revision$
  */
-@TestClass("org.openscience.cdk.config.ElementFactoryTest")
+@TestClass("org.openscience.cdk.config.ElementPTFactoryTest")
 public class ElementPTFactory
 {
 
