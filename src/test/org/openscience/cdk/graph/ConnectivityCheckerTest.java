@@ -95,7 +95,7 @@ public class ConnectivityCheckerTest extends NewCDKTestCase {
     }
 
     /**
-	 * This test tests the consitency between isConnected() and
+	 * This test tests the consistency between isConnected() and
      * partitionIntoMolecules().
 	 */
 	@Test public void testPartitionIntoMolecules_IsConnected_Consistency() {
