@@ -66,7 +66,7 @@ public class MDMoleculeTest extends CDKTestCase {
     }
 
     /**
-     * Test an MDMolecule with residues and chargegroups
+     * Test an MDMolecule with residues and charge groups
      *
      */
     public void testMDMolecule() {
@@ -243,7 +243,7 @@ public class MDMoleculeTest extends CDKTestCase {
     
     
     /**
-     * Create a benzene molecule with 2 residues and 2 chargegroups
+     * Create a benzene molecule with 2 residues and 2 charge groups
      * @return
      */
     public MDMolecule makeMDBenzene(){
