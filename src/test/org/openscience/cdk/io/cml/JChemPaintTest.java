@@ -42,7 +42,7 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.CDKTestCase;
 
 /**
- * TestCase for the reading CML files using a few test files
+ * TestCase for reading CML files using a few test files
  * in data/cmltest as found in the JChemPaint distribution
  * (http://jchempaint.sf.org/).
  *
