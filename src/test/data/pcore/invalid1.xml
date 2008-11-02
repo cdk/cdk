@@ -2,7 +2,7 @@
 
 <pharmacophoreContainer version="1.0">
 
-    <!-- some gobal pharmacphore group definitions, usable by 
+    <!-- some global pharmacophore group definitions, usable by 
     all pharmacophores defined in this file -->
 
     <group id="Ha" description="H-bond acceptor">
