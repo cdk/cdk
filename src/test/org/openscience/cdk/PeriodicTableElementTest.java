@@ -38,81 +38,120 @@ public class PeriodicTableElementTest extends CDKTestCase {
     public void testConstructor() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
         Assert.assertNotNull(pte);
-        Assert.assertNull(pte.getName());
-        Assert.assertNull(pte.getGroup());
-        Assert.assertNull(pte.getPaulingEneg());
-        Assert.assertNull(pte.getPeriod());
-        Assert.assertNull(pte.getPhase());
-        Assert.assertNull(pte.getCASid());
-        Assert.assertNull(pte.getChemicalSerie());
-        Assert.assertNull(pte.getVdwRadius());
-        Assert.assertNull(pte.getCovalentRadius());
     }
-
     @Test
-    public void testName() {
+    public void testGetName() {
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        Assert.assertNull(pte.getName());
+    }
+    
+    @Test
+    public void testSetName() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
         pte.setName("carbon");
         Assert.assertEquals("carbon", pte.getName());
     }
 
     @Test
-    public void testCASid() {
+    public void testGetCASid() {
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        Assert.assertNull(pte.getCASid());
+    }
+
+    @Test
+    public void testSetCASid() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
         pte.setCASid("43-6847");
         Assert.assertEquals("43-6847", pte.getCASid());
     }
 
     @Test
-    public void testVdw() {
+    public void testGetVdw() {
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        Assert.assertNull(pte.getVdwRadius());
+    }
+
+    @Test
+    public void testSetVdw() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
         pte.setVdwRadius(1.9);
         Assert.assertEquals(1.9, pte.getVdwRadius(), 0.1);
     }
-
-
+    
     @Test
-    public void testCovalent() {
+    public void testGetCovalentRadius() {
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        Assert.assertNull(pte.getCovalentRadius());
+    }
+    
+    @Test
+    public void testSetCovalentRadius() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
         pte.setCovalentRadius(1.9);
         Assert.assertEquals(1.9, pte.getCovalentRadius(), 0.1);
     }
 
     @Test
-    public void testEneg() {
+    public void testGetEneg() {
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        Assert.assertNull(pte.getPaulingEneg());
+    }
+
+    @Test
+    public void testSetEneg() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
         pte.setPaulingEneg(3.4);
         Assert.assertEquals(3.4, pte.getPaulingEneg(), 0.1);
     }
 
     @Test
-    public void testPhase() {
+    public void testGetPhase() {
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        Assert.assertNull(pte.getPhase());
+    }
+
+    @Test
+    public void testSetPhase() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
         pte.setPhase("solid");
         Assert.assertEquals("solid", pte.getPhase());
     }
 
-    /**
-     * @cdk.bug 2192238
-     */
-    public void testGroup() {
+    @Test
+    public void testGetGroup() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
-        pte.setGroup(14);
-        Assert.assertEquals(14, pte.getGroup(),0.01);
+        Assert.assertNull(pte.getGroup());
 
-//        pte.setGroup("VI");
-//        pte.setGroup("1875");
     }
 
     @Test
-    public void testSeries() {
+    public void testSetGroup() {
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        pte.setGroup(14);
+        Assert.assertEquals(14, pte.getGroup(),0.1);
+    }
+
+    @Test
+    public void testGetSeries() {
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        Assert.assertNull(pte.getChemicalSerie());
+    }
+
+    @Test
+    public void testSetSeries() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
         pte.setChemicalSerie("blah");
         Assert.assertEquals("blah", pte.getChemicalSerie());
     }
 
     @Test
-    public void testPeriod() {
+    public void testGetPeriod() {
+        PeriodicTableElement pte = new PeriodicTableElement("C");
+        Assert.assertNull(pte.getPeriod());
+    }
+
+    @Test
+    public void testSetPeriod() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
         pte.setPeriod(4);
         Assert.assertEquals(4, pte.getPeriod(),0.01);
@@ -129,12 +168,12 @@ public class PeriodicTableElementTest extends CDKTestCase {
     @Test
     public void testString() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
-        Assert.assertEquals("PeriodicTableElement(C, AN:0, N:null, CS:null, P:null, G:null, Ph:null, CAS:null, VdW:null, Cov:null, Eneg:null)",
+        Assert.assertEquals("PeriodicTableElement(C, AN:null, N:null, CS:null, P:null, G:null, Ph:null, CAS:null, VdW:null, Cov:null, Eneg:null)",
         		pte.toString());
 
         pte.setGroup(14);
         pte.setPhase("solid");
-        Assert.assertEquals("PeriodicTableElement(C, AN:0, N:null, CS:null, P:null, G:14, Ph:solid, CAS:null, VdW:null, Cov:null, Eneg:null)",
+        Assert.assertEquals("PeriodicTableElement(C, AN:null, N:null, CS:null, P:null, G:14, Ph:solid, CAS:null, VdW:null, Cov:null, Eneg:null)",
         		pte.toString());
     }
 }

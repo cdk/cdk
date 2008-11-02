@@ -138,7 +138,7 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #setName
 	*/
-    @TestMethod("testName")
+    @TestMethod("testGetName")
     public String getName()
 	{
 		return this.name;
@@ -151,7 +151,7 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #getName
 	*/
-    @TestMethod("testName")
+    @TestMethod("testSetName")
     public void setName(String name)
 	{
 		this.name=name;
@@ -165,7 +165,7 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #setChemicalSerie
 	*/
-    @TestMethod("testSeries")
+    @TestMethod("testGetSeries")
     public String getChemicalSerie()
 	{
 		return this.chemicalSerie;
@@ -178,7 +178,7 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #getChemicalSerie
 	*/
-    @TestMethod("testSeries")
+    @TestMethod("testSetSeries")
     public void setChemicalSerie(String chemicalSerie)
 	{
 		this.chemicalSerie = chemicalSerie;
@@ -192,8 +192,8 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #setPeriod
 	*/
-    @TestMethod("testPeriod")
-    public int getPeriod()
+    @TestMethod("testGetPeriod")
+    public Integer getPeriod()
 	{
 		return this.period;
 	}
@@ -205,7 +205,7 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #getPeriod
 	*/
-    @TestMethod("testPeriod")
+    @TestMethod("testSetPeriod")
     public void setPeriod(Integer period)
 	{
 		this.period = period;
@@ -219,7 +219,7 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #setGroup
 	*/
-    @TestMethod("testGroup")
+    @TestMethod("testGetGroup")
     public Integer getGroup()
 	{
 		return this.group;
@@ -232,7 +232,7 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #getGroup
 	*/
-    @TestMethod("testGroup")
+    @TestMethod("testSetGroup")
     public void setGroup(Integer group)
 	{
 		this.group = group;
@@ -246,7 +246,7 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #setPhase
 	*/
-    @TestMethod("testPhase")
+    @TestMethod("testGetPhase")
     public String getPhase()
 	{
 		return this.phase;
@@ -260,7 +260,7 @@ public class PeriodicTableElement extends Element
 	* @see    #getGroup
 	* @see #getPhase
 	*/
-    @TestMethod("testPhase")
+    @TestMethod("testSetPhase")
     public void setPhase(String  phase)
 	{
 		this.phase = phase;
@@ -274,7 +274,7 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #setCASid
 	*/
-    @TestMethod("testCASid")
+    @TestMethod("testGetCASid")
     public String getCASid()
 	{
 		return this.casId;
@@ -287,7 +287,7 @@ public class PeriodicTableElement extends Element
 	*
 	* @see    #getCASid
 	*/
-    @TestMethod("testCASid")
+    @TestMethod("testSetCASid")
     public void setCASid(String  casId)
 	{
 		this.casId = casId;
@@ -299,7 +299,7 @@ public class PeriodicTableElement extends Element
      *
      * @return The VdW radius, or null if it is unavailable
      */
-    @TestMethod("testVdw")
+    @TestMethod("testGetVdw")
     public Double getVdwRadius() {
         return vdwRadius;
     }
@@ -309,7 +309,7 @@ public class PeriodicTableElement extends Element
      *
      * @param vdwRadius  The VdW radius
      */
-    @TestMethod("testVdw")
+    @TestMethod("testSetVdw")
     public void setVdwRadius(Double vdwRadius) {
         this.vdwRadius = vdwRadius;
     }
@@ -319,7 +319,7 @@ public class PeriodicTableElement extends Element
      *
      * @return the covalent radius, or null if it is unavailable
      */
-    @TestMethod("testCovalent")
+    @TestMethod("testGetCovalentRadius")
     public Double getCovalentRadius() {
         return covalentRadius;
     }
@@ -329,7 +329,7 @@ public class PeriodicTableElement extends Element
      *
      * @param covalentRadius the covalent radius
      */
-    @TestMethod("testCovalent")
+    @TestMethod("testSetCovalentRadius")
     public void setCovalentRadius(Double covalentRadius) {
         this.covalentRadius = covalentRadius;
     }
@@ -339,7 +339,7 @@ public class PeriodicTableElement extends Element
      *
      * @return   The electronegativity, null if not available for the element
      */
-    @TestMethod("testEneg")
+    @TestMethod("testGetEneg")
     public Double getPaulingEneg() {
         return paulingEneg;
     }
@@ -349,7 +349,7 @@ public class PeriodicTableElement extends Element
      *
      * @param paulingEneg The electronegativity
      */
-    @TestMethod("testEneg")
+    @TestMethod("testSetEneg")
     public void setPaulingEneg(Double paulingEneg) {
         this.paulingEneg = paulingEneg;
     }
