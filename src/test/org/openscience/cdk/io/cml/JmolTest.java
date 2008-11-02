@@ -45,7 +45,7 @@ import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.CDKTestCase;
 
 /**
- * TestCase for the reading CML files using a few test files
+ * TestCase for reading CML files using a few test files
  * in data/cmltest as found in the Jmol distribution
  * (<a href="http://www.jmol.org/">http://www.jmol.org/</a>).
  *
