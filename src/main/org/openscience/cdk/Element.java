@@ -63,7 +63,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
     protected String symbol;
 
     /** The atomic number for this element giving their position in the periodic table. */
-    protected Integer atomicNumber = 0;
+    protected Integer atomicNumber = (Integer) CDKConstants.UNSET;
 
     /**
      * Constructs an empty Element.
@@ -174,7 +174,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
         if (getID() != null) {
         	resultString.append(", ID:").append(getID());
         }
-        if (getAtomicNumber() > 0) {
+        if (getAtomicNumber() != null) {
         	resultString.append(", AN:").append(getAtomicNumber());
         }
         resultString.append(')');
