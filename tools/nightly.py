@@ -1290,11 +1290,13 @@ if __name__ == '__main__':
     
     ## generate copyright summary
     print '  Generating copyright summary'
+    os.chdir(nightly_repo)
     cmd = 'ant checkCopyright > %s' % (os.path.join(nightly_web, 'copyright.log'))
     os.system(cmd)
     resultTable.addRow()
     resultTable.addCell("Copyrights")
     resultTable.addCell("""<a href="copyright.log">Summary</a>""")
+    os.chdir(nightly_dir)
 
     ## generate descriptor summary
     print '  Generating descriptor summary'
