@@ -39,7 +39,7 @@ xred                   # This keyword indicate that the location of the atoms
    0.0  0.0  0.0       # Triplet giving the REDUCED coordinate of atom 1.
    0.25 0.25 0.25      # Triplet giving the REDUCED coordinate of atom 2.
 
-#Gives the number of band, explicitely (do not take the default)
+#Gives the number of band, explicitly (do not take the default)
 nband  4               # For an insulator (if described correctly as an insulator 
                        # by DFT), there is no need to include conduction bands 
                        # in response-function calculations
