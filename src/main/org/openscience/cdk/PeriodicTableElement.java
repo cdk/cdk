@@ -369,28 +369,7 @@ public class PeriodicTableElement extends Element
         }
         return clone;
 	 }
-	 /**
-	 *  Configures an element. Finds the correct element type
-	 *  by looking at the element symbol.
-	 *
-	 *@param  elementPT   The element of the Periodic Table to be configure
-	 *@return element     The configured element
-	 */
-     @TestMethod("testConfigure")
-     public static Element configure(PeriodicTableElement elementPT)
-	 {
-		Element element = new Element(elementPT.getSymbol());
-		element.setSymbol(elementPT.getSymbol());
-		element.setAtomicNumber(elementPT.getAtomicNumber());
-		//element.setName(ElementInt.getName());
-		//element.setChemicalSerie(ElementInt.getChemicalSerie());
-		//element.setPeriod(ElementInt.getPeriod());
-		//element.setGroup(ElementInt.getGroup());
-		//element.setPhase(ElementInt.getPhase());
-		//element.setCASid(ElementInt.getCASid());
-		return element;
-	}
-
+    
     /**
      *
      *@return resultString  String
