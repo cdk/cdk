@@ -2293,7 +2293,7 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
     }
 
     /**
-     * Test if all elements up to and include Uranium have atom types.
+     * Test if all elements up to and including Uranium have atom types.
      * 
      * @throws Exception
      */
