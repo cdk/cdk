@@ -23,7 +23,7 @@
     <para>
       To create a new class called SetOfAtomContainers that will replace the
       use of SetOfMolecules in ChemModel. The SetOfMolecules will not
-      be removed but will be a sublass of SetOfAtomContainers, and will
+      be removed but will be a subclass of SetOfAtomContainers, and will
       keep the API it has now, in addition to the methods inherited.
     </para>
   </refsect1>
