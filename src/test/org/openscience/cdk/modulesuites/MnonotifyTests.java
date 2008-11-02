@@ -65,7 +65,7 @@ import org.openscience.cdk.nonotify.NNSingleElectronTest;
 import org.openscience.cdk.nonotify.NNStrandTest;
 
 /**
- * TestSuite that runs the Mnonotify tests.
+ * TestSuite that runs the tests from the nonotify module.
  *
  * @cdk.module  test-nonotify
  * @cdk.depends log4j.jar
