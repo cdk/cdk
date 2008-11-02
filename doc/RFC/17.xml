@@ -42,7 +42,7 @@ The addition of a field for the hybridization of an atom, implemented as an
   <refsect1>
     <title>Reason</title>
     <para>
-Sometimes it is usefull to hard code the hybridization of an atom.
+Sometimes it is useful to hard code the hybridization of an atom.
  SMILES, e.g. defines the hybridization in case lower case symbols are used,
  as in c1ccccc1 (cited from SMILES homepage: "The full SMILES language allows 
  sp2-hybridized atoms to be indicated by writing the atomic symbol in lower 
