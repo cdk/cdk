@@ -117,7 +117,7 @@ public class HydrogenPlacerTest extends CDKTestCase {
     
     /* This one tests adding hydrogens to all atoms of a molecule and doing the layout for them.
     *  It is intended for visually checking the work of HydrogenPlacer, not to be run
-    *  as a JUnit test. Thus the name withouth "test".
+    *  as a JUnit test. Thus the name without "test".
     */
 	public void visualFullMolecule2DEvaluation() throws Exception
 	{
