@@ -21,12 +21,12 @@
   <refsect1>
     <title>Proposal</title>
     <para>
-A API to be implemented by all CDK renderers and possible others, e.g.
+A API to be implemented by all CDK renders and possible others, e.g.
 Jmol's 3D renderer. The API would define how the renderer can be instantiated
-and how a molecule can be passed to the viewer that should be displayes by
+and how a molecule can be passed to the viewer that should be displayed by
 the viewer.</para>
 <para>
-At this moment CDK includes two working renderers (and one that does not
+At this moment CDK includes two working renders (and one that does not
 work, which is Renderer3D): AcceleratedRenderer3D and Renderer2D. Both should 
 use the same API proposed in this RFC.</para>
 
@@ -82,7 +82,7 @@ void setRenderer2DModel(Renderer2DModel)
 void stateChanged(EventObject)
 void paint(Graphics)
 ]]></programlisting>
-The renderers thus have:
+The renders thus have:
 <orderedlist>
   <listitem><para>a Panel/Canvas for display in a JFrame.</para></listitem>
   <listitem><para>either an implicit or explicit rendering engine</para></listitem>
@@ -91,7 +91,7 @@ The renderers thus have:
 
 <para>
 I propose it is the Panel/Canvas that needs the common API to achieve the
-ability to switch between renderers in GUI applications. The API I think of 
+ability to switch between renders in GUI applications. The API I think of 
 looks like:
 <orderedlist>
   <listitem><para>The class must subclass the java.awt.Component, or one of its
@@ -117,7 +117,7 @@ animation's e.g. stored as ChemSequence's.</para></listitem>
 
 <para>
 Also note that their is no defined interface for setting the RendererModel.
-At this stage I am unsure wether that would further easy the switching
+At this stage I am unsure whether that would further easy the switching
 process.
     </para>
   </refsect1>
@@ -125,7 +125,7 @@ process.
   <refsect1>
     <title>Reason</title>
     <para>To be able to switch between Renderer's it is necessary to be use them in a 
-similar way, using one API. Switching between renderer is usefull when users
+similar way, using one API. Switching between renderer is useful when users
 need an alternative view of the chemical data (2D display of 3D reaction), or
 when a certain Renderer is not available (non accelerated 3D if Java3D is not
 installed).</para>
