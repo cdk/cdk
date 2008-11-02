@@ -38,7 +38,7 @@
  more developers, containing a API description, like package names, class 
  organization, method names, etc. etc. RFC's will serve as a discussion 
  platform and as a documentation tool. The RFC may be changed during the 
- period of discussion on the developers mailling list 
+ period of discussion on the developers mailing list 
  (cdk-devel@li...).
       </para>
     </refsect2>
@@ -57,7 +57,7 @@
       </para>
       
       <para>
- Filled in CFVs are returned by email to the developers mailling list, and are 
+ Filled in CFVs are returned by email to the developers mailing list, and are 
  preferably signed with a PGP/GnuPG key known by free keyservers. One can only 
  vote in favor (YES) or against (NO) the acceptance of a RFC, and the majority 
  of votes count.
@@ -98,7 +98,7 @@
 
        <para>
  The proper RFC number and title must be given as well as a link to the final 
- RFC and the date on which the final RFC was sent to the developers mailling 
+ RFC and the date on which the final RFC was sent to the developers mailing 
  list. 
  </para>
  </refsect2>
