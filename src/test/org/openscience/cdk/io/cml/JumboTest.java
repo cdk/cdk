@@ -42,7 +42,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * TestCase for the reading CML files using a few test files
+ * TestCase for reading CML files using a few test files
  * in data/cmltest as found in the original Jumbo3 release
  * (http://www.xml-cml.org/).
  *
