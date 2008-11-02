@@ -421,7 +421,7 @@ R
  /ATOPROP      1    4
 B1D0
 [1=TRUE, 0=FALSE]
-Atom can form a kation in heterolytic bond cleavages  [0 = false, 1 = true]
+Atom can form a cation in heterolytic bond cleavages  [0 = false, 1 = true]
 L
  /B1D0         6    6
  1
