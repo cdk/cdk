@@ -1288,6 +1288,15 @@ if __name__ == '__main__':
         resultTable.addCell(copyLogFile('javadoc.log', nightly_dir, nightly_web))
     resultTable.addRule()
     
+    ## generate copyright summary
+    print '  Generating copyright summary'
+    cmd = 'ant checkCopyright > %s' % (os.path.join(nightly_web, 'copyright.log'))
+    os.system(cmd)
+    resultTable.addRow()
+    resultTable.addCell("Copyrights")
+    resultTable.addCell("""<a href="copyright.log">Summary</a>""")
+
+    ## generate descriptor summary
     print '  Generating descriptor summary'
     distjar = glob.glob(os.path.join(nightly_repo, 'dist', 'jar', 'cdk-svn-*'))[0]
     cmd = 'java -cp %s:%s bsh.Interpreter %s > %s' % \
