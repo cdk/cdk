@@ -35,7 +35,7 @@ to the AtomType class.
     <title>Reason</title>
     <para>
 A formal charge is something more related to an atom type than to an actual 
- instance. The field will still be accesible from the Atom class too, because 
+ instance. The field will still be accessible from the Atom class too, because 
  it inherits from AtomType. The move, however, will allow atom types to be 
  described with a formal charge.
     </para>
