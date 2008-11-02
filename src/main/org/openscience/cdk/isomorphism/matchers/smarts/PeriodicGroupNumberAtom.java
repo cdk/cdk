@@ -59,7 +59,7 @@ public class PeriodicGroupNumberAtom extends SMARTSAtom {
 	 */
 	public boolean matches(IAtom atom) {
 		String symbol = atom.getSymbol();
-        int group = Integer.parseInt(PeriodicTable.getGroup(symbol));
+        int group = PeriodicTable.getGroup(symbol);
         return group == this.groupNumber;
     }
 

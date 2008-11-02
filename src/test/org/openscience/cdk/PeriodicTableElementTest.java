@@ -23,18 +23,15 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.diff.ElementDiff;
 
 /**
  * @cdk.module test-extra
  */
 public class PeriodicTableElementTest extends CDKTestCase {
-    private static PeriodicTableElement periodicTableElement;
 
     @BeforeClass
     public static void setUp() {
-        periodicTableElement = new PeriodicTableElement("C");
     }
 
     @Test
@@ -98,14 +95,13 @@ public class PeriodicTableElementTest extends CDKTestCase {
     /**
      * @cdk.bug 2192238
      */
-    @Test(expected = CDKException.class)
     public void testGroup() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
-        pte.setGroup("14");
-        Assert.assertEquals("14", pte.getGroup());
+        pte.setGroup(14);
+        Assert.assertEquals(14, pte.getGroup(),0.01);
 
-        pte.setGroup("VI");
-        pte.setGroup("1875");
+//        pte.setGroup("VI");
+//        pte.setGroup("1875");
     }
 
     @Test
@@ -118,8 +114,8 @@ public class PeriodicTableElementTest extends CDKTestCase {
     @Test
     public void testPeriod() {
         PeriodicTableElement pte = new PeriodicTableElement("C");
-        pte.setPeriod("4");
-        Assert.assertEquals("4", pte.getPeriod());
+        pte.setPeriod(4);
+        Assert.assertEquals(4, pte.getPeriod(),0.01);
     }
 
     @Test
@@ -136,21 +132,9 @@ public class PeriodicTableElementTest extends CDKTestCase {
         Assert.assertEquals("PeriodicTableElement(C, AN:0, N:null, CS:null, P:null, G:null, Ph:null, CAS:null, VdW:null, Cov:null, Eneg:null)",
         		pte.toString());
 
-        pte.setGroup("14");
+        pte.setGroup(14);
         pte.setPhase("solid");
         Assert.assertEquals("PeriodicTableElement(C, AN:0, N:null, CS:null, P:null, G:14, Ph:solid, CAS:null, VdW:null, Cov:null, Eneg:null)",
         		pte.toString());
     }
-
-    /**
-     * @cdk.bug 2192317
-     */
-    @Test
-    public void testConfigure() {
-        PeriodicTableElement pte = new PeriodicTableElement("C");
-        Element elem = PeriodicTableElement.configure(pte);
-        Assert.assertEquals("C", elem.getSymbol());
-        Assert.assertEquals(6, elem.getAtomicNumber().intValue());
-    }
-
 }

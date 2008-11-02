@@ -83,14 +83,14 @@ public class PeriodicTableElement extends Element
 	/** The period which this element belong. 
 	*  In the periodic table of the elements, a period is a row of the table.
 	*/
-	protected String period;
+	protected Integer period = (Integer) CDKConstants.UNSET;
 	
 	/** The group which this element belong.
 	*  In the periodic table of the elements, a period is a row of the table.
 	*  the elements in a same group have similar configurations of the outermost 
   	*    electron shells of their atoms
 	*/
-  	protected String group;
+  	protected Integer group = (Integer) CDKConstants.UNSET;
   	  
   	/** The phase which this element find.
   	*   In the physical sciences, a phase is a set of states of a macroscopic 
@@ -193,7 +193,7 @@ public class PeriodicTableElement extends Element
 	* @see    #setPeriod
 	*/
     @TestMethod("testPeriod")
-    public String getPeriod()
+    public int getPeriod()
 	{
 		return this.period;
 	}
@@ -206,7 +206,7 @@ public class PeriodicTableElement extends Element
 	* @see    #getPeriod
 	*/
     @TestMethod("testPeriod")
-    public void setPeriod(String period)
+    public void setPeriod(Integer period)
 	{
 		this.period = period;
 		notifyChanged();
@@ -220,7 +220,7 @@ public class PeriodicTableElement extends Element
 	* @see    #setGroup
 	*/
     @TestMethod("testGroup")
-    public String getGroup()
+    public Integer getGroup()
 	{
 		return this.group;
 	}
@@ -233,7 +233,7 @@ public class PeriodicTableElement extends Element
 	* @see    #getGroup
 	*/
     @TestMethod("testGroup")
-    public void setGroup(String group)
+    public void setGroup(Integer group)
 	{
 		this.group = group;
 		notifyChanged();
