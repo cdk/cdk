@@ -4,7 +4,7 @@
  *  $Date: 2008-07-18 13:16:08 -0400 (Fri, 18 Jul 2008) $
  *  $Revision: 11645 $
  *
- *  Copyright (C) 2008 Rajarshi Guha
+ *  Copyright (C) 2008 Rajarshi Guha  <rajarshi@users.sourceforge.net>
  *
  *  Contact: rajarshi@users.sourceforge.net
  *
