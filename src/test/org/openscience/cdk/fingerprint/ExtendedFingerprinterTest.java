@@ -24,27 +24,21 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.io.InputStream;
-import java.util.BitSet;
-import java.util.List;
-
-import javax.vecmath.Point2d;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.*;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.diff.AtomContainerDiff;
+
+import javax.vecmath.Point2d;
+import java.io.InputStream;
+import java.util.BitSet;
+import java.util.List;
 
 /**
  * @cdk.module test-fingerprint
@@ -363,5 +357,31 @@ public class ExtendedFingerprinterTest extends CDKTestCase {
 		Assert.assertFalse(isSubset);
 		Assert.assertFalse(isSubset2);
 	}
+
+    /**
+     * @cdk.bug 2219597
+     * @throws CDKException
+     * @throws CloneNotSupportedException
+     */
+    @Test
+    public void testMoleculeInvariance() throws CDKException, CloneNotSupportedException {
+        IAtomContainer mol = MoleculeFactory.makePyrrole();
+        IAtomContainer clone = (IAtomContainer) mol.clone();
+
+        // should pass since we have not explicitly detected aromaticity
+        for (IAtom atom : mol.atoms()) {
+            Assert.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
+        }
+        
+        String diff1 = AtomContainerDiff.diff(mol, clone);
+        Assert.assertTrue(diff1.equals(""));
+
+        ExtendedFingerprinter fprinter = new ExtendedFingerprinter();
+        BitSet fp = fprinter.getFingerprint(mol);
+        Assert.assertNotNull(fp);
+
+        String diff2 = AtomContainerDiff.diff(mol, clone);
+        Assert.assertTrue(diff2.equals(""));
+    }
 }
 
