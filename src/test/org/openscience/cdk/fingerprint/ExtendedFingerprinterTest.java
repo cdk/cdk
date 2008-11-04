@@ -381,7 +381,7 @@ public class ExtendedFingerprinterTest extends CDKTestCase {
         Assert.assertNotNull(fp);
 
         String diff2 = AtomContainerDiff.diff(mol, clone);
-        Assert.assertTrue(diff2.equals(""));
+        Assert.assertTrue("There was a difference\n"+diff2, diff2.equals(""));
     }
 }
 
