@@ -52,7 +52,7 @@ public class LonePairElectronCheckerTest extends CDKTestCase {
     /**
     *  The JUnit setup method
     */
-    @BeforeClass public void setUp() throws Exception {
+    @BeforeClass public static void setUp() throws Exception {
     	lpcheck = new LonePairElectronChecker();
     }
 
