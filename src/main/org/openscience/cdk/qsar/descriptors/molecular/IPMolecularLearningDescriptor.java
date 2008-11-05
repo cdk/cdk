@@ -20,11 +20,15 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -37,17 +41,12 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.IonizationPotentialTool;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 /**
  *  This class returns the ionization potential of a molecule. Up to now is
  *  only possible for atomContainers which contain; see IPAtomicDescriptor and
  *  IPBondDescriptor.
  *
  * The descriptor assumes that explicit hydrogens have been added to the molecule
- *
- * TODO: IP: Include the ionization for bonds
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -175,17 +174,28 @@ public class IPMolecularLearningDescriptor implements IMolecularDescriptor {
      *@return                   The 1, 2, .. ionization energies
      *@exception  CDKException  Possible Exceptions
      */
-    @TestMethod(value="testCalculate_IAtomContainer")
+    @TestMethod(value="testCalculatePlus_IAtomContainer")
     public DescriptorValue calculatePlus(IAtomContainer container) throws CDKException {
 
         ArrayList<Double> dar = new ArrayList<Double>();
         for(Iterator<IAtom> itA = container.atoms().iterator(); itA.hasNext();){
             IAtom atom = itA.next();
-    		double value = IonizationPotentialTool.predictIP(container,atom);
-    		if(value != 0)
+            double value = IonizationPotentialTool.predictIP(container,atom);
+            if(value != 0)
     			dar.add(value);
         }
-        
+        for(Iterator<IBond> itB = container.bonds().iterator(); itB.hasNext();){
+            IBond bond = itB.next();
+            if(bond.getOrder() == IBond.Order.DOUBLE 
+            		& bond.getAtom(0).getSymbol().equals("C")
+            		& bond.getAtom(1).getSymbol().equals("C")){
+            	double value = IonizationPotentialTool.predictIP(container,bond);
+                if(value != 0)
+            		dar.add(value);
+                
+            }
+        }
+
         DoubleArrayResult results = arrangingEnergy(dar);
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,

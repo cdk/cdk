@@ -60,6 +60,9 @@ public class ElementPTHandler extends DefaultHandler
 	private final int SCALAR_PERIOD = 5;
 	private final int SCALAR_GROUP = 6;
 	private final int SCALAR_PHASE = 7;
+	private final int SCALAR_RADCOV = 8;
+	private final int SCALAR_RADVDW = 9;
+	private final int SCALAR_PAULE = 10;
 	private int scalarType;
 	private LoggingTool logger;
 	private String currentChars;
@@ -99,24 +102,38 @@ public class ElementPTHandler extends DefaultHandler
 		if ("elementType".equals(local)) 
 		{
 			elements.add(elementType);
-		} else if ("scalar".equals(local)) {
+		} else if ("label".equals(local)) {
 			currentChars.trim();
 			try {
-				if (scalarType == LABEL_CAS){
+				if (scalarType == LABEL_CAS)
 					elementType.setCASid(currentChars);
-				} else if (scalarType == SCALAR_NAME){
+				} catch (NumberFormatException exception) {
+					logger.error("The abundance value is incorrect: ", currentChars);
+					logger.debug(exception);
+				}
+			
+		}else if ("scalar".equals(local)) {
+			currentChars.trim();
+			try {
+				if (scalarType == SCALAR_NAME){
 					elementType.setName(currentChars);
 				} else if (scalarType == SCALAR_ATOMICNUMBER) {
 					elementType.setAtomicNumber(Integer.parseInt(currentChars));
 				} else if (scalarType == SCALAR_CHEMICALSERIE) {
 					elementType.setChemicalSerie(currentChars);
 				} else if (scalarType == SCALAR_PERIOD) {
-					elementType.setPeriod(currentChars);
+					elementType.setPeriod(Integer.parseInt(currentChars));
 				} else if (scalarType == SCALAR_GROUP) {
-					elementType.setGroup(currentChars);
+					elementType.setGroup(Integer.parseInt(currentChars));
 				} else if (scalarType == SCALAR_PHASE) {
 					elementType.setPhase(currentChars);
-				}
+				}else if (scalarType == SCALAR_RADCOV) {
+					elementType.setCovalentRadius(Double.parseDouble(currentChars));
+				}else if (scalarType == SCALAR_RADVDW) {
+					elementType.setVdwRadius(Double.parseDouble(currentChars));
+				} else if (scalarType == SCALAR_PAULE) {
+					elementType.setPaulingEneg(Double.parseDouble(currentChars));
+				}  
 			} catch (NumberFormatException exception) {
 				logger.error("The abundance value is incorrect: ", currentChars);
 				logger.debug(exception);
@@ -141,12 +158,18 @@ public class ElementPTHandler extends DefaultHandler
 					elementType = new PeriodicTableElement(atts.getValue(i));
 				}
 			}
-		} else if ("scalar".equals(local)) 
+		}else if ("label".equals(local)){
 			for (int i = 0; i < atts.getLength(); i++) {
 				if ("dictRef".equals(atts.getQName(i))) {
 					if ("cas:id".equals(atts.getValue(i))) {
 						scalarType = LABEL_CAS;
-					} else if ("cdk:name".equals(atts.getValue(i))) {
+					}
+				}
+			}
+		}else if ("scalar".equals(local)) 
+			for (int i = 0; i < atts.getLength(); i++) {
+				if ("dictRef".equals(atts.getQName(i))) {
+					if ("cdk:name".equals(atts.getValue(i))) {
 						scalarType = SCALAR_NAME;
 					} else if ("cdk:atomicNumber".equals(atts.getValue(i))) {
 						scalarType = SCALAR_ATOMICNUMBER;
@@ -160,6 +183,12 @@ public class ElementPTHandler extends DefaultHandler
 						scalarType = SCALAR_GROUP;
 					} else if ("cdk:phase".equals(atts.getValue(i))) {
 						scalarType = SCALAR_PHASE;
+					} else if ("cdk:radiiCova".equals(atts.getValue(i))) {
+						scalarType = SCALAR_RADCOV;
+					} else if ("cdk:radiiVdw".equals(atts.getValue(i))) {
+						scalarType = SCALAR_RADVDW;
+					} else if ("cdk:paulingE".equals(atts.getValue(i))) {
+						scalarType = SCALAR_PAULE;
 					}
 					
 				}

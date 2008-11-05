@@ -3,7 +3,7 @@
  * $Date$
  * $Revision$
  *
- * Copyright (C) 2007  Todd Martin (Environmental Protection Agency)
+ * Copyright (C) 2007  Todd Martin (Environmental Protection Agency)  <Martin.Todd@epamail.epa.gov>
  * Copyright (C) 2007  Nikolay Kochev <nick@argon.acad.bg>
  *
  * Contact: cdk-devel@lists.sourceforge.net

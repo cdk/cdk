@@ -26,11 +26,13 @@ package org.openscience.cdk.config;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OptionalDataException;
 import java.util.List;
 
 import org.openscience.cdk.PeriodicTableElement;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.elements.ElementPTReader;
+import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -45,6 +47,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @cdk.module     extra
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.config.ElementPTFactoryTest")
 public class ElementPTFactory
 {
 
@@ -57,10 +60,8 @@ public class ElementPTFactory
 	 * Private constructor for the ElementPTFactory object.
 	 *
 	 *@exception  IOException  A problem with reading the chemicalElements.xml file
-	 *@exception  OptionalDataException   Unexpected data appeared in the isotope ObjectInputStream
-	 *@exception  ClassNotFoundException  A problem instantiating the isotopes
 	 */
-	private ElementPTFactory() throws IOException, OptionalDataException,ClassNotFoundException
+	private ElementPTFactory() throws IOException
 	{
 		logger = new LoggingTool(this);
 		logger.info("Creating new ElementPTFactory");
@@ -92,10 +93,9 @@ public class ElementPTFactory
 	 *
 	 *@return                             The instance value
 	 *@exception  IOException             Description of the Exception
-	 *@exception  OptionalDataException   Description of the Exception
-	 *@exception  ClassNotFoundException  Description of the Exception
 	 */
-	public static ElementPTFactory getInstance() throws IOException, OptionalDataException, ClassNotFoundException
+    @TestMethod("testGetInstance")
+	public static ElementPTFactory getInstance() throws IOException
 	{
 		if (efac == null) 
 		{
@@ -110,6 +110,7 @@ public class ElementPTFactory
 	 *
 	 *@return    The size value
 	 */
+    @TestMethod("testGetSize")
 	public int getSize()
 	{
 		return elements.size();
@@ -121,6 +122,7 @@ public class ElementPTFactory
      * @return  A Vector of PeriodicTableElement objects
      * @see org.openscience.cdk.PeriodicTableElement
      */
+    @TestMethod("testGetElements")
     public List<PeriodicTableElement> getElements() {
         return elements;
     }
@@ -131,6 +133,7 @@ public class ElementPTFactory
 	 *@param  symbol  An element symbol to search for
 	 *@return         An array of element that matches the given element symbol
 	 */
+    @TestMethod("testGetElement_String")
 	public PeriodicTableElement getElement(String symbol) {
         for (PeriodicTableElement element : elements) {
             if (element.getSymbol().equals(symbol)) {
@@ -144,25 +147,15 @@ public class ElementPTFactory
         }
         return null;
 	}
-
+    
 	/**
-	* Checks whether the given element exists.
-	*
-	* @param  elementName   The element name to test
-	* @return               True is the element exists, false otherwise
-	*/
-	public boolean isElement(String elementName) 
-	{
-		return (getElement(elementName) != null);
-	}
-
-	/**
-	 *  Configures an element. Finds the correct element type
+	 *  Configures a PeriodicTableElement. Finds the correct element type
 	 *  by looking at the element symbol.
 	 *
-	 *@param  element     The element to be configure
-	 *@return             The configured atom
+	 *@param  element     The PeriodicTableElement to be configure
+	 *@return             The configured PeriodicTableElement
 	 */
+    @TestMethod("testConfigure_PeriodicTableElement")
 	public PeriodicTableElement configure(PeriodicTableElement element)
 	{
 		PeriodicTableElement elementInt = getElement(element.getSymbol());
@@ -177,7 +170,138 @@ public class ElementPTFactory
 		element.setCASid(elementInt.getCASid());
 		return element;
 	}
+	/**
+	 *  Configures a IElement given a PeridicTableElement. 
+	 *
+	 *@param  elementPT   The element of the Periodic Table to be configure
+	 *@return element     The configured element
+	 */
+    @TestMethod("testConfigureE_PeriodicTableElement")
+	public IElement configureE(PeriodicTableElement elementPT)
+	{
+		IElement element = elementPT.getBuilder().newElement(elementPT.getSymbol());
+		element.setSymbol(elementPT.getSymbol());
+		element.setAtomicNumber(elementPT.getAtomicNumber());
+		return element;
+	}
+	
+	/**
+	 *  Gets the atomic number of this element in the periodic table.
+	 *
+	 * @param  element                     The PeriodicTableElement object
+	 * @return                             The atomic number value
+	 */
+    @TestMethod("testGetAtomicNumber_PeriodicTableElement")
+	public double getAtomicNumber(PeriodicTableElement element){
+    	PeriodicTableElement elementInt = getElement(element.getSymbol());
+		return elementInt.getAtomicNumber();
+	}
 
+    /**
+	 *  Gets the name of this element in the periodic table.
+	 *
+	 * @param  element                     The PeriodicTableElement object
+	 * @return                             The name value of this element
+	 */
+    @TestMethod("testGetName_PeriodicTableElement")
+	public String getName(PeriodicTableElement element){
+    	PeriodicTableElement elementInt = getElement(element.getSymbol());
+		return elementInt.getName();
+	}
 
+    /**
+	 *  Gets the chemical serie of this element in the periodic table.
+	 *
+	 * @param  element                     The PeriodicTableElement object
+	 * @return                             The chemical serie value of this element
+	 */
+    @TestMethod("testGetChemicalSerie_PeriodicTableElement")
+	public String getChemicalSerie(PeriodicTableElement element){
+    	PeriodicTableElement elementInt = getElement(element.getSymbol());
+		return elementInt.getChemicalSerie();
+	}
+    
+    /**
+	 *  Gets the period of this element in the periodic table.
+	 *
+	 * @param  element                     The PeriodicTableElement object
+	 * @return                             The period value of this element
+	 */
+    @TestMethod("testGetPeriod_PeriodicTableElement")
+	public int getPeriod(PeriodicTableElement element){
+    	PeriodicTableElement elementInt = getElement(element.getSymbol());
+		return elementInt.getPeriod();
+	}
+    
+    /**
+	 *  Gets the group of this element in the periodic table.
+	 *
+	 * @param  element                     The PeriodicTableElement object
+	 * @return                             The group value of this element
+	 */
+    @TestMethod("testGetGroup_PeriodicTableElement")
+	public int getGroup(PeriodicTableElement element){
+    	PeriodicTableElement elementInt = getElement(element.getSymbol());
+		return elementInt.getGroup();
+	}
+
+    /**
+	 *  Gets the phase of this element in the periodic table.
+	 *
+	 * @param  element                     The PeriodicTableElement object
+	 * @return                             The phase value of this element
+	 */
+    @TestMethod("testGetPhase_PeriodicTableElement")
+	public String getPhase(PeriodicTableElement element){
+    	PeriodicTableElement elementInt = getElement(element.getSymbol());
+		return elementInt.getPhase();
+	}
+
+    /**
+	 *  Gets the CAS id of this element in the periodic table.
+	 *
+	 * @param  element                     The PeriodicTableElement object
+	 * @return                             The CASE id value of this element
+	 */
+    @TestMethod("testGetCASid_PeriodicTableElement")
+	public String getCASid(PeriodicTableElement element){
+    	PeriodicTableElement elementInt = getElement(element.getSymbol());
+		return elementInt.getCASid();
+	}
+
+    /**
+	 *  Gets the Vdw radios of this element in the periodic table.
+	 *
+	 * @param  element                     The PeriodicTableElement object
+	 * @return                             The Vdw radio value of this element
+	 */
+    @TestMethod("testGetVdwRadius_PeriodicTableElement")
+	public double getVdwRadius(PeriodicTableElement element){
+    	PeriodicTableElement elementInt = getElement(element.getSymbol());
+		return elementInt.getVdwRadius();
+	}
+
+    /**
+	 *  Gets the covalent radios of this element in the periodic table.
+	 *
+	 * @param  element                     The PeriodicTableElement object
+	 * @return                             The covalent radio value of this element
+	 */
+    @TestMethod("testGetCovalentRadius_PeriodicTableElement")
+	public double getCovalentRadius(PeriodicTableElement element){
+    	PeriodicTableElement elementInt = getElement(element.getSymbol());
+		return elementInt.getCovalentRadius();
+	}
+    /**
+	 *  Gets the Pauling Electronegativity radios of this element in the periodic table.
+	 *
+	 * @param  element                     The PeriodicTableElement object
+	 * @return                             The Pauling Electronegativity value of this element
+	 */
+    @TestMethod("testGetPaulingEneg_PeriodicTableElement")
+	public double getPaulingEneg(PeriodicTableElement element){
+    	PeriodicTableElement elementInt = getElement(element.getSymbol());
+		return elementInt.getPaulingEneg();
+	}
 }
 
