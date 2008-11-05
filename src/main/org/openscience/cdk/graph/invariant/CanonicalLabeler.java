@@ -127,7 +127,7 @@ public class CanonicalLabeler {
       inv.append(atomContainer.getConnectedAtomsList(a).size() +
               (a.getHydrogenCount() == CDKConstants.UNSET ? 0 : a.getHydrogenCount())); //Num connections
       inv.append(atomContainer.getConnectedAtomsList(a).size());                        //Num of non H bonds
-      inv.append(a.getAtomicNumber());                                              //Atomic number
+      inv.append(a.getAtomicNumber() == CDKConstants.UNSET ? 0 : a.getAtomicNumber());  //Atomic number
 
       Double charge = a.getCharge();
         if (charge == CDKConstants.UNSET) charge = 0.0;

@@ -44,10 +44,10 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class SimpleCycleBasisTest extends CDKTestCase {
 
-	SimpleGraph g;
-	SimpleCycleBasis basis;
+	private static SimpleGraph g;
+	private static SimpleCycleBasis basis;
 
-	@BeforeClass public void setUp() {
+	@BeforeClass public static void setUp() {
 		g = new SimpleGraph();
 		g.addVertex( "a" );
 		g.addVertex( "b" );
