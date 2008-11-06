@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.FingerprintCoverageTest;
 import org.openscience.cdk.fingerprint.EStateFingerprinterTest;
 import org.openscience.cdk.fingerprint.ExtendedFingerprinterTest;
@@ -35,18 +34,11 @@ import org.openscience.cdk.fingerprint.MACCSFingerprinterTest;
  * @cdk.module  test-fingerprint
  * @cdk.depends junit.jar
  */
-public class MfingerprintTests {
-
-    public static Test suite() {
-        TestSuite suite= new TestSuite("All CDK fingerprint Tests");
-
-        suite.addTest(FingerprintCoverageTest.suite());
-        
-        suite.addTest(new JUnit4TestAdapter(ExtendedFingerprinterTest.class));
-        suite.addTest(new JUnit4TestAdapter(MACCSFingerprinterTest.class));
-        suite.addTest(new JUnit4TestAdapter(EStateFingerprinterTest.class));
-
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    FingerprintCoverageTest.class,
+    ExtendedFingerprinterTest.class,
+    MACCSFingerprinterTest.class,
+    EStateFingerprinterTest.class
+})
+public class MfingerprintTests {}

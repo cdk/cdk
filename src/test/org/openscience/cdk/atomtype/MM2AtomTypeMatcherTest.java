@@ -24,8 +24,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -57,10 +55,6 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 	
     private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
 
-    public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(MM2AtomTypeMatcherTest.class);
-    }
-	
     @BeforeClass public static void setUp() throws Exception {
     	logger = new LoggingTool(MM2AtomTypeMatcherTest.class);
     	

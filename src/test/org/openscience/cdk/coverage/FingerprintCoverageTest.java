@@ -20,9 +20,8 @@
  */
 package org.openscience.cdk.coverage;
 
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * TestSuite that tests if all public methods in the diff
@@ -34,23 +33,12 @@ public class FingerprintCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "fingerprint.javafiles";
     
-    public FingerprintCoverageTest(String name) {
-        super(name);
+    @BeforeClass public static void setUp() throws Exception {
+        loadClassList(CLASS_LIST, FingerprintCoverageTest.class.getClassLoader());
     }
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        super.loadClassList(CLASS_LIST);
-    }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTestSuite(FingerprintCoverageTest.class);
-        return suite;
-    }
-
-    public void testCoverage() {
-        assertTrue(super.runCoverageTest());
+    @Test public void testCoverage() {
+        super.runCoverageTest();
     }
 
 }

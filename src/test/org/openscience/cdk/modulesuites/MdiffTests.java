@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.DiffCoverageTest;
 import org.openscience.cdk.tools.diff.AtomContainerDiffTest;
 import org.openscience.cdk.tools.diff.AtomDiffTest;
@@ -53,42 +52,34 @@ import org.openscience.cdk.tools.diff.tree.StringDifferenceTest;
  *
  * @cdk.module test-diff
  */
-public class MdiffTests {
-
-    public static Test suite () {
-        TestSuite suite= new TestSuite("The CDK diff module Tests");
-
-        suite.addTest(new JUnit4TestAdapter(DiffCoverageTest.class));	
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    DiffCoverageTest.class, 
         
-        // cdk.tools.diff
-        suite.addTest(new JUnit4TestAdapter(AtomDiffTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomTypeDiffTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChemObjectDiffTest.class));
-        suite.addTest(new JUnit4TestAdapter(ElectronContainerDiffTest.class));
-        suite.addTest(new JUnit4TestAdapter(ElementDiffTest.class));
-        suite.addTest(new JUnit4TestAdapter(IsotopeDiffTest.class));
-        suite.addTest(new JUnit4TestAdapter(BondDiffTest.class));
-        suite.addTest(new JUnit4TestAdapter(LonePairDiffTest.class));
-        suite.addTest(new JUnit4TestAdapter(SingleElectronDiffTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomContainerDiffTest.class));
+    // cdk.tools.diff
+    AtomDiffTest.class,
+    AtomTypeDiffTest.class,
+    ChemObjectDiffTest.class,
+    ElectronContainerDiffTest.class,
+    ElementDiffTest.class,
+    IsotopeDiffTest.class,
+    BondDiffTest.class,
+    LonePairDiffTest.class,
+    SingleElectronDiffTest.class,
+    AtomContainerDiffTest.class,
 
-        // cdk.tools.diff.tree
-        suite.addTest(new JUnit4TestAdapter(AbstractDifferenceTest.class));
-        suite.addTest(new JUnit4TestAdapter(AbstractDifferenceListTest.class));
-        
-        suite.addTest(new JUnit4TestAdapter(ChemObjectDifferenceTest.class));
-
-        suite.addTest(new JUnit4TestAdapter(BooleanDifferenceTest.class));
-        suite.addTest(new JUnit4TestAdapter(BooleanArrayDifferenceTest.class));
-        suite.addTest(new JUnit4TestAdapter(DoubleDifferenceTest.class));
-        suite.addTest(new JUnit4TestAdapter(IntegerDifferenceTest.class));
-        suite.addTest(new JUnit4TestAdapter(StringDifferenceTest.class));
-        suite.addTest(new JUnit4TestAdapter(BondOrderDifferenceTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomTypeHybridizationDifferenceTest.class));
-        suite.addTest(new JUnit4TestAdapter(Point2dDifferenceTest.class));
-        suite.addTest(new JUnit4TestAdapter(Point3dDifferenceTest.class));
-
-        return suite;
-    }
-
-}
+    // cdk.tools.diff.tree
+    AbstractDifferenceTest.class,
+    AbstractDifferenceListTest.class,
+    ChemObjectDifferenceTest.class,
+    BooleanDifferenceTest.class,
+    BooleanArrayDifferenceTest.class,
+    DoubleDifferenceTest.class,
+    IntegerDifferenceTest.class,
+    StringDifferenceTest.class,
+    BondOrderDifferenceTest.class,
+    AtomTypeHybridizationDifferenceTest.class,
+    Point2dDifferenceTest.class,
+    Point3dDifferenceTest.class
+})
+public class MdiffTests {}

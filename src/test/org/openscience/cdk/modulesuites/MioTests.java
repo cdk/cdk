@@ -23,154 +23,263 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.IoCoverageTest;
-import org.openscience.cdk.io.*;
+import org.openscience.cdk.io.CDKSourceCodeWriterTest;
+import org.openscience.cdk.io.CIFReaderTest;
+import org.openscience.cdk.io.CTXReaderTest;
+import org.openscience.cdk.io.ChemObjectIOInstantionTests;
+import org.openscience.cdk.io.CrystClustReaderTest;
+import org.openscience.cdk.io.GamessReaderTest;
+import org.openscience.cdk.io.Gaussian98ReaderTest;
+import org.openscience.cdk.io.GhemicalReaderTest;
+import org.openscience.cdk.io.HINReaderTest;
+import org.openscience.cdk.io.INChIPlainTextReaderTest;
+import org.openscience.cdk.io.INChIReaderTest;
+import org.openscience.cdk.io.MDLRXNReaderTest;
+import org.openscience.cdk.io.MDLRXNV2000ReaderTest;
+import org.openscience.cdk.io.MDLRXNV3000ReaderTest;
+import org.openscience.cdk.io.MDLRXNWriterTest;
+import org.openscience.cdk.io.MDLReaderTest;
+import org.openscience.cdk.io.MDLV2000ReaderTest;
+import org.openscience.cdk.io.MDLV3000ReaderTest;
+import org.openscience.cdk.io.MDLWriterTest;
+import org.openscience.cdk.io.Mol2ReaderTest;
+import org.openscience.cdk.io.PCCompoundASNReaderTest;
+import org.openscience.cdk.io.PDBWriterTest;
+import org.openscience.cdk.io.PMPReaderTest;
+import org.openscience.cdk.io.ReaderFactoryTest;
+import org.openscience.cdk.io.SDFReaderTest;
+import org.openscience.cdk.io.ShelXReaderTest;
+import org.openscience.cdk.io.WriterFactoryTest;
+import org.openscience.cdk.io.XYZReaderTest;
+import org.openscience.cdk.io.XYZWriterTest;
 import org.openscience.cdk.io.cml.CMLIOTests;
-import org.openscience.cdk.io.formats.*;
-import org.openscience.cdk.io.iterator.*;
+import org.openscience.cdk.io.formats.ABINITFormatTest;
+import org.openscience.cdk.io.formats.ADFFormatTest;
+import org.openscience.cdk.io.formats.Aces2FormatTest;
+import org.openscience.cdk.io.formats.AlchemyFormatTest;
+import org.openscience.cdk.io.formats.BGFFormatTest;
+import org.openscience.cdk.io.formats.BSFormatTest;
+import org.openscience.cdk.io.formats.CACheFormatTest;
+import org.openscience.cdk.io.formats.CIFFormatTest;
+import org.openscience.cdk.io.formats.CMLFormatTest;
+import org.openscience.cdk.io.formats.CMLRSSFormatTest;
+import org.openscience.cdk.io.formats.CRK2DFormatTest;
+import org.openscience.cdk.io.formats.CRK3DFormatTest;
+import org.openscience.cdk.io.formats.CTXFormatTest;
+import org.openscience.cdk.io.formats.CacaoCartesianFormatTest;
+import org.openscience.cdk.io.formats.CacaoInternalFormatTest;
+import org.openscience.cdk.io.formats.Chem3D_Cartesian_1FormatTest;
+import org.openscience.cdk.io.formats.Chem3D_Cartesian_2FormatTest;
+import org.openscience.cdk.io.formats.ChemDrawFormatTest;
+import org.openscience.cdk.io.formats.ChemtoolFormatTest;
+import org.openscience.cdk.io.formats.CrystClustFormatTest;
+import org.openscience.cdk.io.formats.DMol3FormatTest;
+import org.openscience.cdk.io.formats.DOCK5FormatTest;
+import org.openscience.cdk.io.formats.DaltonFormatTest;
+import org.openscience.cdk.io.formats.FenskeHall_ZMatrixFormatTest;
+import org.openscience.cdk.io.formats.GROMOS96FormatTest;
+import org.openscience.cdk.io.formats.GamessFormatTest;
+import org.openscience.cdk.io.formats.Gaussian03FormatTest;
+import org.openscience.cdk.io.formats.Gaussian90FormatTest;
+import org.openscience.cdk.io.formats.Gaussian92FormatTest;
+import org.openscience.cdk.io.formats.Gaussian94FormatTest;
+import org.openscience.cdk.io.formats.Gaussian95FormatTest;
+import org.openscience.cdk.io.formats.Gaussian98FormatTest;
+import org.openscience.cdk.io.formats.GhemicalMMFormatTest;
+import org.openscience.cdk.io.formats.GhemicalSPMFormatTest;
+import org.openscience.cdk.io.formats.HINFormatTest;
+import org.openscience.cdk.io.formats.INChIFormatTest;
+import org.openscience.cdk.io.formats.INChIPlainTextFormatTest;
+import org.openscience.cdk.io.formats.JMEFormatTest;
+import org.openscience.cdk.io.formats.JaguarFormatTest;
+import org.openscience.cdk.io.formats.MDLFormatTest;
+import org.openscience.cdk.io.formats.MDLRXNFormatTest;
+import org.openscience.cdk.io.formats.MDLRXNV3000FormatTest;
+import org.openscience.cdk.io.formats.MDLV2000FormatTest;
+import org.openscience.cdk.io.formats.MDLV3000FormatTest;
+import org.openscience.cdk.io.formats.MMODFormatTest;
+import org.openscience.cdk.io.formats.MOPAC2002FormatTest;
+import org.openscience.cdk.io.formats.MOPAC7FormatTest;
+import org.openscience.cdk.io.formats.MOPAC93FormatTest;
+import org.openscience.cdk.io.formats.MOPAC97FormatTest;
+import org.openscience.cdk.io.formats.MPQCFormatTest;
+import org.openscience.cdk.io.formats.MacroModelFormatTest;
+import org.openscience.cdk.io.formats.Mol2FormatTest;
+import org.openscience.cdk.io.formats.NWChemFormatTest;
+import org.openscience.cdk.io.formats.PCModelFormatTest;
+import org.openscience.cdk.io.formats.PDBFormatTest;
+import org.openscience.cdk.io.formats.PDBMLFormatTest;
+import org.openscience.cdk.io.formats.PMPFormatTest;
+import org.openscience.cdk.io.formats.PQSChemFormatTest;
+import org.openscience.cdk.io.formats.PubChemASNFormatTest;
+import org.openscience.cdk.io.formats.PubChemCompoundXMLFormatTest;
+import org.openscience.cdk.io.formats.PubChemCompoundsXMLFormatTest;
+import org.openscience.cdk.io.formats.PubChemFormatTest;
+import org.openscience.cdk.io.formats.PubChemSubstanceXMLFormatTest;
+import org.openscience.cdk.io.formats.PubChemSubstancesASNFormatTest;
+import org.openscience.cdk.io.formats.PubChemSubstancesXMLFormatTest;
+import org.openscience.cdk.io.formats.QChemFormatTest;
+import org.openscience.cdk.io.formats.RawCopyFormatTest;
+import org.openscience.cdk.io.formats.SDFFormatTest;
+import org.openscience.cdk.io.formats.SMARTSFormatTest;
+import org.openscience.cdk.io.formats.SMILESFIXFormatTest;
+import org.openscience.cdk.io.formats.SMILESFormatTest;
+import org.openscience.cdk.io.formats.ShelXFormatTest;
+import org.openscience.cdk.io.formats.SpartanFormatTest;
+import org.openscience.cdk.io.formats.SybylDescriptorFormatTest;
+import org.openscience.cdk.io.formats.TinkerMM2FormatTest;
+import org.openscience.cdk.io.formats.TinkerXYZFormatTest;
+import org.openscience.cdk.io.formats.TurboMoleFormatTest;
+import org.openscience.cdk.io.formats.UniChemXYZFormatTest;
+import org.openscience.cdk.io.formats.VASPFormatTest;
+import org.openscience.cdk.io.formats.ViewmolFormatTest;
+import org.openscience.cdk.io.formats.XEDFormatTest;
+import org.openscience.cdk.io.formats.XYZFormatTest;
+import org.openscience.cdk.io.formats.YasaraFormatTest;
+import org.openscience.cdk.io.formats.ZMatrixFormatTest;
+import org.openscience.cdk.io.formats.ZindoFormatTest;
+import org.openscience.cdk.io.iterator.IteratingMDLConformerReaderTest;
+import org.openscience.cdk.io.iterator.IteratingMDLReaderTest;
+import org.openscience.cdk.io.iterator.IteratingPCCompoundASNReaderTest;
+import org.openscience.cdk.io.iterator.IteratingPCCompoundXMLReaderTest;
+import org.openscience.cdk.io.iterator.IteratingPCSubstancesXMLReaderTest;
 
 /**
  * TestSuite that runs all the sample tests for the cdk.io package.
  *
  * @cdk.module test-io
  */
-public class MioTests {
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    IoCoverageTest.class,
+    CMLIOTests.class,
+    CrystClustReaderTest.class,
+    CDKSourceCodeWriterTest.class,
+    CIFReaderTest.class,
+    CTXReaderTest.class,
+    GamessReaderTest.class,
+    Gaussian98ReaderTest.class,
+    GhemicalReaderTest.class,
+    HINReaderTest.class,
+    INChIReaderTest.class,
+    INChIPlainTextReaderTest.class,
+    MDLReaderTest.class,
+    MDLV2000ReaderTest.class,
+    MDLV3000ReaderTest.class,
+    SDFReaderTest.class,
+    MDLWriterTest.class,
+    MDLRXNReaderTest.class,
+    MDLRXNV2000ReaderTest.class,
+    MDLRXNV3000ReaderTest.class,
+    MDLRXNWriterTest.class,
+    Mol2ReaderTest.class,
+    PCCompoundASNReaderTest.class,
+    PDBWriterTest.class,
+    PMPReaderTest.class,
+    ShelXReaderTest.class,
+    XYZReaderTest.class,
+    XYZWriterTest.class,
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite("The cdk.io Tests");
-
-        suite.addTest(IoCoverageTest.suite());
-        
-        suite.addTest(CMLIOTests.suite());
-        suite.addTest(new JUnit4TestAdapter(CrystClustReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(CDKSourceCodeWriterTest.class));
-        suite.addTest(new JUnit4TestAdapter(CIFReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(CTXReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(GamessReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(Gaussian98ReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(GhemicalReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(HINReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(INChIReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(INChIPlainTextReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(MDLReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(MDLV2000ReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(MDLV3000ReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(SDFReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(MDLWriterTest.class));
-        suite.addTest(new JUnit4TestAdapter(MDLRXNReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(MDLRXNV2000ReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(MDLRXNV3000ReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(MDLRXNWriterTest.class));
-        suite.addTest(new JUnit4TestAdapter(Mol2ReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(PCCompoundASNReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(PDBWriterTest.class));
-        suite.addTest(new JUnit4TestAdapter(PMPReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(ShelXReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(XYZReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(XYZWriterTest.class));
-
-        suite.addTest(new JUnit4TestAdapter(ReaderFactoryTest.class));
-        suite.addTest(new JUnit4TestAdapter(WriterFactoryTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChemObjectIOInstantionTests.class));
+    ReaderFactoryTest.class,
+    WriterFactoryTest.class,
+    ChemObjectIOInstantionTests.class,
 
         // cdk.io.iterator package
-        suite.addTest(new JUnit4TestAdapter(IteratingMDLReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(IteratingMDLConformerReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(IteratingPCCompoundASNReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(IteratingPCCompoundXMLReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(IteratingPCSubstancesXMLReaderTest.class));
+    IteratingMDLReaderTest.class,
+    IteratingMDLConformerReaderTest.class,
+    IteratingPCCompoundASNReaderTest.class,
+    IteratingPCCompoundXMLReaderTest.class,
+    IteratingPCSubstancesXMLReaderTest.class,
         
         // cdk.io.formats package
-        suite.addTest(new JUnit4TestAdapter(ABINITFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(Aces2FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(ADFFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(AlchemyFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(BGFFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(BSFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(CacaoCartesianFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(CacaoInternalFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(CACheFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(Chem3D_Cartesian_1FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(Chem3D_Cartesian_2FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChemDrawFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChemtoolFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(CIFFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(CMLFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(CMLRSSFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(CRK2DFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(CRK3DFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(CrystClustFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(CTXFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(DaltonFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(DMol3FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(DOCK5FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(FenskeHall_ZMatrixFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(GamessFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(Gaussian03FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(Gaussian90FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(Gaussian92FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(Gaussian94FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(Gaussian95FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(Gaussian98FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(GhemicalMMFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(GhemicalSPMFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(GROMOS96FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(HINFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(INChIFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(INChIPlainTextFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(JaguarFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(JMEFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(MacroModelFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(MDLFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(MDLRXNFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(MDLRXNV3000FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(MDLV2000FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(MDLV3000FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(MMODFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(Mol2FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(MOPAC2002FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(MOPAC7FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(MOPAC93FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(MOPAC97FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(MPQCFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(NWChemFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(PCModelFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(PDBFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(PDBMLFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(PMPFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(PQSChemFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(PubChemASNFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(PubChemFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(PubChemCompoundsXMLFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(PubChemCompoundXMLFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(PubChemSubstancesASNFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(PubChemSubstancesXMLFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(PubChemSubstanceXMLFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(QChemFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(RawCopyFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(SDFFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(ShelXFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(SMARTSFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(SMILESFIXFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(SMILESFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(SpartanFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(SybylDescriptorFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(TinkerMM2FormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(TinkerXYZFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(TurboMoleFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(UniChemXYZFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(VASPFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(ViewmolFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(XEDFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(XYZFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(YasaraFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(ZindoFormatTest.class));
-        suite.addTest(new JUnit4TestAdapter(ZMatrixFormatTest.class));
-        
-        return suite;
-    }
-
-}
+    ABINITFormatTest.class,
+    Aces2FormatTest.class,
+    ADFFormatTest.class,
+    AlchemyFormatTest.class,
+    BGFFormatTest.class,
+    BSFormatTest.class,
+    CacaoCartesianFormatTest.class,
+    CacaoInternalFormatTest.class,
+    CACheFormatTest.class,
+    Chem3D_Cartesian_1FormatTest.class,
+    Chem3D_Cartesian_2FormatTest.class,
+    ChemDrawFormatTest.class,
+    ChemtoolFormatTest.class,
+    CIFFormatTest.class,
+    CMLFormatTest.class,
+    CMLRSSFormatTest.class,
+    CRK2DFormatTest.class,
+    CRK3DFormatTest.class,
+    CrystClustFormatTest.class,
+    CTXFormatTest.class,
+    DaltonFormatTest.class,
+    DMol3FormatTest.class,
+    DOCK5FormatTest.class,
+    FenskeHall_ZMatrixFormatTest.class,
+    GamessFormatTest.class,
+    Gaussian03FormatTest.class,
+    Gaussian90FormatTest.class,
+    Gaussian92FormatTest.class,
+    Gaussian94FormatTest.class,
+    Gaussian95FormatTest.class,
+    Gaussian98FormatTest.class,
+    GhemicalMMFormatTest.class,
+    GhemicalSPMFormatTest.class,
+    GROMOS96FormatTest.class,
+    HINFormatTest.class,
+    INChIFormatTest.class,
+    INChIPlainTextFormatTest.class,
+    JaguarFormatTest.class,
+    JMEFormatTest.class,
+    MacroModelFormatTest.class,
+    MDLFormatTest.class,
+    MDLRXNFormatTest.class,
+    MDLRXNV3000FormatTest.class,
+    MDLV2000FormatTest.class,
+    MDLV3000FormatTest.class,
+    MMODFormatTest.class,
+    Mol2FormatTest.class,
+    MOPAC2002FormatTest.class,
+    MOPAC7FormatTest.class,
+    MOPAC93FormatTest.class,
+    MOPAC97FormatTest.class,
+    MPQCFormatTest.class,
+    NWChemFormatTest.class,
+    PCModelFormatTest.class,
+    PDBFormatTest.class,
+    PDBMLFormatTest.class,
+    PMPFormatTest.class,
+    PQSChemFormatTest.class,
+    PubChemASNFormatTest.class,
+    PubChemFormatTest.class,
+    PubChemCompoundsXMLFormatTest.class,
+    PubChemCompoundXMLFormatTest.class,
+    PubChemSubstancesASNFormatTest.class,
+    PubChemSubstancesXMLFormatTest.class,
+    PubChemSubstanceXMLFormatTest.class,
+    QChemFormatTest.class,
+    RawCopyFormatTest.class,
+    SDFFormatTest.class,
+    ShelXFormatTest.class,
+    SMARTSFormatTest.class,
+    SMILESFIXFormatTest.class,
+    SMILESFormatTest.class,
+    SpartanFormatTest.class,
+    SybylDescriptorFormatTest.class,
+    TinkerMM2FormatTest.class,
+    TinkerXYZFormatTest.class,
+    TurboMoleFormatTest.class,
+    UniChemXYZFormatTest.class,
+    VASPFormatTest.class,
+    ViewmolFormatTest.class,
+    XEDFormatTest.class,
+    XYZFormatTest.class,
+    YasaraFormatTest.class,
+    ZindoFormatTest.class,
+    ZMatrixFormatTest.class
+})
+public class MioTests {}

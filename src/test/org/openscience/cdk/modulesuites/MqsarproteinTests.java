@@ -18,13 +18,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.QsarproteinCoverageTest;
 import org.openscience.cdk.qsar.descriptors.molecular.AminoAcidCountDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.protein.TaeAminoAcidDescriptorTest;
@@ -36,19 +34,10 @@ import org.openscience.cdk.qsar.descriptors.protein.TaeAminoAcidDescriptorTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MqsarproteinTests {
-
-    public static Test suite() {
-
-        TestSuite suite = new TestSuite("All QSAR Tests");
-
-        suite.addTest(QsarproteinCoverageTest.suite());
-        
-        // from cdk.test.qsar.protein
-        suite.addTest(new JUnit4TestAdapter(TaeAminoAcidDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(AminoAcidCountDescriptorTest.class));
-
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    QsarproteinCoverageTest.class,
+    TaeAminoAcidDescriptorTest.class,
+    AminoAcidCountDescriptorTest.class
+})
+public class MqsarproteinTests {}

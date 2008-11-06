@@ -52,7 +52,7 @@ public class MextraTests {
     {
         TestSuite suite= new TestSuite("All CDK extra Tests");
 
-        suite.addTest(ExtraCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ExtraCoverageTest.class));
 
         suite.addTest(new JUnit4TestAdapter(PeriodicTableElementTest.class));
         suite.addTest(new JUnit4TestAdapter(PeriodicTableTest.class));

@@ -25,8 +25,6 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -86,10 +84,6 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     	}
     }
 
-    public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(MMFF94AtomTypeMatcherTest.class);
-    }
-    
     @Test public void testMMFF94AtomTypeMatcher() throws Exception {
     	MMFF94AtomTypeMatcher matcher = new MMFF94AtomTypeMatcher();
 	    Assert.assertNotNull(matcher);

@@ -24,10 +24,9 @@
 
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.DatadebugCoverageTest;
 import org.openscience.cdk.debug.DebugAminoAcidTest;
 import org.openscience.cdk.debug.DebugAtomContainerSetTest;
@@ -71,52 +70,44 @@ import org.openscience.cdk.debug.DebugStrandTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MdatadebugTests {
-    
-    public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.debug Tests");
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    DatadebugCoverageTest.class,
+    DebugChemObjectBuilderTest.class,
+    DebugAminoAcidTest.class,
+    DebugAtomContainerTest.class,
+    DebugAtomParityTest.class,
+    DebugAtomTest.class,
+    DebugAtomTypeTest.class,
+    DebugBioPolymerTest.class,
+    DebugBondTest.class,
+    DebugChemObjectTest.class,
+    DebugChemFileTest.class,
+    DebugChemModelTest.class,
+    DebugChemSequenceTest.class,
+    DebugCrystalTest.class,
+    DebugElectronContainerTest.class,
+    DebugElementTest.class,
+    DebugFragmentAtomTest.class,
+    DebugIsotopeTest.class,
+    DebugLonePairTest.class,
+    DebugMoleculeTest.class,
+    DebugMonomerTest.class,
+    DebugPseudoAtomTest.class,
+    DebugPolymerTest.class,
+    DebugReactionTest.class,
+    DebugRingTest.class,
+    DebugRingSetTest.class,
+    DebugAtomContainerSetTest.class,
+    DebugMoleculeSetTest.class,
+    DebugReactionSetTest.class,
+    DebugSingleElectronTest.class,
+    DebugStrandTest.class,
         
-        suite.addTest(new JUnit4TestAdapter(DatadebugCoverageTest.class));
-        
-        suite.addTest(new JUnit4TestAdapter(DebugChemObjectBuilderTest.class));
-        
-        suite.addTest(new JUnit4TestAdapter(DebugAminoAcidTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugAtomContainerTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugAtomParityTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugAtomTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugAtomTypeTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugBioPolymerTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugBondTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugChemObjectTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugChemFileTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugChemModelTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugChemSequenceTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugCrystalTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugElectronContainerTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugElementTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugFragmentAtomTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugIsotopeTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugLonePairTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugMoleculeTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugMonomerTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugPseudoAtomTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugPolymerTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugReactionTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugRingTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugRingSetTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugAtomContainerSetTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugMoleculeSetTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugReactionSetTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugSingleElectronTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugStrandTest.class));
-        
-        // tests from test.protein.data
-        suite.addTest(new JUnit4TestAdapter(DebugPDBAtomTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugPDBMonomerTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugPDBPolymerTest.class));
-        suite.addTest(new JUnit4TestAdapter(DebugPDBStructureTest.class));
-
-        return suite;
-    }
-    
-}
+    // tests from test.protein.data
+    DebugPDBAtomTest.class,
+    DebugPDBMonomerTest.class,
+    DebugPDBPolymerTest.class,
+    DebugPDBStructureTest.class
+})
+public class MdatadebugTests {}
