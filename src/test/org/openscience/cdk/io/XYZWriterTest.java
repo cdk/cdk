@@ -98,7 +98,7 @@ public class XYZWriterTest extends ChemObjectIOTest {
         writer.close();
 
         String output = writer.toString();
-        Assert.assertTrue(output.contains("0.000000  0.000000  0.000000"));
+        Assert.assertTrue(output.contains("0.000000\t 0.000000\t 0.000000"));
     }
 
     /**
@@ -110,6 +110,9 @@ public class XYZWriterTest extends ChemObjectIOTest {
         IAtom atom1 = new Atom("C");
         atom1.setPoint3d(new Point3d(1.0, 2.0, 3.0));
         molecule.addAtom(atom1);
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint3d(new Point3d(-1.5, -2.0, 0.0));
+        molecule.addAtom(atom2);
 
         XYZWriter xyzWriter = new XYZWriter(writer);
         xyzWriter.write(molecule);
