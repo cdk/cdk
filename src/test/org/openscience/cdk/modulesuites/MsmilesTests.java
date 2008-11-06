@@ -23,9 +23,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.SmilesCoverageTest;
 import org.openscience.cdk.io.SMILESReaderTest;
 import org.openscience.cdk.io.iterator.IteratingSMILESReaderTest;
@@ -39,24 +39,14 @@ import org.openscience.cdk.tools.NormalizerTest;
  *
  * @cdk.module test-smiles
  */
-public class MsmilesTests {
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite("The SMILES Tests");
-        
-        suite.addTest(new JUnit4TestAdapter(SmilesCoverageTest.class));
-
-        // IO classes
-        suite.addTest(new JUnit4TestAdapter(SMILESReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(IteratingSMILESReaderTest.class));
-        // from cdk.test.smiles
-        suite.addTest(new JUnit4TestAdapter(DeduceBondSystemToolTest.class));
-        suite.addTest(new JUnit4TestAdapter(SmilesGeneratorTest.class));
-        suite.addTest(new JUnit4TestAdapter(SmilesParserTest.class));
-        // from cdk.tools
-        suite.addTest(new JUnit4TestAdapter(NormalizerTest.class));
-
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    SmilesCoverageTest.class,
+    SMILESReaderTest.class,
+    IteratingSMILESReaderTest.class,
+    DeduceBondSystemToolTest.class,
+    SmilesParserTest.class,
+    SmilesGeneratorTest.class,
+    NormalizerTest.class
+})
+public class MsmilesTests {}

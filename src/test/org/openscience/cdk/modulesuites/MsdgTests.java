@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.SdgCoverageTest;
 import org.openscience.cdk.layout.HydrogenPlacerTest;
 import org.openscience.cdk.layout.OverlapResolverTest;
@@ -37,21 +36,12 @@ import org.openscience.cdk.layout.TemplateHandlerTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MsdgTests {
-    
-    public static Test suite( )
-    {
-        TestSuite suite= new TestSuite("All CDK sdg Tests");
-
-        suite.addTest(new JUnit4TestAdapter(SdgCoverageTest.class));
-        
-        // from cdk.test.layout
-        suite.addTest(new JUnit4TestAdapter(StructureDiagramGeneratorTest.class));
-        suite.addTest(new JUnit4TestAdapter(HydrogenPlacerTest.class));
-        suite.addTest(new JUnit4TestAdapter(OverlapResolverTest.class));
-        suite.addTest(new JUnit4TestAdapter(TemplateHandlerTest.class));
-        
-        return suite;
-    }
-    
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    SdgCoverageTest.class,
+    StructureDiagramGeneratorTest.class,
+    HydrogenPlacerTest.class,
+    OverlapResolverTest.class,
+    TemplateHandlerTest.class
+})
+public class MsdgTests {}

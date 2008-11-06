@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.RenderCoverageTest;
 import org.openscience.cdk.renderer.color.CDKAtomColorsTest;
 import org.openscience.cdk.renderer.color.CPKAtomColorsTest;
@@ -35,18 +34,10 @@ import org.openscience.cdk.renderer.color.CPKAtomColorsTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MrenderTests {
-    
-    public static Test suite() {
-        TestSuite suite= new TestSuite("CDK render Tests");
-
-        suite.addTest(new JUnit4TestAdapter(RenderCoverageTest.class));
-        
-        // from cdk.render.color
-        suite.addTest(new JUnit4TestAdapter(CPKAtomColorsTest.class));
-        suite.addTest(new JUnit4TestAdapter(CDKAtomColorsTest.class));
-
-        return suite;
-    }
-    
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    RenderCoverageTest.class,
+    CPKAtomColorsTest.class,
+    CDKAtomColorsTest.class
+})
+public class MrenderTests {}

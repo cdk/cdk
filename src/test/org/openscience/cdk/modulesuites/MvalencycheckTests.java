@@ -20,9 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.ValencycheckCoverageTest;
 import org.openscience.cdk.tools.CDKHydrogenAdderTest;
 import org.openscience.cdk.tools.CDKValencyCheckerTest;
@@ -36,21 +36,12 @@ import org.openscience.cdk.tools.SaturationCheckerTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MvalencycheckTests {
-    
-    public static Test suite( ) {
-        TestSuite suite= new TestSuite("All valencycheck Tests");
-        
-        suite.addTest(new JUnit4TestAdapter(ValencycheckCoverageTest.class));
-
-        suite.addTest(new JUnit4TestAdapter(SaturationCheckerTest.class));
-        suite.addTest(new JUnit4TestAdapter(DeduceBondOrderTestFromExplicitHydrogens.class));
-        
-        // the next generation valency tools that rely on CDKAtomTypeMatcher
-        suite.addTest(new JUnit4TestAdapter(CDKHydrogenAdderTest.class));
-        suite.addTest(new JUnit4TestAdapter(CDKValencyCheckerTest.class));
-        
-        return suite;
-    }
-    
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    ValencycheckCoverageTest.class,
+    SaturationCheckerTest.class,
+    DeduceBondOrderTestFromExplicitHydrogens.class,
+    CDKHydrogenAdderTest.class,
+    CDKValencyCheckerTest.class
+})
+public class MvalencycheckTests {}

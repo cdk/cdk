@@ -94,6 +94,6 @@ import org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptorTest;
     SigmaElectronegativityDescriptorTest.class,
     StabilizationPlusChargeDescriptorTest.class,
     VdWRadiusDescriptorTest.class,
-    IPAtomicHOSEDescriptorTest.class,
+    IPAtomicHOSEDescriptorTest.class
 })
 public class MqsaratomicTests {}
