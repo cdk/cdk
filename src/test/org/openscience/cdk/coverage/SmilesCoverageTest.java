@@ -23,9 +23,8 @@
  */
 package org.openscience.cdk.coverage;
 
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -36,22 +35,11 @@ public class SmilesCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "smiles.javafiles";
     
-    public SmilesCoverageTest(String name){
-        super(name);
+    @BeforeClass public static void setUp() throws Exception {
+        loadClassList(CLASS_LIST, SmilesCoverageTest.class.getClassLoader());
     }
 
-    public void setUp() throws Exception {
-        super.setUp();
-        super.loadClassList(CLASS_LIST);
-    }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTestSuite(SmilesCoverageTest.class);
-        return suite;
-    }
-
-    public void testCoverage() {
+    @Test public void testCoverage() {
         super.runCoverageTest();
     }
 }

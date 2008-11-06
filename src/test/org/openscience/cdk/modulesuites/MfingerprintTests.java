@@ -40,7 +40,7 @@ public class MfingerprintTests {
     public static Test suite() {
         TestSuite suite= new TestSuite("All CDK fingerprint Tests");
 
-        suite.addTest(FingerprintCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(FingerprintCoverageTest.class));
         
         suite.addTest(new JUnit4TestAdapter(ExtendedFingerprinterTest.class));
         suite.addTest(new JUnit4TestAdapter(MACCSFingerprinterTest.class));

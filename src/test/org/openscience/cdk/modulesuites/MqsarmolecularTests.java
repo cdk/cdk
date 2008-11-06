@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 package org.openscience.cdk.modulesuites;
 
 import junit.framework.JUnit4TestAdapter;
@@ -32,7 +31,6 @@ import org.openscience.cdk.qsar.ChiIndexUtilsTest;
 import org.openscience.cdk.qsar.DescriptorEngineTest;
 import org.openscience.cdk.qsar.DescriptorNamesTest;
 import org.openscience.cdk.qsar.descriptors.molecular.*;
-
 
 /**
  * TestSuite that runs all the sample tests.
@@ -49,7 +47,7 @@ public class MqsarmolecularTests {
 
         TestSuite suite = new TestSuite("All QSAR molecular Tests");
 
-        suite.addTest(QsarmolecularCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(QsarmolecularCoverageTest.class));
         
         // Individual Tests - Please add correlatively	
         suite.addTest(new JUnit4TestAdapter(ChiIndexUtilsTest.class));

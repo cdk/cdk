@@ -43,7 +43,7 @@ public class MsdgTests {
     {
         TestSuite suite= new TestSuite("All CDK sdg Tests");
 
-        suite.addTest(SdgCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SdgCoverageTest.class));
         
         // from cdk.test.layout
         suite.addTest(new JUnit4TestAdapter(StructureDiagramGeneratorTest.class));

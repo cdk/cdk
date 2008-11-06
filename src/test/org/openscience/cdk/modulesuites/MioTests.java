@@ -42,7 +42,7 @@ public class MioTests {
     public static Test suite() {
         TestSuite suite = new TestSuite("The cdk.io Tests");
 
-        suite.addTest(IoCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(IoCoverageTest.class));
         
         suite.addTest(CMLIOTests.suite());
         suite.addTest(new JUnit4TestAdapter(CrystClustReaderTest.class));

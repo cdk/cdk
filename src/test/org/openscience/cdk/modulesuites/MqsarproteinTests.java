@@ -42,7 +42,7 @@ public class MqsarproteinTests {
 
         TestSuite suite = new TestSuite("All QSAR Tests");
 
-        suite.addTest(QsarproteinCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(QsarproteinCoverageTest.class));
         
         // from cdk.test.qsar.protein
         suite.addTest(new JUnit4TestAdapter(TaeAminoAcidDescriptorTest.class));

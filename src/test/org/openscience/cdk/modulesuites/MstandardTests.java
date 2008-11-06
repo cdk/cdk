@@ -111,7 +111,7 @@ public class MstandardTests {
     public static Test suite() {
         TestSuite suite= new TestSuite("CDK standard Tests");
 
-        suite.addTest(StandardCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(StandardCoverageTest.class));
         
         // make sure to check it against src/test-standard.files
         // before each release!

@@ -44,7 +44,7 @@ public class MsmilesTests {
     public static Test suite() {
         TestSuite suite = new TestSuite("The SMILES Tests");
         
-        suite.addTest(SmilesCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SmilesCoverageTest.class));
 
         // IO classes
         suite.addTest(new JUnit4TestAdapter(SMILESReaderTest.class));

@@ -20,8 +20,7 @@
  */
 package org.openscience.cdk.coverage;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
+import org.junit.Assert;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
@@ -41,41 +40,24 @@ import java.util.Set;
  *
  * @cdk.module test
  */
-abstract public class CoverageAnnotationTest extends TestCase {
+abstract public class CoverageAnnotationTest {
 
-    private final String basePackageName = "org.openscience.cdk.";
+    private final static String BASEPACKAGENAME = "org.openscience.cdk.";
 
-    private String moduleName;
-    private ClassLoader classLoader;
-    private List<String> classesToTest;
+    private static String moduleName;
+    private static ClassLoader classLoader;
+    private static List<String> classesToTest;
 
-    public CoverageAnnotationTest(String name) {
-        super(name);
-        classesToTest = null;
-    }
-
-    protected void setUp() throws Exception {
-        classLoader = this.getClass().getClassLoader();
-    }
-
-    /**
-     * This method must be overwritten by subclasses.
-     *
-     * @return null as this is not meant to be called directly
-     */
-    public static Test suite() {
-        return null;
-    }
-
-    protected void loadClassList(String classList) throws Exception {
+    protected static void loadClassList(String classList, ClassLoader loader) throws Exception {
+        classLoader = loader;
         classesToTest = new ArrayList<String>();
 
         // for a pretty message
         String[] comps = classList.split("\\.");
         moduleName = comps[0];
 
-        InputStream stream = this.getClass().getClassLoader().getResourceAsStream(classList);
-        if (stream == null) fail("File not found in the classpath: " + classList);
+        InputStream stream = loader.getResourceAsStream(classList);
+        if (stream == null) Assert.fail("File not found in the classpath: " + classList);
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         while (reader.ready()) {
             // load them one by one
@@ -98,7 +80,7 @@ abstract public class CoverageAnnotationTest extends TestCase {
             if (errors > 0) uncoveredClassesCount++;
         }
         if (missingTestsCount > 0) {
-            fail("The " + moduleName + " module is not fully tested! Missing number of method tests: " +
+            Assert.fail("The " + moduleName + " module is not fully tested! Missing number of method tests: " +
                     missingTestsCount + " in number of classes: " + uncoveredClassesCount);
         }
         return true;
@@ -197,14 +179,14 @@ abstract public class CoverageAnnotationTest extends TestCase {
             loadedClass = classLoader.loadClass(className);
         } catch (ClassNotFoundException exception) {
             exception.printStackTrace();
-            fail("Could not find class: " + exception.getMessage());
+            Assert.fail("Could not find class: " + exception.getMessage());
         } catch (NoSuchMethodError error) {
-            fail("No such method in class: " + error.getMessage());
+            Assert.fail("No such method in class: " + error.getMessage());
         }
         return loadedClass;
     }
 
-    private String convertSlash2Dot(String className) {
+    private static String convertSlash2Dot(String className) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < className.length(); i++) {
             if (className.charAt(i) == '/') {
@@ -217,7 +199,7 @@ abstract public class CoverageAnnotationTest extends TestCase {
     }
 
     private String getClassName(String className) {
-        return basePackageName + className;
+        return BASEPACKAGENAME + className;
     }
 
 }

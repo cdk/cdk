@@ -37,7 +37,7 @@ public class MinchiTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The inchi module Tests");
         
-        suite.addTest(InchiCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(InchiCoverageTest.class));
         
         suite.addTest(new JUnit4TestAdapter(InChIGeneratorTest.class));
         

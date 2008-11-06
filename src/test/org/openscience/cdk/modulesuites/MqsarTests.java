@@ -48,7 +48,7 @@ public class MqsarTests {
 
         TestSuite suite = new TestSuite("All QSAR Tests");
 
-        suite.addTest(QsarCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(QsarCoverageTest.class));
 
         // Individual Tests - Please add correlatively
         suite.addTest(new JUnit4TestAdapter(DescriptorExceptionTest.class));

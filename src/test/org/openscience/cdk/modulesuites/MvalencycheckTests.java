@@ -41,7 +41,7 @@ public class MvalencycheckTests {
     public static Test suite( ) {
         TestSuite suite= new TestSuite("All valencycheck Tests");
         
-        suite.addTest(ValencycheckCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(ValencycheckCoverageTest.class));
 
         suite.addTest(new JUnit4TestAdapter(SaturationCheckerTest.class));
         suite.addTest(new JUnit4TestAdapter(DeduceBondOrderTestFromExplicitHydrogens.class));
