@@ -30,6 +30,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.ChemFile;
@@ -111,8 +112,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 
     @Test
     public void testModelBuilder3D_c1ccccc1C0() throws Exception {
-
-    	if (!this.runSlowTests()) Assert.fail("Slow tests turned of");
+        Assume.assumeTrue(runSlowTests());
 
     	ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
     	String smile="c1ccccc1C=0";
@@ -127,7 +127,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 
     @Test
     public void testModelBuilder3D_Konstanz() throws Exception {
-    	if (!this.runSlowTests()) Assert.fail("Slow tests turned of");
+        Assume.assumeTrue(runSlowTests());
     	
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
 		String smile="C12(-[H])-C3(-C(-[H])(-[H])-C(-C4(-C5(-C(-Cl)(-Cl)-C(-C-3-4-[H])(-Cl)-C(-Cl)(-[H])-C-5(-Cl)-[H])-Cl)-[H])(-[H])-C-2(-O-1)-[H])-[H]";
@@ -142,7 +142,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 
     @Test
     public void xtestModelBuilder3D_Konstanz2() throws Exception {
-    	if (!this.runSlowTests()) Assert.fail("Slow tests turned of");
+        Assume.assumeTrue(runSlowTests());
     	
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
 		String smile="c1(:c(:c(:c(-[H]):c(-Cl):c:1-[H])-[H])-[H])-[H]";
@@ -157,7 +157,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 
     @Test
     public void testModelBuilder3D_C1CCCCCCC1CC() throws Exception{
-    	if (!this.runSlowTests()) Assert.fail("Slow tests turned of");
+        Assume.assumeTrue(runSlowTests());
 
     	ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
     	String smile="C1CCCCCCC1CC";
@@ -177,7 +177,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
      */
     @Test
     public void testModelBuilder3D_CCCCCCCCCC_with2d() throws Exception{
-    	if (!this.runSlowTests()) Assert.fail("Slow tests turned of");
+        Assume.assumeTrue(runSlowTests());
     	
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
 		String smile="CCCCCCCCCC";
@@ -198,7 +198,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
      */
     @Test
     public void testModelBuilder3D_232() throws Exception{
-    	if (!this.runSlowTests()) Assert.fail("Slow tests turned of");
+        Assume.assumeTrue(runSlowTests());
 
     	ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
     	String filename = "data/mdl/allmol232.mol";
@@ -220,7 +220,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 
     @Test
     public void testModelBuilder3D_231() throws Exception{
-    	if (!this.runSlowTests()) Assert.fail("Slow tests turned of");
+        Assume.assumeTrue(runSlowTests());
 
     	ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
     	String filename = "data/mdl/allmol231.mol";
@@ -279,7 +279,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 	 */
     @Test
     public void testModel3D_bug_1610997() throws Exception{
-		if (!this.runSlowTests()) Assert.fail("Slow tests turned of");
+        Assume.assumeTrue(runSlowTests());
 
 		boolean notCalculatedResults = false;
 		List inputList = new ArrayList();

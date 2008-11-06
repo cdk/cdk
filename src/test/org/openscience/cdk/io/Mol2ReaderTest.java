@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
@@ -126,7 +127,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
      * @throws CDKException if an CDK error occurs
      */
     @Test public void testNCIfeb03_2D() throws Exception {
-    	if (!runSlowTests()) Assert.fail("Not running time consuming test");
+        Assume.assumeTrue(runSlowTests());
     	
         String filename = "data/mol2/NCI_feb03_2D.mol2.gz";
         InputStream in = new GZIPInputStream(Mol2ReaderTest.class.getClassLoader().getResourceAsStream(filename));
