@@ -23,10 +23,9 @@
  */
 package org.openscience.cdk.limitations;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.limitations.tools.SaturationCheckerTest;
 
 /**
@@ -35,12 +34,8 @@ import org.openscience.cdk.limitations.tools.SaturationCheckerTest;
  *
  * @cdk.module test-extra
  */
-public class AlgorithmLimitations {
-    
-    public static Test suite() {
-        TestSuite suite= new TestSuite("CDK Algorithm Limitations");
-        suite.addTest(new JUnit4TestAdapter(SaturationCheckerTest.class));
-        return suite;
-    }
-    
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    SaturationCheckerTest.class
+})
+public class AlgorithmLimitations {}
