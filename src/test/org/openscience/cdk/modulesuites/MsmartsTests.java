@@ -37,7 +37,7 @@ public class MsmartsTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.smarts Tests");
         
-        suite.addTest(SmartsCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(SmartsCoverageTest.class));
         
         suite.addTest(new JUnit4TestAdapter(SMARTSTest.class));
         

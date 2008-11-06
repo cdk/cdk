@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.modulesuites;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -38,7 +39,7 @@ public class MqmTests {
     {
         TestSuite suite= new TestSuite("All CDK QM module Tests");
 
-        suite.addTest(QmCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(QmCoverageTest.class));
         
         // Individual Tests
 //        suite.addTest(GraphRendererTest.suite());

@@ -20,9 +20,8 @@
  */
 package org.openscience.cdk.coverage;
 
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * TestSuite that performs a simple coverage test of the structgen module.
@@ -33,20 +32,11 @@ public class StructgenCoverageTest extends CoverageTest {
 
     private final static String CLASS_LIST = "structgen.javafiles";
     
-    public StructgenCoverageTest(String name){
-        super(name);
+    @BeforeClass public static void setUp() throws Exception {
+        loadClassList(CLASS_LIST, StructgenCoverageTest.class.getClassLoader());
     }
 
-    public void setUp() throws Exception {
-    	super.setUp();
-        super.loadClassList(CLASS_LIST);
-    }
-
-    public static Test suite() {
-        return new TestSuite(StructgenCoverageTest.class);
-    }
-
-    public void testCoverage() {
+    @Test public void testCoverage() {
         super.runCoverageTest();
     }
 }

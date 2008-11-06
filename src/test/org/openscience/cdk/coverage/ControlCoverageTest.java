@@ -23,9 +23,7 @@
  */
 package org.openscience.cdk.coverage;
 
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.BeforeClass;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -36,17 +34,8 @@ public class ControlCoverageTest extends CoverageTest {
 
     private final static String CLASS_LIST = "control.javafiles";
     
-    public ControlCoverageTest(String name){
-        super(name);
-    }
-
-    public void setUp() throws Exception {
-        super.setUp();
-        super.loadClassList(CLASS_LIST);
-    }
-
-    public static Test suite() {
-        return new TestSuite(ControlCoverageTest.class);
+    @BeforeClass public static void setUp() throws Exception {
+        loadClassList(CLASS_LIST, ControlCoverageTest.class.getClassLoader());
     }
 
     public void testCoverage() {

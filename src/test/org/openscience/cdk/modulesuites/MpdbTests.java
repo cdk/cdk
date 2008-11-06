@@ -42,7 +42,7 @@ public class MpdbTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The pdb module Tests");
         
-        suite.addTest(PdbCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(PdbCoverageTest.class));
         
         suite.addTest(new JUnit4TestAdapter(AminoAcidsTest.class));
         suite.addTest(new JUnit4TestAdapter(PDBReaderTest.class));
