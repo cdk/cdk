@@ -55,7 +55,6 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest  {
 	 * @throws	Exception	may be thrown by the <code>super.setUp()</code> instruction.
 	 * @throws	FileNotFoundException	may be thrown by the "FileReader" object if the string given in parameter does not contain a valid file name.
 	 * 
-	 * @see junit.framework.TestCase#setUp()
 	 * @see java.io.FileReader#FileReader(java.lang.String)
 	 */
 	@Before public void setUp() throws Exception {
