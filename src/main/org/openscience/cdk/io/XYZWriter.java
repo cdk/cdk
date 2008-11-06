@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
+import org.openscience.cdk.tools.FormatStringBuffer;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -56,6 +57,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
   
     private BufferedWriter writer;
     private LoggingTool logger;
+    private FormatStringBuffer fsb;
 
     /**
     * Constructor.
@@ -64,6 +66,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
     */
     public XYZWriter(Writer out) {
     	logger = new LoggingTool(this);
+    	fsb = new FormatStringBuffer("%-8.6f");
     	try {
     		if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter)out;
@@ -159,9 +162,11 @@ public class XYZWriter extends DefaultChemObjectWriter {
                 
                 Point3d p3 = a.getPoint3d();
                 if (p3 != null) {
-                    st = st + "\t" + new Double(p3.x).toString() + "\t"
-                            + new Double(p3.y).toString() + "\t"
-                            + new Double(p3.z).toString();
+                    st = st + "\t" + (p3.x < 0 ? "" : " ") + fsb.format(p3.x) + "\t"
+                            + (p3.y < 0 ? "" : " ") + fsb.format(p3.y) + "\t"
+                            + (p3.z < 0 ? "" : " ") + fsb.format(p3.z);
+                } else {
+                    st = st + "\t " + fsb.format(0.0) + "\t " + fsb.format(0.0) + "\t " + fsb.format(0.0);
                 }
                 
                 if (writecharge) {

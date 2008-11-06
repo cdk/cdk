@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
@@ -182,7 +183,7 @@ public class SmilesParserTest extends CDKTestCase {
 	
 	@org.junit.Test (timeout=1000)
 	public void testUnusualConjugatedRings_3() throws Exception {	
-		if (!super.runSlowTests()) Assert.fail("Skipped time consuming test.");
+	    Assume.assumeTrue(runSlowTests());
 		
 		//207-08-9:
 		String smiles = "c2ccc1cc3c(cc1c2)c4cccc5cccc3c45";

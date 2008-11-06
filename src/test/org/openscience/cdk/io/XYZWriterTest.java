@@ -28,6 +28,7 @@ import java.io.BufferedReader;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.junit.Assert;
@@ -79,6 +80,49 @@ public class XYZWriterTest extends ChemObjectIOTest {
         );
         while (reader.readLine() != null) lineCount++;
         Assert.assertEquals(4, lineCount);
+    }
+
+    /**
+     * @cdk.bug 2215774
+     */
+    @Test public void testWriting_Point2d() throws Exception {
+        StringWriter writer = new StringWriter();
+        Molecule molecule = new Molecule();
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint2d(new Point2d(1.0, 2.0));
+        molecule.addAtom(atom1);
+
+        XYZWriter xyzWriter = new XYZWriter(writer);
+        xyzWriter.write(molecule);
+        xyzWriter.close();
+        writer.close();
+
+        String output = writer.toString();
+        Assert.assertTrue(output.contains("0.000000\t 0.000000\t 0.000000"));
+    }
+
+    /**
+     * @cdk.bug 2215775
+     */
+    @Test public void testSixDecimalOuput() throws Exception {
+        StringWriter writer = new StringWriter();
+        Molecule molecule = new Molecule();
+        IAtom atom1 = new Atom("C");
+        atom1.setPoint3d(new Point3d(1.0, 2.0, 3.0));
+        molecule.addAtom(atom1);
+        IAtom atom2 = new Atom("C");
+        atom2.setPoint3d(new Point3d(-1.5, -2.0, 0.0));
+        molecule.addAtom(atom2);
+
+        XYZWriter xyzWriter = new XYZWriter(writer);
+        xyzWriter.write(molecule);
+        xyzWriter.close();
+        writer.close();
+
+        String output = writer.toString();
+        Assert.assertTrue(output.contains("1.000000"));
+        Assert.assertTrue(output.contains("2.000000"));
+        Assert.assertTrue(output.contains("3.000000"));
     }
 
 }

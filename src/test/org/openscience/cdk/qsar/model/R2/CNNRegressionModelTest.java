@@ -24,6 +24,7 @@
 package org.openscience.cdk.qsar.model.R2;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Test;
 import org.openscience.cdk.qsar.model.QSARModelException;
 
@@ -37,8 +38,7 @@ import org.openscience.cdk.qsar.model.QSARModelException;
 public class CNNRegressionModelTest extends RModelTest {
 
     @Test public void testCNNRegressionModel() throws Exception {
-//      Assume.assumeTrue(runRModelTests());
-        if (!runRModelTests()) return;
+        Assume.assumeTrue(runRModelTests());
 
         double[][] x = getXData();
         double[] y = getYData();
@@ -94,8 +94,7 @@ public class CNNRegressionModelTest extends RModelTest {
     }
 
     @Test public void testModelLoadSave() throws QSARModelException {
-//      Assume.assumeTrue(runRModelTests());
-        if (!runRModelTests()) return;
+        Assume.assumeTrue(runRModelTests());
 
         double[][] x = getXData();
         double[] y = getYData();

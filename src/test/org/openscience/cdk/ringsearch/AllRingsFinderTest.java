@@ -20,20 +20,30 @@
  */
 package org.openscience.cdk.ringsearch;
 
+import java.io.InputStream;
+import java.util.Iterator;
+
 import org.junit.Assert;
-import org.junit.Ignore;
+import org.junit.Assume;
 import org.junit.Test;
-import org.openscience.cdk.*;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.Ring;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-
-import java.io.InputStream;
-import java.util.Iterator;
 
 /**
  * @cdk.module test-standard
@@ -139,12 +149,12 @@ public class AllRingsFinderTest extends CDKTestCase
 		Assert.assertEquals(20, ringSet.getAtomContainerCount());
 	}
 	
-	@Ignore public void testBigRingSystem() throws Exception {
-		if (!runSlowTests()) Assert.fail("Not running slow tests: this should find 1976 rings");
+	@Test(timeout=120000)
+	public void testBigRingSystem() throws Exception {
+	  Assume.assumeTrue(runSlowTests());
 		
 		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
-		arf.setTimeout(120000); // 2 min should do, took 37 secs on my system
 
 		String filename = "data/mdl/ring_03419.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -222,7 +232,7 @@ public class AllRingsFinderTest extends CDKTestCase
 	 * @cdk.bug 777488
 	 */
 	@Test public void testBug777488() throws Exception {
-		if (!runSlowTests()) Assert.fail("Not running this slow test");
+		Assume.assumeTrue(runSlowTests());
 		
 		//String filename = "data/Bug646.cml";
 		String filename = "data/cml/testBug777488-1-AllRingsFinder.cml";
