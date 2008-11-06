@@ -26,9 +26,8 @@ package org.openscience.cdk.qsar.model.R2;
 import java.io.File;
 import java.io.FilenameFilter;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.BeforeClass;
+import org.openscience.cdk.CDKTestCase;
 
 /**
  * TestSuite that runs all Model tests.
@@ -36,11 +35,14 @@ import junit.framework.TestSuite;
  * @author Rajarshi Guha
  * @cdk.module test-qsar
  */
-public class QSARRModelTests {
+public class RModelTest extends CDKTestCase {
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite("All QSAR R Based Modeling Tests");
-        try {
+    private static boolean initialized = false;
+    private static boolean foundR = false;
+    private static boolean ldPathOK = false;
+    
+    @BeforeClass public static void setup() {
+        if (!initialized) {
             String os = System.getProperty("os.name").toLowerCase();
 
             // check for R on a Unix system
@@ -53,48 +55,37 @@ public class QSARRModelTests {
                 String rhome = System.getenv("R_HOME");
                 String ldlibrarypath = System.getenv("LD_LIBRARY_PATH");
 
-                if (rhome == null || rhome.equals(""))
-                    throw new RuntimeException("R_HOME must be set for the R tests to run");
-                if (ldlibrarypath == null || ldlibrarypath.equals(""))
-                    throw new RuntimeException("LD_LIBRARY_PATH must be set for the R tests to run");
-
                 // ok so env vars seem to be set. Are they correct?
-                if (!foundR(rhome))
-                    throw new RuntimeException("R_HOME does not appear to be correctly set: " + rhome);
-                if (!ldPathOK(ldlibrarypath))
-                    throw new RuntimeException("LD_LIBRARY_HOME does not appear to be correctly set: " + ldlibrarypath);
+                findR(rhome);
+                checkLdPath(ldlibrarypath);
             } else if (os.startsWith("windows")) {
                 // what variables does windows need set? And what are they set to?
             }
-
-            Class testClass;
-
-            testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.qsar.model.R2.LinearRegressionModelTest");
-            suite.addTest(new JUnit4TestAdapter(testClass));
-            testClass = suite.getClass().getClassLoader().loadClass("org.openscience.cdk.qsar.model.R2.CNNRegressionModelTest");
-            suite.addTest(new JUnit4TestAdapter(testClass));
-            System.out.println("Found RJava, running R tests...");
-        } catch (ClassNotFoundException exception) {
-            System.out.println("RJava is not found, skipping R tests...");
-        } catch (RuntimeException exception) {
-            System.out.println("Required environment variable(s) were missing or not valid, skipping R tests ...");
-            exception.printStackTrace();
-        } catch (Exception exception) {
-            System.out.println("Could not load an R model test: " + exception.getMessage());
-            exception.printStackTrace();
+            initialized = true;
         }
-        return suite;
     }
-
-    private static boolean foundR(String rhome) {
+    
+    public static boolean runRModelTests() {
+        return foundR && ldPathOK;
+    }
+    
+    public static boolean foundR() {
+        return foundR;
+    }
+    public static boolean ldPathOK() {
+        return ldPathOK;
+    }
+    
+    private static boolean findR(String rhome) {
         String path1 = rhome + File.separator + "bin" + File.separator + "Rcmd.exe";
         String path2 = rhome + File.separator + "bin" + File.separator + "Rcmd";
         File file1 = new File(path1);
         File file2 = new File(path2);
-        return file1.exists() || file2.exists();
+        foundR = file1.exists() || file2.exists();
+        return foundR;
     }
 
-    private static boolean ldPathOK(String ldlibrarypath) {
+    private static boolean checkLdPath(String ldlibrarypath) {
         FilenameFilter filterJRIUnix = new FilenameFilter() {
             public boolean accept(File dir, String name) {
                 return name.equals("libjri.so");
@@ -118,6 +109,7 @@ public class QSARRModelTests {
             if (files1 != null && files1.length > 0) foundJRI = true;
             if (files2 != null && files2.length > 0) foundR = true;
         }
-        return foundJRI && foundR;
+        ldPathOK = foundJRI && foundR;
+        return ldPathOK;
     }
 }

@@ -25,7 +25,6 @@ package org.openscience.cdk.qsar.model.R2;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.qsar.model.QSARModelException;
 import org.rosuda.JRI.RList;
@@ -37,10 +36,12 @@ import org.rosuda.JRI.RList;
  * @cdk.require r-project
  * @cdk.module  test-qsar
  */
-public class LinearRegressionModelTest extends CDKTestCase {
+public class LinearRegressionModelTest extends RModelTest {
 
     @Test public void testLinearRegressionModel() throws CDKException, Exception, QSARModelException {
-
+//        Assume.assumeTrue(runRModelTests());
+        if (!runRModelTests()) return;
+        
         double[][] x = getXData();
         double[] y = getYData();
 
@@ -84,6 +85,9 @@ public class LinearRegressionModelTest extends CDKTestCase {
 
 
     @Test public void testModelLoadSave() throws QSARModelException {
+//      Assume.assumeTrue(runRModelTests());
+        if (!runRModelTests()) return;
+        
         double[][] x = getXData();
         double[] y = getYData();
 

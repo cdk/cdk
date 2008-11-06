@@ -24,15 +24,13 @@
 
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.QsarCoverageTest;
 import org.openscience.cdk.qsar.DescriptorExceptionTest;
 import org.openscience.cdk.qsar.model.R2.CNNRegressionModelTest;
 import org.openscience.cdk.qsar.model.R2.LinearRegressionModelTest;
-import org.openscience.cdk.qsar.model.R2.QSARRModelTests;
 import org.openscience.cdk.qsar.model.R2.RJavaEnvironmentTest;
 
 /**
@@ -42,34 +40,12 @@ import org.openscience.cdk.qsar.model.R2.RJavaEnvironmentTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MqsarTests {
-
-    public static Test suite() {
-
-        TestSuite suite = new TestSuite("All QSAR Tests");
-
-        suite.addTest(new JUnit4TestAdapter(QsarCoverageTest.class));
-
-        // Individual Tests - Please add correlatively
-        suite.addTest(new JUnit4TestAdapter(DescriptorExceptionTest.class));
-        
-        // Stuff for R packages
-        String rhome = System.getenv("R_HOME");
-        String ldlibrarypath = System.getenv("LD_LIBRARY_PATH");
-
-        if (rhome != null && rhome.equals("") &&
-        	ldlibrarypath != null && ldlibrarypath.equals("")) {
-
-//      	from cdk.test.qsar.model.R2
-        	suite.addTest(new JUnit4TestAdapter(CNNRegressionModelTest.class));
-        	suite.addTest(new JUnit4TestAdapter(LinearRegressionModelTest.class));
-        	suite.addTest(new JUnit4TestAdapter(QSARRModelTests.class));
-        	suite.addTest(new JUnit4TestAdapter(RJavaEnvironmentTest.class));
-        }
-
-//      from cdk.test.qsar.model.R2
- 
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    QsarCoverageTest.class,
+    DescriptorExceptionTest.class,
+    LinearRegressionModelTest.class,
+    CNNRegressionModelTest.class,
+    RJavaEnvironmentTest.class
+})
+public class MqsarTests {}
