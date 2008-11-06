@@ -218,6 +218,38 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertEquals(atom.getFormalCharge(), roundTrippedAtom.getFormalCharge());
     }
     
+    /**
+     * @cdk.bug 1713398
+     */
+    @Test public void testHydrogenCount() throws Exception {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("N");
+        atom.setHydrogenCount(3);
+        mol.addAtom(atom);
+
+        IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(mol);
+
+        Assert.assertEquals(1, roundTrippedMol.getAtomCount());
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        Assert.assertEquals(atom.getHydrogenCount(), roundTrippedAtom.getHydrogenCount());
+    }
+
+    /**
+     * @cdk.bug 1713398
+     */
+    @Test public void testHydrogenCount_UNSET() throws Exception {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("N");
+        atom.setHydrogenCount((Integer)CDKConstants.UNSET);
+        mol.addAtom(atom);
+
+        IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(mol);
+
+        Assert.assertEquals(1, roundTrippedMol.getAtomCount());
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        Assert.assertEquals(CDKConstants.UNSET, roundTrippedAtom.getHydrogenCount());
+    }
+
     @Test public void testAtomPartialCharge() throws Exception {
         if (true) return;
         Assert.fail("Have to figure out how to store partial charges in CML2");
