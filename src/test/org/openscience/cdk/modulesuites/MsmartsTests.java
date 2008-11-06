@@ -20,45 +20,32 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.SmartsCoverageTest;
 import org.openscience.cdk.isomorphism.SMARTSTest;
+import org.openscience.cdk.smiles.smarts.SMARTSQueryToolTest;
+import org.openscience.cdk.smiles.smarts.parser.ParserTest;
+import org.openscience.cdk.smiles.smarts.parser.RecursiveTest;
+import org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest;
+import org.openscience.cdk.smiles.smarts.parser.visitor.SmartsDumpVisitorTest;
+import org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitorTest;
 
 /**
  * TestSuite that runs all the sample tests for experimental classes.
  *
  * @cdk.module test-smarts
  */
-public class MsmartsTests {
-
-    public static Test suite () {
-        TestSuite suite= new TestSuite("The cdk.smarts Tests");
-        
-        suite.addTest(new JUnit4TestAdapter(SmartsCoverageTest.class));
-        
-        suite.addTest(new JUnit4TestAdapter(SMARTSTest.class));
-        
-        try {
-            Class testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.ParserTest");
-            suite.addTest(new JUnit4TestAdapter(testClass));
-            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest");
-            suite.addTest(new JUnit4TestAdapter(testClass));
-            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.RecursiveTest");
-            suite.addTest(new JUnit4TestAdapter(testClass));
-            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.visitor.SmartsDumpVisitorTest");
-            suite.addTest(new JUnit4TestAdapter(testClass));
-            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitorTest");
-            suite.addTest(new JUnit4TestAdapter(testClass));
-            testClass = ClassLoader.getSystemClassLoader().loadClass("org.openscience.cdk.smiles.smarts.SMARTSQueryToolTest");
-            suite.addTest(new JUnit4TestAdapter(testClass));
-        } catch (Exception exception) {
-            // ok, does not exist, just skip
-            System.out.println("Could not load the SMARTS Parser test: " + exception.getMessage());
-        }
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    SmartsCoverageTest.class,
+    SMARTSTest.class,
+    ParserTest.class,
+    SMARTSSearchTest.class,
+    RecursiveTest.class,
+    SmartsDumpVisitorTest.class,
+    SmartsQueryVisitorTest.class,
+    SMARTSQueryToolTest.class
+})
+public class MsmartsTests {}
