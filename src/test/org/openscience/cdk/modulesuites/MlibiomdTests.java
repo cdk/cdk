@@ -37,7 +37,7 @@ public class MlibiomdTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("libiomd inchi module Tests");
         
-        suite.addTest(LibiomdCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LibiomdCoverageTest.class));
         
         suite.addTest(new JUnit4TestAdapter(MDMoleculeTest.class));
         

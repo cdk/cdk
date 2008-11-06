@@ -42,7 +42,7 @@ public class Mbuilder3dTests {
     public static Test suite () {
         TestSuite suite = new TestSuite("The CDK builder3d module Tests");
         
-        suite.addTest(Builder3dCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(Builder3dCoverageTest.class));
         
         suite.addTest(new JUnit4TestAdapter(ModelBuilder3dTest.class));
         suite.addTest(new JUnit4TestAdapter(TemplateHandler3DTest.class));

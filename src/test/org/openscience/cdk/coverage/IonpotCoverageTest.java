@@ -20,9 +20,8 @@
  */
 package org.openscience.cdk.coverage;
 
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * TestSuite that uses tests whether all public methods in the core
@@ -35,23 +34,12 @@ public class IonpotCoverageTest extends CoverageTest {
 
     private final static String CLASS_LIST = "ionpot.javafiles";
     
-    public IonpotCoverageTest(String name) {
-        super(name);
+    @BeforeClass public static void setUp() throws Exception {
+        loadClassList(CLASS_LIST, IonpotCoverageTest.class.getClassLoader());
     }
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        super.loadClassList(CLASS_LIST);
-    }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTestSuite(IonpotCoverageTest.class);
-        return suite;
-    }
-
-    public void testCoverage() {
-        assertTrue(super.runCoverageTest());
+    @Test public void testCoverage() {
+        super.runCoverageTest();
     }
 
 }

@@ -37,7 +37,7 @@ public class MlibiocmlTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("libiocml module Tests");
         
-        suite.addTest(LibiocmlCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(LibiocmlCoverageTest.class));
         
         suite.addTest(new JUnit4TestAdapter(ConvertorTest.class));
         

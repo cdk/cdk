@@ -30,8 +30,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
+import org.junit.Assert;
 
 /**
  * This test class is <b>not</b> intended to be tested directly,
@@ -39,38 +38,23 @@ import junit.framework.TestCase;
  *
  * @cdk.module test
  */
-abstract public class CoverageTest extends TestCase {
+abstract public class CoverageTest {
 
-    private final String basePackageName = "org.openscience.cdk.";
+    private final static String BASEPACKAGENAME = "org.openscience.cdk.";
     
-    private ClassLoader classLoader;
-    private List<String> classesToTest;
+    private static ClassLoader classLoader;
+    private static List<String> classesToTest;
     
-    private String module;
-    
-    public CoverageTest(String name) {
-        super(name);
-        classesToTest = null;
-    }
+    private static String module;
 
-    protected void setUp() throws Exception {
-        classLoader = this.getClass().getClassLoader();
-    }
-
-    /**
-     * This method must be overwritten by subclasses.
-     */
-    public static Test suite() {
-        return null;
-    }
-
-    protected void loadClassList(String classList) throws Exception {
+    protected static void loadClassList(String classList, ClassLoader loader) throws Exception {
+        classLoader = loader;
         classesToTest = new ArrayList<String>();
         module = classList.substring(0, classList.indexOf('.'));
         
         // get the src/core.javafiles file
-        InputStream stream = this.getClass().getClassLoader().getResourceAsStream(classList);
-        if (stream == null) fail("File not found in the classpath: " + classList);
+        InputStream stream = loader.getResourceAsStream(classList);
+        if (stream == null) Assert.fail("File not found in the classpath: " + classList);
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         while (reader.ready()) {
             // load them one by one
@@ -100,7 +84,7 @@ abstract public class CoverageTest extends TestCase {
             }
         }
         if (missingTestsCount > 0 || untestedClassesCount > 0) {
-            fail("The " + module + " module is not fully tested! Missing number of method tests: " + 
+            Assert.fail("The " + module + " module is not fully tested! Missing number of method tests: " + 
                  missingTestsCount + " in number of classes: " + uncoveredClassesCount + "; " +
                  "Missing test classes: " + untestedClassesCount);
         }
@@ -259,7 +243,7 @@ abstract public class CoverageTest extends TestCase {
         return capitalizedName;
     }
     
-    private String convertSlash2Dot(String className) {
+    private static String convertSlash2Dot(String className) {
         StringBuffer sb = new StringBuffer();
         for (int i=0; i<className.length(); i++) {
             if (className.charAt(i) == '/') {
@@ -272,11 +256,11 @@ abstract public class CoverageTest extends TestCase {
     }
     
     private String getTestClassName(String className) {
-        return basePackageName + className + "Test";
+        return BASEPACKAGENAME + className + "Test";
     }
     
     private String getClassName(String className) {
-        return basePackageName + className;
+        return BASEPACKAGENAME + className;
     }
 
 }

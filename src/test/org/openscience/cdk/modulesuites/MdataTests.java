@@ -81,11 +81,10 @@ public class MdataTests {
     public static Test suite () {
 TestSuite suite= new TestSuite("The CDK data module Tests");
         
-        suite.addTest(DataCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DataCoverageTest.class));
         
         suite.addTest(new JUnit4TestAdapter(AminoAcidTest.class));
         suite.addTest(new JUnit4TestAdapter(AtomContainerTest.class));
-        //suite.addTest(AtomEnumerationTest.suite());
         suite.addTest(new JUnit4TestAdapter(AtomParityTest.class));
         suite.addTest(new JUnit4TestAdapter(AtomTest.class));
         suite.addTest(new JUnit4TestAdapter(AtomTypeTest.class));

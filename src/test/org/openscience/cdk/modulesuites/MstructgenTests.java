@@ -43,7 +43,7 @@ public class MstructgenTests {
     public static Test suite() {
         TestSuite suite= new TestSuite("JUnit tests for the structgen module");
 
-        suite.addTest(StructgenCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(StructgenCoverageTest.class));
 
         suite.addTest(new JUnit4TestAdapter(StructGenMatcherTest.class));
         suite.addTest(new JUnit4TestAdapter(StructGenAtomTypeGuesserTest.class));

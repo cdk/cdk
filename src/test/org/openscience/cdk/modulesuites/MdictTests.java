@@ -39,7 +39,7 @@ public class MdictTests {
     public static Test suite() {
         TestSuite suite= new TestSuite("All CDK dict module Tests");
         
-        suite.addTest(DictCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(DictCoverageTest.class));
 
         // from cdk.dict
         suite.addTest(new JUnit4TestAdapter(DictDBTest.class));

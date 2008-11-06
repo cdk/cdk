@@ -76,7 +76,7 @@ public class MnonotifyTests {
     public static Test suite () {
         TestSuite suite= new TestSuite("The cdk.debug Tests");
         
-        suite.addTest(NonotifyCoverageTest.suite());
+        suite.addTest(new JUnit4TestAdapter(NonotifyCoverageTest.class));
         
         suite.addTest(new JUnit4TestAdapter(NNChemObjectBuilderTest.class));
         

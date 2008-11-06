@@ -11,7 +11,8 @@ if (bsh.args.length > 0 && bsh.args[0] != null) {
 
 File results = new File(antlogFile);
 if (!results.exists()) {
-    System.out.println("Cannot find '" + antlogFile + "'. Run 'ant -logfile ant.log clean test-all' first.");
+    System.out.println("Syntax: bsh tools/extractTestStats.bsh <ant.log>.");
+    System.out.println("Run 'ant -logfile ant.log clean test-all' first.");
     System.exit(1);
 }
 
