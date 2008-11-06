@@ -23,14 +23,54 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.QsarmolecularCoverageTest;
 import org.openscience.cdk.qsar.ChiIndexUtilsTest;
 import org.openscience.cdk.qsar.DescriptorEngineTest;
 import org.openscience.cdk.qsar.DescriptorNamesTest;
-import org.openscience.cdk.qsar.descriptors.molecular.*;
+import org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.APolDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.AromaticAtomsCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.AromaticBondsCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.AtomCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorChargeTest;
+import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorMassTest;
+import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorPolarizabilityTest;
+import org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.BondCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.CPSADescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.CarbonTypesDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.ChiChainDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.ChiClusterDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.ChiPathClusterDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.ChiPathDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.EccentricConnectivityIndexDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.GravitationalIndexDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.HBondAcceptorCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.KappaShapeIndicesDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.KierHallSmartsDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.LargestChainDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.LargestPiSystemDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.LengthOverBreadthDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.LongestAliphaticChainDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.MDEDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.MomentOfInertiaDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanNumberDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanShapeIndexDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.RotatableBondsCountDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.RuleOfFiveDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.VAdjMaDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.WHIMDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.WeightedPathDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.WienerNumbersDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptorTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -41,63 +81,56 @@ import org.openscience.cdk.qsar.descriptors.molecular.*;
  * 
  * @cdk.bug     1860497
  */
-public class MqsarmolecularTests {
-
-    public static Test suite() {
-
-        TestSuite suite = new TestSuite("All QSAR molecular Tests");
-
-        suite.addTest(new JUnit4TestAdapter(QsarmolecularCoverageTest.class));
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    QsarmolecularCoverageTest.class,
         
-        // Individual Tests - Please add correlatively	
-        suite.addTest(new JUnit4TestAdapter(ChiIndexUtilsTest.class));
-        suite.addTest(new JUnit4TestAdapter(DescriptorEngineTest.class));
-        suite.addTest(new JUnit4TestAdapter(DescriptorNamesTest.class));
+        // Individual Tests - Please add correlatively  
+    ChiIndexUtilsTest.class,
+    DescriptorEngineTest.class,
+    DescriptorNamesTest.class,
 
 //      from cdk.test.qsar.molecular
-        suite.addTest(new JUnit4TestAdapter(ALOGPDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(APolDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(AromaticAtomsCountDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(AromaticBondsCountDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomCountDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(BCUTDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(BondCountDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(BPolDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChiChainDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChiPathDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChiClusterDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(ChiPathClusterDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(CPSADescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(EccentricConnectivityIndexDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(GravitationalIndexDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(HBondAcceptorCountDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(HBondDonorCountDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(KappaShapeIndicesDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(KierHallSmartsDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(LargestChainDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(LargestPiSystemDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(LengthOverBreadthDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(LongestAliphaticChainDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(MDEDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(MomentOfInertiaDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(PetitjeanNumberDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(PetitjeanShapeIndexDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(RotatableBondsCountDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(RuleOfFiveDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(TPSADescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(VAdjMaDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(WeightDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(WeightedPathDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(WHIMDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(WienerNumbersDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(XLogPDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(ZagrebIndexDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(AutocorrelationDescriptorChargeTest.class));
-        suite.addTest(new JUnit4TestAdapter(AutocorrelationDescriptorMassTest.class));
-        suite.addTest(new JUnit4TestAdapter(AutocorrelationDescriptorPolarizabilityTest.class));
-        suite.addTest(new JUnit4TestAdapter(CarbonTypesDescriptorTest.class));
-
-        return suite;
-    }
-
-}
+    ALOGPDescriptorTest.class,
+    APolDescriptorTest.class,
+    AromaticAtomsCountDescriptorTest.class,
+    AromaticBondsCountDescriptorTest.class,
+    AtomCountDescriptorTest.class,
+    BCUTDescriptorTest.class,
+    BondCountDescriptorTest.class,
+    BPolDescriptorTest.class,
+    ChiChainDescriptorTest.class,
+    ChiPathDescriptorTest.class,
+    ChiClusterDescriptorTest.class,
+    ChiPathClusterDescriptorTest.class,
+    CPSADescriptorTest.class,
+    EccentricConnectivityIndexDescriptorTest.class,
+    GravitationalIndexDescriptorTest.class,
+    HBondAcceptorCountDescriptorTest.class,
+    HBondDonorCountDescriptorTest.class,
+    KappaShapeIndicesDescriptorTest.class,
+    KierHallSmartsDescriptorTest.class,
+    LargestChainDescriptorTest.class,
+    LargestPiSystemDescriptorTest.class,
+    LengthOverBreadthDescriptorTest.class,
+    LongestAliphaticChainDescriptorTest.class,
+    MDEDescriptorTest.class,
+    MomentOfInertiaDescriptorTest.class,
+    PetitjeanNumberDescriptorTest.class,
+    PetitjeanShapeIndexDescriptorTest.class,
+    RotatableBondsCountDescriptorTest.class,
+    RuleOfFiveDescriptorTest.class,
+    TPSADescriptorTest.class,
+    VAdjMaDescriptorTest.class,
+    WeightDescriptorTest.class,
+    WeightedPathDescriptorTest.class,
+    WHIMDescriptorTest.class,
+    WienerNumbersDescriptorTest.class,
+    XLogPDescriptorTest.class,
+    ZagrebIndexDescriptorTest.class,
+    AutocorrelationDescriptorChargeTest.class,
+    AutocorrelationDescriptorMassTest.class,
+    AutocorrelationDescriptorPolarizabilityTest.class,
+    CarbonTypesDescriptorTest.class
+})
+public class MqsarmolecularTests {}

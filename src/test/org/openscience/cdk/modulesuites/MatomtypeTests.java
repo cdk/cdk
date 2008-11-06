@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.atomtype.SybylAtomTypeMatcherTest;
 import org.openscience.cdk.config.atomtypes.OWLAtomTypeMappingHandlerTest;
 import org.openscience.cdk.config.atomtypes.OWLAtomTypeMappingReaderTest;
@@ -36,19 +35,11 @@ import org.openscience.cdk.coverage.AtomtypeCoverageTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MatomtypeTests {
-    
-    public static Test suite() {
-        TestSuite suite= new TestSuite("CDK atomtype Tests");
-
-        suite.addTest(new JUnit4TestAdapter(AtomtypeCoverageTest.class));
-
-        // cdk.config.atomtype
-        suite.addTest(new JUnit4TestAdapter(OWLAtomTypeMappingHandlerTest.class));
-        suite.addTest(new JUnit4TestAdapter(OWLAtomTypeMappingReaderTest.class));
-        suite.addTest(new JUnit4TestAdapter(SybylAtomTypeMatcherTest.class));
-
-        return suite;
-    }
-    
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    AtomtypeCoverageTest.class,
+    OWLAtomTypeMappingHandlerTest.class,
+    OWLAtomTypeMappingReaderTest.class,
+    SybylAtomTypeMatcherTest.class
+})
+public class MatomtypeTests {}

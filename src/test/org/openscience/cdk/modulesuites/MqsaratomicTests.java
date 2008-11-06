@@ -24,11 +24,38 @@
 
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.QsaratomicCoverageTest;
-import org.openscience.cdk.qsar.descriptors.atomic.*;
+import org.openscience.cdk.qsar.descriptors.atomic.AtomDegreeDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.AtomHybridizationVSEPRDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.BondsToAtomDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.CovalentRadiusDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.DistanceToAtomDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicHOSEDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.InductiveAtomicHardnessDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.InductiveAtomicSoftnessDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargePEOEDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.PiElectronegativityDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.ProtonTotalPartialChargeDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_G3RTest;
+import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GDRTest;
+import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GHRTest;
+import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GHR_topolTest;
+import org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GSRTest;
+import org.openscience.cdk.qsar.descriptors.atomic.SigmaElectronegativityDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.StabilizationPlusChargeDescriptorTest;
+import org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptorTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -37,45 +64,36 @@ import org.openscience.cdk.qsar.descriptors.atomic.*;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MqsaratomicTests {
-
-    public static Test suite() {                                       
-
-        TestSuite suite = new TestSuite("All QSAR Tests");
-
-        suite.addTest(new JUnit4TestAdapter(QsaratomicCoverageTest.class));
-
-//      from cdk.test.qsar.atomic
-        suite.addTest(new JUnit4TestAdapter(AtomDegreeDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomHybridizationDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomHybridizationVSEPRDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomValenceDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(BondsToAtomDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(CovalentRadiusDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(DistanceToAtomDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(EffectiveAtomPolarizabilityDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(InductiveAtomicHardnessDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(InductiveAtomicSoftnessDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(IsProtonInAromaticSystemDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(IsProtonInConjugatedPiSystemDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(PartialPiChargeDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(PartialSigmaChargeDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(PartialTChargeMMFF94DescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(PartialTChargePEOEDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(PeriodicTablePositionDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(PiElectronegativityDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(ProtonTotalPartialChargeDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(RDFProtonDescriptor_G3RTest.class));
-        suite.addTest(new JUnit4TestAdapter(RDFProtonDescriptor_GDRTest.class));
-        suite.addTest(new JUnit4TestAdapter(RDFProtonDescriptor_GHRTest.class));
-        suite.addTest(new JUnit4TestAdapter(RDFProtonDescriptor_GHR_topolTest.class));
-        suite.addTest(new JUnit4TestAdapter(RDFProtonDescriptor_GSRTest.class));
-        suite.addTest(new JUnit4TestAdapter(SigmaElectronegativityDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(StabilizationPlusChargeDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(VdWRadiusDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(IPAtomicHOSEDescriptorTest.class));
-        
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    QsaratomicCoverageTest.class,
+    AtomDegreeDescriptorTest.class,
+    AtomHybridizationDescriptorTest.class,
+    AtomHybridizationVSEPRDescriptorTest.class,
+    AtomValenceDescriptorTest.class,
+    BondsToAtomDescriptorTest.class,
+    CovalentRadiusDescriptorTest.class,
+    DistanceToAtomDescriptorTest.class,
+    EffectiveAtomPolarizabilityDescriptorTest.class,
+    InductiveAtomicHardnessDescriptorTest.class,
+    InductiveAtomicSoftnessDescriptorTest.class,
+    IsProtonInAromaticSystemDescriptorTest.class,
+    IsProtonInConjugatedPiSystemDescriptorTest.class,
+    PartialPiChargeDescriptorTest.class,
+    PartialSigmaChargeDescriptorTest.class,
+    PartialTChargeMMFF94DescriptorTest.class,
+    PartialTChargePEOEDescriptorTest.class,
+    PeriodicTablePositionDescriptorTest.class,
+    PiElectronegativityDescriptorTest.class,
+    ProtonTotalPartialChargeDescriptorTest.class,
+    RDFProtonDescriptor_G3RTest.class,
+    RDFProtonDescriptor_GDRTest.class,
+    RDFProtonDescriptor_GHRTest.class,
+    RDFProtonDescriptor_GHR_topolTest.class,
+    RDFProtonDescriptor_GSRTest.class,
+    SigmaElectronegativityDescriptorTest.class,
+    StabilizationPlusChargeDescriptorTest.class,
+    VdWRadiusDescriptorTest.class,
+    IPAtomicHOSEDescriptorTest.class,
+})
+public class MqsaratomicTests {}

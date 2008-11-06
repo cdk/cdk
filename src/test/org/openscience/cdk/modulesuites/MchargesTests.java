@@ -20,9 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.charges.AtomTypeChargesTest;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialChargesTest;
 import org.openscience.cdk.charges.InductivePartialChargesTest;
@@ -36,21 +36,12 @@ import org.openscience.cdk.coverage.ChargesCoverageTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MchargesTests {
-
-    public static Test suite() {
-
-        TestSuite suite = new TestSuite("All Tests for the 'charges' module");
-
-        suite.addTest(new JUnit4TestAdapter(ChargesCoverageTest.class));	
-
-//      from cdk.test.qsar.charges
-        suite.addTest(new JUnit4TestAdapter(GasteigerMarsiliPartialChargesTest.class));
-        suite.addTest(new JUnit4TestAdapter(InductivePartialChargesTest.class));
-        suite.addTest(new JUnit4TestAdapter(PolarizabilityTest.class));
-        suite.addTest(new JUnit4TestAdapter(AtomTypeChargesTest.class));
-        
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    ChargesCoverageTest.class,
+    GasteigerMarsiliPartialChargesTest.class,
+    InductivePartialChargesTest.class,
+    PolarizabilityTest.class,
+    AtomTypeChargesTest.class
+})
+public class MchargesTests {}

@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.IsomorphismCoverageTest;
 
 /**
@@ -33,14 +32,8 @@ import org.openscience.cdk.coverage.IsomorphismCoverageTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MisomorphismTests {
-    
-    public static Test suite() {
-        TestSuite suite= new TestSuite("CDK isomorphism Tests");
-
-        suite.addTest(new JUnit4TestAdapter(IsomorphismCoverageTest.class));
-
-        return suite;
-    }
-    
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    IsomorphismCoverageTest.class
+})
+public class MisomorphismTests {}

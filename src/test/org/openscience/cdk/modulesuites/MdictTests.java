@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.DictCoverageTest;
 import org.openscience.cdk.dict.DictDBTest;
 
@@ -34,17 +33,9 @@ import org.openscience.cdk.dict.DictDBTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MdictTests {
-    
-    public static Test suite() {
-        TestSuite suite= new TestSuite("All CDK dict module Tests");
-        
-        suite.addTest(new JUnit4TestAdapter(DictCoverageTest.class));
-
-        // from cdk.dict
-        suite.addTest(new JUnit4TestAdapter(DictDBTest.class));
-        
-        return suite;
-    }
-    
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    DictCoverageTest.class,
+    DictDBTest.class
+})
+public class MdictTests {}

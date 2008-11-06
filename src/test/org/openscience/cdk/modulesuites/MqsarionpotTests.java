@@ -20,9 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.QsarionpotCoverageTest;
 import org.openscience.cdk.qsar.descriptors.atomic.IPAtomicLearningDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptorTest;
@@ -35,19 +35,11 @@ import org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescrip
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MqsarionpotTests {
-
-    public static Test suite() {
-
-        TestSuite suite = new TestSuite("All QSAR ionpot Tests");
-
-        suite.addTest(new JUnit4TestAdapter(QsarionpotCoverageTest.class));	
-
-        suite.addTest(new JUnit4TestAdapter(IPAtomicLearningDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(IPBondLearningDescriptorTest.class));
-        suite.addTest(new JUnit4TestAdapter(IPMolecularLearningDescriptorTest.class));
-        
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    QsarionpotCoverageTest.class,
+    IPAtomicLearningDescriptorTest.class,
+    IPBondLearningDescriptorTest.class,
+    IPMolecularLearningDescriptorTest.class
+})
+public class MqsarionpotTests {}

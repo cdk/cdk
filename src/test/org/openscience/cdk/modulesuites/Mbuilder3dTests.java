@@ -24,10 +24,9 @@
 
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.Builder3dCoverageTest;
 import org.openscience.cdk.modeling.builder3d.ModelBuilder3dTest;
 import org.openscience.cdk.modeling.builder3d.TemplateHandler3DTest;
@@ -37,17 +36,10 @@ import org.openscience.cdk.modeling.builder3d.TemplateHandler3DTest;
  *
  * @cdk.module test-builder3d
  */
-public class Mbuilder3dTests {
-
-    public static Test suite () {
-        TestSuite suite = new TestSuite("The CDK builder3d module Tests");
-        
-        suite.addTest(new JUnit4TestAdapter(Builder3dCoverageTest.class));
-        
-        suite.addTest(new JUnit4TestAdapter(ModelBuilder3dTest.class));
-        suite.addTest(new JUnit4TestAdapter(TemplateHandler3DTest.class));
-        
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    Builder3dCoverageTest.class,
+    ModelBuilder3dTest.class,
+    TemplateHandler3DTest.class
+})
+public class Mbuilder3dTests {}

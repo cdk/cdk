@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.QmCoverageTest;
 
 /**
@@ -33,18 +32,8 @@ import org.openscience.cdk.coverage.QmCoverageTest;
  * @cdk.depends log4j.jar
  * @cdk.depends junit.jar
  */
-public class MqmTests {
-    
-    public static Test suite( )
-    {
-        TestSuite suite= new TestSuite("All CDK QM module Tests");
-
-        suite.addTest(new JUnit4TestAdapter(QmCoverageTest.class));
-        
-        // Individual Tests
-//        suite.addTest(GraphRendererTest.suite());
-        
-        return suite;
-    }
-    
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    QmCoverageTest.class
+})
+public class MqmTests {}

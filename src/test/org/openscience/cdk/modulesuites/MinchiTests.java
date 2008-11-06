@@ -20,10 +20,9 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import junit.framework.JUnit4TestAdapter;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.InchiCoverageTest;
 import org.openscience.cdk.inchi.InChIGeneratorTest;
 
@@ -32,16 +31,9 @@ import org.openscience.cdk.inchi.InChIGeneratorTest;
  *
  * @cdk.module test-inchi
  */
-public class MinchiTests {
-
-    public static Test suite () {
-        TestSuite suite= new TestSuite("The inchi module Tests");
-        
-        suite.addTest(new JUnit4TestAdapter(InchiCoverageTest.class));
-        
-        suite.addTest(new JUnit4TestAdapter(InChIGeneratorTest.class));
-        
-        return suite;
-    }
-
-}
+@RunWith(value=Suite.class)
+@SuiteClasses(value={
+    InchiCoverageTest.class,
+    InChIGeneratorTest.class
+})
+public class MinchiTests {}
