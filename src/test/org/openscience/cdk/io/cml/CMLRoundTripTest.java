@@ -74,11 +74,11 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class CMLRoundTripTest extends CDKTestCase {
 
-    private LoggingTool logger;
-    private Convertor convertor;
+    private static LoggingTool logger;
+    private static Convertor convertor;
 
-    @BeforeClass public void setup() {
-        logger = new LoggingTool(this);
+    @BeforeClass public static void setup() {
+        logger = new LoggingTool(CMLRoundTripTest.class);
         convertor = new Convertor(false, "");
         convertor.registerCustomizer(new QSARCustomizer());
     }
