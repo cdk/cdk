@@ -74,11 +74,11 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class CMLRoundTripTest extends CDKTestCase {
 
-    private LoggingTool logger;
-    private Convertor convertor;
+    private static LoggingTool logger;
+    private static Convertor convertor;
 
-    @BeforeClass public void setup() {
-        logger = new LoggingTool(this);
+    @BeforeClass public static void setup() {
+        logger = new LoggingTool(CMLRoundTripTest.class);
         convertor = new Convertor(false, "");
         convertor.registerCustomizer(new QSARCustomizer());
     }
@@ -218,6 +218,38 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertEquals(atom.getFormalCharge(), roundTrippedAtom.getFormalCharge());
     }
     
+    /**
+     * @cdk.bug 1713398
+     */
+    @Test public void testHydrogenCount() throws Exception {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("N");
+        atom.setHydrogenCount(3);
+        mol.addAtom(atom);
+
+        IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(mol);
+
+        Assert.assertEquals(1, roundTrippedMol.getAtomCount());
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        Assert.assertEquals(atom.getHydrogenCount(), roundTrippedAtom.getHydrogenCount());
+    }
+
+    /**
+     * @cdk.bug 1713398
+     */
+    @Test public void testHydrogenCount_UNSET() throws Exception {
+        Molecule mol = new Molecule();
+        Atom atom = new Atom("N");
+        atom.setHydrogenCount((Integer)CDKConstants.UNSET);
+        mol.addAtom(atom);
+
+        IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(mol);
+
+        Assert.assertEquals(1, roundTrippedMol.getAtomCount());
+        IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
+        Assert.assertEquals(CDKConstants.UNSET, roundTrippedAtom.getHydrogenCount());
+    }
+
     @Test public void testAtomPartialCharge() throws Exception {
         if (true) return;
         Assert.fail("Have to figure out how to store partial charges in CML2");
@@ -352,6 +384,30 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertEquals(1, roundTrippedMol.getBondCount());
         IBond roundTrippedBond = roundTrippedMol.getBond(0);
         Assert.assertEquals(bond.getFlag(CDKConstants.ISAROMATIC), roundTrippedBond.getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertEquals(bond.getOrder(), roundTrippedBond.getOrder());
+    }
+
+    /**
+     * @cdk.bug 1713398
+     */
+    @Test public void testBondAromatic_Double() throws Exception {
+        Molecule mol = new Molecule();
+        // surely, this bond is not aromatic... but fortunately, file formats do not care about chemistry
+        Atom atom = new Atom("C");
+        Atom atom2 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        Bond bond = new Bond(atom, atom2, IBond.Order.DOUBLE);
+        bond.setFlag(CDKConstants.ISAROMATIC, true);
+        mol.addBond(bond);
+
+        IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(mol);
+
+        Assert.assertEquals(2, roundTrippedMol.getAtomCount());
+        Assert.assertEquals(1, roundTrippedMol.getBondCount());
+        IBond roundTrippedBond = roundTrippedMol.getBond(0);
+        Assert.assertEquals(bond.getFlag(CDKConstants.ISAROMATIC), roundTrippedBond.getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertEquals(bond.getOrder(), roundTrippedBond.getOrder());
     }
 
     @Test public void testPartialCharge() throws Exception {
