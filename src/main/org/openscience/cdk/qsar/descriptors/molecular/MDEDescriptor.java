@@ -19,6 +19,7 @@
 */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -336,7 +337,8 @@ public class MDEDescriptor implements IMolecularDescriptor {
             IAtom atom = atomContainer.getAtom(i);
             int numConnectedBonds = atomContainer.getConnectedBondsCount(atom);
             atypes[i][1] = i;
-            if (atom.getAtomicNumber() == atomicNum) atypes[i][0] = numConnectedBonds;
+            if (atomicNum == (atom.getAtomicNumber() == null ? 0 : atom.getAtomicNumber()))
+                atypes[i][0] = numConnectedBonds;
             else
                 atypes[i][0] = -1;
         }
