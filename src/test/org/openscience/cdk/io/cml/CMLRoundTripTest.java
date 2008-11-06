@@ -354,6 +354,29 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertEquals(bond.getFlag(CDKConstants.ISAROMATIC), roundTrippedBond.getFlag(CDKConstants.ISAROMATIC));
     }
 
+    /**
+     * @cdk.bug 1713398
+     */
+    @Test public void testBondAromatic_Double() throws Exception {
+        Molecule mol = new Molecule();
+        // surely, this bond is not aromatic... but fortunately, file formats do not care about chemistry
+        Atom atom = new Atom("C");
+        Atom atom2 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        Bond bond = new Bond(atom, atom2, IBond.Order.DOUBLE);
+        bond.setFlag(CDKConstants.ISAROMATIC, true);
+        mol.addBond(bond);
+
+        IMolecule roundTrippedMol = CMLRoundTripTool.roundTripMolecule(mol);
+
+        Assert.assertEquals(2, roundTrippedMol.getAtomCount());
+        Assert.assertEquals(1, roundTrippedMol.getBondCount());
+        IBond roundTrippedBond = roundTrippedMol.getBond(0);
+        Assert.assertEquals(bond.getFlag(CDKConstants.ISAROMATIC), roundTrippedBond.getFlag(CDKConstants.ISAROMATIC));
+        Assert.assertEquals(bond.getOrder(), roundTrippedBond.getOrder());
+    }
+
     @Test public void testPartialCharge() throws Exception {
         Molecule mol = new Molecule();
         Atom atom = new Atom("C");
