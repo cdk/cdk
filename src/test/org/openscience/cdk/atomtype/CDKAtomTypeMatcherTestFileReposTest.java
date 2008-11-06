@@ -20,21 +20,29 @@
  */
 package org.openscience.cdk.atomtype;
 
-import junit.framework.JUnit4TestAdapter;
+import java.io.InputStream;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.openscience.cdk.*;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.PDBReader;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.io.InputStream;
-import java.util.List;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -46,10 +54,6 @@ import java.util.List;
  */
 public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
 
-    public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(CDKAtomTypeMatcherTestFileReposTest.class);
-    }
-    
     @Ignore public void testPDBfiles() throws Exception {
     	final String DIRNAME = "data/pdb/";
     	String[] testFiles = {

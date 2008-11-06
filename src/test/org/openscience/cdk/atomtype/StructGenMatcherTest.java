@@ -23,8 +23,6 @@ package org.openscience.cdk.atomtype;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.JUnit4TestAdapter;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -66,10 +64,6 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     }
 
     private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
-
-    public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(StructGenMatcherTest.class);
-    }
 
     @Test public void testStructGenMatcher() throws Exception {
         StructGenMatcher matcher = new StructGenMatcher();
