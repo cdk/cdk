@@ -23,7 +23,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Assert;
+import java.io.InputStream;
+import java.util.List;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -37,9 +40,6 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.io.InputStream;
-import java.util.List;
 
 /**
  * TestSuite that runs all QSAR tests.
