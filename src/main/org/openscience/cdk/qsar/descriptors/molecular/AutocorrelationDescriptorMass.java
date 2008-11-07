@@ -21,7 +21,6 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Element;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -63,7 +62,7 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
             throws java.io.IOException, ClassNotFoundException {
 
     	IsotopeFactory isofac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
-        double realmasses = isofac.getNaturalMass(new Element("H"));
+        double realmasses = isofac.getNaturalMass(element);
         return (realmasses / CARBON_MASS);
 
     }
