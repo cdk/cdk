@@ -36,6 +36,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * This class calculates ATS autocorrelation descriptor, where the weight equal
@@ -72,8 +73,20 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
     }
 
 
-    @TestMethod("testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtomContainer container) {
+    @TestMethod("test1")
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
+        IAtomContainer container;
+        try {
+            container = (IAtomContainer) atomContainer.clone();
+            container = AtomContainerManipulator.removeHydrogens(container);
+        } catch (CloneNotSupportedException e) {
+            DoubleArrayResult result = new DoubleArrayResult(5);
+            for (int i = 0; i < 5; i++) result.add(Double.NaN);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                    result, getDescriptorNames(),
+                    new CDKException("Error during cloner: " + e.getMessage(), e));
+        }
+
         try {
             double[] w = listcharges(container);
             int natom = container.getAtomCount();
