@@ -65,7 +65,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore public void testIIsotope_NaturalAbundance() throws Exception {
+    @Ignore @Test public void testIIsotope_NaturalAbundance() throws Exception {
         IMolecule mol = builder.newMolecule();
         IAtom atom = builder.newAtom("C");
         atom.setNaturalAbundance(99.);
@@ -95,7 +95,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore public void testIAtomType_Name() throws Exception {
+    @Ignore @Test public void testIAtomType_Name() throws Exception {
         IMolecule mol = builder.newMolecule();
         IAtom atom = builder.newAtom("C");
         atom.setAtomTypeName("C.sp3");
@@ -105,7 +105,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore public void testIAtomType_MaxBondOrder() throws Exception {
+    @Ignore @Test public void testIAtomType_MaxBondOrder() throws Exception {
         IMolecule mol = builder.newMolecule();
         IAtom atom = builder.newAtom("C");
         atom.setMaxBondOrder(IBond.Order.TRIPLE);
@@ -115,7 +115,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore public void testIAtomType_BondOrderSum() throws Exception {
+    @Ignore @Test public void testIAtomType_BondOrderSum() throws Exception {
         IMolecule mol = builder.newMolecule();
         IAtom atom = builder.newAtom("C");
         atom.setBondOrderSum(4.);
@@ -135,7 +135,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore public void testIAtomType_FormalNeighborCount() throws Exception {
+    @Ignore @Test public void testIAtomType_FormalNeighborCount() throws Exception {
         IMolecule mol = builder.newMolecule();
         IAtom atom = builder.newAtom("C");
         atom.setFormalNeighbourCount(4);
@@ -145,7 +145,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore public void testIAtomType_Hybridization() throws Exception {
+    @Ignore @Test public void testIAtomType_Hybridization() throws Exception {
         IMolecule mol = builder.newMolecule();
         IAtom atom = builder.newAtom("C");
         atom.setHybridization(IAtomType.Hybridization.SP3);
@@ -155,7 +155,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore public void testIAtomType_CovalentRadius() throws Exception {
+    @Ignore @Test public void testIAtomType_CovalentRadius() throws Exception {
         IMolecule mol = builder.newMolecule();
         IAtom atom = builder.newAtom("C");
         atom.setCovalentRadius(1.5d);
@@ -165,7 +165,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore public void testIAtomType_Valency() throws Exception {
+    @Ignore @Test public void testIAtomType_Valency() throws Exception {
         IMolecule mol = builder.newMolecule();
         IAtom atom = builder.newAtom("C");
         atom.setValency(4);
@@ -237,7 +237,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
 
-    @Ignore public void testIAtom_StereoParity() throws Exception {
+    @Ignore @Test public void testIAtom_StereoParity() throws Exception {
         IMolecule mol = builder.newMolecule();
         IAtom atom = builder.newAtom("C");
         atom.setStereoParity(-1);

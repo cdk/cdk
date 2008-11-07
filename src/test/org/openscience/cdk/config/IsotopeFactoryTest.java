@@ -182,7 +182,7 @@ public class IsotopeFactoryTest extends CDKTestCase
     }
 
     @Ignore
-    private void assertValidCML(String atomTypeList, String shortcut) throws Exception {
+    @Test private void assertValidCML(String atomTypeList, String shortcut) throws Exception {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
             atomTypeList
         );

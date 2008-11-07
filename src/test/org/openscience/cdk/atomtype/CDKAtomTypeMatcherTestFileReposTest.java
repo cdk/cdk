@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
 
-    @Ignore public void testPDBfiles() throws Exception {
+    @Ignore @Test public void testPDBfiles() throws Exception {
     	final String DIRNAME = "data/pdb/";
     	String[] testFiles = {
     		"114D.pdb",

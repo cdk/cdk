@@ -220,7 +220,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
     }
 
     @Ignore
-    public void testTakeIntoAccountBondHybridization() {
+    @Test public void testTakeIntoAccountBondHybridization() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IMolecule ethane1 = builder.newMolecule();
         IAtom c1 = builder.newAtom("C");
