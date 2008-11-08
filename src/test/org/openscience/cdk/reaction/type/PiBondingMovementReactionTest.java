@@ -49,7 +49,7 @@ import org.openscience.cdk.reaction.ReactionProcessTest;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * TestSuite that runs a test for the PiBondingMovemetReactionTest.
+ * TestSuite that runs a test for the PiBondingMovementReactionTest.
  * Generalized Reaction: C1=C(C)-C(C)=C-C=C1 -> C1(C)=C(C)-C=C-C=C1.
  *
  * FIXME: REACT: The tests fail if I don't put the smiles, strange
@@ -393,7 +393,7 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 		return molecule;
 	}
 	/**
-	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
+	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.
 	 * 
 	 * @param molecule          The IMolecule to analyze
 	 * @throws CDKException
