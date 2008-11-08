@@ -88,7 +88,7 @@ public class CDKTestCase extends TestCase {
      *   ant -f build.xml -DrunKnownBugs=false test-all
      * </pre>
      * 
-     * <p><b>This method may only be used in JUnit classes, it the bug is reported
+     * <p><b>This method may only be used in JUnit classes, if the bug is reported
      * on SourceForge, and both the test <i>and</i> the affected Class are marked
      * with a JavaDoc @cdk.bug taglet!</b>
      * 
