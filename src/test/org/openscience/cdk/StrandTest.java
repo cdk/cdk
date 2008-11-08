@@ -116,7 +116,7 @@ public class StrandTest extends NewCDKTestCase {
 	
 	/** The methods above effectively test SetStrandName and
 	 * SetStrandType as well, but I include SetStrandName and
-	 * SetStrandType explicitly as well (for concinstency).  
+	 * SetStrandType explicitly as well (for consistency).  
 	 */
 	
 	@Test public void testSetStrandName_String()	{
