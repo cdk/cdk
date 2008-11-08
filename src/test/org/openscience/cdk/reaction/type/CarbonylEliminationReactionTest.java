@@ -75,7 +75,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 	 }
 	/**
 	 * A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
-	 * Automatic looking for active center.
+	 * Automatically looks for active centre.
 	 *
 	 * @return    The test suite
 	 */
@@ -153,7 +153,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 	}
 	/**
 	 * A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
-	 * Automatic looking for active center.
+	 * Automatically looks for active centre.
 	 *
 	 * @return    The test suite
 	 */
@@ -235,7 +235,7 @@ public class CarbonylEliminationReactionTest extends ReactionProcessTest {
 	}
 	/**
 	 * A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
-	 * Automatic looking for active center.
+	 * Automatically looks for active centre.
 	 *
 	 * @return    The test suite
 	 */
