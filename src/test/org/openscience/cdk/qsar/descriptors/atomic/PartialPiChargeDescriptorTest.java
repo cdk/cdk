@@ -363,7 +363,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 		}
 	}
 	/**
-	 *  A unit test for JUnit. This molecule break. With PETRA as well.
+	 *  A unit test for JUnit. This molecule breaks with PETRA as well.
 	 *  @cdk.bug   1959099
 	 */
 	public void testPartialPiChargeDescriptoCharge_3() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -390,7 +390,7 @@ public class PartialPiChargeDescriptorTest extends AtomicDescriptorTest {
 	}
 
 	/**
-	 *  A unit test for JUnit. This molecule break. With PETRA as well.
+	 *  A unit test for JUnit. This molecule breaks with PETRA as well.
 	 *  
 	 *  @cdk.inchi InChI: InChI=1/C5H12O2/c1-2-7-5-3-4-6/h6H,2-5H2,1H3
 	 */
