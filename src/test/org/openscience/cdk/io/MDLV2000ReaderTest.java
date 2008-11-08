@@ -133,6 +133,19 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertTrue(((IAtomContainer)containersList.get(0)).getBondCount() > 0);
     }
 
+    @Test public void testReadingMISOLines() throws Exception {
+        String filename = "data/mdl/ChEBI_37340.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        Assert.assertNotNull(chemFile);
+        List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        Assert.assertEquals(1, containersList.size());
+        Assert.assertTrue(((IAtomContainer)containersList.get(0)).getAtomCount() > 0);
+        Assert.assertEquals(210, ((IAtomContainer)containersList.get(0)).getAtom(0).getMassNumber().intValue());
+    }
+
     @Test public void testAlkane() throws Exception {
         String filename = "data/mdl/shortest_path_test.mol";
         logger.info("Testing: " + filename);

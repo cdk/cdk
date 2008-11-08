@@ -172,9 +172,12 @@
               </or>
             </condition>
 
-            <available property="junit.present"
-                       classname="junit.framework.TestCase"
-                       classpath="${ant.home}/lib/junit.jar"/>
+            <condition property="junit.present">
+              <or>
+                <available file="${ant.home}/lib/junit.jar"/>
+                <available file="${devellib}/junit-4.5.jar"/>
+              </or>
+            </condition>
 
             <!-- test Ant version -->
             <condition property="hasAnt17">

@@ -22,8 +22,10 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -44,7 +46,8 @@ public class AutocorrelationDescriptorMassTest extends MolecularDescriptorTest {
 		setDescriptor(AutocorrelationDescriptorMass.class);
 	}
 	
-	public void ignoreCalculate_IAtomContainer() throws Exception {
+	@Test
+    public void test1() throws CDKException {
 		String filename = "data/mdl/clorobenzene.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
 				filename);

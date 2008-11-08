@@ -134,7 +134,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 		
 		GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 		
-		Assert.assertEquals(20,peoe.getMaxGasteigerIters());
+		Assert.assertEquals(20,peoe.getMaxGasteigerIters(),0.01);
 		
 	}
     /**
@@ -145,7 +145,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 		
 		GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 		
-		Assert.assertEquals(20,peoe.getMaxGasteigerIters());
+		Assert.assertEquals(20,peoe.getMaxGasteigerIters(),0.01);
 		
 	}
     /**
@@ -156,7 +156,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 		
 		GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 		
-		Assert.assertEquals(20,peoe.getMaxGasteigerIters());
+		Assert.assertEquals(20,peoe.getMaxGasteigerIters(),0.01);
 		
 	}
     /**
@@ -178,7 +178,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 		GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 		double MX_ITERATIONS = 10;
 		peoe.setMaxGasteigerIters(MX_ITERATIONS);
-		Assert.assertEquals(MX_ITERATIONS,peoe.getMaxGasteigerIters());
+		Assert.assertEquals(MX_ITERATIONS,peoe.getMaxGasteigerIters(),0.01);
 		
 	}
     /**
@@ -190,7 +190,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 		GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 		double MX_DAMP = 1;
 		peoe.setMaxGasteigerDamp(MX_DAMP);
-		Assert.assertEquals(MX_DAMP,peoe.getMaxGasteigerDamp());
+		Assert.assertEquals(MX_DAMP,peoe.getMaxGasteigerDamp(),0.01);
 		
 	}
     /**
@@ -202,7 +202,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 		GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
 		double DEOC_HYDROGEN = 22;
 		peoe.setChiCatHydrogen(DEOC_HYDROGEN);
-		Assert.assertEquals(DEOC_HYDROGEN,peoe.getChiCatHydrogen());
+		Assert.assertEquals(DEOC_HYDROGEN,peoe.getChiCatHydrogen(),0.01);
 		
 	}
     /**

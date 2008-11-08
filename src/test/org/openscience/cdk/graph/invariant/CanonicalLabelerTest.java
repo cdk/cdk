@@ -21,18 +21,33 @@
  */
 package org.openscience.cdk.graph.invariant;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.Iterator;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.graph.invariant.CanonicalLabeler;
+import org.openscience.cdk.Molecule;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.io.CMLReader;
+import org.openscience.cdk.io.CMLWriter;
+import org.openscience.cdk.io.MDLReader;
+import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.smiles.InvPair;
 import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.CDKTestCase;
-
-import java.util.Iterator;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 /**
  * Checks the functionality of the CanonicalLabeler.
@@ -99,4 +114,51 @@ public class CanonicalLabelerTest extends CDKTestCase {
 		Assert.assertEquals(5, ((Long)molecule.getAtom(3).getProperty(InvPair.CANONICAL_LABEL)).intValue());
 		Assert.assertEquals(2, ((Long)molecule.getAtom(4).getProperty(InvPair.CANONICAL_LABEL)).intValue());
 	}
+
+    /**
+     * @cdk.bug 1014344
+     */
+    @Test public void testStabilityAfterRoundtrip() throws Exception {
+        String filename = "data/mdl/bug1014344-1.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLReader reader = new MDLReader(ins, Mode.STRICT);
+        Molecule mol1 = (Molecule) reader.read(new Molecule());
+        addImplicitHydrogens(mol1);
+        StringWriter output=new StringWriter();
+        CMLWriter cmlWriter = new CMLWriter(output);
+        cmlWriter.write(mol1);
+        CMLReader cmlreader=new CMLReader(new ByteArrayInputStream(output.toString().getBytes()));
+        IAtomContainer mol2=((IChemFile)cmlreader.read(new ChemFile())).getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
+        addImplicitHydrogens(mol2);
+
+        labeler.canonLabel(mol1);
+        labeler.canonLabel(mol2);
+        Iterator<IAtom> atoms1 = mol1.atoms().iterator();
+        Iterator<IAtom> atoms2 = mol2.atoms().iterator();
+        while (atoms1.hasNext()) {
+            IAtom atom1 = atoms1.next();
+            IAtom atom2 = atoms2.next();
+            Assert.assertEquals(atom1.getProperty(InvPair.CANONICAL_LABEL), atom1.getProperty(InvPair.CANONICAL_LABEL));
+        }
+    }
+
+    /**
+     * Convenience method that perceives atom types (CDK scheme) and
+     * adds implicit hydrogens accordingly. It does not create 2D or 3D
+     * coordinates for the new hydrogens.
+     *
+     * @param container to which implicit hydrogens are added.
+     */
+    protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+        Iterator<IAtom> atoms = container.atoms().iterator();
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            IAtomType type = matcher.findMatchingAtomType(container, atom);
+            AtomTypeManipulator.configure(atom, type);
+        }
+        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        hAdder.addImplicitHydrogens(container);
+    }
+
 }
