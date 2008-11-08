@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
 /**
  * TestSuite that runs a test for the HeterolyticCleavageSBReactionTest.
- * Generalized Reaction: A-B => |[A-] +[B+] // [A+] + |[B-]. Depending of the bond order
+ * Generalized Reaction: A-B => |[A-] +[B+] // [A+] + |[B-]. Depending on the bond order
  * the bond will be removed or simply the order decreased. 
  *
  * @cdk.module test-reaction
@@ -823,7 +823,7 @@ public class HeterolyticCleavageSBReactionTest extends ReactionProcessTest {
              
 	}
 	/**
-	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
+	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.
 	 * 
 	 * @param molecule          The IMolecule to analyze
 	 * @throws CDKException
