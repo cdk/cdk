@@ -45,16 +45,16 @@ import org.openscience.cdk.tools.LoggingTool;
 public class TemplateHandlerTest extends CDKTestCase {
 
 	public boolean standAlone = false;
-	private LoggingTool logger = null;
+	private static LoggingTool logger = null;
 
-	private SmilesParser sp = null;
-	private StructureDiagramGenerator sdg = null;
+	private static SmilesParser sp = null;
+	private static StructureDiagramGenerator sdg = null;
 
 	/**
 	 *  The JUnit setup method
 	 */
-	@BeforeClass public void setUp() throws Exception {
-		logger = new LoggingTool(this);
+	@BeforeClass public static void setUp() throws Exception {
+		logger = new LoggingTool(TemplateHandlerTest.class);
 		sdg = new StructureDiagramGenerator();
 		sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 	}

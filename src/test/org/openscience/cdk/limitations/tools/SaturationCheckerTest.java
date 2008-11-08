@@ -53,9 +53,9 @@ import org.openscience.cdk.tools.SaturationChecker;
  */
 public class SaturationCheckerTest extends CDKTestCase {
 
-    SaturationChecker satcheck = null;
+    private static SaturationChecker satcheck = null;
     
-    @BeforeClass public void setup() throws Exception {
+    @BeforeClass public static void setup() throws Exception {
         satcheck = new SaturationChecker();
     }
     

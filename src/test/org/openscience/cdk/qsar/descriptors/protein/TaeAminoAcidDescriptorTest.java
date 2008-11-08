@@ -43,9 +43,9 @@ import org.openscience.cdk.tools.ProteinBuilderTool;
  */
 public class TaeAminoAcidDescriptorTest extends CDKTestCase {
 
-	private IMolecularDescriptor descriptor;
+	private static IMolecularDescriptor descriptor;
 	
-    @BeforeClass public void setUp() {
+    @BeforeClass public static void setUp() {
     	descriptor = new TaeAminoAcidDescriptor();
     }
 
