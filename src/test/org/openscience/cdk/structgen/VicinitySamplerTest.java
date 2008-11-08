@@ -49,7 +49,7 @@ public class VicinitySamplerTest extends CDKTestCase {
 	
 	private static SmilesParser parser;
 	
-	@BeforeClass public void setUp() {
+	@BeforeClass public static void setUp() {
 		parser = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
 	}
 

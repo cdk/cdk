@@ -55,14 +55,14 @@ public class OverlapResolverTest extends CDKTestCase {
 	 *  Description of the Field
 	 */
 	public boolean standAlone = false;
-	private LoggingTool logger = null;
+	private static LoggingTool logger = null;
 	StructureDiagramGenerator sdg = null;
 
 	/**
 	 *  The JUnit setup method
 	 */
-	@BeforeClass public void setUp() throws Exception {
-		logger = new LoggingTool(this);
+	@BeforeClass public static void setUp() throws Exception {
+		logger = new LoggingTool(OverlapResolverTest.class);
 	}
 
 	/**
