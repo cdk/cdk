@@ -78,7 +78,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 
 
 	/**
-	 *  Main method, set charget as atom properties
+	 *  Main method, set charge as atom properties
 	 *
 	 *@param  ac             AtomContainer
 	 *@return                AtomContainer
