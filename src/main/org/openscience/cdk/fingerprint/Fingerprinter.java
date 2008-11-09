@@ -44,7 +44,7 @@ import java.util.*;
  *  one-dimensional bit arrays, where bits are set according to a the occurrence
  *  of a particular structural feature (See for example the Daylight inc. theory
  *  manual for more information). Fingerprints allow for a fast screening step to
- *  excluded candidates for a substructure search in a database. They are also a
+ *  exclude candidates for a substructure search in a database. They are also a
  *  means for determining the similarity of chemical structures. <p>
  *
  *  A fingerprint is generated for an AtomContainer with this code: <pre>
