@@ -1309,7 +1309,7 @@ public class GeometryTools {
 	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
 	 *@param  secondAtomContainer               the second aligned AtomContainer
 	 *@param  mappedAtoms             			Map: a Map of the mapped atoms
-	 *@param  Coords3d            			    boolean: true if moecules has 3D coords, false if molecules has 2D coords
+	 *@param  Coords3d            			    boolean: true if molecules has 3D coords, false if molecules has 2D coords
 	 *@return                   				double: the value of the RMSD 
 	 *@exception  CDKException  if there is an error in getting mapped atoms
 	 *
@@ -1350,7 +1350,7 @@ public class GeometryTools {
 	 *@param  secondAtomContainer               the second aligned AtomContainer
 	 *@param  mappedAtoms             			Map: a Map of the mapped atoms
 	 *@param hetAtomOnly                        boolean: true if only hetero atoms should be considered
-	 *@param  Coords3d            			    boolean: true if moecules has 3D coords, false if molecules has 2D coords
+	 *@param  Coords3d            			    boolean: true if molecules has 3D coords, false if molecules has 2D coords
 	 *@return                   				double: the value of the RMSD 
 	 *
 	 **/
