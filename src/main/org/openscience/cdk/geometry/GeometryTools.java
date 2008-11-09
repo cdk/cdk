@@ -43,7 +43,7 @@ import java.util.List;
 /**
  * A set of static utility classes for geometric calculations and operations.
  * This class is extensively used, for example, by JChemPaint to edit molecule.
- * All methods in this class change the coordinates of the atoms. Use GeometryTools if you use an external set of coordinates (e. g. rendeirngCoordinates from RendererModel)
+ * All methods in this class change the coordinates of the atoms. Use GeometryTools if you use an external set of coordinates (e. g. renderingCoordinates from RendererModel)
  *
  * @author        seb
  * @author        Stefan Kuhn
