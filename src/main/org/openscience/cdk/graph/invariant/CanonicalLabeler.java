@@ -37,7 +37,7 @@ import org.openscience.cdk.smiles.InvPair;
 import java.util.*;
 
 /**
- * Canonically lables an atom container implementing
+ * Canonically labels an atom container implementing
  * the algorithm published in David Weininger et.al. {@cdk.cite WEI89}.
  * The Collections.sort() method uses a merge sort which is 
  * stable and runs in n log(n).
@@ -57,7 +57,7 @@ public class CanonicalLabeler {
   }
 
   /**
-   * Canonicaly label the fragment.  The labels are set as atom property InvPair.CANONICAL_LABEL of type Integer, indicating the canonical order.
+   * Canonically label the fragment.  The labels are set as atom property InvPair.CANONICAL_LABEL of type Integer, indicating the canonical order.
    * This is an implementation of the algorithm published in
    * David Weininger et.al. {@cdk.cite WEI89}.
    * 
