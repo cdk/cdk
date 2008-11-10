@@ -76,7 +76,6 @@ import org.openscience.cdk.tools.LoggingTool;
 public class APolDescriptor implements IMolecularDescriptor {
 
     private LoggingTool logger;
-    private IsotopeFactory ifac = null;
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
     private static double[] polarizabilities;
     private static final String[] names = {"apol"};
@@ -120,7 +119,7 @@ public class APolDescriptor implements IMolecularDescriptor {
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");
-    };
+    }
 
     /**
      *  Sets the parameters attribute of the APolDescriptor object.
@@ -169,9 +168,8 @@ public class APolDescriptor implements IMolecularDescriptor {
         double apol = 0;
         int atomicNumber;
         try {
-            ifac = IsotopeFactory.getInstance(container.getBuilder());			
+            IsotopeFactory ifac = IsotopeFactory.getInstance(container.getBuilder());			
             IElement element;
-            java.util.Iterator atoms = container.atoms().iterator();
             String symbol;
             for (IAtom atom : container.atoms()) {
                 symbol = atom.getSymbol();
