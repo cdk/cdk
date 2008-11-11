@@ -244,6 +244,8 @@ public class AtomContainerManipulator {
     /**
      * Adds explicit hydrogens (without coordinates) to the IAtomContainer,
      * equaling the number of set implicit hydrogens.
+     *
+     * @cdk.keyword hydrogens, adding
      */
     @TestMethod("testConvertImplicitToExplicitHydrogens_IAtomContainer")
     public static void convertImplicitToExplicitHydrogens(IAtomContainer atomContainer) {
