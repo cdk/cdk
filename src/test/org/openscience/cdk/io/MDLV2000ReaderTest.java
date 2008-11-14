@@ -146,6 +146,23 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(210, ((IAtomContainer)containersList.get(0)).getAtom(0).getMassNumber().intValue());
     }
 
+    /**
+     * @cdk.bug 2234820
+     */
+    @Test public void testMassNumber() throws Exception {
+        String filename = "data/mdl/massnumber.mol";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        Assert.assertNotNull(chemFile);
+        List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        Assert.assertEquals(1, containersList.size());
+        Assert.assertEquals(3, ((IAtomContainer)containersList.get(0)).getAtomCount());
+        Assert.assertEquals(2, ((IAtomContainer)containersList.get(0)).getAtom(1).getMassNumber().intValue());
+        Assert.assertEquals(3, ((IAtomContainer)containersList.get(0)).getAtom(2).getMassNumber().intValue());
+    }
+
     @Test public void testAlkane() throws Exception {
         String filename = "data/mdl/shortest_path_test.mol";
         logger.info("Testing: " + filename);
