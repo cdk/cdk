@@ -29,6 +29,8 @@ package org.openscience.cdk.interfaces;
  * @cdk.module interfaces
  * @cdk.svnrev  $Revision$
  * @cdk.keyword element
+ * @cdk.keyword atomic number
+ * @cdk.keyword number, atomic
  */
 public interface IElement extends IChemObject {
 
