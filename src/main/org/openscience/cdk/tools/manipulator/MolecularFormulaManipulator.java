@@ -173,14 +173,18 @@ public class MolecularFormulaManipulator {
 	 * 
 	 */
 	@TestMethod("testGetString_IMolecularFormula_String")
-	public static String getString(IMolecularFormula formula, String[] orderElements ){
-		String stringMF = "";
-		List<IIsotope> isotopesList = putInOrder(orderElements, formula);
+    public static String getString(IMolecularFormula formula, String[] orderElements) {
+        String stringMF = "";
+        List<IIsotope> isotopesList = putInOrder(orderElements, formula);
         for (IIsotope isotope : isotopesList) {
-            stringMF = stringMF + isotope.getSymbol() + getElementCount(formula, isotope);
+            int elemCount = getElementCount(formula, isotope);
+            if (elemCount == 1)
+                stringMF = stringMF + isotope.getSymbol();
+            else
+                stringMF = stringMF + isotope.getSymbol() + getElementCount(formula, isotope);
         }
-		return stringMF;
-	}
+        return stringMF;
+    }
 	
 	/**
 	 * Returns the string representation of the molecule formula. 

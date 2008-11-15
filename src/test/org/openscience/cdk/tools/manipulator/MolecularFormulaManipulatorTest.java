@@ -22,8 +22,8 @@ package org.openscience.cdk.tools.manipulator;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -241,7 +241,19 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 		
 	}
 
-	@Test 
+    /**
+     * @cdk.bug 2276507
+     */
+    @Test
+    public void testBug2276507() {
+        IMolecularFormula mf1 = new MolecularFormula();
+        mf1.addIsotope(builder.newIsotope("C"), 1);
+        mf1.addIsotope(builder.newIsotope("H"), 4);
+
+        Assert.assertEquals("CH4", MolecularFormulaManipulator.getString(mf1));        
+    }
+
+    @Test
     public void testGetString_Isotopes()	{
 		IMolecularFormula mf1 = new MolecularFormula();
 		mf1.addIsotope(builder.newIsotope("C",12),9);
