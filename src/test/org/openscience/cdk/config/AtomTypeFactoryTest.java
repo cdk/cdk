@@ -204,6 +204,15 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         Assert.assertNotNull(atomType);
         Assert.assertEquals("C", atomType.getSymbol());
         Assert.assertEquals("C.3", atomType.getAtomTypeName());
+        Assert.assertEquals(4, atomType.getFormalNeighbourCount().intValue());
+        Assert.assertEquals(IAtomType.Hybridization.SP3, atomType.getHybridization());
+        Assert.assertEquals(0, atomType.getFormalCharge().intValue());
+        Assert.assertNotNull(atomType.getProperty(CDKConstants.LONE_PAIR_COUNT));
+        Assert.assertTrue(atomType.getProperty(CDKConstants.LONE_PAIR_COUNT) instanceof Integer);
+        Assert.assertEquals(0, ((Integer)atomType.getProperty(CDKConstants.LONE_PAIR_COUNT)).intValue());
+        Assert.assertNotNull(atomType.getProperty(CDKConstants.PI_BOND_COUNT));
+        Assert.assertTrue(atomType.getProperty(CDKConstants.PI_BOND_COUNT) instanceof Integer);
+        Assert.assertEquals(0, ((Integer)atomType.getProperty(CDKConstants.PI_BOND_COUNT)).intValue());
 	}
 
     @Test
