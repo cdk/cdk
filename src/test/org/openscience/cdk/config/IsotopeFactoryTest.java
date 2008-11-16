@@ -24,22 +24,11 @@
  */
 package org.openscience.cdk.config;
 
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.Element;
-import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.CDKTestCase;
-import org.w3c.dom.Document;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -50,7 +39,20 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import java.io.*;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.Element;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.w3c.dom.Document;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
  * Checks the functionality of the IsotopeFactory
@@ -181,8 +183,7 @@ public class IsotopeFactoryTest extends CDKTestCase
     	assertValidCML("org/openscience/cdk/config/data/isotopes.xml", "Isotopes");
     }
 
-    @Ignore
-    @Test private void assertValidCML(String atomTypeList, String shortcut) throws Exception {
+    private void assertValidCML(String atomTypeList, String shortcut) throws Exception {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
             atomTypeList
         );
