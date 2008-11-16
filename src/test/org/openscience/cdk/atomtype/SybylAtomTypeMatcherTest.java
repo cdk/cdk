@@ -133,7 +133,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         for (IAtom atom : benzene.atoms()) {
           atom.setAtomTypeName(null);
           IAtomType matched = matcher.findMatchingAtomType(benzene, atom);
-          Assert.assertEquals("C.2", matched.getAtomTypeName());
+          Assert.assertEquals("C.ar", matched.getAtomTypeName());
         }
     }
 
@@ -286,6 +286,195 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         assertAtomTypeNames(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testMnF4() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("F");
+        IAtom atom2 = new Atom("Mn");
+        IAtom atom3 = new Atom("F");
+        IAtom atom4 = new Atom("F");
+        IAtom atom5 = new Atom("F");
+        mol.addAtom(atom); atom.setFormalCharge(-1);
+        mol.addAtom(atom2); atom2.setFormalCharge(+2);
+        mol.addAtom(atom3); atom3.setFormalCharge(-1);
+        mol.addAtom(atom4); atom4.setFormalCharge(-1);
+        mol.addAtom(atom5); atom5.setFormalCharge(-1);
+
+        String[] expectedTypes = {"F", "Mn", "F", "F", "F"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testAmide() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("N");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"O.2", "C.2", "N.am"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testMethylAmine() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("N");
+        IAtom atom2 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"N.3", "C.3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testAmmonia() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("H");
+        IAtom atom2 = new Atom("N");
+        IAtom atom3 = new Atom("H");
+        IAtom atom4 = new Atom("H");
+        IAtom atom5 = new Atom("H");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        atom2.setFormalCharge(+1);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addAtom(atom5);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,4,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"H", "N.4", "H", "H", "H"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testMethanol() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"O.3", "C.3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testDMSO() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("S");
+        IAtom atom3 = new Atom("C");
+        IAtom atom4 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"O.2", "S.O", "C.3", "C.3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testDMSOO() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom1 = new Atom("O");
+        IAtom atom2 = new Atom("S");
+        IAtom atom3 = new Atom("C");
+        IAtom atom4 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom1);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addBond(0,2,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(2,3,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(2,4,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"O.2", "O.2", "S.O2", "C.3", "C.3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testCarbokation() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("H");
+        IAtom atom2 = new Atom("C"); atom2.setFormalCharge(+1);
+        IAtom atom3 = new Atom("H");
+        IAtom atom4 = new Atom("H");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"H", "C.cat", "H", "H"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    @Test public void testSilicon() throws Exception {
+    	IMolecule mol = new Molecule();
+    	IAtom a1 = mol.getBuilder().newAtom("Si"); mol.addAtom(a1);
+    	IAtom a2 = mol.getBuilder().newAtom("O"); mol.addAtom(a2);
+    	IAtom a3 = mol.getBuilder().newAtom("O"); mol.addAtom(a3);
+    	IAtom a4 = mol.getBuilder().newAtom("O"); mol.addAtom(a4);
+    	IAtom a5 = mol.getBuilder().newAtom("C"); mol.addAtom(a5);
+    	IAtom a6 = mol.getBuilder().newAtom("C"); mol.addAtom(a6);
+    	IAtom a7 = mol.getBuilder().newAtom("C"); mol.addAtom(a7);
+    	IAtom a8 = mol.getBuilder().newAtom("H"); mol.addAtom(a8);
+    	IAtom a9 = mol.getBuilder().newAtom("H"); mol.addAtom(a9);
+    	IAtom a10 = mol.getBuilder().newAtom("H"); mol.addAtom(a10);
+    	IAtom a11 = mol.getBuilder().newAtom("H"); mol.addAtom(a11);
+    	IAtom a12 = mol.getBuilder().newAtom("H"); mol.addAtom(a12);
+    	IAtom a13 = mol.getBuilder().newAtom("H"); mol.addAtom(a13);
+    	IAtom a14 = mol.getBuilder().newAtom("H"); mol.addAtom(a14);
+    	IAtom a15 = mol.getBuilder().newAtom("H"); mol.addAtom(a15);
+    	IAtom a16 = mol.getBuilder().newAtom("H"); mol.addAtom(a16);
+    	IAtom a17 = mol.getBuilder().newAtom("H"); mol.addAtom(a17);
+    	IBond b1 = mol.getBuilder().newBond(a1, a2, IBond.Order.SINGLE); mol.addBond(b1);
+    	IBond b2 = mol.getBuilder().newBond(a1, a3, IBond.Order.SINGLE); mol.addBond(b2);
+    	IBond b3 = mol.getBuilder().newBond(a1, a4, IBond.Order.SINGLE); mol.addBond(b3);
+    	IBond b4 = mol.getBuilder().newBond(a2, a5, IBond.Order.SINGLE); mol.addBond(b4);
+    	IBond b5 = mol.getBuilder().newBond(a3, a6, IBond.Order.SINGLE); mol.addBond(b5);
+    	IBond b6 = mol.getBuilder().newBond(a4, a7, IBond.Order.SINGLE); mol.addBond(b6);
+    	IBond b7 = mol.getBuilder().newBond(a5, a8, IBond.Order.SINGLE); mol.addBond(b7);
+    	IBond b8 = mol.getBuilder().newBond(a5, a9, IBond.Order.SINGLE); mol.addBond(b8);
+    	IBond b9 = mol.getBuilder().newBond(a5, a10, IBond.Order.SINGLE); mol.addBond(b9);
+    	IBond b10 = mol.getBuilder().newBond(a6, a11, IBond.Order.SINGLE); mol.addBond(b10);
+    	IBond b11 = mol.getBuilder().newBond(a6, a12, IBond.Order.SINGLE); mol.addBond(b11);
+    	IBond b12 = mol.getBuilder().newBond(a6, a13, IBond.Order.SINGLE); mol.addBond(b12);
+    	IBond b13 = mol.getBuilder().newBond(a7, a14, IBond.Order.SINGLE); mol.addBond(b13);
+    	IBond b14 = mol.getBuilder().newBond(a7, a15, IBond.Order.SINGLE); mol.addBond(b14);
+    	IBond b15 = mol.getBuilder().newBond(a7, a16, IBond.Order.SINGLE); mol.addBond(b15);
+    	IBond b16 = mol.getBuilder().newBond(a1, a17, IBond.Order.SINGLE); mol.addBond(b16);
+
+    	String[] expectedTypes = {"Si", "O.3", "O.3", "O.3", "C.3", "C.3", "C.3",
+    			"H", "H", "H", "H", "H", "H", "H", "H", "H", "H"}; 
+    	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testThioAmide() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("S");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("N");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"S.2", "C.2", "N.am"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
     @Test public void countTestedAtomTypes() {
         super.countTestedAtomTypes(testedAtomTypes);
     }
