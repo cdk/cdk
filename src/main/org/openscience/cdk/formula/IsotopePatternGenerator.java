@@ -137,22 +137,7 @@ public class IsotopePatternGenerator{
     	}
     	return distribution;
     }
-	/**
-	 * Get all the isotope masses distribution given the IMolecularFormulaSet. 
-	 * 
-	 * @param molForSet  The IMolecularFormulaSet to start
-	 * @return           A List containing the different mass distribution
-	 */
-    @TestMethod("testGetDistribution_IMolecularFormulaSet")
-	public List<Double> getDistribution(IMolecularFormulaSet molForSet){
-    	List<Double> distribution = new ArrayList<Double>();
-    	
-    	for(IMolecularFormula formula : molForSet.molecularFormulas()){
-    		double mm = MolecularFormulaManipulator.getTotalExactMass(formula);
-        	distribution.add(mm);
-    	}
-    	return distribution;
-    }
+    
 	/**
 	 * Get all combinatorial chemical isotopes given a structure. 
 	 * 
