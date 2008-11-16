@@ -268,4 +268,21 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String[] expectedTypes = {"C.1", "C.1", "C.3"};
         assertAtomTypeNames(testedAtomTypes, expectedTypes, mol);
     }
+
+    @Test public void testHalogenatedMethane() throws Exception {
+        IMolecule mol = new Molecule();
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("F"));
+        mol.addAtom(new Atom("Cl"));
+        mol.addAtom(new Atom("I"));
+        mol.addAtom(new Atom("Br"));
+        mol.addBond(0,1,IBond.Order.SINGLE);
+        mol.addBond(0,2,IBond.Order.SINGLE);
+        mol.addBond(0,3,IBond.Order.SINGLE);
+        mol.addBond(0,4,IBond.Order.SINGLE);
+
+        String[] expectedTypes = {"C.3", "F", "Cl", "I", "Br"};
+        assertAtomTypeNames(testedAtomTypes, expectedTypes, mol);
+    }
+
 }
