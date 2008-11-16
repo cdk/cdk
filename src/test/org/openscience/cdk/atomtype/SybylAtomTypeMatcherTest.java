@@ -218,10 +218,6 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         }
 	}
 
-    @Test public void countTestedAtomTypes() {
-    	super.countTestedAtomTypes(testedAtomTypes);
-    }
-    
     @Test public void testForDuplicateDefinitions() {
     	super.testForDuplicateDefinitions();
     }
@@ -288,6 +284,10 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
         String[] expectedTypes = {"C.3", "F", "Cl", "I", "Br"};
         assertAtomTypeNames(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void countTestedAtomTypes() {
+        super.countTestedAtomTypes(testedAtomTypes);
     }
 
 }
