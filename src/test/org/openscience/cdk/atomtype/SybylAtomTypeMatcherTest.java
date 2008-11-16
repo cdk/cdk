@@ -136,6 +136,21 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         }
     }
 
+    @Test public void testAdenine() throws Exception {
+        IMolecule mol = MoleculeFactory.makeAdenine();
+          String[] expectedTypes = {"C.ar", "C.ar", "C.ar", "N.ar", "N.ar", "N.ar",
+            "N.ar", "N.3", "C.ar", "C.ar"
+          };
+          SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(mol.getBuilder());
+          IAtomType[] types = matcher.findMatchingAtomType(mol);
+          for (int i=0; i<expectedTypes.length; i++) {
+              assertAtomType(testedAtomTypes,
+                  "Incorrect perception for atom " + i,
+                  expectedTypes[i], types[i]
+              );
+          }
+      }
+
     /**
      * Uses findMatchingAtomType(IAtomContainer) type.
      */
