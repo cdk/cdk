@@ -116,6 +116,8 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         String mappedType = mapper.mapAtomType(typeName);
         if ("C.2".equals(mappedType) && atom.getFlag(CDKConstants.ISAROMATIC)) {
             mappedType = "C.ar";
+        } else if ("N.2".equals(mappedType) && atom.getFlag(CDKConstants.ISAROMATIC)) {
+            mappedType = "N.ar";
         } else if ("N.pl3".equals(mappedType) && atom.getFlag(CDKConstants.ISAROMATIC)) {
             mappedType = "N.ar";
         }
