@@ -32,6 +32,8 @@ package org.openscience.cdk.interfaces;
  * @author      egonw
  * @cdk.created 2005-08-24
  * @cdk.keyword isotope
+ * @cdk.keyword mass number
+ * @cdk.keyword number, mass
  */
 public interface IIsotope extends IElement {
 

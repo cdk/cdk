@@ -69,6 +69,30 @@ public class CML2Test extends CDKTestCase {
 
     private static LoggingTool logger = new LoggingTool(CML2Test.class);
 
+    @Test public void testFile3() throws Exception {
+        String filename = "data/cml/3.cml";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        CMLReader reader = new CMLReader(ins);
+        IChemFile chemFile = (IChemFile)reader.read(new NNChemFile());
+
+        // test the resulting ChemFile content
+        Assert.assertNotNull(chemFile);
+        IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
+
+        for (int i=0; i<=3; i++) {
+            Assert.assertFalse(
+                "Bond " + (i+1) + " is not aromatic in the file",
+                mol.getBond(i).getFlag(CDKConstants.ISAROMATIC)
+            );
+        }
+        for (int i=4; i<=9; i++) {
+            Assert.assertTrue(
+                "Bond " + (i+1) + " is aromatic in the file",
+                mol.getBond(i).getFlag(CDKConstants.ISAROMATIC)
+            );
+        }
+    }
+
     /**
      * @cdk.bug 2114987
      */

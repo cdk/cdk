@@ -24,6 +24,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.CDKConstantsTest;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcherFilesTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTestFileReposTest;
 import org.openscience.cdk.config.AtomTypeFactoryTest;
@@ -78,6 +79,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulatorTest;
     // the CDK atom typer
     CDKAtomTypeMatcherTest.class,
     CDKAtomTypeMatcherTestFileReposTest.class,
+    CDKAtomTypeMatcherFilesTest.class,
 
     // other
     CDKExceptionTest.class,

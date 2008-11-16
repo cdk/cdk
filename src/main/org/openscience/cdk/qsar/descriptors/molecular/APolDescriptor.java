@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -75,7 +76,6 @@ import org.openscience.cdk.tools.LoggingTool;
 public class APolDescriptor implements IMolecularDescriptor {
 
     private LoggingTool logger;
-    private IsotopeFactory ifac = null;
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
     private static double[] polarizabilities;
     private static final String[] names = {"apol"};
@@ -119,7 +119,7 @@ public class APolDescriptor implements IMolecularDescriptor {
                 this.getClass().getName(),
                 "$Id$",
                 "The Chemistry Development Kit");
-    };
+    }
 
     /**
      *  Sets the parameters attribute of the APolDescriptor object.
@@ -160,24 +160,25 @@ public class APolDescriptor implements IMolecularDescriptor {
      * Calculate the sum of atomic polarizabilities in an {@link IAtomContainer}.
      *
      *@param  container  The {@link IAtomContainer} for which the descriptor is to be calculated
-     *@return            The sum of atomic polarizabilities
-     *@throws CDKException if there is an error in getting element symbols from the
+     *@return The sum of atomic polarizabilities
      * {@link IsotopeFactory}
      */
     @TestMethod("testCalculate_IAtomContainer,testAPolDescriptorTest")
     public DescriptorValue calculate(IAtomContainer container) {
         double apol = 0;
-        int atomicNumber = 0;
+        int atomicNumber;
         try {
-            ifac = IsotopeFactory.getInstance(container.getBuilder());			
-            IElement element = null;
-            java.util.Iterator atoms = container.atoms().iterator();
-            String symbol = null;
-            while (atoms.hasNext()) {
-                symbol = ((IAtom)atoms.next()).getSymbol();
+            IsotopeFactory ifac = IsotopeFactory.getInstance(container.getBuilder());			
+            IElement element;
+            String symbol;
+            for (IAtom atom : container.atoms()) {
+                symbol = atom.getSymbol();
                 element = ifac.getElement(symbol);
                 atomicNumber = element.getAtomicNumber();
                 apol += polarizabilities[atomicNumber];
+                if (atom.getHydrogenCount() != CDKConstants.UNSET) {
+                    apol += polarizabilities[1] * atom.getHydrogenCount();
+                }
             }
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new DoubleResult(apol), getDescriptorNames());

@@ -579,12 +579,12 @@ public class MassToFormulaToolTest extends CDKTestCase {
 		boolean found = false;
 		for(IMolecularFormula formula : mfSet.molecularFormulas()) {
 			String mf = MolecularFormulaManipulator.getString(formula);
-			if(mf.equals("C4H11N1O4")){
+			if(mf.equals("C4H11NO4")){
 				found = true;
 				break;
 			}
 		}
-		Assert.assertTrue("The molecular formula C4H11N1O4 should be found",found);
+		Assert.assertTrue("The molecular formula C4H11NO4 should be found",found);
 	}
 
 	/**
@@ -624,12 +624,12 @@ public class MassToFormulaToolTest extends CDKTestCase {
 		boolean found = false;
 		for(IMolecularFormula formula : mfSet.molecularFormulas()) {
 			String mf = MolecularFormulaManipulator.getString(formula);
-			if(mf.equals("C11H10N1O2")){
+			if(mf.equals("C11H10NO2")){
 				found = true;
 				break;
 			}
 		}
-		Assert.assertTrue("The molecular formula C4H11N1O4 should be found",found);
+		Assert.assertTrue("The molecular formula C4H11NO4 should be found",found);
 	}
 	/**
 	 * A unit test suite for JUnit. C5H11N2O

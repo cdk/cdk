@@ -61,7 +61,6 @@ import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionSchemeManipulator;
 import org.xmlcml.cml.base.CMLElement;
-import org.xmlcml.cml.base.CMLException;
 import org.xmlcml.cml.element.CMLAtom;
 import org.xmlcml.cml.element.CMLBond;
 import org.xmlcml.cml.element.CMLBondStereo;
@@ -398,12 +397,8 @@ public class Convertor {
                 crystal.getA(), crystal.getB(), crystal.getC()
         );
         logger.debug("Number of cell params: ", params.length);
-        try {
-            cmlCrystal.setCellParameters(params);
-        } catch (CMLException exception) {
-            logger.error("Could not set crystal cell parameters!");
-        }
-        molecule.addCrystal(cmlCrystal);
+        cmlCrystal.setCellParameters(params);
+        molecule.appendChild(cmlCrystal);
         return molecule;
     }
     
@@ -487,7 +482,7 @@ public class Convertor {
         	CMLIdentifier ident = new CMLIdentifier();
         	ident.setConvention("iupac:inchi");
         	ident.setCMLValue(structure.getProperty(CDKConstants.INCHI).toString());
-        	cmlMolecule.addIdentifier(ident);
+          cmlMolecule.appendChild(ident);
         }
         for (int i = 0; i < structure.getAtomCount(); i++) {
             IAtom cdkAtom = structure.getAtom(i);
@@ -703,7 +698,7 @@ public class Convertor {
         if (cdkBond.getFlag(CDKConstants.ISAROMATIC)) {
         	CMLBondType bType = new CMLBondType();
         	bType.setDictRef("cdk:aromaticBond");
-        	cmlBond.addBondType(bType);
+          cmlBond.appendChild(bType);
         }
 
         if (cdkBond.getStereo() == CDKConstants.STEREO_BOND_UP ||

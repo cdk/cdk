@@ -162,8 +162,10 @@ public class MolecularFormulaManipulator {
 	/**
 	 * Returns the string representation of the molecule formula.
 	 * 
-	 * @param  formula      The IMolecularFormula Object 
+	 * @param formula       The IMolecularFormula Object 
 	 * @param orderElements The order of Elements
+	 * @param setOne        True, when must be set the value 1 for elements with
+	 * 					    one atom 
 	 * @return              A String containing the molecular formula
 	 * 
 	 * @see #getHTML(IMolecularFormula)
@@ -172,15 +174,19 @@ public class MolecularFormulaManipulator {
 	 * @see #generateOrderEle_Hill_WithCarbons()
 	 * 
 	 */
-	@TestMethod("testGetString_IMolecularFormula_String")
-	public static String getString(IMolecularFormula formula, String[] orderElements ){
-		String stringMF = "";
-		List<IIsotope> isotopesList = putInOrder(orderElements, formula);
+	@TestMethod("testGetString_IMolecularFormula_arrayString_boolean")
+    public static String getString(IMolecularFormula formula, String[] orderElements, boolean setOne) {
+        String stringMF = "";
+        List<IIsotope> isotopesList = putInOrder(orderElements, formula);
         for (IIsotope isotope : isotopesList) {
-            stringMF = stringMF + isotope.getSymbol() + getElementCount(formula, isotope);
+            int elemCount = getElementCount(formula, isotope);
+            if (elemCount == 1 && !setOne)
+                stringMF = stringMF + isotope.getSymbol();
+            else
+                stringMF = stringMF + isotope.getSymbol() + getElementCount(formula, isotope);
         }
-		return stringMF;
-	}
+        return stringMF;
+    }
 	
 	/**
 	 * Returns the string representation of the molecule formula. 
@@ -199,10 +205,32 @@ public class MolecularFormulaManipulator {
 	@TestMethod("testGetString_IMolecularFormula")
 	public static String getString(IMolecularFormula formula) {
 		
+		return getString(formula, false);
+	}
+	
+	/**
+	 * Returns the string representation of the molecule formula. 
+	 * Based on Hill System. The Hill system is a system of writing 
+	 * chemical formulas such that the number of carbon atoms in a 
+	 * molecule is indicated first, the number of hydrogen atoms next, 
+	 * and then the number of all other chemical elements subsequently, 
+	 * in alphabetical order. When the formula contains no carbon, all 
+	 * the elements, including hydrogen, are listed alphabetically.
+	 *
+	 * @param  formula  The IMolecularFormula Object
+	 * @param  setOne   True, when must be set the value 1 for elements with
+	 * 					one atom 
+	 * @return          A String containing the molecular formula
+	 * 
+	 * @see #getHTML(IMolecularFormula)
+	 */
+	@TestMethod("testGetString_IMolecularFormula_boolean")
+	public static String getString(IMolecularFormula formula, boolean setOne) {
+		
 		if(containsElement(formula, formula.getBuilder().newElement("C")))
-			return getString(formula, generateOrderEle_Hill_WithCarbons());
+			return getString(formula, generateOrderEle_Hill_WithCarbons(), setOne);
 		else 
-			return getString(formula, generateOrderEle_Hill_NoCarbons());
+			return getString(formula, generateOrderEle_Hill_NoCarbons(), setOne);
 	}
 	
 	public static List<IIsotope> putInOrder(String[] orderElements, IMolecularFormula formula) {

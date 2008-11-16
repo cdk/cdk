@@ -663,10 +663,10 @@ public class CMLCoreModule implements ICMLModule {
         if ("bond".equals(name)) {
         	if (!stereoGiven)
                 bondStereo.add("");
-            if (bondStereo.size() > bondDictRefs.size())
+            if (bondCounter > bondDictRefs.size())
                 bondDictRefs.add(null);
-            if (bondAromaticity.size() > bondDictRefs.size())
-            	bondAromaticity.add(null);
+            if (bondCounter > bondAromaticity.size())
+                bondAromaticity.add(null);
         } else if ("atom".equals(name)) {
             if (atomCounter > eltitles.size()) {
                 eltitles.add(null);

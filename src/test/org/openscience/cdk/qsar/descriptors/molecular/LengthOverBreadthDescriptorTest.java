@@ -1,8 +1,5 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.InputStream;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +10,9 @@ import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -41,8 +41,8 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        Assert.assertEquals(3.560092, result.get(0), 0.001);
-        Assert.assertEquals(3.560092, result.get(1), 0.001);
+        Assert.assertEquals(3.5029, result.get(0), 0.001);
+        Assert.assertEquals(3.5029, result.get(1), 0.001);
     }
 
     @Test public void testLOBDescriptorCyclohexane() throws Exception {
@@ -84,8 +84,8 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
-        Assert.assertEquals(2.1251065, result.get(0), 0.000001);
-        Assert.assertEquals(2.1251065, result.get(1), 0.000001);
+        Assert.assertEquals(2.0880171, result.get(0), 0.000001);
+        Assert.assertEquals(2.0880171, result.get(1), 0.000001);
     }
 
     /**

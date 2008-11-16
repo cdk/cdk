@@ -47,7 +47,9 @@ import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * This class tests the matching of atom types defined in the
- * CDK atom type list.
+ * CDK atom type list. All tests in this class <b>must</b> use
+ * explicit {@link IAtomContainer}s; test using data files
+ * must be placed in {@link CDKAtomTypeMatcherFilesTest}.
  *
  * @cdk.module test-core
  */
