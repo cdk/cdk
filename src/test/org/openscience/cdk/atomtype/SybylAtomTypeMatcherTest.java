@@ -489,6 +489,52 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String[] expectedTypes = {"S.2", "C.2", "N.am"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
+
+    @Test public void testSalts() throws Exception {
+        IMolecule mol = new Molecule();
+          
+          IAtom atom = new Atom("Na");
+          atom.setFormalCharge(+1);
+          mol.addAtom(atom);
+          String[] expectedTypes = new String[]{"Na"};
+          assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+          
+          mol = new Molecule();
+          atom = new Atom("K");
+          atom.setFormalCharge(+1);
+          mol.addAtom(atom);
+          expectedTypes = new String[]{"K"};
+          assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+          
+          mol = new Molecule();
+          atom = new Atom("Ca");
+          atom.setFormalCharge(+2);
+          mol.addAtom(atom);
+          expectedTypes = new String[]{"Ca"};
+          assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+          
+          mol = new Molecule();
+          atom = new Atom("Mg");
+          atom.setFormalCharge(+2);
+          mol.addAtom(atom);
+          expectedTypes = new String[]{"Mg"};
+          assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+          
+          mol = new Molecule();
+          atom = new Atom("Cu");
+          atom.setFormalCharge(+2);
+          mol.addAtom(atom);
+          expectedTypes = new String[]{"Cu"};
+          assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+
+          mol = new Molecule();
+          atom = new Atom("Al");
+          atom.setFormalCharge(+3);
+          mol.addAtom(atom);
+          expectedTypes = new String[]{"Al"};
+          assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+       }
+
     @Test public void countTestedAtomTypes() {
         super.countTestedAtomTypes(testedAtomTypes);
     }
