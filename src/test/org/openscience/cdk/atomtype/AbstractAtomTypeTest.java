@@ -95,7 +95,23 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase {
         }
 	}
 
-	/**
+    public void assertAtomTypeNames(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol) throws CDKException {
+        Assert.assertEquals(
+            "The number of expected atom types is unequal to the number of atoms",
+            expectedTypes.length, mol.getAtomCount()
+        );
+        IAtomTypeMatcher atm = getAtomTypeMatcher(mol.getBuilder());
+        for (int i=0; i<expectedTypes.length; i++) {
+            IAtom testedAtom = mol.getAtom(i);
+            IAtomType foundType = atm.findMatchingAtomType(mol, testedAtom);
+            assertAtomType(testedAtomTypes,
+                           "Incorrect perception for atom " + i,
+                           expectedTypes[i], foundType
+            );
+        }
+    }
+
+  /**
 	 * Method that tests if the matched <code>IAtomType</code> and the <code>IAtom</code> are
 	 * consistent. For example, it tests if hybridization states and formal charges are equal.
 	 * 
