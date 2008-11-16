@@ -100,10 +100,10 @@
     <atm:equivalentAsType rdf:resource="&sybylat;C.2"/>
   </owl:Thing>
   <owl:Thing rdf:about="&cdkat;C.plus.planar">
-    <atm:mapsToType rdf:resource="&sybylat;Any"/>
+    <atm:mapsToType rdf:resource="&sybylat;C.cat"/>
   </owl:Thing>
   <owl:Thing rdf:about="&cdkat;C.plus.sp2">
-    <atm:mapsToType rdf:resource="&sybylat;Any"/>
+    <atm:mapsToType rdf:resource="&sybylat;C.cat"/>
   </owl:Thing>
   <owl:Thing rdf:about="&cdkat;C.minus.sp3">
     <atm:mapsToType rdf:resource="&sybylat;Any"/>
