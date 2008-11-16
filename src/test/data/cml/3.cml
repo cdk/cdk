@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<list dictRef="cdk:model" xmlns="http://www.xml-cml.org/schema">
+  <list dictRef="cdk:moleculeSet">
+    <molecule id="m1">
+      <atomArray>
+        <atom id="a1" elementType="C" x2="343.5307436087194" y2="162.00000000000003" formalCharge="0" hydrogenCount="0" isotopeNumber="12"/>
+        <atom id="a2" elementType="N" x2="374.70765814495917" y2="180.0" formalCharge="0" hydrogenCount="1" isotopeNumber="14"/>
+        <atom id="a3" elementType="C" x2="312.3538290724796" y2="180.00000000000006" formalCharge="0" hydrogenCount="0" isotopeNumber="12"/>
+        <atom id="a4" elementType="N" x2="343.5307436087194" y2="126.00000000000003" formalCharge="0" hydrogenCount="1" isotopeNumber="14"/>
+        <atom id="a6" elementType="C" x2="312.3538290724796" y2="216.00000000000006" formalCharge="0" hydrogenCount="1" isotopeNumber="12"/>
+        <atom id="a10" elementType="N" x2="281.1769145362398" y2="162.00000000000006" formalCharge="0" hydrogenCount="0" isotopeNumber="14"/>
+        <atom id="a5" elementType="O" x2="374.70765814495917" y2="108.0" formalCharge="0" hydrogenCount="1" isotopeNumber="16"/>
+        <atom id="a7" elementType="C" x2="281.1769145362398" y2="234.00000000000006" formalCharge="0" hydrogenCount="1" isotopeNumber="12"/>
+        <atom id="a9" elementType="C" x2="250.0" y2="180.00000000000006" formalCharge="0" hydrogenCount="1" isotopeNumber="12"/>
+        <atom id="a8" elementType="C" x2="250.0" y2="216.00000000000006" formalCharge="0" hydrogenCount="1" isotopeNumber="12"/>
+      </atomArray>
+      <bondArray>
+        <bond id="b1" atomRefs2="a2 a1" order="D"/>
+        <bond id="b2" atomRefs2="a1 a3" order="S"/>
+        <bond id="b3" atomRefs2="a1 a4" order="S"/>
+        <bond id="b4" atomRefs2="a4 a5" order="S"/>
+        <bond id="b5" atomRefs2="a3 a6" order="D">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b10" atomRefs2="a10 a3" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b6" atomRefs2="a6 a7" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b9" atomRefs2="a9 a10" order="D">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b7" atomRefs2="a7 a8" order="D">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+        <bond id="b8" atomRefs2="a8 a9" order="S">
+          <bondType dictRef="cdk:aromaticBond"/>
+        </bond>
+      </bondArray>
+    </molecule>
+  </list>
+</list>
