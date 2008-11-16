@@ -59,12 +59,17 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         // so, just mark them as tested
         testedAtomTypes.put("LP", 1);
         testedAtomTypes.put("Du", 1);
+        testedAtomTypes.put("Du.C", 1);
         testedAtomTypes.put("Any", 1);
         testedAtomTypes.put("Hal", 1);
         testedAtomTypes.put("Het", 1);
         testedAtomTypes.put("Hev", 1);
         testedAtomTypes.put("X", 1);
         testedAtomTypes.put("Het", 1);
+        testedAtomTypes.put("H.t3p", 1);
+        testedAtomTypes.put("H.spc", 1);
+        testedAtomTypes.put("O.t3p", 1);
+        testedAtomTypes.put("O.spc", 1);
     }
 
 	@Test public void testGetInstance_IChemObjectBuilder() {
