@@ -285,24 +285,12 @@
     <at:hasElement rdf:resource="&elem;C"/>
   </at:AtomType>
 
-  <at:AtomType rdf:ID="H">
-    <at:hasElement rdf:resource="&elem;H"/>
-    <at:formalNeighbourCount>1</at:formalNeighbourCount>
-    <at:lonePairCount>0</at:lonePairCount>
-    <at:piBondCount>0</at:piBondCount>
-  </at:AtomType>
-
   <at:AtomType rdf:ID="H.spc">
     <at:hasElement rdf:resource="&elem;H"/>
   </at:AtomType>
 
   <at:AtomType rdf:ID="H.t3p">
     <at:hasElement rdf:resource="&elem;H"/>
-  </at:AtomType>
-
-  <at:AtomType rdf:ID="C.cat">
-    <at:formalCharge>+1</at:formalCharge>
-    <at:hasElement rdf:resource="&elem;C"/>
   </at:AtomType>
 
   <at:AtomType rdf:ID="Du.C">
