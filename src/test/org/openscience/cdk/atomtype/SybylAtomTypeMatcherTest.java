@@ -130,10 +130,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
         // test if the perceived atom types match that
         SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
-        for (IAtom atom : benzene.atoms()) {
-          atom.setAtomTypeName(null);
-          IAtomType matched = matcher.findMatchingAtomType(benzene, atom);
-          Assert.assertEquals("C.ar", matched.getAtomTypeName());
+        IAtomType[] types = matcher.findMatchingAtomType(benzene);
+        for (IAtomType type : types) {
+            Assert.assertEquals("C.ar", type.getAtomTypeName());
         }
     }
 
