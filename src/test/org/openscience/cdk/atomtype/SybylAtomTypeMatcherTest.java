@@ -27,8 +27,11 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -203,5 +206,52 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     @Test public void testForDuplicateDefinitions() {
     	super.testForDuplicateDefinitions();
     }
-    
+
+    @Test public void testDummy() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new PseudoAtom("R");
+        mol.addAtom(atom);
+
+        String[] expectedTypes = {"X"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testEthene() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+
+        String[] expectedTypes = {"C.2", "C.2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testImine() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("N");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+
+        String[] expectedTypes = {"C.2", "N.2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testPropyne() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_TRIPLE);
+        mol.addBond(2,1,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"C.1", "C.1", "C.3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
 }
