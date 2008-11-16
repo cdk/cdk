@@ -123,13 +123,15 @@ abstract public class AbstractAtomTypeTest extends CDKTestCase {
 			return;
 		}
 		
-    	if (atom.getHybridization() != CDKConstants.UNSET) {
+    	if (atom.getHybridization() != CDKConstants.UNSET &&
+    	    matched.getHybridization() != CDKConstants.UNSET) {
     		Assert.assertEquals(
     			"Hybridization does not match",
     			atom.getHybridization(), matched.getHybridization()
     		);
     	}
-    	if (atom.getFormalCharge() != CDKConstants.UNSET) {
+    	if (atom.getFormalCharge() != CDKConstants.UNSET &&
+    	    matched.getFormalCharge() != CDKConstants.UNSET) {
     		Assert.assertEquals(
     			"Formal charge does not match",
     			atom.getFormalCharge(), matched.getFormalCharge()
