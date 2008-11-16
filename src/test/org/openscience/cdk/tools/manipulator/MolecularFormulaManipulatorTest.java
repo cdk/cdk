@@ -166,7 +166,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 	 * @return    The test suite
 	 */
 	@Test 
-    public void testGetString_IMolecularFormula_arrayString() {
+    public void testGetString_IMolecularFormula_arrayString_boolean() {
 		IMolecularFormula formula = new MolecularFormula();
 		formula.addIsotope(builder.newIsotope("C"), 2);
 		formula.addIsotope(builder.newIsotope("H"), 2);
@@ -176,7 +176,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 		newOrder[0] = "H";
 		newOrder[1] = "C";
 		
-		Assert.assertEquals("H2C2",MolecularFormulaManipulator.getString(formula,newOrder));
+		Assert.assertEquals("H2C2",MolecularFormulaManipulator.getString(formula,newOrder,true));
 		
 	}
 	/**
@@ -251,6 +251,18 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         mf1.addIsotope(builder.newIsotope("H"), 4);
 
         Assert.assertEquals("CH4", MolecularFormulaManipulator.getString(mf1));        
+    }
+
+    /**
+     * 
+     */
+    @Test
+    public void testGetString_IMolecularFormula_boolean() {
+        IMolecularFormula mf1 = new MolecularFormula();
+        mf1.addIsotope(builder.newIsotope("C"), 1);
+        mf1.addIsotope(builder.newIsotope("H"), 4);
+
+        Assert.assertEquals("C1H4", MolecularFormulaManipulator.getString(mf1,true));        
     }
 
     @Test
