@@ -533,7 +533,184 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
           mol.addAtom(atom);
           expectedTypes = new String[]{"Al"};
           assertAtomTypes(testedAtomTypes, expectedTypes, mol);
-       }
+    }
+
+    @Test public void testH2S() throws CDKException {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom s = DefaultChemObjectBuilder.getInstance().newAtom("S");
+        IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(s, h1, IBond.Order.SINGLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(s, h2, IBond.Order.SINGLE);
+
+        mol.addAtom(s);
+        mol.addAtom(h1);
+        mol.addAtom(h2);
+
+        mol.addBond(b1);
+        mol.addBond(b2);
+
+        String[] expectedTypes = {"S.3", "H", "H"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testFerrocene() throws Exception {
+        IAtomContainer ferrocene = new Molecule();
+        ferrocene.addAtom(new Atom("C"));
+        ferrocene.addAtom(new Atom("C"));
+        ferrocene.addAtom(new Atom("C"));
+        ferrocene.addAtom(new Atom("C"));
+        ferrocene.addAtom(new Atom("C")); ferrocene.getAtom(4).setFormalCharge(-1);
+        ferrocene.addAtom(new Atom("C"));
+        ferrocene.addAtom(new Atom("C"));
+        ferrocene.addAtom(new Atom("C"));
+        ferrocene.addAtom(new Atom("C"));
+        ferrocene.addAtom(new Atom("C")); ferrocene.getAtom(9).setFormalCharge(-1);
+        ferrocene.addAtom(new Atom("Fe")); ferrocene.getAtom(10).setFormalCharge(+2);
+        ferrocene.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        ferrocene.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        ferrocene.addBond(2,3,CDKConstants.BONDORDER_DOUBLE);
+        ferrocene.addBond(3,4,CDKConstants.BONDORDER_SINGLE);
+        ferrocene.addBond(4,0,CDKConstants.BONDORDER_SINGLE);
+        ferrocene.addBond(5,6,CDKConstants.BONDORDER_DOUBLE);
+        ferrocene.addBond(6,7,CDKConstants.BONDORDER_SINGLE);
+        ferrocene.addBond(7,8,CDKConstants.BONDORDER_DOUBLE);
+        ferrocene.addBond(8,9,CDKConstants.BONDORDER_SINGLE);
+        ferrocene.addBond(9,5,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = new String[]{
+                "C.2","C.2","C.2","C.2","Any",
+                "C.2","C.2","C.2","C.2","Any",
+                "Fe"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, ferrocene);
+    }
+
+    @Test public void testHCN() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("N");
+        IAtom atom2 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addBond(0,1,CDKConstants.BONDORDER_TRIPLE);
+
+        String[] expectedTypes = {"N.1", "C.1"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testAniline() throws Exception {
+        IMolecule benzene = MoleculeFactory.makeBenzene();
+        IAtom nitrogen = benzene.getBuilder().newAtom("N");
+        benzene.addAtom(nitrogen);
+        benzene.addBond(benzene.getBuilder().newBond(benzene.getAtom(0), nitrogen, IBond.Order.SINGLE));
+
+        // test if the perceived atom types match that
+        SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(benzene.getBuilder());
+        IAtomType[] types = matcher.findMatchingAtomType(benzene);
+        for (int i=0; i<6; i++) {
+            assertAtomType(testedAtomTypes,
+                "Incorrect perception for atom " + i,
+                "C.ar", types[i]
+            );
+        }
+        assertAtomType(testedAtomTypes,
+            "Incorrect perception for atom " + 6,
+            "N.pl3", types[6]
+        );
+    }
+
+    @Test public void testLithiumMethanoxide() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("Li");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0,2,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"O.3", "C.3", "Li"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testTinCompound() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("Sn");
+        IAtom atom3 = new Atom("C");
+        IAtom atom4 = new Atom("C");
+        IAtom atom5 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addAtom(atom5);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,4,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"C.3", "Sn", "C.3", "C.3", "C.3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testZincChloride() throws Exception {
+        IMolecule mol = new Molecule();
+        mol.addAtom(new Atom("Zn"));
+        mol.addAtom(new Atom("Cl"));
+        mol.addAtom(new Atom("Cl"));
+        mol.addBond(0, 1, CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(0, 2, CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"Zn", "Cl", "Cl"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.inchi InChI=1/H2Se/h1H2
+     */
+    @Test public void testH2Se() throws CDKException {
+        IMolecule mol = DefaultChemObjectBuilder.getInstance().newMolecule();
+        IAtom se = DefaultChemObjectBuilder.getInstance().newAtom("Se");
+        IAtom h1 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+        IAtom h2 = DefaultChemObjectBuilder.getInstance().newAtom("H");
+
+        IBond b1 = DefaultChemObjectBuilder.getInstance().newBond(se, h1, IBond.Order.SINGLE);
+        IBond b2 = DefaultChemObjectBuilder.getInstance().newBond(se, h2, IBond.Order.SINGLE);
+
+        mol.addAtom(se);
+        mol.addAtom(h1);
+        mol.addAtom(h2);
+
+        mol.addBond(b1);
+        mol.addBond(b2);
+
+        String[] expectedTypes = {"Se", "H", "H"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testPhosphate() throws Exception {
+        IMolecule mol = new Molecule();
+          IAtom atom = new Atom("O");
+          IAtom atom2 = new Atom("P");
+          IAtom atom3 = new Atom("O");
+          IAtom atom4 = new Atom("O");
+          IAtom atom5 = new Atom("O");
+          mol.addAtom(atom);
+          mol.addAtom(atom2);
+          mol.addAtom(atom3);
+          mol.addAtom(atom4);
+          mol.addAtom(atom5);
+          mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+          mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+          mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+          mol.addBond(1,4,CDKConstants.BONDORDER_SINGLE);
+
+          String[] expectedTypes = {"O.2", "P.3", "O.3", "O.3", "O.3"};
+          assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+      }
 
     @Test public void countTestedAtomTypes() {
         super.countTestedAtomTypes(testedAtomTypes);
