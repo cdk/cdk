@@ -1301,4 +1301,13 @@
     <at:hybridization rdf:resource="&at;octahedral"/>
   </at:AtomType>
 
+  <at:AtomType rdf:ID="Ge">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Ge"/>
+    <at:formalNeighbourCount>4</at:formalNeighbourCount>
+    <at:lonePairCount>0</at:lonePairCount>
+    <at:piBondCount>0</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp3"/>
+  </at:AtomType>
+
 </rdf:RDF>

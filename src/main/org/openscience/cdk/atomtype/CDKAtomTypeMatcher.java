@@ -132,6 +132,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             type = perceiveSelenium(atomContainer, atom);
         } else if ("Ga".equals(atom.getSymbol())) {
             type = perceiveGallium(atomContainer, atom);
+        } else if ("Ge".equals(atom.getSymbol())) {
+            type = perceiveGermanium(atomContainer, atom);
         } else {
             if (type == null) type = perceiveHalogens(atomContainer, atom);
             if (type == null) type = perceiveCommonSalts(atomContainer, atom);
@@ -149,6 +151,16 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             if (isAcceptable(atom, atomContainer, type)) return type;
         } else if (atom.getFormalCharge() == 3) {
             IAtomType type = getAtomType("Ga.3plus");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }
+        return null;
+    }
+
+    private IAtomType perceiveGermanium(IAtomContainer atomContainer, IAtom atom) throws CDKException {
+        IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
+        if (!isCharged(atom) && maxBondOrder == IBond.Order.SINGLE &&
+            atomContainer.getConnectedAtomsCount(atom) <= 4) {
+            IAtomType type = getAtomType("Ge");
             if (isAcceptable(atom, atomContainer, type)) return type;
         }
         return null;
