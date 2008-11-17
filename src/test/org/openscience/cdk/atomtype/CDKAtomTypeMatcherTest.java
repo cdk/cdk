@@ -1463,6 +1463,48 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * Gallium tetrahydroxide.
+     */
+    @Test public void testGallate() throws Exception {
+        IMolecule mol = new Molecule();
+          IAtom atom = new Atom("O"); atom.setFormalCharge(-1);
+          IAtom atom2 = new Atom("Ga"); atom2.setFormalCharge(+3);
+          IAtom atom3 = new Atom("O"); atom3.setFormalCharge(-1);
+          IAtom atom4 = new Atom("O"); atom4.setFormalCharge(-1);
+          IAtom atom5 = new Atom("O"); atom5.setFormalCharge(-1);
+          mol.addAtom(atom);
+          mol.addAtom(atom2);
+          mol.addAtom(atom3);
+          mol.addAtom(atom4);
+          mol.addAtom(atom5);
+
+        String[] expectedTypes = new String[]{
+              "O.minus", "Ga.3plus", "O.minus", "O.minus", "O.minus"
+          };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+      }
+
+    /**
+     * Gallium trihydroxide.
+     */
+    @Test public void testGallateCovalent() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("Ga");
+        IAtom atom3 = new Atom("O");
+        IAtom atom4 = new Atom("O");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+
+        String[] expectedTypes = new String[]{
+            "O.sp3", "Ga", "O.sp3", "O.sp3"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testPerchlorate_ChargedBonds() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("O");
@@ -2322,7 +2364,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         );
     	Assert.assertTrue("Could not read the atom types", factory.getSize() != 0);
         String errorMessage = "Elements without atom type(s) defined in the XML:";
-        final int testUptoAtomicNumber = 18; // TODO: 92 ?
+        final int testUptoAtomicNumber = 36; // TODO: 92 ?
         int elementsMissingTypes = 0;
     	for (int i=1; i<testUptoAtomicNumber; i++) {
     		String symbol = Symbols.byAtomicNumber[i];
