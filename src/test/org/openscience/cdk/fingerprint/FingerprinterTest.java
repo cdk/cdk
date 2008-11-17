@@ -339,6 +339,15 @@ public class FingerprinterTest extends CDKTestCase
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 	}
 
+  @Test public void testFingerprinterBitSetSize() throws Exception {
+    Fingerprinter fingerprinter = new Fingerprinter(1024,7);
+    Assert.assertNotNull(fingerprinter);
+    Molecule mol = MoleculeFactory.makeIndole();
+    BitSet bs = fingerprinter.getFingerprint(mol);
+    Assert.assertEquals(994, bs.length()); // highest set bit
+    Assert.assertEquals(1024, bs.size()); // actual bit set size
+  }
+
 	/**
 	 * @cdk.bug 1851202
 	 */

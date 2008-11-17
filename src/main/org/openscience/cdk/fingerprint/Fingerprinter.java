@@ -50,6 +50,8 @@ import java.util.*;
  *  A fingerprint is generated for an AtomContainer with this code: <pre>
  *   Molecule molecule = new Molecule();
  *   BitSet fingerprint = Fingerprinter.getFingerprint(molecule);
+ *   fingerprint.size(); // returns 1024 by default
+ *   fingerprint.length(); // returns the highest set bit
  * </pre> <p>
  *
  *  The FingerPrinter assumes that hydrogens are explicitly given! <p>
