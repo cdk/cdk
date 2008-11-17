@@ -20,7 +20,14 @@
  */
 package org.openscience.cdk.atomtype;
 
+import java.util.Map;
+
+import org.junit.Assert;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
@@ -51,5 +58,20 @@ abstract public class AbstractSybylAtomTypeTest extends AbstractAtomTypeTest {
 	public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder) {
 		return SybylAtomTypeMatcher.getInstance(builder);
 	}
-	
+
+    public void assertAtomTypes(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol) throws CDKException {
+        Assert.assertEquals(
+            "The number of expected atom types is unequal to the number of atoms",
+            expectedTypes.length, mol.getAtomCount()
+        );
+        IAtomTypeMatcher atm = getAtomTypeMatcher(mol.getBuilder());
+        for (int i=0; i<expectedTypes.length; i++) {
+            IAtom testedAtom = mol.getAtom(i);
+            IAtomType foundType = atm.findMatchingAtomType(mol, testedAtom);
+            assertAtomType(testedAtomTypes,
+                "Incorrect perception for atom " + i,
+                expectedTypes[i], foundType
+            );
+        }
+    }
 }
