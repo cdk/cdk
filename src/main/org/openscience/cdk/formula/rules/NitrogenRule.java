@@ -99,24 +99,23 @@ public class NitrogenRule implements IRule{
     public double validate(IMolecularFormula formula) throws CDKException {
     	logger.info("Start validation of ",formula);
     	
-    	Integer mass = (int)Math.round(MolecularFormulaManipulator.getTotalExactMass(formula));
-    	
-    	if(mass == 0)
+    	double massE = MolecularFormulaManipulator.getTotalMassNumber(formula);
+    	if(massE == 0)
     		return 0.0;
     	
     	int numberN = MolecularFormulaManipulator.getElementCount(formula, formula.getBuilder().newElement("N"));
     	
     	if(formula.getCharge() == null || formula.getCharge() == 0){
-	    	if(isOdd(mass) && isOdd(numberN)) {
+	    	if(isOdd(massE) && isOdd(numberN)) {
 	    		return 1.0;
-	    	} else if(!isOdd(mass) && ( numberN == 0 || !isOdd(numberN))){
+	    	} else if(!isOdd(massE) && ( numberN == 0 || !isOdd(numberN))){
 	    		return 1.0;
 	    	} else
 	    		return 0.0;
 	    }else{
-	    	if(!isOdd(mass) && isOdd(numberN)) {
+	    	if(!isOdd(massE) && isOdd(numberN)) {
 	    		return 1.0;
-	    	} else if(isOdd(mass) && ( numberN == 0 || !isOdd(numberN))){
+	    	} else if(isOdd(massE) && ( numberN == 0 || !isOdd(numberN))){
 	    		return 1.0;
 	    	} else
 	    		return 0.0;
@@ -128,7 +127,7 @@ public class NitrogenRule implements IRule{
      * @param value The value to analyze
      * @return      True, if the integer is odd
      */
-    private boolean isOdd(int value) {
+    private boolean isOdd(double value) {
     	if(value % 2 == 0)
     		return false;
         else
