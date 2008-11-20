@@ -99,8 +99,7 @@ public class NitrogenRule implements IRule{
     public double validate(IMolecularFormula formula) throws CDKException {
     	logger.info("Start validation of ",formula);
     	
-    	Integer mass = (int)Math.round(MolecularFormulaManipulator.getTotalExactMass(formula));
-    	
+    	double mass = MolecularFormulaManipulator.getTotalMassNumber(formula);
     	if(mass == 0)
     		return 0.0;
     	
@@ -128,7 +127,7 @@ public class NitrogenRule implements IRule{
      * @param value The value to analyze
      * @return      True, if the integer is odd
      */
-    private boolean isOdd(int value) {
+    private boolean isOdd(double value) {
     	if(value % 2 == 0)
     		return false;
         else
