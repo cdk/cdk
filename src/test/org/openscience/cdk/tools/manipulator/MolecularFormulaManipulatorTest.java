@@ -370,7 +370,15 @@ public class MolecularFormulaManipulatorTest extends NewCDKTestCase {
     	double totalExactMass = MolecularFormulaManipulator.getNaturalExactMass(formula);
         Assert.assertEquals(expectedMass, totalExactMass, 0.000001);
     }
-    
+    @Test 
+    public void testGetTotalMassNumber_IMolecularFormula() throws Exception {
+		IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(builder.newIsotope("C"));
+        formula.addIsotope(builder.newIsotope("Cl"));
+    	
+        double totalExactMass = MolecularFormulaManipulator.getTotalMassNumber(formula);
+        Assert.assertEquals(23, totalExactMass, 0.000001);
+    }
     @Test
     public void testGetMajorIsotopeMass_IMolecularFormula() throws Exception {
         IMolecularFormula formula = new MolecularFormula();

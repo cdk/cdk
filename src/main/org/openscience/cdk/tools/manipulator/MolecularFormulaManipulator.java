@@ -24,18 +24,23 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -439,6 +444,28 @@ public class MolecularFormulaManipulator {
         }
 		return mass;
 	 }
+	 
+	 /**
+	  * Get the summed mass number of all isotopes from an MolecularFormula. It
+	  * assumes isotope masses to be preset, and returns 0.0 if not.
+	  * 
+	  * @param  formula The IMolecularFormula to calculate
+	  * @return         The summed nominal mass of all atoms in this MolecularFormula
+	  */
+	 @TestMethod("testGetTotalMassNumber_IMolecularFormula")
+	 public static double getTotalMassNumber(IMolecularFormula formula) {
+		 double mass = 0.0;
+		 for (IIsotope isotope : formula.isotopes()) {
+			try {
+				IIsotope isotope2 = IsotopeFactory.getInstance(formula.getBuilder()).getMajorIsotope(isotope.getSymbol());
+				mass += isotope2.getAtomicNumber() * formula.getIsotopeCount(isotope);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			 
+	     }
+		 return mass;
+	 }
 	  
 	/**
 	 * Get the summed natural mass of all elements from an MolecularFormula.
@@ -450,15 +477,15 @@ public class MolecularFormulaManipulator {
 	 public static double getNaturalExactMass(IMolecularFormula formula) {
 		 double mass = 0.0;
 		 IsotopeFactory factory;
-		try {
-			factory = IsotopeFactory.getInstance(formula.getBuilder());
-		} catch (IOException e) {
-			throw new RuntimeException("Could not instantiate the IsotopeFactory.");
-		}
-        for (IIsotope isotope : formula.isotopes()) {
-            IElement isotopesElement = isotope.getBuilder().newElement(isotope);
-            mass += factory.getNaturalMass(isotopesElement) * formula.getIsotopeCount(isotope);
-        }
+		 try {
+			 factory = IsotopeFactory.getInstance(formula.getBuilder());
+		 } catch (IOException e) {
+			 throw new RuntimeException("Could not instantiate the IsotopeFactory.");
+		 }
+		 for (IIsotope isotope : formula.isotopes()) {
+			 IElement isotopesElement = isotope.getBuilder().newElement(isotope);
+			 mass += factory.getNaturalMass(isotopesElement) * formula.getIsotopeCount(isotope);
+		 }
 		 return mass;
 	 }
 		  
