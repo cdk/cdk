@@ -45,7 +45,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  */
 public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 	
-	private final double METHOD_ERROR = 0.1;
+	private final double METHOD_ERROR = 0.16;
 	
 	private final IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 	
