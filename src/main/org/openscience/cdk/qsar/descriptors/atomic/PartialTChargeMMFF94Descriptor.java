@@ -127,6 +127,14 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      */
     @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
+        int position = ac.getAtomNumber(atom);
+        try {
+	        ac = (IAtomContainer)ac.clone();
+	    } catch (CloneNotSupportedException e) {
+	        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                           new DoubleResult(Double.NaN), names);
+		}
+        atom = ac.getAtom(position);
         String originalAtomtypeName = atom.getAtomTypeName();
         Integer originalNeighborCount = atom.getFormalNeighbourCount();
         Integer originalValency = atom.getValency();

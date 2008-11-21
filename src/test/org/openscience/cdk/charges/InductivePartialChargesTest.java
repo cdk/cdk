@@ -36,6 +36,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
 
 import javax.vecmath.Point3d;
@@ -56,17 +57,23 @@ public class InductivePartialChargesTest extends CDKTestCase {
 
     @BeforeClass
     public static void makeMoleucle() {
-        mol = DefaultChemObjectBuilder.getInstance().newAtomContainer();
-        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newAtom("C");
-        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newAtom("Cl");
-        IAtom atom3 = DefaultChemObjectBuilder.getInstance().newAtom("Br");
-        IAtom atom4 = DefaultChemObjectBuilder.getInstance().newAtom("H");
-        IAtom atom5 = DefaultChemObjectBuilder.getInstance().newAtom("O");
+    	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        mol = builder.newAtomContainer();
+        IAtom atom1 = builder.newAtom("C");
+        IAtom atom2 = builder.newAtom("Cl");
+        IAtom atom3 = builder.newAtom("Br");
+        IAtom atom4 = builder.newAtom("H");
+        IAtom atom5 = builder.newAtom("O");
+        atom5.setPoint3d(new Point3d(2.24, 1.33, 0.0));
+        atom1.setPoint3d(new Point3d(1.80, 0.0, 0.0));
+        atom2.setPoint3d(new Point3d(0.0, 0.0, 0.0));
+        atom3.setPoint3d(new Point3d(2.60, -0.79, 1.59));
+        atom4.setPoint3d(new Point3d(2.15, -0.60, -0.87));
 
-        IBond bond1 = DefaultChemObjectBuilder.getInstance().newBond(atom1, atom2, IBond.Order.SINGLE);
-        IBond bond2 = DefaultChemObjectBuilder.getInstance().newBond(atom1, atom3, IBond.Order.SINGLE);
-        IBond bond3 = DefaultChemObjectBuilder.getInstance().newBond(atom1, atom4, IBond.Order.SINGLE);
-        IBond bond4 = DefaultChemObjectBuilder.getInstance().newBond(atom1, atom5, IBond.Order.SINGLE);
+        IBond bond1 = builder.newBond(atom1, atom2, IBond.Order.SINGLE);
+        IBond bond2 = builder.newBond(atom1, atom3, IBond.Order.SINGLE);
+        IBond bond3 = builder.newBond(atom1, atom4, IBond.Order.SINGLE);
+        IBond bond4 = builder.newBond(atom1, atom5, IBond.Order.SINGLE);
 
         mol.addAtom(atom1);
         mol.addAtom(atom2);

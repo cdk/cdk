@@ -465,8 +465,30 @@ public class MolecularFormulaManipulator {
             } else
                 mass += isotope.getExactMass() * formula.getIsotopeCount(isotope);
         }
-        return mass;
-    }
+		return mass;
+	 }
+	 
+	 /**
+	  * Get the summed mass number of all isotopes from an MolecularFormula. It
+	  * assumes isotope masses to be preset, and returns 0.0 if not.
+	  * 
+	  * @param  formula The IMolecularFormula to calculate
+	  * @return         The summed nominal mass of all atoms in this MolecularFormula
+	  */
+	 @TestMethod("testGetTotalMassNumber_IMolecularFormula")
+	 public static double getTotalMassNumber(IMolecularFormula formula) {
+		 double mass = 0.0;
+		 for (IIsotope isotope : formula.isotopes()) {
+			try {
+				IIsotope isotope2 = IsotopeFactory.getInstance(formula.getBuilder()).getMajorIsotope(isotope.getSymbol());
+				mass += isotope2.getMassNumber() * formula.getIsotopeCount(isotope);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			 
+	     }
+		 return mass;
+	 }
 	  
 	/**
 	 * Get the summed natural mass of all elements from an MolecularFormula.
@@ -478,15 +500,15 @@ public class MolecularFormulaManipulator {
 	 public static double getNaturalExactMass(IMolecularFormula formula) {
 		 double mass = 0.0;
 		 IsotopeFactory factory;
-		try {
-			factory = IsotopeFactory.getInstance(formula.getBuilder());
-		} catch (IOException e) {
-			throw new RuntimeException("Could not instantiate the IsotopeFactory.");
-		}
-        for (IIsotope isotope : formula.isotopes()) {
-            IElement isotopesElement = isotope.getBuilder().newElement(isotope);
-            mass += factory.getNaturalMass(isotopesElement) * formula.getIsotopeCount(isotope);
-        }
+		 try {
+			 factory = IsotopeFactory.getInstance(formula.getBuilder());
+		 } catch (IOException e) {
+			 throw new RuntimeException("Could not instantiate the IsotopeFactory.");
+		 }
+		 for (IIsotope isotope : formula.isotopes()) {
+			 IElement isotopesElement = isotope.getBuilder().newElement(isotope);
+			 mass += factory.getNaturalMass(isotopesElement) * formula.getIsotopeCount(isotope);
+		 }
 		 return mass;
 	 }
 		  
