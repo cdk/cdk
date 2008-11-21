@@ -48,23 +48,6 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(XLogPDescriptor.class);
     }
 
-//	public void testXLogPDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-//	
-//	// each test is for one or more atom types:
-//	// 1. Test for cumarine
-//	IMolecularDescriptor setDescriptor(XLogPDescriptor.class);
-//	Object[] params = {new Boolean(true)};
-//	descriptor.setParameters(params);
-//	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-//	IMolecule mol = sp.parseSmiles("COc1ccccc1C(C3=C(O)c2ccccc2CC3=O)c5c(O)c4ccccc4oc5=O"); // a cumarine
-//	HydrogenAdder hAdder = new HydrogenAdder();
-//	hAdder.addExplicitHydrogensToSatisfyValency(mol);
-//	logger.debug("Cumarine:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue());
-//	//Assert.assertEquals(4.54, ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
-//	
-//	
-//}
-
     @Test public void testno688() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
