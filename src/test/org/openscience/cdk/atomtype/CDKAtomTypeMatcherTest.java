@@ -2744,6 +2744,18 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testGermaniumFourCoordinate() throws Exception {
+        IMolecule mol = new Molecule();
+        mol.addAtom(new Atom("Ge"));
+        mol.addAtom(new Atom("Cl")); mol.addBond(0,1,IBond.Order.SINGLE);
+        mol.addAtom(new Atom("Cl")); mol.addBond(0,2,IBond.Order.SINGLE);
+        mol.addAtom(new Atom("Cl")); mol.addBond(0,3,IBond.Order.SINGLE);
+        mol.addAtom(new Atom("Cl")); mol.addBond(0,4,IBond.Order.SINGLE);
+
+        String[] expectedTypes = {"Ge", "Cl", "Cl", "Cl", "Cl"}; 
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void countTestedAtomTypes() {
     	super.countTestedAtomTypes(testedAtomTypes);
     }
