@@ -254,7 +254,10 @@ public class ForceFieldConfigurator {
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 			CDKHueckelAromaticityDetector.detectAromaticity(molecule);
 		} catch (Exception cdk1) {
-			System.out.println("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
+			throw new CDKException(
+                "AROMATICITYError: Cannot determine aromaticity due to: " +
+                cdk1.getMessage(), cdk1
+            );
 		}
 
 		for (int i = 0; i < molecule.getAtomCount(); i++) {
