@@ -185,7 +185,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 	 */
 	@Test
     public void testPartialTotalChargeDescriptor_Benzene() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={-0.15,0.15,-0.15,0.15,-0.15,0.15,-0.15,0.15,-0.15, 0.15,-0.15, 0.15};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
+		double [] testResult={-0.15,-0.15,-0.15,-0.15,-0.15,-0.15,0.15,0.15,0.15,0.15,0.15,0.15};/* from Merck Molecular Force Field. II. Thomas A. Halgren*/
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
 //		IMolecule mol = sp.parseSmiles("c1ccccc1");
