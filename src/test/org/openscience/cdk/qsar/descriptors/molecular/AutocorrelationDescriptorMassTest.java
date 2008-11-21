@@ -29,6 +29,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
 
 import java.io.InputStream;
 
@@ -54,8 +55,13 @@ public class AutocorrelationDescriptorMassTest extends MolecularDescriptorTest {
 		MDLV2000Reader reader = new MDLV2000Reader(ins);
 		IMolecule container = (Molecule) reader.read((ChemObject) new Molecule());
 		DescriptorValue count = new AutocorrelationDescriptorMass().calculate(container);
-		System.out.println(count.getValue());
-		Assert.fail("Not validated yet");
+		Assert.assertEquals(5, count.getValue().length());
+		Assert.assertTrue(count.getValue() instanceof DoubleArrayResult);
+		DoubleArrayResult result = (DoubleArrayResult)count.getValue();
+		for (int i=0; i<5; i++) {
+			Assert.assertFalse(Double.isNaN(result.get(i)));
+			Assert.assertTrue(0.0 != result.get(i));
+		}
 	}
 	
 }
