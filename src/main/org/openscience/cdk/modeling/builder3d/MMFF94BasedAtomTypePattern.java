@@ -135,7 +135,7 @@ public class MMFF94BasedAtomTypePattern {
 		//O+
 		atomTypePatterns.add(Pattern.compile("O-[1-2][+];[A-Za-z]{0,2}+=.*+"));
 		//O=+
-		atomTypePatterns.add(Pattern.compile("O-[1-2];[H]{0,2}+"));
+		atomTypePatterns.add(Pattern.compile("O-[1-2];[H]{0,2}+.*"));
 		//O in water 
 		atomTypePatterns.add(Pattern.compile("O-2;CC.=C.*+&.*+&.*+"));
 		//osp2furan (36)
