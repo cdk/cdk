@@ -494,6 +494,19 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula2.addIsotope(br1);
         formula2.addIsotope(br2);
 
+        Assert.assertEquals(2,formula2.getIsotopeCount());
+        double totalAbudance = MolecularFormulaManipulator.getTotalNaturalAbundance(formula2);
+
+        Assert.assertEquals(0.25694761,totalAbudance,0.000001);
+    }
+    @Test 
+    public void testGetTotalNaturalAbundance_IMolecularFormula4() throws Exception{
+        IMolecularFormula formula2 = new MolecularFormula();
+		IIsotope br1 = builder.newIsotope("Br");
+    	br1.setNaturalAbundance(50.69);
+        formula2.addIsotope(br1);
+        formula2.addIsotope(br1);
+
         Assert.assertEquals(1,formula2.getIsotopeCount());
         double totalAbudance = MolecularFormulaManipulator.getTotalNaturalAbundance(formula2);
 
