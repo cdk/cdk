@@ -23,16 +23,11 @@
  */
 package org.openscience.cdk.formula;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IMolecularFormulaSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
@@ -74,21 +69,47 @@ public class IsotopePatternGeneratorTest extends CDKTestCase{
 		Assert.assertNotNull(isotopeGe);
     }
 	
+
+    /**
+	 * A unit test for JUnit:
+	 *
+	 * @return    Description of the Return Value
+	 */
+    @Test 
+	public void testGetIsotopes_IMolecularFormula(){
+		IMolecularFormula molFor = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C41H79N8O3P1", builder);
+		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
+		IsotopePattern isos = isotopeGe.getIsotopes(molFor);
+		Assert.assertEquals(2,isos.getNumberOfIsotopes(),0.001);
+	}
+    /**
+	 * A unit test for JUnit:
+	 *
+	 * @return    Description of the Return Value
+	 */
+    @Test 
+	public void testGetIsotopes_IMolecularFormula_withoutONE(){
+		IMolecularFormula molFor = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C41H79N8O3P", builder);
+		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.01);
+		IsotopePattern isos = isotopeGe.getIsotopes(molFor);
+		Assert.assertEquals(6,isos.getNumberOfIsotopes(),0.001);
+	}
+
 	/**
 	 * A unit test for JUnit: Isotopes of the Bromine.
 	 *
 	 * @return    Description of the Return Value
 	 */
     @Test 
-	public void testGetIsotopes_IMolecularFormula() throws CDKException {
+	public void testGetIsotopes1(){
 		IMolecularFormula molFor = new MolecularFormula();
 		molFor.addIsotope(builder.newIsotope("Br"));
 		molFor.addIsotope(builder.newIsotope("Br"));
 
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(10.0);
-		IMolecularFormulaSet molFormSet = isotopeGe.getIsotopes(molFor);
+		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
+		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
 		
-		Assert.assertEquals(3, molFormSet.size());
+		Assert.assertEquals(3, isoPattern.getNumberOfIsotopes());
 		
 	}
     /**
@@ -97,40 +118,27 @@ public class IsotopePatternGeneratorTest extends CDKTestCase{
 	 * @return    Description of the Return Value
 	 */
     @Test 
-	public void testCalculateIsotopesAllBromine() throws CDKException {
+	public void testCalculateIsotopesAllBromine(){
+    	// RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
+    	double[] massResults = {157.836669,159.834630,161.832580};
+    	double[] abundResults = {.512,1.00,.487};
+    	
 		IMolecularFormula molFor = new MolecularFormula();
 		molFor.addIsotope(builder.newIsotope("Br"));
 		molFor.addIsotope(builder.newIsotope("Br"));
 
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(10.0);
-		IMolecularFormulaSet molFormSet = isotopeGe.getIsotopes(molFor);
+		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
+		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
 		
-		Assert.assertEquals(3, molFormSet.size());
+		Assert.assertEquals(3, isoPattern.getNumberOfIsotopes());
 		
-		double mm = MolecularFormulaManipulator.getTotalExactMass(molFormSet.getMolecularFormula(0));
-		Assert.assertEquals(157.8366742, mm, 0.0000001);
-		mm = MolecularFormulaManipulator.getTotalExactMass(molFormSet.getMolecularFormula(1));
-		Assert.assertEquals(159.8346277, mm, 0.0000001);
-		mm = MolecularFormulaManipulator.getTotalExactMass(molFormSet.getMolecularFormula(2));
-		Assert.assertEquals(161.8325812, mm, 0.0000001);
+		Assert.assertEquals(massResults[0], isoPattern.getIsotope(0).getMass(), 0.01);
+		Assert.assertEquals(massResults[1], isoPattern.getIsotope(1).getMass(), 0.01);
+		Assert.assertEquals(massResults[2], isoPattern.getIsotope(2).getMass(), 0.01);
 		
-
-		double sum = 0.0;
-		double occurrence = ((Double)molFormSet.getMolecularFormula(0).getProperty("occurrence"));
-		double ab = MolecularFormulaManipulator.getTotalNaturalAbundance(molFormSet.getMolecularFormula(0));
-		sum += ab;
-		Assert.assertEquals(0.25694761, ab, 0.0000001);
-		occurrence = ((Double)molFormSet.getMolecularFormula(1).getProperty("occurrence"));
-		ab = MolecularFormulaManipulator.getTotalNaturalAbundance(molFormSet.getMolecularFormula(1))*occurrence;
-		sum += ab;
-		Assert.assertEquals(0.4999047, ab, 0.0000001);
-		occurrence = ((Double)molFormSet.getMolecularFormula(2).getProperty("occurrence"));
-		ab = MolecularFormulaManipulator.getTotalNaturalAbundance(molFormSet.getMolecularFormula(2));
-		sum += ab;
-		Assert.assertEquals(0.24314761, ab, 0.0000001);
-		
-
-		Assert.assertEquals(1.0, sum, 0.0000001);
+		Assert.assertEquals(abundResults[0], isoPattern.getIsotope(0).getIntensity(), 0.01);
+		Assert.assertEquals(abundResults[1], isoPattern.getIsotope(1).getIntensity(), 0.01);
+		Assert.assertEquals(abundResults[2], isoPattern.getIsotope(2).getIntensity(), 0.01);
 		
 	}
 	
@@ -140,38 +148,27 @@ public class IsotopePatternGeneratorTest extends CDKTestCase{
 	 * @return    Description of the Return Value
 	 */
 	@Test 
-	public void testCalculateIsotopesIodemethylidyne() throws CDKException {
+	public void testCalculateIsotopesIodemethylidyne(){
+    	// RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
+    	double[] massResults = {138.904480,139.907839};
+    	double[] abundResults = {1.00,.011};
+    	
 		IMolecularFormula molFor = new MolecularFormula();
 		molFor.addIsotope(builder.newIsotope("C"));
 		molFor.addIsotope(builder.newIsotope("I"));
 
 		Assert.assertEquals(2, molFor.getIsotopeCount());
-		
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.10);
-		
-		IMolecularFormulaSet molFormSet = isotopeGe.getIsotopes(molFor);
-		
-		Assert.assertEquals(2, molFormSet.size());
-		
-		double mm = MolecularFormulaManipulator.getTotalExactMass(molFormSet.getMolecularFormula(0));
-		Assert.assertEquals(138.904473, mm, 0.0000001);
-		mm = MolecularFormulaManipulator.getTotalExactMass(molFormSet.getMolecularFormula(1));
-		Assert.assertEquals(139.9078278399, mm, 0.0000001);
-		
 
-		double sum = 0.0;
-		double occurrence = ((Double)molFormSet.getMolecularFormula(0).getProperty("occurrence"));
-		double ab = MolecularFormulaManipulator.getTotalNaturalAbundance(molFormSet.getMolecularFormula(0));
-		sum += ab;
-		Assert.assertEquals(0.9893, ab, 0.0000001);
-		occurrence = ((Double)molFormSet.getMolecularFormula(1).getProperty("occurrence"));
-		ab = MolecularFormulaManipulator.getTotalNaturalAbundance(molFormSet.getMolecularFormula(1))*occurrence;
-		sum += ab;
-		Assert.assertEquals(0.01070, ab, 0.0000001);
+		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.01);
+		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
 		
+		Assert.assertEquals(2, isoPattern.getNumberOfIsotopes());
 		
-
-		Assert.assertEquals(1.0, sum, 0.0000001);
+		Assert.assertEquals(massResults[0], isoPattern.getIsotope(0).getMass(), 0.01);
+		Assert.assertEquals(massResults[1], isoPattern.getIsotope(1).getMass(), 0.01);
+		
+		Assert.assertEquals(abundResults[0], isoPattern.getIsotope(0).getIntensity(), 0.01);
+		Assert.assertEquals(abundResults[1], isoPattern.getIsotope(1).getIntensity(), 0.01);
 		
 	}
 	/**
@@ -180,40 +177,27 @@ public class IsotopePatternGeneratorTest extends CDKTestCase{
 	 * @return    Description of the Return Value
 	 */
 	@Test 
-	public void testCalculateIsotopesnCarbono() throws CDKException {
+	public void testCalculateIsotopesnCarbono(){
+    	// RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
+    	double[] massResults = {120.000000,121.003360,122.006709};
+    	double[] abundResults = {1.00,.108,0.005};
+    	
 		IMolecularFormula molFor = new MolecularFormula();
 		molFor.addIsotope(builder.newIsotope("C"),10);
 
 		
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.10);
+		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.0010);
+		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
 		
-		IMolecularFormulaSet molFormSet = isotopeGe.getIsotopes(molFor);
+		Assert.assertEquals(3, isoPattern.getNumberOfIsotopes());
 		
-		Assert.assertEquals(3, molFormSet.size());
-
-		double sum = 0.0;
-		for(int i = 0; i < molFormSet.size();i++){
-			double occurrence = ((Double)molFormSet.getMolecularFormula(i).getProperty("occurrence"));
-			double ab = MolecularFormulaManipulator.getTotalNaturalAbundance(molFormSet.getMolecularFormula(i));
-			sum += ab*occurrence;
-			
-		}
-		Assert.assertEquals(1.0, sum, 0.001);
+		Assert.assertEquals(massResults[0], isoPattern.getIsotope(0).getMass(), 0.01);
+		Assert.assertEquals(massResults[1], isoPattern.getIsotope(1).getMass(), 0.01);
+		Assert.assertEquals(massResults[2], isoPattern.getIsotope(2).getMass(), 0.01);
 		
-		
-		double mm = MolecularFormulaManipulator.getTotalExactMass(molFormSet.getMolecularFormula(0));
-		Assert.assertEquals(120.0, mm, 0.0000001);
-		mm = MolecularFormulaManipulator.getTotalExactMass(molFormSet.getMolecularFormula(1));
-		Assert.assertEquals(121.00335484, mm, 0.0000001);
-
-		double ab = MolecularFormulaManipulator.getTotalNaturalAbundance(molFormSet.getMolecularFormula(0));
-		double occurrence = ((Double)molFormSet.getMolecularFormula(0).getProperty("occurrence"));
-		ab *= occurrence;
-		Assert.assertEquals(0.898007762480552, ab, 0.0000001);
-		ab = MolecularFormulaManipulator.getTotalNaturalAbundance(molFormSet.getMolecularFormula(1));
-		occurrence = ((Double)molFormSet.getMolecularFormula(1).getProperty("occurrence"));
-		ab *= occurrence;
-		Assert.assertEquals(0.09712607963754075, ab, 0.0000001);
+		Assert.assertEquals(abundResults[0], isoPattern.getIsotope(0).getIntensity(), 0.01);
+		Assert.assertEquals(abundResults[1], isoPattern.getIsotope(1).getIntensity(), 0.01);
+		Assert.assertEquals(abundResults[2], isoPattern.getIsotope(2).getIntensity(), 0.01);
 		
 	}
 	
@@ -223,139 +207,36 @@ public class IsotopePatternGeneratorTest extends CDKTestCase{
 	 * @return    Description of the Return Value
 	 */
 	@Test 
-	public void testCalculateIsotopesOrthinine() throws CDKException {
-		IMolecularFormula molFor = new MolecularFormula();
-			molFor.addIsotope(builder.newIsotope("C"),5);
-			molFor.addIsotope(builder.newIsotope("H"),13);
-			molFor.addIsotope(builder.newIsotope("N"),2);
-			molFor.addIsotope(builder.newIsotope("O"),2);
-
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.10);
-		
-		IMolecularFormulaSet molFormSet = isotopeGe.getIsotopes(molFor);
-		
-		Assert.assertEquals(5, molFormSet.size());
-		
-		double sum = 0.0;
-		for(int i = 0; i < molFormSet.size();i++){
-			double occurrence = ((Double)molFormSet.getMolecularFormula(i).getProperty("occurrence"));
-			double ab = MolecularFormulaManipulator.getTotalNaturalAbundance(molFormSet.getMolecularFormula(i));
-			sum += ab*occurrence;
-		}
-		Assert.assertEquals(1.0, sum, 0.01);
-		
-		
-		double mm = MolecularFormulaManipulator.getTotalExactMass(molFormSet.getMolecularFormula(0));
-		Assert.assertEquals(133.0977, mm, 0.01);
-		mm = MolecularFormulaManipulator.getTotalExactMass(molFormSet.getMolecularFormula(1));
-		Assert.assertEquals(134.0947, mm, 0.01);
-		mm = MolecularFormulaManipulator.getTotalExactMass(molFormSet.getMolecularFormula(2));
-		Assert.assertEquals(134.101079, mm, 0.01);
-		
-		double ab1 = MolecularFormulaManipulator.getTotalNaturalAbundance(molFormSet.getMolecularFormula(0));
-		double occurrence = ((Double)molFormSet.getMolecularFormula(0).getProperty("occurrence"));
-		ab1 *= occurrence;
-		Assert.assertEquals(100.00, ab1/ab1*100, 0.01);
-		double ab2 = MolecularFormulaManipulator.getTotalNaturalAbundance(molFormSet.getMolecularFormula(1));
-		occurrence = ((Double)molFormSet.getMolecularFormula(1).getProperty("occurrence"));
-		ab2 *= occurrence;
-		Assert.assertEquals(0.7387184, ab2/ab1*100, 0.01);
-		double ab3 = MolecularFormulaManipulator.getTotalNaturalAbundance(molFormSet.getMolecularFormula(2));
-		occurrence = ((Double)molFormSet.getMolecularFormula(2).getProperty("occurrence"));
-		ab3 *= occurrence;
-		Assert.assertEquals(5.4078, (ab3/ab1)*100, 0.01);
-		
-	}
-	/**
-	 * A unit test for JUnit.
-	 *
-	 * @return    Description of the Return Value
-	 */
-	@Test 
-	public void testGetIsotopeDistribution_IMolecularFormula() throws CDKException {
+	public void testCalculateIsotopesOrthinine(){
+    	// RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
+    	double[] massResults = {133.097720,134.094750,134.101079,134.103990,135.101959,135.104430};
+    	double[] abundResults = {1.00,.006,.054,0.002,0.004,0.001};
+    	
 		IMolecularFormula molFor = new MolecularFormula();
 		molFor.addIsotope(builder.newIsotope("C"),5);
 		molFor.addIsotope(builder.newIsotope("H"),13);
 		molFor.addIsotope(builder.newIsotope("N"),2);
 		molFor.addIsotope(builder.newIsotope("O"),2);
 
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.10);
-		
-		List<Double> dist = isotopeGe.getIsotopeDistribution(molFor);
-		Assert.assertEquals(5, dist.size());
-		
-		List<Double> distTest = new ArrayList<Double>();
-		distTest.add(100.00);
-		distTest.add(0.7387184);
-		distTest.add(5.4078);
-		
-		for(int i = 0 ; i < 3; i ++)
-			Assert.assertEquals(distTest.get(i), dist.get(i), 0.01);
-		
-		
-	}
-	/**
-	 * A unit test for JUnit.
-	 *
-	 * @return    Description of the Return Value
-	 */
-	@Test 
-	public void testGetIsotopeDistribution_IMolecularFormulaSet() throws CDKException {
-		IMolecularFormula molFor = new MolecularFormula();
-			molFor.addIsotope(builder.newIsotope("C"),5);
-			molFor.addIsotope(builder.newIsotope("H"),13);
-			molFor.addIsotope(builder.newIsotope("N"),2);
-			molFor.addIsotope(builder.newIsotope("O"),2);
-
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.10);
-		
-		IMolecularFormulaSet molFormSet = isotopeGe.getIsotopes(molFor);
-		
-		Assert.assertEquals(5, molFormSet.size());
-		
-		List<Double> dist = isotopeGe.getIsotopeDistribution(molFormSet);
-		Assert.assertEquals(5, dist.size());
-		
-		List<Double> distTest = new ArrayList<Double>();
-		distTest.add(100.00);
-		distTest.add(0.7387184);
-		distTest.add(5.4078);
-		
-		for(int i = 0 ; i < 3; i ++)
-			Assert.assertEquals(distTest.get(i), dist.get(i), 0.01);
-		
-	}
-
-	/**
-	 * A unit test for JUnit.
-	 *
-	 * @return    Description of the Return Value
-	 */
-	@Test 
-	public void testGetMassDistribution_IMolecularFormulaSet() throws CDKException {
-		IMolecularFormula molFor = new MolecularFormula();
-			molFor.addIsotope(builder.newIsotope("C"),5);
-			molFor.addIsotope(builder.newIsotope("H"),13);
-			molFor.addIsotope(builder.newIsotope("N"),2);
-			molFor.addIsotope(builder.newIsotope("O"),2);
-
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.10);
-		
-		IMolecularFormulaSet molFormSet = isotopeGe.getIsotopes(molFor);
-		
-		Assert.assertEquals(5, molFormSet.size());
-		
-		List<Double> dist = isotopeGe.getMassDistribution(molFormSet);
-		Assert.assertEquals(5, dist.size());
-		
-		List<Double> distTest = new ArrayList<Double>();
-		distTest.add(133.0977);
-		distTest.add(134.0947);
-		distTest.add(134.101079);
-		
-		for(int i = 0 ; i < 3; i ++)
-			Assert.assertEquals(distTest.get(i), dist.get(i), 0.01);
-		
+		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.0010);
+		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
+			
+		Assert.assertEquals(6, isoPattern.getNumberOfIsotopes());
+			
+		Assert.assertEquals(massResults[0], isoPattern.getIsotope(0).getMass(), 0.01);
+		Assert.assertEquals(massResults[1], isoPattern.getIsotope(1).getMass(), 0.01);
+		Assert.assertEquals(massResults[2], isoPattern.getIsotope(2).getMass(), 0.01);
+		Assert.assertEquals(massResults[3], isoPattern.getIsotope(3).getMass(), 0.01);
+		Assert.assertEquals(massResults[4], isoPattern.getIsotope(4).getMass(), 0.01);
+		Assert.assertEquals(massResults[5], isoPattern.getIsotope(5).getMass(), 0.01);
+			
+		Assert.assertEquals(abundResults[0], isoPattern.getIsotope(0).getIntensity(), 0.01);
+		Assert.assertEquals(abundResults[1], isoPattern.getIsotope(1).getIntensity(), 0.01);
+		Assert.assertEquals(abundResults[2], isoPattern.getIsotope(2).getIntensity(), 0.01);
+		Assert.assertEquals(abundResults[3], isoPattern.getIsotope(3).getIntensity(), 0.01);
+		Assert.assertEquals(abundResults[4], isoPattern.getIsotope(4).getIntensity(), 0.01);
+		Assert.assertEquals(abundResults[5], isoPattern.getIsotope(5).getIntensity(), 0.01);
+			
 	}
 }
 
