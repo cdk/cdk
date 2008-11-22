@@ -25,10 +25,10 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.DefaultChemObjectReader;
@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class SMARTSSearchTest extends CDKTestCase {
 
-    private LoggingTool logger;
+    private static LoggingTool logger = new LoggingTool(SMARTSSearchTest.class);
 
     private int[] match(String smarts, String smiles) throws Exception {
         SMARTSQueryTool sqt = new SMARTSQueryTool(smarts);
@@ -72,8 +72,8 @@ public class SMARTSSearchTest extends CDKTestCase {
         DefaultChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content;
         content = (ChemFile) reader.read((ChemObject) new ChemFile());
-        List cList = ChemFileManipulator.getAllAtomContainers(content);
-        IAtomContainer atomContainer = (IAtomContainer) cList.get(0);
+        List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer atomContainer = cList.get(0);
 
         SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;h1,h2,H1,H2;!$(NC=O)]");
         boolean status = sqt.matches(atomContainer);

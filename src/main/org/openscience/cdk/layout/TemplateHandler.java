@@ -112,6 +112,7 @@ public class TemplateHandler
 		} catch (Exception exc) {
 			logger.debug("Could not read templates");
 			logger.debug("Reason: " + exc.getMessage());
+			logger.debug(exc);
 		}
 	}
 
