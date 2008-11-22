@@ -6,6 +6,7 @@ Bundle-Version: 1.1.0.A20080911
 Bundle-Vendor: The Chemistry Development Kit Project
 Bundle-ActivationPolicy: lazy
 Export-Package: javax.vecmath,
+ net.sf.jniinchi,
  org.openscience.cdk,
  org.openscience.cdk.annotations,
  org.openscience.cdk.aromaticity,
