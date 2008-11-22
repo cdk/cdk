@@ -432,11 +432,11 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     	
         formula.addIsotope(carb);
     	
-        Assert.assertEquals("C1",MolecularFormulaManipulator.getString(formula));
+        Assert.assertEquals("C1",MolecularFormulaManipulator.getString(formula,true));
         
     	double totalExactMass = MolecularFormulaManipulator.getTotalExactMass(formula);
     	
-        Assert.assertEquals(0.0,totalExactMass,0.000001);
+        Assert.assertEquals(12.0,totalExactMass,0.000001);
     }
     /**
      * A unit test suite for JUnit. Test total natural abundance.
