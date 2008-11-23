@@ -1195,6 +1195,14 @@
     <at:piBondCount>0</at:piBondCount>
     </at:AtomType>
 
+  <at:AtomType rdf:ID="Xe.3">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Xe"/>
+    <at:formalNeighbourCount>4</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp3d2"/>
+  </at:AtomType>
+
   <at:AtomType rdf:ID="Rn">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Rn"/>

@@ -812,6 +812,27 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testXeF4() throws Exception {
+        IMolecule mol = new Molecule();
+          IAtom atom = new Atom("F");
+          IAtom atom2 = new Atom("Xe");
+          IAtom atom3 = new Atom("F");
+          IAtom atom4 = new Atom("F");
+          IAtom atom5 = new Atom("F");
+          mol.addAtom(atom);
+          mol.addAtom(atom2);
+          mol.addAtom(atom3);
+          mol.addAtom(atom4);
+          mol.addAtom(atom5);
+          mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+          mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+          mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+          mol.addBond(1,4,CDKConstants.BONDORDER_SINGLE);
+
+          String[] expectedTypes = {"F", "Xe.3", "F", "F", "F"};
+          assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+      }
+
     @Test public void testPhosphate() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("O");

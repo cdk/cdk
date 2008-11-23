@@ -1342,8 +1342,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     			return null;
     		} else if ((atom.getFormalCharge() == CDKConstants.UNSET ||
     				atom.getFormalCharge() == 0)) {
-    			IAtomType type = getAtomType("Xe");
-    			if (isAcceptable(atom, atomContainer, type)) return type;
+            if (atomContainer.getConnectedBondsCount(atom) == 0) {
+                IAtomType type = getAtomType("Xe");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else {
+                IAtomType type = getAtomType("Xe.3");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
     		}
     	} else if ("Rn".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
