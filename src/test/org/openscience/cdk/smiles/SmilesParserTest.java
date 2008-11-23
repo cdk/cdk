@@ -1669,5 +1669,14 @@ public class SmilesParserTest extends CDKTestCase {
     	}
     	Assert.assertEquals(13,hcount);
     }
+
+    @Test
+    public void testONSSolubility1() throws CDKException{
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule molecule = sp.parseSmiles("Oc1ccc(cc1OC)C=O");
+        Assert.assertEquals(11, molecule.getAtomCount());
+        Assert.assertEquals(11, molecule.getBondCount());
+    }
+
 }
 
