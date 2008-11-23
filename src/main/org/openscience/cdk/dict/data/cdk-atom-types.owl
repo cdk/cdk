@@ -651,6 +651,15 @@
     <at:hybridization rdf:resource="&at;sp2"/>
   </at:AtomType>
 
+  <at:AtomType rdf:ID="S.trioxide">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;S"/>
+    <at:formalNeighbourCount>3</at:formalNeighbourCount>
+    <at:lonePairCount>0</at:lonePairCount>
+    <at:piBondCount>3</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp2"/>
+  </at:AtomType>
+
   <at:AtomType rdf:ID="S.octahedral">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;S"/>

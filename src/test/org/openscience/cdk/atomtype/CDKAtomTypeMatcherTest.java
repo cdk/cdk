@@ -579,6 +579,24 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
     
+    @Test public void testStrioxide() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O");
+        IAtom atom1 = new Atom("O");
+        IAtom atom2 = new Atom("S");
+        IAtom atom3 = new Atom("O");
+        mol.addAtom(atom);
+        mol.addAtom(atom1);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,2,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(2,3,CDKConstants.BONDORDER_DOUBLE);
+
+        String[] expectedTypes = {"O.sp2", "O.sp2", "S.trioxide", "O.sp2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testAmide() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("O");

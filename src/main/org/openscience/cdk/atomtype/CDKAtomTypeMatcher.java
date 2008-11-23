@@ -818,8 +818,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                     neighborcount == 4){
                 IAtomType type = getAtomType("S.onyl");
                 if (isAcceptable(atom, atomContainer, type)) return type;
-            } else if (doubleBondedOxygens + doubleBondedNitrogens == 1 && neighborcount == 3){
+            } else if (doubleBondedOxygens + doubleBondedNitrogens == 1 &&
+                       neighborcount == 3){
                 IAtomType type = getAtomType("S.inyl");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
+            if (countAttachedDoubleBonds(atomContainer, atom) == 3 &&
+                neighborcount == 3) {
+                IAtomType type = getAtomType("S.trioxide");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
         }
