@@ -133,6 +133,8 @@ public class OWLAtomTypeHandler extends DefaultHandler {
             currentAtomType.setHybridization(IAtomType.Hybridization.S);
     		} else if ("planar".equals(hybridization)) {
     			currentAtomType.setHybridization(IAtomType.Hybridization.PLANAR3);
+        } else if ("sp3d2".equals(hybridization)) {
+            currentAtomType.setHybridization(IAtomType.Hybridization.SP3D2);
     		}
     	}
 	}
