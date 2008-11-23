@@ -860,7 +860,16 @@
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:lonePairCount>4</at:lonePairCount>
     <at:piBondCount>0</at:piBondCount>
-    <at:hybridization rdf:resource="&at;s"/>
+    <at:hybridization rdf:resource="&at;sp3"/>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="I.minus.5">
+    <at:formalCharge>-1</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;I"/>
+    <at:formalNeighbourCount>2</at:formalNeighbourCount>
+    <at:lonePairCount>3</at:lonePairCount>
+    <at:piBondCount>0</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp3d1"/>
   </at:AtomType>
 
   <at:AtomType rdf:ID="I.plus.sp2">

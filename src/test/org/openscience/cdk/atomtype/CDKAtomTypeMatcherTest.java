@@ -1234,6 +1234,22 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testIMinusF2() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("F");
+        IAtom atom2 = new Atom("I");
+        IAtom atom3 = new Atom("F");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        atom2.setFormalCharge(-1);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"F", "I.minus.5", "F"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testHydride() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("H");

@@ -1065,10 +1065,15 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 				}
 				return null;
     		} else if (atom.getFormalCharge() != CDKConstants.UNSET && 
-    				atom.getFormalCharge() != 0) {
-    			if (atom.getFormalCharge() == -1) {
-    				IAtomType type = getAtomType("I.minus");
-    				if (isAcceptable(atom, atomContainer, type)) return type;
+                   atom.getFormalCharge() != 0) {
+          if (atom.getFormalCharge() == -1) {
+              if (atomContainer.getConnectedAtomsCount(atom) == 0) {
+                  IAtomType type = getAtomType("I.minus");
+                  if (isAcceptable(atom, atomContainer, type)) return type;
+              } else {
+                  IAtomType type = getAtomType("I.minus.5");
+                  if (isAcceptable(atom, atomContainer, type)) return type;
+              }
     			} else if (atom.getFormalCharge() == 1) {
     				IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
     				if (maxBondOrder == IBond.Order.DOUBLE) {
