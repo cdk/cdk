@@ -432,11 +432,11 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     	
         formula.addIsotope(carb);
     	
-        Assert.assertEquals("C1",MolecularFormulaManipulator.getString(formula));
+        Assert.assertEquals("C1",MolecularFormulaManipulator.getString(formula,true));
         
     	double totalExactMass = MolecularFormulaManipulator.getTotalExactMass(formula);
     	
-        Assert.assertEquals(0.0,totalExactMass,0.000001);
+        Assert.assertEquals(12.0,totalExactMass,0.000001);
     }
     /**
      * A unit test suite for JUnit. Test total natural abundance.
@@ -493,6 +493,19 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         br2.setNaturalAbundance(50.69);
         formula2.addIsotope(br1);
         formula2.addIsotope(br2);
+
+        Assert.assertEquals(2,formula2.getIsotopeCount());
+        double totalAbudance = MolecularFormulaManipulator.getTotalNaturalAbundance(formula2);
+
+        Assert.assertEquals(0.25694761,totalAbudance,0.000001);
+    }
+    @Test 
+    public void testGetTotalNaturalAbundance_IMolecularFormula4() throws Exception{
+        IMolecularFormula formula2 = new MolecularFormula();
+		IIsotope br1 = builder.newIsotope("Br");
+    	br1.setNaturalAbundance(50.69);
+        formula2.addIsotope(br1);
+        formula2.addIsotope(br1);
 
         Assert.assertEquals(1,formula2.getIsotopeCount());
         double totalAbudance = MolecularFormulaManipulator.getTotalNaturalAbundance(formula2);

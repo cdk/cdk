@@ -25,7 +25,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.FormulaCoverageTest;
+import org.openscience.cdk.formula.IsotopeContainerTest;
 import org.openscience.cdk.formula.IsotopePatternGeneratorTest;
+import org.openscience.cdk.formula.IsotopePatternManipulatorTest;
+import org.openscience.cdk.formula.IsotopePatternSimilarityTest;
+import org.openscience.cdk.formula.IsotopePatternTest;
 import org.openscience.cdk.formula.MassToFormulaToolTest;
 import org.openscience.cdk.formula.MolecularFormulaRangeTest;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulatorTest;
@@ -39,7 +43,11 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaRangeManipulatorTes
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     FormulaCoverageTest.class,
+    IsotopeContainerTest.class,
     IsotopePatternGeneratorTest.class,
+    IsotopePatternManipulatorTest.class,
+    IsotopePatternSimilarityTest.class,
+    IsotopePatternTest.class,
     MassToFormulaToolTest.class,
     MolecularFormulaManipulatorTest.class,
     MolecularFormulaRangeManipulatorTest.class,
