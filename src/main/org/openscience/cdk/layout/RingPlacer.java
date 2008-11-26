@@ -1,9 +1,7 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *                    2008  Gilleain Torrance <gilleain@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -28,6 +26,7 @@
  */
 package org.openscience.cdk.layout;
 
+import java.util.List;
 import java.util.Vector;
 
 import javax.vecmath.Point2d;
@@ -104,6 +103,29 @@ public class RingPlacer
 
 	}
 	
+	public void placeRing(IRing ring, Point2d ringCenter, double bondLength) {
+	    double radius = this.getNativeRingRadius(ring, bondLength);
+        double addAngle = 2 * Math.PI / ring.getRingSize();
+
+        IAtom startAtom = ring.getFirstAtom();
+        Point2d p = new Point2d(ringCenter.x + radius, ringCenter.y);
+        startAtom.setPoint2d(p);
+        double startAngle = 0.0;
+        List<IBond> bonds = ring.getConnectedBondsList(startAtom);
+        /*
+         * Store all atoms to draw in consecutive order relative to the
+         * chosen bond.
+         */
+        Vector<IAtom> atomsToDraw = new Vector<IAtom>();
+        IAtom currentAtom = startAtom;
+        IBond currentBond = (IBond)bonds.get(0);
+        for (int i = 0; i < ring.getBondCount(); i++) {
+            currentBond = ring.getNextBond(currentBond, currentAtom);
+            currentAtom = currentBond.getConnectedAtom(currentAtom);
+            atomsToDraw.addElement(currentAtom);
+        }
+        atomPlacer.populatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
+	}
 	
 	/**
 	 * Positions the aliphatic substituents of a ring system
@@ -588,7 +610,7 @@ public class RingPlacer
 	 * @param   bondLength  The bond length for each bond in the ring
 	 * @return  The radius of the ring.   
 	 */
-	public  double getNativeRingRadius(IRing ring, double bondLength)
+	public double getNativeRingRadius(IRing ring, double bondLength)
 	{
 		int size = ring.getAtomCount();
 		double radius = bondLength / (2 * Math.sin((Math.PI) / size));
