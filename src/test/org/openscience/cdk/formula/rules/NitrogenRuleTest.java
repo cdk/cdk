@@ -256,4 +256,19 @@ public class NitrogenRuleTest extends FormulaRuleTest {
 		
 		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
 	}
+
+	/**
+	 * A unit test suite for JUnit.
+	 *
+	 * @return    The test suite
+	 */
+	@Test public void testDoubleCharge() throws ClassNotFoundException, CDKException, Exception {
+		
+		IRule rule  = new NitrogenRule();
+		
+		IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula("C22H34N2S2", builder);
+		formula.setCharge(2.0);
+		
+		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
+	}
 }
