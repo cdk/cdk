@@ -302,6 +302,16 @@
                 depends="check, dist.init, compile-needed-test"
                 unless="module-uptodate">
 
+            <if>
+                <matches string="${module}" pattern="^test"/>
+                <then>
+                    <property name="source" value="src/test"/>
+                </then>
+                <else>
+                    <property name="source" value="src/main"/>
+                </else>
+            </if>
+
             <echo message="Compiling classes for CDK's ${module} module from ${source}..." />
 
             <!-- check for availability for meta info files -->
@@ -475,155 +485,155 @@
     <target id="parallel-all" name="parallel-all" description="dist-all in parallel mode">
       <sequential>
         <antcall target="compile-init"/>
-        <antcall target="compile-module"><param name="module" value="interfaces"/><param name="source" value="${src}/main"/></antcall>
-        <antcall target="compile-module"><param name="module" value="core"/><param name="source" value="${src}/main"/></antcall>
+        <antcall target="compile-module"><param name="module" value="interfaces"/></antcall>
+        <antcall target="compile-module"><param name="module" value="core"/></antcall>
         <parallel>
-          <antcall target="compile-module"><param name="module" value="data"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="dict"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="diff"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="data"/></antcall>
+          <antcall target="compile-module"><param name="module" value="dict"/></antcall>
+          <antcall target="compile-module"><param name="module" value="diff"/></antcall>
         </parallel>
         <parallel>
-          <antcall target="compile-module"><param name="module" value="datadebug"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="nonotify"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="standard"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="isomorphism"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="datadebug"/></antcall>
+          <antcall target="compile-module"><param name="module" value="nonotify"/></antcall>
+          <antcall target="compile-module"><param name="module" value="standard"/></antcall>
+          <antcall target="compile-module"><param name="module" value="isomorphism"/></antcall>
         </parallel>
         <parallel>
-          <antcall target="compile-module"><param name="module" value="atomtype"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="io"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="render"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="valencycheck"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="formula"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="atomtype"/></antcall>
+          <antcall target="compile-module"><param name="module" value="io"/></antcall>
+          <antcall target="compile-module"><param name="module" value="render"/></antcall>
+          <antcall target="compile-module"><param name="module" value="valencycheck"/></antcall>
+          <antcall target="compile-module"><param name="module" value="formula"/></antcall>
         </parallel>
         <parallel>
-          <antcall target="compile-module"><param name="module" value="pdb"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="structgen"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="extra"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="sdg"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="inchi"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="libiocml"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="smarts"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="pdb"/></antcall>
+          <antcall target="compile-module"><param name="module" value="structgen"/></antcall>
+          <antcall target="compile-module"><param name="module" value="extra"/></antcall>
+          <antcall target="compile-module"><param name="module" value="sdg"/></antcall>
+          <antcall target="compile-module"><param name="module" value="inchi"/></antcall>
+          <antcall target="compile-module"><param name="module" value="libiocml"/></antcall>
+          <antcall target="compile-module"><param name="module" value="smarts"/></antcall>
         </parallel>
         <parallel>
-          <antcall target="compile-module"><param name="module" value="control"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="smiles"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="reaction"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="pdbcml"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="libiomd"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="pcore"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="fingerprint"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="control"/></antcall>
+          <antcall target="compile-module"><param name="module" value="smiles"/></antcall>
+          <antcall target="compile-module"><param name="module" value="reaction"/></antcall>
+          <antcall target="compile-module"><param name="module" value="pdbcml"/></antcall>
+          <antcall target="compile-module"><param name="module" value="libiomd"/></antcall>
+          <antcall target="compile-module"><param name="module" value="pcore"/></antcall>
+          <antcall target="compile-module"><param name="module" value="fingerprint"/></antcall>
         </parallel>
-        <antcall target="compile-module"><param name="module" value="charges"/><param name="source" value="${src}/main"/></antcall>
+        <antcall target="compile-module"><param name="module" value="charges"/></antcall>
         <parallel>
-          <antcall target="compile-module"><param name="module" value="qm"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="qsar"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="ionpot"/><param name="source" value="${src}/main"/></antcall>
-        </parallel>
-        <parallel>
-          <antcall target="compile-module"><param name="module" value="qsaratomic"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="qsarbond"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="qsarprotein"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="qsarcml"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="qsarmolecular"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="qm"/></antcall>
+          <antcall target="compile-module"><param name="module" value="qsar"/></antcall>
+          <antcall target="compile-module"><param name="module" value="ionpot"/></antcall>
         </parallel>
         <parallel>
-          <antcall target="compile-module"><param name="module" value="forcefield"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="qsarionpot"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="qsaratomic"/></antcall>
+          <antcall target="compile-module"><param name="module" value="qsarbond"/></antcall>
+          <antcall target="compile-module"><param name="module" value="qsarprotein"/></antcall>
+          <antcall target="compile-module"><param name="module" value="qsarcml"/></antcall>
+          <antcall target="compile-module"><param name="module" value="qsarmolecular"/></antcall>
         </parallel>
         <parallel>
-          <antcall target="compile-module"><param name="module" value="builder3d"/><param name="source" value="${src}/main"/></antcall>
-          <antcall target="compile-module"><param name="module" value="builder3dtools"/><param name="source" value="${src}/main"/></antcall>
+          <antcall target="compile-module"><param name="module" value="forcefield"/></antcall>
+          <antcall target="compile-module"><param name="module" value="qsarionpot"/></antcall>
+        </parallel>
+        <parallel>
+          <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
+          <antcall target="compile-module"><param name="module" value="builder3dtools"/></antcall>
         </parallel>
       </sequential>
     </target>
 
     <target id="dist-all" name="dist-all" description="dist-all">
             <antcall target="compile-init"/>
-            <antcall target="compile-module"><param name="module" value="interfaces"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="core"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="standard"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="atomtype"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="dict"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="data"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="render"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="io"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="valencycheck"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="sdg"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="control"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="datadebug"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="nonotify"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="formula"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="structgen"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="pdb"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="isomorphism"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="smiles"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="extra"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="smarts"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="fingerprint"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="libiocml"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="libiomd"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="pdbcml"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="reaction"/><param name="source" value="${src}/main"/></antcall>
-    	    <antcall target="compile-module"><param name="module" value="charges"/><param name="source" value="${src}/main"/></antcall>
-  		    <antcall target="compile-module"><param name="module" value="ionpot"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qm"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsar"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsaratomic"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsarbond"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsarmolecular"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsarionpot"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsarprotein"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsarcml"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="forcefield"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="builder3d"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="builder3dtools"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="pcore"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="inchi"/><param name="source" value="${src}/main"/></antcall>
-            <antcall target="compile-module"><param name="module" value="diff"/><param name="source" value="${src}/main"/></antcall>
+            <antcall target="compile-module"><param name="module" value="interfaces"/></antcall>
+            <antcall target="compile-module"><param name="module" value="core"/></antcall>
+            <antcall target="compile-module"><param name="module" value="standard"/></antcall>
+            <antcall target="compile-module"><param name="module" value="atomtype"/></antcall>
+            <antcall target="compile-module"><param name="module" value="dict"/></antcall>
+            <antcall target="compile-module"><param name="module" value="data"/></antcall>
+            <antcall target="compile-module"><param name="module" value="render"/></antcall>
+            <antcall target="compile-module"><param name="module" value="io"/></antcall>
+            <antcall target="compile-module"><param name="module" value="valencycheck"/></antcall>
+            <antcall target="compile-module"><param name="module" value="sdg"/></antcall>
+            <antcall target="compile-module"><param name="module" value="control"/></antcall>
+            <antcall target="compile-module"><param name="module" value="datadebug"/></antcall>
+            <antcall target="compile-module"><param name="module" value="nonotify"/></antcall>
+            <antcall target="compile-module"><param name="module" value="formula"/></antcall>
+            <antcall target="compile-module"><param name="module" value="structgen"/></antcall>
+            <antcall target="compile-module"><param name="module" value="pdb"/></antcall>
+            <antcall target="compile-module"><param name="module" value="isomorphism"/></antcall>
+            <antcall target="compile-module"><param name="module" value="smiles"/></antcall>
+            <antcall target="compile-module"><param name="module" value="extra"/></antcall>
+            <antcall target="compile-module"><param name="module" value="smarts"/></antcall>
+            <antcall target="compile-module"><param name="module" value="fingerprint"/></antcall>
+            <antcall target="compile-module"><param name="module" value="libiocml"/></antcall>
+            <antcall target="compile-module"><param name="module" value="libiomd"/></antcall>
+            <antcall target="compile-module"><param name="module" value="pdbcml"/></antcall>
+            <antcall target="compile-module"><param name="module" value="reaction"/></antcall>
+            <antcall target="compile-module"><param name="module" value="charges"/></antcall>
+            <antcall target="compile-module"><param name="module" value="ionpot"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qm"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qsar"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qsaratomic"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qsarbond"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qsarmolecular"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qsarionpot"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qsarprotein"/></antcall>
+            <antcall target="compile-module"><param name="module" value="qsarcml"/></antcall>
+            <antcall target="compile-module"><param name="module" value="forcefield"/></antcall>
+            <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
+            <antcall target="compile-module"><param name="module" value="builder3dtools"/></antcall>
+            <antcall target="compile-module"><param name="module" value="pcore"/></antcall>
+            <antcall target="compile-module"><param name="module" value="inchi"/></antcall>
+            <antcall target="compile-module"><param name="module" value="diff"/></antcall>
         </target>
 
         <target id="test-parallel-all" name="test-parallel-all" description="test-dist-all in parallel mode">
           <sequential>
             <antcall target="compile-init"/>
-            <antcall target="compile-module"><param name="module" value="test"/><param name="source" value="${src}/test"/></antcall>
+            <antcall target="compile-module"><param name="module" value="test"/></antcall>
             <parallel threadCount="${threadCount}">
-              <antcall target="compile-module"><param name="module" value="test-diff"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-core"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-data"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-dict"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-qm"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-qsar"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-libiocml"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-valencycheck"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-pdb"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-structgen"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-charges"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-smarts"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-fingerprint"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-builder3d"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-reaction"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-inchi"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-pcore"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-forcefield"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-isomorphism"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-formula"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-libiomd"/><param name="source" value="${src}/test"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-diff"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-core"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-data"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-dict"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-qm"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-qsar"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-libiocml"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-valencycheck"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-pdb"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-structgen"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-charges"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-smarts"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-fingerprint"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-builder3d"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-reaction"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-inchi"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-pcore"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-forcefield"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-isomorphism"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-formula"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-libiomd"/></antcall>
             </parallel>
             <parallel threadCount="${threadCount}">
-              <antcall target="compile-module"><param name="module" value="test-datadebug"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-nonotify"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-io"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-standard"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-qsarprotein"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-qsaratomic"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-smiles"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-qsarbond"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-atomtype"/><param name="source" value="${src}/test"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-render"/><param name="source" value="${src}/test"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-datadebug"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-nonotify"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-io"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-standard"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-qsarprotein"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-qsaratomic"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-smiles"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-qsarbond"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-atomtype"/></antcall>
+              <antcall target="compile-module"><param name="module" value="test-render"/></antcall>
             </parallel>
-            <antcall target="compile-module"><param name="module" value="test-extra"/><param name="source" value="${src}/test"/></antcall>
-            <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/><param name="source" value="${src}/test"/></antcall>
-            <antcall target="compile-module"><param name="module" value="test-qsarionpot"/><param name="source" value="${src}/test"/></antcall>
+            <antcall target="compile-module"><param name="module" value="test-extra"/></antcall>
+            <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/></antcall>
+            <antcall target="compile-module"><param name="module" value="test-qsarionpot"/></antcall>
           </sequential>
         </target>
 
@@ -638,43 +648,43 @@
 	
 	<target id="test-dist-all" name="test-dist-all" description="test-dist-all">
         <antcall target="compile-init"/>
-        <antcall target="compile-module"><param name="module" value="test"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-diff"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-core"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-atomtype"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-standard"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-data"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-dict"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-datadebug"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-nonotify"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-io"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-structgen"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-isomorphism"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-extra"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-smiles"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-reaction"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-builder3d"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-forcefield"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-valencycheck"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-charges"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-ionpot"/><param name="source" value="${src}/test"/></antcall>
-		<antcall target="compile-module"><param name="module" value="test-qm"/><param name="source" value="${src}/test"/></antcall>
-		<antcall target="compile-module"><param name="module" value="test-qsar"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsaratomic"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsarbond"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsarionpot"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsarprotein"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-pdb"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-inchi"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-libiomd"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-libiocml"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-smarts"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-fingerprint"/><param name="source" value="${src}/test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-pcore"/><param name="source" value="${src}/test"/></antcall>
-    	<antcall target="compile-module"><param name="module" value="test-formula"/><param name="source" value="${src}/test"/></antcall>
-    	<antcall target="compile-module"><param name="module" value="test-render"/><param name="source" value="${src}/test"/></antcall>
-    	<antcall target="compile-module"><param name="module" value="test-sdg"/><param name="source" value="${src}/test"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-diff"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-core"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-atomtype"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-standard"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-data"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-dict"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-datadebug"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-nonotify"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-io"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-structgen"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-isomorphism"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-extra"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-smiles"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-reaction"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-builder3d"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-forcefield"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-valencycheck"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-charges"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-ionpot"/></antcall>
+		<antcall target="compile-module"><param name="module" value="test-qm"/></antcall>
+		<antcall target="compile-module"><param name="module" value="test-qsar"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-qsaratomic"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-qsarbond"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-qsarionpot"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-qsarprotein"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-pdb"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-inchi"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-libiomd"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-libiocml"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-smarts"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-fingerprint"/></antcall>
+        <antcall target="compile-module"><param name="module" value="test-pcore"/></antcall>
+    	<antcall target="compile-module"><param name="module" value="test-formula"/></antcall>
+    	<antcall target="compile-module"><param name="module" value="test-render"/></antcall>
+    	<antcall target="compile-module"><param name="module" value="test-sdg"/></antcall>
 	</target>
 
 	<target id="dist-large" name="dist-large" depends="dist-all"
