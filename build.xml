@@ -505,16 +505,16 @@
             list="io,structgen"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="pdb,smiles,extra,sdg,inchi,libiocml,smarts"/>
+            list="pdb,smiles,sdg,inchi,libiocml"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="control,reaction,pdbcml,libiomd,pcore,fingerprint"/>
+            list="control,extra,reaction,pdbcml,libiomd"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="charges"/>
+            list="charges,smarts"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="qm,qsar,ionpot"/>
+            list="qm,qsar,ionpot,fingerprint,pcore"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="qsaratomic,qsarbond,qsarprotein,qsarcml,qsarmolecular"/>
