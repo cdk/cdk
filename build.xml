@@ -9,6 +9,7 @@
         <property name="deprecation" value="on" />
         <property name="optimization" value="off" />
         <property name="threadCount" value="4" />
+        <property name="parallel" value="false"/>
 
         <!-- patches to apply -->
 
@@ -83,6 +84,8 @@
             <echo message="          debug: ${debug}" />
             <echo message="    deprecation: ${deprecation}" />
             <echo message="   optimization: ${optimization}" />
+            <echo message="       parallel: ${parallel}" />
+            <echo message="        threads: ${threadCount}" />
             <echo message="" />
             <echo message="Available Targets" />
             <echo message="          clean: Remove class files and any temporary files" />
@@ -482,115 +485,46 @@
         	<antcall target="dist-java3d"/>
         </target>
 
-    <target id="parallel-all" name="parallel-all" description="dist-all in parallel mode">
-      <sequential>
-        <antcall target="compile-init"/>
-        <antcall target="compile-module"><param name="module" value="interfaces"/></antcall>
-        <antcall target="compile-module"><param name="module" value="core"/></antcall>
-        <parallel>
-          <antcall target="compile-module"><param name="module" value="data"/></antcall>
-          <antcall target="compile-module"><param name="module" value="dict"/></antcall>
-          <antcall target="compile-module"><param name="module" value="diff"/></antcall>
-        </parallel>
-        <parallel>
-          <antcall target="compile-module"><param name="module" value="datadebug"/></antcall>
-          <antcall target="compile-module"><param name="module" value="nonotify"/></antcall>
-          <antcall target="compile-module"><param name="module" value="standard"/></antcall>
-          <antcall target="compile-module"><param name="module" value="isomorphism"/></antcall>
-        </parallel>
-        <parallel>
-          <antcall target="compile-module"><param name="module" value="atomtype"/></antcall>
-          <antcall target="compile-module"><param name="module" value="io"/></antcall>
-          <antcall target="compile-module"><param name="module" value="render"/></antcall>
-          <antcall target="compile-module"><param name="module" value="valencycheck"/></antcall>
-          <antcall target="compile-module"><param name="module" value="formula"/></antcall>
-        </parallel>
-        <parallel>
-          <antcall target="compile-module"><param name="module" value="pdb"/></antcall>
-          <antcall target="compile-module"><param name="module" value="structgen"/></antcall>
-          <antcall target="compile-module"><param name="module" value="extra"/></antcall>
-          <antcall target="compile-module"><param name="module" value="sdg"/></antcall>
-          <antcall target="compile-module"><param name="module" value="inchi"/></antcall>
-          <antcall target="compile-module"><param name="module" value="libiocml"/></antcall>
-          <antcall target="compile-module"><param name="module" value="smarts"/></antcall>
-        </parallel>
-        <parallel>
-          <antcall target="compile-module"><param name="module" value="control"/></antcall>
-          <antcall target="compile-module"><param name="module" value="smiles"/></antcall>
-          <antcall target="compile-module"><param name="module" value="reaction"/></antcall>
-          <antcall target="compile-module"><param name="module" value="pdbcml"/></antcall>
-          <antcall target="compile-module"><param name="module" value="libiomd"/></antcall>
-          <antcall target="compile-module"><param name="module" value="pcore"/></antcall>
-          <antcall target="compile-module"><param name="module" value="fingerprint"/></antcall>
-        </parallel>
-        <antcall target="compile-module"><param name="module" value="charges"/></antcall>
-        <parallel>
-          <antcall target="compile-module"><param name="module" value="qm"/></antcall>
-          <antcall target="compile-module"><param name="module" value="qsar"/></antcall>
-          <antcall target="compile-module"><param name="module" value="ionpot"/></antcall>
-        </parallel>
-        <parallel>
-          <antcall target="compile-module"><param name="module" value="qsaratomic"/></antcall>
-          <antcall target="compile-module"><param name="module" value="qsarbond"/></antcall>
-          <antcall target="compile-module"><param name="module" value="qsarprotein"/></antcall>
-          <antcall target="compile-module"><param name="module" value="qsarcml"/></antcall>
-          <antcall target="compile-module"><param name="module" value="qsarmolecular"/></antcall>
-        </parallel>
-        <parallel>
-          <antcall target="compile-module"><param name="module" value="forcefield"/></antcall>
-          <antcall target="compile-module"><param name="module" value="qsarionpot"/></antcall>
-        </parallel>
-        <parallel>
-          <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
-          <antcall target="compile-module"><param name="module" value="builder3dtools"/></antcall>
-        </parallel>
-      </sequential>
-    </target>
-
     <target id="dist-all" name="dist-all" description="dist-all">
-            <antcall target="compile-init"/>
-            <antcall target="compile-module"><param name="module" value="interfaces"/></antcall>
-            <antcall target="compile-module"><param name="module" value="core"/></antcall>
-            <antcall target="compile-module"><param name="module" value="standard"/></antcall>
-            <antcall target="compile-module"><param name="module" value="atomtype"/></antcall>
-            <antcall target="compile-module"><param name="module" value="dict"/></antcall>
-            <antcall target="compile-module"><param name="module" value="data"/></antcall>
-            <antcall target="compile-module"><param name="module" value="render"/></antcall>
-            <antcall target="compile-module"><param name="module" value="io"/></antcall>
-            <antcall target="compile-module"><param name="module" value="valencycheck"/></antcall>
-            <antcall target="compile-module"><param name="module" value="sdg"/></antcall>
-            <antcall target="compile-module"><param name="module" value="control"/></antcall>
-            <antcall target="compile-module"><param name="module" value="datadebug"/></antcall>
-            <antcall target="compile-module"><param name="module" value="nonotify"/></antcall>
-            <antcall target="compile-module"><param name="module" value="formula"/></antcall>
-            <antcall target="compile-module"><param name="module" value="structgen"/></antcall>
-            <antcall target="compile-module"><param name="module" value="pdb"/></antcall>
-            <antcall target="compile-module"><param name="module" value="isomorphism"/></antcall>
-            <antcall target="compile-module"><param name="module" value="smiles"/></antcall>
-            <antcall target="compile-module"><param name="module" value="extra"/></antcall>
-            <antcall target="compile-module"><param name="module" value="smarts"/></antcall>
-            <antcall target="compile-module"><param name="module" value="fingerprint"/></antcall>
-            <antcall target="compile-module"><param name="module" value="libiocml"/></antcall>
-            <antcall target="compile-module"><param name="module" value="libiomd"/></antcall>
-            <antcall target="compile-module"><param name="module" value="pdbcml"/></antcall>
-            <antcall target="compile-module"><param name="module" value="reaction"/></antcall>
-            <antcall target="compile-module"><param name="module" value="charges"/></antcall>
-            <antcall target="compile-module"><param name="module" value="ionpot"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qm"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsar"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsaratomic"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsarbond"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsarmolecular"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsarionpot"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsarprotein"/></antcall>
-            <antcall target="compile-module"><param name="module" value="qsarcml"/></antcall>
-            <antcall target="compile-module"><param name="module" value="forcefield"/></antcall>
-            <antcall target="compile-module"><param name="module" value="builder3d"/></antcall>
-            <antcall target="compile-module"><param name="module" value="builder3dtools"/></antcall>
-            <antcall target="compile-module"><param name="module" value="pcore"/></antcall>
-            <antcall target="compile-module"><param name="module" value="inchi"/></antcall>
-            <antcall target="compile-module"><param name="module" value="diff"/></antcall>
-        </target>
+        <antcall target="compile-init"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="interfaces"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="core"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="data,dict,diff,qm,standard"/>
+        <foreach target="compile-module" param="module" trim="yes"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="datadebug,nonotify,isomorphism,atomtype,render,valencycheck,
+                  formula"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="io,structgen"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="pdb,smiles,extra,sdg,inchi,libiocml,smarts"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="control,reaction,pdbcml,libiomd,pcore,fingerprint"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="charges"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="qm,qsar,ionpot"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="qsaratomic,qsarbond,qsarprotein,qsarcml,qsarmolecular"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="forcefield,qsarionpot"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="builder3d,builder3dtools"/>
+    </target>
 
         <target id="test-parallel-all" name="test-parallel-all" description="test-dist-all in parallel mode">
           <sequential>
