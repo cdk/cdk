@@ -732,6 +732,24 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
             Assert.assertTrue(atom.getExactMass() > 0);
         }
     }
+
+    /**
+     * Molecular hydrogen is found in the first batch of PubChem entries, and
+     * removal of hydrogen should simply return an empty IAtomContainer, not
+     * throw an NullPointerException.
+     * 
+     * @cdk.bug 2366528
+     */
+    @Test public void testRemoveHydrogensFromMolecularHydrogen() {
+        Molecule mol = new Molecule(); // molecular hydrogen
+        mol.addAtom(new Atom("H"));
+        mol.addAtom(new Atom("H"));
+        mol.addBond(0, 1, IBond.Order.SINGLE);
+
+        Assert.assertEquals(2, mol.getAtomCount());
+        IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
+        Assert.assertEquals(0, ac.getAtomCount());
+    }
 }
 
 
