@@ -526,50 +526,31 @@
             list="builder3d,builder3dtools"/>
     </target>
 
-        <target id="test-parallel-all" name="test-parallel-all" description="test-dist-all in parallel mode">
-          <sequential>
-            <antcall target="compile-init"/>
-            <antcall target="compile-module"><param name="module" value="test"/></antcall>
-            <parallel threadCount="${threadCount}">
-              <antcall target="compile-module"><param name="module" value="test-diff"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-core"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-data"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-dict"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-qm"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-qsar"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-libiocml"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-valencycheck"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-pdb"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-structgen"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-charges"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-smarts"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-fingerprint"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-builder3d"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-reaction"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-inchi"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-pcore"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-forcefield"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-isomorphism"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-formula"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-libiomd"/></antcall>
-            </parallel>
-            <parallel threadCount="${threadCount}">
-              <antcall target="compile-module"><param name="module" value="test-datadebug"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-nonotify"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-io"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-standard"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-qsarprotein"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-qsaratomic"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-smiles"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-qsarbond"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-atomtype"/></antcall>
-              <antcall target="compile-module"><param name="module" value="test-render"/></antcall>
-            </parallel>
-            <antcall target="compile-module"><param name="module" value="test-extra"/></antcall>
-            <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/></antcall>
-            <antcall target="compile-module"><param name="module" value="test-qsarionpot"/></antcall>
-          </sequential>
-        </target>
+    <target id="test-dist-all" name="test-dist-all" description="test-dist-all">
+        <antcall target="compile-init"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="test"/>
+        <foreach target="compile-module" param="module" trim="true"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="test-libiocml,test-qsar,test-io,test-core,test-valencycheck,
+                  test-smarts,test-builder3d,test-standard,test-reaction,
+                  test-pcore,test-sdg,test-forcefield,test-fingerprint,
+                  test-ionpot,test-qm,test-isomorphism,test-libiomd,test-dict,
+                  test-data,test-diff,test-charges,test-inchi,test-formula,
+                  test-render"/>
+        <foreach target="compile-module" param="module" trim="true"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="test-datadebug,test-nonotify,test-qsaratomic,test-qsarbond,
+                  test-pdb,test-smiles,test-extra,test-atomtype,
+                  test-structgen"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="test-qsarmolecular"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
+            list="test-qsarprotein,test-qsarionpot"/>
+    </target>
 
 	<target id="jarTestdata" name="jarTestdata" description="Creates jar files with test data.">
 		<mkdir dir="${dist}/jar"/>
@@ -580,47 +561,6 @@
         </jar>
 	</target>
 	
-	<target id="test-dist-all" name="test-dist-all" description="test-dist-all">
-        <antcall target="compile-init"/>
-        <antcall target="compile-module"><param name="module" value="test"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-diff"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-core"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-atomtype"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-standard"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-data"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-dict"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-datadebug"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-nonotify"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-io"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-structgen"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-isomorphism"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-extra"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-smiles"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-reaction"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-builder3d"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-forcefield"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-valencycheck"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-charges"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-ionpot"/></antcall>
-		<antcall target="compile-module"><param name="module" value="test-qm"/></antcall>
-		<antcall target="compile-module"><param name="module" value="test-qsar"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsaratomic"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsarbond"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsarmolecular"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsarionpot"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-qsarprotein"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-pdb"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-inchi"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-libiomd"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-libiocml"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-smarts"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-fingerprint"/></antcall>
-        <antcall target="compile-module"><param name="module" value="test-pcore"/></antcall>
-    	<antcall target="compile-module"><param name="module" value="test-formula"/></antcall>
-    	<antcall target="compile-module"><param name="module" value="test-render"/></antcall>
-    	<antcall target="compile-module"><param name="module" value="test-sdg"/></antcall>
-	</target>
-
 	<target id="dist-large" name="dist-large" depends="dist-all"
             description="Builds one big jar file for the CDK, including third-party libraries.">
 
@@ -1061,38 +1001,12 @@
         <target id="test-all" name="test-all" depends="noJunit, dist-all, test-dist-all, jarTestdata"
                 description="Performs a full JUnit test for the CDK." 
                 if="junit.present">
-        	<antcall target="test-module"><param name="module" value="core"/></antcall>
-        	<antcall target="test-module"><param name="module" value="data"/></antcall>
-        	<antcall target="test-module"><param name="module" value="datadebug"/></antcall>
-               <antcall target="test-module"><param name="module" value="diff"/></antcall>
-        	<antcall target="test-module"><param name="module" value="nonotify"/></antcall>
-        	<antcall target="test-module"><param name="module" value="atomtype"/></antcall>
-        	<antcall target="test-module"><param name="module" value="standard"/></antcall>
-        	<antcall target="test-module"><param name="module" value="io"/></antcall>
-            <antcall target="test-module"><param name="module" value="builder3d"/></antcall> 
-            <antcall target="test-module"><param name="module" value="forcefield"/></antcall> 
-        	<antcall target="test-module"><param name="module" value="valencycheck"/></antcall> 
-                <antcall target="test-module"><param name="module" value="charges"/></antcall>
-        	<antcall target="test-module"><param name="module" value="reaction"/></antcall>
-        	<antcall target="test-module"><param name="module" value="smarts"/></antcall> 
-        	<antcall target="test-module"><param name="module" value="fingerprint"/></antcall> 
-                <antcall target="test-module"><param name="module" value="smiles"/></antcall>
-        	<antcall target="test-module"><param name="module" value="qsar"/></antcall> 
-        	<antcall target="test-module"><param name="module" value="qsaratomic"/></antcall>
-                <antcall target="test-module"><param name="module" value="qsarbond"/></antcall>
-                <antcall target="test-module"><param name="module" value="qsarmolecular"/></antcall>
-                <antcall target="test-module"><param name="module" value="qsarionpot"/></antcall>
-                <antcall target="test-module"><param name="module" value="qsarprotein"/></antcall>
-        	<antcall target="test-module"><param name="module" value="pdb"/></antcall> 
-        	<antcall target="test-module"><param name="module" value="pcore"/></antcall> 
-            <antcall target="test-module"><param name="module" value="inchi"/></antcall>
-            <antcall target="test-module"><param name="module" value="structgen"/></antcall>
-            <antcall target="test-module"><param name="module" value="libiomd"/></antcall>
-            <antcall target="test-module"><param name="module" value="libiocml"/></antcall>
-            	<antcall target="test-module"><param name="module" value="formula"/></antcall>
-        	<antcall target="test-module"><param name="module" value="render"/></antcall>
-	        <antcall target="test-module"><param name="module" value="extra"/></antcall>
-	        <antcall target="test-module"><param name="module" value="sdg"/></antcall>
+            <foreach target="test-module" param="module"
+                list="core,data,datadebug,diff,nonotify,atomtype,standard,
+                      io,builder3d,forcefield,valencycheck,charges,reaction,
+                      smarts,fingerprint,smiles,qsar,qsaratomic,qsarbond,
+                      qsarmolecular,qsarionpot,qsarprotein,pdb,pcore,inchi,
+                      structgen,libiomd,libiocml,formula,render,extra,sdg"/>
         </target>
 
         <target id="limitations" name="limitations" depends="noJunit, dist-all"
