@@ -35,10 +35,10 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -60,11 +60,6 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
  */
 public class AtomContainerManipulatorTest extends CDKTestCase {
     IAtomContainer ac;
-
-    public AtomContainerManipulatorTest()
-    {
-        super();
-    }
 
     @Before
     public void setUp()
@@ -191,7 +186,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("H")); mol.getAtom(4).setID("a5");
         mol.addAtom(new Atom("H")); mol.getAtom(5).setID("a6");
         
-        List ids = AtomContainerManipulator.getAllIDs(mol);
+        List<String> ids = AtomContainerManipulator.getAllIDs(mol);
         Assert.assertEquals(6, ids.size());
         Assert.assertTrue(ids.contains("a1"));
         Assert.assertTrue(ids.contains("a2"));
@@ -722,8 +717,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read(new ChemFile());
-        List cList = ChemFileManipulator.getAllAtomContainers(content);
-        IAtomContainer ac = (IAtomContainer) cList.get(0);
+        List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = cList.get(0);
 
         for (IAtom atom : ac.atoms()) {
             Assert.assertNotNull(atom.getExactMass());
