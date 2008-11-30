@@ -534,7 +534,7 @@
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-libiocml,test-qsar,test-io,test-core,test-valencycheck,
-                  test-smarts,test-builder3d,test-standard,test-reaction,
+                  test-smarts,test-standard,test-reaction,
                   test-pcore,test-sdg,test-forcefield,test-fingerprint,
                   test-ionpot,test-qm,test-isomorphism,test-libiomd,test-dict,
                   test-data,test-diff,test-charges,test-inchi,test-formula,
@@ -546,7 +546,7 @@
                   test-structgen"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="test-qsarmolecular"/>
+            list="test-qsarmolecular,test-builder3d"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-qsarprotein,test-qsarionpot"/>
