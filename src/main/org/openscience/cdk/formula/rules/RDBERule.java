@@ -178,15 +178,13 @@ public class RDBERule implements IRule{
 		// The number of combinations with repetition
 		// (v+n-1)!/[n!(v-1)!]
 		int nE = 0; // number of elements to change
-		List<String> eV = new ArrayList<String>(); // number of elements chaning
-		List<Integer> nV = new ArrayList<Integer>(); // number of valence chaning
+		List<Integer> nV = new ArrayList<Integer>(); // number of valence changing
 		for(Iterator<IIsotope> it = formula.isotopes().iterator(); it.hasNext();){
     		IIsotope isotope = it.next();
     		int[] valence = getOxidationState(formula.getBuilder().newAtom(isotope.getSymbol()));
     		if(valence.length != 1){
     			for(int i = 0; i < valence.length; i++){
     				nV.add(valence[i]);
-    				eV.add(isotope.getSymbol());
     			}
     			nE += MolecularFormulaManipulator.getElementCount(formula, formula.getBuilder().newElement(isotope.getSymbol()));
     		}
@@ -206,8 +204,6 @@ public class RDBERule implements IRule{
 			double RDBE_1 = 0;
 			for(Iterator<IIsotope> it = formula.isotopes().iterator(); it.hasNext();){
 	    		IIsotope isotope = it.next();
-	    		if(eV.contains(isotope.getSymbol()))
-	    			continue;
 	    		int[] valence = getOxidationState(formula.getBuilder().newAtom(isotope.getSymbol()));
 	    		double value = (valence[0]-2)*formula.getIsotopeCount(isotope)*0.5;
 	    		RDBE_1 += value;

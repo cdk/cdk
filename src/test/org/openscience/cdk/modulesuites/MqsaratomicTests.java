@@ -43,7 +43,6 @@ import org.openscience.cdk.qsar.descriptors.atomic.IsProtonInAromaticSystemDescr
 import org.openscience.cdk.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargePEOEDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.atomic.PiElectronegativityDescriptorTest;
@@ -81,7 +80,6 @@ import org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptorTest;
     IsProtonInConjugatedPiSystemDescriptorTest.class,
     PartialPiChargeDescriptorTest.class,
     PartialSigmaChargeDescriptorTest.class,
-    PartialTChargeMMFF94DescriptorTest.class,
     PartialTChargePEOEDescriptorTest.class,
     PeriodicTablePositionDescriptorTest.class,
     PiElectronegativityDescriptorTest.class,

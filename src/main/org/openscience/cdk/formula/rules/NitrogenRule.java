@@ -105,7 +105,7 @@ public class NitrogenRule implements IRule{
     	
     	int numberN = MolecularFormulaManipulator.getElementCount(formula, formula.getBuilder().newElement("N"));
     	
-    	if(formula.getCharge() == null || formula.getCharge() == 0){
+    	if(formula.getCharge() == null || formula.getCharge() == 0 || !isOdd(Math.abs(formula.getCharge()))){
 	    	if(isOdd(mass) && isOdd(numberN)) {
 	    		return 1.0;
 	    	} else if(!isOdd(mass) && ( numberN == 0 || !isOdd(numberN))){
