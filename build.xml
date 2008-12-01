@@ -184,7 +184,7 @@
 
             <!-- test Ant version -->
             <condition property="hasAnt17">
-              <contains string="${ant.version}" substring="1.7"/>
+              <contains string="${ant.version}" substring="1.7.1"/>
             </condition>
 
             <!-- test Java version -->
@@ -228,7 +228,7 @@
             	</not>
             </condition>
             <fail if="isNotJava15+" message="This CDK release requires Java5 or better."/>
-            <fail unless="hasAnt17" message="This CDK release requires Ant 1.7 or better."/>
+            <fail unless="hasAnt17" message="This CDK release requires Ant 1.7.1 or better."/>
         </target>
 
 
