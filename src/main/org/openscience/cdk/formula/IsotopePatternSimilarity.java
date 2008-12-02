@@ -62,11 +62,16 @@ public class IsotopePatternSimilarity{
     	
     	/*charge to add*/
     	if(isoto1.getCharge() == 1)
-    		chargeToAdd = -massE;
-    	else if(isoto1.getCharge() == -1)
     		chargeToAdd = massE;
+    	else if(isoto1.getCharge() == -1)
+    		chargeToAdd = -massE;
     	else
     		chargeToAdd = 0;
+    	
+    	for(IsotopeContainer isoC: iso1.getIsotopes()){
+    		double mass = isoC.getMass();
+    		isoC.setMass(mass+chargeToAdd);
+    	}
     	
     	double diffMass, diffAbun, factor, totalFactor = 0d;
 		double score = 0d, tempScore;
@@ -85,7 +90,7 @@ public class IsotopePatternSimilarity{
 			if (closestDp == -1)
 				continue;
 			
-			diffMass = isoContainer.getMass()+chargeToAdd - iso2.getIsotopes().get(closestDp).getMass();
+			diffMass = isoContainer.getMass() - iso2.getIsotopes().get(closestDp).getMass();
 			diffMass = Math.abs(diffMass);
 
 			diffAbun = 1.0d - (isoContainer.getIntensity() / iso2.getIsotopes().get(closestDp).getIntensity());
@@ -115,7 +120,7 @@ public class IsotopePatternSimilarity{
     	double diff = 100;
     	int posi = -1;
 		for(int i = 0 ; i < pattern.getNumberOfIsotopes(); i++) {
-			double tempDiff = Math.abs((isoContainer.getMass() + chargeToAdd) - pattern.getIsotopes().get(i).getMass());
+			double tempDiff = Math.abs((isoContainer.getMass()) - pattern.getIsotopes().get(i).getMass());
 			if (tempDiff <= (tolerance_ppm/isoContainer.getMass()) && tempDiff < diff){
 				diff = tempDiff;
 				posi = i;
