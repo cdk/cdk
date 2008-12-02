@@ -676,7 +676,8 @@ public class MolecularFormulaManipulator {
                 "Ru", "Tc", "Mo", "Nb", "Y", "Sr", "Rb", "Kr", "As",
                 "Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "Be", "Li",
                 "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac",
-                "Th", "Pa", "U", "Np", "Pu"};
+                "Th", "Pa", "U", "Np", "Pu",
+                "R"}; // Extract object typically from molecular formulas
 		
 	}
 	/**
@@ -697,7 +698,8 @@ public class MolecularFormulaManipulator {
                 "Ra", "Rb", "Re", "Rh", "Rn", "Ru",
                 "S", "Sb", "Sc", "Se", "Si", "Sr", "Sm", "Sn",
                 "Ta", "Tb", "Tc", "Te", "Th", "Ti", "Tl", "Tm",
-                "U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr"};
+                "U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr",
+                "R"}; // Extract object typically from molecular formulas
 	}
 	/**
 	 * Generate the order of the Elements according Hill system 
@@ -717,7 +719,8 @@ public class MolecularFormulaManipulator {
                 "Ra", "Rb", "Re", "Rh", "Rn", "Ru",
                 "S", "Sb", "Sc", "Se", "Si", "Sr", "Sm", "Sn",
                 "Ta", "Tb", "Tc", "Te", "Th", "Ti", "Tl", "Tm",
-                "U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr"};
+                "U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr",
+                "R"}; // Extract object typically from molecular formulas
 	}
 
 	/**
