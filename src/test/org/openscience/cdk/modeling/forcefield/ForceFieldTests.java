@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.modeling.forcefield;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.util.Map;
@@ -1026,11 +1027,12 @@ public class ForceFieldTests extends CDKTestCase {
         molecule = forceField.getMolecule();
         //logger.debug("Molecule: ", molecule);
 
-        FileWriter fileWriter = new FileWriter("./" + input + "-output.mol");
-        //stringWriter.write(input + "-output.mol");
-        MDLWriter mdlWriter = new MDLWriter(fileWriter);
-        mdlWriter.write(molecule);
-        mdlWriter.close();
+//        File output = File.createTempFile(input + "-output", "mol");
+//        FileWriter fileWriter = new FileWriter(output);
+//        //stringWriter.write(input + "-output.mol");
+//        MDLWriter mdlWriter = new MDLWriter(fileWriter);
+//        mdlWriter.write(molecule);
+//        mdlWriter.close();
             
 		Assert.assertEquals(34.01, forceField.getMinimumFunctionValueCGM(), 0.01);
 
@@ -1116,12 +1118,12 @@ public class ForceFieldTests extends CDKTestCase {
         molecule = forceField.getMolecule();
         //logger.debug("Molecule: ", molecule);
 
-        // Please don't write a file in the test cases.
-        FileWriter fileWriter = new FileWriter("./" + input + "-output.mol");
-        //stringWriter.write(input + "-output.mol");
-        MDLWriter mdlWriter = new MDLWriter(fileWriter);
-        mdlWriter.write(molecule);
-        mdlWriter.close();
+//        File output = File.createTempFile(input + "-output", "mol");
+//        FileWriter fileWriter = new FileWriter(output);
+//        //stringWriter.write(input + "-output.mol");
+//        MDLWriter mdlWriter = new MDLWriter(fileWriter);
+//        mdlWriter.write(molecule);
+//        mdlWriter.close();
             
         Assert.assertEquals(734.17, forceField.getMinimumFunctionValueCGM(), 0.01);
 
@@ -1248,12 +1250,12 @@ public class ForceFieldTests extends CDKTestCase {
         molecule = forceField.getMolecule();
         //logger.debug("Molecule: ", molecule);
 
-        // Please don't write a file in the test cases.
-        FileWriter fileWriter = new FileWriter("./" + input + "-output.mol");
-        //stringWriter.write(input + "-output.mol");
-        MDLWriter mdlWriter = new MDLWriter(fileWriter);
-        mdlWriter.write(molecule);
-        mdlWriter.close();
+//        File output = File.createTempFile(input + "-output", "mol");
+//        FileWriter fileWriter = new FileWriter(output);
+//        //stringWriter.write(input + "-output.mol");
+//        MDLWriter mdlWriter = new MDLWriter(fileWriter);
+//        mdlWriter.write(molecule);
+//        mdlWriter.close();
             
         Assert.assertEquals(33.32029777, forceField.getMinimumFunctionValueCGM(), 0.00001);
 
