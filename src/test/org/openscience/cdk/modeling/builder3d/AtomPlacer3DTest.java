@@ -78,8 +78,10 @@ public class AtomPlacer3DTest extends NewCDKTestCase{
 	public void testFindHeavyAtomsInChain_IAtomContainer_IAtomContainer() throws CDKException{
     	String filename = "data/mdl/allmol232.mol";
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+    	// TODO: shk3-cleanuptests: best to use the STRICT IO mode here
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
     	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+    	// TODO: shk3-cleanuptests: please make it a types list
     	List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
     	IMolecule ac = new NNMolecule((IAtomContainer)containersList.get(0));
     	addExplicitHydrogens(ac);
@@ -90,6 +92,8 @@ public class AtomPlacer3DTest extends NewCDKTestCase{
     	chain.addAtom(ac.getAtom(29));
     	chain.addAtom(ac.getAtom(30));
     	int[] result=new AtomPlacer3D().findHeavyAtomsInChain(ac,chain);
+    	// FIXME: shk3-cleanuptests: assertEquals() takes the expected value
+    	//          as first argument
     	Assert.assertEquals(result[0],16);
     	Assert.assertEquals(result[1],11);
 	}
