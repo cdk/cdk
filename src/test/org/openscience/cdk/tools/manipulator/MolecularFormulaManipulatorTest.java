@@ -20,6 +20,9 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -28,12 +31,13 @@ import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.formula.MolecularFormula;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
  * Checks the functionality of the MolecularFormulaManipulator.
@@ -915,7 +919,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 			    "Ru", "Tc", "Mo", "Nb", "Y", "Sr", "Rb", "Kr", "As", 
 			    "Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "Be", "Li", 
 			    "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", 
-			    "Th", "Pa", "U", "Np", "Pu"};
+			    "Th", "Pa", "U", "Np", "Pu","R"};
 		
 		String[] listGenerated = MolecularFormulaManipulator.generateOrderEle();
 		Assert.assertEquals(listElements.length,listGenerated.length);
@@ -950,4 +954,100 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         double exactMass = MolecularFormulaManipulator.getTotalExactMass(mf);
         Assert.assertEquals(12.0000, exactMass, 0.0001);
     }
+
+    /**
+     */
+    @Test
+    public void testSingleAtom() {
+        String formula = "CH4";
+        IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula(formula, builder);
+    	Assert.assertEquals(1, MolecularFormulaManipulator.getIsotopes(mf, mf.getBuilder().newElement("C")).size());
+    }
+
+    /**
+     */
+    @Test
+    public void testSimplifyMolecularFormula_String() {
+        String formula = "C1H41.H2O";
+    	String simplifyMF = MolecularFormulaManipulator.simplifyMolecularFormula(formula);
+        Assert.assertEquals("C1H43O", simplifyMF);
+    }
+    /**
+     */
+    @Test
+    public void testSimplifyMolecularFormula_String2() {
+        String formula = "CH41.H2O";
+    	String simplifyMF = MolecularFormulaManipulator.simplifyMolecularFormula(formula);
+        Assert.assertEquals("CH43O", simplifyMF);
+    }
+    /**
+     */
+    @Test
+    public void testSimplifygetMF() {
+        String formula = "CH4.H2O";
+    	IMolecularFormula formula1 = new MolecularFormula();
+    	formula1.addIsotope(builder.newIsotope("C"),1);
+    	formula1.addIsotope(builder.newIsotope("H"),6);
+    	formula1.addIsotope(builder.newIsotope("O"),1);
+    	IMolecularFormula ff = MolecularFormulaManipulator.getMolecularFormula(formula, builder);
+    	Assert.assertTrue(MolecularFormulaManipulator.compare(formula1, MolecularFormulaManipulator.getMolecularFormula(formula, builder)));
+    	Assert.assertEquals("CH6O",MolecularFormulaManipulator.getString(ff));
+    }
+
+      /**
+       */
+      @Test
+      public void testSpace() {
+          String formula = "C17H21NO. C7H6O3";
+          String simplifyMF = MolecularFormulaManipulator.simplifyMolecularFormula(formula);
+          Assert.assertEquals("C24H27NO4", simplifyMF);
+      }
+    /**
+     */
+    @Test
+    public void test0() {
+        String formula = "Fe.(C6H11O7)3";
+        String simplifyMF = MolecularFormulaManipulator.simplifyMolecularFormula(formula);
+        Assert.assertEquals("FeC18H33O21", simplifyMF);
+    }
+      /**
+       */
+      @Test
+      public void test1() {
+          String formula = "(C6H11O7)3.Fe";
+          String simplifyMF = MolecularFormulaManipulator.simplifyMolecularFormula(formula);
+          Assert.assertEquals("C18H33O21Fe", simplifyMF);
+      }
+
+	  /**
+	   */
+	  @Test
+	  public void test2() {
+	      String formula = "C14H14N2.2HCl";
+	      String simplifyMF = MolecularFormulaManipulator.simplifyMolecularFormula(formula);
+	      Assert.assertEquals("C14H16N2Cl2", simplifyMF);
+	    }
+	  /**
+	   */
+	  @Test
+      public void test3() {
+          String formula = "(C27H33N3O8)2.2HNO3.3H2O";
+          String simplifyMF = MolecularFormulaManipulator.simplifyMolecularFormula(formula);
+          Assert.assertEquals("C54H74N8O25", simplifyMF);
+      }
+
+	  /**
+	   */
+	  @Test
+      public void test4() {
+          String formula = "(C27H33N3O8)2.2HNO3.3H2O";
+          IMolecularFormula formula1 = new MolecularFormula();
+          formula1.addIsotope(builder.newIsotope("C"),54);
+      	  formula1.addIsotope(builder.newIsotope("H"),74);
+      	  formula1.addIsotope(builder.newIsotope("O"),25);
+      	  formula1.addIsotope(builder.newIsotope("N"),8);
+      	  IMolecularFormula ff = MolecularFormulaManipulator.getMolecularFormula(formula, builder);
+      	  Assert.assertTrue(MolecularFormulaManipulator.compare(formula1, MolecularFormulaManipulator.getMolecularFormula(formula, builder)));
+      	  Assert.assertEquals("C54H74N8O25", MolecularFormulaManipulator.getString(ff));
+      }
 }
