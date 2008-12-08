@@ -120,6 +120,8 @@ public class SMILESReader extends DefaultChemObjectReader {
             if (IChemFile.class.equals(anInterface)) return true;
             if (IMoleculeSet.class.equals(anInterface)) return true;
         }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
 		return false;
 	}
 

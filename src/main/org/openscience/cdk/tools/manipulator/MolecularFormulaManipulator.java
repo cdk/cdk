@@ -24,17 +24,23 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -380,6 +386,9 @@ public class MolecularFormulaManipulator {
      * @see #getMolecularFormula(String, boolean, org.openscience.cdk.interfaces.IChemObjectBuilder)
 	 */
 	private static IMolecularFormula getMolecularFormula(String stringMF, IMolecularFormula formula, boolean assumeMajorIsotope) {
+		
+		if(stringMF.contains(".") || stringMF.contains("(") || stringMF.charAt(0) >= '0' && stringMF.charAt(0) <= '9')
+			stringMF = simplifyMolecularFormula(stringMF);
 		// FIXME: MF: variables with lower case first char
 		char ThisChar;
 		/*
@@ -676,7 +685,8 @@ public class MolecularFormulaManipulator {
                 "Ru", "Tc", "Mo", "Nb", "Y", "Sr", "Rb", "Kr", "As",
                 "Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "Be", "Li",
                 "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac",
-                "Th", "Pa", "U", "Np", "Pu"};
+                "Th", "Pa", "U", "Np", "Pu",
+                "R"}; // Extract object typically from molecular formulas
 		
 	}
 	/**
@@ -697,7 +707,8 @@ public class MolecularFormulaManipulator {
                 "Ra", "Rb", "Re", "Rh", "Rn", "Ru",
                 "S", "Sb", "Sc", "Se", "Si", "Sr", "Sm", "Sn",
                 "Ta", "Tb", "Tc", "Te", "Th", "Ti", "Tl", "Tm",
-                "U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr"};
+                "U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr",
+                "R"}; // Extract object typically from molecular formulas
 	}
 	/**
 	 * Generate the order of the Elements according Hill system 
@@ -717,7 +728,8 @@ public class MolecularFormulaManipulator {
                 "Ra", "Rb", "Re", "Rh", "Rn", "Ru",
                 "S", "Sb", "Sc", "Se", "Si", "Sr", "Sm", "Sn",
                 "Ta", "Tb", "Tc", "Te", "Th", "Ti", "Tl", "Tm",
-                "U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr"};
+                "U", "V", "W", "Xe", "Y", "Yb", "Zn", "Zr",
+                "R"}; // Extract object typically from molecular formulas
 	}
 
 	/**
@@ -776,6 +788,195 @@ public class MolecularFormulaManipulator {
         }
 		return newEle;
 	}
-	
+
+	/**
+	 * Simplify the molecular formula. E.g the dot '.' character convention is 
+	 * used when dividing a formula into parts. In this case any numeral following a dot refers 
+	 * to all the elements within that part of the formula that follow it.
+	 * 
+	 * @param formula  The molecular formula
+	 * @return         The simplified molecular formula
+	 */
+	@TestMethod("testSimplifyMolecularFormula_String")
+	public static String simplifyMolecularFormula(String formula) {
+		String newFormula = formula;
+		char ThisChar;
+		
+		if(formula.contains(" ")){
+			newFormula = newFormula.replace(" ", "");
+		}
+		if(!formula.contains("."))
+			return formula;
+		
+		List<String> listMF = new ArrayList<String>();
+		while(newFormula.contains(".")){
+			int pos = newFormula.indexOf(".");
+			String thisFormula = newFormula.substring(0, pos);
+			if(thisFormula.charAt(0) >= '0' && thisFormula.charAt(0) <= '9')
+				thisFormula = multipleExtractor(thisFormula);
+			
+			if(thisFormula.contains("("))
+				thisFormula = breakExtractor(thisFormula);
+			
+			listMF.add(thisFormula);
+			thisFormula = newFormula.substring(pos+1,newFormula.length());
+			if(!thisFormula.contains(".")){
+				
+				if(thisFormula.charAt(0) >= '0' && thisFormula.charAt(0) <= '9')
+					thisFormula = multipleExtractor(thisFormula);
+				
+				if(thisFormula.contains("("))
+					thisFormula = breakExtractor(thisFormula);
+
+				listMF.add(thisFormula);
+			}
+			newFormula = thisFormula;
+		}
+		
+		String recentElementSymbol = new String();
+		String recentElementCountString = new String("0");
+
+		List<String> eleSymb = new ArrayList<String>();
+		List<Integer> eleCount = new ArrayList<Integer>();
+		for(int i = 0 ; i < listMF.size(); i++){
+			String thisFormula = listMF.get(i);
+			for (int f = 0; f < thisFormula.length(); f++) {
+				ThisChar = thisFormula.charAt(f);
+				if (f < thisFormula.length()) {
+					if (ThisChar >= 'A' && ThisChar <= 'Z') {
+						recentElementSymbol = String.valueOf(ThisChar);
+						recentElementCountString = "0";
+					}
+					if (ThisChar >= 'a' && ThisChar <= 'z') {
+						recentElementSymbol += ThisChar;
+					}
+					if (ThisChar >= '0' && ThisChar <= '9') {
+						recentElementCountString += ThisChar;
+					}
+				}
+				if (f == thisFormula.length() - 1 || (thisFormula.charAt(f + 1) >= 'A' && thisFormula.charAt(f + 1) <= 'Z')) {
+					int posit = eleSymb.indexOf(recentElementSymbol);
+					int count = Integer.valueOf(recentElementCountString);
+					if(posit == -1){
+						eleSymb.add(recentElementSymbol);
+						eleCount.add(count);
+					}else{
+						int countP = Integer.valueOf(recentElementCountString);
+						if(countP == 0)
+							countP = 1;
+						int countA = eleCount.get(posit);
+						if(countA == 0)
+							countA = 1;
+						int value = countP+countA;
+						eleCount.remove(posit);
+						eleCount.add(posit,value);
+					}
+					
+				}
+			}
+		}
+		String newF = new String();
+		for(int i = 0 ; i < eleCount.size(); i++){
+			String element = eleSymb.get(i);
+			int num = eleCount.get(i);
+			if(num == 0)
+				newF += element;
+			else
+				newF += element+num;
+				
+		}
+		return newF;
+	}
+
+	/**
+	 * The parenthesis convention is used to show a quantity by which a formula is multiplied. 
+	 * For example: (C12H20O11)2 really means that a C24H40O22 unit.
+	 * 
+	 * @param formula Formula to correct
+	 * @return        Formula with the correction
+	 */
+	private static String breakExtractor(String formula) {
+		boolean finalBreak = false;
+		String recentformula = new String();
+		String multiple = new String("0");
+		for (int f = 0; f < formula.length(); f++) {
+			char thisChar = formula.charAt(f);
+			if (thisChar == '('){
+				// start
+			}else if(thisChar == ')'){
+				// final
+				finalBreak = true;
+			}else if(!finalBreak)
+				recentformula += thisChar;
+			else
+				multiple += thisChar;
+		}
+		
+		String finalformula = muliplier(recentformula, Integer.valueOf(multiple));
+		return finalformula;
+	}
+	/**
+	 * The starting with numeric value is used to show a quantity by which a formula is multiplied. 
+	 * For example: 2H2O really means that a H4O2 unit.
+	 * 
+	 * @param formula Formula to correct
+	 * @return        Formula with the correction
+	 */
+	private static String multipleExtractor(String formula) {
+		String recentCompoundCount = new String("0");
+		String recentCompound = new String();
+		
+		boolean found = false;
+		for (int f = 0; f < formula.length(); f++) {
+			char thisChar = formula.charAt(f);
+			if (thisChar >= '0' && thisChar <= '9'){
+				if(!found){
+					recentCompoundCount += thisChar;
+				}else
+					recentCompound += thisChar; 
+				
+			}else{
+				found = true;
+				recentCompound += thisChar; 
+			}
+		}
+		return muliplier(recentCompound, Integer.valueOf(recentCompoundCount));
+	}
+	/**
+	 * This method multiply all the element over a value.
+	 * 
+	 * @param formula Formula to correct
+	 * @param factor  Factor to multiply
+	 * @return        Formula with the correction
+	 */
+	private static String muliplier(String formula, int factor) {
+		String finalformula = new String();
+		String recentElementSymbol = new String();
+		String recentElementCountString = new String("0");
+		for (int f = 0; f < formula.length(); f++) {
+			char thisChar = formula.charAt(f);
+			if (f < formula.length()) {
+				if (thisChar >= 'A' && thisChar <= 'Z') {
+					recentElementSymbol = String.valueOf(thisChar);
+					recentElementCountString = "0";
+				}
+				if (thisChar >= 'a' && thisChar <= 'z') {
+					recentElementSymbol += thisChar;
+				}
+				if (thisChar >= '0' && thisChar <= '9') {
+					recentElementCountString += thisChar;
+				}
+			}
+			if (f == formula.length() - 1 || (formula.charAt(f + 1) >= 'A' && formula.charAt(f + 1) <= 'Z')) {
+				Integer recentElementCount = Integer.valueOf(recentElementCountString);
+				if(recentElementCount == 0)
+					finalformula += recentElementSymbol+factor;
+				else
+					finalformula += recentElementSymbol+recentElementCount*factor;
+			}
+			
+		}
+		return finalformula;
+	}
 }
 

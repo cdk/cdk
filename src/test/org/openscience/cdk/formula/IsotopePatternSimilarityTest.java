@@ -111,5 +111,30 @@ public class IsotopePatternSimilarityTest extends CDKTestCase{
 		}
 		Assert.assertEquals("C6H10N3O2", mfString);
 	}
+    /**
+	 * Real example. Lipid PC
+	 * 
+	 * @throws Exception
+	 */
+    @Test 
+	public void testExperiment() {
+		
+		IsotopePattern spExp = new IsotopePattern();
+		spExp.setMonoIsotope(new IsotopeContainer(762.6006, 124118304));
+		spExp.addIsotope(new IsotopeContainer(763.6033, 57558840));
+		spExp.addIsotope(new IsotopeContainer(764.6064, 15432262));
+		spExp.setCharge(1.0);
+
+    	IMolecularFormula formula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C42H85NO8P", NoNotificationChemObjectBuilder.getInstance());
+
+    	IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.01);
+		IsotopePattern patternIsoPredicted = isotopeGe.getIsotopes(formula);
+
+		IsotopePatternSimilarity is = new IsotopePatternSimilarity();
+		double score = is.compare(spExp, patternIsoPredicted);
+		
+		Assert.assertEquals(0.97, score,.01);
+	}
+
 
 }

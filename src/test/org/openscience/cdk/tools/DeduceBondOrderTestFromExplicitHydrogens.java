@@ -177,7 +177,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder());
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder());
-		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond3.getOrder());
+		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond3.getOrder());
 	}
 
 	/**

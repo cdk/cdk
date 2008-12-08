@@ -94,7 +94,7 @@ public class TemplateHandler
 		String line = null;
 		try
 		{
-			InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/layout/templates.list");
+			InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/layout/templates/templates.list");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
 			while (reader.ready()) {
 					line = reader.readLine();
@@ -111,7 +111,8 @@ public class TemplateHandler
 			}
 		} catch (Exception exc) {
 			logger.debug("Could not read templates");
-			logger.debug("Reason: " + exc.getMessage());
+			System.out.println("Reason: " + exc.getMessage());
+			exc.printStackTrace();
 			logger.debug(exc);
 		}
 	}
