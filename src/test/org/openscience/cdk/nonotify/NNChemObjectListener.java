@@ -1,7 +1,4 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
+/* $Revision$ $Author$ $Date$    
  * 
  * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
@@ -22,20 +19,41 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
  * 
  */
-package org.openscience.cdk.debug;
+package org.openscience.cdk.nonotify;
 
-import org.junit.BeforeClass;
-import org.openscience.cdk.FragmentAtomTest;
+import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
+import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Helper class to test the functionality of the NNChemObject.
  *
- * @cdk.module test-datadebug
+ * @cdk.module test-nonotify
  */
-public class DebugFragmentAtomTest extends FragmentAtomTest {
+public class NNChemObjectListener implements IChemObjectListener {
 
-    @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+    private boolean changed;
+    private IChemObjectChangeEvent event;
+
+    public NNChemObjectListener() {
+        changed = false;
+        event = null;
     }
 
+    public void stateChanged(IChemObjectChangeEvent e) {
+        changed = true;
+        event = e;
+    }
+
+    public void reset() {
+        changed = false;
+        event = null;
+    }
+    
+    public boolean getChanged() {
+        return changed;
+    }
+    
+    public IChemObjectChangeEvent getEvent() {
+        return event;
+    }
 }

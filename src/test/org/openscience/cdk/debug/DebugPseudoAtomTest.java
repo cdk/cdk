@@ -36,7 +36,7 @@ import org.openscience.cdk.PseudoAtomTest;
 public class DebugPseudoAtomTest extends PseudoAtomTest {
 
     @BeforeClass public static void setUp() {
-    	PseudoAtomTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

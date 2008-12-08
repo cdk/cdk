@@ -36,7 +36,7 @@ import org.openscience.cdk.IsotopeTest;
 public class DebugIsotopeTest extends IsotopeTest {
 
     @BeforeClass public static void setUp() {
-    	IsotopeTest.builder = DebugChemObjectBuilder.getInstance();
+    	setBuilder(DebugChemObjectBuilder.getInstance());
     }
     
 }
