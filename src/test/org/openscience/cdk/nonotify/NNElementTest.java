@@ -36,7 +36,7 @@ import org.openscience.cdk.ElementTest;
 public class NNElementTest extends ElementTest {
 
     @BeforeClass public static void setUp() {
-    	ElementTest.builder = NoNotificationChemObjectBuilder.getInstance();
+    	setBuilder(NoNotificationChemObjectBuilder.getInstance());
     }
 
 }

@@ -32,7 +32,7 @@ import org.openscience.cdk.ElementTest;
 public class DebugElementTest extends ElementTest {
 
     @BeforeClass public static void setUp() {
-    	ElementTest.builder = DebugChemObjectBuilder.getInstance();
+    	setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

@@ -23,9 +23,7 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.diff.ElementDiff;
 
@@ -36,34 +34,32 @@ import org.openscience.cdk.tools.diff.ElementDiff;
  *
  * @see org.openscience.cdk.Element
  */
-public class ElementTest extends CDKTestCase {
+public class ElementTest extends ChemObjectTest {
 
-	protected static IChemObjectBuilder builder;
-	
-	@BeforeClass public static void setUp() {
-    	builder = DefaultChemObjectBuilder.getInstance();
+    @BeforeClass public static void setUp() {
+        setBuilder(DefaultChemObjectBuilder.getInstance());
     }
-    
+
     // test constructors
     
     @Test public void testElement() {
-        IElement e = builder.newElement();
+        IElement e = getBuilder().newElement();
         Assert.assertTrue(e instanceof IChemObject);
     }
     
     @Test public void testElement_IElement() {
-    	IElement element = builder.newElement();
-        IElement e = builder.newElement(element);
+    	IElement element = getBuilder().newElement();
+        IElement e = getBuilder().newElement(element);
         Assert.assertTrue(e instanceof IChemObject);
     }
     
     @Test public void testElement_String() {
-        IElement e = builder.newElement("C");
+        IElement e = getBuilder().newElement("C");
         Assert.assertEquals("C", e.getSymbol());
     }
     
     @Test public void testElement_String_int() {
-        IElement e = builder.newElement("H", 1);
+        IElement e = getBuilder().newElement("H", 1);
         Assert.assertEquals("H", e.getSymbol());
         Assert.assertEquals(1, e.getAtomicNumber().intValue());
     }
@@ -71,29 +67,29 @@ public class ElementTest extends CDKTestCase {
     // test methods
     
     @Test public void testSetSymbol_String() {
-        IElement e = builder.newElement();
+        IElement e = getBuilder().newElement();
         e.setSymbol("C");
         Assert.assertEquals("C", e.getSymbol());
     }
         
     @Test public void testGetSymbol() {
-        IElement e = builder.newElement("X");
+        IElement e = getBuilder().newElement("X");
         Assert.assertEquals("X", e.getSymbol());
     }
         
     @Test public void testSetAtomicNumber_Integer() {
-        IElement e = builder.newElement("H");
+        IElement e = getBuilder().newElement("H");
         e.setAtomicNumber(1);
         Assert.assertEquals(1, e.getAtomicNumber().intValue());
     }
 
     @Test public void testGetAtomicNumber() {
-        IElement e = builder.newElement("D", 1);
+        IElement e = getBuilder().newElement("D", 1);
         Assert.assertEquals(1, e.getAtomicNumber().intValue());
     }
 
     @Test public void testClone() throws Exception {
-        IElement elem = builder.newElement();
+        IElement elem = getBuilder().newElement();
         Object clone = elem.clone();
         Assert.assertTrue(clone instanceof IElement);
 
@@ -104,13 +100,13 @@ public class ElementTest extends CDKTestCase {
     }
     
     @Test public void testCloneDiff() throws Exception {
-        IElement elem = builder.newElement();
+        IElement elem = getBuilder().newElement();
         IElement clone = (IElement)elem.clone();
         Assert.assertEquals("", ElementDiff.diff(elem, clone));
     }
 
     @Test public void testClone_Symbol() throws Exception {
-        IElement elem = builder.newElement("C");
+        IElement elem = getBuilder().newElement("C");
         IElement clone = (IElement)elem.clone();
         
         // test cloning of symbol
@@ -119,7 +115,7 @@ public class ElementTest extends CDKTestCase {
     }
     
     @Test public void testClone_IAtomicNumber() throws Exception {
-        IElement elem = builder.newElement("C", 6);
+        IElement elem = getBuilder().newElement("C", 6);
         IElement clone = (IElement)elem.clone();
         
         // test cloning of atomic number
@@ -129,7 +125,7 @@ public class ElementTest extends CDKTestCase {
     
     /** Test for RFC #9 */
     @Test public void testToString() {
-        IElement elem = builder.newElement();
+        IElement elem = getBuilder().newElement();
         String description = elem.toString();
         for (int i=0; i< description.length(); i++) {
         	Assert.assertTrue(description.charAt(i) != '\n');

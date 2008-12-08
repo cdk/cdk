@@ -38,14 +38,14 @@ import org.openscience.cdk.ChemObjectTest;
 public class NNChemObjectTest extends ChemObjectTest {
 
     @BeforeClass public static void setUp() {
-    	ChemObjectTest.builder = NoNotificationChemObjectBuilder.getInstance();
+    	setBuilder(NoNotificationChemObjectBuilder.getInstance());
     }
 
     // Overwrite default methods: no notifications are expected!
     
     @Test public void testNotifyChanged() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = getBuilder().newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");
@@ -54,7 +54,7 @@ public class NNChemObjectTest extends ChemObjectTest {
 
     @Test public void testNotifyChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = getBuilder().newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");
@@ -63,7 +63,7 @@ public class NNChemObjectTest extends ChemObjectTest {
 
     @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = getBuilder().newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");
@@ -81,7 +81,7 @@ public class NNChemObjectTest extends ChemObjectTest {
     }
 
     @Test public void testClone_ChemObjectListeners() throws Exception {
-        IChemObject chemObject1 = builder.newChemObject();
+        IChemObject chemObject1 = getBuilder().newChemObject();
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         chemObject1.addListener(listener);
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();
@@ -92,7 +92,7 @@ public class NNChemObjectTest extends ChemObjectTest {
     }
     
     @Test public void testAddListener_IChemObjectListener() {
-        IChemObject chemObject1 = builder.newChemObject();
+        IChemObject chemObject1 = getBuilder().newChemObject();
         Assert.assertEquals(0, chemObject1.getListenerCount());
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         chemObject1.addListener(listener);
@@ -100,14 +100,14 @@ public class NNChemObjectTest extends ChemObjectTest {
     }
     
     @Test public void testGetListenerCount() {
-        IChemObject chemObject1 = builder.newChemObject();
+        IChemObject chemObject1 = getBuilder().newChemObject();
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         chemObject1.addListener(listener);
         Assert.assertEquals(0, chemObject1.getListenerCount());
     }
 
     @Test public void testRemoveListener_IChemObjectListener() {
-        IChemObject chemObject1 = builder.newChemObject();
+        IChemObject chemObject1 = getBuilder().newChemObject();
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         chemObject1.addListener(listener);
         Assert.assertEquals(0, chemObject1.getListenerCount());
@@ -117,7 +117,7 @@ public class NNChemObjectTest extends ChemObjectTest {
     
     @Test public void testSetNotification_true() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = getBuilder().newChemObject();
         chemObject.addListener(listener);
         chemObject.setNotification(true);
         

@@ -47,10 +47,18 @@ import org.openscience.cdk.tools.diff.ChemObjectDiff;
  */
 public class ChemObjectTest extends CDKTestCase {
 
-	protected static IChemObjectBuilder builder;
-	
-	@BeforeClass public static void setUp() {
-    	builder = DefaultChemObjectBuilder.getInstance();
+    private static IChemObjectBuilder builder;
+
+    public static IChemObjectBuilder getBuilder() {
+        return builder;
+    }
+
+    public static void setBuilder( IChemObjectBuilder builder ) {
+        ChemObjectTest.builder = builder;
+    }
+
+    @BeforeClass public static void setUp() {
+        setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
     @Test public void testChemObject() {

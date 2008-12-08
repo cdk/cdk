@@ -26,13 +26,14 @@ import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.ChemObjectTest;
 
 /**
- * Checks the functionality of the ChemObject.
+ * Checks the functionality of the {@link DebugChemObject}.
  *
  * @cdk.module test-datadebug
  */
 public class DebugChemObjectTest extends ChemObjectTest {
-	@BeforeClass public static void setUp() {
-    	ChemObjectTest.builder = DebugChemObjectBuilder.getInstance();
+
+    @BeforeClass public static void setUp() {
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }
