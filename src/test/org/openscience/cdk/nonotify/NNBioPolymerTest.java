@@ -25,6 +25,7 @@
 package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.BioPolymerTest;
 
@@ -36,7 +37,33 @@ import org.openscience.cdk.BioPolymerTest;
 public class NNBioPolymerTest extends BioPolymerTest {
 
     @BeforeClass public static void setUp() {
-    	BioPolymerTest.builder = NoNotificationChemObjectBuilder.getInstance();
+        setBuilder(NoNotificationChemObjectBuilder.getInstance());
     }
 
+    // Overwrite default methods: no notifications are expected!
+    
+    @Test public void testNotifyChanged() {
+        NNChemObjectTestHelper.testNotifyChanged(getBuilder());
+    }
+    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(getBuilder());
+    }
+    @Test public void testStateChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(getBuilder());
+    }
+    @Test public void testClone_ChemObjectListeners() throws Exception {
+        NNChemObjectTestHelper.testClone_ChemObjectListeners(getBuilder());
+    }
+    @Test public void testAddListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testAddListener_IChemObjectListener(getBuilder());
+    }
+    @Test public void testGetListenerCount() {
+        NNChemObjectTestHelper.testGetListenerCount(getBuilder());
+    }
+    @Test public void testRemoveListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testRemoveListener_IChemObjectListener(getBuilder());
+    }
+    @Test public void testSetNotification_true() {
+        NNChemObjectTestHelper.testSetNotification_true(getBuilder());
+    }
 }

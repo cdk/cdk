@@ -36,7 +36,7 @@ import org.openscience.cdk.BioPolymerTest;
 public class DebugBioPolymerTest extends BioPolymerTest {
 
     @BeforeClass public static void setUp() {
-    	BioPolymerTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

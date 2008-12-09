@@ -32,7 +32,7 @@ import org.openscience.cdk.AtomContainerTest;
 public class DebugAtomContainerTest extends AtomContainerTest {
 
     @BeforeClass public static void setUp() {
-    	AtomContainerTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

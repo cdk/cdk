@@ -36,7 +36,7 @@ import org.openscience.cdk.PolymerTest;
 public class DebugPolymerTest extends PolymerTest {
 
     @BeforeClass public static void setUp() {
-    	PolymerTest.builder = DebugChemObjectBuilder.getInstance();
+    	  setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

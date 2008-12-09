@@ -30,8 +30,6 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMonomer;
 
 /**
@@ -42,21 +40,19 @@ import org.openscience.cdk.interfaces.IMonomer;
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09
  */
-public class MonomerTest extends CDKTestCase {
+public class MonomerTest extends AtomContainerTest {
 
-	protected static IChemObjectBuilder builder;
-	
     @BeforeClass public static void setUp() {
-    	builder = DefaultChemObjectBuilder.getInstance();
+        setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
 	@Test public void testMonomer() {
-		IMonomer oMonomer = builder.newMonomer();
+		IMonomer oMonomer = getBuilder().newMonomer();
         Assert.assertTrue(oMonomer != null);
 	}
 	
 	@Test public void testSetMonomerName_String() {
-        IMonomer m = builder.newMonomer();
+        IMonomer m = getBuilder().newMonomer();
         m.setMonomerName(new String("TRP279"));
         Assert.assertEquals(new String("TRP279"), m.getMonomerName());
 	}
@@ -65,7 +61,7 @@ public class MonomerTest extends CDKTestCase {
     }
     
     @Test public void testSetMonomerType_String() {
-        IMonomer oMonomer = builder.newMonomer();
+        IMonomer oMonomer = getBuilder().newMonomer();
         oMonomer.setMonomerType(new String("TRP"));
         Assert.assertEquals(new String("TRP"), oMonomer.getMonomerType());
     }
@@ -77,7 +73,7 @@ public class MonomerTest extends CDKTestCase {
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-        IMonomer oMonomer = builder.newMonomer();
+        IMonomer oMonomer = getBuilder().newMonomer();
         oMonomer.setMonomerType(new String("TRP"));
         String description = oMonomer.toString();
         for (int i=0; i< description.length(); i++) {
@@ -87,7 +83,7 @@ public class MonomerTest extends CDKTestCase {
     }
 
     @Test public void testClone() throws Exception {
-        IMonomer oMonomer = builder.newMonomer();
+        IMonomer oMonomer = getBuilder().newMonomer();
         Object clone = oMonomer.clone();
         Assert.assertTrue(clone instanceof IMonomer);
         Assert.assertNotSame(oMonomer, clone);

@@ -36,7 +36,7 @@ import org.openscience.cdk.CrystalTest;
 public class DebugCrystalTest extends CrystalTest {
 
     @BeforeClass public static void setUp() {
-    	CrystalTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

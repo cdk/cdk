@@ -48,25 +48,23 @@ import org.openscience.cdk.interfaces.IStrand;
  * @cdk.created 2001-08-09
  * @cdk.module  test-data
  */
-public class PolymerTest extends CDKTestCase {
+public class PolymerTest extends MoleculeTest {
 
-	protected static IChemObjectBuilder builder;
-	
     @BeforeClass public static void setUp() {
-       	builder = DefaultChemObjectBuilder.getInstance();
+       	setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
 	@Test public void testPolymer() {
-		IPolymer oPolymer = builder.newPolymer();
+		IPolymer oPolymer = getBuilder().newPolymer();
 		Assert.assertNotNull(oPolymer);
 		Assert.assertEquals(oPolymer.getMonomerCount(), 0);
 	}
 	
 	@Test public void testAddAtom_IAtom() {
-		IPolymer oPolymer = builder.newPolymer();
+		IPolymer oPolymer = getBuilder().newPolymer();
 		
-		IAtom oAtom1 = builder.newAtom("C1");
-		IAtom oAtom2 = builder.newAtom("C2");
+		IAtom oAtom1 = getBuilder().newAtom("C1");
+		IAtom oAtom2 = getBuilder().newAtom("C2");
 		oPolymer.addAtom(oAtom1);
 		oPolymer.addAtom(oAtom2);
 
@@ -75,13 +73,13 @@ public class PolymerTest extends CDKTestCase {
 	}
     
 	@Test public void testAddAtom_IAtom_IMonomer() {
-		IPolymer oPolymer = builder.newPolymer();
-		IMonomer oMono1 = builder.newMonomer();
+		IPolymer oPolymer = getBuilder().newPolymer();
+		IMonomer oMono1 = getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		IMonomer oMono2 = null;
-		IAtom oAtom1 = builder.newAtom("C1");
-		IAtom oAtom2 = builder.newAtom("C2");
-		IAtom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom1 = getBuilder().newAtom("C1");
+		IAtom oAtom2 = getBuilder().newAtom("C2");
+		IAtom oAtom3 = getBuilder().newAtom("C3");
 		
 		oPolymer.addAtom(oAtom1);
 		oPolymer.addAtom(oAtom2, oMono1);
@@ -101,16 +99,16 @@ public class PolymerTest extends CDKTestCase {
 	}
 	
 	@Test public void testGetMonomerCount() {
-		IPolymer oPolymer = builder.newPolymer();
+		IPolymer oPolymer = getBuilder().newPolymer();
 		Assert.assertEquals(0, oPolymer.getMonomerCount());
 		
-		IMonomer oMono1 = builder.newMonomer();
+		IMonomer oMono1 = getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = builder.newMonomer();
+		IMonomer oMono2 = getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom1 = builder.newAtom("C1");
-		IAtom oAtom2 = builder.newAtom("C2");
-		IAtom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom1 = getBuilder().newAtom("C1");
+		IAtom oAtom2 = getBuilder().newAtom("C2");
+		IAtom oAtom3 = getBuilder().newAtom("C3");
 		oPolymer.addAtom(oAtom1);
 		oPolymer.addAtom(oAtom2, oMono1);
 		oPolymer.addAtom(oAtom3, oMono2);
@@ -120,15 +118,15 @@ public class PolymerTest extends CDKTestCase {
 	}
 	
 	@Test public void testGetMonomer_String() {
-		IPolymer oPolymer = builder.newPolymer();
+		IPolymer oPolymer = getBuilder().newPolymer();
 		
-		IMonomer oMono1 = builder.newMonomer();
+		IMonomer oMono1 = getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = builder.newMonomer();
+		IMonomer oMono2 = getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom1 = builder.newAtom("C1");
-		IAtom oAtom2 = builder.newAtom("C2");
-		IAtom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom1 = getBuilder().newAtom("C1");
+		IAtom oAtom2 = getBuilder().newAtom("C2");
+		IAtom oAtom3 = getBuilder().newAtom("C3");
 		oPolymer.addAtom(oAtom1, oMono1);
 		oPolymer.addAtom(oAtom2, oMono1);
 		oPolymer.addAtom(oAtom3, oMono2);
@@ -139,21 +137,21 @@ public class PolymerTest extends CDKTestCase {
 	}
 	
 	@Test public void testGetMonomerNames() {
-		IPolymer oPolymer = builder.newPolymer();
+		IPolymer oPolymer = getBuilder().newPolymer();
 		Assert.assertEquals(0, oPolymer.getMonomerNames().size());
 		
-		IMonomer oMono1 = builder.newMonomer();
+		IMonomer oMono1 = getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = builder.newMonomer();
+		IMonomer oMono2 = getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom1 = builder.newAtom("C1");
-		IAtom oAtom2 = builder.newAtom("C2");
-		IAtom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom1 = getBuilder().newAtom("C1");
+		IAtom oAtom2 = getBuilder().newAtom("C2");
+		IAtom oAtom3 = getBuilder().newAtom("C3");
 		oPolymer.addAtom(oAtom1);
 		oPolymer.addAtom(oAtom2, oMono1);
 		oPolymer.addAtom(oAtom3, oMono2);
 		Map monomers = new Hashtable();
-		//IMonomer oMon = builder.newMonomer();
+		//IMonomer oMon = getBuilder().newMonomer();
 		monomers.put("TRP279", oMono1);
 		monomers.put("HOH", oMono2);
 
@@ -164,10 +162,10 @@ public class PolymerTest extends CDKTestCase {
 	}
 	
 	@Test public void testRemoveMonomer_String()	{
-		IPolymer oPolymer = builder.newPolymer();
-		IMonomer oMono1 = builder.newMonomer();
+		IPolymer oPolymer = getBuilder().newPolymer();
+		IMonomer oMono1 = getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IAtom oAtom1 = builder.newAtom("C1");
+		IAtom oAtom1 = getBuilder().newAtom("C1");
 		oPolymer.addAtom(oAtom1, oMono1);
 		Assert.assertTrue(oPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
 		Assert.assertEquals(1, oPolymer.getAtomCount());
@@ -181,13 +179,13 @@ public class PolymerTest extends CDKTestCase {
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-        IStrand oStrand = builder.newStrand();
-		IMonomer oMono1 = builder.newMonomer();
+        IStrand oStrand = getBuilder().newStrand();
+		IMonomer oMono1 = getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = builder.newMonomer();
+		IMonomer oMono2 = getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom2 = builder.newAtom("C2");
-		IAtom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom2 = getBuilder().newAtom("C2");
+		IAtom oAtom3 = getBuilder().newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
 		Map monomers = new Hashtable();
@@ -204,7 +202,7 @@ public class PolymerTest extends CDKTestCase {
      * Method to test the clone() method
      */
     @Test public void testClone() throws Exception {
-    	IPolymer polymer = builder.newPolymer();
+    	IPolymer polymer = getBuilder().newPolymer();
         Object clone = polymer.clone();
         Assert.assertTrue(clone instanceof IPolymer);
     }
