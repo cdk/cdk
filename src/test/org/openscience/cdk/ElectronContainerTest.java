@@ -28,8 +28,6 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElectronContainer;
 
 /**
@@ -39,22 +37,20 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  *
  * @see org.openscience.cdk.ElectronContainer
  */
-public class ElectronContainerTest extends CDKTestCase {
+public class ElectronContainerTest extends ChemObjectTest {
 
-	protected static IChemObjectBuilder builder;
-	
     @BeforeClass public static void setUp() {
-    	builder = DefaultChemObjectBuilder.getInstance();
+        setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
     @Test public void testElectronContainer() {
-        IElectronContainer ec = builder.newElectronContainer();
+        IElectronContainer ec = getBuilder().newElectronContainer();
         Assert.assertNotNull(ec);
         Assert.assertEquals(0, ec.getElectronCount().intValue());
     }
     
     @Test public void testSetElectronCount_Integer() {
-        IElectronContainer ec = builder.newElectronContainer();
+        IElectronContainer ec = getBuilder().newElectronContainer();
         ec.setElectronCount(3);
         Assert.assertEquals(3, ec.getElectronCount().intValue());
     }
@@ -63,19 +59,18 @@ public class ElectronContainerTest extends CDKTestCase {
     }
 
     @Test public void testClone() throws Exception {
-        IElectronContainer ec = builder.newElectronContainer();
+        IElectronContainer ec = getBuilder().newElectronContainer();
         ec.setElectronCount(2);
         Object clone = ec.clone();
         Assert.assertNotNull(clone);
         Assert.assertTrue(clone instanceof IElectronContainer);
-        Assert.assertEquals(ec.getElectronCount(), ((IElectronContainer)clone).getElectronCount());
     }
     
     /**
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-        IElectronContainer at = builder.newElectronContainer();
+        IElectronContainer at = getBuilder().newElectronContainer();
         String description = at.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');

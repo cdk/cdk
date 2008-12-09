@@ -36,7 +36,7 @@ import org.openscience.cdk.LonePairTest;
 public class DebugLonePairTest extends LonePairTest {
 
     @BeforeClass public static void setUp() {
-    	LonePairTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

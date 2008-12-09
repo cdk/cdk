@@ -36,7 +36,7 @@ import org.openscience.cdk.ElectronContainerTest;
 public class DebugElectronContainerTest extends ElectronContainerTest {
 
     @BeforeClass public static void setUp() {
-    	ElectronContainerTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

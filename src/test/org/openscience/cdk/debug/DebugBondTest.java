@@ -25,7 +25,6 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.BondTest;
 
 /**
@@ -36,7 +35,7 @@ import org.openscience.cdk.BondTest;
 public class DebugBondTest extends BondTest {
 
     @BeforeClass public static void setUp() {
-    	BondTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

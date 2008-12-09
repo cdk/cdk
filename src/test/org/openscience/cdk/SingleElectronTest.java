@@ -27,9 +27,7 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ISingleElectron;
 
 /**
@@ -39,63 +37,61 @@ import org.openscience.cdk.interfaces.ISingleElectron;
  *
  * @cdk.module test-data
  */
-public class SingleElectronTest extends CDKTestCase {
+public class SingleElectronTest extends ElectronContainerTest {
 
-	protected static IChemObjectBuilder builder;
-	
     @BeforeClass public static void setUp() {
-       	builder = DefaultChemObjectBuilder.getInstance();
+       	setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
     @Test public void testSingleElectron() {
-        ISingleElectron radical = builder.newSingleElectron();
+        ISingleElectron radical = getBuilder().newSingleElectron();
         Assert.assertTrue(radical.getAtom() == null);
         Assert.assertEquals(1, radical.getElectronCount().intValue());
     }
     
     @Test public void testSingleElectron_IAtom() {
-        IAtom atom = builder.newAtom("N");
-        ISingleElectron radical = builder.newSingleElectron(atom);
+        IAtom atom = getBuilder().newAtom("N");
+        ISingleElectron radical = getBuilder().newSingleElectron(atom);
         Assert.assertEquals(1, radical.getElectronCount().intValue());
         Assert.assertEquals(atom, radical.getAtom());
         Assert.assertTrue(radical.contains(atom));
     }
 
     @Test public void testGetElectronCount() {
-        ISingleElectron radical = builder.newSingleElectron();
+        ISingleElectron radical = getBuilder().newSingleElectron();
         Assert.assertEquals(1, radical.getElectronCount().intValue());
     }
 
     @Test public void testContains_IAtom() {
-        IAtom atom = builder.newAtom("N");
-        ISingleElectron radical = builder.newSingleElectron(atom);
+        IAtom atom = getBuilder().newAtom("N");
+        ISingleElectron radical = getBuilder().newSingleElectron(atom);
         Assert.assertTrue(radical.contains(atom));
     }
     
     @Test public void testSetAtom_IAtom() {
-        IAtom atom = builder.newAtom("N");
-        ISingleElectron radical = builder.newSingleElectron();
+        IAtom atom = getBuilder().newAtom("N");
+        ISingleElectron radical = getBuilder().newSingleElectron();
         Assert.assertNull(radical.getAtom());
         radical.setAtom(atom);
         Assert.assertEquals(atom, radical.getAtom());
     }
 
     @Test public void testGetAtom() {
-        IAtom atom = builder.newAtom("N");
-        ISingleElectron radical = builder.newSingleElectron(atom);
+        IAtom atom = getBuilder().newAtom("N");
+        ISingleElectron radical = getBuilder().newSingleElectron(atom);
         Assert.assertEquals(atom, radical.getAtom());
     }
     
     @Test public void testClone() throws Exception {
-        ISingleElectron radical = builder.newSingleElectron();
+        ISingleElectron radical = getBuilder().newSingleElectron();
         Object clone = radical.clone();
         Assert.assertNotNull(clone);
         Assert.assertTrue(clone instanceof ISingleElectron);
     }
     
     @Test public void testClone_IAtom() throws Exception {
-        IAtom atom = builder.newAtom("N");
-        ISingleElectron radical = builder.newSingleElectron();
+        IAtom atom = getBuilder().newAtom("N");
+        ISingleElectron radical = getBuilder().newSingleElectron();
         radical.setAtom(atom);
         
         // test cloning of atom
@@ -105,7 +101,7 @@ public class SingleElectronTest extends CDKTestCase {
     
     /** Test for RFC #9 */
     @Test public void testToString() {
-        ISingleElectron radical = builder.newSingleElectron();
+        ISingleElectron radical = getBuilder().newSingleElectron();
         String description = radical.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
