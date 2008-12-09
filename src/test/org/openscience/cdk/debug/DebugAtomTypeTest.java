@@ -36,7 +36,7 @@ import org.openscience.cdk.AtomTypeTest;
 public class DebugAtomTypeTest extends AtomTypeTest {
 
     @BeforeClass public static void setUp() {
-    	AtomTypeTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

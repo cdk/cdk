@@ -25,7 +25,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.tools.diff.AtomTypeDiff;
@@ -37,44 +36,42 @@ import org.openscience.cdk.tools.diff.AtomTypeDiff;
  *
  * @see org.openscience.cdk.AtomType
  */
-public class AtomTypeTest extends CDKTestCase {
+public class AtomTypeTest extends IsotopeTest {
 
-	protected static IChemObjectBuilder builder;
-	
     @BeforeClass public static void setUp() {
-    	builder = DefaultChemObjectBuilder.getInstance();
+        setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
     @Test public void testAtomType_String() {
-        IAtomType at = builder.newAtomType("C");
+        IAtomType at = getBuilder().newAtomType("C");
         Assert.assertEquals("C", at.getSymbol());
     }
 
     @Test public void testAtomType_IElement() {
-    	IElement element = builder.newElement("C");
-        IAtomType at = builder.newAtomType(element);
+    	IElement element = getBuilder().newElement("C");
+        IAtomType at = getBuilder().newAtomType(element);
         Assert.assertEquals("C", at.getSymbol());
     }
 
     @Test public void testAtomType_String_String() {
-        IAtomType at = builder.newAtomType("C4", "C");
+        IAtomType at = getBuilder().newAtomType("C4", "C");
         Assert.assertEquals("C", at.getSymbol());
         Assert.assertEquals("C4", at.getAtomTypeName());
     }
     
     @Test public void testSetAtomTypeName_String() {
-        IAtomType at = builder.newAtomType("C");
+        IAtomType at = getBuilder().newAtomType("C");
         at.setAtomTypeName("C4");
         Assert.assertEquals("C4", at.getAtomTypeName());
     }
 
     @Test public void testGetAtomTypeName() {
-        IAtomType at = builder.newAtomType("C4", "C");
+        IAtomType at = getBuilder().newAtomType("C4", "C");
         Assert.assertEquals("C4", at.getAtomTypeName());
     }
     
     @Test public void testSetMaxBondOrder_IBond_Order() {
-        IAtomType at = builder.newAtomType("C");
+        IAtomType at = getBuilder().newAtomType("C");
         at.setMaxBondOrder(IBond.Order.TRIPLE);
         Assert.assertEquals(IBond.Order.TRIPLE, at.getMaxBondOrder());
     }
@@ -84,7 +81,7 @@ public class AtomTypeTest extends CDKTestCase {
     }
 
     @Test public void testSetBondOrderSum_Double() {
-        IAtomType at = builder.newAtomType("C");
+        IAtomType at = getBuilder().newAtomType("C");
         at.setBondOrderSum(4.0);
         Assert.assertEquals(4.0, at.getBondOrderSum(), 0.001);
     }
@@ -94,17 +91,17 @@ public class AtomTypeTest extends CDKTestCase {
     }
     
     @Test public void testCompare() {
-        IAtomType at = builder.newAtomType("C4", "C");
+        IAtomType at = getBuilder().newAtomType("C4", "C");
         if (at instanceof org.openscience.cdk.AtomType) {
         	org.openscience.cdk.AtomType at1 = (org.openscience.cdk.AtomType)at;
-	        IAtomType at2 = builder.newAtomType("C3", "C");
+	        IAtomType at2 = getBuilder().newAtomType("C3", "C");
 	        Assert.assertFalse(at1.compare("C4"));
 	        Assert.assertFalse(at1.compare(at2));
         }
     }
 
     @Test public void testSetCovalentRadius_Double() {
-        IAtomType at = builder.newAtomType("C");
+        IAtomType at = getBuilder().newAtomType("C");
         at.setCovalentRadius(1.0);
         Assert.assertEquals(1.0, at.getCovalentRadius(), 0.001);
     }
@@ -118,7 +115,7 @@ public class AtomTypeTest extends CDKTestCase {
     @Test public void testSetFormalCharge_Integer() {
         int charge = 1;
 
-        IAtomType a = builder.newAtomType("C");
+        IAtomType a = getBuilder().newAtomType("C");
         a.setFormalCharge(charge);
         Assert.assertEquals(charge, a.getFormalCharge().intValue());
     }
@@ -132,7 +129,7 @@ public class AtomTypeTest extends CDKTestCase {
     @Test public void testSetValency_Integer() {
         int valency = 4;
 
-        IAtomType a = builder.newAtomType("C");
+        IAtomType a = getBuilder().newAtomType("C");
         a.setValency(valency);
         Assert.assertEquals(valency, (int) a.getValency());
     }
@@ -143,7 +140,7 @@ public class AtomTypeTest extends CDKTestCase {
     @Test public void testSetFormalNeighbourCount_Integer() {
         int count = 4;
 
-        IAtomType a = builder.newAtomType("C");
+        IAtomType a = getBuilder().newAtomType("C");
         a.setFormalNeighbourCount(count);
         Assert.assertEquals(count, (int) a.getFormalNeighbourCount());
     }
@@ -154,7 +151,7 @@ public class AtomTypeTest extends CDKTestCase {
     @Test public void testSetHybridization_IAtomType_Hybridization() {
         Hybridization hybridization = Hybridization.SP1;
 
-        IAtomType atom = builder.newAtomType("C");
+        IAtomType atom = getBuilder().newAtomType("C");
         atom.setHybridization(hybridization);
         Assert.assertEquals(hybridization, atom.getHybridization());
     }
@@ -165,7 +162,7 @@ public class AtomTypeTest extends CDKTestCase {
     @Test public void testSetHybridization_Null() {
         Hybridization hybridization = Hybridization.SP1;
 
-        IAtomType atom = builder.newAtomType("C");
+        IAtomType atom = getBuilder().newAtomType("C");
         atom.setHybridization(hybridization);
         Assert.assertEquals(hybridization, atom.getHybridization());
         atom.setHybridization(null);
@@ -174,7 +171,7 @@ public class AtomTypeTest extends CDKTestCase {
 
     @Test public void testSetAcceptor_boolean(){
     	boolean acceptor=true;
-    	IAtomType a = builder.newAtomType("C");
+    	IAtomType a = getBuilder().newAtomType("C");
         a.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, acceptor);
         Assert.assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));    	
     }
@@ -184,7 +181,7 @@ public class AtomTypeTest extends CDKTestCase {
     
     @Test public void testSetDonor_boolean(){
     	boolean donor=true;
-    	IAtomType a = builder.newAtomType("C");
+    	IAtomType a = getBuilder().newAtomType("C");
         a.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, donor);
         Assert.assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));    	
     }
@@ -194,7 +191,7 @@ public class AtomTypeTest extends CDKTestCase {
     
     @Test public void testSetChemicalGroupConstant_int(){
     	int benzol=6;
-    	IAtomType a = builder.newAtomType("C");
+    	IAtomType a = getBuilder().newAtomType("C");
         a.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, benzol);
         Assert.assertEquals(benzol,((Integer)a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue());    	
     }    
@@ -204,7 +201,7 @@ public class AtomTypeTest extends CDKTestCase {
     
     @Test public void  testSetRingSize_int(){
     	int five=5;
-    	IAtomType a = builder.newAtomType("C");
+    	IAtomType a = getBuilder().newAtomType("C");
         a.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, five);
         Assert.assertEquals(five,((Integer)a.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue());    	
     }    
@@ -213,7 +210,7 @@ public class AtomTypeTest extends CDKTestCase {
     }
     
     @Test public void testSetIsAromatic_boolean(){
-    	IAtomType a = builder.newAtomType("C");
+    	IAtomType a = getBuilder().newAtomType("C");
         a.setFlag(CDKConstants.ISAROMATIC, true);
         Assert.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
     }    
@@ -223,7 +220,7 @@ public class AtomTypeTest extends CDKTestCase {
     
     @Test public void testSetSphericalMatcher_String(){
     	String hoseCode="C-4;HHHC(;///***)";
-    	IAtomType a = builder.newAtomType("C");
+    	IAtomType a = getBuilder().newAtomType("C");
         a.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, hoseCode);
         Assert.assertEquals(hoseCode,a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT));    	
     }    
@@ -235,7 +232,7 @@ public class AtomTypeTest extends CDKTestCase {
      * Test for bug #1309731.
      */
     @Test public void testAtomTypeNameAndIDBug() {
-    	IAtomType a = builder.newAtomType("C");
+    	IAtomType a = getBuilder().newAtomType("C");
     	a.setID("carbon1");
     	a.setAtomTypeName("C.sp3");
     	Assert.assertEquals("carbon1", a.getID());
@@ -245,7 +242,7 @@ public class AtomTypeTest extends CDKTestCase {
      * Method to test the clone() method
      */
     @Test public void testClone() throws Exception {
-        IAtomType at = builder.newAtomType("C");
+        IAtomType at = getBuilder().newAtomType("C");
         Object clone = at.clone();
         Assert.assertTrue(clone instanceof IAtomType);
 
@@ -259,7 +256,7 @@ public class AtomTypeTest extends CDKTestCase {
      * Method to test the clone() method
      */
     @Test public void testClone_MaxBondOrder() throws Exception {
-        IAtomType at = builder.newAtomType("C");
+        IAtomType at = getBuilder().newAtomType("C");
         at.setMaxBondOrder(IBond.Order.SINGLE);
         IAtomType clone = (IAtomType)at.clone();
         
@@ -271,7 +268,7 @@ public class AtomTypeTest extends CDKTestCase {
      * Method to test the clone() method
      */
     @Test public void testClone_IBondOrderSum() throws Exception {
-        IAtomType at = builder.newAtomType("C");
+        IAtomType at = getBuilder().newAtomType("C");
         at.setBondOrderSum(1.0);
         IAtomType clone = (IAtomType)at.clone();
         
@@ -285,7 +282,7 @@ public class AtomTypeTest extends CDKTestCase {
      * Method to test the clone() method
      */
     @Test public void testClone_CovalentRadius() throws Exception {
-        IAtomType at = builder.newAtomType("C");
+        IAtomType at = getBuilder().newAtomType("C");
         at.setCovalentRadius(1.0);
         IAtomType clone = (IAtomType)at.clone();
         
@@ -297,7 +294,7 @@ public class AtomTypeTest extends CDKTestCase {
      * Method to test the clone() method
      */
     @Test public void testClone_FormalCharge() throws Exception {
-        IAtomType at = builder.newAtomType("C");
+        IAtomType at = getBuilder().newAtomType("C");
         at.setFormalCharge(1);
         IAtomType clone = (IAtomType)at.clone();
         
@@ -309,7 +306,7 @@ public class AtomTypeTest extends CDKTestCase {
      * Method to test the clone() method
      */
     @Test public void testClone_FormalNeighbourCount() throws Exception {
-        IAtomType at = builder.newAtomType("C");
+        IAtomType at = getBuilder().newAtomType("C");
         at.setFormalNeighbourCount(1);
         IAtomType clone = (IAtomType)at.clone();
         
@@ -321,7 +318,7 @@ public class AtomTypeTest extends CDKTestCase {
      * Method to test the clone() method
      */
     @Test public void testClone_Hybridization() throws Exception {
-        IAtomType at = builder.newAtomType("C");
+        IAtomType at = getBuilder().newAtomType("C");
         at.setHybridization(Hybridization.PLANAR3);
         IAtomType clone = (IAtomType)at.clone();
         
@@ -333,7 +330,7 @@ public class AtomTypeTest extends CDKTestCase {
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-        IAtomType at = builder.newAtomType("C");
+        IAtomType at = getBuilder().newAtomType("C");
         String description = at.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
@@ -342,18 +339,18 @@ public class AtomTypeTest extends CDKTestCase {
     }
 
     @Test public void testCompare_Object() {
-    	IAtomType someAt = builder.newAtomType("C");
+    	IAtomType someAt = getBuilder().newAtomType("C");
     	if (someAt instanceof org.openscience.cdk.AtomType) {
     		org.openscience.cdk.AtomType at = (org.openscience.cdk.AtomType)someAt;
 	        Assert.assertTrue(at.compare(at));
-	        IAtomType hydrogen = builder.newAtomType("H");
+	        IAtomType hydrogen = getBuilder().newAtomType("H");
 	        Assert.assertFalse(at.compare(hydrogen));
 	        Assert.assertFalse(at.compare("Li"));
     	}
     }
 
     @Test public void testDefaultFormalCharge() {
-        IAtomType atomType = builder.newAtomType("C");
+        IAtomType atomType = getBuilder().newAtomType("C");
         Assert.assertEquals(0, atomType.getFormalCharge().intValue());
     }
 }
