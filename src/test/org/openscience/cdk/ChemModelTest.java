@@ -28,13 +28,7 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.ChemModel;
-import org.openscience.cdk.Crystal;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.MoleculeSet;
-import org.openscience.cdk.ReactionSet;
-import org.openscience.cdk.RingSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 
@@ -45,21 +39,19 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  *
  * @see org.openscience.cdk.ChemModel
  */
-public class ChemModelTest extends CDKTestCase {
+public class ChemModelTest extends ChemObjectTest {
 
-	protected static IChemObjectBuilder builder;
-	
     @BeforeClass public static void setUp() {
-    	builder = DefaultChemObjectBuilder.getInstance();
+        setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
     @Test public void testChemModel() {
-	    ChemModel chemModel = new ChemModel();
+	    IChemModel chemModel = getBuilder().newChemModel();
 	    Assert.assertNotNull(chemModel);
     }
 
     @Test public void testSetMoleculeSet_IMoleculeSet() {
-	    ChemModel chemModel = new ChemModel();
+	    IChemModel chemModel = getBuilder().newChemModel();
 	    MoleculeSet crystal = new MoleculeSet();
         chemModel.setMoleculeSet(crystal);
         Assert.assertEquals(crystal, chemModel.getMoleculeSet());
@@ -69,7 +61,7 @@ public class ChemModelTest extends CDKTestCase {
     }
     
     @Test public void testSetReactionSet_IReactionSet() {
-	    ChemModel chemModel = new ChemModel();
+	    IChemModel chemModel = getBuilder().newChemModel();
 	    ReactionSet crystal = new ReactionSet();
         chemModel.setReactionSet(crystal);
         Assert.assertEquals(crystal, chemModel.getReactionSet());
@@ -79,7 +71,7 @@ public class ChemModelTest extends CDKTestCase {
     }
     
     @Test public void testSetRingSet_IRingSet() {
-	    ChemModel chemModel = new ChemModel();
+	    IChemModel chemModel = getBuilder().newChemModel();
 	    RingSet crystal = new RingSet();
         chemModel.setRingSet(crystal);
         Assert.assertEquals(crystal, chemModel.getRingSet());
@@ -89,7 +81,7 @@ public class ChemModelTest extends CDKTestCase {
     }
     
     @Test public void testSetCrystal_ICrystal() {
-	    ChemModel chemModel = new ChemModel();
+	    IChemModel chemModel = getBuilder().newChemModel();
 	    Crystal crystal = new Crystal();
         chemModel.setCrystal(crystal);
         Assert.assertEquals(crystal, chemModel.getCrystal());
@@ -99,7 +91,7 @@ public class ChemModelTest extends CDKTestCase {
     }
     
     @Test public void testToString() {
-        ChemModel model = new ChemModel();
+        IChemModel model = getBuilder().newChemModel();
         String description = model.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
@@ -108,77 +100,77 @@ public class ChemModelTest extends CDKTestCase {
     }
 
 	@Test public void testClone() throws Exception {
-        ChemModel model = new ChemModel();
+        IChemModel model = getBuilder().newChemModel();
         Object clone = model.clone();
         Assert.assertNotNull(clone);
         Assert.assertTrue(clone instanceof ChemModel);
     }    
         
     @Test public void testClone_IMoleculeSet() throws Exception {
-		ChemModel model = new ChemModel();
-        ChemModel clone = (ChemModel)model.clone();
+        IChemModel model = getBuilder().newChemModel();
+        IChemModel clone = (IChemModel)model.clone();
         Assert.assertNull(clone.getMoleculeSet());
         
 		model.setMoleculeSet(new MoleculeSet());
-        clone = (ChemModel)model.clone();
+        clone = (IChemModel)model.clone();
         Assert.assertNotNull(clone.getMoleculeSet());
         Assert.assertNotSame(model.getMoleculeSet(), clone.getMoleculeSet());
     }
 
     @Test public void testClone_IReactionSet() throws Exception {
-		ChemModel model = new ChemModel();
-        ChemModel clone = (ChemModel)model.clone();
+        IChemModel model = getBuilder().newChemModel();
+        IChemModel clone = (IChemModel)model.clone();
         Assert.assertNull(clone.getReactionSet());
         
 		model.setReactionSet(new ReactionSet());
-        clone = (ChemModel)model.clone();
+        clone = (IChemModel)model.clone();
         Assert.assertNotNull(clone.getReactionSet());
         Assert.assertNotSame(model.getReactionSet(), clone.getReactionSet());
     }
 
     @Test public void testClone_Crystal() throws Exception {
-		ChemModel model = new ChemModel();
-        ChemModel clone = (ChemModel)model.clone();
+		IChemModel model = getBuilder().newChemModel();
+        IChemModel clone = (IChemModel)model.clone();
         Assert.assertNull(clone.getCrystal());
         
-		model.setCrystal(new Crystal());
-        clone = (ChemModel)model.clone();
+		model.setCrystal(getBuilder().newCrystal());
+        clone = (IChemModel)model.clone();
         Assert.assertNotNull(clone.getCrystal());
         Assert.assertNotSame(model.getCrystal(), clone.getCrystal());
     }
 
     @Test public void testClone_RingSet() throws Exception {
-		ChemModel model = new ChemModel();
-        ChemModel clone = (ChemModel)model.clone();
+        IChemModel model = getBuilder().newChemModel();
+        IChemModel clone = (IChemModel)model.clone();
         Assert.assertNull(clone.getRingSet());
         
 		model.setRingSet(new RingSet());
-        clone = (ChemModel)model.clone();
+        clone = (IChemModel)model.clone();
         Assert.assertNotNull(clone.getRingSet());
         Assert.assertNotSame(model.getRingSet(), clone.getRingSet());
     }
 
     @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        ChemModel chemObject = new ChemModel();
+        IChemModel chemObject = getBuilder().newChemModel();
         chemObject.addListener(listener);
         
-        chemObject.setMoleculeSet(new MoleculeSet());
+        chemObject.setMoleculeSet(getBuilder().newMoleculeSet());
         Assert.assertTrue(listener.changed);
         
         listener.reset();
         Assert.assertFalse(listener.changed);
-        chemObject.setReactionSet(new ReactionSet());
+        chemObject.setReactionSet(getBuilder().newReactionSet());
         Assert.assertTrue(listener.changed);
         
         listener.reset();
         Assert.assertFalse(listener.changed);
-        chemObject.setCrystal(new Crystal());
+        chemObject.setCrystal(getBuilder().newCrystal());
         Assert.assertTrue(listener.changed);
         
         listener.reset();
         Assert.assertFalse(listener.changed);
-        chemObject.setRingSet(new RingSet());
+        chemObject.setRingSet(getBuilder().newRingSet());
         Assert.assertTrue(listener.changed);
     }
 

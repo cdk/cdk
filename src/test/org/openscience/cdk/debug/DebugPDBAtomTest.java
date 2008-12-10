@@ -36,7 +36,7 @@ import org.openscience.cdk.protein.data.PDBAtomTest;
 public class DebugPDBAtomTest extends PDBAtomTest {
 
     @BeforeClass public static void setUp() {
-    	PDBAtomTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

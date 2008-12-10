@@ -36,7 +36,7 @@ import org.openscience.cdk.protein.data.PDBMonomerTest;
 public class DebugPDBMonomerTest extends PDBMonomerTest {
 
     @BeforeClass public static void setUp() {
-    	PDBMonomerTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

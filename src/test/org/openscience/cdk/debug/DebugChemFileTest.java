@@ -36,7 +36,7 @@ import org.openscience.cdk.ChemFileTest;
 public class DebugChemFileTest extends ChemFileTest {
 
     @BeforeClass public static void setUp() {
-    	ChemFileTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

@@ -36,7 +36,7 @@ import org.openscience.cdk.MoleculeSetTest;
 public class DebugMoleculeSetTest extends MoleculeSetTest {
 
     @BeforeClass public static void setUp() {
-    	MoleculeSetTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }
