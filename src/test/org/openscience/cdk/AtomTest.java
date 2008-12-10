@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.diff.AtomDiff;
  *
  * @cdk.module test-data
  */
-public class AtomTest extends IsotopeTest {
+public class AtomTest extends AtomTypeTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
