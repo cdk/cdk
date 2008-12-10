@@ -27,10 +27,9 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.debug.DebugAtomParity;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.AtomParityTest;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomParity;
 
 /**
  * Checks the functionality of the AtomContainer.
@@ -40,11 +39,11 @@ import org.openscience.cdk.AtomParityTest;
 public class DebugAtomParityTest extends AtomParityTest {
 
     @BeforeClass public static void setUp() {
-    	AtomParityTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
-    
+
     @Test public void testCorrectInstance() {
-    	IAtomParity parity = builder.newAtomParity(builder.newAtom(), builder.newAtom(), builder.newAtom(), builder.newAtom(), builder.newAtom(), 1); 
+    	IAtomParity parity = getBuilder().newAtomParity(getBuilder().newAtom(), getBuilder().newAtom(), getBuilder().newAtom(), getBuilder().newAtom(), getBuilder().newAtom(), 1); 
     	Assert.assertTrue(
     		"Object not instance of DebugAtomParity, but: " + parity.getClass().getName(),
     		parity instanceof DebugAtomParity

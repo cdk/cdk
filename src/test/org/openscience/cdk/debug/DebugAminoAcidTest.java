@@ -25,8 +25,6 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.junit.Test;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.AminoAcidTest;
 
 /**
@@ -37,38 +35,7 @@ import org.openscience.cdk.AminoAcidTest;
 public class DebugAminoAcidTest extends AminoAcidTest {
 
     @BeforeClass public static void setUp() {
-    	AminoAcidTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
-    @Test public void testAminoAcid() {
-        super.testAminoAcid();
-    }
-    
-    @Test public void testAddCTerminus_IAtom() {
-        super.testAddCTerminus_IAtom();
-    }
-    
-    @Test public void testGetCTerminus() {
-        super.testGetCTerminus();
-    }
-
-    @Test public void testAddNTerminus_IAtom() {
-        super.testAddNTerminus_IAtom();
-    }
-    
-    @Test public void testGetNTerminus() {
-        super.testGetNTerminus();
-    }
-    
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
-    @Test public void testToString() {
-    	super.testToString();
-    }
-
-    @Test public void testClone() throws Exception {
-        super.testClone();
-    }
-    
 }

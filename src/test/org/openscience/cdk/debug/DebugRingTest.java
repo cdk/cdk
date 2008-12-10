@@ -36,7 +36,7 @@ import org.openscience.cdk.RingTest;
 public class DebugRingTest extends RingTest {
 
     @BeforeClass public static void setUp() {
-    	RingTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

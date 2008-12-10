@@ -34,37 +34,33 @@ import org.openscience.cdk.AminoAcidTest;
 public class NNAminoAcidTest extends AminoAcidTest {
 
     @BeforeClass public static void setUp() {
-    	AminoAcidTest.builder = NoNotificationChemObjectBuilder.getInstance();
+    	  setBuilder(NoNotificationChemObjectBuilder.getInstance());
     }
 
-    @Test public void testAminoAcid() {
-        super.testAminoAcid();
-    }
+    // Overwrite default methods: no notifications are expected!
     
-    @Test public void testAddCTerminus_IAtom() {
-        super.testAddCTerminus_IAtom();
+    @Test public void testNotifyChanged() {
+        NNChemObjectTestHelper.testNotifyChanged(getBuilder());
     }
-    
-    @Test public void testGetCTerminus() {
-        super.testGetCTerminus();
+    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(getBuilder());
     }
-
-    @Test public void testAddNTerminus_IAtom() {
-        super.testAddNTerminus_IAtom();
+    @Test public void testStateChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(getBuilder());
     }
-    
-    @Test public void testGetNTerminus() {
-        super.testGetNTerminus();
+    @Test public void testClone_ChemObjectListeners() throws Exception {
+        NNChemObjectTestHelper.testClone_ChemObjectListeners(getBuilder());
     }
-    
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
-    @Test public void testToString() {
-    	super.testToString();
+    @Test public void testAddListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testAddListener_IChemObjectListener(getBuilder());
     }
-
-    @Test public void testClone() throws Exception {
-        super.testClone();
+    @Test public void testGetListenerCount() {
+        NNChemObjectTestHelper.testGetListenerCount(getBuilder());
+    }
+    @Test public void testRemoveListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testRemoveListener_IChemObjectListener(getBuilder());
+    }
+    @Test public void testSetNotification_true() {
+        NNChemObjectTestHelper.testSetNotification_true(getBuilder());
     }
 }

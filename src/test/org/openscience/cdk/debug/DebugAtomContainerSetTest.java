@@ -36,7 +36,7 @@ import org.openscience.cdk.AtomContainerSetTest;
 public class DebugAtomContainerSetTest extends AtomContainerSetTest {
 
     @BeforeClass public static void setUp() {
-    	AtomContainerSetTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

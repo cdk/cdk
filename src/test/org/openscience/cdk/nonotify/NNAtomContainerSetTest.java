@@ -20,12 +20,8 @@
  */
 package org.openscience.cdk.nonotify;
 
-import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
-import org.openscience.cdk.interfaces.IChemObjectListener;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.junit.Test;
 import org.openscience.cdk.AtomContainerSetTest;
 
 /**
@@ -36,33 +32,33 @@ import org.openscience.cdk.AtomContainerSetTest;
 public class NNAtomContainerSetTest extends AtomContainerSetTest {
 
     @BeforeClass public static void setUp() {
-    	AtomContainerSetTest.builder = NoNotificationChemObjectBuilder.getInstance();
+    	  setBuilder(NoNotificationChemObjectBuilder.getInstance());
     }
 
     // Overwrite default methods: no notifications are expected!
     
-    public void testStateChanged_IChemObjectChangeEvent() {
-        ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IAtomContainerSet chemObject = builder.newAtomContainerSet();
-        chemObject.addListener(listener);
-        
-        chemObject.addAtomContainer(builder.newAtomContainer());
-        Assert.assertFalse(listener.changed);
+    @Test public void testNotifyChanged() {
+        NNChemObjectTestHelper.testNotifyChanged(getBuilder());
     }
-
-    private class ChemObjectListenerImpl implements IChemObjectListener {
-        private boolean changed;
-        
-        private ChemObjectListenerImpl() {
-            changed = false;
-        }
-        
-        public void stateChanged(IChemObjectChangeEvent e) {
-            changed = true;
-        }
-        
-        public void reset() {
-            changed = false;
-        }
+    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(getBuilder());
+    }
+    @Test public void testStateChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(getBuilder());
+    }
+    @Test public void testClone_ChemObjectListeners() throws Exception {
+        NNChemObjectTestHelper.testClone_ChemObjectListeners(getBuilder());
+    }
+    @Test public void testAddListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testAddListener_IChemObjectListener(getBuilder());
+    }
+    @Test public void testGetListenerCount() {
+        NNChemObjectTestHelper.testGetListenerCount(getBuilder());
+    }
+    @Test public void testRemoveListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testRemoveListener_IChemObjectListener(getBuilder());
+    }
+    @Test public void testSetNotification_true() {
+        NNChemObjectTestHelper.testSetNotification_true(getBuilder());
     }
 }
