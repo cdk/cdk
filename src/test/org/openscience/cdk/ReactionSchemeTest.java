@@ -30,8 +30,6 @@ import java.util.Iterator;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.ReactionScheme;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionScheme;
 
@@ -42,12 +40,10 @@ import org.openscience.cdk.interfaces.IReactionScheme;
  *
  * @see ReactionScheme
  */
-public class ReactionSchemeTest extends CDKTestCase {
+public class ReactionSchemeTest extends ReactionSetTest {
 
-	protected static IChemObjectBuilder builder;
-	
     @BeforeClass public static void setUp() {
-       	builder = DefaultChemObjectBuilder.getInstance();
+        setBuilder(DefaultChemObjectBuilder.getInstance());
     }
     /**
 	 *  Constructor for the ReactionSchemeTest object.
@@ -63,7 +59,7 @@ public class ReactionSchemeTest extends CDKTestCase {
 	 */
     @Test 
     public void testReactionScheme() {
-        IReactionScheme scheme = builder.newReactionScheme();
+        IReactionScheme scheme = getBuilder().newReactionScheme();
         Assert.assertNotNull(scheme);
     }
     
@@ -74,8 +70,8 @@ public class ReactionSchemeTest extends CDKTestCase {
 	 */
     @Test 
     public void testGetReactionSchemeCount() {
-    	IReactionScheme scheme = builder.newReactionScheme();
-    	scheme.add(builder.newReactionScheme());
+    	IReactionScheme scheme = getBuilder().newReactionScheme();
+    	scheme.add(getBuilder().newReactionScheme());
         Assert.assertEquals(1, scheme.getReactionSchemeCount());
     }
     /**
@@ -85,9 +81,9 @@ public class ReactionSchemeTest extends CDKTestCase {
 	 */
     @Test 
     public void testGetReactionCount() {
-    	IReactionScheme scheme = builder.newReactionScheme();
-    	scheme.addReaction(builder.newReaction());
-    	scheme.addReaction(builder.newReaction());
+    	IReactionScheme scheme = getBuilder().newReactionScheme();
+    	scheme.addReaction(getBuilder().newReaction());
+    	scheme.addReaction(getBuilder().newReaction());
         Assert.assertEquals(2, scheme.getReactionCount());
     }
     /**
@@ -97,10 +93,10 @@ public class ReactionSchemeTest extends CDKTestCase {
 	 */
     @Test 
     public void testReactionSchemes() {
-        IReactionScheme scheme = builder.newReactionScheme();
-        scheme.add(builder.newReactionScheme());
-        scheme.add(builder.newReactionScheme());
-        scheme.add(builder.newReactionScheme());
+        IReactionScheme scheme = getBuilder().newReactionScheme();
+        scheme.add(getBuilder().newReactionScheme());
+        scheme.add(getBuilder().newReactionScheme());
+        scheme.add(getBuilder().newReactionScheme());
 
         Assert.assertEquals(3, scheme.getReactionSchemeCount());
         int count = 0;
@@ -117,10 +113,10 @@ public class ReactionSchemeTest extends CDKTestCase {
 	 */
     @Test 
     public void testReactions() {
-        IReactionScheme scheme = builder.newReactionScheme();
-        scheme.addReaction(builder.newReaction());
-        scheme.addReaction(builder.newReaction());
-        scheme.addReaction(builder.newReaction());
+        IReactionScheme scheme = getBuilder().newReactionScheme();
+        scheme.addReaction(getBuilder().newReaction());
+        scheme.addReaction(getBuilder().newReaction());
+        scheme.addReaction(getBuilder().newReaction());
 
         Assert.assertEquals(3, scheme.getReactionCount());
         int count = 0;
@@ -137,10 +133,10 @@ public class ReactionSchemeTest extends CDKTestCase {
 	 */
     @Test 
     public void testAdd_IReactionScheme() {
-    	IReactionScheme scheme = builder.newReactionScheme();
-        scheme.add(builder.newReactionScheme());
-        scheme.add(builder.newReactionScheme());
-        scheme.add(builder.newReactionScheme());
+    	IReactionScheme scheme = getBuilder().newReactionScheme();
+        scheme.add(getBuilder().newReactionScheme());
+        scheme.add(getBuilder().newReactionScheme());
+        scheme.add(getBuilder().newReactionScheme());
 
         IReactionScheme tested = new ReactionScheme();
         Assert.assertEquals(0, tested.getReactionSchemeCount());
@@ -155,12 +151,12 @@ public class ReactionSchemeTest extends CDKTestCase {
 	 */
     @Test 
     public void testAdd_IReaction() {
-    	IReactionScheme scheme = builder.newReactionScheme();
-    	scheme.add(builder.newReactionScheme());
-        scheme.add(builder.newReactionScheme());
-        scheme.add(builder.newReactionScheme());
+    	IReactionScheme scheme = getBuilder().newReactionScheme();
+    	scheme.add(getBuilder().newReactionScheme());
+        scheme.add(getBuilder().newReactionScheme());
+        scheme.add(getBuilder().newReactionScheme());
 
-        IReactionScheme tested = builder.newReactionScheme();
+        IReactionScheme tested = getBuilder().newReactionScheme();
         Assert.assertEquals(0, tested.getReactionSchemeCount());
         tested.add(scheme);
         Assert.assertEquals(1, tested.getReactionSchemeCount());
@@ -173,7 +169,7 @@ public class ReactionSchemeTest extends CDKTestCase {
 	 */
     @Test 
     public void testClone() throws Exception {
-    	IReactionScheme scheme = builder.newReactionScheme();
+    	IReactionScheme scheme = getBuilder().newReactionScheme();
         Object clone = scheme.clone();
         Assert.assertTrue(clone instanceof IReactionScheme);
         Assert.assertNotSame(scheme, clone);
@@ -185,9 +181,9 @@ public class ReactionSchemeTest extends CDKTestCase {
 	 */
     @Test 
     public void testRemoveReactionScheme_IReactionScheme() {
-        IReactionScheme scheme = builder.newReactionScheme();
-        IReactionScheme scheme1 = builder.newReactionScheme();
-        IReactionScheme scheme2 = builder.newReactionScheme();
+        IReactionScheme scheme = getBuilder().newReactionScheme();
+        IReactionScheme scheme1 = getBuilder().newReactionScheme();
+        IReactionScheme scheme2 = getBuilder().newReactionScheme();
         scheme.add(scheme1);
         scheme.add(scheme2);
         scheme.removeReactionScheme(scheme1);
@@ -200,9 +196,9 @@ public class ReactionSchemeTest extends CDKTestCase {
 	 */
     @Test 
     public void testRemoveAllReactionSchemes() {
-    	 IReactionScheme scheme = builder.newReactionScheme();
-         IReactionScheme scheme1 = builder.newReactionScheme();
-         IReactionScheme scheme2 = builder.newReactionScheme();
+    	 IReactionScheme scheme = getBuilder().newReactionScheme();
+         IReactionScheme scheme1 = getBuilder().newReactionScheme();
+         IReactionScheme scheme2 = getBuilder().newReactionScheme();
          scheme.add(scheme1);
          scheme.add(scheme2);
          

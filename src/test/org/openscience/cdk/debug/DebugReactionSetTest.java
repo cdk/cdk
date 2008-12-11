@@ -36,7 +36,7 @@ import org.openscience.cdk.ReactionSetTest;
 public class DebugReactionSetTest extends ReactionSetTest {
 
     @BeforeClass public static void setUp() {
-    	ReactionSetTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }
