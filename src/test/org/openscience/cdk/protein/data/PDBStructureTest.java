@@ -27,11 +27,10 @@ package org.openscience.cdk.protein.data;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPDBStructure;
-import org.openscience.cdk.protein.data.PDBStructure;
-import org.openscience.cdk.CDKTestCase;
 
 /**
  * Checks the functionality of the PDBStructure class.
@@ -42,97 +41,105 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class PDBStructureTest extends CDKTestCase {
 	
-	protected static IChemObjectBuilder builder;
+    private static IChemObjectBuilder builder;
+
+    public static IChemObjectBuilder getBuilder() {
+        return builder;
+    }
+
+    public static void setBuilder( IChemObjectBuilder builder ) {
+        PDBStructureTest.builder = builder;
+    }
 
     @BeforeClass public static void setUp() {
-    	builder = DefaultChemObjectBuilder.getInstance();
+        setBuilder(DefaultChemObjectBuilder.getInstance());
     }
     
 	@Test public void testPDBStructure() {
-		IPDBStructure structure = builder.newPDBStructure();
+		IPDBStructure structure = getBuilder().newPDBStructure();
 		Assert.assertNotNull(structure);
 	}
 	
 	@Test public void testGetEndChainID() {
-		IPDBStructure structure = builder.newPDBStructure();
+		IPDBStructure structure = getBuilder().newPDBStructure();
 		Assert.assertNull(structure.getEndChainID());
     }
 
     @Test public void testSetEndChainID_Character() {
-    	IPDBStructure structure = builder.newPDBStructure();
+    	IPDBStructure structure = getBuilder().newPDBStructure();
     	char endChainID = 'x';
 		structure.setEndChainID(endChainID);
 		Assert.assertEquals(endChainID, structure.getEndChainID().charValue());
     }
 
     @Test public void testGetEndInsertionCode() {
-		IPDBStructure structure = builder.newPDBStructure();
+		IPDBStructure structure = getBuilder().newPDBStructure();
 		Assert.assertNull(structure.getEndInsertionCode());
     }
 
     @Test public void testSetEndInsertionCode_Character() {
-    	IPDBStructure structure = builder.newPDBStructure();
+    	IPDBStructure structure = getBuilder().newPDBStructure();
     	char endInsertionCode = 'x';
 		structure.setEndInsertionCode(endInsertionCode);
 		Assert.assertEquals(endInsertionCode, structure.getEndInsertionCode().charValue());
     }
 
     @Test public void testGetEndSequenceNumber() {
-		IPDBStructure structure = builder.newPDBStructure();
+		IPDBStructure structure = getBuilder().newPDBStructure();
 		Assert.assertNull(structure.getEndSequenceNumber());
     }
 
     @Test public void testSetEndSequenceNumber_Integer() {
-    	IPDBStructure structure = builder.newPDBStructure();
+    	IPDBStructure structure = getBuilder().newPDBStructure();
     	int endSequenceNumber = 5;
 		structure.setEndSequenceNumber(endSequenceNumber);
 		Assert.assertEquals(endSequenceNumber, structure.getEndSequenceNumber().intValue());
     }
 
     @Test public void testGetStartChainID() {
-		IPDBStructure structure = builder.newPDBStructure();
+		IPDBStructure structure = getBuilder().newPDBStructure();
 		Assert.assertNull(structure.getStartChainID());
     }
 
     @Test public void testSetStartChainID_Character() {
-    	IPDBStructure structure = builder.newPDBStructure();
+    	IPDBStructure structure = getBuilder().newPDBStructure();
     	char startChainID = 'x';
 		structure.setStartChainID(startChainID);
 		Assert.assertEquals(startChainID, structure.getStartChainID().charValue());
     }
 
     @Test public void testGetStartInsertionCode() {
-		IPDBStructure structure = builder.newPDBStructure();
+		IPDBStructure structure = getBuilder().newPDBStructure();
 		Assert.assertNull(structure.getStartInsertionCode());
     }
 
     @Test public void testSetStartInsertionCode_Character() {
-    	IPDBStructure structure = builder.newPDBStructure();
+    	IPDBStructure structure = getBuilder().newPDBStructure();
     	char startInsertionCode = 'x';
 		structure.setStartInsertionCode(startInsertionCode);
 		Assert.assertEquals(startInsertionCode, structure.getStartInsertionCode().charValue());
     }
 
     @Test public void testGetStartSequenceNumber() {
-		IPDBStructure structure = builder.newPDBStructure();
+		IPDBStructure structure = getBuilder().newPDBStructure();
 		Assert.assertNull(structure.getStartSequenceNumber());
     }
 
     @Test public void testSetStartSequenceNumber_Integer() {
-    	IPDBStructure structure = builder.newPDBStructure();
+    	IPDBStructure structure = getBuilder().newPDBStructure();
     	int startSequenceNumber = 5;
 		structure.setStartSequenceNumber(startSequenceNumber);
 		Assert.assertEquals(startSequenceNumber, structure.getStartSequenceNumber().intValue());
     }
 
     @Test public void testGetStructureType() {
-    	IPDBStructure structure = builder.newPDBStructure();
+    	IPDBStructure structure = getBuilder().newPDBStructure();
 		String type = structure.getStructureType();
 		Assert.assertNull(type);
     }
 
     @Test public void testSetStructureType_String() {
-    	IPDBStructure structure = builder.newPDBStructure();
+    	IPDBStructure structure = getBuilder().newPDBStructure();
     	String type = "alpha-barrel";
 		structure.setStructureType(type);
 		Assert.assertEquals(type, structure.getStructureType());

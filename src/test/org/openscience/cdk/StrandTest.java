@@ -33,9 +33,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
 
@@ -46,30 +44,28 @@ import org.openscience.cdk.interfaces.IStrand;
  * @author     Martin Eklund <martin.eklund@farmbio.uu.se>
  * @cdk.module test-data
  */
-public class StrandTest extends CDKTestCase {
-	
-	protected static IChemObjectBuilder builder;
+public class StrandTest extends AtomContainerTest {
 	
     @BeforeClass public static void setUp() {
-       	builder = DefaultChemObjectBuilder.getInstance();
+       	setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
 	@Test public void testStrand() {
-		IStrand oStrand = builder.newStrand();
+		IStrand oStrand = getBuilder().newStrand();
 		Assert.assertNotNull(oStrand);
 		Assert.assertEquals(oStrand.getMonomerCount(), 0);
 
-		IMonomer oMono1 = builder.newMonomer();
+		IMonomer oMono1 = getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = builder.newMonomer();
+		IMonomer oMono2 = getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IMonomer oMono3 = builder.newMonomer();
+		IMonomer oMono3 = getBuilder().newMonomer();
 		oMono3.setMonomerName(new String("GLYA16"));
-		IAtom oAtom1 = builder.newAtom("C1");
-		IAtom oAtom2 = builder.newAtom("C2");
-		IAtom oAtom3 = builder.newAtom("C3");
-		IAtom oAtom4 = builder.newAtom("C4");
-		IAtom oAtom5 = builder.newAtom("C5");
+		IAtom oAtom1 = getBuilder().newAtom("C1");
+		IAtom oAtom2 = getBuilder().newAtom("C2");
+		IAtom oAtom3 = getBuilder().newAtom("C3");
+		IAtom oAtom4 = getBuilder().newAtom("C4");
+		IAtom oAtom5 = getBuilder().newAtom("C5");
 		
 		oStrand.addAtom(oAtom1);
 		oStrand.addAtom(oAtom2);
@@ -101,14 +97,14 @@ public class StrandTest extends CDKTestCase {
 	}
 	
 	@Test public void testGetStrandName()	{
-		IStrand oStrand = builder.newStrand();
+		IStrand oStrand = getBuilder().newStrand();
 		oStrand.setStrandName("A");
 		
 		Assert.assertEquals("A", oStrand.getStrandName());
 	}
 	
 	@Test public void testGetStrandType()	{
-		IStrand oStrand = builder.newStrand();
+		IStrand oStrand = getBuilder().newStrand();
 		oStrand.setStrandType("DNA");
 		
 		Assert.assertEquals("DNA", oStrand.getStrandType());
@@ -120,23 +116,23 @@ public class StrandTest extends CDKTestCase {
 	 */
 	
 	@Test public void testSetStrandName_String()	{
-		IStrand oStrand = builder.newStrand();
+		IStrand oStrand = getBuilder().newStrand();
 		oStrand.setStrandName("A");
 		
 		Assert.assertEquals("A", oStrand.getStrandName());
 	}
 	
 	@Test public void testSetStrandType_String()	{
-		IStrand oStrand = builder.newStrand();
+		IStrand oStrand = getBuilder().newStrand();
 		oStrand.setStrandType("DNA");
 		
 		Assert.assertEquals("DNA", oStrand.getStrandType());
 	}
 	
 	@Test public void testAddAtom_IAtom() {
-		IStrand oStrand = builder.newStrand();
-		IAtom oAtom1 = builder.newAtom("C1");
-		IAtom oAtom2 = builder.newAtom("C2");
+		IStrand oStrand = getBuilder().newStrand();
+		IAtom oAtom1 = getBuilder().newAtom("C1");
+		IAtom oAtom2 = getBuilder().newAtom("C2");
 		oStrand.addAtom(oAtom1);
 		oStrand.addAtom(oAtom2);
 
@@ -144,12 +140,12 @@ public class StrandTest extends CDKTestCase {
 	}
     
 	@Test public void testAddAtom_IAtom_IMonomer() {
-		IStrand oStrand = builder.newStrand();
-		IMonomer oMono1 = builder.newMonomer();
+		IStrand oStrand = getBuilder().newStrand();
+		IMonomer oMono1 = getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IAtom oAtom1 = builder.newAtom("C1");
-		IAtom oAtom2 = builder.newAtom("C2");
-		IAtom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom1 = getBuilder().newAtom("C1");
+		IAtom oAtom2 = getBuilder().newAtom("C2");
+		IAtom oAtom3 = getBuilder().newAtom("C3");
 		oStrand.addAtom(oAtom1);
 		oStrand.addAtom(oAtom2);
 		oStrand.addAtom(oAtom3, oMono1);
@@ -159,13 +155,13 @@ public class StrandTest extends CDKTestCase {
 	}
 	
 	@Test public void testGetMonomerCount() {
-		IStrand oStrand = builder.newStrand();
-		IMonomer oMono1 = builder.newMonomer();
+		IStrand oStrand = getBuilder().newStrand();
+		IMonomer oMono1 = getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = builder.newMonomer();
+		IMonomer oMono2 = getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom2 = builder.newAtom("C2");
-		IAtom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom2 = getBuilder().newAtom("C2");
+		IAtom oAtom3 = getBuilder().newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
 
@@ -173,13 +169,13 @@ public class StrandTest extends CDKTestCase {
 	}
 	 
 	@Test public void testGetMonomer_String() {
-		IStrand oStrand = builder.newStrand();
-		IMonomer oMono1 = builder.newMonomer();
+		IStrand oStrand = getBuilder().newStrand();
+		IMonomer oMono1 = getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = builder.newMonomer();
+		IMonomer oMono2 = getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom2 = builder.newAtom("C2");
-		IAtom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom2 = getBuilder().newAtom("C2");
+		IAtom oAtom3 = getBuilder().newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
 
@@ -189,17 +185,17 @@ public class StrandTest extends CDKTestCase {
 	}
 	
 	@Test public void testGetMonomerNames() {
-		IStrand oStrand = builder.newStrand();
-		IMonomer oMono1 = builder.newMonomer();
+		IStrand oStrand = getBuilder().newStrand();
+		IMonomer oMono1 = getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = builder.newMonomer();
+		IMonomer oMono2 = getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom2 = builder.newAtom("C2");
-		IAtom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom2 = getBuilder().newAtom("C2");
+		IAtom oAtom3 = getBuilder().newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
-		Map monomers = new Hashtable();
-		IMonomer oMon = builder.newMonomer();
+		Map<String,IMonomer> monomers = new Hashtable<String,IMonomer>();
+		IMonomer oMon = getBuilder().newMonomer();
 		oMon.setMonomerName("");
 		oMon.setMonomerType("UNKNOWN");
 		monomers.put("", oMon);
@@ -215,10 +211,10 @@ public class StrandTest extends CDKTestCase {
 	}
 	
 	@Test public void testRemoveMonomer_String()	{
-		IStrand oStrand = builder.newStrand();
-		IMonomer oMono1 = builder.newMonomer();
+		IStrand oStrand = getBuilder().newStrand();
+		IMonomer oMono1 = getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IAtom oAtom1 = builder.newAtom("C1");
+		IAtom oAtom1 = getBuilder().newAtom("C1");
 		oStrand.addAtom(oAtom1, oMono1);		
 		Assert.assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
 		Assert.assertEquals(1, oStrand.getAtomCount());
@@ -228,17 +224,17 @@ public class StrandTest extends CDKTestCase {
 	}
 	
 	@Test public void testGetMonomers()	{
-		IStrand oStrand = builder.newStrand();
-		IMonomer oMono1 = builder.newMonomer();
+		IStrand oStrand = getBuilder().newStrand();
+		IMonomer oMono1 = getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = builder.newMonomer();
+		IMonomer oMono2 = getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom2 = builder.newAtom("C2");
-		IAtom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom2 = getBuilder().newAtom("C2");
+		IAtom oAtom3 = getBuilder().newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
-		Map monomers = new Hashtable();
-		IMonomer oMon = builder.newMonomer();
+		Map<String,IMonomer> monomers = new Hashtable<String,IMonomer>();
+		IMonomer oMon = getBuilder().newMonomer();
 		oMon.setMonomerName("");
 		oMon.setMonomerType("UNKNOWN");
 		monomers.put("", oMon);
@@ -252,17 +248,17 @@ public class StrandTest extends CDKTestCase {
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-        IStrand oStrand = builder.newStrand();
-		IMonomer oMono1 = builder.newMonomer();
+        IStrand oStrand = getBuilder().newStrand();
+		IMonomer oMono1 = getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = builder.newMonomer();
+		IMonomer oMono2 = getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom2 = builder.newAtom("C2");
-		IAtom oAtom3 = builder.newAtom("C3");
+		IAtom oAtom2 = getBuilder().newAtom("C2");
+		IAtom oAtom3 = getBuilder().newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
-		Map monomers = new Hashtable();
-		IMonomer oMon = builder.newMonomer();
+		Map<String,IMonomer> monomers = new Hashtable<String,IMonomer>();
+		IMonomer oMon = getBuilder().newMonomer();
 		oMon.setMonomerName("");
 		oMon.setMonomerType("UNKNOWN");
 		monomers.put("", oMon);
@@ -279,7 +275,7 @@ public class StrandTest extends CDKTestCase {
      * Method to test the clone() method
      */
     @Test public void testClone() throws Exception {
-    	IStrand strand = builder.newStrand();
+    	IStrand strand = getBuilder().newStrand();
         Object clone = strand.clone();
         Assert.assertTrue(clone instanceof IStrand);
     }

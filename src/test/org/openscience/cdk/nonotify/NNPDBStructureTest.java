@@ -25,7 +25,6 @@
 package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.protein.data.PDBStructureTest;
 
 /**
@@ -36,7 +35,7 @@ import org.openscience.cdk.protein.data.PDBStructureTest;
 public class NNPDBStructureTest extends PDBStructureTest {
 
     @BeforeClass public static void setUp() {
-    	PDBStructureTest.builder = NoNotificationChemObjectBuilder.getInstance();
+        setBuilder(NoNotificationChemObjectBuilder.getInstance());
     }
 
 }

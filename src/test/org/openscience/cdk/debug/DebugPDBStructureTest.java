@@ -36,7 +36,7 @@ import org.openscience.cdk.protein.data.PDBStructureTest;
 public class DebugPDBStructureTest extends PDBStructureTest {
 
     @BeforeClass public static void setUp() {
-    	PDBStructureTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

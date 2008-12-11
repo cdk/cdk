@@ -36,7 +36,7 @@ import org.openscience.cdk.protein.data.PDBPolymerTest;
 public class DebugPDBPolymerTest extends PDBPolymerTest {
 
     @BeforeClass public static void setUp() {
-    	PDBPolymerTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }

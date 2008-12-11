@@ -36,7 +36,7 @@ import org.openscience.cdk.StrandTest;
 public class DebugStrandTest extends StrandTest {
 
     @BeforeClass public static void setUp() {
-    	StrandTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
 }
