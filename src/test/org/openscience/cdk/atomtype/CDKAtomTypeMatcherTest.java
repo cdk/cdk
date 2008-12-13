@@ -21,29 +21,20 @@
  */
 package org.openscience.cdk.atomtype;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
-import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.*;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * This class tests the matching of atom types defined in the
@@ -2808,6 +2799,24 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(new Atom("Cl")); mol.addBond(0,4,IBond.Order.SINGLE);
 
         String[] expectedTypes = {"Ge", "Cl", "Cl", "Cl", "Cl"}; 
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.bug 2424511
+     */
+    @Test public void testWeirdNitrogen() throws CDKException {
+        IMolecule mol = new Molecule();
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("N"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+
+        mol.addBond(0,1, IBond.Order.TRIPLE);
+        mol.addBond(1,2, IBond.Order.DOUBLE);
+        mol.addBond(2,3, IBond.Order.SINGLE);
+
+        String[] expectedTypes = {"C.sp", "N", "C.sp2", "C.sp3"}; 
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
