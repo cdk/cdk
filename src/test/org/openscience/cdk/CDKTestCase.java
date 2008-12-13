@@ -162,14 +162,12 @@ public class CDKTestCase {
      * @param container to which implicit hydrogens are added.
      */
     protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
-    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-    	Iterator<IAtom> atoms = container.atoms().iterator();
-    	while (atoms.hasNext()) {
-    		IAtom atom = atoms.next();
+    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());    	
+    	for (IAtom atom : container.atoms()) {
     		IAtomType type = matcher.findMatchingAtomType(container, atom);
     		AtomTypeManipulator.configure(atom, type);
     	}
-    	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
     	hAdder.addImplicitHydrogens(container);
     }
 
