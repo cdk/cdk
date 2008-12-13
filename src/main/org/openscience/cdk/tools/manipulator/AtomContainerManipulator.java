@@ -381,10 +381,11 @@ public class AtomContainerManipulator {
             // Process neighbours.
             for (IAtom iAtom : atomContainer.getConnectedAtomsList(aRemove)) {
                 final IAtom neighb = map.get(iAtom);
-                  neighb.setHydrogenCount(
-                      (neighb.getHydrogenCount() == null ? 0 : neighb.getHydrogenCount())
-                      + 1
-                  );
+                if (neighb == null) continue; // since for the case of H2, neight H has a heavy atom neighbor
+                neighb.setHydrogenCount(
+                        (neighb.getHydrogenCount() == null ? 0 : neighb.getHydrogenCount())
+                                + 1
+                );
             }
         }
         mol.setProperties(atomContainer.getProperties());
