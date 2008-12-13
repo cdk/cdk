@@ -26,6 +26,7 @@ package org.openscience.cdk;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -225,19 +226,20 @@ public class PeriodicTableElement extends Element
 		return this.group;
 	}
 
-	/**
-	* Sets the group, which this element belongs.
-	*
-	* @param group The group to be assigned to this atom
-	*
-	* @see    #getGroup
-	*/
+    /**
+     * Sets the group, which this element belongs.
+     *
+     * @param group The group to be assigned to this atom
+     * @throws org.openscience.cdk.exception.CDKException
+     *          if an invalid IUPAC group number is specified.
+     * @see #getGroup
+     */
     @TestMethod("testSetGroup")
-    public void setGroup(Integer group)
-	{
-		this.group = group;
-		notifyChanged();
-	}
+    public void setGroup(Integer group) throws CDKException {
+        if (group < 1 || group > 18) throw new CDKException("Invalid group number specified. Must be between 1 and 18");
+        this.group = group;
+        notifyChanged();
+    }
 	
 	/**
 	* Returns the phase which this element find.

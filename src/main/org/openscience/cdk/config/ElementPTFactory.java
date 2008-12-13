@@ -23,17 +23,18 @@
  */
 package org.openscience.cdk.config;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
-
 import org.openscience.cdk.PeriodicTableElement;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.elements.ElementPTReader;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.tools.LoggingTool;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  * Used to store and return data of a particular chemicalElement. As this class is a
@@ -154,10 +155,11 @@ public class ElementPTFactory
 	 *
 	 *@param  element     The PeriodicTableElement to be configure
 	 *@return             The configured PeriodicTableElement
+     * @throws org.openscience.cdk.exception.CDKException if there is an error during configuration
+     * (such as invalid IUPAC group number)
 	 */
     @TestMethod("testConfigure_PeriodicTableElement")
-	public PeriodicTableElement configure(PeriodicTableElement element)
-	{
+	public PeriodicTableElement configure(PeriodicTableElement element) throws CDKException {
 		PeriodicTableElement elementInt = getElement(element.getSymbol());
 		
 		element.setSymbol(elementInt.getSymbol());
