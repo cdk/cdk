@@ -27,8 +27,11 @@ package org.openscience.cdk;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMapping;
 
 /**
  * Checks the functionality of the Mapping class.
@@ -37,10 +40,14 @@ import org.openscience.cdk.interfaces.IChemObject;
  *
  * @see org.openscience.cdk.Mapping
  */
-public class MappingTest extends CDKTestCase {
+public class MappingTest extends ChemObjectTest {
 
+    @BeforeClass public static void setUp() {
+        setBuilder(DefaultChemObjectBuilder.getInstance());
+    }
+    
     @Test public void testMapping_IChemObject_IChemObject() {
-        Mapping mapping = new Mapping(new Atom(), new Atom());
+        IMapping mapping = getBuilder().newMapping(getBuilder().newAtom(), getBuilder().newAtom());
         Assert.assertNotNull(mapping);
     }
     
@@ -48,7 +55,7 @@ public class MappingTest extends CDKTestCase {
      * Method to test whether the class complies with RFC #9.
      */
     public void testToString() {
-        Mapping mapping = new Mapping(new Atom(), new Atom());
+        IMapping mapping = getBuilder().newMapping(getBuilder().newAtom(), getBuilder().newAtom());
         String description = mapping.toString();
         for (int i=0; i< description.length(); i++) {
         	Assert.assertTrue(description.charAt(i) != '\n');
@@ -57,23 +64,23 @@ public class MappingTest extends CDKTestCase {
     }
 
 	public void testClone() throws Exception {
-        Mapping mapping = new Mapping(new Atom(), new Atom());
+	    IMapping mapping = getBuilder().newMapping(getBuilder().newAtom(), getBuilder().newAtom());
         Object clone = mapping.clone();
         Assert.assertTrue(clone instanceof Mapping);
     }    
         
 	public void testGetChemObject_int() {
-		Atom atom0 = new Atom();
-		Atom atom1 = new Atom();
-		Mapping mapping = new Mapping(atom0, atom1);
+		IAtom atom0 = getBuilder().newAtom();
+		IAtom atom1 = getBuilder().newAtom();
+		IMapping mapping = getBuilder().newMapping(atom0, atom1);
 		Assert.assertEquals(atom0, mapping.getChemObject(0));
 		Assert.assertEquals(atom1, mapping.getChemObject(1));
 	}
 	
     public void testRelatedChemObjects() {
-    	Atom atom0 = new Atom();
-		Atom atom1 = new Atom();
-		Mapping mapping = new Mapping(atom0, atom1);
+        IAtom atom0 = getBuilder().newAtom();
+        IAtom atom1 = getBuilder().newAtom();
+        IMapping mapping = getBuilder().newMapping(atom0, atom1);
 
 		Iterator<IChemObject> iter = mapping.relatedChemObjects().iterator();
 		Assert.assertTrue(iter.hasNext());
@@ -84,9 +91,9 @@ public class MappingTest extends CDKTestCase {
     }
 
     public void testClone_ChemObject() throws Exception {
-		Mapping mapping = new Mapping(new Atom(), new Atom());
+        IMapping mapping = getBuilder().newMapping(getBuilder().newAtom(), getBuilder().newAtom());
 
-		Mapping clone = (Mapping)mapping.clone();
+		IMapping clone = (IMapping)mapping.clone();
         //IChemObject[] map = mapping.getRelatedChemObjects();
         //IChemObject[] mapClone = clone.getRelatedChemObjects();
         //assertEquals(map.length, mapClone.length);
