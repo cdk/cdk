@@ -27,15 +27,14 @@ package org.openscience.cdk.formula;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 /**
  * Checks the functionality of the AdductFormula.
@@ -44,15 +43,10 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  * 
  * @see AdductFormula
  */
-public class AdductFormulaTest extends CDKTestCase {
+public class AdductFormulaTest extends MolecularFormulaTest {
 
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
-	
-	/**
-	 * Constructor of the AdductFormulaTest.
-	 */
-	public AdductFormulaTest() {
-        super();
+    @BeforeClass public static void setUp() {
+        setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
 	/**
@@ -62,9 +56,10 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test 
     public void testAdductFormula() {
-        IAdductFormula mfS = new AdductFormula();
+        IAdductFormula mfS = getBuilder().newAdductFormula();
         Assert.assertNotNull(mfS);
     }
+
     /**
 	 * A unit test suite for JUnit.
 	 *
@@ -72,7 +67,7 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test 
     public void testAdductFormula_IMolecularFormula() {
-        IAdductFormula mfS = new AdductFormula(new MolecularFormula());
+        IAdductFormula mfS = getBuilder().newAdductFormula(getBuilder().newMolecularFormula());
         Assert.assertEquals(1, mfS.size());
     }
     /**
@@ -82,7 +77,7 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test 
     public void testSize() {
-        IAdductFormula mfS = new AdductFormula();
+        IAdductFormula mfS = getBuilder().newAdductFormula();
         Assert.assertEquals(0, mfS.size());
     }
     /**
@@ -92,10 +87,10 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testAddIMolecularFormula() {
-        IAdductFormula mfS = new AdductFormula();
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
+        IAdductFormula mfS = getBuilder().newAdductFormula();
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
         
         Assert.assertEquals(3, mfS.size());
     }
@@ -106,11 +101,11 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testAdd_IMolecularFormulaSet() {
-        IAdductFormula adduct = new AdductFormula();
-        IMolecularFormulaSet mfSet = new MolecularFormulaSet();
-        mfSet.addMolecularFormula(new MolecularFormula());
-        mfSet.addMolecularFormula(new MolecularFormula());
-        mfSet.addMolecularFormula(new MolecularFormula());
+        IAdductFormula adduct = getBuilder().newAdductFormula();
+        IMolecularFormulaSet mfSet = getBuilder().newMolecularFormulaSet();
+        mfSet.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfSet.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfSet.addMolecularFormula(getBuilder().newMolecularFormula());
         adduct.add(mfSet);
         
         Assert.assertEquals(3, adduct.size());
@@ -122,10 +117,10 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testIterator() {
-        IAdductFormula mfS = new AdductFormula();
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
+        IAdductFormula mfS = getBuilder().newAdductFormula();
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
 
         Assert.assertEquals(3, mfS.size());
         Iterator<IMolecularFormula> iter = mfS.molecularFormulas().iterator();
@@ -147,10 +142,10 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testMolecularFormulas() {
-        IAdductFormula mfS = new AdductFormula();
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
+        IAdductFormula mfS = getBuilder().newAdductFormula();
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
 
         Assert.assertEquals(3, mfS.size());
         int count = 0;
@@ -169,12 +164,12 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testAdd_IAdductFormula() {
-        IAdductFormula mfS = new AdductFormula();
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
+        IAdductFormula mfS = getBuilder().newAdductFormula();
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
         
-        IAdductFormula tested = new AdductFormula();
+        IAdductFormula tested = getBuilder().newAdductFormula();
         Assert.assertEquals(0, tested.size());
         tested.add(mfS);
         Assert.assertEquals(3, tested.size());
@@ -186,7 +181,7 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testGetMolecularFormula_int() {
-        IAdductFormula mfS = new AdductFormula();
+        IAdductFormula mfS = getBuilder().newAdductFormula();
         mfS.addMolecularFormula(new MolecularFormula());
         mfS.addMolecularFormula(new MolecularFormula());
         mfS.addMolecularFormula(new MolecularFormula());
@@ -200,7 +195,7 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testAddMolecularFormula_IMolecularFormula() {
-        IAdductFormula mfS = new AdductFormula();
+        IAdductFormula mfS = getBuilder().newAdductFormula();
         mfS.addMolecularFormula(new MolecularFormula());
         mfS.addMolecularFormula(new MolecularFormula());
         mfS.addMolecularFormula(new MolecularFormula());
@@ -224,13 +219,13 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testGetMolecularFormulas_int() {
-        IAdductFormula mfS = new AdductFormula();
+        IAdductFormula mfS = getBuilder().newAdductFormula();
         
         Assert.assertEquals(0, mfS.size());
 
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
 
         Assert.assertEquals(3, mfS.size());
         Assert.assertNotNull(mfS.getMolecularFormula(0));
@@ -245,13 +240,13 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testContains_IIsotope() {
-    	IAdductFormula add = new AdductFormula();
+    	IAdductFormula add = getBuilder().newAdductFormula();
         
 
-    	IMolecularFormula mf = new MolecularFormula();
-        IIsotope carb = builder.newIsotope("C");
-        IIsotope h1 = builder.newIsotope("H");
-        IIsotope h2 = builder.newIsotope("H");
+    	IMolecularFormula mf = getBuilder().newMolecularFormula();
+        IIsotope carb = getBuilder().newIsotope("C");
+        IIsotope h1 = getBuilder().newIsotope("H");
+        IIsotope h2 = getBuilder().newIsotope("H");
         h2.setExactMass(2.00055);
         
         mf.addIsotope( carb );
@@ -272,13 +267,13 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testContains_IMolecularFormula() {
-    	IAdductFormula add = new AdductFormula();
+    	IAdductFormula add = getBuilder().newAdductFormula();
         
 
-    	IMolecularFormula mf = new MolecularFormula();
-        IIsotope carb = builder.newIsotope("C");
-        IIsotope h1 = builder.newIsotope("H");
-        IIsotope h2 = builder.newIsotope("H");
+    	IMolecularFormula mf = getBuilder().newMolecularFormula();
+        IIsotope carb = getBuilder().newIsotope("C");
+        IIsotope h1 = getBuilder().newIsotope("H");
+        IIsotope h2 = getBuilder().newIsotope("H");
         h2.setExactMass(2.00055);
         
         mf.addIsotope( carb );
@@ -296,8 +291,8 @@ public class AdductFormulaTest extends CDKTestCase {
     @Test
     public void testGetCharge() {
 
-    	IAdductFormula add = new AdductFormula();
-    	IMolecularFormula mf1 = new MolecularFormula();
+    	IAdductFormula add = getBuilder().newAdductFormula();
+    	IMolecularFormula mf1 = getBuilder().newMolecularFormula();
     	mf1.setCharge(1.0);
         add.addMolecularFormula(mf1);
         
@@ -321,7 +316,7 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testClone() throws Exception {
-        IAdductFormula mfS = new AdductFormula();
+        IAdductFormula mfS = getBuilder().newAdductFormula();
         Object clone = mfS.clone();
         Assert.assertTrue(clone instanceof IAdductFormula);
         Assert.assertNotSame(mfS, clone);
@@ -333,9 +328,9 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testRemoveMolecularFormula_IMolecularFormula() {
-        IAdductFormula mfS = new AdductFormula();
-        IMolecularFormula mf1 = new MolecularFormula();
-        IMolecularFormula mf2 = new MolecularFormula();
+        IAdductFormula mfS = getBuilder().newAdductFormula();
+        IMolecularFormula mf1 = getBuilder().newMolecularFormula();
+        IMolecularFormula mf2 = getBuilder().newMolecularFormula();
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
         mfS.removeMolecularFormula(mf1);
@@ -349,9 +344,9 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testRemoveAllMolecularFormulas() {
-        IAdductFormula mfS = new AdductFormula();
-        IMolecularFormula mf1 = new MolecularFormula();
-        IMolecularFormula mf2 = new MolecularFormula();
+        IAdductFormula mfS = getBuilder().newAdductFormula();
+        IMolecularFormula mf1 = getBuilder().newMolecularFormula();
+        IMolecularFormula mf2 = getBuilder().newMolecularFormula();
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
         
@@ -366,9 +361,9 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testRemoveMolecularFormula_int() {
-        IAdductFormula mfS = new AdductFormula();
-        IMolecularFormula mf1 = new MolecularFormula();
-        IMolecularFormula mf2 = new MolecularFormula();
+        IAdductFormula mfS = getBuilder().newAdductFormula();
+        IMolecularFormula mf1 = getBuilder().newMolecularFormula();
+        IMolecularFormula mf2 = getBuilder().newMolecularFormula();
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
         mfS.removeMolecularFormula(0);
@@ -382,10 +377,10 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testReplaceMolecularFormula_int_IMolecularFormula() {
-        IAdductFormula mfS = new AdductFormula();
-        IMolecularFormula mf1 = new MolecularFormula();
-        IMolecularFormula mf2 = new MolecularFormula();
-        IMolecularFormula mf3 = new MolecularFormula();
+        IAdductFormula mfS = getBuilder().newAdductFormula();
+        IMolecularFormula mf1 = getBuilder().newMolecularFormula();
+        IMolecularFormula mf2 = getBuilder().newMolecularFormula();
+        IMolecularFormula mf3 = getBuilder().newMolecularFormula();
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
         Assert.assertEquals(mf2, mfS.getMolecularFormula(1));
@@ -402,12 +397,12 @@ public class AdductFormulaTest extends CDKTestCase {
     @Test
     public void testGetIsotopeCount() {
     	
-    	IAdductFormula add = new AdductFormula();
+    	IAdductFormula add = getBuilder().newAdductFormula();
         Assert.assertEquals(0, add.getIsotopeCount());
     	
-    	IMolecularFormula formula = new MolecularFormula();
-    	formula.addIsotope( builder.newIsotope("C") );
-    	formula.addIsotope( builder.newIsotope("H"),4 );
+    	IMolecularFormula formula = getBuilder().newMolecularFormula();
+    	formula.addIsotope( getBuilder().newIsotope("C") );
+    	formula.addIsotope( getBuilder().newIsotope("H"),4 );
         
 	    add.addMolecularFormula(formula);
 	    
@@ -420,14 +415,14 @@ public class AdductFormulaTest extends CDKTestCase {
 	 */
     @Test
     public void testIsotopes() {
-    	IAdductFormula add = new AdductFormula();
+    	IAdductFormula add = getBuilder().newAdductFormula();
     	
-    	IMolecularFormula formula1 = new MolecularFormula();
-    	formula1.addIsotope( builder.newIsotope("C") );
-    	formula1.addIsotope( builder.newIsotope("H"),4 );
+    	IMolecularFormula formula1 = getBuilder().newMolecularFormula();
+    	formula1.addIsotope( getBuilder().newIsotope("C") );
+    	formula1.addIsotope( getBuilder().newIsotope("H"),4 );
     	
-    	IMolecularFormula formula2 = new MolecularFormula();
-    	formula2.addIsotope( builder.newIsotope("F"));
+    	IMolecularFormula formula2 = getBuilder().newMolecularFormula();
+    	formula2.addIsotope( getBuilder().newIsotope("F"));
     	
     	add.addMolecularFormula(formula1);
     	add.addMolecularFormula(formula2);
@@ -448,16 +443,16 @@ public class AdductFormulaTest extends CDKTestCase {
     @Test
     public void testGetIsotopeCount_Sum() {
     	
-    	IAdductFormula add = new AdductFormula();
+    	IAdductFormula add = getBuilder().newAdductFormula();
         Assert.assertEquals(0, add.getIsotopeCount());
     	
-    	IMolecularFormula adduct1 = new MolecularFormula();
-    	adduct1.addIsotope( builder.newIsotope("C") );
-    	IIsotope h = builder.newIsotope("H");
+    	IMolecularFormula adduct1 = getBuilder().newMolecularFormula();
+    	adduct1.addIsotope( getBuilder().newIsotope("C") );
+    	IIsotope h = getBuilder().newIsotope("H");
     	adduct1.addIsotope( h,4 );
 	    add.addMolecularFormula(adduct1);
 	    
-	    IMolecularFormula formula = new MolecularFormula();
+	    IMolecularFormula formula = getBuilder().newMolecularFormula();
 	    formula.addIsotope(  h );
 	    add.addMolecularFormula(adduct1);
 	    
@@ -473,13 +468,13 @@ public class AdductFormulaTest extends CDKTestCase {
     @Test
     public void testGetIsotopeCount_IIsotope() {
     	
-    	IAdductFormula add = new AdductFormula();
+    	IAdductFormula add = getBuilder().newAdductFormula();
         Assert.assertEquals(0, add.getIsotopeCount());
     	
-    	IMolecularFormula formula = new MolecularFormula();
-    	IIsotope C = builder.newIsotope("C");
+    	IMolecularFormula formula = getBuilder().newMolecularFormula();
+    	IIsotope C = getBuilder().newIsotope("C");
     	formula.addIsotope( C );
-    	IIsotope h = builder.newIsotope("H");
+    	IIsotope h = getBuilder().newIsotope("H");
     	formula.addIsotope( h,4 );
 
 	    add.addMolecularFormula(formula);
@@ -498,17 +493,17 @@ public class AdductFormulaTest extends CDKTestCase {
     @Test
     public void testGetIsotopeCount_Sum_Isotope() {
     	
-    	IAdductFormula add = new AdductFormula();
+    	IAdductFormula add = getBuilder().newAdductFormula();
         Assert.assertEquals(0, add.getIsotopeCount());
     	
-    	IMolecularFormula adduct1 = new MolecularFormula();
-    	IIsotope C = builder.newIsotope("C");
+    	IMolecularFormula adduct1 = getBuilder().newMolecularFormula();
+    	IIsotope C = getBuilder().newIsotope("C");
     	adduct1.addIsotope( C );
-	    IIsotope h = builder.newIsotope("H");
+	    IIsotope h = getBuilder().newIsotope("H");
     	adduct1.addIsotope( h,4 );
 	    add.addMolecularFormula(adduct1);
 	    
-	    IMolecularFormula adduct2 = new MolecularFormula();
+	    IMolecularFormula adduct2 = getBuilder().newMolecularFormula();
 	    adduct2.addIsotope(  h );
 	    add.addMolecularFormula(adduct2);
 	    
@@ -518,9 +513,9 @@ public class AdductFormulaTest extends CDKTestCase {
     }
     
     @Test public void testGetBuilder() {
-    	IAdductFormula add = new AdductFormula();
+    	IAdductFormula add = getBuilder().newAdductFormula();
     	IChemObjectBuilder builder = add.getBuilder();
     	Assert.assertNotNull(builder);
-    	Assert.assertTrue(builder instanceof DefaultChemObjectBuilder);
+    	Assert.assertTrue(builder.getClass().getName().equals(getBuilder().getClass().getName()));
     }
 }

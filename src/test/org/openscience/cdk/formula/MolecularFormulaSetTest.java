@@ -27,14 +27,14 @@ package org.openscience.cdk.formula;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
 /**
  * Checks the functionality of the MolecularFormulaSet class.
@@ -45,14 +45,20 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  */
 public class MolecularFormulaSetTest extends CDKTestCase {
 
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
-	/**
-	 *  Constructor for the MolecularFormulaSetTest object.
-	 *
-	 */
-    public MolecularFormulaSetTest() {
-        super();
+    private static IChemObjectBuilder builder;
+
+    public static IChemObjectBuilder getBuilder() {
+        return builder;
     }
+
+    public static void setBuilder( IChemObjectBuilder builder ) {
+        MolecularFormulaSetTest.builder = builder;
+    }
+
+    @BeforeClass public static void setUp() {
+        setBuilder(DefaultChemObjectBuilder.getInstance());
+    }
+
     /**
 	 * A unit test suite for JUnit.
 	 *
@@ -60,7 +66,7 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testMolecularFormulaSet() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
         Assert.assertNotNull(mfS);
     }
     /**
@@ -70,7 +76,7 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testMolecularFormulaSet_IMolecularFormula() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet(new MolecularFormula());
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet(getBuilder().newMolecularFormula());
         Assert.assertEquals(1, mfS.size());
     }
     /**
@@ -80,8 +86,8 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testSize() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        mfS.addMolecularFormula(new MolecularFormula());
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
         Assert.assertEquals(1, mfS.size());
     }
     /**
@@ -91,10 +97,10 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testAdd_IMolecularFormula() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
         
         Assert.assertEquals(3, mfS.size());
     }
@@ -105,10 +111,10 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testIterator() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
 
         Assert.assertEquals(3, mfS.size());
         Iterator<IMolecularFormula> iter = mfS.molecularFormulas().iterator();
@@ -129,10 +135,10 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testMolecularFormulas() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
 
         Assert.assertEquals(3, mfS.size());
         int count = 0;
@@ -150,12 +156,12 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testAdd_IMolecularFormulaSet() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
         
-        IMolecularFormulaSet tested = new MolecularFormulaSet();
+        IMolecularFormulaSet tested = getBuilder().newMolecularFormulaSet();
         Assert.assertEquals(0, tested.size());
         tested.add(mfS);
         Assert.assertEquals(3, tested.size());
@@ -167,10 +173,10 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testGetMolecularFormula_int() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
         
         Assert.assertNotNull(mfS.getMolecularFormula(2)); // third molecule should exist
 //        Assert.assertNull(mfS.getMolecularFormula(3)); // fourth molecule must not exist
@@ -182,18 +188,18 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testAddMolecularFormula_IMolecularFormula() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
 
         Assert.assertEquals(5, mfS.size());
         
         // now test it to make sure it properly grows the array
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
 
         Assert.assertEquals(7, mfS.size());        
     }
@@ -206,13 +212,13 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testGetMolecularFormulas() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
         
         Assert.assertEquals(0, mfS.size());
 
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
-        mfS.addMolecularFormula(new MolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
+        mfS.addMolecularFormula(getBuilder().newMolecularFormula());
 
         Assert.assertEquals(3, mfS.size());
         Assert.assertNotNull(mfS.getMolecularFormula(0));
@@ -226,10 +232,10 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testContains_IMolecularFormula() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
         
 
-    	IMolecularFormula mf = new MolecularFormula();
+    	IMolecularFormula mf = getBuilder().newMolecularFormula();
         IIsotope carb = builder.newIsotope("C");
         IIsotope h1 = builder.newIsotope("H");
         IIsotope h2 = builder.newIsotope("H");
@@ -249,7 +255,7 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testClone() throws Exception {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
         Object clone = mfS.clone();
         Assert.assertTrue(clone instanceof IMolecularFormulaSet);
         Assert.assertNotSame(mfS, clone);
@@ -261,8 +267,8 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testClone_IMolecualrFormula() throws Exception {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        IMolecularFormula mf1 = new MolecularFormula();
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
+        IMolecularFormula mf1 = getBuilder().newMolecularFormula();
         IIsotope carb = builder.newIsotope("C");
         IIsotope flu = builder.newIsotope("F");
         IIsotope h1 = builder.newIsotope("H");
@@ -271,7 +277,7 @@ public class MolecularFormulaSetTest extends CDKTestCase {
         mf1.addIsotope( h1 ,3);
         mfS.addMolecularFormula(mf1);
         
-        IMolecularFormula mf2 = new MolecularFormula();
+        IMolecularFormula mf2 = getBuilder().newMolecularFormula();
         IIsotope carb2 = builder.newIsotope("C");
         IIsotope iode = builder.newIsotope("I");
         IIsotope h2 = builder.newIsotope("H");
@@ -294,9 +300,9 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testRemoveMolecularFormula_IMolecularFormula() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        IMolecularFormula mf1 = new MolecularFormula();
-        IMolecularFormula mf2 = new MolecularFormula();
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
+        IMolecularFormula mf1 = getBuilder().newMolecularFormula();
+        IMolecularFormula mf2 = getBuilder().newMolecularFormula();
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
         mfS.removeMolecularFormula(mf1);
@@ -310,9 +316,9 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testRemoveAllMolecularFormulas() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        IMolecularFormula mf1 = new MolecularFormula();
-        IMolecularFormula mf2 = new MolecularFormula();
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
+        IMolecularFormula mf1 = getBuilder().newMolecularFormula();
+        IMolecularFormula mf2 = getBuilder().newMolecularFormula();
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
         
@@ -327,9 +333,9 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testRemoveMolecularFormula_int() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        IMolecularFormula mf1 = new MolecularFormula();
-        IMolecularFormula mf2 = new MolecularFormula();
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
+        IMolecularFormula mf1 = getBuilder().newMolecularFormula();
+        IMolecularFormula mf2 = getBuilder().newMolecularFormula();
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
         mfS.removeMolecularFormula(0);
@@ -343,10 +349,10 @@ public class MolecularFormulaSetTest extends CDKTestCase {
 	 */
     @Test 
     public void testReplaceMolecularFormula_int_IMolecularFormula() {
-        IMolecularFormulaSet mfS = new MolecularFormulaSet();
-        IMolecularFormula mf1 = new MolecularFormula();
-        IMolecularFormula mf2 = new MolecularFormula();
-        IMolecularFormula mf3 = new MolecularFormula();
+        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
+        IMolecularFormula mf1 = getBuilder().newMolecularFormula();
+        IMolecularFormula mf2 = getBuilder().newMolecularFormula();
+        IMolecularFormula mf3 = getBuilder().newMolecularFormula();
         mfS.addMolecularFormula(mf1);
         mfS.addMolecularFormula(mf2);
         Assert.assertEquals(mf2, mfS.getMolecularFormula(1));
@@ -356,9 +362,9 @@ public class MolecularFormulaSetTest extends CDKTestCase {
     }
 
     @Test public void testGetBuilder() {
-    	MolecularFormulaSet add = new MolecularFormulaSet();
+    	IMolecularFormulaSet add = getBuilder().newMolecularFormulaSet();
     	IChemObjectBuilder builder = add.getBuilder();
     	Assert.assertNotNull(builder);
-    	Assert.assertTrue(builder instanceof DefaultChemObjectBuilder);
+    	Assert.assertTrue(builder.getClass().getName().equals(getBuilder().getClass().getName()));
     }
 }
