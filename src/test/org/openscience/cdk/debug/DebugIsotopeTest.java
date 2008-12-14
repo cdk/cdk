@@ -24,9 +24,12 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
+import org.junit.Test;
 import org.openscience.cdk.IsotopeTest;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
 
 /**
  * Checks the functionality of the AtomContainer.
@@ -39,5 +42,38 @@ public class DebugIsotopeTest extends IsotopeTest {
     	setBuilder(DebugChemObjectBuilder.getInstance());
     }
     
+    @Test public void testDebugIsotope_String() {
+        IIsotope i = new DebugIsotope("C");
+        Assert.assertEquals("C", i.getSymbol());
+    }
+    
+    @Test public void testDebugIsotope_IElement() {
+    	IElement element = getBuilder().newElement("C");
+        IIsotope i = new DebugIsotope(element);
+        Assert.assertEquals("C", i.getSymbol());
+    }
+    
+    @Test public void testDebugIsotope_int_String_int_double_double() {
+        IIsotope i = new DebugIsotope(6, "C", 12, 12.001, 80.0);
+        Assert.assertEquals(12, i.getMassNumber().intValue());
+        Assert.assertEquals("C", i.getSymbol());
+        Assert.assertEquals(6, i.getAtomicNumber().intValue());
+        Assert.assertEquals(12.001, i.getExactMass(), 0.001);
+        Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
+    }
+    
+    @Test public void testDebugIsotope_String_int() {
+        IIsotope i = new DebugIsotope("C", 12);
+        Assert.assertEquals(12, i.getMassNumber().intValue());
+        Assert.assertEquals("C", i.getSymbol());
+    }
+    
+    @Test public void testDebugIsotope_int_String_double_double() {
+        IIsotope i = new DebugIsotope(6, "C", 12.001, 80.0);
+        Assert.assertEquals("C", i.getSymbol());
+        Assert.assertEquals(6, i.getAtomicNumber().intValue());
+        Assert.assertEquals(12.001, i.getExactMass(), 0.001);
+        Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
+    }
 }
 

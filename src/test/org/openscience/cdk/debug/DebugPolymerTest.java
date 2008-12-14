@@ -24,9 +24,11 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
+import org.junit.Test;
 import org.openscience.cdk.PolymerTest;
+import org.openscience.cdk.interfaces.IPolymer;
 
 /**
  * Checks the functionality of the {@link DebugPolymer}.
@@ -39,4 +41,8 @@ public class DebugPolymerTest extends PolymerTest {
     	  setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugPolymer() {
+        IPolymer polymer = getBuilder().newPolymer();
+        Assert.assertTrue(polymer instanceof DebugPolymer);
+    }
 }

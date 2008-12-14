@@ -24,9 +24,11 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
+import org.junit.Test;
 import org.openscience.cdk.ReactionTest;
+import org.openscience.cdk.interfaces.IReaction;
 
 /**
  * Checks the functionality of the {@link DebugReaction}.
@@ -39,4 +41,8 @@ public class DebugReactionTest extends ReactionTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugReaction() {
+        IReaction polymer = getBuilder().newReaction();
+        Assert.assertTrue(polymer instanceof DebugReaction);
+    }
 }

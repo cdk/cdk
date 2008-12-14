@@ -20,9 +20,12 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
+import org.junit.Test;
 import org.openscience.cdk.ElementTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * Checks the functionality of {@link DebugElement}.
@@ -35,4 +38,25 @@ public class DebugElementTest extends ElementTest {
     	setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugElement() {
+        IElement e = getBuilder().newElement();
+        Assert.assertTrue(e instanceof IChemObject);
+    }
+    
+    @Test public void testDebugElement_IElement() {
+    	IElement element = getBuilder().newElement();
+        IElement e = getBuilder().newElement(element);
+        Assert.assertTrue(e instanceof IChemObject);
+    }
+    
+    @Test public void testDebugElement_String() {
+        IElement e = getBuilder().newElement("C");
+        Assert.assertEquals("C", e.getSymbol());
+    }
+    
+    @Test public void testDebugElement_String_int() {
+        IElement e = getBuilder().newElement("H", 1);
+        Assert.assertEquals("H", e.getSymbol());
+        Assert.assertEquals(1, e.getAtomicNumber().intValue());
+    }
 }
