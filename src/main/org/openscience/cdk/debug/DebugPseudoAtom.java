@@ -194,7 +194,7 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		return super.getFormalCharge();
 	}
 
-	public void setFormalNeighbourCount(int count) {
+	public void setFormalNeighbourCount(Integer count) {
 		logger.debug("Setting forml neighbour count: ", count);
 		super.setFormalNeighbourCount(count);
 	}
@@ -214,7 +214,7 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		return super.getHybridization();
 	}
 
-	public void setCovalentRadius(double radius) {
+	public void setCovalentRadius(Double radius) {
 		logger.debug("Setting covalent radius: ", radius);
 		super.setCovalentRadius(radius);
 	}
@@ -224,7 +224,7 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		return super.getCovalentRadius();
 	}
 
-	public void setValency(int valency) {
+	public void setValency(Integer valency) {
 		logger.debug("Setting valency: ", valency);
 		super.setValency(valency);
 	}
@@ -260,7 +260,7 @@ public class DebugPseudoAtom extends org.openscience.cdk.PseudoAtom
 		return super.getMassNumber();
 	}
 
-	public void setMassNumber(int massNumber) {
+	public void setMassNumber(Integer massNumber) {
 		logger.debug("Setting mass number: ", massNumber);
 		super.setMassNumber(massNumber);
 	}
