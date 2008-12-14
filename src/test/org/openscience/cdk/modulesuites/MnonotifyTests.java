@@ -46,6 +46,8 @@ import org.openscience.cdk.nonotify.NNElementTest;
 import org.openscience.cdk.nonotify.NNFragmentAtomTest;
 import org.openscience.cdk.nonotify.NNIsotopeTest;
 import org.openscience.cdk.nonotify.NNLonePairTest;
+import org.openscience.cdk.nonotify.NNMolecularFormulaSetTest;
+import org.openscience.cdk.nonotify.NNMolecularFormulaTest;
 import org.openscience.cdk.nonotify.NNMoleculeSetTest;
 import org.openscience.cdk.nonotify.NNMoleculeTest;
 import org.openscience.cdk.nonotify.NNMonomerTest;
@@ -55,6 +57,7 @@ import org.openscience.cdk.nonotify.NNPDBPolymerTest;
 import org.openscience.cdk.nonotify.NNPDBStructureTest;
 import org.openscience.cdk.nonotify.NNPolymerTest;
 import org.openscience.cdk.nonotify.NNPseudoAtomTest;
+import org.openscience.cdk.nonotify.NNReactionSchemeTest;
 import org.openscience.cdk.nonotify.NNReactionSetTest;
 import org.openscience.cdk.nonotify.NNReactionTest;
 import org.openscience.cdk.nonotify.NNRingSetTest;
@@ -100,8 +103,11 @@ import org.openscience.cdk.nonotify.NNStrandTest;
     NNAtomContainerSetTest.class,
     NNMoleculeSetTest.class,
     NNReactionSetTest.class,
+    NNReactionSchemeTest.class,
     NNSingleElectronTest.class,
     NNStrandTest.class,
+    NNMolecularFormulaTest.class,
+    NNMolecularFormulaSetTest.class,
         
     // tests from test.protein.data
     NNPDBAtomTest.class,
