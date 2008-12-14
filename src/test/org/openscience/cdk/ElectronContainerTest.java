@@ -31,7 +31,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IElectronContainer;
 
 /**
- * Checks the functionality of the ElectronContainer class.
+ * Checks the functionality of the {@link ElectronContainer} class.
  *
  * @cdk.module test-data
  *

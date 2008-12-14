@@ -29,7 +29,7 @@ import org.openscience.cdk.ReactionSchemeTest;
 
 
 /**
- * Checks the functionality of the ReactionScheme.
+ * Checks the functionality of the {@link DebugReactionScheme}.
  *
  * @cdk.module test-datadebug
  */

@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
 import org.openscience.cdk.formula.AdductFormulaTest;
 
 /**
- * Checks the functionality of the DebugChemModel.
+ * Checks the functionality of the {@link DebugAdductFormula}.
  *
  * @cdk.module test-datadebug
  */

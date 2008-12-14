@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
 import org.openscience.cdk.formula.MolecularFormulaTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugMolecularFormula}.
  *
  * @cdk.module test-datadebug
  */

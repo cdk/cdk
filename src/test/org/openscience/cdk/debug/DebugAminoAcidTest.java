@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
 import org.openscience.cdk.AminoAcidTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugAminoAcid}.
  *
  * @cdk.module test-datadebug
  */

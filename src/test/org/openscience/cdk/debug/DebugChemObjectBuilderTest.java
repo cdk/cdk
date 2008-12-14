@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.DefaultChemObjectBuilderTest;
 
 /**
- * Checks the functionality of the Crystal.
+ * Checks the functionality of the {@link DebugChemObjectBuilder}.
  *
  * @cdk.module test-datadebug
  */

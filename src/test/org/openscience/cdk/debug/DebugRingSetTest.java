@@ -29,7 +29,7 @@ import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.RingSetTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugRingSet}.
  *
  * @cdk.module test-datadebug
  */

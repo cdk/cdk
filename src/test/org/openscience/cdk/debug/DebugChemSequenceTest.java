@@ -29,7 +29,7 @@ import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.ChemSequenceTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugChemSequence}.
  *
  * @cdk.module test-datadebug
  */

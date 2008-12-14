@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
 import org.openscience.cdk.BondTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugBond}.
  *
  * @cdk.module test-datadebug
  */

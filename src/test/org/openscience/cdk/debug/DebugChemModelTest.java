@@ -29,7 +29,7 @@ import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.ChemModelTest;
 
 /**
- * Checks the functionality of the DebugChemModel.
+ * Checks the functionality of the {@link DebugChemModel}.
  *
  * @cdk.module test-datadebug
  */

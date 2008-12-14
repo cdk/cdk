@@ -25,7 +25,7 @@ import org.openscience.cdk.debug.DebugChemObjectBuilder;
 import org.openscience.cdk.ElementTest;
 
 /**
- * Checks the functionality of DebugElement.
+ * Checks the functionality of {@link DebugElement}.
  *
  * @cdk.module test-datadebug
  */

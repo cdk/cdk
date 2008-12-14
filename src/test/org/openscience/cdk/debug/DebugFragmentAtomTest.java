@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
 import org.openscience.cdk.FragmentAtomTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugFragmentAtom}.
  *
  * @cdk.module test-datadebug
  */

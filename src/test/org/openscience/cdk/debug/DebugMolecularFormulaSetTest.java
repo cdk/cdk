@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
 import org.openscience.cdk.formula.MolecularFormulaSetTest;
 
 /**
- * Checks the functionality of the DebugChemModel.
+ * Checks the functionality of the {@link DebugMolecularFormulaSet}.
  *
  * @cdk.module test-datadebug
  */

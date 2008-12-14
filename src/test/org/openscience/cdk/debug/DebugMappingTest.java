@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
 import org.openscience.cdk.MappingTest;
 
 /**
- * Checks the functionality of the DebugChemModel.
+ * Checks the functionality of the {@link DebugMapping}.
  *
  * @cdk.module test-datadebug
  */
