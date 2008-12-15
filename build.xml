@@ -513,7 +513,7 @@
             list="test-data,test-qsaratomic,test-qsarbond,
                   test-pdb,test-smiles,test-extra,test-atomtype,
                   test-structgen"/>
-        <foreach target="compile-module" param="module"
+        <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-qsarmolecular,test-builder3d,test-datadebug,
         	      test-nonotify"/>
