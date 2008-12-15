@@ -181,20 +181,6 @@ public abstract class IAtomTest extends IAtomTypeTest {
     }
     
     /**
-     * Method to test the compare() method.
-     */
-    @Test public void testCompare_Object() {
-        IAtom someAtom = getBuilder().newAtom("C");
-        if (someAtom instanceof org.openscience.cdk.Atom) {
-        	org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)someAtom;
-        	Assert.assertTrue(atom.compare(atom));
-        	IAtom hydrogen = getBuilder().newAtom("H");
-        	Assert.assertFalse(atom.compare(hydrogen));
-        	Assert.assertFalse(atom.compare("C"));
-        }
-    }
-    
-    /**
      * Method to test the clone() method
      */
     @Test public void testClone() throws Exception {

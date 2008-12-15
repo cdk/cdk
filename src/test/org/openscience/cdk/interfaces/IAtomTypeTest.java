@@ -30,8 +30,6 @@ import org.openscience.cdk.tools.diff.AtomTypeDiff;
  * Checks the functionality of {@link IAtomType} implementations.
  *
  * @cdk.module test-interfaces
- *
- * @see org.openscience.cdk.AtomType
  */
 public abstract class IAtomTypeTest extends IIsotopeTest {
 
@@ -83,16 +81,6 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
         testSetBondOrderSum_Double();
     }
     
-    @Test public void testCompare() {
-        IAtomType at = getBuilder().newAtomType("C4", "C");
-        if (at instanceof org.openscience.cdk.AtomType) {
-        	org.openscience.cdk.AtomType at1 = (org.openscience.cdk.AtomType)at;
-	        IAtomType at2 = getBuilder().newAtomType("C3", "C");
-	        Assert.assertFalse(at1.compare("C4"));
-	        Assert.assertFalse(at1.compare(at2));
-        }
-    }
-
     @Test public void testSetCovalentRadius_Double() {
         IAtomType at = getBuilder().newAtomType("C");
         at.setCovalentRadius(1.0);
@@ -102,9 +90,6 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
         testSetCovalentRadius_Double();
     }
     
-    /**
-     * Method to test the get/setFormalCharge() methods.
-     */
     @Test public void testSetFormalCharge_Integer() {
         int charge = 1;
 
@@ -329,17 +314,6 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
             Assert.assertTrue(description.charAt(i) != '\n');
             Assert.assertTrue(description.charAt(i) != '\r');
         }
-    }
-
-    @Test public void testCompare_Object() {
-    	IAtomType someAt = getBuilder().newAtomType("C");
-    	if (someAt instanceof org.openscience.cdk.AtomType) {
-    		org.openscience.cdk.AtomType at = (org.openscience.cdk.AtomType)someAt;
-	        Assert.assertTrue(at.compare(at));
-	        IAtomType hydrogen = getBuilder().newAtomType("H");
-	        Assert.assertFalse(at.compare(hydrogen));
-	        Assert.assertFalse(at.compare("Li"));
-    	}
     }
 
     @Test public void testDefaultFormalCharge() {
