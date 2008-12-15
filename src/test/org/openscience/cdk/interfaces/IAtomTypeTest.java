@@ -33,23 +33,6 @@ import org.openscience.cdk.tools.diff.AtomTypeDiff;
  */
 public abstract class IAtomTypeTest extends IIsotopeTest {
 
-    @Test public void testAtomType_String() {
-        IAtomType at = getBuilder().newAtomType("C");
-        Assert.assertEquals("C", at.getSymbol());
-    }
-
-    @Test public void testAtomType_IElement() {
-    	IElement element = getBuilder().newElement("C");
-        IAtomType at = getBuilder().newAtomType(element);
-        Assert.assertEquals("C", at.getSymbol());
-    }
-
-    @Test public void testAtomType_String_String() {
-        IAtomType at = getBuilder().newAtomType("C4", "C");
-        Assert.assertEquals("C", at.getSymbol());
-        Assert.assertEquals("C4", at.getAtomTypeName());
-    }
-    
     @Test public void testSetAtomTypeName_String() {
         IAtomType at = getBuilder().newAtomType("C");
         at.setAtomTypeName("C4");

@@ -33,30 +33,6 @@ import org.openscience.cdk.tools.diff.ElementDiff;
  */
 public class IElementTest extends IChemObjectTest {
 
-    // test constructors
-    
-    @Test public void testElement() {
-        IElement e = getBuilder().newElement();
-        Assert.assertTrue(e instanceof IChemObject);
-    }
-    
-    @Test public void testElement_IElement() {
-    	IElement element = getBuilder().newElement();
-        IElement e = getBuilder().newElement(element);
-        Assert.assertTrue(e instanceof IChemObject);
-    }
-    
-    @Test public void testElement_String() {
-        IElement e = getBuilder().newElement("C");
-        Assert.assertEquals("C", e.getSymbol());
-    }
-    
-    @Test public void testElement_String_int() {
-        IElement e = getBuilder().newElement("H", 1);
-        Assert.assertEquals("H", e.getSymbol());
-        Assert.assertEquals(1, e.getAtomicNumber().intValue());
-    }
-    
     // test methods
     
     @Test public void testSetSymbol_String() {

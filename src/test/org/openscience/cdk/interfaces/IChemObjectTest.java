@@ -51,17 +51,6 @@ public abstract class IChemObjectTest extends CDKTestCase {
     	IChemObjectTest.builder = builder;
     }
 
-    @Test public void testChemObject() {
-        IChemObject chemObject = builder.newChemObject();
-        Assert.assertNotNull(chemObject);
-    }
-
-    @Test public void testChemObject_IChemObject() {
-    	IChemObject chemObject1 = builder.newChemObject();
-        IChemObject chemObject = builder.newChemObject(chemObject1);
-        Assert.assertNotNull(chemObject);
-    }
-
     @Test public void testGetBuilder() {
     	IChemObject chemObject = builder.newChemObject();
     	Object object = chemObject.getBuilder();

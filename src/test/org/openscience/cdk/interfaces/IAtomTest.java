@@ -39,57 +39,6 @@ import org.openscience.cdk.tools.diff.AtomDiff;
 public abstract class IAtomTest extends IAtomTypeTest {
 
     /**
-     * Method to test the Atom(String symbol) method.
-     */
-    @Test public void testAtom() {
-        IAtom a = getBuilder().newAtom();
-        Assert.assertNotNull(a);
-    }
-
-    @Test public void testAtom_IElement() {
-    	IElement element = getBuilder().newElement();
-        IAtom a = getBuilder().newAtom(element);
-        Assert.assertNotNull(a);
-    }
-
-    /**
-     * Method to test the Atom(String symbol) method.
-     */
-    @Test public void testAtom_String() {
-        IAtom a = getBuilder().newAtom("C");
-        Assert.assertEquals("C", a.getSymbol());
-        Assert.assertNull(a.getPoint2d());
-        Assert.assertNull(a.getPoint3d());
-        Assert.assertNull(a.getFractionalPoint3d());
-    }
-
-    /**
-     * Method to test the Atom(String symbol, javax.vecmath.Point3d point3D) method.
-     */
-    @Test public void testAtom_String_Point3d() {
-        Point3d point3d = new Point3d(1.0, 2.0, 3.0);
-
-        IAtom a = getBuilder().newAtom("C", point3d);
-        Assert.assertEquals("C", a.getSymbol());
-        Assert.assertEquals(point3d, a.getPoint3d());
-        Assert.assertNull(a.getPoint2d());
-        Assert.assertNull(a.getFractionalPoint3d());
-    }
-
-    /**
-     * Method to test the Atom(String symbol, javax.vecmath.Point3d point3D) method.
-     */
-    @Test public void testAtom_String_Point2d() {
-        Point2d point2d = new Point2d(1.0, 2.0);
-
-        IAtom a = getBuilder().newAtom("C", point2d);
-        Assert.assertEquals("C", a.getSymbol());
-        Assert.assertEquals(point2d, a.getPoint2d());
-        Assert.assertNull(a.getPoint3d());
-        Assert.assertNull(a.getFractionalPoint3d());
-    }
-
-    /**
      * Method to test the get/setCharge() methods.
      */
     @Test public void testSetCharge_Double() {

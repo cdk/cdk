@@ -33,40 +33,6 @@ import org.openscience.cdk.tools.diff.IsotopeDiff;
  */
 public abstract class IIsotopeTest extends IElementTest {
 
-    @Test public void testIsotope_String() {
-        IIsotope i = getBuilder().newIsotope("C");
-        Assert.assertEquals("C", i.getSymbol());
-    }
-    
-    @Test public void testIsotope_IElement() {
-    	IElement element = getBuilder().newElement("C");
-        IIsotope i = getBuilder().newIsotope(element);
-        Assert.assertEquals("C", i.getSymbol());
-    }
-    
-    @Test public void testIsotope_int_String_int_double_double() {
-        IIsotope i = getBuilder().newIsotope(6, "C", 12, 12.001, 80.0);
-        Assert.assertEquals(12, i.getMassNumber().intValue());
-        Assert.assertEquals("C", i.getSymbol());
-        Assert.assertEquals(6, i.getAtomicNumber().intValue());
-        Assert.assertEquals(12.001, i.getExactMass(), 0.001);
-        Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
-    }
-    
-    @Test public void testIsotope_String_int() {
-        IIsotope i = getBuilder().newIsotope("C", 12);
-        Assert.assertEquals(12, i.getMassNumber().intValue());
-        Assert.assertEquals("C", i.getSymbol());
-    }
-    
-    @Test public void testIsotope_int_String_double_double() {
-        IIsotope i = getBuilder().newIsotope(6, "C", 12.001, 80.0);
-        Assert.assertEquals("C", i.getSymbol());
-        Assert.assertEquals(6, i.getAtomicNumber().intValue());
-        Assert.assertEquals(12.001, i.getExactMass(), 0.001);
-        Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
-    }
-    
     @Test public void testSetNaturalAbundance_Double() {
         IIsotope i = getBuilder().newIsotope("C");
         i.setNaturalAbundance(80.0);
