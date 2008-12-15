@@ -26,11 +26,10 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.CrystalTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNCrystal}.
  *
  * @cdk.module test-nonotify
  */

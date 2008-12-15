@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNMolecule}.
  *
  * @cdk.module test-nonotify
  */

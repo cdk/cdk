@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNAtomType}.
  *
  * @cdk.module test-nonotify
  */

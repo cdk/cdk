@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.openscience.cdk.AtomContainerSetTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNAtomContainerSet}.
  *
  * @cdk.module test-nonotify
  */

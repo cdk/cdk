@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.protein.data.PDBAtomTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNPDBAtom}.
  *
  * @cdk.module test-nonotify
  */

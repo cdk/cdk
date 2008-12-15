@@ -26,11 +26,10 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.ChemModelTest;
 
 /**
- * Checks the functionality of the NNMapping.
+ * Checks the functionality of the {@link NNMapping}.
  *
  * @cdk.module test-nonotify
  */

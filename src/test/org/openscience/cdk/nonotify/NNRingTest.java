@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNRing}.
  *
  * @cdk.module test-nonotify
  */

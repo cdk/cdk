@@ -28,13 +28,11 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.nonotify.NNChemObject;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.DefaultChemObjectBuilderTest;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * Checks the functionality of the Crystal.
+ * Checks the functionality of the {@link NoNotificationChemObjectBuilder}.
  *
  * @cdk.module test-nonotify
  */

@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
- * Checks the functionality of DebugElement.
+ * Checks the functionality of {@link NNElement}.
  *
  * @cdk.module test-nonotify
  */

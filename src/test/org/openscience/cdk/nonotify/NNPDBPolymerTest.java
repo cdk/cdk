@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.protein.data.PDBPolymerTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNPDBPolymer}.
  *
  * @cdk.module test-nonotify
  */

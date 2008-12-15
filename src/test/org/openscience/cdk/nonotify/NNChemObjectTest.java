@@ -26,7 +26,7 @@ import org.junit.Test;
 import org.openscience.cdk.ChemObjectTest;
 
 /**
- * Checks the functionality of the NNChemObject.
+ * Checks the functionality of the {@link NNChemObject}.
  *
  * @cdk.module test-nonotify
  */

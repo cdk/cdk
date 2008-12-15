@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.IsotopeTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNIsotope}.
  *
  * @cdk.module test-nonotify
  */

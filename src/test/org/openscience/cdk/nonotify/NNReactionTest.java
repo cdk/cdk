@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.ReactionTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNReaction}.
  *
  * @cdk.module test-nonotify
  */

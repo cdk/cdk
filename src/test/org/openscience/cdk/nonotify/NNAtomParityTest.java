@@ -31,7 +31,7 @@ import org.openscience.cdk.AtomParityTest;
 import org.openscience.cdk.interfaces.IAtomParity;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNAtomParity}.
  *
  * @cdk.module test-nonotify
  */

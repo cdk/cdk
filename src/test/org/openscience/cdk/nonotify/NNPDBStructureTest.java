@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
 import org.openscience.cdk.protein.data.PDBStructureTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNPDBStructure}.
  *
  * @cdk.module test-nonotify
  */

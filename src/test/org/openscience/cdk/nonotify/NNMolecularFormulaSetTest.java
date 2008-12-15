@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
 import org.openscience.cdk.formula.MolecularFormulaSetTest;
 
 /**
- * Checks the functionality of the NNMapping.
+ * Checks the functionality of the {@link NNMolecularFormulaSet}.
  *
  * @cdk.module test-nonotify
  */

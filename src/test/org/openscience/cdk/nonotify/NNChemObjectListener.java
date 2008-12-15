@@ -25,7 +25,7 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 
 /**
- * Helper class to test the functionality of the NNChemObject.
+ * Helper class to test the functionality of the {@link NNChemObjectListener}.
  *
  * @cdk.module test-nonotify
  */

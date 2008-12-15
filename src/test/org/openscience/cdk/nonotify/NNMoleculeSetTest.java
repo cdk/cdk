@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.MoleculeSetTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNMoleculeSet}.
  *
  * @cdk.module test-nonotify
  */

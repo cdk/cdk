@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.FragmentAtomTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNFragmentAtom}.
  *
  * @cdk.module test-nonotify
  */

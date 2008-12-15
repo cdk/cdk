@@ -31,7 +31,7 @@ import org.openscience.cdk.ChemModelTest;
 import org.openscience.cdk.interfaces.IChemModel;
 
 /**
- * Checks the functionality of the NNChemModel.
+ * Checks the functionality of the {@link NNChemModel}.
  *
  * @cdk.module test-nonotify
  */
