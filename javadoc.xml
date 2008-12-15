@@ -142,6 +142,8 @@
 
     <target name="check-doccheck">
         <available file="develjar/doccheck.jar" property="doccheck.present" />
+        <fail unless="doccheck.present"
+              message="This task requires DocCheck, which can be downloaded from http://java.sun.com/j2se/javadoc/doccheck/. Copy the doccheck.jar into develjar/."/>
     </target>
 
     <target name="doccheck-module">
