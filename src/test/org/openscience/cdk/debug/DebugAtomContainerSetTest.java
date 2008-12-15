@@ -25,15 +25,14 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.AtomContainerSetTest;
+import org.openscience.cdk.interfaces.IAtomContainerSetTest;
 
 /**
  * Checks the functionality of the {@link DebugAtomContainerSet}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugAtomContainerSetTest extends AtomContainerSetTest {
+public class DebugAtomContainerSetTest extends IAtomContainerSetTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

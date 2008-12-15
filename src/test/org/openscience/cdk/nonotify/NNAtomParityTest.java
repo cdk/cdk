@@ -27,15 +27,15 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.AtomParityTest;
 import org.openscience.cdk.interfaces.IAtomParity;
+import org.openscience.cdk.interfaces.IAtomParityTest;
 
 /**
  * Checks the functionality of the {@link NNAtomParity}.
  *
  * @cdk.module test-nonotify
  */
-public class NNAtomParityTest extends AtomParityTest {
+public class NNAtomParityTest extends IAtomParityTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
