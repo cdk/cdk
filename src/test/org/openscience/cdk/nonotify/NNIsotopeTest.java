@@ -26,14 +26,14 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.IsotopeTest;
+import org.openscience.cdk.interfaces.IIsotopeTest;
 
 /**
  * Checks the functionality of the {@link NNIsotope}.
  *
  * @cdk.module test-nonotify
  */
-public class NNIsotopeTest extends IsotopeTest {
+public class NNIsotopeTest extends IIsotopeTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

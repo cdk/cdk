@@ -24,15 +24,15 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.ChemObjectTest;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectTest;
 
 /**
  * Checks the functionality of the {@link DebugChemObject}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugChemObjectTest extends ChemObjectTest {
+public class DebugChemObjectTest extends IChemObjectTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

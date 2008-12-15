@@ -25,7 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.tools.diff.ElementDiff;
+import org.openscience.cdk.interfaces.IElementTest;
 
 /**
  * Checks the functionality of the Element class.
@@ -34,7 +34,7 @@ import org.openscience.cdk.tools.diff.ElementDiff;
  *
  * @see org.openscience.cdk.Element
  */
-public class ElementTest extends ChemObjectTest {
+public class ElementTest extends IElementTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
@@ -43,99 +43,25 @@ public class ElementTest extends ChemObjectTest {
     // test constructors
     
     @Test public void testElement() {
-        IElement e = getBuilder().newElement();
+        IElement e = new Element();
         Assert.assertTrue(e instanceof IChemObject);
     }
     
     @Test public void testElement_IElement() {
-    	IElement element = getBuilder().newElement();
-        IElement e = getBuilder().newElement(element);
+    	IElement element = new Element();
+        IElement e = new Element(element);
         Assert.assertTrue(e instanceof IChemObject);
     }
     
     @Test public void testElement_String() {
-        IElement e = getBuilder().newElement("C");
+        IElement e = new Element("C");
         Assert.assertEquals("C", e.getSymbol());
     }
     
     @Test public void testElement_String_int() {
-        IElement e = getBuilder().newElement("H", 1);
+        IElement e = new Element("H", 1);
         Assert.assertEquals("H", e.getSymbol());
         Assert.assertEquals(1, e.getAtomicNumber().intValue());
     }
-    
-    // test methods
-    
-    @Test public void testSetSymbol_String() {
-        IElement e = getBuilder().newElement();
-        e.setSymbol("C");
-        Assert.assertEquals("C", e.getSymbol());
-    }
-        
-    @Test public void testGetSymbol() {
-        IElement e = getBuilder().newElement("X");
-        Assert.assertEquals("X", e.getSymbol());
-    }
-        
-    @Test public void testSetAtomicNumber_Integer() {
-        IElement e = getBuilder().newElement("H");
-        e.setAtomicNumber(1);
-        Assert.assertEquals(1, e.getAtomicNumber().intValue());
-    }
 
-    @Test public void testGetAtomicNumber() {
-        IElement e = getBuilder().newElement("D", 1);
-        Assert.assertEquals(1, e.getAtomicNumber().intValue());
-    }
-
-    @Test public void testClone() throws Exception {
-        IElement elem = getBuilder().newElement();
-        Object clone = elem.clone();
-        Assert.assertTrue(clone instanceof IElement);
-
-        // test that everything has been cloned properly
-        String diff = ElementDiff.diff(elem, (IElement)clone);
-        Assert.assertNotNull(diff);
-        Assert.assertEquals(0, diff.length());
-    }
-    
-    @Test public void testCloneDiff() throws Exception {
-        IElement elem = getBuilder().newElement();
-        IElement clone = (IElement)elem.clone();
-        Assert.assertEquals("", ElementDiff.diff(elem, clone));
-    }
-
-    @Test public void testClone_Symbol() throws Exception {
-        IElement elem = getBuilder().newElement("C");
-        IElement clone = (IElement)elem.clone();
-        
-        // test cloning of symbol
-        elem.setSymbol("H");
-        Assert.assertEquals("C", clone.getSymbol());
-    }
-    
-    @Test public void testClone_IAtomicNumber() throws Exception {
-        IElement elem = getBuilder().newElement("C", 6);
-        IElement clone = (IElement)elem.clone();
-        
-        // test cloning of atomic number
-        elem.setAtomicNumber(5); // don't care about symbol
-        Assert.assertEquals(6, clone.getAtomicNumber().intValue());
-    }
-    
-    /** Test for RFC #9 */
-    @Test public void testToString() {
-        IElement elem = getBuilder().newElement();
-        String description = elem.toString();
-        for (int i=0; i< description.length(); i++) {
-        	Assert.assertTrue(description.charAt(i) != '\n');
-        	Assert.assertTrue(description.charAt(i) != '\r');
-        }
-    }
-
-    @Test public void testCompare_Object() {
-        // Added to keep the Coverage checker happy, but since the
-        // compare(Object) method is not part of the interface, nothing is tested
-    	Assert.assertTrue(true);
-    }
 }

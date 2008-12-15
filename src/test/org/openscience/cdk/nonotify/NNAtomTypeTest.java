@@ -27,8 +27,8 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.AtomTypeTest;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IAtomTypeTest;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IElement;
  *
  * @cdk.module test-nonotify
  */
-public class NNAtomTypeTest extends AtomTypeTest {
+public class NNAtomTypeTest extends IAtomTypeTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

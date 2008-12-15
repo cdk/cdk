@@ -3,5 +3,6 @@ cdk-core.jar
 cdk-data.jar
 cdk-nonotify.jar
 cdk-test.jar
+cdk-test-interfaces.jar
 cdk-test-data.jar
 cdk-diff.jar

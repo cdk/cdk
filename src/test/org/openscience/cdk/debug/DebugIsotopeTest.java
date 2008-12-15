@@ -27,16 +27,16 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.IsotopeTest;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IIsotopeTest;
 
 /**
  * Checks the functionality of the AtomContainer.
  *
  * @cdk.module test-datadebug
  */
-public class DebugIsotopeTest extends IsotopeTest {
+public class DebugIsotopeTest extends IIsotopeTest {
 
     @BeforeClass public static void setUp() {
     	setBuilder(DebugChemObjectBuilder.getInstance());

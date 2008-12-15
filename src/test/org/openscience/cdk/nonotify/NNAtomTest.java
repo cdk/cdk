@@ -30,8 +30,8 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.AtomTest;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomTest;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IElement;
  *
  * @cdk.module test-nonotify
  */
-public class NNAtomTest extends AtomTest {
+public class NNAtomTest extends IAtomTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

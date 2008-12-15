@@ -27,8 +27,8 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.AtomTypeTest;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IAtomTypeTest;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IElement;
  *
  * @cdk.module test-datadebug
  */
-public class DebugAtomTypeTest extends AtomTypeTest {
+public class DebugAtomTypeTest extends IAtomTypeTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

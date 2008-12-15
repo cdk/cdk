@@ -25,7 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.tools.diff.IsotopeDiff;
+import org.openscience.cdk.interfaces.IIsotopeTest;
 
 /**
  * Checks the functionality of the Isotope class.
@@ -34,25 +34,25 @@ import org.openscience.cdk.tools.diff.IsotopeDiff;
  *
  * @see org.openscience.cdk.Isotope
  */
-public class IsotopeTest extends ElementTest {
+public class IsotopeTest extends IIsotopeTest {
 
     @BeforeClass public static void setUp() {
     	setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
     @Test public void testIsotope_String() {
-        IIsotope i = getBuilder().newIsotope("C");
+        IIsotope i = new Isotope("C");
         Assert.assertEquals("C", i.getSymbol());
     }
     
     @Test public void testIsotope_IElement() {
-    	IElement element = getBuilder().newElement("C");
+    	IElement element = new Element("C");
         IIsotope i = getBuilder().newIsotope(element);
         Assert.assertEquals("C", i.getSymbol());
     }
     
     @Test public void testIsotope_int_String_int_double_double() {
-        IIsotope i = getBuilder().newIsotope(6, "C", 12, 12.001, 80.0);
+        IIsotope i = new Isotope(6, "C", 12, 12.001, 80.0);
         Assert.assertEquals(12, i.getMassNumber().intValue());
         Assert.assertEquals("C", i.getSymbol());
         Assert.assertEquals(6, i.getAtomicNumber().intValue());
@@ -61,115 +61,17 @@ public class IsotopeTest extends ElementTest {
     }
     
     @Test public void testIsotope_String_int() {
-        IIsotope i = getBuilder().newIsotope("C", 12);
+        IIsotope i = new Isotope("C", 12);
         Assert.assertEquals(12, i.getMassNumber().intValue());
         Assert.assertEquals("C", i.getSymbol());
     }
     
     @Test public void testIsotope_int_String_double_double() {
-        IIsotope i = getBuilder().newIsotope(6, "C", 12.001, 80.0);
+        IIsotope i = new Isotope(6, "C", 12.001, 80.0);
         Assert.assertEquals("C", i.getSymbol());
         Assert.assertEquals(6, i.getAtomicNumber().intValue());
         Assert.assertEquals(12.001, i.getExactMass(), 0.001);
         Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
-    }
-    
-    @Test public void testSetNaturalAbundance_Double() {
-        IIsotope i = getBuilder().newIsotope("C");
-        i.setNaturalAbundance(80.0);
-        Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
-    }
-    @Test public void testGetNaturalAbundance() {
-        testSetNaturalAbundance_Double();
-    }
-    
-    @Test public void testSetExactMass_Double() {
-        IIsotope i = getBuilder().newIsotope("C");
-        i.setExactMass(12.03);
-        Assert.assertEquals(12.03, i.getExactMass(), 0.001);
-    }
-    @Test public void testGetExactMass() {
-        testSetExactMass_Double();
-    }
-
-    @Test public void testSetMassNumber_Integer() {
-        IIsotope i = getBuilder().newIsotope("D");
-        i.setMassNumber(2);
-        Assert.assertEquals(2, i.getMassNumber().intValue());
-    }
-    @Test public void testGetMassNumber() {
-        testSetMassNumber_Integer();
-    }
-
-    /**
-     * Method to test the clone() method
-     */
-    @Test public void testClone() throws Exception {
-        IIsotope iso = getBuilder().newIsotope("C");
-        Object clone = iso.clone();
-        Assert.assertTrue(clone instanceof IIsotope);
-
-        // test that everything has been cloned properly
-        String diff = IsotopeDiff.diff(iso, (IIsotope)clone);
-        Assert.assertNotNull(diff);
-        Assert.assertEquals(0, diff.length());
-    }
-    
-    /**
-     * Method to test the clone() method
-     */
-    @Test public void testClone_ExactMass() throws Exception {
-        IIsotope iso = getBuilder().newIsotope("C");
-        iso.setExactMass(1.0);
-        IIsotope clone = (IIsotope)iso.clone();
-        
-        // test cloning of exact mass
-        iso.setExactMass(2.0);
-        Assert.assertEquals(1.0, clone.getExactMass(), 0.001);
-    }
-    
-    /**
-     * Method to test the clone() method
-     */
-    @Test public void testClone_NaturalAbundance() throws Exception {
-        IIsotope iso = getBuilder().newIsotope("C");
-        iso.setNaturalAbundance(1.0);
-        IIsotope clone = (IIsotope)iso.clone();
-        
-        // test cloning of exact mass
-        iso.setNaturalAbundance(2.0);
-        Assert.assertEquals(1.0, clone.getNaturalAbundance(), 0.001);
-    }
-    
-    /**
-     * Method to test the clone() method
-     */
-    @Test public void testClone_MassNumber() throws Exception {
-        IIsotope iso = getBuilder().newIsotope("C");
-        iso.setMassNumber(12);
-        IIsotope clone = (IIsotope)iso.clone();
-        
-        // test cloning of exact mass
-        iso.setMassNumber(13);
-        Assert.assertEquals(12, clone.getMassNumber().intValue());
-    }
-    
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
-    @Test public void testToString() {
-        IIsotope iso = getBuilder().newIsotope("C");
-        String description = iso.toString();
-        for (int i=0; i< description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
-        }
-    }
-
-    @Test public void testCompare_Object() {
-        // Added to keep the Coverage checker happy, but since the
-        // compare(Object) method is not part of the interface, nothing is tested
-    	Assert.assertTrue(true);
     }
 
 }
