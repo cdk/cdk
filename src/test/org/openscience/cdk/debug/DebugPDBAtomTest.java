@@ -24,8 +24,14 @@
  */
 package org.openscience.cdk.debug;
 
+import javax.vecmath.Point3d;
+
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.protein.data.PDBAtomTest;
 
 /**
@@ -39,4 +45,33 @@ public class DebugPDBAtomTest extends PDBAtomTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugPDBAtom_IElement() {
+    	IElement element = new DebugElement();
+        IAtom a = getBuilder().newPDBAtom(element);
+        Assert.assertNotNull(a);
+    }
+    
+    /**
+     * Method to test the Atom(String symbol) method.
+     */
+    @Test public void testDebugPDBAtom_String() {
+    	IPDBAtom a = new DebugPDBAtom("C");
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getFractionalPoint3d());
+    }
+
+    /**
+     * Method to test the Atom(String symbol, javax.vecmath.Point3d point3D) method.
+     */
+    @Test public void testDebugPDBAtom_String_Point3d() {
+        Point3d point3d = new Point3d(1.0, 2.0, 3.0);
+
+        IPDBAtom a = new DebugPDBAtom("C", point3d);
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertEquals(point3d, a.getPoint3d());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getFractionalPoint3d());
+    }
 }

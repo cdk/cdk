@@ -24,9 +24,12 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
+import org.junit.Test;
 import org.openscience.cdk.RingTest;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IRing;
 
 /**
  * Checks the functionality of the {@link DebugRing}.
@@ -39,4 +42,33 @@ public class DebugRingTest extends RingTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugRing_int_String() {
+        IRing r = new DebugRing(5, "C");
+        Assert.assertEquals(5, r.getAtomCount());
+        Assert.assertEquals(5, r.getBondCount());
+    }
+    
+    @Test public void testDebugRing_int() {
+        IRing r = new DebugRing(5);
+        Assert.assertEquals(0, r.getAtomCount());
+        Assert.assertEquals(0, r.getBondCount());
+    }
+    
+    @Test public void testDebugRing() {
+        IRing ring = new DebugRing();
+        Assert.assertNotNull(ring);
+        Assert.assertEquals(0, ring.getAtomCount());
+        Assert.assertEquals(0, ring.getBondCount());
+    }
+
+    @Test public void testDebugRing_IAtomContainer() {
+        IAtomContainer container = getBuilder().newAtomContainer();
+        container.addAtom(getBuilder().newAtom("C"));
+        container.addAtom(getBuilder().newAtom("C"));
+        
+        IRing ring = new DebugRing(container);
+        Assert.assertNotNull(ring);
+        Assert.assertEquals(2, ring.getAtomCount());
+        Assert.assertEquals(0, ring.getBondCount());
+    }
 }
