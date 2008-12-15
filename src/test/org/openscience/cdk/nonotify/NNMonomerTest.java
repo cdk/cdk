@@ -26,14 +26,14 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.MonomerTest;
+import org.openscience.cdk.interfaces.IMonomerTest;
 
 /**
  * Checks the functionality of the {@link NNMonomer}.
  *
  * @cdk.module test-nonotify
  */
-public class NNMonomerTest extends MonomerTest {
+public class NNMonomerTest extends IMonomerTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

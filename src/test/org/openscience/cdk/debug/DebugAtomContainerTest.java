@@ -23,9 +23,9 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.AtomContainerTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerTest;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 
@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IMolecule;
  *
  * @cdk.module test-datadebug
  */
-public class DebugAtomContainerTest extends AtomContainerTest {
+public class DebugAtomContainerTest extends IAtomContainerTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

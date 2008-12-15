@@ -22,14 +22,14 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.AtomContainerTest;
+import org.openscience.cdk.interfaces.IAtomContainerTest;
 
 /**
  * Checks the functionality of the {@link NNAtomContainer}.
  *
  * @cdk.module test-nonotify
  */
-public class NNAtomContainerTest extends AtomContainerTest {
+public class NNAtomContainerTest extends IAtomContainerTest {
 
     @BeforeClass public static void setUp() {
     	  setBuilder(NoNotificationChemObjectBuilder.getInstance());

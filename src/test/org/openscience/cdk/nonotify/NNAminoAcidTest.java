@@ -23,14 +23,14 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.AminoAcidTest;
+import org.openscience.cdk.interfaces.IAminoAcidTest;
 
 /**
  * Checks the functionality of the {@link NNAminoAcid}.
  *
  * @cdk.module test-nonotify
  */
-public class NNAminoAcidTest extends AminoAcidTest {
+public class NNAminoAcidTest extends IAminoAcidTest {
 
     @BeforeClass public static void setUp() {
     	  setBuilder(NoNotificationChemObjectBuilder.getInstance());

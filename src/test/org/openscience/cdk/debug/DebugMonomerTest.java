@@ -25,15 +25,14 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.MonomerTest;
+import org.openscience.cdk.interfaces.IMonomerTest;
 
 /**
  * Checks the functionality of the {@link DebugMonomer}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugMonomerTest extends MonomerTest {
+public class DebugMonomerTest extends IMonomerTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

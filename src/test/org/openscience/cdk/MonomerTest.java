@@ -31,6 +31,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IMonomerTest;
 
 /**
  * TestCase for the Monomer class.
@@ -40,7 +41,7 @@ import org.openscience.cdk.interfaces.IMonomer;
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09
  */
-public class MonomerTest extends AtomContainerTest {
+public class MonomerTest extends IMonomerTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
@@ -51,41 +52,4 @@ public class MonomerTest extends AtomContainerTest {
         Assert.assertTrue(oMonomer != null);
 	}
 	
-	@Test public void testSetMonomerName_String() {
-        IMonomer m = getBuilder().newMonomer();
-        m.setMonomerName(new String("TRP279"));
-        Assert.assertEquals(new String("TRP279"), m.getMonomerName());
-	}
-    @Test public void testGetMonomerName() {
-        testSetMonomerName_String();
-    }
-    
-    @Test public void testSetMonomerType_String() {
-        IMonomer oMonomer = getBuilder().newMonomer();
-        oMonomer.setMonomerType(new String("TRP"));
-        Assert.assertEquals(new String("TRP"), oMonomer.getMonomerType());
-    }
-    @Test public void testGetMonomerType() {
-        testSetMonomerType_String();
-    }
-
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
-    @Test public void testToString() {
-        IMonomer oMonomer = getBuilder().newMonomer();
-        oMonomer.setMonomerType(new String("TRP"));
-        String description = oMonomer.toString();
-        for (int i=0; i< description.length(); i++) {
-            Assert.assertTrue('\n' != description.charAt(i));
-            Assert.assertTrue('\r' != description.charAt(i));
-        }
-    }
-
-    @Test public void testClone() throws Exception {
-        IMonomer oMonomer = getBuilder().newMonomer();
-        Object clone = oMonomer.clone();
-        Assert.assertTrue(clone instanceof IMonomer);
-        Assert.assertNotSame(oMonomer, clone);
-    }
 }

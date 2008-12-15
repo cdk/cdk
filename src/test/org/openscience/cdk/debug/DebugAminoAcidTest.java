@@ -25,14 +25,14 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.AminoAcidTest;
+import org.openscience.cdk.interfaces.IAminoAcidTest;
 
 /**
  * Checks the functionality of the {@link DebugAminoAcid}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugAminoAcidTest extends AminoAcidTest {
+public class DebugAminoAcidTest extends IAminoAcidTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());
