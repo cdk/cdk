@@ -24,10 +24,14 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.MoleculeTest;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IMolecule;
 
 /**
  * Checks the functionality of the AtomContainer.
@@ -38,6 +42,43 @@ public class NNMoleculeTest extends MoleculeTest {
 
     @BeforeClass public static void setUp() {
     	  setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNMolecule() {
+        IMolecule m = new NNMolecule();
+        Assert.assertTrue(m != null);
+    }
+
+    @Test public void testNNMolecule_int_int_int_int() {
+        IMolecule m = new NNMolecule(5,5,1,1);
+        Assert.assertTrue(m != null);
+        Assert.assertEquals(0, m.getAtomCount());
+        Assert.assertEquals(0, m.getBondCount());
+        Assert.assertEquals(0, m.getLonePairCount());
+        Assert.assertEquals(0, m.getSingleElectronCount());
+    }
+
+    @Test public void testNNMolecule_IAtomContainer() {
+        IAtomContainer acetone = new org.openscience.cdk.AtomContainer();
+        IAtom c1 = getBuilder().newAtom("C");
+        IAtom c2 = getBuilder().newAtom("C");
+        IAtom o = getBuilder().newAtom("O");
+        IAtom c3 = getBuilder().newAtom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        IBond b1 = getBuilder().newBond(c1, c2, IBond.Order.SINGLE);
+        IBond b2 = getBuilder().newBond(c1, o, IBond.Order.DOUBLE);
+        IBond b3 = getBuilder().newBond(c1, c3, IBond.Order.SINGLE);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        IMolecule m = new NNMolecule(acetone);
+        Assert.assertTrue(m != null);
+        Assert.assertEquals(4, m.getAtomCount());
+        Assert.assertEquals(3, m.getBondCount());
     }
 
     // Overwrite default methods: no notifications are expected!

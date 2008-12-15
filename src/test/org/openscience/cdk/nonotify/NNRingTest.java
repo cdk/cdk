@@ -24,10 +24,12 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.RingTest;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IRing;
 
 /**
  * Checks the functionality of the AtomContainer.
@@ -38,6 +40,36 @@ public class NNRingTest extends RingTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNRing_int_String() {
+        IRing r = new NNRing(5, "C");
+        Assert.assertEquals(5, r.getAtomCount());
+        Assert.assertEquals(5, r.getBondCount());
+    }
+    
+    @Test public void testNNRing_int() {
+        IRing r = new NNRing(5); // This does not create a ring!
+        Assert.assertEquals(0, r.getAtomCount());
+        Assert.assertEquals(0, r.getBondCount());
+    }
+    
+    @Test public void testNNRing() {
+        IRing ring = new NNRing();
+        Assert.assertNotNull(ring);
+        Assert.assertEquals(0, ring.getAtomCount());
+        Assert.assertEquals(0, ring.getBondCount());
+    }
+
+    @Test public void testNNRing_IAtomContainer() {
+        IAtomContainer container = getBuilder().newAtomContainer();
+        container.addAtom(getBuilder().newAtom("C"));
+        container.addAtom(getBuilder().newAtom("C"));
+        
+        IRing ring = new NNRing(container);
+        Assert.assertNotNull(ring);
+        Assert.assertEquals(2, ring.getAtomCount());
+        Assert.assertEquals(0, ring.getBondCount());
     }
 
     // Overwrite default methods: no notifications are expected!

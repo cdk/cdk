@@ -24,9 +24,12 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ElementTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * Checks the functionality of DebugElement.
@@ -37,6 +40,28 @@ public class NNElementTest extends ElementTest {
 
     @BeforeClass public static void setUp() {
     	setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNElement() {
+        IElement e = new NNElement();
+        Assert.assertTrue(e instanceof IChemObject);
+    }
+    
+    @Test public void testNNElement_IElement() {
+    	IElement element = new NNElement();
+        IElement e = getBuilder().newElement(element);
+        Assert.assertTrue(e instanceof IChemObject);
+    }
+    
+    @Test public void testNNElement_String() {
+        IElement e = new NNElement("C");
+        Assert.assertEquals("C", e.getSymbol());
+    }
+    
+    @Test public void testNNElement_String_int() {
+        IElement e = new NNElement("H", 1);
+        Assert.assertEquals("H", e.getSymbol());
+        Assert.assertEquals(1, e.getAtomicNumber().intValue());
     }
 
     // Overwrite default methods: no notifications are expected!

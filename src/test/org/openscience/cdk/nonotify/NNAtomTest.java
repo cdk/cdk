@@ -24,9 +24,15 @@
  */
 package org.openscience.cdk.nonotify;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Point3d;
+
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.AtomTest;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * Checks the functionality of the AtomContainer.
@@ -37,6 +43,45 @@ public class NNAtomTest extends AtomTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNAtom() {
+        IAtom a = new NNAtom();
+        Assert.assertNotNull(a);
+    }
+
+    @Test public void testNNAtom_IElement() {
+    	IElement element = getBuilder().newElement();
+        IAtom a = new NNAtom(element);
+        Assert.assertNotNull(a);
+    }
+
+    @Test public void testNNAtom_String() {
+        IAtom a = new NNAtom("C");
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getFractionalPoint3d());
+    }
+
+    @Test public void testNNAtom_String_Point3d() {
+        Point3d point3d = new Point3d(1.0, 2.0, 3.0);
+
+        IAtom a = new NNAtom("C", point3d);
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertEquals(point3d, a.getPoint3d());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getFractionalPoint3d());
+    }
+
+    @Test public void testNNAtom_String_Point2d() {
+        Point2d point2d = new Point2d(1.0, 2.0);
+
+        IAtom a = new NNAtom("C", point2d);
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertEquals(point2d, a.getPoint2d());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getFractionalPoint3d());
     }
 
     // Overwrite default methods: no notifications are expected!

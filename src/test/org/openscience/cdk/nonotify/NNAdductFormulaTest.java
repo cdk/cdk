@@ -24,9 +24,11 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.formula.AdductFormulaTest;
+import org.openscience.cdk.interfaces.IAdductFormula;
 
 /**
  * Checks the functionality of the {@link NNAdductFormula}.
@@ -37,6 +39,16 @@ public class NNAdductFormulaTest extends AdductFormulaTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNAdductFormula() {
+        IAdductFormula mfS = new NNAdductFormula();
+        Assert.assertNotNull(mfS);
+    }
+
+    @Test public void testNNAdductFormula_IMolecularFormula() {
+        IAdductFormula mfS = new NNAdductFormula(getBuilder().newMolecularFormula());
+        Assert.assertEquals(1, mfS.size());
     }
 
     // Overwrite default methods: no notifications are expected!

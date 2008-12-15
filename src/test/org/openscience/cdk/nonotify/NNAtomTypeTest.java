@@ -24,9 +24,12 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.AtomTypeTest;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * Checks the functionality of the AtomContainer.
@@ -37,6 +40,23 @@ public class NNAtomTypeTest extends AtomTypeTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNAtomType_String() {
+        IAtomType at = new NNAtomType("C");
+        Assert.assertEquals("C", at.getSymbol());
+    }
+
+    @Test public void testNNAtomType_IElement() {
+    	IElement element = new NNElement("C");
+        IAtomType at = getBuilder().newAtomType(element);
+        Assert.assertEquals("C", at.getSymbol());
+    }
+
+    @Test public void testNNAtomType_String_String() {
+        IAtomType at = new NNAtomType("C4", "C");
+        Assert.assertEquals("C", at.getSymbol());
+        Assert.assertEquals("C4", at.getAtomTypeName());
     }
 
     // Overwrite default methods: no notifications are expected!

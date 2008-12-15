@@ -24,10 +24,11 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.ChemModelTest;
+import org.openscience.cdk.interfaces.IChemModel;
 
 /**
  * Checks the functionality of the NNChemModel.
@@ -38,6 +39,11 @@ public class NNChemModelTest extends ChemModelTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testChemModel() {
+	    IChemModel chemModel = new NNChemModel();
+	    Assert.assertNotNull(chemModel);
     }
 
     // Overwrite default methods: no notifications are expected!
