@@ -146,18 +146,20 @@
 
     <target name="doccheck-module">
         <mkdir dir="reports/javadoc/${module}/"/>
+        <mkdir dir="${build}/src/${module}"/>
+        <copy todir="${build}/src/${module}">
+            <fileset dir="${src}/main">
+                <includesfile name="${build}/${module}.javafiles"/>
+            </fileset>
+        </copy>
         <javadoc private="false" public="true"
-                 destdir="reports/javadoc/${module}/"
-                 excludepackagenames="org.openscience.cdk.test.*">
+                 destdir="reports/javadoc/${module}/">
             <classpath refid="project.class.path" />
 
             <doclet name="com.sun.tools.doclets.doccheck.DocCheck"
                     path="develjar/doccheck.jar" />
-            <fileset dir="${src}">
-              <includesfile name="${build}/${module}.javafiles"/>
-            </fileset>
             <sourcepath>
-                <pathelement path="${src}/main"/>
+              <pathelement path="${build}/src/${module}"/>
             </sourcepath>
         </javadoc>
     </target>
