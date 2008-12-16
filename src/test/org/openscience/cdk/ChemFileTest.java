@@ -43,7 +43,7 @@ public class ChemFileTest extends IChemFileTest {
     }
 
     @Test public void testChemFile() {
-        IChemFile cs = getBuilder().newChemFile();
+        IChemFile cs = new ChemFile();
         Assert.assertNotNull(cs);
     }
 

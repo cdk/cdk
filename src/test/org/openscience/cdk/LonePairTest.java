@@ -45,13 +45,13 @@ public class LonePairTest extends ILonePairTest {
     }
 
     @Test public void testLonePair() {
-        ILonePair lp = getBuilder().newLonePair();
+        ILonePair lp = new LonePair();
         Assert.assertTrue(lp.getAtom() == null);
         Assert.assertEquals(2, lp.getElectronCount().intValue());
     }
     
     @Test public void testLonePair_IAtom() {
-        IAtom atom = getBuilder().newAtom("N");
+        IAtom atom = new Atom("N");
         ILonePair lp = getBuilder().newLonePair(atom);
         Assert.assertEquals(2, lp.getElectronCount().intValue());
         Assert.assertEquals(atom, lp.getAtom());

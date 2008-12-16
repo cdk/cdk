@@ -51,7 +51,7 @@ public class MolecularFormulaSetTest extends IMolecularFormulaSetTest {
 	 */
     @Test 
     public void testMolecularFormulaSet() {
-        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet();
+        IMolecularFormulaSet mfS = new MolecularFormulaSet();
         Assert.assertNotNull(mfS);
     }
     /**
@@ -61,7 +61,7 @@ public class MolecularFormulaSetTest extends IMolecularFormulaSetTest {
 	 */
     @Test 
     public void testMolecularFormulaSet_IMolecularFormula() {
-        IMolecularFormulaSet mfS = getBuilder().newMolecularFormulaSet(getBuilder().newMolecularFormula());
+        IMolecularFormulaSet mfS = new MolecularFormulaSet(getBuilder().newMolecularFormula());
         Assert.assertEquals(1, mfS.size());
     }
 }

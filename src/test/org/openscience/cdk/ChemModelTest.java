@@ -45,7 +45,7 @@ public class ChemModelTest extends IChemModelTest {
     }
 
     @Test public void testChemModel() {
-	    IChemModel chemModel = getBuilder().newChemModel();
+	    IChemModel chemModel = new ChemModel();
 	    Assert.assertNotNull(chemModel);
     }
 

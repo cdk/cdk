@@ -48,8 +48,8 @@ public class MonomerTest extends IMonomerTest {
     }
 
 	@Test public void testMonomer() {
-		IMonomer oMonomer = getBuilder().newMonomer();
-        Assert.assertTrue(oMonomer != null);
+		IMonomer oMonomer = new Monomer();
+        Assert.assertNotNull(oMonomer);
 	}
 	
 }
