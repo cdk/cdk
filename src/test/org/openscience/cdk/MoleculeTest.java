@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeTest;
 
 /**
  * Checks the functionality of the Molecule class.
@@ -40,7 +41,7 @@ import org.openscience.cdk.interfaces.IMolecule;
  *
  * @see org.openscience.cdk.Molecule
  */
-public class MoleculeTest extends AtomContainerTest {
+public class MoleculeTest extends IMoleculeTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
@@ -85,20 +86,4 @@ public class MoleculeTest extends AtomContainerTest {
         Assert.assertEquals(3, m.getBondCount());
     }
 
-	@Test public void testClone() throws Exception {
-        IMolecule molecule = getBuilder().newMolecule();
-        Object clone = molecule.clone();
-        Assert.assertTrue(clone instanceof IMolecule);
-	Assert.assertNotSame(molecule, clone);
-    }    
-
-    /** Test for RFC #9 */
-    @Test public void testToString() {
-        IMolecule m = getBuilder().newMolecule();
-        String description = m.toString();
-        for (int i=0; i< description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
-        }
-    }
 }

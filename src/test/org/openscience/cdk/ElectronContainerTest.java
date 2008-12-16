@@ -29,6 +29,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IElectronContainerTest;
 
 /**
  * Checks the functionality of the {@link ElectronContainer} class.
@@ -37,7 +38,7 @@ import org.openscience.cdk.interfaces.IElectronContainer;
  *
  * @see org.openscience.cdk.ElectronContainer
  */
-public class ElectronContainerTest extends ChemObjectTest {
+public class ElectronContainerTest extends IElectronContainerTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
@@ -49,32 +50,4 @@ public class ElectronContainerTest extends ChemObjectTest {
         Assert.assertEquals(0, ec.getElectronCount().intValue());
     }
     
-    @Test public void testSetElectronCount_Integer() {
-        IElectronContainer ec = getBuilder().newElectronContainer();
-        ec.setElectronCount(3);
-        Assert.assertEquals(3, ec.getElectronCount().intValue());
-    }
-    @Test public void testGetElectronCount() {
-        testSetElectronCount_Integer();
-    }
-
-    @Test public void testClone() throws Exception {
-        IElectronContainer ec = getBuilder().newElectronContainer();
-        ec.setElectronCount(2);
-        Object clone = ec.clone();
-        Assert.assertNotNull(clone);
-        Assert.assertTrue(clone instanceof IElectronContainer);
-    }
-    
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
-    @Test public void testToString() {
-        IElectronContainer at = getBuilder().newElectronContainer();
-        String description = at.toString();
-        for (int i=0; i< description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
-        }
-    }
 }

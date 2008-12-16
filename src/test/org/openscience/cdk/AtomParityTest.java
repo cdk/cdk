@@ -27,6 +27,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomParityTest;
 
 /**
  * Checks the functionality of the AtomParity class.
@@ -35,7 +36,7 @@ import org.openscience.cdk.interfaces.IAtom;
  *
  * @see org.openscience.cdk.AtomParity
  */
-public class AtomParityTest extends ChemObjectTest {
+public class AtomParityTest extends IAtomParityTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());

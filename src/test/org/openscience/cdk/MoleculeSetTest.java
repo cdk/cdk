@@ -20,10 +20,7 @@
  */
 package org.openscience.cdk;
 
-import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Test;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMoleculeSetTest;
 
 /**
@@ -39,12 +36,4 @@ public class MoleculeSetTest extends IMoleculeSetTest {
        	setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
-    @Test public void testGetMoleculeCount() {
-        IMoleculeSet som = getBuilder().newMoleculeSet();
-        som.addMolecule(getBuilder().newMolecule());
-        som.addMolecule(getBuilder().newMolecule());
-        som.addMolecule(getBuilder().newMolecule());
-        
-        Assert.assertEquals(3, som.getMoleculeCount());
-    }
 }
