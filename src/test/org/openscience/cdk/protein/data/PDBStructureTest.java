@@ -45,7 +45,7 @@ public class PDBStructureTest extends IPDBStructureTest {
     }
     
 	@Test public void testPDBStructure() {
-		IPDBStructure structure = getBuilder().newPDBStructure();
+		IPDBStructure structure = new PDBStructure();
 		Assert.assertNotNull(structure);
 	}
 }

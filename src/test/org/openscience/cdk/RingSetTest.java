@@ -44,7 +44,7 @@ public class RingSetTest extends IRingSetTest {
     }
 
     @Test public void testRingSet() {
-        IRingSet rs = getBuilder().newRingSet();
+        IRingSet rs = new RingSet();
         Assert.assertNotNull(rs);
     }
     

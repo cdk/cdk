@@ -44,7 +44,7 @@ public class MappingTest extends IMappingTest {
     }
     
     @Test public void testMapping_IChemObject_IChemObject() {
-        IMapping mapping = getBuilder().newMapping(getBuilder().newAtom(), getBuilder().newAtom());
+        IMapping mapping = new Mapping(getBuilder().newAtom(), getBuilder().newAtom());
         Assert.assertNotNull(mapping);
     }
     
