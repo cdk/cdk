@@ -25,22 +25,41 @@
  */
 package org.openscience.cdk.io.cml;
 
-import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.dict.DictRef;
-import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.BondManipulator;
-import org.xml.sax.Attributes;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-import java.io.IOException;
-import java.util.*;
+
+import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.dict.DictRef;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.BondManipulator;
+import org.xml.sax.Attributes;
 
 /**
  * Core CML 1.x and 2.x elements are parsed by this class.
@@ -136,7 +155,7 @@ public class CMLCoreModule implements ICMLModule {
         logger = new LoggingTool(this);
 		this.currentChemFile = chemFile;
         try {
-            isotopeFactory = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
+            isotopeFactory = IsotopeFactory.getInstance(chemFile.getBuilder());
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -145,16 +164,12 @@ public class CMLCoreModule implements ICMLModule {
     public CMLCoreModule(ICMLModule conv) {
     	logger = new LoggingTool(this);
         inherit(conv);
-        try {
-            isotopeFactory = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
     }
 
     public void inherit(ICMLModule convention) {
         if (convention instanceof CMLCoreModule) {
             CMLCoreModule conv = (CMLCoreModule)convention;
+            this.isotopeFactory = conv.isotopeFactory;
             
             // copy the data model
             this.currentChemFile = conv.currentChemFile;
