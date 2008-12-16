@@ -38,15 +38,18 @@ import org.junit.Test;
 public class IPDBPolymerTest extends IBioPolymerTest {
 	
 	@Test public void testGetStructures() {
-		Assert.fail("Missing unit test");
+		IPDBPolymer pdbPolymer = getBuilder().newPDBPolymer();
+		Assert.assertEquals(0, pdbPolymer.getStructures().size());
+		IPDBStructure structure = getBuilder().newPDBStructure();
+		pdbPolymer.addStructure(structure);
+		Assert.assertEquals(structure, pdbPolymer.getStructures().iterator().next());
 	}
 	
 	@Test public void testAddStructure_IPDBStructure(){
-		Assert.fail("Missing unit test");
-	}
-	
-	@Test public void testGetMonomerNamesInSequentialOrder() {
-		Assert.fail("Missing unit test");
+		IPDBPolymer pdbPolymer = getBuilder().newPDBPolymer();
+		IPDBStructure structure = getBuilder().newPDBStructure();
+		pdbPolymer.addStructure(structure);
+		Assert.assertEquals(1, pdbPolymer.getStructures().size());
 	}
 	
 	@Test public void testGetMonomerCount() {
