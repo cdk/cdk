@@ -37,7 +37,6 @@ import org.openscience.cdk.nonotify.NNBioPolymerTest;
 import org.openscience.cdk.nonotify.NNBondTest;
 import org.openscience.cdk.nonotify.NNChemFileTest;
 import org.openscience.cdk.nonotify.NNChemModelTest;
-import org.openscience.cdk.nonotify.NNChemObjectBuilderTest;
 import org.openscience.cdk.nonotify.NNChemObjectTest;
 import org.openscience.cdk.nonotify.NNChemSequenceTest;
 import org.openscience.cdk.nonotify.NNCrystalTest;
@@ -64,6 +63,7 @@ import org.openscience.cdk.nonotify.NNRingSetTest;
 import org.openscience.cdk.nonotify.NNRingTest;
 import org.openscience.cdk.nonotify.NNSingleElectronTest;
 import org.openscience.cdk.nonotify.NNStrandTest;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilderTest;
 
 /**
  * TestSuite that runs the nonotify tests.
@@ -75,7 +75,7 @@ import org.openscience.cdk.nonotify.NNStrandTest;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     NonotifyCoverageTest.class,
-    NNChemObjectBuilderTest.class,
+    NoNotificationChemObjectBuilderTest.class,
     NNAminoAcidTest.class,
     NNAtomContainerTest.class,
     NNAtomParityTest.class,
