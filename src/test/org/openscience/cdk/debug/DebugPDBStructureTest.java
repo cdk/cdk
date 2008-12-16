@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IPDBStructureTest;
 
 /**
@@ -38,4 +41,8 @@ public class DebugPDBStructureTest extends IPDBStructureTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+	@Test public void testDebugPDBStructure() {
+		IPDBStructure structure = new DebugPDBStructure();
+		Assert.assertNotNull(structure);
+	}
 }

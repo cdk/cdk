@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IRingSetTest;
 
 /**
@@ -38,4 +41,8 @@ public class DebugRingSetTest extends IRingSetTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugRingSet() {
+        IRingSet rs = new DebugRingSet();
+        Assert.assertNotNull(rs);
+    }
 }

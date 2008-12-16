@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IReactionSetTest;
 
 /**
@@ -38,4 +41,8 @@ public class DebugReactionSetTest extends IReactionSetTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugReactionSet() {
+        IReactionSet rs = new DebugReactionSet();
+        Assert.assertNotNull(rs);
+    }
 }

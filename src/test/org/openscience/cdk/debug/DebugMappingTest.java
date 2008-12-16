@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMappingTest;
 
 /**
@@ -36,6 +39,11 @@ public class DebugMappingTest extends IMappingTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testMapping_IChemObject_IChemObject() {
+        IMapping mapping =  new DebugMapping(getBuilder().newAtom(), getBuilder().newAtom());
+        Assert.assertNotNull(mapping);
     }
 
 }
