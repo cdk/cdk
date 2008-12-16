@@ -27,18 +27,18 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.MoleculeTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IMoleculeTest;
 
 /**
  * Checks the functionality of the {@link NNMolecule}.
  *
  * @cdk.module test-nonotify
  */
-public class NNMoleculeTest extends MoleculeTest {
+public class NNMoleculeTest extends IMoleculeTest {
 
     @BeforeClass public static void setUp() {
     	  setBuilder(NoNotificationChemObjectBuilder.getInstance());

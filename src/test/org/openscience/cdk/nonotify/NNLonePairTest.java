@@ -26,14 +26,14 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.LonePairTest;
+import org.openscience.cdk.interfaces.ILonePairTest;
 
 /**
  * Checks the functionality of the {@link NNLonePair}.
  *
  * @cdk.module test-nonotify
  */
-public class NNLonePairTest extends LonePairTest {
+public class NNLonePairTest extends ILonePairTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

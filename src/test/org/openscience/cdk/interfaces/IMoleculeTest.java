@@ -20,22 +20,33 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
  */
-package org.openscience.cdk.debug;
+package org.openscience.cdk.interfaces;
 
-import org.junit.BeforeClass;
-import org.openscience.cdk.interfaces.IElectronContainerTest;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
- * Checks the functionality of the {@link DebugElectronContainer}.
+ * Checks the functionality of {@link IMolecule} implementations.
  *
- * @cdk.module test-datadebug
+ * @cdk.module test-interfaces
  */
-public class DebugElectronContainerTest extends IElectronContainerTest {
+public class IMoleculeTest extends IAtomContainerTest {
 
-    @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+	@Test public void testClone() throws Exception {
+        IMolecule molecule = getBuilder().newMolecule();
+        Object clone = molecule.clone();
+        Assert.assertTrue(clone instanceof IMolecule);
+	Assert.assertNotSame(molecule, clone);
+    }    
+
+    /** Test for RFC #9 */
+    @Test public void testToString() {
+        IMolecule m = getBuilder().newMolecule();
+        String description = m.toString();
+        for (int i=0; i< description.length(); i++) {
+            Assert.assertTrue(description.charAt(i) != '\n');
+            Assert.assertTrue(description.charAt(i) != '\r');
+        }
     }
-
 }

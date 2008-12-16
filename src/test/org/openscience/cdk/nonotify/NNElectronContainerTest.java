@@ -26,14 +26,14 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.ElectronContainerTest;
+import org.openscience.cdk.interfaces.IElectronContainerTest;
 
 /**
  * Checks the functionality of the {@link NNElectronContainer}.
  *
  * @cdk.module test-nonotify
  */
-public class NNElectronContainerTest extends ElectronContainerTest {
+public class NNElectronContainerTest extends IElectronContainerTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

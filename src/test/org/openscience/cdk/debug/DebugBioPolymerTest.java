@@ -27,9 +27,9 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.BioPolymerTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.interfaces.IBioPolymerTest;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
 
@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IStrand;
  *
  * @cdk.module test-datadebug
  */
-public class DebugBioPolymerTest extends BioPolymerTest {
+public class DebugBioPolymerTest extends IBioPolymerTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

@@ -27,22 +27,22 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.PolymerTest;
 import org.openscience.cdk.interfaces.IPolymer;
+import org.openscience.cdk.interfaces.IPolymerTest;
 
 /**
  * Checks the functionality of the {@link DebugPolymer}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugPolymerTest extends PolymerTest {
+public class DebugPolymerTest extends IPolymerTest {
 
     @BeforeClass public static void setUp() {
     	  setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
     @Test public void testDebugPolymer() {
-        IPolymer polymer = getBuilder().newPolymer();
+        IPolymer polymer = new DebugPolymer();
         Assert.assertTrue(polymer instanceof DebugPolymer);
     }
 }

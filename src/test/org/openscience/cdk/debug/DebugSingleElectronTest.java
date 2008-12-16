@@ -25,15 +25,14 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.SingleElectronTest;
+import org.openscience.cdk.interfaces.ISingleElectronTest;
 
 /**
  * Checks the functionality of the {@link DebugSingleElectron}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugSingleElectronTest extends SingleElectronTest {
+public class DebugSingleElectronTest extends ISingleElectronTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

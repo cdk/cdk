@@ -25,15 +25,14 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.LonePairTest;
+import org.openscience.cdk.interfaces.ILonePairTest;
 
 /**
  * Checks the functionality of the {@link DebugLonePair}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugLonePairTest extends LonePairTest {
+public class DebugLonePairTest extends ILonePairTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());
