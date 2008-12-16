@@ -29,7 +29,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IReactionScheme;
-import org.openscience.cdk.interfaces.IReactionSetTest;
+import org.openscience.cdk.interfaces.IReactionSchemeTest;
 
 /**
  * Checks the functionality of the MolecularFormulaSet class.
@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IReactionSetTest;
  *
  * @see ReactionScheme
  */
-public class ReactionSchemeTest extends IReactionSetTest {
+public class ReactionSchemeTest extends IReactionSchemeTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
