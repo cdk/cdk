@@ -31,9 +31,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * TestCase for the Monomer class.
+ * TestCase for {@link IMonomer} implementations.
  *
- * @cdk.module test-data
+ * @cdk.module test-interfaces
  *
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09

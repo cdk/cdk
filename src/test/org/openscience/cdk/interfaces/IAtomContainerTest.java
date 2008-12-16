@@ -32,7 +32,7 @@ import org.openscience.cdk.CDKConstants;
 /**
  * Checks the functionality of the AtomContainer.
  *
- * @cdk.module test-data
+ * @cdk.module test-interfaces
  */
 public class IAtomContainerTest extends IChemObjectTest {
 

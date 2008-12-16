@@ -28,9 +28,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * TestCase for the AminoAcid class.
+ * TestCase for {@link IAminoAcid} implementations.
  *
- * @cdk.module test-data
+ * @cdk.module test-interfaces
  *
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09

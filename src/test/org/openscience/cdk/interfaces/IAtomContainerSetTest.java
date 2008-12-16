@@ -26,9 +26,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Checks the functionality of {@link IMoleculeSet} implementations.
+ * Checks the functionality of {@link IAtomContainerSet} implementations.
  *
- * @cdk.module test-data
+ * @cdk.module test-interfaces
  */
 public abstract class IAtomContainerSetTest extends IChemObjectTest {
 

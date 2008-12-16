@@ -27,9 +27,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Checks the functionality of the AtomParity class.
+ * Checks the functionality of {@link IAtomParity} implementations.
  *
- * @cdk.module test-data
+ * @cdk.module test-interfaces
  *
  * @see org.openscience.cdk.AtomParity
  */
