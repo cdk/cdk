@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IChemSequenceTest;
 
 /**
@@ -38,4 +41,8 @@ public class DebugChemSequenceTest extends IChemSequenceTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugChemSequence() {
+        IChemSequence cs = new DebugChemSequence();
+        Assert.assertNotNull(cs);
+    }
 }

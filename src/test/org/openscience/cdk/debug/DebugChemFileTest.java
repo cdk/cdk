@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemFileTest;
 
 /**
@@ -38,4 +41,8 @@ public class DebugChemFileTest extends IChemFileTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugChemFile() {
+        IChemFile cs = new DebugChemFile();
+        Assert.assertNotNull(cs);
+    }
 }

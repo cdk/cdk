@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaTest;
 
 /**
@@ -38,4 +41,8 @@ public class DebugMolecularFormulaTest extends IMolecularFormulaTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugMolecularFormula() {
+        IMolecularFormula mf = new DebugMolecularFormula();
+    	Assert.assertNotNull(mf);
+    }
 }

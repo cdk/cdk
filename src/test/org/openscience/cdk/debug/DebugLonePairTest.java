@@ -24,7 +24,11 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ILonePairTest;
 
 /**
@@ -38,4 +42,17 @@ public class DebugLonePairTest extends ILonePairTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugLonePair() {
+        ILonePair lp = new DebugLonePair();
+        Assert.assertTrue(lp.getAtom() == null);
+        Assert.assertEquals(2, lp.getElectronCount().intValue());
+    }
+    
+    @Test public void testDebugLonePair_IAtom() {
+        IAtom atom = getBuilder().newAtom("N");
+        ILonePair lp = new DebugLonePair(atom);
+        Assert.assertEquals(2, lp.getElectronCount().intValue());
+        Assert.assertEquals(atom, lp.getAtom());
+        Assert.assertTrue(lp.contains(atom));
+    }
 }

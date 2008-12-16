@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IMonomerTest;
 
 /**
@@ -38,4 +41,8 @@ public class DebugMonomerTest extends IMonomerTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+	@Test public void testDebugMonomer() {
+		IMonomer oMonomer = new DebugMonomer();
+        Assert.assertNotNull(oMonomer);
+	}
 }

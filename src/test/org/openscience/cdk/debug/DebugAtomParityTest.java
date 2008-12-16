@@ -27,6 +27,8 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.AtomParity;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomParityTest;
 
@@ -49,4 +51,19 @@ public class DebugAtomParityTest extends IAtomParityTest {
     	);
     }
 
+    @Test public void testDebugAtomParity_IAtom_IAtom_IAtom_IAtom_IAtom_int() {
+        IAtom carbon = getBuilder().newAtom("C");
+        carbon.setID("central");
+        IAtom carbon1 = getBuilder().newAtom("C");
+        carbon1.setID("c1");
+        IAtom carbon2 = getBuilder().newAtom("C");
+        carbon2.setID("c2");
+        IAtom carbon3 = getBuilder().newAtom("C");
+        carbon3.setID("c3");
+        IAtom carbon4 = getBuilder().newAtom("C");
+        carbon4.setID("c4");
+        int parityInt = 1;
+        AtomParity parity = new DebugAtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
+        Assert.assertNotNull(parity);
+    }
 }
