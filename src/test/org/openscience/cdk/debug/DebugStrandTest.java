@@ -25,15 +25,14 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.StrandTest;
+import org.openscience.cdk.interfaces.IStrandTest;
 
 /**
  * Checks the functionality of the {@link DebugStrand}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugStrandTest extends StrandTest {
+public class DebugStrandTest extends IStrandTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

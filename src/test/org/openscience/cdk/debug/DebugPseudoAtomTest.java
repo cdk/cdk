@@ -30,16 +30,16 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.PseudoAtomTest;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IPseudoAtomTest;
 
 /**
  * Checks the functionality of the {@link DebugPseudoAtom}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugPseudoAtomTest extends PseudoAtomTest {
+public class DebugPseudoAtomTest extends IPseudoAtomTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

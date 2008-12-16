@@ -25,15 +25,14 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.RingSetTest;
+import org.openscience.cdk.interfaces.IRingSetTest;
 
 /**
  * Checks the functionality of the {@link DebugRingSet}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugRingSetTest extends RingSetTest {
+public class DebugRingSetTest extends IRingSetTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

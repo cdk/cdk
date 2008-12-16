@@ -27,18 +27,18 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.CrystalTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.ICrystalTest;
 
 /**
  * Checks the functionality of the {@link DebugCrystal}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugCrystalTest extends CrystalTest {
+public class DebugCrystalTest extends ICrystalTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

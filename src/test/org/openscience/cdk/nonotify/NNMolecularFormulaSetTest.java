@@ -25,14 +25,14 @@
 package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.formula.MolecularFormulaSetTest;
+import org.openscience.cdk.interfaces.IMolecularFormulaSetTest;
 
 /**
  * Checks the functionality of the {@link NNMolecularFormulaSet}.
  *
  * @cdk.module test-nonotify
  */
-public class NNMolecularFormulaSetTest extends MolecularFormulaSetTest {
+public class NNMolecularFormulaSetTest extends IMolecularFormulaSetTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

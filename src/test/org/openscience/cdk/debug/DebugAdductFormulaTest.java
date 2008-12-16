@@ -25,14 +25,14 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.formula.AdductFormulaTest;
+import org.openscience.cdk.interfaces.IAdductFormulaTest;
 
 /**
  * Checks the functionality of the {@link DebugAdductFormula}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugAdductFormulaTest extends AdductFormulaTest {
+public class DebugAdductFormulaTest extends IAdductFormulaTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

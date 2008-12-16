@@ -27,16 +27,16 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.RingTest;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingTest;
 
 /**
  * Checks the functionality of the {@link DebugRing}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugRingTest extends RingTest {
+public class DebugRingTest extends IRingTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

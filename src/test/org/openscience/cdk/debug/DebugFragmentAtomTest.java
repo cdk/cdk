@@ -25,14 +25,14 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.FragmentAtomTest;
+import org.openscience.cdk.interfaces.IFragmentAtomTest;
 
 /**
  * Checks the functionality of the {@link DebugFragmentAtom}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugFragmentAtomTest extends FragmentAtomTest {
+public class DebugFragmentAtomTest extends IFragmentAtomTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

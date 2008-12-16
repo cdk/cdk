@@ -26,14 +26,14 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.protein.data.PDBMonomerTest;
+import org.openscience.cdk.interfaces.IPDBMonomerTest;
 
 /**
  * Checks the functionality of the {@link NNPDBMonomer}.
  *
  * @cdk.module test-nonotify
  */
-public class NNPDBMonomerTest extends PDBMonomerTest {
+public class NNPDBMonomerTest extends IPDBMonomerTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

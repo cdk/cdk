@@ -25,15 +25,14 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.protein.data.PDBPolymerTest;
+import org.openscience.cdk.interfaces.IPDBPolymerTest;
 
 /**
  * Checks the functionality of the {@link DebugPDBPolymer}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugPDBPolymerTest extends PDBPolymerTest {
+public class DebugPDBPolymerTest extends IPDBPolymerTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

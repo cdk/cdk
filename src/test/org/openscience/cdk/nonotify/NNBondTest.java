@@ -26,14 +26,14 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.BondTest;
+import org.openscience.cdk.interfaces.IBondTest;
 
 /**
  * Checks the functionality of the {@link NNBond}.
  *
  * @cdk.module test-nonotify
  */
-public class NNBondTest extends BondTest {
+public class NNBondTest extends IBondTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

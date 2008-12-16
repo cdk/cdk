@@ -27,21 +27,21 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.ChemModelTest;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemModelTest;
 
 /**
  * Checks the functionality of the {@link NNChemModel}.
  *
  * @cdk.module test-nonotify
  */
-public class NNChemModelTest extends ChemModelTest {
+public class NNChemModelTest extends IChemModelTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
     }
 
-    @Test public void testChemModel() {
+    @Test public void testNNChemModel() {
 	    IChemModel chemModel = new NNChemModel();
 	    Assert.assertNotNull(chemModel);
     }

@@ -25,15 +25,14 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.ReactionSetTest;
+import org.openscience.cdk.interfaces.IReactionSetTest;
 
 /**
  * Checks the functionality of the {@link DebugReactionSet}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugReactionSetTest extends ReactionSetTest {
+public class DebugReactionSetTest extends IReactionSetTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

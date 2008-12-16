@@ -32,14 +32,14 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPDBAtom;
-import org.openscience.cdk.protein.data.PDBAtomTest;
+import org.openscience.cdk.interfaces.IPDBAtomTest;
 
 /**
  * Checks the functionality of the {@link DebugPDBAtom}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugPDBAtomTest extends PDBAtomTest {
+public class DebugPDBAtomTest extends IPDBAtomTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

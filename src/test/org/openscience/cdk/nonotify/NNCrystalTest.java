@@ -26,14 +26,14 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.CrystalTest;
+import org.openscience.cdk.interfaces.ICrystalTest;
 
 /**
  * Checks the functionality of the {@link NNCrystal}.
  *
  * @cdk.module test-nonotify
  */
-public class NNCrystalTest extends CrystalTest {
+public class NNCrystalTest extends ICrystalTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

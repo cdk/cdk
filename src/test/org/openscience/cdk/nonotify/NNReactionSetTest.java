@@ -26,14 +26,14 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.ReactionSetTest;
+import org.openscience.cdk.interfaces.IReactionSetTest;
 
 /**
  * Checks the functionality of the {@link NNReactionSet}.
  *
  * @cdk.module test-nonotify
  */
-public class NNReactionSetTest extends ReactionSetTest {
+public class NNReactionSetTest extends IReactionSetTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

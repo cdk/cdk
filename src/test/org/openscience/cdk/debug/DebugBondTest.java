@@ -27,17 +27,17 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.BondTest;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBondTest;
 
 /**
  * Checks the functionality of the {@link DebugBond}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugBondTest extends BondTest {
+public class DebugBondTest extends IBondTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

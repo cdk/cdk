@@ -25,7 +25,7 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.ReactionSchemeTest;
+import org.openscience.cdk.interfaces.IReactionSchemeTest;
 
 
 /**
@@ -33,7 +33,7 @@ import org.openscience.cdk.ReactionSchemeTest;
  *
  * @cdk.module test-datadebug
  */
-public class DebugReactionSchemeTest extends ReactionSchemeTest {
+public class DebugReactionSchemeTest extends IReactionSchemeTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

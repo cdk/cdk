@@ -27,15 +27,15 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.formula.AdductFormulaTest;
 import org.openscience.cdk.interfaces.IAdductFormula;
+import org.openscience.cdk.interfaces.IAdductFormulaTest;
 
 /**
  * Checks the functionality of the {@link NNAdductFormula}.
  *
  * @cdk.module test-nonotify
  */
-public class NNAdductFormulaTest extends AdductFormulaTest {
+public class NNAdductFormulaTest extends IAdductFormulaTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

@@ -25,14 +25,14 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.MappingTest;
+import org.openscience.cdk.interfaces.IMappingTest;
 
 /**
  * Checks the functionality of the {@link DebugMapping}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugMappingTest extends MappingTest {
+public class DebugMappingTest extends IMappingTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

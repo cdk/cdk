@@ -25,14 +25,14 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.formula.MolecularFormulaSetTest;
+import org.openscience.cdk.interfaces.IMolecularFormulaSetTest;
 
 /**
  * Checks the functionality of the {@link DebugMolecularFormulaSet}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugMolecularFormulaSetTest extends MolecularFormulaSetTest {
+public class DebugMolecularFormulaSetTest extends IMolecularFormulaSetTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

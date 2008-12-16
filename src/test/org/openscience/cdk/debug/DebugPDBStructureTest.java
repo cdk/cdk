@@ -25,15 +25,14 @@
 package org.openscience.cdk.debug;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.protein.data.PDBStructureTest;
+import org.openscience.cdk.interfaces.IPDBStructureTest;
 
 /**
  * Checks the functionality of the {@link DebugPDBStructure}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugPDBStructureTest extends PDBStructureTest {
+public class DebugPDBStructureTest extends IPDBStructureTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

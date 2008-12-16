@@ -23,18 +23,18 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilderTest;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilderTest;
 
 /**
  * Checks the functionality of the {@link NoNotificationChemObjectBuilder}.
  *
  * @cdk.module test-nonotify
  */
-public class NoNotificationChemObjectBuilderTest extends DefaultChemObjectBuilderTest {
+public class NoNotificationChemObjectBuilderTest extends IChemObjectBuilderTest {
 
     @BeforeClass public static void setUp() {
-    	DefaultChemObjectBuilderTest.rootObject = new NNChemObject();
+    	setRootObject(new NNChemObject());
     }
 
     @Test public void testGetInstance() {

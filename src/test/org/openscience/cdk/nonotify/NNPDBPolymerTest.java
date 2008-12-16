@@ -30,15 +30,15 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBPolymer;
+import org.openscience.cdk.interfaces.IPDBPolymerTest;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.protein.data.PDBPolymerTest;
 
 /**
  * Checks the functionality of the {@link NNPDBPolymer}.
  *
  * @cdk.module test-nonotify
  */
-public class NNPDBPolymerTest extends PDBPolymerTest {
+public class NNPDBPolymerTest extends IPDBPolymerTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

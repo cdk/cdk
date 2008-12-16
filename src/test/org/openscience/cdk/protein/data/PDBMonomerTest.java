@@ -28,8 +28,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.MonomerTest;
 import org.openscience.cdk.interfaces.IPDBMonomer;
+import org.openscience.cdk.interfaces.IPDBMonomerTest;
 
 /**
  * Checks the functionality of the PDBMonomer class.
@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IPDBMonomer;
  *
  * @see PDBPolymer
  */
-public class PDBMonomerTest extends MonomerTest {
+public class PDBMonomerTest extends IPDBMonomerTest {
 	
     @BeforeClass public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
@@ -50,55 +50,4 @@ public class PDBMonomerTest extends MonomerTest {
 		Assert.assertEquals(monomer.getICode(), null);
 	}
 	
-	@Test public void testSetICode_String() {
-		IPDBMonomer monomer = getBuilder().newPDBMonomer();
-		monomer.setICode(null);
-		Assert.assertNull(monomer.getICode());
-	}
-	
-	@Test public void testGetICode() {
-		IPDBMonomer monomer = getBuilder().newPDBMonomer();
-		Assert.assertNull(monomer.getICode());
-		monomer.setICode("iCode");
-		Assert.assertNotNull(monomer.getICode());
-		Assert.assertEquals("iCode", monomer.getICode());
-	}
-	
-	@Test public void testSetChainID_String() {
-		IPDBMonomer monomer = getBuilder().newPDBMonomer();
-		monomer.setChainID(null);
-		Assert.assertNull(monomer.getChainID());
-	}
-	
-	@Test public void testGetChainID() {
-		IPDBMonomer monomer = getBuilder().newPDBMonomer();
-		Assert.assertNull(monomer.getChainID());
-		monomer.setChainID("chainA");
-		Assert.assertNotNull(monomer.getChainID());
-		Assert.assertEquals("chainA", monomer.getChainID());
-	}
-	
-	@Test public void testSetResSeq_String() {
-		IPDBMonomer monomer = getBuilder().newPDBMonomer();
-		monomer.setResSeq(null);
-		Assert.assertNull(monomer.getResSeq());
-	}
-	
-	@Test public void testGetResSeq() {
-		IPDBMonomer monomer = getBuilder().newPDBMonomer();
-		Assert.assertNull(monomer.getResSeq());
-		monomer.setResSeq("reqSeq");
-		Assert.assertNotNull(monomer.getResSeq());
-		Assert.assertEquals("reqSeq", monomer.getResSeq());
-	}
-	
-	@Test public void testToString() {
-	    IPDBMonomer monomer = getBuilder().newPDBMonomer();
-        String description = monomer.toString();
-        for (int i=0; i< description.length(); i++) {
-            Assert.assertTrue('\n' != description.charAt(i));
-            Assert.assertTrue('\r' != description.charAt(i));
-        }
-	}
-
 }

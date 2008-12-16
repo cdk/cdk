@@ -26,14 +26,14 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.protein.data.PDBAtomTest;
+import org.openscience.cdk.interfaces.IPDBAtomTest;
 
 /**
  * Checks the functionality of the {@link NNPDBAtom}.
  *
  * @cdk.module test-nonotify
  */
-public class NNPDBAtomTest extends PDBAtomTest {
+public class NNPDBAtomTest extends IPDBAtomTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

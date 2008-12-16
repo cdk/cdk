@@ -28,8 +28,8 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilderTest;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObjectBuilderTest;
 import org.openscience.cdk.interfaces.IPDBStructure;
 
 /**
@@ -37,10 +37,10 @@ import org.openscience.cdk.interfaces.IPDBStructure;
  *
  * @cdk.module test-datadebug
  */
-public class DebugChemObjectBuilderTest extends DefaultChemObjectBuilderTest {
+public class DebugChemObjectBuilderTest extends IChemObjectBuilderTest {
 
     @BeforeClass public static void setUp() {
-    	DefaultChemObjectBuilderTest.rootObject = new org.openscience.cdk.debug.DebugChemObject();
+    	setRootObject(new DebugChemObject());
     }
 
     @Test public void testGetInstance() {

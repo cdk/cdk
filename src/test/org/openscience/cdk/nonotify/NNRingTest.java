@@ -27,16 +27,16 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.RingTest;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingTest;
 
 /**
  * Checks the functionality of the {@link NNRing}.
  *
  * @cdk.module test-nonotify
  */
-public class NNRingTest extends RingTest {
+public class NNRingTest extends IRingTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

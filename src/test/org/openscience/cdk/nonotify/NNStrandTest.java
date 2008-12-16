@@ -26,14 +26,14 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.StrandTest;
+import org.openscience.cdk.interfaces.IStrandTest;
 
 /**
  * Checks the functionality of the {@link NNStrand}.
  *
  * @cdk.module test-nonotify
  */
-public class NNStrandTest extends StrandTest {
+public class NNStrandTest extends IStrandTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

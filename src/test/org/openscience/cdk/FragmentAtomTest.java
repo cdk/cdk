@@ -23,16 +23,15 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IFragmentAtom;
+import org.openscience.cdk.interfaces.IFragmentAtomTest;
 
 /**
  * Checks the functionality of the FragmentAtom.
  *
  * @cdk.module test-data
  */
-public class FragmentAtomTest extends PseudoAtomTest {
+public class FragmentAtomTest extends IFragmentAtomTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
@@ -45,61 +44,5 @@ public class FragmentAtomTest extends PseudoAtomTest {
         IFragmentAtom a = getBuilder().newFragmentAtom();
         Assert.assertNotNull(a);
     }
-    
-    @Test public void testGetFragment() {
-    	IFragmentAtom a = getBuilder().newFragmentAtom();
-    	// make sure that we start with a not-null, but empty container
-    	Assert.assertNotNull(a.getFragment());
-    	Assert.assertEquals(0, a.getFragment().getAtomCount());
-    	Assert.assertEquals(0, a.getFragment().getBondCount());
-    }
-    
-    @Test public void testIsExpanded() {
-    	IFragmentAtom a = getBuilder().newFragmentAtom();
-    	Assert.assertNotNull(a);
-    	Assert.assertFalse(a.isExpanded()); // test the default state
-    }
-    
-    @Test public void testSetExpanded_boolean() {
-    	IFragmentAtom a = getBuilder().newFragmentAtom();
-    	Assert.assertNotNull(a);
-        a.setExpanded(true);
-        Assert.assertTrue(a.isExpanded());
-        a.setExpanded(false);
-        Assert.assertFalse(a.isExpanded());
-    }
-    
-    @Test public void testSetFragment_IAtomContainer() {
-    	IFragmentAtom a = getBuilder().newFragmentAtom();
-    	Assert.assertNotNull(a);
-    	IAtomContainer container = getBuilder().newAtomContainer();
-    	container.addAtom(getBuilder().newAtom("N"));
-    	container.addAtom(getBuilder().newAtom("C"));
-    	container.addBond(0, 1, IBond.Order.TRIPLE);
-    	a.setFragment(container);
-    	Assert.assertEquals(container, a.getFragment());
-    }
-    
-    @Test public void testGetExactMass() {
-    	IFragmentAtom a = getBuilder().newFragmentAtom();
-    	Assert.assertNotNull(a);
-    	IAtomContainer container = getBuilder().newAtomContainer();
-    	container.addAtom(getBuilder().newAtom("N"));
-    	container.getAtom(0).setExactMass(5.5);
-    	container.addAtom(getBuilder().newAtom("C"));
-    	container.getAtom(1).setExactMass(3.5);
-    	container.addBond(0, 1, IBond.Order.TRIPLE);
-    	a.setFragment(container);
-    	Assert.assertEquals(9.0, a.getExactMass(), 0.0001);
-    }
 
-    /** Test for RFC #9 */
-    @Test public void testToString() {
-        IFragmentAtom bond = getBuilder().newFragmentAtom();
-        String description = bond.toString();
-        for (int i=0; i< description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
-        }
-    }
 }

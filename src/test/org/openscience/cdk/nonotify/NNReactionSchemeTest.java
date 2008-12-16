@@ -22,17 +22,14 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.ReactionSchemeTest;
-import org.openscience.cdk.nonotify.NNChemObjectTestHelper;
-import org.openscience.cdk.nonotify.NNReactionScheme;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
+import org.openscience.cdk.interfaces.IReactionSchemeTest;
 
 /**
  * Checks the functionality of the {@link NNReactionScheme}.
  *
  * @cdk.module test-nonotify
  */
-public class NNReactionSchemeTest extends ReactionSchemeTest {
+public class NNReactionSchemeTest extends IReactionSchemeTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

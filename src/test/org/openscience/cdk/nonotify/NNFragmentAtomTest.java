@@ -26,14 +26,14 @@ package org.openscience.cdk.nonotify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.FragmentAtomTest;
+import org.openscience.cdk.interfaces.IFragmentAtomTest;
 
 /**
  * Checks the functionality of the {@link NNFragmentAtom}.
  *
  * @cdk.module test-nonotify
  */
-public class NNFragmentAtomTest extends FragmentAtomTest {
+public class NNFragmentAtomTest extends IFragmentAtomTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
