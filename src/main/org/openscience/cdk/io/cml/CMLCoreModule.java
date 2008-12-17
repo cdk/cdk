@@ -25,7 +25,6 @@
  */
 package org.openscience.cdk.io.cml;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -39,7 +38,6 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -144,8 +142,6 @@ public class CMLCoreModule implements ICMLModule {
     protected double[] unitcellparams;
     protected int crystalScalar;
 
-    private IsotopeFactory isotopeFactory;
-
 //    private Vector3d aAxis;
 //    private Vector3d bAxis;
 //    private Vector3d cAxis;
@@ -154,11 +150,6 @@ public class CMLCoreModule implements ICMLModule {
     public CMLCoreModule(IChemFile chemFile) {
         logger = new LoggingTool(this);
 		this.currentChemFile = chemFile;
-        try {
-            isotopeFactory = IsotopeFactory.getInstance(chemFile.getBuilder());
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
     }
     
     public CMLCoreModule(ICMLModule conv) {
@@ -169,7 +160,6 @@ public class CMLCoreModule implements ICMLModule {
     public void inherit(ICMLModule convention) {
         if (convention instanceof CMLCoreModule) {
             CMLCoreModule conv = (CMLCoreModule)convention;
-            this.isotopeFactory = conv.isotopeFactory;
             
             // copy the data model
             this.currentChemFile = conv.currentChemFile;
@@ -1468,11 +1458,6 @@ public class CMLCoreModule implements ICMLModule {
 
 //            cdo.endObject("Atom");
 
-            if (currentAtom.getSymbol() != null &&
-                isotopeFactory.getMajorIsotope(currentAtom.getSymbol()) != null) {
-                currentAtom = isotopeFactory.configure(currentAtom);
-            }
-            
             currentMolecule.addAtom(currentAtom);
         }
         if (elid.size() > 0) {
