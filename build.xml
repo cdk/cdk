@@ -260,8 +260,17 @@
         </target>
 
         <target id="compile-needed-test" name="compile-needed-test">
+            <if>
+                <matches string="${module}" pattern="^test"/>
+                <then>
+                    <property name="source" value="src/test"/>
+                </then>
+                <else>
+                    <property name="source" value="src/main"/>
+                </else>
+            </if>
             <uptodate property="module-uptodate" targetfile="${dist}/jar/cdk-${module}.jar">
-                <srcfiles dir="${src}/main/">
+                <srcfiles dir="${source}">
                     <includesfile name="${build}/${module}.javafiles"/>
                 </srcfiles>
             </uptodate>
