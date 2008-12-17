@@ -171,7 +171,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     }
 
     /**
-     * Bug #1610997 says the modelbulder does not work if 2d coordinates exist before - we test this here
+     * Bug #1610997 says the modelbuilder does not work if 2d coordinates exist before - we test this here
      * 
      * @cdk.bug 1610997
      */

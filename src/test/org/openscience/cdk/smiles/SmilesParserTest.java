@@ -102,7 +102,6 @@ public class SmilesParserTest extends CDKTestCase {
     }
   }
 
-  /** @cdk.bug 1579229 */
   @Test (timeout=1000)
   public void testBug1579229() throws Exception {
     String smiles = "c1c(c23)ccc(c34)ccc4ccc2c1";

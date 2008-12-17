@@ -73,7 +73,6 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
  * @cdk.created  2006-5-05
  * @cdk.module   reaction
  * @cdk.svnrev   $Revision$
- * @cdk.bug      1728830
  * 
  * @see org.openscience.cdk.reaction.IReactionProcess
  */

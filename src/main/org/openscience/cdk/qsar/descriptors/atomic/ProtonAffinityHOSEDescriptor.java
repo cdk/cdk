@@ -66,7 +66,6 @@ import java.util.StringTokenizer;
  * @cdk.svnrev   $Revision: 10995 $
  * @cdk.set      qsar-descriptors
  * @cdk.dictref  qsar-descriptors:protonaffinity
- * @cdk.bug      1860497
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.ProtonAffinityHOSEDescriptorTest")
 public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {

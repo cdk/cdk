@@ -53,7 +53,6 @@ import org.openscience.cdk.interfaces.IAtomType.Hybridization;
  * @cdk.module     core
  * @cdk.svnrev     $Revision$
  * @cdk.bug        1802998
- * @cdk.bug        1851197
  */
 @TestClass("org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest")
 public class CDKAtomTypeMatcher implements IAtomTypeMatcher {

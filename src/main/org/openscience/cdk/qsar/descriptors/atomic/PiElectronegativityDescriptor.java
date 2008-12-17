@@ -62,8 +62,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:piElectronegativity
- * @cdk.bug     1558660
- * @cdk.bug     1701065
+ *
  * @see Electronegativity
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.PiElectronegativityDescriptorTest")

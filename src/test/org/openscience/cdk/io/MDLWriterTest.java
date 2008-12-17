@@ -67,6 +67,7 @@ public class MDLWriterTest extends ChemObjectIOTest {
 
     /**
      * @cdk.bug 890456
+     * @cdk.bug 1524466
      */
     @Test public void testBug890456() throws Exception {
         StringWriter writer = new StringWriter();
