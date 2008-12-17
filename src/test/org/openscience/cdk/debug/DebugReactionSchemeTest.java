@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSchemeTest;
 
 
@@ -39,4 +42,8 @@ public class DebugReactionSchemeTest extends IReactionSchemeTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testReactionScheme() {
+        IReactionScheme scheme = new DebugReactionScheme();
+        Assert.assertNotNull(scheme);
+    }
 }

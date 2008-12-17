@@ -41,7 +41,7 @@ public class DebugChemModelTest extends IChemModelTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
-    @Test public void testChemModel() {
+    @Test public void testDebugChemModel() {
 	    IChemModel chemModel = new DebugChemModel();
 	    Assert.assertNotNull(chemModel);
     }

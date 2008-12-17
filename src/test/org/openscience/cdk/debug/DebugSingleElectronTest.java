@@ -24,7 +24,11 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.ISingleElectronTest;
 
 /**
@@ -38,4 +42,17 @@ public class DebugSingleElectronTest extends ISingleElectronTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugSingleElectron() {
+        ISingleElectron radical = new DebugSingleElectron();
+        Assert.assertNull(radical.getAtom());
+        Assert.assertEquals(1, radical.getElectronCount().intValue());
+    }
+    
+    @Test public void testDebugSingleElectron_IAtom() {
+        IAtom atom = getBuilder().newAtom("N");
+        ISingleElectron radical = new DebugSingleElectron(atom);
+        Assert.assertEquals(1, radical.getElectronCount().intValue());
+        Assert.assertEquals(atom, radical.getAtom());
+        Assert.assertTrue(radical.contains(atom));
+    }
 }

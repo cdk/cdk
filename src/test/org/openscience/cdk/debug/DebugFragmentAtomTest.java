@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IFragmentAtom;
 import org.openscience.cdk.interfaces.IFragmentAtomTest;
 
 /**
@@ -38,4 +41,8 @@ public class DebugFragmentAtomTest extends IFragmentAtomTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugFragmentAtom() {
+        IFragmentAtom a = new DebugFragmentAtom();
+        Assert.assertNotNull(a);
+    }
 }

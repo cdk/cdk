@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomContainerSetTest;
 
 /**
@@ -38,4 +41,9 @@ public class DebugAtomContainerSetTest extends IAtomContainerSetTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testAtomContainerSet() {
+        IAtomContainerSet som = new DebugAtomContainerSet();
+        Assert.assertNotNull(som);
+        Assert.assertEquals(0, som.getAtomContainerCount());
+    }
 }

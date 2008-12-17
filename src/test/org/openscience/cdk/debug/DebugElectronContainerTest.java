@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElectronContainerTest;
 
 /**
@@ -38,4 +41,9 @@ public class DebugElectronContainerTest extends IElectronContainerTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugElectronContainer() {
+        IElectronContainer ec = new DebugElectronContainer();
+        Assert.assertNotNull(ec);
+        Assert.assertEquals(0, ec.getElectronCount().intValue());
+    }
 }

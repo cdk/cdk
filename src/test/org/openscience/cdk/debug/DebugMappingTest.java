@@ -41,7 +41,7 @@ public class DebugMappingTest extends IMappingTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
-    @Test public void testMapping_IChemObject_IChemObject() {
+    @Test public void testDebugMapping_IChemObject_IChemObject() {
         IMapping mapping =  new DebugMapping(getBuilder().newAtom(), getBuilder().newAtom());
         Assert.assertNotNull(mapping);
     }

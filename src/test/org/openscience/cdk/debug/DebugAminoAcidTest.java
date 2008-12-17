@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAminoAcidTest;
 
 /**
@@ -38,4 +41,8 @@ public class DebugAminoAcidTest extends IAminoAcidTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test public void testDebugAminoAcid() {
+        IAminoAcid oAminoAcid = new DebugAminoAcid();
+        Assert.assertNotNull(oAminoAcid);
+    }
 }
