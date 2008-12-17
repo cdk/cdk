@@ -73,7 +73,7 @@ public class IsotopePattern {
     /**
      * Returns the a isotopes given a specific position.
      * 
-     * @param  The position
+     * @param  position position of the isotope to return
      * @return The isotope
      */
 	@TestMethod("testGetIsotope_int")

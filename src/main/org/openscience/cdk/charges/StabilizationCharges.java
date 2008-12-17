@@ -60,7 +60,7 @@ public class StabilizationCharges {
     /**
      * calculate the stabilization of orbitals when they contain deficiency of charge.
      *
-     * @param container  IAtomContainer
+     * @param atomContainer  IAtomContainer
      * @param atom       IAtom for which effective atom StabilizationCharges 
      *                   factor should be calculated     
      * 
