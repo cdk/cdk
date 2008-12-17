@@ -42,7 +42,7 @@ public class DebugReactionSchemeTest extends IReactionSchemeTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
-    @Test public void testReactionScheme() {
+    @Test public void testDebugReactionScheme() {
         IReactionScheme scheme = new DebugReactionScheme();
         Assert.assertNotNull(scheme);
     }
