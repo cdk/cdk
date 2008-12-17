@@ -1468,7 +1468,10 @@ public class CMLCoreModule implements ICMLModule {
 
 //            cdo.endObject("Atom");
 
-            currentAtom = isotopeFactory.configure(currentAtom);
+            if (currentAtom.getSymbol() != null &&
+                isotopeFactory.getMajorIsotope(currentAtom.getSymbol()) != null) {
+                currentAtom = isotopeFactory.configure(currentAtom);
+            }
             
             currentMolecule.addAtom(currentAtom);
         }
