@@ -1,4 +1,4 @@
-/* $Revision: 11645 $ $Author: rajarshi $ $Date: 2008-07-18 13:16:08 -0400 (Fri, 18 Jul 2008) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (c) 2006-2008 Rational Discovery LLC, Greg Landrum, and Julie Penzotti
  *
