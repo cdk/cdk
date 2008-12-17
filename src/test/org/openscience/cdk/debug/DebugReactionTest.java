@@ -42,7 +42,7 @@ public class DebugReactionTest extends IReactionTest {
     }
 
     @Test public void testDebugReaction() {
-        IReaction polymer = getBuilder().newReaction();
+        IReaction polymer = new DebugReaction();
         Assert.assertTrue(polymer instanceof DebugReaction);
     }
 }
