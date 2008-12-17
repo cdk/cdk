@@ -21,8 +21,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectTest;
 
 /**
@@ -34,6 +36,17 @@ public class NNChemObjectTest extends IChemObjectTest {
 
     @BeforeClass public static void setUp() {
     	setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNChemObject() {
+        IChemObject chemObject = new NNChemObject();
+        Assert.assertNotNull(chemObject);
+    }
+
+    @Test public void testNNChemObject_IChemObject() {
+    	IChemObject chemObject1 = new NNChemObject();
+        IChemObject chemObject = new NNChemObject(chemObject1);
+        Assert.assertNotNull(chemObject);
     }
 
     // Overwrite default methods: no notifications are expected!

@@ -24,8 +24,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IMonomerTest;
 
 /**
@@ -38,6 +40,11 @@ public class NNMonomerTest extends IMonomerTest {
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
     }
+
+	@Test public void testNNMonomer() {
+		IMonomer oMonomer = new NNMonomer();
+        Assert.assertNotNull(oMonomer);
+	}
 
     // Overwrite default methods: no notifications are expected!
     

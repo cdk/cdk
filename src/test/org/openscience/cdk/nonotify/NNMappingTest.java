@@ -24,8 +24,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IMappingTest;
 
 /**
@@ -37,6 +39,11 @@ public class NNMappingTest extends IMappingTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNMapping_IChemObject_IChemObject() {
+        IMapping mapping =  new NNMapping(getBuilder().newAtom(), getBuilder().newAtom());
+        Assert.assertNotNull(mapping);
     }
 
     // Overwrite default methods: no notifications are expected!

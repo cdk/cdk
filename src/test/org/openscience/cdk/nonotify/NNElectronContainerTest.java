@@ -24,8 +24,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElectronContainerTest;
 
 /**
@@ -37,6 +39,12 @@ public class NNElectronContainerTest extends IElectronContainerTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNElectronContainer() {
+        IElectronContainer ec = new NNElectronContainer();
+        Assert.assertNotNull(ec);
+        Assert.assertEquals(0, ec.getElectronCount().intValue());
     }
 
     // Overwrite default methods: no notifications are expected!

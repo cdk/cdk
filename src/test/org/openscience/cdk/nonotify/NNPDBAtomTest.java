@@ -24,8 +24,14 @@
  */
 package org.openscience.cdk.nonotify;
 
+import javax.vecmath.Point3d;
+
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBAtomTest;
 
 /**
@@ -37,6 +43,30 @@ public class NNPDBAtomTest extends IPDBAtomTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNPDBAtom_IElement() {
+    	IElement element = new NNElement();
+        IAtom a = new NNPDBAtom(element);
+        Assert.assertNotNull(a);
+    }
+    
+    @Test public void testNNPDBAtom_String() {
+    	IPDBAtom a = new NNPDBAtom("C");
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getFractionalPoint3d());
+    }
+
+    @Test public void testNNPDBAtom_String_Point3d() {
+        Point3d point3d = new Point3d(1.0, 2.0, 3.0);
+
+        IPDBAtom a = new NNPDBAtom("C", point3d);
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertEquals(point3d, a.getPoint3d());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getFractionalPoint3d());
     }
 
     // Overwrite default methods: no notifications are expected!

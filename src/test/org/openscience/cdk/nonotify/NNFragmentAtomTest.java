@@ -24,8 +24,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IFragmentAtom;
 import org.openscience.cdk.interfaces.IFragmentAtomTest;
 
 /**
@@ -37,6 +39,11 @@ public class NNFragmentAtomTest extends IFragmentAtomTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNFragmentAtom() {
+        IFragmentAtom a = new NNFragmentAtom();
+        Assert.assertNotNull(a);
     }
 
     // Overwrite default methods: no notifications are expected!

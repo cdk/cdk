@@ -30,6 +30,7 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IPseudoAtomTest;
@@ -55,6 +56,15 @@ public class NNPseudoAtomTest extends IPseudoAtomTest {
     
     @Test public void testNNPseudoAtom_IElement() {
     	IElement element = getBuilder().newElement();
+        IPseudoAtom a = new NNPseudoAtom(element);
+        Assert.assertEquals("R", a.getSymbol());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getFractionalPoint3d());
+    }
+    
+    @Test public void testNNPseudoAtom_IAtom() {
+    	IAtom element = getBuilder().newAtom("C");
         IPseudoAtom a = new NNPseudoAtom(element);
         Assert.assertEquals("R", a.getSymbol());
         Assert.assertNull(a.getPoint3d());

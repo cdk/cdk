@@ -21,8 +21,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAminoAcidTest;
 
 /**
@@ -34,6 +36,11 @@ public class NNAminoAcidTest extends IAminoAcidTest {
 
     @BeforeClass public static void setUp() {
     	  setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNAminoAcid() {
+        IAminoAcid oAminoAcid = new NNAminoAcid();
+        Assert.assertNotNull(oAminoAcid);
     }
 
     // Overwrite default methods: no notifications are expected!

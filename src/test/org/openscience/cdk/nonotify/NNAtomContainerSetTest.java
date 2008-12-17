@@ -20,8 +20,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IAtomContainerSetTest;
 
 /**
@@ -33,6 +35,12 @@ public class NNAtomContainerSetTest extends IAtomContainerSetTest {
 
     @BeforeClass public static void setUp() {
     	  setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNAtomContainerSet() {
+        IAtomContainerSet som = new NNAtomContainerSet();
+        Assert.assertNotNull(som);
+        Assert.assertEquals(0, som.getAtomContainerCount());
     }
 
     // Overwrite default methods: no notifications are expected!

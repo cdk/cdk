@@ -27,6 +27,8 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.AtomParity;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomParity;
 import org.openscience.cdk.interfaces.IAtomParityTest;
 
@@ -47,6 +49,22 @@ public class NNAtomParityTest extends IAtomParityTest {
     		"Object not instance of NNAtomParity, but: " + parity.getClass().getName(),
     		parity instanceof NNAtomParity
     	);
+    }
+
+    @Test public void testNNAtomParity_IAtom_IAtom_IAtom_IAtom_IAtom_int() {
+        IAtom carbon = getBuilder().newAtom("C");
+        carbon.setID("central");
+        IAtom carbon1 = getBuilder().newAtom("C");
+        carbon1.setID("c1");
+        IAtom carbon2 = getBuilder().newAtom("C");
+        carbon2.setID("c2");
+        IAtom carbon3 = getBuilder().newAtom("C");
+        carbon3.setID("c3");
+        IAtom carbon4 = getBuilder().newAtom("C");
+        carbon4.setID("c4");
+        int parityInt = 1;
+        AtomParity parity = new NNAtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
+        Assert.assertNotNull(parity);
     }
 
     // Overwrite default methods: no notifications are expected!

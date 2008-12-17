@@ -24,8 +24,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionTest;
 
 /**
@@ -37,6 +39,11 @@ public class NNReactionTest extends IReactionTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNReaction() {
+        IReaction polymer = new NNReaction();
+        Assert.assertTrue(polymer instanceof NNReaction);
     }
 
     // Overwrite default methods: no notifications are expected!

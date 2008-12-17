@@ -24,8 +24,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IChemSequenceTest;
 
 /**
@@ -37,6 +39,11 @@ public class NNChemSequenceTest extends IChemSequenceTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNChemSequence() {
+        IChemSequence cs = new NNChemSequence();
+        Assert.assertNotNull(cs);
     }
 
     // Overwrite default methods: no notifications are expected!
