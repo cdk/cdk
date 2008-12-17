@@ -33,7 +33,17 @@ import org.junit.Test;
  *
  * @see org.openscience.cdk.AtomParity
  */
-public class IAtomParityTest extends IChemObjectTest {
+public class IAtomParityTest {
+
+    private static IChemObjectBuilder builder;
+
+    public static IChemObjectBuilder getBuilder() {
+        return builder;
+    }
+
+    public static void setBuilder( IChemObjectBuilder builder ) {
+        IAtomParityTest.builder = builder;
+    }
 
     @Test public void testGetAtom() {
         IAtom carbon = getBuilder().newAtom("C");
