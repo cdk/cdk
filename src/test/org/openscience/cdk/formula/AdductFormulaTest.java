@@ -51,7 +51,7 @@ public class AdductFormulaTest extends IAdductFormulaTest {
 	 */
     @Test 
     public void testAdductFormula() {
-        IAdductFormula mfS = getBuilder().newAdductFormula();
+        IAdductFormula mfS = new AdductFormula();
         Assert.assertNotNull(mfS);
     }
 
@@ -62,7 +62,7 @@ public class AdductFormulaTest extends IAdductFormulaTest {
 	 */
     @Test 
     public void testAdductFormula_IMolecularFormula() {
-        IAdductFormula mfS = getBuilder().newAdductFormula(getBuilder().newMolecularFormula());
+        IAdductFormula mfS = new AdductFormula(getBuilder().newMolecularFormula());
         Assert.assertEquals(1, mfS.size());
     }
 }
