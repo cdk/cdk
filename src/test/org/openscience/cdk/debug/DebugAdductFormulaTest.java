@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IAdductFormulaTest;
 
 /**
@@ -38,4 +41,14 @@ public class DebugAdductFormulaTest extends IAdductFormulaTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+    @Test 
+    public void testDebugAdductFormula() {
+        IAdductFormula mfS = new DebugAdductFormula();
+        Assert.assertNotNull(mfS);
+    }
+
+    @Test public void testDebugAdductFormula_IMolecularFormula() {
+        IAdductFormula mfS = new DebugAdductFormula(getBuilder().newMolecularFormula());
+        Assert.assertEquals(1, mfS.size());
+    }
 }

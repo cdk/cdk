@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IMoleculeSetTest;
 
 /**
@@ -36,6 +39,11 @@ public class DebugMoleculeSetTest extends IMoleculeSetTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());
+    }
+    
+    @Test public void testDebugMoleculeSet() {
+    	IMoleculeSet set = new DebugMoleculeSet();
+    	Assert.assertNotNull(set);
     }
 
 }

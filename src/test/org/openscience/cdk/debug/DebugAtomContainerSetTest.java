@@ -41,7 +41,7 @@ public class DebugAtomContainerSetTest extends IAtomContainerSetTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
-    @Test public void testAtomContainerSet() {
+    @Test public void testDebugAtomContainerSet() {
         IAtomContainerSet som = new DebugAtomContainerSet();
         Assert.assertNotNull(som);
         Assert.assertEquals(0, som.getAtomContainerCount());

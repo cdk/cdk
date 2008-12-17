@@ -163,7 +163,7 @@ public class DebugAtomContainerSet extends org.openscience.cdk.AtomContainerSet
 		super.replaceAtomContainer(position, container);
 	}
 	
-	public boolean setMultiplier(IAtomContainer container, double multiplier) {
+	public boolean setMultiplier(IAtomContainer container, Double multiplier) {
 		logger.debug("Setting multiplier for atomcontainer: ", container, ""+multiplier);
 		return super.setMultiplier(container, multiplier);
 	}
