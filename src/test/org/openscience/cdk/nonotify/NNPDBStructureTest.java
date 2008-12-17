@@ -45,4 +45,14 @@ public class NNPDBStructureTest extends IPDBStructureTest {
 		IPDBStructure structure = new NNPDBStructure();
 		Assert.assertNotNull(structure);
 	}
+
+    @Test public void testGetBuilder() {
+        NNPDBStructure structure = new NNPDBStructure();
+        Assert.assertTrue(structure.getBuilder() instanceof NoNotificationChemObjectBuilder);
+    }
+
+    @Test public void testAddListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testAddListener_IChemObjectListener(getBuilder());
+    }
+
 }
