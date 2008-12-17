@@ -137,7 +137,7 @@ public class DebugReactionScheme extends ReactionScheme
 		return DebugChemObjectBuilder.getInstance();
 	}
 
-	public void addReactionScheme(IReactionScheme scheme) {
+	public void add(IReactionScheme scheme) {
 		logger.debug("Adding scheme: ", scheme);
 		super.add(scheme);
 	}

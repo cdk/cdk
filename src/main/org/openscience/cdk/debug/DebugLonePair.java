@@ -73,7 +73,7 @@ public class DebugLonePair extends org.openscience.cdk.LonePair
 		return super.getElectronCount();
 	}
 
-	public void setElectronCount(int electronCount) {
+	public void setElectronCount(Integer electronCount) {
 		logger.debug("Setting electron count: ", electronCount);
 		super.setElectronCount(electronCount);
 	}

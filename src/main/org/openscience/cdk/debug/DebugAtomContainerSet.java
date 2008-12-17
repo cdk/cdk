@@ -168,7 +168,7 @@ public class DebugAtomContainerSet extends org.openscience.cdk.AtomContainerSet
 		return super.setMultiplier(container, multiplier);
 	}
 
-	public void setMultiplier(int position, double multiplier) {
+	public void setMultiplier(int position, Double multiplier) {
 		logger.debug("Setting multiplier for atomcontainer at pos: ", ""+position, ""+multiplier);
 		super.setMultiplier(position, multiplier);
 	}
@@ -183,7 +183,7 @@ public class DebugAtomContainerSet extends org.openscience.cdk.AtomContainerSet
 		return super.setMultipliers(newMultipliers);
 	}
 
-	public void addAtomContainer(IAtomContainer atomContainer, Double multiplier) {
+	public void addAtomContainer(IAtomContainer atomContainer, double multiplier) {
 		logger.debug("Adding atom container with multiplier: ", ""+multiplier, atomContainer);
 		super.addAtomContainer(atomContainer, multiplier);
 	}
