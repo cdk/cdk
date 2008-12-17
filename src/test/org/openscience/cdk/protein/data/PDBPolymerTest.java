@@ -24,6 +24,8 @@
  */
 package org.openscience.cdk.protein.data;
 
+import java.util.Iterator;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -100,4 +102,28 @@ public class PDBPolymerTest extends IPDBPolymerTest {
 		Assert.assertNotNull(pdbPolymer.getStrand("B"));
 	}
 	
+	@Test public void testGetMonomerNamesInSequentialOrder() {
+		PDBPolymer pdbPolymer = new PDBPolymer();
+		Assert.assertEquals(0, pdbPolymer.getMonomerNames().size());
+
+		IStrand oStrand1 = getBuilder().newStrand();
+		oStrand1.setStrandName("A");
+		IMonomer oMono1 = getBuilder().newMonomer();
+		oMono1.setMonomerName("TRP279");
+		IMonomer oMono2 = getBuilder().newMonomer();
+		oMono2.setMonomerName("CYS280");
+		IPDBAtom oPDBAtom2 = getBuilder().newPDBAtom("C2");
+		IPDBAtom oPDBAtom3 = getBuilder().newPDBAtom("C3");
+		pdbPolymer.addAtom(oPDBAtom2, oMono1, oStrand1);
+		pdbPolymer.addAtom(oPDBAtom3, oMono2, oStrand1);
+		Assert.assertNotNull(pdbPolymer.getAtom(0));
+		Assert.assertNotNull(pdbPolymer.getAtom(1));
+		Assert.assertEquals(oPDBAtom2, pdbPolymer.getAtom(0));
+		Assert.assertEquals(oPDBAtom3, pdbPolymer.getAtom(1));
+
+		Iterator<String> monomers = pdbPolymer.getMonomerNamesInSequentialOrder().iterator();
+		Assert.assertEquals("TRP279", monomers.next());
+		Assert.assertEquals("CYS280", monomers.next());
+	}
+
 }
