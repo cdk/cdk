@@ -225,9 +225,9 @@ public class AllRingsFinderTest extends CDKTestCase
     
 	/**
 	 * This test takes a very long time. It was to ensure that
-	 * AllRingsFinder acually stops for the given examples.
+	 * AllRingsFinder actually stops for the given examples.
 	 * And it does, after a very long time.
-	 * So, the test is commented our because of its long runtime.
+	 * So, the test is commented out because of its long runtime.
 	 * 
 	 * @cdk.bug 777488
 	 */

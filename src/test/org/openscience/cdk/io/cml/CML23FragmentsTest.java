@@ -48,7 +48,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
- * Atomic tests for the reading CML documents. All tested CML strings are valid CML 2.3,
+ * Atomic tests for reading CML documents. All tested CML strings are valid CML 2.3,
  * as can be determined in cdk/src/org.openscience.cdk/io/cml/cml23TestFramework.xml.
  *
  * @cdk.module test-io

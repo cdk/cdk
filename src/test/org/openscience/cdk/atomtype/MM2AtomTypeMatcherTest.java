@@ -131,9 +131,9 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     }
     
     /**
-     * The test seems to be run by JUnit in order in which they found
+     * The test seems to be run by JUnit in the order in which they are found
      * in the source. Ugly, but @AfterClass does not work because that
-     * methods does cannot Assert.assert anything.
+     * method cannot Assert.assert anything.
      */
     @Test public void countTestedAtomTypes() {
     	AtomTypeFactory factory = AtomTypeFactory.getInstance(

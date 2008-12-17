@@ -12,7 +12,7 @@
         And many more.
       </para>
       <para>
-        To read a molecule, the folowing code may be used:
+        To read a molecule, the following code may be used:
         <example>
           <title>Determining the file format using its name extension</title>
           <programlisting>
@@ -53,10 +53,10 @@ ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
     <section>
       <title>Customizing IO</title>
       <para>
-        CDK's IO can be cusomized making it possible to to only partially read
+        CDK's IO can be customized making it possible to to only partially read
         a file, or save information in a specific format. All possible
         customizations have defaults, so that use of the IO classes do not
-        require one to do any costumization; it's optional.
+        require one to do any customization; it's optional.
       </para>
       <para>
         The principle way to customize a IO class, is to use a

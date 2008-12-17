@@ -12,7 +12,7 @@
     controller, a model and a view. The model holds the pure data on which the
     program in operates in the form best suited to achieve the desired computation
     most efficiently. The view is an external representation of this data, such
-    that is can be most efficiently percepted by the user. The controller is the
+    that is can be most efficiently perceived by the user. The controller is the
     part that allows the user to interact with the program, in the broadest sense
     to customize the view. Even a command line driven utility like "grep" consists
     of these three parts. One can achieve a particularly good program design by
@@ -25,7 +25,7 @@
     <para> 
         In our context of chemistry the model
         would be an internal representation of a molecule, a chemical reaction, an
-        ensemble of molcecules, etc.
+        ensemble of molecules, etc.
     </para>
     <para>
         There can be multiple VIEWs of the same model

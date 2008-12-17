@@ -47,7 +47,7 @@ import java.util.List;
  * module. Part of the data in this file was collected from
  * the website <a href="http://www.webelements.org">webelements.org</a>.
  *
- * <p>The use of this class is examplified as follows. To get information 
+ * <p>The use of this class is exemplified as follows. To get information 
  * about the major isotope of hydrogen, one can use this code:
  * <pre>
  *   IsotopeFactory factory = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
@@ -141,7 +141,7 @@ public class IsotopeFactory
 	}
 
 	/**
-	 * Gets an array of all isotoptes known to the IsotopeFactory for the given
+	 * Gets an array of all isotopes known to the IsotopeFactory for the given
 	 * element symbol.
 	 *
 	 *@param  symbol  An element symbol to search for

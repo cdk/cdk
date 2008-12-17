@@ -59,14 +59,14 @@ more easily. More than one tag may be used. The index is found
 <varlistentry><term>@cdk.builddepends</term>
 <listitem>
 <para>
-Indicates on which jar files this class depends on runtime.
+Indicates on which jar files this class depends on at runtime.
 </para>
 </listitem>
 </varlistentry>
 <varlistentry><term>@cdk.depends</term>
 <listitem>
 <para>
-Indicates the which jar files are required to compile its java source
+Indicates which jar files are required to compile its java source
 code to a class.
 </para>
 </listitem>
@@ -82,7 +82,7 @@ to the SF bug list for the CDK project. One tag for one bug.
 <varlistentry><term>@cdk.require</term>
 <listitem>
 <para>
-Defines a build requirement. Examples requirements are 'java1.4' indicting
+Defines a build requirement. Examples requirements are 'java1.4' indicating
 that the class can only be compiled with java1.4, 'java1.4+' that it can be
 compiled with Java 1.4 or better, 'ant1.6' which requires Ant 1.6 to get this
 class compiled, and 'r-project' which requires the R to be present.

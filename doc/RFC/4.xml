@@ -31,7 +31,7 @@
     <title>Example</title>
     <para>
       The input parameter number in AtomContainer.getAtomAt(int number) does not
-      check wether the value will throw an ArrayIndexOutOfBounds Exception.
+      check whether the value will throw an ArrayIndexOutOfBounds Exception.
     </para>
   </refsect1>
 

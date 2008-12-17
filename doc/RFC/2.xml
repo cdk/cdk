@@ -31,7 +31,7 @@
   <refsect1>
     <title>Proposal</title>
     <para>
-      Proposed is a precise and definate list of classes that belong to the
+      Proposed is a precise and definite list of classes that belong to the
       cdk-code library. This class would contain the classes representing chemical
       entities and required classes by those. All chemical information used in any
       of the CDK classes must be able to be stored in one of these classes. Core

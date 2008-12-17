@@ -36,7 +36,7 @@
                molecule. HOSE stands for Hierarchically Ordered
                Spherical Environment and is a method for describing the
                environment of an atom. It is mostly used in the
-               prediciton of carbon NMR. 
+               prediction of carbon NMR. 
              </para>
            </listitem>
            <listitem>
@@ -105,7 +105,7 @@
     <section>
         <title>Basics</title>
         <para>
-        A orbtial were handled through a vector and a basis set. The
+        An orbital were handled through a vector and a basis set. The
         elements were the coefficients for the basis set. A example
         for a basis set are the gauss functions
         </para>
@@ -134,7 +134,7 @@
         GaussiansBasis basis = new GaussiansBasis(nx,ny,nz,alpha,r,atoms);
         </programlisting>
         <para>
-        For the declaration of the orbials we need the coefficients for the
+        For the declaration of the orbitals we need the coefficients for the
         basis. The px Orbital got the vector O_1=[1,0,0], the py Orbital O_2=[0,1,0]
         and the pz orbital O_3=[0,0,1]
         </para>

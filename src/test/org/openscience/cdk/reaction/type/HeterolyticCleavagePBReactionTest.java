@@ -623,7 +623,7 @@ public class HeterolyticCleavagePBReactionTest extends ReactionProcessTest {
         Assert.assertEquals(mappedProductB1, product.getBond(0));        
 	}
 	/**
-	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
+	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.
 	 * 
 	 * @param molecule          The IMolecule to analyze
 	 * @throws CDKException

@@ -44,7 +44,7 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 
 /**
- * This aromaticity detector detects the aromaticity based on the H&uuml;ckel
+ * This aromaticity detector detects the aromaticity based on the H&uuml;ckle
  * 4n+2 pi-electrons rule applied to isolated ring systems. It assumes
  * CDK atom types to be perceived with the {@link CDKAtomTypeMatcher} or with
  * any compatible class. For example:

@@ -38,9 +38,9 @@
       by the PathTools class in cdk.graph.
     </para>
     <para>
-      The name seems appropriate; the IUPAC Comendium defines it as [1]:
+      The name seems appropriate; the IUPAC Commendium defines it as [1]:
       <quote>The assembling of separate molecular entities into any aggregate,
-      especially of oppositely charged free ions into ione pairs ...</quote>.
+      especially of oppositely charged free ions into ion pairs ...</quote>.
       About hydrogen bonds it says [2]: <quote>A form of association between an
       electronegative atom and a hydrogen atom attached to a second,
       relatively electronagative atom.</quote>

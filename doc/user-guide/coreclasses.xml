@@ -19,7 +19,7 @@
       </para>
       <para>
         A molecule is build by creating an instance of the Molecule.class and the
-        successivly adding instances of &Atom;.class and &Bond;.class to the Molecule
+        successively adding instances of &Atom;.class and &Bond;.class to the Molecule
         container: 
         <example>
           <title>Creating a Molecule</title>
@@ -58,7 +58,7 @@ public static Molecule makeAlphaPinene() {
         Since there are a number of concepts in chemistry that have
         properties very similar to a molecule, the Molecule is not the actual base
         class that has all the addBond(Bond), addAtom(Atom) and other methods that you
-        would probly exspect in it. The base class in fact the 
+        would probably expect in it. The base class in fact the 
         &AtomContainer; class
         which is then subclassed by classes like Ring, Substructure, etc. Thus, if you
         want to know what a Molecule, a Ring, a Substructure can do, look at the
@@ -77,7 +77,7 @@ public static Molecule makeAlphaPinene() {
       <para>
         Due to the dedication of the Model/View/Controller paradigm, the
         programmer will find a &ChemModel;, which can store all of the above concepts. It
-        is supposed to represent a particular state of the programm at a given point in
+        is supposed to represent a particular state of the program at a given point in
         time. A sequence of ChemModels, representing for example different points in
         time in a molecular dynamics simulation of an ensemble molecules, can be stored
         in a &ChemSequence;. A &ChemFile;, the highest level concept, in our CDK hierarchy,

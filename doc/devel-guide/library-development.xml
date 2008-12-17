@@ -97,7 +97,7 @@ cdk/$ ant -Ddebug=off -Doptimization=on -Ddeprecation=off dist-all
       <para>
         Sometimes it may be required to apply patches to the source code
         before it is compiled. For example, the CDK source code needs to be
-        patches before Jmol can use it in an applet. Reasons can be that CDK
+        patched before Jmol can use it in an applet. Reasons can be that CDK
         want to use post Java 1.1 methods and classes, or that it uses
         some algorithm that violates applet security model.
       </para>
@@ -120,7 +120,7 @@ cdk/$ diff -u path/to/OriginalFile.java path/to/PatchedFile.java > src/patches/s
       </para>
       <para>
         Patches can be automatically applied by Ant using the &lt;patch>
-        task, as is done in the current build.xml for CDK. The task requieres
+        task, as is done in the current build.xml for CDK. The task requires
         a program <filename>patch.exe</filename> of <filename>patch</filename>
         to be installed, which is normally installed by default on Unix systems.
         Windows users are referred to Cygwin, which is a Unix shell that can be
@@ -145,7 +145,7 @@ test:
     [junit] Tests run: 21, Failures: 5, Errors: 0, Time elapsed: 9.63 sec
     [junit] TEST org.openscience.cdk.test.CDKTests FAILED
         </programlisting>
-        These tests results in some serious problems.
+        These tests result in some serious problems.
       </para>
 
       <para>
@@ -189,7 +189,7 @@ test:
                 </java>
           </target>
 ]]></programlisting>
-        Then, a <command>ant run</command> should give you a window where you
+        Then, an <command>ant run</command> should give you a window where you
         can add bonds to a given structure.
       </para>
     </section>
@@ -200,7 +200,7 @@ test:
     A word about testing in the CDK: 
     I have already mentioned that I have introduced unit testing with JUnit. 
     The class org.openscience.cdk.tests.CDKTests is supposed to run all the tests at once. 
-    JUnit makes writing an running tests quite easy and it is integrated with Ant, 
+    JUnit makes writing and running tests quite easy and it is integrated with Ant, 
     so Ant can run automatic unit tests with JUnit. 
     So, in contrast to what is written in the CDK readme :-), the CDKTests class is supposed to 
     run _all_ the tests and not just the graphical ones. 
@@ -241,7 +241,7 @@ test:
 
 
     The nicest thing now is that JUnit automatically finds, by introspection, all methods in your 
-    RingSearchTest class whose method name starts with "test..." and runs them. A test is successfull 
+    RingSearchTest class whose method name starts with "test..." and runs them. A test is successful 
     if the assert() method in it returns a boolean "true". In the RingSearchTest, e.g., I run an sssr 
     search on a-pinene. I know that the correct size of the Smallest Set of Smallest Rings is "two", 
     so my test methods reads:
@@ -327,7 +327,7 @@ test:
     <para>
       Once functionality is working, and remaining bugs are removed, it is time to
       optimize the source code, in terms of memory usage and performance. A profiling
-      tool is need for this, e.g. 
+      tool is needed for this, e.g. 
       <ulink url="http://www.khelekore.org/jmp/">jmp</ulink>. With this program you can
       very easily profile your classes by typing something like:
       <command>java -Xrunjmp org.openscience.cdk.test.SomeTest</command>.

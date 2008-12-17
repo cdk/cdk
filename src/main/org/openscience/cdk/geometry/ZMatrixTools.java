@@ -50,9 +50,9 @@ public class ZMatrixTools {
      * @param distances     Array of distance variables of the Z matrix
      * @param angles        Array of angle variables of the Z matrix
      * @param dihedrals     Array of distance variables of the Z matrix
-     * @param first_atoms   Array of atom ids of the first involed atom in distance, angle and dihedral
-     * @param second_atoms  Array of atom ids of the second involed atom in angle and dihedral
-     * @param third_atoms   Array of atom ids of the third involed atom in dihedral
+     * @param first_atoms   Array of atom ids of the first invoked atom in distance, angle and dihedral
+     * @param second_atoms  Array of atom ids of the second invoked atom in angle and dihedral
+     * @param third_atoms   Array of atom ids of the third invoked atom in dihedral
      *
      * @cdk.dictref blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates
      */

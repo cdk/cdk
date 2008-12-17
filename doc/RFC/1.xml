@@ -25,8 +25,8 @@
       Request For Comment's (RFC's). A RFC is a document like this which is
       written by one or more developers containing a API description, like
       package names, class organization, method names, etc. etc. RFC's will 
-      serve as a discussion platform and as documentation tool. The RFC may
-      be changed during the period of discussion on the developers mailling 
+      serve as a discussion platform and as a documentation tool. The RFC may
+      be changed during the period of discussion on the developers mailing 
       list (cdk-devel@lists.sf.net).
       At any time the writers of the RFC may
       choose to Call For Votes (CFV). To do so, they compose a final RFC
@@ -35,7 +35,7 @@
       can vote in favor or against the RFC. The voting period will take
       at most two weeks, and will take place by using voting ballots that
       are send along with the CFV. Filled in CFVs are returned by email to
-      the developers mailling list, and are preferably signed with a 
+      the developers mailing list, and are preferably signed with a 
       PGP/GnuPG key available from a free keyserver. 
       One can only vote in favor (YES) or against (NO) the acceptance of
       a RFC, and the majority of votes count. In case of equal number of
@@ -47,7 +47,7 @@
       A RFC is only valid if it includes this information:
       <itemizedlist>
         <listitem><para>A name. This is normally a sentence describing
-          its intend.</para></listitem>
+          its intent.</para></listitem>
         <listitem><para>A "Proposal" paragraph. This will describe the
           may, should, and must's which the RFC will enforce whence it is
           accepted.</para></listitem>
@@ -81,14 +81,14 @@
       </literallayout>
       The proper RFC number and title must be given as well as
       a link to the final RFC and the date on which
-      the final RFC was sent to the developers mailling list.
+      the final RFC was sent to the developers mailing list.
     </para>
   </refsect1>
 
   <refsect1>
     <title>Reason</title>
     <para>
-      To smoothe the process of API changes and to formalize habits that grew
+      To smooth the process of API changes and to formalize habits that grew
       habits.
       The system is not supposed to delay
       development, but smooth the development and use of the library. Usage of

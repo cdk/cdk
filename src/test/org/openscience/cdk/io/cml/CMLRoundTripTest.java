@@ -65,7 +65,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
- * TestCase for the reading CML 2 files using a few test files
+ * TestCase for reading CML 2 files using a few test files
  * in data/cmltest.
  *
  * @cdk.module  test-libiocml
@@ -577,7 +577,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     }
 
     /**
-     * Tests of bond order information is stored even when aromiticity is given.
+     * Tests of bond order information is stored even when aromaticity is given.
      * 
      * @throws Exception
      */

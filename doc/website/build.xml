@@ -15,7 +15,7 @@
   </target>
 
   <target name="website-from-autolayout" depends="layout">
-    <!-- does should work, but it doesn't -->
+    <!-- should work, but it doesn't -->
     <xslt in="${source.dir}/autolayout.xml" destdir="${build.dir}/" style="${website-docbook-xsl}/xsl/tabular.xsl"/>
   </target>
 
