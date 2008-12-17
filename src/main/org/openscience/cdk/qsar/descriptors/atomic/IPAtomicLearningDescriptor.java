@@ -25,6 +25,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -123,6 +124,7 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
     	String originalAtomtypeName = atom.getAtomTypeName();
     	Integer originalNeighborCount = atom.getFormalNeighbourCount();
     	Integer originalValency = atom.getValency();
+        IAtomType.Hybridization originalHybrid = atom.getHybridization();
 
         if (!isCachedAtomContainer(container)) {
             try {
@@ -147,6 +149,7 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
     	atom.setAtomTypeName(originalAtomtypeName);
     	atom.setFormalNeighbourCount(originalNeighborCount);
     	atom.setValency(originalValency);
+        atom.setHybridization(originalHybrid);
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(value), getDescriptorNames());
