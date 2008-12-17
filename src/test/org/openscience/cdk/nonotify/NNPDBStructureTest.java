@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IPDBStructureTest;
 
 /**
@@ -38,4 +41,8 @@ public class NNPDBStructureTest extends IPDBStructureTest {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
     }
 
+	@Test public void testNNPDBStructure() {
+		IPDBStructure structure = new NNPDBStructure();
+		Assert.assertNotNull(structure);
+	}
 }

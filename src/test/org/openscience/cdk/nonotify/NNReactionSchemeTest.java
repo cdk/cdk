@@ -20,8 +20,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.IReactionSchemeTest;
 
 /**
@@ -33,6 +35,11 @@ public class NNReactionSchemeTest extends IReactionSchemeTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNReactionScheme() {
+        IReactionScheme scheme = new NNReactionScheme();
+        Assert.assertNotNull(scheme);
     }
 
     // Overwrite default methods: no notifications are expected!

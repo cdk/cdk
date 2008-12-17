@@ -20,7 +20,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaTest;
 
 /**
@@ -34,4 +37,8 @@ public class NNMolecularFormulaTest extends IMolecularFormulaTest {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
     }
 
+    @Test public void testNNMolecularFormula() {
+        IMolecularFormula mf = new NNMolecularFormula();
+    	Assert.assertNotNull(mf);
+    }
 }

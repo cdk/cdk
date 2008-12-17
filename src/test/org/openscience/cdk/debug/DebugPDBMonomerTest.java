@@ -24,7 +24,10 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBMonomerTest;
 
 /**
@@ -38,4 +41,9 @@ public class DebugPDBMonomerTest extends IPDBMonomerTest {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
+	@Test public void testDebugPDBMonomer() {
+		IPDBMonomer monomer = new DebugPDBMonomer();
+		Assert.assertNotNull(monomer);
+		Assert.assertEquals(monomer.getICode(), null);
+	}
 }

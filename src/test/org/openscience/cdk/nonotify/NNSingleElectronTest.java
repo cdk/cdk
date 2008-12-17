@@ -24,8 +24,11 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.ISingleElectronTest;
 
 /**
@@ -37,6 +40,20 @@ public class NNSingleElectronTest extends ISingleElectronTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNSingleElectron() {
+        ISingleElectron radical = new NNSingleElectron();
+        Assert.assertNull(radical.getAtom());
+        Assert.assertEquals(1, radical.getElectronCount().intValue());
+    }
+    
+    @Test public void testNNSingleElectron_IAtom() {
+        IAtom atom = getBuilder().newAtom("N");
+        ISingleElectron radical = new NNSingleElectron(atom);
+        Assert.assertEquals(1, radical.getElectronCount().intValue());
+        Assert.assertEquals(atom, radical.getAtom());
+        Assert.assertTrue(radical.contains(atom));
     }
 
     // Overwrite default methods: no notifications are expected!

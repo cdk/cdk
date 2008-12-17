@@ -24,8 +24,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBMonomerTest;
 
 /**
@@ -38,6 +40,12 @@ public class NNPDBMonomerTest extends IPDBMonomerTest {
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
     }
+
+	@Test public void testNNPDBMonomer() {
+		IPDBMonomer monomer = new NNPDBMonomer();
+		Assert.assertNotNull(monomer);
+		Assert.assertEquals(monomer.getICode(), null);
+	}
 
     // Overwrite default methods: no notifications are expected!
     

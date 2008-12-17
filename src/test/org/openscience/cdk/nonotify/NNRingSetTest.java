@@ -24,8 +24,10 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IRingSetTest;
 
 /**
@@ -39,6 +41,11 @@ public class NNRingSetTest extends IRingSetTest {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
     }
     
+    @Test public void testNNRingSet() {
+        IRingSet rs = new NNRingSet();
+        Assert.assertNotNull(rs);
+    }
+
     // Overwrite default methods: no notifications are expected!
     
     @Test public void testNotifyChanged() {

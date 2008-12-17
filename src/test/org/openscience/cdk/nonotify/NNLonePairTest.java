@@ -24,8 +24,11 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.ILonePairTest;
 
 /**
@@ -37,6 +40,20 @@ public class NNLonePairTest extends ILonePairTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    }
+
+    @Test public void testNNLonePair() {
+        ILonePair lp = new NNLonePair();
+        Assert.assertNull(lp.getAtom());
+        Assert.assertEquals(2, lp.getElectronCount().intValue());
+    }
+    
+    @Test public void testNNLonePair_IAtom() {
+        IAtom atom = getBuilder().newAtom("N");
+        ILonePair lp = new NNLonePair(atom);
+        Assert.assertEquals(2, lp.getElectronCount().intValue());
+        Assert.assertEquals(atom, lp.getAtom());
+        Assert.assertTrue(lp.contains(atom));
     }
 
     // Overwrite default methods: no notifications are expected!
