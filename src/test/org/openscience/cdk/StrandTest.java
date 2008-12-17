@@ -49,7 +49,7 @@ public class StrandTest extends IStrandTest {
     }
 
 	@Test public void testStrand() {
-		IStrand oStrand = getBuilder().newStrand();
+		IStrand oStrand = new Strand();
 		Assert.assertNotNull(oStrand);
 		Assert.assertEquals(oStrand.getMonomerCount(), 0);
 

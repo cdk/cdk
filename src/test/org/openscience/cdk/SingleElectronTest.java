@@ -45,14 +45,14 @@ public class SingleElectronTest extends ISingleElectronTest {
     }
 
     @Test public void testSingleElectron() {
-        ISingleElectron radical = getBuilder().newSingleElectron();
-        Assert.assertTrue(radical.getAtom() == null);
+        ISingleElectron radical = new SingleElectron();
+        Assert.assertNull(radical.getAtom());
         Assert.assertEquals(1, radical.getElectronCount().intValue());
     }
     
     @Test public void testSingleElectron_IAtom() {
         IAtom atom = getBuilder().newAtom("N");
-        ISingleElectron radical = getBuilder().newSingleElectron(atom);
+        ISingleElectron radical = new SingleElectron(atom);
         Assert.assertEquals(1, radical.getElectronCount().intValue());
         Assert.assertEquals(atom, radical.getAtom());
         Assert.assertTrue(radical.contains(atom));

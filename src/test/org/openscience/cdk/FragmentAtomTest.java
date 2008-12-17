@@ -37,11 +37,8 @@ public class FragmentAtomTest extends IFragmentAtomTest {
         setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
-    /**
-     * Method to test the Atom(String symbol) method.
-     */
     @Test public void testFragmentAtom() {
-        IFragmentAtom a = getBuilder().newFragmentAtom();
+        IFragmentAtom a = new FragmentAtom();
         Assert.assertNotNull(a);
     }
 

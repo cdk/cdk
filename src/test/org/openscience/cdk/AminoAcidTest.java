@@ -45,7 +45,7 @@ public class AminoAcidTest extends IAminoAcidTest {
     }
     
     @Test public void testAminoAcid() {
-        IAminoAcid oAminoAcid = getBuilder().newAminoAcid();
+        IAminoAcid oAminoAcid = new AminoAcid();
         Assert.assertNotNull(oAminoAcid);
     }
     

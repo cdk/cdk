@@ -40,7 +40,7 @@ public class AtomContainerSetTest extends IAtomContainerSetTest {
     }
 
     @Test public void testAtomContainerSet() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
+        IAtomContainerSet som = new AtomContainerSet();
         Assert.assertNotNull(som);
         Assert.assertEquals(0, som.getAtomContainerCount());
     }
