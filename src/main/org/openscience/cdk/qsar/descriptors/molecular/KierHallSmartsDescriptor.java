@@ -1,8 +1,8 @@
 /*
  *  $RCSfile$
- *  $Author: rajarshi $
- *  $Date: 2008-07-18 13:16:08 -0400 (Fri, 18 Jul 2008) $
- *  $Revision: 11645 $
+ *  $Author$
+ *  $Date$
+ *  $Revision$
  *
  *  Copyright (C) 2008 Rajarshi Guha  <rajarshi@users.sourceforge.net>
  *
@@ -304,7 +304,7 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
  *
  * @author Rajarshi Guha
  * @cdk.module qsarmolecular
- * @cdk.svnrev $Revision: 11645 $
+ * @cdk.svnrev $Revision$
  * @cdk.set qsar-descriptors
  * @cdk.dictref qsar-descriptors:kierHallSmarts
  */
@@ -340,7 +340,7 @@ public class KierHallSmartsDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts",
                 this.getClass().getName(),
-                "$Id: KierHallSmartsDescriptor.java 11645 2008-07-18 17:16:08Z rajarshi $",
+                "$Id$",
                 "The Chemistry Development Kit");
     }
 

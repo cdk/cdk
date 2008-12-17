@@ -1,4 +1,4 @@
-/* $Revision: 6350 $ $Author: choppe $ $Date: 2006-06-07 13:53:17 +0200 (Wed, 07 Jun 2006) $
+/* $Revision$ $Author$ $Date$
  *
  *  Copyright (C) 2004-2007  Christian Hoppe
  *
@@ -43,7 +43,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @author      chhoppe from EUROSCREEN
  * @cdk.created 2006-8-22
  * @cdk.module  qsarmolecular
- * @cdk.svnrev  $Revision: 9162 $
+ * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:NilaComplexity
  */
@@ -78,7 +78,7 @@ public class FragmentComplexityDescriptor implements IMolecularDescriptor {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#NilaComplexity",
                 this.getClass().getName(),
-                "$Id: FragmentComplexityDescriptor.java 6350 2006-22-08 11:53:17Z miguelrojasch $",
+                "$Id$",
                 "The Chemistry Development Kit");
     }
 
