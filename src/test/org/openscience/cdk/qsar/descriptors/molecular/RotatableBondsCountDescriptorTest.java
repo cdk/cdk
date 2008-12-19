@@ -62,11 +62,25 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
-    @Test public void testEthaneIncludeTerminals() throws Exception {
+    private IAtomContainer makeEthane() {
         IAtomContainer container = new NNAtomContainer();
         container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
         container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
         container.addBond(0, 1, IBond.Order.SINGLE);
+        return container;
+    }
+
+    private IAtomContainer makeButane() {
+        IAtomContainer container = makeEthane();
+        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
+        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
+        container.addBond(1, 2, IBond.Order.SINGLE);
+        container.addBond(2, 3, IBond.Order.SINGLE);
+        return container;
+    }
+
+    @Test public void testEthaneIncludeTerminals() throws Exception {
+        IAtomContainer container = makeEthane();
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{Boolean.TRUE});
         DescriptorValue result = descriptor.calculate(container);
@@ -74,10 +88,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test public void testEthane() throws Exception {
-        IAtomContainer container = new NNAtomContainer();
-        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
-        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
-        container.addBond(0, 1, IBond.Order.SINGLE);
+        IAtomContainer container = makeEthane();
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{Boolean.FALSE});
         DescriptorValue result = descriptor.calculate(container);
@@ -85,14 +96,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test public void testButaneIncludeTerminals() throws Exception {
-        IAtomContainer container = new NNAtomContainer();
-        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
-        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
-        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
-        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
-        container.addBond(0, 1, IBond.Order.SINGLE);
-        container.addBond(1, 2, IBond.Order.SINGLE);
-        container.addBond(2, 3, IBond.Order.SINGLE);
+        IAtomContainer container = makeButane();
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{Boolean.TRUE});
         DescriptorValue result = descriptor.calculate(container);
@@ -100,14 +104,7 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
     }
 
     @Test public void testButane() throws Exception {
-        IAtomContainer container = new NNAtomContainer();
-        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
-        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
-        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
-        container.addAtom(container.getBuilder().newAtom(Elements.CARBON));
-        container.addBond(0, 1, IBond.Order.SINGLE);
-        container.addBond(1, 2, IBond.Order.SINGLE);
-        container.addBond(2, 3, IBond.Order.SINGLE);
+        IAtomContainer container = makeButane();
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{Boolean.FALSE});
         DescriptorValue result = descriptor.calculate(container);
