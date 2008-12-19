@@ -36,6 +36,8 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -105,6 +107,54 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
 
     @Test public void testButane() throws Exception {
         IAtomContainer container = makeButane();
+        IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
+        descriptor.setParameters(new Object[]{Boolean.FALSE});
+        DescriptorValue result = descriptor.calculate(container);
+        Assert.assertEquals(1, ((IntegerResult)result.getValue()).intValue());
+    }
+
+    @Test public void testEthaneIncludeTerminalsExplicitH() throws Exception {
+        IAtomContainer container = makeEthane();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        adder.addImplicitHydrogens(container);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+        IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
+        descriptor.setParameters(new Object[]{Boolean.TRUE});
+        DescriptorValue result = descriptor.calculate(container);
+        Assert.assertEquals(1, ((IntegerResult)result.getValue()).intValue());
+    }
+
+    @Test public void testEthaneExplicitH() throws Exception {
+        IAtomContainer container = makeEthane();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        adder.addImplicitHydrogens(container);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+        IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
+        descriptor.setParameters(new Object[]{Boolean.FALSE});
+        DescriptorValue result = descriptor.calculate(container);
+        Assert.assertEquals(0, ((IntegerResult)result.getValue()).intValue());
+    }
+
+    @Test public void testButaneIncludeTerminalsExplicitH() throws Exception {
+        IAtomContainer container = makeButane();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        adder.addImplicitHydrogens(container);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+        IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
+        descriptor.setParameters(new Object[]{Boolean.TRUE});
+        DescriptorValue result = descriptor.calculate(container);
+        Assert.assertEquals(3, ((IntegerResult)result.getValue()).intValue());
+    }
+
+    @Test public void testButaneExplicitH() throws Exception {
+        IAtomContainer container = makeButane();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        adder.addImplicitHydrogens(container);
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
         IMolecularDescriptor descriptor = new RotatableBondsCountDescriptor();
         descriptor.setParameters(new Object[]{Boolean.FALSE});
         DescriptorValue result = descriptor.calculate(container);
