@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IStrand;
 public class DebugBioPolymerTest extends IBioPolymerTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugBioPolymer());
     }
 
 	@Test public void testDebugBioPolymer() {

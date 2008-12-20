@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IPolymerTest;
 public class DebugPolymerTest extends IPolymerTest {
 
     @BeforeClass public static void setUp() {
-    	  setBuilder(DebugChemObjectBuilder.getInstance());
+    	  setChemObject(new DebugPolymer());
     }
 
     @Test public void testDebugPolymer() {

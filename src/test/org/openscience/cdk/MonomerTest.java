@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IMonomerTest;
 public class MonomerTest extends IMonomerTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DefaultChemObjectBuilder.getInstance());
+        setChemObject(new Monomer());
     }
 
 	@Test public void testMonomer() {

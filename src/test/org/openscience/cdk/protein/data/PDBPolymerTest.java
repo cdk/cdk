@@ -29,7 +29,6 @@ import java.util.Iterator;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBPolymer;
@@ -46,7 +45,7 @@ import org.openscience.cdk.interfaces.IStrand;
 public class PDBPolymerTest extends IPDBPolymerTest {
 	
     @BeforeClass public static void setUp() {
-        setBuilder(DefaultChemObjectBuilder.getInstance());
+        setChemObject(new PDBPolymer());
     }
 
 	@Test public void testPDBPolymer() {

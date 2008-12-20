@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IMappingTest;
 public class MappingTest extends IMappingTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DefaultChemObjectBuilder.getInstance());
+        setChemObject(new Mapping(new Atom(), new Atom()));
     }
     
     @Test public void testMapping_IChemObject_IChemObject() {

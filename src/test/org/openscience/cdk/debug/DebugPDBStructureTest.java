@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IPDBStructureTest;
 public class DebugPDBStructureTest extends IPDBStructureTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugPDBStructure());
     }
 
 	@Test public void testDebugPDBStructure() {

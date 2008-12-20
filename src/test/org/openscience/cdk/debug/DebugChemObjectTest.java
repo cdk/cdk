@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IChemObjectTest;
 public class DebugChemObjectTest extends IChemObjectTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugChemObject());
     }
 
     @Test public void testDebugChemObject() {

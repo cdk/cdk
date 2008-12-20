@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IElectronContainerTest;
 public class NNElectronContainerTest extends IElectronContainerTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNElectronContainer());
     }
 
     @Test public void testNNElectronContainer() {

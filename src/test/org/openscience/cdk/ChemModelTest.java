@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IChemModelTest;
 public class ChemModelTest extends IChemModelTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DefaultChemObjectBuilder.getInstance());
+        setChemObject(new ChemModel());
     }
 
     @Test public void testChemModel() {

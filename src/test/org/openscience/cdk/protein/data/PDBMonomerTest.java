@@ -27,7 +27,6 @@ package org.openscience.cdk.protein.data;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.IPDBMonomerTest;
 
@@ -41,7 +40,7 @@ import org.openscience.cdk.interfaces.IPDBMonomerTest;
 public class PDBMonomerTest extends IPDBMonomerTest {
 	
     @BeforeClass public static void setUp() {
-        setBuilder(DefaultChemObjectBuilder.getInstance());
+        setChemObject(new PDBMonomer());
     }
     
 	@Test public void testPDBMonomer() {

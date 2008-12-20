@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IPDBAtomTest;
 public class DebugPDBAtomTest extends IPDBAtomTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugPDBAtom("C"));
     }
 
     @Test public void testDebugPDBAtom_IElement() {

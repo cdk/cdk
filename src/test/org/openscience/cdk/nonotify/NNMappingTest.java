@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IMappingTest;
 public class NNMappingTest extends IMappingTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNMapping(new NNAtom(), new NNAtom()));
     }
 
     @Test public void testNNMapping_IChemObject_IChemObject() {

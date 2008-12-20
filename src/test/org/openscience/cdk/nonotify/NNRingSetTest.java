@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IRingSetTest;
 public class NNRingSetTest extends IRingSetTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNRingSet());
     }
     
     @Test public void testNNRingSet() {

@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.ILonePairTest;
 public class NNLonePairTest extends ILonePairTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNLonePair());
     }
 
     @Test public void testNNLonePair() {

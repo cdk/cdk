@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IReactionSetTest;
 public class ReactionSetTest extends IReactionSetTest {
 
     @BeforeClass public static void setUp() {
-       	setBuilder(DefaultChemObjectBuilder.getInstance());
+       	setChemObject(new ReactionSet());
     }
 
     @Test public void testReactionSet() {

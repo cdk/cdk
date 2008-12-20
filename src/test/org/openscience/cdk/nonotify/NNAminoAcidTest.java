@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAminoAcidTest;
 public class NNAminoAcidTest extends IAminoAcidTest {
 
     @BeforeClass public static void setUp() {
-    	  setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    	  setChemObject(new NNAminoAcid());
     }
 
     @Test public void testNNAminoAcid() {

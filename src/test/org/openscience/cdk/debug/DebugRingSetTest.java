@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IRingSetTest;
 public class DebugRingSetTest extends IRingSetTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugRingSet());
     }
 
     @Test public void testDebugRingSet() {

@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.ICrystalTest;
 public class CrystalTest extends ICrystalTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DefaultChemObjectBuilder.getInstance());
+        setChemObject(new Crystal());
     }
 
     @Test public void testCrystal() {

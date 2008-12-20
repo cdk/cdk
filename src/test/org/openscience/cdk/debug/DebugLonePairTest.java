@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.ILonePairTest;
 public class DebugLonePairTest extends ILonePairTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugLonePair());
     }
 
     @Test public void testDebugLonePair() {

@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IRingTest;
 public class RingTest extends IRingTest {
 
     @BeforeClass public static void setUp() {
-       	setBuilder(DefaultChemObjectBuilder.getInstance());
+       	setChemObject(new Ring());
     }
 
     @Test public void testRing_int_String() {

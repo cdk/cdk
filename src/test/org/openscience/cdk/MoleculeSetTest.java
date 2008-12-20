@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IMoleculeSetTest;
 public class MoleculeSetTest extends IMoleculeSetTest {
 
     @BeforeClass public static void setUp() {
-       	setBuilder(DefaultChemObjectBuilder.getInstance());
+       	setChemObject(new MoleculeSet());
     }
 
 }

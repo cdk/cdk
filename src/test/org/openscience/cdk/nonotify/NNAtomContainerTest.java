@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 public class NNAtomContainerTest extends IAtomContainerTest {
 
     @BeforeClass public static void setUp() {
-    	  setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    	  setChemObject(new NNAtomContainer());
     }
 
     @Test public void testNNAtomContainer_int_int_int_int() {

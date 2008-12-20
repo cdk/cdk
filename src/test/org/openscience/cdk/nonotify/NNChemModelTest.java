@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemModelTest;
 public class NNChemModelTest extends IChemModelTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNChemModel());
     }
 
     @Test public void testNNChemModel() {

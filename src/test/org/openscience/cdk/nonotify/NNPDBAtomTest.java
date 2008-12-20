@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBAtomTest;
+import org.openscience.cdk.protein.data.PDBAtom;
 
 /**
  * Checks the functionality of the {@link NNPDBAtom}.
@@ -42,7 +43,7 @@ import org.openscience.cdk.interfaces.IPDBAtomTest;
 public class NNPDBAtomTest extends IPDBAtomTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new PDBAtom("C"));
     }
 
     @Test public void testNNPDBAtom_IElement() {

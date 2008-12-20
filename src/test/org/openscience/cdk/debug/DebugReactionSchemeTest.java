@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IReactionSchemeTest;
 public class DebugReactionSchemeTest extends IReactionSchemeTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugReactionScheme());
     }
 
     @Test public void testDebugReactionScheme() {

@@ -44,7 +44,7 @@ import org.openscience.cdk.interfaces.IMoleculeTest;
 public class MoleculeTest extends IMoleculeTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DefaultChemObjectBuilder.getInstance());
+        setChemObject(new Molecule());
     }
 
     // test constructors

@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IStrandTest;
 public class DebugStrandTest extends IStrandTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugStrand());
     }
 
 	@Test public void testDebugStrand() {

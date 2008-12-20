@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IPDBStructureTest;
 public class NNPDBStructureTest extends IPDBStructureTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNPDBStructure());
     }
 
 	@Test public void testNNPDBStructure() {

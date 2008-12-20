@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.ICrystalTest;
 public class DebugCrystalTest extends ICrystalTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugCrystal());
     }
 
     @Test public void testDebugCrystal() {

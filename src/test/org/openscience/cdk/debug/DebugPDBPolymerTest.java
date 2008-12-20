@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IStrand;
 public class DebugPDBPolymerTest extends IPDBPolymerTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugPDBPolymer());
     }
 
 	@Test public void testDebugPDBPolymer() {

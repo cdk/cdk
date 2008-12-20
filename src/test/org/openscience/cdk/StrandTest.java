@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IStrandTest;
 public class StrandTest extends IStrandTest {
 	
     @BeforeClass public static void setUp() {
-       	setBuilder(DefaultChemObjectBuilder.getInstance());
+       	setChemObject(new Strand());
     }
 
 	@Test public void testStrand() {

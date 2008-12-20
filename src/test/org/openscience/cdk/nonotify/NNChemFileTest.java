@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemFileTest;
 public class NNChemFileTest extends IChemFileTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNChemFile());
     }
 
     @Test public void testNNChemFile() {

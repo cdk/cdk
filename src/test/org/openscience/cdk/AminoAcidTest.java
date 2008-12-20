@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IAminoAcidTest;
 public class AminoAcidTest extends IAminoAcidTest {
 
     @BeforeClass public static void setUp() {
-       	setBuilder(DefaultChemObjectBuilder.getInstance());
+       	setChemObject(new AminoAcid());
     }
     
     @Test public void testAminoAcid() {

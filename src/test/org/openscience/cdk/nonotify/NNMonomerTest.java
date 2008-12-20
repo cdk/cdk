@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IMonomerTest;
 public class NNMonomerTest extends IMonomerTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNMonomer());
     }
 
 	@Test public void testNNMonomer() {

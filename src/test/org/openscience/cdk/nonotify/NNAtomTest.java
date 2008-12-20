@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IElement;
 public class NNAtomTest extends IAtomTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNAtom());
     }
 
     @Test public void testNNAtom() {

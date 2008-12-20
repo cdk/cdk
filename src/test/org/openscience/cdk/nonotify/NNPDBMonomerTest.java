@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IPDBMonomerTest;
 public class NNPDBMonomerTest extends IPDBMonomerTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNPDBMonomer());
     }
 
 	@Test public void testNNPDBMonomer() {

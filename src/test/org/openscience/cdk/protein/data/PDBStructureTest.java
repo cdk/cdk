@@ -27,7 +27,6 @@ package org.openscience.cdk.protein.data;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPDBStructure;
 import org.openscience.cdk.interfaces.IPDBStructureTest;
 
@@ -41,7 +40,7 @@ import org.openscience.cdk.interfaces.IPDBStructureTest;
 public class PDBStructureTest extends IPDBStructureTest {
 	
     @BeforeClass public static void setUp() {
-        setBuilder(DefaultChemObjectBuilder.getInstance());
+        setChemObject(new PDBStructure());
     }
     
 	@Test public void testPDBStructure() {

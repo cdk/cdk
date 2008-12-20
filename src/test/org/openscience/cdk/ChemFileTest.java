@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IChemFileTest;
 public class ChemFileTest extends IChemFileTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DefaultChemObjectBuilder.getInstance());
+        setChemObject(new ChemFile());
     }
 
     @Test public void testChemFile() {

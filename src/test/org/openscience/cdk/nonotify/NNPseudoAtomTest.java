@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IPseudoAtomTest;
 public class NNPseudoAtomTest extends IPseudoAtomTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNPseudoAtom());
     }
 
     @Test public void testNNPseudoAtom() {

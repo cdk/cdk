@@ -42,7 +42,7 @@ public class IAtomContainerTest extends IChemObjectTest {
         atoms[1] = getBuilder().newAtom("C");
         atoms[2] = getBuilder().newAtom("C");
         atoms[3] = getBuilder().newAtom("O");
-        IAtomContainer ac = getBuilder().newAtomContainer();
+        IAtomContainer ac = (IAtomContainer)newChemObject();
         ac.setAtoms(atoms);
         
         Assert.assertEquals(4, ac.getAtomCount());
@@ -53,13 +53,13 @@ public class IAtomContainerTest extends IChemObjectTest {
      * Only test whether the atoms are correctly cloned.
      */
 	@Test public void testClone() throws Exception {
-        IAtomContainer molecule = getBuilder().newAtomContainer();
+        IAtomContainer molecule = (IAtomContainer)newChemObject();
         Object clone = molecule.clone();
         Assert.assertTrue(clone instanceof IAtomContainer);
     }    
         
     @Test public void testClone_IAtom() throws Exception {
-		IAtomContainer molecule = getBuilder().newAtomContainer();
+		IAtomContainer molecule = (IAtomContainer)newChemObject();
 		molecule.addAtom(getBuilder().newAtom("C")); // 1
 		molecule.addAtom(getBuilder().newAtom("C")); // 2
 		molecule.addAtom(getBuilder().newAtom("C")); // 3
@@ -89,7 +89,7 @@ public class IAtomContainerTest extends IChemObjectTest {
 	}
 
     @Test public void testClone_IBond() throws Exception {
-		IAtomContainer molecule = getBuilder().newAtomContainer();
+		IAtomContainer molecule = (IAtomContainer)newChemObject();
 		molecule.addAtom(getBuilder().newAtom("C")); // 1
 		molecule.addAtom(getBuilder().newAtom("C")); // 2
 		molecule.addAtom(getBuilder().newAtom("C")); // 3
@@ -111,7 +111,7 @@ public class IAtomContainerTest extends IChemObjectTest {
 	}
 
     @Test public void testClone_IBond2() throws Exception {
-		IAtomContainer molecule = getBuilder().newAtomContainer();
+		IAtomContainer molecule = (IAtomContainer)newChemObject();
         IAtom atom1 = getBuilder().newAtom("C");
         IAtom atom2 = getBuilder().newAtom("C");
 		molecule.addAtom(atom1); // 1
@@ -126,7 +126,7 @@ public class IAtomContainerTest extends IChemObjectTest {
 	}
 
     @Test public void testClone_IBond3() throws Exception {
-		IAtomContainer molecule = getBuilder().newAtomContainer();
+		IAtomContainer molecule = (IAtomContainer)newChemObject();
         IAtom atom1 = getBuilder().newAtom("C");
         IAtom atom2 = getBuilder().newAtom("C");
 		molecule.addAtom(atom1); // 1
@@ -141,7 +141,7 @@ public class IAtomContainerTest extends IChemObjectTest {
 	}
 
     @Test public void testClone_ILonePair() throws Exception {
-		IAtomContainer molecule = getBuilder().newAtomContainer();
+		IAtomContainer molecule = (IAtomContainer)newChemObject();
         IAtom atom1 = getBuilder().newAtom("C");
         IAtom atom2 = getBuilder().newAtom("C");
 		molecule.addAtom(atom1); // 1
@@ -390,7 +390,7 @@ public class IAtomContainerTest extends IChemObjectTest {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        IAtomContainer container = getBuilder().newAtomContainer();
+        IAtomContainer container = (IAtomContainer)newChemObject();
         container.add(acetone);
         Assert.assertEquals(4, container.getAtomCount());
         Assert.assertEquals(3, container.getBondCount());
@@ -413,7 +413,7 @@ public class IAtomContainerTest extends IChemObjectTest {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        IAtomContainer container = getBuilder().newAtomContainer();
+        IAtomContainer container = (IAtomContainer)newChemObject();
         container.add(acetone);
         Assert.assertEquals(4, container.getAtomCount());
         Assert.assertEquals(3, container.getBondCount());
@@ -442,7 +442,7 @@ public class IAtomContainerTest extends IChemObjectTest {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        IAtomContainer container = getBuilder().newAtomContainer();
+        IAtomContainer container = (IAtomContainer)newChemObject();
         container.add(acetone);
         Assert.assertEquals(4, container.getAtomCount());
         Assert.assertEquals(3, container.getBondCount());
@@ -490,7 +490,7 @@ public class IAtomContainerTest extends IChemObjectTest {
     }
     
     @Test public void testSetAtom_int_IAtom() {
-        IAtomContainer container = getBuilder().newAtomContainer();
+        IAtomContainer container = (IAtomContainer)newChemObject();
         IAtom c = getBuilder().newAtom("C");
         container.setAtom(0, c);
         
@@ -499,7 +499,7 @@ public class IAtomContainerTest extends IChemObjectTest {
     }
     
     @Test public void testGetAtom_int() {
-        IAtomContainer acetone = getBuilder().newAtomContainer();
+        IAtomContainer acetone = (IAtomContainer)newChemObject();
         
         IAtom c = getBuilder().newAtom("C");
         IAtom n = getBuilder().newAtom("N");
@@ -550,7 +550,7 @@ public class IAtomContainerTest extends IChemObjectTest {
     }
     
 //    @Test public void testSetElectronContainer_int_IElectronContainer() {
-//        IAtomContainer container = getBuilder().newAtomContainer();
+//        IAtomContainer container = (IAtomContainer)newChemObject();
 //        IAtom c1 = getBuilder().newAtom("C");
 //        IAtom c2 = getBuilder().newAtom("C");
 //        container.addAtom(c1);
@@ -639,14 +639,14 @@ public class IAtomContainerTest extends IChemObjectTest {
     }
     
 //    @Test public void testSetElectronContainerCount_int() {
-//        IAtomContainer container = getBuilder().newAtomContainer();
+//        IAtomContainer container = (IAtomContainer)newChemObject();
 //        container.setElectronContainerCount(2);
 //        
 //        Assert.assertEquals(2, container.getElectronContainerCount());
 //    }
     
 //    @Test public void testSetAtomCount_int() {
-//        IAtomContainer container = getBuilder().newAtomContainer();
+//        IAtomContainer container = (IAtomContainer)newChemObject();
 //        container.setAtomCount(2);
 //        
 //        Assert.assertEquals(2, container.getAtomCount());
@@ -1118,7 +1118,7 @@ public class IAtomContainerTest extends IChemObjectTest {
 //        electronContainers[2] = getBuilder().newBond(c1, c3, IBond.Order.SINGLE);
 //        acetone.setElectronContainers(electronContainers);
 //        
-//        IAtomContainer tested = getBuilder().newAtomContainer();
+//        IAtomContainer tested = (IAtomContainer)newChemObject();
 //        tested.addBond(getBuilder().newBond(c2, c3));
 //        tested.addElectronContainers(acetone);
 //        
@@ -1285,7 +1285,7 @@ public class IAtomContainerTest extends IChemObjectTest {
     }
     
     @Test public void testGetFirstAtom() {
-        IAtomContainer container = getBuilder().newAtomContainer();
+        IAtomContainer container = (IAtomContainer)newChemObject();
         IAtom c1 = getBuilder().newAtom("C");
         IAtom c2 = getBuilder().newAtom("O");
         IAtom o = getBuilder().newAtom("H");
@@ -1298,7 +1298,7 @@ public class IAtomContainerTest extends IChemObjectTest {
     }
 
     @Test public void testGetLastAtom() {
-        IAtomContainer container = getBuilder().newAtomContainer();
+        IAtomContainer container = (IAtomContainer)newChemObject();
         IAtom c1 = getBuilder().newAtom("C");
         IAtom c2 = getBuilder().newAtom("O");
         IAtom o = getBuilder().newAtom("H");
@@ -1624,7 +1624,7 @@ public class IAtomContainerTest extends IChemObjectTest {
         carbon4.setID("c4");
         int parityInt = 1;
         IAtomParity parity = getBuilder().newAtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
-        IAtomContainer container = getBuilder().newAtomContainer();
+        IAtomContainer container = (IAtomContainer)newChemObject();
         container.addAtomParity(parity);
         org.openscience.cdk.interfaces.IAtomParity copy = container.getAtomParity(carbon);
         Assert.assertNotNull(copy);
@@ -1633,7 +1633,7 @@ public class IAtomContainerTest extends IChemObjectTest {
 
     /** Test for RFC #9 */
     @Test public void testToString() {
-        IAtomContainer container = getBuilder().newAtomContainer();
+        IAtomContainer container = (IAtomContainer)newChemObject();
         String description = container.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
@@ -1643,7 +1643,7 @@ public class IAtomContainerTest extends IChemObjectTest {
 
     @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IAtomContainer chemObject = getBuilder().newAtomContainer();
+        IAtomContainer chemObject = (IAtomContainer)newChemObject();
         chemObject.addListener(listener);
         
         chemObject.addAtom(getBuilder().newAtom());

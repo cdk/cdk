@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.ISingleElectronTest;
 public class DebugSingleElectronTest extends ISingleElectronTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugSingleElectron());
     }
 
     @Test public void testDebugSingleElectron() {

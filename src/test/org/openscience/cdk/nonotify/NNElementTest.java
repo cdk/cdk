@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IElementTest;
 public class NNElementTest extends IElementTest {
 
     @BeforeClass public static void setUp() {
-    	setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    	setChemObject(new NNElement());
     }
 
     @Test public void testNNElement() {

@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IRingSetTest;
 public class RingSetTest extends IRingSetTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DefaultChemObjectBuilder.getInstance());
+        setChemObject(new RingSet());
     }
 
     @Test public void testRingSet() {

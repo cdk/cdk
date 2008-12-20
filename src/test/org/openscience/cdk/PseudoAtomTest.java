@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IPseudoAtomTest;
 public class PseudoAtomTest extends IPseudoAtomTest {
 
     @BeforeClass public static void setUp() {
-       	setBuilder(DefaultChemObjectBuilder.getInstance());
+       	setChemObject(new PseudoAtom());
     }
 
     @Test public void testPseudoAtom() {

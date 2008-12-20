@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemSequenceTest;
 public class NNChemSequenceTest extends IChemSequenceTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNChemSequence());
     }
 
     @Test public void testNNChemSequence() {

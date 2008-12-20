@@ -41,25 +41,44 @@ import org.openscience.cdk.tools.diff.ChemObjectDiff;
  */
 public abstract class IChemObjectTest extends CDKTestCase {
 
-    private static IChemObjectBuilder builder;
-
     public static IChemObjectBuilder getBuilder() {
-        return builder;
+		return object.getBuilder();
+	}
+
+	private static IChemObject object;
+
+	/**
+	 * Returns a clone of the tested {@link IChemObject}.
+	 * 
+	 * @return a freshly cloned IChemObject.
+	 */
+    public static IChemObject newChemObject() {
+        try {
+			return (IChemObject)object.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
     }
 
-    public static void setBuilder( IChemObjectBuilder builder ) {
-    	IChemObjectTest.builder = builder;
+    /**
+     * Sets the {@link IChemObject} that is being tested. Unit tests should use
+     * {@link #newChemObject()} to instantiate a fresh test object.
+     * 
+     * @param object IChemObject to be tested
+     */
+    public static void setChemObject(IChemObject object) {
+    	IChemObjectTest.object = object;
     }
 
     @Test public void testGetBuilder() {
-    	IChemObject chemObject = builder.newChemObject();
+    	IChemObject chemObject = newChemObject();
     	Object object = chemObject.getBuilder();
     	Assert.assertNotNull(object);
     	Assert.assertTrue(object instanceof IChemObjectBuilder);
     }
     	
     @Test public void testSetProperty_Object_Object() {
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         String cDescription = new String("description");
         String cProperty = new String("property");
         chemObject.setProperty(cDescription, cProperty);
@@ -67,7 +86,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
 
     @Test public void testSetProperties_Map() {
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         Map<Object,Object> props = new Hashtable<Object,Object>();
         String cDescription = new String("description");
         String cProperty = new String("property");
@@ -77,7 +96,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
 
     @Test public void testGetProperties() {
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         Assert.assertNotNull(chemObject.getProperties());
         Assert.assertEquals(0, chemObject.getProperties().size());
     }
@@ -86,12 +105,12 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
 
     @Test public void testGetProperty_Object() {
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         Assert.assertNull(chemObject.getProperty("dummy"));
     }
 
     @Test public void testRemoveProperty_Object() {
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         String cDescription = new String("description");
         String cProperty = new String("property");
         chemObject.setProperty(cDescription, cProperty);
@@ -101,35 +120,35 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
 
     @Test public void testSetID_String() {
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         String id = "objectX";
         chemObject.setID(id);
         Assert.assertEquals(id, chemObject.getID());
     }
     
     @Test public void testGetID() {
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         Assert.assertNull(chemObject.getID());
     }
     
     @Test public void testSetFlags_arrayboolean(){
-      IChemObject chemObject=builder.newChemObject();
+      IChemObject chemObject=newChemObject();
       chemObject.setFlag(1,true);
-      IChemObject chemObject2=builder.newChemObject();
+      IChemObject chemObject2=newChemObject();
       chemObject2.setFlags(chemObject.getFlags());
       Assert.assertTrue(chemObject2.getFlag(1));
     }
     
     @Test public void testGetFlags(){
-      IChemObject chemObject=builder.newChemObject();
+      IChemObject chemObject=newChemObject();
       chemObject.setFlag(1,true);
-      IChemObject chemObject2=builder.newChemObject();
+      IChemObject chemObject2=newChemObject();
       chemObject2.setFlags(chemObject.getFlags());
       Assert.assertTrue(chemObject2.getFlag(1));
     }
 
     @Test public void testSetFlag_int_boolean() {
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         chemObject.setFlag(0, true);
         Assert.assertTrue(chemObject.getFlag(0));
     }
@@ -138,7 +157,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
     
     @Test public void testClone() throws Exception {
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         chemObject.setFlag(3, true);
         
         // test cloning of itself
@@ -152,7 +171,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
     
     @Test public void testClone_Flags() throws Exception {
-        IChemObject chemObject1 = builder.newChemObject();
+        IChemObject chemObject1 = newChemObject();
         chemObject1.setFlag(3, true);
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();
 
@@ -162,7 +181,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
 
     @Test public void testClone_Identifier() throws Exception {
-        IChemObject chemObject1 = builder.newChemObject();
+        IChemObject chemObject1 = newChemObject();
         chemObject1.setID("co1");
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();
 
@@ -172,7 +191,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
     
     @Test public void testClone_Properties() throws Exception {
-        IChemObject chemObject1 = builder.newChemObject();
+        IChemObject chemObject1 = newChemObject();
         Map<Object,Object> props1 = new Hashtable<Object,Object>();
         chemObject1.setProperties(props1);
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();
@@ -187,9 +206,9 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
     
     @Test public void testClone_Properties2() throws Exception {
-        IChemObject chemObject1 = builder.newChemObject();
+        IChemObject chemObject1 = newChemObject();
         Map<Object,Object> props1 = new Hashtable<Object,Object>();
-        IAtom atom = builder.newAtom("C");
+        IAtom atom = chemObject1.getBuilder().newAtom("C");
         props1.put("atom", atom);
         chemObject1.setProperties(props1);
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();
@@ -205,7 +224,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
     
     @Test public void testClone_ChemObjectListeners() throws Exception {
-        IChemObject chemObject1 = builder.newChemObject();
+        IChemObject chemObject1 = newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
         IChemObject chemObject2 = (IChemObject)chemObject1.clone();
@@ -218,7 +237,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     /** @cdk.bug 1838820 */
     @Test(timeout=100)
     public void testDontCloneIChemObjectProperties() throws Exception {
-    	IChemObject chemObject1 = builder.newChemObject();
+    	IChemObject chemObject1 = newChemObject();
     	chemObject1.setProperty("RecursiveBastard", chemObject1);
     	
     	Object clone = chemObject1.clone();
@@ -227,7 +246,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
     
     @Test public void testAddListener_IChemObjectListener() {
-        IChemObject chemObject1 = builder.newChemObject();
+        IChemObject chemObject1 = newChemObject();
         Assert.assertEquals(0, chemObject1.getListenerCount());
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
@@ -235,7 +254,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
     
     @Test public void testRemoveListener_IChemObjectListener() {
-        IChemObject chemObject1 = builder.newChemObject();
+        IChemObject chemObject1 = newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
         Assert.assertEquals(1, chemObject1.getListenerCount());
@@ -244,7 +263,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
     
     @Test public void testGetListenerCount() {
-        IChemObject chemObject1 = builder.newChemObject();
+        IChemObject chemObject1 = newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
         chemObject1.addListener(listener);
         Assert.assertEquals(1, chemObject1.getListenerCount());
@@ -255,7 +274,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
     
    @Test public void testShallowCopy() throws Exception {
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         Object clone = chemObject.clone();
         Assert.assertNotNull(clone);
         Assert.assertTrue(clone instanceof IChemObject);
@@ -263,7 +282,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
 
     @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");
@@ -282,7 +301,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     
     @Test public void testNotifyChanged() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");
@@ -290,7 +309,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     }
 
     @Test public void testSetNotification_boolean() {
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         chemObject.setNotification(false);
         Assert.assertFalse(chemObject.getNotification());
     }
@@ -300,7 +319,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     
     @Test public void testSetNotification_false() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         chemObject.addListener(listener);
         chemObject.setNotification(false);
         
@@ -310,7 +329,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     
     @Test public void testSetNotification_true() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         chemObject.addListener(listener);
         chemObject.setNotification(true);
         
@@ -320,7 +339,7 @@ public abstract class IChemObjectTest extends CDKTestCase {
     
     @Test public void testNotifyChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IChemObject chemObject = builder.newChemObject();
+        IChemObject chemObject = newChemObject();
         chemObject.addListener(listener);
         
         chemObject.setID("Changed");

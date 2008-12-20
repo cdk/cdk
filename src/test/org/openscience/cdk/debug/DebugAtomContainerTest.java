@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IMolecule;
 public class DebugAtomContainerTest extends IAtomContainerTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugAtomContainer());
     }
 
     @Test public void testDebugAtomContainer_int_int_int_int() {

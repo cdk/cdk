@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IIsotopeTest;
 public class NNIsotopeTest extends IIsotopeTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNIsotope("C"));
     }
 
     @Test public void testNNIsotope_String() {

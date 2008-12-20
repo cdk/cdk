@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IStrandTest;
 public class NNStrandTest extends IStrandTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNStrand());
     }
 
 	@Test public void testNNStrand() {

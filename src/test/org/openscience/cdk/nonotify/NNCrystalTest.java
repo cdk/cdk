@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.ICrystalTest;
 public class NNCrystalTest extends ICrystalTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNCrystal());
     }
 
     @Test public void testNNCrystal() {

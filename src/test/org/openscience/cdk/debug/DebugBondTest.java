@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IBondTest;
 public class DebugBondTest extends IBondTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugBond());
     }
 
     @Test

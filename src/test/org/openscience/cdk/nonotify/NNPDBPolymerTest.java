@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IStrand;
 public class NNPDBPolymerTest extends IPDBPolymerTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNPDBPolymer());
     }
 
 	@Test public void testNNPDBPolymer() {

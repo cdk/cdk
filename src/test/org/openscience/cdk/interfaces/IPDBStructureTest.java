@@ -35,14 +35,22 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class IPDBStructureTest extends CDKTestCase {
 	
-    private static IChemObjectBuilder builder;
-
     public static IChemObjectBuilder getBuilder() {
-        return builder;
+		return object.getBuilder();
+	}
+
+	private static IChemObject object;
+
+    public static IChemObject newChemObject() {
+        try {
+			return (IChemObject)object.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
     }
 
-    public static void setBuilder( IChemObjectBuilder builder ) {
-    	IPDBStructureTest.builder = builder;
+    public static void setChemObject(IChemObject object) {
+    	IPDBStructureTest.object = object;
     }
 
 	@Test public void testGetEndChainID() {

@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IMappingTest;
 public class DebugMappingTest extends IMappingTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugMapping(new DebugAtom(), new DebugAtom()));
     }
 
     @Test public void testDebugMapping_IChemObject_IChemObject() {

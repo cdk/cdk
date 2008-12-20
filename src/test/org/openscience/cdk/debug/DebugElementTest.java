@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IElementTest;
 public class DebugElementTest extends IElementTest {
 
     @BeforeClass public static void setUp() {
-    	setBuilder(DebugChemObjectBuilder.getInstance());
+    	setChemObject(new DebugElement());
     }
 
     @Test public void testDebugElement() {

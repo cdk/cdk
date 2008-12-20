@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IPolymerTest;
 public class NNPolymerTest extends IPolymerTest {
 
     @BeforeClass public static void setUp() {
-    	setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    	setChemObject(new NNPolymer());
     }
 
     @Test public void testNNPolymer() {

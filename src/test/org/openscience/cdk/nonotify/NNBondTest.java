@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IBondTest;
 public class NNBondTest extends IBondTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNBond());
     }
 
     @Test

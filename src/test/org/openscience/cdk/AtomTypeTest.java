@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IElement;
 public class AtomTypeTest extends IAtomTypeTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DefaultChemObjectBuilder.getInstance());
+        setChemObject(new AtomType("C"));
     }
 
     @Test public void testAtomType_String() {

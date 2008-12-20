@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IMoleculeTest;
 public class DebugMoleculeTest extends IMoleculeTest {
 
     @BeforeClass public static void setUp() {
-    	  setBuilder(DebugChemObjectBuilder.getInstance());
+    	  setChemObject(new DebugMolecule());
     }
 
     @Test public void testDebugMolecule() {

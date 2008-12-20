@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.ILonePairTest;
 public class LonePairTest extends ILonePairTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DefaultChemObjectBuilder.getInstance());
+        setChemObject(new LonePair());
     }
 
     @Test public void testLonePair() {

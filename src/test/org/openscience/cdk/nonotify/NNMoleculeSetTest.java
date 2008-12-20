@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IMoleculeSetTest;
 public class NNMoleculeSetTest extends IMoleculeSetTest {
 
     @BeforeClass public static void setUp() {
-    	setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    	setChemObject(new NNMoleculeSet());
     }
 
     @Test public void testNNMoleculeSet() {

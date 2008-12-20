@@ -24,6 +24,7 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectTest;
 
@@ -35,7 +36,7 @@ import org.openscience.cdk.interfaces.IChemObjectTest;
 public class NNChemObjectTest extends IChemObjectTest {
 
     @BeforeClass public static void setUp() {
-    	setBuilder(NoNotificationChemObjectBuilder.getInstance());
+    	setChemObject(new ChemObject());
     }
 
     @Test public void testNNChemObject() {

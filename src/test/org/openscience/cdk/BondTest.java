@@ -41,7 +41,7 @@ public class BondTest extends IBondTest {
 
     @BeforeClass
     public static void setUp() {
-        setBuilder(DefaultChemObjectBuilder.getInstance());
+        setChemObject(new Bond());
     }
 
     @Test

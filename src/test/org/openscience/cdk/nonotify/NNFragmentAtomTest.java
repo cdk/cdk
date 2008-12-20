@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IFragmentAtomTest;
 public class NNFragmentAtomTest extends IFragmentAtomTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNFragmentAtom());
     }
 
     @Test public void testNNFragmentAtom() {

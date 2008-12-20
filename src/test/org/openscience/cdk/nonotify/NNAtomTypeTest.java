@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IElement;
 public class NNAtomTypeTest extends IAtomTypeTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNAtomType("C"));
     }
 
     @Test public void testNNAtomType_String() {

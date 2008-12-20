@@ -29,7 +29,6 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPDBAtom;
@@ -43,7 +42,7 @@ import org.openscience.cdk.interfaces.IPDBAtomTest;
 public class PDBAtomTest extends IPDBAtomTest {
 
     @BeforeClass public static void setUp() {
-    	setBuilder(DefaultChemObjectBuilder.getInstance());
+    	setChemObject(new PDBAtom("C"));
     }
 
     @Test public void testPDBAtom_IElement() {

@@ -41,7 +41,7 @@ import org.junit.Test;
 public class IMonomerTest extends IAtomContainerTest {
 
 	@Test public void testSetMonomerName_String() {
-        IMonomer m = getBuilder().newMonomer();
+        IMonomer m = (IMonomer)newChemObject();
         m.setMonomerName(new String("TRP279"));
         Assert.assertEquals(new String("TRP279"), m.getMonomerName());
 	}
@@ -50,7 +50,7 @@ public class IMonomerTest extends IAtomContainerTest {
     }
     
     @Test public void testSetMonomerType_String() {
-        IMonomer oMonomer = getBuilder().newMonomer();
+        IMonomer oMonomer = (IMonomer)newChemObject();
         oMonomer.setMonomerType(new String("TRP"));
         Assert.assertEquals(new String("TRP"), oMonomer.getMonomerType());
     }
@@ -62,7 +62,7 @@ public class IMonomerTest extends IAtomContainerTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-        IMonomer oMonomer = getBuilder().newMonomer();
+        IMonomer oMonomer = (IMonomer)newChemObject();
         oMonomer.setMonomerType(new String("TRP"));
         String description = oMonomer.toString();
         for (int i=0; i< description.length(); i++) {
@@ -72,7 +72,7 @@ public class IMonomerTest extends IAtomContainerTest {
     }
 
     @Test public void testClone() throws Exception {
-        IMonomer oMonomer = getBuilder().newMonomer();
+        IMonomer oMonomer = (IMonomer)newChemObject();
         Object clone = oMonomer.clone();
         Assert.assertTrue(clone instanceof IMonomer);
         Assert.assertNotSame(oMonomer, clone);

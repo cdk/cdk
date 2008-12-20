@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IIsotopeTest;
 public class IsotopeTest extends IIsotopeTest {
 
     @BeforeClass public static void setUp() {
-    	setBuilder(DefaultChemObjectBuilder.getInstance());
+    	setChemObject(new Isotope("C"));
     }
 
     @Test public void testIsotope_String() {

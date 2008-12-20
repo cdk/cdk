@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IReactionSetTest;
 public class NNReactionSetTest extends IReactionSetTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(NoNotificationChemObjectBuilder.getInstance());
+        setChemObject(new NNReactionSet());
     }
 
     @Test public void testNNReactionSet() {

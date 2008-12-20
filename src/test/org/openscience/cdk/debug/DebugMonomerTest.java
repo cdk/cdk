@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IMonomerTest;
 public class DebugMonomerTest extends IMonomerTest {
 
     @BeforeClass public static void setUp() {
-        setBuilder(DebugChemObjectBuilder.getInstance());
+        setChemObject(new DebugMonomer());
     }
 
 	@Test public void testDebugMonomer() {
