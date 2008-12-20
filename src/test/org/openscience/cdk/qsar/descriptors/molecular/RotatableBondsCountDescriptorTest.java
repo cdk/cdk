@@ -113,6 +113,9 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(1, ((IntegerResult)result.getValue()).intValue());
     }
 
+    /**
+     * @cdk.bug 2449257
+     */
     @Test public void testEthaneIncludeTerminalsExplicitH() throws Exception {
         IAtomContainer container = makeEthane();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
@@ -125,6 +128,9 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(1, ((IntegerResult)result.getValue()).intValue());
     }
 
+    /**
+     * @cdk.bug 2449257
+     */
     @Test public void testEthaneExplicitH() throws Exception {
         IAtomContainer container = makeEthane();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
@@ -137,6 +143,9 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0, ((IntegerResult)result.getValue()).intValue());
     }
 
+    /**
+     * @cdk.bug 2449257
+     */
     @Test public void testButaneIncludeTerminalsExplicitH() throws Exception {
         IAtomContainer container = makeButane();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
@@ -149,6 +158,9 @@ public class RotatableBondsCountDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(3, ((IntegerResult)result.getValue()).intValue());
     }
 
+    /**
+     * @cdk.bug 2449257
+     */
     @Test public void testButaneExplicitH() throws Exception {
         IAtomContainer container = makeButane();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
