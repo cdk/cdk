@@ -44,10 +44,10 @@ import org.junit.Test;
 public class IPolymerTest extends IMoleculeTest {
 
 	@Test public void testAddAtom_IAtom() {
-		IPolymer oPolymer = getBuilder().newPolymer();
+		IPolymer oPolymer = (IPolymer)newChemObject();
 		
-		IAtom oAtom1 = getBuilder().newAtom("C1");
-		IAtom oAtom2 = getBuilder().newAtom("C2");
+		IAtom oAtom1 = oPolymer.getBuilder().newAtom("C1");
+		IAtom oAtom2 = oPolymer.getBuilder().newAtom("C2");
 		oPolymer.addAtom(oAtom1);
 		oPolymer.addAtom(oAtom2);
 
@@ -56,13 +56,13 @@ public class IPolymerTest extends IMoleculeTest {
 	}
     
 	@Test public void testAddAtom_IAtom_IMonomer() {
-		IPolymer oPolymer = getBuilder().newPolymer();
-		IMonomer oMono1 = getBuilder().newMonomer();
+		IPolymer oPolymer = (IPolymer)newChemObject();
+		IMonomer oMono1 = oPolymer.getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
 		IMonomer oMono2 = null;
-		IAtom oAtom1 = getBuilder().newAtom("C1");
-		IAtom oAtom2 = getBuilder().newAtom("C2");
-		IAtom oAtom3 = getBuilder().newAtom("C3");
+		IAtom oAtom1 = oPolymer.getBuilder().newAtom("C1");
+		IAtom oAtom2 = oPolymer.getBuilder().newAtom("C2");
+		IAtom oAtom3 = oPolymer.getBuilder().newAtom("C3");
 		
 		oPolymer.addAtom(oAtom1);
 		oPolymer.addAtom(oAtom2, oMono1);
@@ -82,16 +82,16 @@ public class IPolymerTest extends IMoleculeTest {
 	}
 	
 	@Test public void testGetMonomerCount() {
-		IPolymer oPolymer = getBuilder().newPolymer();
+		IPolymer oPolymer = (IPolymer)newChemObject();
 		Assert.assertEquals(0, oPolymer.getMonomerCount());
 		
-		IMonomer oMono1 = getBuilder().newMonomer();
+		IMonomer oMono1 = oPolymer.getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = getBuilder().newMonomer();
+		IMonomer oMono2 = oPolymer.getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom1 = getBuilder().newAtom("C1");
-		IAtom oAtom2 = getBuilder().newAtom("C2");
-		IAtom oAtom3 = getBuilder().newAtom("C3");
+		IAtom oAtom1 = oPolymer.getBuilder().newAtom("C1");
+		IAtom oAtom2 = oPolymer.getBuilder().newAtom("C2");
+		IAtom oAtom3 = oPolymer.getBuilder().newAtom("C3");
 		oPolymer.addAtom(oAtom1);
 		oPolymer.addAtom(oAtom2, oMono1);
 		oPolymer.addAtom(oAtom3, oMono2);
@@ -101,15 +101,15 @@ public class IPolymerTest extends IMoleculeTest {
 	}
 	
 	@Test public void testGetMonomer_String() {
-		IPolymer oPolymer = getBuilder().newPolymer();
+		IPolymer oPolymer = (IPolymer)newChemObject();
 		
-		IMonomer oMono1 = getBuilder().newMonomer();
+		IMonomer oMono1 = oPolymer.getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = getBuilder().newMonomer();
+		IMonomer oMono2 = oPolymer.getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom1 = getBuilder().newAtom("C1");
-		IAtom oAtom2 = getBuilder().newAtom("C2");
-		IAtom oAtom3 = getBuilder().newAtom("C3");
+		IAtom oAtom1 = oPolymer.getBuilder().newAtom("C1");
+		IAtom oAtom2 = oPolymer.getBuilder().newAtom("C2");
+		IAtom oAtom3 = oPolymer.getBuilder().newAtom("C3");
 		oPolymer.addAtom(oAtom1, oMono1);
 		oPolymer.addAtom(oAtom2, oMono1);
 		oPolymer.addAtom(oAtom3, oMono2);
@@ -120,16 +120,16 @@ public class IPolymerTest extends IMoleculeTest {
 	}
 	
 	@Test public void testGetMonomerNames() {
-		IPolymer oPolymer = getBuilder().newPolymer();
+		IPolymer oPolymer = (IPolymer)newChemObject();
 		Assert.assertEquals(0, oPolymer.getMonomerNames().size());
 		
-		IMonomer oMono1 = getBuilder().newMonomer();
+		IMonomer oMono1 = oPolymer.getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = getBuilder().newMonomer();
+		IMonomer oMono2 = oPolymer.getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom1 = getBuilder().newAtom("C1");
-		IAtom oAtom2 = getBuilder().newAtom("C2");
-		IAtom oAtom3 = getBuilder().newAtom("C3");
+		IAtom oAtom1 = oPolymer.getBuilder().newAtom("C1");
+		IAtom oAtom2 = oPolymer.getBuilder().newAtom("C2");
+		IAtom oAtom3 = oPolymer.getBuilder().newAtom("C3");
 		oPolymer.addAtom(oAtom1);
 		oPolymer.addAtom(oAtom2, oMono1);
 		oPolymer.addAtom(oAtom3, oMono2);
@@ -145,10 +145,10 @@ public class IPolymerTest extends IMoleculeTest {
 	}
 	
 	@Test public void testRemoveMonomer_String()	{
-		IPolymer oPolymer = getBuilder().newPolymer();
-		IMonomer oMono1 = getBuilder().newMonomer();
+		IPolymer oPolymer = (IPolymer)newChemObject();
+		IMonomer oMono1 = oPolymer.getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IAtom oAtom1 = getBuilder().newAtom("C1");
+		IAtom oAtom1 = oPolymer.getBuilder().newAtom("C1");
 		oPolymer.addAtom(oAtom1, oMono1);
 		Assert.assertTrue(oPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
 		Assert.assertEquals(1, oPolymer.getAtomCount());
@@ -162,13 +162,14 @@ public class IPolymerTest extends IMoleculeTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-        IStrand oStrand = getBuilder().newStrand();
-		IMonomer oMono1 = getBuilder().newMonomer();
+    	IChemObject object = newChemObject(); // FiXME: bug 2454839
+        IStrand oStrand = object.getBuilder().newStrand(); 
+		IMonomer oMono1 = object.getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = getBuilder().newMonomer();
+		IMonomer oMono2 = object.getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom2 = getBuilder().newAtom("C2");
-		IAtom oAtom3 = getBuilder().newAtom("C3");
+		IAtom oAtom2 = object.getBuilder().newAtom("C2");
+		IAtom oAtom3 = object.getBuilder().newAtom("C3");
 		oStrand.addAtom(oAtom2, oMono1);
 		oStrand.addAtom(oAtom3, oMono2);
 		Map<String,IMonomer> monomers = new Hashtable<String,IMonomer>();
@@ -185,7 +186,7 @@ public class IPolymerTest extends IMoleculeTest {
      * Method to test the clone() method
      */
     @Test public void testClone() throws Exception {
-    	IPolymer polymer = getBuilder().newPolymer();
+    	IPolymer polymer = (IPolymer)newChemObject();
         Object clone = polymer.clone();
         Assert.assertTrue(clone instanceof IPolymer);
     }

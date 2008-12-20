@@ -44,8 +44,8 @@ public class IReactionSchemeTest extends IReactionSetTest {
 	 */
     @Test 
     public void testGetReactionSchemeCount() {
-    	IReactionScheme scheme = getBuilder().newReactionScheme();
-    	scheme.add(getBuilder().newReactionScheme());
+    	IReactionScheme scheme = (IReactionScheme)newChemObject();
+    	scheme.add(scheme.getBuilder().newReactionScheme());
         Assert.assertEquals(1, scheme.getReactionSchemeCount());
     }
     /**
@@ -55,9 +55,9 @@ public class IReactionSchemeTest extends IReactionSetTest {
 	 */
     @Test 
     public void testGetReactionCount() {
-    	IReactionScheme scheme = getBuilder().newReactionScheme();
-    	scheme.addReaction(getBuilder().newReaction());
-    	scheme.addReaction(getBuilder().newReaction());
+    	IReactionScheme scheme = (IReactionScheme)newChemObject();
+    	scheme.addReaction(scheme.getBuilder().newReaction());
+    	scheme.addReaction(scheme.getBuilder().newReaction());
         Assert.assertEquals(2, scheme.getReactionCount());
     }
     /**
@@ -67,10 +67,10 @@ public class IReactionSchemeTest extends IReactionSetTest {
 	 */
     @Test 
     public void testReactionSchemes() {
-        IReactionScheme scheme = getBuilder().newReactionScheme();
-        scheme.add(getBuilder().newReactionScheme());
-        scheme.add(getBuilder().newReactionScheme());
-        scheme.add(getBuilder().newReactionScheme());
+        IReactionScheme scheme = (IReactionScheme)newChemObject();
+        scheme.add(scheme.getBuilder().newReactionScheme());
+        scheme.add(scheme.getBuilder().newReactionScheme());
+        scheme.add(scheme.getBuilder().newReactionScheme());
 
         Assert.assertEquals(3, scheme.getReactionSchemeCount());
         int count = 0;
@@ -87,10 +87,10 @@ public class IReactionSchemeTest extends IReactionSetTest {
 	 */
     @Test 
     public void testReactions() {
-        IReactionScheme scheme = getBuilder().newReactionScheme();
-        scheme.addReaction(getBuilder().newReaction());
-        scheme.addReaction(getBuilder().newReaction());
-        scheme.addReaction(getBuilder().newReaction());
+        IReactionScheme scheme = (IReactionScheme)newChemObject();
+        scheme.addReaction(scheme.getBuilder().newReaction());
+        scheme.addReaction(scheme.getBuilder().newReaction());
+        scheme.addReaction(scheme.getBuilder().newReaction());
 
         Assert.assertEquals(3, scheme.getReactionCount());
         int count = 0;
@@ -107,12 +107,12 @@ public class IReactionSchemeTest extends IReactionSetTest {
 	 */
     @Test 
     public void testAdd_IReactionScheme() {
-    	IReactionScheme scheme = getBuilder().newReactionScheme();
-        scheme.add(getBuilder().newReactionScheme());
-        scheme.add(getBuilder().newReactionScheme());
-        scheme.add(getBuilder().newReactionScheme());
+    	IReactionScheme scheme = (IReactionScheme)newChemObject();
+        scheme.add(scheme.getBuilder().newReactionScheme());
+        scheme.add(scheme.getBuilder().newReactionScheme());
+        scheme.add(scheme.getBuilder().newReactionScheme());
 
-        IReactionScheme tested = getBuilder().newReactionScheme();
+        IReactionScheme tested = scheme.getBuilder().newReactionScheme();
         Assert.assertEquals(0, tested.getReactionSchemeCount());
         tested.add(scheme);
         Assert.assertEquals(1, tested.getReactionSchemeCount());
@@ -125,12 +125,12 @@ public class IReactionSchemeTest extends IReactionSetTest {
 	 */
     @Test 
     public void testAdd_IReaction() {
-    	IReactionScheme scheme = getBuilder().newReactionScheme();
-    	scheme.add(getBuilder().newReactionScheme());
-        scheme.add(getBuilder().newReactionScheme());
-        scheme.add(getBuilder().newReactionScheme());
+    	IReactionScheme scheme = (IReactionScheme)newChemObject();
+    	scheme.add(scheme.getBuilder().newReactionScheme());
+        scheme.add(scheme.getBuilder().newReactionScheme());
+        scheme.add(scheme.getBuilder().newReactionScheme());
 
-        IReactionScheme tested = getBuilder().newReactionScheme();
+        IReactionScheme tested = scheme.getBuilder().newReactionScheme();
         Assert.assertEquals(0, tested.getReactionSchemeCount());
         tested.add(scheme);
         Assert.assertEquals(1, tested.getReactionSchemeCount());
@@ -143,7 +143,7 @@ public class IReactionSchemeTest extends IReactionSetTest {
 	 */
     @Test 
     public void testClone() throws Exception {
-    	IReactionScheme scheme = getBuilder().newReactionScheme();
+    	IReactionScheme scheme = (IReactionScheme)newChemObject();
         Object clone = scheme.clone();
         Assert.assertTrue(clone instanceof IReactionScheme);
         Assert.assertNotSame(scheme, clone);
@@ -155,9 +155,9 @@ public class IReactionSchemeTest extends IReactionSetTest {
 	 */
     @Test 
     public void testRemoveReactionScheme_IReactionScheme() {
-        IReactionScheme scheme = getBuilder().newReactionScheme();
-        IReactionScheme scheme1 = getBuilder().newReactionScheme();
-        IReactionScheme scheme2 = getBuilder().newReactionScheme();
+        IReactionScheme scheme = (IReactionScheme)newChemObject();
+        IReactionScheme scheme1 = (IReactionScheme)newChemObject();
+        IReactionScheme scheme2 = (IReactionScheme)newChemObject();
         scheme.add(scheme1);
         scheme.add(scheme2);
         scheme.removeReactionScheme(scheme1);
@@ -170,9 +170,9 @@ public class IReactionSchemeTest extends IReactionSetTest {
 	 */
     @Test 
     public void testRemoveAllReactionSchemes() {
-    	 IReactionScheme scheme = getBuilder().newReactionScheme();
-         IReactionScheme scheme1 = getBuilder().newReactionScheme();
-         IReactionScheme scheme2 = getBuilder().newReactionScheme();
+    	 IReactionScheme scheme = (IReactionScheme)newChemObject();
+         IReactionScheme scheme1 = (IReactionScheme)newChemObject();
+         IReactionScheme scheme2 = (IReactionScheme)newChemObject();
          scheme.add(scheme1);
          scheme.add(scheme2);
          

@@ -34,7 +34,7 @@ import org.junit.Test;
 public class IMoleculeTest extends IAtomContainerTest {
 
 	@Test public void testClone() throws Exception {
-        IMolecule molecule = getBuilder().newMolecule();
+        IMolecule molecule = (IMolecule)newChemObject();
         Object clone = molecule.clone();
         Assert.assertTrue(clone instanceof IMolecule);
 	Assert.assertNotSame(molecule, clone);
@@ -42,7 +42,7 @@ public class IMoleculeTest extends IAtomContainerTest {
 
     /** Test for RFC #9 */
     @Test public void testToString() {
-        IMolecule m = getBuilder().newMolecule();
+        IMolecule m = (IMolecule)newChemObject();
         String description = m.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');

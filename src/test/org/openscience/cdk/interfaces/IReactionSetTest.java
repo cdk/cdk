@@ -37,35 +37,35 @@ import org.junit.Test;
 public class IReactionSetTest extends IChemObjectTest {
 
 	@Test public void testClone() throws Exception {
-        IReactionSet reactionSet = getBuilder().newReactionSet();
+        IReactionSet reactionSet = (IReactionSet)newChemObject();
         Object clone = reactionSet.clone();
         Assert.assertTrue(clone instanceof IReactionSet);
     }    
         
     @Test public void testGetReactionCount() {
-		IReactionSet reactionSet = getBuilder().newReactionSet();
-		reactionSet.addReaction(getBuilder().newReaction()); // 1
-		reactionSet.addReaction(getBuilder().newReaction()); // 2
-		reactionSet.addReaction(getBuilder().newReaction()); // 3
-		reactionSet.addReaction(getBuilder().newReaction()); // 4
-		reactionSet.addReaction(getBuilder().newReaction()); // 5
-		reactionSet.addReaction(getBuilder().newReaction()); // 6 (force growing)
+		IReactionSet reactionSet = (IReactionSet)newChemObject();
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 1
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 2
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 3
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 4
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 5
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 6 (force growing)
         Assert.assertEquals(6, reactionSet.getReactionCount());
     }
     
     @Test public void testRemoveAllReactions(){
-  		IReactionSet reactionSet = getBuilder().newReactionSet();
-   		reactionSet.addReaction(getBuilder().newReaction());
+  		IReactionSet reactionSet = (IReactionSet)newChemObject();
+   		reactionSet.addReaction(reactionSet.getBuilder().newReaction());
    		reactionSet.removeAllReactions();
    		Assert.assertEquals(0,reactionSet.getReactionCount());
     }
 
     @Test public void testReactions() {
-		IReactionSet reactionSet = getBuilder().newReactionSet();
-		reactionSet.addReaction(getBuilder().newReaction()); // 1
-		reactionSet.addReaction(getBuilder().newReaction()); // 2
-		reactionSet.addReaction(getBuilder().newReaction()); // 3
-		reactionSet.addReaction(getBuilder().newReaction()); // 4
+		IReactionSet reactionSet = (IReactionSet)newChemObject();
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 1
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 2
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 3
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 4
         
 		Iterator<IReaction> reactionIter = reactionSet.reactions().iterator();
         Assert.assertNotNull(reactionIter);
@@ -79,11 +79,11 @@ public class IReactionSetTest extends IChemObjectTest {
     }
     
     @Test public void testGetReaction_int() {
-		IReactionSet reactionSet = getBuilder().newReactionSet();
-		reactionSet.addReaction(getBuilder().newReaction()); // 1
-		reactionSet.addReaction(getBuilder().newReaction()); // 2
-		reactionSet.addReaction(getBuilder().newReaction()); // 3
-		reactionSet.addReaction(getBuilder().newReaction()); // 4
+		IReactionSet reactionSet = (IReactionSet)newChemObject();
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 1
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 2
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 3
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 4
         
         for (int i=0; i<reactionSet.getReactionCount(); i++) {
             Assert.assertNotNull(reactionSet.getReaction(i));
@@ -91,22 +91,22 @@ public class IReactionSetTest extends IChemObjectTest {
     }
     
     @Test public void testAddReaction_IReaction() {
-		IReactionSet reactionSet = getBuilder().newReactionSet();
-		reactionSet.addReaction(getBuilder().newReaction()); // 1
-		reactionSet.addReaction(getBuilder().newReaction()); // 2
-        IReaction third = getBuilder().newReaction();
+		IReactionSet reactionSet = (IReactionSet)newChemObject();
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 1
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 2
+        IReaction third = reactionSet.getBuilder().newReaction();
 		reactionSet.addReaction(third); // 3
-		reactionSet.addReaction(getBuilder().newReaction()); // 4
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 4
         
         Assert.assertEquals(4, reactionSet.getReactionCount());
         Assert.assertEquals(third, reactionSet.getReaction(2));
     }
    
     @Test public void testRemoveReaction_int() {
-    	IReactionSet reactionSet = getBuilder().newReactionSet();
-    	reactionSet.addReaction(getBuilder().newReaction()); // 1
-    	reactionSet.addReaction(getBuilder().newReaction()); // 2
-    	reactionSet.addReaction(getBuilder().newReaction()); // 3
+    	IReactionSet reactionSet = (IReactionSet)newChemObject();
+    	reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 1
+    	reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 2
+    	reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 3
     	Assert.assertEquals(3, reactionSet.getReactionCount());
     	reactionSet.removeReaction(1);
     	Assert.assertEquals(2, reactionSet.getReactionCount());
@@ -115,11 +115,11 @@ public class IReactionSetTest extends IChemObjectTest {
     }
     
     @Test public void testClone_Reaction() throws Exception {
-		IReactionSet reactionSet = getBuilder().newReactionSet();
-		reactionSet.addReaction(getBuilder().newReaction()); // 1
-		reactionSet.addReaction(getBuilder().newReaction()); // 2
-		reactionSet.addReaction(getBuilder().newReaction()); // 3
-		reactionSet.addReaction(getBuilder().newReaction()); // 4
+		IReactionSet reactionSet = (IReactionSet)newChemObject();
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 1
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 2
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 3
+		reactionSet.addReaction(reactionSet.getBuilder().newReaction()); // 4
 
 		IReactionSet clone = (IReactionSet)reactionSet.clone();
 		Assert.assertEquals(reactionSet.getReactionCount(), clone.getReactionCount());
@@ -136,14 +136,14 @@ public class IReactionSetTest extends IChemObjectTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-        IReactionSet reactionSet = getBuilder().newReactionSet();
+        IReactionSet reactionSet = (IReactionSet)newChemObject();
         String description = reactionSet.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
             Assert.assertTrue(description.charAt(i) != '\r');
         }
         
-        IReaction reaction = getBuilder().newReaction();
+        IReaction reaction = reactionSet.getBuilder().newReaction();
         reactionSet.addReaction(reaction);
         description = reactionSet.toString();
         for (int i=0; i< description.length(); i++) {
@@ -154,10 +154,10 @@ public class IReactionSetTest extends IChemObjectTest {
 
     @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IReactionSet chemObject = getBuilder().newReactionSet();
+        IReactionSet chemObject = (IReactionSet)newChemObject();
         chemObject.addListener(listener);
 
-        chemObject.addReaction(getBuilder().newReaction());
+        chemObject.addReaction(chemObject.getBuilder().newReaction());
         Assert.assertTrue(listener.changed);
 
         listener.reset();
