@@ -33,19 +33,19 @@ import org.junit.Test;
 public abstract class IAtomContainerSetTest extends IChemObjectTest {
 
     @Test public void testGetAtomContainerCount() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
         
         Assert.assertEquals(3, som.getAtomContainerCount());
     }
     
     @Test public void testAtomContainers() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
         
         Assert.assertEquals(3, som.getAtomContainerCount());
         Iterator<IAtomContainer> iter = som.atomContainers().iterator();
@@ -61,37 +61,37 @@ public abstract class IAtomContainerSetTest extends IChemObjectTest {
     }
     
     @Test public void testAdd_IAtomContainerSet() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
         
-        IAtomContainerSet tested = getBuilder().newAtomContainerSet();
+        IAtomContainerSet tested = som.getBuilder().newAtomContainerSet();
         Assert.assertEquals(0, tested.getAtomContainerCount());
         tested.add(som);
         Assert.assertEquals(3, tested.getAtomContainerCount());
     }
 
     @Test public void testGetAtomContainer_int() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
 
         Assert.assertNotNull(som.getAtomContainer(2)); // third molecule should exist
         Assert.assertNull(som.getAtomContainer(3)); // fourth molecule must not exist
     }
     
     @Test public void testGetMultiplier_int() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        som.addAtomContainer(getBuilder().newAtomContainer());
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
 
         Assert.assertEquals(1.0, som.getMultiplier(0), 0.00001);
     }
     
     @Test public void testSetMultiplier_int_Double() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        som.addAtomContainer(getBuilder().newAtomContainer());
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
 
         Assert.assertEquals(1.0, som.getMultiplier(0), 0.00001);
         som.setMultiplier(0, 2.0);
@@ -99,10 +99,10 @@ public abstract class IAtomContainerSetTest extends IChemObjectTest {
     }
 
     @Test public void testSetMultipliers_arrayDouble() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        IAtomContainer container = getBuilder().newAtomContainer();
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        IAtomContainer container = som.getBuilder().newAtomContainer();
         som.addAtomContainer(container);
-        IAtomContainer container2 = getBuilder().newAtomContainer();
+        IAtomContainer container2 = som.getBuilder().newAtomContainer();
         som.addAtomContainer(container2);
 
         Assert.assertEquals(1.0, som.getMultiplier(0), 0.00001);
@@ -116,8 +116,8 @@ public abstract class IAtomContainerSetTest extends IChemObjectTest {
     }
 
     @Test public void testSetMultiplier_IAtomContainer_Double() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        IAtomContainer container = getBuilder().newAtomContainer();
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        IAtomContainer container = som.getBuilder().newAtomContainer();
         som.addAtomContainer(container);
 
         Assert.assertEquals(1.0, som.getMultiplier(container), 0.00001);
@@ -126,8 +126,8 @@ public abstract class IAtomContainerSetTest extends IChemObjectTest {
     }
 
     @Test public void testGetMultipliers() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        som.addAtomContainer(getBuilder().newAtomContainer(), 1.0);
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        som.addAtomContainer(som.getBuilder().newAtomContainer(), 1.0);
         
         Double[] multipliers = som.getMultipliers();
         Assert.assertNotNull(multipliers);
@@ -135,32 +135,32 @@ public abstract class IAtomContainerSetTest extends IChemObjectTest {
     }
         
     @Test public void testGetMultiplier_IAtomContainer() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        som.addAtomContainer(getBuilder().newAtomContainer());
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
 
-        Assert.assertEquals(-1.0, som.getMultiplier(getBuilder().newAtomContainer()), 0.00001);
+        Assert.assertEquals(-1.0, som.getMultiplier(som.getBuilder().newAtomContainer()), 0.00001);
     }
     
     @Test public void testAddAtomContainer_IAtomContainer() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
 
         Assert.assertEquals(5, som.getAtomContainerCount());
         
         // now test it to make sure it properly grows the array
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
 
         Assert.assertEquals(7, som.getAtomContainerCount());        
     }
     
     @Test public void testAddAtomContainer_IAtomContainer_double() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        som.addAtomContainer(getBuilder().newAtomContainer(), 2.0);
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        som.addAtomContainer(som.getBuilder().newAtomContainer(), 2.0);
         Assert.assertEquals(1, som.getAtomContainerCount());
         Assert.assertEquals(2.0, som.getMultiplier(0), 0.00001);
     }
@@ -168,27 +168,27 @@ public abstract class IAtomContainerSetTest extends IChemObjectTest {
     @Test public void testGrowAtomContainerArray() {
         // this test assumes that the growSize = 5 !
         // if not, there is need for the array to grow
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
         
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
 
         Assert.assertEquals(7, som.getAtomContainerCount());
     }
     
     @Test public void testGetAtomContainers() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
         
         Assert.assertEquals(0, som.getAtomContainerCount());
         
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
-        som.addAtomContainer(getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
+        som.addAtomContainer(som.getBuilder().newAtomContainer());
 
         Assert.assertEquals(3, som.getAtomContainerCount());
         Assert.assertNotNull(som.getAtomContainer(0));
@@ -197,7 +197,7 @@ public abstract class IAtomContainerSetTest extends IChemObjectTest {
     }
 
     @Test public void testToString() {
-        IAtomContainerSet containerSet = getBuilder().newAtomContainerSet();
+        IAtomContainerSet containerSet = (IAtomContainerSet)newChemObject();
         String description = containerSet.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
@@ -206,15 +206,15 @@ public abstract class IAtomContainerSetTest extends IChemObjectTest {
     }
     
      @Test public void testClone() throws Exception {
-        IAtomContainerSet containerSet = getBuilder().newAtomContainerSet();
+        IAtomContainerSet containerSet = (IAtomContainerSet)newChemObject();
         Object clone = containerSet.clone();
         Assert.assertTrue(clone instanceof IAtomContainerSet);
 	Assert.assertNotSame(containerSet, clone);
     } 
 
      @Test public void testCloneDuplication() throws Exception {
-         IAtomContainerSet containerSet = getBuilder().newAtomContainerSet();
-         containerSet.addAtomContainer(getBuilder().newAtomContainer());
+         IAtomContainerSet containerSet = (IAtomContainerSet)newChemObject();
+         containerSet.addAtomContainer(containerSet.getBuilder().newAtomContainer());
          Object clone = containerSet.clone();
          Assert.assertTrue(clone instanceof IAtomContainerSet);
          IAtomContainerSet clonedSet = (IAtomContainerSet)clone;
@@ -223,8 +223,8 @@ public abstract class IAtomContainerSetTest extends IChemObjectTest {
      }
 
      @Test public void testCloneMultiplier() throws Exception {
-         IAtomContainerSet containerSet = getBuilder().newAtomContainerSet();
-         containerSet.addAtomContainer(getBuilder().newAtomContainer(),2);
+         IAtomContainerSet containerSet = (IAtomContainerSet)newChemObject();
+         containerSet.addAtomContainer(containerSet.getBuilder().newAtomContainer(),2);
          Object clone = containerSet.clone();
          Assert.assertTrue(clone instanceof IAtomContainerSet);
          IAtomContainerSet clonedSet = (IAtomContainerSet)clone;
@@ -235,17 +235,17 @@ public abstract class IAtomContainerSetTest extends IChemObjectTest {
 
     @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IAtomContainerSet chemObject = getBuilder().newAtomContainerSet();
+        IAtomContainerSet chemObject = (IAtomContainerSet)newChemObject();
         chemObject.addListener(listener);
         
-        chemObject.addAtomContainer(getBuilder().newAtomContainer());
+        chemObject.addAtomContainer(chemObject.getBuilder().newAtomContainer());
         Assert.assertTrue(listener.changed);
     }
 
     @Test public void testRemoveAtomContainer_IAtomContainer() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        IAtomContainer ac1 = getBuilder().newAtomContainer();
-        IAtomContainer ac2 = getBuilder().newAtomContainer();
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        IAtomContainer ac1 = som.getBuilder().newAtomContainer();
+        IAtomContainer ac2 = som.getBuilder().newAtomContainer();
         som.addAtomContainer(ac1);
         som.addAtomContainer(ac2);
         som.removeAtomContainer(ac1);
@@ -254,9 +254,9 @@ public abstract class IAtomContainerSetTest extends IChemObjectTest {
     }
     
     @Test public void testRemoveAllAtomContainers() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        IAtomContainer ac1 = getBuilder().newAtomContainer();
-        IAtomContainer ac2 = getBuilder().newAtomContainer();
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        IAtomContainer ac1 = som.getBuilder().newAtomContainer();
+        IAtomContainer ac2 = som.getBuilder().newAtomContainer();
         som.addAtomContainer(ac1);
         som.addAtomContainer(ac2);
         
@@ -266,9 +266,9 @@ public abstract class IAtomContainerSetTest extends IChemObjectTest {
     }
     
     @Test public void testRemoveAtomContainer_int() {
-        IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        IAtomContainer ac1 = getBuilder().newAtomContainer();
-        IAtomContainer ac2 = getBuilder().newAtomContainer();
+        IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        IAtomContainer ac1 = som.getBuilder().newAtomContainer();
+        IAtomContainer ac2 = som.getBuilder().newAtomContainer();
         som.addAtomContainer(ac1);
         som.addAtomContainer(ac2);
         som.removeAtomContainer(0);
@@ -277,10 +277,10 @@ public abstract class IAtomContainerSetTest extends IChemObjectTest {
     }
     
     @Test public void testReplaceAtomContainer_int_IAtomContainer() {
-    	IAtomContainerSet som = getBuilder().newAtomContainerSet();
-        IAtomContainer ac1 = getBuilder().newAtomContainer();
-        IAtomContainer ac2 = getBuilder().newAtomContainer();
-        IAtomContainer ac3 = getBuilder().newAtomContainer();
+    	IAtomContainerSet som = (IAtomContainerSet)newChemObject();
+        IAtomContainer ac1 = som.getBuilder().newAtomContainer();
+        IAtomContainer ac2 = som.getBuilder().newAtomContainer();
+        IAtomContainer ac3 = som.getBuilder().newAtomContainer();
         som.addAtomContainer(ac1);
         som.addAtomContainer(ac2);
         Assert.assertEquals(ac2, som.getAtomContainer(1));
