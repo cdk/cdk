@@ -37,37 +37,38 @@ import org.junit.Test;
 public class ICrystalTest extends IAtomContainerTest {
 
     @Test public void testAdd_IAtomContainer() {
-        IAtomContainer acetone = getBuilder().newAtomContainer();
-        IAtom c1 = getBuilder().newAtom("C");
-        IAtom c2 = getBuilder().newAtom("C");
-        IAtom o = getBuilder().newAtom("O");
-        IAtom c3 = getBuilder().newAtom("C");
+        ICrystal crystal = (ICrystal)newChemObject();
+
+        IAtomContainer acetone = crystal.getBuilder().newAtomContainer();
+        IAtom c1 = crystal.getBuilder().newAtom("C");
+        IAtom c2 = crystal.getBuilder().newAtom("C");
+        IAtom o = crystal.getBuilder().newAtom("O");
+        IAtom c3 = crystal.getBuilder().newAtom("C");
         acetone.addAtom(c1);
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        IBond b1 = getBuilder().newBond(c1, c2, IBond.Order.SINGLE);
-        IBond b2 = getBuilder().newBond(c1, o, IBond.Order.DOUBLE);
-        IBond b3 = getBuilder().newBond(c1, c3, IBond.Order.SINGLE);
+        IBond b1 = crystal.getBuilder().newBond(c1, c2, IBond.Order.SINGLE);
+        IBond b2 = crystal.getBuilder().newBond(c1, o, IBond.Order.DOUBLE);
+        IBond b3 = crystal.getBuilder().newBond(c1, c3, IBond.Order.SINGLE);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        ICrystal crystal = getBuilder().newCrystal();
         crystal.add(acetone);
         Assert.assertEquals(4, crystal.getAtomCount());
         Assert.assertEquals(3, crystal.getBondCount());
     }
     
     @Test public void testAddAtom_IAtom() {
-        IAtom c1 = getBuilder().newAtom("C");
-        ICrystal crystal = getBuilder().newCrystal();
+        ICrystal crystal = (ICrystal)newChemObject();
+        IAtom c1 = crystal.getBuilder().newAtom("C");
         crystal.addAtom(c1);
         Assert.assertEquals(1, crystal.getAtomCount());
     }
 
     @Test public void testSetA_Vector3d() {
-        ICrystal crystal = getBuilder().newCrystal();
+        ICrystal crystal = (ICrystal)newChemObject();
         
         crystal.setA(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getA();
@@ -77,7 +78,7 @@ public class ICrystalTest extends IAtomContainerTest {
     }
     
     @Test public void testGetA() {
-        ICrystal crystal = getBuilder().newCrystal();
+        ICrystal crystal = (ICrystal)newChemObject();
         
         crystal.setA(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getA();
@@ -85,7 +86,7 @@ public class ICrystalTest extends IAtomContainerTest {
     }
     
     @Test public void testGetB() {
-        ICrystal crystal = getBuilder().newCrystal();
+        ICrystal crystal = (ICrystal)newChemObject();
         
         crystal.setB(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getB();
@@ -93,7 +94,7 @@ public class ICrystalTest extends IAtomContainerTest {
     }
     
     @Test public void testGetC() {
-        ICrystal crystal = getBuilder().newCrystal();
+        ICrystal crystal = (ICrystal)newChemObject();
         
         crystal.setC(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getC();
@@ -101,7 +102,7 @@ public class ICrystalTest extends IAtomContainerTest {
     }
     
     @Test public void testSetB_Vector3d() {
-        ICrystal crystal = getBuilder().newCrystal();
+        ICrystal crystal = (ICrystal)newChemObject();
         
         crystal.setB(new Vector3d(1.0, 2.0, 3.0));
         Vector3d b = crystal.getB();
@@ -111,7 +112,7 @@ public class ICrystalTest extends IAtomContainerTest {
     }
     
     @Test public void testSetC_Vector3d() {
-        ICrystal crystal = getBuilder().newCrystal();
+        ICrystal crystal = (ICrystal)newChemObject();
         
         crystal.setC(new Vector3d(1.0, 2.0, 3.0));
         Vector3d c = crystal.getC();
@@ -121,14 +122,14 @@ public class ICrystalTest extends IAtomContainerTest {
     }
     
     @Test public void testSetSpaceGroup_String() {
-        ICrystal crystal = getBuilder().newCrystal();
+        ICrystal crystal = (ICrystal)newChemObject();
         String spacegroup = "P 2_1 2_1 2_1";
         crystal.setSpaceGroup(spacegroup);
         Assert.assertEquals(spacegroup, crystal.getSpaceGroup());
     }
 
     @Test public void testGetSpaceGroup() {
-        ICrystal crystal = getBuilder().newCrystal();
+        ICrystal crystal = (ICrystal)newChemObject();
         String spacegroup = "P 2_1 2_1 2_1";
         crystal.setSpaceGroup(spacegroup);
         Assert.assertNotNull(crystal.getSpaceGroup());
@@ -136,7 +137,7 @@ public class ICrystalTest extends IAtomContainerTest {
     }
 
     @Test public void testSetZ_Integer() {
-        ICrystal crystal = getBuilder().newCrystal();
+        ICrystal crystal = (ICrystal)newChemObject();
         int z = 2;
         crystal.setZ(z);
         Assert.assertEquals(z, crystal.getZ().intValue());
@@ -149,7 +150,7 @@ public class ICrystalTest extends IAtomContainerTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-        ICrystal crystal = getBuilder().newCrystal();
+        ICrystal crystal = (ICrystal)newChemObject();
         String description = crystal.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
@@ -158,13 +159,13 @@ public class ICrystalTest extends IAtomContainerTest {
     }
 
     @Test public void testClone() throws Exception {
-        ICrystal crystal = getBuilder().newCrystal();
+        ICrystal crystal = (ICrystal)newChemObject();
         Object clone = crystal.clone();
         Assert.assertTrue(clone instanceof ICrystal);
     }
 
     @Test public void testClone_Axes() throws Exception {
-        ICrystal crystal1 = getBuilder().newCrystal();
+        ICrystal crystal1 = (ICrystal)newChemObject();
         Vector3d axes = new Vector3d(1.0, 2.0, 3.0);
         crystal1.setA(axes);
         ICrystal crystal2 = (ICrystal)crystal1.clone();
@@ -175,7 +176,7 @@ public class ICrystalTest extends IAtomContainerTest {
     }
     
     @Test public void testSetZeroAxes() {
-        ICrystal crystal = getBuilder().newCrystal();
+        ICrystal crystal = (ICrystal)newChemObject();
         
         crystal.setA(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getA();

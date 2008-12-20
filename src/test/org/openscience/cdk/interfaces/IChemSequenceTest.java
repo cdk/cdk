@@ -37,58 +37,58 @@ import org.junit.Test;
 public class IChemSequenceTest extends IChemObjectTest {
 
     @Test public void testAddChemModel_IChemModel() {
-        IChemSequence cs = getBuilder().newChemSequence();
-        cs.addChemModel(getBuilder().newChemModel());
-        cs.addChemModel(getBuilder().newChemModel());
-        cs.addChemModel(getBuilder().newChemModel());
+        IChemSequence cs = (IChemSequence)newChemObject();
+        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newChemModel());
         Assert.assertEquals(3, cs.getChemModelCount());
     }
 
     @Test public void testRemoveChemModel_int() {
-        IChemSequence cs = getBuilder().newChemSequence();
-        cs.addChemModel(getBuilder().newChemModel());
-        cs.addChemModel(getBuilder().newChemModel());
-        cs.addChemModel(getBuilder().newChemModel());
+        IChemSequence cs = (IChemSequence)newChemObject();
+        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newChemModel());
         Assert.assertEquals(3, cs.getChemModelCount());
         cs.removeChemModel(1);
         Assert.assertEquals(2, cs.getChemModelCount());
     }
     
     @Test public void testGrowChemModelArray() {
-        IChemSequence cs = getBuilder().newChemSequence();
-        cs.addChemModel(getBuilder().newChemModel());
-        cs.addChemModel(getBuilder().newChemModel());
-        cs.addChemModel(getBuilder().newChemModel());
+        IChemSequence cs = (IChemSequence)newChemObject();
+        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newChemModel());
         Assert.assertEquals(3, cs.getChemModelCount());
-        cs.addChemModel(getBuilder().newChemModel());
-        cs.addChemModel(getBuilder().newChemModel());
-        cs.addChemModel(getBuilder().newChemModel()); // this one should enfore array grow
+        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newChemModel()); // this one should enfore array grow
         Assert.assertEquals(6, cs.getChemModelCount());
     }
 
     @Test public void testGetChemModelCount() {
-        IChemSequence cs = getBuilder().newChemSequence();
-        cs.addChemModel(getBuilder().newChemModel());
-        cs.addChemModel(getBuilder().newChemModel());
-        cs.addChemModel(getBuilder().newChemModel());
+        IChemSequence cs = (IChemSequence)newChemObject();
+        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newChemModel());
         Assert.assertEquals(3, cs.getChemModelCount());
     }
 
     @Test public void testGetChemModel_int() {
-        IChemSequence cs = getBuilder().newChemSequence();
-        cs.addChemModel(getBuilder().newChemModel());
-        IChemModel second = getBuilder().newChemModel();
+        IChemSequence cs = (IChemSequence)newChemObject();
+        cs.addChemModel(cs.getBuilder().newChemModel());
+        IChemModel second = cs.getBuilder().newChemModel();
         cs.addChemModel(second);
-        cs.addChemModel(getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newChemModel());
         
         Assert.assertEquals(second, cs.getChemModel(1));
     }
 
     @Test public void testChemModels() {
-        IChemSequence cs = getBuilder().newChemSequence();
-        cs.addChemModel(getBuilder().newChemModel());
-        cs.addChemModel(getBuilder().newChemModel());
-        cs.addChemModel(getBuilder().newChemModel());
+        IChemSequence cs = (IChemSequence)newChemObject();
+        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newChemModel());
+        cs.addChemModel(cs.getBuilder().newChemModel());
 
         Assert.assertEquals(3, cs.getChemModelCount());
         Iterator<IChemModel> models = cs.chemModels().iterator();
@@ -102,7 +102,7 @@ public class IChemSequenceTest extends IChemObjectTest {
 
     /** Test for RFC #9 */
     @Test public void testToString() {
-        IChemSequence cs = getBuilder().newChemSequence();
+        IChemSequence cs = (IChemSequence)newChemObject();
         String description = cs.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
@@ -112,10 +112,10 @@ public class IChemSequenceTest extends IChemObjectTest {
     
     @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IChemSequence chemObject = getBuilder().newChemSequence();
+        IChemSequence chemObject = (IChemSequence)newChemObject();
         chemObject.addListener(listener);
         
-        chemObject.addChemModel(getBuilder().newChemModel());
+        chemObject.addChemModel(chemObject.getBuilder().newChemModel());
         Assert.assertTrue(listener.changed);
     }
 
@@ -136,17 +136,17 @@ public class IChemSequenceTest extends IChemObjectTest {
     }
 
 	@Test public void testClone() throws Exception {
-	    IChemSequence sequence = getBuilder().newChemSequence();
+	    IChemSequence sequence = (IChemSequence)newChemObject();
         Object clone = sequence.clone();
         Assert.assertTrue(clone instanceof IChemSequence);
     }    
         
     @Test public void testClone_IChemModel() throws Exception {
-		IChemSequence sequence = getBuilder().newChemSequence();
-		sequence.addChemModel(getBuilder().newChemModel()); // 1
-		sequence.addChemModel(getBuilder().newChemModel()); // 2
-		sequence.addChemModel(getBuilder().newChemModel()); // 3
-		sequence.addChemModel(getBuilder().newChemModel()); // 4
+		IChemSequence sequence = (IChemSequence)newChemObject();
+		sequence.addChemModel(sequence.getBuilder().newChemModel()); // 1
+		sequence.addChemModel(sequence.getBuilder().newChemModel()); // 2
+		sequence.addChemModel(sequence.getBuilder().newChemModel()); // 3
+		sequence.addChemModel(sequence.getBuilder().newChemModel()); // 4
 
 		IChemSequence clone = (IChemSequence)sequence.clone();
 		Assert.assertEquals(sequence.getChemModelCount(), clone.getChemModelCount());

@@ -34,18 +34,19 @@ import org.openscience.cdk.tools.diff.AtomTypeDiff;
 public abstract class IAtomTypeTest extends IIsotopeTest {
 
     @Test public void testSetAtomTypeName_String() {
-        IAtomType at = getBuilder().newAtomType("C");
+        IAtomType at = (IAtomType)newChemObject();
         at.setAtomTypeName("C4");
         Assert.assertEquals("C4", at.getAtomTypeName());
     }
 
     @Test public void testGetAtomTypeName() {
-        IAtomType at = getBuilder().newAtomType("C4", "C");
+        IAtomType at = (IAtomType)newChemObject();
+        at.setAtomTypeName("C4");
         Assert.assertEquals("C4", at.getAtomTypeName());
     }
     
     @Test public void testSetMaxBondOrder_IBond_Order() {
-        IAtomType at = getBuilder().newAtomType("C");
+        IAtomType at = (IAtomType)newChemObject();
         at.setMaxBondOrder(IBond.Order.TRIPLE);
         Assert.assertEquals(IBond.Order.TRIPLE, at.getMaxBondOrder());
     }
@@ -55,7 +56,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
     }
 
     @Test public void testSetBondOrderSum_Double() {
-        IAtomType at = getBuilder().newAtomType("C");
+        IAtomType at = (IAtomType)newChemObject();
         at.setBondOrderSum(4.0);
         Assert.assertEquals(4.0, at.getBondOrderSum(), 0.001);
     }
@@ -65,7 +66,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
     }
     
     @Test public void testSetCovalentRadius_Double() {
-        IAtomType at = getBuilder().newAtomType("C");
+        IAtomType at = (IAtomType)newChemObject();
         at.setCovalentRadius(1.0);
         Assert.assertEquals(1.0, at.getCovalentRadius(), 0.001);
     }
@@ -76,7 +77,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
     @Test public void testSetFormalCharge_Integer() {
         int charge = 1;
 
-        IAtomType a = getBuilder().newAtomType("C");
+        IAtomType a = (IAtomType)newChemObject();
         a.setFormalCharge(charge);
         Assert.assertEquals(charge, a.getFormalCharge().intValue());
     }
@@ -90,7 +91,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
     @Test public void testSetValency_Integer() {
         int valency = 4;
 
-        IAtomType a = getBuilder().newAtomType("C");
+        IAtomType a = (IAtomType)newChemObject();
         a.setValency(valency);
         Assert.assertEquals(valency, (int) a.getValency());
     }
@@ -101,7 +102,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
     @Test public void testSetFormalNeighbourCount_Integer() {
         int count = 4;
 
-        IAtomType a = getBuilder().newAtomType("C");
+        IAtomType a = (IAtomType)newChemObject();
         a.setFormalNeighbourCount(count);
         Assert.assertEquals(count, (int) a.getFormalNeighbourCount());
     }
@@ -112,7 +113,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
     @Test public void testSetHybridization_IAtomType_Hybridization() {
         Hybridization hybridization = Hybridization.SP1;
 
-        IAtomType atom = getBuilder().newAtomType("C");
+        IAtomType atom = (IAtomType)newChemObject();
         atom.setHybridization(hybridization);
         Assert.assertEquals(hybridization, atom.getHybridization());
     }
@@ -123,7 +124,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
     @Test public void testSetHybridization_Null() {
         Hybridization hybridization = Hybridization.SP1;
 
-        IAtomType atom = getBuilder().newAtomType("C");
+        IAtomType atom = (IAtomType)newChemObject();
         atom.setHybridization(hybridization);
         Assert.assertEquals(hybridization, atom.getHybridization());
         atom.setHybridization(null);
@@ -132,7 +133,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
 
     @Test public void testSetAcceptor_boolean(){
     	boolean acceptor=true;
-    	IAtomType a = getBuilder().newAtomType("C");
+    	IAtomType a = (IAtomType)newChemObject();
         a.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, acceptor);
         Assert.assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));    	
     }
@@ -142,7 +143,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
     
     @Test public void testSetDonor_boolean(){
     	boolean donor=true;
-    	IAtomType a = getBuilder().newAtomType("C");
+    	IAtomType a = (IAtomType)newChemObject();
         a.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, donor);
         Assert.assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));    	
     }
@@ -152,7 +153,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
     
     @Test public void testSetChemicalGroupConstant_int(){
     	int benzol=6;
-    	IAtomType a = getBuilder().newAtomType("C");
+    	IAtomType a = (IAtomType)newChemObject();
         a.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, benzol);
         Assert.assertEquals(benzol,((Integer)a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue());    	
     }    
@@ -162,7 +163,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
     
     @Test public void  testSetRingSize_int(){
     	int five=5;
-    	IAtomType a = getBuilder().newAtomType("C");
+    	IAtomType a = (IAtomType)newChemObject();
         a.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, five);
         Assert.assertEquals(five,((Integer)a.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue());    	
     }    
@@ -171,7 +172,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
     }
     
     @Test public void testSetIsAromatic_boolean(){
-    	IAtomType a = getBuilder().newAtomType("C");
+    	IAtomType a = (IAtomType)newChemObject();
         a.setFlag(CDKConstants.ISAROMATIC, true);
         Assert.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
     }    
@@ -181,7 +182,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
     
     @Test public void testSetSphericalMatcher_String(){
     	String hoseCode="C-4;HHHC(;///***)";
-    	IAtomType a = getBuilder().newAtomType("C");
+    	IAtomType a = (IAtomType)newChemObject();
         a.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, hoseCode);
         Assert.assertEquals(hoseCode,a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT));    	
     }    
@@ -193,7 +194,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
      * Test for bug #1309731.
      */
     @Test public void testAtomTypeNameAndIDBug() {
-    	IAtomType a = getBuilder().newAtomType("C");
+    	IAtomType a = (IAtomType)newChemObject();
     	a.setID("carbon1");
     	a.setAtomTypeName("C.sp3");
     	Assert.assertEquals("carbon1", a.getID());
@@ -203,7 +204,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
      * Method to test the clone() method
      */
     @Test public void testClone() throws Exception {
-        IAtomType at = getBuilder().newAtomType("C");
+        IAtomType at = (IAtomType)newChemObject();
         Object clone = at.clone();
         Assert.assertTrue(clone instanceof IAtomType);
 
@@ -217,7 +218,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
      * Method to test the clone() method
      */
     @Test public void testClone_MaxBondOrder() throws Exception {
-        IAtomType at = getBuilder().newAtomType("C");
+        IAtomType at = (IAtomType)newChemObject();
         at.setMaxBondOrder(IBond.Order.SINGLE);
         IAtomType clone = (IAtomType)at.clone();
         
@@ -229,7 +230,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
      * Method to test the clone() method
      */
     @Test public void testClone_IBondOrderSum() throws Exception {
-        IAtomType at = getBuilder().newAtomType("C");
+        IAtomType at = (IAtomType)newChemObject();
         at.setBondOrderSum(1.0);
         IAtomType clone = (IAtomType)at.clone();
         
@@ -243,7 +244,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
      * Method to test the clone() method
      */
     @Test public void testClone_CovalentRadius() throws Exception {
-        IAtomType at = getBuilder().newAtomType("C");
+        IAtomType at = (IAtomType)newChemObject();
         at.setCovalentRadius(1.0);
         IAtomType clone = (IAtomType)at.clone();
         
@@ -255,7 +256,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
      * Method to test the clone() method
      */
     @Test public void testClone_FormalCharge() throws Exception {
-        IAtomType at = getBuilder().newAtomType("C");
+        IAtomType at = (IAtomType)newChemObject();
         at.setFormalCharge(1);
         IAtomType clone = (IAtomType)at.clone();
         
@@ -267,7 +268,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
      * Method to test the clone() method
      */
     @Test public void testClone_FormalNeighbourCount() throws Exception {
-        IAtomType at = getBuilder().newAtomType("C");
+        IAtomType at = (IAtomType)newChemObject();
         at.setFormalNeighbourCount(1);
         IAtomType clone = (IAtomType)at.clone();
         
@@ -279,7 +280,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
      * Method to test the clone() method
      */
     @Test public void testClone_Hybridization() throws Exception {
-        IAtomType at = getBuilder().newAtomType("C");
+        IAtomType at = (IAtomType)newChemObject();
         at.setHybridization(Hybridization.PLANAR3);
         IAtomType clone = (IAtomType)at.clone();
         
@@ -291,7 +292,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-        IAtomType at = getBuilder().newAtomType("C");
+        IAtomType at = (IAtomType)newChemObject();
         String description = at.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
@@ -300,7 +301,7 @@ public abstract class IAtomTypeTest extends IIsotopeTest {
     }
 
     @Test public void testDefaultFormalCharge() {
-        IAtomType atomType = getBuilder().newAtomType("C");
+        IAtomType atomType = (IAtomType)newChemObject();
         Assert.assertEquals(0, atomType.getFormalCharge().intValue());
     }
 }

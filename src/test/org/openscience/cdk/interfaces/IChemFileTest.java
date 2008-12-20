@@ -35,66 +35,66 @@ import org.junit.Test;
 public class IChemFileTest extends IChemObjectTest {
 
     @Test public void testAddChemSequence_IChemSequence() {
-        IChemFile cs = getBuilder().newChemFile();
-        cs.addChemSequence(getBuilder().newChemSequence());
-        cs.addChemSequence(getBuilder().newChemSequence());
-        cs.addChemSequence(getBuilder().newChemSequence());
+        IChemFile cs = (IChemFile)newChemObject();
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
         Assert.assertEquals(3, cs.getChemSequenceCount());
     }
     
     @Test public void testRemoveChemSequence_int() {
-    	IChemFile cs = getBuilder().newChemFile();
-        cs.addChemSequence(getBuilder().newChemSequence());
-        cs.addChemSequence(getBuilder().newChemSequence());
-        cs.addChemSequence(getBuilder().newChemSequence());
+    	IChemFile cs = (IChemFile)newChemObject();
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
         Assert.assertEquals(3, cs.getChemSequenceCount());
         cs.removeChemSequence(1);
         Assert.assertEquals(2, cs.getChemSequenceCount());
     }
     
     @Test public void testGetChemSequence_int() {
-        IChemFile cs = getBuilder().newChemFile();
-        cs.addChemSequence(getBuilder().newChemSequence());
-        IChemSequence second = getBuilder().newChemSequence();
+        IChemFile cs = (IChemFile)newChemObject();
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
+        IChemSequence second = cs.getBuilder().newChemSequence();
         cs.addChemSequence(second);
-        cs.addChemSequence(getBuilder().newChemSequence());
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
         Assert.assertEquals(second, cs.getChemSequence(1));
     }
     
     @Test public void testGrowChemSequenceArray() {
-        IChemFile cs = getBuilder().newChemFile();
-        cs.addChemSequence(getBuilder().newChemSequence());
-        cs.addChemSequence(getBuilder().newChemSequence());
-        cs.addChemSequence(getBuilder().newChemSequence());
+        IChemFile cs = (IChemFile)newChemObject();
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
         Assert.assertEquals(3, cs.getChemSequenceCount());
-        cs.addChemSequence(getBuilder().newChemSequence());
-        cs.addChemSequence(getBuilder().newChemSequence());
-        cs.addChemSequence(getBuilder().newChemSequence()); // this one should enfore array grow
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
+        cs.addChemSequence(cs.getBuilder().newChemSequence()); // this one should enfore array grow
         Assert.assertEquals(6, cs.getChemSequenceCount());
     }
 
     @Test public void testChemSequences() {
-        IChemFile cs = getBuilder().newChemFile();
-        cs.addChemSequence(getBuilder().newChemSequence());
-        cs.addChemSequence(getBuilder().newChemSequence());
-        cs.addChemSequence(getBuilder().newChemSequence());
+        IChemFile cs = (IChemFile)newChemObject();
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
 
         Assert.assertNotNull(cs.chemSequences());
         Assert.assertEquals(3, cs.getChemSequenceCount());
     }
 
     @Test public void testGetChemSequenceCount() {
-        IChemFile cs = getBuilder().newChemFile();
-        cs.addChemSequence(getBuilder().newChemSequence());
-        cs.addChemSequence(getBuilder().newChemSequence());
-        cs.addChemSequence(getBuilder().newChemSequence());
+        IChemFile cs = (IChemFile)newChemObject();
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
+        cs.addChemSequence(cs.getBuilder().newChemSequence());
  
         Assert.assertEquals(3, cs.getChemSequenceCount());
     }
 
     /** Test for RFC #9 */
     @Test public void testToString() {
-        IChemFile cs = getBuilder().newChemFile();
+        IChemFile cs = (IChemFile)newChemObject();
         String description = cs.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
@@ -104,10 +104,10 @@ public class IChemFileTest extends IChemObjectTest {
 
     @Test public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IChemFile chemObject = getBuilder().newChemFile();
+        IChemFile chemObject = (IChemFile)newChemObject();
         chemObject.addListener(listener);
         
-        chemObject.addChemSequence(getBuilder().newChemSequence());
+        chemObject.addChemSequence(chemObject.getBuilder().newChemSequence());
         Assert.assertTrue(listener.changed);
     }
 
@@ -128,17 +128,17 @@ public class IChemFileTest extends IChemObjectTest {
     }
 
 	@Test public void testClone() throws Exception {
-        IChemFile file = getBuilder().newChemFile();
+        IChemFile file = (IChemFile)newChemObject();
         Object clone = file.clone();
         Assert.assertTrue(clone instanceof IChemFile);
     }    
         
     @Test public void testClone_ChemSequence() throws Exception {
-		IChemFile file = getBuilder().newChemFile();
-		file.addChemSequence(getBuilder().newChemSequence()); // 1
-		file.addChemSequence(getBuilder().newChemSequence()); // 2
-		file.addChemSequence(getBuilder().newChemSequence()); // 3
-		file.addChemSequence(getBuilder().newChemSequence()); // 4
+		IChemFile file = (IChemFile)newChemObject();
+		file.addChemSequence(file.getBuilder().newChemSequence()); // 1
+		file.addChemSequence(file.getBuilder().newChemSequence()); // 2
+		file.addChemSequence(file.getBuilder().newChemSequence()); // 3
+		file.addChemSequence(file.getBuilder().newChemSequence()); // 4
 
 		IChemFile clone = (IChemFile)file.clone();
 		Assert.assertEquals(file.getChemSequenceCount(), clone.getChemSequenceCount());

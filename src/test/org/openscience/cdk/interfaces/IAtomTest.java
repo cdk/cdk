@@ -44,7 +44,7 @@ public abstract class IAtomTest extends IAtomTypeTest {
     @Test public void testSetCharge_Double() {
         double charge = 0.15;
 
-        IAtom a = getBuilder().newAtom("C");
+        IAtom a = (IAtom)newChemObject();
         a.setCharge(charge);
         Assert.assertEquals(charge, a.getCharge(), 0.001);
     }
@@ -58,13 +58,13 @@ public abstract class IAtomTest extends IAtomTypeTest {
     @Test public void testSetHydrogenCount_Integer() {
         Integer count = 1;
 
-        IAtom a = getBuilder().newAtom("C");
+        IAtom a = (IAtom)newChemObject();
         a.setHydrogenCount(count);
         Assert.assertEquals(count, a.getHydrogenCount());
     }
     @Test public void testGetHydrogenCount() {
     	// should be null by default
-    	IAtom a = getBuilder().newAtom("C");
+    	IAtom a = (IAtom)newChemObject();
     	Assert.assertNull(a.getHydrogenCount());
     }
 
@@ -72,7 +72,7 @@ public abstract class IAtomTest extends IAtomTypeTest {
      * Method to test the setFractional3D() methods.
      */
     @Test public void testSetFractionalPoint3d_Point3d() {
-        IAtom a = getBuilder().newAtom("C");
+        IAtom a = (IAtom)newChemObject();
         a.setFractionalPoint3d(new Point3d(0.5, 0.5, 0.5));
         Point3d fract = a.getFractionalPoint3d();
         Assert.assertNotNull(fract);
@@ -87,14 +87,15 @@ public abstract class IAtomTest extends IAtomTypeTest {
     @Test public void testGetPoint3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
-        IAtom a = getBuilder().newAtom("C", point3d);
+        IAtom a = (IAtom)newChemObject();
+        a.setPoint3d(point3d);
         Assert.assertNotNull(a.getPoint3d());
         assertEquals(point3d, a.getPoint3d(), 0.001);
     }
     @Test public void testSetPoint3d_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
-        IAtom a = getBuilder().newAtom("C");
+        IAtom a = (IAtom)newChemObject();
         a.setPoint3d(point3d);
         Assert.assertEquals(point3d, a.getPoint3d());
     }
@@ -102,7 +103,8 @@ public abstract class IAtomTest extends IAtomTypeTest {
     @Test public void testGetPoint2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
         
-        IAtom a = getBuilder().newAtom("C", point2d);
+        IAtom a = (IAtom)newChemObject();
+        a.setPoint2d(point2d);
         Assert.assertNotNull(a.getPoint2d());
         Assert.assertEquals(point2d.x, a.getPoint2d().x, 0.001);
         Assert.assertEquals(point2d.y, a.getPoint2d().y, 0.001);
@@ -110,7 +112,7 @@ public abstract class IAtomTest extends IAtomTypeTest {
     @Test public void testSetPoint2d_Point2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
         
-        IAtom a = getBuilder().newAtom("C");
+        IAtom a = (IAtom)newChemObject();
         a.setPoint2d(point2d);
         Assert.assertEquals(point2d, a.getPoint2d());
     }
@@ -121,7 +123,7 @@ public abstract class IAtomTest extends IAtomTypeTest {
     @Test public void testSetStereoParity_Integer() {
         int parity = CDKConstants.STEREO_ATOM_PARITY_PLUS;
 
-        IAtom a = getBuilder().newAtom("C");
+        IAtom a = (IAtom)newChemObject();
         a.setStereoParity(parity);
         Assert.assertEquals(parity, a.getStereoParity().intValue());
     }
@@ -133,7 +135,7 @@ public abstract class IAtomTest extends IAtomTypeTest {
      * Method to test the clone() method
      */
     @Test public void testClone() throws Exception {
-        IAtom atom = getBuilder().newAtom("C");
+        IAtom atom = (IAtom)newChemObject();
         Object clone = atom.clone();
         Assert.assertTrue(clone instanceof IAtom);
 
@@ -147,7 +149,7 @@ public abstract class IAtomTest extends IAtomTypeTest {
      * Method to test the clone() method
      */
     @Test public void testClone_Point2d() throws Exception {
-        IAtom atom = getBuilder().newAtom("C");
+        IAtom atom = (IAtom)newChemObject();
         atom.setPoint2d(new Point2d(2, 3));
         IAtom clone = (IAtom)atom.clone();
         Assert.assertEquals(clone.getPoint2d().x, 2.0, 0.001);
@@ -157,7 +159,7 @@ public abstract class IAtomTest extends IAtomTypeTest {
      * Method to test the clone() method
      */
     @Test public void testClone_Point3d() throws Exception {
-        IAtom atom = getBuilder().newAtom("C");
+        IAtom atom = (IAtom)newChemObject();
         atom.setPoint3d(new Point3d(2, 3, 4));
         IAtom clone = (IAtom)atom.clone();
         Assert.assertEquals(clone.getPoint3d().x, 2.0, 0.001);
@@ -167,7 +169,7 @@ public abstract class IAtomTest extends IAtomTypeTest {
      * Method to test the clone() method
      */
     @Test public void testClone_FractionalPoint3d() throws Exception {
-        IAtom atom = getBuilder().newAtom("C");
+        IAtom atom = (IAtom)newChemObject();
         atom.setFractionalPoint3d(new Point3d(2, 3, 4));
         IAtom clone = (IAtom)atom.clone();
         Assert.assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
@@ -177,7 +179,7 @@ public abstract class IAtomTest extends IAtomTypeTest {
      * Method to test the clone() method
      */
     @Test public void testClone_HydrogenCount() throws Exception {
-        IAtom atom = getBuilder().newAtom("C");
+        IAtom atom = (IAtom)newChemObject();
         atom.setHydrogenCount(Integer.valueOf(3));
         IAtom clone = (IAtom)atom.clone();
 
@@ -190,7 +192,7 @@ public abstract class IAtomTest extends IAtomTypeTest {
      * Method to test the clone() method
      */
     @Test public void testClone_StereoParity() throws Exception {
-        IAtom atom = getBuilder().newAtom("C");
+        IAtom atom = (IAtom)newChemObject();
         atom.setStereoParity(3);
         IAtom clone = (IAtom)atom.clone();
 
@@ -203,7 +205,7 @@ public abstract class IAtomTest extends IAtomTypeTest {
      * Method to test the clone() method
      */
     @Test public void testClone_Charge() throws Exception {
-        IAtom atom = getBuilder().newAtom("C");
+        IAtom atom = (IAtom)newChemObject();
         atom.setCharge(1.0);
         IAtom clone = (IAtom)atom.clone();
 
@@ -216,7 +218,7 @@ public abstract class IAtomTest extends IAtomTypeTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-        IAtom atom = getBuilder().newAtom("C");
+        IAtom atom = (IAtom)newChemObject();
         String description = atom.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue('\n' != description.charAt(i));
@@ -228,7 +230,7 @@ public abstract class IAtomTest extends IAtomTypeTest {
      * Checks that the default charge is set to NaN
      */
     @Test public void testDefaultChargeValue() {
-        IAtom atom = getBuilder().newAtom("C");
+        IAtom atom = (IAtom)newChemObject();
         Assert.assertEquals(CDKConstants.UNSET, atom.getCharge());
 //        Assert.assertEquals(0.0, atom.getCharge(), 0.00000001);
     }
