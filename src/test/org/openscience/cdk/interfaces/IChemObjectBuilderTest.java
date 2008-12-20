@@ -118,7 +118,6 @@ public class IChemObjectBuilderTest extends CDKTestCase {
 				1
 		);
 		Assert.assertNotNull(object);
-		Assert.assertTrue(object instanceof IChemObject);
 		Assert.assertTrue(object instanceof IAtomParity);
 	}
 	
