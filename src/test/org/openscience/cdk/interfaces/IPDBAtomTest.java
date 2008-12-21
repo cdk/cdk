@@ -40,7 +40,8 @@ public class IPDBAtomTest extends IAtomTest {
      * Method to test the setFractional3D() methods.
      */
     @Test public void testSetFractionalPoint3d_Point3d() {
-    	IPDBAtom a = getBuilder().newPDBAtom("C");
+    	IPDBAtom a = (IPDBAtom)newChemObject();
+    	a.setSymbol("C");
         a.setFractionalPoint3d(new Point3d(0.5, 0.5, 0.5));
         Point3d fract = a.getFractionalPoint3d();
         Assert.assertNotNull(fract);
@@ -55,14 +56,16 @@ public class IPDBAtomTest extends IAtomTest {
     @Test public void testGetPoint3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
-        IPDBAtom a = getBuilder().newPDBAtom("C", point3d);
+        IPDBAtom a = (IPDBAtom)newChemObject();
+    	a.setPoint3d(point3d);
         Assert.assertNotNull(a.getPoint3d());
         assertEquals(point3d, a.getPoint3d(), 0.001);
     }
     @Test public void testSetPoint3d_Point3d() {
     	Point3d point3d = new Point3d(1.0, 2.0, 3.0);
         
-    	IPDBAtom a = getBuilder().newPDBAtom("C");
+    	IPDBAtom a = (IPDBAtom)newChemObject();
+    	a.setSymbol("C");
         a.setPoint3d(point3d);
         Assert.assertEquals(point3d, a.getPoint3d());
     }
@@ -71,7 +74,8 @@ public class IPDBAtomTest extends IAtomTest {
      * Method to test the clone() method
      */
     @Test public void testClone() throws Exception {
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
         Object clone = atom.clone();
         Assert.assertTrue(clone instanceof IAtom);
     }
@@ -80,7 +84,8 @@ public class IPDBAtomTest extends IAtomTest {
      * Method to test the clone() method
      */
     @Test public void testClone_Point3d() throws Exception {
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
         atom.setPoint3d(new Point3d(2, 3, 4));
         IAtom clone = (IAtom)atom.clone();
         Assert.assertEquals(clone.getPoint3d().x, 2.0, 0.001);
@@ -90,7 +95,8 @@ public class IPDBAtomTest extends IAtomTest {
      * Method to test the clone() method
      */
     @Test public void testClone_FractionalPoint3d() throws Exception {
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
         atom.setFractionalPoint3d(new Point3d(2, 3, 4));
         IAtom clone = (IAtom)atom.clone();
         Assert.assertEquals(clone.getFractionalPoint3d().x, 2.0, 0.001);
@@ -101,7 +107,8 @@ public class IPDBAtomTest extends IAtomTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
         String description = atom.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue('\n' != description.charAt(i));
@@ -113,12 +120,14 @@ public class IPDBAtomTest extends IAtomTest {
      * Checks that the default charge is set to NaN
      */
     @Test public void testDefaultChargeValue() {
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
         Assert.assertEquals(0.00, atom.getCharge(), 0.00000001);
     }
     
     @Test public void testGetRecord(){
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
     	atom.setRecord("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N");
         Assert.assertEquals("ATOM 1635 N PHE 105 -3.504 9.019 -14.276 1.00 0.00 N", atom.getRecord());
     }
@@ -128,7 +137,8 @@ public class IPDBAtomTest extends IAtomTest {
     }
     
     @Test public void testGetTempFactor(){
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
     	atom.setTempFactor(0.0);
         Assert.assertEquals(atom.getTempFactor(),0.0, 001);
     }
@@ -142,7 +152,8 @@ public class IPDBAtomTest extends IAtomTest {
     }
     
     @Test public void testGetResName(){
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
     	atom.setResName("PHE");
         Assert.assertEquals("PHE", atom.getResName());
     }
@@ -152,7 +163,8 @@ public class IPDBAtomTest extends IAtomTest {
     }
     
     @Test public void testGetICode(){
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
     	atom.setICode("123");
         Assert.assertEquals("123", atom.getICode());
     }
@@ -162,7 +174,8 @@ public class IPDBAtomTest extends IAtomTest {
     }
     
     @Test public void testGetChainID(){
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
     	atom.setChainID("123");
         Assert.assertEquals("123", atom.getChainID());
     }
@@ -172,7 +185,8 @@ public class IPDBAtomTest extends IAtomTest {
     }
     
     @Test public void testGetAltLoc(){
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
     	atom.setAltLoc("123");
         Assert.assertEquals("123", atom.getAltLoc());
     }
@@ -182,7 +196,8 @@ public class IPDBAtomTest extends IAtomTest {
     }
     
     @Test public void testGetSegID(){
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
     	atom.setSegID("123");
         Assert.assertEquals("123", atom.getSegID());
     }
@@ -192,7 +207,8 @@ public class IPDBAtomTest extends IAtomTest {
     }
     
     @Test public void testGetSerial(){
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
     	atom.setSerial(123);
         Assert.assertEquals(123, atom.getSerial().intValue());
     }
@@ -202,7 +218,8 @@ public class IPDBAtomTest extends IAtomTest {
     }
     
     @Test public void testGetResSeq(){
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
     	atom.setResSeq("123");
         Assert.assertEquals("123", atom.getResSeq());
     }
@@ -212,7 +229,8 @@ public class IPDBAtomTest extends IAtomTest {
     }
     
     @Test public void testGetOxt(){
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
     	atom.setOxt(true);
         Assert.assertTrue(atom.getOxt());
     }
@@ -222,7 +240,8 @@ public class IPDBAtomTest extends IAtomTest {
     }
     
     @Test public void testGetHetAtom(){
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
     	atom.setHetAtom(true);
         Assert.assertTrue(atom.getHetAtom());
     }
@@ -232,13 +251,15 @@ public class IPDBAtomTest extends IAtomTest {
     }
     
     @Test public void testGetOccupancy(){
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
     	atom.setOccupancy(1.0);
         Assert.assertEquals(atom.getOccupancy(),1.0,0.01);
     }
     
     @Test public void testGetName(){
-    	IPDBAtom atom = getBuilder().newPDBAtom("C");
+    	IPDBAtom atom = (IPDBAtom)newChemObject();
+    	atom.setSymbol("C");
     	atom.setName("123");
         Assert.assertEquals("123", atom.getName());
     }
