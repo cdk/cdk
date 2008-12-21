@@ -45,19 +45,19 @@ public class RingTest extends IRingTest {
     }
 
     @Test public void testRing_int_String() {
-        IRing r = getBuilder().newRing(5, "C");
+        IRing r = new Ring(5, "C");
         Assert.assertEquals(5, r.getAtomCount());
         Assert.assertEquals(5, r.getBondCount());
     }
     
     @Test public void testRing_int() {
-        IRing r = getBuilder().newRing(5); // This does not create a ring!
+        IRing r = new Ring(5); // This does not create a ring!
         Assert.assertEquals(0, r.getAtomCount());
         Assert.assertEquals(0, r.getBondCount());
     }
     
     @Test public void testRing() {
-        IRing ring = getBuilder().newRing();
+        IRing ring = new Ring();
         Assert.assertNotNull(ring);
         Assert.assertEquals(0, ring.getAtomCount());
         Assert.assertEquals(0, ring.getBondCount());
@@ -68,7 +68,7 @@ public class RingTest extends IRingTest {
         container.addAtom(getBuilder().newAtom("C"));
         container.addAtom(getBuilder().newAtom("C"));
         
-        IRing ring = getBuilder().newRing(container);
+        IRing ring = new Ring(container);
         Assert.assertNotNull(ring);
         Assert.assertEquals(2, ring.getAtomCount());
         Assert.assertEquals(0, ring.getBondCount());
