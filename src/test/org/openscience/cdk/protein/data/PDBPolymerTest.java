@@ -49,7 +49,7 @@ public class PDBPolymerTest extends IPDBPolymerTest {
     }
 
 	@Test public void testPDBPolymer() {
-		IPDBPolymer pdbPolymer = getBuilder().newPDBPolymer();
+		IPDBPolymer pdbPolymer = new PDBPolymer();
 		Assert.assertNotNull(pdbPolymer);
 		Assert.assertEquals(pdbPolymer.getMonomerCount(), 0);
 		

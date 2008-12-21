@@ -46,7 +46,7 @@ public class PseudoAtomTest extends IPseudoAtomTest {
     }
 
     @Test public void testPseudoAtom() {
-        IPseudoAtom a = getBuilder().newPseudoAtom();
+        IPseudoAtom a = new PseudoAtom();
         Assert.assertEquals("R", a.getSymbol());
         Assert.assertNull(a.getPoint3d());
         Assert.assertNull(a.getPoint2d());
@@ -55,7 +55,7 @@ public class PseudoAtomTest extends IPseudoAtomTest {
     
     @Test public void testPseudoAtom_IElement() {
     	IElement element = getBuilder().newElement();
-        IPseudoAtom a = getBuilder().newPseudoAtom(element);
+        IPseudoAtom a = new PseudoAtom(element);
         Assert.assertEquals("R", a.getSymbol());
         Assert.assertNull(a.getPoint3d());
         Assert.assertNull(a.getPoint2d());
@@ -64,7 +64,7 @@ public class PseudoAtomTest extends IPseudoAtomTest {
     
     @Test public void testPseudoAtom_String() {
         String label = "Arg255";
-        IPseudoAtom a = getBuilder().newPseudoAtom(label);
+        IPseudoAtom a = new PseudoAtom(label);
         Assert.assertEquals("R", a.getSymbol());
         Assert.assertEquals(label, a.getLabel());
         Assert.assertNull(a.getPoint3d());
@@ -75,7 +75,7 @@ public class PseudoAtomTest extends IPseudoAtomTest {
     @Test public void testPseudoAtom_String_Point2d() {
         Point2d point = new Point2d(1.0, 2.0);
         String label = "Arg255";
-        IPseudoAtom a = getBuilder().newPseudoAtom(label, point);
+        IPseudoAtom a = new PseudoAtom(label, point);
         Assert.assertEquals("R", a.getSymbol());
         Assert.assertEquals(label, a.getLabel());
         Assert.assertEquals(point, a.getPoint2d());
@@ -86,7 +86,7 @@ public class PseudoAtomTest extends IPseudoAtomTest {
     @Test public void testPseudoAtom_String_Point3d() {
         Point3d point = new Point3d(1.0, 2.0, 3.0);
         String label = "Arg255";
-        IPseudoAtom a = getBuilder().newPseudoAtom(label, point);
+        IPseudoAtom a = new PseudoAtom(label, point);
         Assert.assertEquals("R", a.getSymbol());
         Assert.assertEquals(label, a.getLabel());
         Assert.assertEquals(point, a.getPoint3d());

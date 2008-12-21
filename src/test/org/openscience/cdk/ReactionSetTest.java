@@ -44,7 +44,7 @@ public class ReactionSetTest extends IReactionSetTest {
     }
 
     @Test public void testReactionSet() {
-        IReactionSet reactionSet = getBuilder().newReactionSet();
+        IReactionSet reactionSet = new ReactionSet();
         Assert.assertNotNull(reactionSet);
     }
     

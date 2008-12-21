@@ -45,7 +45,7 @@ public class ElectronContainerTest extends IElectronContainerTest {
     }
 
     @Test public void testElectronContainer() {
-        IElectronContainer ec = getBuilder().newElectronContainer();
+        IElectronContainer ec = new ElectronContainer();
         Assert.assertNotNull(ec);
         Assert.assertEquals(0, ec.getElectronCount().intValue());
     }

@@ -47,7 +47,7 @@ public class IsotopeTest extends IIsotopeTest {
     
     @Test public void testIsotope_IElement() {
     	IElement element = new Element("C");
-        IIsotope i = getBuilder().newIsotope(element);
+        IIsotope i = new Isotope(element);
         Assert.assertEquals("C", i.getSymbol());
     }
     

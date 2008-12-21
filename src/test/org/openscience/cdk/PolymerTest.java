@@ -48,7 +48,7 @@ public class PolymerTest extends IPolymerTest {
     }
 
 	@Test public void testPolymer() {
-		IPolymer oPolymer = getBuilder().newPolymer();
+		IPolymer oPolymer = new Polymer();
 		Assert.assertNotNull(oPolymer);
 		Assert.assertEquals(oPolymer.getMonomerCount(), 0);
 	}

@@ -44,7 +44,7 @@ public class PDBMonomerTest extends IPDBMonomerTest {
     }
     
 	@Test public void testPDBMonomer() {
-		IPDBMonomer monomer = getBuilder().newPDBMonomer();
+		IPDBMonomer monomer = new PDBMonomer();
 		Assert.assertNotNull(monomer);
 		Assert.assertEquals(monomer.getICode(), null);
 	}

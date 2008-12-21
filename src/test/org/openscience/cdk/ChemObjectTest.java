@@ -44,13 +44,13 @@ public class ChemObjectTest extends IChemObjectTest {
     }
 
     @Test public void testChemObject() {
-        IChemObject chemObject = getBuilder().newChemObject();
+        IChemObject chemObject = new ChemObject();
         Assert.assertNotNull(chemObject);
     }
 
     @Test public void testChemObject_IChemObject() {
-    	IChemObject chemObject1 = getBuilder().newChemObject();
-        IChemObject chemObject = getBuilder().newChemObject(chemObject1);
+    	IChemObject chemObject1 = new ChemObject();
+        IChemObject chemObject = new ChemObject(chemObject1);
         Assert.assertNotNull(chemObject);
     }
 

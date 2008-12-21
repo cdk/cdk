@@ -47,7 +47,7 @@ public class PDBAtomTest extends IPDBAtomTest {
 
     @Test public void testPDBAtom_IElement() {
     	IElement element = getBuilder().newElement();
-        IAtom a = getBuilder().newPDBAtom(element);
+        IAtom a = new PDBAtom(element);
         Assert.assertNotNull(a);
     }
     
@@ -55,7 +55,7 @@ public class PDBAtomTest extends IPDBAtomTest {
      * Method to test the Atom(String symbol) method.
      */
     @Test public void testPDBAtom_String() {
-    	IPDBAtom a = getBuilder().newPDBAtom("C");
+    	IPDBAtom a = new PDBAtom("C");
         Assert.assertEquals("C", a.getSymbol());
         Assert.assertNull(a.getPoint2d());
         Assert.assertNull(a.getPoint3d());
@@ -68,7 +68,7 @@ public class PDBAtomTest extends IPDBAtomTest {
     @Test public void testPDBAtom_String_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
 
-        IPDBAtom a = getBuilder().newPDBAtom("C", point3d);
+        IPDBAtom a = new PDBAtom("C", point3d);
         Assert.assertEquals("C", a.getSymbol());
         Assert.assertEquals(point3d, a.getPoint3d());
         Assert.assertNull(a.getPoint2d());
@@ -79,7 +79,7 @@ public class PDBAtomTest extends IPDBAtomTest {
      * Method to test the compare() method.
      */
     @Test public void testCompare_Object() {
-    	IPDBAtom someAtom = getBuilder().newPDBAtom("C");
+    	IPDBAtom someAtom = new PDBAtom("C");
         if (someAtom instanceof org.openscience.cdk.Atom) {
         	org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)someAtom;
         	Assert.assertTrue(atom.compare(atom));

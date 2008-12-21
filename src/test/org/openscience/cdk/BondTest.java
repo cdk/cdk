@@ -46,7 +46,7 @@ public class BondTest extends IBondTest {
 
     @Test
     public void testBond() {
-        IBond bond = getBuilder().newBond();
+        IBond bond = new Bond();
         Assert.assertEquals(2, bond.getAtomCount());
         Assert.assertNull(bond.getAtom(0));
         Assert.assertNull(bond.getAtom(1));
@@ -62,7 +62,7 @@ public class BondTest extends IBondTest {
         IAtom atom4 = getBuilder().newAtom("C");
         IAtom atom5 = getBuilder().newAtom("C");
 
-        IBond bond1 = getBuilder().newBond(new IAtom[]{atom1, atom2, atom3, atom4, atom5});
+        IBond bond1 = new Bond(new IAtom[]{atom1, atom2, atom3, atom4, atom5});
         Assert.assertEquals(5, bond1.getAtomCount());
         Assert.assertEquals(atom1, bond1.getAtom(0));
         Assert.assertEquals(atom2, bond1.getAtom(1));
@@ -76,7 +76,7 @@ public class BondTest extends IBondTest {
         IAtom atom4 = getBuilder().newAtom("C");
         IAtom atom5 = getBuilder().newAtom("C");
 
-        IBond bond1 = getBuilder().newBond(new IAtom[]{atom1, atom2, atom3, atom4, atom5}, IBond.Order.SINGLE);
+        IBond bond1 = new Bond(new IAtom[]{atom1, atom2, atom3, atom4, atom5}, IBond.Order.SINGLE);
         Assert.assertEquals(5, bond1.getAtomCount());
         Assert.assertEquals(atom1, bond1.getAtom(0));
         Assert.assertEquals(atom2, bond1.getAtom(1));
@@ -87,7 +87,7 @@ public class BondTest extends IBondTest {
     public void testBond_IAtom_IAtom() {
         IAtom c = getBuilder().newAtom("C");
         IAtom o = getBuilder().newAtom("O");
-        IBond bond = getBuilder().newBond(c, o);
+        IBond bond = new Bond(c, o);
 
         Assert.assertEquals(2, bond.getAtomCount());
         Assert.assertEquals(c, bond.getAtom(0));
@@ -100,7 +100,7 @@ public class BondTest extends IBondTest {
     public void testBond_IAtom_IAtom_IBond_Order() {
         IAtom c = getBuilder().newAtom("C");
         IAtom o = getBuilder().newAtom("O");
-        IBond bond = getBuilder().newBond(c, o, IBond.Order.DOUBLE);
+        IBond bond = new Bond(c, o, IBond.Order.DOUBLE);
 
         Assert.assertEquals(2, bond.getAtomCount());
         Assert.assertEquals(c, bond.getAtom(0));
@@ -113,7 +113,7 @@ public class BondTest extends IBondTest {
     public void testBond_IAtom_IAtom_IBond_Order_int() {
         IAtom c = getBuilder().newAtom("C");
         IAtom o = getBuilder().newAtom("O");
-        IBond bond = getBuilder().newBond(c, o, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_UP);
+        IBond bond = new Bond(c, o, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_UP);
 
         Assert.assertEquals(2, bond.getAtomCount());
         Assert.assertEquals(c, bond.getAtom(0));
@@ -127,8 +127,8 @@ public class BondTest extends IBondTest {
         IAtom c = getBuilder().newAtom("C");
         IAtom o = getBuilder().newAtom("O");
 
-        IBond b = getBuilder().newBond(c, o, IBond.Order.DOUBLE); // C=O bond
-        IBond b2 = getBuilder().newBond(c, o, IBond.Order.DOUBLE); // same C=O bond
+        IBond b = new Bond(c, o, IBond.Order.DOUBLE); // C=O bond
+        IBond b2 = new Bond(c, o, IBond.Order.DOUBLE); // same C=O bond
 
         Assert.assertTrue(b.compare(b2));
     }

@@ -45,7 +45,7 @@ public class CrystalTest extends ICrystalTest {
     }
 
     @Test public void testCrystal() {
-        ICrystal crystal = getBuilder().newCrystal();
+        ICrystal crystal = new Crystal();
         Assert.assertNotNull(crystal);
         Assert.assertEquals(0, crystal.getAtomCount());
         Assert.assertEquals(0, crystal.getBondCount());
@@ -68,7 +68,7 @@ public class CrystalTest extends ICrystalTest {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        ICrystal crystal = getBuilder().newCrystal(acetone);
+        ICrystal crystal = new Crystal(acetone);
         Assert.assertNotNull(crystal);
         Assert.assertEquals(4, crystal.getAtomCount());
         Assert.assertEquals(3, crystal.getBondCount());

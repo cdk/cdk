@@ -52,7 +52,7 @@ public class LonePairTest extends ILonePairTest {
     
     @Test public void testLonePair_IAtom() {
         IAtom atom = new Atom("N");
-        ILonePair lp = getBuilder().newLonePair(atom);
+        ILonePair lp = new LonePair(atom);
         Assert.assertEquals(2, lp.getElectronCount().intValue());
         Assert.assertEquals(atom, lp.getAtom());
         Assert.assertTrue(lp.contains(atom));

@@ -50,12 +50,12 @@ public class MoleculeTest extends IMoleculeTest {
     // test constructors
     
     @Test public void testMolecule() {
-        IMolecule m = getBuilder().newMolecule();
+        IMolecule m = new Molecule();
         Assert.assertTrue(m != null);
     }
 
     @Test public void testMolecule_int_int_int_int() {
-        IMolecule m = getBuilder().newMolecule(5,5,1,1);
+        IMolecule m = new Molecule(5,5,1,1);
         Assert.assertTrue(m != null);
         Assert.assertEquals(0, m.getAtomCount());
         Assert.assertEquals(0, m.getBondCount());
@@ -80,7 +80,7 @@ public class MoleculeTest extends IMoleculeTest {
         acetone.addBond(b2);
         acetone.addBond(b3);
         
-        IMolecule m = getBuilder().newMolecule(acetone);
+        IMolecule m = new Molecule(acetone);
         Assert.assertTrue(m != null);
         Assert.assertEquals(4, m.getAtomCount());
         Assert.assertEquals(3, m.getBondCount());

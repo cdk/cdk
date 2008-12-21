@@ -45,7 +45,7 @@ public class ReactionTest extends IReactionTest {
     }
 
     @Test public void testReaction() {
-        IReaction reaction = getBuilder().newReaction();
+        IReaction reaction = new Reaction();
         Assert.assertNotNull(reaction);
         Assert.assertEquals(0, reaction.getReactantCount());
         Assert.assertEquals(0, reaction.getProductCount());
