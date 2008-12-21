@@ -37,40 +37,42 @@ import org.junit.Test;
 public class ISingleElectronTest extends IElectronContainerTest {
 
     @Test public void testGetElectronCount() {
-        ISingleElectron radical = getBuilder().newSingleElectron();
+        ISingleElectron radical = (ISingleElectron)newChemObject();
         Assert.assertEquals(1, radical.getElectronCount().intValue());
     }
 
     @Test public void testContains_IAtom() {
-        IAtom atom = getBuilder().newAtom("N");
-        ISingleElectron radical = getBuilder().newSingleElectron(atom);
+    	IChemObject object = newChemObject();
+        IAtom atom = object.getBuilder().newAtom("N");
+        ISingleElectron radical = object.getBuilder().newSingleElectron(atom);
         Assert.assertTrue(radical.contains(atom));
     }
     
     @Test public void testSetAtom_IAtom() {
-        IAtom atom = getBuilder().newAtom("N");
-        ISingleElectron radical = getBuilder().newSingleElectron();
+        ISingleElectron radical = (ISingleElectron)newChemObject();
+        IAtom atom = radical.getBuilder().newAtom("N");
         Assert.assertNull(radical.getAtom());
         radical.setAtom(atom);
         Assert.assertEquals(atom, radical.getAtom());
     }
 
     @Test public void testGetAtom() {
-        IAtom atom = getBuilder().newAtom("N");
-        ISingleElectron radical = getBuilder().newSingleElectron(atom);
+    	IChemObject object = newChemObject();
+    	IAtom atom = object.getBuilder().newAtom("N");
+        ISingleElectron radical = object.getBuilder().newSingleElectron(atom);
         Assert.assertEquals(atom, radical.getAtom());
     }
     
     @Test public void testClone() throws Exception {
-        ISingleElectron radical = getBuilder().newSingleElectron();
+        ISingleElectron radical = (ISingleElectron)newChemObject();
         Object clone = radical.clone();
         Assert.assertNotNull(clone);
         Assert.assertTrue(clone instanceof ISingleElectron);
     }
     
     @Test public void testClone_IAtom() throws Exception {
-        IAtom atom = getBuilder().newAtom("N");
-        ISingleElectron radical = getBuilder().newSingleElectron();
+        ISingleElectron radical = (ISingleElectron)newChemObject();
+        IAtom atom = radical.getBuilder().newAtom("N");
         radical.setAtom(atom);
         
         // test cloning of atom
@@ -80,7 +82,7 @@ public class ISingleElectronTest extends IElectronContainerTest {
     
     /** Test for RFC #9 */
     @Test public void testToString() {
-        ISingleElectron radical = getBuilder().newSingleElectron();
+        ISingleElectron radical = (ISingleElectron)newChemObject();
         String description = radical.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');

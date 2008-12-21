@@ -37,44 +37,44 @@ import org.junit.Test;
 public class ILonePairTest extends IElectronContainerTest {
 
     @Test public void testSetAtom_IAtom() {
-        IAtom atom = getBuilder().newAtom("N");
-        ILonePair lp = getBuilder().newLonePair();
+        ILonePair lp = (ILonePair)newChemObject();
+        IAtom atom = lp.getBuilder().newAtom("N");
         lp.setAtom(atom);
         Assert.assertEquals(atom, lp.getAtom());
     }
     
     @Test public void testGetAtom() {
-        IAtom atom = getBuilder().newAtom("N");
-        ILonePair lp = getBuilder().newLonePair();
+        ILonePair lp = (ILonePair)newChemObject();
+        IAtom atom = lp.getBuilder().newAtom("N");
         Assert.assertNull(lp.getAtom());
         lp.setAtom(atom);
         Assert.assertEquals(atom, lp.getAtom());
     }
     
     @Test public void testGetElectronCount() {
-        ILonePair lp = getBuilder().newLonePair();
+        ILonePair lp = (ILonePair)newChemObject();
         Assert.assertEquals(2, lp.getElectronCount().intValue());
         
-        lp = getBuilder().newLonePair(getBuilder().newAtom("N"));
+        lp = lp.getBuilder().newLonePair(lp.getBuilder().newAtom("N"));
         Assert.assertEquals(2, lp.getElectronCount().intValue());
     }
     
     @Test public void testContains_IAtom() {
-        IAtom atom = getBuilder().newAtom("N");
-        ILonePair lp = getBuilder().newLonePair();
+        ILonePair lp = (ILonePair)newChemObject();
+        IAtom atom = lp.getBuilder().newAtom("N");
         lp.setAtom(atom);
         Assert.assertTrue(lp.contains(atom));
     }
     
     @Test public void testClone() throws Exception {
-        ILonePair lp = getBuilder().newLonePair();
+        ILonePair lp = (ILonePair)newChemObject();
         Object clone = lp.clone();
         Assert.assertTrue(clone instanceof ILonePair);
     }
     
     @Test public void testClone_IAtom() throws Exception {
-        IAtom atom = getBuilder().newAtom("N");
-        ILonePair lp = getBuilder().newLonePair();
+    	ILonePair lp = (ILonePair)newChemObject();
+        IAtom atom = lp.getBuilder().newAtom("N");
         lp.setAtom(atom);
         
         // test cloning of atom
@@ -84,7 +84,7 @@ public class ILonePairTest extends IElectronContainerTest {
     
     /** Test for RFC #9 */
     @Test public void testToString() {
-        ILonePair lp = getBuilder().newLonePair();
+    	ILonePair lp = (ILonePair)newChemObject();
         String description = lp.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');

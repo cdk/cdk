@@ -39,7 +39,7 @@ public class IMappingTest extends IChemObjectTest {
      * Method to test whether the class complies with RFC #9.
      */
     public void testToString() {
-        IMapping mapping = getBuilder().newMapping(getBuilder().newAtom(), getBuilder().newAtom());
+        IMapping mapping = (IMapping)newChemObject();
         String description = mapping.toString();
         for (int i=0; i< description.length(); i++) {
         	Assert.assertTrue(description.charAt(i) != '\n');
@@ -48,23 +48,25 @@ public class IMappingTest extends IChemObjectTest {
     }
 
 	public void testClone() throws Exception {
-	    IMapping mapping = getBuilder().newMapping(getBuilder().newAtom(), getBuilder().newAtom());
+	    IMapping mapping = (IMapping)newChemObject();
         Object clone = mapping.clone();
         Assert.assertTrue(clone instanceof IMapping);
     }    
         
 	public void testGetChemObject_int() {
-		IAtom atom0 = getBuilder().newAtom();
-		IAtom atom1 = getBuilder().newAtom();
-		IMapping mapping = getBuilder().newMapping(atom0, atom1);
+		IChemObject object = newChemObject();
+        IAtom atom0 = object.getBuilder().newAtom();
+        IAtom atom1 = object.getBuilder().newAtom();
+        IMapping mapping = object.getBuilder().newMapping(atom0, atom1);
 		Assert.assertEquals(atom0, mapping.getChemObject(0));
 		Assert.assertEquals(atom1, mapping.getChemObject(1));
 	}
 	
     public void testRelatedChemObjects() {
-        IAtom atom0 = getBuilder().newAtom();
-        IAtom atom1 = getBuilder().newAtom();
-        IMapping mapping = getBuilder().newMapping(atom0, atom1);
+    	IChemObject object = newChemObject();
+        IAtom atom0 = object.getBuilder().newAtom();
+        IAtom atom1 = object.getBuilder().newAtom();
+        IMapping mapping = object.getBuilder().newMapping(atom0, atom1);
 
 		Iterator<IChemObject> iter = mapping.relatedChemObjects().iterator();
 		Assert.assertTrue(iter.hasNext());
@@ -75,7 +77,7 @@ public class IMappingTest extends IChemObjectTest {
     }
 
     public void testClone_ChemObject() throws Exception {
-        IMapping mapping = getBuilder().newMapping(getBuilder().newAtom(), getBuilder().newAtom());
+        IMapping mapping = (IMapping)newChemObject();
 
 		IMapping clone = (IMapping)mapping.clone();
         //IChemObject[] map = mapping.getRelatedChemObjects();

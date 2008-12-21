@@ -34,7 +34,7 @@ import org.openscience.cdk.tools.diff.IsotopeDiff;
 public abstract class IIsotopeTest extends IElementTest {
 
     @Test public void testSetNaturalAbundance_Double() {
-        IIsotope i = getBuilder().newIsotope("C");
+        IIsotope i = (IIsotope)newChemObject();
         i.setNaturalAbundance(80.0);
         Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
     }
@@ -43,7 +43,7 @@ public abstract class IIsotopeTest extends IElementTest {
     }
     
     @Test public void testSetExactMass_Double() {
-        IIsotope i = getBuilder().newIsotope("C");
+        IIsotope i = (IIsotope)newChemObject();
         i.setExactMass(12.03);
         Assert.assertEquals(12.03, i.getExactMass(), 0.001);
     }
@@ -52,7 +52,7 @@ public abstract class IIsotopeTest extends IElementTest {
     }
 
     @Test public void testSetMassNumber_Integer() {
-        IIsotope i = getBuilder().newIsotope("D");
+        IIsotope i = (IIsotope)newChemObject();
         i.setMassNumber(2);
         Assert.assertEquals(2, i.getMassNumber().intValue());
     }
@@ -64,7 +64,7 @@ public abstract class IIsotopeTest extends IElementTest {
      * Method to test the clone() method
      */
     @Test public void testClone() throws Exception {
-        IIsotope iso = getBuilder().newIsotope("C");
+        IIsotope iso = (IIsotope)newChemObject();
         Object clone = iso.clone();
         Assert.assertTrue(clone instanceof IIsotope);
 
@@ -78,7 +78,7 @@ public abstract class IIsotopeTest extends IElementTest {
      * Method to test the clone() method
      */
     @Test public void testClone_ExactMass() throws Exception {
-        IIsotope iso = getBuilder().newIsotope("C");
+        IIsotope iso = (IIsotope)newChemObject();
         iso.setExactMass(1.0);
         IIsotope clone = (IIsotope)iso.clone();
         
@@ -91,7 +91,7 @@ public abstract class IIsotopeTest extends IElementTest {
      * Method to test the clone() method
      */
     @Test public void testClone_NaturalAbundance() throws Exception {
-        IIsotope iso = getBuilder().newIsotope("C");
+        IIsotope iso = (IIsotope)newChemObject();
         iso.setNaturalAbundance(1.0);
         IIsotope clone = (IIsotope)iso.clone();
         
@@ -104,7 +104,7 @@ public abstract class IIsotopeTest extends IElementTest {
      * Method to test the clone() method
      */
     @Test public void testClone_MassNumber() throws Exception {
-        IIsotope iso = getBuilder().newIsotope("C");
+        IIsotope iso = (IIsotope)newChemObject();
         iso.setMassNumber(12);
         IIsotope clone = (IIsotope)iso.clone();
         
@@ -117,7 +117,7 @@ public abstract class IIsotopeTest extends IElementTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-        IIsotope iso = getBuilder().newIsotope("C");
+        IIsotope iso = (IIsotope)newChemObject();
         String description = iso.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
