@@ -49,27 +49,27 @@ public class NNMonomerTest extends IMonomerTest {
     // Overwrite default methods: no notifications are expected!
     
     @Test public void testNotifyChanged() {
-        NNChemObjectTestHelper.testNotifyChanged(getBuilder());
+        NNChemObjectTestHelper.testNotifyChanged(newChemObject());
     }
     @Test public void testNotifyChanged_IChemObjectChangeEvent() {
-        NNChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(getBuilder());
+        NNChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
     }
     @Test public void testStateChanged_IChemObjectChangeEvent() {
-        NNChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(getBuilder());
+        NNChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(newChemObject());
     }
     @Test public void testClone_ChemObjectListeners() throws Exception {
-        NNChemObjectTestHelper.testClone_ChemObjectListeners(getBuilder());
+        NNChemObjectTestHelper.testClone_ChemObjectListeners(newChemObject());
     }
     @Test public void testAddListener_IChemObjectListener() {
-        NNChemObjectTestHelper.testAddListener_IChemObjectListener(getBuilder());
+        NNChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
     }
     @Test public void testGetListenerCount() {
-        NNChemObjectTestHelper.testGetListenerCount(getBuilder());
+        NNChemObjectTestHelper.testGetListenerCount(newChemObject());
     }
     @Test public void testRemoveListener_IChemObjectListener() {
-        NNChemObjectTestHelper.testRemoveListener_IChemObjectListener(getBuilder());
+        NNChemObjectTestHelper.testRemoveListener_IChemObjectListener(newChemObject());
     }
     @Test public void testSetNotification_true() {
-        NNChemObjectTestHelper.testSetNotification_true(getBuilder());
+        NNChemObjectTestHelper.testSetNotification_true(newChemObject());
     }
 }

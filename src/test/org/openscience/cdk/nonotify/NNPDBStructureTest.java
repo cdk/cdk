@@ -52,7 +52,7 @@ public class NNPDBStructureTest extends IPDBStructureTest {
     }
 
     @Test public void testAddListener_IChemObjectListener() {
-        NNChemObjectTestHelper.testAddListener_IChemObjectListener(getBuilder());
+        NNChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
     }
 
 }
