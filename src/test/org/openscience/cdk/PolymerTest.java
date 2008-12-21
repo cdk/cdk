@@ -53,4 +53,19 @@ public class PolymerTest extends IPolymerTest {
 		Assert.assertEquals(oPolymer.getMonomerCount(), 0);
 	}
 	
+	/**
+	 * A clone must deep clone everything, so that after the clone, operations
+	 * on the original do not modify the clone.
+	 */
+	@Test public void testPolymerClone() throws Exception {
+		IPolymer oPolymer = new Polymer();
+		Assert.assertNotNull(oPolymer);
+		Assert.assertEquals(0, oPolymer.getMonomerCount());
+		Polymer clone = (Polymer)oPolymer.clone();
+		Monomer monomer = new Monomer();
+		monomer.setMonomerName("TYR55");
+		oPolymer.addAtom(new Atom("C"), monomer);
+		Assert.assertEquals(0, clone.getMonomerCount());
+		Assert.assertEquals(0, clone.getMonomerNames().size());
+	}
 }
