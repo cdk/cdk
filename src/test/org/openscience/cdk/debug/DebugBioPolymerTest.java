@@ -49,21 +49,21 @@ public class DebugBioPolymerTest extends IBioPolymerTest {
 		Assert.assertNotNull(oBioPolymer);
 		Assert.assertEquals(oBioPolymer.getMonomerCount(), 0);
 		
-		IStrand oStrand1 = getBuilder().newStrand();
+		IStrand oStrand1 = oBioPolymer.getBuilder().newStrand();
 		oStrand1.setStrandName("A");
-		IStrand oStrand2 = getBuilder().newStrand();
+		IStrand oStrand2 = oBioPolymer.getBuilder().newStrand();
 		oStrand2.setStrandName("B");
-		IMonomer oMono1 = getBuilder().newMonomer();
+		IMonomer oMono1 = oBioPolymer.getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = getBuilder().newMonomer();
+		IMonomer oMono2 = oBioPolymer.getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IMonomer oMono3 = getBuilder().newMonomer();
+		IMonomer oMono3 = oBioPolymer.getBuilder().newMonomer();
 		oMono3.setMonomerName(new String("GLYA16"));
-		IAtom oAtom1 = getBuilder().newAtom("C1");
-		IAtom oAtom2 = getBuilder().newAtom("C2");
-		IAtom oAtom3 = getBuilder().newAtom("C3");
-		IAtom oAtom4 = getBuilder().newAtom("C4");
-		IAtom oAtom5 = getBuilder().newAtom("C5");
+		IAtom oAtom1 = oBioPolymer.getBuilder().newAtom("C1");
+		IAtom oAtom2 = oBioPolymer.getBuilder().newAtom("C2");
+		IAtom oAtom3 = oBioPolymer.getBuilder().newAtom("C3");
+		IAtom oAtom4 = oBioPolymer.getBuilder().newAtom("C4");
+		IAtom oAtom5 = oBioPolymer.getBuilder().newAtom("C5");
 		
 		oBioPolymer.addAtom(oAtom1);
 		oBioPolymer.addAtom(oAtom2, oStrand1);

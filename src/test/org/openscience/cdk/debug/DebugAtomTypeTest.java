@@ -49,7 +49,7 @@ public class DebugAtomTypeTest extends IAtomTypeTest {
 
     @Test public void testDebugAtomType_IElement() {
     	IElement element = new DebugElement("C");
-        IAtomType at = getBuilder().newAtomType(element);
+        IAtomType at = element.getBuilder().newAtomType(element);
         Assert.assertEquals("C", at.getSymbol());
     }
 

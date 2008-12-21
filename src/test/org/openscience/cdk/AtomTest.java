@@ -54,7 +54,7 @@ public class AtomTest extends IAtomTest {
     }
 
     @Test public void testAtom_IElement() {
-    	IElement element = getBuilder().newElement();
+        IElement element = newChemObject().getBuilder().newElement();
         IAtom a = new Atom(element);
         Assert.assertNotNull(a);
     }

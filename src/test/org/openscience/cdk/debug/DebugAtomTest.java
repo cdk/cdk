@@ -32,6 +32,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomTest;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
@@ -51,7 +52,8 @@ public class DebugAtomTest extends IAtomTest {
     }
 
     @Test public void testDebugAtom_IElement() {
-    	IElement element = getBuilder().newElement();
+    	IChemObject object = newChemObject();
+    	IElement element = object.getBuilder().newElement();
         IAtom a = new DebugAtom(element);
         Assert.assertNotNull(a);
     }
