@@ -37,7 +37,7 @@ import org.junit.Test;
 public class IElectronContainerTest extends IChemObjectTest {
 
     @Test public void testSetElectronCount_Integer() {
-        IElectronContainer ec = getBuilder().newElectronContainer();
+        IElectronContainer ec = (IElectronContainer)newChemObject();
         ec.setElectronCount(3);
         Assert.assertEquals(3, ec.getElectronCount().intValue());
     }
@@ -46,7 +46,7 @@ public class IElectronContainerTest extends IChemObjectTest {
     }
 
     @Test public void testClone() throws Exception {
-        IElectronContainer ec = getBuilder().newElectronContainer();
+        IElectronContainer ec = (IElectronContainer)newChemObject();
         ec.setElectronCount(2);
         Object clone = ec.clone();
         Assert.assertNotNull(clone);
@@ -57,7 +57,7 @@ public class IElectronContainerTest extends IChemObjectTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-        IElectronContainer at = getBuilder().newElectronContainer();
+        IElectronContainer at = (IElectronContainer)newChemObject();
         String description = at.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');

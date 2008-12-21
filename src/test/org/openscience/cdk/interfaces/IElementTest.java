@@ -36,29 +36,31 @@ public class IElementTest extends IChemObjectTest {
     // test methods
     
     @Test public void testSetSymbol_String() {
-        IElement e = getBuilder().newElement();
+        IElement e = (IElement)newChemObject();
         e.setSymbol("C");
         Assert.assertEquals("C", e.getSymbol());
     }
         
     @Test public void testGetSymbol() {
-        IElement e = getBuilder().newElement("X");
+        IElement e = (IElement)newChemObject();
+        e.setSymbol("X");
         Assert.assertEquals("X", e.getSymbol());
     }
         
     @Test public void testSetAtomicNumber_Integer() {
-        IElement e = getBuilder().newElement("H");
+        IElement e = (IElement)newChemObject();
         e.setAtomicNumber(1);
         Assert.assertEquals(1, e.getAtomicNumber().intValue());
     }
 
     @Test public void testGetAtomicNumber() {
-        IElement e = getBuilder().newElement("D", 1);
+        IElement e = (IElement)newChemObject();
+        e.setAtomicNumber(1);
         Assert.assertEquals(1, e.getAtomicNumber().intValue());
     }
 
     @Test public void testClone() throws Exception {
-        IElement elem = getBuilder().newElement();
+        IElement elem = (IElement)newChemObject();
         Object clone = elem.clone();
         Assert.assertTrue(clone instanceof IElement);
 
@@ -69,13 +71,14 @@ public class IElementTest extends IChemObjectTest {
     }
     
     @Test public void testCloneDiff() throws Exception {
-        IElement elem = getBuilder().newElement();
+        IElement elem = (IElement)newChemObject();
         IElement clone = (IElement)elem.clone();
         Assert.assertEquals("", ElementDiff.diff(elem, clone));
     }
 
     @Test public void testClone_Symbol() throws Exception {
-        IElement elem = getBuilder().newElement("C");
+        IElement elem = (IElement)newChemObject();
+        elem.setSymbol("C");
         IElement clone = (IElement)elem.clone();
         
         // test cloning of symbol
@@ -84,7 +87,8 @@ public class IElementTest extends IChemObjectTest {
     }
     
     @Test public void testClone_IAtomicNumber() throws Exception {
-        IElement elem = getBuilder().newElement("C", 6);
+        IElement elem = (IElement)newChemObject();
+        elem.setAtomicNumber(6);
         IElement clone = (IElement)elem.clone();
         
         // test cloning of atomic number
@@ -94,7 +98,7 @@ public class IElementTest extends IChemObjectTest {
     
     /** Test for RFC #9 */
     @Test public void testToString() {
-        IElement elem = getBuilder().newElement();
+        IElement elem = (IElement)newChemObject();
         String description = elem.toString();
         for (int i=0; i< description.length(); i++) {
         	Assert.assertTrue(description.charAt(i) != '\n');
@@ -105,6 +109,6 @@ public class IElementTest extends IChemObjectTest {
     @Test public void testCompare_Object() {
         // Added to keep the Coverage checker happy, but since the
         // compare(Object) method is not part of the interface, nothing is tested
-    	Assert.assertTrue(true);
+       Assert.assertTrue(true);
     }
 }
