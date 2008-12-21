@@ -89,7 +89,7 @@ public class AtomTest extends IAtomTest {
     @Test public void testAtom_String_Point2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
 
-        IAtom a = getBuilder().newAtom("C", point2d);
+        IAtom a = new Atom("C", point2d);
         Assert.assertEquals("C", a.getSymbol());
         Assert.assertEquals(point2d, a.getPoint2d());
         Assert.assertNull(a.getPoint3d());
@@ -100,11 +100,11 @@ public class AtomTest extends IAtomTest {
      * Method to test the compare() method.
      */
     @Test public void testCompare_Object() {
-        IAtom someAtom = getBuilder().newAtom("C");
+        IAtom someAtom = new Atom("C");
         if (someAtom instanceof org.openscience.cdk.Atom) {
         	org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)someAtom;
         	Assert.assertTrue(atom.compare(atom));
-        	IAtom hydrogen = getBuilder().newAtom("H");
+            IAtom hydrogen = someAtom.getBuilder().newAtom("H");
         	Assert.assertFalse(atom.compare(hydrogen));
         	Assert.assertFalse(atom.compare("C"));
         }

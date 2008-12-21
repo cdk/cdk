@@ -41,24 +41,24 @@ public class AtomTypeTest extends IAtomTypeTest {
     }
 
     @Test public void testAtomType_String() {
-        IAtomType at = getBuilder().newAtomType("C");
+        IAtomType at = new AtomType("C");
         Assert.assertEquals("C", at.getSymbol());
     }
 
     @Test public void testAtomType_IElement() {
     	IElement element = getBuilder().newElement("C");
-        IAtomType at = getBuilder().newAtomType(element);
+        IAtomType at = new AtomType(element);
         Assert.assertEquals("C", at.getSymbol());
     }
 
     @Test public void testAtomType_String_String() {
-        IAtomType at = getBuilder().newAtomType("C4", "C");
+        IAtomType at = new AtomType("C4", "C");
         Assert.assertEquals("C", at.getSymbol());
         Assert.assertEquals("C4", at.getAtomTypeName());
     }
     
     @Test public void testCompare() {
-        IAtomType at = getBuilder().newAtomType("C4", "C");
+        IAtomType at = new AtomType("C4", "C");
         if (at instanceof org.openscience.cdk.AtomType) {
         	org.openscience.cdk.AtomType at1 = (org.openscience.cdk.AtomType)at;
 	        IAtomType at2 = getBuilder().newAtomType("C3", "C");
@@ -68,7 +68,7 @@ public class AtomTypeTest extends IAtomTypeTest {
     }
 
     @Test public void testCompare_Object() {
-    	IAtomType someAt = getBuilder().newAtomType("C");
+    	IAtomType someAt = new AtomType("C");
     	if (someAt instanceof org.openscience.cdk.AtomType) {
     		org.openscience.cdk.AtomType at = (org.openscience.cdk.AtomType)someAt;
 	        Assert.assertTrue(at.compare(at));

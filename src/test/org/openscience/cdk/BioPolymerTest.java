@@ -47,7 +47,7 @@ public class BioPolymerTest extends IBioPolymerTest {
     }
 
 	@Test public void testBioPolymer() {
-		IBioPolymer oBioPolymer = getBuilder().newBioPolymer();
+		IBioPolymer oBioPolymer = new BioPolymer();
 		Assert.assertNotNull(oBioPolymer);
 		Assert.assertEquals(oBioPolymer.getMonomerCount(), 0);
 		

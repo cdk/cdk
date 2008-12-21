@@ -39,23 +39,23 @@ public class DebugElementTest extends IElementTest {
     }
 
     @Test public void testDebugElement() {
-        IElement e = getBuilder().newElement();
+        IElement e = new DebugElement();
         Assert.assertTrue(e instanceof IChemObject);
     }
     
     @Test public void testDebugElement_IElement() {
-    	IElement element = getBuilder().newElement();
-        IElement e = getBuilder().newElement(element);
+        IElement element = new DebugElement();
+        IElement e = new DebugElement(element);
         Assert.assertTrue(e instanceof IChemObject);
     }
     
     @Test public void testDebugElement_String() {
-        IElement e = getBuilder().newElement("C");
+        IElement e = new DebugElement("C");
         Assert.assertEquals("C", e.getSymbol());
     }
     
     @Test public void testDebugElement_String_int() {
-        IElement e = getBuilder().newElement("H", 1);
+        IElement e = new DebugElement("H", 1);
         Assert.assertEquals("H", e.getSymbol());
         Assert.assertEquals(1, e.getAtomicNumber().intValue());
     }
