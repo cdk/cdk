@@ -56,6 +56,8 @@ public class PolymerTest extends IPolymerTest {
 	/**
 	 * A clone must deep clone everything, so that after the clone, operations
 	 * on the original do not modify the clone.
+	 *
+	 * @cdk.bug 2454890
 	 */
 	@Test public void testPolymerClone() throws Exception {
 		IPolymer oPolymer = new Polymer();
