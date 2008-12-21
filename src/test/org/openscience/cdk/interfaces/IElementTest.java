@@ -105,10 +105,4 @@ public class IElementTest extends IChemObjectTest {
         	Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
-
-    @Test public void testCompare_Object() {
-        // Added to keep the Coverage checker happy, but since the
-        // compare(Object) method is not part of the interface, nothing is tested
-       Assert.assertTrue(true);
-    }
 }
