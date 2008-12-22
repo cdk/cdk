@@ -32,14 +32,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IPseudoAtomTest;
+import org.openscience.cdk.interfaces.AbstractPseudoAtomTest;
 
 /**
  * Checks the functionality of the AtomTypeFactory
  *
  * @cdk.module test-data
  */
-public class PseudoAtomTest extends IPseudoAtomTest {
+public class PseudoAtomTest extends AbstractPseudoAtomTest {
 
     @BeforeClass public static void setUp() {
        	setChemObject(new PseudoAtom());

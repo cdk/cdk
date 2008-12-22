@@ -28,7 +28,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IPDBStructure;
-import org.openscience.cdk.interfaces.IPDBStructureTest;
+import org.openscience.cdk.interfaces.AbstractPDBStructureTest;
 
 /**
  * Checks the functionality of the PDBStructure class.
@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IPDBStructureTest;
  *
  * @see PDBStructure
  */
-public class PDBStructureTest extends IPDBStructureTest {
+public class PDBStructureTest extends AbstractPDBStructureTest {
 	
     @BeforeClass public static void setUp() {
         setChemObject(new PDBStructure());

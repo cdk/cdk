@@ -24,14 +24,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectBuilderTest;
+import org.openscience.cdk.interfaces.AbstractChemObjectBuilderTest;
 
 /**
  * Checks the functionality of the {@link NoNotificationChemObjectBuilder}.
  *
  * @cdk.module test-nonotify
  */
-public class NoNotificationChemObjectBuilderTest extends IChemObjectBuilderTest {
+public class NoNotificationChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
 
     @BeforeClass public static void setUp() {
     	setRootObject(new NNChemObject());

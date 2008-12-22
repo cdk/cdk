@@ -24,14 +24,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectBuilderTest;
+import org.openscience.cdk.interfaces.AbstractChemObjectBuilderTest;
 
 /**
  * Checks the functionality of the Crystal.
  *
  * @cdk.module test-data
  */
-public class DefaultChemObjectBuilderTest extends IChemObjectBuilderTest {
+public class DefaultChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
 
     @BeforeClass public static void setUp() {
         setRootObject(new ChemObject());

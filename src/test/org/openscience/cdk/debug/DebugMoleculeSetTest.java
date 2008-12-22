@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IMoleculeSetTest;
+import org.openscience.cdk.interfaces.AbstractMoleculeSetTest;
 
 /**
  * Checks the functionality of the {@link DebugMoleculeSet}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugMoleculeSetTest extends IMoleculeSetTest {
+public class DebugMoleculeSetTest extends AbstractMoleculeSetTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new DebugMoleculeSet());

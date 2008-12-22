@@ -28,7 +28,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.IRingSetTest;
+import org.openscience.cdk.interfaces.AbstractRingSetTest;
 
 /**
  * Checks the functionality of the RingSet class.
@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IRingSetTest;
  *
  * @see org.openscience.cdk.RingSet
  */
-public class RingSetTest extends IRingSetTest {
+public class RingSetTest extends AbstractRingSetTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new RingSet());

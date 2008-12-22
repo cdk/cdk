@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMappingTest;
+import org.openscience.cdk.interfaces.AbstractMappingTest;
 
 /**
  * Checks the functionality of the {@link NNMapping}.
  *
  * @cdk.module test-nonotify
  */
-public class NNMappingTest extends IMappingTest {
+public class NNMappingTest extends AbstractMappingTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNMapping(new NNAtom(), new NNAtom()));

@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.IRingSetTest;
+import org.openscience.cdk.interfaces.AbstractRingSetTest;
 
 /**
  * Checks the functionality of the {@link DebugRingSet}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugRingSetTest extends IRingSetTest {
+public class DebugRingSetTest extends AbstractRingSetTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new DebugRingSet());

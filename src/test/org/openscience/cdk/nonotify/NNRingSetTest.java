@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.IRingSetTest;
+import org.openscience.cdk.interfaces.AbstractRingSetTest;
 
 /**
  * Checks the functionality of the {@link NNRingSet}.
  *
  * @cdk.module test-nonotify
  */
-public class NNRingSetTest extends IRingSetTest {
+public class NNRingSetTest extends AbstractRingSetTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNRingSet());

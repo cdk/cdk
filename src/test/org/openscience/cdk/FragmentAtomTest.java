@@ -24,14 +24,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IFragmentAtom;
-import org.openscience.cdk.interfaces.IFragmentAtomTest;
+import org.openscience.cdk.interfaces.AbstractFragmentAtomTest;
 
 /**
  * Checks the functionality of the FragmentAtom.
  *
  * @cdk.module test-data
  */
-public class FragmentAtomTest extends IFragmentAtomTest {
+public class FragmentAtomTest extends AbstractFragmentAtomTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new FragmentAtom());

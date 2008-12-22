@@ -31,7 +31,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IPolymer;
-import org.openscience.cdk.interfaces.IPolymerTest;
+import org.openscience.cdk.interfaces.AbstractPolymerTest;
 
 /**
  * TestCase for the Polymer class.
@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IPolymerTest;
  * @cdk.created 2001-08-09
  * @cdk.module  test-data
  */
-public class PolymerTest extends IPolymerTest {
+public class PolymerTest extends AbstractPolymerTest {
 
     @BeforeClass public static void setUp() {
        	setChemObject(new Polymer());

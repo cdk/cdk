@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IPDBStructure;
-import org.openscience.cdk.interfaces.IPDBStructureTest;
+import org.openscience.cdk.interfaces.AbstractPDBStructureTest;
 
 /**
  * Checks the functionality of the {@link DebugPDBStructure}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugPDBStructureTest extends IPDBStructureTest {
+public class DebugPDBStructureTest extends AbstractPDBStructureTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new DebugPDBStructure());

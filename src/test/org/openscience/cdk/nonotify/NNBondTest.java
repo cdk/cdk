@@ -30,14 +30,14 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IBondTest;
+import org.openscience.cdk.interfaces.AbstractBondTest;
 
 /**
  * Checks the functionality of the {@link NNBond}.
  *
  * @cdk.module test-nonotify
  */
-public class NNBondTest extends IBondTest {
+public class NNBondTest extends AbstractBondTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNBond());

@@ -30,7 +30,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IBondTest;
+import org.openscience.cdk.interfaces.AbstractBondTest;
 import org.openscience.cdk.interfaces.IChemObject;
 
 /**
@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  *
  * @cdk.module test-datadebug
  */
-public class DebugBondTest extends IBondTest {
+public class DebugBondTest extends AbstractBondTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new DebugBond());

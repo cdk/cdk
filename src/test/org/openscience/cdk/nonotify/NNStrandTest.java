@@ -30,14 +30,14 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.interfaces.IStrandTest;
+import org.openscience.cdk.interfaces.AbstractStrandTest;
 
 /**
  * Checks the functionality of the {@link NNStrand}.
  *
  * @cdk.module test-nonotify
  */
-public class NNStrandTest extends IStrandTest {
+public class NNStrandTest extends AbstractStrandTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNStrand());

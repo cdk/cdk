@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemFileTest;
+import org.openscience.cdk.interfaces.AbstractChemFileTest;
 
 /**
  * Checks the functionality of the {@link NNChemFile}.
  *
  * @cdk.module test-nonotify
  */
-public class NNChemFileTest extends IChemFileTest {
+public class NNChemFileTest extends AbstractChemFileTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNChemFile());

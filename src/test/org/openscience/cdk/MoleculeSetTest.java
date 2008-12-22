@@ -21,7 +21,7 @@
 package org.openscience.cdk;
 
 import org.junit.BeforeClass;
-import org.openscience.cdk.interfaces.IMoleculeSetTest;
+import org.openscience.cdk.interfaces.AbstractMoleculeSetTest;
 
 /**
  * Checks the functionality of the MoleculeSet class.
@@ -30,7 +30,7 @@ import org.openscience.cdk.interfaces.IMoleculeSetTest;
  *
  * @see org.openscience.cdk.MoleculeSet
  */
-public class MoleculeSetTest extends IMoleculeSetTest {
+public class MoleculeSetTest extends AbstractMoleculeSetTest {
 
     @BeforeClass public static void setUp() {
        	setChemObject(new MoleculeSet());

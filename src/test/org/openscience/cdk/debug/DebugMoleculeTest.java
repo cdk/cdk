@@ -31,14 +31,14 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeTest;
+import org.openscience.cdk.interfaces.AbstractMoleculeTest;
 
 /**
  * Checks the functionality of the {@link DebugMolecule}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugMoleculeTest extends IMoleculeTest {
+public class DebugMoleculeTest extends AbstractMoleculeTest {
 
     @BeforeClass public static void setUp() {
     	  setChemObject(new DebugMolecule());

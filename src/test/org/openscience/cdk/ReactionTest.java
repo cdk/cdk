@@ -31,14 +31,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionTest;
+import org.openscience.cdk.interfaces.AbstractReactionTest;
 
 /**
  * TestCase for the Reaction class.
  *
  * @cdk.module test-data
  */
-public class ReactionTest extends IReactionTest {
+public class ReactionTest extends AbstractReactionTest {
 
     @BeforeClass public static void setUp() {
        	setChemObject(new Reaction());

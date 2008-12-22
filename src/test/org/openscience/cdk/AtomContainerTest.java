@@ -25,7 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainerTest;
+import org.openscience.cdk.interfaces.AbstractAtomContainerTest;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
 
@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IMolecule;
  *
  * @cdk.module test-data
  */
-public class AtomContainerTest extends IAtomContainerTest {
+public class AtomContainerTest extends AbstractAtomContainerTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new AtomContainer());

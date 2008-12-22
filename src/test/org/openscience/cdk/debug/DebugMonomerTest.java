@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.IMonomerTest;
+import org.openscience.cdk.interfaces.AbstractMonomerTest;
 
 /**
  * Checks the functionality of the {@link DebugMonomer}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugMonomerTest extends IMonomerTest {
+public class DebugMonomerTest extends AbstractMonomerTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new DebugMonomer());

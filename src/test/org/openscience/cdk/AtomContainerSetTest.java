@@ -24,7 +24,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IAtomContainerSetTest;
+import org.openscience.cdk.interfaces.AbstractAtomContainerSetTest;
 
 /**
  * Checks the functionality of the MoleculeSet class.
@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSetTest;
  *
  * @see org.openscience.cdk.MoleculeSet
  */
-public class AtomContainerSetTest extends IAtomContainerSetTest {
+public class AtomContainerSetTest extends AbstractAtomContainerSetTest {
 
     @BeforeClass public static void setUp() {
        	setChemObject(new AtomContainerSet());

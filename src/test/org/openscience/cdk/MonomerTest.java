@@ -31,7 +31,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IMonomer;
-import org.openscience.cdk.interfaces.IMonomerTest;
+import org.openscience.cdk.interfaces.AbstractMonomerTest;
 
 /**
  * TestCase for the Monomer class.
@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IMonomerTest;
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09
  */
-public class MonomerTest extends IMonomerTest {
+public class MonomerTest extends AbstractMonomerTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new Monomer());

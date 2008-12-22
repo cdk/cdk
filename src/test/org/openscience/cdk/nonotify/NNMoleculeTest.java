@@ -31,14 +31,14 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeTest;
+import org.openscience.cdk.interfaces.AbstractMoleculeTest;
 
 /**
  * Checks the functionality of the {@link NNMolecule}.
  *
  * @cdk.module test-nonotify
  */
-public class NNMoleculeTest extends IMoleculeTest {
+public class NNMoleculeTest extends AbstractMoleculeTest {
 
     @BeforeClass public static void setUp() {
     	  setChemObject(new NNMolecule());

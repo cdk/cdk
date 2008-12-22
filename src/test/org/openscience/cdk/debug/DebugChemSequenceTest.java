@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IChemSequenceTest;
+import org.openscience.cdk.interfaces.AbstractChemSequenceTest;
 
 /**
  * Checks the functionality of the {@link DebugChemSequence}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugChemSequenceTest extends IChemSequenceTest {
+public class DebugChemSequenceTest extends AbstractChemSequenceTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new DebugChemSequence());

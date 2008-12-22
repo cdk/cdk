@@ -28,7 +28,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectTest;
+import org.openscience.cdk.interfaces.AbstractChemObjectTest;
 
 /**
  * TestCase for the IChemObject class.
@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IChemObjectTest;
  * @cdk.module  test-data
  * @cdk.created 2001-08-09
  */
-public class ChemObjectTest extends IChemObjectTest {
+public class ChemObjectTest extends AbstractChemObjectTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new ChemObject());

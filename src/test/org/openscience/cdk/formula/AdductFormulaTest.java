@@ -29,7 +29,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAdductFormula;
-import org.openscience.cdk.interfaces.IAdductFormulaTest;
+import org.openscience.cdk.interfaces.AbstractAdductFormulaTest;
 
 /**
  * Checks the functionality of the AdductFormula.
@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IAdductFormulaTest;
  * 
  * @see AdductFormula
  */
-public class AdductFormulaTest extends IAdductFormulaTest {
+public class AdductFormulaTest extends AbstractAdductFormulaTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());

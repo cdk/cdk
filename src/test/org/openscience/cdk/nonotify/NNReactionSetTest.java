@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.interfaces.IReactionSetTest;
+import org.openscience.cdk.interfaces.AbstractReactionSetTest;
 
 /**
  * Checks the functionality of the {@link NNReactionSet}.
  *
  * @cdk.module test-nonotify
  */
-public class NNReactionSetTest extends IReactionSetTest {
+public class NNReactionSetTest extends AbstractReactionSetTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNReactionSet());

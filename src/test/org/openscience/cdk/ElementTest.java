@@ -25,7 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IElementTest;
+import org.openscience.cdk.interfaces.AbstractElementTest;
 
 /**
  * Checks the functionality of the Element class.
@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IElementTest;
  *
  * @see org.openscience.cdk.Element
  */
-public class ElementTest extends IElementTest {
+public class ElementTest extends AbstractElementTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new Element());

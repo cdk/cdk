@@ -24,14 +24,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IReactionScheme;
-import org.openscience.cdk.interfaces.IReactionSchemeTest;
+import org.openscience.cdk.interfaces.AbstractReactionSchemeTest;
 
 /**
  * Checks the functionality of the {@link NNReactionScheme}.
  *
  * @cdk.module test-nonotify
  */
-public class NNReactionSchemeTest extends IReactionSchemeTest {
+public class NNReactionSchemeTest extends AbstractReactionSchemeTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNReactionScheme());

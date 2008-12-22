@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemFileTest;
+import org.openscience.cdk.interfaces.AbstractChemFileTest;
 
 /**
  * Checks the functionality of the {@link DebugChemFile}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugChemFileTest extends IChemFileTest {
+public class DebugChemFileTest extends AbstractChemFileTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new DebugChemFile());

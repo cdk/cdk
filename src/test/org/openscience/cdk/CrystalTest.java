@@ -31,14 +31,14 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.ICrystalTest;
+import org.openscience.cdk.interfaces.AbstractCrystalTest;
 
 /**
  * Checks the functionality of the Crystal.
  *
  * @cdk.module test-data
  */
-public class CrystalTest extends ICrystalTest {
+public class CrystalTest extends AbstractCrystalTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new Crystal());

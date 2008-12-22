@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAdductFormula;
-import org.openscience.cdk.interfaces.IAdductFormulaTest;
+import org.openscience.cdk.interfaces.AbstractAdductFormulaTest;
 
 /**
  * Checks the functionality of the {@link DebugAdductFormula}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugAdductFormulaTest extends IAdductFormulaTest {
+public class DebugAdductFormulaTest extends AbstractAdductFormulaTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

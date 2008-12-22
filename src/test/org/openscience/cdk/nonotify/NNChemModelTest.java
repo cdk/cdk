@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemModelTest;
+import org.openscience.cdk.interfaces.AbstractChemModelTest;
 
 /**
  * Checks the functionality of the {@link NNChemModel}.
  *
  * @cdk.module test-nonotify
  */
-public class NNChemModelTest extends IChemModelTest {
+public class NNChemModelTest extends AbstractChemModelTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNChemModel());

@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IPDBMonomer;
-import org.openscience.cdk.interfaces.IPDBMonomerTest;
+import org.openscience.cdk.interfaces.AbstractPDBMonomerTest;
 
 /**
  * Checks the functionality of the {@link NNPDBMonomer}.
  *
  * @cdk.module test-nonotify
  */
-public class NNPDBMonomerTest extends IPDBMonomerTest {
+public class NNPDBMonomerTest extends AbstractPDBMonomerTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNPDBMonomer());

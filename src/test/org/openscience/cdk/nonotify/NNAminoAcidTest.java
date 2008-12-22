@@ -25,14 +25,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAminoAcid;
-import org.openscience.cdk.interfaces.IAminoAcidTest;
+import org.openscience.cdk.interfaces.AbstractAminoAcidTest;
 
 /**
  * Checks the functionality of the {@link NNAminoAcid}.
  *
  * @cdk.module test-nonotify
  */
-public class NNAminoAcidTest extends IAminoAcidTest {
+public class NNAminoAcidTest extends AbstractAminoAcidTest {
 
     @BeforeClass public static void setUp() {
     	  setChemObject(new NNAminoAcid());

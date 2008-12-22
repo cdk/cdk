@@ -26,14 +26,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.IChemObjectTest;
+import org.openscience.cdk.interfaces.AbstractChemObjectTest;
 
 /**
  * Checks the functionality of the {@link NNChemObject}.
  *
  * @cdk.module test-nonotify
  */
-public class NNChemObjectTest extends IChemObjectTest {
+public class NNChemObjectTest extends AbstractChemObjectTest {
 
     @BeforeClass public static void setUp() {
     	setChemObject(new ChemObject());

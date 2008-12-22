@@ -33,14 +33,14 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IPseudoAtomTest;
+import org.openscience.cdk.interfaces.AbstractPseudoAtomTest;
 
 /**
  * Checks the functionality of the {@link NNPseudoAtom}.
  *
  * @cdk.module test-nonotify
  */
-public class NNPseudoAtomTest extends IPseudoAtomTest {
+public class NNPseudoAtomTest extends AbstractPseudoAtomTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNPseudoAtom());

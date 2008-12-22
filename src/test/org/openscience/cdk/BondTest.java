@@ -29,7 +29,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IBondTest;
+import org.openscience.cdk.interfaces.AbstractBondTest;
 
 /**
  * Checks the functionality of the Bond class.
@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IBondTest;
  * @cdk.module test-data
  * @see org.openscience.cdk.Bond
  */
-public class BondTest extends IBondTest {
+public class BondTest extends AbstractBondTest {
 
     @BeforeClass
     public static void setUp() {

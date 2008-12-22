@@ -25,7 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IIsotopeTest;
+import org.openscience.cdk.interfaces.AbstractIsotopeTest;
 
 /**
  * Checks the functionality of the Isotope class.
@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IIsotopeTest;
  *
  * @see org.openscience.cdk.Isotope
  */
-public class IsotopeTest extends IIsotopeTest {
+public class IsotopeTest extends AbstractIsotopeTest {
 
     @BeforeClass public static void setUp() {
     	setChemObject(new Isotope("C"));

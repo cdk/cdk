@@ -31,14 +31,14 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.interfaces.ICrystalTest;
+import org.openscience.cdk.interfaces.AbstractCrystalTest;
 
 /**
  * Checks the functionality of the {@link NNCrystal}.
  *
  * @cdk.module test-nonotify
  */
-public class NNCrystalTest extends ICrystalTest {
+public class NNCrystalTest extends AbstractCrystalTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNCrystal());

@@ -30,14 +30,14 @@ import org.junit.Test;
 import org.openscience.cdk.AtomParity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.interfaces.IAtomParityTest;
+import org.openscience.cdk.interfaces.AbstractAtomParityTest;
 
 /**
  * Checks the functionality of the {@link DebugAtomParity}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugAtomParityTest extends IAtomParityTest {
+public class DebugAtomParityTest extends AbstractAtomParityTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

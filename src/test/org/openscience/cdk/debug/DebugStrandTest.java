@@ -30,14 +30,14 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.interfaces.IStrandTest;
+import org.openscience.cdk.interfaces.AbstractStrandTest;
 
 /**
  * Checks the functionality of the {@link DebugStrand}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugStrandTest extends IStrandTest {
+public class DebugStrandTest extends AbstractStrandTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new DebugStrand());

@@ -28,7 +28,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAminoAcid;
-import org.openscience.cdk.interfaces.IAminoAcidTest;
+import org.openscience.cdk.interfaces.AbstractAminoAcidTest;
 
 /**
  * TestCase for the AminoAcid class.
@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IAminoAcidTest;
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09
  */
-public class AminoAcidTest extends IAminoAcidTest {
+public class AminoAcidTest extends AbstractAminoAcidTest {
 
     @BeforeClass public static void setUp() {
        	setChemObject(new AminoAcid());

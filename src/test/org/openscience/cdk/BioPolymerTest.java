@@ -29,7 +29,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBioPolymer;
-import org.openscience.cdk.interfaces.IBioPolymerTest;
+import org.openscience.cdk.interfaces.AbstractBioPolymerTest;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
 
@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IStrand;
  *
  * @see org.openscience.cdk.BioPolymer
  */
-public class BioPolymerTest extends IBioPolymerTest {
+public class BioPolymerTest extends AbstractBioPolymerTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new BioPolymer());

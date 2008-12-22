@@ -29,14 +29,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IElementTest;
+import org.openscience.cdk.interfaces.AbstractElementTest;
 
 /**
  * Checks the functionality of {@link NNElement}.
  *
  * @cdk.module test-nonotify
  */
-public class NNElementTest extends IElementTest {
+public class NNElementTest extends AbstractElementTest {
 
     @BeforeClass public static void setUp() {
     	setChemObject(new NNElement());

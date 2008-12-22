@@ -29,14 +29,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.interfaces.ISingleElectronTest;
+import org.openscience.cdk.interfaces.AbstractSingleElectronTest;
 
 /**
  * Checks the functionality of the {@link DebugSingleElectron}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugSingleElectronTest extends ISingleElectronTest {
+public class DebugSingleElectronTest extends AbstractSingleElectronTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new DebugSingleElectron());

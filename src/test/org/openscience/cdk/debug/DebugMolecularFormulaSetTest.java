@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.interfaces.IMolecularFormulaSetTest;
+import org.openscience.cdk.interfaces.AbstractMolecularFormulaSetTest;
 
 /**
  * Checks the functionality of the {@link DebugMolecularFormulaSet}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugMolecularFormulaSetTest extends IMolecularFormulaSetTest {
+public class DebugMolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());

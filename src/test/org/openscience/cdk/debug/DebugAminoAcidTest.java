@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAminoAcid;
-import org.openscience.cdk.interfaces.IAminoAcidTest;
+import org.openscience.cdk.interfaces.AbstractAminoAcidTest;
 
 /**
  * Checks the functionality of the {@link DebugAminoAcid}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugAminoAcidTest extends IAminoAcidTest {
+public class DebugAminoAcidTest extends AbstractAminoAcidTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new DebugAminoAcid());

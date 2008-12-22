@@ -24,14 +24,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IAtomContainerSetTest;
+import org.openscience.cdk.interfaces.AbstractAtomContainerSetTest;
 
 /**
  * Checks the functionality of the {@link NNAtomContainerSet}.
  *
  * @cdk.module test-nonotify
  */
-public class NNAtomContainerSetTest extends IAtomContainerSetTest {
+public class NNAtomContainerSetTest extends AbstractAtomContainerSetTest {
 
     @BeforeClass public static void setUp() {
     	  setChemObject(new NNAtomContainerSet());

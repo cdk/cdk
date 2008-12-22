@@ -32,7 +32,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPDBAtom;
-import org.openscience.cdk.interfaces.IPDBAtomTest;
+import org.openscience.cdk.interfaces.AbstractPDBAtomTest;
 import org.openscience.cdk.protein.data.PDBAtom;
 
 /**
@@ -40,7 +40,7 @@ import org.openscience.cdk.protein.data.PDBAtom;
  *
  * @cdk.module test-nonotify
  */
-public class NNPDBAtomTest extends IPDBAtomTest {
+public class NNPDBAtomTest extends AbstractPDBAtomTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new PDBAtom("C"));

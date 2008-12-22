@@ -29,7 +29,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IElectronContainerTest;
+import org.openscience.cdk.interfaces.AbstractElectronContainerTest;
 
 /**
  * Checks the functionality of the {@link ElectronContainer} class.
@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IElectronContainerTest;
  *
  * @see org.openscience.cdk.ElectronContainer
  */
-public class ElectronContainerTest extends IElectronContainerTest {
+public class ElectronContainerTest extends AbstractElectronContainerTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new ElectronContainer());

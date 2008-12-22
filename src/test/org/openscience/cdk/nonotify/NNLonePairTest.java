@@ -29,14 +29,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.ILonePairTest;
+import org.openscience.cdk.interfaces.AbstractLonePairTest;
 
 /**
  * Checks the functionality of the {@link NNLonePair}.
  *
  * @cdk.module test-nonotify
  */
-public class NNLonePairTest extends ILonePairTest {
+public class NNLonePairTest extends AbstractLonePairTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNLonePair());

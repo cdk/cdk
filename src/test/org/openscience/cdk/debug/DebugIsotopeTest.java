@@ -29,14 +29,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IIsotopeTest;
+import org.openscience.cdk.interfaces.AbstractIsotopeTest;
 
 /**
  * Checks the functionality of the AtomContainer.
  *
  * @cdk.module test-datadebug
  */
-public class DebugIsotopeTest extends IIsotopeTest {
+public class DebugIsotopeTest extends AbstractIsotopeTest {
 
     @BeforeClass public static void setUp() {
     	setChemObject(new DebugIsotope("C"));

@@ -29,7 +29,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.interfaces.IMolecularFormulaSetTest;
+import org.openscience.cdk.interfaces.AbstractMolecularFormulaSetTest;
 
 /**
  * Checks the functionality of the MolecularFormulaSet class.
@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSetTest;
  *
  * @see MolecularFormulaSet
  */
-public class MolecularFormulaSetTest extends IMolecularFormulaSetTest {
+public class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());

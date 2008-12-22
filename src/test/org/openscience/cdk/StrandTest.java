@@ -33,7 +33,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
-import org.openscience.cdk.interfaces.IStrandTest;
+import org.openscience.cdk.interfaces.AbstractStrandTest;
 
 /**
  * TODO To change the template for this generated type comment go to
@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IStrandTest;
  * @author     Martin Eklund <martin.eklund@farmbio.uu.se>
  * @cdk.module test-data
  */
-public class StrandTest extends IStrandTest {
+public class StrandTest extends AbstractStrandTest {
 	
     @BeforeClass public static void setUp() {
        	setChemObject(new Strand());

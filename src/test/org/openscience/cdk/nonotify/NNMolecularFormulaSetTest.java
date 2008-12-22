@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.interfaces.IMolecularFormulaSetTest;
+import org.openscience.cdk.interfaces.AbstractMolecularFormulaSetTest;
 
 /**
  * Checks the functionality of the {@link NNMolecularFormulaSet}.
  *
  * @cdk.module test-nonotify
  */
-public class NNMolecularFormulaSetTest extends IMolecularFormulaSetTest {
+public class NNMolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
 
     @BeforeClass public static void setUp() {
         setBuilder(NoNotificationChemObjectBuilder.getInstance());

@@ -29,7 +29,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.interfaces.ISingleElectronTest;
+import org.openscience.cdk.interfaces.AbstractSingleElectronTest;
 
 /**
  * Checks the functionality of the SingleElectron class.
@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.ISingleElectronTest;
  *
  * @cdk.module test-data
  */
-public class SingleElectronTest extends ISingleElectronTest {
+public class SingleElectronTest extends AbstractSingleElectronTest {
 
     @BeforeClass public static void setUp() {
        	setChemObject(new SingleElectron());

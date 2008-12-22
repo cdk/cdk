@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IMapping;
-import org.openscience.cdk.interfaces.IMappingTest;
+import org.openscience.cdk.interfaces.AbstractMappingTest;
 
 /**
  * Checks the functionality of the {@link DebugMapping}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugMappingTest extends IMappingTest {
+public class DebugMappingTest extends AbstractMappingTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new DebugMapping(new DebugAtom(), new DebugAtom()));

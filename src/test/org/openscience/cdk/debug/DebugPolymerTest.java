@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IPolymer;
-import org.openscience.cdk.interfaces.IPolymerTest;
+import org.openscience.cdk.interfaces.AbstractPolymerTest;
 
 /**
  * Checks the functionality of the {@link DebugPolymer}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugPolymerTest extends IPolymerTest {
+public class DebugPolymerTest extends AbstractPolymerTest {
 
     @BeforeClass public static void setUp() {
     	  setChemObject(new DebugPolymer());

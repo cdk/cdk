@@ -29,7 +29,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.ILonePairTest;
+import org.openscience.cdk.interfaces.AbstractLonePairTest;
 
 /**
  * Checks the functionality of the LonePair class.
@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.ILonePairTest;
  *
  * @cdk.module test-data
  */
-public class LonePairTest extends ILonePairTest {
+public class LonePairTest extends AbstractLonePairTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new LonePair());

@@ -25,14 +25,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.IElementTest;
+import org.openscience.cdk.interfaces.AbstractElementTest;
 
 /**
  * Checks the functionality of {@link DebugElement}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugElementTest extends IElementTest {
+public class DebugElementTest extends AbstractElementTest {
 
     @BeforeClass public static void setUp() {
     	setChemObject(new DebugElement());

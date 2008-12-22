@@ -29,14 +29,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
-import org.openscience.cdk.interfaces.ISingleElectronTest;
+import org.openscience.cdk.interfaces.AbstractSingleElectronTest;
 
 /**
  * Checks the functionality of the {@link NNSingleElectron}.
  *
  * @cdk.module test-nonotify
  */
-public class NNSingleElectronTest extends ISingleElectronTest {
+public class NNSingleElectronTest extends AbstractSingleElectronTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNSingleElectron());

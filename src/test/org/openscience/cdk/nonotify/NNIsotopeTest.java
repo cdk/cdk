@@ -29,14 +29,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IIsotopeTest;
+import org.openscience.cdk.interfaces.AbstractIsotopeTest;
 
 /**
  * Checks the functionality of the {@link NNIsotope}.
  *
  * @cdk.module test-nonotify
  */
-public class NNIsotopeTest extends IIsotopeTest {
+public class NNIsotopeTest extends AbstractIsotopeTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNIsotope("C"));

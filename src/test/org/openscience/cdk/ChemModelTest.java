@@ -29,7 +29,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemModelTest;
+import org.openscience.cdk.interfaces.AbstractChemModelTest;
 
 /**
  * Checks the functionality of the ChemModel class.
@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IChemModelTest;
  *
  * @see org.openscience.cdk.ChemModel
  */
-public class ChemModelTest extends IChemModelTest {
+public class ChemModelTest extends AbstractChemModelTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new ChemModel());

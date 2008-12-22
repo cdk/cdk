@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IElectronContainer;
-import org.openscience.cdk.interfaces.IElectronContainerTest;
+import org.openscience.cdk.interfaces.AbstractElectronContainerTest;
 
 /**
  * Checks the functionality of the {@link NNElectronContainer}.
  *
  * @cdk.module test-nonotify
  */
-public class NNElectronContainerTest extends IElectronContainerTest {
+public class NNElectronContainerTest extends AbstractElectronContainerTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNElectronContainer());

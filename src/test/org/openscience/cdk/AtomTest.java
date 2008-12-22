@@ -31,7 +31,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomTest;
+import org.openscience.cdk.interfaces.AbstractAtomTest;
 import org.openscience.cdk.interfaces.IElement;
 
 /**
@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IElement;
  *
  * @cdk.module test-data
  */
-public class AtomTest extends IAtomTest {
+public class AtomTest extends AbstractAtomTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new Atom());

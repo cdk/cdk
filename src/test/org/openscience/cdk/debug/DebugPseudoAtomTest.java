@@ -32,14 +32,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IPseudoAtomTest;
+import org.openscience.cdk.interfaces.AbstractPseudoAtomTest;
 
 /**
  * Checks the functionality of the {@link DebugPseudoAtom}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugPseudoAtomTest extends IPseudoAtomTest {
+public class DebugPseudoAtomTest extends AbstractPseudoAtomTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new DebugPseudoAtom());

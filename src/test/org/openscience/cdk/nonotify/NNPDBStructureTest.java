@@ -28,14 +28,14 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IPDBStructure;
-import org.openscience.cdk.interfaces.IPDBStructureTest;
+import org.openscience.cdk.interfaces.AbstractPDBStructureTest;
 
 /**
  * Checks the functionality of the {@link NNPDBStructure}.
  *
  * @cdk.module test-nonotify
  */
-public class NNPDBStructureTest extends IPDBStructureTest {
+public class NNPDBStructureTest extends AbstractPDBStructureTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new NNPDBStructure());

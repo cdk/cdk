@@ -29,14 +29,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.ILonePair;
-import org.openscience.cdk.interfaces.ILonePairTest;
+import org.openscience.cdk.interfaces.AbstractLonePairTest;
 
 /**
  * Checks the functionality of the {@link DebugLonePair}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugLonePairTest extends ILonePairTest {
+public class DebugLonePairTest extends AbstractLonePairTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new DebugLonePair());

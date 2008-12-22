@@ -32,7 +32,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBPolymer;
-import org.openscience.cdk.interfaces.IPDBPolymerTest;
+import org.openscience.cdk.interfaces.AbstractPDBPolymerTest;
 import org.openscience.cdk.interfaces.IStrand;
 
 /**
@@ -42,7 +42,7 @@ import org.openscience.cdk.interfaces.IStrand;
  *
  * @see PDBPolymer
  */
-public class PDBPolymerTest extends IPDBPolymerTest {
+public class PDBPolymerTest extends AbstractPDBPolymerTest {
 	
     @BeforeClass public static void setUp() {
         setChemObject(new PDBPolymer());

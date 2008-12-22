@@ -28,7 +28,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IReactionScheme;
-import org.openscience.cdk.interfaces.IReactionSchemeTest;
+import org.openscience.cdk.interfaces.AbstractReactionSchemeTest;
 
 
 /**
@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IReactionSchemeTest;
  *
  * @cdk.module test-datadebug
  */
-public class DebugReactionSchemeTest extends IReactionSchemeTest {
+public class DebugReactionSchemeTest extends AbstractReactionSchemeTest {
 
     @BeforeClass public static void setUp() {
         setChemObject(new DebugReactionScheme());
