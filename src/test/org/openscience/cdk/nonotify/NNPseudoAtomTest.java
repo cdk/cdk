@@ -55,7 +55,7 @@ public class NNPseudoAtomTest extends AbstractPseudoAtomTest {
     }
     
     @Test public void testNNPseudoAtom_IElement() {
-    	IElement element = getBuilder().newElement();
+    	IElement element = newChemObject().getBuilder().newElement();
         IPseudoAtom a = new NNPseudoAtom(element);
         Assert.assertEquals("R", a.getSymbol());
         Assert.assertNull(a.getPoint3d());
@@ -64,7 +64,7 @@ public class NNPseudoAtomTest extends AbstractPseudoAtomTest {
     }
     
     @Test public void testNNPseudoAtom_IAtom() {
-    	IAtom element = getBuilder().newAtom("C");
+    	IAtom element = newChemObject().getBuilder().newAtom("C");
         IPseudoAtom a = new NNPseudoAtom(element);
         Assert.assertEquals("R", a.getSymbol());
         Assert.assertNull(a.getPoint3d());

@@ -48,17 +48,17 @@ public class NNStrandTest extends AbstractStrandTest {
 		Assert.assertNotNull(oStrand);
 		Assert.assertEquals(oStrand.getMonomerCount(), 0);
 
-		IMonomer oMono1 = getBuilder().newMonomer();
+		IMonomer oMono1 = oStrand.getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = getBuilder().newMonomer();
+		IMonomer oMono2 = oStrand.getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IMonomer oMono3 = getBuilder().newMonomer();
+		IMonomer oMono3 = oStrand.getBuilder().newMonomer();
 		oMono3.setMonomerName(new String("GLYA16"));
-		IAtom oAtom1 = getBuilder().newAtom("C1");
-		IAtom oAtom2 = getBuilder().newAtom("C2");
-		IAtom oAtom3 = getBuilder().newAtom("C3");
-		IAtom oAtom4 = getBuilder().newAtom("C4");
-		IAtom oAtom5 = getBuilder().newAtom("C5");
+		IAtom oAtom1 = oStrand.getBuilder().newAtom("C1");
+		IAtom oAtom2 = oStrand.getBuilder().newAtom("C2");
+		IAtom oAtom3 = oStrand.getBuilder().newAtom("C3");
+		IAtom oAtom4 = oStrand.getBuilder().newAtom("C4");
+		IAtom oAtom5 = oStrand.getBuilder().newAtom("C5");
 		
 		oStrand.addAtom(oAtom1);
 		oStrand.addAtom(oAtom2);

@@ -49,7 +49,7 @@ public class NNAtomTypeTest extends AbstractAtomTypeTest {
 
     @Test public void testNNAtomType_IElement() {
     	IElement element = new NNElement("C");
-        IAtomType at = getBuilder().newAtomType(element);
+        IAtomType at = element.getBuilder().newAtomType(element);
         Assert.assertEquals("C", at.getSymbol());
     }
 

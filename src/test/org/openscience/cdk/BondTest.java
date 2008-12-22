@@ -27,9 +27,10 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractBondTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.AbstractBondTest;
+import org.openscience.cdk.interfaces.IChemObject;
 
 /**
  * Checks the functionality of the Bond class.
@@ -56,11 +57,12 @@ public class BondTest extends AbstractBondTest {
 
     @Test
     public void testBond_arrayIAtom() {
-        IAtom atom1 = getBuilder().newAtom("C");
-        IAtom atom2 = getBuilder().newAtom("O");
-        IAtom atom3 = getBuilder().newAtom("C");
-        IAtom atom4 = getBuilder().newAtom("C");
-        IAtom atom5 = getBuilder().newAtom("C");
+        IChemObject object = newChemObject();
+        IAtom atom1 = object.getBuilder().newAtom("C");
+        IAtom atom2 = object.getBuilder().newAtom("O");
+        IAtom atom3 = object.getBuilder().newAtom("C");
+        IAtom atom4 = object.getBuilder().newAtom("C");
+        IAtom atom5 = object.getBuilder().newAtom("C");
 
         IBond bond1 = new Bond(new IAtom[]{atom1, atom2, atom3, atom4, atom5});
         Assert.assertEquals(5, bond1.getAtomCount());
@@ -70,11 +72,12 @@ public class BondTest extends AbstractBondTest {
 
     @Test
     public void testBond_arrayIAtom_IBond_Order() {
-        IAtom atom1 = getBuilder().newAtom("C");
-        IAtom atom2 = getBuilder().newAtom("O");
-        IAtom atom3 = getBuilder().newAtom("C");
-        IAtom atom4 = getBuilder().newAtom("C");
-        IAtom atom5 = getBuilder().newAtom("C");
+        IChemObject object = newChemObject();
+        IAtom atom1 = object.getBuilder().newAtom("C");
+        IAtom atom2 = object.getBuilder().newAtom("O");
+        IAtom atom3 = object.getBuilder().newAtom("C");
+        IAtom atom4 = object.getBuilder().newAtom("C");
+        IAtom atom5 = object.getBuilder().newAtom("C");
 
         IBond bond1 = new Bond(new IAtom[]{atom1, atom2, atom3, atom4, atom5}, IBond.Order.SINGLE);
         Assert.assertEquals(5, bond1.getAtomCount());
@@ -85,8 +88,9 @@ public class BondTest extends AbstractBondTest {
 
     @Test
     public void testBond_IAtom_IAtom() {
-        IAtom c = getBuilder().newAtom("C");
-        IAtom o = getBuilder().newAtom("O");
+        IChemObject object = newChemObject();
+        IAtom c = object.getBuilder().newAtom("C");
+        IAtom o = object.getBuilder().newAtom("O");
         IBond bond = new Bond(c, o);
 
         Assert.assertEquals(2, bond.getAtomCount());
@@ -98,8 +102,9 @@ public class BondTest extends AbstractBondTest {
 
     @Test
     public void testBond_IAtom_IAtom_IBond_Order() {
-        IAtom c = getBuilder().newAtom("C");
-        IAtom o = getBuilder().newAtom("O");
+        IChemObject object = newChemObject();
+        IAtom c = object.getBuilder().newAtom("C");
+        IAtom o = object.getBuilder().newAtom("O");
         IBond bond = new Bond(c, o, IBond.Order.DOUBLE);
 
         Assert.assertEquals(2, bond.getAtomCount());
@@ -111,8 +116,9 @@ public class BondTest extends AbstractBondTest {
 
     @Test
     public void testBond_IAtom_IAtom_IBond_Order_int() {
-        IAtom c = getBuilder().newAtom("C");
-        IAtom o = getBuilder().newAtom("O");
+        IChemObject object = newChemObject();
+        IAtom c = object.getBuilder().newAtom("C");
+        IAtom o = object.getBuilder().newAtom("O");
         IBond bond = new Bond(c, o, IBond.Order.SINGLE, CDKConstants.STEREO_BOND_UP);
 
         Assert.assertEquals(2, bond.getAtomCount());
@@ -124,8 +130,9 @@ public class BondTest extends AbstractBondTest {
 
     @Test
     public void testCompare_Object() {
-        IAtom c = getBuilder().newAtom("C");
-        IAtom o = getBuilder().newAtom("O");
+        IChemObject object = newChemObject();
+        IAtom c = object.getBuilder().newAtom("C");
+        IAtom o = object.getBuilder().newAtom("O");
 
         IBond b = new Bond(c, o, IBond.Order.DOUBLE); // C=O bond
         IBond b2 = new Bond(c, o, IBond.Order.DOUBLE); // same C=O bond

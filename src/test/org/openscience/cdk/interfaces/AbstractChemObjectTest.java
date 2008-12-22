@@ -41,10 +41,6 @@ import org.openscience.cdk.tools.diff.ChemObjectDiff;
  */
 public abstract class AbstractChemObjectTest extends CDKTestCase {
 
-    public static IChemObjectBuilder getBuilder() {
-		return object.getBuilder();
-	}
-
 	private static IChemObject object;
 
 	/**

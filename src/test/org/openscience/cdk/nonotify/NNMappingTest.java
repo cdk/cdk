@@ -42,7 +42,7 @@ public class NNMappingTest extends AbstractMappingTest {
     }
 
     @Test public void testNNMapping_IChemObject_IChemObject() {
-        IMapping mapping =  new NNMapping(getBuilder().newAtom(), getBuilder().newAtom());
+        IMapping mapping =  new NNMapping(newChemObject().getBuilder().newAtom(), newChemObject().getBuilder().newAtom());
         Assert.assertNotNull(mapping);
     }
 

@@ -62,9 +62,9 @@ public class DebugRingTest extends AbstractRingTest {
     }
 
     @Test public void testDebugRing_IAtomContainer() {
-        IAtomContainer container = getBuilder().newAtomContainer();
-        container.addAtom(getBuilder().newAtom("C"));
-        container.addAtom(getBuilder().newAtom("C"));
+        IAtomContainer container = newChemObject().getBuilder().newAtomContainer();
+        container.addAtom(container.getBuilder().newAtom("C"));
+        container.addAtom(container.getBuilder().newAtom("C"));
         
         IRing ring = new DebugRing(container);
         Assert.assertNotNull(ring);

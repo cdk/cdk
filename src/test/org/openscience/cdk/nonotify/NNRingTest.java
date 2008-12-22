@@ -62,9 +62,9 @@ public class NNRingTest extends AbstractRingTest {
     }
 
     @Test public void testNNRing_IAtomContainer() {
-        IAtomContainer container = getBuilder().newAtomContainer();
-        container.addAtom(getBuilder().newAtom("C"));
-        container.addAtom(getBuilder().newAtom("C"));
+        IAtomContainer container = newChemObject().getBuilder().newAtomContainer();
+        container.addAtom(container.getBuilder().newAtom("C"));
+        container.addAtom(container.getBuilder().newAtom("C"));
         
         IRing ring = new NNRing(container);
         Assert.assertNotNull(ring);

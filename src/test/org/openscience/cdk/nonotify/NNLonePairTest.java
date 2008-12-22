@@ -49,7 +49,7 @@ public class NNLonePairTest extends AbstractLonePairTest {
     }
     
     @Test public void testNNLonePair_IAtom() {
-        IAtom atom = getBuilder().newAtom("N");
+        IAtom atom = newChemObject().getBuilder().newAtom("N");
         ILonePair lp = new NNLonePair(atom);
         Assert.assertEquals(2, lp.getElectronCount().intValue());
         Assert.assertEquals(atom, lp.getAtom());

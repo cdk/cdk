@@ -54,7 +54,7 @@ public class PseudoAtomTest extends AbstractPseudoAtomTest {
     }
     
     @Test public void testPseudoAtom_IElement() {
-    	IElement element = getBuilder().newElement();
+    	IElement element = newChemObject().getBuilder().newElement();
         IPseudoAtom a = new PseudoAtom(element);
         Assert.assertEquals("R", a.getSymbol());
         Assert.assertNull(a.getPoint3d());

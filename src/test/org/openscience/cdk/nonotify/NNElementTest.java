@@ -49,7 +49,7 @@ public class NNElementTest extends AbstractElementTest {
     
     @Test public void testNNElement_IElement() {
     	IElement element = new NNElement();
-        IElement e = getBuilder().newElement(element);
+        IElement e = element.getBuilder().newElement(element);
         Assert.assertTrue(e instanceof IChemObject);
     }
     

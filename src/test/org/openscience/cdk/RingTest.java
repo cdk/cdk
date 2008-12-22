@@ -65,8 +65,8 @@ public class RingTest extends AbstractRingTest {
 
     @Test public void testRing_IAtomContainer() {
         IAtomContainer container = new org.openscience.cdk.AtomContainer();
-        container.addAtom(getBuilder().newAtom("C"));
-        container.addAtom(getBuilder().newAtom("C"));
+        container.addAtom(container.getBuilder().newAtom("C"));
+        container.addAtom(container.getBuilder().newAtom("C"));
         
         IRing ring = new Ring(container);
         Assert.assertNotNull(ring);

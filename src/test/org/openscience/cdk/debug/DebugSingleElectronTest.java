@@ -49,7 +49,7 @@ public class DebugSingleElectronTest extends AbstractSingleElectronTest {
     }
     
     @Test public void testDebugSingleElectron_IAtom() {
-        IAtom atom = getBuilder().newAtom("N");
+        IAtom atom = newChemObject().getBuilder().newAtom("N");
         ISingleElectron radical = new DebugSingleElectron(atom);
         Assert.assertEquals(1, radical.getElectronCount().intValue());
         Assert.assertEquals(atom, radical.getAtom());
