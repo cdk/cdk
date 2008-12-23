@@ -27,8 +27,10 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.AbstractReactionSetTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link NNReactionSet}.
@@ -38,7 +40,11 @@ import org.openscience.cdk.interfaces.AbstractReactionSetTest;
 public class NNReactionSetTest extends AbstractReactionSetTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new NNReactionSet());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNReactionSet();
+            }
+        });
     }
 
     @Test public void testNNReactionSet() {

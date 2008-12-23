@@ -27,9 +27,11 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.AbstractSingleElectronTest;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ISingleElectron;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugSingleElectron}.
@@ -39,7 +41,11 @@ import org.openscience.cdk.interfaces.AbstractSingleElectronTest;
 public class DebugSingleElectronTest extends AbstractSingleElectronTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new DebugSingleElectron());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugSingleElectron();
+            }
+        });
     }
 
     @Test public void testDebugSingleElectron() {

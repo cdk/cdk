@@ -23,8 +23,10 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.AbstractAtomContainerSetTest;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link NNAtomContainerSet}.
@@ -34,7 +36,11 @@ import org.openscience.cdk.interfaces.AbstractAtomContainerSetTest;
 public class NNAtomContainerSetTest extends AbstractAtomContainerSetTest {
 
     @BeforeClass public static void setUp() {
-    	  setChemObject(new NNAtomContainerSet());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNAtomContainerSet();
+            }
+        });
     }
 
     @Test public void testNNAtomContainerSet() {

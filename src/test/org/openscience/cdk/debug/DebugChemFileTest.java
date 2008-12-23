@@ -27,8 +27,10 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.AbstractChemFileTest;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugChemFile}.
@@ -38,7 +40,11 @@ import org.openscience.cdk.interfaces.AbstractChemFileTest;
 public class DebugChemFileTest extends AbstractChemFileTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new DebugChemFile());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugChemFile();
+            }
+        });
     }
 
     @Test public void testDebugChemFile() {

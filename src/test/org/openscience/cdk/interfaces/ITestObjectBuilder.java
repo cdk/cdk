@@ -1,6 +1,6 @@
-/* $Revision$ $Author$ $Date$    
+/* $Revision$ $Author$ $Date$
  * 
- * Copyright (C) 1997-2008  The Chemistry Development Kit (CDK) project
+ * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -8,6 +8,10 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -18,28 +22,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.openscience.cdk;
-
-import org.junit.BeforeClass;
-import org.openscience.cdk.interfaces.AbstractMoleculeSetTest;
-import org.openscience.cdk.interfaces.IChemObject;
-import org.openscience.cdk.interfaces.ITestObjectBuilder;
+package org.openscience.cdk.interfaces;
 
 /**
- * Checks the functionality of the MoleculeSet class.
+ * Interfaces for objects that create new, clean test objects to be used by
+ * unit testing for the module <code>data</code>, <code>datadebug</code> and
+ * <code>nonotify</code>.
  *
- * @cdk.module test-data
- *
- * @see org.openscience.cdk.MoleculeSet
+ * @cdk.module  test-interfaces
  */
-public class MoleculeSetTest extends AbstractMoleculeSetTest {
-
-    @BeforeClass public static void setUp() {
-        setTestObjectBuilder(new ITestObjectBuilder() {
-            public IChemObject newTestObject() {
-                return new MoleculeSet();
-            }
-        });
-    }
+public interface ITestObjectBuilder {
+    
+    /**
+     * Returns a clean new test object.
+     * @return a new test object
+     */
+    public IChemObject newTestObject();
 
 }

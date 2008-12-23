@@ -30,10 +30,11 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.AbstractAtomTest;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugAtom}.
@@ -43,7 +44,11 @@ import org.openscience.cdk.interfaces.IElement;
 public class DebugAtomTest extends AbstractAtomTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new DebugAtom());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugAtom();
+            }
+        });
     }
 
     @Test public void testDebugAtom() {

@@ -30,6 +30,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.AbstractChemFileTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link ChemFile} class.
@@ -39,7 +41,11 @@ import org.openscience.cdk.interfaces.AbstractChemFileTest;
 public class ChemFileTest extends AbstractChemFileTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new ChemFile());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new ChemFile();
+            }
+        });
     }
 
     @Test public void testChemFile() {

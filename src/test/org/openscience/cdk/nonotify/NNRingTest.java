@@ -28,8 +28,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.AbstractRingTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link NNRing}.
@@ -39,7 +41,11 @@ import org.openscience.cdk.interfaces.AbstractRingTest;
 public class NNRingTest extends AbstractRingTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new NNRing());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNRing();
+            }
+        });
     }
 
     @Test public void testNNRing_int_String() {

@@ -27,8 +27,10 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IPDBMonomer;
 import org.openscience.cdk.interfaces.AbstractPDBMonomerTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link NNPDBMonomer}.
@@ -38,7 +40,11 @@ import org.openscience.cdk.interfaces.AbstractPDBMonomerTest;
 public class NNPDBMonomerTest extends AbstractPDBMonomerTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new NNPDBMonomer());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNPDBMonomer();
+            }
+        });
     }
 
 	@Test public void testNNPDBMonomer() {

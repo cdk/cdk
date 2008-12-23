@@ -24,8 +24,9 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.AbstractChemObjectTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugChemObject}.
@@ -35,7 +36,11 @@ import org.openscience.cdk.interfaces.AbstractChemObjectTest;
 public class DebugChemObjectTest extends AbstractChemObjectTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new DebugChemObject());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugChemObject();
+            }
+        });
     }
 
     @Test public void testDebugChemObject() {

@@ -33,6 +33,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the Crystal.
@@ -42,7 +43,11 @@ import org.openscience.cdk.interfaces.ICrystal;
 public class CrystalTest extends AbstractCrystalTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new Crystal());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new Crystal();
+            }
+        });
     }
 
     @Test public void testCrystal() {

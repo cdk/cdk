@@ -30,8 +30,10 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.AbstractMoleculeTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link NNMolecule}.
@@ -41,7 +43,11 @@ import org.openscience.cdk.interfaces.AbstractMoleculeTest;
 public class NNMoleculeTest extends AbstractMoleculeTest {
 
     @BeforeClass public static void setUp() {
-    	  setChemObject(new NNMolecule());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNMolecule();
+            }
+        });
     }
 
     @Test public void testNNMolecule() {

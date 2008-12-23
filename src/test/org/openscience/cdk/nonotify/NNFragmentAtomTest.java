@@ -27,8 +27,10 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IFragmentAtom;
 import org.openscience.cdk.interfaces.AbstractFragmentAtomTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link NNFragmentAtom}.
@@ -38,7 +40,11 @@ import org.openscience.cdk.interfaces.AbstractFragmentAtomTest;
 public class NNFragmentAtomTest extends AbstractFragmentAtomTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new NNFragmentAtom());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNFragmentAtom();
+            }
+        });
     }
 
     @Test public void testNNFragmentAtom() {

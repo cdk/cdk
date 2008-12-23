@@ -28,8 +28,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.AbstractRingTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the Ring class.
@@ -41,7 +43,13 @@ import org.openscience.cdk.interfaces.AbstractRingTest;
 public class RingTest extends AbstractRingTest {
 
     @BeforeClass public static void setUp() {
-       	setChemObject(new Ring());
+        setTestObjectBuilder(
+            new ITestObjectBuilder() {
+                public IChemObject newTestObject() {
+                    return new Ring();
+                }
+            }
+        );
     }
 
     @Test public void testRing_int_String() {

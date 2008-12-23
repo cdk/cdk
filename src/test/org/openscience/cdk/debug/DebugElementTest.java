@@ -23,9 +23,10 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractElementTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
-import org.openscience.cdk.interfaces.AbstractElementTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of {@link DebugElement}.
@@ -35,7 +36,11 @@ import org.openscience.cdk.interfaces.AbstractElementTest;
 public class DebugElementTest extends AbstractElementTest {
 
     @BeforeClass public static void setUp() {
-    	setChemObject(new DebugElement());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugElement();
+            }
+        });
     }
 
     @Test public void testDebugElement() {

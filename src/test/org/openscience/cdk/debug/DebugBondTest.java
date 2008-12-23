@@ -28,10 +28,11 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.AbstractBondTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.AbstractBondTest;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugBond}.
@@ -41,7 +42,11 @@ import org.openscience.cdk.interfaces.IChemObject;
 public class DebugBondTest extends AbstractBondTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new DebugBond());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugBond();
+            }
+        });
     }
 
     @Test

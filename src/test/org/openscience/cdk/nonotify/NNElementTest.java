@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.AbstractElementTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of {@link NNElement}.
@@ -39,7 +40,11 @@ import org.openscience.cdk.interfaces.AbstractElementTest;
 public class NNElementTest extends AbstractElementTest {
 
     @BeforeClass public static void setUp() {
-    	setChemObject(new NNElement());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNElement();
+            }
+        });
     }
 
     @Test public void testNNElement() {

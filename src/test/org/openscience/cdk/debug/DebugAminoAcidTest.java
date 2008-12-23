@@ -27,8 +27,10 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.AbstractAminoAcidTest;
+import org.openscience.cdk.interfaces.IAminoAcid;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugAminoAcid}.
@@ -38,7 +40,11 @@ import org.openscience.cdk.interfaces.AbstractAminoAcidTest;
 public class DebugAminoAcidTest extends AbstractAminoAcidTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new DebugAminoAcid());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugAminoAcid();
+            }
+        });
     }
 
     @Test public void testDebugAminoAcid() {

@@ -30,8 +30,10 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.AbstractMonomerTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * TestCase for the Monomer class.
@@ -44,7 +46,11 @@ import org.openscience.cdk.interfaces.AbstractMonomerTest;
 public class MonomerTest extends AbstractMonomerTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new Monomer());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new Monomer();
+            }
+        });
     }
 
 	@Test public void testMonomer() {

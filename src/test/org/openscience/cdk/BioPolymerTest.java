@@ -30,8 +30,10 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.AbstractBioPolymerTest;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the BioPolymer class.
@@ -43,7 +45,11 @@ import org.openscience.cdk.interfaces.IStrand;
 public class BioPolymerTest extends AbstractBioPolymerTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new BioPolymer());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new BioPolymer();
+            }
+        });
     }
 
 	@Test public void testBioPolymer() {

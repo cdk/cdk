@@ -32,7 +32,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.AbstractAtomTest;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link NNAtom}.
@@ -42,7 +44,11 @@ import org.openscience.cdk.interfaces.IElement;
 public class NNAtomTest extends AbstractAtomTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new NNAtom());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNAtom();
+            }
+        });
     }
 
     @Test public void testNNAtom() {

@@ -27,11 +27,13 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractMoleculeTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.AbstractMoleculeTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugMolecule}.
@@ -41,7 +43,11 @@ import org.openscience.cdk.interfaces.AbstractMoleculeTest;
 public class DebugMoleculeTest extends AbstractMoleculeTest {
 
     @BeforeClass public static void setUp() {
-    	  setChemObject(new DebugMolecule());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugMolecule();
+            }
+        });
     }
 
     @Test public void testDebugMolecule() {

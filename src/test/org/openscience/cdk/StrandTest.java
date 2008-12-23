@@ -31,9 +31,11 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.interfaces.AbstractStrandTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * TODO To change the template for this generated type comment go to
@@ -45,7 +47,13 @@ import org.openscience.cdk.interfaces.AbstractStrandTest;
 public class StrandTest extends AbstractStrandTest {
 	
     @BeforeClass public static void setUp() {
-       	setChemObject(new Strand());
+        setTestObjectBuilder(
+            new ITestObjectBuilder() {
+                public IChemObject newTestObject() {
+                    return new Strand();
+                }
+            }
+        );
     }
 
 	@Test public void testStrand() {

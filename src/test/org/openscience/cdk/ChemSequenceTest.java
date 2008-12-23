@@ -27,8 +27,10 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.AbstractChemSequenceTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link ChemSequence} class.
@@ -38,7 +40,11 @@ import org.openscience.cdk.interfaces.AbstractChemSequenceTest;
 public class ChemSequenceTest extends AbstractChemSequenceTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new ChemSequence());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new ChemSequence();
+            }
+        });
     }
 
     @Test public void testChemSequence() {

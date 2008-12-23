@@ -28,8 +28,10 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.AbstractReactionSchemeTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the MolecularFormulaSet class.
@@ -41,7 +43,11 @@ import org.openscience.cdk.interfaces.AbstractReactionSchemeTest;
 public class ReactionSchemeTest extends AbstractReactionSchemeTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new ReactionScheme());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new ReactionScheme();
+            }
+        });
     }
 
     /**

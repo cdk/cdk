@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.AbstractMappingTest;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMapping;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the Mapping class.
@@ -41,7 +42,11 @@ import org.openscience.cdk.interfaces.IMapping;
 public class MappingTest extends AbstractMappingTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new Mapping(new Atom(), new Atom()));
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new Mapping(new Atom(), new Atom());
+            }
+        });
     }
     
     @Test public void testMapping_IChemObject_IChemObject() {

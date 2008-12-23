@@ -23,11 +23,13 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractAtomContainerTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.AbstractAtomContainerTest;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the AtomContainer.
@@ -37,7 +39,13 @@ import org.openscience.cdk.interfaces.IMolecule;
 public class AtomContainerTest extends AbstractAtomContainerTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new AtomContainer());
+        setTestObjectBuilder(
+            new ITestObjectBuilder() {
+                public IChemObject newTestObject() {
+                    return new AtomContainer();
+                }
+            }
+        );
     }
 
     @Test public void testAtomContainer_int_int_int_int() {

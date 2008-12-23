@@ -41,29 +41,20 @@ import org.openscience.cdk.tools.diff.ChemObjectDiff;
  */
 public abstract class AbstractChemObjectTest extends CDKTestCase {
 
-	private static IChemObject object;
-
-	/**
-	 * Returns a clone of the tested {@link IChemObject}.
-	 * 
-	 * @return a freshly cloned IChemObject.
-	 */
-    public static IChemObject newChemObject() {
-        try {
-			return (IChemObject)object.clone();
-		} catch (CloneNotSupportedException e) {
-			return null;
-		}
-    }
+    private static ITestObjectBuilder builder;
 
     /**
-     * Sets the {@link IChemObject} that is being tested. Unit tests should use
-     * {@link #newChemObject()} to instantiate a fresh test object.
+     * Sets the {@link ITestObjectBuilder} that constructs new test objects with
+     * {@link #newChemObject()}.
      * 
-     * @param object IChemObject to be tested
+     * @param builder ITestChemObject that instantiates new test objects
      */
-    public static void setChemObject(IChemObject object) {
-    	AbstractChemObjectTest.object = object;
+    public static void setTestObjectBuilder(ITestObjectBuilder builder) {
+        AbstractChemObjectTest.builder = builder;
+    }
+
+    public static IChemObject newChemObject() {
+        return AbstractChemObjectTest.builder.newTestObject();
     }
 
     @Test public void testGetBuilder() {

@@ -26,6 +26,7 @@ import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.AbstractElementTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the Element class.
@@ -37,7 +38,11 @@ import org.openscience.cdk.interfaces.AbstractElementTest;
 public class ElementTest extends AbstractElementTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new Element());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new Element();
+            }
+        });
     }
 
     // test constructors

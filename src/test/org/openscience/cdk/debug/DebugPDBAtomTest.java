@@ -29,10 +29,12 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractPDBAtomTest;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IPDBAtom;
-import org.openscience.cdk.interfaces.AbstractPDBAtomTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugPDBAtom}.
@@ -42,7 +44,11 @@ import org.openscience.cdk.interfaces.AbstractPDBAtomTest;
 public class DebugPDBAtomTest extends AbstractPDBAtomTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new DebugPDBAtom("C"));
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugPDBAtom(new DebugElement());
+            }
+        });
     }
 
     @Test public void testDebugPDBAtom_IElement() {

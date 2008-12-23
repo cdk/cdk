@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.AbstractBondTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link NNBond}.
@@ -41,7 +42,11 @@ import org.openscience.cdk.interfaces.IChemObject;
 public class NNBondTest extends AbstractBondTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new NNBond());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNBond();
+            }
+        });
     }
 
     @Test

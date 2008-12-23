@@ -32,7 +32,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.AbstractAtomTest;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the AtomTypeFactory
@@ -42,7 +44,13 @@ import org.openscience.cdk.interfaces.IElement;
 public class AtomTest extends AbstractAtomTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new Atom());
+        setTestObjectBuilder(
+            new ITestObjectBuilder() {
+                public IChemObject newTestObject() {
+                    return new Atom();
+                }
+            }
+        );
     }
 
     /**

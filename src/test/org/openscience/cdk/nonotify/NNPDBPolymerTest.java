@@ -27,11 +27,13 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.interfaces.IPDBAtom;
 import org.openscience.cdk.interfaces.IPDBPolymer;
 import org.openscience.cdk.interfaces.AbstractPDBPolymerTest;
 import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link NNPDBPolymer}.
@@ -41,7 +43,11 @@ import org.openscience.cdk.interfaces.IStrand;
 public class NNPDBPolymerTest extends AbstractPDBPolymerTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new NNPDBPolymer());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNPDBPolymer();
+            }
+        });
     }
 
 	@Test public void testNNPDBPolymer() {

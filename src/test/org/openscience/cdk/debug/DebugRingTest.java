@@ -27,9 +27,11 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.AbstractRingTest;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugRing}.
@@ -39,7 +41,11 @@ import org.openscience.cdk.interfaces.AbstractRingTest;
 public class DebugRingTest extends AbstractRingTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new DebugRing());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugRing();
+            }
+        });
     }
 
     @Test public void testDebugRing_int_String() {

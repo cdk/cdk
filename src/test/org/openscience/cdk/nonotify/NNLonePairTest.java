@@ -28,8 +28,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.AbstractLonePairTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link NNLonePair}.
@@ -39,7 +41,11 @@ import org.openscience.cdk.interfaces.AbstractLonePairTest;
 public class NNLonePairTest extends AbstractLonePairTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new NNLonePair());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNLonePair();
+            }
+        });
     }
 
     @Test public void testNNLonePair() {

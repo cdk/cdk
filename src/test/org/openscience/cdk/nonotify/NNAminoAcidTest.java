@@ -24,8 +24,10 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.AbstractAminoAcidTest;
+import org.openscience.cdk.interfaces.IAminoAcid;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link NNAminoAcid}.
@@ -35,7 +37,11 @@ import org.openscience.cdk.interfaces.AbstractAminoAcidTest;
 public class NNAminoAcidTest extends AbstractAminoAcidTest {
 
     @BeforeClass public static void setUp() {
-    	  setChemObject(new NNAminoAcid());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNAminoAcid();
+            }
+        });
     }
 
     @Test public void testNNAminoAcid() {

@@ -27,9 +27,11 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.AbstractIsotopeTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link NNIsotope}.
@@ -39,7 +41,11 @@ import org.openscience.cdk.interfaces.AbstractIsotopeTest;
 public class NNIsotopeTest extends AbstractIsotopeTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new NNIsotope("C"));
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNIsotope(new NNElement());
+            }
+        });
     }
 
     @Test public void testNNIsotope_String() {

@@ -28,8 +28,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.AbstractSingleElectronTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link NNSingleElectron}.
@@ -39,7 +41,11 @@ import org.openscience.cdk.interfaces.AbstractSingleElectronTest;
 public class NNSingleElectronTest extends AbstractSingleElectronTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new NNSingleElectron());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNSingleElectron();
+            }
+        });
     }
 
     @Test public void testNNSingleElectron() {

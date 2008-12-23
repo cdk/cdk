@@ -27,8 +27,10 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.AbstractElectronContainerTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugElectronContainer}.
@@ -38,7 +40,11 @@ import org.openscience.cdk.interfaces.AbstractElectronContainerTest;
 public class DebugElectronContainerTest extends AbstractElectronContainerTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new DebugElectronContainer());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugElectronContainer();
+            }
+        });
     }
 
     @Test public void testDebugElectronContainer() {

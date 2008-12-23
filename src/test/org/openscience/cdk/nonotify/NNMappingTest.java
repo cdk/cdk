@@ -27,8 +27,10 @@ package org.openscience.cdk.nonotify;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.AbstractMappingTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link NNMapping}.
@@ -38,7 +40,11 @@ import org.openscience.cdk.interfaces.AbstractMappingTest;
 public class NNMappingTest extends AbstractMappingTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new NNMapping(new NNAtom(), new NNAtom()));
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNMapping(new NNAtom(), new NNAtom());
+            }
+        });
     }
 
     @Test public void testNNMapping_IChemObject_IChemObject() {

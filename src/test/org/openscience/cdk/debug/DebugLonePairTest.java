@@ -27,9 +27,11 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.AbstractLonePairTest;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the {@link DebugLonePair}.
@@ -39,7 +41,11 @@ import org.openscience.cdk.interfaces.AbstractLonePairTest;
 public class DebugLonePairTest extends AbstractLonePairTest {
 
     @BeforeClass public static void setUp() {
-        setChemObject(new DebugLonePair());
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugLonePair();
+            }
+        });
     }
 
     @Test public void testDebugLonePair() {
