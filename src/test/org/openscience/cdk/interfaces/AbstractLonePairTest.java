@@ -91,4 +91,16 @@ public abstract class AbstractLonePairTest extends AbstractElectronContainerTest
             Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
+
+    /**
+     * The electron count of an LP is always exactly 2.
+     */
+    @Test public void testSetElectronCount_Integer() {
+        IElectronContainer ec = (IElectronContainer)newChemObject();
+        ec.setElectronCount(3);
+        Assert.assertEquals(2, ec.getElectronCount().intValue());
+        ec.setElectronCount(null);
+        Assert.assertEquals(2, ec.getElectronCount().intValue());
+    }
+
 }
