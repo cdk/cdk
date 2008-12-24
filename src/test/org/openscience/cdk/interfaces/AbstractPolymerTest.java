@@ -162,20 +162,19 @@ public abstract class AbstractPolymerTest extends AbstractMoleculeTest {
      * Method to test whether the class complies with RFC #9.
      */
     @Test public void testToString() {
-    	IChemObject object = newChemObject(); // FiXME: bug 2454839
-        IStrand oStrand = object.getBuilder().newStrand(); 
-		IMonomer oMono1 = object.getBuilder().newMonomer();
+        IPolymer polymer = (IPolymer)newChemObject();
+		IMonomer oMono1 = polymer.getBuilder().newMonomer();
 		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = object.getBuilder().newMonomer();
+		IMonomer oMono2 = polymer.getBuilder().newMonomer();
 		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom2 = object.getBuilder().newAtom("C2");
-		IAtom oAtom3 = object.getBuilder().newAtom("C3");
-		oStrand.addAtom(oAtom2, oMono1);
-		oStrand.addAtom(oAtom3, oMono2);
+		IAtom oAtom2 = polymer.getBuilder().newAtom("C2");
+		IAtom oAtom3 = polymer.getBuilder().newAtom("C3");
+		polymer.addAtom(oAtom2, oMono1);
+		polymer.addAtom(oAtom3, oMono2);
 		Map<String,IMonomer> monomers = new Hashtable<String,IMonomer>();
 		monomers.put("TRP279", oMono1);
 		monomers.put("HOH", oMono2);
-        String description = oStrand.toString();
+        String description = polymer.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue('\n' != description.charAt(i));
             Assert.assertTrue('\r' != description.charAt(i));
