@@ -89,4 +89,15 @@ public abstract class AbstractSingleElectronTest extends AbstractElectronContain
             Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
+
+    /**
+     * The electron count of a single electron is always exactly 1.
+     */
+    @Test public void testSetElectronCount_Integer() {
+        IElectronContainer ec = (IElectronContainer)newChemObject();
+        ec.setElectronCount(3);
+        Assert.assertEquals(1, ec.getElectronCount().intValue());
+        ec.setElectronCount(null);
+        Assert.assertEquals(1, ec.getElectronCount().intValue());
+    }
 }
