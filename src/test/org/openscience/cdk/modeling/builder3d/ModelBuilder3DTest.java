@@ -1,4 +1,4 @@
-/*  $Revision$ $Author$ $Date$
+/*  $Revision: 12349 $ $Author: shk3 $ $Date: 2008-09-19 15:05:01 +0100 (Fri, 19 Sep 2008) $
  *
  *  Copyright (C) 1997-2007  Christian Hoppe <chhoppe@users.sf.net>
  *                     2006  Mario Baseda
@@ -33,10 +33,10 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -57,7 +57,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-public class ModelBuilder3dTest extends CDKTestCase {
+public class ModelBuilder3DTest extends CDKTestCase {
 	
 	boolean standAlone = false;
 
@@ -94,6 +94,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		assertEquals(h1_coord, mol.getAtom(2).getPoint3d(), 0.0001);
 		assertEquals(h2_coord, mol.getAtom(3).getPoint3d(), 0.0001);
 		assertEquals(h3_coord, mol.getAtom(4).getPoint3d(), 0.0001);
+		checkAverageBondLength(mol);
     }
 
     @Test
@@ -107,6 +108,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		for (int i=0;i<mol.getAtomCount();i++){
 			Assert.assertNotNull(mol.getAtom(i).getPoint3d());
 		}
+		checkAverageBondLength(mol);
 		//logger.debug("Layout molecule with SMILE: "+smile);
     }
 
@@ -123,6 +125,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	for(int i=0;i<mol.getAtomCount();i++){
     		Assert.assertNotNull(mol.getAtom(i).getPoint3d());
     	}
+    	checkAverageBondLength(mol);
     }
 
     @Test
@@ -138,6 +141,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	for(int i=0;i<mol.getAtomCount();i++){
     		Assert.assertNotNull(mol.getAtom(i).getPoint3d());
     	}
+    	checkAverageBondLength(mol);
     }
 
     @Test
@@ -153,6 +157,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	for(int i=0;i<mol.getAtomCount();i++){
     		Assert.assertNotNull(mol.getAtom(i).getPoint3d());
     	}
+    	checkAverageBondLength(mol);
     }
 
     @Test
@@ -168,6 +173,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	for(int i=0;i<mol.getAtomCount();i++){
     		Assert.assertNotNull(mol.getAtom(i).getPoint3d());
     	}
+    	checkAverageBondLength(mol);
     }
 
     /**
@@ -191,6 +197,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	for(int i=0;i<mol.getAtomCount();i++){
     		Assert.assertNotNull(mol.getAtom(i).getPoint3d());
     	}
+    	checkAverageBondLength(mol);
 	}
     
     /**
@@ -210,6 +217,10 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	addExplicitHydrogens(ac);
     	ac = mb3d.generate3DCoordinates(ac, false);
     	Assert.assertNotNull(ac.getAtom(0).getPoint3d());
+    	checkAverageBondLength(ac);
+    }
+    
+    public static void checkAverageBondLength(IAtomContainer ac){
     	double avlength=GeometryTools.getBondLengthAverage3D(ac);
     	for(int i=0;i<ac.getBondCount();i++){
     		double distance=ac.getBond(i).getAtom(0).getPoint3d().distance(ac.getBond(i).getAtom(1).getPoint3d());
@@ -234,6 +245,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	for(int i=0;i<ac.getAtomCount();i++){
     		Assert.assertNotNull(ac.getAtom(i).getPoint3d());
     	}
+    	checkAverageBondLength(ac);    	
     }
 
     
@@ -269,6 +281,7 @@ public class ModelBuilder3dTest extends CDKTestCase {
 
     	mb3d.generate3DCoordinates(methanol, false);
 
+    	checkAverageBondLength(methanol);
     	Assert.assertEquals("carbon1", carbon1.getID());
     	Assert.assertEquals("oxygen1", oxygen1.getID());
     }
@@ -328,17 +341,14 @@ public class ModelBuilder3dTest extends CDKTestCase {
 		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
 			IAtomContainer molecules = (IAtomContainer) iter.next();
 			IMolecule mol = molecules.getBuilder().newMolecule(molecules);
-			/*for(int i=0;i<mol.getAtomCount();i++){
-			      mol.getAtom(i).setFlag(CDKConstants.ISPLACED,false);
-				  mol.getAtom(i).setFlag(CDKConstants.VISITED,false);
-				} */
 			mol = mb3d.generate3DCoordinates(mol, false);
 			System.out.println("Calculation done");
 		}
 		
 		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
-			IAtomContainer molecules = (IAtomContainer) iter.next();
-			for (Iterator atom = molecules.atoms().iterator(); atom.hasNext();){
+			IAtomContainer molecule = (IAtomContainer) iter.next();
+	    	checkAverageBondLength(molecule);
+			for (Iterator atom = molecule.atoms().iterator(); atom.hasNext();){
 				Atom last = (Atom) atom.next();
 				if (last.getPoint3d() == null) notCalculatedResults = true;
 			}
@@ -359,11 +369,6 @@ public class ModelBuilder3dTest extends CDKTestCase {
     	List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
     	IMolecule ac= new NNMolecule((IAtomContainer)containersList.get(0));
     	ac = mb3d.generate3DCoordinates(ac, false);
-    	double avlength=GeometryTools.getBondLengthAverage3D(ac);
-    	for(int i=0;i<ac.getBondCount();i++){
-    		double distance=ac.getBond(i).getAtom(0).getPoint3d().distance(ac.getBond(i).getAtom(1).getPoint3d());
-    		Assert.assertTrue("Unreasonable bond length (" + distance + ") for bond " + i, 
-    			distance >= avlength/2 && distance <= avlength*2);
-    	}
+    	checkAverageBondLength(ac);
 	}
 }

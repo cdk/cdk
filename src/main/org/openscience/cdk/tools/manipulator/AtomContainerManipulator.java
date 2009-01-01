@@ -782,7 +782,7 @@ public class AtomContainerManipulator {
 	 * @return The new atomcontainer
 	 * @throws CloneNotSupportedException The atomcontainer cannot be cloned
 	 */
-	public static IAtomContainer createAnyAtomAnyBondAtomContainer(
+	public static IAtomContainer createAllCarbonAllSingleNonAromaticBondAtomContainer(
 			IAtomContainer atomContainer) throws CloneNotSupportedException{
 			IAtomContainer query = (IAtomContainer) atomContainer.clone();
 			for (int i = 0; i < query.getBondCount(); i++) {
