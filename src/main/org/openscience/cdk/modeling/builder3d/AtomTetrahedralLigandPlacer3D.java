@@ -54,7 +54,7 @@ import org.openscience.cdk.interfaces.IBond;
 public class AtomTetrahedralLigandPlacer3D {
 
 	private Map pSet = null;
-	private final double DEFAULT_BOND_LENGTH_H = 1.0;
+	final double DEFAULT_BOND_LENGTH_H = 1.0;
 	//private final double DEFAULT_BOND_LENGTH_HA = 1.3;
 
 	public final double TETRAHEDRAL_ANGLE =
@@ -96,16 +96,14 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@cdk.keyword           3D model
 	 */
 	public void add3DCoordinatesForSinglyBondedLigands(IAtomContainer atomContainer) throws CDKException {
-		IAtomContainer noCoords = new org.openscience.cdk.AtomContainer();
-		IAtomContainer withCoords = new org.openscience.cdk.AtomContainer();
 		IAtom refAtom = null;
 		IAtom atomC = null;
 		int nwanted = 0;
 		for (int i = 0; i < atomContainer.getAtomCount(); i++) {
 			refAtom = atomContainer.getAtom(i);
 			if (!refAtom.getSymbol().equals("H") && hasUnsetNeighbour(refAtom, atomContainer)) {
-				noCoords = getUnsetAtomsInAtomContainer(refAtom, atomContainer);
-				withCoords = getPlacedAtomsInAtomContainer(refAtom, atomContainer);
+				IAtomContainer noCoords = getUnsetAtomsInAtomContainer(refAtom, atomContainer);
+				IAtomContainer withCoords = getPlacedAtomsInAtomContainer(refAtom, atomContainer);
 				if (withCoords.getAtomCount() > 0) {
 					atomC = getPlacedHeavyAtomInAtomContainer(withCoords.getAtom(0), refAtom, atomContainer);
 				}
