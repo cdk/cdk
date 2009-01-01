@@ -1,4 +1,4 @@
-/*  $Revision$ $Author$ $Date$
+/*  $Revision: 12349 $ $Author: shk3 $ $Date: 2008-09-19 15:05:01 +0100 (Fri, 19 Sep 2008) $
  *
  *  Copyright (C) 1997-2007  Christian Hoppe <chhoppe@users.sf.net>
  *                     2006  Mario Baseda
@@ -22,7 +22,6 @@
 package org.openscience.cdk.modeling.builder3d;
 
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -44,7 +43,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.MDLWriter;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.nonotify.NNMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
@@ -58,7 +56,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *@author     chhoppe
  *@cdk.created    2004-11-04
  */
-public class ModelBuilder3dTest extends NewCDKTestCase {
+public class ModelBuilder3DTest extends NewCDKTestCase {
 	
 	boolean standAlone = false;
 
@@ -222,7 +220,7 @@ public class ModelBuilder3dTest extends NewCDKTestCase {
     	checkAverageBondLength(ac);
     }
     
-    private void checkAverageBondLength(IAtomContainer ac){
+    public static void checkAverageBondLength(IAtomContainer ac){
     	double avlength=GeometryTools.getBondLengthAverage3D(ac);
     	for(int i=0;i<ac.getBondCount();i++){
     		double distance=ac.getBond(i).getAtom(0).getPoint3d().distance(ac.getBond(i).getAtom(1).getPoint3d());

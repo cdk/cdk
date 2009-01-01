@@ -23,6 +23,7 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -148,8 +149,9 @@ public class NewCDKTestCase {
      * coordinates for the new hydrogens.
      * 
      * @param container to which explicit hydrogens are added.
+     * @throws CDKException 
      */
-    protected void addExplicitHydrogens(IAtomContainer container) throws Exception {
+    protected void addExplicitHydrogens(IAtomContainer container) throws CDKException {
     	addImplicitHydrogens(container);
     	AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
     }
@@ -160,8 +162,9 @@ public class NewCDKTestCase {
      * coordinates for the new hydrogens.
      * 
      * @param container to which implicit hydrogens are added.
+     * @throws CDKException 
      */
-    protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
+    protected void addImplicitHydrogens(IAtomContainer container) throws CDKException {
     	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
     	Iterator<IAtom> atoms = container.atoms().iterator();
     	while (atoms.hasNext()) {

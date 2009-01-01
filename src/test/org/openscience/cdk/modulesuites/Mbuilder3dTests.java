@@ -29,8 +29,10 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.openscience.cdk.coverage.Builder3dCoverageTest;
-import org.openscience.cdk.modeling.builder3d.ModelBuilder3dTest;
+import org.openscience.cdk.modeling.builder3d.AtomPlacer3DTest;
+import org.openscience.cdk.modeling.builder3d.ModelBuilder3DTest;
 import org.openscience.cdk.modeling.builder3d.TemplateHandler3DTest;
+import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest;
 
 /**
  * TestSuite that runs all the sample tests.
@@ -44,8 +46,10 @@ public class Mbuilder3dTests {
         
         suite.addTest(Builder3dCoverageTest.suite());
         
-        suite.addTest(new JUnit4TestAdapter(ModelBuilder3dTest.class));
+        suite.addTest(new JUnit4TestAdapter(ModelBuilder3DTest.class));
         suite.addTest(new JUnit4TestAdapter(TemplateHandler3DTest.class));
+        suite.addTest(new JUnit4TestAdapter(AtomPlacer3DTest.class));
+        suite.addTest(PartialTChargeMMFF94DescriptorTest.suite());
         
         return suite;
     }

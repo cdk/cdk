@@ -31,7 +31,13 @@ import java.util.StringTokenizer;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.nonotify.NNAtomContainer;
+import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * @cdk.module test-builder3d
@@ -71,6 +77,23 @@ public class TemplateHandler3DTest extends NewCDKTestCase {
         	BitSet bs=(BitSet) data.get(i);
         	Assert.assertEquals(bs,bsmb[i]);
         }		
+	}
+	
+	@Test
+	public void testMapTemplates_IAtomContainer_double() throws Exception{
+		IMolecule ac = MoleculeFactory.makeBicycloRings();
+		TemplateHandler3D th3d = TemplateHandler3D.getInstance();
+		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
+		ffc.setForceFieldConfigurator("mm2");
+		IRingSet ringSetMolecule = ffc.assignAtomTyps(ac);
+		List<IRingSet> ringSystems = RingPartitioner.partitionRings(ringSetMolecule);
+		IRingSet largestRingSet = RingSetManipulator.getLargestRingSet(ringSystems);
+		IAtomContainer largestRingSetContainer = RingSetManipulator.getAllInOneContainer(largestRingSet);
+		th3d.mapTemplates(largestRingSetContainer, largestRingSetContainer.getAtomCount());
+		for (int i=0;i<ac.getAtomCount();i++){
+			Assert.assertNotNull(ac.getAtom(i).getPoint3d());
+		}
+		ModelBuilder3DTest.checkAverageBondLength(ac);
 	}
 
 }
