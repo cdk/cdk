@@ -91,10 +91,8 @@ public class AtomPlacer3DTest extends CDKTestCase{
     	chain.addAtom(ac.getAtom(29));
     	chain.addAtom(ac.getAtom(30));
     	int[] result=new AtomPlacer3D().findHeavyAtomsInChain(ac,chain);
-    	// FIXME: shk3-cleanuptests: assertEquals() takes the expected value
-    	//          as first argument
-    	Assert.assertEquals(result[0],16);
-    	Assert.assertEquals(result[1],11);
+    	Assert.assertEquals(16,result[0]);
+    	Assert.assertEquals(11,result[1]);
 	}
 	
 	@Test

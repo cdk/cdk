@@ -28,7 +28,6 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -54,8 +53,7 @@ import org.openscience.cdk.interfaces.IBond;
 public class AtomTetrahedralLigandPlacer3D {
 
 	private Map pSet = null;
-	final double DEFAULT_BOND_LENGTH_H = 1.0;
-	//private final double DEFAULT_BOND_LENGTH_HA = 1.3;
+	public final static double DEFAULT_BOND_LENGTH_H = 1.0;
 
 	public final double TETRAHEDRAL_ANGLE =
 			2.0 * Math.acos(1.0 / Math.sqrt(3.0));

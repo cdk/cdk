@@ -101,16 +101,16 @@ public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase{
 		ac.addBond(bond2);
 		ac.addBond(bond3);
 		ac.addBond(bond4);
-		// TODO: shk3-cleanuptests: suggestion: use ~80 character lines
-		IAtomContainer noCoords = new AtomTetrahedralLigandPlacer3D().getUnsetAtomsInAtomContainer(atom1, ac);
-		IAtomContainer withCoords = new AtomTetrahedralLigandPlacer3D().getPlacedAtomsInAtomContainer(atom1, ac);
-		// FIXME: shk3-cleanuptests: DEFAULT_BOND_LENGTH_H is a static, no need
-		//        to instantiate a new AtomTetrahedralLigandPlacer3D()
-		Point3d[] newPoints = new AtomTetrahedralLigandPlacer3D().get3DCoordinatesForLigands(atom1, noCoords, withCoords, null, 4, new AtomTetrahedralLigandPlacer3D().DEFAULT_BOND_LENGTH_H, -1);
+		IAtomContainer noCoords = new AtomTetrahedralLigandPlacer3D()
+			.getUnsetAtomsInAtomContainer(atom1, ac);
+		IAtomContainer withCoords = new AtomTetrahedralLigandPlacer3D()
+			.getPlacedAtomsInAtomContainer(atom1, ac);
+		Point3d[] newPoints = new AtomTetrahedralLigandPlacer3D()
+			.get3DCoordinatesForLigands(atom1, noCoords, withCoords, null, 
+			4, AtomTetrahedralLigandPlacer3D.DEFAULT_BOND_LENGTH_H, -1);
 		for (int j = 0; j < noCoords.getAtomCount(); j++) {
 			if(newPoints[j]==null)
-			    // FIXME: shk3-cleanuptests: please add a fail message
-				Assert.fail();
+				Assert.fail("No coordinates generated for atom "+j);
 			IAtom ligand = noCoords.getAtom(j);
 			ligand.setPoint3d(newPoints[j]);
 		}

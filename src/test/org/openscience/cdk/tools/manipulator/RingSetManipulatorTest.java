@@ -243,10 +243,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
     	List<IRingSet> list=new Vector<IRingSet>();
     	list.add(ringset);
         IAtomContainer mol = MoleculeFactory.makeBiphenyl();
-        // TODO: shk3-cleanuptests: why do you need to do aromaticity detection here?
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
-        
+
         AllRingsFinder arf = new AllRingsFinder();
         IRingSet ringSet = arf.findAllRings(mol);
         list.add(ringSet);
