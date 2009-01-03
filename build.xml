@@ -931,7 +931,7 @@
                 <property name="package" value="cdk-src+libs-${version}"/>
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
                 <delete dir="${sourcedist.dir}"/>
-                <copy todir="${sourcedist.dir}/${${src}/main/org/}">
+                <copy todir="${sourcedist.dir}/${src}/main/org/">
                         <fileset dir="${build}" includes="*.javafiles" />
                         <fileset dir="${build}" includes="*.classes" />
                         <fileset dir="${build}" includes="*.set" />
