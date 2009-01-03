@@ -1,2 +1,0 @@
-Main-Class: org.openscience.cdk.applications.Viewer
-Class-Path: cdk-core.jar cdk-extra.jar cdk-libio.jar gnujaxp.jar batik-awt-util.jar batik-dom.jar batik-util.jar baysmith-io.jar dadml.jar log4j-core.jar log4j.jar mysql-2.0.4.jar postgresql7.0-1.2.jar printf.jar vecmath1.2-1.14.jar xerces-1.3.0.jar jmol.jar joelib.jar
