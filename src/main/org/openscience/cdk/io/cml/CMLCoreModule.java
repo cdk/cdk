@@ -55,6 +55,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IStrand;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 import org.xml.sax.Attributes;
 
@@ -1142,9 +1143,21 @@ public class CMLCoreModule implements ICMLModule {
         }
         storeAtomData();
         storeBondData();
+        convertCMLToCDKHydrogenCounts();
     }
 
-    protected void storeAtomData() {
+    private void convertCMLToCDKHydrogenCounts() {
+        for (IAtom atom : currentMolecule.atoms()) {
+            if (atom.getHydrogenCount() != null) {
+                int explicitHCount = AtomContainerManipulator.countExplicitHydrogens(currentMolecule, atom);
+                if (explicitHCount != 0) {
+                    atom.setHydrogenCount(atom.getHydrogenCount() - explicitHCount);
+                }
+            }
+        }
+	}
+
+	protected void storeAtomData() {
         logger.debug("No atoms: ", atomCounter);
         if (atomCounter == 0) {
             return;
