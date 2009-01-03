@@ -1,4 +1,4 @@
-CDK The Chemical Development Kit
+CDK - The Chemical Development Kit
  
 Copyright 1997-2008 The CDK Development Team
 License: LGPL, see doc/lgpl.license
@@ -54,6 +54,8 @@ the documentation using the following command:
 cdk/$ firefox doc/api/index.html
 
 3. Running tests
+
+IMPORTANT: this requires the SVN or Git version of the sources.
 
 After you compiled the code, you can do "ant test-all" to run the test suite of non-interactive, automated
 tests. You might need to copy an appropriate junit.jar into your $ANT_HOME/lib
