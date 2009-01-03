@@ -335,7 +335,76 @@ public class CML23FragmentsTest extends CDKTestCase {
         
         assertEquals("acetic acid", mol.getProperty(CDKConstants.TITLE));
     }
-    
+
+    /**
+     * @cdk.bug 2142400
+     */
+    public void testHydrogenCount1() throws Exception {
+        String cmlString = "<molecule><atomArray><atom id='a1' elementType='C' hydrogenCount='4'/></atomArray></molecule>";
+
+        IChemFile chemFile = parseCMLString(cmlString);
+        IMolecule mol = checkForSingleMoleculeFile(chemFile);
+
+        assertEquals(1,mol.getAtomCount());
+        IAtom atom = mol.getAtom(0);
+        assertNotNull(atom);
+        assertNotNull(atom.getHydrogenCount());
+        assertEquals(4, atom.getHydrogenCount().intValue());
+    }
+
+    /**
+     * @cdk.bug 2142400
+     */
+    public void testHydrogenCount2() throws Exception {
+        String cmlString = "<molecule><atomArray>" +
+                "<atom id='a1' elementType='C' hydrogenCount='4'/>" +
+                "<atom id='a2' elementType='H'/>" +
+                "<atom id='a3' elementType='H'/>" +
+                "<atom id='a4' elementType='H'/>" +
+                "<atom id='a5' elementType='H'/>" +
+                "</atomArray>" +
+                "<bondArray>" +
+                "<bond id='b1' atomRefs2='a1 a2' order='S'/>" +
+                "<bond id='b2' atomRefs2='a1 a3' order='S'/>" +
+                "<bond id='b3' atomRefs2='a1 a4' order='S'/>" +
+                "<bond id='b4' atomRefs2='a1 a5' order='S'/>" +
+                "</bondArray></molecule>";
+
+        IChemFile chemFile = parseCMLString(cmlString);
+        IMolecule mol = checkForSingleMoleculeFile(chemFile);
+
+        assertEquals(5,mol.getAtomCount());
+        IAtom atom = mol.getAtom(0);
+        assertNotNull(atom);
+        assertEquals("C", atom.getSymbol());
+        assertNotNull(atom.getHydrogenCount());
+        assertEquals(0, atom.getHydrogenCount().intValue());
+    }
+
+    /**
+     * @cdk.bug 2142400
+     */
+    public void testHydrogenCount3() throws Exception {
+        String cmlString = "<molecule>" +
+                "<atomArray>" +
+                "<atom id='a1' elementType='C' hydrogenCount='4'/>" +
+                "<atom id='a2' elementType='H'/>" +
+                "</atomArray>" +
+                "<bondArray>" +
+                "<bond id='b1' atomRefs2='a1 a2' order='S'/>" +
+                "</bondArray>" +
+                "</molecule>";
+
+        IChemFile chemFile = parseCMLString(cmlString);
+        IMolecule mol = checkForSingleMoleculeFile(chemFile);
+
+        assertEquals(2,mol.getAtomCount());
+        IAtom atom = mol.getAtom(0);
+        assertNotNull(atom);
+        assertNotNull(atom.getHydrogenCount());
+        assertEquals(3, atom.getHydrogenCount().intValue());
+    }
+
     public void testInChI() throws Exception {
         String cmlString = "<molecule id='m1'><identifier convention='iupac:inchi' value='InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)'/><atomArray atomID='a1 a2 a3'/></molecule>";
         
