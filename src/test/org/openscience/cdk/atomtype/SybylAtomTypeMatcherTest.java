@@ -21,13 +21,14 @@
 package org.openscience.cdk.atomtype;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -45,7 +46,9 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * @cdk.module test-atomtype
  */
-public class SybylAtomTypeMatcherTest extends NewCDKTestCase {
+public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
+
+    private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
 
 	@Test public void testGetInstance_IChemObjectBuilder() {
 		IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(NoNotificationChemObjectBuilder.getInstance());
@@ -56,8 +59,8 @@ public class SybylAtomTypeMatcherTest extends NewCDKTestCase {
 		IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(NoNotificationChemObjectBuilder.getInstance());
 		Assert.assertNotNull(matcher);
 		Molecule ethane = MoleculeFactory.makeAlkane(2);
-		String sybylType = matcher.findMatchingAtomType(ethane, ethane.getAtom(0)).getAtomTypeName();
-		Assert.assertEquals("C.3", sybylType);
+		String[] expectedTypes = {"C.3", "C.3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, ethane);
 	}
 
   @Test public void testFindMatchingAtomType_IAtomContainer() throws Exception {
@@ -192,4 +195,13 @@ public class SybylAtomTypeMatcherTest extends NewCDKTestCase {
         	if (matched != null) AtomTypeManipulator.configure(atom, matched);
         }
 	}
+
+    @Test public void countTestedAtomTypes() {
+    	super.countTestedAtomTypes(testedAtomTypes);
+    }
+    
+    @Test public void testForDuplicateDefinitions() {
+    	super.testForDuplicateDefinitions();
+    }
+    
 }
