@@ -440,9 +440,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             IAtom neighbor = cBond.getConnectedAtom(carbon);
             if ("O".equals(neighbor.getSymbol())) {
                 oxygenCount++;
-                if (cBond.getOrder() == IBond.Order.SINGLE && neighbor.getFormalCharge() == -1) {
+                IBond.Order order = cBond.getOrder();
+                Integer charge = neighbor.getFormalCharge();
+                if (order == IBond.Order.SINGLE && charge != null && charge == -1) {
                     singleBondedNegativeOxygenCount++;
-                } else if (cBond.getOrder() == IBond.Order.DOUBLE) {
+                } else if (order == IBond.Order.DOUBLE) {
                     doubleBondedOxygenCount++;
                 }
             }
