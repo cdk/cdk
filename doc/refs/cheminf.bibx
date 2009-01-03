@@ -331,6 +331,17 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="KAB78">
+    <bibtex:article>
+      <bibtex:author>Kabsch, W.</bibtex:author>
+      <bibtex:title>Discussion of Solution for Best Rotation to Relate 2 Sets of Vectors</bibtex:title>
+      <bibtex:journal>Acta Cryst.</bibtex:journal>
+      <bibtex:year>1978</bibtex:year>
+      <bibtex:volume>A34</bibtex:volume>
+      <bibtex:pages>827-828</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="KAT96">
       <bibtex:article>
           <bibtex:author>Katritzky, A.R. and Mu, L. and Lobanov, V.S. and Karelson, M.</bibtex:author>

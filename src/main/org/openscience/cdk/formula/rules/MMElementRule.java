@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * databases and according different mass of the metabolites. The analysis don't
  * take account if the IElement is not contained in the matrix. It will be jumped. <p>
  * The rules is based from Tobias Kind paper with the title "Seven Golden Rules for heuristic 
- * filetering of molecular formula" {@cdk.cite kind2007}.
+ * filtering of molecular formula" {@cdk.cite kind2007}.
  * 
  * <p>This rule uses these parameters:
  * <table border="1">
