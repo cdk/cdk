@@ -342,6 +342,19 @@
       </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="kind2007">
+      <bibtex:article>
+          <bibtex:author>Kind, Tobias   and Fiehn, Oliver</bibtex:author>
+          <bibtex:doi>10.1186/1471-2105-8-105</bibtex:doi>
+          <bibtex:journal>BMC Bioinformatics</bibtex:journal>
+          <bibtex:year>2007</bibtex:year>
+          <bibtex:title>Seven Golden Rules for heuristic filtering of molecular formulas
+obtained by accurate mass spectrometry</bibtex:title>
+          <bibtex:volume>8</bibtex:volume>
+          <bibtex:year>2007</bibtex:year>
+      </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="KJ81">
     <bibtex:article>
       <bibtex:author>Kang, Y.K. and  Jhon, M.S.</bibtex:author>
