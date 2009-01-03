@@ -827,6 +827,18 @@ public class CDKAtomTypeMatcherTest extends AbstractAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testPhosphorusTriradical() throws Exception {
+    	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("P");
+        mol.addAtom(atom);
+        mol.addSingleElectron(0);
+        mol.addSingleElectron(0);
+        mol.addSingleElectron(0);
+
+        String[] expectedTypes = {"P.se.3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testAmmonia() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("H");

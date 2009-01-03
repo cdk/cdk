@@ -289,6 +289,15 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 	    return false;
     }
 
+    private int countSingleElectrons(IAtomContainer atomContainer, IAtom atom) {
+	    Iterator<ISingleElectron> singleElectrons = atomContainer.singleElectrons().iterator();
+	    int count = 0;
+	    while (singleElectrons.hasNext()) {
+	    	if (singleElectrons.next().contains(atom)) count++;
+	    }
+	    return count;
+    }
+
     private IAtomType perceiveOxygenRadicals(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if (atom.getFormalCharge() == 0) {
             if (atomContainer.getConnectedBondsCount(atom) <= 1) {
@@ -793,7 +802,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         List<IBond> neighbors = atomContainer.getConnectedBondsList(atom);
         int neighborcount = neighbors.size();
         IBond.Order maxBondOrder = atomContainer.getMaximumBondOrder(atom);
-        if (hasOneSingleElectron(atomContainer, atom)) {
+        if (countSingleElectrons(atomContainer, atom) == 3) {
+        	IAtomType type = getAtomType("P.se.3");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (hasOneSingleElectron(atomContainer, atom)) {
             // no idea how to deal with this yet
             return null;
         } else if (neighborcount == 3) {
