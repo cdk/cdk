@@ -168,7 +168,7 @@
             <!-- test for optional jars -->
             <condition property="cmllibs.present">
               <or>
-                <available file="${lib}/jumbo-5.4.2-b2.jar"/>
+                <available file="${lib}/jumbo-with-fix-by-jonalv.jar"/>
               </or>
             </condition>
 
@@ -926,17 +926,15 @@
             </jar>
         </target>
 
-        <target id="sourcedist" name="sourcedist" depends="init, runDoclet"
+        <target id="sourcedist" name="sourcedist"
                 description="Builds the source packages.">
                 <property name="package" value="cdk-src+libs-${version}"/>
                 <property name="sourcedist.dir" value="${sourcedist}/${package}"/>
                 <delete dir="${sourcedist.dir}"/>
-                <copy todir="${sourcedist.dir}/${src}/main/org/">
-                        <fileset dir="${build}" includes="*.javafiles" />
-                        <fileset dir="${build}" includes="*.classes" />
-                        <fileset dir="${build}" includes="*.set" />
+                <copy todir="${sourcedist.dir}/${src}/main/">
                         <fileset dir="${src}/main/" includes="**/*.java" />
                         <fileset dir="${src}/main/" includes="**/*.jj" />
+                        <fileset dir="${src}/main/" includes="**/*.jjt" />
                         <fileset dir="${src}/main/" includes="org/openscience/cdk/io/cml/data/**" />
                 </copy>
                 <copy todir="${sourcedist.dir}">
@@ -946,6 +944,13 @@
                         <fileset dir="." includes="README" />
                         <fileset dir="." includes="changelog*" />
                 </copy>
+            <copy todir="${sourcedist.dir}/jar">
+                    <fileset dir="jar">
+                        <exclude name="*.so"/>
+                        <exclude name="*.dll"/>
+                        <exclude name="jumbo-5.4.2-b2.jar"/>
+                    </fileset>
+            </copy>
             <copy todir="${sourcedist.dir}/develjar">
                     <fileset dir="develjar">
                         <exclude name="pmd-1.8.jar"/>
@@ -956,7 +961,7 @@
             <copy todir="${sourcedist.dir}/src/META-INF">
                     <fileset dir="src/META-INF" />
             </copy>
-                <copy todir="${sourcedist.dir}/${src}/org/openscience/cdk/config/data/">
+                <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/config/data/">
                         <fileset dir="${src}/main/org/openscience/cdk/config/data/"
                                  includes="*" />
                 </copy>
@@ -978,9 +983,6 @@
             <copy todir="${sourcedist.dir}/${src}/main/org/openscience/cdk/modeling/builder3d/data/">
                 <fileset dir="${src}/main/org/openscience/cdk/modeling/builder3d/data/" includes="*.gz"/>
             </copy>
-                <copy todir="${sourcedist.dir}/${src}/">
-                    <fileset dir="${src}/main/" includes="*.manifest" />
-                </copy>
                 <mkdir dir="${sourcedist.dir}/doc/" />
                 <copy todir="${sourcedist.dir}/doc/">
                     <fileset dir="doc/" includes="lgpl.license" />
@@ -988,7 +990,7 @@
                 <mkdir dir="${sourcedist.dir}/doc/javadoc" />
                 <!-- the below deteles are a workaround, because the above should not have copied
                      in the src/data and src/org/openscience/cdk/test dirs -->
-                <delete dir="${sourcedist.dir}/src/data"/>
+                <delete dir="${sourcedist.dir}/src/test/data"/>
 
                 <!-- now package things up -->
                 <tar tarfile="${package}.tar" basedir="${sourcedist}/" includes="${package}/**" />
