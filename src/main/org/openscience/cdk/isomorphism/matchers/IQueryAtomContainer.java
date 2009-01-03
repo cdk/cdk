@@ -21,7 +21,6 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 
 /**
  * General concept of a IAtomContainer aimed at doing molecular subgraph
@@ -30,7 +29,7 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
  * @author      egonw
  * @cdk.module  interfaces
  * @cdk.svnrev  $Revision$
- * @see         UniversalIsomorphismTester
+ * @see         org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */
 public interface IQueryAtomContainer extends IAtomContainer {
 
