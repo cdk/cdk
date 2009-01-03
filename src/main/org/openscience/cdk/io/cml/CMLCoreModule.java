@@ -671,7 +671,7 @@ public class CMLCoreModule implements ICMLModule {
                 eltitles.add(null);
             }
             if (atomCounter > hCounts.size()) {
-                hCounts.add("");
+                hCounts.add(null);
             }
             if (atomCounter > atomDictRefs.size()) {
                 atomDictRefs.add(null);
@@ -1381,7 +1381,7 @@ public class CMLCoreModule implements ICMLModule {
 //                cdo.setObjectProperty("Atom", "hydrogenCount", (String)hCounts.get(i));
             	// FIXME: the hCount in CML is the total of implicit *and* explicit
                 String hCount = hCounts.get(i);
-                if (hCount.length() > 0) {
+                if (hCount != null) {
                     currentAtom.setHydrogenCount(Integer.parseInt(hCount));
                 } else {
                     currentAtom.setHydrogenCount((Integer)CDKConstants.UNSET);
