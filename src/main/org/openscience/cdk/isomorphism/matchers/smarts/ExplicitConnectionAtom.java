@@ -24,7 +24,7 @@ import org.openscience.cdk.interfaces.IAtom;
 
 /**
  * This smarts atom matches any atom with a certain number of explicit
- * connections
+ * connections.
  *
  * @cdk.module  smarts
  * @cdk.svnrev  $Revision$
@@ -34,22 +34,19 @@ public class ExplicitConnectionAtom extends SMARTSAtom {
 	private static final long serialVersionUID = 7453671653627040279L;
 
 	/**
-	 * Number of explicit connections
+	 * Number of explicit connections.
 	 */
 	private int numOfConnection;
 
 	/**
-	 * Creates a new instance
-	 *
+	 * Creates a new instance.
 	 */
 	public ExplicitConnectionAtom() {
 		super();
 	}
 
 	/**
-	 * Creates a new instance
-	 *
-	 * @param connection
+	 * Creates a new instance.
 	 */
 	public ExplicitConnectionAtom(int connection) {
 		super();
@@ -66,16 +63,14 @@ public class ExplicitConnectionAtom extends SMARTSAtom {
     }
 
     /**
-	 * Returns number of explicit connections
-	 * 
-	 * @return
+	 * Returns number of explicit connections.
 	 */
 	public int getNumOfConnection() {
 		return numOfConnection;
 	}
 
 	/**
-	 * Sets number of explicit connections
+	 * Sets number of explicit connections.
 	 * 
 	 * @param numOfConnection
 	 */

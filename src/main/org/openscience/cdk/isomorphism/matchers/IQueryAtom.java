@@ -21,6 +21,7 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 
 /**
  * Defines the ability to be matched against {@link IAtom}'s. Most prominent application

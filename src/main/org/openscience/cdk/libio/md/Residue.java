@@ -51,10 +51,7 @@ public class Residue extends AtomContainer{
 	}
 	
 	/**
-	 * Constructor to create a Residue based on an AC, a number, and a MDMolecule
-	 * @param container
-	 * @param number
-	 * @param molecule
+	 * Constructor to create a Residue based on an AC, a number, and a MDMolecule.
 	 */
 	public Residue(IAtomContainer container, int number, MDMolecule parentMolecule) {
 		super(container);

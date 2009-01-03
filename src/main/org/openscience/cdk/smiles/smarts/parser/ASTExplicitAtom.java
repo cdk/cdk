@@ -32,33 +32,26 @@ package org.openscience.cdk.smiles.smarts.parser;
 public class ASTExplicitAtom extends SimpleNode {
 	
     /**
-     * The element symbol
+     * The element symbol.
      */
     private String symbol;
 
     /**
-     * Creates a new instance
-     *
-     * @param id
+     * Creates a new instance.
      */
     public ASTExplicitAtom(int id) {
         super(id);
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param p
-     * @param id
+     * Creates a new instance.
      */
     public ASTExplicitAtom(SMARTSParser p, int id) {
         super(p, id);
     }
 
     /**
-     * Returns the element symbol
-     * 
-     * @return
+     * Returns the element symbol.
      */
     public String getSymbol() {
         return symbol;
@@ -72,9 +65,7 @@ public class ASTExplicitAtom extends SimpleNode {
     }
 
     /**
-     * Sets the element symbol
-     * 
-     * @param symbol
+     * Sets the element symbol.
      */
     public void setSymbol(String symbol) {
         this.symbol = symbol;

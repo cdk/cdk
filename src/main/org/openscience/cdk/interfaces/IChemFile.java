@@ -23,9 +23,8 @@
  */
 package org.openscience.cdk.interfaces;
 
-
 /**
- * A Object containing a number of ChemSequences. This is supposed to be the
+ * An {@link IChemObject} containing a number of ChemSequences. This is supposed to be the
  * top level container, which can contain all the concepts stored in a chemical
  * document
  *
@@ -36,7 +35,7 @@ package org.openscience.cdk.interfaces;
 public interface IChemFile extends IChemObject {
 
 	/**
-	 * Adds an ChemSequence to this container.
+	 * Adds an {@link IChemSequence} to this container.
 	 *
 	 * @param  chemSequence  The chemSequence to be added to this container
 	 * @see                  #chemSequences
@@ -44,17 +43,17 @@ public interface IChemFile extends IChemObject {
 	public void addChemSequence(IChemSequence chemSequence);
 
 	/**
-	 *  Removes a ChemSequence from this container.
+	 * Removes the IChemSequence at the given position from this container.
 	 *
-	 *@param  chemSequence  The chemSequence to be added to this container
-	 *@see                  #chemSequences
+	 * @param  pos Position of the IChemSequence to remove
+	 * @see        #chemSequences
 	 */
 	public void removeChemSequence(int pos);
 	
 	/**
-	 *  Returns the Iterable to ChemSequences of this container.
+	 *  Returns the {@link Iterable} to ChemSequences of this container.
 	 *
-	 *@return    The Iterable to ChemSequences of this container
+	 *@return    The {@link Iterable} to ChemSequences of this container
 	 *@see       #addChemSequence
 	 */
 	public Iterable<IChemSequence> chemSequences();

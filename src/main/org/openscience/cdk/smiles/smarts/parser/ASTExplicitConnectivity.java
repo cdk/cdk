@@ -30,33 +30,26 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 public class ASTExplicitConnectivity extends SimpleNode {
     /**
-     * Number of explicit connections
+     * Number of explicit connections.
      */
     private int numOfConnection;
 
     /**
-     * Creates a new instance
-     *
-     * @param id
+     * Creates a new instance.
      */
     public ASTExplicitConnectivity(int id) {
         super(id);
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param p
-     * @param id
+     * Creates a new instance.
      */
     public ASTExplicitConnectivity(SMARTSParser p, int id) {
         super(p, id);
     }
 
     /**
-     * Returns the number of explicit connections
-     * 
-     * @return
+     * Returns the number of explicit connections.
      */
     public int getNumOfConnection() {
         return numOfConnection;
@@ -70,9 +63,7 @@ public class ASTExplicitConnectivity extends SimpleNode {
     }
 
     /**
-     * Sets the number of explicit connections
-     * 
-     * @param degree
+     * Sets the number of explicit connections.
      */
     public void setNumOfConnection(int degree) {
         this.numOfConnection = degree;

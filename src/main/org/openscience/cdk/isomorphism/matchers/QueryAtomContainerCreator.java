@@ -77,8 +77,6 @@ public class QueryAtomContainerCreator {
      *
      * @param  container  The AtomContainer that stands as model
      * @return            The new QueryAtomContainer created from container.
-     * 
-     * @see               createBasicQueryContainer
      */
     public static QueryAtomContainer createSymbolAndBondOrderQueryContainer(IAtomContainer container) {
         QueryAtomContainer queryContainer = new QueryAtomContainer();

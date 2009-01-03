@@ -56,7 +56,7 @@ public class CMLHandler extends DefaultHandler {
     /**
      * Constructor for the CMLHandler.
      *
-     * @param cdo The Chemical Document Object in which data is stored
+     * @param IChemFile The document in which data is stored
      **/
     public CMLHandler(IChemFile chemFile) {
         logger = new LoggingTool(this);

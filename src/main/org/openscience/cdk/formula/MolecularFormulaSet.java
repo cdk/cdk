@@ -150,7 +150,6 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      * chemObject.
      *
      * @param  number  The position of the IMolecularFormula to be returned. 
-     * @return 
      * @return         The IMolecularFormula at position <code>number</code> . 
      */
     @TestMethod("testGetMolecularFormula_int")

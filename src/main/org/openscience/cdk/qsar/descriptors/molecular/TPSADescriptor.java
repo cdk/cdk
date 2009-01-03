@@ -38,6 +38,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
@@ -217,8 +218,8 @@ public class TPSADescriptor implements IMolecularDescriptor {
      * checked.
      * <p/>
      * Prior to calling this method it is necessary to either add implicit or explicit hydrogens
-     * using {@link org.openscience.cdk.tools.HydrogenAdder#addImplicitHydrogensToSatisfyValency} or
-     * {@link org.openscience.cdk.tools.HydrogenAdder#addExplicitHydrogensToSatisfyValency}.
+     * using {@link CDKHydrogenAdder#addImplicitHydrogens(IAtomContainer)} or
+     * {@link AtomContainerManipulator#convertImplicitToExplicitHydrogens(IAtomContainer)}.
      *
      * @param atomContainer The AtomContainer whose TPSA is to be calculated
      * @return A double containing the topological surface area

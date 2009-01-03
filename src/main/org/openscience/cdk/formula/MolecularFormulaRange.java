@@ -135,7 +135,6 @@ public class MolecularFormulaRange implements Cloneable {
 	 *  MolecularFormulaExpand.
 	 *
 	 * @return        The the number of different isotopes in this MolecularFormulaExpand
-	 * @see           #getIsotopeCount(IIsotope)
 	 */
 	@TestMethod("testGetIsotopeCount")
 	public int getIsotopeCount() {

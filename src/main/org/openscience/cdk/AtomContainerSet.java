@@ -291,7 +291,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 *
 	 * @param  number  The position of the multiplier of the AtomContainer to be returned.
 	 * @return         The multiplier for the AtomContainer at position <code>number</code> .
-	 * @see            #setMultiplier(int, double)
+	 * @see            #setMultiplier(int, Double)
 	 */
 	public Double getMultiplier(int number) {
 		return multipliers[number];
@@ -302,7 +302,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 *
 	 * @param  container  The AtomContainer for which the multiplier is given
 	 * @return            -1, if the given molecule is not a container in this set
-	 * @see               #setMultiplier(IAtomContainer, double)
+	 * @see               #setMultiplier(IAtomContainer, Double)
 	 */
 	public Double getMultiplier(org.openscience.cdk.interfaces.IAtomContainer container) {
 		for (int i = 0; i < atomContainerCount; i++) {

@@ -41,27 +41,19 @@ public class RingIdentifierAtom extends SMARTSAtom {
 	public boolean matches(IAtom atom) {
 		return this.atom.matches(atom);
 	}
-	/**
-	 * @return
-	 */
+
 	public IQueryAtom getAtom() {
 		return atom;
 	}
-	/**
-	 * @param atom
-	 */
+
 	public void setAtom(IQueryAtom atom) {
 		this.atom = atom;
 	}
-	/**
-	 * @return
-	 */
+
 	public IQueryBond getRingBond() {
 		return ringBond;
 	}
-	/**
-	 * @param bond
-	 */
+
 	public void setRingBond(IQueryBond bond) {
 		this.ringBond = bond;
 	}

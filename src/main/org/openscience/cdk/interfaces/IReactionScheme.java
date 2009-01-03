@@ -35,9 +35,9 @@ package org.openscience.cdk.interfaces;
 public interface IReactionScheme extends IReactionSet{
 	
 	/**
-	 * Add a scheme of Reactions.
+	 * Add a scheme of reactions.
 	 * 
-	 * @param reactSet The IReactionScheme to include
+	 * @param reactScheme The IReactionScheme to include
 	 */
 	public void add(IReactionScheme reactScheme);
 	

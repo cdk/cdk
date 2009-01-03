@@ -44,19 +44,14 @@ public class TotalConnectionAtom extends SMARTSAtom {
 	private static final long serialVersionUID = 2714616726873309671L;
 
 	/**
-	 * Creates a new instance
-	 *
-	 * @param count
+	 * Creates a new instance.
 	 */
 	public TotalConnectionAtom(int count) {
 		this.setProperty(CDKConstants.TOTAL_CONNECTIONS, count);
 	}
 	
 	/**
-	 * This returns the total connection of an atom
-	 * 
-	 * @param atom
-	 * @return
+	 * This returns the total connection of an atom.
 	 */
 	public int getTC(IAtom atom) {
 		if (atom.getProperty(CDKConstants.TOTAL_CONNECTIONS) != null)

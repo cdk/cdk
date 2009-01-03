@@ -31,19 +31,14 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 public class ASTOrBond extends SimpleNode {
 	/**
-	 * Creates a new instance
-	 * 
-	 * @param id
+	 * Creates a new instance.
 	 */
 	public ASTOrBond(int id) {
 		super(id);
 	}
 
 	/**
-	 * Creates a new instance
-	 * 
-	 * @param p
-	 * @param id
+	 * Creates a new instance.
 	 */
 	public ASTOrBond(SMARTSParser p, int id) {
 		super(p, id);

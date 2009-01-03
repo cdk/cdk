@@ -245,8 +245,8 @@ public interface IReaction extends IChemObject {
      * Returns the direction of the reaction.
      *
      * @return The direction of this reaction (FORWARD, BACKWARD or BIDIRECTIONAL).
-     * @see    #BIDIRECTIONAL
-     * @see    #setDirection
+     * @see    Direction.BIDIRECTIONAL
+     * @see    #setDirection(Direction)
      */
     public IReaction.Direction getDirection();
     

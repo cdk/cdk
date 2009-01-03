@@ -1,4 +1,5 @@
-/* 
+/* $Revision:$
+ * 
  * Copyright (C) 2005-2008   Nina Jeliazkova <nina@acad.bg>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -20,9 +21,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
-
 package org.openscience.cdk.io.random;
 
 import java.io.BufferedReader;
@@ -50,9 +49,9 @@ import org.openscience.cdk.tools.LoggingTool;
  * Reads the file as a text and builds an index file, if the index file doesn't already exist.
  * The index stores offset, length and a third field reserved for future use.
  * Subsequent access for a record N uses this index to seek the record and return the molecule.
- * Useful for very big files. 
+ * Useful for very big files.
+ *  
  * @author Nina Jeliazkova nina@acad.bg
- * <b>Modified</b> May 25, 2006
  */
 public abstract class RandomAccessReader extends DefaultIteratingChemObjectReader implements IRandomAccessChemObjectReader<IChemObject> {
     protected static LoggingTool logger = new LoggingTool(RandomAccessReader.class);
@@ -315,9 +314,9 @@ public abstract class RandomAccessReader extends DefaultIteratingChemObjectReade
     }
 
     /**
-     * Opens the file index <filename>_cdk.index in a temporary folder, as specified by "java.io.tmpdir" property.
+     * Opens the file index <filename>_cdk.index</filename> in a temporary folder, as specified by "java.io.tmpdir" property.
+     * 
      * @param filename
-     * @return
      * @throws Exception
      */
 	public static File getIndexFile(String filename) throws Exception {

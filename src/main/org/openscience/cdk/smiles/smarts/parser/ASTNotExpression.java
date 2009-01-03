@@ -31,7 +31,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 public class ASTNotExpression extends SimpleNode {
     /**
-     * Whether it's not
+     * Whether it's not.
      */
     private int type;
 
@@ -44,19 +44,14 @@ public class ASTNotExpression extends SimpleNode {
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param id
+     * Creates a new instance.
      */
     public ASTNotExpression(int id) {
         super(id);
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param p
-     * @param id
+     * Creates a new instance.
      */
     public ASTNotExpression(SMARTSParser p, int id) {
         super(p, id);

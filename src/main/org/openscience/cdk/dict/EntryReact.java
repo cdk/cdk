@@ -101,7 +101,7 @@ public class EntryReact extends Entry{
      * Set the parameters of the reaction.
      * 
      * @param nameParam The parameter names of the reaction as String
-     * @param nameType  The parameter types of the reaction as String
+     * @param typeParam The parameter types of the reaction as String
      * @param value     The value default of the parameter
      */
     public void setParameters(String nameParam, String typeParam, String value) {
