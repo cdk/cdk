@@ -34,7 +34,7 @@ import org.openscience.cdk.interfaces.IBond;
 
 /**
  * An algorithm for topological symmetry.
- * This algorithm derived from the algorithm {@cdk.cite HU94}.
+ * This algorithm derived from the algorithm {@cdk.cite Hu94}.
  * @cdk.svnrev  $Revision$
  *
  *@author      Junfeng Hao
