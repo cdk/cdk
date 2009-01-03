@@ -30,33 +30,26 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 public class ASTRingMembership extends SimpleNode {
     /**
-     * Number of SSSR rings this atom is in
+     * Number of SSSR rings this atom is in.
      */
     private int numOfMembership;
 
     /**
-     * Creates a new instance
-     *
-     * @param id
+     * Creates a new instance.
      */
     public ASTRingMembership(int id) {
         super(id);
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param p
-     * @param id
+     * Creates a new instance.
      */
     public ASTRingMembership(SMARTSParser p, int id) {
         super(p, id);
     }
 
     /**
-     * Returns the number of SSSR rings this atom is in
-     * 
-     * @return
+     * Returns the number of SSSR rings this atom is in.
      */
     public int getNumOfMembership() {
         return numOfMembership;
@@ -70,9 +63,7 @@ public class ASTRingMembership extends SimpleNode {
     }
 
     /**
-     * Sets the number of SSSR rings this atom is in
-     * 
-     * @param numOfMembership
+     * Sets the number of SSSR rings this atom is in.
      */
     public void setNumOfMembership(int numOfMembership) {
         this.numOfMembership = numOfMembership;

@@ -30,24 +30,19 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 public class ASTTotalHCount extends SimpleNode {
     /**
-     * Total H count
+     * Total H count.
      */
     private int count;
 
     /**
-     * Creates a new instance
-     *
-     * @param id
+     * Creates a new instance.
      */
     public ASTTotalHCount(int id) {
         super(id);
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param p
-     * @param id
+     * Creates a new instance.
      */
     public ASTTotalHCount(SMARTSParser p, int id) {
         super(p, id);
@@ -61,18 +56,14 @@ public class ASTTotalHCount extends SimpleNode {
     }
 
     /**
-     * Returns total H count
-     * 
-     * @return
+     * Returns total H count.
      */
     public int getCount() {
         return count;
     }
 
     /**
-     * Sets total H count
-     * 
-     * @param count
+     * Sets total H count.
      */
     public void setCount(int count) {
         this.count = count;

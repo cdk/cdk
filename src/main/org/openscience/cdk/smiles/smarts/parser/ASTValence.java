@@ -30,33 +30,26 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 public class ASTValence extends SimpleNode {
     /**
-     * Valence order
+     * Valence order.
      */
     private int order;
 
     /**
-     * Creates a new instance
-     *
-     * @param id
+     * Creates a new instance.
      */
     public ASTValence(int id) {
         super(id);
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param p
-     * @param id
+     * Creates a new instance.
      */
     public ASTValence(SMARTSParser p, int id) {
         super(p, id);
     }
 
     /**
-     * Returns valence order
-     * 
-     * @return
+     * Returns valence order.
      */
     public int getOrder() {
         return order;
@@ -70,9 +63,7 @@ public class ASTValence extends SimpleNode {
     }
 
     /**
-     * Sets valence order
-     * 
-     * @param order
+     * Sets valence order.
      */
     public void setOrder(int order) {
         this.order = order;

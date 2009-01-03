@@ -1134,9 +1134,8 @@ public class Java2DRenderer implements IJava2DRenderer {
 		return affinet;
 	}
 	/**
-	 *  Returns model coordinates from screencoordinates provided by the graphics translation
+	 * Returns model coordinates from screencoordinates provided by the graphics translation.
 	 *
-	 * @param ptSrc the point to convert
 	 * @return Point2D in real world coordinates
 	 */
 	public Point2d getCoorFromScreen(final int screenX, final int screenY) {
@@ -1152,8 +1151,6 @@ public class Java2DRenderer implements IJava2DRenderer {
 		return new Point2d(ptDst.getX(), ptDst.getY());
 	}
 	/**
-	 *
-	 * @param container
 	 * @param ptSrc in real world coordinates (ie not screencoordinates)
 	 */
 	public static void showClosestAtomOrBond(final IAtomContainer container, final Point2d ptSrc) {

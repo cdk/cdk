@@ -31,19 +31,14 @@ package org.openscience.cdk.smiles.smarts.parser;
 public class ASTSmarts extends SimpleNode {
 
     /**
-     * Creates a new instance
-     *
-     * @param id
+     * Creates a new instance.
      */
     public ASTSmarts(int id) {
         super(id);
     }
 
     /**
-     * Creates a new instance
-     *
-     * @param p
-     * @param id
+     * Creates a new instance.
      */
     public ASTSmarts(SMARTSParser p, int id) {
         super(p, id);

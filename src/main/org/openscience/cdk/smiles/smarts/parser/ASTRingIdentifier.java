@@ -31,24 +31,19 @@ package org.openscience.cdk.smiles.smarts.parser;
 public class ASTRingIdentifier extends SimpleNode {
 
 	/**
-	 * The ring identifier
+	 * The ring identifier.
 	 */
 	private int ringId;
 
 	/**
-	 * Creates a new instance
-	 *
-	 * @param id
+	 * Creates a new instance.
 	 */
 	public ASTRingIdentifier(int id) {
 		super(id);
 	}
 
 	/**
-	 * Creates a new instance
-	 *
-	 * @param p
-	 * @param id
+	 * Creates a new instance.
 	 */
 	public ASTRingIdentifier(SMARTSParser p, int id) {
 		super(p, id);
@@ -62,18 +57,14 @@ public class ASTRingIdentifier extends SimpleNode {
 	}
 
 	/**
-	 * Returns the ring identifier
-	 * 
-	 * @return
+	 * Returns the ring identifier.
 	 */
 	public int getRingId() {
 		return ringId;
 	}
 
 	/**
-	 * Sets the ring identifier
-	 * 
-	 * @param ringId
+	 * Sets the ring identifier.
 	 */
 	public void setRingId(int ringId) {
 		this.ringId = ringId;

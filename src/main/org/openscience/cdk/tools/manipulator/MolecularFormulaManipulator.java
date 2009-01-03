@@ -211,12 +211,6 @@ public class MolecularFormulaManipulator {
 			return getString(formula, generateOrderEle_Hill_NoCarbons());
 	}
 	
-	/**
-	 * 
-	 * @param orderElements
-	 * @param formula
-	 * @return
-	 */
 	public static List<IIsotope> putInOrder(String[] orderElements, IMolecularFormula formula) {
 		List<IIsotope> isotopesList = new ArrayList<IIsotope>();
         for (String orderElement : orderElements) {
@@ -231,15 +225,11 @@ public class MolecularFormulaManipulator {
 		return isotopesList;
 	}
 	
-	/**
-	 * 
-	 * @param formula
-	 * @return
-	 */
 	@TestMethod("testGetHillString_IMolecularFormula")
 	public static String getHillString(IMolecularFormula formula){
 		return null;
 	}
+
 	/**
 	 * Returns the string representation of the molecule formula with
 	 * numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags. 
@@ -345,7 +335,7 @@ public class MolecularFormulaManipulator {
 	 *
 	 * @param  stringMF   The molecularFormula string 
 	 * @return            The filled IMolecularFormula
-	 * @see               #getMolecularFormula(String)
+	 * @see               #getMolecularFormula(String, IChemObjectBuilder)
 	 */
 	@TestMethod("testGetMolecularFormula_String_IMolecularFormula")
 	public static IMolecularFormula getMolecularFormula(String stringMF, IMolecularFormula formula) {
@@ -554,7 +544,7 @@ public class MolecularFormulaManipulator {
 	 * <p> The hydrogens must be implicit.
 	 *
 	 * @param  atomContainer     IAtomContainer object
-	 * @param  molecularFormula  IMolecularFormula molecularFormula to put the new Isotopes
+	 * @param  formula           IMolecularFormula molecularFormula to put the new Isotopes
 	 * @return                   the filled AtomContainer
 	 * @see                      #getMolecularFormula(IAtomContainer)
 	 */

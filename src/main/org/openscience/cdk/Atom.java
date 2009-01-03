@@ -24,12 +24,13 @@
  */
 package org.openscience.cdk;
 
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IElement;
+import java.io.Serializable;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-import java.io.Serializable;
+
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IElement;
 
 /**
  * Represents the idea of an chemical atom.

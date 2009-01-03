@@ -31,9 +31,9 @@ import java.util.Map;
  * Provides atomic property values for descriptor calculations.
  *
  * This class currently provides values for mass, Vanderwaals volume, electronegativity and
- * polarizability
+ * polarizability.
  *
- * @cdk.author Todd Martin
+ * @author     Todd Martin
  * @cdk.module qsar
  * @cdk.svnrev  $Revision$
  */
