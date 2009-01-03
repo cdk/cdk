@@ -693,7 +693,7 @@ public class CMLCoreModule implements ICMLModule {
             }
             if (atomCounter > formalCharges.size()) {
                 /* while strictly undefined, assume zero 
-                implicit hydrogens when no number is given */
+                formal charge when no number is given */
                 formalCharges.add("0");
             }
             /* It may happen that not all atoms have
