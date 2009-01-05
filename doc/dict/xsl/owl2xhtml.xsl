@@ -130,7 +130,7 @@ h3 {background-color: #EEEEEE}
   </xsl:element>
 </p>
 <p>
-  Additions to this dictionary can be send to the 
+  Additions to this dictionary can be sent to the 
   <a href="http://sourceforge.net/mail/?group_id=107219">QSAR project developers list (qsar-devel)</a>.
   If you find an error on this page, please post a bug report then on
   <a href="http://sourceforge.net/tracker/?group_id=107219&amp;atid=647049">this page</a>.

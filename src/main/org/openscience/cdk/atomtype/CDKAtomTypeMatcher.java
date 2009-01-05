@@ -53,7 +53,6 @@ import org.openscience.cdk.interfaces.IAtomType.Hybridization;
  * @cdk.module     core
  * @cdk.svnrev     $Revision$
  * @cdk.bug        1802998
- * @cdk.bug        1851197
  */
 @TestClass("org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest")
 public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
@@ -542,8 +541,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             return perceiveNitrogenRadicals(atomContainer, atom);
         } else if (hasHybridization(atom) && !isCharged(atom)) {
             if (atom.getHybridization() == Hybridization.SP1) {
-                IAtomType type = getAtomType("N.sp1");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                int neighborCount = atomContainer.getConnectedAtomsCount(atom);
+                if (neighborCount > 1) {
+                    IAtomType type = getAtomType("N.sp1.2");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                } else {
+                    IAtomType type = getAtomType("N.sp1");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                }
             } else if (atom.getHybridization() == Hybridization.SP2) {
             	if (isAmide(atom, atomContainer)) {
                     IAtomType type = getAtomType("N.amide");
@@ -694,8 +699,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 IAtomType type = getAtomType("N.sp2");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             } else if (maxBondOrder == CDKConstants.BONDORDER_TRIPLE) {
-                IAtomType type = getAtomType("N.sp1");
-                if (isAcceptable(atom, atomContainer, type)) return type;
+                int neighborCount = atomContainer.getConnectedAtomsCount(atom);
+                if (neighborCount > 1) {
+                    IAtomType type = getAtomType("N.sp1.2");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                } else {
+                    IAtomType type = getAtomType("N.sp1");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                }
             }
         }
     	return null;

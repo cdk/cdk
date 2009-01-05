@@ -30,9 +30,10 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.AbstractMonomerTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * TestCase for the Monomer class.
@@ -42,58 +43,19 @@ import org.openscience.cdk.interfaces.IMonomer;
  * @author  Edgar Luttman <edgar@uni-paderborn.de>
  * @cdk.created 2001-08-09
  */
-<<<<<<< HEAD:src/test/org/openscience/cdk/MonomerTest.java
-public class MonomerTest extends AtomContainerTest {
-=======
-public class MonomerTest extends CDKTestCase {
->>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/MonomerTest.java
+public class MonomerTest extends AbstractMonomerTest {
 
-	protected static IChemObjectBuilder builder;
-	
     @BeforeClass public static void setUp() {
-    	builder = DefaultChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new Monomer();
+            }
+        });
     }
 
 	@Test public void testMonomer() {
-		IMonomer oMonomer = builder.newMonomer();
-        Assert.assertTrue(oMonomer != null);
+		IMonomer oMonomer = new Monomer();
+        Assert.assertNotNull(oMonomer);
 	}
 	
-	@Test public void testSetMonomerName_String() {
-        IMonomer m = builder.newMonomer();
-        m.setMonomerName(new String("TRP279"));
-        Assert.assertEquals(new String("TRP279"), m.getMonomerName());
-	}
-    @Test public void testGetMonomerName() {
-        testSetMonomerName_String();
-    }
-    
-    @Test public void testSetMonomerType_String() {
-        IMonomer oMonomer = builder.newMonomer();
-        oMonomer.setMonomerType(new String("TRP"));
-        Assert.assertEquals(new String("TRP"), oMonomer.getMonomerType());
-    }
-    @Test public void testGetMonomerType() {
-        testSetMonomerType_String();
-    }
-
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
-    @Test public void testToString() {
-        IMonomer oMonomer = builder.newMonomer();
-        oMonomer.setMonomerType(new String("TRP"));
-        String description = oMonomer.toString();
-        for (int i=0; i< description.length(); i++) {
-            Assert.assertTrue('\n' != description.charAt(i));
-            Assert.assertTrue('\r' != description.charAt(i));
-        }
-    }
-
-    @Test public void testClone() throws Exception {
-        IMonomer oMonomer = builder.newMonomer();
-        Object clone = oMonomer.clone();
-        Assert.assertTrue(clone instanceof IMonomer);
-        Assert.assertNotSame(oMonomer, clone);
-    }
 }

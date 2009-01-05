@@ -24,19 +24,86 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.CrystalTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.interfaces.AbstractCrystalTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNCrystal}.
  *
  * @cdk.module test-nonotify
  */
-public class NNCrystalTest extends CrystalTest {
+public class NNCrystalTest extends AbstractCrystalTest {
 
     @BeforeClass public static void setUp() {
-    	CrystalTest.builder = NoNotificationChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNCrystal();
+            }
+        });
     }
 
+    @Test public void testNNCrystal() {
+        ICrystal crystal = new NNCrystal();
+        Assert.assertNotNull(crystal);
+        Assert.assertEquals(0, crystal.getAtomCount());
+        Assert.assertEquals(0, crystal.getBondCount());
+    }
+    
+    @Test public void testNNCrystal_IAtomContainer() {
+        IAtomContainer acetone = newChemObject().getBuilder().newAtomContainer();
+        IAtom c1 = acetone.getBuilder().newAtom("C");
+        IAtom c2 = acetone.getBuilder().newAtom("C");
+        IAtom o = acetone.getBuilder().newAtom("O");
+        IAtom c3 = acetone.getBuilder().newAtom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        IBond b1 = acetone.getBuilder().newBond(c1, c2, IBond.Order.SINGLE);
+        IBond b2 = acetone.getBuilder().newBond(c1, o, IBond.Order.DOUBLE);
+        IBond b3 = acetone.getBuilder().newBond(c1, c3, IBond.Order.SINGLE);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        ICrystal crystal = new NNCrystal(acetone);
+        Assert.assertNotNull(crystal);
+        Assert.assertEquals(4, crystal.getAtomCount());
+        Assert.assertEquals(3, crystal.getBondCount());
+    }
+
+    // Overwrite default methods: no notifications are expected!
+    
+    @Test public void testNotifyChanged() {
+        NNChemObjectTestHelper.testNotifyChanged(newChemObject());
+    }
+    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
+    }
+    @Test public void testStateChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(newChemObject());
+    }
+    @Test public void testClone_ChemObjectListeners() throws Exception {
+        NNChemObjectTestHelper.testClone_ChemObjectListeners(newChemObject());
+    }
+    @Test public void testAddListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
+    }
+    @Test public void testGetListenerCount() {
+        NNChemObjectTestHelper.testGetListenerCount(newChemObject());
+    }
+    @Test public void testRemoveListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testRemoveListener_IChemObjectListener(newChemObject());
+    }
+    @Test public void testSetNotification_true() {
+        NNChemObjectTestHelper.testSetNotification_true(newChemObject());
+    }
 }

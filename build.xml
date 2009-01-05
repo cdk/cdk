@@ -260,8 +260,17 @@
         </target>
 
         <target id="compile-needed-test" name="compile-needed-test">
+            <if>
+                <matches string="${module}" pattern="^test"/>
+                <then>
+                    <property name="source" value="src/test"/>
+                </then>
+                <else>
+                    <property name="source" value="src/main"/>
+                </else>
+            </if>
             <uptodate property="module-uptodate" targetfile="${dist}/jar/cdk-${module}.jar">
-                <srcfiles dir="${src}/main/">
+                <srcfiles dir="${source}">
                     <includesfile name="${build}/${module}.javafiles"/>
                 </srcfiles>
             </uptodate>
@@ -502,20 +511,21 @@
             list="test"/>
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="test-libiocml,test-qsar,test-io,test-core,test-valencycheck,
-                  test-smarts,test-standard,test-reaction,
+            list="test-interfaces,test-libiocml,test-qsar,test-io,test-core,
+        	      test-valencycheck,test-smarts,test-standard,test-reaction,
                   test-pcore,test-sdg,test-forcefield,test-fingerprint,
                   test-ionpot,test-qm,test-isomorphism,test-libiomd,test-dict,
-                  test-data,test-diff,test-charges,test-inchi,test-formula,
+                  test-diff,test-charges,test-inchi,test-formula,
                   test-render"/>
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="test-datadebug,test-nonotify,test-qsaratomic,test-qsarbond,
+            list="test-data,test-qsaratomic,test-qsarbond,
                   test-pdb,test-smiles,test-extra,test-atomtype,
                   test-structgen"/>
-        <foreach target="compile-module" param="module"
+        <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="test-qsarmolecular,test-builder3d"/>
+            list="test-qsarmolecular,test-builder3d,test-datadebug,
+        	      test-nonotify"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-qsarprotein,test-qsarionpot"/>

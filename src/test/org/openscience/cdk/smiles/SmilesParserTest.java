@@ -28,8 +28,8 @@ import org.junit.Assume;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -102,7 +102,6 @@ public class SmilesParserTest extends CDKTestCase {
     }
   }
 
-  /** @cdk.bug 1579229 */
   @Test (timeout=1000)
   public void testBug1579229() throws Exception {
     String smiles = "c1c(c23)ccc(c34)ccc4ccc2c1";
@@ -1678,5 +1677,12 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(11, molecule.getBondCount());
     }
 
+	@Test public void test1456139() throws Exception{
+		SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = p.parseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
+		IMolecule mol2=DefaultChemObjectBuilder.getInstance().newMolecule(mol);		
+		Assert.assertNotNull(mol2);
+		Assert.assertEquals(22, mol2.getAtomCount());
+	}
 }
 

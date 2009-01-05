@@ -219,6 +219,71 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         }
     }
 
+    @Test
+    public void testTakeIntoAccountImplicitHydrogensInEthane() {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IMolecule ethane1 = builder.newMolecule();
+        IAtom c1 = builder.newAtom("C");
+        IAtom c2 = builder.newAtom("C");
+        c1.setHydrogenCount(3);
+        c2.setHydrogenCount(3);
+        ethane1.addAtom(c1);
+        ethane1.addAtom(c2);
+
+        IMolecule ethane2 = builder.newMolecule();
+        IAtom c3 = builder.newAtom("C");
+        IAtom c4 = builder.newAtom("C");
+        ethane2.addAtom(c3);
+        ethane2.addAtom(c4);
+
+        IAtom h1 = builder.newAtom("H");
+        ethane2.addAtom(h1);
+        IAtom h2 = builder.newAtom("H");
+        ethane2.addAtom(h2);
+        IAtom h3 = builder.newAtom("H");
+        ethane2.addAtom(h3);
+
+        IAtom h4 = builder.newAtom("H");
+        IAtom h5 = builder.newAtom("H");
+        IAtom h6 = builder.newAtom("H");
+        ethane2.addAtom(h4);
+        ethane2.addAtom(h5);
+        ethane2.addAtom(h6);
+
+        ethane2.addBond(0, 1, Order.SINGLE);
+        ethane2.addBond(0, 2, Order.SINGLE);
+        ethane2.addBond(0, 3, Order.SINGLE);
+        ethane2.addBond(0, 4, Order.SINGLE);
+
+        ethane2.addBond(1, 5, Order.SINGLE);
+        ethane2.addBond(1, 6, Order.SINGLE);
+        ethane2.addBond(1, 7, Order.SINGLE);
+
+        IDescriptorResult v1 = descriptor.calculate(ethane1).getValue();
+        IDescriptorResult v2 = descriptor.calculate(ethane2).getValue();
+
+        String errorMessage = "(" + descriptor.getClass().toString() + ") The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
+        if (v1 instanceof IntegerResult) {
+            Assert.assertEquals(errorMessage, ((IntegerResult) v1).intValue(), ((IntegerResult) v2).intValue());
+        } else if (v1 instanceof DoubleResult) {
+            Assert.assertEquals(errorMessage, ((DoubleResult) v1).doubleValue(), ((DoubleResult) v2).doubleValue(), 0.00001);
+        } else if (v1 instanceof BooleanResult) {
+            Assert.assertEquals(errorMessage, ((BooleanResult) v1).booleanValue(), ((BooleanResult) v2).booleanValue());
+        } else if (v1 instanceof DoubleArrayResult) {
+            DoubleArrayResult da1 = (DoubleArrayResult) v1;
+            DoubleArrayResult da2 = (DoubleArrayResult) v2;
+            for (int i = 0; i < da1.length(); i++) {
+                Assert.assertEquals(errorMessage, da1.get(i), da2.get(i), 0.00001);
+            }
+        } else if (v1 instanceof IntegerArrayResult) {
+            IntegerArrayResult da1 = (IntegerArrayResult) v1;
+            IntegerArrayResult da2 = (IntegerArrayResult) v2;
+            for (int i = 0; i < da1.length(); i++) {
+                Assert.assertEquals(errorMessage, da1.get(i), da2.get(i));
+            }
+        }
+    }
+
     @Ignore
     @Test public void testTakeIntoAccountBondHybridization() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();

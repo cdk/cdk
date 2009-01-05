@@ -72,7 +72,7 @@ public class MorganNumbersTools {
 
   /**
    *  Makes an array containing the morgan numbers+element symbol of the atoms of atomContainer. This method
-   *  puts the element symbol before the morgan number, usefull for finding out how many different rests are connected to an atom.
+   *  puts the element symbol before the morgan number, useful for finding out how many different rests are connected to an atom.
    *
    * @param  atomContainer  The atomContainer to analyse.
    * @return                The morgan numbers value.

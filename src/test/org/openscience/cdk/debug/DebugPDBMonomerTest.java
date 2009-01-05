@@ -24,19 +24,32 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.protein.data.PDBMonomerTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractPDBMonomerTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IPDBMonomer;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugPDBMonomer}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugPDBMonomerTest extends PDBMonomerTest {
+public class DebugPDBMonomerTest extends AbstractPDBMonomerTest {
 
     @BeforeClass public static void setUp() {
-    	PDBMonomerTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugPDBMonomer();
+            }
+        });
     }
 
+	@Test public void testDebugPDBMonomer() {
+		IPDBMonomer monomer = new DebugPDBMonomer();
+		Assert.assertNotNull(monomer);
+		Assert.assertEquals(monomer.getICode(), null);
+	}
 }

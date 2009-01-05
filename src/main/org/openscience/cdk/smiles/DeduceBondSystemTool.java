@@ -53,7 +53,6 @@ import java.util.List;
  * @cdk.keyword bond order
  * 
  * @cdk.bug 1895805
- * @cdk.bug 1895807
  * @cdk.bug 1931262
  */
 @TestClass("org.openscience.cdk.smiles.DeduceBondSystemToolTest")

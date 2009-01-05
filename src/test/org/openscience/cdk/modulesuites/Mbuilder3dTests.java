@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.Builder3dCoverageTest;
-import org.openscience.cdk.modeling.builder3d.ModelBuilder3dTest;
+import org.openscience.cdk.modeling.builder3d.ModelBuilder3DTest;
 import org.openscience.cdk.modeling.builder3d.TemplateHandler3DTest;
 import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest;
 
@@ -40,7 +40,7 @@ import org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94Descripto
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     Builder3dCoverageTest.class,
-    ModelBuilder3dTest.class,
+    ModelBuilder3DTest.class,
     PartialTChargeMMFF94DescriptorTest.class,
     TemplateHandler3DTest.class
 })

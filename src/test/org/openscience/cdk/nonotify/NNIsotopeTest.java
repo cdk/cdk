@@ -24,19 +24,88 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.IsotopeTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.AbstractIsotopeTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNIsotope}.
  *
  * @cdk.module test-nonotify
  */
-public class NNIsotopeTest extends IsotopeTest {
+public class NNIsotopeTest extends AbstractIsotopeTest {
 
     @BeforeClass public static void setUp() {
-    	IsotopeTest.builder = NoNotificationChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNIsotope(new NNElement());
+            }
+        });
     }
 
+    @Test public void testNNIsotope_String() {
+        IIsotope i = new NNIsotope("C");
+        Assert.assertEquals("C", i.getSymbol());
+    }
+    
+    @Test public void testNNIsotope_IElement() {
+    	IElement element = newChemObject().getBuilder().newElement("C");
+        IIsotope i = new NNIsotope(element);
+        Assert.assertEquals("C", i.getSymbol());
+    }
+    
+    @Test public void testNNIsotope_int_String_int_double_double() {
+        IIsotope i = new NNIsotope(6, "C", 12, 12.001, 80.0);
+        Assert.assertEquals(12, i.getMassNumber().intValue());
+        Assert.assertEquals("C", i.getSymbol());
+        Assert.assertEquals(6, i.getAtomicNumber().intValue());
+        Assert.assertEquals(12.001, i.getExactMass(), 0.001);
+        Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
+    }
+    
+    @Test public void testNNIsotope_String_int() {
+        IIsotope i = new NNIsotope("C", 12);
+        Assert.assertEquals(12, i.getMassNumber().intValue());
+        Assert.assertEquals("C", i.getSymbol());
+    }
+    
+    @Test public void testNNIsotope_int_String_double_double() {
+        IIsotope i = new NNIsotope(6, "C", 12.001, 80.0);
+        Assert.assertEquals("C", i.getSymbol());
+        Assert.assertEquals(6, i.getAtomicNumber().intValue());
+        Assert.assertEquals(12.001, i.getExactMass(), 0.001);
+        Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
+    }
+
+    // Overwrite default methods: no notifications are expected!
+    
+    @Test public void testNotifyChanged() {
+        NNChemObjectTestHelper.testNotifyChanged(newChemObject());
+    }
+    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
+    }
+    @Test public void testStateChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(newChemObject());
+    }
+    @Test public void testClone_ChemObjectListeners() throws Exception {
+        NNChemObjectTestHelper.testClone_ChemObjectListeners(newChemObject());
+    }
+    @Test public void testAddListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
+    }
+    @Test public void testGetListenerCount() {
+        NNChemObjectTestHelper.testGetListenerCount(newChemObject());
+    }
+    @Test public void testRemoveListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testRemoveListener_IChemObjectListener(newChemObject());
+    }
+    @Test public void testSetNotification_true() {
+        NNChemObjectTestHelper.testSetNotification_true(newChemObject());
+    }
 }

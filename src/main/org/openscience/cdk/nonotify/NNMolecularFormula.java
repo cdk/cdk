@@ -1,4 +1,4 @@
-/* $Revision: 10774 $ $Author: egonw $ $Date: 2008-05-03 08:50:01 +0200 (Sat, 03 May 2008) $
+/* $Revision$ $Author$ $Date$
  * 
  * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
  * 
@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @cdk.module  nonotify
- * @cdk.svnrev  $Revision: 10774 $
+ * @cdk.svnrev  $Revision$
  */
 public class NNMolecularFormula extends MolecularFormula {
 	

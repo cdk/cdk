@@ -24,7 +24,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * TestSuite that uses tests whether all public methods in the core
+ * TestSuite that tests whether all public methods in the core
  * module are tested. Unlike Emma, it does not test that all code is
  * tested, just all methods.
  *

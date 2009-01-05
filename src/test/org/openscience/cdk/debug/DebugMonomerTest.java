@@ -24,19 +24,31 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.MonomerTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractMonomerTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMonomer;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugMonomer}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugMonomerTest extends MonomerTest {
+public class DebugMonomerTest extends AbstractMonomerTest {
 
     @BeforeClass public static void setUp() {
-    	MonomerTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugMonomer();
+            }
+        });
     }
 
+	@Test public void testDebugMonomer() {
+		IMonomer oMonomer = new DebugMonomer();
+        Assert.assertNotNull(oMonomer);
+	}
 }

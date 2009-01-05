@@ -28,7 +28,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * See <a href="http://wwmm.ch.cam.ac.uk/moin/ChemicalMarkupLanguage">here</a>.
+ * See <a href="http://en.wikipedia.org/wiki/Chemical_Markup_Language">here</a>.
  * 
  * @cdk.module io
  * @cdk.svnrev  $Revision$

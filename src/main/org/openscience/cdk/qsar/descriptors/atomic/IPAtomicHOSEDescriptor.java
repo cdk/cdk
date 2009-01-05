@@ -72,7 +72,6 @@ import java.util.StringTokenizer;
  * @cdk.svnrev   $Revision$
  * @cdk.set      qsar-descriptors
  * @cdk.dictref  qsar-descriptors:ionizationPotential
- * @cdk.bug      1860497
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.IPAtomicHOSEDescriptorTest")
 public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {

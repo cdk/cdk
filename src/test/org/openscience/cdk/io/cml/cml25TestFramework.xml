@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cml title="Regression tests for valid XML Schema documents for CML 2.3"
+
+  xmlns="http://www.xml-cml.org/schema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.xml-cml.org/schema ../../../../../../main/org/openscience/cdk/io/cml/data/cml25b1.xsd"
+  
+  xmlns:bo="http://www.blueobelisk.org/dict/terminology">
+  
+  <!-- IMPORTANT
+  
+    the goal of this file is to list the exact strings tested in the
+    CML25FragmentsTest JUnit test, in order to make sure that the 
+    tested CML fragments are valid against the CML Schema 2.5.
+    
+    Each fragment has a label pointing to the method in the JUnit test
+    class that tests that string.    
+  -->
+  
+  <!-- not tested yet -->
+  <cml>
+    <isotopeList>
+      <isotope id='H1' number='1' elementType='H'>
+        <scalar dictRef="bo:relativeAbundance">99.9885</scalar>
+        <scalar dictRef="bo:exactMass" errorValue="0.0001E-6">1.007825032</scalar>
+      </isotope>
+    </isotopeList>
+    <molecule>
+      <atomArray>
+        <atom id='a1' elementType='H' isotopeRef='H1'/>
+      </atomArray>
+    </molecule>
+  </cml>
+
+</cml>

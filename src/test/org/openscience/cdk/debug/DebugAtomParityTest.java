@@ -27,28 +27,43 @@ package org.openscience.cdk.debug;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.debug.DebugAtomParity;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
+import org.openscience.cdk.AtomParity;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.AtomParityTest;
+import org.openscience.cdk.interfaces.AbstractAtomParityTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugAtomParity}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugAtomParityTest extends AtomParityTest {
+public class DebugAtomParityTest extends AbstractAtomParityTest {
 
     @BeforeClass public static void setUp() {
-    	AtomParityTest.builder = DebugChemObjectBuilder.getInstance();
+        setBuilder(DebugChemObjectBuilder.getInstance());
     }
-    
+
     @Test public void testCorrectInstance() {
-    	IAtomParity parity = builder.newAtomParity(builder.newAtom(), builder.newAtom(), builder.newAtom(), builder.newAtom(), builder.newAtom(), 1); 
+    	IAtomParity parity = getBuilder().newAtomParity(getBuilder().newAtom(), getBuilder().newAtom(), getBuilder().newAtom(), getBuilder().newAtom(), getBuilder().newAtom(), 1); 
     	Assert.assertTrue(
     		"Object not instance of DebugAtomParity, but: " + parity.getClass().getName(),
     		parity instanceof DebugAtomParity
     	);
     }
 
+    @Test public void testDebugAtomParity_IAtom_IAtom_IAtom_IAtom_IAtom_int() {
+        IAtom carbon = getBuilder().newAtom("C");
+        carbon.setID("central");
+        IAtom carbon1 = getBuilder().newAtom("C");
+        carbon1.setID("c1");
+        IAtom carbon2 = getBuilder().newAtom("C");
+        carbon2.setID("c2");
+        IAtom carbon3 = getBuilder().newAtom("C");
+        carbon3.setID("c3");
+        IAtom carbon4 = getBuilder().newAtom("C");
+        carbon4.setID("c4");
+        int parityInt = 1;
+        AtomParity parity = new DebugAtomParity(carbon, carbon1, carbon2, carbon3, carbon4, parityInt);
+        Assert.assertNotNull(parity);
+    }
 }

@@ -24,19 +24,31 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.ChemSequenceTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractChemSequenceTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugChemSequence}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugChemSequenceTest extends ChemSequenceTest {
+public class DebugChemSequenceTest extends AbstractChemSequenceTest {
 
     @BeforeClass public static void setUp() {
-    	ChemSequenceTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugChemSequence();
+            }
+        });
     }
 
+    @Test public void testDebugChemSequence() {
+        IChemSequence cs = new DebugChemSequence();
+        Assert.assertNotNull(cs);
+    }
 }

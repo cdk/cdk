@@ -310,7 +310,7 @@ IReactionProcess type = new RadicalSiteInitiationHReaction();
 	}
 	
 	/**
-	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
+	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.
 	 * 
 	 * @param molecule          The IMolecule to analyze
 	 * @throws CDKException

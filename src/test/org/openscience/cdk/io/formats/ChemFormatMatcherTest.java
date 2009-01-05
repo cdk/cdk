@@ -46,6 +46,12 @@ abstract public class ChemFormatMatcherTest extends ChemFormatTest {
         );
     }
 
+    @Test public void testMatches() {
+        Assert.assertTrue(true);
+        // positive testing is done by the ReaderFactoryTest, and
+        // negative tests are given below
+    }
+
     @Test public void testMatchesEmptyString() {
         Assert.assertFalse(matcher.matches(1, ""));
     }

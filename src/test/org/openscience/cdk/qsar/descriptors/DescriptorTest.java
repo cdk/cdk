@@ -81,6 +81,9 @@ public abstract class DescriptorTest extends CDKTestCase {
         }
     }
     
+    /**
+     * @cdk.bug 1862137
+     */
     @Test public void testGetParameters() {
         Object[] params = descriptor.getParameters();
         if (params == null) {
@@ -98,6 +101,9 @@ public abstract class DescriptorTest extends CDKTestCase {
         }
     }
     
+    /**
+     * @cdk.bug 1862137
+     */
     @Test public void testGetParameterType_String() {
         String[] paramNames = descriptor.getParameterNames();
         if (paramNames == null) paramNames = new String[0];

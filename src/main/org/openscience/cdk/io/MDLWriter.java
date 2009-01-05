@@ -93,7 +93,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module  io
  * @cdk.svnrev  $Revision$
  * @cdk.keyword file format, MDL molfile
- * @cdk.bug     1524466
  */
 @TestClass("org.openscience.cdk.io.MDLWriterTest")
 public class MDLWriter extends DefaultChemObjectWriter {

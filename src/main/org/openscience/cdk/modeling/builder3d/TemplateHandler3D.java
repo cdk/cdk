@@ -25,6 +25,7 @@
 package org.openscience.cdk.modeling.builder3d;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -37,13 +38,11 @@ import java.util.zip.GZIPInputStream;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -97,8 +96,9 @@ public class TemplateHandler3D {
     /**
      * Loads all existing templates into memory. 
      * Template file is a mdl file. Creates a Object Set of Molecules
+     * @throws CDKException The template file cannot be loaded
      */
-    private void loadTemplates() throws CDKException {
+    private void loadTemplates() throws CDKException{
         logger.debug("Loading templates...");
         IteratingMDLReader imdl;
         InputStream ins;
@@ -108,7 +108,7 @@ public class TemplateHandler3D {
             ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/builder3d/data/ringTemplateStructures.sdf.gz");
             fin = new BufferedReader(new InputStreamReader(new GZIPInputStream(ins)));
             imdl = new IteratingMDLReader(fin, builder);
-        } catch (Exception exc1) {
+        } catch (IOException exc1) {
             throw new CDKException("Problems loading file ringTemplateStructures.sdf.gz", exc1);
         }
         IMolecule molecule;
@@ -192,14 +192,15 @@ public class TemplateHandler3D {
      * Molecule. If so, it assigns the coordinates from the template to the
      * respective atoms in the Molecule.
      *
-     * @param ringSystems       AtomContainer from the ring systems
+     * @param ringSystems       AtomContainer from the ring systems.
      * @param NumberOfRingAtoms double
+     * @throws CloneNotSupportedException The atomcontainer cannot be cloned.
      */
-    public void mapTemplates(IAtomContainer ringSystems, double NumberOfRingAtoms) throws Exception {
+    public void mapTemplates(IAtomContainer ringSystems, double NumberOfRingAtoms) throws CDKException, CloneNotSupportedException{
 		if (!templatesLoaded) self.loadTemplates();
 
         //logger.debug("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
-        IAtomContainer ringSystemAnyBondAnyAtom = AtomContainerManipulator.createAnyAtomAnyBondAtomContainer(ringSystems);
+        IAtomContainer ringSystemAnyBondAnyAtom = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(ringSystems);
         BitSet ringSystemFingerprint = new Fingerprinter().getFingerprint(ringSystemAnyBondAnyAtom);
         boolean flagMaxSubstructure = false;
         boolean flagSecondbest=false;
@@ -211,7 +212,7 @@ public class TemplateHandler3D {
             }
             //we compare the fingerprint with any atom and any bond
             if (FingerprinterTool.isSubset(fingerprintData.get(i),ringSystemFingerprint)) {
-                IAtomContainer templateAnyBondAnyAtom = AtomContainerManipulator.createAnyAtomAnyBondAtomContainer(template);
+                IAtomContainer templateAnyBondAnyAtom = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(template);
                 //we do the exact match with any atom and any bond
                 if (UniversalIsomorphismTester.isSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom)) {
                 	//if this is the case, we keep it as a guess, but look if we can do better

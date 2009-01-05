@@ -1,4 +1,4 @@
-/* $Revision: 10774 $ $Author: egonw $ $Date: 2008-05-03 08:50:01 +0200 (Sat, 03 May 2008) $
+/* $Revision$ $Author$ $Date$
  *
  * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
  * 
@@ -47,7 +47,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
  * bits are supported: atoms.aid, atoms.element, bonds.aid1, bonds.aid2.
  *
  * @cdk.module  io
- * @cdk.svnrev  $Revision: 10774 $
+ * @cdk.svnrev  $Revision$
  *
  * @cdk.keyword file format, PubChem Compound XML
  */

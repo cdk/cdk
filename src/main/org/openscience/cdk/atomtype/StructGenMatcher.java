@@ -72,7 +72,7 @@ public class StructGenMatcher implements IAtomTypeMatcher {
 	 *
 	 * @param  atomContainer  AtomContainer
 	 * @param  atom            the target atom
-	 * @exception CDKException Exception thrown if something goed wrong
+	 * @exception CDKException Exception thrown if something goes wrong
 	 * @return                 the matching AtomType
 	 */
 	public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {

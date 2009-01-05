@@ -24,6 +24,7 @@
 package org.openscience.cdk.config.elements;
 
 import org.openscience.cdk.PeriodicTableElement;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.tools.LoggingTool;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -96,8 +97,7 @@ public class ElementPTHandler extends DefaultHandler
 		elementType = null;
 	}
 
-	public void endElement(String uri, String local, String raw) 
-	{
+	public void endElement(String uri, String local, String raw) {
 		logger.debug("end element: ", raw);
 		if ("elementType".equals(local)) 
 		{
@@ -124,8 +124,8 @@ public class ElementPTHandler extends DefaultHandler
 				} else if (scalarType == SCALAR_PERIOD) {
 					elementType.setPeriod(Integer.parseInt(currentChars));
 				} else if (scalarType == SCALAR_GROUP) {
-					elementType.setGroup(Integer.parseInt(currentChars));
-				} else if (scalarType == SCALAR_PHASE) {
+                        elementType.setGroup(Integer.parseInt(currentChars));
+                } else if (scalarType == SCALAR_PHASE) {
 					elementType.setPhase(currentChars);
 				}else if (scalarType == SCALAR_RADCOV) {
 					elementType.setCovalentRadius(Double.parseDouble(currentChars));
@@ -137,8 +137,10 @@ public class ElementPTHandler extends DefaultHandler
 			} catch (NumberFormatException exception) {
 				logger.error("The abundance value is incorrect: ", currentChars);
 				logger.debug(exception);
-			}
-			scalarType = SCALAR_UNSET;
+			} catch (CDKException e) {
+                logger.error("Invalid IUPAC group number is specified");
+            }
+            scalarType = SCALAR_UNSET;
 		}
 		currentChars = "";
 	}

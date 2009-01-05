@@ -68,7 +68,7 @@ import java.util.List;
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bondPartialTCharge
- * @cdk.bug     1860497
+ *
  * @see org.openscience.cdk.qsar.descriptors.atomic.PartialPiChargeDescriptor
  * @see org.openscience.cdk.qsar.descriptors.atomic.PartialSigmaChargeDescriptor
  */

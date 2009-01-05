@@ -3,7 +3,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://bibtexml.sf.net/ bibtexml.xsd">
 
-  <!-- This file is preferable edited in jEdit with the XML plugin installed -->
+  <!-- This file is preferably edited in jEdit with the XML plugin installed -->
 
   <bibtex:entry id="BER2001">
     <bibtex:misc>

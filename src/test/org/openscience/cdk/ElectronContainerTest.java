@@ -28,62 +28,32 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.AbstractElectronContainerTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the ElectronContainer class.
+ * Checks the functionality of the {@link ElectronContainer} class.
  *
  * @cdk.module test-data
  *
  * @see org.openscience.cdk.ElectronContainer
  */
-<<<<<<< HEAD:src/test/org/openscience/cdk/ElectronContainerTest.java
-public class ElectronContainerTest extends ChemObjectTest {
-=======
-public class ElectronContainerTest extends CDKTestCase {
->>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/ElectronContainerTest.java
+public class ElectronContainerTest extends AbstractElectronContainerTest {
 
-	protected static IChemObjectBuilder builder;
-	
     @BeforeClass public static void setUp() {
-    	builder = DefaultChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new ElectronContainer();
+            }
+        });
     }
 
     @Test public void testElectronContainer() {
-        IElectronContainer ec = builder.newElectronContainer();
+        IElectronContainer ec = new ElectronContainer();
         Assert.assertNotNull(ec);
         Assert.assertEquals(0, ec.getElectronCount().intValue());
     }
     
-    @Test public void testSetElectronCount_Integer() {
-        IElectronContainer ec = builder.newElectronContainer();
-        ec.setElectronCount(3);
-        Assert.assertEquals(3, ec.getElectronCount().intValue());
-    }
-    @Test public void testGetElectronCount() {
-        testSetElectronCount_Integer();
-    }
-
-    @Test public void testClone() throws Exception {
-        IElectronContainer ec = builder.newElectronContainer();
-        ec.setElectronCount(2);
-        Object clone = ec.clone();
-        Assert.assertNotNull(clone);
-        Assert.assertTrue(clone instanceof IElectronContainer);
-        Assert.assertEquals(ec.getElectronCount(), ((IElectronContainer)clone).getElectronCount());
-    }
-    
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
-    @Test public void testToString() {
-        IElectronContainer at = builder.newElectronContainer();
-        String description = at.toString();
-        for (int i=0; i< description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
-        }
-    }
 }

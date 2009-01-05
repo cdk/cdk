@@ -41,6 +41,8 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
+import java.util.List;
+
 /**
  *  The number of rotatable bonds is given by the SMARTS specified by Daylight on
  *  <a href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</a><p>
@@ -163,12 +165,14 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
 		for (IBond bond : ac.bonds()) {
 			IAtom atom0 = bond.getAtom(0);
 			IAtom atom1 = bond.getAtom(1);
-			if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
+            if (atom0.getSymbol().equals("H") || atom1.getSymbol().equals("H")) continue;
+            if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
 				if ((BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom0), IBond.Order.TRIPLE)) && 
 					(BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom1), IBond.Order.TRIPLE))) {
 					if (!bond.getFlag(CDKConstants.ISINRING)) {
-						degree0 = ac.getConnectedBondsCount(atom0);
-						degree1 = ac.getConnectedBondsCount(atom1);
+                        // if there are explicit H's we should ignore those bonds
+                        degree0 = ac.getConnectedBondsCount(atom0) - getConnectedHCount(ac, atom0);
+						degree1 = ac.getConnectedBondsCount(atom1) - getConnectedHCount(ac, atom1);
 						if ((degree0 == 1) || (degree1 == 1)) {
 							if (includeTerminals) {
 								rotatableBondsCount += 1;
@@ -184,6 +188,13 @@ public class RotatableBondsCountDescriptor implements IMolecularDescriptor {
                 new IntegerResult(rotatableBondsCount), getDescriptorNames());
 
 	}
+
+    private int getConnectedHCount(IAtomContainer atomContainer, IAtom atom) {
+        List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
+        int n = 0;
+        for (IAtom anAtom : connectedAtoms) if (anAtom.getSymbol().equals("H")) n++;
+        return n;
+    }
 
     /**
      * Returns the specific type of the DescriptorResult object.

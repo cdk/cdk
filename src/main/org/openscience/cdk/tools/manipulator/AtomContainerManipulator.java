@@ -27,6 +27,12 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -34,13 +40,15 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -381,10 +389,11 @@ public class AtomContainerManipulator {
             // Process neighbours.
             for (IAtom iAtom : atomContainer.getConnectedAtomsList(aRemove)) {
                 final IAtom neighb = map.get(iAtom);
-                  neighb.setHydrogenCount(
-                      (neighb.getHydrogenCount() == null ? 0 : neighb.getHydrogenCount())
-                      + 1
-                  );
+                if (neighb == null) continue; // since for the case of H2, neight H has a heavy atom neighbor
+                neighb.setHydrogenCount(
+                        (neighb.getHydrogenCount() == null ? 0 : neighb.getHydrogenCount())
+                                + 1
+                );
             }
         }
         mol.setProperties(atomContainer.getProperties());
@@ -773,7 +782,7 @@ public class AtomContainerManipulator {
 	 * @return The new atomcontainer
 	 * @throws CloneNotSupportedException The atomcontainer cannot be cloned
 	 */
-	public static IAtomContainer createAnyAtomAnyBondAtomContainer(
+	public static IAtomContainer createAllCarbonAllSingleNonAromaticBondAtomContainer(
 			IAtomContainer atomContainer) throws CloneNotSupportedException{
 			IAtomContainer query = (IAtomContainer) atomContainer.clone();
 			for (int i = 0; i < query.getBondCount(); i++) {
@@ -788,5 +797,29 @@ public class AtomContainerManipulator {
 			}
 			return query;
 	}	
+
+	/**
+	 * Returns the sum of the bond order equivalents for a given IAtom. It
+	 * considers single bonds as 1.0, double bonds as 2.0, triple bonds as 3.0,
+	 * and quadruple bonds as 4.0.
+	 *
+	 * @param  atom  The atom for which to calculate the bond order sum
+	 * @return       The number of bond order equivalents for this atom
+	 */
+	public double getBondOrderSum(IAtomContainer container, IAtom atom) {
+		double count = 0;
+		for (IBond bond : container.getConnectedBondsList(atom)) {
+			if (bond.getOrder() == IBond.Order.SINGLE) {
+				count += 1.0;
+			} else if (bond.getOrder() == IBond.Order.DOUBLE) {
+				count += 2.0;
+			} else if (bond.getOrder() == IBond.Order.TRIPLE) {
+				count += 3.0;
+			} else if (bond.getOrder() == IBond.Order.QUADRUPLE) {
+				count += 4.0;
+			}
+		}
+		return count;
+	}
 }
 

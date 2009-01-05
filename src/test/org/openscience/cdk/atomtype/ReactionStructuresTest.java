@@ -59,7 +59,7 @@ public class ReactionStructuresTest extends CDKTestCase {
         super();
     }
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       SharingChargeDBReactionTest#testAtomTypesMolecule1()
@@ -104,7 +104,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 			}
     }
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       HeterolyticCleavageSBReactionTest#testCspSingleB()
@@ -138,7 +138,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 		
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       HomolyticCleavageReactionTest#testCsp2SingleB()
@@ -176,7 +176,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 		
 	}	
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       HomolyticCleavageReactionTest#testCsp2SingleB()
@@ -210,7 +210,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	}
 
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       HomolyticCleavageReactionTest#testCsp2DoubleB()
@@ -256,7 +256,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     		}
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       HomolyticCleavageReactionTest#testCspDoubleB()
@@ -299,7 +299,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	}
 
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       HomolyticCleavageReactionTest#testNsp3SingleB()
@@ -338,7 +338,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     		}
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       HomolyticCleavageReactionTest#testNsp2SingleB()
@@ -373,7 +373,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     		}
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       HomolyticCleavageReactionTest#testOsp2SingleB()
@@ -410,7 +410,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     		}
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       HomolyticCleavageReactionTest#testFspSingleB()
@@ -439,7 +439,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     		}
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       HomolyticCleavageReactionTest#testOsp2SingleB()
@@ -476,7 +476,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     		}
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       ElectronImpactNBEReaction#testNsp2SingleB()
@@ -514,7 +514,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     		}
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       ElectronImpactNBEReaction#testNsp3SingleB()
@@ -556,7 +556,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     		}
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       ElectronImpactNBEReaction#testNsp3SingleB()
@@ -594,7 +594,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     		}
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see       RadicalSiteInitiationHReactionTest#testManuallyCentreActive()
@@ -623,7 +623,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     		}
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 */
@@ -652,7 +652,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     		}
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see AdductionSodiumLPReactionTest
@@ -694,7 +694,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     		}
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see AdductionSodiumLPReactionTest
@@ -757,7 +757,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	}
 
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see HomolyticCleavageReactionTest#testNsp2DoubleB
@@ -801,7 +801,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     		}
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see HomolyticCleavageReactionTest#testNsp2DoubleB
@@ -840,7 +840,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     		}
 	}
 	/**
-	 * A unit test suite for JUnit. Compound and his fragments to be tested
+	 * A unit test suite for JUnit. Compound and its fragments to be tested
 	 * @throws Exception 
 	 * 
 	 * @see HomolyticCleavageReactionTest#testNsp2DoubleB

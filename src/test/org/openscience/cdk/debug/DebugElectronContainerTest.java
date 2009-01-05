@@ -24,19 +24,32 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.ElectronContainerTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractElectronContainerTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugElectronContainer}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugElectronContainerTest extends ElectronContainerTest {
+public class DebugElectronContainerTest extends AbstractElectronContainerTest {
 
     @BeforeClass public static void setUp() {
-    	ElectronContainerTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugElectronContainer();
+            }
+        });
     }
 
+    @Test public void testDebugElectronContainer() {
+        IElectronContainer ec = new DebugElectronContainer();
+        Assert.assertNotNull(ec);
+        Assert.assertEquals(0, ec.getElectronCount().intValue());
+    }
 }

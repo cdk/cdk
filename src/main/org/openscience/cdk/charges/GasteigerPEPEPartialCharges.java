@@ -57,8 +57,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <p>The calculation of the Gasteiger (PEPE) partial charges is based on 
  * {@cdk.cite Saller85}. This class doesn't implement the original method of the Marsili but the 
  * method based on H. Saller which is described from Petra manual version 2.6</p> 
- * <p>They are calculated by generating all valence bond(resonance) structures
- * for this system and then weighting them on the basis of pi-orbital electronegativies
+ * <p>They are calculated by generating all valence bond (resonance) structures
+ * for this system and then weighting them on the basis of pi-orbital electronegativities
  * and formal considerations based on PEPE (Partial Equalization of pi-electronegativity).</p>
  * 
  * @author      Miguel Rojas
@@ -473,8 +473,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	}
 	
 	/**
-	 * get the possibles structures after a hyperconjugation interactions for bonds wich
-	 * not belong any resonance structure.
+	 * get the possibles structures after hyperconjugation interactions for bonds which
+	 * do not belong to any resonance structure.
 	 * 
 	 * @param ac IAtomContainer
 	 * @return IAtomContainerSet

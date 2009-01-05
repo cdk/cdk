@@ -24,6 +24,7 @@
 package org.openscience.cdk.charges;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -72,7 +73,7 @@ public class PolarizabilityTest extends CDKTestCase {
     /**
 	 *  A unit test for JUnit
 	 */
-    @Test
+    @Ignore @Test
     public void testCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Boolean_IntInt() throws Exception {
     	Assert.fail("Not tested yet");
 	}

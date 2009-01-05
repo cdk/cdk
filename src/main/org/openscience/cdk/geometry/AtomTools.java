@@ -143,7 +143,7 @@ public class AtomTools {
      * Adds 3D coordinates for singly-bonded ligands of a reference atom (A).
      * Initially designed for hydrogens. The ligands of refAtom are identified
      * and those with 3D coordinates used to generate the new points. (This
-     * allows strucures with partially known 3D coordinates to be used, as when
+     * allows structures with partially known 3D coordinates to be used, as when
      * groups are added.)
      * "Bent" and "non-planar" groups can be formed by taking a subset of the
      * calculated points. Thus R-NH2 could use 2 of the 3 points calculated 

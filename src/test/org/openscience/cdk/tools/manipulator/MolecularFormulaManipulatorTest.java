@@ -421,7 +421,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 
     /**
      * A unit test suite for JUnit. Test total Exact Mass. It is 
-     * necessary to added the corresponding isotope before to calculate
+     * necessary to have added the corresponding isotope before to calculate
      * the exact mass.
      *
      * @throws IOException

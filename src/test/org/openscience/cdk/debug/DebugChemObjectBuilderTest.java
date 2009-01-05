@@ -27,26 +27,33 @@ package org.openscience.cdk.debug;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
+import org.junit.Test;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.DefaultChemObjectBuilderTest;
+import org.openscience.cdk.interfaces.AbstractChemObjectBuilderTest;
+import org.openscience.cdk.interfaces.IPDBStructure;
 
 /**
- * Checks the functionality of the Crystal.
+ * Checks the functionality of the {@link DebugChemObjectBuilder}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugChemObjectBuilderTest extends DefaultChemObjectBuilderTest {
+public class DebugChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
 
     @BeforeClass public static void setUp() {
-    	DefaultChemObjectBuilderTest.rootObject = new org.openscience.cdk.debug.DebugChemObject();
+    	setRootObject(new DebugChemObject());
     }
 
-    @org.junit.Test public void testGetInstance() {
+    @Test public void testGetInstance() {
     	Object builder = DebugChemObjectBuilder.getInstance();
     	Assert.assertNotNull(builder);
     	Assert.assertTrue(builder instanceof IChemObjectBuilder);
     	Assert.assertTrue(builder instanceof DebugChemObjectBuilder);
+    }
+    
+    @Test public void testNewStructure() {
+    	IPDBStructure structure = DebugChemObjectBuilder.getInstance().newStructure();
+    	Assert.assertNotNull(structure);
+    	Assert.assertTrue(structure instanceof DebugPDBStructure);
     }
     
 }

@@ -24,19 +24,31 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.RingSetTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractRingSetTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugRingSet}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugRingSetTest extends RingSetTest {
+public class DebugRingSetTest extends AbstractRingSetTest {
 
     @BeforeClass public static void setUp() {
-    	RingSetTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugRingSet();
+            }
+        });
     }
 
+    @Test public void testDebugRingSet() {
+        IRingSet rs = new DebugRingSet();
+        Assert.assertNotNull(rs);
+    }
 }

@@ -43,7 +43,7 @@ import org.openscience.cdk.interfaces.IAtomParity;
  * @cdk.keyword atom parity
  * @cdk.keyword stereochemistry
  */
-public class AtomParity extends ChemObject implements IAtomParity, Serializable, Cloneable  {
+public class AtomParity implements IAtomParity, Serializable, Cloneable  {
     
     /**
      * Determines if a de-serialized object is compatible with this class.

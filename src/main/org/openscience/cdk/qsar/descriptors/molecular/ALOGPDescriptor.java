@@ -38,7 +38,9 @@ import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.tools.AtomicProperties;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 import java.lang.reflect.Method;
@@ -1980,8 +1982,29 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
         return SameRing;
     }
 
+    /**
+     * The AlogP descriptor.
+     *
+     * TODO Ideally we should explicit H addition should be cached
+     *
+     * @param atomContainer the molecule to calculate on
+     * @return the result of the calculation
+     */
     @TestMethod("testCalculate_IAtomContainer,testChloroButane")
-    public DescriptorValue calculate(IAtomContainer container) {
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
+        IAtomContainer container;
+        try {
+            container = (IAtomContainer) atomContainer.clone();
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+            CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+            hAdder.addImplicitHydrogens(container);
+            AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+        } catch (CloneNotSupportedException e) {
+            return getDummyDescriptorValue(new CDKException("Error during clone"));
+        } catch (CDKException e) {
+            return getDummyDescriptorValue(new CDKException("Error during atom typing" + e.getMessage()));
+        }
+
         IRingSet rs;
         try {
             AllRingsFinder arf = new AllRingsFinder();

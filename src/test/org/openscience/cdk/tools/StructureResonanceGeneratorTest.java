@@ -1099,6 +1099,8 @@ public class StructureResonanceGeneratorTest  extends CDKTestCase{
 	
 	/**
      * A unit test for JUnit
+     * 
+     * @cdk.bug      1728830
      */
     @Test public void testBenzene() throws Exception {
         IMolecule molecule = MoleculeFactory.makeBenzene();

@@ -24,19 +24,81 @@
  */
 package org.openscience.cdk.nonotify;
 
+import javax.vecmath.Point3d;
+
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.protein.data.PDBAtomTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractPDBAtomTest;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.IPDBAtom;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNPDBAtom}.
  *
  * @cdk.module test-nonotify
  */
-public class NNPDBAtomTest extends PDBAtomTest {
+public class NNPDBAtomTest extends AbstractPDBAtomTest {
 
     @BeforeClass public static void setUp() {
-    	PDBAtomTest.builder = NoNotificationChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new NNPDBAtom(new NNElement());
+            }
+        });
     }
 
+    @Test public void testNNPDBAtom_IElement() {
+    	IElement element = new NNElement();
+        IAtom a = new NNPDBAtom(element);
+        Assert.assertNotNull(a);
+    }
+    
+    @Test public void testNNPDBAtom_String() {
+    	IPDBAtom a = new NNPDBAtom("C");
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getPoint3d());
+        Assert.assertNull(a.getFractionalPoint3d());
+    }
+
+    @Test public void testNNPDBAtom_String_Point3d() {
+        Point3d point3d = new Point3d(1.0, 2.0, 3.0);
+
+        IPDBAtom a = new NNPDBAtom("C", point3d);
+        Assert.assertEquals("C", a.getSymbol());
+        Assert.assertEquals(point3d, a.getPoint3d());
+        Assert.assertNull(a.getPoint2d());
+        Assert.assertNull(a.getFractionalPoint3d());
+    }
+
+    // Overwrite default methods: no notifications are expected!
+    
+    @Test public void testNotifyChanged() {
+        NNChemObjectTestHelper.testNotifyChanged(newChemObject());
+    }
+    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
+    }
+    @Test public void testStateChanged_IChemObjectChangeEvent() {
+        NNChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(newChemObject());
+    }
+    @Test public void testClone_ChemObjectListeners() throws Exception {
+        NNChemObjectTestHelper.testClone_ChemObjectListeners(newChemObject());
+    }
+    @Test public void testAddListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
+    }
+    @Test public void testGetListenerCount() {
+        NNChemObjectTestHelper.testGetListenerCount(newChemObject());
+    }
+    @Test public void testRemoveListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testRemoveListener_IChemObjectListener(newChemObject());
+    }
+    @Test public void testSetNotification_true() {
+        NNChemObjectTestHelper.testSetNotification_true(newChemObject());
+    }
 }

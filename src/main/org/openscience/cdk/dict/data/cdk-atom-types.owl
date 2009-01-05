@@ -450,6 +450,15 @@
     <at:hybridization rdf:resource="&at;sp2"/>
   </at:AtomType>
 
+  <at:AtomType rdf:ID="N.sp1.2">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;N"/>
+    <at:formalNeighbourCount>2</at:formalNeighbourCount>
+    <at:lonePairCount>0</at:lonePairCount>
+    <at:piBondCount>3</at:piBondCount>
+    <at:hybridization rdf:resource="&at;sp1"/>
+  </at:AtomType>
+
   <at:AtomType rdf:ID="N.planar3">
     <at:formalCharge>0</at:formalCharge>
     <at:hasElement rdf:resource="&elem;N"/>

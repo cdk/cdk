@@ -242,7 +242,7 @@ public class RadicalSiteHrBetaReactionTest extends ReactionProcessTest {
         Assert.assertEquals(mappedProductB1, product.getBond(17));        
 	}
 	/**
-	 * Test to recognize if a IMolecule matcher correctly the CDKAtomTypes.
+	 * Test to recognize if a IMolecule matcher correctly identifies the CDKAtomTypes.
 	 * 
 	 * @param molecule          The IMolecule to analyze
 	 * @throws CDKException

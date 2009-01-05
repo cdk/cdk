@@ -78,7 +78,7 @@ public class CDKTestCase {
      *   ant -f build.xml -DrunKnownBugs=false test-all
      * </pre>
      * 
-     * <p><b>This method may only be used in JUnit classes, it the bug is reported
+     * <p><b>This method may only be used in JUnit classes, if the bug is reported
      * on SourceForge, and both the test <i>and</i> the affected Class are marked
      * with a JavaDoc @cdk.bug taglet!</b>
      * 
@@ -162,14 +162,12 @@ public class CDKTestCase {
      * @param container to which implicit hydrogens are added.
      */
     protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
-    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
-    	Iterator<IAtom> atoms = container.atoms().iterator();
-    	while (atoms.hasNext()) {
-    		IAtom atom = atoms.next();
+    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());    	
+    	for (IAtom atom : container.atoms()) {
     		IAtomType type = matcher.findMatchingAtomType(container, atom);
     		AtomTypeManipulator.configure(atom, type);
     	}
-    	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
     	hAdder.addImplicitHydrogens(container);
     }
 

@@ -24,19 +24,35 @@
  */
 package org.openscience.cdk.nonotify;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.protein.data.PDBStructureTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.IPDBStructure;
+import org.openscience.cdk.interfaces.AbstractPDBStructureTest;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link NNPDBStructure}.
  *
  * @cdk.module test-nonotify
  */
-public class NNPDBStructureTest extends PDBStructureTest {
+public class NNPDBStructureTest extends AbstractPDBStructureTest {
 
     @BeforeClass public static void setUp() {
-    	PDBStructureTest.builder = NoNotificationChemObjectBuilder.getInstance();
+        setChemObject(new NNPDBStructure());
+    }
+
+	@Test public void testNNPDBStructure() {
+		IPDBStructure structure = new NNPDBStructure();
+		Assert.assertNotNull(structure);
+	}
+
+    @Test public void testGetBuilder() {
+        NNPDBStructure structure = new NNPDBStructure();
+        Assert.assertTrue(structure.getBuilder() instanceof NoNotificationChemObjectBuilder);
+    }
+
+    @Test public void testAddListener_IChemObjectListener() {
+        NNChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
     }
 
 }

@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  * Jhon and Gasteiger based on {@cdk.cite KJ81} and {@cdk.cite GH82}
  * Limitations in parameterization of atoms:
  * H, Csp3, Csp2, Csp2arom, Csp3, Nsp3, Nsp2, Nsp3,
- * P, Osp3 and Osp2. Aromaticity must be calculated on beforehand.
+ * P, Osp3 and Osp2. Aromaticity must be calculated beforehand.
  *
  * @author         chhoppe
  * @cdk.svnrev  $Revision$
@@ -118,7 +118,7 @@ public class Polarizability {
      *
      * @param  atomContainer                     IAtomContainer
      * @param  atom                   atom for which effective atom polarizability should be calculated
-     * @param  influenceSphereCutOff  cut off for spheres whoch should taken into account for calculation
+     * @param  influenceSphereCutOff  cut off for spheres which should taken into account for calculation
      * @param addExplicitH if set to true, then explicit H's will be added, otherwise it assumes that they have
      *  been added to the molecule before being called
      * @return polarizabilitiy

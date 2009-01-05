@@ -25,22 +25,23 @@
 package org.openscience.cdk.charges;
 
 
+import java.io.IOException;
+
+import javax.vecmath.Point3d;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
+import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.Molecule;
-import org.openscience.cdk.charges.InductivePartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.CDKTestCase;
-
-import javax.vecmath.Point3d;
-import java.io.IOException;
 
 /**
  *  TestSuite that runs a test for the MMFF94PartialCharges.
@@ -198,7 +199,7 @@ public class InductivePartialChargesTest extends CDKTestCase {
         Assert.assertEquals("Error in O electronegativity", 3.20, eneg[4], 0.01);
     }
 
-    @Test
+    @Ignore @Test
     public void testGetAtomicSoftness() throws IOException, ClassNotFoundException, CDKException {
         InductivePartialCharges ipc = new InductivePartialCharges();
         double softness = ipc.getAtomicSoftnessCore(mol, 0);

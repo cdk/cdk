@@ -42,6 +42,7 @@ import org.junit.runners.Suite.SuiteClasses;
     JChemPaintTest.class,
     CMLFragmentsTest.class,
     CML23FragmentsTest.class,
+    CML25FragmentsTest.class,
     Jumbo46CMLFragmentsTest.class
 })
 public class CMLIOTests {}

@@ -24,19 +24,31 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.ChemFileTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractChemFileTest;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugChemFile}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugChemFileTest extends ChemFileTest {
+public class DebugChemFileTest extends AbstractChemFileTest {
 
     @BeforeClass public static void setUp() {
-    	ChemFileTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugChemFile();
+            }
+        });
     }
 
+    @Test public void testDebugChemFile() {
+        IChemFile cs = new DebugChemFile();
+        Assert.assertNotNull(cs);
+    }
 }

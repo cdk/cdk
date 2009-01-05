@@ -2408,7 +2408,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     }
 
     /**
-     * Test if all elements up to and include Uranium have atom types.
+     * Test if all elements up to and including Uranium have atom types.
      * 
      * @throws Exception
      */
@@ -2808,6 +2808,24 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         mol.addAtom(new Atom("Cl")); mol.addBond(0,4,IBond.Order.SINGLE);
 
         String[] expectedTypes = {"Ge", "Cl", "Cl", "Cl", "Cl"}; 
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    /**
+     * @cdk.bug 2424511
+     */
+    @Test public void testWeirdNitrogen() throws CDKException {
+        IMolecule mol = new Molecule();
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("N"));
+        mol.addAtom(new Atom("C"));
+        mol.addAtom(new Atom("C"));
+
+        mol.addBond(0,1, IBond.Order.TRIPLE);
+        mol.addBond(1,2, IBond.Order.DOUBLE);
+        mol.addBond(2,3, IBond.Order.SINGLE);
+
+        String[] expectedTypes = {"C.sp", "N.sp1.2", "C.sp2", "C.sp3"}; 
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 

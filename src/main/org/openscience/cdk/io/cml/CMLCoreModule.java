@@ -141,7 +141,7 @@ public class CMLCoreModule implements ICMLModule {
     
     protected double[] unitcellparams;
     protected int crystalScalar;
-    
+
 //    private Vector3d aAxis;
 //    private Vector3d bAxis;
 //    private Vector3d cAxis;
@@ -1457,6 +1457,7 @@ public class CMLCoreModule implements ICMLModule {
             }
 
 //            cdo.endObject("Atom");
+
             currentMolecule.addAtom(currentAtom);
         }
         if (elid.size() > 0) {

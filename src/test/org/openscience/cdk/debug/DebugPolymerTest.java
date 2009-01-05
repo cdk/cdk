@@ -24,19 +24,31 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.PolymerTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractPolymerTest;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IPolymer;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugPolymer}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugPolymerTest extends PolymerTest {
+public class DebugPolymerTest extends AbstractPolymerTest {
 
     @BeforeClass public static void setUp() {
-    	PolymerTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugPolymer();
+            }
+        });
     }
 
+    @Test public void testDebugPolymer() {
+        IPolymer polymer = new DebugPolymer();
+        Assert.assertTrue(polymer instanceof DebugPolymer);
+    }
 }

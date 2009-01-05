@@ -20,19 +20,77 @@
  */
 package org.openscience.cdk.debug;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.openscience.cdk.debug.DebugChemObjectBuilder;
-import org.openscience.cdk.AtomContainerTest;
+import org.junit.Test;
+import org.openscience.cdk.interfaces.AbstractAtomContainerTest;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
- * Checks the functionality of the AtomContainer.
+ * Checks the functionality of the {@link DebugAtomContainer}.
  *
  * @cdk.module test-datadebug
  */
-public class DebugAtomContainerTest extends AtomContainerTest {
+public class DebugAtomContainerTest extends AbstractAtomContainerTest {
 
     @BeforeClass public static void setUp() {
-    	AtomContainerTest.builder = DebugChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new DebugAtomContainer();
+            }
+        });
     }
 
+    @Test public void testDebugAtomContainer_int_int_int_int() {
+        // create an empty container with predefined
+        // array lengths
+        IAtomContainer ac = new DebugAtomContainer(5,6,1,2);
+        
+        Assert.assertEquals(0, ac.getAtomCount());
+        Assert.assertEquals(0, ac.getElectronContainerCount());
+
+        // test whether the ElectronContainer is correctly initialized
+        ac.addBond(ac.getBuilder().newBond(ac.getBuilder().newAtom("C"), ac.getBuilder().newAtom("C"), IBond.Order.DOUBLE));
+        ac.addLonePair(ac.getBuilder().newLonePair(ac.getBuilder().newAtom("N")));
+    }
+
+    @Test public void testDebugAtomContainer() {
+        // create an empty container with in the constructor defined array lengths
+        IAtomContainer container = new DebugAtomContainer();
+        
+        Assert.assertEquals(0, container.getAtomCount());
+        Assert.assertEquals(0, container.getBondCount());
+        
+        // test whether the ElectronContainer is correctly initialized
+        container.addBond(container.getBuilder().newBond(container.getBuilder().newAtom("C"), container.getBuilder().newAtom("C"), IBond.Order.DOUBLE));
+        container.addLonePair(container.getBuilder().newLonePair(container.getBuilder().newAtom("N")));
+    }
+
+    @Test public void testDebugAtomContainer_IAtomContainer() {
+    	IChemObject object = newChemObject();
+        IMolecule acetone = object.getBuilder().newMolecule();
+        IAtom c1 = object.getBuilder().newAtom("C");
+        IAtom c2 = object.getBuilder().newAtom("C");
+        IAtom o = object.getBuilder().newAtom("O");
+        IAtom c3 = object.getBuilder().newAtom("C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        IBond b1 = object.getBuilder().newBond(c1, c2, IBond.Order.SINGLE);
+        IBond b2 = object.getBuilder().newBond(c1, o, IBond.Order.DOUBLE);
+        IBond b3 = object.getBuilder().newBond(c1, c3, IBond.Order.SINGLE);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+        
+        IAtomContainer container = new DebugAtomContainer(acetone);
+        Assert.assertEquals(4, container.getAtomCount());
+        Assert.assertEquals(3, container.getBondCount());
+    }
 }

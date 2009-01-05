@@ -37,7 +37,6 @@ import org.openscience.cdk.nonotify.NNBioPolymerTest;
 import org.openscience.cdk.nonotify.NNBondTest;
 import org.openscience.cdk.nonotify.NNChemFileTest;
 import org.openscience.cdk.nonotify.NNChemModelTest;
-import org.openscience.cdk.nonotify.NNChemObjectBuilderTest;
 import org.openscience.cdk.nonotify.NNChemObjectTest;
 import org.openscience.cdk.nonotify.NNChemSequenceTest;
 import org.openscience.cdk.nonotify.NNCrystalTest;
@@ -46,6 +45,8 @@ import org.openscience.cdk.nonotify.NNElementTest;
 import org.openscience.cdk.nonotify.NNFragmentAtomTest;
 import org.openscience.cdk.nonotify.NNIsotopeTest;
 import org.openscience.cdk.nonotify.NNLonePairTest;
+import org.openscience.cdk.nonotify.NNMolecularFormulaSetTest;
+import org.openscience.cdk.nonotify.NNMolecularFormulaTest;
 import org.openscience.cdk.nonotify.NNMoleculeSetTest;
 import org.openscience.cdk.nonotify.NNMoleculeTest;
 import org.openscience.cdk.nonotify.NNMonomerTest;
@@ -55,15 +56,17 @@ import org.openscience.cdk.nonotify.NNPDBPolymerTest;
 import org.openscience.cdk.nonotify.NNPDBStructureTest;
 import org.openscience.cdk.nonotify.NNPolymerTest;
 import org.openscience.cdk.nonotify.NNPseudoAtomTest;
+import org.openscience.cdk.nonotify.NNReactionSchemeTest;
 import org.openscience.cdk.nonotify.NNReactionSetTest;
 import org.openscience.cdk.nonotify.NNReactionTest;
 import org.openscience.cdk.nonotify.NNRingSetTest;
 import org.openscience.cdk.nonotify.NNRingTest;
 import org.openscience.cdk.nonotify.NNSingleElectronTest;
 import org.openscience.cdk.nonotify.NNStrandTest;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilderTest;
 
 /**
- * TestSuite that runs the nonotify tests.
+ * TestSuite that runs the tests from the nonotify module.
  *
  * @cdk.module  test-nonotify
  * @cdk.depends log4j.jar
@@ -72,7 +75,7 @@ import org.openscience.cdk.nonotify.NNStrandTest;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     NonotifyCoverageTest.class,
-    NNChemObjectBuilderTest.class,
+    NoNotificationChemObjectBuilderTest.class,
     NNAminoAcidTest.class,
     NNAtomContainerTest.class,
     NNAtomParityTest.class,
@@ -100,8 +103,11 @@ import org.openscience.cdk.nonotify.NNStrandTest;
     NNAtomContainerSetTest.class,
     NNMoleculeSetTest.class,
     NNReactionSetTest.class,
+    NNReactionSchemeTest.class,
     NNSingleElectronTest.class,
     NNStrandTest.class,
+    NNMolecularFormulaTest.class,
+    NNMolecularFormulaSetTest.class,
         
     // tests from test.protein.data
     NNPDBAtomTest.class,

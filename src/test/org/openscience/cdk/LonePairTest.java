@@ -27,10 +27,11 @@ package org.openscience.cdk;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.AbstractLonePairTest;
+import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
 /**
  * Checks the functionality of the LonePair class.
@@ -39,85 +40,28 @@ import org.openscience.cdk.interfaces.ILonePair;
  *
  * @cdk.module test-data
  */
-<<<<<<< HEAD:src/test/org/openscience/cdk/LonePairTest.java
-public class LonePairTest extends ElectronContainerTest {
-=======
-public class LonePairTest extends CDKTestCase {
->>>>>>> bbc19522071c1b78697779bddcd7509e9314667e:src/test/org/openscience/cdk/LonePairTest.java
+public class LonePairTest extends AbstractLonePairTest {
 
-	protected static IChemObjectBuilder builder;
-	
     @BeforeClass public static void setUp() {
-    	builder = DefaultChemObjectBuilder.getInstance();
+        setTestObjectBuilder(new ITestObjectBuilder() {
+            public IChemObject newTestObject() {
+                return new LonePair();
+            }
+        });
     }
 
     @Test public void testLonePair() {
-        ILonePair lp = builder.newLonePair();
+        ILonePair lp = new LonePair();
         Assert.assertTrue(lp.getAtom() == null);
         Assert.assertEquals(2, lp.getElectronCount().intValue());
     }
     
     @Test public void testLonePair_IAtom() {
-        IAtom atom = builder.newAtom("N");
-        ILonePair lp = builder.newLonePair(atom);
+        IAtom atom = new Atom("N");
+        ILonePair lp = new LonePair(atom);
         Assert.assertEquals(2, lp.getElectronCount().intValue());
         Assert.assertEquals(atom, lp.getAtom());
         Assert.assertTrue(lp.contains(atom));
     }
     
-    @Test public void testSetAtom_IAtom() {
-        IAtom atom = builder.newAtom("N");
-        ILonePair lp = builder.newLonePair();
-        lp.setAtom(atom);
-        Assert.assertEquals(atom, lp.getAtom());
-    }
-    
-    @Test public void testGetAtom() {
-        IAtom atom = builder.newAtom("N");
-        ILonePair lp = builder.newLonePair();
-        Assert.assertNull(lp.getAtom());
-        lp.setAtom(atom);
-        Assert.assertEquals(atom, lp.getAtom());
-    }
-    
-    @Test public void testGetElectronCount() {
-        ILonePair lp = builder.newLonePair();
-        Assert.assertEquals(2, lp.getElectronCount().intValue());
-        
-        lp = builder.newLonePair(builder.newAtom("N"));
-        Assert.assertEquals(2, lp.getElectronCount().intValue());
-    }
-    
-    @Test public void testContains_IAtom() {
-        IAtom atom = builder.newAtom("N");
-        ILonePair lp = builder.newLonePair();
-        lp.setAtom(atom);
-        Assert.assertTrue(lp.contains(atom));
-    }
-    
-    @Test public void testClone() throws Exception {
-        ILonePair lp = builder.newLonePair();
-        Object clone = lp.clone();
-        Assert.assertTrue(clone instanceof ILonePair);
-    }
-    
-    @Test public void testClone_IAtom() throws Exception {
-        IAtom atom = builder.newAtom("N");
-        ILonePair lp = builder.newLonePair();
-        lp.setAtom(atom);
-        
-        // test cloning of atom
-        ILonePair clone = (ILonePair)lp.clone();
-        Assert.assertNotSame(atom, clone.getAtom());
-    }
-    
-    /** Test for RFC #9 */
-    @Test public void testToString() {
-        ILonePair lp = builder.newLonePair();
-        String description = lp.toString();
-        for (int i=0; i< description.length(); i++) {
-            Assert.assertTrue(description.charAt(i) != '\n');
-            Assert.assertTrue(description.charAt(i) != '\r');
-        }
-    }
 }

@@ -678,6 +678,9 @@ public class DescriptorEngine {
                 IDescriptor descriptor = (IDescriptor) this.getClass().getClassLoader().loadClass(descriptorName).newInstance();
                 descriptors.add(descriptor);
                 logger.info("Loaded descriptor: ", descriptorName);
+            } catch (NoClassDefFoundError error) {
+                logger.error("Could not find this Descriptor: ", descriptorName);
+                logger.debug(error);
             } catch (ClassNotFoundException exception) {
                 logger.error("Could not find this Descriptor: ", descriptorName);
                 logger.debug(exception);

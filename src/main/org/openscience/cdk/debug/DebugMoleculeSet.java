@@ -185,7 +185,7 @@ public class DebugMoleculeSet extends org.openscience.cdk.MoleculeSet
 		return super.setMultipliers(newMultipliers);
 	}
 
-	public void addAtomContainer(IAtomContainer atomContainer, Double multiplier) {
+	public void addAtomContainer(IAtomContainer atomContainer, double multiplier) {
 		logger.debug("Adding atom container with multiplier: ", ""+multiplier, atomContainer);
 		super.addAtomContainer(atomContainer, multiplier);
 	}
