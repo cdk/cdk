@@ -1234,15 +1234,17 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @throws Exception
      */
     @Test public void testExplicitH() throws Exception {
-        int[] results = match("CO", "[CH3][OH]");
-        Assert.assertEquals(2, results[0]);
-        Assert.assertEquals(1, results[1]);
-
-        results = match("[CH3][OH]", "[CH3][OH]");
-        Assert.assertEquals(2, results[0]);
-        Assert.assertEquals(1, results[1]);
+        int[] results;
 
         results = match("[OH]", "CO[H]");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+
+        results = match("[OD1H]", "CO");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+
+        results = match("[OD1H]", "CO[H]");
         Assert.assertEquals(1, results[0]);
         Assert.assertEquals(1, results[1]);
 
