@@ -1229,6 +1229,10 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(1, results[1]);
     }
 
+    /**
+     * @cdk.bug 2489417 
+     * @throws Exception
+     */
     @Test public void testExplicitH() throws Exception {
         int[] results = match("CO", "[CH3][OH]");
         Assert.assertEquals(2, results[0]);
@@ -1246,7 +1250,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(2, results[0]);
         Assert.assertEquals(1, results[1]);
 
-        results = match("[OD1H]-*", "CC[OH]");
+        results = match("[OD1H]-*", "CCO[H]");
         Assert.assertEquals(2, results[0]);
         Assert.assertEquals(1, results[1]);
 
