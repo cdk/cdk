@@ -1686,7 +1686,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(3, mol.getAtomCount());
         
         mol = p.parseSmiles("[CH3][OH]");
-        Assert.assertEquals(6, mol.getAtomCount());
+        Assert.assertEquals(2, mol.getAtomCount());
 
         mol = p.parseSmiles("C([H])([H])([H])O([H])");
         Assert.assertEquals(6, mol.getAtomCount());
