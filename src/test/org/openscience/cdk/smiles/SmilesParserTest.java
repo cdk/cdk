@@ -1680,7 +1680,12 @@ public class SmilesParserTest extends CDKTestCase {
 
     @Test public void testExplicitH() throws Exception {
         SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IMolecule mol = p.parseSmiles("[CH3][OH]");
+        IMolecule mol;
+
+        mol = p.parseSmiles("CO[H]");
+        Assert.assertEquals(3, mol.getAtomCount());
+        
+        mol = p.parseSmiles("[CH3][OH]");
         Assert.assertEquals(6, mol.getAtomCount());
 
         mol = p.parseSmiles("C([H])([H])([H])O([H])");
