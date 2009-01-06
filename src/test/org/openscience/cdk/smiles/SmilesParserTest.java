@@ -20,9 +20,6 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
@@ -34,14 +31,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
@@ -51,6 +41,9 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Please see the test.gui package for visual feedback on tests.
@@ -1684,5 +1677,14 @@ public class SmilesParserTest extends CDKTestCase {
 		Assert.assertNotNull(mol2);
 		Assert.assertEquals(22, mol2.getAtomCount());
 	}
+
+    @Test public void testExplicitH() throws Exception {
+        SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+		IMolecule mol = p.parseSmiles("[CH3][OH]");
+        Assert.assertEquals(6, mol.getAtomCount());
+
+        mol = p.parseSmiles("C([H])([H])([H])O([H])");
+        Assert.assertEquals(6, mol.getAtomCount());
+    }
 }
 
