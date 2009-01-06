@@ -193,6 +193,21 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 
+    /**
+     * @cdk.bug 2489533
+     * @throws Exception
+     */
+    @Test public void testAnyAtomWithH() throws Exception {
+        int[] result = match("*", "CO");
+        Assert.assertEquals(2, result[0]);
+        Assert.assertEquals(2, result[1]);
+
+        result = match("*", "CO[H]");
+        Assert.assertEquals(2, result[0]);
+        Assert.assertEquals(2, result[1]);
+
+    }
+
     @Test public void testAliphaticAtom() throws Exception {
         QueryAtomContainer query = SMARTSParser.parse("CAC");
         logger.debug("Query CAC: " + query.toString());
@@ -1235,6 +1250,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      */
     @Test public void testExplicitH() throws Exception {
         int[] results;
+
 
         results = match("[OH]", "CO[H]");
         Assert.assertEquals(1, results[0]);
