@@ -68,12 +68,6 @@ public class ALOGPDescriptorTest extends MolecularDescriptorTest {
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
-        // add explicit hydrogens here
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        hydrogenAdder.addImplicitHydrogens(mol);
-        AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-
         DescriptorValue v = descriptor.calculate(mol);
         Assert.assertEquals(0.5192, ((DoubleArrayResult) v.getValue()).get(0), 0.0001);
         Assert.assertEquals(19.1381, ((DoubleArrayResult) v.getValue()).get(2), 0.0001);
