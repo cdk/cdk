@@ -36,6 +36,7 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * A fragment count descriptor that uses e-state fragments.
@@ -385,13 +386,21 @@ public class KierHallSmartsDescriptor implements IMolecularDescriptor {
     /**
      * This method calculates occurrences of the Kier &amp; Hall E-state fragments.
      *
-     * @param atomContainer The molecule for which this descriptor is to be calculated
+     * @param container The molecule for which this descriptor is to be calculated
      * @return Counts of the fragments
      */
     @TestMethod("testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtomContainer atomContainer) {
-        if (atomContainer == null || atomContainer.getAtomCount() == 0) {
+    public DescriptorValue calculate(IAtomContainer container) {
+        if (container == null || container.getAtomCount() == 0) {
             return getDummyDescriptorValue(new CDKException("Container was null or else had no atoms"));
+        }
+
+        IAtomContainer atomContainer;
+        try {
+            atomContainer = (IAtomContainer) container.clone();
+            atomContainer = AtomContainerManipulator.removeHydrogens(atomContainer);
+        } catch (CloneNotSupportedException e) {
+            return getDummyDescriptorValue(new CDKException("Error during clone"));
         }
 
         int[] counts = new int[smarts.length];
