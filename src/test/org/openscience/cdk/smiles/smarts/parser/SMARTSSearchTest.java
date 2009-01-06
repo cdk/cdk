@@ -187,20 +187,6 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
 
-    /**
-     * @cdk.bug 2489533
-     * @throws Exception
-     */
-    @Test public void testAnyAtomWithH() throws Exception {
-        int[] result = match("*", "CO");
-        Assert.assertEquals(2, result[0]);
-        Assert.assertEquals(2, result[1]);
-
-        result = match("*", "CO[H]");
-        Assert.assertEquals(2, result[0]);
-        Assert.assertEquals(2, result[1]);
-
-    }
 
     @Test public void testAliphaticAtom() throws Exception {
         QueryAtomContainer query = SMARTSParser.parse("CAC");
@@ -564,6 +550,81 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(8, results[0]);
     }
 
+    /**
+     * @throws Exception
+     * @cdk.bug 2489417
+     */
+    @Test
+    public void testPropertyD7() throws Exception {
+        int[] results = match("[ND3]", "CCN([H])([H])");
+        Assert.assertEquals(0, results[0]);
+        Assert.assertEquals(0, results[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489417
+     */
+    @Test
+    public void testPropertyD8() throws Exception {
+        int[] results = match("[OD1]", "CO[H]");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489417
+     */
+    @Test
+    public void testPropertyD9() throws Exception {
+        int[] results;
+
+        results = match("[OD1H]", "CO");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489417
+     */
+    @Test
+    public void testPropertyD10() throws Exception {
+        int[] results;
+
+        results = match("[OD1H]", "CO[H]");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489417
+     */
+    @Test
+    public void testPropertyD11() throws Exception {
+        int[] results;
+
+        results = match("[OD1H]-*", "CCO");
+        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489417
+     */
+    @Test
+    public void testPropertyD12() throws Exception {
+        int[] results;
+
+        results = match("[OD1H]-*", "CCO[H]");
+        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[1]);
+
+   }
+
     @Test public void testPropertyHAtom1() throws Exception {
         int[] results = match("[H]", "[H+].[Cl-]");
         Assert.assertEquals(1, results[0]);
@@ -653,6 +714,39 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(5, results[0]);
         Assert.assertEquals(5, results[1]);
     }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489533
+     */
+    @Test
+    public void testPropertyAnyAtom5() throws Exception {
+        int[] result = match("*", "CO");
+        Assert.assertEquals(2, result[0]);
+        Assert.assertEquals(2, result[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489533
+     */
+    @Test
+    public void testPropertyAnyAtom6() throws Exception {
+        int[] result = match("*", "CO[H]");
+        Assert.assertEquals(2, result[0]);
+        Assert.assertEquals(2, result[1]);
+    }
+
+     /**
+     * @throws Exception
+     * @cdk.bug 2489533
+     */
+    @Test
+    public void testPropertyAnyAtom7() throws Exception {
+        int[] result = match("*", "[H]C([H])([H])[H]");
+        Assert.assertEquals(1, result[0]);
+        Assert.assertEquals(1, result[1]);
+    }  
 
     @Test public void testPropertyAtomicMass1() throws Exception {
         int[] results = match("[13C]", "[13C]");
@@ -1236,54 +1330,6 @@ public class SMARTSSearchTest extends CDKTestCase {
         results = match("c1ccncc1", "C1=NC=CC=C1" );
         Assert.assertEquals(2, results[0]);
         Assert.assertEquals(1, results[1]);
-    }
-
-    /**
-     * @cdk.bug 2489417 
-     * @throws Exception
-     */
-    @Test public void testDegreeWithExplicitH() throws Exception {
-        int[] results;
-
-
-        results = match("[OH]", "CO[H]");
-        Assert.assertEquals(1, results[0]);
-        Assert.assertEquals(1, results[1]);
-
-        results = match("[OD1H]", "CO");
-        Assert.assertEquals(1, results[0]);
-        Assert.assertEquals(1, results[1]);
-
-        results = match("[OD1H]", "CO[H]");
-        Assert.assertEquals(1, results[0]);
-        Assert.assertEquals(1, results[1]);
-
-        results = match("[OD1H]-*", "CCO");
-        Assert.assertEquals(2, results[0]);
-        Assert.assertEquals(1, results[1]);
-
-        results = match("[OD1H]-*", "CCO[H]");
-        Assert.assertEquals(2, results[0]);
-        Assert.assertEquals(1, results[1]);
-
-    }
-
-    /**
-     * @cdk.bug 2489417
-     * @throws Exception
-     */
-    @Test public void testDegreeWithExplicitH2() throws Exception {
-        int[] results;
-
-
-        results = match("[ND3]", "CCN([H])([H])");
-        Assert.assertEquals(0, results[0]);
-        Assert.assertEquals(0, results[1]);
-
-        results = match("[OD1]", "CO[H]");
-        Assert.assertEquals(1, results[0]);
-        Assert.assertEquals(1, results[1]);
-
     }
 
     @Test public void testGroup5Elements() throws Exception {
