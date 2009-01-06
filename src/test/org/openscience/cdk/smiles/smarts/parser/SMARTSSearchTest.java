@@ -746,7 +746,18 @@ public class SMARTSSearchTest extends CDKTestCase {
         int[] result = match("*", "[H]C([H])([H])[H]");
         Assert.assertEquals(1, result[0]);
         Assert.assertEquals(1, result[1]);
-    }  
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489533
+     */
+    @Test
+    public void testPropertyAnyAtom8() throws Exception {
+        int[] result = match("*", "CCCC([2H])[H]");
+        Assert.assertEquals(5, result[0]);
+        Assert.assertEquals(5, result[1]);
+    }
 
     @Test public void testPropertyAtomicMass1() throws Exception {
         int[] results = match("[13C]", "[13C]");
@@ -770,6 +781,24 @@ public class SMARTSSearchTest extends CDKTestCase {
         int[] results = match("[12C]", "CCl");
         Assert.assertEquals(0, results[0]);
         Assert.assertEquals(0, results[1]);
+    }
+
+    /**
+     * @cdk.bug 2490336
+     * @throws Exception
+     */
+    @Test
+    public void testPropertyAtomicMass5() throws Exception {
+        int[] results = match("[2H]", "CCCC([2H])[H]");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+    @Test
+    public void testPropertyAtomicMass6() throws Exception {
+        int[] results = match("[H]", "CCCC([2H])[H]");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
     }
 
     @Test public void testBondSingle1() throws Exception {
