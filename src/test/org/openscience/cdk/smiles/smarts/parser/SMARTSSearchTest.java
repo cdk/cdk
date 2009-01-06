@@ -1242,8 +1242,8 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(2, results[0]);
         Assert.assertEquals(1, results[1]);
 
-        results = match("[CH3][OH]", "CO");
-        Assert.assertEquals(2, results[0]);
+        results = match("[OH]", "CO[H]");
+        Assert.assertEquals(1, results[0]);
         Assert.assertEquals(1, results[1]);
 
         results = match("[OD1H]-*", "CCO");
