@@ -20,9 +20,6 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
-import java.io.InputStream;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -39,6 +36,9 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * JUnit test routines for the SMARTS substructure search.
@@ -1227,6 +1227,20 @@ public class SMARTSSearchTest extends CDKTestCase {
         results = match("c1ccncc1", "C1=NC=CC=C1" );
         Assert.assertEquals(2, results[0]);
         Assert.assertEquals(1, results[1]);
+    }
+
+    @Test public void testExplicitH() throws Exception {
+        int[] results = match("CO", "[CH3][OH]");
+        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[1]);
+
+        results = match("[CH3][OH]", "[CH3][OH]");
+        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[1]);
+
+        results = match("[CH3][OH]", "CO");
+        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[1]);     
     }
 
     @Test public void testGroup5Elements() throws Exception {
