@@ -88,13 +88,7 @@ public class SMARTSSearchTest extends CDKTestCase {
 
         sqt.setSmarts("[ND3]");
         status = sqt.matches(atomContainer);
-        Assert.assertEquals(true, status);
-
-        nmatch = sqt.countMatches();
-        nqmatch = sqt.getUniqueMatchingAtoms().size();
-
-        Assert.assertEquals(3, nmatch);
-        Assert.assertEquals(3, nqmatch);
+        Assert.assertEquals(false, status);
     }
 
     @Test public void testRGraphBond() throws Exception {
@@ -1270,6 +1264,24 @@ public class SMARTSSearchTest extends CDKTestCase {
 
         results = match("[OD1H]-*", "CCO[H]");
         Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[1]);
+
+    }
+
+    /**
+     * @cdk.bug 2489417
+     * @throws Exception
+     */
+    @Test public void testDegreeWithExplicitH2() throws Exception {
+        int[] results;
+
+
+        results = match("[ND3]", "CCN([H])([H])");
+        Assert.assertEquals(0, results[0]);
+        Assert.assertEquals(0, results[1]);
+
+        results = match("[OD1]", "CO[H]");
+        Assert.assertEquals(1, results[0]);
         Assert.assertEquals(1, results[1]);
 
     }
