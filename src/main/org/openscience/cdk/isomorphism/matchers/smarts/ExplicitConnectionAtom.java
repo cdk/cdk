@@ -58,8 +58,8 @@ public class ExplicitConnectionAtom extends SMARTSAtom {
 	 */
     public boolean matches(IAtom atom) {
         int ih = atom.getHydrogenCount() == CDKConstants.UNSET ? 0 : atom.getHydrogenCount();
-        int conn = ((Integer) atom.getProperty(CDKConstants.TOTAL_CONNECTIONS)).intValue() -
-                ((Integer) atom.getProperty(CDKConstants.TOTAL_H_COUNT)).intValue();
+        int conn = (Integer) atom.getProperty(CDKConstants.TOTAL_CONNECTIONS) -
+                (Integer) atom.getProperty(CDKConstants.TOTAL_H_COUNT);
         
         return numOfConnection == conn;
     }
