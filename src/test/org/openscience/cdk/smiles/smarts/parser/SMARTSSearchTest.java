@@ -1248,7 +1248,7 @@ public class SMARTSSearchTest extends CDKTestCase {
      * @cdk.bug 2489417 
      * @throws Exception
      */
-    @Test public void testExplicitH() throws Exception {
+    @Test public void testDegreeWithExplicitH() throws Exception {
         int[] results;
 
 
