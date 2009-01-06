@@ -437,6 +437,27 @@ public class CDKHydrogenAdderTest extends CDKTestCase {
         Assert.assertEquals(3, carbon2.getHydrogenCount().intValue());
     }
 
+    @Test
+    public void testEthaneWithPresetImplicitHCount() throws Exception {
+        Molecule mol = new Molecule();
+        Atom carbon1 = new Atom("C");
+        Atom carbon2 = new Atom("C");
+        Bond b = new Bond(carbon1, carbon2, IBond.Order.SINGLE);
+        mol.addAtom(carbon1);
+        mol.addAtom(carbon2);
+        mol.addBond(b);
+        carbon1.setHydrogenCount(3);
+        carbon2.setHydrogenCount(3);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+
+        adder.addImplicitHydrogens(mol);
+
+        Assert.assertEquals(2, mol.getAtomCount());
+        Assert.assertEquals(1, mol.getBondCount());
+        Assert.assertEquals(3, carbon1.getHydrogenCount().intValue());
+        Assert.assertEquals(3, carbon2.getHydrogenCount().intValue());
+    }
+
     @Test public void testEthene() throws Exception {
         Molecule mol = new Molecule();
         Atom carbon1 = new Atom("C");
