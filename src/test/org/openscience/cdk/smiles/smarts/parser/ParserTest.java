@@ -20,14 +20,11 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
-import java.io.StringReader;
-import java.util.Iterator;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -38,6 +35,9 @@ import org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+
+import java.io.StringReader;
+import java.util.Iterator;
 
 /**
  * JUnit test routines for the SMARTS parser.
@@ -1306,7 +1306,7 @@ public class ParserTest extends CDKTestCase {
 
     @Test public void testPropertyR2() throws Exception {
         int m = match("[R2]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34", false);
-        Assert.assertEquals(2, m);
+        Assert.assertEquals(6, m);
     }
 
     @Test public void testPropertyR3() throws Exception {
@@ -1471,7 +1471,7 @@ public class ParserTest extends CDKTestCase {
 
     @Test public void testPropertyAnyAtom3() throws Exception {
         int m = match("[*]", "[H][H]", false);
-        Assert.assertEquals(2, m);
+        Assert.assertEquals(0, m);
     }
 
     @Test public void testPropertyAnyAtom4() throws Exception {
