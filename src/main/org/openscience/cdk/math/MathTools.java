@@ -104,7 +104,7 @@ public class MathTools {
 
     @TestMethod("testIsEven_int")
     public static boolean isEven(int intValue) {
-        return Math.floor((double) intValue / 2.0) * 2.0 == (double) intValue;
+        return intValue % 2 == 0;
     }
     
 }
