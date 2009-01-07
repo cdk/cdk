@@ -395,15 +395,12 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(7, results[1]);
     }
 
-    @Test public void testPropertyR2() throws Exception {
-        // TODO: It seems the part C4CC(CC3)CCN34 are not correctly built into
-        // the AtomContainer. No R2 matches this part.
-        // Commented to pass the test
-        /*
-          int[] results = match("[R2]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
-          Assert.assertEquals(6, results[0]);
-          Assert.assertEquals(6, results[1]);
-          */
+    @Test
+    public void testPropertyR2() throws Exception {
+        int[] results = match("[R2]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
+        Assert.assertEquals(6, results[0]);
+        Assert.assertEquals(6, results[1]);
+
     }
 
     @Test public void testPropertyR3() throws Exception {
