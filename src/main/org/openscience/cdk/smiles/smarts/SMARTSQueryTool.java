@@ -92,6 +92,13 @@ import java.util.*;
  * </tbody>
  * </table>
  *
+ * <h3>Notes</h3>
+ * <ul>
+ * <li>As <a href="http://sourceforge.net/mailarchive/message.php?msg_name=4964F605.1070502%40emolecules.com">described</a>
+ * by Craig James</li> the <i>h&lt;n&gt;></i> SMARTS pattern should not be used. It was included in the Daylight spec for
+ * backwards compatibility. To match hydrogens, use the <i>H&lt;n&gt;</i> pattern.
+ * </ul>
+ *
  * @author Rajarshi Guha
  * @cdk.created 2007-04-08
  * @cdk.module smarts
