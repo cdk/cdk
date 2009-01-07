@@ -95,15 +95,17 @@ import java.util.*;
  * <h3>Notes</h3>
  * <ul>
  * <li>As <a href="http://sourceforge.net/mailarchive/message.php?msg_name=4964F605.1070502%40emolecules.com">described</a>
- * by Craig James the <i>h&lt;n&gt;></i> SMARTS pattern should not be used. It was included in the Daylight spec for
+ * by Craig James the <i>h&lt;n&gt;</i> SMARTS pattern should not be used. It was included in the Daylight spec for
  * backwards compatibility. To match hydrogens, use the <i>H&lt;n&gt;</i> pattern.</li>
  * <li>The wild card pattern (<i>*</i>) will not match hydrogens (explicit or implicit) unless an isotope is specified.
  * In other words, <i>*</i> gives two hits against <i>C[2H]</i> but 1 hit against <i>C[H]</i>. This also means that
  * it gives no hits against <i>[H][H]</i>. This is contrary to what is shown by Daylights
- * <a href="http://www.daylight.com/daycgi_tutorials/depictmatch.cgi">depictmatch</> service, but is based on this
+ * <a href="http://www.daylight.com/daycgi_tutorials/depictmatch.cgi">depictmatch</a> service, but is based on this
  * <a href="https://sourceforge.net/mailarchive/message.php?msg_name=4964FF9D.3040004%40emolecules.com">discussion</a>.
- * A work around to get <i>*</i> to match <i>[H][H]</i> is to write it in the form <i>[1H][1H]</i>. Given the ambiguity,
- * it is possible that the code will be updated so that <i>*</i> will not match <i>any</i> hydrogen in the future.
+ * A work around to get <i>*</i> to match <i>[H][H]</i> is to write it in the form <i>[1H][1H]</i>.
+ * <p>
+ * It's not entirely clear what the behavior of * should be with respect to hydrogens.
+ * it is possible that the code will be updated so that <i>*</i> will not match <i>any</i> hydrogen in the future.</li>
  * </ul>
  *
  * @author Rajarshi Guha
