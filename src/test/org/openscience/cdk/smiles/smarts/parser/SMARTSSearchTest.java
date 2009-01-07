@@ -901,8 +901,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(22, results[1]);
     }
 
-    //TODO: Stereo bond not implemented in smiles parser. Commented.
-    /*
+    //TODO: Stereo bond not implemented in smiles parser. Will fail
     @Test public void testBondStereo1() throws Exception { 
     	int[] results = match("F/?C=C/Cl", "F/C=C/Cl");
     	Assert.assertEquals(1, results[0]);
@@ -923,7 +922,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     	Assert.assertEquals(0, results[0]);
     	Assert.assertEquals(0, results[1]);
     }
-    */
+
     @Test public void testLogicalNot1() throws Exception {
         int[] results = match("[!c]", "c1cc(C)c(N)cc1");
         Assert.assertEquals(2, results[0]);
