@@ -704,7 +704,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test public void testPropertyAnyAtom3() throws Exception {
-        int[] results = match("[*]", "[H][H]");
+        int[] results = match("[*]", "[1H][1H]");
         Assert.assertEquals(2, results[0]);
         Assert.assertEquals(2, results[1]);
     }
@@ -713,6 +713,13 @@ public class SMARTSSearchTest extends CDKTestCase {
         int[] results = match("[*]", "[1H]C([1H])([1H])[1H]");
         Assert.assertEquals(5, results[0]);
         Assert.assertEquals(5, results[1]);
+    }
+
+    @Test
+    public void testPropertAnyAtom5() throws Exception {
+        int[] results = match("[*]", "[H][H]");
+        Assert.assertEquals(0, results[0]);
+        Assert.assertEquals(0, results[1]);
     }
 
     /**

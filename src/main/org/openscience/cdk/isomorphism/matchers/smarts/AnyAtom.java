@@ -46,7 +46,11 @@ public class AnyAtom extends SMARTSAtom {
      * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
      */
     public boolean matches(IAtom atom) {
-    	return true;
+        if (atom.getSymbol().equals("H")) {
+            Integer massNumber = atom.getMassNumber();
+            return massNumber != null;
+        }
+        return true;
     }
 
     /* (non-Javadoc)
