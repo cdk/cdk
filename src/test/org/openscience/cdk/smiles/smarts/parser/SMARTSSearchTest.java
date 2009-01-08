@@ -1115,6 +1115,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(5, results[1]);
     }
 
+    /* this fails, likely dueto a problem in aromaticity detection */
     @Test public void testLogicalOrLowAnd6() throws Exception { 
     	int[] results = match("[#7,C;+0,+1]", "[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
     	Assert.assertEquals(1, results[0]);    	
