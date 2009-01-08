@@ -25,7 +25,7 @@ public class ChiPathDescriptorTest extends MolecularDescriptorTest {
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(ChiPathClusterDescriptor.class);
+    	setDescriptor(ChiPathDescriptor.class);
     }
 
     @Test
