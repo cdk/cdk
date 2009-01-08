@@ -1073,18 +1073,12 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(17, results[1]);
     }
 
-    /*
-    @Test public void testLogicalOrHighAnd6() throws Exception { 
-        //TODO: This takes a long time to match
-        long start = Calendar.getInstance().getTimeInMillis();
-        //int[] results = match("[N,#6&+1,+0]", "[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
-        new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        SMARTSParser.parse("[N,#6&+1,+0]");
-        long end = Calendar.getInstance().getTimeInMillis();
-        System.out.println( (end - start) );
-        //Assert.assertEquals(23, results[0]);
+
+    @Test public void testLogicalOrHighAnd6() throws Exception {
+        int[] results = match("[N,#6&+1,+0]", "[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
+        Assert.assertEquals(23, results[0]);
     }
-    */
+
     @Test public void testLogicalOrHighAnd7() throws Exception {
         int[] results = match("[N,#6&+1,+0]", "[Cl-].Clc1ccc([I+]c2cccs2)cc1");
         Assert.assertEquals(12, results[0]);
@@ -1121,14 +1115,11 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(5, results[1]);
     }
 
-    // //TODO: this takes very long. It is the same smiles. So the bottle neck
-    // might be in the AtomContainer
-    /*
     @Test public void testLogicalOrLowAnd6() throws Exception { 
     	int[] results = match("[#7,C;+0,+1]", "[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
     	Assert.assertEquals(1, results[0]);    	
     }
-    */
+
     @Test public void testLogicalOrLowAnd7() throws Exception {
         int[] results = match("[#7,C;+0,+1]", "[Cl-].Clc1ccc([I+]c2cccs2)cc1");
         Assert.assertEquals(0, results[0]);
