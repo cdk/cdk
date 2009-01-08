@@ -1138,4 +1138,90 @@ public class ParserTest extends CDKTestCase {
     @Test public void testHydrogen() throws Exception {
         parse("[H]");
     }
+
+    @Test
+    public void testHybridizationNumber1() throws Exception {
+        parse("[^1]");
+    }
+
+    @Test
+    public void testHybridizationNumber2() throws Exception {
+        parse("[^1&N]");
+    }
+
+    @Test
+    public void testHybridizationNumber3() throws Exception {
+        parse("[^1&N,^2&C]");
+    }
+
+    @Test(expected = ParseException.class)
+    public void testHybridizationNumber4() throws Exception {
+        parse("[^]");
+    }
+
+    @Test(expected = ParseException.class)
+    public void testHybridizationNumber5() throws Exception {
+        parse("[^X]");
+    }
+
+    @Test(expected = ParseException.class)
+    public void testHybridizationNumber6() throws Exception {
+        parse("[^0]");
+    }
+
+    @Test(expected = ParseException.class)
+    public void testHybridizationNumber7() throws Exception {
+        parse("[^9]");
+    }
+
+    @Test
+    public void testNonCHHeavyAtom1() throws Exception {
+        parse("[#X]");
+    }
+
+    @Test
+    public void testNonCHHeavyAtom2() throws Exception {
+        parse("C#[#X]");
+    }
+
+    @Test
+    public void testPeriodicGroupNumber1() throws Exception {
+        parse("[G14]");
+    }
+
+    @Test
+    public void testPeriodicGroupNumber2() throws Exception {
+        parse("[G14,G15]");
+    }
+
+    @Test(expected = ParseException.class)
+    public void testPeriodicGroupNumber3() throws Exception {
+        parse("[G19]");
+    }
+
+    @Test(expected = ParseException.class)
+    public void testPeriodicGroupNumber4() throws Exception {
+        parse("[G0]");
+    }
+
+    @Test(expected = ParseException.class)
+    public void testPeriodicGroupNumber5() throws Exception {
+        parse("[G345]");
+    }
+
+    @Test(expected = ParseException.class)
+    public void testPeriodicGroupNumber6() throws Exception {
+        parse("[G]");
+    }
+
+    @Test(expected = ParseException.class)
+    public void testPeriodicGroupNumber7() throws Exception {
+        parse("[GA]");
+    }
+
+    @Test
+    public void testGroup5Elements() throws Exception {
+        parse("[V,Cr,Mn,Nb,Mo,Tc,Ta,W,Re]");
+    }
+
 }
