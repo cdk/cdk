@@ -368,7 +368,7 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
             ap = AtomicProperties.getInstance();
         } catch (Exception e) {
             logger.debug("Problem in accessing atomic properties. Can't calculate");
-            throw new CDKException("Problem in accessing atomic properties. Can't calculate");
+            throw new CDKException("Problem in accessing atomic properties. Can't calculate\n" + e.getMessage(), e);
         }
     }
 
@@ -420,7 +420,7 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
                 }
 
             } catch (Exception e) {
-                throw new CDKException(e.toString());
+                throw new CDKException(e.toString(), e);
             }
         } // end i atom loop
 
