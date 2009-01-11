@@ -241,7 +241,7 @@ public class RssWriter extends DefaultChemObjectWriter {
 	      writer.write(doc.toXML());
 	      writer.flush();
 		}catch(IOException ex){
-			throw new CDKException(ex.getMessage());
+			throw new CDKException(ex.getMessage(), ex);
 		}
 
 	}
