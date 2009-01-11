@@ -230,7 +230,7 @@ public class AtomTetrahedralLigandPlacer3D {
 				newPoints = get3DCoordinatesForSP2Ligands(refAtom, noCoords, withCoords, atomC, length, angle);
 			} catch (Exception ex1) {
 //				logger.debug("Get3DCoordinatesForLigandsERROR: Cannot place SP2 Ligands due to:" + ex1.toString());
-				throw new CDKException("Cannot place sp2 substituents");
+				throw new CDKException("Cannot place sp2 substituents\n"+ex1.getMessage(), ex1);
 			}
 
 		} else {
@@ -239,7 +239,7 @@ public class AtomTetrahedralLigandPlacer3D {
 				newPoints = get3DCoordinatesForSP3Ligands(refAtom, noCoords, withCoords, atomC, nwanted, length, angle);
 			} catch (Exception ex1) {
 //				logger.debug("Get3DCoordinatesForLigandsERROR: Cannot place SP3 Ligands due to:" + ex1.toString());
-				throw new CDKException("Cannot place sp3 substituents");
+				throw new CDKException("Cannot place sp3 substituents\n"+ex1.getMessage(), ex1);
 			}
 		}
 		//logger.debug("...Ready "+newPoints.length+" "+newPoints[0].toString());
