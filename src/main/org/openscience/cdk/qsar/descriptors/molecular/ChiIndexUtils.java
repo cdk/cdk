@@ -115,7 +115,7 @@ public class ChiIndexUtils {
             IsotopeFactory ifac = IsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
             ifac.configureAtoms(atomContainer);
         } catch (IOException e) {
-            throw new CDKException("IO problem occured when using the CDK atom config");
+            throw new CDKException("IO problem occured when using the CDK atom config\n"+e.getMessage(), e);
         }
         double sum = 0;
         for (Object aFragList : fragList) {
