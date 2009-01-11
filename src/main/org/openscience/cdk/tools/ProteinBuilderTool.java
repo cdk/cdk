@@ -127,7 +127,7 @@ public class ProteinBuilderTool {
                 try {
                     aminoAcid = (AminoAcid)aminoAcid.clone();
                 } catch (CloneNotSupportedException e) {
-                    throw new CDKException("Cannot build sequence! Clone exception: " + e.getMessage());
+                    throw new CDKException("Cannot build sequence! Clone exception: " + e.getMessage(), e);
                 }
                 aminoAcid.setMonomerName(aminoAcidCode + i);
                 logger.debug("protein: ", protein);
