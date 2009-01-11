@@ -252,7 +252,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 					type = factory.getAtomType(symbol);
 				} catch (Exception ex1) {
 					logger.debug(ex1);
-					throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
+					throw new CDKException("Problems with AtomTypeFactory due to " + ex1.getMessage(), ex1);
 				}
 				if (getCovalentRadius(symbol, ac.getMaximumBondOrder(atom)) > 0) {
 					radius = getCovalentRadius(symbol, ac.getMaximumBondOrder(atom));
@@ -305,7 +305,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 			}
 		} catch (Exception ex1) {
 			logger.debug(ex1);
-			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
+			throw new CDKException("Problems with AtomTypeFactory due to " + ex1.getMessage(), ex1);
 		}
 
 		for (int a = 0; a < allAtoms.length; a++) {
@@ -316,7 +316,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 					type = factory.getAtomType(symbol);
 				} catch (Exception ex1) {
 					logger.debug(ex1);
-					throw new CDKException("Problems with AtomTypeFactory due to " + ex1.toString());
+					throw new CDKException("Problems with AtomTypeFactory due to " + ex1.getMessage(), ex1);
 				}
 				if (getCovalentRadius(symbol, ac.getMaximumBondOrder(allAtoms[a])) > 0) {
 					radius = getCovalentRadius(symbol, ac.getMaximumBondOrder(allAtoms[a]));
