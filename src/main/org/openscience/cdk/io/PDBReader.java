@@ -185,7 +185,7 @@ public class PDBReader extends DefaultChemObjectReader {
 				    	  ((IChemFile)oObj).getBuilder());
 				} catch (Exception exception) {
 					logger.debug(exception);
-					throw new CDKException("Could not setup list of PDB atom types! " + exception.getMessage());
+					throw new CDKException("Could not setup list of PDB atom types! " + exception.getMessage(), exception);
 				}
 			}
 			return readChemFile((IChemFile)oObj);
