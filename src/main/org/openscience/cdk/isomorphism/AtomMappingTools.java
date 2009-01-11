@@ -79,7 +79,7 @@ public class AtomMappingTools {
                 }
             }
         } catch (CDKException e) {
-            throw new CDKException("Error in UniversalIsomorphismTester due to:" + e.toString());
+            throw new CDKException("Error in UniversalIsomorphismTester due to:" + e.toString(), e);
         }
         return mappedAtoms;
     }
