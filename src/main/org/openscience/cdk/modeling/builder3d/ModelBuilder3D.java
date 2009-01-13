@@ -26,7 +26,6 @@ package org.openscience.cdk.modeling.builder3d;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -398,16 +397,6 @@ public class ModelBuilder3D {
 				ac.getAtom(i).setFlag(CDKConstants.ISPLACED, true);
 			}
 		}
-	}
-
-
-	private IAtomContainer getAllInOneContainer(IRingSet ringSet) {
-		IAtomContainer resultContainer = ringSet.getBuilder().newAtomContainer();
-		Iterator containers = RingSetManipulator.getAllAtomContainers(ringSet).iterator();
-		while (containers.hasNext()) {
-			resultContainer.add((IAtomContainer) containers.next());
-		}
-		return resultContainer;
 	}
 
 
