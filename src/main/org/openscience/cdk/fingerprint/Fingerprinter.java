@@ -94,6 +94,11 @@ public class Fingerprinter implements IFingerprinter {
 
 	private static LoggingTool logger = new LoggingTool(Fingerprinter.class);
 
+	private static final String[] query 
+	    = {"Cl", "Br", "Si", "As", "Li", "Se", "Na", "Ca", "Al"};
+    private static final String[] replace 
+        = {"X", "Z", "Y",  "D",  "L",  "E",  "G",  "J",  "A" };
+	
     /**
 	 * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
 	 * and with a search depth of <code>DEFAULT_SEARCH_DEPTH</code>.
@@ -214,9 +219,6 @@ public class Fingerprinter implements IFingerprinter {
     }
 
     private String convertSymbol(String symbol) {
-
-        String[] query = {"Cl", "Br", "Si", "As", "Li", "Se", "Na", "Ca", "Al"};
-        String[] replace = {"X", "Z", "Y",  "D",  "L",  "E",  "G",  "J",  "A" };
 
         String returnSymbol = symbol;
         for (int i = 0; i < query.length; i++) {
