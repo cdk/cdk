@@ -94,10 +94,19 @@ public class Fingerprinter implements IFingerprinter {
 
 	private static LoggingTool logger = new LoggingTool(Fingerprinter.class);
 
-	private static final String[] query 
-	    = {"Cl", "Br", "Si", "As", "Li", "Se", "Na", "Ca", "Al"};
-    private static final String[] replace 
-        = {"X", "Z", "Y",  "D",  "L",  "E",  "G",  "J",  "A" };
+	private static final Map<String, String> queryReplace 
+	        = new HashMap<String, String>() {
+        
+	    private static final long serialVersionUID = 1L;
+        
+	    {
+	        put("Cl", "X");    put("Br", "Z");
+	        put("Si", "Y");    put("As", "D");
+	        put("Li", "L");    put("Se", "E");
+	        put("Na", "G");    put("Ca", "J");
+	        put("Al", "A");
+	    }
+	};
 	
     /**
 	 * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
@@ -232,14 +241,9 @@ public class Fingerprinter implements IFingerprinter {
 
     private String convertSymbol(String symbol) {
 
-        String returnSymbol = symbol;
-        for (int i = 0; i < query.length; i++) {
-            if (symbol.equals(query[i])) {
-                returnSymbol = replace[i];
-                break;
-            }
-        }
-        return returnSymbol;
+        String returnSymbol = queryReplace.get( symbol );
+        return returnSymbol == null ? symbol
+                                    : returnSymbol;
     }
 
 
