@@ -876,13 +876,11 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             }
         } else if (neighborcount == 4) {
             // count the number of double bonded oxygens
-            int doubleBonds = 0;
-            for (int i=neighborcount-1;i>=0;i--) {
-                if (neighbors.get(i).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
-                    doubleBonds++;
-                }
-            }
-            if (doubleBonds == 1){
+            int doubleBonds = countAttachedDoubleBonds(atomContainer, atom);
+            if (atom.getFormalCharge() == 1 && doubleBonds == 0) {
+                IAtomType type = getAtomType("P.ate.charged");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (doubleBonds == 1){
                 IAtomType type = getAtomType("P.ate");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             }
