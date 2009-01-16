@@ -776,8 +776,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 atom.getHybridization() == Hybridization.SP2 &&
                 atom.getFormalCharge() != CDKConstants.UNSET &&
                 atom.getFormalCharge() == +1) {
-            IAtomType type = getAtomType("S.plus");
-            if (isAcceptable(atom, atomContainer, type)) return type;
+            if (neighborcount == 3) {
+                IAtomType type = getAtomType("S.inyl.charged");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else {
+                IAtomType type = getAtomType("S.plus");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
         } else if (atom.getFormalCharge() != CDKConstants.UNSET &&
                 atom.getFormalCharge() != 0) {
             if (atom.getFormalCharge() == -1 &&
@@ -787,6 +792,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             } else if (atom.getFormalCharge() == +1 &&
                     neighborcount == 2) {
                 IAtomType type = getAtomType("S.plus");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (atom.getFormalCharge() == +1 &&
+                    neighborcount == 3) {
+                IAtomType type = getAtomType("S.inyl.charged");
                 if (isAcceptable(atom, atomContainer, type)) return type;
             } else if (atom.getFormalCharge() == +2 &&
                     neighborcount == 4) {

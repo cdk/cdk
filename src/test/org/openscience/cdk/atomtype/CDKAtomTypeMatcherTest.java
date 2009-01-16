@@ -540,8 +540,26 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    @Test public void testDMSO() throws Exception {
+    @Test public void testDMSOCharged() throws Exception {
     	IMolecule mol = new Molecule();
+        IAtom atom = new Atom("O"); atom.setFormalCharge(-1);
+        IAtom atom2 = new Atom("S"); atom2.setFormalCharge(1);
+        IAtom atom3 = new Atom("C");
+        IAtom atom4 = new Atom("C");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"O.minus", "S.inyl.charged", "C.sp3", "C.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+    
+    @Test public void testDMSO() throws Exception {
+        IMolecule mol = new Molecule();
         IAtom atom = new Atom("O");
         IAtom atom2 = new Atom("S");
         IAtom atom3 = new Atom("C");
