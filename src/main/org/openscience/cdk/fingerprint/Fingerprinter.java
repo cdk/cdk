@@ -232,9 +232,10 @@ public class Fingerprinter implements IFingerprinter {
         // now lets clean stuff up
         Set<String> cleanPath = new HashSet<String>();
         for (StringBuffer s : allPaths) {
-            String s2 = s.toString();
-            if (cleanPath.contains(s2) || cleanPath.contains(s.reverse().toString())) continue;
-            else cleanPath.add(s2);
+            if (cleanPath.contains( s.toString() )) continue;
+            String s2 = s.reverse().toString();
+            if (cleanPath.contains(s2)) continue;
+            cleanPath.add(s2);
         }
         for (String s : cleanPath) paths.put(s, s);
         return paths;
