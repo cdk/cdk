@@ -1676,6 +1676,25 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
+    /**
+     * Test for the structure in XLogPDescriptorTest.testno937().
+     */
+    @Test public void testno937() throws Exception {
+        String[] expectedTypes = {
+            "C.sp2",
+            "N.planar3",
+            "C.sp2",
+            "N.sp2",
+            "C.sp2",
+            "C.sp3"
+        };
+        IMolecule molecule = MoleculeFactory.makePyrrole();
+        molecule.getAtom(3).setSymbol("N");
+        molecule.addAtom(molecule.getBuilder().newAtom("C"));
+        molecule.addBond(1,5, IBond.Order.SINGLE);
+        assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
+    }
+
     @Test public void testPyrrole() throws Exception {
 		String[] expectedTypes = {
 			"C.sp2",
