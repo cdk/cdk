@@ -1691,5 +1691,17 @@ public class SmilesParserTest extends CDKTestCase {
         mol = p.parseSmiles("C([H])([H])([H])O([H])");
         Assert.assertEquals(6, mol.getAtomCount());
     }
+
+    /**
+     * @cdk.bug 2514200
+     */
+    @Test public void testno937() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IMolecule mol = sp.parseSmiles("C[nH0]1c([nH0]cc1"); // xlogp training set molecule no937
+        Assert.assertNotNull(mol.getAtom(1).getHydrogenCount());
+        Assert.assertEquals(0, mol.getAtom(1).getHydrogenCount().intValue());
+        Assert.assertNotNull(mol.getAtom(3).getHydrogenCount());
+        Assert.assertEquals(0, mol.getAtom(3).getHydrogenCount().intValue());
+    }
 }
 
