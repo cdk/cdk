@@ -1484,7 +1484,38 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
      }
 
-    @Test public void testFerrocene() throws Exception {
+     @Test public void testCyclopentadienyl() throws Exception {
+         IAtomContainer cp = new Molecule();
+         cp.addAtom(new Atom("C"));
+         cp.getAtom(0).setHybridization(IAtomType.Hybridization.SP2);
+         cp.getAtom(0).setHydrogenCount(1);
+         cp.addAtom(new Atom("C"));
+         cp.getAtom(1).setHybridization(IAtomType.Hybridization.SP2);
+         cp.getAtom(1).setHydrogenCount(1);
+         cp.addAtom(new Atom("C"));
+         cp.getAtom(2).setHybridization(IAtomType.Hybridization.SP2);
+         cp.getAtom(2).setHydrogenCount(1);
+         cp.addAtom(new Atom("C"));
+         cp.getAtom(3).setHybridization(IAtomType.Hybridization.SP2);
+         cp.getAtom(3).setHydrogenCount(1);
+         cp.addAtom(new Atom("C"));
+         cp.getAtom(4).setFormalCharge(-1);
+         cp.getAtom(4).setHybridization(IAtomType.Hybridization.PLANAR3);
+         cp.addAtom(new Atom("H"));
+         cp.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+         cp.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+         cp.addBond(2,3,CDKConstants.BONDORDER_DOUBLE);
+         cp.addBond(3,4,CDKConstants.BONDORDER_SINGLE);
+         cp.addBond(4,0,CDKConstants.BONDORDER_SINGLE);
+         cp.addBond(4,5,CDKConstants.BONDORDER_SINGLE);
+
+         String[] expectedTypes = new String[]{
+             "C.sp2","C.sp2","C.sp2","C.sp2","C.minus.planar", "H"
+         };
+         assertAtomTypes(testedAtomTypes, expectedTypes, cp);
+     }
+
+     @Test public void testFerrocene() throws Exception {
     	IAtomContainer ferrocene = new Molecule();
     	ferrocene.addAtom(new Atom("C"));
     	ferrocene.addAtom(new Atom("C"));
