@@ -1118,7 +1118,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private IAtomType perceiveCommonSalts(IAtomContainer atomContainer, IAtom atom) throws CDKException {
-    	if ("Na".equals(atom.getSymbol())) {
+        if ("Na".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
     			// no idea how to deal with this yet
     			return null;
@@ -1167,6 +1167,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				atom.getFormalCharge() == +2)) {
     			IAtomType type = getAtomType("Co.2plus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if ((atom.getFormalCharge() == CDKConstants.UNSET ||
+                    atom.getFormalCharge() == 0)) {
+                IAtomType type = getAtomType("Co.metallic");
+                if (isAcceptable(atom, atomContainer, type)) return type;
     		}
     	} else if ("Cu".equals(atom.getSymbol())) {
     		if (hasOneSingleElectron(atomContainer, atom)) {
@@ -1217,7 +1221,20 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     				atom.getFormalCharge() == +1)) {
     			IAtomType type = getAtomType("K.plus");
     			if (isAcceptable(atom, atomContainer, type)) return type;
+            } else if (atom.getFormalCharge() == CDKConstants.UNSET ||
+                    atom.getFormalCharge() == 0) {
+                IAtomType type = getAtomType("K.metallic");
+                if (isAcceptable(atom, atomContainer, type)) return type;
     		}
+        } else if ("W".equals(atom.getSymbol())) {
+            if (hasOneSingleElectron(atomContainer, atom)) {
+                // no idea how to deal with this yet
+                return null;
+            } else if ((atom.getFormalCharge() == CDKConstants.UNSET ||
+                    atom.getFormalCharge() == 0)) {
+                IAtomType type = getAtomType("W.metallic");
+                if (isAcceptable(atom, atomContainer, type)) return type;
+            }
     	}
     	return null;
     }

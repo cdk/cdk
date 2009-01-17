@@ -1064,6 +1064,20 @@
     <at:piBondCount>0</at:piBondCount>
     </at:AtomType>
 
+  <at:AtomType rdf:ID="K.metallic">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;K"/>
+    <at:formalNeighbourCount>0</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="W.metallic">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;W"/>
+    <at:formalNeighbourCount>0</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+  </at:AtomType>
+
   <at:AtomType rdf:ID="Ca.2plus">
     <at:formalCharge>2</at:formalCharge>
     <at:hasElement rdf:resource="&elem;Ca"/>
@@ -1125,7 +1139,14 @@
     <at:hasElement rdf:resource="&elem;Co"/>
     <at:formalNeighbourCount>0</at:formalNeighbourCount>
     <at:piBondCount>0</at:piBondCount>
-    </at:AtomType>
+  </at:AtomType>
+
+  <at:AtomType rdf:ID="Co.metallic">
+    <at:formalCharge>0</at:formalCharge>
+    <at:hasElement rdf:resource="&elem;Co"/>
+    <at:formalNeighbourCount>0</at:formalNeighbourCount>
+    <at:piBondCount>0</at:piBondCount>
+  </at:AtomType>
 
   <at:AtomType rdf:ID="Cu.2plus">
     <at:formalCharge>2</at:formalCharge>

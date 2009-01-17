@@ -1418,7 +1418,28 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
      }
 
-     @Test public void testSalts() throws Exception {
+    @Test public void testMetallics() throws Exception {
+        IMolecule mol = new Molecule();
+
+        IAtom atom = new Atom("W");
+        mol.addAtom(atom);
+        String[] expectedTypes = new String[]{"W.metallic"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+
+        mol = new Molecule();
+        atom = new Atom("K");
+        mol.addAtom(atom);
+        expectedTypes = new String[]{"K.metallic"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+
+        mol = new Molecule();
+        atom = new Atom("Co");
+        mol.addAtom(atom);
+        expectedTypes = new String[]{"Co.metallic"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testSalts() throws Exception {
     	IMolecule mol = new Molecule();
         
         IAtom atom = new Atom("Na");
