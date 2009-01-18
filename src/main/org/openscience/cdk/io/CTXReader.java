@@ -30,6 +30,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -52,6 +53,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.module io
  * @cdk.svnrev  $Revision$
  */
+@TestClass("org.openscience.cdk.io.CTXReaderTest")
 public class CTXReader extends DefaultChemObjectReader {
 
     private BufferedReader input;

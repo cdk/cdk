@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.PhysicalConstants;
 import org.openscience.cdk.interfaces.IMoleculeSet;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.GamessFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
@@ -93,7 +94,8 @@ import org.openscience.cdk.io.formats.IResourceFormat;
  */
 //TODO Update class comments with appropriate information.
 //TODO Update "see" tag with reference to GamessWriter when it will be implemented.
-//TODO Update "author" tag with appropriate information. 
+//TODO Update "author" tag with appropriate information.
+@TestClass("org.openscience.cdk.io.GamessReaderTest")
 public class GamessReader extends DefaultChemObjectReader {
 	
 	/**

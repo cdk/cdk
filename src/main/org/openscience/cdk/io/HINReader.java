@@ -21,6 +21,7 @@
 package org.openscience.cdk.io;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.formats.HINFormat;
@@ -43,6 +44,7 @@ import java.util.StringTokenizer;
  *
  * @cdk.keyword file format, HIN 
  */
+@TestClass("org.openscience.cdk.io.HINReaderTest")
 public class HINReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
