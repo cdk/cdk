@@ -232,7 +232,8 @@ public class ReaderFactoryTest extends CDKTestCase {
         assertEquals("Incorrect format detected: ", expectedFormat.getFormatName(), format.getFormatName());
         // ok, if format ok, try instantiating a reader
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        ISimpleChemObjectReader reader = factory.createReader(ins);
+        ISimpleChemObjectReader reader = factory.createReader(format);
+        reader.setReader(ins);
         assertNotNull(reader);
         assertEquals(format.getReaderClassName(), reader.getClass().getName());
         // now try reading something from it
