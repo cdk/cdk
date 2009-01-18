@@ -38,15 +38,17 @@ import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.XYZFormat;
 import org.openscience.cdk.tools.LoggingTool;
@@ -61,6 +63,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.keyword file format, XYZ
  */
+@TestClass("org.openscience.cdk.io.XYZReaderTest")
 public class XYZReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
@@ -84,6 +87,7 @@ public class XYZReader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return XYZFormat.getInstance();
     }
@@ -100,13 +104,16 @@ public class XYZReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
-		Class[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemFile.class.equals(interfaces[i])) return true;
-		}
-		return false;
-	}
+    @TestMethod("testAccepts")
+    public boolean accepts(Class<? extends IChemObject> classObject) {
+        Class[] interfaces = classObject.getInterfaces();
+        for (int i=0; i<interfaces.length; i++) {
+            if (IChemFile.class.equals(interfaces[i])) return true;
+        }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
     /**
      * reads the content from a XYZ input. It can only return a
@@ -116,6 +123,7 @@ public class XYZReader extends DefaultChemObjectReader {
      *
      * @see IChemFile
      */
+    @TestMethod("testViagra")
     public IChemObject read(IChemObject object) throws CDKException {
         if (object instanceof IChemFile) {
             return (IChemObject)readChemFile((IChemFile)object);
