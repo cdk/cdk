@@ -34,7 +34,7 @@ import org.junit.Test;
  *
  * @cdk.module test-interfaces
  */
-public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormulaTest {
+public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormulaSetTest {
 
     /**
 	 * A unit test suite for JUnit.
