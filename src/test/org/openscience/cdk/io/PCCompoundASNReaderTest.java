@@ -40,13 +40,14 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 /**
  * @cdk.module test-io
  */
-public class PCCompoundASNReaderTest extends ChemObjectIOTest {
+public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() throws Exception {
         logger = new LoggingTool(PCCompoundASNReaderTest.class);
-        setChemObjectIO(new PCCompoundASNReader());
+        System.out.println("Foo");
+        setSimpleChemObjectReader(new PCCompoundASNReader(), "data/asn/pubchem/cid1.asn");
     }
 
     @Test public void testAccepts() {
