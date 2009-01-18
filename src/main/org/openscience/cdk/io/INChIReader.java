@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -64,6 +66,7 @@ import org.xml.sax.XMLReader;
  *
  * @see     org.openscience.cdk.io.inchi.INChIHandler
  */
+@TestClass("org.openscience.cdk.io.INChIReaderTest")
 public class INChIReader extends DefaultChemObjectReader {
 
     private XMLReader parser;
@@ -207,6 +210,7 @@ public class INChIReader extends DefaultChemObjectReader {
         return cf;
     }
 
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

@@ -36,6 +36,8 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -79,6 +81,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see        org.openscience.cdk.io.MDLV2000Reader 
  */
+@TestClass("org.openscience.cdk.io.MDLReaderTest")
 public class MDLReader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
@@ -544,7 +547,8 @@ public class MDLReader extends DefaultChemObjectReader {
 		return molecule;
 	}
     
-    public void close() throws IOException {
+	@TestMethod("testClose")
+  public void close() throws IOException {
         input.close();
     }
     

@@ -41,6 +41,7 @@ import nu.xom.Element;
 import nu.xom.Serializer;
 
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -176,6 +177,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object
      */
+    @TestMethod("testClose")
     public void close() throws IOException {
         output.close();
     }

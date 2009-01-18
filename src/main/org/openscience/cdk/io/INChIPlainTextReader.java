@@ -36,13 +36,15 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.StringTokenizer;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.INChIPlainTextFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
@@ -71,6 +73,7 @@ import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
  *
  * @see     org.openscience.cdk.io.INChIReader
  */
+@TestClass("org.openscience.cdk.io.INChIPlainTextReaderTest")
 public class INChIPlainTextReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
@@ -187,6 +190,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
         return cf;
     }
 
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

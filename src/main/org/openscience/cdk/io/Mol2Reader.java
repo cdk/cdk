@@ -35,6 +35,8 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.Symbols;
 import org.openscience.cdk.exception.CDKException;
@@ -64,6 +66,7 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * @cdk.keyword    file format, Mol2
  */
+@TestClass("org.openscience.cdk.io.Mol2ReaderTest")
 public class Mol2Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
@@ -332,7 +335,8 @@ public class Mol2Reader extends DefaultChemObjectReader {
 		return false;
 	}
 
-	public void close() throws IOException {
+    @TestMethod("testClose")
+    public void close() throws IOException {
         input.close();
     }
 }

@@ -34,6 +34,7 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -93,6 +94,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
+    @TestMethod("testClose")
     public void close() {
     }
     

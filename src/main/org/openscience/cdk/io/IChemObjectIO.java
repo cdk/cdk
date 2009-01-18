@@ -26,6 +26,7 @@ package org.openscience.cdk.io;
 
 import java.io.IOException;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
@@ -61,6 +62,7 @@ public interface IChemObjectIO {
     /**
      * Closes the Reader's resources.
      */
+    @TestMethod("testClose")
     public void close() throws IOException;
 
     /**

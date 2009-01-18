@@ -36,14 +36,16 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.VASPFormat;
 import org.openscience.cdk.math.FortranFormat;
@@ -57,6 +59,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @author  Fabian Dortu <Fabian.Dortu@wanadoo.be>
  */
+@TestClass("org.openscience.cdk.io.VSPReaderTest")
 public class VASPReader extends DefaultChemObjectReader {
 
     private LoggingTool logger = null;
@@ -347,6 +350,7 @@ public class VASPReader extends DefaultChemObjectReader {
         return fieldVal;
     } //end nextVASPTokenFollowing(String string) 
         
+    @TestMethod("testClose")
     public void close() throws IOException {
         inputBuffer.close();
     }

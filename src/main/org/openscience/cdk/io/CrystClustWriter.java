@@ -30,6 +30,7 @@ import java.io.Writer;
 import javax.vecmath.Vector3d;
 
 import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.UnsupportedChemObjectException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -125,6 +126,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object
      */
+    @TestMethod("testClose")
     public void close() throws IOException {
     	writer.close();
     }

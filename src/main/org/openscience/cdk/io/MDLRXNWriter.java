@@ -41,7 +41,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -71,6 +72,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.keyword file format, MDL RXN file
  */
+@TestClass("org.openscience.cdk.io.MDLRXNReaderTest")
 public class MDLRXNWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
@@ -144,6 +146,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
     /**
      * Flushes the output and closes this object.
      */
+    @TestMethod("testClose")
     public void close() throws IOException {
         writer.close();
     }

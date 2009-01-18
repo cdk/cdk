@@ -34,6 +34,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
@@ -57,6 +59,7 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @cdk.keyword file format, PubChem Compound ASN
  */
+@TestClass("org.openscience.cdk.io.PCCompoundASNReaderTest")
 public class PCCompoundASNReader extends DefaultChemObjectReader {
 
     private BufferedReader input;
@@ -125,6 +128,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

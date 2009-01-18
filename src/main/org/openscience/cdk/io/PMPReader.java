@@ -41,6 +41,8 @@ import java.util.regex.Pattern;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.rebond.RebondTool;
 import org.openscience.cdk.interfaces.IAtom;
@@ -68,6 +70,7 @@ import org.openscience.cdk.tools.LoggingTool;
  * @author E.L. Willighagen
  * @cdk.require java1.4+
  */
+@TestClass("org.openscience.cdk.io.PMPReaderTest")
 public class PMPReader extends DefaultChemObjectReader {
 
     private static final String PMP_ZORDER = "ZOrder";
@@ -481,6 +484,7 @@ public class PMPReader extends DefaultChemObjectReader {
         }
     };
 
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

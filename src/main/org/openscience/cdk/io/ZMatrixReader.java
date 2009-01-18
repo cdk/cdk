@@ -39,6 +39,8 @@ import java.util.StringTokenizer;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.ZMatrixTools;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -60,6 +62,7 @@ import org.openscience.cdk.io.formats.ZMatrixFormat;
  *
  * @cdk.keyword file format, Z-matrix
  */
+@TestClass("org.openscience.cdk.io.ZMatrixReaderTest")
 public class ZMatrixReader extends DefaultChemObjectReader {
 
   private BufferedReader input;
@@ -241,6 +244,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
     return file;
   }
 
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }

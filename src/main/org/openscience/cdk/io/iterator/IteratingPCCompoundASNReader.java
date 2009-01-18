@@ -32,6 +32,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.NoSuchElementException;
 
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -181,7 +182,8 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
         return nextMolecule;
     }
     
-    public void close() throws IOException {
+    @TestMethod("testClose")
+	  public void close() throws IOException {
         input.close();
     }
     
