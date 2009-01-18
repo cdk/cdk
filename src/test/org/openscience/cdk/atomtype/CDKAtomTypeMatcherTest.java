@@ -890,6 +890,31 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.inchi InChI=1/C3H10OP/c1-5(2,3)4/h4H,1-3H3/q+1
+     */
+    @Test public void testHydroxyTriMethylPhophanium() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("C");
+        IAtom atom2 = new Atom("P");
+        atom2.setFormalCharge(+1);
+        IAtom atom3 = new Atom("C");
+        IAtom atom4 = new Atom("C");
+        IAtom atom5 = new Atom("O");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addAtom(atom4);
+        mol.addAtom(atom5);
+        mol.addBond(0,1,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,3,CDKConstants.BONDORDER_SINGLE);
+        mol.addBond(1,4,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"C.sp3", "P.ate.charged", "C.sp3", "C.sp3", "O.sp3"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testPhosphateCharged() throws Exception {
         IMolecule mol = new Molecule();
         IAtom atom = new Atom("O"); atom.setFormalCharge(-1);
