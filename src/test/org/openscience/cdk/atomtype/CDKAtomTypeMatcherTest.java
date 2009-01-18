@@ -106,6 +106,17 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    /**
+     * @cdk.bug 2445178
+     */
+    @Test public void testNonExistingType() throws Exception {
+        IMolecule mol = new Molecule();
+        IAtom atom = new Atom("Error");
+        mol.addAtom(atom);
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(DefaultChemObjectBuilder.getInstance());
+        Assert.assertNull(matcher.findMatchingAtomType(mol, atom));
+    }
+
     @Test public void testEthene() throws Exception {
     	IMolecule mol = new Molecule();
         IAtom atom = new Atom("C");
