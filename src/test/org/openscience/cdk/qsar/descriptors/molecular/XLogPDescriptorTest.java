@@ -69,7 +69,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no1596:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(0.86, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assert.assertEquals(0.86, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     @Test public void testno367() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -146,7 +146,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no990:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(1.834, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assert.assertEquals(1.834, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     @Test public void testno1000() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -157,7 +157,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no10000:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(2.809, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assert.assertEquals(2.809, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     @Test public void testApirinBug1296383() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -179,7 +179,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no1429:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(0.31, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assert.assertEquals(0.31, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     @Test public void testno1274() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -190,7 +190,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no1274:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(-1.487, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assert.assertEquals(-1.487, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     @Test public void testno454() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -228,7 +228,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("Aprindine:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(5.03, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assert.assertEquals(5.03, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     @Test public void test1844() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -240,7 +240,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no1844:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(5.22, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assert.assertEquals(5.22, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     @Test public void test1810() throws ClassNotFoundException, CDKException, java.lang.Exception {
@@ -251,7 +251,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
         //logger.debug("no1810:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
-        Assert.assertEquals(4.56, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+        Assert.assertEquals(4.56, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
     /**
