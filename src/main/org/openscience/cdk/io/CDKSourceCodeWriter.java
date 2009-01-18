@@ -127,6 +127,8 @@ public class CDKSourceCodeWriter extends DefaultChemObjectWriter {
 			if (IMolecule.class.equals(interfaces[i])) return true;
 			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}
+    Class superClass = classObject.getSuperclass();
+    if (superClass != null) return this.accepts(superClass);
 		return false;
 	}
 

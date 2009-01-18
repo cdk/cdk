@@ -89,6 +89,8 @@ public class HINReader extends DefaultChemObjectReader {
         for (Class anInterface : interfaces) {
             if (IChemFile.class.equals(anInterface)) return true;
         }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
 		return false;
 	}
 

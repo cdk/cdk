@@ -122,6 +122,8 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
 			if (IChemFile.class.equals(interfaces[i])) return true;
 			if (IReaction.class.equals(interfaces[i])) return true;
 		}
+    Class superClass = classObject.getSuperclass();
+    if (superClass != null) return this.accepts(superClass);
 		return false;
 	}
 
