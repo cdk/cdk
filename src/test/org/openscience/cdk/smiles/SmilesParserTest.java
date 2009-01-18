@@ -159,6 +159,7 @@ public class SmilesParserTest extends CDKTestCase {
 	public void testPositivePhosphor() throws Exception {
 		String smiles = "[Cl+3]([O-])([O-])([O-])[O-].[P+]([O-])(c1ccccc1)(c1ccccc1)c1cc([nH0+](C)c(c1)c1ccccc1)c1ccccc1";
 		IMolecule mol = sp.parseSmiles(smiles);
+		Assert.assertEquals(0, mol.getAtom(22).getHydrogenCount().intValue());
 		assertAtomTypesPerceived(mol);
         Assert.assertEquals(38, mol.getAtomCount());
 		Assert.assertEquals("P", mol.getAtom(5).getSymbol());
