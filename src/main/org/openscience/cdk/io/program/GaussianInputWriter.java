@@ -32,6 +32,7 @@ import java.util.List;
 
 import javax.vecmath.Point3d;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -57,6 +58,7 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  *
  * @cdk.keyword Gaussian (tm), input file
  */
+@TestClass("org.openscience.cdk.io.program.GaussianInputWriterTest")
 public class GaussianInputWriter extends DefaultChemObjectWriter {
   
     static BufferedWriter writer;
@@ -122,6 +124,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
 		return false;
 	}
 
+	@TestMethod("testWrite")
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IMolecule) {
             try {
