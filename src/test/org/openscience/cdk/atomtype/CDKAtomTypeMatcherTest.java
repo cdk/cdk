@@ -1994,7 +1994,7 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
     
-    @Test public void testPyridineOxide() throws Exception {
+    @Test public void testPyridineOxide_Charged() throws Exception {
 		String[] expectedTypes = {
 			"C.sp2",
 			"N.plus.sp2",
@@ -2007,8 +2007,75 @@ public class CDKAtomTypeMatcherTest extends AbstractCDKAtomTypeTest {
 		IMolecule molecule = MoleculeFactory.makePyridineOxide();
     	assertAtomTypes(testedAtomTypes, expectedTypes, molecule);
 	}
-    
+
+    @Test public void testPyridineOxide() throws Exception {
+        Molecule mol = new Molecule();
+        mol.addAtom(new Atom("C")); // 0
+        mol.addAtom(new Atom("N")); // 1
+        mol.addAtom(new Atom("C")); // 2
+        mol.addAtom(new Atom("C")); // 3
+        mol.addAtom(new Atom("C")); // 4
+        mol.addAtom(new Atom("C")); // 5
+        mol.addAtom(new Atom("O")); // 6
+
+        mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+        mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+        mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
+        mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+        mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
+        mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+        mol.addBond(1, 6, IBond.Order.DOUBLE); // 7
+
+        String[] expectedTypes = {
+            "C.sp2",
+            "N.sp2.3",
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "O.sp2"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testPyridineOxide_SP2() throws Exception {
+        Molecule mol = new Molecule();
+        mol.addAtom(new Atom("C")); // 0
+        mol.getAtom(0).setHybridization(Hybridization.SP2);
+        mol.addAtom(new Atom("N")); // 1
+        mol.getAtom(1).setHybridization(Hybridization.SP2);
+        mol.addAtom(new Atom("C")); // 2
+        mol.getAtom(2).setHybridization(Hybridization.SP2);
+        mol.addAtom(new Atom("C")); // 3
+        mol.getAtom(3).setHybridization(Hybridization.SP2);
+        mol.addAtom(new Atom("C")); // 4
+        mol.getAtom(4).setHybridization(Hybridization.SP2);
+        mol.addAtom(new Atom("C")); // 5
+        mol.getAtom(5).setHybridization(Hybridization.SP2);
+        mol.addAtom(new Atom("O")); // 6
+        mol.getAtom(6).setHybridization(Hybridization.SP2);
+
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+        mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+        mol.addBond(3, 4, IBond.Order.SINGLE); // 4
+        mol.addBond(4, 5, IBond.Order.SINGLE); // 5
+        mol.addBond(5, 0, IBond.Order.SINGLE); // 6
+        mol.addBond(1, 6, IBond.Order.DOUBLE); // 7
+
+        String[] expectedTypes = {
+            "C.sp2",
+            "N.sp2.3",
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "C.sp2",
+            "O.sp2"
+        };
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testPyridineOxideCharged_SP2() throws Exception {
 		String[] expectedTypes = {
 			"C.sp2",
 			"N.plus.sp2",

@@ -564,8 +564,14 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             		int ringSize = ring == null ? 0 : ring.getAtomCount();
             		if (ring != null && ring.getAtomCount() > 0) {
             			if (neighborCount == 3) {
-            				IAtomType type = getAtomType("N.planar3");
-            				if (isAcceptable(atom, atomContainer, type)) return type;
+                            IBond.Order maxOrder = atomContainer.getMaximumBondOrder(atom);
+                            if (maxOrder == IBond.Order.DOUBLE) {
+                                IAtomType type = getAtomType("N.sp2.3");
+                                if (isAcceptable(atom, atomContainer, type)) return type;
+                            } else if (maxOrder == IBond.Order.SINGLE) {
+                                IAtomType type = getAtomType("N.planar3");
+                                if (isAcceptable(atom, atomContainer, type)) return type;
+                            }
             			} else if (neighborCount == 2) {
             				IBond.Order maxOrder = atomContainer.getMaximumBondOrder(atom);
             				if (maxOrder == IBond.Order.SINGLE) {
@@ -694,6 +700,10 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 if (atomContainer.getConnectedAtomsCount(atom) == 3 &&
                         countAttachedDoubleBonds(atomContainer, atom, "O") == 2) {
                     IAtomType type = getAtomType("N.nitro");
+                    if (isAcceptable(atom, atomContainer, type)) return type;
+                } else if (atomContainer.getConnectedAtomsCount(atom) == 3 &&
+                        countAttachedDoubleBonds(atomContainer, atom) > 0) {
+                    IAtomType type = getAtomType("N.sp2.3");
                     if (isAcceptable(atom, atomContainer, type)) return type;
                 }
                 IAtomType type = getAtomType("N.sp2");
