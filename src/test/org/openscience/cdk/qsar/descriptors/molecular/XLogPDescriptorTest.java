@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
@@ -47,7 +48,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     	setDescriptor(XLogPDescriptor.class);
     }
 
-    @Test public void testno688() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Ignore @Test public void testno688() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -126,7 +127,7 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(4.62, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
-    @Test public void testno937() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Ignore @Test public void testno937() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
