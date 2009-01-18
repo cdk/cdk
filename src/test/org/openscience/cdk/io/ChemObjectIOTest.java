@@ -26,12 +26,21 @@ package org.openscience.cdk.io;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.ChemModel;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.NewCDKTestCase;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IReaction;
+import org.openscience.cdk.Reaction;
+import org.openscience.cdk.debug.DebugChemFile;
+import org.openscience.cdk.debug.DebugChemModel;
+import org.openscience.cdk.debug.DebugMolecule;
+import org.openscience.cdk.debug.DebugReaction;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.nonotify.NNChemFile;
+import org.openscience.cdk.nonotify.NNChemModel;
+import org.openscience.cdk.nonotify.NNMolecule;
+import org.openscience.cdk.nonotify.NNReaction;
 
 /**
  * TestCase for CDK IO classes.
@@ -61,14 +70,45 @@ public abstract class ChemObjectIOTest extends NewCDKTestCase {
         );
     }
 
-    @Test public void testAcceptsAtLeastOne() {
-        Class[] objects = {
-            IChemFile.class, IChemModel.class, IMolecule.class,
-            IReaction.class
-        };
+    private static IChemObject[] acceptableNNChemObjects = {
+        new NNChemFile(), new NNChemModel(), new NNMolecule(),
+        new NNReaction()
+    };
+
+    @Test public void testAcceptsAtLeastOneNonotifyObject() {
         boolean oneAccepted = false;
-        for (int i=0; (i<objects.length && !oneAccepted); i++) {
-            if (chemObjectIO.accepts(objects[i])) {
+        for (IChemObject object : acceptableNNChemObjects) {
+            if (chemObjectIO.accepts(object.getClass())) {
+                oneAccepted = true;
+            }
+        }
+        Assert.assertTrue("At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IMolecule, IReaction", oneAccepted);
+    }
+
+    private static IChemObject[] acceptableDebugChemObjects = {
+        new DebugChemFile(), new DebugChemModel(), new DebugMolecule(),
+        new DebugReaction()
+    };
+
+    @Test public void testAcceptsAtLeastOneDebugObject() {
+        boolean oneAccepted = false;
+        for (IChemObject object : acceptableDebugChemObjects) {
+            if (chemObjectIO.accepts(object.getClass())) {
+                oneAccepted = true;
+            }
+        }
+        Assert.assertTrue("At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IMolecule, IReaction", oneAccepted);
+    }
+
+    private static IChemObject[] acceptableChemObjects = {
+        new ChemFile(), new ChemModel(), new Molecule(),
+        new Reaction()
+    };
+
+    @Test public void testAcceptsAtLeastOneChemObject() {
+        boolean oneAccepted = false;
+        for (IChemObject object : acceptableChemObjects) {
+            if (chemObjectIO.accepts(object.getClass())) {
                 oneAccepted = true;
             }
         }
