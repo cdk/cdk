@@ -82,6 +82,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CrystClustFormat.getInstance();
     }
@@ -99,7 +100,8 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     }
     
     
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (ICrystal.class.equals(interfaces[i])) return true;

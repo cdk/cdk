@@ -88,6 +88,7 @@ public class INChIReader extends DefaultChemObjectReader {
         this(new ByteArrayInputStream(new byte[0]));
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return INChIFormat.getInstance();
     }
@@ -96,10 +97,12 @@ public class INChIReader extends DefaultChemObjectReader {
      * This method must not be used; XML reading requires the use of an InputStream.
      * Use setReader(InputStream) instead.
      */
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
         throw new CDKException("Invalid method call; use SetReader(InputStream) instead.");
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         this.input = input;
     }
@@ -155,7 +158,8 @@ public class INChIReader extends DefaultChemObjectReader {
         }
     }
 
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;

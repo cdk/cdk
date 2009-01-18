@@ -160,6 +160,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
     	logger.info("Loaded Customizer: ", customizer.getClass().getName());
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CMLFormat.getInstance();
     }
@@ -182,7 +183,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
         output.close();
     }
 
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IAtom.class.equals(interfaces[i])) return true;

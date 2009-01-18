@@ -119,6 +119,7 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
         this(new InputStreamReader(in), builder);
     }
 
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return currentFormat;
     }
@@ -248,7 +249,8 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
         throw new UnsupportedOperationException();
     }
 
-	public void setReader(Reader reader) {
+	@TestMethod("testSetReader_Reader")
+    public void setReader(Reader reader) {
 		if (reader instanceof BufferedReader) {
 			input = (BufferedReader)reader;
 		} else {
@@ -259,7 +261,8 @@ public class IteratingMDLReader extends DefaultIteratingChemObjectReader impleme
         hasNext = false;
     }
 
-	public void setReader(InputStream reader) {
+	@TestMethod("testSetReader_InputStream")
+    public void setReader(InputStream reader) {
 	    setReader(new InputStreamReader(reader));
     }
 

@@ -83,6 +83,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
         this(new OutputStreamWriter(output));
     }
 
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return Mol2Format.getInstance();
     }
@@ -107,7 +108,8 @@ public class Mol2Writer extends DefaultChemObjectWriter {
         writer.close();
     }
 
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IMolecule.class.equals(interfaces[i])) return true;

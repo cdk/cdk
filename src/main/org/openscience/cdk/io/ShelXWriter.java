@@ -92,6 +92,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return ShelXFormat.getInstance();
     }
@@ -116,7 +117,8 @@ public class ShelXWriter extends DefaultChemObjectWriter {
     	writer.close();
     }
 
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (ICrystal.class.equals(interfaces[i])) return true;

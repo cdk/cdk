@@ -103,10 +103,12 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         this(new StringReader(""));
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return MDLV3000Format.getInstance();
     }
 
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -116,11 +118,13 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         lineNumber = 0;
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
-	public boolean accepts(Class classObject) {
+	@TestMethod("testAccepts")
+    public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IMolecule.class.equals(interfaces[i])) return true;
@@ -580,6 +584,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testAccepts")
     public boolean accepts(IChemObject object) {
         if (object instanceof IMolecule) {
             return true;

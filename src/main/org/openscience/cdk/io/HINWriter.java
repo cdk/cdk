@@ -85,6 +85,7 @@ public class HINWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return HINFormat.getInstance();
     }
@@ -109,6 +110,7 @@ public class HINWriter extends DefaultChemObjectWriter {
         writer.close();
     }
 
+    @TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
         Class[] interfaces = classObject.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {

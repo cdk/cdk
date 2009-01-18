@@ -104,6 +104,7 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
     }
 
 
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return PubChemCompoundsXMLFormat.getInstance();
     }
@@ -159,7 +160,8 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
         throw new UnsupportedOperationException();
     }
 
-	public void setReader(Reader reader) throws CDKException {
+	@TestMethod("testSetReader_Reader")
+    public void setReader(Reader reader) throws CDKException {
 		primarySource = reader;
         try {
 	        parser.setInput(primarySource);
@@ -171,7 +173,8 @@ public class IteratingPCCompoundXMLReader extends DefaultIteratingChemObjectRead
         hasNext = false;
     }
 
-	public void setReader(InputStream reader) throws CDKException {
+	@TestMethod("testSetReader_InputStream")
+    public void setReader(InputStream reader) throws CDKException {
 	    setReader(new InputStreamReader(reader));
     }
 }

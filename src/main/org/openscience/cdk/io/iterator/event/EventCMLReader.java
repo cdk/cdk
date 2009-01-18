@@ -86,6 +86,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
         this.addChemObjectIOListener(listener);
     }
     
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CMLFormat.getInstance();
     }
@@ -94,6 +95,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
         return cdo.getAtomContainer();
     }
     
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
         this.input = reader;
     }
