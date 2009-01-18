@@ -92,6 +92,7 @@ public class XYZReader extends DefaultChemObjectReader {
         return XYZFormat.getInstance();
     }
     
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader)input;
@@ -100,6 +101,7 @@ public class XYZReader extends DefaultChemObjectReader {
         }
     }
 
+    @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
@@ -212,7 +214,8 @@ public class XYZReader extends DefaultChemObjectReader {
         }
         return file;
     }
-    
+
+    @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }
