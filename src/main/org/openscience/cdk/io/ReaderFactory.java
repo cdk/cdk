@@ -207,22 +207,20 @@ public class ReaderFactory {
     }
     
     public IChemFormat guessFormat(InputStream input) throws IOException {
+        if (input instanceof GZIPInputStream) {
+            return guessFormat(new BufferedReader(new InputStreamReader(input)));
+        }
         BufferedInputStream bistream = new BufferedInputStream(input, 8192);
         InputStream istreamToRead = bistream; // if gzip test fails, then take default
         bistream.mark(5);
         int countRead = 0;
-        try {
-            byte[] abMagic = new byte[4];
-            countRead = bistream.read(abMagic, 0, 4);
-            bistream.reset();
-            if (countRead == 4) {
-                if (abMagic[0] == (byte)0x1F && abMagic[1] == (byte)0x8B) {
-                    istreamToRead = new GZIPInputStream(bistream);
-                }
+        byte[] abMagic = new byte[4];
+        countRead = bistream.read(abMagic, 0, 4);
+        bistream.reset();
+        if (countRead == 4) {
+            if (abMagic[0] == (byte)0x1F && abMagic[1] == (byte)0x8B) {
+                istreamToRead = new GZIPInputStream(bistream);
             }
-        } catch (IOException exception) {
-            logger.error(exception.getMessage());
-            logger.debug(exception);
         }
         return guessFormat(new BufferedReader(new InputStreamReader(istreamToRead)));
     }
@@ -237,11 +235,15 @@ public class ReaderFactory {
      * @see #createReader(Reader)
      */
     public ISimpleChemObjectReader createReader(InputStream input) throws IOException {
-        BufferedInputStream bistream = new BufferedInputStream(input, 8192);
-        InputStream istreamToRead = bistream; // if gzip test fails, then take default
-        bistream.mark(5);
-        int countRead = 0;
-        try {
+        IChemFormat format = null;
+        ISimpleChemObjectReader reader = null;
+        if (input instanceof GZIPInputStream) {
+            format = guessFormat(input);
+        } else {
+            BufferedInputStream bistream = new BufferedInputStream(input, 8192);
+            InputStream istreamToRead = bistream; // if gzip test fails, then take default
+            bistream.mark(5);
+            int countRead = 0;
             byte[] abMagic = new byte[4];
             countRead = bistream.read(abMagic, 0, 4);
             bistream.reset();
@@ -250,38 +252,13 @@ public class ReaderFactory {
                     istreamToRead = new GZIPInputStream(bistream);
                 }
             }
-        } catch (IOException exception) {
-            logger.error(exception.getMessage());
-            logger.debug(exception);
+            format = guessFormat( istreamToRead );
         }
-        ISimpleChemObjectReader reader 
-            = createReader(new InputStreamReader(istreamToRead));
-        
-        /*
-         * The CMLReader demands to be given an inputstream and not a 
-         * Reader. So I am redoing everyhting one more time and giving 
-         * it that. Code below is a quick fix for olas who really needed
-         * to release Bioclipse. 
-         * 
-         *  // jonalv 
-         */
-        if ( reader instanceof CMLReader ) {
-            try {
-                bistream.reset();
-                byte[] abMagic = new byte[4];
-                countRead = bistream.read(abMagic, 0, 4);
-                bistream.reset();
-                if (countRead == 4) {
-                    if (abMagic[0] == (byte)0x1F && abMagic[1] == (byte)0x8B) {
-                        istreamToRead = new GZIPInputStream(bistream);
-                    }
-                }
-                reader.setReader( istreamToRead );
-            } 
-            catch ( CDKException e ) {
-                logger.error("Could not set the Reader source: ", e.getMessage());
-                logger.debug(e);
-            }
+        reader = createReader(format);
+        try {
+            reader.setReader(input);
+        } catch ( CDKException e1 ) {
+            throw new IOException("Exception while setting the InputStream: " + e1.getMessage(), e1);
         }
         return reader;
     }
