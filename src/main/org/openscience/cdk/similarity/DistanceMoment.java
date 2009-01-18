@@ -21,10 +21,12 @@ import java.util.Iterator;
  * <p/>
  * This class allows you to evaluate the 3D similarity between two specified molecules as well as
  * generate the 12 descriptors used to characterize the 3D structure which can then be used for a
- * variety of purposes such as storing in a database. The values are also available via a {@link XXX}.
+ * variety of purposes such as storing in a database.
  *
- * <b>Note</b>: The methods of this class do no perform hydrogen removal. If you want to
- * do the calculations excluding hydrogens, you'll need to do it yourself.
+ * <b>Note</b>: The methods of this class do not perform hydrogen removal. If you want to
+ * do the calculations excluding hydrogens, you'll need to do it yourself. Also, if the molecule has
+ * disconnected components, you should consider one (usually the largest), otherwise all components
+ * are conidered in the calculation.
  *
  * @author Rajarshi Guha
  * @cdk.created 2007-03-11
@@ -38,9 +40,7 @@ public class DistanceMoment {
         double y = 0;
         double z = 0;
 
-        Iterator<IAtom> atoms = atomContainer.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : atomContainer.atoms()) {
             Point3d p = atom.getPoint3d();
             if (p == null) throw new CDKException("Molecule must have 3D coordinates");
             x += p.x;
