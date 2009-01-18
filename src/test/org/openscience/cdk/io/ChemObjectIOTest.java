@@ -37,6 +37,8 @@ import org.openscience.cdk.debug.DebugMolecule;
 import org.openscience.cdk.debug.DebugReaction;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.io.listener.IChemObjectIOListener;
+import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.nonotify.NNChemFile;
 import org.openscience.cdk.nonotify.NNChemModel;
 import org.openscience.cdk.nonotify.NNMolecule;
@@ -100,7 +102,7 @@ public abstract class ChemObjectIOTest extends NewCDKTestCase {
         Assert.assertTrue("At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IMolecule, IReaction", oneAccepted);
     }
 
-    private static IChemObject[] acceptableChemObjects = {
+    protected static IChemObject[] acceptableChemObjects = {
         new ChemFile(), new ChemModel(), new Molecule(),
         new Reaction()
     };
@@ -113,6 +115,41 @@ public abstract class ChemObjectIOTest extends NewCDKTestCase {
             }
         }
         Assert.assertTrue("At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IMolecule, IReaction", oneAccepted);
+    }
+
+    @Test public void testClose() throws Exception {
+        chemObjectIO.close();
+    }
+
+    @Test public void testGetIOSetting() {
+        IOSetting[] settings = chemObjectIO.getIOSettings();
+        for (IOSetting setting : settings) {
+            Assert.assertNotNull(setting);
+            Assert.assertNotNull(setting.getDefaultSetting());
+            Assert.assertNotNull(setting.getName());
+            Assert.assertNotNull(setting.getQuestion());
+            Assert.assertNotNull(setting.getLevel());
+        }
+    }
+
+    @Test public void testAddChemObjectIOListener() {
+        MyListener listener = new MyListener();
+        chemObjectIO.addChemObjectIOListener(listener);
+    }
+
+    class MyListener implements IChemObjectIOListener {
+
+        private int timesCalled = 0;
+
+        public void processIOSettingQuestion(IOSetting setting) {
+            timesCalled++;
+        }
+    }
+
+    @Test public void testRemoveChemObjectIOListener() {
+        MyListener listener = new MyListener();
+        chemObjectIO.addChemObjectIOListener(listener);
+        chemObjectIO.removeChemObjectIOListener(listener);
     }
 
 }
