@@ -94,6 +94,20 @@ public class Fingerprinter implements IFingerprinter {
 
 	private static LoggingTool logger = new LoggingTool(Fingerprinter.class);
 
+	private static final Map<String, String> queryReplace 
+	        = new HashMap<String, String>() {
+        
+	    private static final long serialVersionUID = 1L;
+        
+	    {
+	        put("Cl", "X");    put("Br", "Z");
+	        put("Si", "Y");    put("As", "D");
+	        put("Li", "L");    put("Se", "E");
+	        put("Na", "G");    put("Ca", "J");
+	        put("Al", "A");
+	    }
+	};
+	
     /**
 	 * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
 	 * and with a search depth of <code>DEFAULT_SEARCH_DEPTH</code>.
@@ -178,6 +192,9 @@ public class Fingerprinter implements IFingerprinter {
 
         List<StringBuffer> allPaths = new ArrayList<StringBuffer>();
 
+        Map<IAtom,Map<IAtom, IBond>> cache 
+            = new HashMap<IAtom, Map<IAtom,IBond>>();
+        
         for (IAtom startAtom : container.atoms()) {
             for (int pathLength = 0; pathLength <= searchDepth; pathLength++) {
                 List<List<IAtom>> p = PathTools.getPathsOfLength(container, startAtom, pathLength);
@@ -187,10 +204,19 @@ public class Fingerprinter implements IFingerprinter {
                     sb.append(convertSymbol(x.getSymbol()));
 
                     for (int i = 1; i < path.size(); i++) {
-                        IAtom y = path.get(i);
-                        sb.append(getBondSymbol(container.getBond(x, y)));
-                        sb.append(convertSymbol(y.getSymbol()));
-                        x = y;
+                        final IAtom[] y = {path.get(i)};
+                        Map<IAtom, IBond> m = cache.get( x );
+                        final IBond[] b = { m != null ? m.get( y[0] ) : null };
+                        if ( b[0] == null ) {
+                            b[0] = container.getBond(x, y[0]);
+                            cache.put( x, 
+                                       new HashMap<IAtom, IBond>() {
+                                {put(y[0], b[0]); }
+                            } );
+                                                }
+                     sb.append(getBondSymbol(b[0]));
+                     sb.append(convertSymbol(y[0].getSymbol()));
+                     x = y[0];
                     }
 
                     // we store the lexicographically lower one of the
@@ -204,10 +230,12 @@ public class Fingerprinter implements IFingerprinter {
             }
         }
         // now lets clean stuff up
-        List<String> cleanPath = new ArrayList<String>();
+        Set<String> cleanPath = new HashSet<String>();
         for (StringBuffer s : allPaths) {
-            if (cleanPath.contains(s.toString()) || cleanPath.contains(s.reverse().toString())) continue;
-            else cleanPath.add(s.toString());
+            if (cleanPath.contains( s.toString() )) continue;
+            String s2 = s.reverse().toString();
+            if (cleanPath.contains(s2)) continue;
+            cleanPath.add(s2);
         }
         for (String s : cleanPath) paths.put(s, s);
         return paths;
@@ -215,17 +243,9 @@ public class Fingerprinter implements IFingerprinter {
 
     private String convertSymbol(String symbol) {
 
-        String[] query = {"Cl", "Br", "Si", "As", "Li", "Se", "Na", "Ca", "Al"};
-        String[] replace = {"X", "Z", "Y",  "D",  "L",  "E",  "G",  "J",  "A" };
-
-        String returnSymbol = symbol;
-        for (int i = 0; i < query.length; i++) {
-            if (symbol.equals(query[i])) {
-                returnSymbol = replace[i];
-                break;
-            }
-        }
-        return returnSymbol;
+        String returnSymbol = queryReplace.get( symbol );
+        return returnSymbol == null ? symbol
+                                    : returnSymbol;
     }
 
 

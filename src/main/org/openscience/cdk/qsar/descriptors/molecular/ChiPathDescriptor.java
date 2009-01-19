@@ -233,9 +233,7 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
 
     private List<List<Integer>> order0(IAtomContainer atomContainer) {
         List<List<Integer>> fragments = new ArrayList<List<Integer>>();
-        Iterator<IAtom> atoms = atomContainer.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = atoms.next();
+        for (IAtom atom : atomContainer.atoms()) {
             List<Integer> tmp = new ArrayList<Integer>();
             tmp.add(atomContainer.getAtomNumber(atom));
             fragments.add(tmp);
@@ -245,11 +243,7 @@ public class ChiPathDescriptor implements IMolecularDescriptor {
 
     private List<List<Integer>> order1(IAtomContainer atomContainer) throws CDKException {
         List<List<Integer>> fragments = new ArrayList<List<Integer>>();
-
-        Iterator<IBond> bonds = atomContainer.bonds().iterator();
-
-        while (bonds.hasNext()) {
-            IBond bond = bonds.next();
+        for (IBond bond : atomContainer.bonds()) {
             if (bond.getAtomCount() != 2) throw new CDKException("We only consider 2 center bonds");
             List<Integer> tmp = new ArrayList<Integer>();
             tmp.add(atomContainer.getAtomNumber(bond.getAtom(0)));

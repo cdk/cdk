@@ -20,9 +20,6 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
-import java.io.InputStream;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -39,6 +36,9 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.tools.LoggingTool;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * JUnit test routines for the SMARTS substructure search.
@@ -88,13 +88,7 @@ public class SMARTSSearchTest extends CDKTestCase {
 
         sqt.setSmarts("[ND3]");
         status = sqt.matches(atomContainer);
-        Assert.assertEquals(true, status);
-
-        nmatch = sqt.countMatches();
-        nqmatch = sqt.getUniqueMatchingAtoms().size();
-
-        Assert.assertEquals(3, nmatch);
-        Assert.assertEquals(3, nqmatch);
+        Assert.assertEquals(false, status);
     }
 
     @Test public void testRGraphBond() throws Exception {
@@ -192,6 +186,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         atomContainer = sp.parseSmiles("CCN");
         Assert.assertFalse(UniversalIsomorphismTester.isSubgraph(atomContainer, query));
     }
+
 
     @Test public void testAliphaticAtom() throws Exception {
         QueryAtomContainer query = SMARTSParser.parse("CAC");
@@ -400,15 +395,12 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(7, results[1]);
     }
 
-    @Test public void testPropertyR2() throws Exception {
-        // TODO: It seems the part C4CC(CC3)CCN34 are not correctly built into
-        // the AtomContainer. No R2 matches this part.
-        // Commented to pass the test
-        /*
-          int[] results = match("[R2]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
-          Assert.assertEquals(6, results[0]);
-          Assert.assertEquals(6, results[1]);
-          */
+    @Test
+    public void testPropertyR2() throws Exception {
+        int[] results = match("[R2]", "COc1cc2c(ccnc2cc1)C(O)C4CC(CC3)C(C=C)CN34");
+        Assert.assertEquals(6, results[0]);
+        Assert.assertEquals(6, results[1]);
+
     }
 
     @Test public void testPropertyR3() throws Exception {
@@ -555,6 +547,81 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(8, results[0]);
     }
 
+    /**
+     * @throws Exception
+     * @cdk.bug 2489417
+     */
+    @Test
+    public void testPropertyD7() throws Exception {
+        int[] results = match("[ND3]", "CCN([H])([H])");
+        Assert.assertEquals(0, results[0]);
+        Assert.assertEquals(0, results[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489417
+     */
+    @Test
+    public void testPropertyD8() throws Exception {
+        int[] results = match("[OD1]", "CO[H]");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489417
+     */
+    @Test
+    public void testPropertyD9() throws Exception {
+        int[] results;
+
+        results = match("[OD1H]", "CO");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489417
+     */
+    @Test
+    public void testPropertyD10() throws Exception {
+        int[] results;
+
+        results = match("[OD1H]", "CO[H]");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489417
+     */
+    @Test
+    public void testPropertyD11() throws Exception {
+        int[] results;
+
+        results = match("[OD1H]-*", "CCO");
+        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489417
+     */
+    @Test
+    public void testPropertyD12() throws Exception {
+        int[] results;
+
+        results = match("[OD1H]-*", "CCO[H]");
+        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[1]);
+
+   }
+
     @Test public void testPropertyHAtom1() throws Exception {
         int[] results = match("[H]", "[H+].[Cl-]");
         Assert.assertEquals(1, results[0]);
@@ -634,7 +701,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test public void testPropertyAnyAtom3() throws Exception {
-        int[] results = match("[*]", "[H][H]");
+        int[] results = match("[*]", "[1H][1H]");
         Assert.assertEquals(2, results[0]);
         Assert.assertEquals(2, results[1]);
     }
@@ -643,6 +710,57 @@ public class SMARTSSearchTest extends CDKTestCase {
         int[] results = match("[*]", "[1H]C([1H])([1H])[1H]");
         Assert.assertEquals(5, results[0]);
         Assert.assertEquals(5, results[1]);
+    }
+
+    @Test
+    public void testPropertAnyAtom5() throws Exception {
+        int[] results = match("[*]", "[H][H]");
+        Assert.assertEquals(0, results[0]);
+        Assert.assertEquals(0, results[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489533
+     */
+    @Test
+    public void testPropertyAnyAtom5() throws Exception {
+        int[] result = match("*", "CO");
+        Assert.assertEquals(2, result[0]);
+        Assert.assertEquals(2, result[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489533
+     */
+    @Test
+    public void testPropertyAnyAtom6() throws Exception {
+        int[] result = match("*", "CO[H]");
+        Assert.assertEquals(2, result[0]);
+        Assert.assertEquals(2, result[1]);
+    }
+
+     /**
+     * @throws Exception
+     * @cdk.bug 2489533
+     */
+    @Test
+    public void testPropertyAnyAtom7() throws Exception {
+        int[] result = match("*", "[H]C([H])([H])[H]");
+        Assert.assertEquals(1, result[0]);
+        Assert.assertEquals(1, result[1]);
+    }
+
+    /**
+     * @throws Exception
+     * @cdk.bug 2489533
+     */
+    @Test
+    public void testPropertyAnyAtom8() throws Exception {
+        int[] result = match("*", "CCCC([2H])[H]");
+        Assert.assertEquals(5, result[0]);
+        Assert.assertEquals(5, result[1]);
     }
 
     @Test public void testPropertyAtomicMass1() throws Exception {
@@ -667,6 +785,24 @@ public class SMARTSSearchTest extends CDKTestCase {
         int[] results = match("[12C]", "CCl");
         Assert.assertEquals(0, results[0]);
         Assert.assertEquals(0, results[1]);
+    }
+
+    /**
+     * @cdk.bug 2490336
+     * @throws Exception
+     */
+    @Test
+    public void testPropertyAtomicMass5() throws Exception {
+        int[] results = match("[2H]", "CCCC([2H])[H]");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+    @Test
+    public void testPropertyAtomicMass6() throws Exception {
+        int[] results = match("[H]", "CCCC([2H])[H]");
+        Assert.assertEquals(1, results[0]);
+        Assert.assertEquals(1, results[1]);
     }
 
     @Test public void testBondSingle1() throws Exception {
@@ -765,8 +901,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(22, results[1]);
     }
 
-    //TODO: Stereo bond not implemented in smiles parser. Commented.
-    /*
+    //TODO: Stereo bond not implemented in smiles parser. Will fail
     @Test public void testBondStereo1() throws Exception { 
     	int[] results = match("F/?C=C/Cl", "F/C=C/Cl");
     	Assert.assertEquals(1, results[0]);
@@ -787,7 +922,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     	Assert.assertEquals(0, results[0]);
     	Assert.assertEquals(0, results[1]);
     }
-    */
+
     @Test public void testLogicalNot1() throws Exception {
         int[] results = match("[!c]", "c1cc(C)c(N)cc1");
         Assert.assertEquals(2, results[0]);
@@ -938,18 +1073,12 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(17, results[1]);
     }
 
-    /*
-    @Test public void testLogicalOrHighAnd6() throws Exception { 
-        //TODO: This takes a long time to match
-        long start = Calendar.getInstance().getTimeInMillis();
-        //int[] results = match("[N,#6&+1,+0]", "[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
-        new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        SMARTSParser.parse("[N,#6&+1,+0]");
-        long end = Calendar.getInstance().getTimeInMillis();
-        System.out.println( (end - start) );
-        //Assert.assertEquals(23, results[0]);
+
+    @Test public void testLogicalOrHighAnd6() throws Exception {
+        int[] results = match("[N,#6&+1,+0]", "[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
+        Assert.assertEquals(23, results[0]);
     }
-    */
+
     @Test public void testLogicalOrHighAnd7() throws Exception {
         int[] results = match("[N,#6&+1,+0]", "[Cl-].Clc1ccc([I+]c2cccs2)cc1");
         Assert.assertEquals(12, results[0]);
@@ -986,14 +1115,12 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(5, results[1]);
     }
 
-    // //TODO: this takes very long. It is the same smiles. So the bottle neck
-    // might be in the AtomContainer
-    /*
+    /* this fails, likely dueto a problem in aromaticity detection */
     @Test public void testLogicalOrLowAnd6() throws Exception { 
     	int[] results = match("[#7,C;+0,+1]", "[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
     	Assert.assertEquals(1, results[0]);    	
     }
-    */
+
     @Test public void testLogicalOrLowAnd7() throws Exception {
         int[] results = match("[#7,C;+0,+1]", "[Cl-].Clc1ccc([I+]c2cccs2)cc1");
         Assert.assertEquals(0, results[0]);

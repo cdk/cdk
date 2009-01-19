@@ -92,6 +92,27 @@ import java.util.*;
  * </tbody>
  * </table>
  *
+ * <h3>Notes</h3>
+ * <ul>
+ * <li>As <a href="http://sourceforge.net/mailarchive/message.php?msg_name=4964F605.1070502%40emolecules.com">described</a>
+ * by Craig James the <code>h&lt;n&gt;</code> SMARTS pattern should not be used. It was included in the Daylight spec for
+ * backwards compatibility. To match hydrogens, use the <code>H&lt;n&gt;</cod> pattern.</li>
+ * <li>The wild card pattern (<code>*</code>) will not match hydrogens (explicit or implicit) unless an isotope is specified.
+ * In other words, <code>*</code> gives two hits against <code>C[2H]</code> but 1 hit against
+ * <code>C[H]</code>. This also means that
+ * it gives no hits against <code>[H][H]</code>. This is contrary to what is shown by Daylights
+ * <a href="http://www.daylight.com/daycgi_tutorials/depictmatch.cgi">depictmatch</a> service, but is based on this
+ * <a href="https://sourceforge.net/mailarchive/message.php?msg_name=4964FF9D.3040004%40emolecules.com">discussion</a>.
+ * A work around to get <code>*</code> to match <code>[H][H]</code> is to write it in the form <code>[1H][1H]</code>.
+ * <p>
+ * It's not entirely clear what the behavior of * should be with respect to hydrogens.
+ * it is possible that the code will be updated so that <code>*</code> will not match <i>any</i> hydrogen in the future.</li>
+ * <li>The {@link org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector} only considers single rings and
+ * two fused non-spiro rings. As a result, it does not properly detect aromaticity in polycyclic systems such
+ * as <code>[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24</code>. Thus SMARTS patterns that depend on proper
+ * aromaticity detection may not work correctly in such polycyclic systems</li>
+ * </ul>
+ *
  * @author Rajarshi Guha
  * @cdk.created 2007-04-08
  * @cdk.module smarts

@@ -22,7 +22,6 @@ package org.openscience.cdk.debug;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomParity;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -42,10 +41,6 @@ public class DebugAtomParity extends org.openscience.cdk.AtomParity
 	}
 
 	LoggingTool logger = new LoggingTool(DebugAtomParity.class);
-
-	public IChemObjectBuilder getBuilder() {
-		return DebugChemObjectBuilder.getInstance();
-	}
 
 	public IAtom getAtom() {
 		logger.debug("Getting atom: ", super.getAtom());

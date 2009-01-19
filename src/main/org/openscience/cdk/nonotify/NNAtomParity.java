@@ -30,7 +30,6 @@ package org.openscience.cdk.nonotify;
 
 import org.openscience.cdk.AtomParity;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * @cdk.module nonotify
@@ -50,10 +49,6 @@ public class NNAtomParity extends AtomParity  {
     	super(centralAtom, first, second, third, fourth, parity);
     }
     
-	public IChemObjectBuilder getBuilder() {
-		return NoNotificationChemObjectBuilder.getInstance();
-	}
-	
 }
 
 

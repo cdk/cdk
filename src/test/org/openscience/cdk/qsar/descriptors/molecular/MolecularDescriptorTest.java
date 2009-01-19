@@ -229,6 +229,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest {
         c2.setHydrogenCount(3);
         ethane1.addAtom(c1);
         ethane1.addAtom(c2);
+        ethane1.addBond(0,1,IBond.Order.SINGLE);
 
         IMolecule ethane2 = builder.newMolecule();
         IAtom c3 = builder.newAtom("C");
