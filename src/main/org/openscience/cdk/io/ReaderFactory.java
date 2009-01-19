@@ -258,7 +258,7 @@ public class ReaderFactory {
         try {
             reader.setReader(input);
         } catch ( CDKException e1 ) {
-            throw new IOException("Exception while setting the InputStream: " + e1.getMessage(), e1);
+            throw new IOException("Exception while setting the InputStream: " + e1.getMessage());
         }
         return reader;
     }
