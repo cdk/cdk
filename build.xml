@@ -467,7 +467,7 @@
         <antcall target="compile-init"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="interfaces"/>
+            list="interfaces,annotation"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="core"/>

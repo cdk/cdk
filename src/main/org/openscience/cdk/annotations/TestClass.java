@@ -34,7 +34,7 @@ import java.lang.annotation.RetentionPolicy;
  *
  * @author Egon Willighagen
  * @cdk.svnrev $Revision$
- * @cdk.module core
+ * @cdk.module annotation
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
