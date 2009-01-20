@@ -82,15 +82,12 @@ public class HINFormat implements IChemFormatMatcher {
              line.endsWith(" t") || line.endsWith(" a")
             )) {
             StringTokenizer tokenizer = new StringTokenizer(line, " ");
-            if (isOdd(tokenizer.countTokens())) {
+            if ((tokenizer.countTokens() % 2) == 0) {
+                // odd number of values found, typical for HIN
                 return true;
             }
         }
         return false;
-    }
-
-	private boolean isOdd(int intValue) {
-        return (intValue % 2) == 0;
     }
 
     @TestMethod("testIsXMLBased")
