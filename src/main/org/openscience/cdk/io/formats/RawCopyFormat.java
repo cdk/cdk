@@ -30,7 +30,7 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * See <a href="http://openbabel.sourceforge.net/wiki/Raw_Copy">here</a>.
  * 
- * @cdk.module io
+ * @cdk.module ioformats
  * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */

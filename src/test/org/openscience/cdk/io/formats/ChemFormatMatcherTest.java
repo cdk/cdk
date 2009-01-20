@@ -28,7 +28,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @cdk.module test-io
+ * @cdk.module test-ioformats
  */
 abstract public class ChemFormatMatcherTest extends ChemFormatTest {
     

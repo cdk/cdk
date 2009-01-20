@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * @cdk.module test-io
+ * @cdk.module test-ioformats
  */
 abstract public class ChemFormatTest extends ResourceFormatTest {
     

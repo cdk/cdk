@@ -25,7 +25,7 @@
 package org.openscience.cdk.io.formats;
 
 /**
- * @cdk.module test-io
+ * @cdk.module test-ioformats
  */
 public class MDLV2000FormatTest extends ChemFormatMatcherTest {
 

@@ -470,7 +470,7 @@
             list="interfaces,annotation"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="core"/>
+            list="core,ioformats"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="data,dict,diff,qm,standard"/>
@@ -516,7 +516,7 @@
                   test-pcore,test-sdg,test-forcefield,test-fingerprint,
                   test-ionpot,test-qm,test-isomorphism,test-libiomd,test-dict,
                   test-diff,test-charges,test-inchi,test-formula,
-                  test-render"/>
+                  test-render,test-ioformats"/>
         <foreach target="compile-module" param="module" trim="true"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-data,test-qsaratomic,test-qsarbond,

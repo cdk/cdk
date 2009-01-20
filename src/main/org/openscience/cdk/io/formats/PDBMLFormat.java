@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.DataFeatures;
  * XML version of the PDB format.
  * See <a href="http://pdbml.rcsb.org/">here</a>.
  * 
- * @cdk.module io
+ * @cdk.module ioformats
  * @cdk.svnrev  $Revision$
  * @cdk.set    io-formats
  */
