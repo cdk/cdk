@@ -28,8 +28,6 @@
  */
 package org.openscience.cdk.tools;
 
-import org.openscience.cdk.annotations.TestClass;
-
 /**
  * Class with constants for possible data features defined in the
  * a Data Feature Ontology. Actual integers are random
@@ -46,7 +44,7 @@ import org.openscience.cdk.annotations.TestClass;
  * >Blue Obelisk Data Features Ontology</a>.
  * 
  * @author     Egon Willighagen <ewilligh@uni-koeln.de>
- * @cdk.module core
+ * @cdk.module annotation
  * @cdk.svnrev  $Revision$
  **/
 public class DataFeatures {
