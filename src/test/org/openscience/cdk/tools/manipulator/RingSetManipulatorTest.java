@@ -163,7 +163,7 @@ public class RingSetManipulatorTest extends NewCDKTestCase {
     	Assert.assertEquals(2, list.size());
     }
     
-    @Test public void testGetAtomCount_IRingSet()
+    @Test public void testGetAtomCount()
     {
     	IRingSet rs = builder.newRingSet();
     	IAtomContainer ac1 = builder.newRing();
@@ -177,7 +177,7 @@ public class RingSetManipulatorTest extends NewCDKTestCase {
     	Assert.assertEquals(3, RingSetManipulator.getAtomCount(rs));
     	Assert.assertEquals(1, RingSetManipulator.getBondCount(rs));
     }
-    
+
     @Test public void testGetHeaviestRing_IRingSet_IBond()
     {
     	IRing ring = RingSetManipulator.getHeaviestRing(ringset, bondRing2Ring3);
