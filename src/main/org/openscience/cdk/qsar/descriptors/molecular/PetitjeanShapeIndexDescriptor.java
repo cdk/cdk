@@ -19,6 +19,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -71,12 +72,14 @@ import javax.vecmath.Point3d;
  * @cdk.dictref qsar-descriptors:petitjeanShapeIndex
  * @cdk.keyword Petit-Jean, shape index
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.PetitjeanShapeIndexDescriptorTest")
 public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
 
     private static final String[] names = {"topoShape", "geomShape"};
     public PetitjeanShapeIndexDescriptor() {
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanShapeIndex",
@@ -93,6 +96,7 @@ public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
      * @throws org.openscience.cdk.exception.CDKException
      *          Description of the Exception
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -102,6 +106,7 @@ public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
      *
      * @return The parameters value
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // no parameters to return
         return (null);
@@ -117,6 +122,7 @@ public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -129,6 +135,7 @@ public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return (null);
     }
@@ -140,6 +147,7 @@ public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
      * @return A DoubleArrayResult value representing the Petitjean shape indices
      */
 
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         IAtomContainer local = AtomContainerManipulator.removeHydrogens(container);
 
@@ -201,6 +209,7 @@ public class PetitjeanShapeIndexDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(2);
     }

@@ -22,6 +22,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
@@ -55,6 +56,7 @@ import java.util.Iterator;
  * @cdk.set qsar-descriptors
  */
 
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorPolarizabilityTest")
 public class AutocorrelationDescriptorPolarizability implements IMolecularDescriptor {
 
     private static final String[] names = {"ATSp1", "ATSp2", "ATSp3", "ATSp4", "ATSp5"};
@@ -79,6 +81,7 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
     /**
      * This method calculate the ATS Autocorrelation descriptor.
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         Molecule molecule;
         try {
@@ -157,14 +160,17 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
                 getParameters(), results, getDescriptorNames(), e);
     }
 
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         return null;
     }
 
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
 
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return null;
     }
@@ -174,6 +180,7 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
         return names;
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationPolarizability",
@@ -182,10 +189,12 @@ public class AutocorrelationDescriptorPolarizability implements IMolecularDescri
                 "The Chemistry Development Kit");
     }
 
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(5);
     }
 
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
 
     }

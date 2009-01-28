@@ -21,7 +21,7 @@
 package org.openscience.cdk.tools;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
@@ -43,6 +43,8 @@ import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.type.ElectronImpactNBEReaction;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -364,8 +366,9 @@ public class IonizationPotentialTool {
 		return results;
 	}
 	/**
-	 * Get the desicion-tree result for the Halogen family given a series of values.
-	 * It is based on 167 instances and 7 attributes(descriptors) with a Root mean squared error 0.5817.
+	 * Get the prediction result for the Halogen family given a series of values.
+	 * It is based on 167 instances and 9 attributes(descriptors) using the Linear Regression Model
+	 * with result of Root mean squared error 0.5817 with a cross validation of 10 folds.
 	 * 
 	 * @param resultsH      Array which contains the results of each descriptor
 	 * @return              The result
@@ -396,8 +399,9 @@ public class IonizationPotentialTool {
 		return result;
 	}
 	/**
-	 * Get the desicion-tree result for the Oxygen family given a series of values.
-	 * It is based in 6 qsar descriptors.
+	 * Get the prediction result for the Oxygen family given a series of values.
+	 * It is based on 368 instances and 9 attributes(descriptors) using the Linear Regression Model
+	 * with result of Root mean squared error 0.64 with a cross validation of 10 folds.
 	 * 
 	 * @param resultsH      Array which contains the results of each descriptor
 	 * @return              The result
@@ -418,8 +422,9 @@ public class IonizationPotentialTool {
 		return result;
 	}
 	/**
-	 * Get the desicion-tree result for the Nitrogen family given a series of values.
-	 * It is based in 6 qsar descriptors.
+	 * Get the prediction result for the Nitrogen family given a series of values.
+	 * It is based on 244 instances and 9 attributes(descriptors) using the Linear Regression Model
+	 * with result of Root mean squared error 0.54 with a cross validation of 10 folds.
 	 * 
 	 * @param resultsH      Array which contains the results of each descriptor
 	 * @return              The result
@@ -484,9 +489,11 @@ public class IonizationPotentialTool {
         setOfReactants.addMolecule((IMolecule) container);
 
         atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
-		HashMap<String,Object> params = new HashMap<String,Object>();
-        params.put("hasActiveCenter",Boolean.TRUE);
-        reactionNBE.setParameters(params);
+        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+	    IParameterReact param = new SetReactionCenter();
+        param.setParameter(Boolean.TRUE);
+        paramList.add(param);
+        reactionNBE.setParameterList(paramList);
        
         /* initiate */
 		IReactionSet setOfReactions = reactionNBE.initiate(setOfReactants, null);

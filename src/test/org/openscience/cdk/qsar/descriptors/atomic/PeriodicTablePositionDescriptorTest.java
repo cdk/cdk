@@ -23,14 +23,13 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.PeriodicTablePositionDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -43,18 +42,16 @@ public class PeriodicTablePositionDescriptorTest extends AtomicDescriptorTest {
 	
 	public  PeriodicTablePositionDescriptorTest() {}
     
-	public static Test suite() {
-		return new TestSuite(PeriodicTablePositionDescriptorTest.class);
-	}
-    
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(PeriodicTablePositionDescriptor.class);
     }
     
-	public void testPeriodicTablePositionDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPeriodicTablePositionDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IAtomicDescriptor descriptor  = new PeriodicTablePositionDescriptor();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CCCl"); // 
-		assertEquals(3, ((IntegerResult)descriptor.calculate(mol.getAtom(2),mol).getValue()).intValue());
+		Assert.assertEquals(3, ((IntegerResult)descriptor.calculate(mol.getAtom(2),mol).getValue()).intValue());
 	}
 }

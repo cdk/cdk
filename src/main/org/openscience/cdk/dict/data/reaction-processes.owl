@@ -183,6 +183,11 @@
         <dc:date>2007-02-28</dc:date>
         <description>       </description>
         <isAs rdf:resource="#mechanisms"/>
+	    <mapList>
+	    	<map>
+	    		<link from="" to="" />
+	    	</map>
+	    </mapList>
     </Mechanism>
 
     <Mechanism rdf:ID="AdductionPBMechanism">
@@ -268,57 +273,86 @@
     <!-- the facts: Processes -->
 
     <Reaction rdf:ID="AdductionProtonLP">
-        <rdfs:label>    </rdfs:label>
+        <rdfs:label>Adduction Proton from Lone Pair Orbitals</rdfs:label>
         <dc:contributor rdf:resource="#miguelrojasch"/>
         <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
-        <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#AdductionLPMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
-    	<reaction>
-	    	<reactionCenter>
-	    		<atomTypeList>
-	    			<atomType />
-	    		</atomTypeList>
-	    		<bondTypeList>
-	    			<bondType />
-	    		</bondTypeList>
-	    	</reactionCenter>
-	    	<mapList>
-	    		<map>
-	    			<link from="" to="" />
-	    		</map>
-	    	</mapList>
-	    </reaction>
+    	<parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
+	    <representation>
+        	<simple id="rep1" content="[A1-] + [H1+] => A1-B1-H1" />
+        	<simple id="rep2" content="[&#196;1] + [H1+] => [A1+]-B1-H1" />
+        </representation>
+        <reactionCenter>
+	    	<atomTypeList>
+	    		<atomType id="A1">
+	    			<constraint formalCharge="0,-1,-2" lonePair="1,2,3" singleElectron="0"/> 
+	    		</atomType>
+	    		<atomType id="H1" elementType="H">
+	    			<constraint formalCharge="1"/> 
+	    		</atomType>
+	    	</atomTypeList>
+	    </reactionCenter>
     	<example-Reactions>
-    		<reaction id="r1">
-    			<reactantList id="rl1">
-    				<reactant>
-    					<molecule id="rm1">
-    						<atomArray>
-    							<atom id="rma1" elementType="C"/>
-    						</atomArray>
-    						<bondArray>
-    							<bond id="rmb1" atomRefs="rma1 rma2" order="1"/>
-    						</bondArray>
-    					</molecule>
-    				</reactant>
-    			</reactantList>
-    			<productList id="pl1">
-    				<product>
-    					<molecule id="pm1">
-    						<atomArray>
-    							<atom id="pma1" elementType="C"/>
-    						</atomArray>
-    						<bondArray>
-    							<bond id="pmb1" atomRefs="pma1 pma2" order="1"/>
-    						</bondArray>
-    					</molecule>
-    				</product>
-    			</productList>
-    		</reaction>
+    		<reaction id="r1" ref="rep1">
+			  <reactantList>
+			    <reactant>
+			      <molecule id="MethylAlcohol">
+			         <identifier convention="iupac:inchi" value="InChI=1/CH4O/c1-2/h2H,1H"/>
+  					  <atomArray>
+			          <atom id="a1" elementType="C" formalCharge="0"/>
+			          <atom id="a2" elementType="O" formalCharge="0">
+			            <scalar dictRef="cdk:LonePair" dataType="xsd:integer">2</scalar>
+			          </atom>
+			          <atom id="a3" elementType="H" formalCharge="0"/>
+			          <atom id="a4" elementType="H" formalCharge="0"/>
+			          <atom id="a5" elementType="H" formalCharge="0"/>
+			          <atom id="a6" elementType="H" formalCharge="0"/>
+			        </atomArray>
+			        <bondArray>
+			          <bond id="b1" atomRefs2="a1 a2" order="S"/>
+			          <bond id="b2" atomRefs2="a1 a3" order="S"/>
+			          <bond id="b3" atomRefs2="a1 a4" order="S"/>
+			          <bond id="b4" atomRefs2="a1 a5" order="S"/>
+			          <bond id="b5" atomRefs2="a2 a6" order="S"/>
+			        </bondArray>
+			      </molecule>
+			    </reactant>
+			  </reactantList>
+			  <productList>
+			    <product>
+			      <molecule id="m2">
+			        <atomArray>
+			          <atom id="a7" elementType="C" formalCharge="0"/>
+			          <atom id="a8" elementType="O" formalCharge="1" spinMultiplicity="2">
+			            <scalar dictRef="cdk:LonePair" dataType="xsd:integer">1</scalar>
+			          </atom>
+			          <atom id="a9" elementType="H" formalCharge="0"/>
+			          <atom id="a10" elementType="H" formalCharge="0"/>
+			          <atom id="a11" elementType="H" formalCharge="0"/>
+			          <atom id="a12" elementType="H" formalCharge="0"/>
+			          <atom id="a13" elementType="H" formalCharge="0"/>
+			        </atomArray>
+			        <bondArray>
+			          <bond id="b6" atomRefs2="a7 a8" order="S"/>
+			          <bond id="b7" atomRefs2="a7 a9" order="S"/>
+			          <bond id="b8" atomRefs2="a7 a10" order="S"/>
+			          <bond id="b9" atomRefs2="a7 a11" order="S"/>
+			          <bond id="b10" atomRefs2="a8 a12" order="S"/>
+			          <bond id="b11" atomRefs2="a8 a13" order="S"/>
+			        </bondArray>
+			      </molecule>
+			    </product>
+			  </productList>
+			  <substanceList/>
+			</reaction>
     	</example-Reactions>
     </Reaction>
 
@@ -328,10 +362,35 @@
         <dc:date>2007-02-28</dc:date>
     	<definition>	</definition>
     	<description>   </description>
-        <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#AdductionPBMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
+    	<representation>
+        	<simple id="rep1" content="A1=B1=A2 + [H1+] => [A1+]-B1-[A2]-B2-H1" />
+        </representation>
+        <reactionCenter>
+	    	<atomTypeList>
+	    		<atomType id="A1">
+	    			<constraint formalCharge="0" lonePair="0" singleElectron="0"/> 
+	    		</atomType>
+	    		<atomType id="A2">
+	    			<constraint formalCharge="0" lonePair="0" singleElectron="0"/> 
+	    		</atomType>
+	    		<atomType id="H1" elementType="H">
+	    			<constraint formalCharge="1"/> 
+	    		</atomType>
+	    	</atomTypeList>
+	    	<bondTypeList>
+	    		<bondType id="B1" atomRefs2="A1 A2">
+	    			<constraint order="2,3"/> 
+	    		</bondType>
+	    	</bondTypeList>
+	    </reactionCenter>
     </Reaction>
 
     <Reaction rdf:ID="AdductionSodiumLP">
@@ -343,7 +402,26 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#AdductionLPMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
+	    <representation>
+        	<simple id="rep1" content="[&#196;1-] + [Na1+] => A1-B1-Na1" />
+        	<simple id="rep2" content="[&#196;1] + [Na1+] => [A1+]-B1-Na1" />
+        </representation>
+        <reactionCenter>
+	    	<atomTypeList>
+	    		<atomType id="A1">
+	    			<constraint formalCharge="0,-1,-2" lonePair="1,2,3" singleElectron="0"/> 
+	    		</atomType>
+	    		<atomType id="Na1" elementType="Na">
+	    			<constraint formalCharge="1"/> 
+	    		</atomType>
+	    	</atomTypeList>
+	    </reactionCenter>
     </Reaction>
 
     <Reaction rdf:ID="CarbonylElimination">
@@ -355,7 +433,36 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#HomolyticCleavageMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
+    	<representation>
+        	<simple id="rep1" content="A1-B1-A2#B2#[A3+] => [&#196;1-] + A2#B2#[A3+]" />
+        </representation>
+        <reactionCenter>
+	    	<atomTypeList>
+	    		<atomType id="A1" elementType="C">
+	    			<constraint formalCharge="0" lonePair="0" singleElectron="0"/> 
+	    		</atomType>
+	    		<atomType id="A2" elementType="C">
+	    			<constraint formalCharge="0" lonePair="0" singleElectron="0"/> 
+	    		</atomType>
+	    		<atomType id="A3" elementType="O">
+	    			<constraint formalCharge="1"/> 
+	    		</atomType>
+	    	</atomTypeList>
+	    	<bondTypeList>
+	    		<bondType id="B1" atomRefs2="A1 A2">
+	    			<constraint order="1"/> 
+	    		</bondType>
+	    		<bondType id="B2" atomRefs2="A2 A3">
+	    			<constraint order="3"/> 
+	    		</bondType>
+	    	</bondTypeList>
+	    </reactionCenter>
     </Reaction>
     
     <Reaction rdf:ID="electronImpactNBE">
@@ -373,7 +480,12 @@
         </description>
         <representation id="a1" content="[&#196;] => [A+&#183;]" />
         <mechanismDependence rdf:resource="#RemovingSEofNBMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="ElectronImpactPDB">
@@ -386,7 +498,12 @@
         <isAs rdf:resource="#process"/>
    		<isClassifiedAs rdf:resource="#electronImpact"/>
         <mechanismDependence rdf:resource="#RemovingSEofBMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="ElectronImpactSDB">
@@ -399,7 +516,12 @@
         <isAs rdf:resource="#process"/>
    		<isClassifiedAs rdf:resource="#electronImpact"/>
         <mechanismDependence rdf:resource="#RemovingSEofBMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="HeterolyticCleavagePB">
@@ -411,7 +533,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#HeterolyticCleavageMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="HeterolyticCleavageSB">
@@ -423,7 +550,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#HeterolyticCleavageMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="HomolyticCleavage">
@@ -435,7 +567,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#HomolyticCleavageMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="Hyperconjugation">
@@ -446,7 +583,13 @@
     	<description>   </description>
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <mechanismDependence rdf:resource="#RearrangementChargeMechanism"/>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="PiBondingMovement">
@@ -457,7 +600,12 @@
     	<description>   </description>
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RadicalChargeSiteInitiationH">
@@ -469,7 +617,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RadicalSiteIonizationMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RadicalChargeSiteInitiation">
@@ -481,7 +634,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RadicalSiteIonizationMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteHrAlpha">
@@ -493,7 +651,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteHrBeta">
@@ -505,7 +668,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteHrDelta">
@@ -517,7 +685,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteHrGamma">
@@ -529,7 +702,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteInitiationH">
@@ -541,7 +719,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RadicalSiteIonizationMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteInitiation">
@@ -553,7 +736,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RadicalSiteIonizationMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteRrAlpha">
@@ -565,7 +753,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteRrBeta">
@@ -577,7 +770,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteRrDelta">
@@ -589,7 +787,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RadicalSiteRrGamma">
@@ -601,7 +804,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RadicalSiteRearrangementMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RearrangementAnion">
@@ -613,7 +821,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RearrangementChargeMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RearrangementCation">
@@ -625,7 +838,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RearrangementChargeMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RearrangementLonePair">
@@ -637,7 +855,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#RearrangementChargeMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="RearrangementRadical">
@@ -648,8 +871,13 @@
     	<description>   </description>
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
-        <mechanismDependence rdf:resource="#RadicalSiteIonizationMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <mechanismDependence rdf:resource="#RearrangementChargeMechanism"/>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="SharingAnion">
@@ -661,7 +889,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#SharingElectronMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="SharingChargeDB">
@@ -672,8 +905,13 @@
     	<description>   </description>
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
-        <mechanismDependence rdf:resource="#HomolyticCleavageMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <mechanismDependence rdf:resource="#HeterolyticCleavageMechanism"/>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="SharingChargeSB">
@@ -684,8 +922,13 @@
     	<description>   </description>
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
-        <mechanismDependence rdf:resource="#HomolyticCleavageMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <mechanismDependence rdf:resource="#HeterolyticCleavageMechanism"/>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="SharingLonePair">
@@ -697,7 +940,12 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#SharingElectronMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
 
     <Reaction rdf:ID="Tautomerization">
@@ -709,9 +957,14 @@
         <representation id="a1" content="" />
         <isAs rdf:resource="#process"/>
         <mechanismDependence rdf:resource="#TautomerizationMechanism"/>
-        <parameters dataType="xsd:boolean" resource="hasActiveCenter">false</parameters>
+        <parameterList>
+    	 <parameter2 rdf:resource="#SetReactionCenter">
+    	   <isSetParameter>false</isSetParameter>
+    	   <value dataType="xsd:null">null</value> <!-- it could be xsd:Double or xsd:Integer -->
+    	 </parameter2>
+    	</parameterList>
     </Reaction>
-
+    
     <!-- The Bibliography -->
 
 </rdf:RDF>

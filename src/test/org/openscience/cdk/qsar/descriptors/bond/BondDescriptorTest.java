@@ -20,9 +20,8 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import javax.vecmath.Point3d;
-
 import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -34,6 +33,8 @@ import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.descriptors.DescriptorTest;
 import org.openscience.cdk.tools.diff.BondDiff;
 
+import javax.vecmath.Point3d;
+
 /**
  * Tests for bond descriptors.
  *
@@ -44,12 +45,8 @@ public abstract class BondDescriptorTest extends DescriptorTest {
 	protected IBondDescriptor descriptor;
 
 	public BondDescriptorTest() {}
-	
-	public BondDescriptorTest(String name) {
-		super(name);
-	}
-	
-	public void setDescriptor(Class descriptorClass) throws Exception {
+
+    public void setDescriptor(Class descriptorClass) throws Exception {
 		if (descriptor == null) {
 			Object descriptor = descriptorClass.newInstance();
 			if (!(descriptor instanceof IBondDescriptor)) {
@@ -60,6 +57,7 @@ public abstract class BondDescriptorTest extends DescriptorTest {
 		super.setDescriptor(descriptorClass);
 	}
 
+    @Test
     public void testCalculate_IBond_IAtomContainer() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
 
@@ -67,10 +65,10 @@ public abstract class BondDescriptorTest extends DescriptorTest {
         try {
             v = descriptor.calculate(mol.getBond(0), mol);
         } catch (Exception e) {
-            fail("A descriptor must not throw an exception");
+            Assert.fail("A descriptor must not throw an exception");
         }
-        assertNotNull(v);
-        assertNotSame(
+        Assert.assertNotNull(v);
+        Assert.assertNotSame(
         	"The descriptor did not calculate any value.",
         	0, v.getValue().length()
         );
@@ -81,34 +79,35 @@ public abstract class BondDescriptorTest extends DescriptorTest {
 	 * 
 	 * @throws Exception Passed on from calculate.
 	 */
+    @Test
     public void testLabels() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         
         DescriptorValue v = descriptor.calculate(mol.getBond(0), mol);
-        assertNotNull(v);
+        Assert.assertNotNull(v);
         String[] names = v.getNames();
-        assertNotNull(
+        Assert.assertNotNull(
         	"The descriptor must return labels using the getNames() method.",
         	names
         );
-        assertNotSame(
+        Assert.assertNotSame(
         	"At least one label must be given.",
         	0, names.length
         );
         for (int i=0; i<names.length; i++) {
-        	assertNotNull(
-        		"A descriptor label may not be null.",
-        		names[i]
-        	);
-        	assertNotSame(
-        		"The label string must not be empty.",
-        		0, names[i].length()
-        	);
+            Assert.assertNotNull(
+                "A descriptor label may not be null.",
+                names[i]
+            );
+            Assert.assertNotSame(
+            		"The label string must not be empty.",
+            		0, names[i].length()
+            );
 //        	System.out.println("Label: " + names[i]);
         }
-        assertNotNull(v.getValue());
+        Assert.assertNotNull(v.getValue());
         int valueCount = v.getValue().length();
-        assertEquals(
+        Assert.assertEquals(
         	"The number of labels must equals the number of values.",
         	names.length, valueCount
         );
@@ -120,28 +119,30 @@ public abstract class BondDescriptorTest extends DescriptorTest {
      * Also ensure that the number of actual values matches the length
      * of the names
      */
-    public void testNamesConsistency() {
+     @Test
+     public void testNamesConsistency() {
         IAtomContainer mol = someoneBringMeSomeWater();
 
         String[] names1 = descriptor.getDescriptorNames();
         DescriptorValue v = descriptor.calculate(mol.getBond(1), mol);
         String[] names2 = v.getNames();
 
-        assertEquals(names1.length, names2.length);
+        Assert.assertEquals(names1.length, names2.length);
         Assert.assertArrayEquals(names1, names2);
 
         int valueCount = v.getValue().length();
-        assertEquals(valueCount, names1.length);
-    }
+        Assert.assertEquals(valueCount, names1.length);
+     }
 
+    @Test
     public void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         IBond bond = mol.getBond(0);
         IBond clone = (IBond)mol.getBond(0).clone();
         descriptor.calculate(bond, mol);
-        String diff = BondDiff.diff(clone, bond); 
-        assertEquals(
-          "The descriptor must not change the passed bond in any respect, but found this diff: " + diff,
+        String diff = BondDiff.diff(clone, bond);
+        Assert.assertEquals(
+          "("+ descriptor.getClass().toString()+") The descriptor must not change the passed bond in any respect, but found this diff: " + diff,
           0, diff.length()
         );
     }

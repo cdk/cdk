@@ -23,13 +23,12 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -44,19 +43,18 @@ public class BPolDescriptorTest extends MolecularDescriptorTest {
     public BPolDescriptorTest() {
     }
 
-    public static Test suite() {
-        return new TestSuite(BPolDescriptorTest.class);
-    }
 
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(BPolDescriptor.class);
     }
 
+    @Test
     public void testBPolDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IMolecule mol = sp.parseSmiles("O=C(O)CC");
         addExplicitHydrogens(mol);
-        assertEquals(7.517242, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
+        Assert.assertEquals(7.517242, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 }
 

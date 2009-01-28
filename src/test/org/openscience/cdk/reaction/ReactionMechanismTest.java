@@ -20,33 +20,20 @@
  */
 package org.openscience.cdk.reaction;
 
-import java.util.ArrayList;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
-import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IReactionSet;
-import org.openscience.cdk.interfaces.IBond.Order;
-import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.reaction.IReactionMechanism;
 import org.openscience.cdk.NewCDKTestCase;
+import org.openscience.cdk.exception.CDKException;
 
 /**
  * Tests for IReactionProcess implementations.
  *
  * @cdk.module test-reaction
  */
-public abstract class ReactionMechanismTest extends NewCDKTestCase {
+public class ReactionMechanismTest extends NewCDKTestCase {
 	
 	protected static IReactionMechanism reactionMechanism;
-	private final static IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
-
+	
 	 /**
 	  * Defining reaction mechanism.
 	  * 

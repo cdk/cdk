@@ -22,6 +22,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Element;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -45,6 +46,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.svnrev  $Revision$
  * @cdk.set     qsar-descriptors
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorMassTest")
 public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 
     private final static String[] names = {"ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5"};
@@ -90,6 +92,7 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
 	/**
      * This method calculate the ATS Autocorrelation descriptor.
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         try {
             double[] w = listConvertion(container);
@@ -126,15 +129,18 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
         }
     }
 
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
 		return new String[0];
 	}
 
-	public Object getParameterType(String name) {
+	@TestMethod("testGetParameterType_String")
+    public Object getParameterType(String name) {
 		return null;
 	}
 
-	public Object[] getParameters() {
+	@TestMethod("testGetParameters")
+    public Object[] getParameters() {
 		return null;
 	}
 
@@ -143,6 +149,7 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
         return names;
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
 		return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass",
@@ -151,11 +158,13 @@ public class AutocorrelationDescriptorMass implements IMolecularDescriptor{
                 "The Chemistry Development Kit");
 	}
 	
-	public IDescriptorResult getDescriptorResultType() {
+	@TestMethod("testGetDescriptorResultType")
+    public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(5);
     }
 
-	public void setParameters(Object[] params) throws CDKException {
+	@TestMethod("testSetParameters_arrayObject")
+    public void setParameters(Object[] params) throws CDKException {
 		
 		}
 

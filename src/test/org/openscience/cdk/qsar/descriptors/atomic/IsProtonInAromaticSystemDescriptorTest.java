@@ -23,14 +23,13 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.IsProtonInAromaticSystemDescriptor;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -43,22 +42,20 @@ public class IsProtonInAromaticSystemDescriptorTest extends AtomicDescriptorTest
 	
 	public  IsProtonInAromaticSystemDescriptorTest() {}
     
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(IsProtonInAromaticSystemDescriptor.class);
     }
-    
-	public static Test suite() {
-		return new TestSuite(IsProtonInAromaticSystemDescriptorTest.class);
-	}
 	
-	public void testIsProtonInAromaticSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testIsProtonInAromaticSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		IAtomicDescriptor descriptor  = new IsProtonInAromaticSystemDescriptor();
 		Object[] params = {new Boolean(true)};
 		descriptor.setParameters(params);
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("Oc1cc(OC)c(cc1Br)Br"); 
 		addExplicitHydrogens(mol);
-		assertEquals(1, ((IntegerResult)descriptor.calculate(mol.getAtom(13),mol).getValue()).intValue());
+		Assert.assertEquals(1, ((IntegerResult)descriptor.calculate(mol.getAtom(13),mol).getValue()).intValue());
 	}
 }
 

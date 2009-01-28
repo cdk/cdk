@@ -30,6 +30,8 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import org.openscience.cdk.ReactionSet;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IReaction;
 
 
@@ -43,6 +45,7 @@ import org.openscience.cdk.interfaces.IReaction;
  * @author      miguelrojasch <miguelrojasch@yahoo.es>
  * @cdk.module  reaction
  */
+@TestClass(value="org.openscience.cdk.reaction.ReactionChainTest")
 public class ReactionChain extends ReactionSet{
 
 	HashMap<IReaction, Integer> hashMapChain = new HashMap<IReaction,Integer>();
@@ -62,6 +65,7 @@ public class ReactionChain extends ReactionSet{
 	 * @param reaction  The IReaction
 	 * @param position  The position in this chain where the reaction is to be inserted
 	 */
+    @TestMethod(value="testAddReaction_IReaction_int")
 	public void addReaction(IReaction reaction, int position){
 		hashMapChain.put(reaction, position);
 		this.addReaction(reaction);
@@ -71,6 +75,7 @@ public class ReactionChain extends ReactionSet{
 	 * @param reaction The IReaction to look at
 	 * @return         The position of the IReaction in this chain
 	 */
+    @TestMethod(value="testGetReactionStep_IReaction")
 	public int getReactionStep(IReaction reaction){
 		
 		if(hashMapChain.containsKey(reaction))
@@ -87,9 +92,10 @@ public class ReactionChain extends ReactionSet{
 	 * @return          Reaction The IReaction to look at
 	 * 
 	 */
+    @TestMethod(value="testGetReaction_int")
 	public IReaction getReaction(int position){
-		
-		if(hashMapChain.containsValue(position))
+
+		if(hashMapChain.containsKey(position))
 			return null;
 		
 		Set<Entry<IReaction, Integer>> entries = hashMapChain.entrySet();

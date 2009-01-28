@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
  *
  * @cdk.module test-qsarmolecular
  */
-public class QsarmolecularCoverageTest extends CoverageTest {
+public class QsarmolecularCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "qsarmolecular.javafiles";
     

@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -83,6 +84,7 @@ import java.util.List;
  * @cdk.keyword chi path cluster index
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.ChiPathClusterDescriptorTest")
 public class ChiPathClusterDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
     private SmilesParser sp;
@@ -97,6 +99,7 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
         sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiPathCluster",
@@ -105,18 +108,22 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
                 "The Chemistry Development Kit");
     }
 
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -127,6 +134,7 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
     }
 
 
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
 
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
@@ -200,6 +208,7 @@ public class ChiPathClusterDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(6);
     }

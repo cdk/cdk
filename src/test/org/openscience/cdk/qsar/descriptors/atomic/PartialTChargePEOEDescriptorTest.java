@@ -23,9 +23,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
@@ -53,10 +53,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 	 */
 	public  PartialTChargePEOEDescriptorTest() {}
     
-	public static Test suite() {
-		return new TestSuite(PartialTChargePEOEDescriptorTest.class);
-	}
-    
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(PartialTChargePEOEDescriptor.class);
     }
@@ -66,7 +63,8 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
 	 */
-	public void testPartialTChargeDescriptor_Methyl_Fluoride() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialTChargeDescriptor_Methyl_Fluoride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.2527,0.0795,0.0577,0.0577,0.0577};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialTChargePEOEDescriptor();
 		 
@@ -82,13 +80,14 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i),molecule).getValue()).doubleValue();
 			
-			assertEquals(testResult[i],result, 0.01);
+			Assert.assertEquals(testResult[i],result, 0.01);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Fluoroethylene
 	 */
-	public void testPartialTChargeDescriptor_Fluoroethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialTChargeDescriptor_Fluoroethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.1839,0.079,-0.1019,0.0942,0.0563,0.0563};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialTChargePEOEDescriptor();
 		
@@ -101,7 +100,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){
 	        double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 	        
-	        assertEquals(testResult[i],result, 0.04);
+	        Assert.assertEquals(testResult[i],result, 0.04);
 		}
 	}
 	/**
@@ -109,7 +108,8 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi  InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H
 	 */
-	public void testPartialTChargeDescriptor_FormicAcid() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialTChargeDescriptor_FormicAcid() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={0.2672,-0.3877,-0.2365,0.1367,0.2203};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialTChargePEOEDescriptor();
 		
@@ -126,7 +126,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 		for (int i = 0 ; i < molecule.getAtomCount() ; i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i),molecule).getValue()).doubleValue();
 			
-			assertEquals(testResult[i],result, 0.05);
+			Assert.assertEquals(testResult[i],result, 0.05);
 		}
 	}
 	/**
@@ -134,7 +134,8 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
 	 */
-	public void testPartialTChargeDescriptor_Fluorobenzene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialTChargeDescriptor_Fluorobenzene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.1785,0.1227,-0.0373,-0.0598,-0.0683};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialTChargePEOEDescriptor();
 		
@@ -160,7 +161,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 		for (int i = 0 ; i < 5 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i),molecule).getValue()).doubleValue();
 
-			assertEquals(testResult[i],result, 0.012);
+			Assert.assertEquals(testResult[i],result, 0.012);
 		}
 	}
 	/**
@@ -168,7 +169,8 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C3H6O/c1-3-4-2/h3H,1H2,2H3
 	 */
-	public void testPartialTChargeDescriptor_Methoxyethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialTChargeDescriptor_Methoxyethylene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.1211,0.0314,-0.3121,0.0429,0.056,0.056,0.0885,0.056,0.056,0.056};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialTChargePEOEDescriptor();
 		
@@ -187,7 +189,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 		for (int i = 0 ; i < molecule.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i),molecule).getValue()).doubleValue();
 	        
-	        assertEquals(testResult[i],result, 0.05);
+	        Assert.assertEquals(testResult[i],result, 0.05);
 		}
 	}
 	/**
@@ -195,7 +197,8 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C5H8O/c1-3-4-5-6-2/h3-5H,1H2,2H3
 	 */
-	public void testPartialTChargeDescriptor_1_Methoxybutadiene() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testPartialTChargeDescriptor_1_Methoxybutadiene() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={-0.1331,-0.0678,-0.0803,0.0385,-0.2822,0.0429,0.0541,0.0541,0.0619,0.0644,0.0891,0.0528,0.0528,0.0528,0.0528};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PartialTChargePEOEDescriptor();
 		
@@ -218,7 +221,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 		for (int i = 0 ; i < molecule.getAtomCount(); i++){
 	        double result= ((DoubleResult)descriptor.calculate(molecule.getAtom(i),molecule).getValue()).doubleValue();
 	        
-	        assertEquals(testResult[i],result, 0.3);
+	        Assert.assertEquals(testResult[i],result, 0.3);
 		}
 	}
 }

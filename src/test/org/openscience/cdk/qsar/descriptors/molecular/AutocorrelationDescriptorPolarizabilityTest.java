@@ -1,16 +1,14 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.InputStream;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorPolarizability;
+
+import java.io.InputStream;
 
 /**
  * @cdk.module test-qsarmolecular
@@ -18,16 +16,13 @@ import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorP
 
 public class AutocorrelationDescriptorPolarizabilityTest extends MolecularDescriptorTest {
 
-	public AutocorrelationDescriptorPolarizabilityTest(String name) {
-		super(name);
-	}
-	
-	public void setUp() throws Exception {
-		setDescriptor(AutocorrelationDescriptorPolarizability.class);
+	public AutocorrelationDescriptorPolarizabilityTest() {
+		super();
 	}
 
-	public static Test suite() {
-		return new TestSuite(AutocorrelationDescriptorPolarizabilityTest.class);
+	@Before
+    public void setUp() throws Exception {
+		setDescriptor(AutocorrelationDescriptorPolarizability.class);
 	}
 	
 	public void ignoreCalculate_IAtomContainer() throws Exception {
@@ -39,7 +34,7 @@ public class AutocorrelationDescriptorPolarizabilityTest extends MolecularDescri
 		DescriptorValue count = descriptor.calculate(container);
 		System.out.println(count.getValue());
 
-		fail("Not validated yet");
+		Assert.fail("Not validated yet");
 	}
 
 }

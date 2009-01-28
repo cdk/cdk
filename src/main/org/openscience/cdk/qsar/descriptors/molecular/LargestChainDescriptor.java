@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -77,6 +78,7 @@ import java.util.List;
  * @cdk.dictref qsar-descriptors:largestChain
  */
 
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.LargestChainDescriptorTest")
 public class LargestChainDescriptor implements IMolecularDescriptor {
     private boolean checkAromaticity = false;
     private boolean checkRingSystem = false;
@@ -104,6 +106,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      *
      * @return An object containing the descriptor specification
      */
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestChain",
@@ -123,6 +126,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      * @throws CDKException if more than one parameter or a non-Boolean parameter is specified
      * @see #getParameters
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 2) {
             throw new CDKException("LargestChainDescriptor only expects two parameter");
@@ -142,6 +146,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      * @return The parameters value
      * @see #setParameters
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[2];
@@ -175,6 +180,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      * @return the number of atoms in the largest chain of this AtomContainer
      * @see #setParameters
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         //logger.debug("LargestChainDescriptor");
         boolean[] originalFlag4 = new boolean[container.getAtomCount()];
@@ -258,6 +264,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
     }
@@ -276,7 +283,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      *          Description of the
      *          Exception
      */
-    public void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws org.openscience.cdk.exception.CDKException {
+    private void breadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path) throws org.openscience.cdk.exception.CDKException {
         IAtom atom;
         IAtom nextAtom;
         List<IAtom> newSphere = new ArrayList<IAtom>();
@@ -311,6 +318,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[2];
         params[0] = "checkAromaticity";
@@ -325,6 +333,7 @@ public class LargestChainDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return An Object of class equal to that of the parameter being requested
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return true;
     }

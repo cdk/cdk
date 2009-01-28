@@ -24,11 +24,11 @@
 package org.openscience.cdk.reaction.type;
 
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -42,8 +42,9 @@ import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
-import org.openscience.cdk.reaction.type.ElectronImpactSDBReaction;
 import org.openscience.cdk.reaction.ReactionProcessTest;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 
 /**
  * TestSuite that runs a test for the ElectronImpactSDBReactionTest.
@@ -52,13 +53,13 @@ import org.openscience.cdk.reaction.ReactionProcessTest;
  */
  
 public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
-
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	
+	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
 	 */
-	 @BeforeClass public static void setUp() throws Exception {
-	 	setReaction(ElectronImpactSDBReaction.class);
+	public  ElectronImpactSDBReactionTest()  throws Exception {
+			setReaction(ElectronImpactSDBReaction.class);
 	 }
 	 
 	 /**
@@ -109,9 +110,11 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 		makeSureAtomTypesAreRecognized(reactant);
 		
 		IReactionProcess type  = new ElectronImpactSDBReaction();
-        HashMap<String,Object> params = new HashMap<String,Object>();
-        params.put("hasActiveCenter",Boolean.TRUE);;
-        type.setParameters(params);
+        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+	    IParameterReact param = new SetReactionCenter();
+        param.setParameter(Boolean.TRUE);
+        paramList.add(param);
+        type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         Assert.assertEquals(2, setOfReactions.getReactionCount());

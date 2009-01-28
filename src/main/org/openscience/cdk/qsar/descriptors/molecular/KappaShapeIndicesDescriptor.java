@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -75,6 +76,7 @@ import java.util.ArrayList;
  * @cdk.keyword Kappe shape index
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.KappaShapeIndicesDescriptorTest")
 public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {   
 
     private static final String[] names = {"Kier1", "Kier2", "Kier3"};
@@ -92,6 +94,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      *
      * @return The specification value
      */
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues",
@@ -108,6 +111,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      * @param params The new parameters value
      * @throws CDKException Description of the Exception
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -119,6 +123,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      *
      * @return The parameters value
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // no parameters to return
         return (null);
@@ -137,6 +142,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      * @return kier1, kier2 and kier3 are returned as arrayList of doubles
      * @throws CDKException Possible Exceptions
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
 
         //org.openscience.cdk.interfaces.IAtom[] atoms = atomContainer.getAtoms();
@@ -252,6 +258,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(3);
     }
@@ -263,6 +270,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -276,6 +284,7 @@ public class KappaShapeIndicesDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return (null);
     }

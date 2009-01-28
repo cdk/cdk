@@ -140,7 +140,7 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
      *@param  ac                AtomContainer
      *@return                   return the sigma electronegativity
      */
-    @TestMethod(value="testCalculate_IBond_IAtomContainer")
+    @TestMethod(value="testCalculate_IBond_IAtomContainer,testBondSigmaElectronegativityDescriptor,testBondSigmaElectronegativityDescriptor_Methyl_chloride")
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
     	// FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
     	Double originalCharge1 = bond.getAtom(0).getCharge();

@@ -21,9 +21,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.bond;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
@@ -44,19 +44,18 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
 	public  BondPartialPiChargeDescriptorTest() {
 		
 	}
-	
+
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(BondPartialPiChargeDescriptor.class);
     }
-    
-    public static Test suite() {
-        return new TestSuite(BondPartialPiChargeDescriptorTest.class);
-    }
-	
+
 	/**
 	 *  A unit test for JUnit
 	 */
-	public void testBondPiElectronegativityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+
+    @Test
+    public void testBondPiElectronegativityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		descriptor  = new BondPartialPiChargeDescriptor() ;
 		double [] testResult={0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		 
@@ -66,14 +65,14 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
         
         for (int i = 0 ; i < 2 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.01);
+			Assert.assertEquals(testResult[i],result,0.01);
 		}
         
 	}
 	/**
 	 *  A unit test for JUnit with Allyl bromide
 	 */
-	public void testBondPiElectronegativityDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void testBondPiElectronegativityDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		descriptor  = new BondPartialPiChargeDescriptor() ;
 		double [] testResult={0.0022,0.0011,0.0011,0.0011,0.0011,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
@@ -83,13 +82,13 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
 		
 		for (int i = 0 ; i < 8 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.03);
+			Assert.assertEquals(testResult[i],result,0.03);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Isopentyl iodide
 	 */
-	public void testBondPiElectronegativityDescriptor_Isopentyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void testBondPiElectronegativityDescriptor_Isopentyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		descriptor  = new BondPartialPiChargeDescriptor() ;
 		double testResult = 0.0	; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		
@@ -98,13 +97,13 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
 		addExplicitHydrogens(mol);
 		for (int i = 0 ; i < 6 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
-			assertEquals(testResult,result,0.001);
+			Assert.assertEquals(testResult,result,0.001);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Allyl mercaptan
 	 */
-	public void testBondPiElectronegativityDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test public void testBondPiElectronegativityDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		descriptor  = new BondPartialPiChargeDescriptor() ;
 		double [] testResult={0.0006,0.0003,0.0003,0.0003,0.0003,0.0,0.0,0.0,0.0}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
         
@@ -114,7 +113,7 @@ public class BondPartialPiChargeDescriptorTest extends BondDescriptorTest {
 		
 		for (int i = 0 ; i < 9 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.03);
+			Assert.assertEquals(testResult[i],result,0.03);
 		}
 	}
 }

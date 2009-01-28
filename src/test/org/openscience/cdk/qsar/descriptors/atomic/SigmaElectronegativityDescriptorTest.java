@@ -23,9 +23,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -49,15 +49,13 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
     
 	public  SigmaElectronegativityDescriptorTest() {}
     
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(SigmaElectronegativityDescriptor.class);
     }
     
-    public static Test suite() {
-        return new TestSuite(SigmaElectronegativityDescriptorTest.class);
-    }
-    
-	public void testSigmaElectronegativityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testSigmaElectronegativityDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={8.7177,11.306};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor  = new SigmaElectronegativityDescriptor() ;
 		Integer[] params = new Integer[1];
@@ -70,7 +68,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 			params[0] = 6;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.01);
+			Assert.assertEquals(testResult[i],result,0.01);
 		}
         
 	}
@@ -78,7 +76,8 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	/**
 	 *  A unit test for JUnit with Methyl chloride
 	 */
-	public void testSigmaElectronegativityDescriptor_Methyl_chloride() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testSigmaElectronegativityDescriptor_Methyl_chloride() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={8.3293,10.491};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
@@ -90,13 +89,14 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 			params[0] = 6;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.05);
+			Assert.assertEquals(testResult[i],result,0.05);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Allyl bromide
 	 */
-	public void testSigmaElectronegativityDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testSigmaElectronegativityDescriptor_Allyl_bromide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={7.8677,8.1073,8.4452,10.154}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
@@ -110,13 +110,14 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 			params[0] = 6;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.02);
+			Assert.assertEquals(testResult[i],result,0.02);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Isopentyl iodide
 	 */
-	public void testSigmaElectronegativityDescriptor_Isopentyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testSigmaElectronegativityDescriptor_Isopentyl_iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double testResult = 9.2264; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
         
@@ -125,12 +126,13 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		addExplicitHydrogens(mol);
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getAtom(5),mol).getValue()).doubleValue();
-		assertEquals(testResult,result,0.08);
+		Assert.assertEquals(testResult,result,0.08);
 	}
 	/**
 	 *  A unit test for JUnit with Ethoxy ethane
 	 */
-	public void testSigmaElectronegativityDescriptor_Ethoxy_ethane() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testSigmaElectronegativityDescriptor_Ethoxy_ethane() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={7.6009,8.3948,9.4663,8.3948,7.6009}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
@@ -143,13 +145,14 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 			params[0] = 6;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.002);
+			Assert.assertEquals(testResult[i],result,0.002);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Ethanolamine
 	 */
-	public void testSigmaElectronegativityDescriptor_Ethanolamine() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testSigmaElectronegativityDescriptor_Ethanolamine() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={8.1395,8.1321,8.5049,9.3081}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
@@ -162,13 +165,14 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 			params[0] = 6;
 	        descriptor.setParameters(params);
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.002);
+			Assert.assertEquals(testResult[i],result,0.002);
 		}
 	}
 	/**
 	 *  A unit test for JUnit with Allyl mercaptan
 	 */
-	public void testSigmaElectronegativityDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testSigmaElectronegativityDescriptor_Allyl_mercaptan() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={7.8634,8.0467,8.061,8.5917}; /* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new SigmaElectronegativityDescriptor();
         
@@ -178,7 +182,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		
 		for (int i = 0 ; i < 4 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
-			assertEquals(testResult[i],result,0.01);
+			Assert.assertEquals(testResult[i],result,0.01);
 		}
 	}
 	/**
@@ -186,6 +190,7 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
 	 */
+    @Test
     public void testCompareIonized() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
 		IMolecule molA = builder.newMolecule();
@@ -220,13 +225,13 @@ public class SigmaElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molB);
 		lpcheck.saturate(molB);
 		
-		assertEquals(1, molB.getAtom(3).getFormalCharge(), 0.00001);
-		assertEquals(1, molB.getSingleElectronCount(), 0.00001);
-		assertEquals(2, molB.getLonePairCount(), 0.00001);
+		Assert.assertEquals(1, molB.getAtom(3).getFormalCharge(), 0.00001);
+		Assert.assertEquals(1, molB.getSingleElectronCount(), 0.00001);
+		Assert.assertEquals(2, molB.getLonePairCount(), 0.00001);
 		
         double resultB= ((DoubleResult)descriptor.calculate(molB.getAtom(3),molB).getValue()).doubleValue();
         
-        assertEquals(resultA, resultB, 0.00001);
+        Assert.assertEquals(resultA, resultB, 0.00001);
     }
 }
 

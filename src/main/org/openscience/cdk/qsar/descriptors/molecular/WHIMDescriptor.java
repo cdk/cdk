@@ -26,6 +26,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import Jama.EigenvalueDecomposition;
 import Jama.Matrix;
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -123,6 +124,7 @@ import java.util.Map;
  * @cdk.keyword WHIM
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.WHIMDescriptorTest")
 public class WHIMDescriptor implements IMolecularDescriptor {
 
     LoggingTool logger;
@@ -221,6 +223,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
         this.hashpol.put("I", new Double(3.040));
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#WHIM",
@@ -240,6 +243,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
      * @throws CDKException if the parameters are of the wrong type
      * @see #getParameters
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) {
             throw new CDKException("WHIMDescriptor requires 1 parameter");
@@ -263,6 +267,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
      *         to return respectively
      * @see #setParameters
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         Object[] o = new Object[1];
         o[0] = this.type;
@@ -287,6 +292,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         String[] pname = new String[1];
         pname[0] = "type";
@@ -300,6 +306,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {        
         return ("");
     }
@@ -320,6 +327,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
      * @param container Parameter is the atom container.
      * @return An ArrayList containing the descriptors in the order described above.
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         if (!GeometryTools.has3DCoordinates(container))
             return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
@@ -469,6 +477,7 @@ public class WHIMDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(17);
     }

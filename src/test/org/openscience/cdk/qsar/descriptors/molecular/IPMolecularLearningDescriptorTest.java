@@ -20,9 +20,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IBond;
@@ -52,22 +52,16 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
     public  IPMolecularLearningDescriptorTest() {
     }
     
-    /**
-	 *  A unit test suite for JUnit
-	 *
-	 *@return    The test suite
-	 */
-    public static Test suite() {
-        return new TestSuite(IPMolecularLearningDescriptorTest.class);
-    }
 
+    @Before
     public void setUp() throws Exception {
     	super.setDescriptor(IPMolecularLearningDescriptor.class);
     }
 
 
+    @Test
     public void testIPMolecularLearningDescriptor() throws Exception {
-    	assertNotNull(descriptor);
+    	Assert.assertNotNull(descriptor);
     }
 
 	/**
@@ -75,7 +69,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 	 *  
 	 *  @cdk.inchi InChI=1/C6H14/c1-5(2)6(3)4/h5-6H,1-4H3
 	 */
-    public void testIPDescriptor0() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor0() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
     	IMolecule mol = builder.newMolecule();
 		mol.addAtom(builder.newAtom("C"));
@@ -98,7 +92,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
         double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 0.0; 
         
-        assertEquals(resultAccordingNIST, result, 0.0001);
+        Assert.assertEquals(resultAccordingNIST, result, 0.0001);
     }
 
     /**
@@ -108,7 +102,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
      * @throws CDKException
      * @throws java.lang.Exception
 	 */
-    public void testIPDescriptor_1() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor_1() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
 		IMolecule mol = sp.parseSmiles("C-Cl");
 
@@ -120,12 +114,12 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 		double result= ((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue();
         double resultAccordingNIST = 11.26; 
 
-        assertEquals(resultAccordingNIST, result, 0.53);
+        Assert.assertEquals(resultAccordingNIST, result, 0.53);
     }
     /**
 	 *  A unit test for JUnit with COCCCC=O
 	 */
-    public void testIPDescriptor_2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor_2() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
 		IMolecule mol = sp.parseSmiles("COCCCC=O");
 
@@ -138,13 +132,13 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
         
         double resultAccordingNIST = 9.37; 
         
-        assertEquals(2, dar.length());
-        assertEquals(resultAccordingNIST, dar.get(0), 0.3);
+        Assert.assertEquals(2, dar.length());
+        Assert.assertEquals(resultAccordingNIST, dar.get(0), 0.3);
     }
     /**
 	 *  A unit test for JUnit with C=CCC(=O)CC
 	 */
-    public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception{
+    @Test public void testIPDescriptor_3() throws ClassNotFoundException, CDKException, java.lang.Exception{
         
 		IMolecule mol = sp.parseSmiles("C=CCCC(=O)C");
 		
@@ -156,8 +150,8 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 		DoubleArrayResult dar = ((DoubleArrayResult)((IPMolecularLearningDescriptor)descriptor).calculatePlus(mol).getValue());
 
         double resultAccordingNIST = 9.50; 
-        assertEquals(2, dar.length());
-        assertEquals(resultAccordingNIST, dar.get(0), 0.15);
+        Assert.assertEquals(2, dar.length());
+        Assert.assertEquals(resultAccordingNIST, dar.get(0), 0.15);
         
     }
 //    /**
@@ -167,7 +161,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //     * @throws CDKException
 //     * @throws java.lang.Exception
 //     */
-//    public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException, java.lang.Exception{
+//    @Test public void testIPDescriptorReaction() throws ClassNotFoundException, CDKException, java.lang.Exception{
 //    	IMolecule mol = sp.parseSmiles("C-Cl");
 //
 //		addExplicitHydrogens(mol);
@@ -180,8 +174,8 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //		double resultAccordingNIST = 11.26; 
 //
 //		double result = ((Double) reactionSet.getReaction(0).getProperty("IonizationEnergy")).doubleValue();
-//        assertEquals(1, reactionSet.getReactionCount());
-//        assertEquals(resultAccordingNIST, result, 0.53);
+//        Assert.assertEquals(1, reactionSet.getReactionCount());
+//        Assert.assertEquals(resultAccordingNIST, result, 0.53);
 //    }
 //    /**
 //     * A unit test for JUnit with CCCC
@@ -190,7 +184,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //     * @throws CDKException
 //     * @throws java.lang.Exception
 //     */
-//    public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
+//    @Test public void testIPDescriptorReaction2() throws ClassNotFoundException, CDKException, java.lang.Exception{
 //    	IMolecule mol = sp.parseSmiles("CCCC");
 //
 //		addExplicitHydrogens(mol);
@@ -201,7 +195,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //		
 //		IReactionSet reactionSet = ((IPMolecularLearningDescriptor)descriptor).getReactionSet();
 //		
-//        assertEquals(0, reactionSet.getReactionCount());
+//        Assert.assertEquals(0, reactionSet.getReactionCount());
 //    }
 //    /**
 //     * A unit test for JUnit with CCC#CCCO
@@ -210,7 +204,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //     * @throws CDKException
 //     * @throws java.lang.Exception
 //     */
-//    public void testIPDescriptorReaction3() throws ClassNotFoundException, CDKException, java.lang.Exception{
+//    @Test public void testIPDescriptorReaction3() throws ClassNotFoundException, CDKException, java.lang.Exception{
 //    	IMolecule mol = sp.parseSmiles("CCC#CCCO");
 //
 //		addExplicitHydrogens(mol);
@@ -221,7 +215,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //		
 //		IReactionSet reactionSet = ((IPMolecularLearningDescriptor)descriptor).getReactionSet();
 //		
-//        assertEquals(3, reactionSet.getReactionCount());
+//        Assert.assertEquals(3, reactionSet.getReactionCount());
 //    }
 //    /**
 //     * A unit test for JUnit with CCC#CCCO
@@ -230,7 +224,7 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //     * @throws CDKException
 //     * @throws java.lang.Exception
 //     */
-//    public void testIPDescriptorReaction4() throws ClassNotFoundException, CDKException, java.lang.Exception{
+//    @Test public void testIPDescriptorReaction4() throws ClassNotFoundException, CDKException, java.lang.Exception{
 //    	IMolecule mol = sp.parseSmiles("CCCCC=CO");
 //
 //		addExplicitHydrogens(mol);
@@ -241,6 +235,6 @@ public class IPMolecularLearningDescriptorTest extends MolecularDescriptorTest {
 //		
 //		IReactionSet reactionSet = ((IPMolecularLearningDescriptor)descriptor).getReactionSet();
 //		
-//        assertEquals(3, reactionSet.getReactionCount());
+//        Assert.assertEquals(3, reactionSet.getReactionCount());
 //    }
 }

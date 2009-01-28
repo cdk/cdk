@@ -139,14 +139,21 @@ public class BondSigmaElectronegativityDescriptor implements IBondDescriptor {
      *  The method calculates the sigma electronegativity of a given bond
      *  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
      *
-     *@param  ac                AtomContainer
+     *@param  atomContainer                AtomContainer
      *@return                   return the sigma electronegativity
      */
-    @TestMethod(value="testCalculate_IBond_IAtomContainer")
-    public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
+    @TestMethod(value="testCalculate_IBond_IAtomContainer,testBondSigmaElectronegativityDescriptor,testBondSigmaElectronegativityDescriptor_Methyl_chloride")
+    public DescriptorValue calculate(IBond aBond, IAtomContainer atomContainer) {
+        IAtomContainer ac;
+        IBond bond;
+
         try {
+            ac = (IAtomContainer) atomContainer.clone();
+            bond = ac.getBond(atomContainer.getBondNumber(aBond));
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
         } catch (CDKException e) {
+            return getDummyDescriptorValue(e);
+        } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
 

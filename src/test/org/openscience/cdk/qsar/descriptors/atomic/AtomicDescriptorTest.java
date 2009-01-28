@@ -21,6 +21,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -45,10 +46,6 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
 
 	public AtomicDescriptorTest() {}
 	
-	public AtomicDescriptorTest(String name) {
-		super(name);
-	}
-	
 	public void setDescriptor(Class descriptorClass) throws Exception {
 		if (descriptor == null) {
 			Object descriptor = descriptorClass.newInstance();
@@ -60,6 +57,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
 		super.setDescriptor(descriptorClass);
 	}
 
+    @Test
     public void testCalculate_IAtomContainer() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
 
@@ -67,10 +65,11 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
         try {
             v = descriptor.calculate(mol.getAtom(1), mol);
         } catch (Exception e) {
-            fail("A descriptor must not throw an exception");
+            Assert.fail("A descriptor must not throw an exception");
         }
-        assertNotNull(v);
-        assertNotSame(
+        Assert.assertNotNull(v);
+        assert v != null;
+        Assert.assertNotSame(
         	"The descriptor did not calculate any value.",
         	0, v.getValue().length()
         );
@@ -81,34 +80,34 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
 	 * 
 	 * @throws Exception Passed on from calculate.
 	 */
-    public void testLabels() throws Exception {
+    @Test public void testLabels() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         
         DescriptorValue v = descriptor.calculate(mol.getAtom(1), mol);
-        assertNotNull(v);
+        Assert.assertNotNull(v);
         String[] names = v.getNames();
-        assertNotNull(
+        Assert.assertNotNull(
         	"The descriptor must return labels using the getNames() method.",
         	names
         );
-        assertNotSame(
+        Assert.assertNotSame(
         	"At least one label must be given.",
         	0, names.length
         );
-        for (int i=0; i<names.length; i++) {
-        	assertNotNull(
-        		"A descriptor label may not be null.",
-        		names[i]
-        	);
-        	assertNotSame(
-        		"The label string must not be empty.",
-        		0, names[i].length()
-        	);
+        for (String name : names) {
+            Assert.assertNotNull(
+                    "A descriptor label may not be null.",
+                    name
+            );
+            Assert.assertNotSame(
+                    "The label string must not be empty.",
+                    0, name.length()
+            );
 //        	System.out.println("Label: " + names[i]);
         }
-        assertNotNull(v.getValue());
+        Assert.assertNotNull(v.getValue());
         int valueCount = v.getValue().length();
-        assertEquals(
+        Assert.assertEquals(
         	"The number of labels must equals the number of values.",
         	names.length, valueCount
         );
@@ -120,27 +119,27 @@ public abstract class AtomicDescriptorTest extends DescriptorTest {
      * Also ensure that the number of actual values matches the length
      * of the names
      */
-    public void testNamesConsistency() {
+    @Test public void testNamesConsistency() {
         IAtomContainer mol = someoneBringMeSomeWater();
 
         String[] names1 = descriptor.getDescriptorNames();
         DescriptorValue v = descriptor.calculate(mol.getAtom(1), mol);
         String[] names2 = v.getNames();
 
-        assertEquals(names1.length, names2.length);
+        Assert.assertEquals(names1.length, names2.length);
         Assert.assertArrayEquals(names1, names2);
 
         int valueCount = v.getValue().length();
-        assertEquals(valueCount, names1.length);        
+        Assert.assertEquals(valueCount, names1.length);        
     }
 
-    public void testCalculate_NoModifications() throws Exception {
+    @Test public void testCalculate_NoModifications() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
         IAtom atom = mol.getAtom(1);
         IAtom clone = (IAtom)mol.getAtom(1).clone();
         descriptor.calculate(atom, mol);
         String diff = AtomDiff.diff(clone, atom); 
-        assertEquals(
+        Assert.assertEquals(
           "The descriptor must not change the passed atom in any respect, but found this diff: " + diff,
           0, diff.length()
         );

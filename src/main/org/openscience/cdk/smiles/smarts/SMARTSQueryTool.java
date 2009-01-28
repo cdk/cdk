@@ -63,12 +63,34 @@ import java.util.*;
  *    }
  * }
  * </pre>
- * <p/>
- * To use the JJTree based Smarts Parser, use:
- * <p/>
- * <pre>
- * SMARTSQueryTool querytool = new SMARTSQueryTool(&quot;O=CO&quot;, true);
- * </pre>
+ *
+ * <h3>SMARTS Extensions</h3>
+ *
+ * Currently the CDK supports the following SMARTS symbols, that are not described
+ * in the Daylight specification. However they are supported by other packages and
+ * are noted as such.
+ *
+ * <table border=1 cellpadding=3>
+ * <thead>
+ * <tr>
+ * <th>Symbol</th><th>Meaning</th><th>Default</th><th>Notes</th>
+ * </tr>
+ * </thead>
+ * <tbody>
+ * <tr>
+ * <td>Gx</td><td>Periodic group number</td><td>None</td><td>x must be specified and must be a number between
+ *  1 and 18. This symbol is supported by the MOE SMARTS implementation</td>
+ * <tr>
+ * <td>#X</td><td>Any non-carbon heavy element</td><td>None</td><td>This
+ * symbol is supported by the MOE SMARTS implementation</td>
+ * </tr>
+ * <tr>
+ * <td>^x</td><td>Any atom with the a specified hybridization state</td><td>None</td><td>x must be specified and
+ * should be between 1 and 8 (inclusive), corresponding to SP1, SP2, SP3, SP3D1, SP3D2
+ * SP3D3, SP3D4 and SP3D5. Supported by the OpenEye SMARTS implementation</td>
+ * </tr>
+ * </tbody>
+ * </table>
  *
  * @author Rajarshi Guha
  * @cdk.created 2007-04-08
@@ -403,13 +425,16 @@ public class SMARTSQueryTool {
     }
 
     /**
-     * Initializes recursive smarts atoms in the query
+     * Initializes recursive smarts atoms in the query.
+     *
+     * We loop over the SMARTS atoms in the query and associate the
+     * target molecule with each of the SMARTS atoms that need it
      *
      * @param atomContainer
      * @throws CDKException
      */
     private void initializeRecursiveSmarts(IAtomContainer atomContainer) throws CDKException {
-        for (IAtom atom : atomContainer.atoms()) {
+        for (IAtom atom : query.atoms()) {
             initializeRecursiveSmartsAtom(atom, atomContainer);
         }
     }

@@ -2,6 +2,8 @@ package org.openscience.cdk.io.iterator;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ConformerContainer;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 
@@ -46,6 +48,7 @@ import java.util.NoSuchElementException;
  * @cdk.keyword file format SDF
  * @cdk.keyword conformer conformation
  */
+@TestClass("org.openscience.cdk.io.iterator.IteratingMDLConformerReaderTest")
 public class IteratingMDLConformerReader implements Iterator {
     private IteratingMDLReader imdlr;
     private ConformerContainer container;
@@ -54,16 +57,19 @@ public class IteratingMDLConformerReader implements Iterator {
     private boolean hasNext = false;
     private boolean nextIsKnown = false;
 
+    @TestMethod("testSDF")
     public IteratingMDLConformerReader(Reader in, IChemObjectBuilder builder) {
         imdlr = new IteratingMDLReader(in, builder);
         container = new ConformerContainer();
     }
 
+    @TestMethod("testSDF")
     public IteratingMDLConformerReader(InputStream in, IChemObjectBuilder builder) {
         imdlr = new IteratingMDLReader(in, builder);
         container = new ConformerContainer();
     }
 
+    @TestMethod("testSDF")
     public boolean hasNext() {
 
         boolean slurpedConformers = false;
@@ -93,6 +99,7 @@ public class IteratingMDLConformerReader implements Iterator {
         return hasNext;
     }
 
+    @TestMethod("testSDF")
     public Object next() {
         if (!nextIsKnown) hasNext();
         nextIsKnown = false;
@@ -102,6 +109,7 @@ public class IteratingMDLConformerReader implements Iterator {
         return container;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @TestMethod("testRemove")
     public void remove() {
         throw new UnsupportedOperationException();
     }

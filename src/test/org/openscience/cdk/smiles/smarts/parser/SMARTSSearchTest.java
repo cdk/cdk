@@ -1244,5 +1244,129 @@ public class SMARTSSearchTest extends CDKTestCase {
         assertEquals(1, results[0]);
         assertEquals(1, results[1]);
     }
+
+    public void testPeriodicGroupNumber() throws Exception {
+        int[] results = match("[G14]", "CCN");
+        assertEquals(2, results[0]);
+        assertEquals(2, results[1]);
+
+        results = match("[G14,G15]", "CCN");
+        assertEquals(3, results[0]);
+        assertEquals(3, results[1]);
+    }
+
+    public void testInvalidPeriodicGroupNumber() throws Exception {
+        try {
+            int[] results = match("[G19]", "CCN");
+            fail();
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+
+        try {
+            int[] results = match("[G0]", "CCN");
+            fail();
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+
+        try {
+            int[] results = match("[G345]", "CCN");
+            fail();
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+
+    }
+
+    public void testNonPeriodicGroupNumber() throws Exception {
+        try {
+            int[] results = match("[G]", "CCN");
+            fail("Should throw an exception if G is not followed by a number");
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+
+        try {
+            int[] results = match("[GA]", "CCN");
+            fail("Should throw an exception if G is not followed by a number");
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+    }
+
+    public void testNonCHHeavyAtom() throws Exception {
+        int[] results = match("[#X]", "CCN");
+        assertEquals(1, results[0]);
+        assertEquals(1, results[1]);
+
+        results = match("[#X]", "CCNC(=O)CCSF");
+        assertEquals(4, results[0]);
+        assertEquals(4, results[1]);
+
+
+        results = match("C#[#X]", "CCNC(=O)C#N");
+        assertEquals(2, results[0]);
+        assertEquals(1, results[1]);
+
+        results = match("C#[#X]", "CCNC(=O)C#C");
+        assertEquals(0, results[0]);
+        assertEquals(0, results[1]);
+
+    }
+
+    public void testHybridizationNumber() throws Exception {
+        int[] results = match("[^1]", "CCN");
+        assertEquals(0, results[0]);
+        assertEquals(0, results[1]);
+
+        results = match("[^1]", "N#N");
+        assertEquals(2, results[0]);
+        assertEquals(2, results[1]);
+
+        results = match("[^1&N]", "CC#C");
+        assertEquals(0, results[0]);
+        assertEquals(0, results[1]);
+
+        results = match("[^1&N]", "CC#N");
+        assertEquals(1, results[0]);
+        assertEquals(1, results[1]);
+
+        results = match("[^1&N,^2&C]", "CC(=O)CC(=O)CC#N");
+        assertEquals(3, results[0]);
+        assertEquals(3, results[1]);
+
+    }
+
+    public void testBadHybridizationNumber() throws Exception {
+
+        try {
+            int[] results = match("[^]", "CCN");
+            fail("Should throw an exception if ^ is not followed by a number");
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+
+        try {
+            int[] results = match("[^X]", "CCN");
+            fail("Should throw an exception if ^ is not followed by a number");
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+
+        try {
+            int[] results = match("[^0]", "CCN");
+            fail("Should throw an exception if ^ is not between 1 & 8");
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+
+        try {
+            int[] results = match("[^9]", "CCN");
+            fail("Should throw an exception if ^ is not between 1 & 8");
+        } catch (CDKException pe) {
+            assertTrue(true);
+        }
+    }
 }
 

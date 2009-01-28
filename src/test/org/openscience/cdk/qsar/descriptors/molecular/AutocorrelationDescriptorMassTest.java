@@ -20,32 +20,27 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.InputStream;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorMass;
+
+import java.io.InputStream;
 
 /**
  * @cdk.module test-qsarmolecular
  */
 public class AutocorrelationDescriptorMassTest extends MolecularDescriptorTest {
 
-	public AutocorrelationDescriptorMassTest(String name) {
-		super(name);
+	public AutocorrelationDescriptorMassTest() {
+		super();
 	}
 
-	public static Test suite() {
-		return new TestSuite(AutocorrelationDescriptorMassTest.class);
-	}
-		
-	public void setUp() throws Exception {
+	@Before
+    public void setUp() throws Exception {
 		setDescriptor(AutocorrelationDescriptorMass.class);
 	}
 	
@@ -57,7 +52,7 @@ public class AutocorrelationDescriptorMassTest extends MolecularDescriptorTest {
 		IMolecule container = (Molecule) reader.read((ChemObject) new Molecule());
 		DescriptorValue count = new AutocorrelationDescriptorMass().calculate(container);
 		System.out.println(count.getValue());
-		fail("Not validated yet");
+		Assert.fail("Not validated yet");
 	}
 	
 }

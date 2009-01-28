@@ -1,11 +1,11 @@
 package org.openscience.cdk.io.iterator;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
-import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.tools.LoggingTool;
 
 import java.io.InputStream;
@@ -17,19 +17,16 @@ import java.io.InputStream;
  *
  * @see org.openscience.cdk.io.MDLReader
  */
-public class IteratingMDLConformerReaderTest extends CDKTestCase {
+public class IteratingMDLConformerReaderTest extends NewCDKTestCase {
 
-    private LoggingTool logger;
+    private static LoggingTool logger;
 
-    public IteratingMDLConformerReaderTest(String name) {
-        super(name);
-        logger = new LoggingTool(this);
+    @BeforeClass
+    public static void setup() {
+        logger = new LoggingTool(IteratingMDLConformerReaderTest.class);
     }
 
-    public static Test suite() {
-        return new TestSuite(IteratingMDLConformerReaderTest.class);
-    }
-
+    @Test
     public void testSDF() throws Exception {
         String filename = "data/mdl/iterconftest.sdf";
         logger.info("Testing: " + filename);
@@ -42,17 +39,28 @@ public class IteratingMDLConformerReaderTest extends CDKTestCase {
         int i = 0;
         while (reader.hasNext()) {
             ConformerContainer confContainer = (ConformerContainer) reader.next();
-            assertNotNull(confContainer);
+            Assert.assertNotNull(confContainer);
             nconfs[i++] = confContainer.size();
             molCount++;
         }
 
-        assertEquals(3, molCount);
-        assertEquals(3, nconfs[0]);
-        assertEquals(18, nconfs[1]);
-        assertEquals(18, nconfs[2]);
+        Assert.assertEquals(3, molCount);
+        Assert.assertEquals(3, nconfs[0]);
+        Assert.assertEquals(18, nconfs[1]);
+        Assert.assertEquals(18, nconfs[2]);
     }
 
 
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRemove() {
+        String filename = "data/mdl/iterconftest.sdf";
+        logger.info("Testing: " + filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins, DefaultChemObjectBuilder.getInstance());
 
+        reader.hasNext();
+        reader.next();
+        reader.remove();
+
+    }
 }

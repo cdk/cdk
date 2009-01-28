@@ -24,11 +24,11 @@
 package org.openscience.cdk.reaction.type;
 
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -46,8 +46,9 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
-import org.openscience.cdk.reaction.type.RearrangementRadicalReaction;
 import org.openscience.cdk.reaction.ReactionProcessTest;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ReactionManipulator;
 
@@ -59,13 +60,12 @@ import org.openscience.cdk.tools.manipulator.ReactionManipulator;
  */
 public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 	
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
-	
+	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
 	 */
-	 @BeforeClass public static void setUp() throws Exception {
-	 	setReaction(RearrangementRadicalReaction.class);
+	public  RearrangementRadicalReactionTest()  throws Exception {
+			setReaction(RearrangementRadicalReaction.class);
 	 }
 	 
 	 /**
@@ -94,9 +94,11 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 
 		/* initiate */
 		
-        HashMap<String,Object> params = new HashMap<String,Object>();
-        params.put("hasActiveCenter",Boolean.FALSE);;
-        type.setParameters(params);
+        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+	    IParameterReact param = new SetReactionCenter();
+        param.setParameter(Boolean.FALSE);
+        paramList.add(param);
+        type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         Assert.assertEquals(1, setOfReactions.getReactionCount());
@@ -135,10 +137,11 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 		molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 
 		
-        HashMap<String,Object> params = new HashMap<String,Object>();
-        params.put("hasActiveCenter",Boolean.TRUE);;
-        type.setParameters(params);
-
+		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+		IParameterReact param = new SetReactionCenter();
+	    param.setParameter(Boolean.TRUE);
+	    paramList.add(param);
+	    type.setParameterList(paramList);
 		/* initiate */
 		
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
@@ -154,23 +157,6 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(UniversalIsomorphismTester.isIsomorph(molecule2,queryAtom));
         
-	}
-	/**
-	 * A unit test suite for JUnit. 
-	 * 
-	 * @return    The test suite
-	 */
-	@Test public void testCentreActive() throws Exception {
-		IReactionProcess type  = new RearrangementRadicalReaction();
-
-		HashMap<String,Object> params = type.getParameters();
-		Assert.assertTrue(params.get("hasActiveCenter") instanceof Boolean);
-		Assert.assertFalse((Boolean)params.get("hasActiveCenter"));
-
-        params = new HashMap<String,Object>();
-        params.put("hasActiveCenter",Boolean.TRUE);
-        type.setParameters(params);
-		Assert.assertTrue((Boolean)params.get("hasActiveCenter"));
 	}
 	/**
 	 * A unit test suite for JUnit.
@@ -191,9 +177,11 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		
 		setOfReactants.addMolecule(molecule);
-		HashMap<String,Object> params = new HashMap<String,Object>();
-        params.put("hasActiveCenter",Boolean.TRUE);;
-        type.setParameters(params);
+		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+	    IParameterReact param = new SetReactionCenter();
+        param.setParameter(Boolean.TRUE);
+        paramList.add(param);
+        type.setParameterList(paramList);
         
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
@@ -225,10 +213,11 @@ public class RearrangementRadicalReactionTest extends ReactionProcessTest {
 		setOfReactants.addMolecule(molecule);
 		
 		/*automatic search of the center active*/
-        HashMap<String,Object> params = new HashMap<String,Object>();
-        params.put("hasActiveCenter",Boolean.FALSE);;
-        type.setParameters(params);
-
+        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+	    IParameterReact param = new SetReactionCenter();
+        param.setParameter(Boolean.FALSE);
+        paramList.add(param);
+        type.setParameterList(paramList);
 		/* initiate */
 		
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);

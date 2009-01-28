@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -62,6 +63,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:vAdjMa
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.VAdjMaDescriptorTest")
 public class VAdjMaDescriptor implements IMolecularDescriptor {
     private static final String[] names = {"VAdjMat"};
 
@@ -76,7 +78,8 @@ public class VAdjMaDescriptor implements IMolecularDescriptor {
 	 *
 	 *@return    The specification value
 	 */
-	public DescriptorSpecification getSpecification() {
+	@TestMethod("testGetSpecification")
+    public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vAdjMa",
 		    this.getClass().getName(),
@@ -91,7 +94,8 @@ public class VAdjMaDescriptor implements IMolecularDescriptor {
 	 *@param  params            The new parameters value
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public void setParameters(Object[] params) throws CDKException {
+	@TestMethod("testSetParameters_arrayObject")
+    public void setParameters(Object[] params) throws CDKException {
 		// no parameters for this descriptor
 	}
 
@@ -101,7 +105,8 @@ public class VAdjMaDescriptor implements IMolecularDescriptor {
 	 *
 	 *@return    The parameters value
 	 */
-	public Object[] getParameters() {
+	@TestMethod("testGetParameters")
+    public Object[] getParameters() {
 		// no parameters to return
 		return (null);
 	}
@@ -119,7 +124,8 @@ public class VAdjMaDescriptor implements IMolecularDescriptor {
 	 *@return                   VAdjMa
 	 
 	 */
-	public DescriptorValue calculate(IAtomContainer atomContainer) {
+	@TestMethod("testCalculate_IAtomContainer")
+    public DescriptorValue calculate(IAtomContainer atomContainer) {
 		int magnitude = AtomContainerManipulator.getHeavyAtoms(atomContainer).size();
 		double vadjMa = 0;
 		if (magnitude > 0) {
@@ -140,6 +146,7 @@ public class VAdjMaDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0); 
     }
@@ -150,6 +157,7 @@ public class VAdjMaDescriptor implements IMolecularDescriptor {
      *
      *@return    The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -163,7 +171,8 @@ public class VAdjMaDescriptor implements IMolecularDescriptor {
 	 *@param  name  Description of the Parameter
 	 *@return       The parameterType value
 	 */
-	public Object getParameterType(String name) {
+	@TestMethod("testGetParameterType_String")
+    public Object getParameterType(String name) {
 		return (null);
 	}
 }

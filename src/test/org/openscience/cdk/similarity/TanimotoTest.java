@@ -59,7 +59,7 @@ public class TanimotoTest extends NewCDKTestCase
 		BitSet bs2 = fingerprinter.getFingerprint(mol2);
 		float tanimoto = Tanimoto.calculate(bs1, bs2);
 		if (standAlone) System.out.println("Tanimoto: " + tanimoto);
-		if (!standAlone) Assert.assertEquals(0.40625, tanimoto, 0.01);
+		if (!standAlone) Assert.assertEquals(0.3939, tanimoto, 0.01);
 	}
 	@Test
     public void testTanimoto2() throws java.lang.Exception

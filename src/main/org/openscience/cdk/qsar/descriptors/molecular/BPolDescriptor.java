@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
@@ -68,6 +69,7 @@ import java.util.Iterator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:bpol
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptorTest")
 public class BPolDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
@@ -92,6 +94,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
         }
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bpol",
@@ -106,6 +109,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
      *@param  params            The new parameters value
      *@exception  CDKException  Description of the Exception
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -116,6 +120,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
      *
      *@return    The parameters value
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // no parameters for this descriptor
         return (null);
@@ -136,6 +141,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
      */
 
 
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
 
         double bpol = 0;
@@ -183,6 +189,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
     }
@@ -193,6 +200,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
      *
      *@return    The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -205,6 +213,7 @@ public class BPolDescriptor implements IMolecularDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return (null);
     }

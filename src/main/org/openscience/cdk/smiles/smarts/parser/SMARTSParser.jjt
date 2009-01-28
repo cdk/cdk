@@ -272,6 +272,12 @@ PARSER_END(SMARTSParser)
     |
     <x : "x" >
     |
+    <G : "G" >
+    |
+    <HX : "#X" >
+    |
+    <CARET : "^">
+    |
     <DOLLAR : "$" >
     |
     <L_PAREN : "(" >
@@ -311,8 +317,9 @@ PARSER_END(SMARTSParser)
  *             NotExpression ::= "!" ( <PrimitiveAtomExpression> | <RecursiveSmartsExpression> )
  * RecursiveSmartsExpression ::= "$" "(" <SmartsExpression> ")"
  *   PrimitiveAtomExpression ::= <NonHydrogenElement> | "*" | "A" | "a" | "D" (<Digits>)? | "H" (<Digits>)? | "h" (<Digits>)?
- *                               | "R" (<Digit>+)? | "r" (<Digit>+)? | "v" (<Digit>+)? | "X" (<Digit>+)? | "x" (<Digit>+)? 
- *                               | ("+" | "-") (<Digit>+)? | "#" (<Digit>+)? | "@" | "@@" | <Digit>+
+ *                               | "R" (<Digit>+)? | "r" (<Digit>+)? | "v" (<Digit>+)? | "#X" | "G" (<DIGIT>+)  
+ *                               | "X" (<Digit>+)? | "x" (<Digit>+)? | "^" (<DIGIT>)
+ *                               | ("+" | "-") (<Digit>+)? | "#" (<Digit>+) | "@" | "@@" | <Digit>+
  *                     Digit ::= ( "0" - "9")
  *        NonHydrogenElement ::= [ "HE" | "LI" | "BE" | "NE" | "NA" | "MG" | "AL" | "SI" | "AR" | "CA" | "SC" |
  *                               "TI" | "CR" | "MN" | "FE" | "CO" | "NI" | "CU" | "ZN" | "GA" | "GE" | "AS" |
@@ -546,6 +553,12 @@ void PrimitiveAtomExpression() : {}
         AtomicNumber()
         |
         Chirality()
+        |
+        PeriodicGroupNumber()
+        |
+        NonCHHeavyAtom()
+        |
+        HybridizationNumber()
     )
 }
 
@@ -578,6 +591,16 @@ void AtomicNumber() #AtomicNumber :
     { jjtThis.setNumber( Integer.parseInt(digits.toString()) ); }
 }
 
+void HybridizationNumber() #HybrdizationNumber :
+{}
+{
+    <CARET> ( <DIGIT> ) {
+        int tmp = Integer.parseInt(token.image);
+        if (tmp < 1 || tmp > 8) throw new ParseException("Hybridization number must be between 1 & 8");
+        jjtThis.setHybridizationNumber(tmp);
+   }
+}
+        
 void Charge() #Charge : 
 { StringBuffer digits = new StringBuffer(); }
 {
@@ -610,6 +633,17 @@ void RingConnectivity() #RingConnectivity : {}
 {
     <x> { jjtThis.setNumOfConnection(1); } 
     [ ( <DIGIT> )+ { jjtThis.setNumOfConnection( Integer.parseInt(token.image) ); } ]
+}
+
+void PeriodicGroupNumber() throws ParseException #PeriodicGroupNumber :
+{ StringBuffer digits = new StringBuffer(); }
+{
+    <G> { }
+    ( <DIGIT> { digits.append(token.image); } )+
+    { int tmpInt = Integer.parseInt(digits.toString());
+      if (tmpInt < 1 || tmpInt > 18) throw new ParseException("Invalid group number");
+      jjtThis.setGroupNumber( Integer.parseInt(digits.toString()) ); }
+
 }
 
 void TotalConnectivity() #TotalConnectivity : 
@@ -647,6 +681,11 @@ void SmallestRingSize() #SmallestRingSize :
 void Aliphatic() #Aliphatic : {}
 {
     <A> 
+}
+
+void NonCHHeavyAtom() #NonCHHeavyAtom : {}
+{
+    <HX>
 }
 
 void Aromatic() #Aromatic : {}

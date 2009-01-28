@@ -24,11 +24,11 @@
 package org.openscience.cdk.reaction.type;
 
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -46,6 +46,8 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.reaction.IReactionProcess;
 import org.openscience.cdk.reaction.ReactionProcessTest;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
+import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -57,13 +59,13 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.module test-reaction
  */
 public class PiBondingMovementReactionTest extends ReactionProcessTest {
-
-	private final static  IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
+	
+	private IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	/**
 	 *  The JUnit setup method
 	 */
-	 @BeforeClass public static void setUp() throws Exception {
-	 	setReaction(PiBondingMovementReaction.class);
+	public  PiBondingMovementReactionTest()  throws Exception {
+			setReaction(PiBondingMovementReaction.class);
 	 }
 	 
 	 /**
@@ -107,10 +109,11 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 			setOfReactants.addMolecule(molecule);
 
 			/* initiate */
-			HashMap<String,Object> params = new HashMap<String,Object>();
-			params.put("hasActiveCenter",Boolean.FALSE);
-			type.setParameters(params);
-	        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+			List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+			IParameterReact param = new SetReactionCenter();
+		    param.setParameter(Boolean.FALSE);
+		    paramList.add(param);
+		    type.setParameterList(paramList);IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 	        
 	        Assert.assertEquals(1, setOfReactions.getReactionCount());
 	        Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
@@ -159,11 +162,11 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 		setOfReactants.addMolecule(molecule);
 
 		/* initiate */
-		HashMap<String,Object> params = new HashMap<String,Object>();
-        params.put("hasActiveCenter",Boolean.FALSE);
-		
-        type.setParameters(params);
-        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+		IParameterReact param = new SetReactionCenter();
+	    param.setParameter(Boolean.FALSE);
+	    paramList.add(param);
+	    IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
@@ -217,10 +220,11 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 		setOfReactants.addMolecule(molecule);
 
 		/* initiate */
-		HashMap<String,Object> params = new HashMap<String,Object>();
-        params.put("hasActiveCenter",Boolean.FALSE);
-		type.setParameters(params);
-        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+		IParameterReact param = new SetReactionCenter();
+	    param.setParameter(Boolean.FALSE);
+	    paramList.add(param);
+	    IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         Assert.assertEquals(2, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
@@ -295,10 +299,12 @@ public class PiBondingMovementReactionTest extends ReactionProcessTest {
 		setOfReactants.addMolecule(molecule);
 
 		/* initiate */
-        HashMap<String,Object> params = new HashMap<String,Object>();
-        params.put("hasActiveCenter",Boolean.TRUE);
-		type.setParameters(params);
-        IReactionSet setOfReactions = type.initiate(setOfReactants, null);
+		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+		IParameterReact param = new SetReactionCenter();
+	    param.setParameter(Boolean.TRUE);
+	    paramList.add(param);
+	    type.setParameterList(paramList);
+	    IReactionSet setOfReactions = type.initiate(setOfReactants, null);
         
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());

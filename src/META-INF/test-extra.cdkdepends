@@ -22,3 +22,4 @@ cdk-isomorphism.jar
 cdk-test-core.jar
 cdk-test-io.jar
 cdk-testdata.jar
+cdk-diff.jar

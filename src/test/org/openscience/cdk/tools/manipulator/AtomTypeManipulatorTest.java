@@ -52,6 +52,25 @@ public class AtomTypeManipulatorTest extends NewCDKTestCase {
 		);
 	}
 
+    @Test
+    public void testConfigureUnsetProperties_DontOverwriterSetProperties() {
+        IAtom atom = new NNAtom(Elements.CARBON);
+        atom.setExactMass(13.0);
+        IAtomType atomType = new NNAtomType(Elements.CARBON);
+        atomType.setExactMass(12.0);
+        AtomTypeManipulator.configureUnsetProperties(atom, atomType);
+        Assert.assertEquals(13.0, atom.getExactMass(), 0.1);
+    }
+
+    @Test
+    public void testConfigureUnsetProperties() {
+        IAtom atom = new NNAtom(Elements.CARBON);
+        IAtomType atomType = new NNAtomType(Elements.CARBON);
+        atomType.setExactMass(12.0);
+        AtomTypeManipulator.configureUnsetProperties(atom, atomType);
+        Assert.assertEquals(12.0, atom.getExactMass(), 0.1);
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void testConfigure_IAtom_Null() {
         IAtom atom = new NNAtom(Elements.CARBON);

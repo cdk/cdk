@@ -1,20 +1,18 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.io.InputStream;
-import java.util.List;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Test;
 import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
+import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.descriptors.molecular.FragmentComplexityDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.GenerateFragments;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author      chhoppe from EUROSCREEN
@@ -23,12 +21,9 @@ import org.openscience.cdk.tools.GenerateFragments;
 public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
 	
 	public  FragmentComplexityDescriptorTest() {}
-	
-	public static Test suite() {
-		return new TestSuite(FragmentComplexityDescriptorTest.class);
-	}
+
 	   
-	public void test1FragmentComplexityDescriptor() throws Exception {
+	@Test public void test1FragmentComplexityDescriptor() throws Exception {
 		IMolecularDescriptor descriptor = new FragmentComplexityDescriptor();
 		String filename = "data/mdl/murckoTest1.mol";
     	//System.out.println("\nFragmentComplexityTest: " + filename);
@@ -44,10 +39,11 @@ public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
         		Complexity=((DoubleResult)descriptor.calculate((IAtomContainer) setOfFragments.get(i)).getValue()).doubleValue();
         		//System.out.println("Complexity:"+Complexity);
         	}
-    	 assertEquals(659.00,Complexity , 0.01);
+    	 Assert.assertEquals(659.00,Complexity , 0.01);
 	}
 	
-	public void test2FragmentComplexityDescriptor() throws Exception {
+	@Test
+    public void test2FragmentComplexityDescriptor() throws Exception {
 		IMolecularDescriptor descriptor = new FragmentComplexityDescriptor();
 		String filename = "data/mdl/murckoTest10.mol";
     	//System.out.println("\nFragmentComplexityTest: " + filename);
@@ -63,7 +59,7 @@ public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
     		Complexity=((DoubleResult)descriptor.calculate((IAtomContainer) setOfFragments.get(i)).getValue()).doubleValue();
     		//System.out.println("Complexity:"+Complexity);
     	}
-    	assertEquals(544.01,Complexity , 0.01);
+    	Assert.assertEquals(544.01,Complexity , 0.01);
 	}
 	
 	

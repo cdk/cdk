@@ -25,6 +25,7 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.EStateAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -88,6 +89,7 @@ import java.lang.reflect.Method;
  * @see org.openscience.cdk.tools.CDKHydrogenAdder
  * @see org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptorTest")
 public class ALOGPDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
 
@@ -1978,7 +1980,7 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
         return SameRing;
     }
 
-
+    @TestMethod("testCalculate_IAtomContainer,testChloroButane")
     public DescriptorValue calculate(IAtomContainer container) {
         IRingSet rs;
         try {
@@ -2037,11 +2039,13 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(3);
     }
 
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP",
@@ -2051,20 +2055,24 @@ public class ALOGPDescriptor implements IMolecularDescriptor {
     }
 
 
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
 
 
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
 
 
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
     }
 
 
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return null;
     }

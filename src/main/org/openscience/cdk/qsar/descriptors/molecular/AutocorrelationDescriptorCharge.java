@@ -23,6 +23,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 
 import org.openscience.cdk.Molecule;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
@@ -48,6 +49,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.bug     1728862
  */
 
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorChargeTest")
 public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
 
     private static final String[] names = {"ATSc1", "ATSc2", "ATSc3", "ATSc4", "ATSc5"};
@@ -70,6 +72,7 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
     }
 
 
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
         try {
             double[] w = listcharges(container);
@@ -106,14 +109,17 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
     }
 
 
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
 
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
 
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return null;
     }
@@ -123,6 +129,7 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
         return names;
     }
 
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge",
@@ -131,10 +138,12 @@ public class AutocorrelationDescriptorCharge implements IMolecularDescriptor{
                 "The Chemistry Development Kit");
     }
 
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(5);
     }
 
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
 
         }

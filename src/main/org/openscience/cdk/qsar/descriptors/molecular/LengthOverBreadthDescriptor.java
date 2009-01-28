@@ -25,13 +25,12 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import Jama.Matrix;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
@@ -39,7 +38,7 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+import org.openscience.cdk.tools.PeriodicTable;
 
 import javax.vecmath.Point3d;
 
@@ -66,6 +65,7 @@ import javax.vecmath.Point3d;
  * @cdk.dictref qsar-descriptors:lengthOverBreadth
  * @cdk.bug     1862142
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.LengthOverBreadthDescriptorTest")
 public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
     private LoggingTool logger;
 
@@ -83,6 +83,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
      *
      * @return The specification value
      */
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth",
@@ -99,6 +100,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
      * @throws org.openscience.cdk.exception.CDKException
      *          Description of the Exception
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -109,6 +111,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
      *
      * @return The parameters value
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return (null);
         // no parameters to return
@@ -134,6 +137,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
      * @return A {@link org.openscience.cdk.qsar.result.DoubleArrayResult} containing LOBMAX and LOBMIN in that
      *         order     
      */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         if (!GeometryTools.has3DCoordinates(atomContainer))
             return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
@@ -208,6 +212,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(2);
     }
@@ -245,25 +250,13 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
         double ymin = 1e30;
         double zmin = 1e30;
 
-        AtomTypeFactory atomTypeFactory = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/config/data/jmol_atomtypes.txt",
-                atomContainer.getBuilder()
-        );
-
         int natom = atomContainer.getAtomCount();
         for (int i = 0; i < natom; i++) {
             double[] coord = new double[coords[0].length];
             System.arraycopy(coords[i], 0, coord, 0, coords[0].length);
             if (withRadii) {
                 IAtom atom = atomContainer.getAtom(i);
-                // FIXME (see bug #1862142): should really do proper atom type perception here
-                IAtomType[] types = atomTypeFactory.getAtomTypes(atom.getSymbol());
-                if (types.length == 0) throw new CDKException("Could not determine covalent radius for: " + atom);
-                AtomTypeManipulator.configure(atom,types[0]);
-
-                // TODO: is this the same as the VDW radius?
-                double radius = atom.getCovalentRadius();
-                //logger.debug("radius = " + radius);
+                double radius = PeriodicTable.getCovalentRadius(atom.getSymbol());
 
                 xmax = Math.max(xmax, coord[0] + radius);
                 ymax = Math.max(ymax, coord[1] + radius);
@@ -294,6 +287,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
      *
      * @return The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -306,6 +300,7 @@ public class LengthOverBreadthDescriptor implements IMolecularDescriptor {
      * @param name Description of the Parameter
      * @return The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
         return (null);
     }

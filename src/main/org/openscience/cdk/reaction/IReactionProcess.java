@@ -24,11 +24,12 @@
  */
 package org.openscience.cdk.reaction;
 
-import java.util.HashMap;
+import java.util.List;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.reaction.type.parameters.IParameterReact;
 
 /**
  * Classes that implement this interface are Reactions types.
@@ -62,21 +63,21 @@ public interface IReactionProcess {
      * Must be done before calling
      * calculate as the parameters influence the calculation outcome.
      *
-     * @param params A HashMap of Objects containing the parameters for this reaction. 
+     * @param params A List of Objects containing the parameters for this reaction. 
      * 				 The key must be included into the Dictionary reacton-processes
      * @throws CDKException if invalid number of type of parameters are passed to it
      * 
-     * @see #getParameters
+     * @see #getParameterList
      */
-    public void setParameters(HashMap<String,Object> params) throws CDKException;
+    public void setParameterList(List<IParameterReact> params) throws CDKException;
     
     /** 
      * Returns the current parameter values.
      *
-     * @return A HashMap of Object containing the name and the type of the parameter
-     * @see #setParameters
+     * @return A List of Object containing the name and the type of the parameter
+     * @see #setParameterList
      * */
-    public HashMap<String,Object> getParameters();
+    public List<IParameterReact> getParameterList();
     
     /** 
      * Initiates the process for the given Reaction.
@@ -91,4 +92,12 @@ public interface IReactionProcess {
      */
     public IReactionSet initiate(IMoleculeSet reactants, IMoleculeSet agents) throws CDKException;
 
+    /**
+     * Return the IParameterReact if it exists given the class.
+     * 
+     * @param paramClass The class
+     * @return           The IParameterReact
+     */
+    public IParameterReact getParameterClass(Class<?> paramClass);
+    
 }

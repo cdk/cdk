@@ -48,6 +48,9 @@ public class EntryReact extends Entry{
 	private List<String> representations;
 	private HashMap<String,String> parameters;
 	private List<String> parametersValue;
+	private List<String> reactionExample;
+	private List<List<String>> parameterClass;
+	private String mechanism;
     
     /**
      * Constructor of the EntryReact.
@@ -60,6 +63,8 @@ public class EntryReact extends Entry{
         this.representations = new ArrayList<String>();
         this.parameters = new HashMap<String,String>();
         this.parametersValue = new ArrayList<String>();
+        this.reactionExample = new ArrayList<String>();
+        this.parameterClass = new ArrayList<List<String>>();
     }
     
     /**
@@ -117,7 +122,24 @@ public class EntryReact extends Entry{
     public HashMap<String,String> getParameters() {
     	return this.parameters;
     }
-    
+
+    /**
+     * Get the IParameterReact's of the reaction.
+     * 
+     * @return A String List with the parameter class 
+     */
+    public List<List<String>> getParameterClass() {
+    	return this.parameterClass;
+    }
+    /**
+     * Add a IParameterReact's of the reaction.
+     * 
+     * @param A String List containing the information about this parameter.
+     */
+    public void addParameter(List<String> param) {
+    	
+    	this.parameterClass.add(param);
+    }
     /**
      * Get the parameter value of the reaction.
      * 
@@ -126,4 +148,41 @@ public class EntryReact extends Entry{
     public List<String> getParameterValue() {
     	return this.parametersValue;
     }
+
+    /**
+     * Set the mechanism of this reaction.
+     * 
+     * @param mechani The mechanism
+     */
+	public void setMechanism(String mechani) {
+		this.mechanism = mechani; 
+	}
+	/**
+     * Get the mechanism of this reaction.
+     * 
+     * @return The mechanism
+     */
+	public String getMechanism() {
+		return this.mechanism; 
+	}
+
+	/**
+	 * add a example for this reaction.
+	 * 
+	 * @param xml A reaction in XML scheme
+	 */
+	public void addExampleReaction(String xml) {
+		this.reactionExample.add(xml);
+		
+	}
+
+	/**
+	 * add a example for this reaction.
+	 * 
+	 * @param xml A List of reactions in XML scheme
+	 */
+	public List<String> getExampleReactions() {
+		return this.reactionExample;
+		
+	}
 }

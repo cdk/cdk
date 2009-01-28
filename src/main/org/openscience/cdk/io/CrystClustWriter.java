@@ -20,15 +20,6 @@
  */
 package org.openscience.cdk.io;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-
-import javax.vecmath.Vector3d;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -39,6 +30,10 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.io.formats.CrystClustFormat;
 import org.openscience.cdk.io.formats.IResourceFormat;
+import org.openscience.cdk.tools.LoggingTool;
+
+import javax.vecmath.Vector3d;
+import java.io.*;
 //import org.openscience.cdk.tools.LoggingTool;
 
 /**
@@ -54,7 +49,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 public class CrystClustWriter extends DefaultChemObjectWriter {
 
     private BufferedWriter writer;
-    //private LoggingTool logger;
+    private LoggingTool logger;
 
     /**
      * Constructs a new CrystClustWriter class. Output will be stored in the Writer
@@ -63,7 +58,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      * @param out Writer to redirect the output to.
      */
     public CrystClustWriter(Writer out) {
-    	//logger = new LoggingTool(this);
+    	logger = new LoggingTool(this);
     	try {
     		if (out instanceof BufferedWriter) {
                 writer = (BufferedWriter)out;
@@ -71,6 +66,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
                 writer = new BufferedWriter(out);
             }
         } catch (Exception exc) {
+            logger.debug(exc.toString());
         }
     }
 
@@ -103,10 +99,10 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
 		Class[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (ICrystal.class.equals(interfaces[i])) return true;
-			if (IChemSequence.class.equals(interfaces[i])) return true;
-		}
+        for (Class anInterface : interfaces) {
+            if (ICrystal.class.equals(anInterface)) return true;
+            if (IChemSequence.class.equals(anInterface)) return true;
+        }
 		return false;
 	}
 
@@ -123,7 +119,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         } else {
             throw new UnsupportedChemObjectException("This object type is not supported.");
         }
-    };
+    }
 
     /**
      * Flushes the output and closes this object
@@ -179,7 +175,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
 
         // output number of atoms
         int noatoms = crystal.getAtomCount();
-        write(new Integer(noatoms).toString());
+        write(Integer.toString(noatoms));
         writeln("");
 
         // output number of asym. units (Z)
@@ -197,11 +193,11 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
             write(atom.getSymbol());
             write(":");
             // output atom charge
-            writeln(new Double(atom.getCharge()).toString());
+            writeln(Double.toString(atom.getCharge()));
             // output coordinates
-            writeln(new Double(atom.getPoint3d().x).toString());
-            writeln(new Double(atom.getPoint3d().y).toString());
-            writeln(new Double(atom.getPoint3d().z).toString());
+            writeln(Double.toString(atom.getPoint3d().x));
+            writeln(Double.toString(atom.getPoint3d().y));
+            writeln(Double.toString(atom.getPoint3d().z));
         }
     
     }
@@ -226,11 +222,11 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     }
     
     private void writeVector3d(Vector3d vector) {
-        write(new Double(vector.x).toString());
+        write(Double.toString(vector.x));
         writeln("");
-        write(new Double(vector.y).toString());
+        write(Double.toString(vector.y));
         writeln("");
-        write(new Double(vector.z).toString());
+        write(Double.toString(vector.z));
         writeln("");
     }
 

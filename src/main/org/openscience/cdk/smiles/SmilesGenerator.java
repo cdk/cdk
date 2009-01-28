@@ -67,10 +67,8 @@ import java.util.*;
  * @cdk.keyword    SMILES, generator
  * @cdk.module     smiles
  * @cdk.svnrev  $Revision$
- * @cdk.bug        1257438
  * @cdk.bug        1535055
  * @cdk.bug        1793446
- * @cdk.bug        1875946
  */
 @TestClass("org.openscience.cdk.smiles.SmilesGeneratorTest")
 public class SmilesGenerator

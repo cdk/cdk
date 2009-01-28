@@ -22,6 +22,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
@@ -114,6 +115,7 @@ import java.util.List;
  * @cdk.keyword XLogP
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptorTest")
 public class XLogPDescriptor implements IMolecularDescriptor {
 
     private boolean checkAromaticity = false;
@@ -132,6 +134,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *
      *@return    The specification value
      */
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP",
@@ -148,6 +151,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@exception  CDKException  Description of the Exception
      *@see #getParameters
      */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 2) {
             throw new CDKException("XLogPDescriptor expects two parameter");
@@ -169,6 +173,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@return    The parameters value [boolean checkAromaticity, boolean salicylFlag]
      *@see #setParameters
      */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[2];
@@ -199,6 +204,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@return XLogP is a double
      */
 
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac;
         try {
@@ -960,6 +966,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      * @return an object that implements the {@link org.openscience.cdk.qsar.result.IDescriptorResult} interface indicating
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
     }
@@ -970,7 +977,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      * @param pairCheck value
      * @return void
      */
-    public int[][] initializeHydrogenPairCheck(int [][] pairCheck) {
+    private int[][] initializeHydrogenPairCheck(int [][] pairCheck) {
         for (int i = 0; i < pairCheck.length; i++) {
             for (int j = 0; j < pairCheck[0].length; j++) {
                     pairCheck[i][j] = 0;
@@ -1461,6 +1468,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *
      *@return    The parameterNames value
      */
+    @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[2];
         params[0] = "checkAromaticity";
@@ -1476,6 +1484,7 @@ public class XLogPDescriptor implements IMolecularDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
             return true;
     }

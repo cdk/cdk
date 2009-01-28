@@ -23,14 +23,13 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
-import org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
@@ -41,22 +40,20 @@ public class VdWRadiusDescriptorTest extends AtomicDescriptorTest {
 	
 	public  VdWRadiusDescriptorTest() {}
     
+    @Before
     public void setUp() throws Exception {
     	setDescriptor(VdWRadiusDescriptor.class);
     }
-    
-	public static Test suite() {
-		return new TestSuite(VdWRadiusDescriptorTest.class);
-	}
 	
-	public void testVdWRadiusDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+	@Test
+    public void testVdWRadiusDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double [] testResult={1.7};
 		IAtomicDescriptor descriptor  = new VdWRadiusDescriptor();
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IMolecule mol = sp.parseSmiles("NCCN(C)(C)"); 
 		double retval = ((DoubleResult)descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
 
-		assertEquals(testResult[0], retval, 0.01);
+		Assert.assertEquals(testResult[0], retval, 0.01);
 	}
 }
 

@@ -1,7 +1,7 @@
 CDK - The Chemical Development Kit
  
 Copyright 1997-2008 The CDK Development Team
-License: LGPL, see doc/lgpl.license
+License: LGPL v2, see doc/lgpl.license
 
 1. Introduction
 
@@ -11,11 +11,11 @@ Please refer to these pages for updated information and the latest version of th
 
 The CDK is an open-source library of algorithms for structural chemo- and bioinformatics, implemented in 
 the programming language Java(tm). The library is published under terms of the the 
-GNU Lesser General Public License. This has implications on what you can do with sources and
+GNU Lesser General Public License v2. This has implications on what you can do with sources and
 binaries of the CDK library. For details, please refer to the file LICENSE, which should have been
 provided with this distribution.
 
-PLEASE NOTE: This is a library of useful data structures and algorithms to manipulated them 
+PLEASE NOTE: This is a library of useful data structures and algorithms to manipulate them 
 from the area of structural chemo- and bioinformatics. As such, it is intended for the use by
 programmers, who wish to save some effort by reusing code. It is not intended for the enduser. 
 If you consider yourself to be more like user, you might not find what you wanted. 
