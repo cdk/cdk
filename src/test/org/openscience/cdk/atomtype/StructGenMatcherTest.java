@@ -35,6 +35,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 
@@ -45,6 +46,24 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
  * @cdk.module test-structgen
  */
 public class StructGenMatcherTest extends AbstractAtomTypeTest {
+
+    private final static String ATOMTYPE_LIST = "structgen_atomtypes.owl";
+
+    private final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
+        "org/openscience/cdk/config/data/" + ATOMTYPE_LIST, NoNotificationChemObjectBuilder.getInstance()
+    );
+
+    public String getAtomTypeListName() {
+      return ATOMTYPE_LIST;
+    };
+
+    public AtomTypeFactory getFactory() {
+      return factory;
+    }
+
+    public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder) {
+      return new StructGenMatcher();
+    }
 
     private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
 
@@ -69,6 +88,7 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         IAtomType[] types = matcher.findMatchingAtomType(mol);
         for (int i=0; i<types.length; i++) {
             IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
+            Assert.assertNotNull(type);
             Assert.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
         }
     }
