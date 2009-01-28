@@ -25,9 +25,12 @@ import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.NewCDKTestCase;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -175,6 +178,21 @@ public class SMARTSQueryToolTest extends NewCDKTestCase {
 
         SMARTSQueryTool querytool = new SMARTSQueryTool(indoleSmiles);
         Assert.assertTrue(querytool.matches(indole));
+    }
+
+    /**
+     * @cdk.bug 2149621
+     */
+    @Test
+    public void testMethane() throws CDKException {
+        IMolecule methane =
+                NoNotificationChemObjectBuilder.getInstance().newMolecule();
+        IAtom carbon = methane.getBuilder().newAtom(Elements.CARBON);
+        methane.addAtom(carbon);
+
+        SMARTSQueryTool sqt = new SMARTSQueryTool("CC");
+        boolean matches = sqt.matches(methane);
+        Assert.assertFalse(matches);
 
     }
 }
