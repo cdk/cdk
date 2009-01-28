@@ -27,10 +27,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class JMEFormatTest extends ChemFormatTest {
+public class JMEFormatTest extends ChemFormatMatcherTest {
 
     public JMEFormatTest() {
-        super.setChemFormat((IChemFormat)JMEFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)JMEFormat.getInstance());
     }
     
 }

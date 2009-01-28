@@ -27,10 +27,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class HINFormatTest extends ChemFormatTest {
+public class HINFormatTest extends ChemFormatMatcherTest {
 
     public HINFormatTest() {
-        super.setChemFormat((IChemFormat)HINFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)HINFormat.getInstance());
     }
     
 }

@@ -28,10 +28,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class ABINITFormatTest extends ChemFormatTest {
+public class ABINITFormatTest extends ChemFormatMatcherTest {
 
     public ABINITFormatTest() {
-        super.setChemFormat((IChemFormat)ABINITFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)ABINITFormat.getInstance());
     }
     
 }

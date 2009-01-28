@@ -28,10 +28,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class CIFFormatTest extends ChemFormatTest {
+public class CIFFormatTest extends ChemFormatMatcherTest {
 
     public CIFFormatTest() {
-        super.setChemFormat((IChemFormat)CIFFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)CIFFormat.getInstance());
     }
     
 }

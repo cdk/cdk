@@ -27,10 +27,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class CACheFormatTest extends ChemFormatTest {
+public class CACheFormatTest extends ChemFormatMatcherTest {
 
     public CACheFormatTest() {
-        super.setChemFormat((IChemFormat)CACheFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)CACheFormat.getInstance());
     }
     
 }

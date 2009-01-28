@@ -27,10 +27,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class PDBFormatTest extends ChemFormatTest {
+public class PDBFormatTest extends ChemFormatMatcherTest {
 
     public PDBFormatTest() {
-        super.setChemFormat((IChemFormat)PDBFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)PDBFormat.getInstance());
     }
     
 }

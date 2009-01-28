@@ -28,10 +28,10 @@ package org.openscience.cdk.io.formats;
 /**
  * @cdk.module test-io
  */
-public class DaltonFormatTest extends ChemFormatTest {
+public class DaltonFormatTest extends ChemFormatMatcherTest {
 
     public DaltonFormatTest() {
-        super.setChemFormat((IChemFormat)DaltonFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher)DaltonFormat.getInstance());
     }
     
 }
