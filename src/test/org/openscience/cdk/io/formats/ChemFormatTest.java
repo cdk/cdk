@@ -26,6 +26,7 @@ package org.openscience.cdk.io.formats;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * @cdk.module test-io
@@ -70,6 +71,22 @@ abstract public class ChemFormatTest extends ResourceFormatTest {
             Class<?> writer = Class.forName(writerClass);
             Assert.assertNotNull(writer);
         }
+    }
+
+    @Test public void testGetSupportedDataFeatures() {
+        int supported = chemFormat.getSupportedDataFeatures();
+        Assert.assertTrue(supported >= DataFeatures.NONE);
+        Assert.assertTrue(supported <= 1<<13); // 13 features, so: all summed <= 1<<13
+    }
+
+    @Test public void testGetRequiredDataFeatures() {
+        int required = chemFormat.getRequiredDataFeatures();
+        Assert.assertTrue(required >= DataFeatures.NONE);
+        Assert.assertTrue(required <= 1<<13); // 13 features, so: all summed <= 1<<13
+
+        // test that the required features is a subset of the supported features
+        int supported = chemFormat.getSupportedDataFeatures();
+        Assert.assertTrue(supported - required >= 0);
     }
 
 }
