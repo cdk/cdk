@@ -85,7 +85,8 @@ public class SMILESFormat implements IChemFormat {
 		       DataFeatures.HAS_GRAPH_REPRESENTATION;
 	}
 
-	public int getRequiredDataFeatures() {
+	@TestMethod("testGetRequiredDataFeatures")
+    public int getRequiredDataFeatures() {
 		return DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
 	}
 }
