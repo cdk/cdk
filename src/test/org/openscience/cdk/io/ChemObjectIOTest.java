@@ -102,7 +102,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
         Assert.assertTrue("At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IMolecule, IReaction", oneAccepted);
     }
 
-    private static IChemObject[] acceptableChemObjects = {
+    protected static IChemObject[] acceptableChemObjects = {
         new ChemFile(), new ChemModel(), new Molecule(),
         new Reaction()
     };
