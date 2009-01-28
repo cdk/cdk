@@ -40,13 +40,13 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * @cdk.module test-io
  */
-public class ShelXReaderTest extends ChemObjectIOTest {
+public class ShelXReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() throws Exception {
         logger = new LoggingTool(ShelXReaderTest.class);
-        setChemObjectIO(new ShelXReader());
+        setSimpleChemObjectReader(new ShelXReader(), "data/shelx/frame_1.res");
     }
 
     @Test public void testAccepts() {

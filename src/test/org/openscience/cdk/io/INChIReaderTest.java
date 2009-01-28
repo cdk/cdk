@@ -44,13 +44,13 @@ import org.openscience.cdk.tools.LoggingTool;
  * @see org.openscience.cdk.io.INChIReader
  * @cdk.require java1.4+
  */
-public class INChIReaderTest extends ChemObjectIOTest {
+public class INChIReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() {
         logger = new LoggingTool(INChIReaderTest.class);
-        setChemObjectIO(new INChIReader());
+        setSimpleChemObjectReader(new INChIReader(), "data/inchi/guanine.inchi.xml");
     }
     
     @Test public void testAccepts() {

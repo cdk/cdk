@@ -46,13 +46,13 @@ import org.openscience.cdk.tools.LoggingTool;
  *
  * @see org.openscience.cdk.io.CrystClustReader
  */
-public class CrystClustReaderTest extends ChemObjectIOTest {
+public class CrystClustReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
         
     @BeforeClass public static void setup() {
         logger = new LoggingTool(CrystClustReaderTest.class);
-        setChemObjectIO(new CrystClustReader());
+        setSimpleChemObjectReader(new CrystClustReader(), "data/crystclust/estron.crystclust");
     }
 
     @Test public void testAccepts() {

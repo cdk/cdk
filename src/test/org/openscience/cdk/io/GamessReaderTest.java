@@ -26,7 +26,7 @@ import org.openscience.cdk.exception.CDKException;
  * @author Nathana&euml;l "M.Le_maudit" Mazuir
  */
 //TODO Update TestCase comments with appropriate information.
-public class GamessReaderTest extends ChemObjectIOTest  {
+public class GamessReaderTest extends SimpleChemObjectReaderTest  {
 
 	/**
 	 * The "BufferedReader" object used as input parameter for the "GamessReader" object.
@@ -63,7 +63,7 @@ public class GamessReaderTest extends ChemObjectIOTest  {
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		this.inputReader = new BufferedReader(new InputStreamReader(ins));
 		this.gamessReaderUnderTest = new GamessReader(this.inputReader);
-        setChemObjectIO(this.gamessReaderUnderTest);
+		setSimpleChemObjectReader(this.gamessReaderUnderTest, filename);
 	}
 	
 	/*

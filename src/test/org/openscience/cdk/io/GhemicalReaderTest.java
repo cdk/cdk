@@ -42,10 +42,10 @@ import org.openscience.cdk.ChemObject;
  *
  * @see org.openscience.cdk.io.GhemicalReader
  */
-public class GhemicalReaderTest extends ChemObjectIOTest {
+public class GhemicalReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass public static void setup() {
-        setChemObjectIO(new GhemicalMMReader());
+        setSimpleChemObjectReader(new GhemicalMMReader(), "data/ghemical/ethene.mm1gp");
     }
 
     @Test public void testAccepts() {

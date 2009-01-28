@@ -36,13 +36,13 @@ import org.openscience.cdk.tools.LoggingTool;
 /**
  * @cdk.module test-io
  */
-public class PCCompoundXMLReaderTest extends ChemObjectIOTest {
+public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() throws Exception {
         logger = new LoggingTool(PCCompoundXMLReaderTest.class);
-        setChemObjectIO(new PCCompoundXMLReader());
+        setSimpleChemObjectReader(new PCCompoundXMLReader(), "data/asn/pubchem/cid1145.xml");
     }
 
     @Test public void testAccepts() throws Exception {

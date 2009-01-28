@@ -21,10 +21,10 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *
  * @author Christoph Steinbeck
  */
-public class Gaussian98ReaderTest extends ChemObjectIOTest {
+public class Gaussian98ReaderTest extends SimpleChemObjectReaderTest {
 
     @BeforeClass public static void setup() {
-        setChemObjectIO(new Gaussian98Reader());
+        setSimpleChemObjectReader(new Gaussian98Reader(), "aSimpelChemObjectReader, testFile )");
     }
 
     @Test public void testAccepts() {

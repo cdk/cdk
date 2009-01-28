@@ -52,13 +52,13 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @see org.openscience.cdk.io.MDLReader
  * @see org.openscience.cdk.io.SDFReaderTest
  */
-public class MDLReaderTest extends ChemObjectIOTest {
+public class MDLReaderTest extends SimpleChemObjectReaderTest {
 
     private static LoggingTool logger;
 
     @BeforeClass public static void setup() {
         logger = new LoggingTool(MDLReaderTest.class);
-        setChemObjectIO(new MDLReader());
+        setSimpleChemObjectReader(new MDLReader(), "data/mdl/Strychnine_nichtOK.mol");
     }
 
     @Test public void testAccepts() {
