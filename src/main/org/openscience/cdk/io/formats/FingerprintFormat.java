@@ -76,6 +76,7 @@ public class FingerprintFormat implements IChemFormat {
 		return false;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}

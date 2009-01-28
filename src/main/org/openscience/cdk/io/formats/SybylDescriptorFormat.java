@@ -79,6 +79,7 @@ public class SybylDescriptorFormat implements IChemFormat {
 		return false;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}

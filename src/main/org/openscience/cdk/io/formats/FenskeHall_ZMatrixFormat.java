@@ -76,6 +76,7 @@ public class FenskeHall_ZMatrixFormat implements IChemFormat {
 		return false;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}

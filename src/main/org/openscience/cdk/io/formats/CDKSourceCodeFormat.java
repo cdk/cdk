@@ -75,6 +75,7 @@ public class CDKSourceCodeFormat implements IChemFormat {
 		return false;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return getRequiredDataFeatures() |
 		DataFeatures.HAS_GRAPH_REPRESENTATION;

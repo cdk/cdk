@@ -74,6 +74,7 @@ public class PubChemASNFormat implements IChemFormatMatcher {
 		return false;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}

@@ -91,6 +91,7 @@ public class CMLFormat implements IChemFormatMatcher {
 		return true;
 	}
 
+	@TestMethod("testGetSupportedDataFeatures")
 	public int getSupportedDataFeatures() {
 		return DataFeatures.HAS_2D_COORDINATES |
                DataFeatures.HAS_3D_COORDINATES |
