@@ -57,7 +57,7 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 	 */
 	private static final long serialVersionUID = -2596790658835319339L;
 
-	private Map<String, IMonomer> monomers;	// the list of all the contained Monomers. 
+    private Map<String, IMonomer> monomers;	// the list of all the contained Monomers.
 	
 	/**
 	 * Constructs a new Polymer to store the Monomers.
@@ -132,6 +132,11 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
 		}
 	}
 
+    private void setMonomers(Map<String, IMonomer> monomers) {
+        this.monomers = monomers;
+    }
+
+
     public String toString() {
         StringBuffer stringContent = new StringBuffer();
         stringContent.append("Polymer(");
@@ -145,13 +150,12 @@ public class Polymer extends Molecule implements java.io.Serializable, org.opens
     	Polymer clone = (Polymer)super.clone();
         clone.removeAllElements();
         clone.monomers = new Hashtable<String, IMonomer>();
-        for (Iterator<String> iter = clone.getMonomerNames().iterator(); iter.hasNext();) {
-            Monomer monomerClone = (Monomer)(clone.getMonomer(iter.next().toString()).clone());
-            Iterator<IAtom> atoms = monomerClone.atoms().iterator();
-            while (atoms.hasNext()) {
-                clone.addAtom(atoms.next(), monomerClone);
+        for (String monomerName : getMonomerNames()) {
+            Monomer monomerClone = (Monomer) getMonomer(monomerName).clone();
+            for (IAtom atomInMonomer : monomerClone.atoms()) {
+                clone.addAtom(atomInMonomer, monomerClone);
             }
-        }
+        }       
         return clone;
     }
 }
