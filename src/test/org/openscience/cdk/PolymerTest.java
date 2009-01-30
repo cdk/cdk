@@ -75,7 +75,14 @@ public class PolymerTest extends AbstractPolymerTest {
 		Monomer monomer = new Monomer();
 		monomer.setMonomerName("TYR55");
 		oPolymer.addAtom(new Atom("C"), monomer);
-		Assert.assertEquals(0, clone.getMonomerCount());
+
+        // changes should not occur in the clone
+        Assert.assertEquals(0, clone.getMonomerCount());
 		Assert.assertEquals(0, clone.getMonomerNames().size());
-	}
+
+        // new clone should see the changes
+        clone = (Polymer) oPolymer.clone();
+        Assert.assertEquals(1, clone.getMonomerCount());
+        Assert.assertEquals(1, clone.getMonomerNames().size());
+    }
 }
