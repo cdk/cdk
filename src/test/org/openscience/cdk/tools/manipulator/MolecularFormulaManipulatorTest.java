@@ -400,10 +400,10 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     public void testGetTotalMassNumber_IMolecularFormula() throws Exception {
 		IMolecularFormula formula = new MolecularFormula();
         formula.addIsotope(builder.newIsotope("C"));
-        formula.addIsotope(builder.newIsotope("Cl"));
+        formula.addIsotope(builder.newIsotope("O"));
     	
         double totalExactMass = MolecularFormulaManipulator.getTotalMassNumber(formula);
-        Assert.assertEquals(23, totalExactMass, 0.000001);
+        Assert.assertEquals(28, totalExactMass, 0.000001);
     }
     @Test
     public void testGetMajorIsotopeMass_IMolecularFormula() throws Exception {
