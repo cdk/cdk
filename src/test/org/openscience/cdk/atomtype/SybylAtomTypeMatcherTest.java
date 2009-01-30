@@ -193,15 +193,32 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         }
     }
 
-	/**
-	 * @cdk.bug 2445178
-	 */
-    @Test public void testNonExistingType() throws Exception {
-        IMolecule mol = new Molecule();
-        IAtom atom = new Atom("Error");
-        mol.addAtom(atom);
-        SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(mol.getBuilder());
-        Assert.assertNull(matcher.findMatchingAtomType(mol, atom));
+    @Test public void testAtomTyping2() throws Exception {
+        String filename = "data/mol2/atomtyping2.mol2";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        Mol2Reader reader = new Mol2Reader(ins);
+        IMolecule molecule = (IMolecule)reader.read(new Molecule());
+        Assert.assertNotNull(molecule);
+        IMolecule reference = (IMolecule)molecule.clone();
+        
+        // test if the perceived atom types match that
+        percieveAtomTypesAndConfigureAtoms(molecule);
+        Iterator<IAtom> refAtoms = reference.atoms().iterator();
+        Iterator<IAtom> atoms = molecule.atoms().iterator();
+        while (atoms.hasNext() && refAtoms.hasNext()) {
+            // work around aromaticity, which we skipped for now
+            IAtom refAtom = refAtoms.next();
+            String refName = refAtom.getAtomTypeName();
+            if (refName.endsWith(".ar")) {
+                refName = refName.substring(0, refName.indexOf(".")) + ".2";
+                refAtom.setAtomTypeName(refName);
+            }
+        	Assert.assertEquals(
+        		"Perceived atom type does not match atom type in file",
+        		refAtom.getAtomTypeName(),
+        		atoms.next().getAtomTypeName()
+        	);
+        }
     }
 
     @Test public void testAtomTyping3() throws Exception {
