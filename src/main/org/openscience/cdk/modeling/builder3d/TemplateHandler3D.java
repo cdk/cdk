@@ -38,24 +38,24 @@ import java.util.zip.GZIPInputStream;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.FingerprinterTool;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.iterator.IteratingMDLReader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
-import org.openscience.cdk.ringsearch.RingPartitioner;
+import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LoggingTool;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -72,6 +72,8 @@ public class TemplateHandler3D {
 	
 	private static final IChemObjectBuilder builder = NoNotificationChemObjectBuilder.getInstance();
 	private static final LoggingTool logger = new LoggingTool(TemplateHandler3D.class);
+    SmilesParser sp = new SmilesParser(NoNotificationChemObjectBuilder.getInstance());
+    SmilesGenerator sg = new SmilesGenerator();
 	
     IMolecule molecule;
     IRingSet sssr;
@@ -98,7 +100,7 @@ public class TemplateHandler3D {
      * Template file is a mdl file. Creates a Object Set of Molecules
      * @throws CDKException The template file cannot be loaded
      */
-    private void loadTemplates() throws CDKException{
+    private void loadTemplates() throws CDKException {
         logger.debug("Loading templates...");
         IteratingMDLReader imdl;
         InputStream ins;
@@ -159,6 +161,21 @@ public class TemplateHandler3D {
         return bitSet;
     }
     
+	public static IAtomContainer createAnyAtomAnyBondAtomContainer(
+		IAtomContainer atomContainer) throws Exception {
+		IAtomContainer query = (IAtomContainer) atomContainer.clone();
+		for (int i = 0; i < query.getBondCount(); i++) {
+			query.getBond(i).setOrder(IBond.Order.SINGLE);
+			query.getBond(i).setFlag(CDKConstants.ISAROMATIC, false);
+			query.getBond(i).getAtom(0).setSymbol("C");
+			query.getBond(i).getAtom(1).setSymbol("C");
+			query.getBond(i).getAtom(0).setFlag(CDKConstants.ISAROMATIC, false);
+			query.getBond(i).getAtom(1).setFlag(CDKConstants.ISAROMATIC, false);
+		}
+		return query;
+	}
+
+	
 	/**
 	 * Returns the largest (number of atoms) ring set in a molecule
 	 *
@@ -196,11 +213,12 @@ public class TemplateHandler3D {
      * @param NumberOfRingAtoms double
      * @throws CloneNotSupportedException The atomcontainer cannot be cloned.
      */
-    public void mapTemplates(IAtomContainer ringSystems, double NumberOfRingAtoms) throws CDKException, CloneNotSupportedException{
+    public void mapTemplates(IAtomContainer ringSystems, double NumberOfRingAtoms) throws Exception, CloneNotSupportedException{
 		if (!templatesLoaded) self.loadTemplates();
 
         //logger.debug("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
-        IAtomContainer ringSystemAnyBondAnyAtom = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(ringSystems);
+        IAtomContainer ringSystemAnyBondAnyAtom = createAnyAtomAnyBondAtomContainer(ringSystems);
+        ringSystemAnyBondAnyAtom = sp.parseSmiles(sg.createSMILES(new Molecule(ringSystemAnyBondAnyAtom)));
         BitSet ringSystemFingerprint = new Fingerprinter().getFingerprint(ringSystemAnyBondAnyAtom);
         boolean flagMaxSubstructure = false;
         boolean flagSecondbest=false;
@@ -212,8 +230,8 @@ public class TemplateHandler3D {
             }
             //we compare the fingerprint with any atom and any bond
             if (FingerprinterTool.isSubset(fingerprintData.get(i),ringSystemFingerprint)) {
-                IAtomContainer templateAnyBondAnyAtom = AtomContainerManipulator.createAllCarbonAllSingleNonAromaticBondAtomContainer(template);
-                //we do the exact match with any atom and any bond
+                IAtomContainer templateAnyBondAnyAtom = createAnyAtomAnyBondAtomContainer(template);
+                templateAnyBondAnyAtom = sp.parseSmiles(sg.createSMILES(new Molecule(templateAnyBondAnyAtom)));
                 if (UniversalIsomorphismTester.isSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom)) {
                 	//if this is the case, we keep it as a guess, but look if we can do better
                     List list = UniversalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom);
@@ -229,7 +247,6 @@ public class TemplateHandler3D {
                     		flagSecondbest = true;
                     		flagwritefromsecondbest=true;
                     	}
-                    }
                     
                     if(!flagSecondbest || flagMaxSubstructure || flagwritefromsecondbest){
 	                    for (int j = 0; j < list.size(); j++) {
@@ -240,6 +257,7 @@ public class TemplateHandler3D {
 	                        	atom1.setPoint3d(new Point3d(atom2.getPoint3d()));
 	                        }
 	                    }//for j
+                    }
                     }
 
                     if (flagMaxSubstructure) {
