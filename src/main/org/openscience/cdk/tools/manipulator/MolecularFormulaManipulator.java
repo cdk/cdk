@@ -490,7 +490,7 @@ public class MolecularFormulaManipulator {
 		 for (IIsotope isotope : formula.isotopes()) {
 			try {
 				IIsotope isotope2 = IsotopeFactory.getInstance(formula.getBuilder()).getMajorIsotope(isotope.getSymbol());
-				mass += isotope2.getMassNumber() * formula.getIsotopeCount(isotope);
+				mass += isotope2.getAtomicNumber() * formula.getIsotopeCount(isotope);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
