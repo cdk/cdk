@@ -112,5 +112,6 @@ public class PolymerTest extends AbstractPolymerTest {
         IAtom atomFromMonomer = clone.getMonomer("TYR55").getAtom(0);
         Assert.assertEquals("C", atomFromMonomer.getSymbol());
         Assert.assertNotSame(atom, atomFromMonomer);
+        Assert.assertSame(atomFromMonomer, clonedAtom);
     }
 }
